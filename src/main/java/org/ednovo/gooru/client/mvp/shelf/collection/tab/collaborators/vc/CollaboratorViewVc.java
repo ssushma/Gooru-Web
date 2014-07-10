@@ -192,10 +192,15 @@ public abstract class CollaboratorViewVc extends Composite implements MessagePro
 		panelCollaborators.getElement().setId("divCollaborators");
 		
 		btnRemoveFromList.setText(GL0937);
+		btnRemoveFromList.getElement().setAttribute("alt",GL0937);
+		btnRemoveFromList.getElement().setAttribute("title",GL0937);
 		btnRemoveFromList.getElement().setId("btnRemoveFromList");
 		lblYou.setText(GL0938);
-		
+		lblYou.getElement().setAttribute("alt",GL0938);
+		lblYou.getElement().setAttribute("title",GL0938);
 		btnRemoveCollab.setText(GL0237);
+		btnRemoveCollab.getElement().setAttribute("alt",GL0237);
+		btnRemoveCollab.getElement().setAttribute("title",GL0237);
 		btnRemoveCollab.setVisible(false);
 		
 		if (collaboratorsDo!=null && collaboratorsDo.getStatus().equalsIgnoreCase("pending")){
@@ -221,7 +226,11 @@ public abstract class CollaboratorViewVc extends Composite implements MessagePro
 			
 			//imgProfileImage.setUrl((collectionDo.getUser() !=null && collectionDo.getUser().getProfileImageUrl() !=null ) ? collectionDo.getUser().getProfileImageUrl() : defaultProfileImage);
 			lblUserName.setText((collectionDo.getUser() !=null && collectionDo.getUser().getUsername() !=null )  ? collectionDo.getUser().getUsername() : "");
+			lblUserName.getElement().setAttribute("alt",(collectionDo.getUser() !=null && collectionDo.getUser().getUsername() !=null )  ? collectionDo.getUser().getUsername() : "");
+			lblUserName.getElement().setAttribute("title",(collectionDo.getUser() !=null && collectionDo.getUser().getUsername() !=null )  ? collectionDo.getUser().getUsername() : "");
 			lblEmailId.setText((collectionDo.getUser() !=null && collectionDo.getUser().getEmailId() !=null )  ? collectionDo.getUser().getEmailId() : "");
+			lblEmailId.getElement().setAttribute("alt",(collectionDo.getUser() !=null && collectionDo.getUser().getEmailId() !=null )  ? collectionDo.getUser().getEmailId() : "");
+			lblEmailId.getElement().setAttribute("title",(collectionDo.getUser() !=null && collectionDo.getUser().getEmailId() !=null )  ? collectionDo.getUser().getEmailId() : "");
 			lblRadioButton.getElement().setId(lblEmailId.getText());
 			lblRadioButton.getElement().setAttribute("userName", lblUserName.getText());
 			
@@ -232,7 +241,11 @@ public abstract class CollaboratorViewVc extends Composite implements MessagePro
 			imgProfileImage.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl()+collaboratorsDo.getGooruUid()+".png");
 			//imgProfileImage.setUrl((collaboratorsDo.getProfileImageUrl() !=null ) ? collaboratorsDo.getProfileImageUrl() : defaultProfileImage);
 			lblUserName.setText((collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : "");
+			lblUserName.getElement().setAttribute("alt",(collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : "");
+			lblUserName.getElement().setAttribute("title",(collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : "");
 			lblEmailId.setText((collaboratorsDo.getEmailId() !=null)  ? collaboratorsDo.getEmailId() : "");
+			lblEmailId.getElement().setAttribute("alt",(collaboratorsDo.getEmailId() !=null)  ? collaboratorsDo.getEmailId() : "");
+			lblEmailId.getElement().setAttribute("title",(collaboratorsDo.getEmailId() !=null)  ? collaboratorsDo.getEmailId() : "");
 			lblRadioButton.getElement().setId(lblEmailId.getText());
 			lblRadioButton.getElement().setAttribute("username", (collaboratorsDo.getUsername() !=null)  ? collaboratorsDo.getUsername() : lblEmailId.getText());
 			
@@ -281,7 +294,11 @@ public abstract class CollaboratorViewVc extends Composite implements MessagePro
 				imgYourPhoto.setUrl(defaultProfileImage);
 			}
 		});
-		
+		imgYourPhoto.getElement().setId("imgYourPhoto");
+		lblYou.getElement().setId("lblYou");
+		imgProfileImage.getElement().setId("imgProfileImage");
+		lblUserName.getElement().setId("lblUserName");
+		lblEmailId.getElement().setId("lblEmailId");
 	}
 	
 	@UiHandler("btnRemoveCollab")

@@ -38,6 +38,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -56,6 +57,8 @@ public abstract class SuccessPopupViewVc extends PopupPanel implements MessagePr
 	Button btnPositive;
 	
 	@UiField Label lblTitle, lblDescription,tagImageForTagging;
+	
+	@UiField HTMLPanel imgSuccessIcon;
 	
 	@UiTemplate("SuccessPopupViewVc.ui.xml")
 	interface Binder extends UiBinder<Widget, SuccessPopupViewVc> {
@@ -102,6 +105,10 @@ public abstract class SuccessPopupViewVc extends PopupPanel implements MessagePr
 	
 	private void setElementId() {
 		btnPositive.getElement().setId("btnPositive");
+		lblTitle.getElement().setId("lblTitle");
+		tagImageForTagging.getElement().setId("lblTagImageForTagging");
+		imgSuccessIcon.getElement().setId("pnlImgSuccessIcon");
+		lblDescription.getElement().setId("lblDescription");
 	}
 
 	/* Setters */
@@ -126,6 +133,8 @@ public abstract class SuccessPopupViewVc extends PopupPanel implements MessagePr
 	 */
 	public void setPositiveButtonText(String text) {
 		btnPositive.setText(text);
+		btnPositive.getElement().setAttribute("alt",text);
+		btnPositive.getElement().setAttribute("title",text);
 	}
 	
 	/**
@@ -149,6 +158,8 @@ public abstract class SuccessPopupViewVc extends PopupPanel implements MessagePr
 	 */
 	public void setPopupTitle(String title) {
 		lblTitle.setText(title);
+		lblTitle.getElement().setAttribute("alt",title);
+		lblTitle.getElement().setAttribute("title",title);
 	}
 	public void enableTaggingImage() {
 		tagImageForTagging.getElement().getStyle().setVisibility(Visibility.VISIBLE);

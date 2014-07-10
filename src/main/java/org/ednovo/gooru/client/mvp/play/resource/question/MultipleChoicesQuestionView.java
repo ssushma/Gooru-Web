@@ -87,11 +87,19 @@ public abstract class  MultipleChoicesQuestionView extends Composite implements 
 		this.attemptedAnswerDo=attemptedAnswerDo;
 		renderQuestionAnswerOptions();
 		answerText.getElement().setInnerHTML(GL0665);
+		answerText.getElement().setAttribute("alt",GL0665);
+		answerText.getElement().setAttribute("title",GL0665);
 		checkAnswer.setText(GL0666);
+		checkAnswer.getElement().setAttribute("alt",GL0666);
+		checkAnswer.getElement().setAttribute("title",GL0666);
 	}
 	
 	private void setQuestionTypeCaption(){
 		messageBodyText.setText(TRUE_FALSE_BODY_TEXT);
+		answerText.getElement().setId("pnlAnswerText");
+		checkAnswer.getElement().setId("btnCheckAnswer");
+		messageBodyText.getElement().setId("lblMessageBodyText");
+		optionsContainer.getElement().setId("fpnlOptionsContainer");
 	}
 	
 	private void renderQuestionAnswerOptions(){

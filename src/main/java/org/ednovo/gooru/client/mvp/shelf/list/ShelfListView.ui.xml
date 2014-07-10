@@ -90,7 +90,7 @@
 		}
 
 	</ui:style>
-	<g:FocusPanel styleName="{style.shelfPanel}" ui:field="shelfFocPanel">
+	<g:FocusPanel styleName="{style.shelfPanel} mediaCssToHide" ui:field="shelfFocPanel">
 			<g:ScrollPanel ui:field="collectionListScrollpanel" styleName="{style.collectionScrlPanel}">
 				<g:FlowPanel styleName="{folderStyle.folderPanel}">
 					<g:FlowPanel ui:field="folderCollectionPanel">

@@ -79,12 +79,25 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 		this.collectionItemDo=collectionItemDo;
 		setQuestionTypeCaption();
 		answertext.getElement().setInnerHTML(GL0665);
+		answertext.getElement().setAttribute("alt",GL0665);
+		answertext.getElement().setAttribute("title",GL0665);
 		submitButton.setText(GL0666);
+		submitButton.getElement().setAttribute("alt",GL0666);
+		submitButton.getElement().setAttribute("title",GL0666);
 		showPreviousAttemptResult(attemptedAnswerDo);
 	}
 	
 	public void setQuestionTypeCaption(){
 		messageBodyText.setText(OPEN_ENDED_BODY_TEXT);
+		messageBodyText.getElement().setAttribute("alt",OPEN_ENDED_BODY_TEXT);
+		messageBodyText.getElement().setAttribute("title",OPEN_ENDED_BODY_TEXT);
+		answertext.getElement().setId("pnlAnswertext");
+		submitButton.getElement().setId("btnSubmitButton");
+		messageBodyText.getElement().setId("lblMessageBodyText");
+		openEndedAnswerTextArea.getElement().setId("tatOpenEndedAnswerTextArea");
+		errorMessageText.getElement().setId("lblErrorMessageText");
+		answetTextAfterSubmission.getElement().setId("pnlAnswetTextAfterSubmission");
+		submittedText.getElement().setId("lblSubmittedText");
 	}
 	
 	public void showPreviousAttemptResult(AttemptedAnswersDo attemptedAnswerDo){
@@ -101,9 +114,13 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 		 if(answerText!=null){
 			 if(answerText.trim().length()>=1000){
 				 errorMessageText.setText(ERROR_MESSAGE);
+				 errorMessageText.getElement().setAttribute("alt",ERROR_MESSAGE);
+				 errorMessageText.getElement().setAttribute("title",ERROR_MESSAGE);
 				 event.preventDefault();
 			 }else{
 				 errorMessageText.setText("");
+				 errorMessageText.getElement().setAttribute("alt","");
+				 errorMessageText.getElement().setAttribute("title","");
 			 }
 			 if(answerText.length()>0){
 				 isOeAnswerSubmited(false);
@@ -126,10 +143,16 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 		 if(answerText!=null&&answerText.trim().length()>0){
 			 if(answerText.trim().length()>1000){
 				 errorMessageText.setText(ERROR_MESSAGE);
+				 errorMessageText.getElement().setAttribute("alt",ERROR_MESSAGE);
+				 errorMessageText.getElement().setAttribute("title",ERROR_MESSAGE);
 			 }else{
 				 errorMessageText.setText("");
+				 errorMessageText.getElement().setAttribute("alt","");
+				 errorMessageText.getElement().setAttribute("title","");
 				 submitButton.removeFromParent();
 				 submittedText.setText(GL1138);
+				 submittedText.getElement().setAttribute("alt",GL1138);
+				 submittedText.getElement().setAttribute("title",GL1138);
 				 //TODO answer submit API
 				 showSubmitedText();
 				 isOeAnswerSubmited(true);
@@ -141,6 +164,8 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 	
 	public void showSubmitedText(){
 		submittedText.setText("");
+		submittedText.getElement().setAttribute("alt","");
+		submittedText.getElement().setAttribute("title","");
 		answetTextAfterSubmission.add(new HTML(openEndedAnswerTextArea.getValue().replaceAll("<", "&lt;").replaceAll(">", "&gt;")));
 		createSesstionItemAttemptOe("",openEndedAnswerTextArea.getValue());
 		saveOeAnswerData();

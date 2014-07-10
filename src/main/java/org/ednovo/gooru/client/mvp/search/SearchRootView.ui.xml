@@ -91,7 +91,7 @@
 			<g:HTML styleName="{style.searchResult}" ui:field="queriedTextHtml" />
 		</g:FlowPanel>
 		<g:SimplePanel styleName="{style.searchWrapper}"  ui:field="searchWrapperSimPanel"/>
-		<g:SimplePanel ui:field="shelfTabSimPanel"/>
+		<g:SimplePanel styleName="searchResults" ui:field="shelfTabSimPanel"/>
 		<g:Label ui:field="lodingImage" styleName="{style.loadingImageContainer}" />
 		<sg:FooterUc />
 	</g:HTMLPanel>

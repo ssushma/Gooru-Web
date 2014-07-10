@@ -62,8 +62,20 @@ public abstract class SocialShareWidget extends Composite implements MessageProp
 	public SocialShareWidget(String resourceDescription,String resourceThumbnail,String category) {
 		initWidget(uiBinder.createAndBindUi(this));
 		fbButton.setText(GL0646);
+		fbButton.getElement().setId("btnFbButton");
+		fbButton.getElement().setAttribute("alt",GL0646);
+		fbButton.getElement().setAttribute("title",GL0646);
+		
 		twitterButton.setText(GL0647);
+		twitterButton.getElement().setId("btnTwitterButton");
+		twitterButton.getElement().setAttribute("alt",GL0647);
+		twitterButton.getElement().setAttribute("title",GL0647);
+		
 		emailButton.setText(GL0212);
+		emailButton.getElement().setId("btnEmailButton");
+		emailButton.getElement().setAttribute("alt",GL0212);
+		emailButton.getElement().setAttribute("title",GL0212);
+		resourceHiddenImage.getElement().setId("imgResourceHiddenImage");
 		this.resourceDescription=resourceDescription;
 		this.resourceThumbnail=resourceThumbnail;
 		this.category=category;

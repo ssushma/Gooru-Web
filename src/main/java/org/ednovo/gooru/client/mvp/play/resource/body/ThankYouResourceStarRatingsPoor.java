@@ -116,9 +116,24 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel implements Messa
 		
 		
 		incorporateresourceText.setText(GL0612);
+		incorporateresourceText.getElement().setId("lblIncorporateresourceText");
+		incorporateresourceText.getElement().setAttribute("alt",GL0612);
+		incorporateresourceText.getElement().setAttribute("title",GL0612);
+		
 		unavailableresourceText.setText(GL0613);
+		unavailableresourceText.getElement().setId("lblUnavailableresourceText");
+		unavailableresourceText.getElement().setAttribute("alt",GL0613);
+		unavailableresourceText.getElement().setAttribute("title",GL0613);
+		
 		inaccurateTextresource.setText(GL0614);
+		inaccurateTextresource.getElement().setId("lblInaccurateTextresource");
+		inaccurateTextresource.getElement().setAttribute("alt",GL0614);
+		inaccurateTextresource.getElement().setAttribute("title",GL0614);
+		
 		otherReason.setText(GL0606);
+		otherReason.getElement().setId("lblOtherReason");
+		otherReason.getElement().setAttribute("alt",GL0606);
+		otherReason.getElement().setAttribute("title",GL0606);
 		
 		setUserReview(review);
 		setAvgRatingWidget();
@@ -126,7 +141,27 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel implements Messa
 		saveAndPsotLbl.setVisible(false);
 		buttonsContainer.setVisible(true);
 		ratingText.getElement().setInnerHTML(GL1991);
+		ratingText.getElement().setId("pnlRatingText");
+		ratingText.getElement().setAttribute("alt",GL1991);
+		ratingText.getElement().setAttribute("title",GL1991);
+		
 		btnSkip.setText(GL1004);
+		btnSkip.getElement().setId("btnSkip");
+		btnSkip.getElement().setAttribute("alt",GL1004);
+		btnSkip.getElement().setAttribute("title",GL1004);
+	
+		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
+		reviewTextAreaTitle.getElement().setId("lblReviewTextAreaTitle");
+		resourceCheckBox4.getElement().setId("chkResourceCheckBox4");
+		resourceCheckBox3.getElement().setId("chkResourceCheckBox3");
+		resourceCheckBox2.getElement().setId("chkResourceCheckBox2");
+		resourceCheckBox1.getElement().setId("chkResourceCheckBox1");
+		ratingCommentTxtArea.getElement().setId("tatRatingCommentTxtArea");
+		mandatoryDescLblForSwareWords.getElement().setId("lblMandatoryDescLblForSwareWords");
+		buttonsContainer.getElement().setId("pnlButtonsContainer");
+		btnSkip.getElement().setId("btnSkip");
+		btnPost.getElement().setId("btnPost");
+		saveAndPsotLbl.getElement().setId("lblSaveAndPsotLbl");
 	}
 	
 	/**
@@ -169,14 +204,19 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel implements Messa
 			public void onSuccess(Boolean value) {
 					if(!value){
 						saveAndPsotLbl.setText("");
+						saveAndPsotLbl.getElement().setAttribute("alt","");
+						saveAndPsotLbl.getElement().setAttribute("title","");
 						saveAndPsotLbl.setVisible(true);
 						buttonsContainer.setVisible(false);
 						if(btnPost.getText().equalsIgnoreCase("Save")){
 							saveAndPsotLbl.setText(saving);
+							saveAndPsotLbl.getElement().setAttribute("alt",saving);
+							saveAndPsotLbl.getElement().setAttribute("title",saving);
 							AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,true));  
 						}else if(btnPost.getText().equalsIgnoreCase("Post")){
 							saveAndPsotLbl.setText(posting);
-							
+							saveAndPsotLbl.getElement().setAttribute("alt",posting);
+							saveAndPsotLbl.getElement().setAttribute("title",posting);
 							if(resourceCheckBox1.isChecked())
 							{
 								reourceContentReportList.add("missing-concept");
@@ -227,11 +267,21 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel implements Messa
 	private void setUserReview(String review) {
 		if(!review.equals("")){
 			reviewTextAreaTitle.setText(GL1858);
+			reviewTextAreaTitle.getElement().setAttribute("alt",GL1858);
+			reviewTextAreaTitle.getElement().setAttribute("title",GL1858);
 			btnPost.setText("Save");
+			btnPost.getElement().setAttribute("alt","Save");
+			btnPost.getElement().setAttribute("title","Save");
 			ratingCommentTxtArea.setText(review.trim());
+			ratingCommentTxtArea.getElement().setAttribute("alt",review.trim());
+			ratingCommentTxtArea.getElement().setAttribute("title",review.trim());
 		}else{
 			reviewTextAreaTitle.setText(GL1855);
+			reviewTextAreaTitle.getElement().setAttribute("alt",GL1855);
+			reviewTextAreaTitle.getElement().setAttribute("title",GL1855);
 			btnPost.setText("Post");
+			btnPost.getElement().setAttribute("alt","Post");
+			btnPost.getElement().setAttribute("title","Post");
 		}
 	}
 	
@@ -250,9 +300,13 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel implements Messa
 							buttonsContainer.setVisible(false);
 							if(btnPost.getText().equalsIgnoreCase("Save")){
 								saveAndPsotLbl.setText(saving);
+								saveAndPsotLbl.getElement().setAttribute("alt",saving);
+								saveAndPsotLbl.getElement().setAttribute("title",saving);
 								AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,true));  
 							}else if(btnPost.getText().equalsIgnoreCase("Post")){
 								saveAndPsotLbl.setText(posting);
+								saveAndPsotLbl.getElement().setAttribute("alt",posting);
+								saveAndPsotLbl.getElement().setAttribute("title",posting);
 								AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));  
 							}
 						}

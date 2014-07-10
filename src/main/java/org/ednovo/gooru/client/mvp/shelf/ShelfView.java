@@ -402,41 +402,135 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				DisplayNoCollectionEvent.TYPE, displayNoCollections);
 		
 		collectionDescriptionUc.setPlaceholder(WHAT_IS_THIS_COLLECTION_ABOUT);
+		collectionDescriptionUc.getElement().setId("tatCollectionDescription");
 		// collectionDescriptionUc.getElement().setAttribute("placeholder",
 		// WHAT_IS_THIS_COLLECTION_ABOUT);
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		editSelfCollectionSaveButtonCancel.setText(GL0142);
+		editSelfCollectionSaveButtonCancel.getElement().setId("btnEditCancel");
+		editSelfCollectionSaveButtonCancel.getElement().setAttribute("alt",GL0142);
+		editSelfCollectionSaveButtonCancel.getElement().setAttribute("title",GL0142);
+		
 		editSelfCollectionSaveButton.setText(GL0141);
+		editSelfCollectionSaveButton.getElement().setId("btnSave");
+		editSelfCollectionSaveButton.getElement().setAttribute("alt",GL0141);
+		editSelfCollectionSaveButton.getElement().setAttribute("title",GL0141);
+		
 		titleAlertMessageLbl.setText(GL0143);
+		titleAlertMessageLbl.getElement().setId("lblTitleAlertMessageLbl");
+		titleAlertMessageLbl.getElement().setAttribute("alt",GL0143);
+		titleAlertMessageLbl.getElement().setAttribute("title",GL0143);
+		
 		collectionDescriptionTitle.setText(GL0618);
+		collectionDescriptionTitle.getElement().setId("lblCollectionDescriptionTitle");
+		collectionDescriptionTitle.getElement().setAttribute("alt",GL0618);
+		collectionDescriptionTitle.getElement().setAttribute("title",GL0618);
+		
 		editSelfCollectionDescSaveButtonCancel.setText(GL0142);
+		editSelfCollectionDescSaveButtonCancel.getElement().setId("btnEditDescCancel");
+		editSelfCollectionDescSaveButtonCancel.getElement().setAttribute("alt",GL0142);
+		editSelfCollectionDescSaveButtonCancel.getElement().setAttribute("title",GL0142);
+		
 		editSelfCollectionDescSaveButton.setText(GL0141);
+		editSelfCollectionDescSaveButton.getElement().setId("btnEditDescSave");
+		editSelfCollectionDescSaveButton.getElement().setAttribute("alt",GL0141);
+		editSelfCollectionDescSaveButton.getElement().setAttribute("title",GL0141);
+		
 		descriptionAlertMessageLbl.setText(GL0143);
+		descriptionAlertMessageLbl.getElement().setId("lblDescriptionAlertMessageLbl");
+		descriptionAlertMessageLbl.getElement().setAttribute("alt",GL0143);
+		descriptionAlertMessageLbl.getElement().setAttribute("title",GL0143);
+		
 		collectionPreviewBtn.setText(GL0633);
+		collectionPreviewBtn.getElement().setId("btnCollectionPreview");
+		collectionPreviewBtn.getElement().setAttribute("alt",GL0633);
+		collectionPreviewBtn.getElement().setAttribute("title",GL0633);
+		
 		copyCollectionLbl.setText(GL0827);
+		copyCollectionLbl.getElement().setId("lblCopyCollection");
+		copyCollectionLbl.getElement().setAttribute("alt",GL0827);
+		copyCollectionLbl.getElement().setAttribute("title",GL0827);
+		
 		moveCollectionLbl.setText(GL1261);
+		moveCollectionLbl.getElement().setId("moveCollectionLbl");
+		moveCollectionLbl.getElement().setAttribute("alt",GL1261);
+		moveCollectionLbl.getElement().setAttribute("title",GL1261);
+		
 		imgNotFriendly.setTitle(GL0732);
+		imgNotFriendly.getElement().setId("moveCollectionLbl");
+		imgNotFriendly.getElement().setAttribute("alt",GL0732);
+		imgNotFriendly.getElement().setAttribute("title",GL0732);
 		imgNotFriendly.setAltText(GL0732);
 		imgNotFriendly.setUrl("images/mos/questionmark.png");
+		
 		infoTabVc.setLabel(GL0828);
+		infoTabVc.getElement().setId("lblInfoTab");
+		infoTabVc.getElement().setAttribute("alt",GL0828);
+		infoTabVc.getElement().setAttribute("title",GL0828);
+		
 		resourceTabVc.setLabel(GL0829);
+		resourceTabVc.getElement().setId("lblResourceTab");
+		resourceTabVc.getElement().setAttribute("alt",GL0829);
+		resourceTabVc.getElement().setAttribute("title",GL0829);
+		
 		shareTabVc.setLabel(GL0526);
+		shareTabVc.getElement().setId("lblShareTab");
+		shareTabVc.getElement().setAttribute("alt",GL0526);
+		shareTabVc.getElement().setAttribute("title",GL0526);
+		
 		assignTabVc.setLabel(GL0519);
+		assignTabVc.getElement().setId("lblAssignTab");
+		assignTabVc.getElement().setAttribute("alt",GL0519);
+		assignTabVc.getElement().setAttribute("title",GL0519);
+		
 		collaboratorTabVc.setLabel(GL0830);
+		collaboratorTabVc.getElement().setId("lblCollaboratorTab");
+		collaboratorTabVc.getElement().setAttribute("alt",GL0830);
+		collaboratorTabVc.getElement().setAttribute("title",GL0830);
+		
 		statisticsTabVc.setText(GL0831);
-		editSelfCollectionDescSaveButtonCancel.getElement().setId("btnEditDescCancel");
-		editSelfCollectionSaveButtonCancel.getElement().setId("btnEditCancel");
-		editSelfCollectionDescSaveButton.getElement().setId("btnEditDescSave");
-		editSelfCollectionSaveButton.getElement().setId("btnSave");
-		collectionDescriptionUc.getElement().setId("tatCollectionDescription");
+		statisticsTabVc.getElement().setId("lblStatisticsTab");
+		statisticsTabVc.getElement().setAttribute("alt",GL0831);
+		statisticsTabVc.getElement().setAttribute("title",GL0831);
+	
 		backToSearchHtml.addClickHandler(this);
 		infoTabVc.addClickHandler(this);
 		resourceTabVc.addClickHandler(this);
 		shareTabVc.addClickHandler(this);
 		//By default not visible.
 		lblLastEditedBy.setVisible(false);
+		shelfViewMainContainer.getElement().setId("fpnlShelfViewMainContainer");
+		scrollContainer.getElement().setId("fpnlScrollContainer");
+		backToSearchFloPanel.getElement().setId("fpnlBackToSearchFloPanel");
+		backToSearchPreHtml.getElement().setId("htmlBackToSearchPreHtml");
+		backToSearchHtml.getElement().setId("htmlBackToSearchHtml");
+		shelfTabSimPanel.getElement().setId("spnlShelfTabSimPanel");
+		noCollectionResetPanel.getElement().setId("fpnlNoCollectionResetPanel");
+		loadingImageLabel.getElement().setId("pnlLoadingImageLabel");
+		editPanel.getElement().setId("pnlEditPanel");
+		folderListPanel.getElement().setId("spnlFolderListPanel");
+		collectionFloPanel.getElement().setId("fpnlCollectionFloPanel");
+		lblLastEditedBy.getElement().setId("lblLastEditedBy");
+		collectionImageShelfUc.getElement().setId("collectionImageUcCollectionImageShelfUc");
+		collectionTitleContainer.getElement().setId("epnlCollectionTitleContainer");
+		editCollectionTitle.getElement().setId("epnlEditCollectionTitle");
+		collectionEditImageLbl.getElement().setId("lblCollectionEditImageLbl");
+		panelActionItems.getElement().setId("pnlPanelActionItems");
+		collectionDescriptionTitleContainer.getElement().setId("epnlCollectionDescriptionTitleContainer");
+		editCollectionDescTitle.getElement().setId("epnlEditCollectionDescTitle");
+		simplePencilPanel.getElement().setId("lblSimplePencilPanel");
+		panelFriendly.getElement().setId("pnlPanelFriendly");
+		imgFriendly.getElement().setId("imgImgFriendly");
+		lblFriendly.getElement().setId("lblFriendly");
+		collPopup.getElement().setId("pnlCollPopup");
+		statPopup.getElement().setId("pnlStatPopup");
+		rbPublicPanel.getElement().setId("pnlRbPublicPanel");
+		rbPublic.getElement().setId("btnRbPublic");
+		publishedPanel.getElement().setId("pnlPublishedPanel");
+		collectionMetaDataSimPanel.getElement().setId("spnlCollectionMetaDataSimPanel");
+		panelFoooter.getElement().setId("footerOrganizePanelFoooter");
 		
 		/* Disabled */
 //		collaboratorTabVc.addStyleName("deactivated");
@@ -444,18 +538,9 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 //		statisticsTabVc.addStyleName("deactivated");
 		
 		collectionEditImageLbl.setVisible(false);
-		editSelfCollectionDescSaveButton.getElement().setId("btnEditDescSave");
-		infoTabVc.getElement().setId("lblInfoTab");
-		resourceTabVc.getElement().setId("lblResourceTab");
-		shareTabVc.getElement().setId("lblShareTab");
-		assignTabVc.getElement().setId("lblAssignTab");
-		statisticsTabVc.getElement().setId("lblStatisticsTab");
 		statisticsTabVc.setVisible(false);
-		collaboratorTabVc.getElement().setId("lblCollaboratorTab");
-		collectionPreviewBtn.getElement().setId("btnCollectionPreview");
-		copyCollectionLbl.getElement().setId("lblCopyCollection");
 		deleteUserCollectionLbl.getElement().setId("lblDeleteUserCollection");
-		moveCollectionLbl.getElement().setId("moveCollectionLbl");
+	
 		editSelfCollectionDescSaveButtonCancel.getElement().setAttribute(
 				"style", "margin-top:3px");
 		editSelfCollectionSaveButton.getElement().getStyle()
@@ -485,7 +570,14 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		lblPublishPending.setVisible(false);
 		lblPublishPending.getElement().getStyle().setMarginTop(9, Unit.PX);
 		lblPublishPending.setText(GL1943);
+		lblPublishPending.getElement().setId("lblPublishPending");
+		lblPublishPending.getElement().setAttribute("alt",GL1943);
+		lblPublishPending.getElement().setAttribute("title",GL1943);
+		
 		lblPublish.setText(GL1942);
+		lblPublish.getElement().setId("lblPublish");
+		lblPublish.getElement().setAttribute("alt",GL1942);
+		lblPublish.getElement().setAttribute("title",GL1942);
 
 		handelChangeImageEvent();
 		// simplePencilFocPanel.addMouseOverHandler(new hideEditPencil());
@@ -602,13 +694,21 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		
 		lblDeleting.setVisible(false);
 		lblDeleting.setText(GL0560);
+		lblDeleting.getElement().setId("lblDeleting");
+		lblDeleting.getElement().setAttribute("alt",GL0560);
+		lblDeleting.getElement().setAttribute("title",GL0560);
 		
 		classpageTitles = new ArrayList<ClassPageCollectionDo>();
 		loadingImageLabel.getElement().setId("loadingImageLabel");
 		
 		panelFoooter.setVisible(true);
 		rbPublic.setText(GL1921);
+		rbPublic.getElement().setAttribute("alt",GL1921);
+		rbPublic.getElement().setAttribute("title",GL1921);
+		
 		lblPublish.setText(GL1942);
+		lblPublish.getElement().setAttribute("alt",GL1942);
+		lblPublish.getElement().setAttribute("title",GL1942);
 //		if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 1){
 //			shelfViewMainContainer.getElement().getStyle().clearMarginTop();
 //		}else{
@@ -693,6 +793,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		collectionImageShelfUc.getCollectionImg().setTitle(collection.getTitle());
 		collectionFloPanel.setVisible(true);
 		deleteUserCollectionLbl.setText(DELETE_COLLECTION);
+		deleteUserCollectionLbl.getElement().setAttribute("alt",DELETE_COLLECTION);
+		deleteUserCollectionLbl.getElement().setAttribute("title",DELETE_COLLECTION);
 		
 		if (AppClientFactory.isContentAdmin() || collectionDo
 				.getUser().getGooruUId().equals(AppClientFactory.getLoggedInUser()
@@ -876,8 +978,12 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 					if ((query.length()) >= 30) {
 						query = query.substring(0, 30) + "...";
 						backToSearchHtml.setHTML(PRE_SEARCH_LINK + query + "\"");
+						backToSearchHtml.getElement().setAttribute("alt", PRE_SEARCH_LINK);
+						backToSearchHtml.getElement().setAttribute("title", PRE_SEARCH_LINK);
 					} else {
 						backToSearchHtml.setHTML(PRE_SEARCH_LINK + query + "\"");
+						backToSearchHtml.getElement().setAttribute("alt", PRE_SEARCH_LINK);
+						backToSearchHtml.getElement().setAttribute("title", PRE_SEARCH_LINK);
 					}
 				}
 				
@@ -886,6 +992,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 				if(isVisible){
 					backToSearchHtml.setHTML(PRE_CLASSPAGE_LINK);
+					backToSearchHtml.getElement().setAttribute("alt", PRE_CLASSPAGE_LINK);
+					backToSearchHtml.getElement().setAttribute("title", PRE_CLASSPAGE_LINK);
 					backToSearchPreHtml.setVisible(isVisible);
 					backToSearchHtml.setVisible(isVisible);
 				}

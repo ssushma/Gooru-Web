@@ -160,13 +160,23 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		btnAssign.getElement().setAttribute("style", "margin-right:25px;");
 		
 		lblDirections.setText(GL1166+" "+GL1167);
+		lblDirections.getElement().setId("lblDirections");
+		lblDirections.getElement().setAttribute("alt",GL1166+" "+GL1167);
+		lblDirections.getElement().setAttribute("title",GL1166+" "+GL1167);
 		
 		lblDuedate.setText(GL1168+" "+GL1167);
+		lblDuedate.getElement().setId("lblDuedate");
+		lblDuedate.getElement().setAttribute("alt",GL1168+" "+GL1167);
+		lblDuedate.getElement().setAttribute("title",GL1168+" "+GL1167);
 		
 		dateBoxUc = new DateBoxUc(false, false,false);
 		duedateContainer.add(dateBoxUc);
 		dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
 		textAreaVal.setText(GL1389);
+		textAreaVal.getElement().setId("tatTextAreaVal");
+		textAreaVal.getElement().setAttribute("alt",GL1389);
+		textAreaVal.getElement().setAttribute("title",GL1389);
+		
 		textAreaVal.getElement().getStyle().setColor("#999");
 		textAreaVal.getElement().setAttribute("maxlength", "400");
 		directionsErrorLength.setVisible(false);
@@ -176,6 +186,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 				if(textAreaVal.getText().equalsIgnoreCase(GL1389))
 				{
 					textAreaVal.setText("");
+					textAreaVal.getElement().setAttribute("alt","");
+					textAreaVal.getElement().setAttribute("title","");
 				}
 				textAreaVal.getElement().getStyle().setColor("black");
 			}
@@ -197,6 +209,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 			public void onKeyUp(KeyUpEvent event) {
 				if(textAreaVal.getText().length() >=400){
 					directionsErrorLength.setText(GL0143);
+					directionsErrorLength.getElement().setAttribute("alt",GL0143);
+					directionsErrorLength.getElement().setAttribute("title",GL0143);
 					directionsErrorLength.setVisible(true);
 				}else{
 					directionsErrorLength.setVisible(false);
@@ -216,6 +230,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 				if(textAreaVal.getText().length() == 0)
 				{
 					textAreaVal.setText(GL1461);
+					textAreaVal.getElement().setAttribute("alt",GL1461);
+					textAreaVal.getElement().setAttribute("title",GL1461);
 					textAreaVal.getElement().getStyle().setColor("#999");
 				}
 				Map<String, String> parms = new HashMap<String, String>();
@@ -286,32 +302,70 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	public void setLabelsAndIds(){
 		
 		remainderLbl.setText(GL1889);
+		remainderLbl.getElement().setId("lblRemainderLbl");
+		remainderLbl.getElement().setAttribute("alt",GL1889);
+		remainderLbl.getElement().setAttribute("title",GL1889);
+		
 		lblAssignCollectionPrivate.setText(GL0112);
+		lblAssignCollectionPrivate.getElement().setId("lblAssignCollectionPrivate");
+		lblAssignCollectionPrivate.getElement().setAttribute("alt",GL0112);
+		lblAssignCollectionPrivate.getElement().setAttribute("title",GL0112);
+		
 		lblAssignCollectionPrivate.setVisible(false);
 		
 		lblAssignCollectionTitle.setText(GL0101);
+		lblAssignCollectionTitle.getElement().setId("lblAssignCollectionTitle");
+		lblAssignCollectionTitle.getElement().setAttribute("alt",GL0101);
+		lblAssignCollectionTitle.getElement().setAttribute("title",GL0101);
+		
 		lblClasspages.setText(GL0102);
+		lblClasspages.getElement().setId("lblClasspages");
+		lblClasspages.getElement().setAttribute("alt",GL0102);
+		lblClasspages.getElement().setAttribute("title",GL0102);
 		//lblAssignments.setText(GL0103);
 		
 		btnAssign.setText(GL0104);
+		btnAssign.getElement().setAttribute("alt",GL0104);
+		btnAssign.getElement().setAttribute("title",GL0104);
 		
 		lblClasspagePlaceHolder.setText(GL0105);
+		lblClasspagePlaceHolder.getElement().setId("lblClasspagePlaceHolder");
+		lblClasspagePlaceHolder.getElement().setAttribute("alt",GL0105);
+		lblClasspagePlaceHolder.getElement().setAttribute("title",GL0105);
 		//lblAssignmentsPlaceHolder.setText(GL0105);
 		
 		lblNoClasspages.setText(GL0106);
+		lblNoClasspages.getElement().setId("lblNoClasspages");
+		lblNoClasspages.getElement().setAttribute("alt",GL0106);
+		lblNoClasspages.getElement().setAttribute("title",GL0106);
 //		htmlGoto.setHTML(MessageProperties.GL0107);
 //		ancTeach.setText(MessageProperties.GL0108);
 		htmlTab.setHTML(GL0109);
-		
+		htmlTab.getElement().setId("htmlTab");
+		htmlTab.getElement().setAttribute("alt",GL0109);
+		htmlTab.getElement().setAttribute("title",GL0109);
 		//ancTeach.setHref("#"+PlaceTokens.TEACH);
 		
 		//Ids
 		btnAssign.getElement().setAttribute("id", "btnAssign");
 		btnAssign.setStyleName(res.css().disableAssignButon());
 		btnAssign.setText(GL0104);
+		btnAssign.getElement().setAttribute("alt",GL0104);
+		btnAssign.getElement().setAttribute("title",GL0104);
 		btnAssign.setEnabled(false);
 		btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
 
+		panelLoading.getElement().setId("pnlPanelLoading");
+		panelNoClasspages.getElement().setId("pnlPanelNoClasspages");
+		htmlGoto.getElement().setId("htmlGoto");
+		ancTeach.getElement().setId("htmlAncTeach");
+		htmlEvenPanelContainer.getElement().setId("epnlHtmlEvenPanelContainer");
+		lblClasspagesArrow.getElement().setId("lblClasspagesArrow");
+		spanelClasspagesPanel.getElement().setId("sbSpanelClasspagesPanel");
+		htmlClasspagesListContainer.getElement().setId("pnlHtmlClasspagesListContainer");
+		duedateContainer.getElement().setId("pnlDuedateContainer");
+		directionsErrorLength.getElement().setId("lblDirectionsErrorLength");
+		directionsErrorLbl.getElement().setId("lblDirectionsErrorLbl");
 	}
 	/**
 	 * 
@@ -380,6 +434,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 					btnAssign.getElement().setAttribute("id", "btnAssign");
 					btnAssign.setStyleName(res.css().disableAssignButon());
 					btnAssign.setText(GL1172);
+					btnAssign.getElement().setAttribute("alt",GL1172);
+					btnAssign.getElement().setAttribute("title",GL1172);
 					//btnAssign.getElement().getStyle().setMarginRight(17, Unit.PCT);
 				
 					btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
@@ -430,7 +486,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 							}
 							
 							btnAssign.setText(GL0104);
-			
+							btnAssign.getElement().setAttribute("alt",GL0104);
+							btnAssign.getElement().setAttribute("title",GL0104);
 							SuccessPopupVc successPopupVc = new SuccessPopupVc(classpageId, collectionDo.getTitle(), lblClasspagePlaceHolder.getText()) {
 								
 								@Override
@@ -438,6 +495,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 						
 									
 									lblClasspagePlaceHolder.setText(GL0105);
+									lblClasspagePlaceHolder.getElement().setAttribute("alt",GL0105);
+									lblClasspagePlaceHolder.getElement().setAttribute("title",GL0105);
 									lblClasspagePlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().placeHolderText());
 									lblAssignCollectionPrivate.setVisible(false);
 									
@@ -448,11 +507,15 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 									AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 									
 									textAreaVal.setText("");
+									textAreaVal.getElement().setAttribute("alt","");
+									textAreaVal.getElement().setAttribute("title","");
 									dateBoxUc.getDateBox().setValue("");
 								
 									btnAssign.getElement().setAttribute("id", "btnAssign");
 									btnAssign.setStyleName(res.css().disableAssignButon());
 									btnAssign.setText(GL0104);
+									btnAssign.getElement().setAttribute("alt",GL0104);
+									btnAssign.getElement().setAttribute("title",GL0104);
 									btnAssign.setEnabled(false);
 									btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
 									
@@ -525,6 +588,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 					@Override
 					public void onClick(ClickEvent event) {						
 						lblClasspagePlaceHolder.setText(titleLabel.getText());
+						lblClasspagePlaceHolder.getElement().setAttribute("alt",titleLabel.getText());
+						lblClasspagePlaceHolder.getElement().setAttribute("title",titleLabel.getText());
 						lblClasspagePlaceHolder.getElement().setId(titleLabel.getElement().getId());
 						lblClasspagePlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
 						

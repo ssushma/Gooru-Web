@@ -65,6 +65,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -311,7 +312,8 @@ public class LibraryMenuNav extends Composite{
 					if(!isStandatdHover && isStandardCode){
 						isStandatdHover = true;
 						String codeId = STANDARDS;
-						getTaxonomyData(codeId,null);
+						String courseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId");
+						getTaxonomyData(codeId,courseId);
 					}
 				}
 			});
@@ -468,18 +470,8 @@ public class LibraryMenuNav extends Composite{
 	
 			if (subjectCode!=null){
 				if(subjectCode.equalsIgnoreCase(STANDARDS)){
-					AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(subjectCode, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, StandardsDo>>() {
 
-						@Override
-						public void onSuccess(HashMap<String, StandardsDo> result) {
-							setSubjectPanelIdsForStandards(result);
-							AppClientFactory.fireEvent(new SetStandardDoEvent(STANDARDS,result.get(STANDARDS)));
-							if(!getSubjectSelected(STANDARDS)) {
-								setTaxonomyDataforStandards(STANDARDS, subjectCode, courseId, result.get(STANDARDS).getData());
-							}
-						}
-					});
-				/*	AppClientFactory.getInjector().getLibraryService().getStandardLibraryMenuList(subjectCode, getPlaceToken(), new SimpleAsyncCallback<ArrayList<StandardCourseDo>>(){
+					AppClientFactory.getInjector().getLibraryService().getStandardLibraryMenuList(subjectCode, getPlaceToken(), new SimpleAsyncCallback<ArrayList<StandardCourseDo>>(){
 						@Override
 						public void onSuccess(ArrayList<StandardCourseDo> standardCourseList) {
 							setSubjectPanelIdsForStandardsCustomized(standardCourseList);
@@ -491,6 +483,18 @@ public class LibraryMenuNav extends Composite{
 							}
 						}
 						
+					});
+					
+/*					AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(subjectCode, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, StandardsDo>>() {
+
+						@Override
+						public void onSuccess(HashMap<String, StandardsDo> result) {
+						//	setSubjectPanelIdsForStandards(result);
+						//	AppClientFactory.fireEvent(new SetStandardDoEvent(STANDARDS,result.get(STANDARDS)));
+							if(!getSubjectSelected(STANDARDS)) {
+								setTaxonomyDataforStandards(STANDARDS, subjectCode, courseId, result.get(STANDARDS).getData());
+							}
+						}
 					});*/
 					
 				}
@@ -708,7 +712,7 @@ public class LibraryMenuNav extends Composite{
 		}
 	}
 	
-	protected void setTaxonomyDataforStandards(String subjectname, final String subjectCode, String courseIdRefresh, ArrayList<StandardCourseDo> courseDoList) {
+	protected void setTaxonomyDataforStandards(final String subjectname, final String subjectCode, final String courseIdRefresh, ArrayList<StandardCourseDo> courseDoList) {
 		if (courseDoList != null) {
 			for (final StandardCourseDo standardsCourseDo : courseDoList) {
 	
@@ -737,18 +741,35 @@ public class LibraryMenuNav extends Composite{
 								
 								@Override
 								public void onClick(ClickEvent event) {
-									setHeaderBrowserTitle(standardsCourseDo.getLabel());
-									//MixpanelUtil.mixpanelEvent("Library_"+STANDARDS+"_"+standardsCourseDo.getLabel());
-									MixpanelUtil.mixpanelEvent("standardlibrary_select_course");
-									Map<String,String> params = new HashMap<String, String>();
-									params.put(LIBRARY_PAGE, "course-page");
-									params.put(SUBJECT, STANDARDS);
-									params.put("courseId", courseId);
-									params.put("standardId", standardsId);
-									if(courseTitle.getText().contains("Texas")) {
-										params.put("libtype", "TEKS");
-									}
-									AppClientFactory.getPlaceManager().revealPlace(getPlaceToken(),params);
+									
+									//here u add
+									AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(subjectCode, subjectname, new SimpleAsyncCallback<HashMap<String, StandardsDo>>() {
+
+										@Override
+										public void onSuccess(HashMap<String, StandardsDo> result) {
+											
+											setHeaderBrowserTitle(standardsCourseDo.getLabel());
+											//MixpanelUtil.mixpanelEvent("Library_"+STANDARDS+"_"+standardsCourseDo.getLabel());
+											MixpanelUtil.mixpanelEvent("standardlibrary_select_course");
+											Map<String,String> params = new HashMap<String, String>();
+											params.put(LIBRARY_PAGE, "course-page");
+											params.put(SUBJECT, STANDARDS);
+											params.put("courseId", courseId);
+											params.put("standardId", standardsId);
+											if(courseTitle.getText().contains("Texas")) {
+												params.put("libtype", "TEKS");
+											}
+											AppClientFactory.getPlaceManager().revealPlace(getPlaceToken(),params);
+											
+											setSubjectPanelIdsForStandards(result);
+											AppClientFactory.fireEvent(new SetStandardDoEvent(STANDARDS,result.get(STANDARDS)));
+											if(!getSubjectSelected(STANDARDS)) {
+												setTaxonomyDataforStandards(STANDARDS, subjectCode, courseId, result.get(STANDARDS).getData());
+											}
+											
+										}
+									});
+									
 									
 								}
 							});

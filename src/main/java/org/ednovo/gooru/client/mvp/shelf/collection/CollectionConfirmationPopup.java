@@ -36,6 +36,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -46,6 +47,7 @@ public  class CollectionConfirmationPopup extends PopupPanel implements MessageP
 	
 
 	@UiField BlueButtonUc okButton, goBackBtn;
+	@UiField HTMLPanel buttonContainer;
 	
 	
 	
@@ -60,13 +62,37 @@ public  class CollectionConfirmationPopup extends PopupPanel implements MessageP
 		setWidget(uiBinder.createAndBindUi(this));
 		
 		shareMsgTitle.setText(GL0836);
+		shareMsgTitle.getElement().setId("lblShareMsgTitle");
+		shareMsgTitle.getElement().setAttribute("alt",GL0836);
+		shareMsgTitle.getElement().setAttribute("title",GL0836);
+		
 		shareMsgTxt.setText(GL0837);
+		shareMsgTxt.getElement().setId("lblShareMsgTxt");
+		shareMsgTxt.getElement().setAttribute("alt",GL0837);
+		shareMsgTxt.getElement().setAttribute("title",GL0837);
+		
 		shareMsgLbl.setText(GL0838);
+		shareMsgLbl.getElement().setId("lblShareMsgLbl");
+		shareMsgLbl.getElement().setAttribute("alt",GL0838);
+		shareMsgLbl.getElement().setAttribute("title",GL0838);
+		
 		okButton.getElement().getStyle().setMarginLeft(7, Unit.PX);
 		goBackBtn.setText(GL0834);
+		goBackBtn.getElement().setAttribute("alt",GL0834);
+		goBackBtn.getElement().setAttribute("title",GL0834);
+		
 		okButton.setText(GL0835);
+		okButton.getElement().setAttribute("alt",GL0835);
+		okButton.getElement().setAttribute("title",GL0835);
+		
 		goBackBtn.getElement().setId("btnGoBack");
 		okButton.getElement().setId("btnOk");
+		closeButton.getElement().setId("lblCloseButton");
+		classPageNames.getElement().setId("lblClassPageNames");
+		buttonContainer.getElement().setId("pnlButtonContainer");
+		
+		
+		
 		this.setGlassEnabled(true);
 		
         /*this.setPopupPositionAndShow(new PopupPanel.PositionCallback() {

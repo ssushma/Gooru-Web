@@ -70,7 +70,10 @@ public class CollectionUploadImageUc extends Composite implements MessagePropert
 	public CollectionUploadImageUc() {
 		initWidget(uiBinder.createAndBindUi(this));
 		changeImgLbl.setText(GL0800);
+		changeImgLbl.getElement().setAttribute("alt",GL0800);
+		changeImgLbl.getElement().setAttribute("title",GL0800);
 		changeImgLbl.getElement().setId("lblChangeImg");
+		
 		collectionImg.addErrorHandler(new ErrorHandler() {
 
 			@Override
@@ -81,6 +84,8 @@ public class CollectionUploadImageUc extends Composite implements MessagePropert
 		
 		collectionEditImageContainer.addMouseOverHandler(new ShowUploadImageButton());
 		collectionEditImageContainer.addMouseOutHandler(new HideUploadImageButton());
+		collectionEditImageContainer.getElement().setId("epnlCollectionEditImageContainer");
+		collectionImg.getElement().setId("imgCollectionImg");
 	}
 
 	/**

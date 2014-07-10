@@ -81,14 +81,40 @@ public class FolderDeleteView extends AppPopUp implements MessageProperties{
 	public void setView()
 	{
 		titleLabel.setText(GL1176);
+		titleLabel.getElement().setId("lblTitleLabel");
+		titleLabel.getElement().setAttribute("alt",GL1176);
+		titleLabel.getElement().setAttribute("title",GL1176);
+		
 		cancelButton.setText(GL0142);
+		cancelButton.getElement().setId("btnCancelButton");
+		cancelButton.getElement().setAttribute("alt",GL0142);
+		cancelButton.getElement().setAttribute("title",GL0142);
+		
 		okButton.setText(GL0190);
+		okButton.getElement().setId("btnOkButton");
+		okButton.getElement().setAttribute("alt",GL0190);
+		okButton.getElement().setAttribute("title",GL0190);
+		
 		headerLabel.setText(GL1174);
+		headerLabel.getElement().setId("lblHeaderLabel");
+		headerLabel.getElement().setAttribute("alt",GL1174);
+		headerLabel.getElement().setAttribute("title",GL1174);
+		
 		descriptionLabel.setText(GL1328);
+		descriptionLabel.getElement().setId("lblDescriptionLabel");
+		descriptionLabel.getElement().setAttribute("alt",GL1328);
+		descriptionLabel.getElement().setAttribute("title",GL1328);
+		
 		txtDelete.setPlaceholder(GL1175);
+		txtDelete.getElement().setId("txtTxtDelete");
+		
 		txtDelete.addKeyUpHandler(new ValidateConfirmText());
 		okButton.getElement().addClassName("disabled");
 		deleteText.setText(GL0560);
+		deleteText.getElement().setId("lblDeleteText");
+		deleteText.getElement().setAttribute("alt",GL0560);
+		deleteText.getElement().setAttribute("title",GL0560);
+		
 		deleteText.setVisible(false);
 	}
 	/**

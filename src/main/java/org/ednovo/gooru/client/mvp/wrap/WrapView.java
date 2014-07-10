@@ -125,6 +125,7 @@ public class WrapView extends BaseView implements IsWrapView {
 			  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 		  }
+		 
 		  setUiText();
 	}
 

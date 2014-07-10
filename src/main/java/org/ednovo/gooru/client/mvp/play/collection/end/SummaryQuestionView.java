@@ -85,18 +85,31 @@ public class SummaryQuestionView extends Composite implements MessageProperties{
 	protected void renderSummaryQuestionView(){
 		if(collectionItemDo.getResource().getType()==4){
 			questionSerialNum.setText(""+collectionItemDo.getItemSequence());
+			questionSerialNum.getElement().setAttribute("alt",""+collectionItemDo.getItemSequence());
+			questionSerialNum.getElement().setAttribute("title",""+collectionItemDo.getItemSequence());
+			  
 			if(attemptedAnswersDo!=null){	
 				String fibQuest = renderFibQuestion(attemptedAnswersDo);
 				SummaryAnswerView summaryAnwerView=new SummaryAnswerView(fibQuest,fibAnsIsCorrect); 
 				questionAnswerContainer.add(summaryAnwerView);
 			}else{
 				questionText.setHTML(GL0702+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+				questionText.getElement().setAttribute("alt",GL0702+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+				questionText.getElement().setAttribute("title",GL0702+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
 			}
 			return;
 		}
 		questionText.setHTML(GL0702+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+		questionText.getElement().setAttribute("alt",GL0702+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+		questionText.getElement().setAttribute("title",GL0702+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+	
 		questionExplanation.setHTML(removeHtmlTags(collectionItemDo.getResource().getExplanation()));
+		questionExplanation.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getExplanation()));
+		questionExplanation.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getExplanation()));
+		  
 		questionSerialNum.setText(""+collectionItemDo.getItemSequence());
+		questionSerialNum.getElement().setAttribute("alt",""+collectionItemDo.getItemSequence());
+		questionSerialNum.getElement().setAttribute("title",""+collectionItemDo.getItemSequence());
 		if(collectionItemDo.getResource().getType()==1||collectionItemDo.getResource().getType()==3){
 			if(collectionItemDo.getResource().getAnswers().size()>0){
 				TreeSet<QuestionAnswerDo> answersList=collectionItemDo.getResource().getAnswers();
@@ -194,5 +207,13 @@ public class SummaryQuestionView extends Composite implements MessageProperties{
 			i++;
 		}
 		return questionAnswerDo;
+	}
+	
+	public void setId(){
+		questionSerialNum.getElement().setId("lblQuestionSerialNum");
+		questionThumbnail.getElement().setId("imgQuestionThumbnail");
+		questionText.getElement().setId("htmlQuestionText");
+		questionAnswerContainer.getElement().setId("pnlQuestionAnswerContainer");
+		questionExplanation.getElement().setId("htmlQuestionExplanation");
 	}
 }

@@ -55,6 +55,11 @@ public class QuestionAnswerOptionView extends Composite{
 		this.answerText=questionText;
 		//optionAlpahabeticSerialNo.setText(questionSerialNum);
 		answerOptionText.setHTML(questionSerialNum+" "+removeHtmlTags(questionText));
+		
+		answerChoiceResult.getElement().setId("lblAnswerChoiceResult");
+		radioButton.getElement().setId("lblRadioButton");
+		answerOptionText.getElement().setId("htmlAnswerOptionText");
+		answerOptionRadioButton.getElement().setId("rdAnswerOptionRadioButton");
 	}
 	private HTML getHTML(String html){
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");

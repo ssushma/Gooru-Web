@@ -98,20 +98,48 @@ public abstract class DeleteConfirmPopupVc extends AppPopUp implements MessagePr
 		cancelAnr.getElement().setId("lnkCancel");
 		msgFlowPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		entityLbl.setText(" "+entityInfo);
+		entityLbl.getElement().setAttribute("alt",entityInfo);
+		entityLbl.getElement().setAttribute("title",entityInfo);
+		
         setModal(true);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
         loadingTextLbl.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
         loadingTextLbl.setVisible(false);
+        buttonContainer.getElement().setId("fpnlButtonContainer");
         buttonContainer.setVisible(true);
 		show();
 		center();
 		confirmMessagesText.setHTML(GL0824);
+		confirmMessagesText.getElement().setId("htmlConfirmMessagesText");
+		confirmMessagesText.getElement().setAttribute("alt",GL0824);
+		confirmMessagesText.getElement().setAttribute("title",GL0824);
+		
 		permenantText.setText(GL0825);
+		permenantText.getElement().setId("lblPermenantText");
+		permenantText.getElement().setAttribute("alt",GL0825);
+		permenantText.getElement().setAttribute("title",GL0825);
+		
 		typeDeleteText.setText(GL0826);
+		typeDeleteText.getElement().setId("lblTypeDeleteText");
+		typeDeleteText.getElement().setAttribute("alt",GL0826);
+		typeDeleteText.getElement().setAttribute("title",GL0826);
+		
 		okButtonUc.setText(GL0190);
+		okButtonUc.getElement().setAttribute("alt",GL0190);
+		okButtonUc.getElement().setAttribute("title",GL0190);
+		
 		cancelAnr.setText(GL0142);
+		cancelAnr.getElement().setAttribute("alt",GL0142);
+		cancelAnr.getElement().setAttribute("title",GL0142);
+		
 		loadingTextLbl.setText(GL0560);
+		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
+		loadingTextLbl.getElement().setAttribute("alt",GL0560);
+		loadingTextLbl.getElement().setAttribute("title",GL0560);
+		
+		msgFlowPanel.getElement().setId("fpnlMsgFlowPanel");
+		entityLbl.getElement().setId("lblEntityLbl");
 		//GL0190
 	}
 
