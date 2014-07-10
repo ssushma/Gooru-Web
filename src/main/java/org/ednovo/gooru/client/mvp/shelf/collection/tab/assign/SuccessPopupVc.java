@@ -31,7 +31,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -45,14 +45,13 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author BLR Team
  * 
  */
-public abstract class SuccessPopupVc extends PopupPanel implements MessageProperties {
+public abstract class SuccessPopupVc extends PopupPanel {
  
 	
 	@UiField InlineLabel assignMoreCpLbl,ancClasspageTitle;
@@ -73,6 +72,8 @@ public abstract class SuccessPopupVc extends PopupPanel implements MessageProper
 
 	private static final Binder binder = GWT.create(Binder.class);
 	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	/**
 	 * 
 	 */
@@ -86,26 +87,26 @@ public abstract class SuccessPopupVc extends PopupPanel implements MessageProper
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
         
-        successPopUpHeader.getElement().setInnerHTML(GL1183);
+        successPopUpHeader.getElement().setInnerHTML(i18n.GL1183());
         successPopUpHeader.getElement().setId("pnlSuccessPopUpHeader");
-        successPopUpHeader.getElement().setAttribute("alt",GL1183);
-        successPopUpHeader.getElement().setAttribute("title",GL1183);
+        successPopUpHeader.getElement().setAttribute("alt",i18n.GL1183());
+        successPopUpHeader.getElement().setAttribute("title",i18n.GL1183());
 		
         
-    	assignMoreCpLbl.setText(GL0521);
+    	assignMoreCpLbl.setText(i18n.GL0521());
     	assignMoreCpLbl.getElement().setId("spnAssignMoreCpLbl");
-    	assignMoreCpLbl.getElement().setAttribute("alt",GL0521);
-    	assignMoreCpLbl.getElement().setAttribute("title",GL0521);
+    	assignMoreCpLbl.getElement().setAttribute("alt",i18n.GL0521());
+    	assignMoreCpLbl.getElement().setAttribute("title",i18n.GL0521());
            
 		ancClasspageTitle.setText(classpageTitle);
 		ancClasspageTitle.getElement().setId("spnAncClasspageTitle");
 		ancClasspageTitle.getElement().setAttribute("alt",classpageTitle);
 		ancClasspageTitle.getElement().setAttribute("title",classpageTitle);
     	
-		classPageDoneBtn.setText(GL0190);
+		classPageDoneBtn.setText(i18n.GL0190());
 		classPageDoneBtn.getElement().setId("btnClassPageDoneBtn");
-		classPageDoneBtn.getElement().setAttribute("alt",GL0190);
-		classPageDoneBtn.getElement().setAttribute("title",GL0190);
+		classPageDoneBtn.getElement().setAttribute("alt",i18n.GL0190());
+		classPageDoneBtn.getElement().setAttribute("title",i18n.GL0190());
 		
 		ancClasspageTitle.getElement().setAttribute("classpageId", classpageId);
 		cancelButton.getElement().setId("lblCancelButton");

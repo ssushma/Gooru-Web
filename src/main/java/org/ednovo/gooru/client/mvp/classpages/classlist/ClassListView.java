@@ -1047,7 +1047,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 							lblActiveMembers.setVisible(true);
 							lblActiveMembersDesc.setVisible(true);
 							ancActiveListSeeMore.setVisible(false);
-							Label noActiveStudents = new Label(GL1527);
+							Label noActiveStudents = new Label(i18n.GL1527());
 							panelActiveMembersContainter.setVisible(true);
 							noActiveStudents.getElement().addClassName(res.css().noActiveStudents());
 							panelActiveMembersList.add(noActiveStudents);
