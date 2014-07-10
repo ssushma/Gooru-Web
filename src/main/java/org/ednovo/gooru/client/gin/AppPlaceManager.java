@@ -72,7 +72,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 	public AppPlaceManager(EventBus eventBus, TokenFormatter tokenFormatter, @AppDefaultPlace String place) {
 		super(eventBus, tokenFormatter);
 		this.defaultPlaceRequest = new PlaceRequest(place);
-		this.errorPlaceRequest = new PlaceRequest(PlaceTokens.ERROR);
+		this.errorPlaceRequest = new PlaceRequest(PlaceTokens.HOME);
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 
 	@Override
 	public void revealErrorPlace(String invalidHistoryToken) {
-		revealPlace(errorPlaceRequest, false);
+		revealPlace(errorPlaceRequest, true);
 	}
 
 	@Override
