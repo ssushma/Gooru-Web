@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -40,12 +41,14 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class ErrorPopupVc extends Composite implements MessageProperties {
+public class ErrorPopupVc extends Composite{
 
 	private static ErrorPopupVcUiBinder uiBinder = GWT.create(ErrorPopupVcUiBinder.class);
 
 	interface ErrorPopupVcUiBinder extends UiBinder<Widget, ErrorPopupVc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
    
 	@UiField(provided = true)
 	UcCBundle res;
@@ -62,12 +65,12 @@ public class ErrorPopupVc extends Composite implements MessageProperties {
 	public ErrorPopupVc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
-		errorPopupHeaderText.setText(GL0061);
-		dragText.setText(GL1028);
-		questionLabel.setText(GL1029);
-		faqsText.setText(GL1030);
-		okButton.setText(GL0190);
-		cancelButton.setText(GL0142);
+		errorPopupHeaderText.setText(i18n.GL0061());
+		dragText.setText(i18n.GL1028());
+		questionLabel.setText(i18n.GL1029());
+		faqsText.setText(i18n.GL1030());
+		okButton.setText(i18n.GL0190());
+		cancelButton.setText(i18n.GL0142());
 		okButton.addClickHandler(new ClickHandler() {
 
 			@Override

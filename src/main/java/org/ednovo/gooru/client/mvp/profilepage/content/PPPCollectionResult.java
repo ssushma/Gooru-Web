@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.uc.CollectionImageUc;
 import org.ednovo.gooru.client.uc.SeparatorUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -54,12 +55,14 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  * 
  */
 
-public class PPPCollectionResult extends Composite implements MessageProperties {
+public class PPPCollectionResult extends Composite{
 	
 	private static PPPCollectionResultUiBinder uiBinder = GWT.create(PPPCollectionResultUiBinder.class);
 
 	interface PPPCollectionResultUiBinder extends UiBinder<Widget, PPPCollectionResult> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	@UiField
 	Label resourceCountLbl;
@@ -81,13 +84,13 @@ public class PPPCollectionResult extends Composite implements MessageProperties 
 
 	private CollectionItemDo collectionItemDo;
 	
-	private static final String VIEWS =" "+GL1099;
+//	private static final String VIEWS =" "+i18n.GL1099;
 	
 //	private static final String CREATED_BY = "Created by ";
 	
-	private static final String RESOURCES =GL0174;
+//	private static final String RESOURCES =i18n.GL0174;
 	
-	private static final String RESOURCE = " "+GL1110;
+//	private static final String RESOURCE = " "+i18n.GL1110;
 	
 	/**
 	 * Class constructor, creates new instance of PPPCollectionSearchResultWrapperVc and call collection search result setData method
@@ -116,17 +119,17 @@ public class PPPCollectionResult extends Composite implements MessageProperties 
 		//creatorNameLblValue.setText(" "+collectionItemDo.getCreator().getUsernameDisplay());
 		collectionDescriptionHtml.setHTML(collectionItemDo.getDescription());
 		SearchUiUtil.renderMetaData(metaDataPanelFloPanel, collectionItemDo.getCourse(), 30);
-		SearchUiUtil.renderMetaData(metaDataPanelFloPanel, collectionItemDo.getViews() + "", VIEWS);
+		SearchUiUtil.renderMetaData(metaDataPanelFloPanel, collectionItemDo.getViews() + "", " "+i18n.GL1099());
 		metaDataPanelFloPanel.add(new SeparatorUc());
 		collectionImageUc.setUrl(collectionItemDo.getUrl(),collectionItemDo.getResourceTitle());
 //		collectionImageUc.getElement().getStyle().setZIndex(9999);
 		collectionImageUc.setGooruOid(collectionItemDo.getGooruOid());
 		if(collectionItemDo.getResourceCount()==1)
 		{
-			resourceCountLbl.setText(collectionItemDo.getResourceCount() + RESOURCE);
+			resourceCountLbl.setText(collectionItemDo.getResourceCount() +  " "+i18n.GL1110());
 		}
 		else{
-		resourceCountLbl.setText(collectionItemDo.getResourceCount() +" "+RESOURCES);
+		resourceCountLbl.setText(collectionItemDo.getResourceCount() +" "+i18n.GL0174());
 		}
 		SearchUiUtil.renderStandards(standardsFloPanel, collectionItemDo);
 	

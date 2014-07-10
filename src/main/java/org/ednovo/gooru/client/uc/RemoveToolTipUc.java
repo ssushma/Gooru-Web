@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
@@ -33,7 +34,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RemoveToolTipUc extends PopupPanel implements MessageProperties{
+public class RemoveToolTipUc extends PopupPanel{
 	
 	@UiField Label removeText;
 	public interface RemoveToolTipUcUiBinder extends UiBinder<Widget, RemoveToolTipUc>{
@@ -41,9 +42,11 @@ public class RemoveToolTipUc extends PopupPanel implements MessageProperties{
 	}
 	public static RemoveToolTipUcUiBinder uiBinder=GWT.create(RemoveToolTipUcUiBinder.class);
 	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	public RemoveToolTipUc(){
 		
 		setWidget(uiBinder.createAndBindUi(this));
-		removeText.setText(GL0237);
+		removeText.setText(i18n.GL0237());
 	}
 }

@@ -53,7 +53,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PartnerLessonUc extends Composite implements MessageProperties {
+public class PartnerLessonUc extends Composite{
 
 	@UiField HTMLPanel lessonList;
 	@UiField ProfilePageLibraryStyleBundle style;

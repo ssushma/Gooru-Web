@@ -30,6 +30,7 @@ import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -45,7 +46,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProfileUserTagView extends Composite implements MessageProperties {
+public class ProfileUserTagView extends Composite{
 
 	private static ProfileUserTagViewUiBinder uiBinder = GWT
 			.create(ProfileUserTagViewUiBinder.class);
@@ -53,6 +54,8 @@ public class ProfileUserTagView extends Composite implements MessageProperties {
 	interface ProfileUserTagViewUiBinder extends
 			UiBinder<Widget, ProfileUserTagView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	List<UserTagsDo> userTagDo = new ArrayList<UserTagsDo>();
 	
@@ -99,8 +102,8 @@ public class ProfileUserTagView extends Composite implements MessageProperties {
 	}
 	public void setData(){
 		userTagsConatiner.clear();
-		TagTextMessage.setText(GL1915);
-		tagTextMessage.getElement().setInnerHTML(GL1937);
+		TagTextMessage.setText(i18n.GL1915());
+		tagTextMessage.getElement().setInnerHTML(i18n.GL1937());
 		
 		for(int i=0;i<userTagDo.size();i++){
 			ProfileUserTagWidget profileUserTagWidget =new ProfileUserTagWidget(userTagDo.get(i),followingContainer,tagResourceContainer);

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -21,7 +22,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProfilePageFollowersView extends Composite implements MessageProperties {
+public class ProfilePageFollowersView extends Composite{
 
 	private static ProfilePageFollowersViewUiBinder uiBinder = GWT
 			.create(ProfilePageFollowersViewUiBinder.class);
@@ -29,6 +30,9 @@ public class ProfilePageFollowersView extends Composite implements MessageProper
 	interface ProfilePageFollowersViewUiBinder extends
 			UiBinder<Widget, ProfilePageFollowersView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@UiField HTMLPanel followersUserConatiner;
 	List<UserFollowDo> userFollowDo = new ArrayList<UserFollowDo>();
 	@UiField InlineLabel followersTextMessage,followersTextMessageNormal;
@@ -58,9 +62,9 @@ public class ProfilePageFollowersView extends Composite implements MessageProper
 	public void setData()
 	{
 		
-		followersTextMessage.setText(GL1914);
+		followersTextMessage.setText(i18n.GL1914());
 		followersTextMessage.getElement().setAttribute("style", "font-weight:bold");
-		followersTextMessageNormal.setText(GL1914_1);
+		followersTextMessageNormal.setText(i18n.GL1914_1());
 		followersUserConatiner.clear();
 		
 		if(totalHitCount>pageInitialLimit)

@@ -10,6 +10,7 @@ import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -33,7 +34,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PreviewResourceView extends Composite implements HasClickHandlers,MessageProperties{
+public class PreviewResourceView extends Composite implements HasClickHandlers{
 
 	@UiField Image resourceThumbnail;
 	@UiField Label resourceTypeImage,resourceCategory,resourceSourceName,resourceIndex,resourceNumber;
@@ -55,6 +56,7 @@ public class PreviewResourceView extends Composite implements HasClickHandlers,M
 	public PreviewResourceView(){
 		initWidget(uiBinder.createAndBindUi(this));
 	}
+	
 	
 	@UiConstructor
 	public PreviewResourceView(CollectionItemDo collectionItemDo, int itemIndex){
