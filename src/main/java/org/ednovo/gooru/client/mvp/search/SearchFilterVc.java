@@ -36,10 +36,10 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
 import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
-import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionInfoEvent;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
@@ -51,12 +51,12 @@ import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.search.AbstractSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -103,9 +103,11 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  * 
  */
-public class SearchFilterVc extends Composite implements SelectionHandler<SuggestOracle.Suggestion>,MessageProperties {
+public class SearchFilterVc extends Composite implements SelectionHandler<SuggestOracle.Suggestion> {
 
 	private static SearchFilterVcUiBinder uiBinder = GWT.create(SearchFilterVcUiBinder.class);
+	
+	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface SearchFilterVcUiBinder extends UiBinder<Widget, SearchFilterVc> {
 	}
@@ -197,11 +199,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	
 	private Map<String,String> standardCodesMap = new HashMap<String, String>();
 
-	private static final String NO_MATCH_FOUND = GL0723;
+	private static final String NO_MATCH_FOUND = i18n.GL0723();
 	
 	private static final String ALL = "All";
 	
-	private static final String COMMA_SEPARATOR = GL_GRR_COMMA;
+	private static final String COMMA_SEPARATOR = i18n.GL_GRR_COMMA();
 
 	private boolean resourceSearch;
 	
@@ -362,12 +364,12 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		RootPanel.get().addDomHandler(eve1, ClickEvent.getType());
 */
 		
-		sourceSgstBox.getElement().setAttribute("placeHolder", GL1464);
+		sourceSgstBox.getElement().setAttribute("placeHolder", i18n.GL1464());
 		sourceSgstBox.getElement().setId("asSourceSgst");
 		sourceSgstBox.getElement().setAttribute("style","margin-top: 5px;");
 		standardSgstBox.addSelectionHandler(this);
 		aggregatorSgstBox.getElement().setId("asAggregatorSgst");
-		aggregatorSgstBox.getElement().setAttribute("placeHolder", GL1749);
+		aggregatorSgstBox.getElement().setAttribute("placeHolder", i18n.GL1749());
 		aggregatorSgstBox.getElement().setAttribute("style","margin-top: 5px;");
 		
 		BlurHandler blurhander=new BlurHandler() {
@@ -380,23 +382,23 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		};
 		standardSgstBox.addDomHandler(blurhander, BlurEvent.getType());
 		initWidget(uiBinder.createAndBindUi(this));
-		filtersText.setText(GL0719);
-		resourceLinkLbl.setText(GL0174);
-		notifyText.setText(GL0720);
-		collectionLinkLbl.setText(GL0175);
-		categoryPanelUc.setHeaderTitle(GL0721);
-		sourcePanelUc.setHeaderTitle(GL0566);
-		//sourceHelpicon.setText(GL_SPL_QUESTION);
-		sourcesNotFoundLbl.setText(GL0723);
-		authorPanelUc.setHeaderTitle(GL0573);
-		standardPanelUc.setHeaderTitle(GL0724);
-		standardHelpicon.setText(GL_SPL_QUESTION);
-		standardsNotFoundLbl.setText(GL0723);
-		subjectPanelUc.setHeaderTitle(GL0226);
-		gradePanelUc.setHeaderTitle(GL0165);
-		clearAll.setText(GL0725);
+		filtersText.setText(i18n.GL0719());
+		resourceLinkLbl.setText(i18n.GL0174());
+		notifyText.setText(i18n.GL0720());
+		collectionLinkLbl.setText(i18n.GL0175());
+		categoryPanelUc.setHeaderTitle(i18n.GL0721());
+		sourcePanelUc.setHeaderTitle(i18n.GL0566());
+		//sourceHelpicon.setText(i18n.GL_SPL_QUESTION);
+		sourcesNotFoundLbl.setText(i18n.GL0723());
+		authorPanelUc.setHeaderTitle(i18n.GL0573());
+		standardPanelUc.setHeaderTitle(i18n.GL0724());
+		standardHelpicon.setText(i18n.GL_SPL_QUESTION());
+		standardsNotFoundLbl.setText(i18n.GL0723());
+		subjectPanelUc.setHeaderTitle(i18n.GL0226());
+		gradePanelUc.setHeaderTitle(i18n.GL0165());
+		clearAll.setText(i18n.GL0725());
 	
-		aggregatorPanelUc.setHeaderTitle(GL1628+GL_SPL_SEMICOLON);
+		aggregatorPanelUc.setHeaderTitle(i18n.GL1628()+i18n.GL_SPL_SEMICOLON());
 		
 		if (resourceSearch) {
 			sourcePanelUc.setVisible(true);
@@ -411,7 +413,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
-					toolTip = new ToolTip(GL1769);
+					toolTip = new ToolTip(i18n.GL1769());
 					toolTip.getLblLink().setVisible(false);
 					toolTip.getElement().getStyle().setBackgroundColor("transparent");
 					toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -436,7 +438,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
-					toolTip = new ToolTip(GL1768);
+					toolTip = new ToolTip(i18n.GL1768());
 					toolTip.getLblLink().setVisible(false);
 					toolTip.getElement().getStyle().setBackgroundColor("transparent");
 					toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -479,17 +481,17 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		standardsNotFoundLbl.getElement().getStyle().setOpacity(0.0);
 		if(resourceSearch){
-			categoryPanelUc.setHeaderTitle(GL0721);
+			categoryPanelUc.setHeaderTitle(i18n.GL0721());
 			categoryPanelUc.getElement().addClassName("categoryFilterContainer");
 		}else{
-			categoryPanelUc.setHeaderTitle(GL1465);
+			categoryPanelUc.setHeaderTitle(i18n.GL1465());
 		}
 		
 		resourceLinkLbl.getElement().setId("lblResourceLink");
 		collectionLinkLbl.getElement().setId("lblCollectionLink");
 		
-		resourceLinkLbl.setText(GL0174);
-		collectionLinkLbl.setText(GL0175);
+		resourceLinkLbl.setText(i18n.GL0174());
+		collectionLinkLbl.setText(i18n.GL0175());
 		
 	}
 	
@@ -711,7 +713,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	public void onStandardHelpiconClicked(ClickEvent event) {
 		if(!(standardToolTip.getWidgetCount()>0)) {
 			standardtooltipPopUpUc = new DownToolTipUc();
-			standardtooltipPopUpUc.setContent(new HTML(GL0247));
+			standardtooltipPopUpUc.setContent(new HTML(i18n.GL0247()));
 			standardToolTip.add(standardtooltipPopUpUc);
 		}
 		if(standardToolTip.isVisible()) {
@@ -765,10 +767,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				}
 			}
 			if (searchFilterDo.getGradeLevels() != null) {		
-				renderCheckBox(gradePanelUc, "K-4", GL0166);
-				renderCheckBox(gradePanelUc, "5-8", GL0167);
-				renderCheckBox(gradePanelUc, "9-12", GL0168);
-				renderCheckBox(gradePanelUc, "H", GL0169);
+				renderCheckBox(gradePanelUc, "K-4", i18n.GL0166());
+				renderCheckBox(gradePanelUc, "5-8", i18n.GL0167());
+				renderCheckBox(gradePanelUc, "9-12", i18n.GL0168());
+				renderCheckBox(gradePanelUc, "H", i18n.GL0169());
 			}
 			if (searchFilterDo.getSubjects() != null) {
 				for (String subject : searchFilterDo.getSubjects()) {
@@ -794,13 +796,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 /*			imgNotFriendly.getElement().getStyle().setMarginLeft(29, Unit.PX);
 */
 			imgNotFriendly.getElement().getStyle().setCursor(Cursor.POINTER);
-			imgNotFriendly.setAltText(GL0732);
-			imgNotFriendly.setTitle(GL0732);
+			imgNotFriendly.setAltText(i18n.GL0732());
+			imgNotFriendly.setTitle(i18n.GL0732());
 			imgNotFriendly.addMouseOverHandler(new MouseOverHandler() {
 				
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
-					toolTip = new ToolTip(GL0454+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+GL04431);
+					toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
 					
 					toolTip.getElement().getStyle().setBackgroundColor("transparent");
 					toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -830,13 +832,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			oer.getElement().getStyle().setTop(-23, Unit.PX);
 			oer.getElement().getStyle().setPosition(Position.RELATIVE);
 			oer.getElement().getStyle().setCursor(Cursor.POINTER);
-			oer.setAltText(GL0732);
-			oer.setTitle(GL0732);
+			oer.setAltText(i18n.GL0732());
+			oer.setTitle(i18n.GL0732());
 			oer.addMouseOverHandler(new MouseOverHandler() {
 				
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
-					toolTip = new ToolTip(GL1770);
+					toolTip = new ToolTip(i18n.GL1770());
 					toolTip.getLblLink().setVisible(false);
 					toolTip.getElement().getStyle().setBackgroundColor("transparent");
 					toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -1187,7 +1189,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 							AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 						}
 						
-					}, GL1466));
+					}, i18n.GL1466()));
 					filterCodes += COMMA_SEPARATOR + filter;
 				} else {
 					flowPanel.add(new FilterLabelVc(filter));

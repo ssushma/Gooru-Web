@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -66,13 +67,15 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer: 
  */
-public class EditableLabelUc extends Composite implements HasValue<String>,MessageProperties {
+public class EditableLabelUc extends Composite implements HasValue<String> {
 
 	private static EditableLabelUcUiBinder uiBinder = GWT
 			.create(EditableLabelUcUiBinder.class);
 
 	interface EditableLabelUcUiBinder extends UiBinder<Widget, EditableLabelUc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	@UiField
 	protected Label editLabel;
@@ -224,7 +227,7 @@ public class EditableLabelUc extends Composite implements HasValue<String>,Messa
 			if (isHavingBadWords){
 				editTextBox.getElement().getStyle().setBorderColor("orange");
 			}else{
-				new AlertContentUc(GL0061,GL1026+GL_SPL_EXCLAMATION);
+				new AlertContentUc(i18n.GL0061(),i18n.GL1026()+i18n.GL_SPL_EXCLAMATION());
 			}
 			return;
 		}

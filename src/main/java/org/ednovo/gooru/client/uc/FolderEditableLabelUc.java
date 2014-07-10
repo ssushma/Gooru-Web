@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -46,13 +47,14 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class FolderEditableLabelUc extends Composite implements HasValue<String>,MessageProperties {
+public class FolderEditableLabelUc extends Composite implements HasValue<String>{
 
 	private static EditableLabelUc1UiBinder uiBinder = GWT.create(EditableLabelUc1UiBinder.class);
 
 	interface EditableLabelUc1UiBinder extends UiBinder<Widget, FolderEditableLabelUc> {
 	}
-
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@UiField
 	protected Label editLabel;
 
@@ -154,7 +156,7 @@ public class FolderEditableLabelUc extends Composite implements HasValue<String>
 		if(editTextBox.getText().length() > 0){
 			setValue(editTextBox.getText(), true); // fires events, too
 		}else{
-			new AlertContentUc(GL0061,GL1026+GL_SPL_EXCLAMATION);
+			new AlertContentUc(i18n.GL0061(),i18n.GL1026()+i18n.GL_SPL_EXCLAMATION());
 			return;
 		}
 		deckPanel.showWidget(0);

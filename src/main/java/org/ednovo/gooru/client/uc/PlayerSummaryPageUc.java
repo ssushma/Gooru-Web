@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.uc;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -37,7 +38,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PlayerSummaryPageUc extends PopupPanel implements MessageProperties {
+public class PlayerSummaryPageUc extends PopupPanel{
 
 	@UiField
 	Button leaveBtn, stayBtn;
@@ -49,6 +50,8 @@ public class PlayerSummaryPageUc extends PopupPanel implements MessageProperties
 	interface PlayerSummaryPageUcUiBinder extends
 			UiBinder<Widget, PlayerSummaryPageUc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	public PlayerSummaryPageUc() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -58,11 +61,11 @@ public class PlayerSummaryPageUc extends PopupPanel implements MessageProperties
 		this.setGlassStyleName(CollectionCBundle.INSTANCE.css().playerSummaryPageGlassPanel());
 		this.show();
 		this.center();
-		alertMessageHeaderField.setText(GL1037);
-		alertMessageField.setText(GL1038);
-		alertMessageField1.setText(GL1039);
-		leaveBtn.setText(GL1040);
-		stayBtn.setText(GL1041);
+		alertMessageHeaderField.setText(i18n.GL1037());
+		alertMessageField.setText(i18n.GL1038());
+		alertMessageField1.setText(i18n.GL1039());
+		leaveBtn.setText(i18n.GL1040());
+		stayBtn.setText(i18n.GL1041());
 	}
 
 	public Button getLeaveButton() {

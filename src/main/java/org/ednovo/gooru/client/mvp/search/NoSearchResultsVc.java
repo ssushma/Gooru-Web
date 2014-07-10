@@ -32,9 +32,9 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -64,10 +64,12 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public class NoSearchResultsVc extends Composite implements MessageProperties{
+public class NoSearchResultsVc extends Composite {
 
 	private static NoSearchResultsVcUiBinder uiBinder = GWT.create(NoSearchResultsVcUiBinder.class);
 
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	interface NoSearchResultsVcUiBinder extends UiBinder<Widget, NoSearchResultsVc> {
 	}
 	
@@ -99,13 +101,13 @@ public class NoSearchResultsVc extends Composite implements MessageProperties{
 	 */
 	public NoSearchResultsVc() {
 		initWidget(uiBinder.createAndBindUi(this));
-		didnotFindText.setText(GL0711);
-		tryText.setText(GL0712);
-		removeFiltersText.setText(GL0713);
-		checkSpellingText.setText(GL0714);
-		differentKeywordText.setText(GL0715);
-		changeToggleText.setText(GL0716);
-		suggestedresourcesText.setText(GL0717);
+		didnotFindText.setText(i18n.GL0711());
+		tryText.setText(i18n.GL0712());
+		removeFiltersText.setText(i18n.GL0713());
+		checkSpellingText.setText(i18n.GL0714());
+		differentKeywordText.setText(i18n.GL0715());
+		changeToggleText.setText(i18n.GL0716());
+		suggestedresourcesText.setText(i18n.GL0717());
 		getSearchData();
 	}
 

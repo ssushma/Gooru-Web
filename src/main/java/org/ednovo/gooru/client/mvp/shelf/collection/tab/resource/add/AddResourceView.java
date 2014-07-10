@@ -161,17 +161,35 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		super(eventBus);
 		appPopUp = new AppPopUp("type");
 		appPopUp.setContent(uiBinder.createAndBindUi(this));
+		tabViewContainer.getElement().setId("pnlTabViewContainer");
 		tabViewContainer.clear();
 		fromweb.setText(GL0887);
+		fromweb.getElement().setAttribute("alt", GL0887);
+		fromweb.getElement().setAttribute("title", GL0887);
 		fromfile.setText(GL0888);
+		fromfile.getElement().setAttribute("alt", GL0888);
+		fromfile.getElement().setAttribute("title", GL0888);
 		googleDrive.setText(GDRIVE);
-
+		googleDrive.getElement().setAttribute("alt", GDRIVE);
+		googleDrive.getElement().setAttribute("title", GDRIVE);
 		fromwsearch.setText(GL1916);
+		fromwsearch.getElement().setAttribute("alt", GL1916);
+		fromwsearch.getElement().setAttribute("title", GL1916);
 		multiplechoice.setText(GL0305);
+		multiplechoice.getElement().setAttribute("alt", GL0305);
+		multiplechoice.getElement().setAttribute("title", GL0305);
 		truefalase.setText(GL0306);
+		truefalase.getElement().setAttribute("alt", GL0306);
+		truefalase.getElement().setAttribute("title", GL0306);
 		truefalseText.setText(GL0890);
+		truefalseText.getElement().setAttribute("alt", GL0890);
+		truefalseText.getElement().setAttribute("title", GL0890);
 		openended.setText(GL0307);
+		openended.getElement().setAttribute("alt", GL0307);
+		openended.getElement().setAttribute("title", GL0307);
 		multipleAnswerAnc.setText(StringUtil.generateMessage(i18n.GL2017()));
+		multipleAnswerAnc.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL2017()));
+		multipleAnswerAnc.getElement().setAttribute("title", StringUtil.generateMessage(i18n.GL2017()));
 		//GL0748
 		fromweb.getElement().setId("lnkFromWeb");
 		fromfile.getElement().setId("lnkFromFile");
@@ -179,11 +197,29 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		multiplechoice.getElement().setId("lnkMultipleChoice");
 		truefalase.getElement().setId("lnkTrueFalse");
 		openended.getElement().setId("lnkOpenEnded");
+		questionTabButton.getElement().setId("epnlQuestionTabButton");
 		questionTabButton.addClickHandler(new showMultipleChoiceWidget());
+		trueOrFlaseButton.getElement().setId("epnlTrueOrFlaseButton");
 		trueOrFlaseButton.addClickHandler(new showTrueOrFalseWidget());
+		openEndedButton.getElement().setId("epnlOpenEndedButton");
 		openEndedButton.addClickHandler(new showOpenEndedWidget());
+		fillInTheBlankTabButton.getElement().setId("FillInTheBlankTabButton");
 		fillInTheBlankTabButton.addClickHandler(new ShowFillInTheBlanWidget());
+		multipleAnswerTabButton.getElement().setId("epnlMultipleAnswerTabButton");
 		multipleAnswerTabButton.addClickHandler(new ShowMultipleAnswerWidget());
+		titleLbl.getElement().setId("lblTitleLbl");
+		addResourceCloseButton.getElement().setId("lblAddResourceCloseButton");
+		addResourceTabContainer.getElement().setId("pnlAddResourceTabContainer");
+		urlTabButton.getElement().setId("epnlUrlTabButton");
+		myComputerTabButton.getElement().setId("epnlMyComputerTabButton");
+		myDriveButton.getElement().setId("epnlMyDriveButton");
+		googleDrive.getElement().setId("lnkGoogleDrive");
+		searchTabButton.getElement().setId("epnlSearchTabButton");
+		multipleChoiceRadioButton.getElement().setId("rdMultipleChoiceRadioButton");
+		multipleAnswerRadioButton.getElement().setId("rdMultipleAnswerRadioButton");
+		trueOrFalseRadioButton.getElement().setId("rdTrueOrFalseRadioButton");
+		fillInTheBlankRadioButton.getElement().setId("rdFillInTheBlankRadioButton");
+		openEndedRadioButton.getElement().setId("rdOpenEndedRadioButton");
 		urlTabButton.addClickHandler(new ClickHandler() {	
 			@Override
 			public void onClick(ClickEvent event) {
@@ -204,6 +240,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				addUserOwnResourceWidget=new AddUserOwnResourceWidget(getUiHandlers().getParentCollectionDetails());
 				tabViewContainer.add(addUserOwnResourceWidget);
+				tabViewContainer.getElement().setId("pnlTabViewContainer");
 				myComputerTabButton.setStyleName(res.css().buttonSelected());
 				questionTabButton.setStyleName(res.css().buttonDeSelected());
 				searchTabButton.setStyleName(res.css().buttonDeSelected());
@@ -222,6 +259,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				addSearchResourceWidget=new AddSearchResourceWidget(getUiHandlers().getParentCollectionDetails(),appPopUp);
 				tabViewContainer.add(addSearchResourceWidget);
+				tabViewContainer.getElement().setId("pnlTabViewContainer");
 				searchTabButton.setStyleName(res.css().buttonSelected());
 				questionTabButton.setStyleName(res.css().buttonDeSelected());
 				urlTabButton.setStyleName(res.css().buttonDeSelected());
@@ -253,17 +291,20 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		trueOrFlaseButton.getElement().getStyle().setDisplay(Display.NONE);
 		openEndedButton.getElement().getStyle().setDisplay(Display.NONE);
 		fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.NONE);
+		urlTabButton.getElement().setId("epnlUrlTabButton");
 		addWebResourceWidget=new AddWebResourceWidget(getUiHandlers().getParentCollectionDetails(),isGoogleDriveFile,googleDriveItemDo);
 		if(isGoogleDriveFile){
 			addWebResourceWidget.setStyleName(res.css().driveWebContainer());
 			googleDriveContainer.add(addWebResourceWidget);
 		}else{
 			tabViewContainer.add(addWebResourceWidget);
+			tabViewContainer.getElement().setId("pnlTabViewContainer");
 			urlTabButton.setStyleName(res.css().buttonSelected());
 			questionTabButton.setStyleName(res.css().buttonDeSelected());
 			searchTabButton.setStyleName(res.css().buttonDeSelected());
 			myComputerTabButton.setStyleName(res.css().buttonDeSelected());
 			myDriveButton.setStyleName(res.css().buttonDeSelected());
+
 		}
 		
 	}
@@ -287,6 +328,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		tabViewContainer.clear();	
 		addWebResourceWidget=new AddWebResourceWidget(getUiHandlers().getParentCollectionDetails(),false,null);
 		tabViewContainer.add(addWebResourceWidget);
+		tabViewContainer.getElement().setId("pnlTabViewContainer");
 		urlTabButton.setStyleName(res.css().buttonSelected());
 		myComputerTabButton.setStyleName(res.css().buttonSelected());
 		questionTabButton.setStyleName(res.css().buttonDeSelected());
@@ -475,9 +517,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void hidePopup() {
 			closeAddResourcePopup();
-			tabViewContainer.clear();	
+			tabViewContainer.clear();
 			addWebResourceWidget=new AddWebResourceWidget(getUiHandlers().getParentCollectionDetails(),false,null);
 			tabViewContainer.add(addWebResourceWidget);
+			tabViewContainer.getElement().setId("pnlTabViewContainer");
 			urlTabButton.setStyleName(res.css().buttonSelected());
 			questionTabButton.setStyleName(res.css().buttonDeSelected());
 			searchTabButton.setStyleName(res.css().buttonDeSelected());
@@ -787,9 +830,14 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	
 	@Override
 	public void setPopup(String clickType) {
+		titleLbl.getElement().setId("lblTitleLbl");
+		addResourceCloseButton.getElement().setId("lblAddResourceCloseButton");
+		addResourceTabContainer.getElement().setId("pnlAddResourceTabContainer");
 		if(clickType.equalsIgnoreCase("Url")){			
 			tabViewContainer.clear();
 			Window.enableScrolling(false);
+			titleLbl.getElement().setAttribute("alt", GL0886);
+			titleLbl.getElement().setAttribute("title", GL0886);
 			titleLbl.setText(GL0886);
 			urlTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
 			searchTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -802,6 +850,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.NONE);
 			addWebResourceWidget=new AddWebResourceWidget(getUiHandlers().getParentCollectionDetails(),false,null);
 			tabViewContainer.add(addWebResourceWidget);
+			tabViewContainer.getElement().setId("pnlTabViewContainer");
 			urlTabButton.setStyleName(res.css().buttonSelected());
 			questionTabButton.setStyleName(res.css().buttonDeSelected());
 			searchTabButton.setStyleName(res.css().buttonDeSelected());
@@ -811,6 +860,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				Window.enableScrolling(false);
 				tabViewContainer.clear();
 				titleLbl.setText(GL0893);
+				titleLbl.getElement().setAttribute("alt", GL0893);
+				titleLbl.getElement().setAttribute("title", GL0893);
 				addQuestionResourceWidget=new AddQuestionResourceWidget();
 				questionTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
 				trueOrFlaseButton.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -825,6 +876,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				addQuestionResourceWidget.setQuestionType("MC");
 				addQuestionResourceWidget.showMulipleChoice();
 				tabViewContainer.add(addQuestionResourceWidget);
+				tabViewContainer.getElement().setId("pnlTabViewContainer");
 				questionTabButton.setStyleName(res.css().buttonSelected());
 				AppClientFactory.fireEvent(new GetEditPageHeightEvent(appPopUp, false));
 			    urlTabButton.setStyleName(res.css().buttonDeSelected());
@@ -842,6 +894,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				Window.enableScrolling(false);
 				tabViewContainer.clear();
 				titleLbl.setText(GL0304);
+				titleLbl.getElement().setAttribute("alt", GL0304);
+				titleLbl.getElement().setAttribute("title", GL0304);
 				addQuestionResourceWidget=new AddQuestionResourceWidget(collectionItemDo);
 				addQuestionResourceWidget.getHideRightsToolTip();
 				questionTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -854,6 +908,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				searchTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				myDriveButton.getElement().getStyle().setDisplay(Display.NONE);
 				tabViewContainer.add(addQuestionResourceWidget);
+				tabViewContainer.getElement().setId("pnlTabViewContainer");
 				int questionTypeNum=collectionItemDo.getResource().getType();
 				if(questionTypeNum==1){
 					highlightSelectedTab("MC");
@@ -878,9 +933,12 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}else if(clickType.equalsIgnoreCase("Search")) {
 			Window.enableScrolling(true);
 			titleLbl.setText(GL0886);
+			titleLbl.getElement().setAttribute("alt", GL0886);
+			titleLbl.getElement().setAttribute("title", GL0886);
 			tabViewContainer.clear();
 			addSearchResourceWidget=new AddSearchResourceWidget(getUiHandlers().getParentCollectionDetails(),appPopUp);
 			tabViewContainer.add(addSearchResourceWidget);
+			tabViewContainer.getElement().setId("pnlTabViewContainer");
 			searchTabButton.setStyleName(res.css().buttonSelected());
 			questionTabButton.setStyleName(res.css().buttonDeSelected());
 			urlTabButton.setStyleName(res.css().buttonDeSelected());
@@ -1117,7 +1175,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	public void getDriveDetails(GoogleDriveItemDo driveDo){
 		tabViewContainer.clear();
 		tabViewContainer.add(new GoogleDocsResourceView(driveDo));
-		
+		tabViewContainer.getElement().setId("pnlTabViewContainer");
 	}
 
 
@@ -1131,7 +1189,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			
 	         tabViewContainer.add(new GoogleWebResource(result.get(m)));
 		}
-		
+		tabViewContainer.getElement().setId("pnlTabViewContainer");
 	}
 	
 }

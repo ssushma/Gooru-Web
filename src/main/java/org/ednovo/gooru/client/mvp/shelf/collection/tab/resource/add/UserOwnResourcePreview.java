@@ -98,17 +98,54 @@ public abstract class UserOwnResourcePreview extends PopupPanel implements Messa
 	public UserOwnResourcePreview() {
 		setWidget(uiBinder.createAndBindUi(this));
 		areYouSureText.getElement().setInnerHTML(GL0363);
+		areYouSureText.getElement().setId("pnlAreYouSureText");
+		areYouSureText.getElement().setAttribute("alt", GL0363);
+		areYouSureText.getElement().setAttribute("title", GL0363);
 		messageText.setText(GL0928);
+		messageText.getElement().setId("lblMessageText");
+		messageText.getElement().setAttribute("alt", GL0928);
+		messageText.getElement().setAttribute("title", GL0928);
 		uploadedSuccessText.setText(GL0929);
+		uploadedSuccessText.getElement().setId("lblUploadedSuccessText");
+		uploadedSuccessText.getElement().setAttribute("alt",GL0929);
+		uploadedSuccessText.getElement().setAttribute("title", GL0929);
 		titleText.setText(GL0318);
+		titleText.getElement().setId("lblTitleText");
+		titleText.getElement().setAttribute("alt",GL0318);
+		titleText.getElement().setAttribute("title", GL0318);
 		descriptionText.setText(GL0904);
+		descriptionText.getElement().setId("lblDescriptionText");
+		descriptionText.getElement().setAttribute("alt",GL0904);
+		descriptionText.getElement().setAttribute("title", GL0904);
 		categoryText.setText(GL0721);
+		categoryText.getElement().setId("lblCategoryText");
+		categoryText.getElement().setAttribute("alt",GL0721);
+		categoryText.getElement().setAttribute("title", GL0721);
 		thumbnailLbl.setText(GL0911);
+		thumbnailLbl.getElement().setId("lblThumbnailLbl");
+		thumbnailLbl.getElement().setAttribute("alt",GL0911);
+		thumbnailLbl.getElement().setAttribute("title", GL0911);
 		goBackBtn.setText(GL0841);
+		goBackBtn.getElement().setId("bluebtnGoBackBtn");
+		goBackBtn.getElement().setAttribute("alt",GL0841);
+		goBackBtn.getElement().setAttribute("title", GL0841);
 		okButton.setText(GL_GRR_YES);
+		okButton.getElement().setId("bluebtnOkButton");
+		okButton.getElement().setAttribute("alt",GL_GRR_YES);
+		okButton.getElement().setAttribute("title", GL_GRR_YES);
 		lblConfirmAdding.setText(GL0591.toLowerCase());
+		lblConfirmAdding.getElement().setId("lblLblConfirmAdding");
+		lblConfirmAdding.getElement().setAttribute("alt",GL0591.toLowerCase());
+		lblConfirmAdding.getElement().setAttribute("title", GL0591.toLowerCase());
 		lblConfirmAdding.getElement().getStyle().setDisplay(Display.NONE);
+		actionPanel.getElement().setId("pnlActionPanel");
 		actionPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+		previewCloseButton.getElement().setId("lblPreviewCloseButton");
+		filePathValueLbl.getElement().setId("lblFilePathValueLbl");
+		resourceTitleValueLbl.getElement().setId("lblResourceTitleValueLbl");
+		descriptionTxtValueLbl.getElement().setId("lblDescriptionTxtValueLbl");
+		categoryValueLbl.getElement().setId("lblCategoryValueLbl");
+		setThumbnailImage.getElement().setId("imgSetThumbnailImage");
 	}
 	
 	@UiHandler("previewCloseButton")

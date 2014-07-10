@@ -30,10 +30,9 @@ import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.uc.AppPopUp;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -58,10 +57,12 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer: Gooru Team
  */
-public class SentEmailSuccessVc extends Composite implements MessageProperties{
+public class SentEmailSuccessVc extends Composite {
 
 	private static SentEmailSuccessVcUiBinder uiBinder = GWT
 			.create(SentEmailSuccessVcUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface SentEmailSuccessVcUiBinder extends
 	UiBinder<Widget, SentEmailSuccessVc> {
@@ -88,25 +89,25 @@ public class SentEmailSuccessVc extends Composite implements MessageProperties{
 		appPopUp.show();
 		appPopUp.center();
 		
-		emailToFriendText.getElement().setInnerHTML(GL0222);
+		emailToFriendText.getElement().setInnerHTML(i18n.GL0222());
 		emailToFriendText.getElement().setId("pnlEmailToFriendText");
-		emailToFriendText.getElement().setAttribute("alt", GL0222);
-		emailToFriendText.getElement().setAttribute("title", GL0222);
+		emailToFriendText.getElement().setAttribute("alt", i18n.GL0222());
+		emailToFriendText.getElement().setAttribute("title", i18n.GL0222());
 		
-		emailSentText.getElement().setInnerHTML(GL0648);
+		emailSentText.getElement().setInnerHTML(i18n.GL0648());
 		emailSentText.getElement().setId("pnlEmailSentText");
-		emailSentText.getElement().setAttribute("alt", GL0648);
-		emailSentText.getElement().setAttribute("title", GL0648);
+		emailSentText.getElement().setAttribute("alt", i18n.GL0648());
+		emailSentText.getElement().setAttribute("title", i18n.GL0648());
 		
 		toEmailLbl.setText(toEmail);
 		toEmailLbl.getElement().setId("lblToEmailLbl");
 		toEmailLbl.getElement().setAttribute("alt", toEmail);
 		toEmailLbl.getElement().setAttribute("title", toEmail);
 		
-		okLbl.setText(GL0190);
+		okLbl.setText(i18n.GL0190());
 		okLbl.getElement().setId("lblOkLbl");
-		okLbl.getElement().setAttribute("alt", GL0190);
-		okLbl.getElement().setAttribute("title", GL0190);
+		okLbl.getElement().setAttribute("alt", i18n.GL0190());
+		okLbl.getElement().setAttribute("title", i18n.GL0190());
 		
 		Window.enableScrolling(false);
 	}
@@ -139,10 +140,10 @@ public class SentEmailSuccessVc extends Composite implements MessageProperties{
 		toEmailLbl.getElement().setAttribute("alt", desc);
 		toEmailLbl.getElement().setAttribute("title", desc);
 		
-		okLbl.setText(GL0190);
+		okLbl.setText(i18n.GL0190());
 		okLbl.getElement().setId("lblOkLbl");
-		okLbl.getElement().setAttribute("alt", GL0190);
-		okLbl.getElement().setAttribute("title", GL0190);
+		okLbl.getElement().setAttribute("alt", i18n.GL0190());
+		okLbl.getElement().setAttribute("title", i18n.GL0190());
 		
 		Window.enableScrolling(false);
 	}

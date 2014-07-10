@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -61,7 +62,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class TocResourceView extends Composite implements HasClickHandlers,MessageProperties{
+public class TocResourceView extends Composite implements HasClickHandlers{
 
 	@UiField Image resourceThumbnail;
 	@UiField Label resourceTypeImage,resourceIndex,resourceCategory,resourceSourceName;
@@ -79,6 +80,8 @@ public class TocResourceView extends Composite implements HasClickHandlers,Messa
 
 	interface TocResourceViewUiBinder extends UiBinder<Widget, TocResourceView> {
 	}
+	
+
 	
 	public TocResourceView(){
 		initWidget(uiBinder.createAndBindUi(this));

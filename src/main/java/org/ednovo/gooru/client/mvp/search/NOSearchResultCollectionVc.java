@@ -33,8 +33,8 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -67,11 +67,13 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public class NOSearchResultCollectionVc extends Composite implements MessageProperties {
+public class NOSearchResultCollectionVc extends Composite {
 
 	private static NOSearchResultCollectionVcUiBinder uiBinder = GWT
 			.create(NOSearchResultCollectionVcUiBinder.class);
 
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	interface NOSearchResultCollectionVcUiBinder extends
 			UiBinder<Widget, NOSearchResultCollectionVc> {
 	}
@@ -92,16 +94,16 @@ public class NOSearchResultCollectionVc extends Composite implements MessageProp
 	public NOSearchResultCollectionVc() {
 		initWidget(uiBinder.createAndBindUi(this));
 		suggestedCollectionContainer.setVisible(false);
-		btnLibrary.setText(GL0506);
+		btnLibrary.setText(i18n.GL0506());
 		btnLibrary.getElement().getStyle().setMarginLeft(180, Unit.PX);
-		didnotFindText.setText(GL0704);
-		orText.setText(GL0209.toUpperCase());
-		tryTipsText.setText(GL0705);
-		removeFiltersText.setText(GL0706);
-		checkSpellingText.setText(GL0707);
-		differentKeywordText.setText(GL0708);
-		changeToggleText.setText(GL0709);
-		suggestedCollectionsText.setText(GL0710);
+		didnotFindText.setText(i18n.GL0704());
+		orText.setText(i18n.GL0209().toUpperCase());
+		tryTipsText.setText(i18n.GL0705());
+		removeFiltersText.setText(i18n.GL0706());
+		checkSpellingText.setText(i18n.GL0707());
+		differentKeywordText.setText(i18n.GL0708());
+		changeToggleText.setText(i18n.GL0709());
+		suggestedCollectionsText.setText(i18n.GL0710());
 		//getCollectionData();
 	}
 	
