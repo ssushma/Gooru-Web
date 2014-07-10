@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
@@ -62,7 +63,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandlers> implements IsCollectionEndView,MessageProperties{
+public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandlers> implements IsCollectionEndView{
 	
 	@UiField HTMLPanel summaryQuestionsContainer,ftmSummaryPageContainer,collectionSummaryShareButtonImage;
 	
@@ -94,6 +95,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		
 	}
 	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@Inject
 	public CollectionEndView(){
 		setWidget(uiBinder.createAndBindUi(this));
@@ -107,30 +110,30 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		
 		flagButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().collectionplayerEndFlagBlackImage());
 		flagButton.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().collectionplayerEndFlagOrange());
-		flagButton.setText(GL0556);
+		flagButton.setText(i18n.GL0556());
 		flagButton.getElement().setId("btnFlagButton");
-		flagButton.getElement().setAttribute("alt",GL0556);
-		flagButton.getElement().setAttribute("title",GL0556);
+		flagButton.getElement().setAttribute("alt",i18n.GL0556());
+		flagButton.getElement().setAttribute("title",i18n.GL0556());
 		
-		endLabelText.setText(GL0596);
+		endLabelText.setText(i18n.GL0596());
 		endLabelText.getElement().setId("lblEndLabelText");
-		endLabelText.getElement().setAttribute("alt",GL0596);
-		endLabelText.getElement().setAttribute("title",GL0596);
+		endLabelText.getElement().setAttribute("alt",i18n.GL0596());
+		endLabelText.getElement().setAttribute("title",i18n.GL0596());
 		
-		replayText.setText(GL0597);
+		replayText.setText(i18n.GL0597());
 		replayText.getElement().setId("lblReplayText");
-		replayText.getElement().setAttribute("alt",GL0597);
-		replayText.getElement().setAttribute("title",GL0597);
+		replayText.getElement().setAttribute("alt",i18n.GL0597());
+		replayText.getElement().setAttribute("title",i18n.GL0597());
 		
-		shareCollectionText.setText(GL0598);
+		shareCollectionText.setText(i18n.GL0598());
 		shareCollectionText.getElement().setId("lblShareCollectionText");
-		shareCollectionText.getElement().setAttribute("alt",GL0598);
-		shareCollectionText.getElement().setAttribute("title",GL0598);
+		shareCollectionText.getElement().setAttribute("alt",i18n.GL0598());
+		shareCollectionText.getElement().setAttribute("title",i18n.GL0598());
 		
-		saveSummaryText.setText(GL0599);
+		saveSummaryText.setText(i18n.GL0599());
 		saveSummaryText.getElement().setId("lblSaveSummaryText");
-		saveSummaryText.getElement().setAttribute("alt",GL0599);
-		saveSummaryText.getElement().setAttribute("title",GL0599);
+		saveSummaryText.getElement().setAttribute("alt",i18n.GL0599());
+		saveSummaryText.getElement().setAttribute("title",i18n.GL0599());
 		
 		collectionReplayButtonImage.getElement().setId("epnlCollectionReplayButtonImage");
 		collectionSummaryShareButtonImage.getElement().setId("pnlCollectionSummaryShareButtonImage");
@@ -211,7 +214,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		SocialShareWidget swidget= new SocialShareWidget(collectionDo.getGoals(),collectionDo.getThumbnails().getUrl(),"collection") {
 			@Override
 			public void onTwitter() {
-				Window.open("http://twitter.com/intent/tweet?text=" +GL0733+" "+GL_GRR_Hyphen+" "+collectionDo.getTitle().replaceAll("\\+", "%2B") +": " +URL.encodeComponent(originalUrl,true), "_blank", "width=600,height=300");
+				Window.open("http://twitter.com/intent/tweet?text=" +i18n.GL0733()+" "+i18n.GL_GRR_Hyphen()+" "+collectionDo.getTitle().replaceAll("\\+", "%2B") +": " +URL.encodeComponent(originalUrl,true), "_blank", "width=600,height=300");
 			}
 			
 			@Override
@@ -222,7 +225,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			@Override
 			public void onEmail() {
 				String emailSubject="Gooru - "+collectionDo.getTitle();
-				String emailDescription= collectionDo.getTitle()+"<div><br/></div><div>"+originalUrl+"</div><div><br/></div><div>"+GL1429+"</div>";
+				String emailDescription= collectionDo.getTitle()+"<div><br/></div><div>"+originalUrl+"</div><div><br/></div><div>"+i18n.GL1429()+"</div>";
 				 emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){
 					@Override
 					public void sendEmail(String fromEmail, String toEmail,String copyEmail, String subject, String message) {
