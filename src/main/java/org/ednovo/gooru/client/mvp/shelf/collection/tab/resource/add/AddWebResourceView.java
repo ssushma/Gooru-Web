@@ -136,7 +136,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	public HTMLPanel addResourceBtnPanel,loadingPanel,urlTitle,descriptionLabel,videoLabel,interactiveText,websiteText,imagesText,textsText,audioText,urlContianer;//otherText
 
 	@UiField
-	HTMLPanel categorypanel, video, interactive, website,thumbnailText,audio,texts,image,rightsContent;//other
+	HTMLPanel categorypanel, video, interactive, website,thumbnailText,audio,texts,image,rightsContent,errorContainer;//other
 
 	@UiField
 	HTMLPanel resourceTypePanel,educationalUsePanel,momentsOfLearningPanel, resourceDescriptionContainer,buttonsPanel;
@@ -202,7 +202,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			@Override
 			public void keyAction(String text) {
 				text=text.toUpperCase();
-				standardsPreferenceOrganizeToolTip.hide();
+				errorContainer.setVisible(false);
+				//standardsPreferenceOrganizeToolTip.hide();
 				standardSearchDo.setSearchResults(null);
 				boolean standardsPrefDisplayPopup = false;
 				//standardSgstBox.hideSuggestionList();
@@ -213,7 +214,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				}
 				standardSearchDo.setQuery(text);
 				if (text != null && text.trim().length() > 0) {
-					standardsPreferenceOrganizeToolTip.hide();
+					//standardsPreferenceOrganizeToolTip.hide();
+					errorContainer.setVisible(false);
 					if(standardPreflist!=null){
 						for(int count=0; count<standardPreflist.size();count++) {
 							if(text.contains(standardPreflist.get(count))) {
@@ -224,8 +226,11 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 							}
 						}						
 					}
+					
 					if(standardsPrefDisplayPopup){
-						standardsPreferenceOrganizeToolTip.hide();
+					
+						//standardsPreferenceOrganizeToolTip.hide();
+						errorContainer.setVisible(false);
 						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new SimpleAsyncCallback<SearchDo<CodeDo>>() {
 							
 							@Override
@@ -237,12 +242,13 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 						standardSgstBox.showSuggestionList();
 						}
 					else{
+						errorContainer.setVisible(true);
 						standardSgstBox.hideSuggestionList();
 						standardSuggestOracle.clear();
-						standardsPreferenceOrganizeToolTip.show();
+						/*standardsPreferenceOrganizeToolTip.show();
 						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
 						standardsPreferenceOrganizeToolTip.getElement().getStyle().setZIndex(1111);
-						//standardSuggestOracle.add(GL1613);
+			*/			//standardSuggestOracle.add(GL1613);
 					}
 				}
 			}
@@ -257,7 +263,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			@Override
 			public void onBlur(BlurEvent event) {
 				if(standardsPreferenceOrganizeToolTip.isShowing()){
-				standardsPreferenceOrganizeToolTip.hide();
+				//standardsPreferenceOrganizeToolTip.hide();
+					errorContainer.setVisible(false);
 				}
 			}
 		};
@@ -265,6 +272,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		standardSgstBox.addSelectionHandler(this);
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
+		errorContainer.setVisible(false);
+		errorContainer.add(standardsPreferenceOrganizeToolTip);
 		urlTitle.getElement().setInnerHTML(GL0915);
 		urlTitle.getElement().setId("pnlUrlTitle");
 		urlTitle.getElement().setAttribute("alt", GL0915);

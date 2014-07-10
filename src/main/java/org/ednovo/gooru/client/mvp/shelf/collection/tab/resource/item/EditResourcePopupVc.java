@@ -142,7 +142,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 	@UiField Label mandatorymomentsOfLearninglLbl,standardsDefaultText,resourceCategoryLabel,loadingTextLbl,rightsLbl;
 	
-	 @UiField HTMLPanel categorypanel,video,interactive,website,resourceTypePanel,image,texts,audio,resourceFormat,resDescription,urlTextPanel,titleTextPanel,thumbnailLbl,orLbl,refreshLblPanel;//other,
+	 @UiField HTMLPanel categorypanel,video,interactive,website,resourceTypePanel,image,texts,audio,resourceFormat,resDescription,urlTextPanel,titleTextPanel,thumbnailLbl,orLbl,refreshLblPanel,errorContainer;//other,
 	 @UiField CheckBox rightsChkBox;
 	 @UiField Anchor copyRightAnr;
 	 @UiField Anchor termsAndPolicyAnr,privacyAnr;
@@ -203,7 +203,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			@Override
 			public void keyAction(String text) {
 				text=text.toUpperCase();
-				standardsPreferenceOrganizeToolTip.hide();
+				//standardsPreferenceOrganizeToolTip.hide();
+				errorContainer.setVisible(false);
 				standardSearchDo.setSearchResults(null);
 				boolean standardsPrefDisplayPopup = false;
 				standardSgstBox.hideSuggestionList();
@@ -214,7 +215,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				}
 				standardSearchDo.setQuery(text);
 				if (text != null && text.trim().length() > 0) {
-					standardsPreferenceOrganizeToolTip.hide();
+					errorContainer.setVisible(false);
+					//standardsPreferenceOrganizeToolTip.hide();
 					if(standardPreflist!=null){
 						for(int count=0; count<standardPreflist.size();count++) {
 							if(text.contains(standardPreflist.get(count))) {
@@ -227,7 +229,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 					}
 					
 					if(standardsPrefDisplayPopup){
-						standardsPreferenceOrganizeToolTip.hide();
+						//standardsPreferenceOrganizeToolTip.hide();
+						errorContainer.setVisible(false);
 						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new SimpleAsyncCallback<SearchDo<CodeDo>>() {
 							
 							@Override
@@ -240,11 +243,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 						standardSgstBox.showSuggestionList();
 						}
 					else{
+						errorContainer.setVisible(true);
 						standardSgstBox.hideSuggestionList();
 						standardSuggestOracle.clear();
-						standardsPreferenceOrganizeToolTip.show();
+						/*standardsPreferenceOrganizeToolTip.show();
 						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-						standardsPreferenceOrganizeToolTip.getElement().getStyle().setZIndex(1111);
+						standardsPreferenceOrganizeToolTip.getElement().getStyle().setZIndex(1111);*/
 						//standardSuggestOracle.add(i18n.GL1613);
 						
 					}
@@ -261,7 +265,9 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			@Override
 			public void onBlur(BlurEvent event) {
 				if(standardsPreferenceOrganizeToolTip.isShowing()){
-				standardsPreferenceOrganizeToolTip.hide();
+					
+				/*standardsPreferenceOrganizeToolTip.hide();*/
+				errorContainer.setVisible(false);
 				}
 			}
 		};
@@ -271,8 +277,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		// this.getElement().getStyle().setHeight(788, Unit.PX);
 		this.collectionItemDo = collectionItemDo;
 		this.collectionOriginalItemDo = collectionItemDo;
+		
 		setContent(i18n.GL0949(), uiBinder.createAndBindUi(this));
-
+		errorContainer.setVisible(false);
+		errorContainer.add(standardsPreferenceOrganizeToolTip);
 		addResourceBtn.addClickHandler(new AddClickHandler());
 		addResourceBtn.getElement().getStyle().setFloat(Float.LEFT);
 		uploadImageLbl.addClickHandler(new OnEditImageClick());
