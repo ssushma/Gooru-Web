@@ -7,7 +7,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionTabTitleVc;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.BorderStyle;
@@ -28,10 +28,12 @@ import com.google.gwt.user.client.ui.Widget;
  * @author ibc
  *
  */
-public abstract class CollectionAnalyticsUc extends PopupPanel implements MessageProperties {
+public abstract class CollectionAnalyticsUc extends PopupPanel {
 
 	private static CollectionAnalyticsUcUiBinder uiBinder = GWT
 			.create(CollectionAnalyticsUcUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface CollectionAnalyticsUcUiBinder extends
 			UiBinder<Widget, CollectionAnalyticsUc> {
@@ -58,7 +60,7 @@ public abstract class CollectionAnalyticsUc extends PopupPanel implements Messag
 		this.getElement().getStyle().setZIndex(99999);
 		
 		final int height = Window.getClientHeight()-40;
-		analyticsHeaderLbl.setText(GL0831+" "+GL_GRR_Hyphen+" "+collectionName);
+		analyticsHeaderLbl.setText(i18n.GL0831()+" "+i18n.GL_GRR_Hyphen()+" "+collectionName);
 		Window.scrollTo(0, 0);
 				
 		AppClientFactory.getInjector().getAppService().getAnalyticsURL("collection", gooruOid, new SimpleAsyncCallback<String>() {

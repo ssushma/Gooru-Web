@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -42,7 +42,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  * 
  */
-public class AlertMessageUc extends Composite implements MessageProperties {
+public class AlertMessageUc extends Composite {
 
 	public AppPopUp appPopUp;
 
@@ -53,6 +53,8 @@ public class AlertMessageUc extends Composite implements MessageProperties {
 	FlowPanel content;
 
 	private static AlertMessageUcUiBinder uiBinder = GWT.create(AlertMessageUcUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface AlertMessageUcUiBinder extends UiBinder<Widget, AlertMessageUc> {
 	}
@@ -73,8 +75,11 @@ public class AlertMessageUc extends Composite implements MessageProperties {
 		content.add(messageContent);
 		appPopUp.show();
 		appPopUp.center();
-		okButton.setText(GL0190);
+		okButton.setText(i18n.GL0190());
 		okButton.getElement().setId("btnOk");
+		okButton.getElement().setAttribute("alt",i18n.GL0190());
+		okButton.getElement().setAttribute("title",i18n.GL0190());
+		content.getElement().setId("fpnlContent");
 	}
 
 	@UiHandler("okButton")

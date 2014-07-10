@@ -4,7 +4,6 @@
 package org.ednovo.gooru.client.mvp.search;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -12,25 +11,18 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.search.SearchInfoWidget.MouseOutHideToolTip;
-import org.ednovo.gooru.client.mvp.search.SearchInfoWidget.MouseOverShowToolTip;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.ToolTipPopUp;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.util.InfoUtil;
-import org.ednovo.gooru.shared.util.MessageProperties;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -43,10 +35,12 @@ import com.google.gwt.user.client.ui.Widget;
  * @author ibc
  *
  */
-public class CollectionInfo extends Composite implements MessageProperties{
+public class CollectionInfo extends Composite {
 
 	private static CollectionInfoUiBinder uiBinder = GWT
 			.create(CollectionInfoUiBinder.class);
+	
+	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface CollectionInfoUiBinder extends UiBinder<Widget, CollectionInfo> {
 	}
@@ -111,14 +105,14 @@ public class CollectionInfo extends Composite implements MessageProperties{
 
 
 	private void setStaticText() {
-		lblGradeTitle.setText(GL0325+GL_SPL_SEMICOLON);
-		lblStandrads.setText(GL0575+GL_SPL_SEMICOLON);
-		lblLanguage.setText(GL1721+GL_SPL_SEMICOLON);
-		lblDepthKnowledge.setText(GL1693+GL_SPL_SEMICOLON);
-		lblLearningSkills.setText(GL1722+GL_SPL_SEMICOLON);
-		lblAudience.setText(GL1723+GL_SPL_SEMICOLON);
-		lblInstructional.setText(GL1724+GL_SPL_SEMICOLON);
-    	lblOer.setText(GL1834+GL_SPL_SEMICOLON);
+		lblGradeTitle.setText(i18n.GL0325()+i18n.GL_SPL_SEMICOLON());
+		lblStandrads.setText(i18n.GL0575()+i18n.GL_SPL_SEMICOLON());
+		lblLanguage.setText(i18n.GL1721()+i18n.GL_SPL_SEMICOLON());
+		lblDepthKnowledge.setText(i18n.GL1693()+i18n.GL_SPL_SEMICOLON());
+		lblLearningSkills.setText(i18n.GL1722()+i18n.GL_SPL_SEMICOLON());
+		lblAudience.setText(i18n.GL1723()+i18n.GL_SPL_SEMICOLON());
+		lblInstructional.setText(i18n.GL1724()+i18n.GL_SPL_SEMICOLON());
+    	lblOer.setText(i18n.GL1834()+i18n.GL_SPL_SEMICOLON());
 	}
 
 
@@ -166,7 +160,7 @@ public class CollectionInfo extends Composite implements MessageProperties{
 			gradesPanel.setVisible(true);
 		}else{
 			gradesPanel.setVisible(false);
-			//this.gradesText.setText(GL0977);
+			//this.gradesText.setText(i18n.GL0977());
 		}
 	}
 

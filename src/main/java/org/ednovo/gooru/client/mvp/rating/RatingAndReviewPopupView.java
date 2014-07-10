@@ -26,21 +26,16 @@ package org.ednovo.gooru.client.mvp.rating;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
-import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
-import org.ednovo.gooru.shared.util.DOMUtils;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -66,7 +61,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
-public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndReviewPopupUiHandlers> implements IsRatingAndReviewPopupView,MessageProperties{
+public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndReviewPopupUiHandlers> implements IsRatingAndReviewPopupView{
 
 	public PopupPanel appPopUp =new PopupPanel();
 
@@ -98,6 +93,8 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	private RatingWidgetView ratingWidgetView= new RatingWidgetView();
 
 	private static ResourceNarrationViewUiBinder uiBinder = GWT.create(ResourceNarrationViewUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface ResourceNarrationViewUiBinder extends UiBinder<Widget, RatingAndReviewPopupView> {
 
@@ -148,7 +145,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		this.gooruOid = gooruOid;
 		this.createrName = createrName;
 		userRatingContainer.setVisible(false);
-		lblResourceTitle.setHTML(GL1840+" "+removeHtmlTags(resourceTitle));
+		lblResourceTitle.setHTML(i18n.GL1840()+" "+removeHtmlTags(resourceTitle));
 		setStaticText();
 		clearContainer();
 		getAverageRatingForContent(gooruOid);
@@ -160,15 +157,15 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	}
 
 	private void setStaticText() {
-		excellentLbl.setText(GL1842);
-		veryGoodLbl.setText(GL1843);
-		goodLbl.setText(GL1844);
-		fairLbl.setText(GL1845);
-		poorLbl.setText(GL1846);
-		avgLbl.setText(GL1848);
-		rateResourceBtn.setText(GL1849);
-		ratingDistributionLbl.setText(GL1841);
-		rateMsg.setText(GL1992);
+		excellentLbl.setText(i18n.GL1842());
+		veryGoodLbl.setText(i18n.GL1843());
+		goodLbl.setText(i18n.GL1844());
+		fairLbl.setText(i18n.GL1845());
+		poorLbl.setText(i18n.GL1846());
+		avgLbl.setText(i18n.GL1848());
+		rateResourceBtn.setText(i18n.GL1849());
+		ratingDistributionLbl.setText(i18n.GL1841());
+		rateMsg.setText(i18n.GL1992());
 	}
 
 	public void getUserRatingsAndReviews(String resourceId)

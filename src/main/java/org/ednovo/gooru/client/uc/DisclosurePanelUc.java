@@ -27,7 +27,7 @@
  */
 package org.ednovo.gooru.client.uc;
 
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -48,9 +48,11 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  * 
  */
-public class DisclosurePanelUc extends Composite implements ClickHandler,MessageProperties {
+public class DisclosurePanelUc extends Composite implements ClickHandler {
 
 	private static DisclosurePanelUcUiBinder uiBinder = GWT.create(DisclosurePanelUcUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface DisclosurePanelUcUiBinder extends UiBinder<Widget, DisclosurePanelUc> {
 	}
@@ -82,7 +84,7 @@ public class DisclosurePanelUc extends Composite implements ClickHandler,Message
 	public DisclosurePanelUc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
-		titleImg.setAltText(GL1023);
+		titleImg.setAltText(i18n.GL1023());
 		titleImg.setUrl("images/Collection-Search/dropdown-arrow-active.png");
 		headerPanel.addClickHandler(this);
 	}
