@@ -86,7 +86,7 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 	protected FocusPanel focusPanel;
 	boolean emailAvailable;
 	protected String text;
-	private static final String EMAIL = i18n.GL0212.toLowerCase();
+//	private static final String EMAIL = i18n.GL0212.toLowerCase();
 	@UiField(provided = true)
 	UcCBundle res;
 	public SettingEmailEditLabelUc() {
@@ -147,14 +147,14 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 										}else {
 											
 											errorLabel.setVisible(true);
-											errorLabel.setText(StringUtil.generateMessage(i18n.GL0082, EMAIL));
+											errorLabel.setText(StringUtil.generateMessage(i18n.GL0082(), i18n.GL0212().toLowerCase()));
 												return;
 											
 											
 										}
 										if ((getText() != null && text.trim().length() > 0)) {
 											if(emailAvailable){
-											errorLabel.setText(StringUtil.generateMessage(i18n.GL0428, EMAIL));	
+											errorLabel.setText(StringUtil.generateMessage(i18n.GL0428(), i18n.GL0212().toLowerCase()));	
 											errorLabel.setVisible(true);
 											}
 											if(!emailAvailable){
@@ -256,13 +256,13 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 		Boolean hasvalidData = editTextBox.getText().matches(EMAIL_REGEX);
 		
 		if ((editTextBox.getText() != null && !editTextBox.getText().isEmpty()) && !hasvalidData) {
-			errorLabel.setText(StringUtil.generateMessage(i18n.GL0067(), EMAIL));
+			errorLabel.setText(StringUtil.generateMessage(i18n.GL0067(), i18n.GL0212().toLowerCase()));
 			errorLabel.setVisible(true);
 			isValid = false;
 		}	
 		if (editTextBox.getText() == null || editTextBox.getText().isEmpty() || editTextBox.getText().trim().equals(""))
 		 { 
-			errorLabel.setText(StringUtil.generateMessage(i18n.GL0082(), EMAIL));
+			errorLabel.setText(StringUtil.generateMessage(i18n.GL0082(), i18n.GL0212().toLowerCase()));
 			errorLabel.setVisible(true);
 			editTextBox.addStyleName(RegisterCBundle.INSTANCE.css().errorBoxStyle());
 			isValid = false;
