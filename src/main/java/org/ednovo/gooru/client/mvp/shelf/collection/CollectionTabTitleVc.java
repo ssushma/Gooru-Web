@@ -65,6 +65,9 @@ public class CollectionTabTitleVc extends FocusPanel {
 	 */
 	public CollectionTabTitleVc() {
 		setWidget(uiBinder.createAndBindUi(this));
+		wrapperFloPanel.getElement().setId("fpnlWrapperFloPanel");
+		imageSimPanel.getElement().setId("spnlImageSimPanel");
+		labelLbl.getElement().setId("lblLabelLbl");
 	}
 
 	/** 
@@ -110,6 +113,8 @@ public class CollectionTabTitleVc extends FocusPanel {
 */			wrapperFloPanel.getElement().getStyle().setPaddingBottom(9.0, Unit.PX);
 		}
 		labelLbl.setText(label);
+		labelLbl.getElement().setAttribute("alt",label);
+		labelLbl.getElement().setAttribute("title",label);
 	}
 
 	public FlowPanel getWrapperFloPanel() {

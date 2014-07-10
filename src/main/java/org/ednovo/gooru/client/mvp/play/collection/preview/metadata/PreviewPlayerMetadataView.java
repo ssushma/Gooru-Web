@@ -158,8 +158,20 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		setWidget(uiBinder.createAndBindUi(this));
 		SearchResultWrapperCBundle.INSTANCE.css().ensureInjected();
 		loginMessagingText.setText(GL0568);
+		loginMessagingText.getElement().setId("lblLoginMessagingText");
+		loginMessagingText.getElement().setAttribute("alt",GL0568);
+		loginMessagingText.getElement().setAttribute("title",GL0568);
+		
 		orText.setText(GL0209);
+		orText.getElement().setId("lblOrText");
+		orText.getElement().setAttribute("alt",GL0209);
+		orText.getElement().setAttribute("title",GL0209);
+		
 		toCommentText.setText(" "+GL0569);
+		toCommentText.getElement().setId("lblToCommentText");
+		toCommentText.getElement().setAttribute("alt",GL0569);
+		toCommentText.getElement().setAttribute("title",GL0569);
+		
 		loginMessagingText.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().toCommentTextPreviewPlayer());
 		orText.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().toCommentTextPreviewPlayer());
 		toCommentText.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().toCommentTextPreviewPlayer());
@@ -234,7 +246,9 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			{
 				authorPanel.getElement().getStyle().setHeight(100, Unit.PX);
 			}
-				teacherTipLabel.setText(""+collectionDo.getKeyPoints()+"");			
+				teacherTipLabel.setText(""+collectionDo.getKeyPoints()+"");		
+				teacherTipLabel.getElement().setAttribute("alt",""+collectionDo.getKeyPoints()+"");
+				teacherTipLabel.getElement().setAttribute("title",""+collectionDo.getKeyPoints()+"");
 		}
 	}
 	
@@ -263,31 +277,140 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 
 	public void setLabelAndIds() {
 		seeMoreButton.setText(GL0508);
+		seeMoreButton.getElement().setId("lblSeeMoreButton");
+		seeMoreButton.getElement().setAttribute("alt",GL0508);
+		seeMoreButton.getElement().setAttribute("title",GL0508);
+		
 //		loginMessaging.setTitle(GL0568);
 		loginUrl.setText(GL0187.toLowerCase());
+		loginUrl.getElement().setId("lnkLoginUrl");
+		loginUrl.getElement().setAttribute("alt",GL0187.toLowerCase());
+		loginUrl.getElement().setAttribute("title",GL0187.toLowerCase());
+		
 		signupUrl.setText(GL0186.toLowerCase());
+		signupUrl.getElement().setId("lnkSignupUrl");
+		signupUrl.getElement().setAttribute("alt",GL0186.toLowerCase());
+		signupUrl.getElement().setAttribute("title",GL0186.toLowerCase());
+		
 		successPostMsg.setText(GL0570);
+		successPostMsg.getElement().setId("lblSuccessPostMsg");
+		successPostMsg.getElement().setAttribute("alt",GL0570);
+		successPostMsg.getElement().setAttribute("title",GL0570);
+		
 		postCommentBtn.setText(GL0571);
+		postCommentBtn.getElement().setId("btnPostCommentBtn");
+		postCommentBtn.getElement().setAttribute("alt",GL0571);
+		postCommentBtn.getElement().setAttribute("title",GL0571);
+		
 		postCommentCancel.setText(GL0142);
+		postCommentCancel.getElement().setId("btnPostCommentCancel");
+		postCommentCancel.getElement().setAttribute("alt",GL0142);
+		postCommentCancel.getElement().setAttribute("title",GL0142);
+		
 		characterLimit.setText(GL0143);
+		characterLimit.getElement().setId("lblCharacterLimit");
+		characterLimit.getElement().setAttribute("alt",GL0143);
+		characterLimit.getElement().setAttribute("title",GL0143);
+		
 		lblWhatsNext.setText(GL0432);
+		lblWhatsNext.getElement().setId("lblWhatsNext");
+		lblWhatsNext.getElement().setAttribute("alt",GL0432);
+		lblWhatsNext.getElement().setAttribute("title",GL0432);
+		
 		lblSeeOtherRelatedConcepts.setText(GL0572 + GL_SPL_SEMICOLON);
+		lblSeeOtherRelatedConcepts.getElement().setId("lblSeeOtherRelatedConcepts");
+		lblSeeOtherRelatedConcepts.getElement().setAttribute("alt",GL0572);
+		lblSeeOtherRelatedConcepts.getElement().setAttribute("title",GL0572);
+		
 		lblAuthor.setText(GL0573);
+		lblAuthor.getElement().setId("lblAuthor");
+		lblAuthor.getElement().setAttribute("alt",GL0573);
+		lblAuthor.getElement().setAttribute("title",GL0573);
+		
 		lblCourse.setText(GL0574);
+		lblCourse.getElement().setId("lblCourse");
+		lblCourse.getElement().setAttribute("alt",GL0574);
+		lblCourse.getElement().setAttribute("title",GL0574);
+		
 		lblStandards.setText(GL0575);
+		lblStandards.getElement().setId("lblStandards");
+		lblStandards.getElement().setAttribute("alt",GL0575);
+		lblStandards.getElement().setAttribute("title",GL0575);
+		
 		lblRelatedConcepts.setText(GL0576);
+		lblRelatedConcepts.getElement().setId("lblRelatedConcepts");
+		lblRelatedConcepts.getElement().setAttribute("alt",GL0576);
+		lblRelatedConcepts.getElement().setAttribute("title",GL0576);
 		
 		postCommentBtn.setEnabled(false);
 		previewFlagButton.setText(GL0556);
+		previewFlagButton.getElement().setId("btnPreviewFlagButton");
+		previewFlagButton.getElement().setAttribute("alt",GL0556);
+		previewFlagButton.getElement().setAttribute("title",GL0556);
 		previewFlagButton.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
 		previewFlagButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
 		//added for 6.2 release
 		lbllanguageObjectiveText.setText(GL1721);
-		lbldepthOfKnowledgeText.setText(GL1693);
-		lbllearningAndInnovationText.setText(GL1722);
-		lblAudienceText.setText(GL1723);
-		lblInstructionalmethodText.setText(GL1724);
+		lbllanguageObjectiveText.getElement().setId("lbllanguageObjectiveText");
+		lbllanguageObjectiveText.getElement().setAttribute("alt",GL1721);
+		lbllanguageObjectiveText.getElement().setAttribute("title",GL1721);
 		
+		lbldepthOfKnowledgeText.setText(GL1693);
+		lbldepthOfKnowledgeText.getElement().setId("lbldepthOfKnowledgeText");
+		lbldepthOfKnowledgeText.getElement().setAttribute("alt",GL1693);
+		lbldepthOfKnowledgeText.getElement().setAttribute("title",GL1693);
+		
+		lbllearningAndInnovationText.setText(GL1722);
+		lbllearningAndInnovationText.getElement().setId("lbllearningAndInnovationText");
+		lbllearningAndInnovationText.getElement().setAttribute("alt",GL1722);
+		lbllearningAndInnovationText.getElement().setAttribute("title",GL1722);
+		
+		lblAudienceText.setText(GL1723);
+		lblAudienceText.getElement().setId("lblAudienceText");
+		lblAudienceText.getElement().setAttribute("alt",GL1723);
+		lblAudienceText.getElement().setAttribute("title",GL1723);
+		
+		lblInstructionalmethodText.setText(GL1724);
+		lblInstructionalmethodText.getElement().setId("lblInstructionalmethodText");
+		lblInstructionalmethodText.getElement().setAttribute("alt",GL1724);
+		lblInstructionalmethodText.getElement().setAttribute("title",GL1724);
+		
+		
+		mainPlayerContainer.getElement().setId("fpnlMainPlayerContainer");
+		metadataContainer.getElement().setId("fpnlMetadataContainer");
+		commentCount.getElement().setId("lblCommentCount");
+		commentsContainer.getElement().setId("vpnlCommentsContainer");
+		seeMoreButton.getElement().setId("lblSeeMoreButton");
+		noCommentsLbl.getElement().setId("lblNoCommentsLbl");
+		addComment.getElement().setId("pnlAddComment");
+		userPhoto.getElement().setId("imgUserPhoto");
+		commentField.getElement().setId("tatCommentField");
+		whatNextPanel.getElement().setId("pnlWhatNextPanel");
+		relatedConceptsEndPage.getElement().setId("pnlRelatedConceptsEndPage");
+		authorPanel.getElement().setId("pnlAuthorPanel");
+		profileThumbnailImage.getElement().setId("imgProfileThumbnailImage");
+		teacherTipLabel.getElement().setId("lblTeacherTipLabel");
+		userNameLabel.getElement().setId("lblUserNameLabel");
+		teamContainer.getElement().setId("fpnlTeamContainer");
+		courseSection.getElement().setId("pnlCourseSection");
+		courseTitle.getElement().setId("fpnlCourseTitle");
+		standardSection.getElement().setId("pnlStandardSection");
+		standardsContainer.getElement().setId("fpnlStandardsContainer");
+		viewsCountLabel.getElement().setId("lblViewsCountLabel");
+		languageObjectiveContainer.getElement().setId("pnlLanguageObjectiveContainer");
+		lbllanguageObjective.getElement().setId("spnLbllanguageObjective");
+		seeMoreAnchor.getElement().setId("lnkSeeMoreAnchor");
+		lbllanguageObjectiveAll.getElement().setId("spnLbllanguageObjectiveAll");
+		depthOfKnowledgeContainer.getElement().setId("pnlDepthOfKnowledgeContainer");
+		depthOfKnowledgePanel.getElement().setId("pnlDepthOfKnowledgePanel");
+		learningAndInnovationSkillsContainer.getElement().setId("pnlLearningAndInnovationSkillsContainer");
+		learningAndInnovationSkillPanel.getElement().setId("pnlLearningAndInnovationSkillPanel");
+		audienceContainer.getElement().setId("pnlAudienceContainer");
+		audiencePanel.getElement().setId("pnlAudiencePanel");
+		InstructionalmethodContainer.getElement().setId("pnlInstructionalmethodContainer");
+		instructionalmethodPanel.getElement().setId("pnlInstructionalmethodPanel");
+		homePageConceptsPanel.getElement().setId("pnlHomePageConceptsPanel");
+		relatedConceptsCoverPage.getElement().setId("pnlRelatedConceptsCoverPage");
 	}
 	
 	public void setUserName(String userName){
@@ -305,13 +428,19 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 					usernameAnchor.setHref(token);
 				}
 				usernameAnchor.setText(userName);
+				usernameAnchor.getElement().setAttribute("alt",userName);
+				usernameAnchor.getElement().setAttribute("title",userName);
 				usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
 				usernameAnchor.setTarget("_blank");
 				userNameLabel.setText("");
+				userNameLabel.getElement().setAttribute("alt","");
+				userNameLabel.getElement().setAttribute("title","");
 				userNameLabel.getElement().appendChild(usernameAnchor.getElement());
 			}
 			else{
 				userNameLabel.setText(userName);
+				userNameLabel.getElement().setAttribute("alt",userName);
+				userNameLabel.getElement().setAttribute("title",userName);
 			}
 		}
 	}
@@ -326,6 +455,8 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	public void setViewCount(String viewCount){
 		String viewsText=Integer.parseInt(viewCount)==1?viewCount+" "+GL1428:viewCount+" "+GL0934;
 		viewsCountLabel.setText(viewsText);
+		viewsCountLabel.getElement().setAttribute("alt",viewsText);
+		viewsCountLabel.getElement().setAttribute("title",viewsText);
 	}
 	public void renderCourseInfo(List<String> courseInfo){
 		courseTitle.clear();
@@ -348,8 +479,14 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	}
 	public void resetMetadataFields(){
 		userNameLabel.setText("");
+		userNameLabel.getElement().setAttribute("alt","");
+		userNameLabel.getElement().setAttribute("title","");
 		viewsCountLabel.setText("");
+		viewsCountLabel.getElement().setAttribute("alt","");
+		viewsCountLabel.getElement().setAttribute("title","");
 		commentField.setText("");
+		commentField.getElement().setAttribute("alt","");
+		commentField.getElement().setAttribute("title","");
 		commentField.setVisible(false);
 		loginMessaging.setVisible(true);
 		modifyEditControls(false);
@@ -373,6 +510,8 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		anchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
 		anchor.setTarget("_blank");
 		userNameLabel.setText("");
+		userNameLabel.getElement().setAttribute("alt","");
+		userNameLabel.getElement().setAttribute("title","");
 		userNameLabel.getElement().appendChild(anchor.getElement());
 	}
 	public void renderStandards(FlowPanel standardsContainer, List<Map<String,String>> standardsList) {
@@ -607,6 +746,8 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 						if (value){
 							commentField.getElement().getStyle().setBorderColor("orange");
 							characterLimit.setText(GL0554);
+							characterLimit.getElement().setAttribute("alt",GL0554);
+							characterLimit.getElement().setAttribute("title",GL0554);
 							characterLimit.setVisible(true);
 						}else{
 							commentField.getElement().getStyle().clearBackgroundColor();
@@ -616,7 +757,9 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 							getUiHandlers().createCommentForCollection(collectionDo.getGooruOid(), commentField.getText());
 							
 							commentField.setText("");
-							characterLimit.setVisible(false);
+							commentField.getElement().setAttribute("alt","");
+							commentField.getElement().setAttribute("title","");
+							commentField.setVisible(false);
 							modifyEditControls(false);
 							displaySuccessMsg(true);
 						}
@@ -625,6 +768,8 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			}
 		}else{
 			commentField.setText("");
+			commentField.getElement().setAttribute("alt","");
+			commentField.getElement().setAttribute("title","");
 			characterLimit.setVisible(false);
 			modifyEditControls(false);
 		}
@@ -687,6 +832,8 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 						if (value){
 							commentField.getElement().getStyle().setBorderColor("orange");
 							characterLimit.setText(GL0554);
+							characterLimit.getElement().setAttribute("alt",GL0554);
+							characterLimit.getElement().setAttribute("title",GL0554);
 							characterLimit.setVisible(true);
 						}else{
 							commentField.getElement().getStyle().clearBackgroundColor();
@@ -748,7 +895,11 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		public void onKeyUp(KeyUpEvent event) {
 			if(commentField.getText().length()>415) {
 				commentField.setText(commentField.getText().substring(0,415));
+				commentField.getElement().setAttribute("alt",commentField.getText().substring(0,415));
+				commentField.getElement().setAttribute("title",commentField.getText().substring(0,415));
 				characterLimit.setText(GL0143);
+				characterLimit.getElement().setAttribute("alt",GL0143);
+				characterLimit.getElement().setAttribute("title",GL0143);
 				characterLimit.setVisible(true);
 			} else {
 				if(commentField.getText().trim().length()==0){
@@ -919,6 +1070,8 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	private void setCommentsText(int commentIncrement) {
 		totalCommentCount+=commentIncrement;
 		commentCount.setText(totalCommentCount+COMMENTS_LBL);
+		commentCount.getElement().setAttribute("alt",totalCommentCount+COMMENTS_LBL);
+		commentCount.getElement().setAttribute("title",totalCommentCount+COMMENTS_LBL);
 	}
 	
 	/**
@@ -1187,14 +1340,20 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			seeMoreAnchor.getElement().setAttribute("style", "float:right;");
 			if(languageObjective.length()>=200){
 				seeMoreAnchor.setText(GL1728);	
+				seeMoreAnchor.getElement().setAttribute("alt",GL1728);
+				seeMoreAnchor.getElement().setAttribute("title",GL1728);
 				seeMoreAnchor.setVisible(true);
 				lbllanguageObjective.setText(languageObjective.substring(0,200));
+				lbllanguageObjective.getElement().setAttribute("alt",languageObjective.substring(0,200));
+				lbllanguageObjective.getElement().setAttribute("title",languageObjective.substring(0,200));
 				
 			}
 			else
 			{
 				seeMoreAnchor.setVisible(false);
 				lbllanguageObjective.setText(languageObjective);
+				lbllanguageObjective.getElement().setAttribute("alt",languageObjective);
+				lbllanguageObjective.getElement().setAttribute("title",languageObjective);
 			}
 			
 		}
@@ -1213,6 +1372,8 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		lbllanguageObjective.setText("");
 		seeMoreAnchor.setVisible(false);
 		lbllanguageObjective.setText(languageObjectiveValue);
+		lbllanguageObjective.getElement().setAttribute("alt",languageObjectiveValue);
+		lbllanguageObjective.getElement().setAttribute("title",languageObjectiveValue);
 	}
 	
 	public static void onClosingAndriodorIpaddiv()

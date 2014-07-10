@@ -175,10 +175,29 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		//emoticsContainer.addMouseOverHandler(new OnEmoticsMouseOver());
 		//emoticsContainer.addMouseOutHandler(new OnEmoticsMouseOut());
 		reactionToolTipOne.setText(GL0581); 
+		reactionToolTipOne.getElement().setId("lblReactionToolTipOne");
+		reactionToolTipOne.getElement().setAttribute("alt",GL0581);
+		reactionToolTipOne.getElement().setAttribute("title",GL0581);
+		
 		reactionToolTipTwo.setText(GL0582); 
+		reactionToolTipTwo.getElement().setId("lblReactionToolTipTwo");
+		reactionToolTipTwo.getElement().setAttribute("alt",GL0582);
+		reactionToolTipTwo.getElement().setAttribute("title",GL0582);
+		
 		reactionToolTipThree.setText(GL0583); 
+		reactionToolTipThree.getElement().setId("lblReactionToolTipThree");
+		reactionToolTipThree.getElement().setAttribute("alt",GL0583);
+		reactionToolTipThree.getElement().setAttribute("title",GL0583);
+		
 		reactionToolTipFour.setText(GL0584); 
+		reactionToolTipFour.getElement().setId("lblReactionToolTipFour");
+		reactionToolTipFour.getElement().setAttribute("alt",GL0584);
+		reactionToolTipFour.getElement().setAttribute("title",GL0584);
+		
 		reactionToolTipFive.setText(GL0585); 
+		reactionToolTipFive.getElement().setId("lblReactionToolTipFive");
+		reactionToolTipFive.getElement().setAttribute("alt",GL0585);
+		reactionToolTipFive.getElement().setAttribute("title",GL0585);
 		
 		/*rating1 = new SimpleRadioButton("rating");
 		rating2 = new SimpleRadioButton("rating");
@@ -189,6 +208,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 //		starValue.setVisible(false);
 		starValue.setVisible(true);
 		starValue.setText(GL1879);
+		starValue.getElement().setId("lblStarValue");
+		starValue.getElement().setAttribute("alt",GL1879);
+		starValue.getElement().setAttribute("title",GL1879);
 		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			emoticsContainer.removeFromParent();
@@ -240,6 +262,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			four_star.addMouseOutHandler(new OnStarMouseOut(FOUR_STAR));
 			five_star.addMouseOutHandler(new OnStarMouseOut(FIVE_STAR));
 		
+			setId();
 	}
 
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
@@ -253,8 +276,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 		if(collectionItemDo.getResource().getTitle()!=null){
 			resourceTitleLbl.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
+			resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
+			resourceTitleLbl.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 		}else{
 			resourceTitleLbl.setHTML("");
+			resourceTitleLbl.getElement().setAttribute("alt","");
+			resourceTitleLbl.getElement().setAttribute("title","");
 		}
 		getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
 		if(collectionItemDo.getResource().getResourceSource()!=null){
@@ -321,8 +348,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			if(collectionItemDo.getResource().getTitle()!=null){
 				int sequenceNumber=collectionItemDo.getItemSequence();
 				resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
+				resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
+				resourceTitleLbl.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			}else{
 				resourceTitleLbl.setHTML("");
+				resourceTitleLbl.getElement().setAttribute("alt","");
+				resourceTitleLbl.getElement().setAttribute("title","");
 			}
 			getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
 			if(collectionItemDo.getResource().getResourceSource()!=null){
@@ -1331,6 +1362,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					clearAllStars();
 					one_star.getElement().addClassName(FILLED_BLUE);
 					mouseOverStarValue.setText(POOR);
+					mouseOverStarValue.getElement().setAttribute("alt",POOR);
+					mouseOverStarValue.getElement().setAttribute("title",POOR);
 				}else{
 					starValue.setVisible(true);
 				}
@@ -1340,6 +1373,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					one_star.getElement().addClassName(FILLED_BLUE);
 					two_star.getElement().addClassName(FILLED_BLUE);
 					mouseOverStarValue.setText(FAIR);
+					mouseOverStarValue.getElement().setAttribute("alt",FAIR);
+					mouseOverStarValue.getElement().setAttribute("title",FAIR);
 				}else{
 					starValue.setVisible(true);
 				}
@@ -1350,6 +1385,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					two_star.getElement().addClassName(FILLED_BLUE);
 					three_star.getElement().addClassName(FILLED_BLUE);
 					mouseOverStarValue.setText(GOOD);
+					mouseOverStarValue.getElement().setAttribute("alt",GOOD);
+					mouseOverStarValue.getElement().setAttribute("title",GOOD);
 				}else{
 					starValue.setVisible(true);
 				}
@@ -1361,6 +1398,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					three_star.getElement().addClassName(FILLED_BLUE);
 					four_star.getElement().addClassName(FILLED_BLUE);
 					mouseOverStarValue.setText(VERY_GOOD);
+					mouseOverStarValue.getElement().setAttribute("alt",VERY_GOOD);
+					mouseOverStarValue.getElement().setAttribute("title",VERY_GOOD);
 				}else{
 					starValue.setVisible(true);
 				}
@@ -1373,6 +1412,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					four_star.getElement().addClassName(FILLED_BLUE);
 					five_star.getElement().addClassName(FILLED_BLUE);
 					mouseOverStarValue.setText(EXCELLENT);
+					mouseOverStarValue.getElement().setAttribute("alt",EXCELLENT);
+					mouseOverStarValue.getElement().setAttribute("title",EXCELLENT);
 				}
 
 			}
@@ -1392,18 +1433,28 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			if(starScore.equalsIgnoreCase(ONE_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}
 			
 			if(!starValue.getText().equals(DEFAULT_RATING_TEXT)){
@@ -1556,5 +1607,28 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		starValue.setText(DEFAULT_RATING_TEXT);
 		clearAllStars();
 	}
-	
+	public void setId(){
+		wrapperContainerField.getElement().setId("fpnlWrapperContainerField");
+		collectionContainer.getElement().setId("pnlCollectionContainer");
+		ratingsContainer.getElement().setId("pnlRatingsContainer");
+		mouseOverStarValue.getElement().setId("lblMouseOverStarValue");
+		one_star.getElement().setId("divOne_star");
+		two_star.getElement().setId("divTwo_star");
+		three_star.getElement().setId("divThree_star");
+		four_star.getElement().setId("divFour_star");
+		five_star.getElement().setId("divFive_star");
+		emoticsContainer.getElement().setId("epnlEmoticsContainer");
+		singleEmoticsContainer.getElement().setId("pnlSingleEmoticsContainer");
+		selectedEmoticButton.getElement().setId("btnSelectedEmoticButton");
+		needHelpButton.getElement().setId("btnNeedHelpButton");
+		doNotUnderstandEmoticButton.getElement().setId("btnDoNotUnderstandEmoticButton");
+		mehEmoticButton.getElement().setId("btnMehEmoticButton");
+		understandEmoticButton.getElement().setId("btnUnderstandEmoticButton");
+		canExplainEmoticButton.getElement().setId("btnCanExplainEmoticButton");
+		forwardButton.getElement().setId("btnForwardButton");
+		backwardButton.getElement().setId("btnBackwardButton");
+		resourceTitleLbl.getElement().setId("htmlResourceTitleLbl");
+		resourcePublisher.getElement().setId("lblResourcePublisher");
+		resourceWidgetContainer.getElement().setId("fpnlResourceWidgetContainer");
+	}
 }

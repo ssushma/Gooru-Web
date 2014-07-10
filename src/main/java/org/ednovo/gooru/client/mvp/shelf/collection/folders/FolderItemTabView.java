@@ -66,7 +66,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	
 	@UiField HTMLPanel mainSection, panelTitleSection;
 	@UiField VerticalPanel folderContentBlock;
-	@UiField Label editFolderLbl, deleteFolderLbl, folderTitleErrorLbl, editMetaLbl;
+	@UiField Label errorMessage,editFolderLbl, deleteFolderLbl, folderTitleErrorLbl, editMetaLbl;
 	@UiField Button newCollectionBtn, newFolderBtn;
 	@UiField HTMLEventPanel editButtonEventPanel;
 	@UiField FlowPanel folderContentPanel;
@@ -133,7 +133,13 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		editFolderCancelBtn.setVisible(false);
 		folderTitleErrorLbl.setVisible(false);	
 		editFolderSaveBtn.setText(GL0141);
+		editFolderSaveBtn.getElement().setAttribute("alt",GL0141);
+		editFolderSaveBtn.getElement().setAttribute("title",GL0141);
+		
 		editFolderCancelBtn.setText(GL0142);
+		editFolderCancelBtn.getElement().setAttribute("alt",GL0142);
+		editFolderCancelBtn.getElement().setAttribute("title",GL0142);
+		
 		loadingImage.setVisible(true);
 		folderContentBlock.setVisible(false);
 		if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 1){
@@ -142,7 +148,18 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 			panelTitleSection.getElement().getStyle().setPaddingTop(45, Unit.PX);
 		}
 		
-		
+		folderContentPanel.getElement().setId("fpnlFolderContentPanel");
+		panelTitleSection.getElement().setId("pnlPanelTitleSection");
+		organizeTitleLbl.getElement().setId("edlblOrganizeTitleLbl");
+		editButtonEventPanel.getElement().setId("epnlEditButtonEventPanel");
+		editFolderLbl.getElement().setId("lblEditFolderLbl");
+		deleteFolderLbl.getElement().setId("lblDeleteFolderLbl");
+		editMetaLbl.getElement().setId("lblEditMetaLbl");
+		editFolderSaveBtn.getElement().setId("btnEditFolderSaveBtn");
+		editFolderCancelBtn.getElement().setId("btnEditFolderCancelBtn");
+		errorMessage.getElement().setId("lblErrorMessage");
+		folderItemMetaDataUc.getElement().setId("folderItemMetaDataUc");
+		mainSection.getElement().setId("pnlMainSection");
 	}
 	
 	private void setFolderTitleValidations() {
@@ -152,6 +169,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 			public void checkCharacterLimit(String text) {
 				if (text.length() >= 50) {
 					folderTitleErrorLbl.setText(GL0143);
+					folderTitleErrorLbl.getElement().setAttribute("alt",GL0143);
+					folderTitleErrorLbl.getElement().setAttribute("title",GL0143);
 					folderTitleErrorLbl.getElement().getStyle().setFloat(Float.RIGHT);
 					folderTitleErrorLbl.setVisible(true);
 				}else{
@@ -166,6 +185,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 						folderTitleErrorLbl.getElement().getStyle().setFloat(Float.RIGHT);
 						folderTitleErrorLbl.setVisible(true);
 						folderTitleErrorLbl.setText(GL0554);
+						folderTitleErrorLbl.getElement().setAttribute("alt",GL0554);
+						folderTitleErrorLbl.getElement().setAttribute("title",GL0554);
 					}
 				}else if(!folderTitleValidations()){
 					folderTitleErrorLbl.setVisible(true);	
@@ -196,12 +217,33 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	*/
 	private void setStaticMsgs() {
 		organizeTitleLbl.setText(GL0180);
+		organizeTitleLbl.getElement().setAttribute("alt",GL0180);
+		organizeTitleLbl.getElement().setAttribute("title",GL0180);
+		
 		editFolderLbl.setText(GL1147);
+		editFolderLbl.getElement().setAttribute("alt",GL1147);
+		editFolderLbl.getElement().setAttribute("title",GL1147);
+		
 		deleteFolderLbl.setText(GL1148);
+		deleteFolderLbl.getElement().setAttribute("alt",GL1148);
+		deleteFolderLbl.getElement().setAttribute("title",GL1148);
+		
 		editMetaLbl.setText(GL1654);
+		editMetaLbl.getElement().setAttribute("alt",GL1654);
+		editMetaLbl.getElement().setAttribute("title",GL1654);
+		
 		newCollectionBtn.setText(GL1451);
+		newCollectionBtn.getElement().setId("btnNewCollectionBtn");
+		newCollectionBtn.getElement().setAttribute("alt",GL1451);
+		newCollectionBtn.getElement().setAttribute("title",GL1451);
+		
 		newFolderBtn.setText(GL1450);
+		newFolderBtn.getElement().setId("btnNewFolderBtn");
+		newFolderBtn.getElement().setAttribute("alt",GL1450);
+		newFolderBtn.getElement().setAttribute("title",GL1450);
 		folderItemMetaDataUc.setVisible(false);
+		loadingImage.getElement().setId("pnlLoadingImage");
+		folderContentBlock.getElement().setId("vpnlFolderContentBlock");
 	}
 	
 	public class AddNewFolderClick implements ClickHandler {
@@ -285,6 +327,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		}
 		if(folderParentName!=null) {
 			organizeTitleLbl.setText(folderParentName);
+			organizeTitleLbl.getElement().setAttribute("alt",folderParentName);
+			organizeTitleLbl.getElement().setAttribute("title",folderParentName);
 		}
 		mainSection.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()-100)+"px");
 		
@@ -456,6 +500,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		editFolderCancelBtn.setVisible(false);
 		organizeTitleLbl.switchToCancelLabel();
 		organizeTitleLbl.setText(organizeTitleLbl.getText());
+		organizeTitleLbl.getElement().setAttribute("alt",organizeTitleLbl.getText());
+		organizeTitleLbl.getElement().setAttribute("title",organizeTitleLbl.getText());
 		organizeTitleLbl.getElement().getStyle().clearBackgroundColor();
 		organizeTitleLbl.getElement().getStyle().setBorderColor("#ccc");
 	}
@@ -472,6 +518,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 						if(editFolderSaveBtn.isVisible()){
 							organizeTitleLbl.getElement().getStyle().setBorderColor("orange");
 							folderTitleErrorLbl.setText(GL0554);
+							folderTitleErrorLbl.getElement().setAttribute("alt",GL0554);
+							folderTitleErrorLbl.getElement().setAttribute("title",GL0554);
 							folderTitleErrorLbl.setVisible(true);
 							folderTitleErrorLbl.getElement().getStyle().setFloat(Float.RIGHT);
 						}
@@ -497,6 +545,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		String title=organizeTitleLbl.getTextBoxSource().getText().trim();
 		if(title==null || title.equals("")){
 			folderTitleErrorLbl.setText(GL0173);
+			folderTitleErrorLbl.getElement().setAttribute("alt",GL0173);
+			folderTitleErrorLbl.getElement().setAttribute("title",GL0173);
 			folderTitleErrorLbl.setVisible(true);
 			organizeTitleLbl.getElement().setAttribute("style", "border-color:#fab03a");
 			return false;
@@ -589,6 +639,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	@Override
 	public void setFolderTitle(String title) {
 		organizeTitleLbl.setText(title);
+		organizeTitleLbl.getElement().setAttribute("alt",title);
+		organizeTitleLbl.getElement().setAttribute("title",title);
 	}
 	
 	public void setPaginatedResults() {

@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.play.collection.add;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -82,18 +83,50 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 	
 	@UiField Anchor workSpaceLink;
 
+	@UiField HTMLEventPanel hideButton;
 	
 	@Inject
 	public AddCollectionView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		hideText.setText(GL0592);
+		hideText.getElement().setId("lblHideText");
+		hideText.getElement().setAttribute("alt",GL0592);
+		hideText.getElement().setAttribute("title",GL0592);
+		  
 		addcollectionText.getElement().setInnerHTML(GL0690);
+		addcollectionText.getElement().setId("pnlAddcollectionText");
+		addcollectionText.getElement().setAttribute("alt",GL0690);
+		addcollectionText.getElement().setAttribute("title",GL0690);
+		
 		renameText.setText(GL0593);
+		renameText.getElement().setId("lblRenameText");
+		renameText.getElement().setAttribute("alt",GL0593);
+		renameText.getElement().setAttribute("title",GL0593);
+		
 		addToShelfCollectionButton.setText(GL0590);
+		addToShelfCollectionButton.getElement().setId("btnAddToShelfCollectionButton");
+		addToShelfCollectionButton.getElement().setAttribute("alt",GL0590);
+		addToShelfCollectionButton.getElement().setAttribute("title",GL0590);
+		
 		collectionAddedSuccessMessageContainer.setVisible(false);
 		getAddToShelfCollectionButton().addClickHandler(new OnAddCollectionClick());
 		collectionTitleInCoverPage.addKeyUpHandler(new onKeyErrorMsg());
 		workSpaceLink.setText(GL0589);
+		workSpaceLink.getElement().setId("lnkWorkSpaceLink");
+		workSpaceLink.getElement().setAttribute("alt",GL0589);
+		workSpaceLink.getElement().setAttribute("title",GL0589);
+		
+		
+		addToCollectionWidgetContainer.getElement().setId("pnlAddToCollectionWidgetContainer");
+		collectionAddImageContainer.getElement().setId("pnlCollectionAddImageContainer");
+		addResourceInsteadLabelContainerInCollectionImage.getElement().setId("pnlAddResourceInsteadLabelContainerInCollectionImage");
+		collectionAddedSuccessMessageContainer.getElement().setId("pnlCollectionAddedSuccessMessageContainer");
+		successMessageLabelText.getElement().setId("lblSuccessMessageLabelText");
+		addCollectionInsteadLabelContainer.getElement().setId("pnlAddCollectionInsteadLabelContainer");
+		collectionTitleInCoverPage.getElement().setId("txtCollectionTitleInCoverPage");
+		addingLabel.getElement().setId("lblAddingLabel");
+		addErrorLabel.getElement().setId("errlblAddErrorLabel");
+		hideButton.getElement().setId("epnlHideButton");
 	}
 	
 	@UiHandler("workSpaceLink")
@@ -166,8 +199,12 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 		if(getAddToShelfCollectionButton().getText().equalsIgnoreCase("Add")){
 			getAddToShelfCollectionButton().setText(GL0691);
 			successMessageLabelText.setText(GL0547);
+			successMessageLabelText.getElement().setAttribute("alt",GL0547);
+			successMessageLabelText.getElement().setAttribute("title",GL0547);
 		}else{
 			successMessageLabelText.setText(GL0692);
+			successMessageLabelText.getElement().setAttribute("alt",GL0692);
+			successMessageLabelText.getElement().setAttribute("title",GL0692);
 		}
 		addCollectionInsteadLabelContainer.clear();
 		addResourceInsteadLabel.setText(GL0685);
@@ -181,6 +218,8 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 	public void showCollectionAddImageWidget(){
 		getAddToShelfCollectionButton().setText(GL0590);
 		successMessageLabelText.setText(GL0547);
+		successMessageLabelText.getElement().setAttribute("alt",GL0547);
+		successMessageLabelText.getElement().setAttribute("title",GL0547);
 		addResourceInsteadLabelContainerInCollectionImage.clear();
 		addResourceInsteadLabelContainerInCollectionImage.add(addResourceInsteadLabel);
 		
@@ -193,6 +232,8 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 	public class OnAddCollectionClick implements ClickHandler {
 		public void onClick(ClickEvent event) {
 			addingLabel.setText(GL0591);
+			addingLabel.getElement().setAttribute("alt",GL0591);
+			addingLabel.getElement().setAttribute("title",GL0591);
 			String title = getCollectionTitleInCoverPage().getText();
 			if(title.trim().length()==0){
 				getAddErrorLabel().setVisible(true);

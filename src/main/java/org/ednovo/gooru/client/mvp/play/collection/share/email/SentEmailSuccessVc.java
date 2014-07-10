@@ -61,14 +61,26 @@ public class SentEmailSuccessVc extends PopupPanel implements MessageProperties{
 	public SentEmailSuccessVc(String toEmail) {
 		setWidget(uiBinder.createAndBindUi(this));
 		toEmailLbl.setText(toEmail);
+		toEmailLbl.getElement().setId("lblToEmailLbl");
+		toEmailLbl.getElement().setAttribute("alt",toEmail);
+		toEmailLbl.getElement().setAttribute("title",toEmail);
 		this.setGlassEnabled(true);
 		this.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setGlassPanelStyle());
 		this.getElement().getStyle().setZIndex(99999);
 		this.show();
 		this.center();
 		emailToFriendText.getElement().setInnerHTML(GL0222);
+		emailToFriendText.getElement().setId("pnlEmailToFriendText");
+		emailToFriendText.getElement().setAttribute("alt",GL0222);
+		emailToFriendText.getElement().setAttribute("title",GL0222);
 		thanksEmailText.getElement().setInnerHTML(GL0648);
+		thanksEmailText.getElement().setId("pnlThanksEmailText");
+		thanksEmailText.getElement().setAttribute("alt",GL0648);
+		thanksEmailText.getElement().setAttribute("title",GL0648);
 		okLbl.setText(GL0190);
+		okLbl.getElement().setId("lblOkLbl");
+		okLbl.getElement().setAttribute("alt",GL0190);
+		okLbl.getElement().setAttribute("title",GL0190);
 	
 	}
 	

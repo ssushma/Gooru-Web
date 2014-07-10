@@ -108,6 +108,8 @@ public class FeaturedCollectionView extends Composite{
 	public void onLoad(){
 		super.onLoad();
 		featureCollectionImage.setUrl(formThumbnailName(imageUrl,"-160x120."));
+		imageAnchor.getElement().setId("lnkImageAnchor");
+		featureCollectionTitle.getElement().setId("pnlFeatureCollectionTitle");
 	}
 	
 	/**

@@ -72,7 +72,7 @@ import com.google.inject.Inject;
 public abstract class RenameCustomizePopUp extends PopupPanel implements MessageProperties {
 
 	@UiField
-	HTMLPanel loginCustom, copyCollectionSuccess, panelAssign,loadingImageLabel,popupcontentCustomize,customizeText,buttonsContainer;
+	HTMLPanel popupContentAssign,loginCustom, copyCollectionSuccess, panelAssign,loadingImageLabel,popupcontentCustomize,customizeText,buttonsContainer;
 
 	@UiField(provided = true)
 	AssignPopUpCBundle res;
@@ -115,8 +115,17 @@ public abstract class RenameCustomizePopUp extends PopupPanel implements Message
 		errorLabel.setVisible(false);
 		this.setGlassEnabled(true);
 		customizeText.getElement().setInnerHTML(GL0743);
+		customizeText.getElement().setAttribute("alt",GL0743);
+		customizeText.getElement().setAttribute("title",GL0743);
+		
 		backtoLibrary.setText(GL0142);
+		backtoLibrary.getElement().setAttribute("alt",GL0142);
+		backtoLibrary.getElement().setAttribute("title",GL0142);
+		
 		editCollection.setText(GL0636);
+		editCollection.getElement().setAttribute("alt",GL0636);
+		editCollection.getElement().setAttribute("title",GL0636);
+		
 		panelAssign.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		loginCustom.getElement().getStyle().setMarginBottom(15, Unit.PX);
 		isDraggedFromSearch=false;
@@ -132,8 +141,17 @@ public abstract class RenameCustomizePopUp extends PopupPanel implements Message
 		
 
 		assignDes.setText(GL0744);
+		assignDes.getElement().setAttribute("alt",GL0744);
+		assignDes.getElement().setAttribute("title",GL0744);
+		
 		lblpopupTitle.setText(GL0743);
+		lblpopupTitle.getElement().setAttribute("alt",GL0743);
+		lblpopupTitle.getElement().setAttribute("title",GL0743);
+		
 		lbltxtBoxTitle.setText(GL0553);
+		lbltxtBoxTitle.getElement().setAttribute("alt",GL0553);
+		lbltxtBoxTitle.getElement().setAttribute("title",GL0553);
+		
 		copycollectionTextbox.setMaxLength(50);
 		copycollectionTextbox.addKeyPressHandler(new OnkeyPress());
 		copycollectionTextbox.addBlurHandler(new OnBlurr());
@@ -193,10 +211,36 @@ public abstract class RenameCustomizePopUp extends PopupPanel implements Message
 		});
 
 		MixpanelUtil.mixpanelEvent("CoursePage_customize_collection");
+		
+		
+		
+		
+		
+		
+		
+		setId();
 		this.center();
 
 	}
-
+	public void setId(){
+		panelAssign.getElement().setId("pnlPanelAssign");
+		lbltxtBoxTitle.getElement().setId("lbltxtBoxTitle");
+		lblpopupTitle.getElement().setId("lblpopupTitle");
+		assignDes.getElement().setId("lblAssignDes");
+		editCollection.getElement().setId("btnEditCollection");
+		customizeText.getElement().setId("pnlCustomizeText");
+		backtoLibrary.getElement().setId("btnBacktoLibrary");
+		cancelButton.getElement().setId("lblCancelButton");
+		loadingImageLabel.getElement().setId("pnlLoadingImageLabel");
+		loadingLbl.getElement().setId("pnlLoadingLbl");
+		popupcontentCustomize.getElement().setId("pnlPopupcontentCustomize");
+		loginCustom.getElement().setId("pnlLoginCustom");
+		copyCollectionSuccess.getElement().setId("pnlCopyCollectionSuccess");
+		popupContentAssign.getElement().setId("pnlPopupContentAssign");
+		copycollectionTextbox.getElement().setId("txtCopycollectionTextbox");
+		errorLabel.getElement().setId("errlblErrorLabel");
+		buttonsContainer.getElement().setId("pnlButtonsContainer");
+	}
 
 	public RenameCustomizePopUp(String dragId) { 
 		super(false);
@@ -206,6 +250,8 @@ public abstract class RenameCustomizePopUp extends PopupPanel implements Message
 		errorLabel.setVisible(false);
 		this.setGlassEnabled(true);
 		customizeText.getElement().setInnerHTML(GL0322);
+		customizeText.getElement().setAttribute("alt",GL0322);
+		customizeText.getElement().setAttribute("title",GL0322);
 		isDraggedFromSearch = true;
 		copyCollectionSuccess.getElement().getStyle().setPadding(0, Unit.PX);
 		backtoLibrary.setText(GL0142);
@@ -230,6 +276,8 @@ public abstract class RenameCustomizePopUp extends PopupPanel implements Message
 		assignDes.getElement().getStyle().setDisplay(Display.NONE);
 		lblpopupTitle.getElement().getStyle().setDisplay(Display.NONE);
 		lbltxtBoxTitle.setText(GL0553);
+		lbltxtBoxTitle.getElement().setAttribute("alt",GL0553);
+		lbltxtBoxTitle.getElement().setAttribute("title",GL0553);
 		copycollectionTextbox.getElement().getStyle().setWidth(275, Unit.PX);
 		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(dragId, new SimpleAsyncCallback<CollectionDo>(){
 			@Override
@@ -242,6 +290,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel implements Message
 				popupcontentCustomize.setVisible(true);
 			}
 		});
+		 setId();
 	}
 
 	public abstract void closePoup();

@@ -46,14 +46,24 @@ public abstract class DeleteFolderSuccessView extends Composite implements Messa
 		appPopUp.show();
 		appPopUp.center();
 		cancelButton.setText(GL0142);
+		cancelButton.getElement().setAttribute("alt",GL0142);
+		cancelButton.getElement().setAttribute("title",GL0142);
+		
 		Window.enableScrolling(false);
 		okButton.setText(GL0190);
+		okButton.getElement().setAttribute("alt",GL0190);
+		okButton.getElement().setAttribute("title",GL0190);
+		
 		headerTitle.setText(GL1173);
+		headerTitle.getElement().setAttribute("alt",GL1173);
+		headerTitle.getElement().setAttribute("title",GL1173);
+		
 //		titleLabel.setText(MessageProperties.GL1176);
 		cancelButton.setVisible(false);
 		buttonContainer.getElement().setAttribute("Style", "margin-bottom: 22px !important;");
 		headerTitleDes.setVisible(false);
 		headerTitleDesUsername.setVisible(false);
+		setId();
 	}
 	
 	public DeleteFolderSuccessView(String movedFolderName) {
@@ -67,13 +77,23 @@ public abstract class DeleteFolderSuccessView extends Composite implements Messa
 		appPopUp.show();
 		appPopUp.center();
 		cancelButton.setText(GL0142);
+		cancelButton.getElement().setAttribute("alt",GL0142);
+		cancelButton.getElement().setAttribute("title",GL0142);
+		
 		Window.enableScrolling(false);
 		okButton.setText(GL0190);
+		okButton.getElement().setAttribute("alt",GL0190);
+		okButton.getElement().setAttribute("title",GL0190);
+		
 		headerTitle.setText(GL1366+"\""+movedFolderName+"\"");
+		headerTitle.getElement().setAttribute("alt",GL1366+"\""+movedFolderName+"\"");
+		headerTitle.getElement().setAttribute("title",GL1366+"\""+movedFolderName+"\"");
+		
 		cancelButton.setVisible(false);
 		buttonContainer.getElement().setAttribute("Style", "margin-bottom: 22px !important;");
 		headerTitleDes.setVisible(false);
 		headerTitleDesUsername.setVisible(false);
+		setId();
 	}
 	
 	public DeleteFolderSuccessView(String title, String desc) {
@@ -87,8 +107,14 @@ public abstract class DeleteFolderSuccessView extends Composite implements Messa
 		appPopUp.show();
 		appPopUp.center();
 		cancelButton.setText(GL0142);
+		cancelButton.getElement().setAttribute("alt",GL0142);
+		cancelButton.getElement().setAttribute("title",GL0142);
+		
 		Window.enableScrolling(false);
 		okButton.setText(GL0190);
+		okButton.getElement().setAttribute("alt",GL0190);
+		okButton.getElement().setAttribute("title",GL0190);
+		
 		contentPnl.getElement().getStyle().setHeight(117, Unit.PX);
 		headerTitle.getElement().setInnerHTML(desc);	
 		headerTitle.getElement().getStyle().setFontSize(12, Unit.PX);
@@ -96,6 +122,7 @@ public abstract class DeleteFolderSuccessView extends Composite implements Messa
 		buttonContainer.getElement().setAttribute("Style", "margin-bottom: 22px !important;");
 		headerTitleDes.setVisible(false);
 		headerTitleDesUsername.setVisible(false);
+		setId();
 	}
 	
 	public DeleteFolderSuccessView(String title, String desc,String userName) {
@@ -109,8 +136,14 @@ public abstract class DeleteFolderSuccessView extends Composite implements Messa
 		appPopUp.show();
 		appPopUp.center();
 		cancelButton.setText(GL0142);
+		cancelButton.getElement().setAttribute("alt",GL0142);
+		cancelButton.getElement().setAttribute("title",GL0142);
+		
 		Window.enableScrolling(false);
 		okButton.setText(GL0190);
+		okButton.getElement().setAttribute("alt",GL0190);
+		okButton.getElement().setAttribute("title",GL0190);
+		
 		contentPnl.getElement().getStyle().setHeight(117, Unit.PX);
 		headerTitleDes.getElement().setInnerHTML(desc);	
 		
@@ -122,6 +155,16 @@ public abstract class DeleteFolderSuccessView extends Composite implements Messa
 		buttonContainer.getElement().setAttribute("Style", "margin-bottom: 22px !important;");
 		headerTitleDes.setVisible(true);
 		headerTitleDesUsername.setVisible(true);
+		setId();
+	}
+	public void setId(){
+		cancelButton.getElement().setId("btnCancelButton");
+		okButton.getElement().setId("btnOkButton");
+		headerTitle.getElement().setId("lblHeaderTitle");
+		contentPnl.getElement().setId("pnlContentPnl");
+		headerTitleDes.getElement().setId("spnHeaderTitleDes");
+		headerTitleDesUsername.getElement().setId("spnHeaderTitleDesUsername");
+		buttonContainer.getElement().setId("pnlButtonContainer");
 	}
 
 	@UiHandler("cancelButton")

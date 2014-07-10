@@ -94,12 +94,27 @@ public class StudyPlayerHeaderView extends Composite implements MessagePropertie
 		navigationButton.getElement().setId("navigationButton");
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		studentViewButton.setText(GL0139);
+		studentViewButton.getElement().setId("lnkStudentViewButton");
+		studentViewButton.getElement().setAttribute("alt",GL0139);
+		studentViewButton.getElement().setAttribute("title",GL0139);
+		
 		studentViewButton.addMouseOverHandler(new OnStudentViewButtonMouseOver());
 		studentViewButton.addMouseOutHandler(new OnStudentViewButtonMouseOut());
 		shareButton.addMouseOverHandler(new ShareButtonMouseOver());
 		shareButton.addMouseOutHandler(new ShareButtonMouseOut());
 		addButton.getElement().setId("addButton");
-		
+		flagButton.getElement().setId("btnFlagButton");
+		infoButton.getElement().setId("btnInfoButton");
+		shareButton.getElement().setId("btnShareButton");
+		narrationButton.getElement().setId("btnNarrationButton");
+		navigationButton.getElement().setId("btnNavigationButton");
+		closeButtonForCollection.getElement().setId("lblCloseButtonForCollection");
+		resourceTitle.getElement().setId("htmlResourceTitle");
+		authorContainer.getElement().setId("epnlAuthorContainer");
+		wishLabel.getElement().setId("spnWishLabel");
+		loginUserName.getElement().setId("spnLoginUserName");
+		wishingText.getElement().setId("spnWishingText");
+		loginMessageText.getElement().setId("lblLoginMessageText");
 	}
 	
 	public void setResourceTitle(String title){
@@ -141,17 +156,31 @@ public class StudyPlayerHeaderView extends Composite implements MessagePropertie
 			authorContainer.addStyleName(headerStyle.loggedIn());
 			setLoggedInWishingText();
 			loginMessageText.setText(StringUtil.generateMessage(GL1616, AppClientFactory.getLoggedInUser().getUsernameDisplay()));
+			loginMessageText.getElement().setAttribute("alt",StringUtil.generateMessage(GL1616, AppClientFactory.getLoggedInUser().getUsernameDisplay()));
+			loginMessageText.getElement().setAttribute("title",StringUtil.generateMessage(GL1616, AppClientFactory.getLoggedInUser().getUsernameDisplay()));
 		}
 	}
 	public void setLoggedOutWishingText(){
 		wishLabel.setText("");
+		wishLabel.getElement().setAttribute("alt","");
+		wishLabel.getElement().setAttribute("title","");
 		loginUserName.setText("");
+		loginUserName.getElement().setAttribute("alt","");
+		loginUserName.getElement().setAttribute("title","");
 		wishingText.setText(GL1531);
+		wishingText.getElement().setAttribute("alt","");
+		wishingText.getElement().setAttribute("title","");
 	}
 	public void setLoggedInWishingText(){
 		wishLabel.setText(GL1529);
+		wishLabel.getElement().setAttribute("alt",GL1529);
+		wishLabel.getElement().setAttribute("title",GL1529);
 		loginUserName.setText(AppClientFactory.getLoggedInUser().getUsernameDisplay());
+		loginUserName.getElement().setAttribute("alt",AppClientFactory.getLoggedInUser().getUsernameDisplay());
+		loginUserName.getElement().setAttribute("title",AppClientFactory.getLoggedInUser().getUsernameDisplay());
 		wishingText.setText(GL1530);
+		wishingText.getElement().setAttribute("alt",GL1530);
+		wishingText.getElement().setAttribute("title",GL1530);
 	}
 	
 	public void makeButtonActive(boolean makeAddButtonActive,boolean makeInfoButtionActive, boolean  makeShareButtonActive, boolean makeNarrationButtonActive, boolean makeNavigationButtonActive,boolean makeFlagButtonActive){

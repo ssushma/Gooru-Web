@@ -37,11 +37,25 @@ public class FlagThankYouPopUpView extends PopupPanel implements MessageProperti
 		this.setGlassStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().glassStyle());
 		setGlassEnabled(true);
 		flagHeaderText.setText(GL0600);
+		flagHeaderText.getElement().setId("lblFlagHeaderText");
+		flagHeaderText.getElement().setAttribute("alt",GL0600);
+		flagHeaderText.getElement().setAttribute("title",GL0600);
+		  
 		thanksSubmitText.setText(GL0615);
+		thanksSubmitText.getElement().setId("lblThanksSubmitText");
+		thanksSubmitText.getElement().setAttribute("alt",GL0615);
+		thanksSubmitText.getElement().setAttribute("title",GL0615);
+		
 		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE
 				.closeFlagPopUpImages());
+		popUpCloseButton.getElement().setId("imgPopUpCloseButton");
+		
 		okButton.setText(GL0190);
 		okButton.getElement().setAttribute("id","okButton");
+		okButton.getElement().setAttribute("alt",GL0190);
+		okButton.getElement().setAttribute("title",GL0190);
+		
+		closeButton.getElement().setId("epnlCloseButton");
 	}
 	
 	public HTMLEventPanel getCloseButton(){

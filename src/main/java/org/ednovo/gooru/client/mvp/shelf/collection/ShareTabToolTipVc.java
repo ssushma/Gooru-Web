@@ -29,6 +29,7 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -40,6 +41,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class ShareTabToolTipVc extends PopupPanel implements MessageProperties{
 
 	@UiField Label tooltipText;
+	@UiField FlowPanel logPanel;
 	private static ShareTabToolTipVcUiBinder uiBinder = GWT
 			.create(ShareTabToolTipVcUiBinder.class);
 
@@ -54,5 +56,9 @@ public class ShareTabToolTipVc extends PopupPanel implements MessageProperties{
 		super(true);
 		setWidget(uiBinder.createAndBindUi(this));
 		tooltipText.setText(GL0845);
+		tooltipText.getElement().setId("lblTooltipText");
+		tooltipText.getElement().setAttribute("alt",GL0845);
+		tooltipText.getElement().setAttribute("title",GL0845);
+		logPanel.getElement().setId("fpnlLogPanel");
 	}
 }

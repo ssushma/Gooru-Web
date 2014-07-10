@@ -88,12 +88,26 @@ public class ErrorPopup extends PopupPanel implements MessageProperties{
 //		this.setSize("475px", "200px");
 		this.center();
 		errorpopupHeaderTitle.setText(GL1177);
+		errorpopupHeaderTitle.getElement().setId("lblErrorpopupHeaderTitle");
+		errorpopupHeaderTitle.getElement().setAttribute("alt",GL1177);
+		errorpopupHeaderTitle.getElement().setAttribute("title",GL1177);
+		
 //		questionsEmailText.setText(GL0298);
 //		emailId.setText(GL0299);
 		questionsEmailText.setVisible(false);
 		emailId.setVisible(false);
 		btnOk.setText(GL0190);
+		btnOk.getElement().setId("btnOk");
+		btnOk.getElement().setAttribute("alt",GL0190);
+		btnOk.getElement().setAttribute("title",GL0190);
+		
 		errorMessage.setText(message);
+		errorMessage.getElement().setId("errlblErrorMessage");
+		errorMessage.getElement().setAttribute("alt",message);
+		errorMessage.getElement().setAttribute("title",message);
+		
+		questionsEmailText.getElement().setId("lblQuestionsEmailText");
+		emailId.getElement().setId("lblEmailId");
 	}
 	
 	public void closePopup(){

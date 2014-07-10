@@ -64,6 +64,12 @@ public class ResourcePlayerHeaderView extends Composite{
 	public ResourcePlayerHeaderView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
+		resourceTitle.getElement().setId("htmlResourceTitle");
+		addButton.getElement().setId("addButton");
+		flagButton.getElement().setId("btnFlagButton");
+		infoButton.getElement().setId("btnInfoButton");
+		shareButton.getElement().setId("btnShareButton");
+		closeButton.getElement().setId("lblCloseButton");
 	}
 
 	public void setResourceTitle(String title){
