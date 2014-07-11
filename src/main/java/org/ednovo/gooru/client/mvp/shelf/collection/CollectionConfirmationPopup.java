@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -41,7 +41,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public  class CollectionConfirmationPopup extends PopupPanel implements MessageProperties{
+public  class CollectionConfirmationPopup extends PopupPanel {
 
 	@UiField Label shareMsgTitle, shareMsgTxt, shareMsgLbl, closeButton,classPageNames;
 	
@@ -53,6 +53,8 @@ public  class CollectionConfirmationPopup extends PopupPanel implements MessageP
 	
 	private static CollectionConfirmationPopupUiBinder uiBinder = GWT
 			.create(CollectionConfirmationPopupUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface CollectionConfirmationPopupUiBinder extends
 			UiBinder<Widget, CollectionConfirmationPopup> {
@@ -61,29 +63,29 @@ public  class CollectionConfirmationPopup extends PopupPanel implements MessageP
 	public CollectionConfirmationPopup() {
 		setWidget(uiBinder.createAndBindUi(this));
 		
-		shareMsgTitle.setText(GL0836);
+		shareMsgTitle.setText(i18n.GL0836());
 		shareMsgTitle.getElement().setId("lblShareMsgTitle");
-		shareMsgTitle.getElement().setAttribute("alt",GL0836);
-		shareMsgTitle.getElement().setAttribute("title",GL0836);
+		shareMsgTitle.getElement().setAttribute("alt",i18n.GL0836());
+		shareMsgTitle.getElement().setAttribute("title",i18n.GL0836());
 		
-		shareMsgTxt.setText(GL0837);
+		shareMsgTxt.setText(i18n.GL0837());
 		shareMsgTxt.getElement().setId("lblShareMsgTxt");
-		shareMsgTxt.getElement().setAttribute("alt",GL0837);
-		shareMsgTxt.getElement().setAttribute("title",GL0837);
+		shareMsgTxt.getElement().setAttribute("alt",i18n.GL0837());
+		shareMsgTxt.getElement().setAttribute("title",i18n.GL0837());
 		
-		shareMsgLbl.setText(GL0838);
+		shareMsgLbl.setText(i18n.GL0838());
 		shareMsgLbl.getElement().setId("lblShareMsgLbl");
-		shareMsgLbl.getElement().setAttribute("alt",GL0838);
-		shareMsgLbl.getElement().setAttribute("title",GL0838);
+		shareMsgLbl.getElement().setAttribute("alt",i18n.GL0838());
+		shareMsgLbl.getElement().setAttribute("title",i18n.GL0838());
 		
 		okButton.getElement().getStyle().setMarginLeft(7, Unit.PX);
-		goBackBtn.setText(GL0834);
-		goBackBtn.getElement().setAttribute("alt",GL0834);
-		goBackBtn.getElement().setAttribute("title",GL0834);
+		goBackBtn.setText(i18n.GL0834());
+		goBackBtn.getElement().setAttribute("alt",i18n.GL0834());
+		goBackBtn.getElement().setAttribute("title",i18n.GL0834());
 		
-		okButton.setText(GL0835);
-		okButton.getElement().setAttribute("alt",GL0835);
-		okButton.getElement().setAttribute("title",GL0835);
+		okButton.setText(i18n.GL0835());
+		okButton.getElement().setAttribute("alt",i18n.GL0835());
+		okButton.getElement().setAttribute("title",i18n.GL0835());
 		
 		goBackBtn.getElement().setId("btnGoBack");
 		okButton.getElement().setId("btnOk");

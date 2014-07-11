@@ -8,9 +8,9 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -43,7 +43,7 @@ import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.Widget;
 
 
-public abstract class FolderPopupUc extends PopupPanel implements MessageProperties {
+public abstract class FolderPopupUc extends PopupPanel {
 	
 	@UiField HTMLPanel folderStructureTree, buttonsContainer;
 	@UiField Button cancelBtn, okBtn;
@@ -86,6 +86,8 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 	private String FOLDER = "folder";
 	
 	private static FolderPopupUcUiBinder uiBinder = GWT.create(FolderPopupUcUiBinder.class);
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface FolderPopupUcUiBinder extends UiBinder<Widget, FolderPopupUc> {}
 
@@ -112,7 +114,7 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 		folderTreePanel.getElement().removeAttribute("style");
 		folderStructureTree.add(folderTreePanel);
 		folderTitle.getElement().setAttribute("maxlength", "50");
-		folderTitle.getElement().setAttribute("placeholder", GL1250);
+		folderTitle.getElement().setAttribute("placeholder", i18n.GL1250());
 		validationTitleLbl.getElement().getStyle().setDisplay(Display.NONE);
 		validationTitleLbl.getElement().getStyle().setTextAlign(TextAlign.RIGHT);
 		addingLbl.setVisible(false);
@@ -139,9 +141,9 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 			folderStructureTree.setVisible(true);
 			
 			if(!moveType.equalsIgnoreCase(COLLECTION_MOVE)) {
-				inputDescLbl.setText(GL1329);
-				inputDescLbl.getElement().setAttribute("alt",GL1329);
-				inputDescLbl.getElement().setAttribute("title",GL1329);
+				inputDescLbl.setText(i18n.GL1329());
+				inputDescLbl.getElement().setAttribute("alt",i18n.GL1329());
+				inputDescLbl.getElement().setAttribute("title",i18n.GL1329());
 			}
 		}else{
 			inputDescLbl.setVisible(false);
@@ -155,25 +157,25 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 			isCollectionMove = true;
 			inputTitleLbl.getElement().getStyle().setDisplay(Display.NONE);
 			folderTitle.getElement().getStyle().setDisplay(Display.NONE);
-			popupHeaderTitleLbl.setText(GL1264);
-			popupHeaderTitleLbl.getElement().setAttribute("alt",GL1264);
-			popupHeaderTitleLbl.getElement().setAttribute("title",GL1264);
+			popupHeaderTitleLbl.setText(i18n.GL1264());
+			popupHeaderTitleLbl.getElement().setAttribute("alt",i18n.GL1264());
+			popupHeaderTitleLbl.getElement().setAttribute("title",i18n.GL1264());
 			
-			inputDescLbl.setText(GL1364);
-			inputDescLbl.getElement().setAttribute("alt",GL1364);
-			inputDescLbl.getElement().setAttribute("title",GL1364);
+			inputDescLbl.setText(i18n.GL1364());
+			inputDescLbl.getElement().setAttribute("alt",i18n.GL1364());
+			inputDescLbl.getElement().setAttribute("title",i18n.GL1364());
 			
-			addingLbl.setText(GL1362);
-			addingLbl.getElement().setAttribute("alt",GL1362);
-			addingLbl.getElement().setAttribute("title",GL1362);
+			addingLbl.setText(i18n.GL1362());
+			addingLbl.getElement().setAttribute("alt",i18n.GL1362());
+			addingLbl.getElement().setAttribute("title",i18n.GL1362());
 			
-			okBtn.setText(GL1261);
-			okBtn.getElement().setAttribute("alt",GL1261);
-			okBtn.getElement().setAttribute("title",GL1261);
+			okBtn.setText(i18n.GL1261());
+			okBtn.getElement().setAttribute("alt",i18n.GL1261());
+			okBtn.getElement().setAttribute("title",i18n.GL1261());
 			
-			cancelBtn.setText(GL0142);
-			cancelBtn.getElement().setAttribute("alt",GL0142);
-			cancelBtn.getElement().setAttribute("title",GL0142);
+			cancelBtn.setText(i18n.GL0142());
+			cancelBtn.getElement().setAttribute("alt",i18n.GL0142());
+			cancelBtn.getElement().setAttribute("title",i18n.GL0142());
 			if(AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL)==null){
 				okBtn.getElement().removeClassName("enabled");
 				okBtn.getElement().addClassName("disabled");
@@ -185,29 +187,29 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 			}
 		}else{
 			isCollectionMove = false;
-			popupHeaderTitleLbl.setText(GL1266);
-			popupHeaderTitleLbl.getElement().setAttribute("alt",GL1266);
-			popupHeaderTitleLbl.getElement().setAttribute("title",GL1266);
+			popupHeaderTitleLbl.setText(i18n.GL1266);
+			popupHeaderTitleLbl.getElement().setAttribute("alt",i18n.GL1266);
+			popupHeaderTitleLbl.getElement().setAttribute("title",i18n.GL1266);
 			
-			inputTitleLbl.setText(GL1262);
-			inputTitleLbl.getElement().setAttribute("alt",GL1262);
-			inputTitleLbl.getElement().setAttribute("title",GL1262);
+			inputTitleLbl.setText(i18n.GL1262());
+			inputTitleLbl.getElement().setAttribute("alt",i18n.GL1262());
+			inputTitleLbl.getElement().setAttribute("title",i18n.GL1262());
 			
-			inputDescLbl.setText(GL1263);
-			inputDescLbl.getElement().setAttribute("alt",GL1263);
-			inputDescLbl.getElement().setAttribute("title",GL1263);
+			inputDescLbl.setText(i18n.GL1263());
+			inputDescLbl.getElement().setAttribute("alt",i18n.GL1263());
+			inputDescLbl.getElement().setAttribute("title",i18n.GL1263());
 			
-			addingLbl.setText(GL0591.toLowerCase());
-			addingLbl.getElement().setAttribute("alt",GL0591.toLowerCase());
-			addingLbl.getElement().setAttribute("title",GL0591.toLowerCase());
+			addingLbl.setText(i18n.GL0591().toLowerCase());
+			addingLbl.getElement().setAttribute("alt",i18n.GL0591().toLowerCase());
+			addingLbl.getElement().setAttribute("title",i18n.GL0591().toLowerCase());
 			
-			okBtn.setText(GL0190);
-			okBtn.getElement().setAttribute("alt",GL0190);
-			okBtn.getElement().setAttribute("title",GL0190);
+			okBtn.setText(i18n.GL0190());
+			okBtn.getElement().setAttribute("alt",i18n.GL0190());
+			okBtn.getElement().setAttribute("title",i18n.GL0190());
 			
-			cancelBtn.setText(GL0142);
-			cancelBtn.getElement().setAttribute("alt",GL0142);
-			cancelBtn.getElement().setAttribute("title",GL0142);
+			cancelBtn.setText(i18n.GL0142());
+			cancelBtn.getElement().setAttribute("alt",i18n.GL0142());
+			cancelBtn.getElement().setAttribute("title",i18n.GL0142());
 		}
 	}
 
@@ -271,7 +273,7 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 		}else{
 			selectedParentItem="";
 			params=folderPopupChildItem.getUrlParams();
-			destinationFolderName=GL0180;
+			destinationFolderName=i18n.GL0180();
 			if(AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL)==null&& isCollectionMove){
 				okBtn.getElement().removeClassName("enabled");
 				okBtn.getElement().addClassName("disabled");
@@ -309,7 +311,7 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 	private void setData(List<FolderDo> folders, String moveType) {
 		if(getPageNumber()==0) {
 			FolderDo organizeDo = new FolderDo();
-			organizeDo.setTitle(GL1752);
+			organizeDo.setTitle(i18n.GL1752());
 			setOrganizeStaticData(organizeDo, 0, 0, 0);
 		}
 		
@@ -377,16 +379,16 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 		public void onKeyUp(KeyUpEvent event) {
 			folderTitle.removeStyleName(ShelfCBundle.INSTANCE.css().folderBorderColor());
 			if (folderTitle.getText().length() >= 50) {
-				validationTitleLbl.setText(GL0143);
-				validationTitleLbl.getElement().setAttribute("alt",GL0143);
-				validationTitleLbl.getElement().setAttribute("title",GL0143);
+				validationTitleLbl.setText(i18n.GL0143());
+				validationTitleLbl.getElement().setAttribute("alt",i18n.GL0143());
+				validationTitleLbl.getElement().setAttribute("title",i18n.GL0143());
 				validationTitleLbl.getElement().getStyle().setDisplay(Display.BLOCK);
 				folderTitle.addStyleName(ShelfCBundle.INSTANCE.css().folderBorderColor());
 				folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");	
 			}else if(folderTitle.getText().equalsIgnoreCase("") && validationTitleLbl.isVisible()){
-				validationTitleLbl.setText(GL0173);
-				validationTitleLbl.getElement().setAttribute("alt",GL0173);
-				validationTitleLbl.getElement().setAttribute("title",GL0173);
+				validationTitleLbl.setText(i18n.GL0173());
+				validationTitleLbl.getElement().setAttribute("alt",i18n.GL0173());
+				validationTitleLbl.getElement().setAttribute("title",i18n.GL0173());
 				folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");
 			}else{
 				validationTitleLbl.getElement().getStyle().setDisplay(Display.NONE);
@@ -409,16 +411,16 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 				public void onSuccess(Boolean result) {
 					if (result){
 						folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");	
-						validationTitleLbl.setText(GL0554);
-						validationTitleLbl.getElement().setAttribute("alt",GL0554);
-						validationTitleLbl.getElement().setAttribute("title",GL0554);
+						validationTitleLbl.setText(i18n.GL0554());
+						validationTitleLbl.getElement().setAttribute("alt",i18n.GL0554());
+						validationTitleLbl.getElement().setAttribute("title",i18n.GL0554());
 						validationTitleLbl.getElement().getStyle().setDisplay(Display.BLOCK);
 //						validationTitleLbl.setStyleName(CollectionCBundle.INSTANCE.css().mandatoryLabelError());
 					}else{
 						folderTitle.getElement().getStyle().clearBackgroundColor();
 						folderTitle.getElement().setAttribute("style", "border-color:#E3E3E3");
 //						folderTitle.getElement().setAttribute("style", "border-color:#ccc !important");	
-						if(validationTitleLbl.getText().equalsIgnoreCase(GL0554))
+						if(validationTitleLbl.getText().equalsIgnoreCase(i18n.GL0554()))
 							validationTitleLbl.getElement().getStyle().setDisplay(Display.NONE);
 					}
 //					SetStyleForProfanity.SetStyleForProfanityForTextBox(folderTitle, validationTitleLbl, result);
@@ -523,15 +525,15 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 							showAddingMsg(true);
 //							SetStyleForProfanity.SetStyleForProfanityForTextBox(folderTitle, validationTitleLbl, result);
 							folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");	
-							validationTitleLbl.setText(GL0554);
-							validationTitleLbl.getElement().setAttribute("alt",GL0554);
-							validationTitleLbl.getElement().setAttribute("title",GL0554);
+							validationTitleLbl.setText(i18n.GL0554());
+							validationTitleLbl.getElement().setAttribute("alt",i18n.GL0554());
+							validationTitleLbl.getElement().setAttribute("title",i18n.GL0554());
 							validationTitleLbl.getElement().getStyle().setDisplay(Display.BLOCK);
 						}else{
 							showAddingMsg(false);
 							folderTitle.getElement().getStyle().clearBackgroundColor();
 							folderTitle.getElement().setAttribute("style", "border-color:#E3E3E3");
-							if(validationTitleLbl.getText().equalsIgnoreCase(GL0554))
+							if(validationTitleLbl.getText().equalsIgnoreCase(i18n.GL0554()))
 							validationTitleLbl.getElement().getStyle().setDisplay(Display.NONE);
 							onClickPositiveButton(event, folderTitle.getText(), selectedParentItem, params);
 						}
@@ -544,9 +546,9 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 	private boolean folderTitleValidations() {
 		String title=folderTitle.getText().trim();
 		if(title==null || title.equals("")){
-			validationTitleLbl.setText(GL0173);
-			validationTitleLbl.getElement().setAttribute("alt",GL0173);
-			validationTitleLbl.getElement().setAttribute("title",GL0173);
+			validationTitleLbl.setText(i18n.GL0173());
+			validationTitleLbl.getElement().setAttribute("alt",i18n.GL0173());
+			validationTitleLbl.getElement().setAttribute("title",i18n.GL0173());
 			validationTitleLbl.getElement().getStyle().setDisplay(Display.BLOCK);
 			folderTitle.addStyleName(ShelfCBundle.INSTANCE.css().folderBorderColor());
 			folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");
