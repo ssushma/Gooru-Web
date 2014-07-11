@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.home.share.SharePlaye
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -65,7 +66,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
-public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> implements IsPreviewEndView,MessageProperties{
+public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> implements IsPreviewEndView{
 	
 	@UiField Image collectionThumbnail;
 	@UiField HTML collectionGoal;
@@ -89,38 +90,40 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 	interface PreviewEndViewUiBinder extends UiBinder<Widget, PreviewEndView> {
 	}
 	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@Inject
 	public PreviewEndView(){
 		setWidget(uiBinder.createAndBindUi(this));
-		endText.getElement().setInnerHTML(GL0596);
+		endText.getElement().setInnerHTML(i18n.GL0596());
 		endText.getElement().setId("pnlEndText");
-		endText.getElement().setAttribute("alt",GL0596);
-		endText.getElement().setAttribute("title",GL0596);
+		endText.getElement().setAttribute("alt",i18n.GL0596());
+		endText.getElement().setAttribute("title",i18n.GL0596());
 		
-		assignCollectionBtn.setText(GL0104);
+		assignCollectionBtn.setText(i18n.GL0104());
 		assignCollectionBtn.getElement().setId("btnAssignCollectionBtn");
-		assignCollectionBtn.getElement().setAttribute("alt",GL0104);
-		assignCollectionBtn.getElement().setAttribute("title",GL0104);
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
 		
-		customizeCollectionBtn.setText(GL0631);
+		customizeCollectionBtn.setText(i18n.GL0631());
 		customizeCollectionBtn.getElement().setId("btnCustomizeCollectionBtn");
-		customizeCollectionBtn.getElement().setAttribute("alt",GL0631);
-		customizeCollectionBtn.getElement().setAttribute("title",GL0631);
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
 		
-		shareCollectionBtn.setText(GL0536);
+		shareCollectionBtn.setText(i18n.GL0536());
 		shareCollectionBtn.getElement().setId("btnShareCollectionBtn");
-		shareCollectionBtn.getElement().setAttribute("alt",GL0536);
-		shareCollectionBtn.getElement().setAttribute("title",GL0536);
+		shareCollectionBtn.getElement().setAttribute("alt",i18n.GL0536());
+		shareCollectionBtn.getElement().setAttribute("title",i18n.GL0536());
 		
-		replayCollection.setText(GL0632);
+		replayCollection.setText(i18n.GL0632());
 		replayCollection.getElement().setId("lblReplayCollection");
-		replayCollection.getElement().setAttribute("alt",GL0632);
-		replayCollection.getElement().setAttribute("title",GL0632);
+		replayCollection.getElement().setAttribute("alt",i18n.GL0632());
+		replayCollection.getElement().setAttribute("title",i18n.GL0632());
 		
-		learningobjectiveText.setText(GL0618);
+		learningobjectiveText.setText(i18n.GL0618());
 		learningobjectiveText.getElement().setId("lblLearningobjectiveText");
-		learningobjectiveText.getElement().setAttribute("alt",GL0618);
-		learningobjectiveText.getElement().setAttribute("title",GL0618);
+		learningobjectiveText.getElement().setAttribute("alt",i18n.GL0618());
+		learningobjectiveText.getElement().setAttribute("title",i18n.GL0618());
 		
 		collectionThumbnail.getElement().setId("imgCollectionThumbnail");
 		thumbnailContainer.getElement().setId("fpnlThumbnailContainer");
@@ -156,7 +159,7 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 		HTMLPanel collectionHTMLPanel = new HTMLPanel("");
 		resourceAnchor.addClickHandler(new ReplayCollectionEvent());
 		collectionHTMLPanel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().collectionreplay());
-		Label collectionReplayButton=new Label(GL0632);
+		Label collectionReplayButton=new Label(i18n.GL0632());
 		collectionReplayButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().collectionreplayText());
 		collectionHTMLPanel.add(collectionReplayButton);
 		resourceAnchor.getElement().appendChild(collectionHTMLPanel.getElement());
@@ -191,7 +194,7 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 				this.collectionGoal.setHTML(collectionGoal);
 			}
 		}else{
-			this.collectionGoal.setHTML(GL1374);
+			this.collectionGoal.setHTML(i18n.GL1374());
 		}
 	}
 	
@@ -342,7 +345,7 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanel.clear();
-			toolTipPopupPanel.setWidget(new GlobalToolTip(GL0676));
+			toolTipPopupPanel.setWidget(new GlobalToolTip(i18n.GL0676()));
 			toolTipPopupPanel.setStyleName("");
 			toolTipPopupPanel.setPopupPosition(assignCollectionBtn.getElement().getAbsoluteLeft()+8, assignCollectionBtn.getElement().getAbsoluteTop()+10);
 			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
@@ -367,7 +370,7 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanel.clear();
-			toolTipPopupPanel.setWidget(new GlobalToolTip(GL0677));
+			toolTipPopupPanel.setWidget(new GlobalToolTip(i18n.GL0677()));
 			toolTipPopupPanel.setStyleName("");
 			toolTipPopupPanel.setPopupPosition(customizeCollectionBtn.getElement().getAbsoluteLeft()+18, customizeCollectionBtn.getElement().getAbsoluteTop()+10);
 			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
@@ -392,7 +395,7 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanel.clear();
-			toolTipPopupPanel.setWidget(new GlobalToolTip(GL0678));
+			toolTipPopupPanel.setWidget(new GlobalToolTip(i18n.GL0678()));
 			toolTipPopupPanel.setStyleName("");
 			toolTipPopupPanel.setPopupPosition(shareCollectionBtn.getElement().getAbsoluteLeft()+5, shareCollectionBtn.getElement().getAbsoluteTop()+10);
 			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
