@@ -293,6 +293,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		cancelButton.setText(GL0142);
 		cancelButton.getElement().setAttribute("alt", GL0142);
 		cancelButton.getElement().setAttribute("title", GL0142);
+		cancelButton.getElement().setAttribute("style", "margin-left:10px");
 		addbutton.setText(GL0590);
 		addbutton.getElement().setAttribute("alt", GL0590);
 		addbutton.getElement().setAttribute("title", GL0590);
@@ -444,10 +445,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		questionNameErrorLbl.getElement().setId("errlblQuestionNameErrorLbl");
 		questionNameTextArea.getElement().setId("tinyMCEQuestionNameTextArea");
 		addQuestionImg.getElement().setId("lnkAddQuestionImg");
-		addbutton.setText(GL0141);
+		addbutton.setText(GL0590);
 		addbutton.getElement().setId("btnAdd");
 		addbutton.getElement().setAttribute("alt", GL0141);
 		addbutton.getElement().setAttribute("title", GL0141);
+		cancelButton.getElement().setAttribute("style", "margin-left:10px");
 		loadingTextLbl.setVisible(false);
 		loadingTextLbl.setText(GL0808);
 		loadingTextLbl.getElement().setId("lblLoadingTextLbl");

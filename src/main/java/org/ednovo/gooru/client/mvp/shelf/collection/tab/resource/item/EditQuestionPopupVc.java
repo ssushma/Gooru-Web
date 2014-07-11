@@ -419,6 +419,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		 panelPleaseWait.getElement().setId("pnlPanelPleaseWait");
 		 lblPleaseWait.getElement().setId("lblLblPleaseWait");
 		 panelControls.getElement().setId("pnlPanelControls");
+		 btnCancel.getElement().setAttribute("style", "margin-left:10px");
 	//	 educationalUsePanel.setVisible(false);
 		 
 
@@ -617,12 +618,13 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		typeLbl.getElement().setInnerText(i18n.GL1499());
 		typeLbl.getElement().setAttribute("alt", i18n.GL1499());
 		typeLbl.getElement().setAttribute("title", i18n.GL1499());
-		btnSave.setText(i18n.GL0141());
+		btnSave.setText(i18n.GL0590());
 		btnSave.getElement().setAttribute("alt", i18n.GL0141());
 		btnSave.getElement().setAttribute("title", i18n.GL0141());
 		btnCancel.setText(i18n.GL0142());
 		btnCancel.getElement().setAttribute("alt", i18n.GL0142());
 		btnCancel.getElement().setAttribute("title", i18n.GL0142());
+		btnCancel.getElement().setAttribute("style", "margin-left:10px");
 		lblEditQuestionTitle.setText(i18n.GL0304());
 		lblEditQuestionTitle.getElement().setAttribute("alt", i18n.GL0304());
 		lblEditQuestionTitle.getElement().setAttribute("title", i18n.GL0304());
