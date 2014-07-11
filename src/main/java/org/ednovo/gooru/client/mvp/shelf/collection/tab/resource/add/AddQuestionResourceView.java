@@ -55,8 +55,8 @@ import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
@@ -65,7 +65,6 @@ import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Document;
@@ -90,7 +89,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -104,13 +102,15 @@ import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class AddQuestionResourceView extends Composite implements SelectionHandler<SuggestOracle.Suggestion>,MessageProperties{
+public abstract class AddQuestionResourceView extends Composite implements SelectionHandler<SuggestOracle.Suggestion>{
 	
 	public interface AddQuestionResourceViewUiBinder extends UiBinder<Widget, AddQuestionResourceView>{
 		
 	}
 	
 	public static AddQuestionResourceViewUiBinder uiBinder=GWT.create(AddQuestionResourceViewUiBinder.class);
+	
+	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	private CollectionItemDo collectionItemDo=null;
 	 boolean isAnsweEmpty = false;
@@ -176,22 +176,22 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		
 	RemoveToolTipUc removeToolTip=null;   
 	boolean validationValue=false, isAnswerChoiceSelected=false;
-	private static final String ERROR_MSG_QUESTION = GL0310;
-    private static final String ERROR_MSG_ANSWER = GL0311;
-    private static final String ERROR_MSG_ANSWER_SELECTED =GL0312; 
-    private static final String ERROR_MSG_ATLEAST_SELECTED =GL0876; 
-    private static final String ERROR_MSG_HINTS_LENGTH = GL0877;
-	private static final String ERROR_MSG_ANSWER_LENGTH =GL0878;
-	private static final String ERROR_MSG_EXPLAINATION_LENGTH =GL0879;
-	private static final String ERROR_MSG_QUESTION_LENGTH =GL0880;
-	private static final String ERROR_MSG_CHAR_LIMIT=GL0143;
+	private static final String ERROR_MSG_QUESTION = i18n.GL0310();
+    private static final String ERROR_MSG_ANSWER = i18n.GL0311();
+    private static final String ERROR_MSG_ANSWER_SELECTED =i18n.GL0312(); 
+    private static final String ERROR_MSG_ATLEAST_SELECTED =i18n.GL0876(); 
+    private static final String ERROR_MSG_HINTS_LENGTH = i18n.GL0877();
+	private static final String ERROR_MSG_ANSWER_LENGTH =i18n.GL0878();
+	private static final String ERROR_MSG_EXPLAINATION_LENGTH =i18n.GL0879();
+	private static final String ERROR_MSG_QUESTION_LENGTH =i18n.GL0880();
+	private static final String ERROR_MSG_CHAR_LIMIT=i18n.GL0143();
 	
-	private static final String ERROR_MSG_FIB_BALANCED=GL0881;
-	private static final String ERROR_MSG_FIB_BLANKS=GL0882;
-	private static final String ERROR_MSG_MULTIPLE_FIB=GL0883;
-	private static final String ERROR_MSG_MARK_AS_BLANK = GL0884;
+	private static final String ERROR_MSG_FIB_BALANCED=i18n.GL0881();
+	private static final String ERROR_MSG_FIB_BLANKS=i18n.GL0882();
+	private static final String ERROR_MSG_MULTIPLE_FIB=i18n.GL0883();
+	private static final String ERROR_MSG_MARK_AS_BLANK = i18n.GL0884();
 	private static final String REGX_PATTERN = "\\[(.*?)\\]";
-	private static final String FIB_SEPARATOR = GL0885;
+	private static final String FIB_SEPARATOR = i18n.GL0885();
 	
 	private static final int ANSWER_CHOICE_HINTS_TEXT_LENGTH =150;
 	private static final int QUESTION_TEXT_LENGTH =500;
@@ -223,84 +223,86 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		questionTypeHeader.getElement().setId("lblQuestionTypeHeader");
 		questionTypeText.getElement().setId("lblQuestionTypeText");
 		questionText.getElement().setId("pnlQuestionText");
-		questionText.getElement().setInnerHTML(" "+GL0863);
-		questionText.getElement().setAttribute("alt", GL0863);
-		questionText.getElement().setAttribute("title", GL0863);
+		questionText.getElement().setInnerHTML(" "+i18n.GL0863());
+		questionText.getElement().setAttribute("alt", i18n.GL0863());
+		questionText.getElement().setAttribute("title", i18n.GL0863());
 		questionNameErrorLbl.getElement().setId("errlblQuestionNameErrorLbl");
-		addQuestionImg.setText(GL_SPL_PLUS+" "+GL0860);
-		addQuestionImg.getElement().setAttribute("alt", GL0860);
-		addQuestionImg.getElement().setAttribute("title", GL0860);
+		addQuestionImg.setText(i18n.GL_SPL_PLUS()+" "+i18n.GL0860());
+		addQuestionImg.getElement().setAttribute("alt", i18n.GL0860());
+		addQuestionImg.getElement().setAttribute("title", i18n.GL0860());
 		addResourceFormTitleChoice.getElement().setId("lblAddResourceFormTitleChoice");
-		addResourceFormTitleChoice.getElement().setAttribute("alt", GL0864);
-		addResourceFormTitleChoice.getElement().setAttribute("title", GL0864);
-		addResourceFormTitleChoice.setText(GL0864);
+		addResourceFormTitleChoice.getElement().setAttribute("alt", i18n.GL0864());
+		addResourceFormTitleChoice.getElement().setAttribute("title", i18n.GL0864());
+		addResourceFormTitleChoice.setText(i18n.GL0864());
 		correctText.getElement().setId("pnlCorrectText");
 		noLabelText.getElement().setId("pnlNoLabelText");
-		correctText.getElement().setInnerHTML(GL0314);
-		correctText.getElement().setAttribute("alt", GL0314);
-		correctText.getElement().setAttribute("title", GL0314);
+		correctText.getElement().setInnerHTML(i18n.GL0314());
+		correctText.getElement().setAttribute("alt", i18n.GL0314());
+		correctText.getElement().setAttribute("title", i18n.GL0314());
 		noLabelText.setVisible(false);
 		alphaLetterA.getElement().setId("qacAlphaLetterA");
-		alphaLetterA.getElement().setAttribute("alt", GL_GRR_ALPHABET_A);
-		alphaLetterA.getElement().setAttribute("title", GL_GRR_ALPHABET_A);
-		alphaLetterA.setLabelName(GL_GRR_ALPHABET_A);
-		alphaLetterB.setLabelName(GL_GRR_ALPHABET_B);
+		alphaLetterA.getElement().setAttribute("alt", i18n.GL_GRR_ALPHABET_A());
+		alphaLetterA.getElement().setAttribute("title", i18n.GL_GRR_ALPHABET_A());
+		alphaLetterA.setLabelName(i18n.GL_GRR_ALPHABET_A());
+		alphaLetterB.setLabelName(i18n.GL_GRR_ALPHABET_B());
 		alphaLetterB.getElement().setId("qacAlphaLetterB");
-		alphaLetterB.getElement().setAttribute("alt", GL_GRR_ALPHABET_B);
-		alphaLetterB.getElement().setAttribute("title", GL_GRR_ALPHABET_B);
-		addAnswerChoice.setText(GL0866);
-		addAnswerChoice.getElement().setAttribute("alt", GL0866);
-		addAnswerChoice.getElement().setAttribute("title", GL0866);
-		explanationLabel.setText(" "+GL0867);
+		alphaLetterB.getElement().setAttribute("alt", i18n.GL_GRR_ALPHABET_B());
+		alphaLetterB.getElement().setAttribute("title", i18n.GL_GRR_ALPHABET_B());
+		addAnswerChoice.setText(i18n.GL0866());
+		addAnswerChoice.getElement().setAttribute("alt", i18n.GL0866());
+		addAnswerChoice.getElement().setAttribute("title", i18n.GL0866());
+		explanationLabel.setText(" "+i18n.GL0867());
 		explanationLabel.getElement().setId("lblExplanationLabel");
-		explanationLabel.getElement().setAttribute("alt", GL0867);
-		explanationLabel.getElement().setAttribute("title", GL0867);
-		addHintsLabel.setText(GL0868);
-		addHintsLabel.getElement().setAttribute("alt", GL0868);
-		addHintsLabel.getElement().setAttribute("title", GL0868);
-		rightsLbl.setText(GL0869);
+		explanationLabel.getElement().setAttribute("alt", i18n.GL0867());
+		explanationLabel.getElement().setAttribute("title", i18n.GL0867());
+		addHintsLabel.setText(i18n.GL0868());
+		addHintsLabel.getElement().setAttribute("alt", i18n.GL0868());
+		addHintsLabel.getElement().setAttribute("title", i18n.GL0868());
+		rightsLbl.setText(i18n.GL0869());
 		rightsLbl.getElement().setId("lblRightsLbl");
-		rightsLbl.getElement().setAttribute("alt", GL0869);
-		rightsLbl.getElement().setAttribute("title", GL0869);
-		agreeText.setText(GL0870);
+		rightsLbl.getElement().setAttribute("alt", i18n.GL0869());
+		rightsLbl.getElement().setAttribute("title", i18n.GL0869());
+		agreeText.setText(i18n.GL0870());
 		agreeText.getElement().setId("lblAgreeText");
-		agreeText.getElement().setAttribute("alt", GL0870);
-		agreeText.getElement().setAttribute("title", GL0870);
-		commuGuideLinesAnr.setText(GL0871);
+		agreeText.getElement().setAttribute("alt", i18n.GL0870());
+		agreeText.getElement().setAttribute("title", i18n.GL0870());
+		commuGuideLinesAnr.setText(i18n.GL0871());
 		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
-		commuGuideLinesAnr.getElement().setAttribute("alt", GL0871);
-		commuGuideLinesAnr.getElement().setAttribute("title", GL0871);
-		termsAndPolicyAnr.setText(" "+GL0872+GL_GRR_COMMA);
+		commuGuideLinesAnr.getElement().setAttribute("alt", i18n.GL0871());
+		commuGuideLinesAnr.getElement().setAttribute("title", i18n.GL0871());
+		termsAndPolicyAnr.setText(" "+i18n.GL0872()+i18n.GL_GRR_COMMA());
 		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicyAnr");
-		termsAndPolicyAnr.getElement().setAttribute("alt", GL0872);
-		termsAndPolicyAnr.getElement().setAttribute("title", GL0872);
-		privacyAnr.setText(" "+GL0873);
+		termsAndPolicyAnr.getElement().setAttribute("alt", i18n.GL0872());
+		termsAndPolicyAnr.getElement().setAttribute("title", i18n.GL0872());
+		privacyAnr.setText(" "+i18n.GL0873());
 		privacyAnr.getElement().setId("lnkPrivacyAnr");
-		privacyAnr.getElement().setAttribute("alt", GL0873);
-		privacyAnr.getElement().setAttribute("title", GL0873);
-		andText.setText(" "+GL_GRR_AND+" ");
+		privacyAnr.getElement().setAttribute("alt", i18n.GL0873());
+		privacyAnr.getElement().setAttribute("title", i18n.GL0873());
+		andText.setText(" "+i18n.GL_GRR_AND()+" ");
 		andText.getElement().setId("lblAndText");
-		andText.getElement().setAttribute("alt", GL_GRR_AND);
-		andText.getElement().setAttribute("title", GL_GRR_AND);
-		copyRightAnr.setText(" "+GL0875);
+		andText.getElement().setAttribute("alt", i18n.GL_GRR_AND());
+		andText.getElement().setAttribute("title", i18n.GL_GRR_AND());
+		copyRightAnr.setText(" "+i18n.GL0875());
 		copyRightAnr.getElement().setId("lnkCopyRightAnr");
-		copyRightAnr.getElement().setAttribute("alt", GL0875);
-		copyRightAnr.getElement().setAttribute("title", GL0875);
-		additionalText.setText(GL0874);
+		copyRightAnr.getElement().setAttribute("alt", i18n.GL0875());
+		copyRightAnr.getElement().setAttribute("title", i18n.GL0875());
+		additionalText.setText(i18n.GL0874());
 		additionalText.getElement().setId("lblAdditionalText");
-		additionalText.getElement().setAttribute("alt", GL0874);
-		additionalText.getElement().setAttribute("title", GL0874);
-		cancelButton.setText(GL0142);
-		cancelButton.getElement().setAttribute("alt", GL0142);
-		cancelButton.getElement().setAttribute("title", GL0142);
+
+		additionalText.getElement().setAttribute("alt", i18n.GL0874());
+		additionalText.getElement().setAttribute("title", i18n.GL0874());
+		cancelButton.setText(i18n.GL0142());
+		cancelButton.getElement().setAttribute("alt", i18n.GL0142());
+		cancelButton.getElement().setAttribute("title", i18n.GL0142());
 		cancelButton.getElement().setAttribute("style", "margin-left:10px");
-		addbutton.setText(GL0590);
-		addbutton.getElement().setAttribute("alt", GL0590);
-		addbutton.getElement().setAttribute("title", GL0590);
-		loadingTextLbl.setText(GL0591.toLowerCase());
+		addbutton.setText(i18n.GL0590());
+		addbutton.getElement().setAttribute("alt", i18n.GL0590());
+		addbutton.getElement().setAttribute("title", i18n.GL0590());
+		loadingTextLbl.setText(i18n.GL0591().toLowerCase());
+
 		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
-		loadingTextLbl.getElement().setAttribute("alt", GL0591.toLowerCase());
-		loadingTextLbl.getElement().setAttribute("title", GL0591.toLowerCase());
+		loadingTextLbl.getElement().setAttribute("alt", i18n.GL0591().toLowerCase());
+		loadingTextLbl.getElement().setAttribute("title", i18n.GL0591().toLowerCase());
 		questionNameTextArea.getElement().setId("tinyMCEQuestionNameTextArea");
 		questionNameTextArea.getElement().setAttribute("maxlength", "500");
 		explainationTextArea.getElement().setAttribute("maxlength", "400");
@@ -445,67 +447,67 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		questionNameErrorLbl.getElement().setId("errlblQuestionNameErrorLbl");
 		questionNameTextArea.getElement().setId("tinyMCEQuestionNameTextArea");
 		addQuestionImg.getElement().setId("lnkAddQuestionImg");
-		addbutton.setText(GL0590);
+		addbutton.setText(i18n.GL0590());
 		addbutton.getElement().setId("btnAdd");
-		addbutton.getElement().setAttribute("alt", GL0141);
-		addbutton.getElement().setAttribute("title", GL0141);
+		addbutton.getElement().setAttribute("alt", i18n.GL0590());
+		addbutton.getElement().setAttribute("title", i18n.GL0590());
 		cancelButton.getElement().setAttribute("style", "margin-left:10px");
 		loadingTextLbl.setVisible(false);
-		loadingTextLbl.setText(GL0808);
+		loadingTextLbl.setText(i18n.GL0808());
 		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
-		loadingTextLbl.getElement().setAttribute("alt", GL0808);
-		loadingTextLbl.getElement().setAttribute("title", GL0808);
-		rightsLbl.setText(GL0869);
+		loadingTextLbl.getElement().setAttribute("alt", i18n.GL0808());
+		loadingTextLbl.getElement().setAttribute("title", i18n.GL0808());
+		rightsLbl.setText(i18n.GL0869());
 		rightsLbl.getElement().setId("lblRightsLbl");
-		rightsLbl.getElement().setAttribute("alt", GL0869);
-		rightsLbl.getElement().setAttribute("title", GL0869);
-		agreeText.setText(GL0870);
+		rightsLbl.getElement().setAttribute("alt", i18n.GL0869());
+		rightsLbl.getElement().setAttribute("title", i18n.GL0869());
+		agreeText.setText(i18n.GL0870());
 		agreeText.getElement().setId("lblAgreeText");
-		agreeText.getElement().setAttribute("alt", GL0870);
-		agreeText.getElement().setAttribute("title", GL0870);
-		commuGuideLinesAnr.setText(GL0871);
+		agreeText.getElement().setAttribute("alt", i18n.GL0870());
+		agreeText.getElement().setAttribute("title", i18n.GL0870());
+		commuGuideLinesAnr.setText(i18n.GL0871());
 		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
-		commuGuideLinesAnr.getElement().setAttribute("alt", GL0871);
-		commuGuideLinesAnr.getElement().setAttribute("title", GL0871);
-		termsAndPolicyAnr.setText(" "+GL0872+GL_GRR_COMMA);
+		commuGuideLinesAnr.getElement().setAttribute("alt", i18n.GL0871());
+		commuGuideLinesAnr.getElement().setAttribute("title", i18n.GL0871());
+		termsAndPolicyAnr.setText(" "+i18n.GL0872()+i18n.GL_GRR_COMMA());
 		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicyAnr");
-		termsAndPolicyAnr.getElement().setAttribute("alt", GL0872);
-		termsAndPolicyAnr.getElement().setAttribute("title", GL0872);
-		privacyAnr.setText(" "+GL0873);
+		termsAndPolicyAnr.getElement().setAttribute("alt", i18n.GL0872());
+		termsAndPolicyAnr.getElement().setAttribute("title", i18n.GL0872());
+		privacyAnr.setText(" "+i18n.GL0873());
 		privacyAnr.getElement().setId("lnkPrivacyAnr");
-		privacyAnr.getElement().setAttribute("alt", GL0873);
-		privacyAnr.getElement().setAttribute("title", GL0873);
-		andText.setText(" "+GL_GRR_AND+" ");
+		privacyAnr.getElement().setAttribute("alt", i18n.GL0873());
+		privacyAnr.getElement().setAttribute("title", i18n.GL0873());
+		andText.setText(" "+i18n.GL_GRR_AND()+" ");
 		andText.getElement().setId("lblAndText");
-		andText.getElement().setAttribute("alt", GL_GRR_AND);
-		andText.getElement().setAttribute("title", GL_GRR_AND);
-		copyRightAnr.setText(" "+GL0875);
+		andText.getElement().setAttribute("alt", i18n.GL_GRR_AND());
+		andText.getElement().setAttribute("title", i18n.GL_GRR_AND());
+		copyRightAnr.setText(" "+i18n.GL0875());
 		copyRightAnr.getElement().setId("lnkCopyRightAnr");
-		copyRightAnr.getElement().setAttribute("alt", GL0875);
-		copyRightAnr.getElement().setAttribute("title", GL0875);
-		additionalText.setText(GL0874);
+		copyRightAnr.getElement().setAttribute("alt", i18n.GL0875());
+		copyRightAnr.getElement().setAttribute("title", i18n.GL0875());
+		additionalText.setText(i18n.GL0874());
 		additionalText.getElement().setId("lblAdditionalText");
-		additionalText.getElement().setAttribute("alt", GL0874);
-		additionalText.getElement().setAttribute("title", GL0874);
-		cancelButton.setText(GL0142);
+		additionalText.getElement().setAttribute("alt", i18n.GL0874());
+		additionalText.getElement().setAttribute("title", i18n.GL0874());
+		cancelButton.setText(i18n.GL0142());
 		cancelButton.getElement().setId("btnCancel");
-		cancelButton.getElement().setAttribute("alt", GL0142);
-		cancelButton.getElement().setAttribute("title", GL0142);
-		loadingTextLbl.setText(GL0808.toLowerCase());
+		cancelButton.getElement().setAttribute("alt", i18n.GL0142());
+		cancelButton.getElement().setAttribute("title", i18n.GL0142());
+		loadingTextLbl.setText(i18n.GL0808().toLowerCase());
 		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
-		loadingTextLbl.getElement().setAttribute("alt", GL0808.toLowerCase());
-		loadingTextLbl.getElement().setAttribute("title", GL0808.toLowerCase());
-		explanationLabel.setText(" "+GL0867);
+		loadingTextLbl.getElement().setAttribute("alt", i18n.GL0808().toLowerCase());
+		loadingTextLbl.getElement().setAttribute("title", i18n.GL0808().toLowerCase());
+		explanationLabel.setText(" "+i18n.GL0867());
 		explanationLabel.getElement().setId("lblExplanationLabel");
-		explanationLabel.getElement().setAttribute("alt", GL0867);
-		explanationLabel.getElement().setAttribute("title", GL0867);
-		addAnswerChoice.setText(GL0866);
-		addAnswerChoice.getElement().setAttribute("alt", GL0866);
-		addAnswerChoice.getElement().setAttribute("title", GL0866);
+		explanationLabel.getElement().setAttribute("alt", i18n.GL0867());
+		explanationLabel.getElement().setAttribute("title", i18n.GL0867());
+		addAnswerChoice.setText(i18n.GL0866());
+		addAnswerChoice.getElement().setAttribute("alt", i18n.GL0866());
+		addAnswerChoice.getElement().setAttribute("title", i18n.GL0866());
 		addAnswerChoice.getElement().setId("lnkAnswerChoice");
-		addHintsLabel.setText(GL0868);
-		addHintsLabel.getElement().setAttribute("alt", GL0868);
-		addHintsLabel.getElement().setAttribute("title", GL0868);
+		addHintsLabel.setText(i18n.GL0868());
+		addHintsLabel.getElement().setAttribute("alt", i18n.GL0868());
+		addHintsLabel.getElement().setAttribute("title", i18n.GL0868());
 		addHintsLabel.getElement().setId("lnkHints");
 		errorMessageForQuestion.getElement().setId("errlblErrorMessageForQuestion");
 		addQuestImgContainer.getElement().setId("pnlAddQuestImgContainer");
@@ -598,7 +600,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						/*standardsPreferenceOrganizeToolTip.show();
 						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
 						standardsPreferenceOrganizeToolTip.getElement().getStyle().setZIndex(1111);
-					*/	//standardSuggestOracle.add(GL1613);
+					*/	//standardSuggestOracle.add(i18n.GL1613);
 					}
 					}
 			}
@@ -621,42 +623,42 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
 	}
 	public void setTextForTheFields(){
-		/*educationalTitle.getElement().setInnerHTML(GL1664);
-		activityText.getElement().setInnerHTML(GL1665);
-		handoutText.getElement().setInnerHTML(GL0907);
-		homeworkText.getElement().setInnerHTML(GL1666);
-		gameText.getElement().setInnerHTML(GL1667);
-		presentationText.getElement().setInnerHTML(GL1668);
-		referenceMaterialText.getElement().setInnerHTML(GL1669);
-		quizText.getElement().setInnerHTML(GL1670);
-		curriculumPlanText.getElement().setInnerHTML(GL1671);
-		lessonPlanText.getElement().setInnerHTML(GL1672);
-		unitPlanText.getElement().setInnerHTML(GL1673);
-		projectPlanText.getElement().setInnerHTML(GL1674);
-		readingText.getElement().setInnerHTML(GL1675);
-		textbookText.getElement().setInnerHTML(GL0909);
-		articleText.getElement().setInnerHTML(GL1676);
-		bookText.getElement().setInnerHTML(GL1677);
+		/*educationalTitle.getElement().setInnerHTML(i18n.GL1664);
+		activityText.getElement().setInnerHTML(i18n.GL1665);
+		handoutText.getElement().setInnerHTML(i18n.GL0907);
+		homeworkText.getElement().setInnerHTML(i18n.GL1666);
+		gameText.getElement().setInnerHTML(i18n.GL1667);
+		presentationText.getElement().setInnerHTML(i18n.GL1668);
+		referenceMaterialText.getElement().setInnerHTML(i18n.GL1669);
+		quizText.getElement().setInnerHTML(i18n.GL1670);
+		curriculumPlanText.getElement().setInnerHTML(i18n.GL1671);
+		lessonPlanText.getElement().setInnerHTML(i18n.GL1672);
+		unitPlanText.getElement().setInnerHTML(i18n.GL1673);
+		projectPlanText.getElement().setInnerHTML(i18n.GL1674);
+		readingText.getElement().setInnerHTML(i18n.GL1675);
+		textbookText.getElement().setInnerHTML(i18n.GL0909);
+		articleText.getElement().setInnerHTML(i18n.GL1676);
+		bookText.getElement().setInnerHTML(i18n.GL1677);
 		educationalUsePanel.setVisible(false);
-		resourceEducationalLabel.setText(GL1684);*/
-		standardsDefaultText.setText(GL1682);
-		standardsDefaultText.getElement().setAttribute("alt", GL1682);
-		standardsDefaultText.getElement().setAttribute("title", GL1682);
-		depthOfKnowledgeHeader.setText(GL1693);
-		depthOfKnowledgeHeader.getElement().setAttribute("alt", GL1693);
-		depthOfKnowledgeHeader.getElement().setAttribute("title", GL1693);
-		chkLevelRecall.setText(GL1645);
-		chkLevelRecall.getElement().setAttribute("alt", GL1645);
-		chkLevelRecall.getElement().setAttribute("title", GL1645);
-		chkLevelSkillConcept.setText(GL1646);
-		chkLevelSkillConcept.getElement().setAttribute("alt", GL1646);
-		chkLevelSkillConcept.getElement().setAttribute("title", GL1646);
-		chkLevelStrategicThinking.setText(GL1647);
-		chkLevelStrategicThinking.getElement().setAttribute("alt", GL1647);
-		chkLevelStrategicThinking.getElement().setAttribute("title", GL1647);
-		chkLevelExtendedThinking.setText(GL1648);
-		chkLevelExtendedThinking.getElement().setAttribute("alt", GL1648);
-		chkLevelExtendedThinking.getElement().setAttribute("title", GL1648);
+		resourceEducationalLabel.setText(i18n.GL1684);*/
+		standardsDefaultText.setText(i18n.GL1682());
+		standardsDefaultText.getElement().setAttribute("alt", i18n.GL1682());
+		standardsDefaultText.getElement().setAttribute("title", i18n.GL1682());
+		depthOfKnowledgeHeader.setText(i18n.GL1693());
+		depthOfKnowledgeHeader.getElement().setAttribute("alt", i18n.GL1693());
+		depthOfKnowledgeHeader.getElement().setAttribute("title", i18n.GL1693());
+		chkLevelRecall.setText(i18n.GL1645());
+		chkLevelRecall.getElement().setAttribute("alt", i18n.GL1645());
+		chkLevelRecall.getElement().setAttribute("title", i18n.GL1645());
+		chkLevelSkillConcept.setText(i18n.GL1646());
+		chkLevelSkillConcept.getElement().setAttribute("alt", i18n.GL1646());
+		chkLevelSkillConcept.getElement().setAttribute("title", i18n.GL1646());
+		chkLevelStrategicThinking.setText(i18n.GL1647());
+		chkLevelStrategicThinking.getElement().setAttribute("alt", i18n.GL1647());
+		chkLevelStrategicThinking.getElement().setAttribute("title", i18n.GL1647());
+		chkLevelExtendedThinking.setText(i18n.GL1648());
+		chkLevelExtendedThinking.getElement().setAttribute("alt", i18n.GL1648());
+		chkLevelExtendedThinking.getElement().setAttribute("title", i18n.GL1648());
 		depthOfKnoweldgeToolTip.setUrl("images/mos/questionmark.png");
 		depthOfKnoweldgeToolTip.setTitle("Question Mark");
 		depthOfKnoweldgeToolTip.getElement().setAttribute("alt", "Question Mark");
@@ -1650,7 +1652,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				}
 			}
 			educationalUse.put("educationalUse", arrayList);
-			if(!resourceEducationalLabel.getText().equalsIgnoreCase(GL1684))
+			if(!resourceEducationalLabel.getText().equalsIgnoreCase(i18n.GL1684))
 			collectionQuestionItemDo.setEducationalUse(educationalUse);*/
 			if(!isSaveButtonClicked){
 				isSaveButtonClicked=true;
@@ -1987,43 +1989,43 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	public void setHeaderAndBodyText(String tabType){
 		if(tabType.equals("MC")){
-			questionTypeHeader.setText(GL0349);
-			questionTypeText.setText(GL0350);
-			questionTypeHeader.getElement().setAttribute("alt", GL0349);
-			questionTypeHeader.getElement().setAttribute("title", GL0349);
-			questionTypeText.getElement().setAttribute("alt", GL0350);
-			questionTypeText.getElement().setAttribute("title", GL0350);
+			questionTypeHeader.setText(i18n.GL0349());
+			questionTypeText.setText(i18n.GL0350());
+			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0349());
+			questionTypeHeader.getElement().setAttribute("title", i18n.GL0349());
+			questionTypeText.getElement().setAttribute("alt", i18n.GL0350());
+			questionTypeText.getElement().setAttribute("title", i18n.GL0350());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 		}else if(tabType.equals("MA")){
-			questionTypeHeader.setText(GL0351);
-			questionTypeHeader.getElement().setAttribute("alt", GL0351);
-			questionTypeHeader.getElement().setAttribute("title", GL0351);
-			questionTypeText.setText(GL0352);
-			questionTypeText.getElement().setAttribute("alt", GL0352);
-			questionTypeText.getElement().setAttribute("title", GL0352);
+			questionTypeHeader.setText(i18n.GL0351());
+			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0351());
+			questionTypeHeader.getElement().setAttribute("title", i18n.GL0351());
+			questionTypeText.setText(i18n.GL0352());
+			questionTypeText.getElement().setAttribute("alt", i18n.GL0352());
+			questionTypeText.getElement().setAttribute("title", i18n.GL0352());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 		}else if(tabType.equals("T/F")){
-			questionTypeHeader.setText(GL0353);
-			questionTypeHeader.getElement().setAttribute("alt", GL0353);
-			questionTypeHeader.getElement().setAttribute("title", GL0353);
-			questionTypeText.setText(GL0354);
-			questionTypeText.getElement().setAttribute("alt", GL0354);
-			questionTypeText.getElement().setAttribute("title", GL0354);
+			questionTypeHeader.setText(i18n.GL0353());
+			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0353());
+			questionTypeHeader.getElement().setAttribute("title", i18n.GL0353());
+			questionTypeText.setText(i18n.GL0354());
+			questionTypeText.getElement().setAttribute("alt", i18n.GL0354());
+			questionTypeText.getElement().setAttribute("title", i18n.GL0354());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 		}else if(tabType.equals("FIB")){
-			questionTypeHeader.setText(GL0355);
-			questionTypeHeader.getElement().setAttribute("alt", GL0355);
-			questionTypeHeader.getElement().setAttribute("title", GL0355);
-			questionTypeText.setText(GL0356);
-			questionTypeText.getElement().setAttribute("alt", GL0356);
-			questionTypeText.getElement().setAttribute("title", GL0356);
+			questionTypeHeader.setText(i18n.GL0355());
+			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0355());
+			questionTypeHeader.getElement().setAttribute("title", i18n.GL0355());
+			questionTypeText.setText(i18n.GL0356());
+			questionTypeText.getElement().setAttribute("alt", i18n.GL0356());
+			questionTypeText.getElement().setAttribute("title", i18n.GL0356());
 		}else if(tabType.equals("OE")){
-			questionTypeHeader.setText(GL0357);
-			questionTypeHeader.getElement().setAttribute("alt", GL0357);
-			questionTypeHeader.getElement().setAttribute("title", GL0357);
-			questionTypeText.setText(GL0358);
-			questionTypeText.getElement().setAttribute("alt", GL0358);
-			questionTypeText.getElement().setAttribute("title", GL0358);
+			questionTypeHeader.setText(i18n.GL0357());
+			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0357());
+			questionTypeHeader.getElement().setAttribute("title", i18n.GL0357());
+			questionTypeText.setText(i18n.GL0358());
+			questionTypeText.getElement().setAttribute("alt", i18n.GL0358());
+			questionTypeText.getElement().setAttribute("title", i18n.GL0358());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 		}
 	}
@@ -2109,13 +2111,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	        addHintsTextArea(addHints);
 		}
 		if(collectionItemDo.getResource().getType()==1){
-			addResourceFormTitleChoice.setText(GL0864);
-			addResourceFormTitleChoice.getElement().setAttribute("alt", GL0864);
-			addResourceFormTitleChoice.getElement().setAttribute("title", GL0864);
+			addResourceFormTitleChoice.setText(i18n.GL0864());
+			addResourceFormTitleChoice.getElement().setAttribute("alt", i18n.GL0864());
+			addResourceFormTitleChoice.getElement().setAttribute("title", i18n.GL0864());
 			correctText.clear();
-			correctText.getElement().setInnerHTML(GL0314);
-			correctText.getElement().setAttribute("alt", GL0314);
-			correctText.getElement().setAttribute("title", GL0314);
+			correctText.getElement().setInnerHTML(i18n.GL0314());
+			correctText.getElement().setAttribute("alt", i18n.GL0314());
+			correctText.getElement().setAttribute("title", i18n.GL0314());
 			setCorrectTextStyle();
 			noLabelText.setVisible(false);
 			questionAnswerChoiceContainer.clear();
@@ -2161,13 +2163,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				addQuesetionAnswerOptionTextArea(addQuestionAnswer,widgetCount);
 			}
 		}else if(collectionItemDo.getResource().getType()==3){
-			addResourceFormTitleChoice.setText(GL0864);
-			addResourceFormTitleChoice.getElement().setAttribute("alt", GL0864);
-			addResourceFormTitleChoice.getElement().setAttribute("title", GL0864);
+			addResourceFormTitleChoice.setText(i18n.GL0864());
+			addResourceFormTitleChoice.getElement().setAttribute("alt", i18n.GL0864());
+			addResourceFormTitleChoice.getElement().setAttribute("title", i18n.GL0864());
 			correctText.clear();
-			correctText.getElement().setInnerHTML(GL0314);
-			correctText.getElement().setAttribute("alt", GL0314);
-			correctText.getElement().setAttribute("title", GL0314);
+			correctText.getElement().setInnerHTML(i18n.GL0314());
+			correctText.getElement().setAttribute("alt", i18n.GL0314());
+			correctText.getElement().setAttribute("title", i18n.GL0314());
 			setCorrectTextStyle();
 			noLabelText.setVisible(false);
 			setMultipleChoiceAnswerFields();
@@ -2447,7 +2449,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	/*@UiHandler("activityPanel")
 	void activityPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_activity_selected");
-		resourceEducationalLabel.setText(GL1665);
+		resourceEducationalLabel.setText(i18n.GL1665);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -2455,7 +2457,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiHandler("handoutPanel")
 	void handoutPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_handout_selected");
-		resourceEducationalLabel.setText(GL0907);
+		resourceEducationalLabel.setText(i18n.GL0907);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -2463,7 +2465,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiHandler("homeworkPanel")
 	void homeworkPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_homework_selected");
-		resourceEducationalLabel.setText(GL1666);
+		resourceEducationalLabel.setText(i18n.GL1666);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -2471,7 +2473,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiHandler("gamePanel")
 	void gamePanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_game_selected");
-		resourceEducationalLabel.setText(GL1667);
+		resourceEducationalLabel.setText(i18n.GL1667);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -2479,7 +2481,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiHandler("presentationPanel")
 	void presentationPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_presentation_selected");
-		resourceEducationalLabel.setText(GL1668);
+		resourceEducationalLabel.setText(i18n.GL1668);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -2487,7 +2489,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiHandler("referenceMaterialPanel")
 	void referenceMaterialPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_reference_material_selected");
-		resourceEducationalLabel.setText(GL1669);
+		resourceEducationalLabel.setText(i18n.GL1669);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -2495,7 +2497,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiHandler("quizPanel")
 	void quizPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_quiz_selected");
-		resourceEducationalLabel.setText(GL1670);
+		resourceEducationalLabel.setText(i18n.GL1670);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -2503,7 +2505,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiHandler("curriculumPlanPanel")
 	void curriculumPlanPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_curriculum_plan_selected");
-		resourceEducationalLabel.setText(GL1671);
+		resourceEducationalLabel.setText(i18n.GL1671);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -2511,7 +2513,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiHandler("lessonPlanPanel")
 	void lessonPlanPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_lesson_plan_selected");
-		resourceEducationalLabel.setText(GL1672);
+		resourceEducationalLabel.setText(i18n.GL1672);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -2519,7 +2521,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiHandler("unitPlanPanel")
 	void unitPlanPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_unit_plan_selected");
-		resourceEducationalLabel.setText(GL1673);
+		resourceEducationalLabel.setText(i18n.GL1673);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -2527,7 +2529,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiHandler("projectPlanPanel")
 	void projectPlanPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_project_plan_selected");
-		resourceEducationalLabel.setText(GL1674);
+		resourceEducationalLabel.setText(i18n.GL1674);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -2535,7 +2537,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiHandler("readingPanel")
 	void readingPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_reading_selected");
-		resourceEducationalLabel.setText(GL1675);
+		resourceEducationalLabel.setText(i18n.GL1675);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -2543,7 +2545,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiHandler("textbookPanel")
 	void textbookPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_textbook_selected");
-		resourceEducationalLabel.setText(GL0909);
+		resourceEducationalLabel.setText(i18n.GL0909);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -2551,7 +2553,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiHandler("articlePanel")
 	void articlePanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_article_selected");
-		resourceEducationalLabel.setText(GL1676);
+		resourceEducationalLabel.setText(i18n.GL1676);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -2559,7 +2561,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiHandler("bookPanel")
 	void bookPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_book_selected");
-		resourceEducationalLabel.setText(GL1677);
+		resourceEducationalLabel.setText(i18n.GL1677);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -2607,7 +2609,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
  			
  			@Override
  			public void onMouseOver(MouseOverEvent event) {
- 				toolTip = new ToolTip(GL1734);
+ 				toolTip = new ToolTip(i18n.GL1734());
  				toolTip.getLblLink().setVisible(false);
  				toolTip.getElement().getStyle().setBackgroundColor("transparent");
  				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
