@@ -9,7 +9,7 @@
           	  <g:Label styleName="{oeStyle.systemMessageStyle}" ui:field="messageBodyText"></g:Label>
               <g:TextArea styleName="{oeStyle.openEndedQuestionAnswer}" ui:field="openEndedAnswerTextArea"></g:TextArea>
               <g:Label ui:field="errorMessageText" styleName="{oeStyle.errorMessageStyle}"></g:Label>
-              <g:Button styleName="{oeStyle.openEndedQuestionSubmitButton} {oeStyle.addjustSubmitButton}" ui:field="submitButton"></g:Button>
+              <g:Button styleName="{oeStyle.hintsInActiveButton} {oeStyle.addjustSubmitButton}" ui:field="submitButton"></g:Button>
               <g:HTMLPanel styleName="{oeStyle.openEndedQuestionAnswerHolder}" ui:field="answetTextAfterSubmission"></g:HTMLPanel>
               <g:Label ui:field="submittedText" styleName="{oeStyle.openEndedQuestionAnswerText}"></g:Label>
         </g:FlowPanel>

@@ -67,6 +67,7 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 	private static final String OPEN_ENDED_BODY_TEXT=GL1460;
 	private String answerText="";
 	private CollectionItemDo collectionItemDo;
+	private boolean isCheckButtonEnabled=false;
 	private static OpendEndedQuestionViewUiBinder uiBinder = GWT.create(OpendEndedQuestionViewUiBinder.class);
 
 	interface OpendEndedQuestionViewUiBinder extends UiBinder<Widget, OpendEndedQuestionView> {
@@ -112,6 +113,7 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 		setOeQuestionAnswerText(answerText);
 		//saveOeAnswerData();
 		 if(answerText!=null){
+			 enableSubmitButton();
 			 if(answerText.trim().length()>=1000){
 				 errorMessageText.setText(ERROR_MESSAGE);
 				 errorMessageText.getElement().setAttribute("alt",ERROR_MESSAGE);
@@ -133,6 +135,11 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 	
 	@UiHandler("submitButton")
 	public void clickOnSubmitButton(ClickEvent clickEvent){
+		if(isCheckButtonEnabled){
+		isCheckButtonEnabled=false;
+		submitButton.removeStyleName(oeStyle.openEndedQuestionSubmitButton());
+		submitButton.addStyleName(oeStyle.hintsInActiveButton());
+		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 			MixpanelUtil.ClickOpenEndedQuestionSubmitButtonFromCollectionPlayer();
 		}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
@@ -160,6 +167,7 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 		 }else{
 			 errorMessageText.setText(EMPTY_ERROR_MESSAGE);
 		 }
+		}
 	}
 	
 	public void showSubmitedText(){
@@ -194,6 +202,11 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 	}
 	public void createSesstionItemAttemptOeWhenNavigation(){
 		createSesstionItemAttemptOe("",openEndedAnswerTextArea.getValue());
+	}
+	private void enableSubmitButton(){
+		isCheckButtonEnabled=true;
+		submitButton.removeStyleName(oeStyle.hintsInActiveButton());
+		submitButton.addStyleName(oeStyle.openEndedQuestionSubmitButton());
 	}
 	public abstract void createSesstionItemAttemptOe(String answerId,String answerText);
 	public abstract void setAttemptStatus(String collecionItemId, AttemptedAnswersDo attempteAnswersDo);
