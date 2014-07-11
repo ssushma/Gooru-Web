@@ -251,9 +251,8 @@ public class CourseListUc extends PopupPanel implements MessageProperties {
 			collectionId=collectionDo.getGooruOid();
 			for (CodeDo code : collectionDo.getTaxonomySet()) {
 				if(code.getDepth()==2){
-					oldCourseId=Integer.toString(code.getCodeId());
-					updateCourse(collectionId, oldCourseId,"delete");				}
-				
+					deleteCourse(collectionId, code.getCodeId());	
+				}
 			}
 			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
 				MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
@@ -279,6 +278,13 @@ public class CourseListUc extends PopupPanel implements MessageProperties {
 			}
 		});
 
+	}
+	public void deleteCourse(String collectionId, int courseCode) {
+		AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionId, courseCode, new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+			}
+		});
 	}
 	
 	

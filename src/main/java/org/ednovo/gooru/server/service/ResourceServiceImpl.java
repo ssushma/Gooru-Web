@@ -479,10 +479,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 				collectionTypeJsonObject.put("vocabulary", vocabulary);
 			}
 			if(taxonomyCode!=null){
-				collectionTypeJsonObject.put("taxonomyCode", taxonomyCode);
-			}
-			if(updateTaxonomyByCode!=null){
-				collectionTypeJsonObject.put("updateTaxonomyByCode", updateTaxonomyByCode);
+				JSONArray taxonomySet = new JSONArray();
+				JSONObject code = new JSONObject();
+				code.put("codeId", taxonomyCode);
+				taxonomySet.put(code);
+				collectionTypeJsonObject.put("taxonomySet", taxonomySet);
 			}
 			if(mediaType!=null){
 				collectionTypeJsonObject.put("mediaType", mediaType);

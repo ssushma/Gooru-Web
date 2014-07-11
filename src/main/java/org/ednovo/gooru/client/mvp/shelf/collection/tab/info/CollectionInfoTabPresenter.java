@@ -280,5 +280,14 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 		
 	}
 
+	@Override
+	public void deleteCourseOrStandard(String collectionId, String courseCode) {
+		AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionId, Integer.valueOf(courseCode), new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+			}
+		});
+	}
+
 
 }
