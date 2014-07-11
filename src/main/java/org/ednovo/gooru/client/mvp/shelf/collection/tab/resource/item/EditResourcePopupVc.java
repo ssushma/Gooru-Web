@@ -103,7 +103,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 
 	@UiField
-	public Button addResourceBtn;
+	public Button addResourceBtn,cancelResourcePopupBtnLbl;
 	
 	@UiField
 	public Label generateImageLbl,resoureDropDownLbl;
@@ -146,7 +146,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	 @UiField CheckBox rightsChkBox;
 	 @UiField Anchor copyRightAnr;
 	 @UiField Anchor termsAndPolicyAnr,privacyAnr;
-	@UiField Anchor commuGuideLinesAnr,cancelResourcePopupBtnLbl;
+	@UiField Anchor commuGuideLinesAnr;
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox;
 	
@@ -412,7 +412,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		additionalText.getElement().setId("lblAdditionalText");
 		additionalText.getElement().setAttribute("alt", i18n.GL0874());
 		additionalText.getElement().setAttribute("title", i18n.GL0874());
-		addResourceBtn.setText(i18n.GL0141());
+		addResourceBtn.setText(i18n.GL0590());
 		addResourceBtn.getElement().setId("btnAddResourceBtn");
 		addResourceBtn.getElement().setAttribute("alt", i18n.GL0141());
 		addResourceBtn.getElement().setAttribute("title", i18n.GL0141());
@@ -591,7 +591,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		refreshLbl.getElement().setId("lblRefreshLbl");
 		rightsContainer.getElement().setId("pnlRightsContainer");
 		lblContentRights.getElement().setId("epnlLblContentRights");
-		
+		cancelResourcePopupBtnLbl.getElement().setAttribute("style", "margin-left:10px");
 		displayResourceInfo();
 		show();
 		center();

@@ -274,6 +274,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 		cancelResourcePopupBtnLbl.setText(GL0142);
 		cancelResourcePopupBtnLbl.getElement().setAttribute("alt", GL0142);
 		cancelResourcePopupBtnLbl.getElement().setAttribute("title", GL0142);
+		cancelResourcePopupBtnLbl.getElement().setAttribute("style", "margin-left:10px;");
 		addResourceBtnLbl.setText(GL0590);
 		addResourceBtnLbl.getElement().setAttribute("alt", GL0590);
 		addResourceBtnLbl.getElement().setAttribute("title", GL0590);
