@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.uc.EmailShareUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
@@ -71,13 +72,15 @@ import com.google.gwt.user.client.ui.Widget;
 */
 
 public class SocialShareSmallView extends ChildView<SocialShareSmallPresenter> implements
-IsSocialShareSmallView, MessageProperties {
+IsSocialShareSmallView{
 
 	private static SocialShareSmallViewUiBinder uiBinder = GWT
 			.create(SocialShareSmallViewUiBinder.class);
 
 	interface SocialShareSmallViewUiBinder extends UiBinder<Widget, SocialShareSmallView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 
 	@UiField
@@ -170,7 +173,7 @@ IsSocialShareSmallView, MessageProperties {
 
 
 		if(title.contains("img")){
-			socialDo.setTitle(GL0308);
+			socialDo.setTitle(i18n.GL0308());
 		}else{
 			if (title.length() > 50) {
 				title = title.substring(0,50)+ "...";
@@ -410,7 +413,7 @@ IsSocialShareSmallView, MessageProperties {
 				SocialShareView.postOnFacebook(socialDo.getTitle(),socialDo.getRawUrl(),description,categoryImage.getUrl());
 			}
 			else{
-				String title = GL1085_2;
+				String title = i18n.GL1085_2();
 				triggerShareDataEvent(PlayerDataLogEvents.FACEBOOK,false);
 				SocialShareView.postOnFacebook(title,socialDo.getRawUrl(),description,categoryImage.getUrl());
 			}
@@ -429,14 +432,14 @@ IsSocialShareSmallView, MessageProperties {
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)){
 			if(socialDo.getIsSearchShare()){
 				triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
-				Window.open("http://twitter.com/intent/tweet?text=" + GL0733+" "+GL_GRR_Hyphen+" "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");  
+				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL0733()+" "+i18n.GL_GRR_Hyphen()+" "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");  
 			}else{
 				triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
-				Window.open("http://twitter.com/intent/tweet?text=" + GL1085_1 +" "+GL_GRR_Hyphen+" " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
+				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL1085_1() +" "+i18n.GL_GRR_Hyphen()+" " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
 			}
 		}else{
 			triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
-			Window.open("http://twitter.com/intent/tweet?text=" + GL0733+" "+GL_GRR_Hyphen+" "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
+			Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL0733()+" "+i18n.GL_GRR_Hyphen()+" "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
 		}
 	}
 	/**
