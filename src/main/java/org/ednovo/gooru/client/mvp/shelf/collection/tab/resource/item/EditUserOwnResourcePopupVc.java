@@ -83,7 +83,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	CollectionItemDo collectionItemDo;
 
 	@UiField
-	public Button addResourceBtn,changeFileBtn,browseResourceBtn;
+	public Button addResourceBtn,changeFileBtn,browseResourceBtn,cancelResourcePopupBtnLbl;
 	
 	@UiField
 	FormPanel fileuploadForm;
@@ -122,7 +122,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	@UiField HTMLPanel categorypanel,texts,image,resourceTypePanel,panelAction,fileTitleText,
 	descriptionText,categoryLabel,thumbnailImageText;
 	@UiField Anchor copyRightAnr,rollBackToPaperClip;
-	@UiField Anchor termsAndPolicyAnr,privacyAnr,cancelResourcePopupBtnLbl;
+	@UiField Anchor termsAndPolicyAnr,privacyAnr;
 	@UiField Anchor commuGuideLinesAnr;
 	private CopyRightPolicyVc copyRightPolicy;
 	private TermsAndPolicyVc termsAndPolicyVc;
@@ -266,7 +266,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 		additionalText.getElement().setId("lblAdditionalText");
 		additionalText.getElement().setAttribute("alt", GL0874);
 		additionalText.getElement().setAttribute("title", GL0874);
-		addResourceBtn.setText(GL0141);
+		addResourceBtn.setText(GL0590);
 		addResourceBtn.getElement().setId("btnAddResourceBtn");
 		addResourceBtn.getElement().setAttribute("alt", GL0141);
 		addResourceBtn.getElement().setAttribute("title", GL0141);
@@ -274,6 +274,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 		cancelResourcePopupBtnLbl.getElement().setId("lnkCancelResourcePopupBtnLbl");
 		cancelResourcePopupBtnLbl.getElement().setAttribute("alt", GL0142);
 		cancelResourcePopupBtnLbl.getElement().setAttribute("title", GL0142);
+		cancelResourcePopupBtnLbl.getElement().setAttribute("style","margin-left:10px");
 		lblAdding.setText(GL0591.toLowerCase());
 		lblAdding.getElement().setId("lblLblAdding");
 		lblAdding.getElement().setAttribute("alt", GL0591);

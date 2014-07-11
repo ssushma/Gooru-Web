@@ -467,7 +467,8 @@
           <g:HTMLPanel styleName="{res.css.myFolderCollectionOk}" ui:field="addResourceBtnPanel">
 	          <gg:BlueButtonUc styleName="primary" ui:field="addResourceBtnLbl"/>
           </g:HTMLPanel>
-          <g:Label styleName="{res.css.myFolderCollectionCancel}" ui:field="cancelResourcePopupBtnLbl"/>
+       <g:Button styleName="grayPrimaryButton" ui:field="cancelResourcePopupBtnLbl"></g:Button>
+       <!--    <g:Label styleName="{res.css.myFolderCollectionCancel}" ui:field="cancelResourcePopupBtnLbl"/> -->
         </g:HTMLPanel>
          <g:Label styleName="{res.css.myFolderCollectionButtonContainer}" ui:field="loadingTextLbl"></g:Label>
       </g:HTMLPanel>
