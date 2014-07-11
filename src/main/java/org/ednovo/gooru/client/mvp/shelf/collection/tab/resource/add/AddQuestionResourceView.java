@@ -288,15 +288,18 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		copyRightAnr.getElement().setAttribute("title", i18n.GL0875());
 		additionalText.setText(i18n.GL0874());
 		additionalText.getElement().setId("lblAdditionalText");
+
 		additionalText.getElement().setAttribute("alt", i18n.GL0874());
 		additionalText.getElement().setAttribute("title", i18n.GL0874());
 		cancelButton.setText(i18n.GL0142());
 		cancelButton.getElement().setAttribute("alt", i18n.GL0142());
 		cancelButton.getElement().setAttribute("title", i18n.GL0142());
+		cancelButton.getElement().setAttribute("style", "margin-left:10px");
 		addbutton.setText(i18n.GL0590());
 		addbutton.getElement().setAttribute("alt", i18n.GL0590());
 		addbutton.getElement().setAttribute("title", i18n.GL0590());
 		loadingTextLbl.setText(i18n.GL0591().toLowerCase());
+
 		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
 		loadingTextLbl.getElement().setAttribute("alt", i18n.GL0591().toLowerCase());
 		loadingTextLbl.getElement().setAttribute("title", i18n.GL0591().toLowerCase());
@@ -444,10 +447,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		questionNameErrorLbl.getElement().setId("errlblQuestionNameErrorLbl");
 		questionNameTextArea.getElement().setId("tinyMCEQuestionNameTextArea");
 		addQuestionImg.getElement().setId("lnkAddQuestionImg");
-		addbutton.setText(i18n.GL0141());
+		addbutton.setText(i18n.GL0590());
 		addbutton.getElement().setId("btnAdd");
-		addbutton.getElement().setAttribute("alt", i18n.GL0141());
-		addbutton.getElement().setAttribute("title", i18n.GL0141());
+		addbutton.getElement().setAttribute("alt", i18n.GL0590());
+		addbutton.getElement().setAttribute("title", i18n.GL0590());
+		cancelButton.getElement().setAttribute("style", "margin-left:10px");
 		loadingTextLbl.setVisible(false);
 		loadingTextLbl.setText(i18n.GL0808());
 		loadingTextLbl.getElement().setId("lblLoadingTextLbl");

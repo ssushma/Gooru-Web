@@ -270,12 +270,14 @@ public abstract class AddUserOwnResourceView extends Composite {
 		cancelResourcePopupBtnLbl.setText(i18n.GL0142());
 		cancelResourcePopupBtnLbl.getElement().setAttribute("alt", i18n.GL0142());
 		cancelResourcePopupBtnLbl.getElement().setAttribute("title", i18n.GL0142());
+		cancelResourcePopupBtnLbl.getElement().setAttribute("style", "margin-left:10px;");
 		addResourceBtnLbl.setText(i18n.GL0590());
 		addResourceBtnLbl.getElement().setAttribute("alt", i18n.GL0590());
 		addResourceBtnLbl.getElement().setAttribute("title", i18n.GL0590());
 		lblAdding.setText(i18n.GL0591().toLowerCase());
 		lblAdding.getElement().setAttribute("alt", i18n.GL0591().toLowerCase());
 		lblAdding.getElement().setAttribute("title", i18n.GL0591().toLowerCase());
+
 		CollectionEditResourceCBundle.INSTANCE.css().ensureInjected();
 		cancelResourcePopupBtnLbl.addClickHandler(new CloseClickHandler());
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());

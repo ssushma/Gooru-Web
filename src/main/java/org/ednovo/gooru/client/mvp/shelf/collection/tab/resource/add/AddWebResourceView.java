@@ -76,6 +76,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -101,7 +102,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	@UiField
-	public Label standardsDefaultText,mandatoryEducationalLbl, cancelResourcePopupBtnLbl, generateImageLbl,agreeText,andText,additionalText,mandatorymomentsOfLearninglLbl,driveFileInfoLbl;
+	public Label standardsDefaultText,mandatoryEducationalLbl, generateImageLbl,agreeText,andText,additionalText,mandatorymomentsOfLearninglLbl,driveFileInfoLbl;
 	@UiField
 	public BlueButtonUc addResourceBtnLbl;
 
@@ -160,6 +161,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	AppSuggestBox standardSgstBox;
 	
 	@UiField FlowPanel standardsPanel,standardContainer;
+	@UiField Button cancelResourcePopupBtnLbl;
 	
 	Integer videoDuration=0;
 	private CopyRightPolicyVc copyRightPolicy;
@@ -588,6 +590,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		buttonsPanel.getElement().setId("pnlButtonsPanel");
 		addResourceBtnPanel.getElement().setId("pnlAddResourceBtnPanel");
 		clearFields();
+		cancelResourcePopupBtnLbl.getElement().setAttribute("style", "margin-top:10px");
 		copyRightAnr.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
