@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.play.collection.share.email;
 
 
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -39,7 +40,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SentEmailSuccessVc extends PopupPanel implements MessageProperties{
+public class SentEmailSuccessVc extends PopupPanel{
 
 	private static SentEmailSuccessVcUiBinder uiBinder = GWT
 			.create(SentEmailSuccessVcUiBinder.class);
@@ -47,6 +48,8 @@ public class SentEmailSuccessVc extends PopupPanel implements MessageProperties{
 	interface SentEmailSuccessVcUiBinder extends
 			UiBinder<Widget, SentEmailSuccessVc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 
 	@UiField
@@ -69,18 +72,18 @@ public class SentEmailSuccessVc extends PopupPanel implements MessageProperties{
 		this.getElement().getStyle().setZIndex(99999);
 		this.show();
 		this.center();
-		emailToFriendText.getElement().setInnerHTML(GL0222);
+		emailToFriendText.getElement().setInnerHTML(i18n.GL0222());
 		emailToFriendText.getElement().setId("pnlEmailToFriendText");
-		emailToFriendText.getElement().setAttribute("alt",GL0222);
-		emailToFriendText.getElement().setAttribute("title",GL0222);
-		thanksEmailText.getElement().setInnerHTML(GL0648);
+		emailToFriendText.getElement().setAttribute("alt",i18n.GL0222());
+		emailToFriendText.getElement().setAttribute("title",i18n.GL0222());
+		thanksEmailText.getElement().setInnerHTML(i18n.GL0648());
 		thanksEmailText.getElement().setId("pnlThanksEmailText");
-		thanksEmailText.getElement().setAttribute("alt",GL0648);
-		thanksEmailText.getElement().setAttribute("title",GL0648);
-		okLbl.setText(GL0190);
+		thanksEmailText.getElement().setAttribute("alt",i18n.GL0648());
+		thanksEmailText.getElement().setAttribute("title",i18n.GL0648());
+		okLbl.setText(i18n.GL0190());
 		okLbl.getElement().setId("lblOkLbl");
-		okLbl.getElement().setAttribute("alt",GL0190);
-		okLbl.getElement().setAttribute("title",GL0190);
+		okLbl.getElement().setAttribute("alt",i18n.GL0190());
+		okLbl.getElement().setAttribute("title",i18n.GL0190());
 	
 	}
 	

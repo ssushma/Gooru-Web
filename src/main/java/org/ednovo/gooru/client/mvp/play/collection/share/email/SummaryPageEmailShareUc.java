@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.ThankYouToolTip;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -57,7 +58,7 @@ import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SummaryPageEmailShareUc extends PopupPanel implements MessageProperties{
+public class SummaryPageEmailShareUc extends PopupPanel{
 
 	@UiField Label fromValidation, toValidation, lblEmailFriend, lblFrom, lblTo, lblSendMeCopy, lblSubject, lblMessage, fromLbl, cpAttachmentContainer,mandatoryErrorLbl,mandatoryErrorRichTextArea;
 	
@@ -87,6 +88,8 @@ public class SummaryPageEmailShareUc extends PopupPanel implements MessageProper
 	interface SummaryPageEmailShareUcUiBinder extends
 			UiBinder<Widget, SummaryPageEmailShareUc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 
 	public SummaryPageEmailShareUc( String fromEmailAddress,String pdfUrl) {
@@ -97,55 +100,55 @@ public class SummaryPageEmailShareUc extends PopupPanel implements MessageProper
 		cpAttachmentContainer.getElement().setAttribute("alt",fileName[fileName.length-1]);
 		cpAttachmentContainer.getElement().setAttribute("title",fileName[fileName.length-1]);
 		this.pdfUrl = pdfUrl;
-		fromValidation.setText(GL0215);
+		fromValidation.setText(i18n.GL0215());
 		fromValidation.getElement().setId("lblFromValidation");
-		fromValidation.getElement().setAttribute("alt",GL0215);
-		fromValidation.getElement().setAttribute("title",GL0215);
+		fromValidation.getElement().setAttribute("alt",i18n.GL0215());
+		fromValidation.getElement().setAttribute("title",i18n.GL0215());
 		
-		toValidation.setText(GL0216);
+		toValidation.setText(i18n.GL0216());
 		toValidation.getElement().setId("lblToValidation");
-		toValidation.getElement().setAttribute("alt",GL0216);
-		toValidation.getElement().setAttribute("title",GL0216);
+		toValidation.getElement().setAttribute("alt",i18n.GL0216());
+		toValidation.getElement().setAttribute("title",i18n.GL0216());
 		
-		lblEmailFriend.setText(GL1449);
+		lblEmailFriend.setText(i18n.GL1449());
 		lblEmailFriend.getElement().setId("lblEmailFriend");
-		lblEmailFriend.getElement().setAttribute("alt",GL1449);
-		lblEmailFriend.getElement().setAttribute("title",GL1449);
+		lblEmailFriend.getElement().setAttribute("alt",i18n.GL1449());
+		lblEmailFriend.getElement().setAttribute("title",i18n.GL1449());
 		
-		lblFrom.setText(GL0223 + GL_SPL_SEMICOLON);
+		lblFrom.setText(i18n.GL0223() + i18n.GL_SPL_SEMICOLON());
 		lblFrom.getElement().setId("lblFrom");
-		lblFrom.getElement().setAttribute("alt",GL0223);
-		lblFrom.getElement().setAttribute("title",GL0223);
+		lblFrom.getElement().setAttribute("alt",i18n.GL0223());
+		lblFrom.getElement().setAttribute("title",i18n.GL0223());
 		
-		lblTo.setText(GL0224 + GL_SPL_SEMICOLON);
+		lblTo.setText(i18n.GL0224() + i18n.GL_SPL_SEMICOLON());
 		lblTo.getElement().setId("lblTo");
-		lblTo.getElement().setAttribute("alt",GL0224);
-		lblTo.getElement().setAttribute("title",GL0224);
+		lblTo.getElement().setAttribute("alt",i18n.GL0224());
+		lblTo.getElement().setAttribute("title",i18n.GL0224());
 		
-		lblSendMeCopy.setText(GL0225);
+		lblSendMeCopy.setText(i18n.GL0225());
 		lblSendMeCopy.getElement().setId("lblSendMeCopy");
-		lblSendMeCopy.getElement().setAttribute("alt",GL0225);
-		lblSendMeCopy.getElement().setAttribute("title",GL0225);
+		lblSendMeCopy.getElement().setAttribute("alt",i18n.GL0225());
+		lblSendMeCopy.getElement().setAttribute("title",i18n.GL0225());
 		
-		lblSubject.setText(GL0226 + GL_SPL_SEMICOLON);
+		lblSubject.setText(i18n.GL0226() + i18n.GL_SPL_SEMICOLON());
 		lblSubject.getElement().setId("lblSubject");
-		lblSubject.getElement().setAttribute("alt",GL0226);
-		lblSubject.getElement().setAttribute("title",GL0226);
+		lblSubject.getElement().setAttribute("alt",i18n.GL0226());
+		lblSubject.getElement().setAttribute("title",i18n.GL0226());
 		
-		lblMessage.setText(GL0227 + GL_SPL_SEMICOLON);
+		lblMessage.setText(i18n.GL0227() + i18n.GL_SPL_SEMICOLON());
 		lblMessage.getElement().setId("lblSubject");
-		lblMessage.getElement().setAttribute("alt",GL0227);
-		lblMessage.getElement().setAttribute("title",GL0227);
+		lblMessage.getElement().setAttribute("alt",i18n.GL0227());
+		lblMessage.getElement().setAttribute("title",i18n.GL0227());
 		
-		btnSend.setText(GL0228);
+		btnSend.setText(i18n.GL0228());
 		btnSend.getElement().setId("btnSend");
-		btnSend.getElement().setAttribute("alt",GL0227);
-		btnSend.getElement().setAttribute("title",GL0227);
+		btnSend.getElement().setAttribute("alt",i18n.GL0227());
+		btnSend.getElement().setAttribute("title",i18n.GL0227());
 		
-		cancelLbl.setText(GL0142);
+		cancelLbl.setText(i18n.GL0142());
 		cancelLbl.getElement().setId("btnCancelLbl");
-		cancelLbl.getElement().setAttribute("alt",GL0142);
-		cancelLbl.getElement().setAttribute("title",GL0142);
+		cancelLbl.getElement().setAttribute("alt",i18n.GL0142());
+		cancelLbl.getElement().setAttribute("title",i18n.GL0142());
 		
 		mandatoryErrorLbl.setVisible(false);
 		mandatoryErrorRichTextArea.setVisible(false);
@@ -154,9 +157,9 @@ public class SummaryPageEmailShareUc extends PopupPanel implements MessageProper
 		toValidation.setVisible(false);
 		toTxt.getElement().setId("tbTo");
 		subTxt.getElement().setId("tbSubject");
-		subTxt.setText(GL1443);
-		subTxt.getElement().setAttribute("alt",GL1443);
-		subTxt.getElement().setAttribute("title",GL1443);
+		subTxt.setText(i18n.GL1443());
+		subTxt.getElement().setAttribute("alt",i18n.GL1443());
+		subTxt.getElement().setAttribute("title",i18n.GL1443());
 		
 		fromTxt.getElement().setId("tbFrom");
 		msgTxa.getElement().setId("taMessage");
@@ -170,7 +173,7 @@ public class SummaryPageEmailShareUc extends PopupPanel implements MessageProper
 		if(fromEmailAddress==null || fromEmailAddress.isEmpty()) {
 			fromLbl.setVisible(false);
 			fromTxt.setVisible(true);
-			fromTxt.getElement().setAttribute("placeholder",GL1442);
+			fromTxt.getElement().setAttribute("placeholder",i18n.GL1442());
 		} else {
 			fromLbl.setText(fromEmailAddress);
 			fromLbl.getElement().setAttribute("alt",fromEmailAddress);
@@ -178,10 +181,10 @@ public class SummaryPageEmailShareUc extends PopupPanel implements MessageProper
 			fromLbl.setVisible(true);
 			fromTxt.setVisible(false);
 		}
-		toTxt.getElement().setAttribute("placeholder",GL0217);
-		msgTxa.setHTML(GL1444);
-		msgTxa.getElement().setAttribute("alt",GL1444);
-		msgTxa.getElement().setAttribute("title",GL1444);
+		toTxt.getElement().setAttribute("placeholder",i18n.GL0217());
+		msgTxa.setHTML(i18n.GL1444());
+		msgTxa.getElement().setAttribute("alt",i18n.GL1444());
+		msgTxa.getElement().setAttribute("title",i18n.GL1444());
 		
 		isCheckedValue = false;
 		isvalid = true;
@@ -221,9 +224,9 @@ public class SummaryPageEmailShareUc extends PopupPanel implements MessageProper
 			if ((fromTxt.getText() != null && !fromTxt.getText().isEmpty())
 					&& !fromTxt.getText().contains(AT_SYMBOL)) {
 
-				fromValidation.setText(GL1027);
-				fromValidation.getElement().setAttribute("alt",GL1027);
-				fromValidation.getElement().setAttribute("title",GL1027);
+				fromValidation.setText(i18n.GL1027());
+				fromValidation.getElement().setAttribute("alt",i18n.GL1027());
+				fromValidation.getElement().setAttribute("title",i18n.GL1027());
 				fromValidation.setVisible(true);
 				isvalid = false;
 			}
@@ -236,9 +239,9 @@ public class SummaryPageEmailShareUc extends PopupPanel implements MessageProper
 		if ((toTxt.getText() != null && !toTxt.getText().isEmpty())
 				&& !toTxt.getText().contains(AT_SYMBOL)) {
 
-			toValidation.setText(GL1027);
-			toValidation.getElement().setAttribute("alt",GL1027);
-			toValidation.getElement().setAttribute("title",GL1027);
+			toValidation.setText(i18n.GL1027());
+			toValidation.getElement().setAttribute("alt",i18n.GL1027());
+			toValidation.getElement().setAttribute("title",i18n.GL1027());
 			toValidation.setVisible(true);
 			isvalid = false;
 		}
@@ -274,7 +277,7 @@ public class SummaryPageEmailShareUc extends PopupPanel implements MessageProper
 													if(result.equalsIgnoreCase("success")) {
 														closeEmailpanel();
 														ThankYouToolTip thankYouToolTip=new ThankYouToolTip();
-														thankYouToolTip.setTitleData(GL0222, toTxt.getText());
+														thankYouToolTip.setTitleData(i18n.GL0222(), toTxt.getText());
 														thankYouToolTip.setPopupPosition((Window.getClientWidth()-400)/2,(Window.getClientHeight()-165)/2+Window.getScrollTop());
 														thankYouToolTip.show();	
 													}

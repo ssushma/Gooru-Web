@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.play.collection.share;
 
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -41,7 +42,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class SocialShareWidget extends Composite implements MessageProperties {
+public abstract class SocialShareWidget extends Composite{
 
 	private static SocialShareWidgetUiBinder uiBinder = GWT
 			.create(SocialShareWidgetUiBinder.class);
@@ -49,6 +50,8 @@ public abstract class SocialShareWidget extends Composite implements MessageProp
 	interface SocialShareWidgetUiBinder extends
 			UiBinder<Widget, SocialShareWidget> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	@UiField Button fbButton,twitterButton,emailButton;
 	@UiField Image resourceHiddenImage;
@@ -61,20 +64,20 @@ public abstract class SocialShareWidget extends Composite implements MessageProp
 
 	public SocialShareWidget(String resourceDescription,String resourceThumbnail,String category) {
 		initWidget(uiBinder.createAndBindUi(this));
-		fbButton.setText(GL0646);
+		fbButton.setText(i18n.GL0646());
 		fbButton.getElement().setId("btnFbButton");
-		fbButton.getElement().setAttribute("alt",GL0646);
-		fbButton.getElement().setAttribute("title",GL0646);
+		fbButton.getElement().setAttribute("alt",i18n.GL0646());
+		fbButton.getElement().setAttribute("title",i18n.GL0646());
 		
-		twitterButton.setText(GL0647);
+		twitterButton.setText(i18n.GL0647());
 		twitterButton.getElement().setId("btnTwitterButton");
-		twitterButton.getElement().setAttribute("alt",GL0647);
-		twitterButton.getElement().setAttribute("title",GL0647);
+		twitterButton.getElement().setAttribute("alt",i18n.GL0647());
+		twitterButton.getElement().setAttribute("title",i18n.GL0647());
 		
-		emailButton.setText(GL0212);
+		emailButton.setText(i18n.GL0212());
 		emailButton.getElement().setId("btnEmailButton");
-		emailButton.getElement().setAttribute("alt",GL0212);
-		emailButton.getElement().setAttribute("title",GL0212);
+		emailButton.getElement().setAttribute("alt",i18n.GL0212());
+		emailButton.getElement().setAttribute("title",i18n.GL0212());
 		resourceHiddenImage.getElement().setId("imgResourceHiddenImage");
 		this.resourceDescription=resourceDescription;
 		this.resourceThumbnail=resourceThumbnail;

@@ -39,12 +39,14 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomePrese
 import org.ednovo.gooru.client.service.LibraryServiceAsync;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
@@ -83,6 +85,8 @@ public class PreviewPlayerMetadataPresenter extends PresenterWidget<IsPreviewPla
 	private boolean isCommentsLoaded = false;
 	
 	private static final String PAGE = "course-page";
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	@Inject
 	public PreviewPlayerMetadataPresenter(EventBus eventBus, IsPreviewPlayerMetadataView view,PreviewHomePresenter previewHomePresenter,
@@ -223,13 +227,13 @@ public class PreviewPlayerMetadataPresenter extends PresenterWidget<IsPreviewPla
 			public void onSuccess(ArrayList<ContentReportDo> result) {
 				String gooruFlagId="";
 				if(result.size()==0){
-					getView().getFlagButton().setText(GL0556);
+					getView().getFlagButton().setText(i18n.GL0556());
 					getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
 					getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
 				}else{
 					for(int i =0;i<result.size();i++){
 						gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
-						getView().getFlagButton().setText(GL0557);
+						getView().getFlagButton().setText(i18n.GL0557());
 						getView().getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
 						getView().getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
 						
