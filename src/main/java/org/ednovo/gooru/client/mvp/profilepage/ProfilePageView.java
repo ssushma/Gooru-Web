@@ -272,6 +272,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		res.css().ensureInjected();
 		ccb = CollectionCBundle.INSTANCE;
 		CollectionCBundle.INSTANCE.css().ensureInjected();
+		
 		profileTextArea = new ProfilePageDescriptionEditUc() {
 			@Override
 			public void onEditDisabled(String text) {
@@ -371,7 +372,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		FollowingButtonBlue.addMouseOutHandler(new MouseOutOnUnFollowingButton());
 		followButton.getElement().setAttribute("style", "width: 100px;");
 		//end for 6.4
-
+		userCoursePopup.setVisible(false);	
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
 			profileOnButton.addClickHandler(new ProfileOnClickEvent());
 		 }else{
@@ -536,6 +537,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			profileDo.setAboutMe("");
 		}
 		this.profileDo = profileDo;
+		userCoursePopup.setVisible(false);	
 		roleTxt.setText(profileDo.getUserType());
 		profileTextArea.cancel();
 		btnSave.setVisible(false);
