@@ -27,7 +27,7 @@ public class RatingsConfirmationPopup extends PopupPanel implements MessagePrope
 	String assocGooruOId,createrName;
 	@UiField Label reviewRatingText,saveAndPsotLbl;
 	@UiField HTMLPanel averageRationPanel,buttonsContainer;
-	@UiField Image imgSuccessIcon;
+	@UiField HTMLPanel imgSuccessIcon;
 	
 	private static RatingsConfirmationPopupUiBinder uiBinder = GWT
 			.create(RatingsConfirmationPopupUiBinder.class);

@@ -109,6 +109,7 @@ public class PartnerLessonUc extends Composite{
 	 * 
 	 */
 	private void setLessonData(final LessonDo lessonDo, final ProfileLibraryDo profileLibraryDo, ArrayList<ProfileLibraryDo> profileLibraryDoList, boolean isLessonHighlighted, Integer lessonNumber, boolean isPaginated) {
+		lessonList.getElement().setId("pnlLessonList");
 		if(profileLibraryDo!=null) {
 			lessonTitle.setHTML(profileLibraryDo.getTitle());
 			lessonList.add(lessonTitle);

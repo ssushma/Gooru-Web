@@ -71,7 +71,7 @@ public class PPPCollectionResult extends Composite{
 	HTML collectionDescriptionHtml,collectionTitleLbl;
 
 	@UiField
-	FlowPanel metaDataPanelFloPanel, standardsFloPanel;
+	FlowPanel collectionTitlePanel,metaDataPanelFloPanel, standardsFloPanel;
 
 	@UiField
 	CollectionImageUc collectionImageUc;
@@ -115,24 +115,38 @@ public class PPPCollectionResult extends Composite{
 		this.collectionItemDo = collectionItemDo;
 		wrapperVc.setData(collectionItemDo);
 		collectionTitleLbl.setHTML(StringUtil.truncateText(collectionItemDo.getResourceTitle(), 40));
+		collectionTitleLbl.getElement().setId("htmlCollectionTitleLbl");
+		collectionTitleLbl.getElement().setAttribute("alt",StringUtil.truncateText(collectionItemDo.getResourceTitle(), 40));
+		collectionTitleLbl.getElement().setAttribute("title",StringUtil.truncateText(collectionItemDo.getResourceTitle(), 40));
+		
 		//creatorNameLbl.setText(CREATED_BY);
 		//creatorNameLblValue.setText(" "+collectionItemDo.getCreator().getUsernameDisplay());
 		collectionDescriptionHtml.setHTML(collectionItemDo.getDescription());
+		collectionDescriptionHtml.getElement().setId("htmlCollectionDescriptionHtml");
+		collectionDescriptionHtml.getElement().setAttribute("alt",collectionItemDo.getDescription());
+		collectionDescriptionHtml.getElement().setAttribute("title",collectionItemDo.getDescription());
+		
 		SearchUiUtil.renderMetaData(metaDataPanelFloPanel, collectionItemDo.getCourse(), 30);
 		SearchUiUtil.renderMetaData(metaDataPanelFloPanel, collectionItemDo.getViews() + "", " "+i18n.GL1099());
 		metaDataPanelFloPanel.add(new SeparatorUc());
 		collectionImageUc.setUrl(collectionItemDo.getUrl(),collectionItemDo.getResourceTitle());
 //		collectionImageUc.getElement().getStyle().setZIndex(9999);
 		collectionImageUc.setGooruOid(collectionItemDo.getGooruOid());
+		resourceCountLbl.getElement().setId("lblResourceCountLbl");
 		if(collectionItemDo.getResourceCount()==1)
 		{
 			resourceCountLbl.setText(collectionItemDo.getResourceCount() +  " "+i18n.GL1110());
+			resourceCountLbl.getElement().setAttribute("alt",collectionItemDo.getResourceCount() +  " "+i18n.GL1110());
+			resourceCountLbl.getElement().setAttribute("title",collectionItemDo.getResourceCount() +  " "+i18n.GL1110());
 		}
 		else{
 		resourceCountLbl.setText(collectionItemDo.getResourceCount() +" "+i18n.GL0174());
+		resourceCountLbl.getElement().setAttribute("alt",collectionItemDo.getResourceCount() +" "+i18n.GL0174());
+		resourceCountLbl.getElement().setAttribute("title",collectionItemDo.getResourceCount() +" "+i18n.GL0174());
 		}
 		SearchUiUtil.renderStandards(standardsFloPanel, collectionItemDo);
-	
+		collectionTitlePanel.getElement().setId("fpnlCollectionTitlePanel");
+		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
 	}
 
 	/*
