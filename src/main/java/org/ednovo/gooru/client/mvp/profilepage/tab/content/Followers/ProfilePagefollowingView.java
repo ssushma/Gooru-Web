@@ -64,7 +64,14 @@ public class ProfilePagefollowingView extends Composite {
 	public void setData(){
 		
 		follwingTextMessage.setText(i18n.GL1913());
+		follwingTextMessage.getElement().setId("spnFollwingTextMessage");
+		follwingTextMessage.getElement().setAttribute("alt",i18n.GL1913());
+		follwingTextMessage.getElement().setAttribute("title",i18n.GL1913());
 		follwingTextMessageDes.setText(i18n.GL1914_1());
+		follwingTextMessageDes.getElement().setId("spnFollwingTextMessageDes");
+		follwingTextMessageDes.getElement().setAttribute("alt",i18n.GL1914_1());
+		follwingTextMessageDes.getElement().setAttribute("title",i18n.GL1914_1());
+		
 		follwingTextMessageDes.getElement().setAttribute("style", "font-weight: normal;");
 		userConatiner.clear();
 		
@@ -81,7 +88,8 @@ public class ProfilePagefollowingView extends Composite {
 			ProfilePageUserInfoWidget profilePageUserInfo=new ProfilePageUserInfoWidget(userFollowDo.get(i),tab);
 			userConatiner.add(profilePageUserInfo);
 		}
-		
+		userConatiner.getElement().setId("pnlUserConatiner");
+		seeMorebtn.getElement().setId("btnSeeMorebtn");
 		
 	}
 	@UiHandler("seeMorebtn")

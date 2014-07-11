@@ -74,7 +74,20 @@ public class ProfileUserTagsResourceWidget extends Composite {
 	public void setData(UserTagsResourceDO userTagsResourceDO)
 	{
 		resourceTitle.setHTML(removeHtmlTags(userTagsResourceDO.getTitle()));
+		resourceTitle.getElement().setId("htmlResourceTitle");
+		resourceTitle.getElement().setAttribute("alt",removeHtmlTags(userTagsResourceDO.getTitle()));
+		resourceTitle.getElement().setAttribute("title",removeHtmlTags(userTagsResourceDO.getTitle()));
+		
 		resourceType.setText(userTagsResourceDO.getResourceFormat().getValue());
+		resourceType.getElement().setId("lblResourceType");
+		resourceType.getElement().setAttribute("alt",userTagsResourceDO.getResourceFormat().getValue());
+		resourceType.getElement().setAttribute("title",userTagsResourceDO.getResourceFormat().getValue());
+		
+		resourceImage.getElement().setId("imgResourceImage");
+		resourceTypeIcon.getElement().setId("imgResourceTypeIcon");
+		resourceSource.getElement().setId("lblResourceSource");
+		ratingContainer.getElement().setId("pnlRatingContainer");
+		
 		resourceTypeImage=userTagsResourceDO.getResourceFormat().getValue();
 		setPublisger(userTagsResourceDO.getPublisher());
 		if(userTagsResourceDO.getResourceFormat()!=null){
@@ -160,6 +173,8 @@ public class ProfileUserTagsResourceWidget extends Composite {
 			publisherValue=publisherValue.substring(0, publisherValue.length()-1);
 		}
 		resourceSource.setText(publisherValue);
+		resourceSource.getElement().setAttribute("alt",publisherValue);
+		resourceSource.getElement().setAttribute("title",publisherValue);
 	}
 	}
 	@UiHandler("resourceImage")

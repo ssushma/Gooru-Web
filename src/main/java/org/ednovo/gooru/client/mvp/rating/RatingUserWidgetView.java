@@ -124,17 +124,63 @@ public class RatingUserWidgetView extends Composite {
 	}
 	
 	public void setData(final StarRatingsDo starRatingsDo,final String createrName) {
+		reviewContainer.getElement().setId("epnlReviewContainer");
+		userName.getElement().setId("lblUserName");
+		editReviewLabelContainer.getElement().setId("pnlEditReviewLabelContainer");
+		starOne.getElement().setId("divStarOne");
+		starTwo.getElement().setId("divStarTwo");
+		starThree.getElement().setId("divStarThree");
+		starFour.getElement().setId("divStarFour");
+		starFive.getElement().setId("divStarFive");
+		editReviewTextareaContainer.getElement().setId("pnlEditReviewTextareaContainer");
+		userratingOne.getElement().setId("divUserratingOne");
+		userratingTwo.getElement().setId("divUserratingTwo");
+		userratingThree.getElement().setId("divUserratingThree");
+		userratingFour.getElement().setId("divUserratingFour");
+		userratingFive.getElement().setId("divUserratingFive");
+		starValue.getElement().setId("lblStarValue");
+		mouseOverStarValue.getElement().setId("lblMouseOverStarValue");
+		mandatoryDescLblForSwareWords.getElement().setId("lblMandatoryDescLblForSwareWords");
+		errorLbl.getElement().setId("lblErrorLbl");
+
 		editReviewText.getElement().setAttribute("maxlength", "500");
 		editReview.setText(i18n.GL1860());
+		editReview.getElement().setId("btnEditReview");
+		editReview.getElement().setAttribute("alt",i18n.GL1860());
+		editReview.getElement().setAttribute("title",i18n.GL1860());
+		
 		editReviewBtn.setText(i18n.GL0141());
+		editReviewBtn.getElement().setId("btnEditReviewBtn");
+		editReviewBtn.getElement().setAttribute("alt",i18n.GL0141());
+		editReviewBtn.getElement().setAttribute("title",i18n.GL0141());
+		
 		cancelReviewBtn.setText(i18n.GL0142());
+		cancelReviewBtn.getElement().setId("btnCancelReviewBtn");
+		cancelReviewBtn.getElement().setAttribute("alt",i18n.GL0142());
+		cancelReviewBtn.getElement().setAttribute("title",i18n.GL0142());
+		
 		String commentTime = getCreatedTime(Long.toString(starRatingsDo.getCreatedDate())); 
 		long lastModifiedOn = starRatingsDo.getLastModifiedOn();
 		timeStamp.setText(commentTime +""+ (lastModifiedOn > 0 ? " " + i18n.GL_GRR_Hyphen() + " " + i18n.GL1434() : ""));
+		timeStamp.getElement().setId("lblTimeStamp");
+		timeStamp.getElement().setAttribute("alt",commentTime +""+ (lastModifiedOn > 0 ? " " + i18n.GL_GRR_Hyphen() + " " + i18n.GL1434() : ""));
+		timeStamp.getElement().setAttribute("title",commentTime +""+ (lastModifiedOn > 0 ? " " + i18n.GL_GRR_Hyphen() + " " + i18n.GL1434() : ""));
+		
 		deleteReview.setText(i18n.GL1861());
+		deleteReview.getElement().setId("btnDeleteReview");
+		deleteReview.getElement().setAttribute("alt",i18n.GL1861());
+		deleteReview.getElement().setAttribute("title",i18n.GL1861());
 		
 		review.setText(starRatingsDo.getFreeText());
+		review.getElement().setId("lblReview");
+		review.getElement().setAttribute("alt",starRatingsDo.getFreeText());
+		review.getElement().setAttribute("title",starRatingsDo.getFreeText());
+		
 		editReviewText.setText(starRatingsDo.getFreeText());
+		editReviewText.getElement().setId("tatEditReviewText");
+		editReviewText.getElement().setAttribute("alt",starRatingsDo.getFreeText());
+		editReviewText.getElement().setAttribute("title",starRatingsDo.getFreeText());
+		
 		editReview.setVisible(false);
 		deleteReview.addStyleName(style.deleteButtonAlign());
 		
@@ -143,6 +189,8 @@ public class RatingUserWidgetView extends Composite {
 			reviewContainer.setVisible(true);
 			editReviewLabelContainer.setVisible(true);
 			userName.setText(starRatingsDo.getCreator().getUsername());
+			userName.getElement().setAttribute("alt",starRatingsDo.getCreator().getUsername());
+			userName.getElement().setAttribute("title",starRatingsDo.getCreator().getUsername());
 			clearAllStarsReadOnly();
 			this.currentRating = starRatingsDo.getScore();
 			if(starRatingsDo.getScore() == 1)
@@ -172,11 +220,15 @@ public class RatingUserWidgetView extends Composite {
 		  }else{
 			//reviewContainer.setVisible(false);
 			userName.setText(starRatingsDo.getCreator().getUsername());
+			userName.getElement().setAttribute("alt",starRatingsDo.getCreator().getUsername());
+			userName.getElement().setAttribute("title",starRatingsDo.getCreator().getUsername());
 			//editReviewLabelContainer.setVisible(false);
 		}
 			
 		}else{
 			userName.setText(starRatingsDo.getCreator().getUsername());
+			userName.getElement().setAttribute("alt",starRatingsDo.getCreator().getUsername());
+			userName.getElement().setAttribute("title",starRatingsDo.getCreator().getUsername());
 			clearAllStarsReadOnly();
 			this.currentRating = starRatingsDo.getScore();
 			if(starRatingsDo.getScore() == 1)
@@ -235,6 +287,8 @@ public class RatingUserWidgetView extends Composite {
 			cancelReviewBtn.removeStyleName(style.editReview());
 			//editReview.setVisible(true);
 			userName.setText(i18n.GL1850());
+			userName.getElement().setAttribute("alt",i18n.GL1850());
+			userName.getElement().setAttribute("title",i18n.GL1850());
 			deleteReview.removeStyleName(style.editReview());
 		} else {
 			editReview.removeStyleName(style.editReview());
@@ -430,11 +484,17 @@ public class RatingUserWidgetView extends Composite {
 	public void keyRatingTextArea(KeyUpEvent event){
 		String review=editReviewText.getText();
 		errorLbl.setText("");
+		errorLbl.getElement().setAttribute("alt","");
+		errorLbl.getElement().setAttribute("title","");
 		if(review.length()>0){
 			errorLbl.setText("");
+			errorLbl.getElement().setAttribute("alt","");
+			errorLbl.getElement().setAttribute("title","");
 		}
 		if(review.length()==500){
 			errorLbl.setText(i18n.GL0143());
+			errorLbl.getElement().setAttribute("alt",i18n.GL0143());
+			errorLbl.getElement().setAttribute("title",i18n.GL0143());
 			errorLbl.setVisible(true);
 		//	fieldValidationStaus=false;
 		}else{
@@ -457,8 +517,12 @@ public class RatingUserWidgetView extends Composite {
 							AppClientFactory.fireEvent(new UpdateUserStarReviewEvent(result));
 							String commentTime = getCreatedTime(Long.toString(starRatingsDo.getCreatedDate())); 
 							timeStamp.setText(commentTime +""+ (" " + i18n.GL_GRR_Hyphen() + " " + i18n.GL1434()));
+							timeStamp.getElement().setAttribute("alt",commentTime +""+ (" " + i18n.GL_GRR_Hyphen() + " " + i18n.GL1434()));
+							timeStamp.getElement().setAttribute("title",commentTime +""+ (" " + i18n.GL_GRR_Hyphen() + " " + i18n.GL1434()));
 							editReviewTextareaContainer.setVisible(false);
 							review.setText(result.get(0).getFreeText());
+							review.getElement().setAttribute("alt",result.get(0).getFreeText());
+							review.getElement().setAttribute("title",result.get(0).getFreeText());
 							editReviewLabelContainer.setVisible(true);
 							editReviewBtn.removeStyleName(style.editReview());
 							cancelReviewBtn.removeStyleName(style.editReview());
@@ -607,6 +671,9 @@ public class RatingUserWidgetView extends Composite {
 	public void cancelReview(ClickEvent event) {
 		this.currentRating =starRatingsDo.getScore();
 		editReviewText.setText(starRatingsDo.getFreeText());
+		editReviewText.getElement().setAttribute("alt",starRatingsDo.getFreeText());
+		editReviewText.getElement().setAttribute("title",starRatingsDo.getFreeText());
+		
 		editReviewTextareaContainer.setVisible(false);
 		editReviewLabelContainer.setVisible(true);
 		editReviewBtn.removeStyleName(style.editReview());
@@ -626,6 +693,8 @@ public class RatingUserWidgetView extends Composite {
 				final HTMLPanel deletePanel = new HTMLPanel("");
 				Label deleteMsg = new Label();
 				deleteMsg.setText(i18n.GL1853());
+				deleteMsg.getElement().setAttribute("alt",i18n.GL1853());
+				deleteMsg.getElement().setAttribute("title",i18n.GL1853());
 				deleteMsg.setStyleName(style.lbldeleteMsg());
 				deletePanel.add(deleteMsg);
 				reviewContainer.add(deletePanel);
@@ -689,24 +758,34 @@ public class RatingUserWidgetView extends Composite {
 			clearAllStars();
 			if(starScore.equalsIgnoreCase(ONE_STAR)){
 				mouseOverStarValue.setText(POOR);
+				mouseOverStarValue.getElement().setAttribute("alt",POOR);
+				mouseOverStarValue.getElement().setAttribute("title",POOR);
 				userratingOne.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
 				mouseOverStarValue.setText(FAIR);
+				mouseOverStarValue.getElement().setAttribute("alt",FAIR);
+				mouseOverStarValue.getElement().setAttribute("title",FAIR);
 				userratingOne.getElement().addClassName(FILLED_BLUE);
 				userratingTwo.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
 				mouseOverStarValue.setText(GOOD);
+				mouseOverStarValue.getElement().setAttribute("alt",GOOD);
+				mouseOverStarValue.getElement().setAttribute("title",GOOD);
 				userratingOne.getElement().addClassName(FILLED_BLUE);
 				userratingTwo.getElement().addClassName(FILLED_BLUE);
 				userratingThree.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
 				mouseOverStarValue.setText(VERY_GOOD);
+				mouseOverStarValue.getElement().setAttribute("alt",VERY_GOOD);
+				mouseOverStarValue.getElement().setAttribute("title",VERY_GOOD);
 				userratingOne.getElement().addClassName(FILLED_BLUE);
 				userratingTwo.getElement().addClassName(FILLED_BLUE);
 				userratingThree.getElement().addClassName(FILLED_BLUE);
 				userratingFour.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
 				mouseOverStarValue.setText(EXCELLENT);
+				mouseOverStarValue.getElement().setAttribute("alt",EXCELLENT);
+				mouseOverStarValue.getElement().setAttribute("title",EXCELLENT);
 				userratingOne.getElement().addClassName(FILLED_BLUE);
 				userratingTwo.getElement().addClassName(FILLED_BLUE);
 				userratingThree.getElement().addClassName(FILLED_BLUE);
@@ -729,18 +808,28 @@ public class RatingUserWidgetView extends Composite {
 			if(starScore.equalsIgnoreCase(ONE_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}
 			setStarRatingValue(currentRating);
 		}

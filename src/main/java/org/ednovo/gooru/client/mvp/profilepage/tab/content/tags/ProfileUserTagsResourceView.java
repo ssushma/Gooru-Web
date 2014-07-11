@@ -106,7 +106,15 @@ public class ProfileUserTagsResourceView extends Composite{
 		
 		tagContainer.setVisible(true);
 		TagTextMessage.setText(i18n.GL1915());
+		TagTextMessage.getElement().setId("lblTagTextMessage");
+		TagTextMessage.getElement().setAttribute("alt",i18n.GL1915());
+		TagTextMessage.getElement().setAttribute("title",i18n.GL1915());
+		
 		tagMessage.setText(i18n.GL1944());
+		tagMessage.getElement().setId("lblTagMessage");
+		tagMessage.getElement().setAttribute("alt",i18n.GL1944());
+		tagMessage.getElement().setAttribute("title",i18n.GL1944());
+		
 		tagContainer.getElement().setAttribute("alt", labelName);
 		tagContainer.setTitle(labelName);
 		
@@ -114,14 +122,24 @@ public class ProfileUserTagsResourceView extends Composite{
 			labelName = labelName.substring(0, 12) + "...";
 		}*/
 		tagType.setText(labelName);
+		tagType.getElement().setId("lblTagType");
+		tagType.getElement().setAttribute("alt",labelName);
+		tagType.getElement().setAttribute("title",labelName);
+		
 		tagCount.setText(count);
+		tagCount.getElement().setId("lblTagCount");
+		tagCount.getElement().setAttribute("alt",count);
+		tagCount.getElement().setAttribute("title",count);
+		
 		userTagsResourceContainerConatiner.clear();
 		for(int i=0;i<result.size();i++){
 			ProfileUserTagsResourceWidget profileUserTagsResourceWidget=new ProfileUserTagsResourceWidget(result.get(i));
 			userTagsResourceContainerConatiner.add(profileUserTagsResourceWidget);
 		}
 			
-		
+		tagContainer.getElement().setId("pnlTagContainer");
+		tagScrollPanel.getElement().setId("sbTagScrollPanel");
+		userTagsResourceContainerConatiner.getElement().setId("pnlUserTagsResourceContainerConatiner");
 	}
 	@UiHandler("tagMessage")
 	public void onclickOnBackButton(ClickEvent event){
