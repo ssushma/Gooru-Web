@@ -467,7 +467,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 				collectionTypeJsonObject.put(TITLE, title);
 			}
 			if(description != null){
-				collectionTypeJsonObject.put("description", description);
+				collectionTypeJsonObject.put("goals", description);
 			}
 			if(grade!=null){
 				collectionTypeJsonObject.put(GRADE, grade);
