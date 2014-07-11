@@ -59,7 +59,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresenter> implements IsProfilePageLibraryView {
 
-	@UiField HTMLPanel loadingImage,leftNav, contentScroll, emptyContainer, loadingIconPanel;
+	@UiField HTMLPanel leftNav, contentScroll, emptyContainer, loadingIconPanel;
 	
 	@UiField ProfilePageLibraryStyleBundle style;
 	
@@ -111,7 +111,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		emptyContainer.getElement().setId("pnlEmptyContainer");
 		noCollectionsMsg.getElement().setId("lblNoCollectionsMsg");
 		leftNav.getElement().setId("pnlLeftNav");
-		loadingImage.getElement().setId("pnlLoadingImage");
+		loadingIconPanel.getElement().setId("pnlLoadingImage");
 		contentScroll.getElement().setId("pnlContentScroll");
 	}
 	
