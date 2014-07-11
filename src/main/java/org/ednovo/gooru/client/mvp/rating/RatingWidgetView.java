@@ -39,7 +39,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class RatingWidgetView extends Composite{
 
 	@UiField InlineLabel ratingCountLabel,star_1,star_2,star_3,star_4,star_5;
-	@UiField FlowPanel rating;
+	
 
 	private static RatingWidgetViewUiBinder uiBinder = GWT.create(RatingWidgetViewUiBinder.class);
 
@@ -51,7 +51,7 @@ public class RatingWidgetView extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		
-		rating.getElement().setId("fpnlRating");
+		
 		star_1.getElement().setId("spnStar_1");
 		star_2.getElement().setId("spnStar_2");
 		star_3.getElement().setId("spnStar_3");
