@@ -91,7 +91,9 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 
 	private static ClassListViewUiBinder uiBinder = GWT
 			.create(ClassListViewUiBinder.class);
-    CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
+
+    
 	@UiField(provided = true)
 	ClasslistpageCBundle res;
 	
@@ -120,7 +122,8 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	@UiField Anchor ancprivacy;
 		
 	MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
-
+    CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+    
 	private static int studentsLimitCount = 500;
 
 	int currentStudentsCount=0;
@@ -1047,7 +1050,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 							lblActiveMembers.setVisible(true);
 							lblActiveMembersDesc.setVisible(true);
 							ancActiveListSeeMore.setVisible(false);
-							Label noActiveStudents = new Label(i18n.GL1527());
+     						Label noActiveStudents = new Label(i18n.GL1527());
 							panelActiveMembersContainter.setVisible(true);
 							noActiveStudents.getElement().addClassName(res.css().noActiveStudents());
 							panelActiveMembersList.add(noActiveStudents);
