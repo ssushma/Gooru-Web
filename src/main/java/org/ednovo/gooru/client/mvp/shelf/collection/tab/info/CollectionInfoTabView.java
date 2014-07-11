@@ -856,7 +856,9 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				courseLbl.getElement().getStyle().setDisplay(Display.NONE);
 				addCourseBtn.setText(ADD_COURSE);
 				removeCourseBtn.setVisible(false);
-				getUiHandlers().updateCourse(collectionDo.getGooruOid(), courseCode, "delete");
+				if(courseCode!=null&&!courseCode.equals("")){
+					getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
+				}
 				courseCode="";
 			}else{
 				for (CodeDo code : collectionDoVal.getTaxonomySet()) {
@@ -931,7 +933,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
 				this.removeFromParent();
-				getUiHandlers().updateCourse(collectionDo.getGooruOid(), courseCode, "delete");
+				getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
 				resetCourseCount();
 			
 			}

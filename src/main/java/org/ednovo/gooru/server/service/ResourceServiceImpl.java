@@ -1360,11 +1360,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 
 			taxonomySetObj.put("taxonomySet", codeIdJsonArray);
 			taxonomyObject.put("resource", taxonomySetObj);
-		
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor
 					.put(url, getRestUsername(), getRestPassword(),
 							taxonomyObject.toString());
-			jsonRep = jsonResponseRep.getJsonRepresentation();
+		//	jsonRep = jsonResponseRep.getJsonRepresentation();
 			
 		} catch (Exception ex) {
 			

@@ -26,9 +26,11 @@ package org.ednovo.gooru.client.uc;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -268,13 +270,20 @@ public class CourseListUc extends PopupPanel implements MessageProperties {
 		
 	}
 	
-	public void updateCourse(String collectionId, String courseCode, String action) {
+	public void updateCourse(String collectionId, final String courseCode, String action) {
 	  	
 		AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionId, null, null, null, null, null, courseCode, null, null, action, new SimpleAsyncCallback<CollectionDo>() {
 
 			@Override
 			public void onSuccess(CollectionDo result) {	
-				collectionDo=result;
+				if(collectionDo!=null){
+					Set<CodeDo> codeSet=new HashSet<CodeDo>();
+					CodeDo codeDo=new CodeDo();
+					codeDo.setCodeId(Integer.valueOf(courseCode));
+					codeDo.setDepth((short)2);
+					codeSet.add(codeDo);
+					collectionDo.setTaxonomySet(codeSet);
+				}
 			}
 		});
 
@@ -283,6 +292,8 @@ public class CourseListUc extends PopupPanel implements MessageProperties {
 		AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionId, courseCode, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
+				Set<CodeDo> codeSet=new HashSet<CodeDo>();
+				collectionDo.setTaxonomySet(codeSet);
 			}
 		});
 	}
