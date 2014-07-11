@@ -28,7 +28,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -43,7 +43,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class WebResourcePreview extends PopupPanel implements MessageProperties {
+public abstract class WebResourcePreview extends PopupPanel {
 	
 	@UiField BlueButtonUc okButton, goBackBtn;
 	
@@ -58,6 +58,8 @@ public abstract class WebResourcePreview extends PopupPanel implements MessagePr
 	@UiField Label lblConfirmAdding,messageText,titleText,categoryText;
 	
 	private static WebResourcePreviewUiBinder uiBinder = GWT.create(WebResourcePreviewUiBinder.class);
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface WebResourcePreviewUiBinder extends UiBinder<Widget, WebResourcePreview> {
 	}
@@ -70,48 +72,48 @@ public abstract class WebResourcePreview extends PopupPanel implements MessagePr
 		actionPanel.getElement().setId("pnlActionPanel");
 		actionPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 		setGlassEnabled(true);
-		areYouSureText.getElement().setInnerHTML(GL0363);
+		areYouSureText.getElement().setInnerHTML(i18n.GL0363());
 		areYouSureText.getElement().setId("pnlAreYouSureText");
-		areYouSureText.getElement().setAttribute("alt", GL0363);
-		areYouSureText.getElement().setAttribute("title", GL0363);
-		messageText.setText(GL0930);
+		areYouSureText.getElement().setAttribute("alt", i18n.GL0363());
+		areYouSureText.getElement().setAttribute("title", i18n.GL0363());
+		messageText.setText(i18n.GL0930());
 		messageText.getElement().setId("lblMessageText");
-		messageText.getElement().setAttribute("alt", GL0930);
-		messageText.getElement().setAttribute("title", GL0930);
-		titleText.setText(GL0318);
+		messageText.getElement().setAttribute("alt", i18n.GL0930());
+		messageText.getElement().setAttribute("title", i18n.GL0930());
+		titleText.setText(i18n.GL0318());
 		titleText.getElement().setId("lblTitleText");
-		titleText.getElement().setAttribute("alt", GL0318);
-		titleText.getElement().setAttribute("title", GL0318);
-		descriptionTxtLbl.setText(GL0904);
+		titleText.getElement().setAttribute("alt", i18n.GL0318());
+		titleText.getElement().setAttribute("title", i18n.GL0318());
+		descriptionTxtLbl.setText(i18n.GL0904());
 		descriptionTxtLbl.getElement().setId("lblDescriptionTxtLbl");
-		descriptionTxtLbl.getElement().setAttribute("alt", GL0904);
-		descriptionTxtLbl.getElement().setAttribute("title", GL0904);
-		categoryText.setText(GL0906);
+		descriptionTxtLbl.getElement().setAttribute("alt", i18n.GL0904());
+		descriptionTxtLbl.getElement().setAttribute("title", i18n.GL0904());
+		categoryText.setText(i18n.GL0906());
 		categoryText.getElement().setId("lblCategoryText");
-		categoryText.getElement().setAttribute("alt", GL0906);
-		categoryText.getElement().setAttribute("title", GL0906);
-		thumbnailLbl.setText(GL0911);
+		categoryText.getElement().setAttribute("alt", i18n.GL0906());
+		categoryText.getElement().setAttribute("title", i18n.GL0906());
+		thumbnailLbl.setText(i18n.GL0911());
 		thumbnailLbl.getElement().setId("lblThumbnailLbl");
-		thumbnailLbl.getElement().setAttribute("alt", GL0911);
-		thumbnailLbl.getElement().setAttribute("title", GL0911);
-		goBackBtn.setText(GL0841);
+		thumbnailLbl.getElement().setAttribute("alt", i18n.GL0911());
+		thumbnailLbl.getElement().setAttribute("title", i18n.GL0911());
+		goBackBtn.setText(i18n.GL0841());
 		goBackBtn.getElement().setId("bluebtnGoBackBtn");
-		goBackBtn.getElement().setAttribute("alt", GL0841);
-		goBackBtn.getElement().setAttribute("title", GL0841);
-		okButton.setText(GL_GRR_YES);
+		goBackBtn.getElement().setAttribute("alt", i18n.GL0841());
+		goBackBtn.getElement().setAttribute("title", i18n.GL0841());
+		okButton.setText(i18n.GL_GRR_YES());
 		okButton.getElement().setId("bluebtnOkButton");
-		okButton.getElement().setAttribute("alt", GL_GRR_YES);
-		okButton.getElement().setAttribute("title", GL_GRR_YES);
+		okButton.getElement().setAttribute("alt", i18n.GL_GRR_YES());
+		okButton.getElement().setAttribute("title", i18n.GL_GRR_YES());
 		previewCloseButton.getElement().setId("lblPreviewCloseButton");
 		filePathValueLbl.getElement().setId("lblFilePathValueLbl");
 		resourceTitleValueLbl.getElement().setId("lblResourceTitleValueLbl");
 		descriptionTxtValueLbl.getElement().setId("lblDescriptionTxtValueLbl");
 		categoryValueLbl.getElement().setId("CategoryValueLbl");
 		setThumbnailImage.getElement().setId("imgSetThumbnailImage");
-		lblConfirmAdding.setText(GL0591.toLowerCase());
+		lblConfirmAdding.setText(i18n.GL0591().toLowerCase());
 		lblConfirmAdding.getElement().setId("lblLblConfirmAdding");
-		lblConfirmAdding.getElement().setAttribute("alt", GL0591.toLowerCase());
-		lblConfirmAdding.getElement().setAttribute("title", GL0591.toLowerCase());
+		lblConfirmAdding.getElement().setAttribute("alt", i18n.GL0591().toLowerCase());
+		lblConfirmAdding.getElement().setAttribute("title", i18n.GL0591().toLowerCase());
 		setWidth("508px");
 		setHeight("481px");
 		center();

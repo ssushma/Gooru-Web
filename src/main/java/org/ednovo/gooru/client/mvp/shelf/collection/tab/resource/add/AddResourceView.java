@@ -44,10 +44,8 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleDocsResourceView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleWebResource;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.IsDriveView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.exists.ExistsResourceView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
@@ -64,7 +62,6 @@ import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -92,11 +89,11 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
-public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandlers> implements IsAddResourceView,MessageProperties{
+public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandlers> implements IsAddResourceView {
 
 	private static AddResourcePopupViewUiBinder uiBinder = GWT.create(AddResourcePopupViewUiBinder.class);
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	interface AddResourcePopupViewUiBinder extends
 			UiBinder<Widget, AddResourceView> {
@@ -104,8 +101,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	}
 	 static List<GoogleDriveItemDo> listobj=new ArrayList<GoogleDriveItemDo>();
 
-	private static final String MESSAGE_HEADER = GL0748;
-	private static final String MESSAGE_CONTENT = GL0891;
+	private static final String MESSAGE_HEADER = i18n.GL0748();
+	private static final String MESSAGE_CONTENT = i18n.GL0891();
 	private AddWebResourceWidget addWebResourceWidget;
 	private AddQuestionResourceWidget addQuestionResourceWidget;
 	private AddSearchResourceWidget addSearchResourceWidget;
@@ -163,30 +160,30 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		appPopUp.setContent(uiBinder.createAndBindUi(this));
 		tabViewContainer.getElement().setId("pnlTabViewContainer");
 		tabViewContainer.clear();
-		fromweb.setText(GL0887);
-		fromweb.getElement().setAttribute("alt", GL0887);
-		fromweb.getElement().setAttribute("title", GL0887);
-		fromfile.setText(GL0888);
-		fromfile.getElement().setAttribute("alt", GL0888);
-		fromfile.getElement().setAttribute("title", GL0888);
-		googleDrive.setText(GDRIVE);
-		googleDrive.getElement().setAttribute("alt", GDRIVE);
-		googleDrive.getElement().setAttribute("title", GDRIVE);
-		fromwsearch.setText(GL1916);
-		fromwsearch.getElement().setAttribute("alt", GL1916);
-		fromwsearch.getElement().setAttribute("title", GL1916);
-		multiplechoice.setText(GL0305);
-		multiplechoice.getElement().setAttribute("alt", GL0305);
-		multiplechoice.getElement().setAttribute("title", GL0305);
-		truefalase.setText(GL0306);
-		truefalase.getElement().setAttribute("alt", GL0306);
-		truefalase.getElement().setAttribute("title", GL0306);
-		truefalseText.setText(GL0890);
-		truefalseText.getElement().setAttribute("alt", GL0890);
-		truefalseText.getElement().setAttribute("title", GL0890);
-		openended.setText(GL0307);
-		openended.getElement().setAttribute("alt", GL0307);
-		openended.getElement().setAttribute("title", GL0307);
+		fromweb.setText(i18n.GL0887());
+		fromweb.getElement().setAttribute("alt", i18n.GL0887());
+		fromweb.getElement().setAttribute("title", i18n.GL0887());
+		fromfile.setText(i18n.GL0888());
+		fromfile.getElement().setAttribute("alt", i18n.GL0888());
+		fromfile.getElement().setAttribute("title", i18n.GL0888());
+		googleDrive.setText(i18n.GL2009());
+		googleDrive.getElement().setAttribute("alt", i18n.GL2009());
+		googleDrive.getElement().setAttribute("title", i18n.GL2009());
+		fromwsearch.setText(i18n.GL1916());
+		fromwsearch.getElement().setAttribute("alt", i18n.GL1916());
+		fromwsearch.getElement().setAttribute("title", i18n.GL1916());
+		multiplechoice.setText(i18n.GL0305());
+		multiplechoice.getElement().setAttribute("alt", i18n.GL0305());
+		multiplechoice.getElement().setAttribute("title", i18n.GL0305());
+		truefalase.setText(i18n.GL0306());
+		truefalase.getElement().setAttribute("alt", i18n.GL0306());
+		truefalase.getElement().setAttribute("title", i18n.GL0306());
+		truefalseText.setText(i18n.GL0890());
+		truefalseText.getElement().setAttribute("alt", i18n.GL0890());
+		truefalseText.getElement().setAttribute("title", i18n.GL0890());
+		openended.setText(i18n.GL0307());
+		openended.getElement().setAttribute("alt", i18n.GL0307());
+		openended.getElement().setAttribute("title", i18n.GL0307());
 		multipleAnswerAnc.setText(StringUtil.generateMessage(i18n.GL2017()));
 		multipleAnswerAnc.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL2017()));
 		multipleAnswerAnc.getElement().setAttribute("title", StringUtil.generateMessage(i18n.GL2017()));
@@ -813,7 +810,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	
 	@Override
 	public void setShortenUrlAlertMsg(){
-		addWebResourceWidget.mandatoryUrlLbl.setText(GL0892);
+		addWebResourceWidget.mandatoryUrlLbl.setText(i18n.GL0892());
 		addWebResourceWidget.mandatoryUrlLbl.setVisible(true);
 		addWebResourceWidget.setShortenedUrl(true); 
 	}
@@ -836,9 +833,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		if(clickType.equalsIgnoreCase("Url")){			
 			tabViewContainer.clear();
 			Window.enableScrolling(false);
-			titleLbl.getElement().setAttribute("alt", GL0886);
-			titleLbl.getElement().setAttribute("title", GL0886);
-			titleLbl.setText(GL0886);
+			titleLbl.getElement().setAttribute("alt", i18n.GL0886());
+			titleLbl.getElement().setAttribute("title", i18n.GL0886());
+			titleLbl.setText(i18n.GL0886());
 			urlTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
 			searchTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
 			myComputerTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -859,9 +856,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			try{
 				Window.enableScrolling(false);
 				tabViewContainer.clear();
-				titleLbl.setText(GL0893);
-				titleLbl.getElement().setAttribute("alt", GL0893);
-				titleLbl.getElement().setAttribute("title", GL0893);
+				titleLbl.setText(i18n.GL0893());
+				titleLbl.getElement().setAttribute("alt", i18n.GL0893());
+				titleLbl.getElement().setAttribute("title", i18n.GL0893());
 				addQuestionResourceWidget=new AddQuestionResourceWidget();
 				questionTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
 				trueOrFlaseButton.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -893,9 +890,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			try{
 				Window.enableScrolling(false);
 				tabViewContainer.clear();
-				titleLbl.setText(GL0304);
-				titleLbl.getElement().setAttribute("alt", GL0304);
-				titleLbl.getElement().setAttribute("title", GL0304);
+				titleLbl.setText(i18n.GL0304());
+				titleLbl.getElement().setAttribute("alt", i18n.GL0304());
+				titleLbl.getElement().setAttribute("title", i18n.GL0304());
 				addQuestionResourceWidget=new AddQuestionResourceWidget(collectionItemDo);
 				addQuestionResourceWidget.getHideRightsToolTip();
 				questionTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -932,9 +929,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			}
 		}else if(clickType.equalsIgnoreCase("Search")) {
 			Window.enableScrolling(true);
-			titleLbl.setText(GL0886);
-			titleLbl.getElement().setAttribute("alt", GL0886);
-			titleLbl.getElement().setAttribute("title", GL0886);
+			titleLbl.setText(i18n.GL0886());
+			titleLbl.getElement().setAttribute("alt", i18n.GL0886());
+			titleLbl.getElement().setAttribute("title", i18n.GL0886());
 			tabViewContainer.clear();
 			addSearchResourceWidget=new AddSearchResourceWidget(getUiHandlers().getParentCollectionDetails(),appPopUp);
 			tabViewContainer.add(addSearchResourceWidget);
@@ -972,9 +969,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				highlightSelectedTab("MC");
 				addQuestionResourceWidget.setQuestionType("MC");
 				addQuestionResourceWidget.showMulipleChoice();
-				addQuestionResourceWidget.addResourceFormTitleChoice.setText(GL0864);
+				addQuestionResourceWidget.addResourceFormTitleChoice.setText(i18n.GL0864());
 				addQuestionResourceWidget.correctText.clear();
-				addQuestionResourceWidget.correctText.getElement().setInnerHTML(GL0314);
+				addQuestionResourceWidget.correctText.getElement().setInnerHTML(i18n.GL0314());
 				addQuestionResourceWidget.setCorrectTextStyle();
 				addQuestionResourceWidget.noLabelText.setVisible(false);
 				AppClientFactory.fireEvent(new GetEditPageHeightEvent(appPopUp, false));
@@ -989,9 +986,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				highlightSelectedTab("TF");
 				addQuestionResourceWidget.setQuestionType("T/F");
 				addQuestionResourceWidget.showTrueOrFalseAnswerChoice();
-				addQuestionResourceWidget.addResourceFormTitleChoice.setText(GL0864);
+				addQuestionResourceWidget.addResourceFormTitleChoice.setText(i18n.GL0864());
 				addQuestionResourceWidget.correctText.clear();
-				addQuestionResourceWidget.correctText.getElement().setInnerHTML(GL0314);
+				addQuestionResourceWidget.correctText.getElement().setInnerHTML(i18n.GL0314());
 				addQuestionResourceWidget.setCorrectTextStyle();
 				addQuestionResourceWidget.noLabelText.setVisible(false);
 
