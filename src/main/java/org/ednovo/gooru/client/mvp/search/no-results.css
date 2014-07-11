@@ -74,12 +74,12 @@
 
 .liPosition {
 	clear: both;
-	overflow: hidden;
+	/* overflow: hidden; */
 	margin: 15px 0px;
 }
 
 .liContent {
-	width: 166px;
+	width: 300px;
 	line-height: 1.4em;
 	display: block;
 	/* float: left; */

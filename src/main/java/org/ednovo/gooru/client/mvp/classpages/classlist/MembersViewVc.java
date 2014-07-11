@@ -32,7 +32,6 @@ import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -60,7 +59,7 @@ public abstract class MembersViewVc extends Composite {
 	interface MembersViewVcUiBinder extends UiBinder<Widget, MembersViewVc> {
 	}
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	public CopyOfMessageProperties i18N = GWT.create(CopyOfMessageProperties.class);
 	List<ClassPageCollectionDo> classpageTitles = new ArrayList<ClassPageCollectionDo>();
 
 	CollaboratorsDo collaboratorsDo = null;
@@ -135,10 +134,10 @@ public abstract class MembersViewVc extends Composite {
 		String status = collaboratorsDo.getStatus();
 		
 		panelCollaboratorsListContainer.getElement().setId(emailId);
-		btnRemove.setText(i18n.GL0237());
+		btnRemove.setText(i18N.GL0237());
 		btnRemove.getElement().setId("" + position);
-		btnRemove.getElement().setAttribute("alt",i18n.GL0237());
-		btnRemove.getElement().setAttribute("title",i18n.GL0237());
+		btnRemove.getElement().setAttribute("alt",i18N.GL0237());
+		btnRemove.getElement().setAttribute("title",i18N.GL0237());
 
 		imgProfileImage.addErrorHandler(new ErrorHandler() {
 			

@@ -27,7 +27,6 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsCBundle;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Visibility;
@@ -47,7 +46,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author BLR Team
  * 
  */
-public abstract class SuccessPopupViewVc extends PopupPanel implements MessageProperties {
+public abstract class SuccessPopupViewVc extends PopupPanel {
  
 	
 	@UiField(provided = true)

@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.uc.CollaboratorsUc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
@@ -74,7 +75,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class CollectionPlayerMetadataView extends BaseViewWithHandlers<CollectionPlayerMetadataUiHandlers> implements IsCollectionPlayerMetadataView,MessageProperties{
+public class CollectionPlayerMetadataView extends BaseViewWithHandlers<CollectionPlayerMetadataUiHandlers> implements IsCollectionPlayerMetadataView{
 
 	
 	@UiField
@@ -110,6 +111,8 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 
 	interface CollectionPlayerMetadataViewUiBinder extends UiBinder<Widget, CollectionPlayerMetadataView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	@Inject
 	public CollectionPlayerMetadataView(){
@@ -150,7 +153,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		if (collectionDo.getMeta() !=null && collectionDo.getMeta().getCollaboratorCount()>0){
 			 CollaboratorsUc collaboratorsUc=new CollaboratorsUc(collectionDo);
 			 teamContainer.add(collaboratorsUc);
-			setUserName(collectionDo.getUser().getUsernameDisplay() +" " + GL_GRR_AND);
+			setUserName(collectionDo.getUser().getUsernameDisplay() +" " + i18n.GL_GRR_AND());
 		}else{
 			setUserName(collectionDo.getUser().getUsernameDisplay());
 		}
@@ -187,45 +190,45 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 
 	public void setLabelAndIds() {
 //		collectionSummaryLbl.setVisible(false);
-		lblAuthor.setText(GL0573);
+		lblAuthor.setText(i18n.GL0573());
 		lblAuthor.getElement().setId("lblAuthor");
-		lblAuthor.getElement().setAttribute("alt",GL0573);
-		lblAuthor.getElement().setAttribute("title",GL0573);
+		lblAuthor.getElement().setAttribute("alt",i18n.GL0573());
+		lblAuthor.getElement().setAttribute("title",i18n.GL0573());
 		  
-		lblCourse.setText(GL0574);
+		lblCourse.setText(i18n.GL0574());
 		lblCourse.getElement().setId("lblCourse");
-		lblCourse.getElement().setAttribute("alt",GL0574);
-		lblCourse.getElement().setAttribute("title",GL0574);
+		lblCourse.getElement().setAttribute("alt",i18n.GL0574());
+		lblCourse.getElement().setAttribute("title",i18n.GL0574());
 		
-		lblStandards.setText(GL0575);
+		lblStandards.setText(i18n.GL0575());
 		lblStandards.getElement().setId("lblStandards");
-		lblStandards.getElement().setAttribute("alt",GL0575);
-		lblStandards.getElement().setAttribute("title",GL0575);
+		lblStandards.getElement().setAttribute("alt",i18n.GL0575());
+		lblStandards.getElement().setAttribute("title",i18n.GL0575());
 		
-		previewFlagButton.setText(GL0556);
+		previewFlagButton.setText(i18n.GL0556());
 		previewFlagButton.getElement().setId("lnkPreviewFlagButton");
-		previewFlagButton.getElement().setAttribute("alt",GL0556);
-		previewFlagButton.getElement().setAttribute("title",GL0556);
+		previewFlagButton.getElement().setAttribute("alt",i18n.GL0556());
+		previewFlagButton.getElement().setAttribute("title",i18n.GL0556());
 		
-//		collectionSummaryLbl.setText(GL1544);
-//		emptyMsgDescOne.setText(GL1545);
-//		emptyMsgDescTwo.setText(GL1546);
-		insightsHeaderText.setText(GL1626);
+//		collectionSummaryLbl.setText(i18n.GL1544);
+//		emptyMsgDescOne.setText(i18n.GL1545);
+//		emptyMsgDescTwo.setText(i18n.GL1546);
+		insightsHeaderText.setText(i18n.GL1626());
 		insightsHeaderText.getElement().setId("lblInsightsHeaderText");
-		insightsHeaderText.getElement().setAttribute("alt",GL1626);
-		insightsHeaderText.getElement().setAttribute("title",GL1626);
+		insightsHeaderText.getElement().setAttribute("alt",i18n.GL1626());
+		insightsHeaderText.getElement().setAttribute("title",i18n.GL1626());
 		
-		insightsContentText.setText(GL1627);
+		insightsContentText.setText(i18n.GL1627());
 		insightsContentText.getElement().setId("lblInsightsContentText");
-		insightsContentText.getElement().setAttribute("alt",GL1627);
-		insightsContentText.getElement().setAttribute("title",GL1627);
+		insightsContentText.getElement().setAttribute("alt",i18n.GL1627());
+		insightsContentText.getElement().setAttribute("title",i18n.GL1627());
 		
 		previewFlagButton.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
 		previewFlagButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
-		lbllanguageObjectiveText.setText(GL1721);
+		lbllanguageObjectiveText.setText(i18n.GL1721());
 		lbllanguageObjectiveText.getElement().setId("lblLanguageObjectiveText");
-		lbllanguageObjectiveText.getElement().setAttribute("alt",GL1721);
-		lbllanguageObjectiveText.getElement().setAttribute("title",GL1721);
+		lbllanguageObjectiveText.getElement().setAttribute("alt",i18n.GL1721());
+		lbllanguageObjectiveText.getElement().setAttribute("title",i18n.GL1721());
 		
 		studyMainContianer.getElement().setId("fpnlStudyMainContianer");
 		metadataContainer.getElement().setId("fpnlMetadataContainer");
@@ -318,7 +321,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		profileThumbnailImage.setUrl("images/settings/setting-user-image.png");
 	}
 	public void setViewCount(String viewCount){
-		String viewsText=Integer.parseInt(viewCount)==1?viewCount+" "+GL1428:viewCount+" "+GL0934;
+		String viewsText=Integer.parseInt(viewCount)==1?viewCount+" "+i18n.GL1428():viewCount+" "+i18n.GL0934();
 		viewsCountLabel.setText(viewsText);
 		viewsCountLabel.getElement().setAttribute("alt",viewsText);
 		viewsCountLabel.getElement().setAttribute("title",viewsText);
@@ -453,25 +456,25 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		classTitleValue.getElement().setAttribute("alt",classpageItemDo.getTitle());
 		classTitleValue.getElement().setAttribute("title",classpageItemDo.getTitle());
 		
-		lblclassTitle.setText(GL1578);
-		lblclassTitle.getElement().setAttribute("alt",GL1578);
-		lblclassTitle.getElement().setAttribute("title",GL1578);
+		lblclassTitle.setText(i18n.GL1578());
+		lblclassTitle.getElement().setAttribute("alt",i18n.GL1578());
+		lblclassTitle.getElement().setAttribute("title",i18n.GL1578());
 		
-		lblClassInfo.setText(GL1579);
-		lblClassInfo.getElement().setAttribute("alt",GL1579);
-		lblClassInfo.getElement().setAttribute("title",GL1579);
+		lblClassInfo.setText(i18n.GL1579());
+		lblClassInfo.getElement().setAttribute("alt",i18n.GL1579());
+		lblClassInfo.getElement().setAttribute("title",i18n.GL1579());
 		
-		lblTeacher.setText(GL1580);
-		lblTeacher.getElement().setAttribute("alt",GL1580);
-		lblTeacher.getElement().setAttribute("title",GL1580);
+		lblTeacher.setText(i18n.GL1580());
+		lblTeacher.getElement().setAttribute("alt",i18n.GL1580());
+		lblTeacher.getElement().setAttribute("title",i18n.GL1580());
 		
-		lbldueDate.setText(GL1581);
-		lbldueDate.getElement().setAttribute("alt",GL1581);
-		lbldueDate.getElement().setAttribute("title",GL1581);
+		lbldueDate.setText(i18n.GL1581());
+		lbldueDate.getElement().setAttribute("alt",i18n.GL1581());
+		lbldueDate.getElement().setAttribute("title",i18n.GL1581());
 		
-		lblDirections.setText(GL1582);
-		lblDirections.getElement().setAttribute("alt",GL1582);
-		lblDirections.getElement().setAttribute("title",GL1582);
+		lblDirections.setText(i18n.GL1582());
+		lblDirections.getElement().setAttribute("alt",i18n.GL1582());
+		lblDirections.getElement().setAttribute("title",i18n.GL1582());
 		
 		setDueDateText(classpageItemDo.getPlannedEndDate());
 		setDirectionText(classpageItemDo.getDirection());
@@ -635,9 +638,9 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			//lbllanguageObjectiveAll.setVisible(false);
 			seeMoreAnchor.getElement().setAttribute("style", "float:right;");
 			if(languageObjective.length()>=200){
-				seeMoreAnchor.setText(GL1728);	
-				seeMoreAnchor.getElement().setAttribute("alt",GL1728);
-				seeMoreAnchor.getElement().setAttribute("title",GL1728);
+				seeMoreAnchor.setText(i18n.GL1728());	
+				seeMoreAnchor.getElement().setAttribute("alt",i18n.GL1728());
+				seeMoreAnchor.getElement().setAttribute("title",i18n.GL1728());
 				seeMoreAnchor.setVisible(true);
 				lbllanguageObjective.setText(languageObjective.substring(0,200));
 				lbllanguageObjective.getElement().setAttribute("alt",languageObjective.substring(0,200));
