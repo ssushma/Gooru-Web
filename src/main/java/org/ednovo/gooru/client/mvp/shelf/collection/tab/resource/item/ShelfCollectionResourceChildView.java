@@ -49,12 +49,12 @@ import org.ednovo.gooru.client.uc.ResourceImageUc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.AssetsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -102,7 +102,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ShelfCollectionResourceChildView extends
 		ChildView<ShelfCollectionResourceChildPresenter> implements
-		IsShelfCollectionResourceView, MessageProperties {
+		IsShelfCollectionResourceView {
 
 	@UiField
 	HTML resourceNarrationHtml;
@@ -155,6 +155,8 @@ public class ShelfCollectionResourceChildView extends
 //	IsCollectionResourceTabView isCollResourceTabView = null;
 
 	private CollectionItemDo collectionItemDo;
+	
+	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	List<Integer> collectionItems;
 	
@@ -196,9 +198,9 @@ public class ShelfCollectionResourceChildView extends
 	{
 		this.ResourceEditButtonContainer=ResourceEditButtonContainer;
 	}*/
-	private static final String NO_NARRATION_ADDED =GL0956;
+	private static final String NO_NARRATION_ADDED =i18n.GL0956();
 
-	private static final String ADD_NARRATION_FOR_YOUR_VIEWERS =GL0967;
+	private static final String ADD_NARRATION_FOR_YOUR_VIEWERS =i18n.GL0967();
 
 	private ConfirmationPopupVc deleteConfirmationPopupVc;
 
@@ -210,23 +212,23 @@ public class ShelfCollectionResourceChildView extends
 
 	private static ShelfCollectionResourceChildView previousCollectionResourceChildView;
 
-	private static final String MESSAGE_CONTENT =GL0968;
+	private static final String MESSAGE_CONTENT =i18n.GL0968();
 
-	private static final String MESSAGE_HEADER =GL0748;
+	private static final String MESSAGE_HEADER =i18n.GL0748();
 
-	private static final String PLAYER_NAME =GL0969;
+	private static final String PLAYER_NAME =i18n.GL0969();
 
-	private static final String VALID_START_STOP_TIME = GL0970;
+	private static final String VALID_START_STOP_TIME = i18n.GL0970();
 
-	private static final String YOUTUBE_START_END_TIME = GL0971;
+	private static final String YOUTUBE_START_END_TIME = i18n.GL0971();
 
-	private static final String FROM_START_TIME =GL0972;
-	private static final String FROM_STOP_TIME = GL0973;
+	private static final String FROM_START_TIME =i18n.GL0972();
+	private static final String FROM_STOP_TIME = i18n.GL0973();
 //	private static final String FROM_START_PAGE = "Start page";
-	private static final String VIDEO_TIME =GL0974;
-	//private static final String START_TIME=GL0972+GL_SPL_SEMICOLON;
+	private static final String VIDEO_TIME =i18n.GL0974();
+	//private static final String START_TIME=i18n.GL0972+i18n.GL_SPL_SEMICOLON;
 	
-	private static final String START_PAGE=GL0961;
+	private static final String START_PAGE=i18n.GL0961();
 	private static boolean isConfirmationPopup;
 	private static final String START_MINUTE="00";
 	private static final String START_SEC="00";
@@ -237,9 +239,9 @@ public class ShelfCollectionResourceChildView extends
 
 	private static boolean isEdited = false;
 
-	private static final String OOPS = GL0061;
+	private static final String OOPS = i18n.GL0061();
 
-	private static final String EDIT_CONFIRM =GL0975;
+	private static final String EDIT_CONFIRM =i18n.GL0975();
 
 	private String selectedCollectionId;
 	private boolean youtube;
@@ -335,80 +337,80 @@ public class ShelfCollectionResourceChildView extends
 		editFloPanel.getElement().setId("fpnlEditFloPanel");
 		imgNotFriendly.getElement().setId("imgImgNotFriendly");
 		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
-		startStopTimeDisplayText.setText(GL0957);
+		startStopTimeDisplayText.setText(i18n.GL0957());
 		startStopTimeDisplayText.getElement().setId("lblStartStopTimeDisplayText");
-		startStopTimeDisplayText.getElement().setAttribute("alt", GL0957);
-		startStopTimeDisplayText.getElement().setAttribute("title", GL0957);
-		minsText.getElement().setInnerHTML(GL0958);
+		startStopTimeDisplayText.getElement().setAttribute("alt", i18n.GL0957());
+		startStopTimeDisplayText.getElement().setAttribute("title", i18n.GL0957());
+		minsText.getElement().setInnerHTML(i18n.GL0958());
 		minsText.getElement().setId("pnlMinsText");
-		minsText.getElement().setAttribute("alt", GL0958);
-		minsText.getElement().setAttribute("title", GL0958);
-		secondsText.getElement().setInnerHTML(GL0959);
+		minsText.getElement().setAttribute("alt", i18n.GL0958());
+		minsText.getElement().setAttribute("title", i18n.GL0958());
+		secondsText.getElement().setInnerHTML(i18n.GL0959());
 		secondsText.getElement().setId("pnlSecondsText");
-		secondsText.getElement().setAttribute("alt", GL0959);
-		secondsText.getElement().setAttribute("title", GL0959);
-		endMinsText.getElement().setInnerHTML(GL0958);
+		secondsText.getElement().setAttribute("alt", i18n.GL0959());
+		secondsText.getElement().setAttribute("title", i18n.GL0959());
+		endMinsText.getElement().setInnerHTML(i18n.GL0958());
 		endMinsText.getElement().setId("pnlEndMinsText");
-		endMinsText.getElement().setAttribute("alt", GL0958);
-		endMinsText.getElement().setAttribute("title", GL0958);
-		endSecondsText.getElement().setInnerHTML(GL0959);
+		endMinsText.getElement().setAttribute("alt", i18n.GL0958());
+		endMinsText.getElement().setAttribute("title", i18n.GL0958());
+		endSecondsText.getElement().setInnerHTML(i18n.GL0959());
 		endSecondsText.getElement().setId("pnlEndSecondsText");
-		endSecondsText.getElement().setAttribute("alt", GL0959);
-		endSecondsText.getElement().setAttribute("title", GL0959);
-		editSartPageText.setText(GL0960);
+		endSecondsText.getElement().setAttribute("alt", i18n.GL0959());
+		endSecondsText.getElement().setAttribute("title", i18n.GL0959());
+		editSartPageText.setText(i18n.GL0960());
 		editSartPageText.getElement().setId("lblEditSartPageText");
-		editSartPageText.getElement().setAttribute("alt", GL0960);
-		editSartPageText.getElement().setAttribute("title", GL0960);
-		StartPageLbl.setText(GL0961);
+		editSartPageText.getElement().setAttribute("alt", i18n.GL0960());
+		editSartPageText.getElement().setAttribute("title", i18n.GL0960());
+		StartPageLbl.setText(i18n.GL0961());
 		StartPageLbl.getElement().setId("lblStartPageLbl");
-		StartPageLbl.getElement().setAttribute("alt", GL0961);
-		StartPageLbl.getElement().setAttribute("title", GL0961);
-		EditBtn.setText(GL0140);
-		EditBtn.getElement().setAttribute("alt", GL0140);
-		EditBtn.getElement().setAttribute("title", GL0140);
-		updateResourceBtn.setText(GL0962);
-		updateResourceBtn.getElement().setAttribute("alt", GL0962);
-		updateResourceBtn.getElement().setAttribute("title", GL0962);
+		StartPageLbl.getElement().setAttribute("alt", i18n.GL0961());
+		StartPageLbl.getElement().setAttribute("title", i18n.GL0961());
+		EditBtn.setText(i18n.GL0140());
+		EditBtn.getElement().setAttribute("alt", i18n.GL0140());
+		EditBtn.getElement().setAttribute("title", i18n.GL0140());
+		updateResourceBtn.setText(i18n.GL0962());
+		updateResourceBtn.getElement().setAttribute("alt", i18n.GL0962());
+		updateResourceBtn.getElement().setAttribute("title", i18n.GL0962());
 		addTages.setText("Add Tags");
 		addTages.getElement().setAttribute("alt", "Add Tags");
 		addTages.getElement().setAttribute("title", "Add Tags");
-		editInfoLbl.setText(GL0963);
-		editInfoLbl.getElement().setAttribute("alt", GL0963);
-		editInfoLbl.getElement().setAttribute("title", GL0963);
-		editVideoTimeLbl.setText(GL0964);
-		editVideoTimeLbl.getElement().setAttribute("alt", GL0964);
-		editVideoTimeLbl.getElement().setAttribute("title", GL0964);
-		editStartPageLbl.setText(GL0960);
-		editStartPageLbl.getElement().setAttribute("alt", GL0960);
-		editStartPageLbl.getElement().setAttribute("title", GL0960);
-		copyResource.setText(GL0965);
-		copyResource.getElement().setAttribute("alt", GL0965);
-		copyResource.getElement().setAttribute("title", GL0965);
-		confirmDeleteLbl.setText(GL0237);
-		confirmDeleteLbl.getElement().setAttribute("alt", GL0237);
-		confirmDeleteLbl.getElement().setAttribute("title", GL0237);
-		UpdateTextMessage.setText(GL0966);
+		editInfoLbl.setText(i18n.GL0963());
+		editInfoLbl.getElement().setAttribute("alt", i18n.GL0963());
+		editInfoLbl.getElement().setAttribute("title", i18n.GL0963());
+		editVideoTimeLbl.setText(i18n.GL0964());
+		editVideoTimeLbl.getElement().setAttribute("alt", i18n.GL0964());
+		editVideoTimeLbl.getElement().setAttribute("title", i18n.GL0964());
+		editStartPageLbl.setText(i18n.GL0960());
+		editStartPageLbl.getElement().setAttribute("alt", i18n.GL0960());
+		editStartPageLbl.getElement().setAttribute("title", i18n.GL0960());
+		copyResource.setText(i18n.GL0965());
+		copyResource.getElement().setAttribute("alt", i18n.GL0965());
+		copyResource.getElement().setAttribute("title", i18n.GL0965());
+		confirmDeleteLbl.setText(i18n.GL0237());
+		confirmDeleteLbl.getElement().setAttribute("alt", i18n.GL0237());
+		confirmDeleteLbl.getElement().setAttribute("title", i18n.GL0237());
+		UpdateTextMessage.setText(i18n.GL0966());
 		UpdateTextMessage.getElement().setId("lblUpdateTextMessage");
-		UpdateTextMessage.getElement().setAttribute("alt", GL0966);
-		UpdateTextMessage.getElement().setAttribute("title", GL0966);
-		updateNarrationBtn.setText(GL0240);
-		updateNarrationBtn.getElement().setAttribute("alt", GL0240);
-		updateNarrationBtn.getElement().setAttribute("title", GL0240);
-		cancelNarrationBtn.setText(GL0142);
-		cancelNarrationBtn.getElement().setAttribute("alt", GL0142);
-		cancelNarrationBtn.getElement().setAttribute("title", GL0142);
-		updateVideoTimeBtn.setText(GL0240);
-		updateVideoTimeBtn.getElement().setAttribute("alt", GL0240);
-		updateVideoTimeBtn.getElement().setAttribute("title", GL0240);
-		cancelVideoTimeBtn.setText(GL0142);
-		cancelVideoTimeBtn.getElement().setAttribute("alt", GL0142);
-		cancelVideoTimeBtn.getElement().setAttribute("title", GL0142);
-		updatePdfBtn.setText(GL0240);
-		updatePdfBtn.getElement().setAttribute("alt", GL0240);
-		updatePdfBtn.getElement().setAttribute("title", GL0240);
-		cancelpdfBtn.setText(GL0142);
-		cancelpdfBtn.getElement().setAttribute("alt", GL0142);
-		cancelpdfBtn.getElement().setAttribute("title", GL0142);
+		UpdateTextMessage.getElement().setAttribute("alt", i18n.GL0966());
+		UpdateTextMessage.getElement().setAttribute("title", i18n.GL0966());
+		updateNarrationBtn.setText(i18n.GL0240());
+		updateNarrationBtn.getElement().setAttribute("alt", i18n.GL0240());
+		updateNarrationBtn.getElement().setAttribute("title", i18n.GL0240());
+		cancelNarrationBtn.setText(i18n.GL0142());
+		cancelNarrationBtn.getElement().setAttribute("alt", i18n.GL0142());
+		cancelNarrationBtn.getElement().setAttribute("title", i18n.GL0142());
+		updateVideoTimeBtn.setText(i18n.GL0240());
+		updateVideoTimeBtn.getElement().setAttribute("alt", i18n.GL0240());
+		updateVideoTimeBtn.getElement().setAttribute("title", i18n.GL0240());
+		cancelVideoTimeBtn.setText(i18n.GL0142());
+		cancelVideoTimeBtn.getElement().setAttribute("alt", i18n.GL0142());
+		cancelVideoTimeBtn.getElement().setAttribute("title", i18n.GL0142());
+		updatePdfBtn.setText(i18n.GL0240());
+		updatePdfBtn.getElement().setAttribute("alt", i18n.GL0240());
+		updatePdfBtn.getElement().setAttribute("title", i18n.GL0240());
+		cancelpdfBtn.setText(i18n.GL0142());
+		cancelpdfBtn.getElement().setAttribute("alt", i18n.GL0142());
+		cancelpdfBtn.getElement().setAttribute("title", i18n.GL0142());
 		resourceFlowPanel.getElement().setId("fpnlResourceFlowPanel");
 		narrationConatainer.getElement().setId("fpnlNarrationConatainer");
 		setData(collectionItem);
@@ -418,10 +420,10 @@ public class ShelfCollectionResourceChildView extends
 		addDomHandler(new ActionPanelOut(), MouseOutEvent.getType());
 		setPresenter(new ShelfCollectionResourceChildPresenter(this));
 		//For 5.9 
-		narrationAlertMessageLbl.setText(GL0143);
+		narrationAlertMessageLbl.setText(i18n.GL0143());
 		narrationAlertMessageLbl.getElement().setId("lblNarrationAlertMessageLbl");
-		narrationAlertMessageLbl.getElement().setAttribute("alt", GL0143);
-		narrationAlertMessageLbl.getElement().setAttribute("title", GL0143);
+		narrationAlertMessageLbl.getElement().setAttribute("alt", i18n.GL0143());
+		narrationAlertMessageLbl.getElement().setAttribute("title", i18n.GL0143());
 		actionVerPanel.setVisible(false);
 		actionVerPanel.getElement().setId("fpnlActionVerPanel");
 		actionVerPanelForUpdateTime.getElement().setId("fpnlActionVerPanelForUpdateTime");
@@ -483,7 +485,7 @@ public class ShelfCollectionResourceChildView extends
 		resourceTitleLbl.getElement().setId("htmlResourceTitleLbl");
 		pencilEditNarationLbl.getElement().setId("lblPencilEditNarationLbl");
 		narationFloPanel.getElement().setId("fpnlNarationFloPanel");
-		narrationAlertMessageLbl.getElement().setAttribute("alt", GL0143);
+		narrationAlertMessageLbl.getElement().setAttribute("alt", i18n.GL0143());
 		videoDisplay.getElement().setId("fpnlVideoDisplay");
 		videoImage.getElement().setId("fpnlVideoImage");
 		videoTimeField.getElement().setId("lblVideoTimeField");
@@ -598,7 +600,7 @@ public class ShelfCollectionResourceChildView extends
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(GL0454+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+GL04431);
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
 				
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -918,9 +920,9 @@ public class ShelfCollectionResourceChildView extends
 					EndTimeTxt2.setText(endSec);
 					EndTimeTxt2.getElement().setAttribute("alt", endSec);
 					EndTimeTxt2.getElement().setAttribute("title", endSec);
-					fromLblDisplayText.setText(startMm+" "+GL0958+" "+startSec +" "+GL0959+" "+GL_GRR_Hyphen+" "+endMm+" "+GL0958+" "+endSec +" "+GL0959+" ");
-					fromLblDisplayText.getElement().setAttribute("alt", startMm+" "+GL0958+" "+startSec +" "+GL0959+" "+GL_GRR_Hyphen+" "+endMm+" "+GL0958+" "+endSec +" "+GL0959+" ");
-					fromLblDisplayText.getElement().setAttribute("title", startMm+" "+GL0958+" "+startSec +" "+GL0959+" "+GL_GRR_Hyphen+" "+endMm+" "+GL0958+" "+endSec +" "+GL0959+" ");
+					fromLblDisplayText.setText(startMm+" "+i18n.GL0958()+" "+startSec +" "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "+endMm+" "+i18n.GL0958()+" "+endSec +" "+i18n.GL0959()+" ");
+					fromLblDisplayText.getElement().setAttribute("alt", startMm+" "+i18n.GL0958()+" "+startSec +" "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "+endMm+" "+i18n.GL0958()+" "+endSec +" "+i18n.GL0959()+" ");
+					fromLblDisplayText.getElement().setAttribute("title", startMm+" "+i18n.GL0958()+" "+startSec +" "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "+endMm+" "+i18n.GL0958()+" "+endSec +" "+i18n.GL0959()+" ");
 					fromLbl.setText(FROM_START_TIME);
 					fromLbl.getElement().setAttribute("alt", FROM_START_TIME);
 					fromLbl.getElement().setAttribute("title", FROM_START_TIME);
@@ -963,29 +965,29 @@ public class ShelfCollectionResourceChildView extends
 												}
 												fromLblDisplayText
 														.setText(START_MINUTE
-																+ " "+GL0958+" "
+																+ " "+i18n.GL0958()+" "
 																+ START_SEC
-																+ " "+GL0959+" "+GL_GRR_Hyphen+" "
+																+ " "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "
 																+ tolTimeInmin
-																+ " "+GL0958+" "
+																+ " "+i18n.GL0958()+" "
 																+ totalTimeSec
-																+ " "+GL0959+" ");
+																+ " "+i18n.GL0959()+" ");
 												fromLblDisplayText.getElement().setAttribute("alt", START_MINUTE
-														+ " "+GL0958+" "
+														+ " "+i18n.GL0958()+" "
 														+ START_SEC
-														+ " "+GL0959+" "+GL_GRR_Hyphen+" "
+														+ " "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "
 														+ tolTimeInmin
-														+ " "+GL0958+" "
+														+ " "+i18n.GL0958()+" "
 														+ totalTimeSec
-														+ " "+GL0959+" ");
+														+ " "+i18n.GL0959()+" ");
 												fromLblDisplayText.getElement().setAttribute("title", START_MINUTE
-														+ " "+GL0958+" "
+														+ " "+i18n.GL0958()+" "
 														+ START_SEC
-														+ " "+GL0959+" "+GL_GRR_Hyphen+" "
+														+ " "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "
 														+ tolTimeInmin
-														+ " "+GL0958+" "
+														+ " "+i18n.GL0958()+" "
 														+ totalTimeSec
-														+ " "+GL0959+" ");
+														+ " "+i18n.GL0959()+" ");
 												EndTimeTxt1
 														.setText(tolTimeInmin);
 												EndTimeTxt1.getElement().setAttribute("alt", tolTimeInmin);
@@ -997,29 +999,29 @@ public class ShelfCollectionResourceChildView extends
 											} else {
 												fromLblDisplayText
 														.setText(START_MINUTE
-																+ " "+GL0958+" "
+																+ " "+i18n.GL0958()+" "
 																+ START_SEC
-																+ " "+GL0959+" "+GL_GRR_Hyphen+" "
+																+ " "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "
 																+ START_MINUTE
-																+ " "+GL0958+" "
+																+ " "+i18n.GL0958()+" "
 																+ END_MINUTE
-																+ " "+GL0959+" ");
+																+ " "+i18n.GL0959()+" ");
 												fromLblDisplayText.getElement().setAttribute("alt", START_MINUTE
-														+ " "+GL0958+" "
+														+ " "+i18n.GL0958()+" "
 														+ START_SEC
-														+ " "+GL0959+" "+GL_GRR_Hyphen+" "
+														+ " "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "
 														+ START_MINUTE
-														+ " "+GL0958+" "
+														+ " "+i18n.GL0958()+" "
 														+ END_MINUTE
-														+ " "+GL0959+" ");
+														+ " "+i18n.GL0959()+" ");
 												fromLblDisplayText.getElement().setAttribute("title", START_MINUTE
-														+ " "+GL0958+" "
+														+ " "+i18n.GL0958()+" "
 														+ START_SEC
-														+ " "+GL0959+" "+GL_GRR_Hyphen+" "
+														+ " "+i18n.GL0959()+" "+i18n.GL_GRR_Hyphen()+" "
 														+ START_MINUTE
-														+ " "+GL0958+" "
+														+ " "+i18n.GL0958()+" "
 														+ END_MINUTE
-														+ " "+GL0959+" ");
+														+ " "+i18n.GL0959()+" ");
 												EndTimeTxt1.setText(END_MINUTE);
 												EndTimeTxt1.getElement().setAttribute("alt", END_MINUTE);
 												EndTimeTxt1.getElement().setAttribute("title", END_MINUTE);
@@ -1186,10 +1188,10 @@ public class ShelfCollectionResourceChildView extends
 					};
 					success.setHeight("253px");
 					success.setWidth("450px");
-					success.setPopupTitle(GL1795);
-					success.setDescText(GL1796);
+					success.setPopupTitle(i18n.GL1795());
+					success.setDescText(i18n.GL1796());
 					success.enableTaggingImage();
-					success.setPositiveButtonText(GL0190);
+					success.setPositiveButtonText(i18n.GL0190());
 					success.center();
 					success.show();
 			        }else{
@@ -1523,10 +1525,10 @@ public class ShelfCollectionResourceChildView extends
 					
 					
 					narrationTxtArea.getElement().getStyle().setBorderColor("orange");
-					narrationAlertMessageLbl.setText(GL0554);
+					narrationAlertMessageLbl.setText(i18n.GL0554());
 					
-					narrationAlertMessageLbl.getElement().setAttribute("alt", GL0554);
-					narrationAlertMessageLbl.getElement().setAttribute("title", GL0554);
+					narrationAlertMessageLbl.getElement().setAttribute("alt", i18n.GL0554());
+					narrationAlertMessageLbl.getElement().setAttribute("title", i18n.GL0554());
 					narrationAlertMessageLbl.setVisible(true);
 					
 					MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
@@ -1796,7 +1798,7 @@ public class ShelfCollectionResourceChildView extends
 		RegExp regExp = RegExp.compile(REG_EXP);
 		if (!(regExp.test(start)) || !(regExp.test(stop))) {
 			UpdateTextMessage.setVisible(false);
-			new AlertContentUc(GL0061, YOUTUBE_START_END_TIME);
+			new AlertContentUc(i18n.GL0061(), YOUTUBE_START_END_TIME);
 			return;
 		}
 		String videoId = ResourceImageUtil.getYoutubeVideoId(collectionItemDo
@@ -1844,7 +1846,7 @@ public class ShelfCollectionResourceChildView extends
 										///setEditMode(false);
 									} else {
 										UpdateTextMessage.setVisible(false);
-										new AlertContentUc(GL0061,
+										new AlertContentUc(i18n.GL0061(),
 												VALID_START_STOP_TIME);
 									}
 								}

@@ -64,11 +64,12 @@ import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.service.ShelfServiceAsync;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
@@ -95,7 +96,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
  * @author Search Team
  * 
  */
-public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresenter.IsShelfProxy> implements ShelfUiHandlers,MessageProperties {
+public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresenter.IsShelfProxy> implements ShelfUiHandlers {
 
 	@Inject
 	private ShelfServiceAsync shelfService;
@@ -146,6 +147,8 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	SignUpPresenter signUpViewPresenter = null;
 	
 	Map<String,String> folderMetaData = new HashMap<String,String>();
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	private static final String CALLBACK = "callback";
 	
@@ -640,7 +643,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	
 	public void invokeErrorPopup(){
 		if (errorPopup == null){
-			errorPopup = new ErrorPopup(GL0340);
+			errorPopup = new ErrorPopup(i18n.GL0340());
 			errorPopup.show();
 			errorPopup.center();
 		}
