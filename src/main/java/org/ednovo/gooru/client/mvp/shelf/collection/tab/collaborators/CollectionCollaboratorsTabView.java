@@ -42,9 +42,9 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeleteP
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.suggestbox.widget.AutoSuggestForm;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -85,12 +85,14 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer:
  */
-public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<CollectionCollaboratorsTabUiHandlers> implements IsCollectionCollaboratorsTab,MessageProperties, SelectionHandler<SuggestOracle.Suggestion>  {
+public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<CollectionCollaboratorsTabUiHandlers> implements IsCollectionCollaboratorsTab, SelectionHandler<SuggestOracle.Suggestion>  {
 
 	@UiField(provided = true)
 	CollectionCollaboratorsCBundle res;
 	
 	private static CollectionAssignViewTabUiBinder uiBinder = GWT.create(CollectionAssignViewTabUiBinder.class);
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 	
@@ -192,98 +194,98 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	 */
 	public void setLabelsAndIds(){
 		
-		lblCollectionCreator.setText(GL0936);
+		lblCollectionCreator.setText(i18n.GL0936());
 		lblCollectionCreator.getElement().setId("lblCollectionCreator");
-		lblCollectionCreator.getElement().setAttribute("alt",GL0936);
-		lblCollectionCreator.getElement().setAttribute("title",GL0936);
+		lblCollectionCreator.getElement().setAttribute("alt",i18n.GL0936());
+		lblCollectionCreator.getElement().setAttribute("title",i18n.GL0936());
 		
-		lblCurrentCollaborators.setText( GL0939);
+		lblCurrentCollaborators.setText(i18n.GL0939());
 		lblCurrentCollaborators.getElement().setId("lblCurrentCollaborators");
-		lblCurrentCollaborators.getElement().setAttribute("alt",GL0939);
-		lblCurrentCollaborators.getElement().setAttribute("title",GL0939);
+		lblCurrentCollaborators.getElement().setAttribute("alt",i18n.GL0939());
+		lblCurrentCollaborators.getElement().setAttribute("title",i18n.GL0939());
 		
-		lblYouAreTheCollectionCreator.setText(GL0940);
+		lblYouAreTheCollectionCreator.setText(i18n.GL0940());
 		lblYouAreTheCollectionCreator.getElement().setId("lblYouAreTheCollectionCreator");
-		lblYouAreTheCollectionCreator.getElement().setAttribute("alt",GL0940);
-		lblYouAreTheCollectionCreator.getElement().setAttribute("title",GL0940);
+		lblYouAreTheCollectionCreator.getElement().setAttribute("alt",i18n.GL0940());
+		lblYouAreTheCollectionCreator.getElement().setAttribute("title",i18n.GL0940());
 		
-		lblAddCollaborator.setText(GL0941);
+		lblAddCollaborator.setText(i18n.GL0941());
 		lblAddCollaborator.getElement().setId("lblAddCollaborator");
-		lblAddCollaborator.getElement().setAttribute("alt",GL0941);
-		lblAddCollaborator.getElement().setAttribute("title",GL0941);
+		lblAddCollaborator.getElement().setAttribute("alt",i18n.GL0941());
+		lblAddCollaborator.getElement().setAttribute("title",i18n.GL0941());
 		
-		lblCollaboratorsDesc.setText(GL0942);
+		lblCollaboratorsDesc.setText(i18n.GL0942());
 		lblCollaboratorsDesc.getElement().setId("lblCollaboratorsDesc");
-		lblCollaboratorsDesc.getElement().setAttribute("alt",GL0942);
-		lblCollaboratorsDesc.getElement().setAttribute("title",GL0942);
+		lblCollaboratorsDesc.getElement().setAttribute("alt",i18n.GL0942());
+		lblCollaboratorsDesc.getElement().setAttribute("title",i18n.GL0942());
 		
-		lblInviteCollaborators.setText(GL0943);
+		lblInviteCollaborators.setText(i18n.GL0943());
 		lblInviteCollaborators.getElement().setId("lblInviteCollaborators");
-		lblInviteCollaborators.getElement().setAttribute("alt",GL0943);
-		lblInviteCollaborators.getElement().setAttribute("title",GL0943);
+		lblInviteCollaborators.getElement().setAttribute("alt",i18n.GL0943());
+		lblInviteCollaborators.getElement().setAttribute("title",i18n.GL0943());
 		
-		lblPendingInvitations.setText(GL1114);
+		lblPendingInvitations.setText(i18n.GL1114());
 		lblPendingInvitations.getElement().setId("lblPendingInvitations");
-		lblPendingInvitations.getElement().setAttribute("alt",GL1114);
-		lblPendingInvitations.getElement().setAttribute("title",GL1114);
+		lblPendingInvitations.getElement().setAttribute("alt",i18n.GL1114());
+		lblPendingInvitations.getElement().setAttribute("title",i18n.GL1114());
 		
-		lblCurrentCollabTitle.setText(GL1113);
+		lblCurrentCollabTitle.setText(i18n.GL1113());
 		lblCurrentCollabTitle.getElement().setId("lblCurrentCollabTitle");
-		lblCurrentCollabTitle.getElement().setAttribute("alt",GL1113);
-		lblCurrentCollabTitle.getElement().setAttribute("title",GL1113);
+		lblCurrentCollabTitle.getElement().setAttribute("alt",i18n.GL1113());
+		lblCurrentCollabTitle.getElement().setAttribute("title",i18n.GL1113());
 		
-		btnInvite.setText(GL0944);
+		btnInvite.setText(i18n.GL0944());
 		btnInvite.getElement().setId("btnInvite");
-		btnInvite.getElement().setAttribute("alt",GL0944);
-		btnInvite.getElement().setAttribute("title",GL0944);
+		btnInvite.getElement().setAttribute("alt",i18n.GL0944());
+		btnInvite.getElement().setAttribute("title",i18n.GL0944());
 		
-		lblPii.setText(GL1892);
+		lblPii.setText(i18n.GL1892());
 		lblPii.getElement().setId("lblPii");
-		lblPii.getElement().setAttribute("alt",GL1892);
-		lblPii.getElement().setAttribute("title",GL1892);
+		lblPii.getElement().setAttribute("alt",i18n.GL1892());
+		lblPii.getElement().setAttribute("title",i18n.GL1892());
 		
 		privacyLabelPanel.setVisible(false);
-		ancprivacy.setText(GL1893);
+		ancprivacy.setText(i18n.GL1893());
 		ancprivacy.getElement().setId("lnkAncprivacy");
-		ancprivacy.getElement().setAttribute("alt",GL1893);
-		ancprivacy.getElement().setAttribute("title",GL1893);
+		ancprivacy.getElement().setAttribute("alt",i18n.GL1893());
+		ancprivacy.getElement().setAttribute("title",i18n.GL1893());
 		
-		toUsText.setText(GL1894);
+		toUsText.setText(i18n.GL1894());
 		toUsText.getElement().setId("spnToUsText");
-		toUsText.getElement().setAttribute("alt",GL1894);
-		toUsText.getElement().setAttribute("title",GL1894);
+		toUsText.getElement().setAttribute("alt",i18n.GL1894());
+		toUsText.getElement().setAttribute("title",i18n.GL1894());
 	
 		btnInvite.setEnabled(false);
 		panelActions.getElement().addClassName(res.css().buttonTooltip());
 		btnInvite.setVisible(true);
-		lblText.setText(GL1184);
+		lblText.setText(i18n.GL1184());
 		lblText.getElement().setId("lblText");
-		lblText.getElement().setAttribute("alt",GL1184);
-		lblText.getElement().setAttribute("title",GL1184);
+		lblText.getElement().setAttribute("alt",i18n.GL1184());
+		lblText.getElement().setAttribute("title",i18n.GL1184());
 		
 //		btnInvite.addMouseOverHandler(new OnBtnInviteMouseOver());
 //		btnInvite.addMouseOutHandler(new OnBtnInviteMouseOut());
 		
-		btnRemoveSelectedInvities.setText(GL0237);
+		btnRemoveSelectedInvities.setText(i18n.GL0237());
 		btnRemoveSelectedInvities.getElement().setId("btnRemoveSelectedInvities");
-		btnRemoveSelectedInvities.getElement().setAttribute("alt",GL0237);
-		btnRemoveSelectedInvities.getElement().setAttribute("title",GL0237);
+		btnRemoveSelectedInvities.getElement().setAttribute("alt",i18n.GL0237());
+		btnRemoveSelectedInvities.getElement().setAttribute("title",i18n.GL0237());
 		
 		btnRemoveSelectedInvities.setVisible(false);
 		
 		
 		
-/*		lblToolTip.setText(GL1165_1);
+/*		lblToolTip.setText(i18n.GL1165_1);
 		lblToolTip.setVisible(false);
 */		
 		lblErrorMessage.setVisible(false);
 		
 		setInviteButtonEnable(overAllCollabCount);
 		
-		lblPleaseWait.setText(GL1137);
+		lblPleaseWait.setText(i18n.GL1137());
 		lblPleaseWait.getElement().setId("lblPleaseWait");
-		lblPleaseWait.getElement().setAttribute("alt",GL1137);
-		lblPleaseWait.getElement().setAttribute("title",GL1137);
+		lblPleaseWait.getElement().setAttribute("alt",i18n.GL1137());
+		lblPleaseWait.getElement().setAttribute("title",i18n.GL1137());
 		
 		panelCollaboratorsList.clear();		// View mode
 		panelPendingCollabListContainer.clear();	//edit mode
@@ -392,7 +394,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 			@Override
 			public void errorMsgVisibility(boolean visibility, String emailId) {
 				if (visibility){
-					showErrorMessage(StringUtil.generateMessage(GL1019, emailId));
+					showErrorMessage(StringUtil.generateMessage(i18n.GL1019(), emailId));
 				}else{
 					lblErrorMessage.setVisible(false);
 				}
@@ -453,10 +455,10 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 					hide();
 				}
 			};
-			delete.setPopupTitle(GL1118);
-			delete.setDescText(StringUtil.generateMessage(GL1119, emailIdsToRemove.get(1) != null ? emailIdsToRemove.get(1) : emailIdsToRemove.get(0))); 
-			delete.setPositiveButtonText(GL_GRR_YES);
-			delete.setNegitiveButtonText(GL0142);
+			delete.setPopupTitle(i18n.GL1118());
+			delete.setDescText(StringUtil.generateMessage(i18n.GL1119(), emailIdsToRemove.get(1) != null ? emailIdsToRemove.get(1) : emailIdsToRemove.get(0))); 
+			delete.setPositiveButtonText(i18n.GL_GRR_YES());
+			delete.setNegitiveButtonText(i18n.GL0142());
 			delete.center();
 			delete.show();
 			
@@ -495,7 +497,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 			lstEmailID.add("\""+emailIds[i].toLowerCase().trim()+"\"");
 		}
 		if (collabEmailIds != null && collabEmailIds.equalsIgnoreCase("")){
-//			showErrorMessage(MessageProperties.GL1015);
+//			showErrorMessage(MessageProperties.i18n.GL1015);
 			lblPleaseWait.setVisible(false);
 			btnInvite.setVisible(true);
 			return;
@@ -505,7 +507,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		if (currentCollabCount > collabLimitCount){
 			lblPleaseWait.setVisible(false);
 			btnInvite.setVisible(true);
-			showErrorMessage(StringUtil.generateMessage(GL1016, ""+collabLimitCount));
+			showErrorMessage(StringUtil.generateMessage(i18n.GL1016(), ""+collabLimitCount));
 			return;
 		}
 				
@@ -517,7 +519,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 			if (!from){
 				lblPleaseWait.setVisible(false);
 				btnInvite.setVisible(true);
-				showErrorMessage(StringUtil.generateMessage(GL1019, emailID));
+				showErrorMessage(StringUtil.generateMessage(i18n.GL1019(), emailID));
 				return;
 			}
 		}
@@ -528,7 +530,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 				if (emailId.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getEmailId())){
 					lblPleaseWait.setVisible(false);
 					btnInvite.setVisible(true);
-					showErrorMessage(GL1018);
+					showErrorMessage(i18n.GL1018());
 					isValid = false;
 					break;
 				}
@@ -788,13 +790,13 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 				autoSuggetTextBox.getTxtInput().getTxtInputBox().setFocus(true);
 			}
 		};
-		success.setPopupTitle(GL1120);
+		success.setPopupTitle(i18n.GL1120());
 		if (collabList.size()>1){
-			success.setDescText(GL1121);
+			success.setDescText(i18n.GL1121());
 		}else{
-			success.setDescText(GL1360);
+			success.setDescText(i18n.GL1360());
 		}
-		success.setPositiveButtonText(GL0190);
+		success.setPositiveButtonText(i18n.GL0190());
 		success.center();
 		success.show();
 		
@@ -847,7 +849,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 //		@Override
 //		public void onMouseOver(MouseOverEvent event) {
 //			toolTipPopupPanel.clear();
-//			toolTipPopupPanel.setWidget(new GlobalToolTip(MessageProperties.GL1184,true));
+//			toolTipPopupPanel.setWidget(new GlobalToolTip(MessageProperties.i18n.GL1184,true));
 //			toolTipPopupPanel.setStyleName("");
 //			toolTipPopupPanel.setPopupPosition(btnInvite.getElement().getAbsoluteLeft()-35, btnInvite.getElement().getAbsoluteTop()+4);
 //			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);

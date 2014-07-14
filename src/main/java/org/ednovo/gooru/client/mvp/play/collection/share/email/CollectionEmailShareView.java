@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.uc.EmailShareUc.CheckProfanityInOnBlur;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -66,7 +67,7 @@ import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class CollectionEmailShareView extends PopupPanel implements MessageProperties {
+public abstract class CollectionEmailShareView extends PopupPanel{
 
 	@UiField Label fromValidation, toValidation, lblEmailFriend, lblFrom, lblTo, lblSendMeCopy, lblSubject, lblMessage, fromLbl,mandatoryErrorLbl,mandatoryErrorRichTextArea,noteTxt;
 	
@@ -89,8 +90,8 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 	
 	private static final String AT_SYMBOL = "@";
 
-	String GL_EMAIL_SUBJECT = GL1443;
-	String GL0219 = GL1444;
+//	String i18n.GL_EMAIL_SUBJECT = i18n.GL1443;
+//	String i18n.GL0219 = i18n.GL1444;
 	
 	boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
 	
@@ -101,6 +102,8 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 	interface CollectionEmailShareViewUiBinder extends
 			UiBinder<Widget, CollectionEmailShareView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 
 	public CollectionEmailShareView( String mailSubject, String mailDescription) {
@@ -109,75 +112,75 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		this.getElement().getStyle().setZIndex(999999);
 		this.setGlassEnabled(true);
-		fromValidation.setText(GL0215);
+		fromValidation.setText(i18n.GL0215());
 		fromValidation.getElement().setId("lblFromValidation");
-		fromValidation.getElement().setAttribute("alt",GL0215);
-		fromValidation.getElement().setAttribute("title",GL0215);
+		fromValidation.getElement().setAttribute("alt",i18n.GL0215());
+		fromValidation.getElement().setAttribute("title",i18n.GL0215());
 		
-		toValidation.setText(GL0216);
+		toValidation.setText(i18n.GL0216());
 		toValidation.getElement().setId("lblToValidation");
-		toValidation.getElement().setAttribute("alt",GL0216);
-		toValidation.getElement().setAttribute("title",GL0216);
+		toValidation.getElement().setAttribute("alt",i18n.GL0216());
+		toValidation.getElement().setAttribute("title",i18n.GL0216());
 		
-		lblEmailFriend.setText(GL0222);
+		lblEmailFriend.setText(i18n.GL0222());
 		lblEmailFriend.getElement().setId("lblEmailFriend");
-		lblEmailFriend.getElement().setAttribute("alt",GL0222);
-		lblEmailFriend.getElement().setAttribute("title",GL0222);
+		lblEmailFriend.getElement().setAttribute("alt",i18n.GL0222());
+		lblEmailFriend.getElement().setAttribute("title",i18n.GL0222());
 		
-		lblFrom.setText(GL0223 + GL_SPL_SEMICOLON);
+		lblFrom.setText(i18n.GL0223() + i18n.GL_SPL_SEMICOLON());
 		lblFrom.getElement().setId("lblFrom");
-		lblFrom.getElement().setAttribute("alt",GL0223);
-		lblFrom.getElement().setAttribute("title",GL0223);
+		lblFrom.getElement().setAttribute("alt",i18n.GL0223());
+		lblFrom.getElement().setAttribute("title",i18n.GL0223());
 		
-		lblTo.setText(GL0224 + GL_SPL_SEMICOLON);
+		lblTo.setText(i18n.GL0224() + i18n.GL_SPL_SEMICOLON());
 		lblTo.getElement().setId("lblTo");
-		lblTo.getElement().setAttribute("alt",GL0224);
-		lblTo.getElement().setAttribute("title",GL0224);
+		lblTo.getElement().setAttribute("alt",i18n.GL0224());
+		lblTo.getElement().setAttribute("title",i18n.GL0224());
 		
-		lblSendMeCopy.setText(GL0225);
+		lblSendMeCopy.setText(i18n.GL0225());
 		lblSendMeCopy.getElement().setId("lblSendMeCopy");
-		lblSendMeCopy.getElement().setAttribute("alt",GL0225);
-		lblSendMeCopy.getElement().setAttribute("title",GL0225);
+		lblSendMeCopy.getElement().setAttribute("alt",i18n.GL0225());
+		lblSendMeCopy.getElement().setAttribute("title",i18n.GL0225());
 		
-		lblSubject.setText(GL0226 + GL_SPL_SEMICOLON);
+		lblSubject.setText(i18n.GL0226() + i18n.GL_SPL_SEMICOLON());
 		lblSubject.getElement().setId("lblSubject");
-		lblSubject.getElement().setAttribute("alt",GL0226);
-		lblSubject.getElement().setAttribute("title",GL0226);
+		lblSubject.getElement().setAttribute("alt",i18n.GL0226());
+		lblSubject.getElement().setAttribute("title",i18n.GL0226());
 		
-		lblMessage.setText(GL0227 + GL_SPL_SEMICOLON);
+		lblMessage.setText(i18n.GL0227() + i18n.GL_SPL_SEMICOLON());
 		lblMessage.getElement().setId("lblMessage");
-		lblMessage.getElement().setAttribute("alt",GL0227);
-		lblMessage.getElement().setAttribute("title",GL0227);
+		lblMessage.getElement().setAttribute("alt",i18n.GL0227());
+		lblMessage.getElement().setAttribute("title",i18n.GL0227());
 		
-		btnSend.setText(GL0228);
+		btnSend.setText(i18n.GL0228());
 		btnSend.getElement().setId("btnSend");
-		btnSend.getElement().setAttribute("alt",GL0228);
-		btnSend.getElement().setAttribute("title",GL0228);
+		btnSend.getElement().setAttribute("alt",i18n.GL0228());
+		btnSend.getElement().setAttribute("title",i18n.GL0228());
 		
-		cancelLbl.setText(GL0142);
+		cancelLbl.setText(i18n.GL0142());
 		cancelLbl.getElement().setId("btnCancelLbl");
-		cancelLbl.getElement().setAttribute("alt",GL0142);
-		cancelLbl.getElement().setAttribute("title",GL0142);
+		cancelLbl.getElement().setAttribute("alt",i18n.GL0142());
+		cancelLbl.getElement().setAttribute("title",i18n.GL0142());
 		
-		noteTxt.setText(GL1636);
+		noteTxt.setText(i18n.GL1636());
 		noteTxt.getElement().setId("lblNoteTxt");
-		noteTxt.getElement().setAttribute("alt",GL1636);
-		noteTxt.getElement().setAttribute("title",GL1636);
+		noteTxt.getElement().setAttribute("alt",i18n.GL1636());
+		noteTxt.getElement().setAttribute("title",i18n.GL1636());
 		
-		lblPii.setText(GL1892);
+		lblPii.setText(i18n.GL1892());
 		lblPii.getElement().setId("spnLblPii");
-		lblPii.getElement().setAttribute("alt",GL1892);
-		lblPii.getElement().setAttribute("title",GL1892);
+		lblPii.getElement().setAttribute("alt",i18n.GL1892());
+		lblPii.getElement().setAttribute("title",i18n.GL1892());
 		
-		ancprivacy.setText(GL1893);
+		ancprivacy.setText(i18n.GL1893());
 		ancprivacy.getElement().setId("lnkAncprivacy");
-		ancprivacy.getElement().setAttribute("alt",GL1893);
-		ancprivacy.getElement().setAttribute("title",GL1893);
+		ancprivacy.getElement().setAttribute("alt",i18n.GL1893());
+		ancprivacy.getElement().setAttribute("title",i18n.GL1893());
 		
-		toUsText.setText(GL1894);
+		toUsText.setText(i18n.GL1894());
 		toUsText.getElement().setId("spnToUsText");
-		toUsText.getElement().setAttribute("alt",GL1894);
-		toUsText.getElement().setAttribute("title",GL1894);
+		toUsText.getElement().setAttribute("alt",i18n.GL1894());
+		toUsText.getElement().setAttribute("title",i18n.GL1894());
 		
 		lblPii.getElement().getStyle().setMarginLeft(99, Unit.PX);
 		ancprivacy.getElement().getStyle().setMarginLeft(101, Unit.PX);
@@ -189,9 +192,9 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 		toValidation.setVisible(false);
 		toTxt.getElement().setId("tbTo");
 		subTxt.getElement().setId("tbSubject");
-		subTxt.setText(StringUtil.generateMessage(GL1997,GL2000)); 
-		subTxt.getElement().setAttribute("alt",StringUtil.generateMessage(GL1997,GL2000));
-		subTxt.getElement().setAttribute("title",StringUtil.generateMessage(GL1997,GL2000));
+		subTxt.setText(StringUtil.generateMessage(i18n.GL1997(),i18n.GL2000())); 
+		subTxt.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1997(),i18n.GL2000()));
+		subTxt.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1997(),i18n.GL2000()));
 		fromTxt.getElement().setId("tbFrom");
 		msgTxa.getElement().setId("taMessage");
 		fromLbl.getElement().setId("lblFromLbl");
@@ -203,8 +206,8 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 		if(AppClientFactory.isAnonymous()){
 //			fromLbl.setVisible(false);
 			fromTxt.setVisible(true);
-//			fromTxt.getElement().setAttribute("placeholder",GL1442);
-			fromTxt.setPlaceholder(GL1442_1);
+//			fromTxt.getElement().setAttribute("placeholder",i18n.GL1442);
+			fromTxt.setPlaceholder(i18n.GL1442_1());
 		}else{
 //			fromTxt.setText(AppClientFactory.getLoggedInUser().getEmailId());
 			if(AppClientFactory.getLoggedInUser().getFirstName()!=null && AppClientFactory.getLoggedInUser().getLastName()!=null){
@@ -216,14 +219,14 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 			}else{
 //				fromLbl.setVisible(false);
 				fromTxt.setVisible(true);
-				fromTxt.setPlaceholder(GL1442_1);
+				fromTxt.setPlaceholder(i18n.GL1442_1());
 			}
 		}
-//		toTxt.getElement().setAttribute("placeholder",GL1184_1);
-		toTxt.setPlaceholder(GL1184_1);
+//		toTxt.getElement().setAttribute("placeholder",i18n.GL1184_1);
+		toTxt.setPlaceholder(i18n.GL1184_1());
 		msgTxa.setHTML(mailDescription);
-		msgTxa.getElement().setAttribute("alt",GL1184_1);
-		msgTxa.getElement().setAttribute("title",GL1184_1);
+		msgTxa.getElement().setAttribute("alt",i18n.GL1184_1());
+		msgTxa.getElement().setAttribute("title",i18n.GL1184_1());
 		
 		isvalid = true;
 		this.setGlassEnabled(true);
@@ -259,7 +262,7 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 		isvalid = true;
 /*		if(fromTxt.isVisible()) {
 			if (fromTxt.getText().equals("")) {
-				fromValidation.setText(GL0215);
+				fromValidation.setText(i18n.GL0215);
 				fromValidation.setVisible(true);
 				isvalid = false;
 			}
@@ -273,14 +276,14 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 					emailIds = strEmails.split("\\s*;\\s*");
 				}
 				if(emailIds.length > 1 ){
-					fromValidation.setText(GL1027_1);
+					fromValidation.setText(i18n.GL1027_1);
 					fromValidation.setVisible(true);
 					isvalid = false;
 				}
 			}
 			if ((fromTxt.getText() != null && !fromTxt.getText().isEmpty())
 					&& !fromTxt.getText().contains(AT_SYMBOL)) {
-				fromValidation.setText(GL1027);
+				fromValidation.setText(i18n.GL1027);
 				fromValidation.setVisible(true);
 				isvalid = false;
 			}
@@ -301,7 +304,7 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 				if(to){
 //					isvalid = true;
 				}else{
-					toValidation.setText(StringUtil.generateMessage(GL1019, emailIds[i]));
+					toValidation.setText(StringUtil.generateMessage(i18n.GL1019(), emailIds[i]));
 					toValidation.setVisible(true);
 					isvalid = false;
 					break;
@@ -310,18 +313,18 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 		}
 
 		if (toTxt.getText().equals("")) {
-			toValidation.setText(GL0216);
-			toValidation.getElement().setAttribute("alt",GL0216);
-			toValidation.getElement().setAttribute("title",GL0216);
+			toValidation.setText(i18n.GL0216());
+			toValidation.getElement().setAttribute("alt",i18n.GL0216());
+			toValidation.getElement().setAttribute("title",i18n.GL0216());
 			toValidation.setVisible(true);
 			isvalid = false;
 		}
 		if ((toTxt.getText() != null && !toTxt.getText().isEmpty())
 				&& !toTxt.getText().contains(AT_SYMBOL)) {
 
-			toValidation.setText(GL1027);
-			toValidation.getElement().setAttribute("alt",GL1027);
-			toValidation.getElement().setAttribute("title",GL1027);
+			toValidation.setText(i18n.GL1027());
+			toValidation.getElement().setAttribute("alt",i18n.GL1027());
+			toValidation.getElement().setAttribute("title",i18n.GL1027());
 			toValidation.setVisible(true);
 			isvalid = false;
 		}

@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
 import org.ednovo.gooru.client.ui.TinyMCE;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -45,13 +46,15 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers,MessageProperties{
+public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers{
 
 	@UiField Label hintNumLbl;
 	@UiField TinyMCE hintTextBox;
 	@UiField Label hintsTextLblVal,errorMessageforHints;
 	@UiField HTMLPanel deleteButtonContainer;
 	@UiField AddResourceBundle addWebResourceStyle;
+	
+	private  CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	public Label hintDelLbl=new Label();
 	private String hintText=null;
 	public AddHintsView(){
@@ -87,9 +90,9 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 			hintNumLbl.setText(""+widgetsCount);
 			hintNumLbl.getElement().setAttribute("alt", ""+widgetsCount);
 			hintNumLbl.getElement().setAttribute("title", ""+widgetsCount);	
-			hintsTextLblVal.setText(GL0859);
-			hintsTextLblVal.getElement().setAttribute("alt", GL0859);
-			hintsTextLblVal.getElement().setAttribute("title", GL0859);
+			hintsTextLblVal.setText(i18n.GL0859());
+			hintsTextLblVal.getElement().setAttribute("alt", i18n.GL0859());
+			hintsTextLblVal.getElement().setAttribute("title", i18n.GL0859());
 		}
 		else{
 			hintNumLbl.setText(""+widgetsCount);

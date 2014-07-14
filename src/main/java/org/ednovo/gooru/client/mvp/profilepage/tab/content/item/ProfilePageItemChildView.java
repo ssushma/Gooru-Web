@@ -84,6 +84,13 @@ public class ProfilePageItemChildView extends ChildView<ProfilePageItemChildPres
 		addDomHandler(new ActionPanelHover(), MouseOverEvent.getType());
 		addDomHandler(new ActionPanelOut(), MouseOutEvent.getType());
 		actionVerPanel.setVisible(false);
+		
+		
+		childItemFolderIcon.getElement().setId("fpnlChildItemFolderIcon");
+		lblChildItemTitle.getElement().setId("lblChildItemTitle");
+		lblChildItemDescription.getElement().setId("lblChildItemDescription");
+		actionVerPanel.getElement().setId("fpnlActionVerPanel");
+		childItemOpenBtn.getElement().setId("btnChildItemOpenBtn");
 	}
 
 	/**
@@ -108,7 +115,11 @@ public class ProfilePageItemChildView extends ChildView<ProfilePageItemChildPres
 
 	private void setData(final CollectionItemDo collectionItemDo) {
 		lblChildItemTitle.setText(collectionItemDo.getResource().getTitle());
+		lblChildItemTitle.getElement().setAttribute("alt",collectionItemDo.getResource().getTitle());
+		lblChildItemTitle.getElement().setAttribute("title",collectionItemDo.getResource().getTitle());
 		lblChildItemDescription.setText(collectionItemDo.getResource().getGoals());
+		lblChildItemDescription.getElement().setAttribute("alt",collectionItemDo.getResource().getGoals());
+		lblChildItemDescription.getElement().setAttribute("title",collectionItemDo.getResource().getGoals());
 		childItemOpenBtn.setText(i18n.GL1115());
 		childItemOpenBtn.addClickHandler(new ClickHandler() {
 			@Override

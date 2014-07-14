@@ -28,7 +28,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsCBundle;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -54,8 +53,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author BLR Team
  * 
  */
-public abstract class DeletePopupViewVc extends PopupPanel implements
-		MessageProperties {
+public abstract class DeletePopupViewVc extends PopupPanel {
 
 	@UiField(provided = true)
 	CollectionCollaboratorsCBundle collaborators;
@@ -101,7 +99,7 @@ public abstract class DeletePopupViewVc extends PopupPanel implements
 		setElementId();
 		
 		txtConfirmAction.addKeyUpHandler(new ValidateConfirmText());
-		txtConfirmAction.getElement().setAttribute("placeholder", GL1175);
+		txtConfirmAction.getElement().setAttribute("placeholder", i18n.GL1175());
 		btnNegitive.setText(StringUtil.generateMessage(i18n.GL0142()));
 		btnNegitive.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0142()));
 		btnNegitive.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0142()));

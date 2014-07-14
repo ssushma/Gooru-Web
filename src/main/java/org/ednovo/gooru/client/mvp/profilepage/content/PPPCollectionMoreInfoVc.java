@@ -143,15 +143,44 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 		usedInSearchDo.setPageSize(20);
 		setWidget(uiBinder.createAndBindUi(this));
 		moreInfotext.setText(i18n.GL0726());
+		moreInfotext.getElement().setId("lblMoreInfotext");
+		moreInfotext.getElement().setAttribute("alt",i18n.GL0726());
+		moreInfotext.getElement().setAttribute("title",i18n.GL0726());
+		
 		gradeFieldVc.setToolTip(i18n.GL1076());
+		gradeFieldVc.getElement().setId("moreInfoFieldVcGradeFieldVc");
+		gradeFieldVc.getElement().setAttribute("alt",i18n.GL1076());
+		gradeFieldVc.getElement().setAttribute("title",i18n.GL1076());
+		
 		tagsFieldVc.setToolTip(i18n.GL0727());
+		tagsFieldVc.getElement().setId("moreInfoFieldVcTgsFieldVc");
+		tagsFieldVc.getElement().setAttribute("alt",i18n.GL0727());
+		tagsFieldVc.getElement().setAttribute("title",i18n.GL0727());
+		
 		timeFieldVc.setToolTip(i18n.GL0728());
+		timeFieldVc.getElement().setId("moreInfoFieldVcTimeFieldVc");
+		timeFieldVc.getElement().setAttribute("alt",i18n.GL0728());
+		timeFieldVc.getElement().setAttribute("title",i18n.GL0728());
+		
 		likesFieldVc.setToolTip(i18n.GL0729());
+		likesFieldVc.getElement().setId("moreInfoFieldVcLikesFieldVc");
+		likesFieldVc.getElement().setAttribute("alt",i18n.GL0729());
+		likesFieldVc.getElement().setAttribute("title",i18n.GL0729());
+		
 		shareField.setToolTip(i18n.GL0526());
+		shareField.getElement().setId("moreInfoFieldVcShareField");
+		shareField.getElement().setAttribute("alt",i18n.GL0526());
+		shareField.getElement().setAttribute("title",i18n.GL0526());
+		
 		rightsFieldVc.setToolTip(i18n.GL1091());
 		rightsLbl.setText(i18n.GL0731());
+		rightsLbl.getElement().setId("lblRightsLbl");
+		rightsLbl.getElement().setAttribute("alt",i18n.GL0731());
+		rightsLbl.getElement().setAttribute("title",i18n.GL0731());
+		
 		resourceSearchRightsFieldVc.setToolTip(i18n.GL0730());
 		imgQuestionImage.setAltText(i18n.GL0732());
+		imgQuestionImage.getElement().setId("imgQuestionImage");
 		imgQuestionImage.setUrl("images/mos/questionmark.png");
 		resourceSearchGradeFieldVc.setToolTip(i18n.GL1076());
 		setUsedInResourcesAsyncCallback(new SimpleAsyncCallback<SearchDo<CollectionItemSearchResultDo>>() {
@@ -197,6 +226,17 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 			}
 		});
 		imgQuestionImage.setVisible(false);
+		
+		metaInfoFloPanel.getElement().setId("fpnlMetaInfoFloPanel");
+		resourceSearchRightsFieldVc.getElement().setId("moreInfoFieldVcResourceSearchRightsFieldVc");
+		resourceScrPanel.getElement().setId("sbResourceScrPanel");
+		resourceMoreInfoRightPanel.getElement().setId("fpnlResourceMoreInfoRightPanel");
+		countLblTxt.getElement().setId("lblCountLblTxt");
+		countLbl.getElement().setId("lblCountLbl");
+    	lblNotFriendly.getElement().setId("lblNotFriendly");
+		resourceSearchGradeFieldVc.getElement().setId("moreInfoFieldVcResourceSearchGradeFieldVc");
+		messageInfo.getElement().setId("errpnlMessageInfo");
+		profileusedInResourcesPanel.getElement().setId("vpnlProfileusedInResourcesPanel");
 	}
 	
 	public void reset() {
@@ -489,6 +529,8 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 	 */
 	public void setResourceCount(String text) {
 		countLbl.setText(text);
+		countLbl.getElement().setAttribute("alt",text);
+		countLbl.getElement().setAttribute("title",text);
 	}
 
 	/**
@@ -499,6 +541,8 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 	 */
 	public void setResourceCountTxt(String text) {
 		countLblTxt.setText(text);
+		countLblTxt.getElement().setAttribute("alt",text);
+		countLblTxt.getElement().setAttribute("title",text);
 	}
 
 	/**
@@ -534,6 +578,8 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 	}
 	public void setNotFriendly(String text){
 		lblNotFriendly.setText(text);
+		lblNotFriendly.getElement().setAttribute("alt",text);
+		lblNotFriendly.getElement().setAttribute("title",text);
 	}
 	public void showNotFriendly(boolean visibility){
 		lblNotFriendly.setVisible(visibility);

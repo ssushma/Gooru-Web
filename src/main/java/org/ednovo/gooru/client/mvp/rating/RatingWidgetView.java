@@ -32,13 +32,14 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class RatingWidgetView extends Composite{
 
 	@UiField InlineLabel ratingCountLabel,star_1,star_2,star_3,star_4,star_5;
-
+	
 
 	private static RatingWidgetViewUiBinder uiBinder = GWT.create(RatingWidgetViewUiBinder.class);
 
@@ -49,6 +50,15 @@ public class RatingWidgetView extends Composite{
 	public RatingWidgetView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
+		
+		
+		star_1.getElement().setId("spnStar_1");
+		star_2.getElement().setId("spnStar_2");
+		star_3.getElement().setId("spnStar_3");
+		star_4.getElement().setId("spnStar_4");
+		star_5.getElement().setId("spnStar_5");
+		ratingCountLabel.getElement().setId("spnRatingCountLabel");
+		
 	}
 
 	public InlineLabel getRatingCountLabel(){

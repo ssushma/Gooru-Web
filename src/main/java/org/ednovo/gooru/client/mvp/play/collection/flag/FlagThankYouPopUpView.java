@@ -1,6 +1,7 @@
 package org.ednovo.gooru.client.mvp.play.collection.flag;
 
 import org.ednovo.gooru.player.collection.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -14,7 +15,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class FlagThankYouPopUpView extends PopupPanel implements MessageProperties
+public class FlagThankYouPopUpView extends PopupPanel
 		 {
 
 	private static ThankYouCollectionCoverPageToolTipUiBinder uiBinder = GWT
@@ -23,6 +24,9 @@ public class FlagThankYouPopUpView extends PopupPanel implements MessageProperti
 	interface ThankYouCollectionCoverPageToolTipUiBinder extends
 			UiBinder<Widget, FlagThankYouPopUpView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@UiField
 	HTMLEventPanel closeButton;
 	@UiField
@@ -36,24 +40,24 @@ public class FlagThankYouPopUpView extends PopupPanel implements MessageProperti
 		this.getElement().getStyle().setZIndex(999999);
 		this.setGlassStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().glassStyle());
 		setGlassEnabled(true);
-		flagHeaderText.setText(GL0600);
+		flagHeaderText.setText(i18n.GL0600());
 		flagHeaderText.getElement().setId("lblFlagHeaderText");
-		flagHeaderText.getElement().setAttribute("alt",GL0600);
-		flagHeaderText.getElement().setAttribute("title",GL0600);
+		flagHeaderText.getElement().setAttribute("alt",i18n.GL0600());
+		flagHeaderText.getElement().setAttribute("title",i18n.GL0600());
 		  
-		thanksSubmitText.setText(GL0615);
+		thanksSubmitText.setText(i18n.GL0615());
 		thanksSubmitText.getElement().setId("lblThanksSubmitText");
-		thanksSubmitText.getElement().setAttribute("alt",GL0615);
-		thanksSubmitText.getElement().setAttribute("title",GL0615);
+		thanksSubmitText.getElement().setAttribute("alt",i18n.GL0615());
+		thanksSubmitText.getElement().setAttribute("title",i18n.GL0615());
 		
 		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE
 				.closeFlagPopUpImages());
 		popUpCloseButton.getElement().setId("imgPopUpCloseButton");
 		
-		okButton.setText(GL0190);
+		okButton.setText(i18n.GL0190());
 		okButton.getElement().setAttribute("id","okButton");
-		okButton.getElement().setAttribute("alt",GL0190);
-		okButton.getElement().setAttribute("title",GL0190);
+		okButton.getElement().setAttribute("alt",i18n.GL0190());
+		okButton.getElement().setAttribute("title",i18n.GL0190());
 		
 		closeButton.getElement().setId("epnlCloseButton");
 	}

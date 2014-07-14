@@ -6,7 +6,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderMetaDataEvent;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -26,7 +26,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
-public class FolderItemMetaDataUc extends Composite implements MessageProperties{
+public class FolderItemMetaDataUc extends Composite {
 
 	@UiField Button closeItem, saveBtn, cancelBtn;
 	
@@ -44,6 +44,8 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 	
 	private static FolderItemMetaDataUcUiBinder uiBinder = GWT
 			.create(FolderItemMetaDataUcUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface FolderItemMetaDataUcUiBinder extends
 			UiBinder<Widget, FolderItemMetaDataUc> {
@@ -104,30 +106,30 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 	}
 	
 	private void setDebugIds() {
-		ideasStaticLbl.setText(GL1731);
+		ideasStaticLbl.setText(i18n.GL1731());
 		ideasStaticLbl.getElement().setId("lblIdeasStaticLbl");
-		ideasStaticLbl.getElement().setAttribute("alt",GL1731);
-		ideasStaticLbl.getElement().setAttribute("title",GL1731);
+		ideasStaticLbl.getElement().setAttribute("alt",i18n.GL1731());
+		ideasStaticLbl.getElement().setAttribute("title",i18n.GL1731());
 		
-		questionsStaticLbl.setText(GL1732);
+		questionsStaticLbl.setText(i18n.GL1732());
 		questionsStaticLbl.getElement().setId("lblQuestionsStaticLbl");
-		questionsStaticLbl.getElement().setAttribute("alt",GL1732);
-		questionsStaticLbl.getElement().setAttribute("title",GL1732);
+		questionsStaticLbl.getElement().setAttribute("alt",i18n.GL1732());
+		questionsStaticLbl.getElement().setAttribute("title",i18n.GL1732());
 		
-		tasksStaticLbl.setText(GL1733);
+		tasksStaticLbl.setText(i18n.GL1733());
 		tasksStaticLbl.getElement().setId("lblTasksStaticLbl");
-		tasksStaticLbl.getElement().setAttribute("alt",GL1733);
-		tasksStaticLbl.getElement().setAttribute("title",GL1733);
+		tasksStaticLbl.getElement().setAttribute("alt",i18n.GL1733());
+		tasksStaticLbl.getElement().setAttribute("title",i18n.GL1733());
 		
-		saveBtn.setText(GL0141);
+		saveBtn.setText(i18n.GL0141());
 		saveBtn.getElement().setId("btnSaveBtn");
-		saveBtn.getElement().setAttribute("alt",GL0141);
-		saveBtn.getElement().setAttribute("title",GL0141);
+		saveBtn.getElement().setAttribute("alt",i18n.GL0141());
+		saveBtn.getElement().setAttribute("title",i18n.GL0141());
 		
-		cancelBtn.setText(GL0142);
+		cancelBtn.setText(i18n.GL0142());
 		cancelBtn.getElement().setId("btnCancelBtn");
-		cancelBtn.getElement().setAttribute("alt",GL0142);
-		cancelBtn.getElement().setAttribute("title",GL0142);
+		cancelBtn.getElement().setAttribute("alt",i18n.GL0142());
+		cancelBtn.getElement().setAttribute("title",i18n.GL0142());
 		
 		bigIdeasPanel.getElement().setId("pnlBigIdeasPanel");
 		bigIdeasLbl.getElement().setId("htmlBigIdeasLbl");
@@ -152,9 +154,9 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 			if(event==null) {
 				textArea.cancelKey();
 				errorLabelToDisplay.setVisible(true);
-				errorLabelToDisplay.setText(GL0143);	
-				errorLabelToDisplay.getElement().setAttribute("alt",GL0143);
-				errorLabelToDisplay.getElement().setAttribute("title",GL0143);
+				errorLabelToDisplay.setText(i18n.GL0143());	
+				errorLabelToDisplay.getElement().setAttribute("alt",i18n.GL0143());
+				errorLabelToDisplay.getElement().setAttribute("title",i18n.GL0143());
 			} else {
 				if(event.isControlKeyDown() || event.isShiftKeyDown() ||
 						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_UP)) || 
@@ -169,9 +171,9 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 				} else {
 					textArea.cancelKey();
 					errorLabelToDisplay.setVisible(true);
-					errorLabelToDisplay.setText(GL0143);
-					errorLabelToDisplay.getElement().setAttribute("alt",GL0143);
-					errorLabelToDisplay.getElement().setAttribute("title",GL0143);
+					errorLabelToDisplay.setText(i18n.GL0143());
+					errorLabelToDisplay.getElement().setAttribute("alt",i18n.GL0143());
+					errorLabelToDisplay.getElement().setAttribute("title",i18n.GL0143());
 				}
 			}
 		}
@@ -182,13 +184,13 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		this.essentialQuestions = essentialQuestions;
 		this.performanceTask = performanceTask;
 		if(bigIdeas==null || bigIdeas.isEmpty()) {
-			bigIdeas = GL1725;
+			bigIdeas = i18n.GL1725();
 		}
 		if(essentialQuestions==null || essentialQuestions.isEmpty()) {
-			essentialQuestions = GL1726;
+			essentialQuestions = i18n.GL1726();
 		}
 		if(performanceTask==null || performanceTask.isEmpty()) {
-			performanceTask = GL1727;
+			performanceTask = i18n.GL1727();
 		}
 		
 		bigIdeasLbl.setText(bigIdeas);
@@ -297,9 +299,9 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 								else
 								{
 									performanceTaskHTML.getElement().getStyle().setBorderColor("orange");
-									errorLabelperformanceTaskHTML.setText(GL0554);
-									errorLabelperformanceTaskHTML.getElement().setAttribute("alt",GL0554);
-									errorLabelperformanceTaskHTML.getElement().setAttribute("title",GL0554);
+									errorLabelperformanceTaskHTML.setText(i18n.GL0554());
+									errorLabelperformanceTaskHTML.getElement().setAttribute("alt",i18n.GL0554());
+									errorLabelperformanceTaskHTML.getElement().setAttribute("title",i18n.GL0554());
 									errorLabelperformanceTaskHTML.setVisible(true);	
 								}
 							}
@@ -308,9 +310,9 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 						else
 						{
 							essentialQuestionsHTML.getElement().getStyle().setBorderColor("orange");
-							errorLabelessentialQuestionsHTML.setText(GL0554);
-							errorLabelperformanceTaskHTML.getElement().setAttribute("alt",GL0554);
-							errorLabelperformanceTaskHTML.getElement().setAttribute("title",GL0554);
+							errorLabelessentialQuestionsHTML.setText(i18n.GL0554());
+							errorLabelperformanceTaskHTML.getElement().setAttribute("alt",i18n.GL0554());
+							errorLabelperformanceTaskHTML.getElement().setAttribute("title",i18n.GL0554());
 							errorLabelessentialQuestionsHTML.setVisible(true);
 						}
 					}
@@ -320,9 +322,9 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 				{
 					//errorLabelbigIdeasHTML.setText("error text");
 					bigIdeasHTML.getElement().getStyle().setBorderColor("orange");
-					errorLabelbigIdeasHTML.setText(GL0554);
-					errorLabelbigIdeasHTML.getElement().setAttribute("alt",GL0554);
-					errorLabelbigIdeasHTML.getElement().setAttribute("title",GL0554);
+					errorLabelbigIdeasHTML.setText(i18n.GL0554());
+					errorLabelbigIdeasHTML.getElement().setAttribute("alt",i18n.GL0554());
+					errorLabelbigIdeasHTML.getElement().setAttribute("title",i18n.GL0554());
 					errorLabelbigIdeasHTML.setVisible(true);
 				}
 				

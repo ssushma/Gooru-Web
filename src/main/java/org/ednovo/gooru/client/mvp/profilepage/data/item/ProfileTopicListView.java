@@ -175,8 +175,17 @@ public class ProfileTopicListView extends Composite{
 		this.topicId = topicNumber;
 		setPlaceToken(placeToken);
 		assignCollectionBtn.setText(i18n.GL0104());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
+		
 		customizeCollectionBtn.setText(i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
+		
 		noCollectionLbl.setText(i18n.GL1170());
+		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());
+		noCollectionLbl.getElement().setAttribute("title",i18n.GL1170());
+		
 		setTopicLabel(profileFolderDo.getTitle());
 		collectionInfo.setVisible(false);
 		if(profileFolderDo.getCollections()!=null) {
@@ -213,15 +222,39 @@ public class ProfileTopicListView extends Composite{
 		AppClientFactory.getEventBus().addHandler(OpenProfileCollectionEvent.TYPE, openProfileCollectionHandler);
 		AppClientFactory.getEventBus().addHandler(SetLoadingIconEvent.TYPE, setLoadingIconHandler);
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
+		setId();
 	}
-	
+	public void setId(){
+		assignCollectionBtn.getElement().setId("btnAssignCollectionBtn");
+		customizeCollectionBtn.getElement().setId("btnCustomizeCollectionBtn");
+		noCollectionLbl.getElement().setId("lblNoCollectionLbl");
+		topicBlock.getElement().setId("pnlTopicBlock");
+		topicTitleLbl.getElement().setId("lblTopicTitleLbl");
+		libraryTopicLbl.getElement().setId("lblLibraryTopicLbl");
+		lessonScrollPanel.getElement().setId("sbLessonScrollPanel");
+		conceptList.getElement().setId("pnlConceptList");
+		loadingImage.getElement().setId("pnlLoadingImage");
+		collectionViewer.getElement().setId("pnlCollectionViewer");
+		collectionInfo.getElement().setId("pnlCollectionInfo");
+		collectionImage.getElement().setId("imgCollectionImage");
+		collectionTitleLbl.getElement().setId("htmlCollectionTitleLbl");
+		collectionDescriptionLbl.getElement().setId("htmlCollectionDescriptionLbl");
+		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
+		resourcesInside.getElement().setId("htmlResourcesInside");
+	}
 
 	public ProfileTopicListView(ProfileLibraryDo profileFolderDo, Integer conceptNumber, String placeToken, String collectionType) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
 		setPlaceToken(placeToken);
 		assignCollectionBtn.setText(i18n.GL0104());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
+		
 		customizeCollectionBtn.setText(i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
+		
 		setTopicLabel(profileFolderDo.getTitle());
 		topicTitleLbl.addStyleName(style.collection());
 		searchTitle=profileFolderDo.getTitle();
@@ -257,6 +290,7 @@ public class ProfileTopicListView extends Composite{
 		}
 		
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
+		setId();
 	}
 	
 	private void setOnlyConceptData(ArrayList<ProfileLibraryDo> profileFolderDoList, boolean isTopicCalled, final String parentId, final int partnerItemCount) {
@@ -932,10 +966,14 @@ public class ProfileTopicListView extends Composite{
 			topicTitleLbl.setVisible(true);
 			libraryTopicLbl.setVisible(false);
 			topicTitleLbl.setText(title);
+			topicTitleLbl.getElement().setAttribute("alt",title);
+			topicTitleLbl.getElement().setAttribute("title",title);
 		} else {
 			topicTitleLbl.setVisible(false);
 			libraryTopicLbl.setVisible(true);
 			libraryTopicLbl.setText(title);
+			libraryTopicLbl.getElement().setAttribute("alt",title);
+			libraryTopicLbl.getElement().setAttribute("title",title);
 		}
 	}
 }
