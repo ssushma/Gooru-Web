@@ -34,6 +34,7 @@ import org.ednovo.gooru.player.resource.client.presenter.ResourcePlayerPresenter
 import org.ednovo.gooru.player.resource.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.player.resource.client.view.resourceplayer.QuestionResourceImageBundle;
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -51,7 +52,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ResourceContentReportView extends PopupPanel implements MessageProperties{
+public class ResourceContentReportView extends PopupPanel{
 
 	private static ResourceFlagToolTipUiBinder uiBinder = GWT
 			.create(ResourceFlagToolTipUiBinder.class);
@@ -59,7 +60,12 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 	interface ResourceFlagToolTipUiBinder extends
 			UiBinder<Widget, ResourceContentReportView> {
 	}
+	
+	
 	private ResourcePlayerComponentServiceAsync  playerRpcService = GWT.create(ResourcePlayerComponentService.class);
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	ResourceContentReportView resourceFlagToolTip;
 	@UiField HTMLEventPanel closeButton;
 	@UiField Button cancelButton,submitButton,submitButtonGray;
@@ -73,7 +79,7 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 	private String assocGooruOid;
 	int formateSize=0;
 	HTMLEventPanel resourceflagButton=new HTMLEventPanel("");
-	private static final String HEADER_LINK = GL1430;
+//	private static final String HEADER_LINK = i18n.GL1430;
 	String gooruOid="";
 	String contentResourceGooruOid="";
 	String formatting1="";
@@ -90,59 +96,59 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 		this.getElement().getStyle().setZIndex(999999);
 		this.setGlassStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().glassStyle());
 		setGlassEnabled(true);
-		flagText.setText(GL0600);
+		flagText.setText(i18n.GL0600());
 		flagText.getElement().setId("lblFlagText");
-		flagText.getElement().setAttribute("alt",GL0600);
-		flagText.getElement().setAttribute("title",GL0600);
+		flagText.getElement().setAttribute("alt",i18n.GL0600());
+		flagText.getElement().setAttribute("title",i18n.GL0600());
 		
-		inappropriateText.setText(GL0612);
+		inappropriateText.setText(i18n.GL0612());
 		inappropriateText.getElement().setId("lblInappropriateText");
-		inappropriateText.getElement().setAttribute("alt",GL0612);
-		inappropriateText.getElement().setAttribute("title",GL0612);
+		inappropriateText.getElement().setAttribute("alt",i18n.GL0612());
+		inappropriateText.getElement().setAttribute("title",i18n.GL0612());
 		
-		unavailableText.setText(GL0613);
+		unavailableText.setText(i18n.GL0613());
 		unavailableText.getElement().setId("lblUnavailableText");
-		unavailableText.getElement().setAttribute("alt",GL0613);
-		unavailableText.getElement().setAttribute("title",GL0613);
+		unavailableText.getElement().setAttribute("alt",i18n.GL0613());
+		unavailableText.getElement().setAttribute("title",i18n.GL0613());
 		
-		inaccurateText.setText(GL0614);
+		inaccurateText.setText(i18n.GL0614());
 		inaccurateText.getElement().setId("lblInaccurateText");
-		inaccurateText.getElement().setAttribute("alt",GL0614);
-		inaccurateText.getElement().setAttribute("title",GL0614);
+		inaccurateText.getElement().setAttribute("alt",i18n.GL0614());
+		inaccurateText.getElement().setAttribute("title",i18n.GL0614());
 		
-		otherReasonText.setText(GL0606);
+		otherReasonText.setText(i18n.GL0606());
 		otherReasonText.getElement().setId("lblOtherReasonText");
-		otherReasonText.getElement().setAttribute("alt",GL0606);
-		otherReasonText.getElement().setAttribute("title",GL0606);
+		otherReasonText.getElement().setAttribute("alt",i18n.GL0606());
+		otherReasonText.getElement().setAttribute("title",i18n.GL0606());
 		
-		provideMoreText.setText(GL0607);
+		provideMoreText.setText(i18n.GL0607());
 		provideMoreText.getElement().setId("lblProvideMoreText");
-		provideMoreText.getElement().setAttribute("alt",GL0607);
-		provideMoreText.getElement().setAttribute("title",GL0607);
+		provideMoreText.getElement().setAttribute("alt",i18n.GL0607());
+		provideMoreText.getElement().setAttribute("title",i18n.GL0607());
 		
-		cancelButton.setText(GL0608);
+		cancelButton.setText(i18n.GL0608());
 		cancelButton.getElement().setAttribute("id", "cancelButton");
-		cancelButton.getElement().setAttribute("alt",GL0608);
-		cancelButton.getElement().setAttribute("title",GL0608);
+		cancelButton.getElement().setAttribute("alt",i18n.GL0608());
+		cancelButton.getElement().setAttribute("title",i18n.GL0608());
 		
-		submitButton.setText(GL0486);
+		submitButton.setText(i18n.GL0486());
 		submitButton.getElement().setAttribute("id", "SubmitButton");
-		submitButton.getElement().setAttribute("alt",GL0486);
-		submitButton.getElement().setAttribute("title",GL0486);
+		submitButton.getElement().setAttribute("alt",i18n.GL0486());
+		submitButton.getElement().setAttribute("title",i18n.GL0486());
 		
-		submitButtonGray.setText(GL0486);
+		submitButtonGray.setText(i18n.GL0486());
 		submitButtonGray.getElement().setAttribute("id", "SubmitButtonInactive");
-		submitButtonGray.getElement().setAttribute("alt",GL0486);
-		submitButtonGray.getElement().setAttribute("title",GL0486);
+		submitButtonGray.getElement().setAttribute("alt",i18n.GL0486());
+		submitButtonGray.getElement().setAttribute("title",i18n.GL0486());
 		
 		this.restEndPoint=restEndPoint;
 		this.session=session;
 		this.assocGooruOid=assocGooruOid;
 		this.resourceflagButton=resourceflagButton;
 		resourceTitle=resourceTitle.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
-		titleText.setHTML(GL1430 +resourceTitle+" \" "+GL1431+"");
-		titleText.getElement().setAttribute("alt",GL1430 +resourceTitle+" \" "+GL1431+"");
-		titleText.getElement().setAttribute("title",GL1430 +resourceTitle+" \" "+GL1431+"");
+		titleText.setHTML(i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
+		titleText.getElement().setAttribute("alt",i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
+		titleText.getElement().setAttribute("title",i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
 		
 		submitButtonGray.setVisible(true);
 		submitButton.setVisible(false);

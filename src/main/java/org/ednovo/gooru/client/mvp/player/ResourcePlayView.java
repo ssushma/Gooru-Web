@@ -35,10 +35,12 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.ShareViewUc;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
@@ -58,7 +60,7 @@ import com.google.inject.Inject;
  */
 public class ResourcePlayView extends
 		BasePopupViewWithHandlers<ResourcePlayUiHandlers> implements
-		IsResourcePlayView,MessageProperties {
+		IsResourcePlayView {
 
 	private ResourcePlayWidget gooruResourcePlayer;
 
@@ -75,6 +77,8 @@ public class ResourcePlayView extends
 	String contentId;
 
 	HandlerRegistration playerCloseHandler;
+	
+	 private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	/**
 	 * Class constructor, style for resource player popup panel
@@ -177,7 +181,7 @@ public class ResourcePlayView extends
 											@Override
 											public void onFailure(
 													Throwable caught) {
-												new AlertContentUc(GL0061,
+												new AlertContentUc(i18n.GL0061(),
 														caught.getMessage());
 											}
 										});

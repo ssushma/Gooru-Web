@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.play.resource.framebreaker;
 
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -61,7 +62,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer:
  */
-public class ResourceFrameBreakerView extends Composite implements MessageProperties{
+public class ResourceFrameBreakerView extends Composite{
 	
 	
 	@UiField Button btnResourceLink;
@@ -80,6 +81,8 @@ public class ResourceFrameBreakerView extends Composite implements MessageProper
 
 	interface ResourceFrameBreakerViewUiBinder extends UiBinder<Widget, ResourceFrameBreakerView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	
 	/*
@@ -103,10 +106,10 @@ public class ResourceFrameBreakerView extends Composite implements MessageProper
 		if(!isGoogleFile){
 			setLabelsAndIds();
 			supportTip.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().supportTip());
-			supportTip.setText(GL1453);
+			supportTip.setText(i18n.GL1453());
 			supportTip.getElement().setId("lblSupportTip");
-			supportTip.getElement().setAttribute("alt",GL1453);
-			supportTip.getElement().setAttribute("title",GL1453);
+			supportTip.getElement().setAttribute("alt",i18n.GL1453());
+			supportTip.getElement().setAttribute("title",i18n.GL1453());
 			btnResourceLink.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().btnResourceLink());
 		}else{
 			btnResourceLink.removeFromParent();
@@ -145,12 +148,12 @@ public class ResourceFrameBreakerView extends Composite implements MessageProper
 		btnResourceLink.removeFromParent();
 		lblGooruFieldTrip.getElement().getStyle().setPaddingLeft(50, Unit.PX);
 		lblGooruFieldTrip.getElement().getStyle().setPaddingRight(50, Unit.PX);
-		lblGooruFieldTrip.setText(GL2007);
+		lblGooruFieldTrip.setText(i18n.GL2007());
 	}
 	public void setFilePermissionMessage(){
 		lblGooruFieldTrip.getElement().getStyle().setPaddingLeft(50, Unit.PX);
 		lblGooruFieldTrip.getElement().getStyle().setPaddingRight(50, Unit.PX);
-		lblGooruFieldTrip.setText(GL2007);
+		lblGooruFieldTrip.setText(i18n.GL2007());
 	}
 	/**
 	 * 
@@ -172,27 +175,27 @@ public class ResourceFrameBreakerView extends Composite implements MessageProper
 	 *
 	 */
 	private void setLabelsAndIds() {
-		btnResourceLink.setText(GL0548);
+		btnResourceLink.setText(i18n.GL0548());
 		btnResourceLink.getElement().setId("btnResourceLink");
-		btnResourceLink.getElement().setAttribute("alt",GL0548);
-		btnResourceLink.getElement().setAttribute("title",GL0548);
+		btnResourceLink.getElement().setAttribute("alt",i18n.GL0548());
+		btnResourceLink.getElement().setAttribute("title",i18n.GL0548());
 		
-		lblGooruFieldTrip.setText(GL0549);
+		lblGooruFieldTrip.setText(i18n.GL0549());
 		lblGooruFieldTrip.getElement().setId("lblGooruFieldTrip");
-		lblGooruFieldTrip.getElement().setAttribute("alt",GL0549);
-		lblGooruFieldTrip.getElement().setAttribute("title",GL0549);
+		lblGooruFieldTrip.getElement().setAttribute("alt",i18n.GL0549());
+		lblGooruFieldTrip.getElement().setAttribute("title",i18n.GL0549());
 		
-		//lblGooruFieldTripDescUnforseen.setText(GL0550);
-		//lblGooruFieldTripDescOriginal.setText(GL0552);
+		//lblGooruFieldTripDescUnforseen.setText(i18n.GL0550);
+		//lblGooruFieldTripDescOriginal.setText(i18n.GL0552);
 		lblGooruFieldTripDescOriginal.setText("");
 		lblGooruFieldTripDescOriginal.getElement().setId("lblGooruFieldTripDescOriginal");
 		lblGooruFieldTripDescOriginal.getElement().setAttribute("alt","");
 		lblGooruFieldTripDescOriginal.getElement().setAttribute("title","");
 		
-		lblDontForget.setText(GL0551);
+		lblDontForget.setText(i18n.GL0551());
 		lblDontForget.getElement().setId("lblDontForget");
-		lblDontForget.getElement().setAttribute("alt",GL0551);
-		lblDontForget.getElement().setAttribute("title",GL0551);
+		lblDontForget.getElement().setAttribute("alt",i18n.GL0551());
+		lblDontForget.getElement().setAttribute("title",i18n.GL0551());
 		
 		imgFieldTrip.getElement().setId("imgFieldTrip");
 		imgFieldTrip.setUrl("images/framebraker/field-trip.png");

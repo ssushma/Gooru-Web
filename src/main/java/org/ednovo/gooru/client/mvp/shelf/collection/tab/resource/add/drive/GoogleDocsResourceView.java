@@ -1,18 +1,14 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 
-import java.util.List;
-
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
-import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -25,7 +21,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -33,8 +28,10 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GoogleDocsResourceView extends Composite implements MessageProperties{
+public class GoogleDocsResourceView extends Composite {
 	private static GoogleDocsResourceViewUiBinder uiBinder = GWT.create(GoogleDocsResourceViewUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface GoogleDocsResourceViewUiBinder extends
 			UiBinder<Widget, GoogleDocsResourceView> {
@@ -107,11 +104,11 @@ public class GoogleDocsResourceView extends Composite implements MessageProperti
 	
 	public GoogleDocsResourceView( GoogleDriveItemDo driveDo){
 		initWidget(uiBinder.createAndBindUi(this));
-		addResourceBtnLbl.setText(GL0590);
-		cancelResourcePopupBtnLbl.setText(GL0142);
+		addResourceBtnLbl.setText(i18n.GL0590());
+		cancelResourcePopupBtnLbl.setText(i18n.GL0142());
 		cancelResourcePopupBtnLbl.addClickHandler(new CloseClickHandler());
 		
-		thumbnailText.getElement().setInnerText(GL0922);
+		thumbnailText.getElement().setInnerText(i18n.GL0922());
 		titleTextLabel.setText("Title");
 		videoLabel.getElement().setInnerText("Slides");
 		descriptionTextLabel.setText("Description");
@@ -189,7 +186,7 @@ public class GoogleDocsResourceView extends Composite implements MessageProperti
 		/*if (thumbnailImages != null) {
 			thumbnailImages.clear();
 		}*/
-		resourceCategoryLabel.setText(GL0360);
+		resourceCategoryLabel.setText(i18n.GL0360());
 		categorypanel.setStyleName("");
 
 		mandatoryCategoryLbl.setVisible(false);

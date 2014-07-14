@@ -47,10 +47,10 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.FlaggingPopUp;
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -62,16 +62,17 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ExistsResourceView extends AppPopUp implements MessageProperties{
+public class ExistsResourceView extends AppPopUp {
 
 	private static ExistsResourceViewUiBinder uiBinder = GWT.create(ExistsResourceViewUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 
@@ -111,31 +112,31 @@ public class ExistsResourceView extends AppPopUp implements MessageProperties{
         setModal(true);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-        alreadyExistsText.getElement().setInnerHTML(GL0932+GL_SPL_EXCLAMATION);
+        alreadyExistsText.getElement().setInnerHTML(i18n.GL0932()+i18n.GL_SPL_EXCLAMATION());
         alreadyExistsText.getElement().setId("pnlAlreadyExistsText");
-        alreadyExistsText.getElement().setAttribute("alt", GL0932);
-        alreadyExistsText.getElement().setAttribute("title", GL0932);
-        resourceExistsText.getElement().setInnerHTML(GL0933+GL_SPL_EXCLAMATION);
+        alreadyExistsText.getElement().setAttribute("alt", i18n.GL0932());
+        alreadyExistsText.getElement().setAttribute("title", i18n.GL0932());
+        resourceExistsText.getElement().setInnerHTML(i18n.GL0933()+i18n.GL_SPL_EXCLAMATION());
         resourceExistsText.getElement().setId("pnlResourceExistsText");
-        resourceExistsText.getElement().setAttribute("alt", GL0933);
-        resourceExistsText.getElement().setAttribute("title", GL0933);
+        resourceExistsText.getElement().setAttribute("alt", i18n.GL0933());
+        resourceExistsText.getElement().setAttribute("title", i18n.GL0933());
         resourceThumbnailImg.getElement().setId("imgResourceThumbnailImg");
         resourceThumbnailImg.setUrl("images/thumbimg-I.png");
         
-        resourceTitleLbl.setText(GL0935);
+        resourceTitleLbl.setText(i18n.GL0935());
         resourceTitleLbl.getElement().setId("lblResourceTitleLbl");
-        resourceTitleLbl.getElement().setAttribute("alt", GL0935);
-        resourceTitleLbl.getElement().setAttribute("title", GL0935);
-        addExistsResourceBtnLbl.setText(GL0590);
-        addExistsResourceBtnLbl.getElement().setAttribute("alt", GL0590);
-        addExistsResourceBtnLbl.getElement().setAttribute("title", GL0590);
-        cancelExistsResourcePopupBtnLbl.setText(GL0142);
-        cancelExistsResourcePopupBtnLbl.getElement().setAttribute("alt", GL0142);
-        cancelExistsResourcePopupBtnLbl.getElement().setAttribute("title", GL0142);
-        loadingTextLbl.setText(GL0591.toLowerCase());
+        resourceTitleLbl.getElement().setAttribute("alt", i18n.GL0935());
+        resourceTitleLbl.getElement().setAttribute("title", i18n.GL0935());
+        addExistsResourceBtnLbl.setText(i18n.GL0590());
+        addExistsResourceBtnLbl.getElement().setAttribute("alt", i18n.GL0590());
+        addExistsResourceBtnLbl.getElement().setAttribute("title", i18n.GL0590());
+        cancelExistsResourcePopupBtnLbl.setText(i18n.GL0142());
+        cancelExistsResourcePopupBtnLbl.getElement().setAttribute("alt", i18n.GL0142());
+        cancelExistsResourcePopupBtnLbl.getElement().setAttribute("title", i18n.GL0142());
+        loadingTextLbl.setText(i18n.GL0591().toLowerCase());
         loadingTextLbl.getElement().setId("lblLoadingTextLbl");
-        loadingTextLbl.getElement().setAttribute("alt", GL0591);
-        loadingTextLbl.getElement().setAttribute("title", GL0591);
+        loadingTextLbl.getElement().setAttribute("alt", i18n.GL0591());
+        loadingTextLbl.getElement().setAttribute("title", i18n.GL0591());
         addExistsResourceBtnLbl.getElement().setId("lblAdd");
         cancelExistsResourcePopupBtnLbl.getElement().setId("lblCancel");
 		cancelExistsResourcePopupBtnLbl.addClickHandler(new CloseExistsClickHandler());
@@ -255,15 +256,15 @@ public class ExistsResourceView extends AppPopUp implements MessageProperties{
 			@Override
 			public void onSuccess(GetFlagContentDO result) {
 				if(result==null ){
-					reportResInfoLbl.setText(GL1497);
-					reportResInfoLbl.getElement().setAttribute("alt", GL1497);
-					reportResInfoLbl.getElement().setAttribute("title", GL1497);
+					reportResInfoLbl.setText(i18n.GL1497());
+					reportResInfoLbl.getElement().setAttribute("alt", i18n.GL1497());
+					reportResInfoLbl.getElement().setAttribute("title", i18n.GL1497());
 				}
 				else
 				{
-					reportResInfoLbl.setText(GL1498);	
-					reportResInfoLbl.getElement().setAttribute("alt", GL1498);
-					reportResInfoLbl.getElement().setAttribute("title", GL1498);
+					reportResInfoLbl.setText(i18n.GL1498());	
+					reportResInfoLbl.getElement().setAttribute("alt", i18n.GL1498());
+					reportResInfoLbl.getElement().setAttribute("title", i18n.GL1498());
 
 				}
 			}
