@@ -296,4 +296,18 @@ public class StringUtil {
 		Cookies.setCookie(key, "",  new Date(), "."+Window.Location.getHost(), path, false);
 		Cookies.removeCookie("google-access-token", "/");
 	}
+	
+	
+	public static String getPublicLibraryName(String placeToken) {
+		String libraryName = null;
+		if(placeToken.equals(PlaceTokens.RUSD_LIBRARY)) {
+			libraryName = "rusd";
+		} else if(placeToken.equals(PlaceTokens.SAUSD_LIBRARY)) {
+			libraryName = "sausd";
+		} else {
+			libraryName = "gooru";
+		}
+		return libraryName;
+	}
+
 }
