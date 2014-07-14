@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
@@ -77,7 +78,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePlayerMetadataUiHandlers> implements IsResourcePlayerMetadataView, MessageProperties{
+public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePlayerMetadataUiHandlers> implements IsResourcePlayerMetadataView{
 
 	@UiField FlowPanel resourceWidgetContainer;
 	@UiField
@@ -154,6 +155,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	interface ResourcePlayerMetadataViewUiBinder extends UiBinder<Widget, ResourcePlayerMetadataView> {
 	}
 	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 //	@UiFactory
 //	public SimpleRadioButton createRadioButton() {
 //	    return new SimpleRadioButton("");
@@ -174,30 +177,30 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		singleEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
 		//emoticsContainer.addMouseOverHandler(new OnEmoticsMouseOver());
 		//emoticsContainer.addMouseOutHandler(new OnEmoticsMouseOut());
-		reactionToolTipOne.setText(GL0581); 
+		reactionToolTipOne.setText(i18n.GL0581()); 
 		reactionToolTipOne.getElement().setId("lblReactionToolTipOne");
-		reactionToolTipOne.getElement().setAttribute("alt",GL0581);
-		reactionToolTipOne.getElement().setAttribute("title",GL0581);
+		reactionToolTipOne.getElement().setAttribute("alt",i18n.GL0581());
+		reactionToolTipOne.getElement().setAttribute("title",i18n.GL0581());
 		
-		reactionToolTipTwo.setText(GL0582); 
+		reactionToolTipTwo.setText(i18n.GL0582()); 
 		reactionToolTipTwo.getElement().setId("lblReactionToolTipTwo");
-		reactionToolTipTwo.getElement().setAttribute("alt",GL0582);
-		reactionToolTipTwo.getElement().setAttribute("title",GL0582);
+		reactionToolTipTwo.getElement().setAttribute("alt",i18n.GL0582());
+		reactionToolTipTwo.getElement().setAttribute("title",i18n.GL0582());
 		
-		reactionToolTipThree.setText(GL0583); 
+		reactionToolTipThree.setText(i18n.GL0583()); 
 		reactionToolTipThree.getElement().setId("lblReactionToolTipThree");
-		reactionToolTipThree.getElement().setAttribute("alt",GL0583);
-		reactionToolTipThree.getElement().setAttribute("title",GL0583);
+		reactionToolTipThree.getElement().setAttribute("alt",i18n.GL0583());
+		reactionToolTipThree.getElement().setAttribute("title",i18n.GL0583());
 		
-		reactionToolTipFour.setText(GL0584); 
+		reactionToolTipFour.setText(i18n.GL0584()); 
 		reactionToolTipFour.getElement().setId("lblReactionToolTipFour");
-		reactionToolTipFour.getElement().setAttribute("alt",GL0584);
-		reactionToolTipFour.getElement().setAttribute("title",GL0584);
+		reactionToolTipFour.getElement().setAttribute("alt",i18n.GL0584());
+		reactionToolTipFour.getElement().setAttribute("title",i18n.GL0584());
 		
-		reactionToolTipFive.setText(GL0585); 
+		reactionToolTipFive.setText(i18n.GL0585()); 
 		reactionToolTipFive.getElement().setId("lblReactionToolTipFive");
-		reactionToolTipFive.getElement().setAttribute("alt",GL0585);
-		reactionToolTipFive.getElement().setAttribute("title",GL0585);
+		reactionToolTipFive.getElement().setAttribute("alt",i18n.GL0585());
+		reactionToolTipFive.getElement().setAttribute("title",i18n.GL0585());
 		
 		/*rating1 = new SimpleRadioButton("rating");
 		rating2 = new SimpleRadioButton("rating");
@@ -207,10 +210,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 //		starValue.setVisible(false);
 		starValue.setVisible(true);
-		starValue.setText(GL1879);
+		starValue.setText(i18n.GL1879());
 		starValue.getElement().setId("lblStarValue");
-		starValue.getElement().setAttribute("alt",GL1879);
-		starValue.getElement().setAttribute("title",GL1879);
+		starValue.getElement().setAttribute("alt",i18n.GL1879());
+		starValue.getElement().setAttribute("title",i18n.GL1879());
 		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			emoticsContainer.removeFromParent();
@@ -291,9 +294,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				String resourceSource=collectionItemDo.getResource().getResourceSource().getAttribution();
 				if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
 					if(resourceSource.length() > 100){
-					resourcePublisher.setText(GL0566+resourceSource.substring(0, 100)+"...");
+					resourcePublisher.setText(i18n.GL0566()+resourceSource.substring(0, 100)+"...");
 					}else{
-						resourcePublisher.setText(GL0566+resourceSource);
+						resourcePublisher.setText(i18n.GL0566()+resourceSource);
 					}
 				}else
 				{
@@ -363,9 +366,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					if(resourceSource != null && !resourceSource.equals("") && !resourceSource.equals("null")){
 						if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
 							if(resourceSource.length() > 100){
-							resourcePublisher.setText(GL0566+resourceSource.substring(0, 100)+"...");
+							resourcePublisher.setText(i18n.GL0566()+resourceSource.substring(0, 100)+"...");
 							}else{
-								resourcePublisher.setText(GL0566+resourceSource);
+								resourcePublisher.setText(i18n.GL0566()+resourceSource);
 							}
 						}else{resourcePublisher.setText("");
 						}
@@ -1296,7 +1299,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}else{
 			starValue.setVisible(true);
-			starValue.setText(GL1879);
+			starValue.setText(i18n.GL1879());
 			setStarRatingValue(0);
 		}
 	
