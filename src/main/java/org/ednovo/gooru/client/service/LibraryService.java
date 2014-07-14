@@ -42,6 +42,7 @@ import org.ednovo.gooru.shared.model.library.StandardCourseDo;
 import org.ednovo.gooru.shared.model.library.StandardsDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.library.TopicDo;
+import org.ednovo.gooru.shared.model.library.UnitDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -206,4 +207,58 @@ public interface LibraryService extends BaseService {
 	
 	public ArrayList<StandardCourseDo> getStandardLibraryMenuList(String subjectCode,String libraryName) throws GwtException, ServerDownException;
 	
+	/** New Optimized Library APIs **/
+	
+	/**
+	 * @function getLibrarySubjects 
+	 * @return : HashMap<String,SubjectDo>
+	 * @description: Get the list of subjects in the taxonomy list
+	 * @param: libraryName
+	 * @throws : GwtException
+	 */
+	public HashMap<String,SubjectDo> getLibrarySubjects(String subjectName, String courseId, String libraryName) throws GwtException;	
+
+	/**
+	 * @function getLibraryCourses
+	 * @return : ArrayList<CourseDo>
+	 * @description: Get the list of courses of the library
+	 * @param: subjectName
+	 * @param: libraryName
+	 * @throws : GwtException
+	 */
+	public ArrayList<CourseDo> getLibraryCourses(String subjectName, String libraryName) throws GwtException;
+
+	/**
+	 * @function getLibraryUnits
+	 * @return : ArrayList<UnitDo>
+	 * @description: Get the list of units of the library
+	 * @param: subjectName
+	 * @param: courseId
+	 * @param: libraryName
+	 * @throws : GwtException
+	 */
+	public ArrayList<UnitDo> getLibraryUnits(String subjectName, String courseId, String libraryName) throws GwtException;
+	
+	/**
+	 * @function getLibraryTopics
+	 * @return : ArrayList<TopicDo>
+	 * @description: Get the list of topics of the library
+	 * @param: subjectName
+	 * @param: unitId
+	 * @param: libraryName
+	 * @throws : GwtException
+	 */
+	public ArrayList<TopicDo> getLibraryTopics(String subjectName, String unitId, String libraryName, int offset, int limit) throws GwtException;
+
+	/**
+	 * @function getLibraryLessons
+	 * @return : ArrayList<LessonDo>
+	 * @description: Get the list of Lessons of the library
+	 * @param: subjectName
+	 * @param: topicId
+	 * @param: libraryName
+	 * @throws : GwtException
+	 */
+	public ArrayList<LessonDo> getLibraryLessons(String subjectName, String topicId, String libraryName, int offset, int limit) throws GwtException;
+
 }

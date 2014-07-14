@@ -28,10 +28,13 @@ package org.ednovo.gooru.server.service;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.service.LibraryService;
+import org.ednovo.gooru.server.ArrayListSorter;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.deserializer.ProfileLibraryDeserializer;
 import org.ednovo.gooru.server.request.JsonResponseRepresentation;
@@ -55,6 +58,7 @@ import org.ednovo.gooru.shared.model.library.StandardCourseDo;
 import org.ednovo.gooru.shared.model.library.StandardsDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.library.TopicDo;
+import org.ednovo.gooru.shared.model.library.UnitDo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,7 +66,6 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.gargoylesoftware.htmlunit.javascript.host.Node;
 
 @Service("libraryService")
 @ServiceURL("/libraryService")
@@ -920,5 +923,151 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		return new ArrayList<CourseDo>();
 	}
 	
+	/** New Library Optimized APIs Implementation**/
+	@Override
+	public HashMap<String, SubjectDo> getLibrarySubjects(String subjectName, String courseId, String libraryName) throws GwtException {
+		JsonRepresentation jsonRepresentation = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_SUBJECTS_OPTIMIZED, getLoggedInSessionToken(), libraryName);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+		HashMap<String,SubjectDo> subjectList = new HashMap<String,SubjectDo>();
+		subjectList = deserializeLibrarySubjects(jsonRepresentation);
+		if(subjectName!=null) {
+			ArrayList<CourseDo> courseList = getLibraryCourses(subjectName, libraryName);
+			subjectList.get(subjectName).setData(courseList);
+			if(courseId==null) {
+				courseId = courseList.get(0).getCodeId()+"";
+			}
+			ArrayList<UnitDo> unitListDo = getLibraryUnits(subjectName, courseId, libraryName);
+			subjectList.get(subjectName).getData().get(getCourseDoFromCourseId(courseList, courseId)).setUnit(unitListDo);
+		}
+		return subjectList;
+	}
+	
+	public HashMap<String,SubjectDo> deserializeLibrarySubjects(JsonRepresentation jsonRep) {
+		ArrayList<SubjectDo> subjectList = new ArrayList<SubjectDo>();
+		HashMap<String, SubjectDo> subjectMap = new HashMap<String, SubjectDo>();
+		
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				String jsonRepStr = jsonRep.getJsonArray().toString();
+				subjectList = JsonDeserializer.deserialize(jsonRepStr, new TypeReference<ArrayList<SubjectDo>>() {});
+				for (SubjectDo object : subjectList) {
+					subjectMap.put(object.getLabel(), object);
+				}
+				return subjectMap;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return new HashMap<String,SubjectDo>();
+	}
+	
+	public Integer getCourseDoFromCourseId(ArrayList<CourseDo> courseList, String courseId) {
+		final Iterator<CourseDo> courses = courseList.iterator();
+		int courseCount = 0;
+		while (courses.hasNext()) {
+			final CourseDo courseDo = courses.next();
+			String course = ""+courseDo.getCodeId();
+			if(course.equals(courseId)) {
+				return courseCount;
+			}
+			courseCount++;
+		}
+		return courseCount;
+	}
+	
+	@Override
+	public ArrayList<CourseDo> getLibraryCourses(String subjectName, String libraryName) throws GwtException {
+		JsonRepresentation jsonRepresentation = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COURSES_OPTIMIZED, subjectName, getLoggedInSessionToken(), libraryName);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+		return deserializeLibraryCourses(jsonRepresentation, subjectName, libraryName);
+	}
+	
+	public ArrayList<CourseDo> deserializeLibraryCourses(JsonRepresentation jsonRep, String subjectName, String libraryName) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				ArrayList<CourseDo> courseDoList = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<CourseDo>>() {});
+				if(!subjectName.equalsIgnoreCase(FEATURED)) {
+					Collections.sort(courseDoList, new ArrayListSorter("grade", true));
+				}
+				if(libraryName.equals(RUSD)&&subjectName.equals(FEATURED)) {
+					courseDoList = getRusdLearnsData(courseDoList);
+				}
+				return courseDoList;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return new ArrayList<CourseDo>();
+	}
+	
+	private ArrayList<CourseDo> getRusdLearnsData(ArrayList<CourseDo> courseDoList) {
+		CourseDo courseDo = new CourseDo();
+		courseDo.setLabel(INCLUDED_COURSE);
+		courseDo.setParentId(AUTODESK_GOORU_UID);
+		ThumbnailDo thumbnailDo = new ThumbnailDo();
+		thumbnailDo.setUrl(COURSE_100_75_IMG);
+		courseDo.setThumbnails(thumbnailDo);
+		LibraryUserDo libraryUserDo = new LibraryUserDo();
+		libraryUserDo.setGender(MALE);
+		libraryUserDo.setLastName(RUSD_LAST_NAME);
+		libraryUserDo.setUsername(RUSDLEARNS);
+		libraryUserDo.setGooruUId(AUTODESK_GOORU_UID);
+		courseDo.setCreator(libraryUserDo);
+		courseDo.setUser(null);
+		try {
+			for(int i=0;i<courseDoList.size();i++) {
+				if(courseDoList.get(i).getLabel().equalsIgnoreCase(EXCLUDED_COURSE)) {
+					courseDoList.remove(i);
+				}
+			}
+		} catch (Exception e) {e.printStackTrace();}
+		courseDoList.add(0, courseDo);
+		return courseDoList;
+	}
+	
+	@Override
+	public ArrayList<UnitDo> getLibraryUnits(String subjectName, String courseId, String libraryName) throws GwtException {
+		JsonRepresentation jsonRepresentation = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_UNITS_OPTIMIZED, subjectName, courseId, getLoggedInSessionToken());
+		System.out.println("url "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+		return deserializeLibraryUnits(jsonRepresentation, subjectName);
+	}
+
+	public ArrayList<UnitDo> deserializeLibraryUnits(JsonRepresentation jsonRep, String subjectName) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				return JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<UnitDo>>() {
+				});
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return new ArrayList<UnitDo>();
+	}
+
+	@Override
+	public ArrayList<TopicDo> getLibraryTopics(String subjectName, String unitId, String libraryName, int offset, int limit) throws GwtException {
+		JsonRepresentation jsonRepresentation = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_TOPICS_OPTIMIZED, subjectName, unitId, getLoggedInSessionToken(), offset+"", TOTAL_LIMIT);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+		return deserializeTopicList(jsonRepresentation);
+	}
+
+	@Override
+	public ArrayList<LessonDo> getLibraryLessons(String subjectName, String topicId, String libraryName, int offset, int limit) throws GwtException {
+		JsonRepresentation jsonRepresentation = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_LESSONS_OPTIMIZED, subjectName, topicId, getLoggedInSessionToken(), ""+offset, ""+limit);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+		return deserializeLessons(jsonRepresentation);
+	}
+
 
 }
