@@ -135,6 +135,13 @@ public interface ClasslistpageCBundle extends ClientBundle{
 		String activeMembersDesc();
 		
 		String privacyAlignStyle();
+		String visibilityDivContainer();
+		String radioBtnVisiblity();
+		String radioBtnVisiblitySecondContainer();
+		String subBodyInviteContainer();
+		String leftInviteContainer();
+		String rightInviteContainer();
+		String inviteDivContainer();
 	}
 	@NotStrict
 	@Source("classlistPage.css")
