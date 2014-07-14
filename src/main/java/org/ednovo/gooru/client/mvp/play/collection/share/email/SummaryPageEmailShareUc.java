@@ -115,12 +115,12 @@ public class SummaryPageEmailShareUc extends PopupPanel{
 		lblEmailFriend.getElement().setAttribute("alt",i18n.GL1449());
 		lblEmailFriend.getElement().setAttribute("title",i18n.GL1449());
 		
-		lblFrom.setText(i18n.GL0223() + i18n.GL_SPL_SEMICOLON());
+		lblFrom.setText(i18n.GL0223() + i18n.GL_SPL_SEMICOLON()+" ");
 		lblFrom.getElement().setId("lblFrom");
 		lblFrom.getElement().setAttribute("alt",i18n.GL0223());
 		lblFrom.getElement().setAttribute("title",i18n.GL0223());
 		
-		lblTo.setText(i18n.GL0224() + i18n.GL_SPL_SEMICOLON());
+		lblTo.setText(i18n.GL0224() + i18n.GL_SPL_SEMICOLON()+" ");
 		lblTo.getElement().setId("lblTo");
 		lblTo.getElement().setAttribute("alt",i18n.GL0224());
 		lblTo.getElement().setAttribute("title",i18n.GL0224());
@@ -130,12 +130,12 @@ public class SummaryPageEmailShareUc extends PopupPanel{
 		lblSendMeCopy.getElement().setAttribute("alt",i18n.GL0225());
 		lblSendMeCopy.getElement().setAttribute("title",i18n.GL0225());
 		
-		lblSubject.setText(i18n.GL0226() + i18n.GL_SPL_SEMICOLON());
+		lblSubject.setText(i18n.GL0226() + i18n.GL_SPL_SEMICOLON()+" ");
 		lblSubject.getElement().setId("lblSubject");
 		lblSubject.getElement().setAttribute("alt",i18n.GL0226());
 		lblSubject.getElement().setAttribute("title",i18n.GL0226());
 		
-		lblMessage.setText(i18n.GL0227() + i18n.GL_SPL_SEMICOLON());
+		lblMessage.setText(i18n.GL0227() + i18n.GL_SPL_SEMICOLON()+" ");
 		lblMessage.getElement().setId("lblSubject");
 		lblMessage.getElement().setAttribute("alt",i18n.GL0227());
 		lblMessage.getElement().setAttribute("title",i18n.GL0227());

@@ -73,7 +73,7 @@ public class CollectionStatisticsTabVc extends FlowPanel {
 	 *            instance of the {@link CollectionDo}
 	 */
 	public void setData(CollectionDo collection) {
-		statisticsLblUc = new LabelUc(i18n.GL1491()+i18n.GL_SPL_SEMICOLON());
+		statisticsLblUc = new LabelUc(i18n.GL1491()+i18n.GL_SPL_SEMICOLON()+" ");
 		statisticsLblUc.setStyleName(ShelfCBundle.INSTANCE.css().headerLabel());
 		this.add(statisticsLblUc);
 		showAddsFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().addsImageStyle(), i18n.GL1493(), "50"));

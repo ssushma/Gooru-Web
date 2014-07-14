@@ -290,7 +290,7 @@ public class FillIntheBlankQuestionView extends Composite{
 	private void showResultPanel(int blankNum,String correctAnswer){
 		FlowPanel resultContianer=new FlowPanel();
 		resultContianer.setStyleName(oeStyle.resultPanelConatiner());
-		HTMLPanel blankHtml=new HTMLPanel(i18n.GL1455()+" "+(blankNum+1)+i18n.GL_SPL_SEMICOLON());
+		HTMLPanel blankHtml=new HTMLPanel(i18n.GL1455()+" "+(blankNum+1)+i18n.GL_SPL_SEMICOLON()+" ");
 		blankHtml.setStyleName(oeStyle.resultPanelText());
 		Label answerWrongImagePanel=new Label();
 		answerWrongImagePanel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());

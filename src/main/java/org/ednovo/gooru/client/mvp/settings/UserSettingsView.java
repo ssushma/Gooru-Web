@@ -313,7 +313,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		uploadProfileImage.setAltText(i18n.GL0823());
 		//i18n.GL0823
 		charLimitFNameLbl.setText(i18n.GL0143());
-		genderText.getElement().setInnerHTML(i18n.GL0809()+i18n.GL_SPL_SEMICOLON());
+		genderText.getElement().setInnerHTML(i18n.GL0809()+i18n.GL_SPL_SEMICOLON()+" ");
 		lbMaleText.setText(i18n.GL0810());
 		lbFemaleText.setText(i18n.GL0811());
 		lbOtherText.setText(i18n.GL0419());
@@ -323,7 +323,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		editButtonContact.setText(i18n.GL0140());
 		emailCancelButton.setText(i18n.GL0142());
 		emailSaveButton.setText(i18n.GL0141());
-		email.setText(i18n.GL0212()+i18n.GL_SPL_SEMICOLON());
+		email.setText(i18n.GL0212()+i18n.GL_SPL_SEMICOLON()+" ");
 		emailTextConfirmation.setText(i18n.GL0813());
 		securityText.getElement().setInnerHTML(i18n.GL0814());
 		forgetPasswordMsg.setText(i18n.GL0815());
