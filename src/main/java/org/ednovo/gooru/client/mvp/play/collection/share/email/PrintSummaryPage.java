@@ -30,6 +30,7 @@ import java.util.TreeSet;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.player.collection.client.view.collectionoverview.CollectionPlayerImageBundle;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
@@ -50,7 +51,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PrintSummaryPage extends Composite implements PlayerMessageProperties,MessageProperties{
+public class PrintSummaryPage extends Composite implements PlayerMessageProperties{
 
 	@UiField HTMLPanel printPageContainer,gooruLogoContainer,userNameContainer,userClassContainer,classField;
 	@UiField HTMLPanel mainContainer,metaDataLeftContainer,metaDataRightContainer,metaDataTitleContainer,metaDataTimeContainer,metaDataUserNameContainer,timeContainer;
@@ -65,9 +66,9 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 	private InlineLabel timeTxt;
 	private InlineLabel timeLbl;
 	
-	private static final String FIB_SEPARATOR = GL0885;
-	private static final String MC_FIB_TITLE_TXT = GL1445;
-	private static final String MC_TITLE_TXT = GL1446;
+//	private static final String FIB_SEPARATOR = i18n.GL0885;
+//	private static final String MC_FIB_TITLE_TXT = i18n.GL1445;
+//	private static final String MC_TITLE_TXT = i18n.GL1446;
 	
 	private CollectionDo collectionDo=null;
 	
@@ -77,38 +78,40 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 	interface PrintSummaryPageUiBinder extends
 			UiBinder<Widget, PrintSummaryPage> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	public PrintSummaryPage(CollectionDo collectionDo, String timeSpent, String collectionBitlyLink,  Map<String,AttemptedAnswersDo> attemptedAnswerMap, String completedDate) {
 		initWidget(uiBinder.createAndBindUi(this));
-		userName.setText(GL0649);
+		userName.setText(i18n.GL0649());
 		userName.getElement().setId("lblUserName");
-		userName.getElement().setAttribute("alt",GL0649);
-		userName.getElement().setAttribute("title",GL0649);
+		userName.getElement().setAttribute("alt",i18n.GL0649());
+		userName.getElement().setAttribute("title",i18n.GL0649());
 		
-		userClass.setText(GL0650);
+		userClass.setText(i18n.GL0650());
 		userClass.getElement().setId("lblUserClass");
-		userClass.getElement().setAttribute("alt",GL0650);
-		userClass.getElement().setAttribute("title",GL0650);
+		userClass.getElement().setAttribute("alt",i18n.GL0650());
+		userClass.getElement().setAttribute("title",i18n.GL0650());
 		
-		metaDataTitleTxt.setText(GL0651);
+		metaDataTitleTxt.setText(i18n.GL0651());
 		metaDataTitleTxt.getElement().setId("lblMetaDataTitleTxt");
-		metaDataTitleTxt.getElement().setAttribute("alt",GL0651);
-		metaDataTitleTxt.getElement().setAttribute("title",GL0651);
+		metaDataTitleTxt.getElement().setAttribute("alt",i18n.GL0651());
+		metaDataTitleTxt.getElement().setAttribute("title",i18n.GL0651());
 		
-		metaDataUserNameTxt.setText(GL0652);
+		metaDataUserNameTxt.setText(i18n.GL0652());
 		metaDataUserNameTxt.getElement().setId("lblMetaDataUserNameTxt");
-		metaDataUserNameTxt.getElement().setAttribute("alt",GL0652);
-		metaDataUserNameTxt.getElement().setAttribute("title",GL0652);
+		metaDataUserNameTxt.getElement().setAttribute("alt",i18n.GL0652());
+		metaDataUserNameTxt.getElement().setAttribute("title",i18n.GL0652());
 		
-		metaDataTimeTxt.setText(GL0653);
+		metaDataTimeTxt.setText(i18n.GL0653());
 		metaDataTimeTxt.getElement().setId("lblMetaDataTimeTxt");
-		metaDataTimeTxt.getElement().setAttribute("alt",GL0653);
-		metaDataTimeTxt.getElement().setAttribute("title",GL0653);
+		metaDataTimeTxt.getElement().setAttribute("alt",i18n.GL0653());
+		metaDataTimeTxt.getElement().setAttribute("title",i18n.GL0653());
 		
-		oeQuestionLbl.setText(GL0654);
+		oeQuestionLbl.setText(i18n.GL0654());
 		oeQuestionLbl.getElement().setId("lblOeQuestionLbl");
-		oeQuestionLbl.getElement().setAttribute("alt",GL0654);
-		oeQuestionLbl.getElement().setAttribute("title",GL0654);
+		oeQuestionLbl.getElement().setAttribute("alt",i18n.GL0654());
+		oeQuestionLbl.getElement().setAttribute("title",i18n.GL0654());
 		
 		this.collectionDo=collectionDo;
 		printPageContainer.getElement().setAttribute("style",cp001);
@@ -144,10 +147,10 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 		oeQuestionLbl.getElement().setAttribute("style",cp0013);
 		mcQuestionsLbl.getElement().setAttribute("style",cp0013);
 		mcQuestionsLblPanel.getElement().setAttribute("style",cp0013);
-		mcQuestionsLbl.setText(MC_TITLE_TXT);
+		mcQuestionsLbl.setText(i18n.GL1446());
 		mcQuestionsLbl.getElement().setId("spnMcQuestionsLbl");
-		mcQuestionsLbl.getElement().setAttribute("alt",MC_TITLE_TXT);
-		mcQuestionsLbl.getElement().setAttribute("title",MC_TITLE_TXT);
+		mcQuestionsLbl.getElement().setAttribute("alt",i18n.GL1446());
+		mcQuestionsLbl.getElement().setAttribute("title",i18n.GL1446());
 		setMetaData(collectionDo.getTitle(), timeSpent, AppClientFactory.getLoggedInUser().getUsername(), collectionBitlyLink, completedDate);
 		//setMcQuestionsData(resourceList, questionResourceOptions);
 		
@@ -190,15 +193,15 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 		metaDataUserNameLbl.setText(collectionUserName);
 		metaDataUserNameLbl.getElement().setAttribute("alt",collectionUserName);
 		metaDataUserNameLbl.getElement().setAttribute("title",collectionUserName);
-		timeTxt.setText(GL1447+GL_SPL_SEMICOLON);
-		timeTxt.getElement().setAttribute("alt",GL1447);
-		timeTxt.getElement().setAttribute("title",GL1447);
+		timeTxt.setText(i18n.GL1447()+i18n.GL_SPL_SEMICOLON());
+		timeTxt.getElement().setAttribute("alt",i18n.GL1447());
+		timeTxt.getElement().setAttribute("title",i18n.GL1447());
 		timeLbl.setText(completedDate);
 		timeLbl.getElement().setAttribute("alt",completedDate);
 		timeLbl.getElement().setAttribute("title",completedDate);
-		bitlyLink.setText(GL1448+GL_SPL_SEMICOLON+" "+collectionBitlyLink);
-		bitlyLink.getElement().setAttribute("alt",GL1448+GL_SPL_SEMICOLON+" "+collectionBitlyLink);
-		bitlyLink.getElement().setAttribute("title",GL1448+GL_SPL_SEMICOLON+" "+collectionBitlyLink);
+		bitlyLink.setText(i18n.GL1448()+i18n.GL_SPL_SEMICOLON()+" "+collectionBitlyLink);
+		bitlyLink.getElement().setAttribute("alt",i18n.GL1448()+i18n.GL_SPL_SEMICOLON()+" "+collectionBitlyLink);
+		bitlyLink.getElement().setAttribute("title",i18n.GL1448()+i18n.GL_SPL_SEMICOLON()+" "+collectionBitlyLink);
 	}
 	
 	private String calculateSpentTime(String totalSecs) {
@@ -264,8 +267,8 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 					HTML questionLabel=new HTML();
 					final HTMLPanel fibQuestionPanel = new HTMLPanel("");
 					if(collectionItemDo.getResource().getType()==4){
-						String[] fibArray = questionText.split(FIB_SEPARATOR);
-						mcQuestionsLbl.setText(MC_FIB_TITLE_TXT);
+						String[] fibArray = questionText.split(i18n.GL0885());
+						mcQuestionsLbl.setText(i18n.GL1445());
 						String fibQuestionTxt = "";
 						int k=0;
 						boolean isFibAnswerCorrect=true;
@@ -356,9 +359,9 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 		if(!(mcQuestionsBox.getWidgetCount()>0)) {
 			mcQuestionsContainer.setVisible(false);
 		}
-		answerCount.setText(correctAnswers+" / "+questionResourceOptionsSize+" "+GL0314);
-		answerCount.getElement().setAttribute("alt",correctAnswers+" / "+questionResourceOptionsSize+" "+GL0314);
-		answerCount.getElement().setAttribute("title",correctAnswers+" / "+questionResourceOptionsSize+" "+GL0314);
+		answerCount.setText(correctAnswers+" / "+questionResourceOptionsSize+" "+i18n.GL0314());
+		answerCount.getElement().setAttribute("alt",correctAnswers+" / "+questionResourceOptionsSize+" "+i18n.GL0314());
+		answerCount.getElement().setAttribute("title",correctAnswers+" / "+questionResourceOptionsSize+" "+i18n.GL0314());
 		answerCount.getElement().setAttribute("style", cp0026);
 			
 	}
@@ -406,8 +409,8 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 //					final HTML mcQuestionAnswer = new HTML();
 //					final HTMLPanel fibQuestionPanel = new HTMLPanel("");
 //					if(resourceList.get(i).getQuestionsList().getQuestionType()==4) {
-//						String[] fibArray = questionText.split(FIB_SEPARATOR);
-//						mcQuestionsLbl.setText(MC_FIB_TITLE_TXT);
+//						String[] fibArray = questionText.split(i18n.GL0885);
+//						mcQuestionsLbl.setText(i18n.GL1445);
 //						List<String> questionArray = Arrays.asList(fibArray);
 //						
 //						for(int j = 0; j < questionArray.size(); j++) {

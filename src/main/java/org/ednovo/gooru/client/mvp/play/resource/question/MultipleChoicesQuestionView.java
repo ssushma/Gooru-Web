@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
@@ -51,7 +52,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class  MultipleChoicesQuestionView extends Composite implements MessageProperties{
+public abstract class  MultipleChoicesQuestionView extends Composite {
 	
 	@UiField Button checkAnswer;
 	@UiField FlowPanel optionsContainer;
@@ -62,7 +63,7 @@ public abstract class  MultipleChoicesQuestionView extends Composite implements 
 	
 	private boolean isChekcAnswerButtonClicked=false;
 	
-	private static final String TRUE_FALSE_BODY_TEXT=GL1457+GL_SPL_FULLSTOP;
+//	private static final String i18n.GL1457+i18n.GL_SPL_FULLSTOP=i18n.GL1457+i18n.GL_SPL_FULLSTOP;
 	private CollectionItemDo collectionItemDo;
 	
 	private AttemptedAnswersDo attemptedAnswerDo=null;
@@ -72,6 +73,8 @@ public abstract class  MultipleChoicesQuestionView extends Composite implements 
 	interface MultipleChoicesQuestionViewUiBinder extends UiBinder<Widget, MultipleChoicesQuestionView> {
 		
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	public MultipleChoicesQuestionView(){
 		initWidget(uiBinder.createAndBindUi(this));
@@ -86,16 +89,16 @@ public abstract class  MultipleChoicesQuestionView extends Composite implements 
 		setQuestionTypeCaption();
 		this.attemptedAnswerDo=attemptedAnswerDo;
 		renderQuestionAnswerOptions();
-		answerText.getElement().setInnerHTML(GL0665);
-		answerText.getElement().setAttribute("alt",GL0665);
-		answerText.getElement().setAttribute("title",GL0665);
-		checkAnswer.setText(GL0666);
-		checkAnswer.getElement().setAttribute("alt",GL0666);
-		checkAnswer.getElement().setAttribute("title",GL0666);
+		answerText.getElement().setInnerHTML(i18n.GL0665());
+		answerText.getElement().setAttribute("alt",i18n.GL0665());
+		answerText.getElement().setAttribute("title",i18n.GL0665());
+		checkAnswer.setText(i18n.GL0666());
+		checkAnswer.getElement().setAttribute("alt",i18n.GL0666());
+		checkAnswer.getElement().setAttribute("title",i18n.GL0666());
 	}
 	
 	private void setQuestionTypeCaption(){
-		messageBodyText.setText(TRUE_FALSE_BODY_TEXT);
+		messageBodyText.setText(i18n.GL1457()+i18n.GL_SPL_FULLSTOP());
 		answerText.getElement().setId("pnlAnswerText");
 		checkAnswer.getElement().setId("btnCheckAnswer");
 		messageBodyText.getElement().setId("lblMessageBodyText");

@@ -36,10 +36,12 @@ import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.ShareViewUc;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
@@ -59,7 +61,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  * @author Search Team
  * 
  */
-public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlayUiHandlers> implements	IsCollectionPlayView,MessageProperties {
+public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlayUiHandlers> implements	IsCollectionPlayView {
 
 	//private CollectionOverviewPopupImpl gooruCollectionPlayer;
 	
@@ -71,7 +73,7 @@ public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlay
 
 	Document doc = Document.get();
 
-	private static final String OOPS = GL0061;
+//	private static final String OOPS = i18n.GL0061;
 
 	String reloadUrl = null;
 
@@ -87,6 +89,8 @@ public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlay
 	boolean updateview=false;
 	
 	HandlerRegistration playerCloseHandler;
+	
+	 private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	/**
 	 * Class constructor , Assign styles for overview popup
@@ -219,7 +223,7 @@ public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlay
 
 													@Override
 													public void onFailure(	Throwable caught) {
-														new AlertContentUc(OOPS,caught.getMessage());
+														new AlertContentUc(i18n.GL0061(),caught.getMessage());
 													}
 												});
 							}

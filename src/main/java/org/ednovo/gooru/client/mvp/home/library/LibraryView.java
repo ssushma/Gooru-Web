@@ -67,7 +67,7 @@ import org.ednovo.gooru.shared.model.library.StandardsDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.library.TopicDo;
 import org.ednovo.gooru.shared.model.library.UnitDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StorageJsonSerializationFactory;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
@@ -77,13 +77,11 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -91,9 +89,8 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.seanchenxi.gwt.storage.client.StorageExt;
-import com.seanchenxi.gwt.storage.client.StorageKey;
-import com.seanchenxi.gwt.storage.client.StorageKeyFactory;
+import com.googlecode.gwt.serialization.JsonReader;
+import com.googlecode.gwt.serialization.JsonWriter;
 
 public class LibraryView extends Composite implements  ClickHandler {
 
@@ -198,11 +195,11 @@ public class LibraryView extends Composite implements  ClickHandler {
 
 	private int INITIAL_OFFSET = 0;
 	
-    StorageExt localStorage = StorageExt.getLocalStorage();
+	StorageJsonSerializationFactory factory = GWT.create(StorageJsonSerializationFactory.class);
 
-    StorageKey<HashMap<String, SubjectDo>> libraryStorageObject = StorageKeyFactory.objectKey("libraryStorageObject");
+	private Storage stockStore = Storage.getLocalStorageIfSupported();
 	
-    LibraryMenuNav libraryMenuNavigation = null;
+	LibraryMenuNav libraryMenuNavigation = null;
     
     private String placeToken = null;
     
@@ -505,35 +502,27 @@ public class LibraryView extends Composite implements  ClickHandler {
 			container.setVisible(true);
 			
 			Window.scrollTo(0, 0);
-			if(standardId == null)
-			{
-			String subjectName = getSubjectNameBySubjectId(courseMap, subjectId);
-			CourseDo courseDo = null;
-			if(subjectName!=null&&courseMap.get(subjectName)!=null&&courseMap.get(subjectName).getData()!=null&&courseId!=null) 
-			{
-				libraryMenuNavigation.setTabSelection(subjectName);
-				courseDo = getCourseDoFromCourseId(courseMap.get(subjectName), courseId);
-				setCourseData(courseDo);
-			} 
-			else 
-			{
-				libraryMenuNavigation.getTaxonomyData(subjectId,courseId);
-			}
-			}
-			else
-			{
-			String subjectName = STANDARDS;
-			CourseDo courseDo = null;
-			if(subjectName!=null&&standardsMap.get(subjectName)!=null&&standardsMap.get(subjectName).getData()!=null&&courseId!=null) 
-			{
-				libraryMenuNavigation.setTabSelection(subjectName);
-				courseDo = getCourseDoFromCourseIdStandards(standardsMap.get(STANDARDS), standardId, courseId);
-				setCourseData(courseDo);
-			} 
-			else 
-			{
-				libraryMenuNavigation.getTaxonomyData(subjectId,courseId);
-			}
+			if(standardId == null) {
+				String subjectName = getSubjectNameBySubjectId(courseMap, subjectId);
+				CourseDo courseDo = null;
+				if(subjectName!=null&&courseMap.get(subjectName)!=null&&courseId!=null) {
+					libraryMenuNavigation.setTabSelection(subjectName);
+					courseDo = getCourseDoFromCourseId(courseMap.get(subjectName), courseId);
+					getUnitDataFromService(courseDo, subjectId, courseId);
+					//setCourseData(courseDo);
+				} else {
+					getFeaturedCourses(FEATURED_LABEL, true);
+				}
+			} else {
+				String subjectName = STANDARDS;
+				CourseDo courseDo = null;
+				if(subjectName!=null&&standardsMap.get(subjectName)!=null&&standardsMap.get(subjectName).getData()!=null&&courseId!=null) {
+					libraryMenuNavigation.setTabSelection(subjectName);
+					courseDo = getCourseDoFromCourseIdStandards(standardsMap.get(STANDARDS), standardId, courseId);
+					setCourseData(courseDo);
+				} else {
+					libraryMenuNavigation.getTaxonomyData(subjectName,subjectId,courseId);
+				}
 			}
 			
 		} else if(callBack.equalsIgnoreCase(FEATURED_COURSE_PAGE)){
@@ -553,13 +542,13 @@ public class LibraryView extends Composite implements  ClickHandler {
 				if(courseMap!=null&&courseMap.get("featured")!=null) {
 					setFeaturedCourseWidgets(courseMap.get("featured").getData(), true);
 				} else {
-					getFeaturedCourses(FEATURED_LABEL);
+					getFeaturedCourses(FEATURED_LABEL, false);
 				}
 			}
 		} else if (callBack.equalsIgnoreCase(PARTNER_PAGE)) {
 			if(courseMap!=null&&courseMap.get(FEATURED_LABEL)!=null) {
 			} else {
-				getFeaturedCourses(FEATURED_LABEL);
+				getFeaturedCourses(FEATURED_LABEL, false);
 			}
 			landingBanner.setVisible(false);
 			contributorsContainer.setVisible(false);
@@ -579,6 +568,10 @@ public class LibraryView extends Composite implements  ClickHandler {
 		this.previousCourseId = courseId;
 	}
 	
+	private void getRefreshedSubjects() {
+		
+	}
+	
 	/**
 	 * 
 	 * @function setFeaturedCourses 
@@ -593,54 +586,71 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 */
-	public void getFeaturedCourses(final String featuredLabel) {
-		try {
-			if(Cookies.getCookie("featured-gooru-release")!=null&&!Cookies.getCookie("featured-gooru-release").contains("5.11")) {
-				if(localStorage!=null&&localStorage.get(libraryStorageObject)!=null&&localStorage.get(libraryStorageObject).get(featuredLabel)!=null){
-					localStorage.get(libraryStorageObject).remove(featuredLabel);
-				}
-			}
-			HashMap<String, SubjectDo> savedValuesMap = localStorage.get(libraryStorageObject);
-			if(savedValuesMap!=null&&savedValuesMap.get(featuredLabel)!=null) {
-				setFeaturedCourseWidgets(savedValuesMap.get(featuredLabel).getData(), false);
-			} else {
-				String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
-				if (featuredLabel!=null){
-					if(standardId != null)
-					{
-						AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(featuredLabel, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, StandardsDo>>() {
-									
-							@Override
-							public void onSuccess(
-									HashMap<String, StandardsDo> result) {
-								standardsMap = result;
-								libraryMenuNavigation.setSubjectPanelIdsForStandards(standardsMap);
-								setFeaturedCourseWidgets(standardsMap.get(featuredLabel).getData().get(0).getCourse(), false);
-								
-							}
-						});	
+	public void getFeaturedCourses(final String featuredLabel, final boolean isNotHomePage) {
+		String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
+		if (featuredLabel!=null){
+			if(standardId != null)
+			{
+				AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(featuredLabel, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, StandardsDo>>() {
+					@Override
+					public void onSuccess(HashMap<String, StandardsDo> result) {
+						standardsMap = result;
+						libraryMenuNavigation.setSubjectPanelIdsForStandards(standardsMap);
+						setFeaturedCourseWidgets(standardsMap.get(featuredLabel).getData().get(0).getCourse(), false);
 					}
-					else
-					{
-					AppClientFactory.getInjector().getLibraryService().getSubjects(featuredLabel, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
-	
+				});	
+			}
+			else
+			{
+				final JsonWriter<HashMap<String, SubjectDo>> courseMapWriter = factory.getWriter();
+				final JsonReader<HashMap<String, SubjectDo>> courseMapReader = factory.getReader();
+				String map = null;
+				if(stockStore!=null&&stockStore.getItem("courseMapDataSerializedStr")!=null){
+					map = stockStore.getItem("courseMapDataSerializedStr");
+					courseMap = courseMapReader.read(map);
+					setLibraryInitialData(featuredLabel,isNotHomePage);
+				} else {
+					AppClientFactory.getInjector().getLibraryService().getLibrarySubjects(featuredLabel, null, StringUtil.getPublicLibraryName(getPlaceToken()), new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
+						@Override
+						public void onFailure(Throwable caught) {
+							
+						}
 						@Override
 						public void onSuccess(HashMap<String, SubjectDo> subjectDoList) {
 							courseMap = subjectDoList;
-							libraryMenuNavigation.setSubjectPanelIds(courseMap);
-							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
-								setFeaturedCourseWidgets(courseMap.get(featuredLabel).getData(), false);
-							}
+							setLibraryInitialData(featuredLabel,isNotHomePage);
 						}
 					});
+					
+/*					AppClientFactory.getInjector().getLibraryService().getSubjects(featuredLabel, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
+						@Override
+						public void onSuccess(HashMap<String, SubjectDo> subjectDoList) {
+								String courseMapWriterString = courseMapWriter.write(subjectDoList);
+								if(stockStore!=null) {
+									stockStore.setItem("courseMapDataSerializedStr", courseMapWriterString);
+								}
+								courseMap = subjectDoList;
+								setLibraryInitialData(featuredLabel);
+							}
+						});
+*/						
 					}
 				}
-			}
-		} catch (SerializationException e) {
-			
 		}
 	}
-		
+	
+	void setLibraryInitialData(String featuredLabel, boolean isNotHomePage) {
+		libraryMenuNavigation.setSubjectPanelIds(courseMap);
+		if(isNotHomePage) {
+			String subjectId = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
+			String courseId = AppClientFactory.getPlaceManager().getRequestParameter(COURSE_ID);
+			String subjectName = getSubjectNameBySubjectId(courseMap, subjectId);
+			libraryMenuNavigation.getTaxonomyData(subjectName,subjectId,courseId);
+		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+			setFeaturedCourseWidgets(courseMap.get(featuredLabel).getData(), false);
+		}
+	}
+	
 	/**
 	 * @function setFeaturedCourseWidgets 
 	 * 
@@ -657,9 +667,15 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 *
 	 */
 	private void setFeaturedCourseWidgets(final ArrayList<CourseDo> courseDoList, boolean isFeaturedCourseSelected) {
+		System.out.println("inside this");
 		featuredCourses.clear();
 		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(COURSE_ID);
 		for(int i = 0; i<courseDoList.size(); i++) {
+			
+			//TEMPORARY QA fix as there is no data
+			String userName = "rusdlearns";//courseDoList.get(i).getCreator().getUsername();
+			//TEMPORARY QA fix as there is no data
+			
 			featuredCourses.add(new FeaturedCourseListView(courseDoList.get(i)));
 			if(!isFeaturedCourseSelected) {
 				if(i==0&&(courseId==null)) {
@@ -669,12 +685,12 @@ public class LibraryView extends Composite implements  ClickHandler {
 						if(partnerFolderList.size()>0) {
 							setThirdPartyCourseUnitData(partnerFolderList);
 						} else {
-							getPartnerWorkspaceFolders(courseDoList.get(i).getCreator().getUsername());
+							getPartnerWorkspaceFolders(userName);
 						}
 						//setUnitListData(courseDoList.get(i).getUnit());
 					}
 					else {
-						getPopularList(courseDoList.get(i).getUnit(), courseDoList.get(i).getCodeId(), true);	
+						getPopularList(courseDoList.get(i).getUnit(), courseDoList.get(i).getCodeId(), true);
 					}
 				}
 			} else if(isFeaturedCourseSelected&&courseId==null) {
@@ -684,7 +700,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 						if(partnerFolderList.size()>0) {
 							setThirdPartyCourseUnitData(partnerFolderList);
 						} else {
-							getPartnerWorkspaceFolders(courseDoList.get(i).getCreator().getUsername());
+							getPartnerWorkspaceFolders(userName);
 						}
 						//setUnitListData(courseDoList.get(i).getUnit());
 					}
@@ -744,7 +760,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 						}
 					}
 					else{
-						getPopularList(courseDoList.get(widgetCountTemp).getUnit(), courseDoList.get(widgetCountTemp).getCodeId(), false);
+						getUnitDataFromService(courseDoList.get(widgetCountTemp), "featured", courseDoList.get(widgetCountTemp).getCodeId()+"");
 					}
 					Map<String,String> params = new HashMap<String, String>();
 					params.put(LIBRARY_PAGE, FEATURED_COURSE_PAGE);
@@ -915,8 +931,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 	
 	OpenSubjectCourseHandler openSubjectCourseHandler = new OpenSubjectCourseHandler() {
 		@Override
-		public void openSubjectCourse(String subjectName, CourseDo courseDo) {
-			setCourseData(courseDo);
+		public void openSubjectCourse(String subjectCode, CourseDo courseDo) {
+			getUnitDataFromService(courseDo, subjectCode, courseDo.getCodeId()+"");
 		}
 	};
 
@@ -933,6 +949,20 @@ public class LibraryView extends Composite implements  ClickHandler {
 			standardsMap.put(subjectCode, standardDo);
 		}
 	};
+	
+	public void getUnitDataFromService(final CourseDo courseDo, String subjectCode, String courseId) {
+		AppClientFactory.getInjector().getLibraryService().getLibraryUnits(subjectCode, courseId, StringUtil.getPublicLibraryName(getPlaceToken()), new SimpleAsyncCallback<ArrayList<UnitDo>>() {
+			@Override
+			public void onSuccess(ArrayList<UnitDo> unitDoList) {
+				courseDo.setUnit(unitDoList);
+				setCourseData(courseDo);
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+		});
+	}
 	
 	/**
 	 * 
@@ -1113,7 +1143,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 */
 	public String getSubjectNameBySubjectId(HashMap<String, SubjectDo> subjectList, String subjectId) {
 		for (Map.Entry<String, SubjectDo> entry : subjectList.entrySet()) {
-			if(entry.getValue().getCode().equals(subjectId)) {
+			if(entry.getValue().getSubjectCode().equals(subjectId)) {
 				return entry.getKey();
 			}
 		}
@@ -1212,7 +1242,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 			unitDoListTemp = new ArrayList<UnitDo>();
 			unitDoListTemp = unitDoTempList;
 			setUnitListData(unitDoListTemp);
-			
 /*			if(unitDoListTemp.size()!=0){
 			if(isRefresh&&(!unitDoListTemp.get(0).getLabel().contains("Popular"))) {
 				AppClientFactory.getInjector().getLibraryService().getPopularCollectionsData(""+courseId, new AsyncCallback<ArrayList<ConceptDo>>(){

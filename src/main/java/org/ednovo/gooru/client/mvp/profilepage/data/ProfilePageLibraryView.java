@@ -99,7 +99,20 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	
 	private void setMetaData() {
 		myCollectionsBtn.setText(i18n.GL1789());
+		myCollectionsBtn.getElement().setId("btnMyCollectionsBtn");
+		myCollectionsBtn.getElement().setAttribute("alt",i18n.GL1789());
+		myCollectionsBtn.getElement().setAttribute("title",i18n.GL1789());
+		
 		collectionsRedirectionMsg.setText(i18n.GL1788());
+		collectionsRedirectionMsg.getElement().setId("lblCollectionsRedirectionMsg");
+		collectionsRedirectionMsg.getElement().setAttribute("alt",i18n.GL1788());
+		collectionsRedirectionMsg.getElement().setAttribute("title",i18n.GL1788());
+		
+		emptyContainer.getElement().setId("pnlEmptyContainer");
+		noCollectionsMsg.getElement().setId("lblNoCollectionsMsg");
+		leftNav.getElement().setId("pnlLeftNav");
+		loadingIconPanel.getElement().setId("pnlLoadingImage");
+		contentScroll.getElement().setId("pnlContentScroll");
 	}
 	
 	public void setData() {
@@ -251,11 +264,15 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	private void setUserNoContentMsg() {
 		if(AppClientFactory.getPlaceManager().getRequestParameter("id").equals(AppClientFactory.getLoggedInUser().getGooruUId())) {
 			noCollectionsMsg.setText(i18n.GL1790());
+			noCollectionsMsg.getElement().setAttribute("alt",i18n.GL1790());
+			noCollectionsMsg.getElement().setAttribute("title",i18n.GL1790());
 			collectionsRedirectionMsg.setVisible(true);
 			myCollectionsBtn.setVisible(true);
 		} else {
 //			noCollectionsMsg.setText("\""+AppClientFactory.getPlaceManager().getRequestParameter("user")+"\" "+i18n.GL1791);
 			noCollectionsMsg.setText(StringUtil.generateMessage(i18n.GL1791(),AppClientFactory.getPlaceManager().getRequestParameter("user")));
+			noCollectionsMsg.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1791(),AppClientFactory.getPlaceManager().getRequestParameter("user")));
+			noCollectionsMsg.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1791(),AppClientFactory.getPlaceManager().getRequestParameter("user")));
 			collectionsRedirectionMsg.setVisible(false);
 			myCollectionsBtn.setVisible(false);
 		}

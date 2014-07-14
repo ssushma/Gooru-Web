@@ -35,12 +35,12 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -54,7 +54,6 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -64,11 +63,13 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class AddSearchResourceView extends Composite implements MessageProperties{
+public abstract class AddSearchResourceView extends Composite {
 	
 	private String subjectDoFilter = "";
 	private String gradeDoFilter = "";
 	private SearchDo<ResourceSearchResultDo> filterSearchDo = new SearchDo<ResourceSearchResultDo>();
+	
+	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 //	private static final AppConstants CONSTANTS = GWT.create(AppConstants.class);
 	
@@ -122,9 +123,9 @@ public abstract class AddSearchResourceView extends Composite implements Message
 	
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 	
-	private static final String PNG =GL0899;
+	private static final String PNG =i18n.GL0899();
 	
-	private static final String SMALL = GL0900;
+	private static final String SMALL = i18n.GL0900();
 	private String category;
 	PopupPanel appPopup;
 	public interface AddSearchResourceViewUiBinder extends UiBinder<Widget, AddSearchResourceView> {
@@ -138,27 +139,27 @@ public abstract class AddSearchResourceView extends Composite implements Message
 		this.appPopup=popuppanel;
 		final String collectionTitle = collectionDo.getTitle();
 		this.collectionTitle = collectionTitle;
-		searchtitleText.setText(GL0894);
+		searchtitleText.setText(i18n.GL0894());
 		searchtitleText.getElement().setId("lblSearchtitleText");
-		searchtitleText.getElement().setAttribute("alt", GL0894);
-		searchtitleText.getElement().setAttribute("title", GL0894);
-		serachcontentText.setText(GL0895);
+		searchtitleText.getElement().setAttribute("alt", i18n.GL0894());
+		searchtitleText.getElement().setAttribute("title", i18n.GL0894());
+		serachcontentText.setText(i18n.GL0895());
 		serachcontentText.getElement().setId("lblSerachcontentText");
-		serachcontentText.getElement().setAttribute("alt", GL0895);
-		serachcontentText.getElement().setAttribute("title", GL0895);
-		addResourceButton.setText(GL0896);
-		addResourceButton.getElement().setAttribute("alt", GL0896);
-		addResourceButton.getElement().setAttribute("title", GL0896);
-		suggestedText.setText(GL0897);
+		serachcontentText.getElement().setAttribute("alt", i18n.GL0895());
+		serachcontentText.getElement().setAttribute("title", i18n.GL0895());
+		addResourceButton.setText(i18n.GL0896());
+		addResourceButton.getElement().setAttribute("alt", i18n.GL0896());
+		addResourceButton.getElement().setAttribute("title", i18n.GL0896());
+		suggestedText.setText(i18n.GL0897());
 		suggestedText.getElement().setId("lblSuggestedText");
-		suggestedText.getElement().setAttribute("alt", GL0897);
-		suggestedText.getElement().setAttribute("title", GL0897);
+		suggestedText.getElement().setAttribute("alt", i18n.GL0897());
+		suggestedText.getElement().setAttribute("title", i18n.GL0897());
 		searchResultspanel.getElement().setId("pnlSearchResultspanel");
 		noResultsPanel.getElement().setId("pnlNoResultsPanel");
 		totalResources.getElement().setId("lblTotalResources");
 		noResultsLabel.getElement().setId("htmlNoResultsLabel");
 		//GL0896
-		searchBox.getElement().setAttribute("placeholder", GL1967);
+		searchBox.getElement().setAttribute("placeholder", i18n.GL1967());
 		searchBox.setText(collectionTitle);
 		searchBox.getElement().setId("txtSearchBox");
 		searchBox.getElement().setAttribute("alt", collectionTitle);
@@ -352,7 +353,7 @@ public abstract class AddSearchResourceView extends Composite implements Message
 			searchResultspanel.setVisible(false);
 		} else {
 			searchResultspanel.setVisible(true);
-			totalResources.setText(StringUtil.generateMessage(GL0335, Integer.toString(result.getSearchHits())));
+			totalResources.setText(StringUtil.generateMessage(i18n.GL0335, Integer.toString(result.getSearchHits())));
 			final List<ResourceSearchResultDo> searchResults = result.getSearchResults();
 			for(int i = 0; i < 4; i++) {
 				final String thumbnailUrl = searchResults.get(i).getUrl();
@@ -415,9 +416,9 @@ public abstract class AddSearchResourceView extends Composite implements Message
 		}*/
 		if(suggestedSearchResults.size()==0) {
 			suggestedResourcesPanel.setVisible(false);
-			noResultsLabel.setHTML(GL1957);
-			noResultsLabel.getElement().setAttribute("alt", GL1957);
-			noResultsLabel.getElement().setAttribute("title", GL1957);
+			noResultsLabel.setHTML(i18n.GL1957());
+			noResultsLabel.getElement().setAttribute("alt", i18n.GL1957());
+			noResultsLabel.getElement().setAttribute("title", i18n.GL1957());
 			noResultsPanel.setVisible(true);
 			noResultsLabel.setVisible(true);
 		} else {
@@ -426,9 +427,9 @@ public abstract class AddSearchResourceView extends Composite implements Message
 					if(suggestedSearchResults.size()<=2){
 						noResultsLabel.setVisible(true);
 						noResultsLabel.setHTML("");
-						noResultsLabel.setHTML(GL1958);
-						noResultsLabel.getElement().setAttribute("alt", GL1958);
-						noResultsLabel.getElement().setAttribute("title", GL1958);
+						noResultsLabel.setHTML(i18n.GL1958());
+						noResultsLabel.getElement().setAttribute("alt", i18n.GL1958());
+						noResultsLabel.getElement().setAttribute("title", i18n.GL1958());
 						}
 					if(i>3){
 						noResultsLabel.setVisible(false);

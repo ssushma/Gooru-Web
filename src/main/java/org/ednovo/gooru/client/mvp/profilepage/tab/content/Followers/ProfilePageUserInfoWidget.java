@@ -27,7 +27,6 @@ package org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -37,6 +36,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -51,6 +51,8 @@ public class ProfilePageUserInfoWidget extends Composite{
 	}
 	@UiField Image profileThumbnailImage;
 	@UiField Label userNameLabel,userCollections,userFollowDetails;
+	@UiField HTMLPanel authorPanel;
+	
 	UserFollowDo userFollowDo=new UserFollowDo();
 	String tab;
 	public ProfilePageUserInfoWidget(UserFollowDo userFollowDo,String tab) {
@@ -58,6 +60,11 @@ public class ProfilePageUserInfoWidget extends Composite{
 		this.tab = tab;
 		initWidget(uiBinder.createAndBindUi(this));
 		SetData();
+		authorPanel.getElement().setId("pnlAuthorPanel");
+		profileThumbnailImage.getElement().setId("imgProfileThumbnailImage");
+		userNameLabel.getElement().setId("lblUserNameLabel");
+		userCollections.getElement().setId("lblUserCollections");
+		userFollowDetails.getElement().setId("lblUserFollowDetails");
 	}
 	public void SetData(){
 	if("following".equalsIgnoreCase(tab)){
@@ -84,9 +91,12 @@ public class ProfilePageUserInfoWidget extends Composite{
 
 		int collectionCount= userFollowDo.getSummary().getCollection();
 		userCollections.setText(collectionCount+(collectionCount==1?" Collection":" Collections"));
-		
+		userCollections.getElement().setAttribute("alt",collectionCount+(collectionCount==1?" Collection":" Collections"));
+		userCollections.getElement().setAttribute("title",collectionCount+(collectionCount==1?" Collection":" Collections"));
 
 		userFollowDetails.setText(userFollowDo.getSummary().getFollowers()+(userFollowDo.getSummary().getFollowers()==1?" Follower":" Followers")+" | " +userFollowDo.getSummary().getFollowing()+" Following");
+		userFollowDetails.getElement().setAttribute("alt",userFollowDo.getSummary().getFollowers()+(userFollowDo.getSummary().getFollowers()==1?" Follower":" Followers")+" | " +userFollowDo.getSummary().getFollowing()+" Following");
+		userFollowDetails.getElement().setAttribute("title",userFollowDo.getSummary().getFollowers()+(userFollowDo.getSummary().getFollowers()==1?" Follower":" Followers")+" | " +userFollowDo.getSummary().getFollowing()+" Following");
 		
 		String gooruUid = userNameLabel.getElement().getId();
 		Anchor anchor = new Anchor();
@@ -98,6 +108,8 @@ public class ProfilePageUserInfoWidget extends Composite{
 		anchor.getElement().setAttribute("style","font-size: 18px !important");		
 		anchor.setTarget("_blank");
 		userNameLabel.setText("");
+		userNameLabel.getElement().setAttribute("alt","");
+		userNameLabel.getElement().setAttribute("title","");
 //		boolean isEnabled =  userFollowDo.getCustomFields() != null && userFollowDo.getCustomFields().get(0).getOptionalValue() != null && userFollowDo.getCustomFields().get(0).getOptionalValue().equalsIgnoreCase("true") ? true : false;
 		boolean isEnabled = false;
 		if(userFollowDo.getCustomFields() != null){
@@ -111,6 +123,8 @@ public class ProfilePageUserInfoWidget extends Composite{
 			userNameLabel.getElement().appendChild(anchor.getElement());
 		}else{
 			userNameLabel.setText(userFollowDo.getUsername());
+			userNameLabel.getElement().setAttribute("alt",userFollowDo.getUsername());
+			userNameLabel.getElement().setAttribute("title",userFollowDo.getUsername());
 			userNameLabel.getElement().getStyle().setCursor(Cursor.DEFAULT);
 		}
 			
@@ -120,9 +134,14 @@ public class ProfilePageUserInfoWidget extends Composite{
 	{
 		profileThumbnailImage.setUrl("");
 		userNameLabel.setText("");
+		userNameLabel.getElement().setAttribute("alt","");
+		userNameLabel.getElement().setAttribute("title","");
 		userCollections.setText("");
+		userCollections.getElement().setAttribute("alt","");
+		userCollections.getElement().setAttribute("title","");
 		userFollowDetails.setText("");
-		
+		userFollowDetails.getElement().setAttribute("alt","");
+		userFollowDetails.getElement().setAttribute("title","");
 	}
 	
 }

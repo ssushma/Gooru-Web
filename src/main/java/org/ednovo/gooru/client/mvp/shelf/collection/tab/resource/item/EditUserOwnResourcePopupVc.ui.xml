@@ -296,8 +296,9 @@
          </g:HTMLPanel>
 		
 		<g:HTMLPanel styleName="{res.css.fileActionPanelEditFile}" ui:field="panelAction">
-			<g:Anchor styleName="{res.css.myFolderCollectionCancel}" ui:field="cancelResourcePopupBtnLbl" />
+			<!-- <g:Anchor styleName="{res.css.myFolderCollectionCancel}" ui:field="cancelResourcePopupBtnLbl" /> -->
 			<g:Button styleName="primary" ui:field="addResourceBtn"/>
+			 <g:Button styleName="grayPrimaryButton" ui:field="cancelResourcePopupBtnLbl"></g:Button>
 		</g:HTMLPanel>
 		 <g:Label styleName="{res.css.fileEditAdding}" ui:field="lblAdding"></g:Label>
 	</g:HTMLPanel>

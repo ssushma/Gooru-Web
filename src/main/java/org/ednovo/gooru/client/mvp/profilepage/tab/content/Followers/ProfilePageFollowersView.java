@@ -63,8 +63,16 @@ public class ProfilePageFollowersView extends Composite{
 	{
 		
 		followersTextMessage.setText(i18n.GL1914());
+		followersTextMessage.getElement().setId("spnFollowersTextMessage");
+		followersTextMessage.getElement().setAttribute("alt",i18n.GL1914());
+		followersTextMessage.getElement().setAttribute("title",i18n.GL1914());
+		
 		followersTextMessage.getElement().setAttribute("style", "font-weight:bold");
 		followersTextMessageNormal.setText(i18n.GL1914_1());
+		followersTextMessageNormal.getElement().setId("spnFollowersTextMessageNormal");
+		followersTextMessageNormal.getElement().setAttribute("alt",i18n.GL1914_1());
+		followersTextMessageNormal.getElement().setAttribute("title",i18n.GL1914_1());
+		
 		followersUserConatiner.clear();
 		
 		if(totalHitCount>pageInitialLimit)
@@ -81,7 +89,8 @@ public class ProfilePageFollowersView extends Composite{
 			followersUserConatiner.add(profilePageUserInfoWidget);
 		}
 		
-		
+		followersUserConatiner.getElement().setId("pnlFollowersUserConatiner");
+		seeMorebtn.getElement().setId("btnSeeMorebtn");
 	}
 	@UiHandler("seeMorebtn")
 	public void onSeeMoreClick(ClickEvent event) {

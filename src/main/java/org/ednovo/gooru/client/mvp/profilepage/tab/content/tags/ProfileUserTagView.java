@@ -103,7 +103,17 @@ public class ProfileUserTagView extends Composite{
 	public void setData(){
 		userTagsConatiner.clear();
 		TagTextMessage.setText(i18n.GL1915());
+		TagTextMessage.getElement().setId("lblTagTextMessage");
+		TagTextMessage.getElement().setAttribute("alt",i18n.GL1915());
+		TagTextMessage.getElement().setAttribute("title",i18n.GL1915());
+		
 		tagTextMessage.getElement().setInnerHTML(i18n.GL1937());
+		tagTextMessage.getElement().setId("pnltagTextMessage");
+		tagTextMessage.getElement().setAttribute("alt",i18n.GL1937());
+		tagTextMessage.getElement().setAttribute("title",i18n.GL1937());
+		
+		userTagScrollPanel.getElement().setId("sbUserTagScrollPanel");
+		userTagsConatiner.getElement().setId("pnlUserTagsConatiner");
 		
 		for(int i=0;i<userTagDo.size();i++){
 			ProfileUserTagWidget profileUserTagWidget =new ProfileUserTagWidget(userTagDo.get(i),followingContainer,tagResourceContainer);

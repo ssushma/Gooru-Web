@@ -272,6 +272,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		res.css().ensureInjected();
 		ccb = CollectionCBundle.INSTANCE;
 		CollectionCBundle.INSTANCE.css().ensureInjected();
+		
 		profileTextArea = new ProfilePageDescriptionEditUc() {
 			@Override
 			public void onEditDisabled(String text) {
@@ -285,6 +286,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				}
 					
 				userBio.setText(text);
+				userBio.getElement().setAttribute("alt",text);
+				userBio.getElement().setAttribute("title",text);
+				
 				String gender = "";
 				if(profileDo.getGender()!=null&&profileDo.getGender().getGenderId()!=null) {
 					gender = profileDo.getGender().getGenderId();
@@ -306,26 +310,95 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 		setWidget(uiBinder.createAndBindUi(this));
 		addCourseGradeBtn.setText(i18n.GL1075());
+		addCourseGradeBtn.getElement().setAttribute("alt",i18n.GL1075());
+		addCourseGradeBtn.getElement().setAttribute("title",i18n.GL1075());
+		
 		editPencil.getElement().setInnerHTML(i18n.GL0140());
+		editPencil.getElement().setId("epnlEditPencil");
+		editPencil.getElement().setAttribute("alt",i18n.GL0140());
+		editPencil.getElement().setAttribute("title",i18n.GL0140());
+		
 		gradeText.setText(i18n.GL1076());
+		gradeText.getElement().setId("lblGradeText");
+		gradeText.getElement().setAttribute("alt",i18n.GL1076());
+		gradeText.getElement().setAttribute("title",i18n.GL1076());
+		
 		courseLabel.setText(i18n.GL0574());
+		courseLabel.getElement().setId("lblCourseLabel");
+		courseLabel.getElement().setAttribute("alt",i18n.GL0574());
+		courseLabel.getElement().setAttribute("title",i18n.GL0574());
+		
 		addCourseBtn.setText(i18n.GL0590());
+		addCourseBtn.getElement().setAttribute("alt",i18n.GL0590());
+		addCourseBtn.getElement().setAttribute("title",i18n.GL0590());
+		
 		courseMaxMsg.setText(i18n.GL0822());
+		courseMaxMsg.getElement().setId("lblCourseMaxMsg");
+		courseMaxMsg.getElement().setAttribute("alt",i18n.GL0822());
+		courseMaxMsg.getElement().setAttribute("title",i18n.GL0822());
+		
 		saveBtn.setText(i18n.GL0141());
+		saveBtn.getElement().setId("btnSaveBtn");
+		saveBtn.getElement().setAttribute("alt",i18n.GL0141());
+		saveBtn.getElement().setAttribute("title",i18n.GL0141());
+		
 		cancelBtn.setText(i18n.GL0142());
+		cancelBtn.getElement().setId("lblCancelBtn");
+		cancelBtn.getElement().setAttribute("alt",i18n.GL0142());
+		cancelBtn.getElement().setAttribute("title",i18n.GL0142());
+		
 		addBioBtn.setText(i18n.GL1786());
+		addBioBtn.getElement().setAttribute("alt",i18n.GL1786());
+		addBioBtn.getElement().setAttribute("title",i18n.GL1786());
+		
 		aboutUsCharacterValidation.setText(i18n.GL0143());
+		aboutUsCharacterValidation.getElement().setId("lblAboutUsCharacterValidation");
+		aboutUsCharacterValidation.getElement().setAttribute("alt",i18n.GL0143());
+		aboutUsCharacterValidation.getElement().setAttribute("title",i18n.GL0143());
+		
 		btnSave.setText(i18n.GL0141());
+		btnSave.getElement().setId("btnSave");
+		btnSave.getElement().setAttribute("alt",i18n.GL0141());
+		btnSave.getElement().setAttribute("title",i18n.GL0141());
+		
 		biographyCancelButton.setText(i18n.GL0142());
+		biographyCancelButton.getElement().setId("btnBiographyCancelButton");
+		biographyCancelButton.getElement().setAttribute("alt",i18n.GL0142());
+		biographyCancelButton.getElement().setAttribute("title",i18n.GL0142());
+		
 		profilePageViewMsg.setText(i18n.GL1078());
+		profilePageViewMsg.getElement().setId("lblProfilePageViewMsg");
+		profilePageViewMsg.getElement().setAttribute("alt",i18n.GL1078());
+		profilePageViewMsg.getElement().setAttribute("title",i18n.GL1078());
+		
 		profilePageText.setText(i18n.GL1079());
+		profilePageText.getElement().setId("lblProfilePageText");
+		profilePageText.getElement().setAttribute("alt",i18n.GL1079());
+		profilePageText.getElement().setAttribute("title",i18n.GL1079());
+		
 		profileOnButton.setText(i18n.GL0802());
+		profileOnButton.getElement().setAttribute("alt",i18n.GL0802());
+		profileOnButton.getElement().setAttribute("title",i18n.GL0802());
+		
 		profileOffButton.setText(i18n.GL0803());
+		profileOffButton.getElement().setAttribute("alt",i18n.GL0803());
+		profileOffButton.getElement().setAttribute("title",i18n.GL0803());
+		
 		contentTabVc.setText(i18n.GL1082());
+		contentTabVc.getElement().setAttribute("alt",i18n.GL1082());
+		contentTabVc.getElement().setAttribute("title",i18n.GL1082());
+		
 		courseGradeLbl.setText(i18n.GL1886());
+		courseGradeLbl.getElement().setId("lblCourseGradeLbl");
+		courseGradeLbl.getElement().setAttribute("alt",i18n.GL1886());
+		courseGradeLbl.getElement().setAttribute("title",i18n.GL1886());
+		
 		errorImage.setTitle(i18n.GL1091_1());
+		errorImage.getElement().setId("imgErrorImage");
+		errorImage.getElement().setAttribute("title",i18n.GL1091_1());
 		errorImage.setAltText(i18n.GL1091_1());
 		errorImage.setUrl("images/404_message.png");
+		
 		profileOnContainerPanel.setVisible(false);
 		profileOffContainerPanel.setVisible(false);
 		loadingPanel.setVisible(false);
@@ -363,15 +436,20 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		hpnlQuestion.getElement().setAttribute("style", "margin-top: 12px;");
 		
 		followButton.setText(i18n.GL1935());
+		followButton.getElement().setAttribute("alt",i18n.GL1935());
+		followButton.getElement().setAttribute("title",i18n.GL1935());
 		
 		FollowingButtonBlue.setText(i18n.GL1895());
+		FollowingButtonBlue.getElement().setAttribute("alt",i18n.GL1895());
+		FollowingButtonBlue.getElement().setAttribute("title",i18n.GL1895());
+		
 		FollowingButtonBlue.setVisible(false);
 		FollowingButtonBlue.addStyleName(ProfilePageStyle.followingBtn());
 		FollowingButtonBlue.addMouseOverHandler(new MouseOverOnUnFollowingButton());
 		FollowingButtonBlue.addMouseOutHandler(new MouseOutOnUnFollowingButton());
 		followButton.getElement().setAttribute("style", "width: 100px;");
 		//end for 6.4
-
+		userCoursePopup.setVisible(false);	
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
 			profileOnButton.addClickHandler(new ProfileOnClickEvent());
 		 }else{
@@ -419,7 +497,50 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		};
 		RootPanel.get().addDomHandler(eve1, ClickEvent.getType());
 		
-		
+		profileOnContainerPanel.getElement().setId("pnlProfileOnContainerPanel");
+		profileImageContainer.getElement().setId("epnlProfileImageContainer");
+		userProfilePic.getElement().setId("imgUserProfilePic");
+		userName.getElement().setId("lblUserName");
+		roleTxt.getElement().setId("lblRoleTxt");
+		profilePageViewMsg.getElement().setId("lblProfilePageViewMsg");
+		gooruProfileOnOffContainer.getElement().setId("pnlGooruProfileOnOffContainer");
+		profileVisiblityMessage.getElement().setId("htmlProfileVisiblityMessage");
+		gooruSocialButtonsContainer.getElement().setId("pnlGooruSocialButtonsContainer");
+		socialButtonContainer.getElement().setId("pnlSocialButtonContainer");
+		followButton.getElement().setId("btnFollowButton");
+		FollowingButtonBlue.getElement().setId("btnFollowingButtonBlue");
+		userMetadata.getElement().setId("epnlUserMetadata");
+		metaDataContainer.getElement().setId("pnlMetaDataContainer");
+		userGradeList.getElement().setId("pnlUserGradeList");
+		moreGradeCourseLbl.getElement().setId("fpnlMoreGradeCourseLbl");
+		userCourseList.getElement().setId("pnlUserCourseList");
+		moreCourseLbl.getElement().setId("fpnlMoreCourseLbl");
+		userCoursePopup.getElement().setId("epnlUserCoursePopup");
+		KinderGarten.getElement().setId("fpnlKinderGarten");
+		gradeTopList.getElement().setId("fpnlGradeTopList");
+		higherEducation.getElement().setId("fpnlHigherEducation");
+		gradeMiddleList.getElement().setId("fpnlGradeMiddleList");
+		courseData.getElement().setId("fpnlCourseData");
+		collectionCourseLstPanel.getElement().setId("fpnlCollectionCourseLstPanel");
+		coursesPanel.getElement().setId("fpnlCoursesPanel");
+		bioMainContainer.getElement().setId("pnlBioMainContainer");
+		userBio.getElement().setId("lblUserBio");
+		profilePageEditBioPanel.getElement().setId("pnlProfilePageEditBioPanel");
+		profileDescriptionlabel.getElement().setId("pnlProfileDescriptionlabel");
+		profileTextArea.getElement().setId("profilePageDescUcProfileTextArea");
+		noAboutUsContainer.getElement().setId("fpnlNoAboutUsContainer");
+		pencilTextAreaImage.getElement().setId("epnlPencilTextAreaImage");
+		mainContainer.getElement().setId("pnlMainContainer");
+		userLibraryMessage.getElement().setId("lblUserLibraryMessage");
+		hpnlQuestion.getElement().setId("pnlHpnlQuestion");
+		libraryMessage.getElement().setId("lblLibraryMessage");
+		loadingPanel.getElement().setId("pnlLoadingPanel");
+		contentview.getElement().setId("pnlContentview");
+		profilePageLibraryView.getElement().setId("profilePageLibraryViewProfilePageLibraryView");
+		shareLinkFloPanel.getElement().setId("pnlShareLinkFloPanel");
+		followingContainer.getElement().setId("pnlFollowingContainer");
+		tagResourceContainer.getElement().setId("pnlTagResourceContainer");
+		profileOffContainerPanel.getElement().setId("pnlProfileOffContainerPanel");
 	}
 
 	public class ProfileOnClickEvent implements ClickHandler  {
@@ -536,19 +657,44 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			profileDo.setAboutMe("");
 		}
 		this.profileDo = profileDo;
+		userCoursePopup.setVisible(false);	
 		roleTxt.setText(profileDo.getUserType());
+		roleTxt.getElement().setAttribute("alt",profileDo.getUserType());
+		roleTxt.getElement().setAttribute("title",profileDo.getUserType());
+		
 		profileTextArea.cancel();
 		btnSave.setVisible(false);
 		biographyCancelButton.setVisible(false);
 		moreGradeCourseLbl.clear();
 		moreCourseLbl.clear();
 		noCollectionMsgPanel.setText(profileDo.getUser().getUsernameDisplay()+" "+i18n.GL1083());
+		noCollectionMsgPanel.getElement().setAttribute("alt",profileDo.getUser().getUsernameDisplay()+" "+i18n.GL1083());
+		noCollectionMsgPanel.getElement().setAttribute("title",profileDo.getUser().getUsernameDisplay()+" "+i18n.GL1083());
+		
 		userName.setText(profileDo.getUser().getUsernameDisplay());
+		userName.getElement().setAttribute("alt",profileDo.getUser().getUsernameDisplay());
+		userName.getElement().setAttribute("title",profileDo.getUser().getUsernameDisplay());
+		
 		userLibraryMessage.setText(profileDo.getUser().getUsernameDisplay()+i18n.GL_GRR_ALPHABET_APOSTROPHE()+" "+i18n.GL1888());
+		userLibraryMessage.getElement().setAttribute("alt",profileDo.getUser().getUsernameDisplay()+i18n.GL_GRR_ALPHABET_APOSTROPHE()+" "+i18n.GL1888());
+		userLibraryMessage.getElement().setAttribute("title",profileDo.getUser().getUsernameDisplay()+i18n.GL_GRR_ALPHABET_APOSTROPHE()+" "+i18n.GL1888());
+		
 		libraryMessage.setText(i18n.GL1792());
+		libraryMessage.getElement().setAttribute("alt",i18n.GL1792());
+		libraryMessage.getElement().setAttribute("title",i18n.GL1792());
+		
 		profileVisiblityMessage.setHTML(i18n.GL1793()+"<br/><br/>"+i18n.GL1794());
+		profileVisiblityMessage.getElement().setAttribute("alt",i18n.GL1793()+"<br/><br/>"+i18n.GL1794());
+		profileVisiblityMessage.getElement().setAttribute("title",i18n.GL1793()+"<br/><br/>"+i18n.GL1794());
+		
 		userBio.setText(profileDo.getAboutMe());
+		userBio.getElement().setAttribute("alt",profileDo.getAboutMe());
+		userBio.getElement().setAttribute("title",profileDo.getAboutMe());
+		
 		profileTextArea.setText(profileDo.getAboutMe());
+		profileTextArea.getElement().setAttribute("alt",profileDo.getAboutMe());
+		profileTextArea.getElement().setAttribute("title",profileDo.getAboutMe());
+		
 		profileImageUrl=profileDo.getUser().getProfileImageUrl() + "?p="+ Math.random();
 		userProfilePic.setUrl(profileImageUrl);
 		userProfilePic.setAltText(profileDo.getUser().getUsername());
@@ -815,11 +961,19 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@Override
 	public void showProfileView(boolean isVisible) {
 		userName.setText("");
+		userName.getElement().setAttribute("alt","");
+		userName.getElement().setAttribute("title","");
+		
 		userBio.setText("");
+		userBio.getElement().setAttribute("alt","");
+		userBio.getElement().setAttribute("title","");
+		
 		userProfilePic.setUrl("");
 		shareLinkFloPanel.clear();
 		socialButtonContainer.clear();
 		profileTextArea.setText("");
+		profileTextArea.getElement().setAttribute("alt","");
+		profileTextArea.getElement().setAttribute("title","");
 	}
 
 	private class ShowImageUploadWidget implements ClickHandler {
@@ -868,6 +1022,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		if(profileDo.getUser().getProfileImageUrl()==null) {
 			editImageButton.setText(i18n.GL1087());
+			editImageButton.getElement().setAttribute("alt",i18n.GL1087());
+			editImageButton.getElement().setAttribute("title",i18n.GL1087());
 		}
 		courseData.getElement().getStyle().setWidth(324, Unit.PX);
 		saveBtn.getElement().getStyle().setFloat(Float.LEFT);
@@ -1735,6 +1891,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			{
 			FollowingButtonBlue.setText("");
 			FollowingButtonBlue.setText(i18n.GL1936());
+			FollowingButtonBlue.getElement().setAttribute("alt",i18n.GL1936());
+			FollowingButtonBlue.getElement().setAttribute("title",i18n.GL1936());
 			FollowingButtonBlue.removeStyleName(ProfilePageStyle.followingBtn());
 			FollowingButtonBlue.addStyleName(ProfilePageStyle.blackPrimaryButton());
 			}
@@ -1750,6 +1908,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			{
 			FollowingButtonBlue.setText("");
 			FollowingButtonBlue.setText(i18n.GL1895());
+			FollowingButtonBlue.getElement().setAttribute("alt",i18n.GL1895());
+			FollowingButtonBlue.getElement().setAttribute("title",i18n.GL1895());
 			FollowingButtonBlue.removeStyleName(ProfilePageStyle.blackPrimaryButton());
 			FollowingButtonBlue.addStyleName(ProfilePageStyle.followingBtn());
 			}

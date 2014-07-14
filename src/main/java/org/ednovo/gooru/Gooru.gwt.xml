@@ -21,6 +21,7 @@
   <inherits name='com.nitrous.gwt.earth.GwtEarthAPI'/>
   <inherits name='br.com.freller.tool.PrintIt'/>
   <inherits name='com.google.gwt.query.Query'/>
+  <inherits name='com.googlecode.gwt.Serialization'/>
   
   <!--Inherit this class for disabling obfuscation. Remove this line for production-->
   <inherits name='com.google.gwt.resources.Resources'/>
