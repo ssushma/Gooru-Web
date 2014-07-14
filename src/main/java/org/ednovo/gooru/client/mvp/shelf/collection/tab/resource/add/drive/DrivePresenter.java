@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 import java.util.List;
+
 import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -36,7 +37,6 @@ import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
