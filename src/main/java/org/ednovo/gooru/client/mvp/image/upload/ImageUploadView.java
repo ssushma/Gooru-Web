@@ -163,10 +163,10 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		appPopUp.setStyleName(GooruCBundle.INSTANCE.css().imageUploadPopup());
 		imageCropPopup = new AppPopUp(i18n.GL1424());
 		imageCropPopup.setStyleName(GooruCBundle.INSTANCE.css().imageUploadPopup());
-		chooseText.setText(i18n.GL1215()+i18n.GL_SPL_SEMICOLON());
+		chooseText.setText(i18n.GL1215()+i18n.GL_SPL_SEMICOLON()+" ");
 		chooseText.getElement().setId("lblChooseText");
-		chooseText.getElement().setAttribute("alt",i18n.GL1215()+i18n.GL_SPL_SEMICOLON());
-		chooseText.getElement().setAttribute("title",i18n.GL1215()+i18n.GL_SPL_SEMICOLON());
+		chooseText.getElement().setAttribute("alt",i18n.GL1215()+i18n.GL_SPL_SEMICOLON()+" ");
+		chooseText.getElement().setAttribute("title",i18n.GL1215()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		imageUploadOnWebLbl.setText(i18n.GL1216());
 		imageUploadOnWebLbl.getElement().setId("lnkOnWeb");
@@ -238,7 +238,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		onWebCancelBtn.getElement().setAttribute("alt",i18n.GL0142());
 		onWebCancelBtn.getElement().setAttribute("title",i18n.GL0142());
 		
-		chooseFromText.setText(i18n.GL1228()+i18n.GL_SPL_SEMICOLON());
+		chooseFromText.setText(i18n.GL1228()+i18n.GL_SPL_SEMICOLON()+" ");
 		chooseFromText.getElement().setId("lblChooseFromText");
 		chooseFromText.getElement().setAttribute("alt",i18n.GL1228());
 		chooseFromText.getElement().setAttribute("title",i18n.GL1228());

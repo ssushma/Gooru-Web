@@ -135,45 +135,45 @@ public class SearchInfoWidget extends Composite {
 
 	private void setResourceInfoData() {
 		publisherText.setText(i18n.GL0566()+" ");
-		lblAggregation.setText(i18n.GL1628()+" "+i18n.GL_SPL_SEMICOLON());
+		lblAggregation.setText(i18n.GL1628()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 		courseText.setText(i18n.GL0616()+" ");
-		legalText.setText(i18n.GL0730()+" "+i18n.GL_SPL_SEMICOLON());
+		legalText.setText(i18n.GL0730()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 		standardsText.setText(i18n.GL0619()+" ");
 		//		resourceInfoText.setText(i18n.GL0621);
-		gradeTitle.setText(i18n.GL0325()+" "+i18n.GL_SPL_SEMICOLON());
-		originalUrlTitle.setText(i18n.GL0976()+" "+i18n.GL_SPL_SEMICOLON());
+		gradeTitle.setText(i18n.GL0325()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		originalUrlTitle.setText(i18n.GL0976()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 		generalLbl.setText(i18n.GL1708());
-		hostLbl.setText(i18n.GL1700()+" "+i18n.GL_SPL_SEMICOLON());
+		hostLbl.setText(i18n.GL1700()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		//Educational static data
 		educationallLbl.setText(i18n.GL1720());
-		eduAllignLbl.setText(i18n.GL1690()+" "+i18n.GL_SPL_SEMICOLON());
-		eduUseLbl.setText(i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON());
+		eduAllignLbl.setText(i18n.GL1690()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		eduUseLbl.setText(i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 		eduRoleLbl.setText(i18n.GL1867()+" ");
-		interactiveLbl.setText(i18n.GL1689()+" "+i18n.GL_SPL_SEMICOLON());
-		ageRangeLbl.setText(i18n.GL1692()+" "+i18n.GL_SPL_SEMICOLON());
-		dKnowledgeLbl.setText(i18n.GL1693()+" "+i18n.GL_SPL_SEMICOLON());
-		momentsoflearningLbl.setText(i18n.GL1678()+" "+i18n.GL_SPL_SEMICOLON());
-		readingLevelLbl.setText(i18n.GL1694()+" "+i18n.GL_SPL_SEMICOLON());
-		schLevelLbl.setText(i18n.GL1868()+" "+i18n.GL_SPL_SEMICOLON());
+		interactiveLbl.setText(i18n.GL1689()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		ageRangeLbl.setText(i18n.GL1692()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		dKnowledgeLbl.setText(i18n.GL1693()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		momentsoflearningLbl.setText(i18n.GL1678()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		readingLevelLbl.setText(i18n.GL1694()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		schLevelLbl.setText(i18n.GL1868()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		//Resource Info Static data
 		resourceInfoLbl.setText(i18n.GL1716());
 //		dateCreatedLbl.setText(i18n.GL1717+i18n.GL_SPL_SEMICOLON);
-		countryCodeLbl.setText(i18n.GL1697()+" "+i18n.GL_SPL_SEMICOLON());
-		languageLbl.setText(i18n.GL1696()+" "+i18n.GL_SPL_SEMICOLON());
-		dataTypeLbl.setText(i18n.GL1688()+" "+i18n.GL_SPL_SEMICOLON());
-		authorLbl.setText(i18n.GL0573()+" "+i18n.GL_SPL_SEMICOLON());
-		copyRightLbl.setText(i18n.GL1699()+" "+i18n.GL_SPL_SEMICOLON());
-		keywordsTitle.setText(i18n.GL1876()+" "+i18n.GL_SPL_SEMICOLON());
+		countryCodeLbl.setText(i18n.GL1697()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		languageLbl.setText(i18n.GL1696()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		dataTypeLbl.setText(i18n.GL1688()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		authorLbl.setText(i18n.GL0573()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		copyRightLbl.setText(i18n.GL1699()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		keywordsTitle.setText(i18n.GL1876()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 		adsTitle.setText(i18n.GL1800()+" "+i18n.GL_SPL_SEMICOLON());
 		//Accessibility Static data
 		accesibilityLbl.setText(i18n.GL1703());
-		mbFriendlyLbl.setText(i18n.GL1687()+" "+i18n.GL_SPL_SEMICOLON());
-		accessModelLbl.setText(i18n.GL1707()+" "+i18n.GL_SPL_SEMICOLON());
-		mediaFeatureLbl.setText(i18n.GL1706()+" "+i18n.GL_SPL_SEMICOLON());
-		controlLbl.setText(i18n.GL1704()+" "+i18n.GL_SPL_SEMICOLON());
-		acessHazardlLbl.setText(i18n.GL1705()+" "+i18n.GL_SPL_SEMICOLON());
+		mbFriendlyLbl.setText(i18n.GL1687()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		accessModelLbl.setText(i18n.GL1707()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		mediaFeatureLbl.setText(i18n.GL1706()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		controlLbl.setText(i18n.GL1704()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		acessHazardlLbl.setText(i18n.GL1705()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 		
 	}
 
@@ -700,7 +700,7 @@ public class SearchInfoWidget extends Composite {
 				eduUseType.add(eduUseLabel);
 				eduUsePanel.setVisible(true);
 				educationallLbl.setText(i18n.GL1720());
-				eduUseLbl.setText(i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON());
+				eduUseLbl.setText(i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 				educationallLbl.setVisible(true);
 			}
 			if(eduUsedetails.size()>2){
@@ -713,7 +713,7 @@ public class SearchInfoWidget extends Composite {
 				eduUseLabel.addMouseOutHandler(new MouseOutHideToolTip());
 				eduUsePanel.setVisible(true);
 				educationallLbl.setText(i18n.GL1720());
-				eduUseLbl.setText(i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON());
+				eduUseLbl.setText(i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 				educationallLbl.setVisible(true);
 			}
 		}

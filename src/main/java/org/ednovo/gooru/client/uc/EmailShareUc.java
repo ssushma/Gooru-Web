@@ -156,11 +156,11 @@ public class EmailShareUc extends PopupPanel{
 		fromValidation.setText(i18n.GL0215());
 		toValidation.setText(i18n.GL0216());
 		lblEmailFriend.setText(i18n.GL0222());
-		lblFrom.setText(i18n.GL0223()+i18n.GL_SPL_SEMICOLON());
-		lblTo.setText(i18n.GL0224()+i18n.GL_SPL_SEMICOLON());
+		lblFrom.setText(i18n.GL0223()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblTo.setText(i18n.GL0224()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblSendMeCopy.setText(i18n.GL0225());
-		lblSubject.setText(i18n.GL0226()+i18n.GL_SPL_SEMICOLON());
-		lblMessage.setText(i18n.GL0227()+i18n.GL_SPL_SEMICOLON());
+		lblSubject.setText(i18n.GL0226()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblMessage.setText(i18n.GL0227()+i18n.GL_SPL_SEMICOLON()+" ");
 		btnSend.setText(i18n.GL0228());
 		cancelLbl.setText(i18n.GL0142());
 		

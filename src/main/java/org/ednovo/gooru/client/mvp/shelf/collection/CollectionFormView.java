@@ -430,12 +430,12 @@ public class CollectionFormView extends
 		lblPrivateDesc.getElement().setAttribute("alt",i18n.GL0334());
 		lblPrivateDesc.getElement().setAttribute("title",i18n.GL0334());
 		
-		gradeLbl.setText(i18n.GL0325()+i18n.GL_SPL_SEMICOLON());
+		gradeLbl.setText(i18n.GL0325()+i18n.GL_SPL_SEMICOLON()+" ");
 		gradeLbl.getElement().setId("lblGradeLbl");
 		gradeLbl.getElement().setAttribute("alt",i18n.GL0325());
 		gradeLbl.getElement().setAttribute("title",i18n.GL0325());
 		
-		courseLbl.setText(i18n.GL0326()+i18n.GL_SPL_SEMICOLON());
+		courseLbl.setText(i18n.GL0326()+i18n.GL_SPL_SEMICOLON()+" ");
 		courseLbl.getElement().setId("lblCourseLbl");
 		courseLbl.getElement().setAttribute("alt",i18n.GL0326());
 		courseLbl.getElement().setAttribute("title",i18n.GL0326());
@@ -607,7 +607,7 @@ public class CollectionFormView extends
 				collPopUpSubheading.setText(i18n.GL1033());
 				collPopUpSubheading.getElement().setAttribute("alt",i18n.GL1033());
 				collPopUpSubheading.getElement().setAttribute("title",i18n.GL1033());
-				collTitleLbl.setText(i18n.GL0993()+i18n.GL_SPL_SEMICOLON());
+				collTitleLbl.setText(i18n.GL0993()+i18n.GL_SPL_SEMICOLON()+" ");
 				collTitleLbl.getElement().setAttribute("alt",i18n.GL0993());
 				collTitleLbl.getElement().setAttribute("title",i18n.GL0993());
 				btnOk.setText(i18n.GL0141());
