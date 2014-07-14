@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -69,11 +70,13 @@ import com.google.gwt.user.client.ui.Widget;
 * 
 * @Reviewer: Gooru Team.
 */
-public class ThankYouResourceStarRatings extends PopupPanel implements MessageProperties {
+public class ThankYouResourceStarRatings extends PopupPanel{
 	
 	private static ThankYouResourceStarRatingsUiBinder uiBinder = GWT.create(ThankYouResourceStarRatingsUiBinder.class);
 
 	interface ThankYouResourceStarRatingsUiBinder extends UiBinder<Widget, ThankYouResourceStarRatings> {}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	@UiField Button btnSkip,btnPost;
 	@UiField TextArea ratingCommentTxtArea;
@@ -106,12 +109,12 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 		setUserReview(review);
 		setAvgRatingWidget();
 		setGlassEnabled(true);
-		thankYouRatingLbl.setText(GL1854);
+		thankYouRatingLbl.setText(i18n.GL1854());
 		thankYouRatingLbl.getElement().setId("lblThankYouRatingLbl");
-		thankYouRatingLbl.getElement().setAttribute("alt",GL1854);
-		thankYouRatingLbl.getElement().setAttribute("title",GL1854);
+		thankYouRatingLbl.getElement().setAttribute("alt",i18n.GL1854());
+		thankYouRatingLbl.getElement().setAttribute("title",i18n.GL1854());
 		
-		//avgRatingLbl.setText(GL1848);
+		//avgRatingLbl.setText(i18n.GL1848);
 		saveAndPsotLbl.setVisible(false);
 		buttonsContainer.setVisible(true);
 		ratingCommentTxtArea.getElement().setAttribute("maxlength", "500");
@@ -178,9 +181,9 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 			
 		}
 		if(review.length()==500){
-			errorLbl.setText(GL0143);
-			errorLbl.getElement().setAttribute("alt",GL0143);
-			errorLbl.getElement().setAttribute("title",GL0143);
+			errorLbl.setText(i18n.GL0143());
+			errorLbl.getElement().setAttribute("alt",i18n.GL0143());
+			errorLbl.getElement().setAttribute("title",i18n.GL0143());
 			errorLbl.setVisible(true);
 			
 					
@@ -247,13 +250,13 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	 * @param review
 	 */
 	private void setUserReview(String review) {
-		btnSkip.setText(GL1004);
-		btnSkip.getElement().setAttribute("alt",GL1004);
-		btnSkip.getElement().setAttribute("title",GL1004);
+		btnSkip.setText(i18n.GL1004());
+		btnSkip.getElement().setAttribute("alt",i18n.GL1004());
+		btnSkip.getElement().setAttribute("title",i18n.GL1004());
  		if(!review.equals("")){
-			reviewTextAreaTitle.setText(GL1858);
-			reviewTextAreaTitle.getElement().setAttribute("alt",GL1858);
-			reviewTextAreaTitle.getElement().setAttribute("title",GL1858);
+			reviewTextAreaTitle.setText(i18n.GL1858());
+			reviewTextAreaTitle.getElement().setAttribute("alt",i18n.GL1858());
+			reviewTextAreaTitle.getElement().setAttribute("title",i18n.GL1858());
 			btnPost.setText("Save");
 			btnPost.getElement().setAttribute("alt","Save");
 			btnPost.getElement().setAttribute("title","Save");
@@ -263,9 +266,9 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 		}else{
 			btnPost.setEnabled(false);
 			btnPost.getElement().addClassName("disabled");
-			reviewTextAreaTitle.setText(GL1855);
-			reviewTextAreaTitle.getElement().setAttribute("alt",GL1855);
-			reviewTextAreaTitle.getElement().setAttribute("title",GL1855);
+			reviewTextAreaTitle.setText(i18n.GL1855());
+			reviewTextAreaTitle.getElement().setAttribute("alt",i18n.GL1855());
+			reviewTextAreaTitle.getElement().setAttribute("title",i18n.GL1855());
 			btnPost.setText("Post");
 			btnPost.getElement().setAttribute("alt","Post");
 			btnPost.getElement().setAttribute("title","Post");
