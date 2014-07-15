@@ -337,7 +337,9 @@ public class LibraryMenuNav extends Composite{
 		@Override
 		public List<String> getCode(List<String> standPrefCode) {
 			try {
-				getStandardPrefCode(standPrefCode);
+				if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
+					getStandardPrefCode(standPrefCode);
+				}
 			} catch (Exception e) {}
 			return standPrefCode;
 			
