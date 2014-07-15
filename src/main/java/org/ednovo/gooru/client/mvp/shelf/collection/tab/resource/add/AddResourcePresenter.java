@@ -209,8 +209,8 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				getView().hide();
-//				tagResourceAsOER(result); 
-				isCollResourceTabView.insertData(result);
+				tagResourceAsOER(result); 
+//				isCollResourceTabView.insertData(result);
 			}
 
 			@Override
@@ -226,11 +226,11 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			public void onSuccess(CollectionItemDo result) {
 				
 				getView().hide();
-				isCollResourceTabView.insertData(result);
+//				isCollResourceTabView.insertData(result);
 				/**
-				 * De-scoped for 6.4 release
+				 * enabled for 6.5 release
 				 */
-//				tagResourceAsOER(result);
+				tagResourceAsOER(result);
 				MixpanelUtil.AddResourceByUrl();
 				
 //				updateShare("private");
