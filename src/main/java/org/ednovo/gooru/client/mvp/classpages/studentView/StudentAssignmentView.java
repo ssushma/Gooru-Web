@@ -102,7 +102,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	
 	private static StudentAssignmentViewUiBinder uiBinder = GWT.create(StudentAssignmentViewUiBinder.class);
 	
-	static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface StudentAssignmentViewUiBinder extends UiBinder<Widget, StudentAssignmentView> {    
 
@@ -179,6 +178,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	
 	private Integer defaultOffsetForPath=0;
 	private Integer defaultLimitForPath=20;
+	
+	public static final MessageProperties i18n = GWT.create(MessageProperties.class); 
 	
 	@Inject
 	public StudentAssignmentView() {
@@ -473,7 +474,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 											lblWebHelp.setVisible(false);
 											btnWithDraw.setVisible(true);
 											LblMember.setVisible(true);
-											LblMember.setText(i18n.GL1549());
+											LblMember.setText(StudentAssignmentView.i18n.GL1549());
 											mainContainer.setVisible(true);
 											this.hide();
 											isJoinPopupPublic=false;
@@ -483,9 +484,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									};
 									success.setHeight("248px");
                                     success.setWidth("450px");
-                                    success.setPopupTitle(i18n.GL1553());
-                                    success.setDescText(i18n.GL1554()+classpageDo.getTitle()+i18n.GL_SPL_EXCLAMATION()+'\n'+i18n.GL1552());
-                                    success.setPositiveButtonText(i18n.GL0190());
+                                    success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
+                                    success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+                                    success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
                                     success.center();
                                     success.show();
 						
@@ -577,7 +578,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 													lblWebHelp.setVisible(false);
 													btnWithDraw.setVisible(false);
 													LblMember.setVisible(true);
-													LblMember.setText(i18n.GL1549());
+													LblMember.setText(StudentAssignmentView.i18n.GL1549());
 													mainContainer.setVisible(true);
 													this.hide();
 													isJoinPopupPrivateStatic=false;
@@ -587,9 +588,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 											};
 											success.setHeight("248px");
                                             success.setWidth("450px");
-                                            success.setPopupTitle(i18n.GL1553());
-                                            success.setDescText(i18n.GL1554()+classpageDo.getTitle()+i18n.GL_SPL_EXCLAMATION()+'\n'+i18n.GL1552());
-                                            success.setPositiveButtonText(i18n.GL0190());
+                                            success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
+                                            success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+                                            success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
                                             success.center();
                                             success.show();
 								
@@ -901,7 +902,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 										lblWebHelp.setVisible(false);
 										btnWithDraw.setVisible(true);
 										LblMember.setVisible(true);
-										LblMember.setText(i18n.GL1549());
+										LblMember.setText(StudentAssignmentView.i18n.GL1549());
 										mainContainer.setVisible(true);
 										this.hide();
 										isJoinPopupButtonclick=false;
@@ -910,9 +911,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 								};
 								success.setHeight("248px");
                                 success.setWidth("450px");
-                                success.setPopupTitle(i18n.GL1553());
-                                success.setDescText(i18n.GL1554()+classpageDo.getTitle()+i18n.GL_SPL_EXCLAMATION()+'\n'+i18n.GL1552());
-                                success.setPositiveButtonText(i18n.GL0190());
+                                success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
+                                success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+                                success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
                                 success.center();
                                 success.show();
 								
@@ -1055,7 +1056,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									lblWebHelp.setVisible(false);
 									btnWithDraw.setVisible(false);
 									LblMember.setVisible(true);
-									LblMember.setText(i18n.GL1549());
+									LblMember.setText(StudentAssignmentView.i18n.GL1549());
 									mainContainer.setVisible(true);
 									this.hide();
 									isJoinPopupPrivate=false;
@@ -1065,9 +1066,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 							};
 							success.setHeight("248px");
                             success.setWidth("450px");
-                            success.setPopupTitle(i18n.GL1553());
-                            success.setDescText(i18n.GL1554()+classpageDo.getTitle()+i18n.GL_SPL_EXCLAMATION()+'\n'+i18n.GL1552());
-                            success.setPositiveButtonText(i18n.GL0190());
+                            success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
+                            success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+                            success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
                             success.center();
                             success.show();
 				
@@ -1150,7 +1151,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 										lblWebHelp.setVisible(false);
 										btnWithDraw.setVisible(true);
 										LblMember.setVisible(true);
-										LblMember.setText(i18n.GL1549());
+										LblMember.setText(StudentAssignmentView.i18n.GL1549());
 										mainContainer.setVisible(true);
 										this.hide();
 										isJoinPopupPublicStatic=false;
@@ -1160,9 +1161,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 								};
 								success.setHeight("248px");
                                 success.setWidth("450px");
-                                success.setPopupTitle(i18n.GL1553());
-                                success.setDescText(i18n.GL1554()+classpageDo.getTitle()+i18n.GL_SPL_EXCLAMATION()+'\n'+i18n.GL1552());
-                                success.setPositiveButtonText(i18n.GL0190());
+                                success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
+                                success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+                                success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
                                 success.center();
                                 success.show();
 					
@@ -1289,7 +1290,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 													lblWebHelp.setVisible(false);
 													btnWithDraw.setVisible(true);
 													LblMember.setVisible(true);
-													LblMember.setText(i18n.GL1549());
+													LblMember.setText(StudentAssignmentView.i18n.GL1549());
 													mainContainer.setVisible(true);
 													this.hide();
 													isJoinPopupPublic=false;
@@ -1299,9 +1300,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 											};
 											success.setHeight("248px");
 		                                    success.setWidth("450px");
-		                                    success.setPopupTitle(i18n.GL1553());
-		                                    success.setDescText(i18n.GL1554()+classpageDo.getTitle()+i18n.GL_SPL_EXCLAMATION()+'\n'+i18n.GL1552());
-		                                    success.setPositiveButtonText(i18n.GL0190());
+		                                    success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
+		                                    success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+		                                    success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
 		                                    success.center();
 		                                    success.show();
 								
@@ -1394,7 +1395,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 															lblWebHelp.setVisible(false);
 															btnWithDraw.setVisible(false);
 															LblMember.setVisible(true);
-															LblMember.setText(i18n.GL1549());
+															LblMember.setText(StudentAssignmentView.i18n.GL1549());
 															mainContainer.setVisible(true);
 															this.hide();
 															isJoinPopupPrivateStatic=false;
@@ -1404,9 +1405,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 													};
 													success.setHeight("248px");
 		                                            success.setWidth("450px");
-		                                            success.setPopupTitle(i18n.GL1553());
-		                                            success.setDescText(i18n.GL1554()+classpageDo.getTitle()+i18n.GL_SPL_EXCLAMATION()+'\n'+i18n.GL1552());
-		                                            success.setPositiveButtonText(i18n.GL0190());
+		                                            success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
+		                                            success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+		                                            success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
 		                                            success.center();
 		                                            success.show();
 										
