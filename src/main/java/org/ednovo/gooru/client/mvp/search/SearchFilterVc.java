@@ -451,7 +451,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		clearAll.getElement().setAttribute("alt",i18n.GL0725());
 		clearAll.getElement().setAttribute("title",i18n.GL0725());
 		
-		aggregatorPanelUc.setHeaderTitle(i18n.GL1628()+i18n.GL_SPL_SEMICOLON());
+		aggregatorPanelUc.setHeaderTitle(i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		if (resourceSearch) {
 			sourcePanelUc.setVisible(true);

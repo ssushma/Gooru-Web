@@ -105,45 +105,45 @@ public class CollectionInfo extends Composite {
 
 
 	private void setStaticText() {
-		lblGradeTitle.setText(i18n.GL0325()+i18n.GL_SPL_SEMICOLON());
+		lblGradeTitle.setText(i18n.GL0325()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblGradeTitle.getElement().setId("lblGradeTitle");
-		lblGradeTitle.getElement().setAttribute("alt",i18n.GL0325()+i18n.GL_SPL_SEMICOLON());
-		lblGradeTitle.getElement().setAttribute("title",i18n.GL0325()+i18n.GL_SPL_SEMICOLON());
+		lblGradeTitle.getElement().setAttribute("alt",i18n.GL0325()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblGradeTitle.getElement().setAttribute("title",i18n.GL0325()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		lblStandrads.setText(i18n.GL0575()+i18n.GL_SPL_SEMICOLON());
+		lblStandrads.setText(i18n.GL0575()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblStandrads.getElement().setId("lblStandrads");
-		lblStandrads.getElement().setAttribute("alt",i18n.GL0575()+i18n.GL_SPL_SEMICOLON());
-		lblStandrads.getElement().setAttribute("title",i18n.GL0575()+i18n.GL_SPL_SEMICOLON());
+		lblStandrads.getElement().setAttribute("alt",i18n.GL0575()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblStandrads.getElement().setAttribute("title",i18n.GL0575()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		lblLanguage.setText(i18n.GL1721()+i18n.GL_SPL_SEMICOLON());
+		lblLanguage.setText(i18n.GL1721()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblLanguage.getElement().setId("lblLanguage");
-		lblLanguage.getElement().setAttribute("alt",i18n.GL1721()+i18n.GL_SPL_SEMICOLON());
-		lblLanguage.getElement().setAttribute("title",i18n.GL1721()+i18n.GL_SPL_SEMICOLON());
+		lblLanguage.getElement().setAttribute("alt",i18n.GL1721()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblLanguage.getElement().setAttribute("title",i18n.GL1721()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		lblDepthKnowledge.setText(i18n.GL1693()+i18n.GL_SPL_SEMICOLON());
+		lblDepthKnowledge.setText(i18n.GL1693()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblDepthKnowledge.getElement().setId("lblDepthKnowledge");
-		lblDepthKnowledge.getElement().setAttribute("alt",i18n.GL1693()+i18n.GL_SPL_SEMICOLON());
-		lblDepthKnowledge.getElement().setAttribute("title",i18n.GL1693()+i18n.GL_SPL_SEMICOLON());
+		lblDepthKnowledge.getElement().setAttribute("alt",i18n.GL1693()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblDepthKnowledge.getElement().setAttribute("title",i18n.GL1693()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		lblLearningSkills.setText(i18n.GL1722()+i18n.GL_SPL_SEMICOLON());
+		lblLearningSkills.setText(i18n.GL1722()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblLearningSkills.getElement().setId("lblLearningSkills");
-		lblLearningSkills.getElement().setAttribute("alt",i18n.GL1722()+i18n.GL_SPL_SEMICOLON());
-		lblLearningSkills.getElement().setAttribute("title",i18n.GL1722()+i18n.GL_SPL_SEMICOLON());
+		lblLearningSkills.getElement().setAttribute("alt",i18n.GL1722()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblLearningSkills.getElement().setAttribute("title",i18n.GL1722()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		lblAudience.setText(i18n.GL1723()+i18n.GL_SPL_SEMICOLON());
+		lblAudience.setText(i18n.GL1723()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblAudience.getElement().setId("lblAudience");
-		lblAudience.getElement().setAttribute("alt",i18n.GL1723()+i18n.GL_SPL_SEMICOLON());
-		lblAudience.getElement().setAttribute("title",i18n.GL1723()+i18n.GL_SPL_SEMICOLON());
+		lblAudience.getElement().setAttribute("alt",i18n.GL1723()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblAudience.getElement().setAttribute("title",i18n.GL1723()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		lblInstructional.setText(i18n.GL1724()+i18n.GL_SPL_SEMICOLON());
+		lblInstructional.setText(i18n.GL1724()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblInstructional.getElement().setId("lblInstructional");
-		lblInstructional.getElement().setAttribute("alt",i18n.GL1724()+i18n.GL_SPL_SEMICOLON());
-		lblInstructional.getElement().setAttribute("title",i18n.GL1724()+i18n.GL_SPL_SEMICOLON());
+		lblInstructional.getElement().setAttribute("alt",i18n.GL1724()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblInstructional.getElement().setAttribute("title",i18n.GL1724()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-    	lblOer.setText(i18n.GL1834()+i18n.GL_SPL_SEMICOLON());
+    	lblOer.setText(i18n.GL1834()+i18n.GL_SPL_SEMICOLON()+" ");
     	lblOer.getElement().setId("lblOer");
-    	lblOer.getElement().setAttribute("alt",i18n.GL1834()+i18n.GL_SPL_SEMICOLON());
-    	lblOer.getElement().setAttribute("title",i18n.GL1834()+i18n.GL_SPL_SEMICOLON());
+    	lblOer.getElement().setAttribute("alt",i18n.GL1834()+i18n.GL_SPL_SEMICOLON()+" ");
+    	lblOer.getElement().setAttribute("title",i18n.GL1834()+i18n.GL_SPL_SEMICOLON()+" ");
     	
     	loadingImagePanel.getElement().setId("pnlLoadingImagePanel");
     	gradesPanel.getElement().setId("pnlGradesPanel");

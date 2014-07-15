@@ -25,7 +25,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item;
 
 import org.ednovo.gooru.client.ui.TinyMCE;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -44,7 +44,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class UpdateQuestionHints extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers,MessageProperties{
+public class UpdateQuestionHints extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers{
 	 	
       @UiField Label hintsChoice;
       
@@ -58,6 +58,8 @@ public class UpdateQuestionHints extends Composite implements HasMouseOutHandler
 		  
 	  }
 	  public static UpdateQuestionHintsUiBinder uiBinder=GWT.create(UpdateQuestionHintsUiBinder.class);
+	  
+	  private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	  public UpdateQuestionHints(){
 		  initWidget(uiBinder.createAndBindUi(this));
@@ -84,9 +86,9 @@ public class UpdateQuestionHints extends Composite implements HasMouseOutHandler
 			  hintsChoice.setText(""+count);
 			  hintsChoice.getElement().setAttribute("alt", ""+count);
 			  hintsChoice.getElement().setAttribute("title", ""+count);
-			  addHintsLabel.setText(GL0859);
-			  addHintsLabel.getElement().setAttribute("alt", GL0859);
-			  addHintsLabel.getElement().setAttribute("title", GL0859);
+			  addHintsLabel.setText(i18n.GL0859());
+			  addHintsLabel.getElement().setAttribute("alt", i18n.GL0859());
+			  addHintsLabel.getElement().setAttribute("title", i18n.GL0859());
 		  }else{
 			  hintsChoice.setText(""+count);
 			  hintsChoice.getElement().setAttribute("alt", ""+count);

@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -57,7 +58,7 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarrationUiHandlers> implements IsResourceNarrationView,MessageProperties{
+public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarrationUiHandlers> implements IsResourceNarrationView{
 	
 	@UiField Image authorImage;
 	@UiField HTML resourceTitle,narrationText;
@@ -72,6 +73,8 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 	interface ResourceNarrationViewUiBinder extends UiBinder<Widget, ResourceNarrationView> {
 	}
 	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@Inject
 	public ResourceNarrationView(EventBus eventsBus){
 		super(eventsBus);
@@ -79,15 +82,15 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
 		narrationCloseButton.addClickHandler(new CloseNarrationPopupEvent());
 		okButton.addClickHandler(new CloseNarrationPopupEvent());
-		authorName.setText(GL0423);
+		authorName.setText(i18n.GL0423());
 		authorName.getElement().setId("lblAuthorName");
-		authorName.getElement().setAttribute("alt",GL0423);
-		authorName.getElement().setAttribute("title",GL0423);
+		authorName.getElement().setAttribute("alt",i18n.GL0423());
+		authorName.getElement().setAttribute("title",i18n.GL0423());
 		
-		okButton.setText(GL0703);
+		okButton.setText(i18n.GL0703());
 		okButton.getElement().setId("btnOkButton");
-		okButton.getElement().setAttribute("alt",GL0703);
-		okButton.getElement().setAttribute("title",GL0703);
+		okButton.getElement().setAttribute("alt",i18n.GL0703());
+		okButton.getElement().setAttribute("title",i18n.GL0703());
 		
 		resourceTitle.getElement().setId("htmlResourceTitle");
 		narrationCloseButton.getElement().setId("lblNarrationCloseButton");
@@ -202,7 +205,7 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 		resourcePlayerFirstTimeUser =Cookies.getCookie("resourcePlayerFirstTimeUser");
 		if(resourcePlayerFirstTimeUser==null){
 			Cookies.setCookie("resourcePlayerFirstTimeUser", "1");
-			globalTooltipWithButton=new GlobalTooltipWithButton(GL0681, GL0543);
+			globalTooltipWithButton=new GlobalTooltipWithButton(i18n.GL0681, i18n.GL0543);
 			globalTooltipWithButton.setGlassStyleName(HomeCBundle.INSTANCE.css().playerAddToolTipGlassStyle());
 			globalTooltipWithButton.setStyleName("");
 			globalTooltipWithButton.getElement().getStyle().setZIndex(999999);

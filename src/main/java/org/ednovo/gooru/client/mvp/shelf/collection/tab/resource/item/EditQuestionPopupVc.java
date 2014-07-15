@@ -55,7 +55,6 @@ import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -89,7 +88,7 @@ import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionHandler<SuggestOracle.Suggestion>,MessageProperties{
+public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionHandler<SuggestOracle.Suggestion>{
 
 	@UiField
 	ListBox questionTypeListBox;
