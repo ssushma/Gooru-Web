@@ -135,46 +135,109 @@ public class SearchInfoWidget extends Composite {
 
 	private void setResourceInfoData() {
 		publisherText.setText(i18n.GL0566()+" ");
+		setIdForLabel(publisherText,"PublisherText",i18n.GL0566()+" ");
+		
 		lblAggregation.setText(i18n.GL1628()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(lblAggregation,"LblAggregation",i18n.GL1628()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		courseText.setText(i18n.GL0616()+" ");
+		setIdForLabel(courseText,"CourseText",i18n.GL0616()+" ");
+		
 		legalText.setText(i18n.GL0730()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(legalText,"LegalText",i18n.GL0730()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		standardsText.setText(i18n.GL0619()+" ");
+		setIdForLabel(standardsText,"standardsText",i18n.GL0619()+" ");
+		
 		//		resourceInfoText.setText(i18n.GL0621);
 		gradeTitle.setText(i18n.GL0325()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(gradeTitle,"GradeTitle",i18n.GL0325()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		originalUrlTitle.setText(i18n.GL0976()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(originalUrlTitle,"OriginalUrlTitle",i18n.GL0976()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		generalLbl.setText(i18n.GL1708());
+		setIdForLabel(generalLbl,"GeneralLbl",i18n.GL1708());
+		
 		hostLbl.setText(i18n.GL1700()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(hostLbl,"HostLbl",i18n.GL1700()+" "+i18n.GL_SPL_SEMICOLON());
 		
 		//Educational static data
 		educationallLbl.setText(i18n.GL1720());
+		setIdForLabel(educationallLbl,"EducationallLbl",i18n.GL1720());
+		
 		eduAllignLbl.setText(i18n.GL1690()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(eduAllignLbl,"EduAllignLbl",i18n.GL1690()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		eduUseLbl.setText(i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(eduUseLbl,"EduUseLbl",i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		eduRoleLbl.setText(i18n.GL1867()+" ");
+		setIdForLabel(eduRoleLbl,"EduRoleLbl",i18n.GL1867()+" ");
+		
 		interactiveLbl.setText(i18n.GL1689()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(interactiveLbl,"InteractiveLbl",i18n.GL1689()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		ageRangeLbl.setText(i18n.GL1692()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(ageRangeLbl,"AgeRangeLbl",i18n.GL1692()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		dKnowledgeLbl.setText(i18n.GL1693()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(dKnowledgeLbl,"DKnowledgeLbl",i18n.GL1693()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		momentsoflearningLbl.setText(i18n.GL1678()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(momentsoflearningLbl,"MomentsoflearningLbl",i18n.GL1678()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		readingLevelLbl.setText(i18n.GL1694()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(readingLevelLbl,"ReadingLevelLbl",i18n.GL1694()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		schLevelLbl.setText(i18n.GL1868()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(schLevelLbl,"SchLevelLbl",i18n.GL1868()+" "+i18n.GL_SPL_SEMICOLON());
 		
 		//Resource Info Static data
 		resourceInfoLbl.setText(i18n.GL1716());
+		setIdForLabel(resourceInfoLbl,"ResourceInfoLbl",i18n.GL1716());
+		
+		
 //		dateCreatedLbl.setText(i18n.GL1717+i18n.GL_SPL_SEMICOLON);
 		countryCodeLbl.setText(i18n.GL1697()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(countryCodeLbl,"CountryCodeLbl",i18n.GL1697()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		languageLbl.setText(i18n.GL1696()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(languageLbl,"LanguageLbl",i18n.GL1696()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		dataTypeLbl.setText(i18n.GL1688()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(dataTypeLbl,"DataTypeLbl",i18n.GL1688()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		authorLbl.setText(i18n.GL0573()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(authorLbl,"AuthorLbl",i18n.GL0573()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		copyRightLbl.setText(i18n.GL1699()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(copyRightLbl,"CopyRightLbl",i18n.GL1699()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		keywordsTitle.setText(i18n.GL1876()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(keywordsTitle,"KeywordsTitle",i18n.GL1876()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		adsTitle.setText(i18n.GL1800()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(adsTitle,"AdsTitle",i18n.GL1800()+" "+i18n.GL_SPL_SEMICOLON());
+		
 		//Accessibility Static data
 		accesibilityLbl.setText(i18n.GL1703());
-		mbFriendlyLbl.setText(i18n.GL1687()+" "+i18n.GL_SPL_SEMICOLON());
-		accessModelLbl.setText(i18n.GL1707()+" "+i18n.GL_SPL_SEMICOLON());
-		mediaFeatureLbl.setText(i18n.GL1706()+" "+i18n.GL_SPL_SEMICOLON());
-		controlLbl.setText(i18n.GL1704()+" "+i18n.GL_SPL_SEMICOLON());
-		acessHazardlLbl.setText(i18n.GL1705()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(accesibilityLbl,"AccesibilityLbl",i18n.GL1703());
 		
+		mbFriendlyLbl.setText(i18n.GL1687()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(mbFriendlyLbl,"MbFriendlyLbl",i18n.GL1687()+" "+i18n.GL_SPL_SEMICOLON());
+		
+		accessModelLbl.setText(i18n.GL1707()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(accessModelLbl,"AccessModelLbl",i18n.GL1707()+" "+i18n.GL_SPL_SEMICOLON());
+		
+		mediaFeatureLbl.setText(i18n.GL1706()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(mediaFeatureLbl,"MediaFeatureLbl",i18n.GL1706()+" "+i18n.GL_SPL_SEMICOLON());
+		
+		controlLbl.setText(i18n.GL1704()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(controlLbl,"ControlLbl",i18n.GL1704()+" "+i18n.GL_SPL_SEMICOLON());
+		
+		acessHazardlLbl.setText(i18n.GL1705()+" "+i18n.GL_SPL_SEMICOLON());
+		setIdForLabel(acessHazardlLbl,"AcessHazardlLbl",i18n.GL1705()+" "+i18n.GL_SPL_SEMICOLON());
 	}
 
 	/**
@@ -380,9 +443,6 @@ public class SearchInfoWidget extends Composite {
 			setOriginalUrl(CollectiongenealInfo.getResource().getAssetURI(),CollectiongenealInfo.getResource().getFolder(),
 					CollectiongenealInfo.getResource().getUrl(),CollectiongenealInfo.getResource().getResourceType().getName());
 			
-			System.out.println("publisherPanel11::"+resourceDo.getPublisher());
-			System.out.println("publisherPanel::"+CollectiongenealInfo.getResource().getPublisher());
-			
 			if(resourceDo.getPublisher()!=null){
 				if(resourceDo.getPublisher().size()>0){
 				InfoUtil.setDepthofknowledgeDetails(CollectiongenealInfo.getResource().getPublisher(), publisherType, publisherText, publisherPanel);
@@ -411,6 +471,8 @@ public class SearchInfoWidget extends Composite {
 			if(host!=null && !host.equals("")){
 				hostPanel.setVisible(true);
 				hostType.setText(" "+CollectiongenealInfo.getResource().getCustomFieldValues().getCfHost());
+				hostType.getElement().setAttribute("alt"," "+CollectiongenealInfo.getResource().getCustomFieldValues().getCfHost());
+				hostType.getElement().setAttribute("title"," "+CollectiongenealInfo.getResource().getCustomFieldValues().getCfHost());
 				isGeneralInfo=true;
 			}else{
 				hostPanel.setVisible(false);
@@ -700,7 +762,13 @@ public class SearchInfoWidget extends Composite {
 				eduUseType.add(eduUseLabel);
 				eduUsePanel.setVisible(true);
 				educationallLbl.setText(i18n.GL1720());
+				educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
+				educationallLbl.getElement().setAttribute("title",i18n.GL1720());
+				
 				eduUseLbl.setText(i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON());
+				eduUseLbl.getElement().setAttribute("alt",i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON());
+				eduUseLbl.getElement().setAttribute("title",i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON());
+				
 				educationallLbl.setVisible(true);
 			}
 			if(eduUsedetails.size()>2){
@@ -713,7 +781,12 @@ public class SearchInfoWidget extends Composite {
 				eduUseLabel.addMouseOutHandler(new MouseOutHideToolTip());
 				eduUsePanel.setVisible(true);
 				educationallLbl.setText(i18n.GL1720());
+				educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
+				educationallLbl.getElement().setAttribute("title",i18n.GL1720());
+				
 				eduUseLbl.setText(i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON());
+				eduUseLbl.getElement().setAttribute("alt",i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON());
+				eduUseLbl.getElement().setAttribute("title",i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON());
 				educationallLbl.setVisible(true);
 			}
 		}
@@ -818,6 +891,8 @@ public class SearchInfoWidget extends Composite {
 				if(alignType!=null && !alignType.equals("")){
 					isEducationalInfo=true;
 					eduAllignType.setText(" "+alignType);
+					eduAllignType.getElement().setAttribute("alt"," "+alignType);
+					eduAllignType.getElement().setAttribute("title"," "+alignType);
 					eduAllignPanel.setVisible(true);
 				}else{
 					eduAllignPanel.setVisible(false);
@@ -825,6 +900,8 @@ public class SearchInfoWidget extends Composite {
 				if(educationRole!=null && !educationRole.equals("")){
 					isEducationalInfo=true;
 					eduRoleType.setText(" "+educationRole);
+					eduRoleType.getElement().setAttribute("alt"," "+educationRole);
+					eduRoleType.getElement().setAttribute("title"," "+educationRole);
 					eduRolePanel.setVisible(true);
 				}else{
 					eduRolePanel.setVisible(false);
@@ -832,6 +909,8 @@ public class SearchInfoWidget extends Composite {
 				if(learningMode!=null && !learningMode.equals("")){
 					isEducationalInfo=true;
 					interactiveType.setText(" "+learningMode);
+					interactiveType.getElement().setAttribute("alt"," "+learningMode);
+					interactiveType.getElement().setAttribute("title"," "+learningMode);
 					interactivityTypePanel.setVisible(true);
 				}else{
 					interactivityTypePanel.setVisible(false);
@@ -839,6 +918,8 @@ public class SearchInfoWidget extends Composite {
 				if(age!=null && !age.equals("")){
 					isEducationalInfo=true;
 					ageRangeType.setText(" "+age);
+					ageRangeType.getElement().setAttribute("alt"," "+age);
+					ageRangeType.getElement().setAttribute("title"," "+age);
 					ageRangePanel.setVisible(true);
 				}else{
 					ageRangePanel.setVisible(false);
@@ -847,6 +928,8 @@ public class SearchInfoWidget extends Composite {
 				if(readingLevel!=null && !readingLevel.equals("")){
 					isEducationalInfo=true;
 					readingLevelType.getElement().setInnerText(" "+readingLevel);
+					readingLevelType.getElement().setAttribute("alt"," "+readingLevel);
+					readingLevelType.getElement().setAttribute("title"," "+readingLevel);
 					readingLevelPanel.setVisible(true);
 				}else{
 					readingLevelPanel.setVisible(false);
@@ -855,6 +938,8 @@ public class SearchInfoWidget extends Composite {
 				if(schLevel!=null && !schLevel.equals("")){
 					isEducationalInfo=true;
 					schLevelInfo.setText(" "+schLevel);
+					schLevelInfo.getElement().setAttribute("alt"," "+schLevel);
+					schLevelInfo.getElement().setAttribute("title"," "+schLevel);
 					schLevelPanel.setVisible(true);
 				}else{
 					schLevelPanel.setVisible(false);
@@ -911,6 +996,8 @@ public class SearchInfoWidget extends Composite {
 			if(countryCode!=null && !countryCode.equals("")){
 				isResourceInfo=true;
 				countryCodeType.setText(" "+countryCode);
+				countryCodeType.getElement().setAttribute("alt"," "+countryCode);
+				countryCodeType.getElement().setAttribute("title"," "+countryCode);
 				countryCodePanel.setVisible(true);
 			}else{
 				countryCodePanel.setVisible(false);
@@ -918,6 +1005,8 @@ public class SearchInfoWidget extends Composite {
 			if(language!=null && !language.equals("")){
 				isResourceInfo=true;
 				languageType.setText(" "+language);
+				languageType.getElement().setAttribute("alt"," "+language);
+				languageType.getElement().setAttribute("title"," "+language);
 				languagePanel.setVisible(true);
 			}else{
 				languagePanel.setVisible(false);
@@ -925,6 +1014,8 @@ public class SearchInfoWidget extends Composite {
 			if(dataType!=null && !dataType.equals("")){
 				isResourceInfo=true;
 				dataTypeFormat.setText(" "+dataType);
+				dataTypeFormat.getElement().setAttribute("alt"," "+dataType);
+				dataTypeFormat.getElement().setAttribute("title"," "+dataType);
 				dataTypePanel.setVisible(true);
 			}else{
 				dataTypePanel.setVisible(false);
@@ -932,6 +1023,8 @@ public class SearchInfoWidget extends Composite {
 			if(copyrightHolder!=null && !copyrightHolder.equals("")){
 				isResourceInfo=true;
 				copyRightType.setText(" "+copyrightHolder);
+				copyRightType.getElement().setAttribute("alt"," "+copyrightHolder);
+				copyRightType.getElement().setAttribute("title"," "+copyrightHolder);
 				copyRightPanel.setVisible(true);
 			}else{
 				copyRightPanel.setVisible(false);
@@ -939,6 +1032,8 @@ public class SearchInfoWidget extends Composite {
 			if(author!=null && !author.equals("")){
 				isResourceInfo=true;
 				authorName.setText(" "+author);
+				authorName.getElement().setAttribute("alt"," "+author);
+				authorName.getElement().setAttribute("title"," "+author);
 				authorPanel.setVisible(true);
 			}else{
 				authorPanel.setVisible(false);
@@ -946,6 +1041,8 @@ public class SearchInfoWidget extends Composite {
 			if(keywords!=null && !keywords.equals("")){
 				isResourceInfo=true;
 				keywordsInfo.getElement().setInnerText(" "+keywords);
+				keywordsInfo.getElement().setAttribute("alt"," "+keywords);
+				keywordsInfo.getElement().setAttribute("title"," "+keywords);
 				keyWordsPanel.setVisible(true);
 			}else{
 				keyWordsPanel.setVisible(false);
@@ -953,6 +1050,8 @@ public class SearchInfoWidget extends Composite {
 			if(ads!=null && !ads.equals("")){
 				isResourceInfo=true;
 				adsName.setText(" "+ads);
+				adsName.getElement().setAttribute("alt"," "+ads);
+				adsName.getElement().setAttribute("title"," "+ads);
 				adsPanel.setVisible(true);
 			}else{
 				adsPanel.setVisible(false);
@@ -996,10 +1095,14 @@ public class SearchInfoWidget extends Composite {
 				if(mobileFriendly.equalsIgnoreCase(IPAD_FRIENDLY)){
 					mobileFriendlyPanel.setVisible(true);
 					mbFriendlyText.setText(" "+i18n.GL_GRR_YES());
+					mbFriendlyText.getElement().setAttribute("alt"," "+i18n.GL_GRR_YES());
+					mbFriendlyText.getElement().setAttribute("title"," "+i18n.GL_GRR_YES());
 					isAccessibilityInfo=true;
 				}else{
 					mobileFriendlyPanel.setVisible(true);
 					mbFriendlyText.setText(" "+i18n.GL1735());
+					mbFriendlyText.getElement().setAttribute("alt"," "+i18n.GL1735());
+					mbFriendlyText.getElement().setAttribute("title"," "+i18n.GL1735());
 					isAccessibilityInfo=true;
 				}
 			}else{
@@ -1022,6 +1125,9 @@ public class SearchInfoWidget extends Composite {
 				}
 				if(mediaFeature!=null && !mediaFeature.equals("")){
 					mediaFeatureType.getElement().setInnerText(" "+mediaFeature);
+					mediaFeatureType.getElement().setAttribute("alt"," "+mediaFeature);
+					mediaFeatureType.getElement().setAttribute("title"," "+mediaFeature);
+					
 					mediaFeaturePanel.setVisible(true);
 					isAccessibilityInfo=true;
 				}else{
@@ -1029,6 +1135,8 @@ public class SearchInfoWidget extends Composite {
 				}
 				if(controlFlexibility!=null && !controlFlexibility.equals("")){
 					controlType.setText(" "+controlFlexibility);
+					controlType.getElement().setAttribute("alt"," "+controlFlexibility);
+					controlType.getElement().setAttribute("title"," "+controlFlexibility);
 					controlPanel.setVisible(true);
 					isAccessibilityInfo=true;
 				}else{
@@ -1036,6 +1144,8 @@ public class SearchInfoWidget extends Composite {
 				}
 				if(accessHazard!=null && !accessHazard.equals("")){
 					acessHazardType.setText(" "+accessHazard);
+					acessHazardType.getElement().setAttribute("alt"," "+accessHazard);
+					acessHazardType.getElement().setAttribute("title"," "+accessHazard);
 					accessHazardPanel.setVisible(true);
 					isAccessibilityInfo=true;
 				}else{
@@ -1190,5 +1300,10 @@ public class SearchInfoWidget extends Composite {
 			isGrades =true;
 		}
 		}
+	}
+	public void setIdForLabel(Label label,String uiFieldName,String text){
+		label.getElement().setId("lbl"+uiFieldName);
+		label.getElement().setAttribute("alt",text);
+		label.getElement().setAttribute("title",text);
 	}
 }

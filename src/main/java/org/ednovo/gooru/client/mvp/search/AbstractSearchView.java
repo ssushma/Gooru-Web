@@ -108,6 +108,9 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		searchFilterVc = new SearchFilterVc(resourceSearch);
 		setWidget(uiBinder.createAndBindUi(this));
 		searchFilterPanel.getElement().setId("searchFilterPanelDiv");
+		searchFilterVc.getElement().setId("searchFilterVcsearchFilterVc");
+		paginationFocPanel.getElement().setId("fnlPaginationFocPanel");
+		searchResultPanel.getElement().setId("appMirageDragContainer");
 	}
 
 	@Override

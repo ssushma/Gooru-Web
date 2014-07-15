@@ -106,13 +106,63 @@ public class CollectionInfo extends Composite {
 
 	private void setStaticText() {
 		lblGradeTitle.setText(i18n.GL0325()+i18n.GL_SPL_SEMICOLON());
+		lblGradeTitle.getElement().setId("lblGradeTitle");
+		lblGradeTitle.getElement().setAttribute("alt",i18n.GL0325()+i18n.GL_SPL_SEMICOLON());
+		lblGradeTitle.getElement().setAttribute("title",i18n.GL0325()+i18n.GL_SPL_SEMICOLON());
+		
 		lblStandrads.setText(i18n.GL0575()+i18n.GL_SPL_SEMICOLON());
+		lblStandrads.getElement().setId("lblStandrads");
+		lblStandrads.getElement().setAttribute("alt",i18n.GL0575()+i18n.GL_SPL_SEMICOLON());
+		lblStandrads.getElement().setAttribute("title",i18n.GL0575()+i18n.GL_SPL_SEMICOLON());
+		
 		lblLanguage.setText(i18n.GL1721()+i18n.GL_SPL_SEMICOLON());
+		lblLanguage.getElement().setId("lblLanguage");
+		lblLanguage.getElement().setAttribute("alt",i18n.GL1721()+i18n.GL_SPL_SEMICOLON());
+		lblLanguage.getElement().setAttribute("title",i18n.GL1721()+i18n.GL_SPL_SEMICOLON());
+		
 		lblDepthKnowledge.setText(i18n.GL1693()+i18n.GL_SPL_SEMICOLON());
+		lblDepthKnowledge.getElement().setId("lblDepthKnowledge");
+		lblDepthKnowledge.getElement().setAttribute("alt",i18n.GL1693()+i18n.GL_SPL_SEMICOLON());
+		lblDepthKnowledge.getElement().setAttribute("title",i18n.GL1693()+i18n.GL_SPL_SEMICOLON());
+		
 		lblLearningSkills.setText(i18n.GL1722()+i18n.GL_SPL_SEMICOLON());
+		lblLearningSkills.getElement().setId("lblLearningSkills");
+		lblLearningSkills.getElement().setAttribute("alt",i18n.GL1722()+i18n.GL_SPL_SEMICOLON());
+		lblLearningSkills.getElement().setAttribute("title",i18n.GL1722()+i18n.GL_SPL_SEMICOLON());
+		
 		lblAudience.setText(i18n.GL1723()+i18n.GL_SPL_SEMICOLON());
+		lblAudience.getElement().setId("lblAudience");
+		lblAudience.getElement().setAttribute("alt",i18n.GL1723()+i18n.GL_SPL_SEMICOLON());
+		lblAudience.getElement().setAttribute("title",i18n.GL1723()+i18n.GL_SPL_SEMICOLON());
+		
 		lblInstructional.setText(i18n.GL1724()+i18n.GL_SPL_SEMICOLON());
+		lblInstructional.getElement().setId("lblInstructional");
+		lblInstructional.getElement().setAttribute("alt",i18n.GL1724()+i18n.GL_SPL_SEMICOLON());
+		lblInstructional.getElement().setAttribute("title",i18n.GL1724()+i18n.GL_SPL_SEMICOLON());
+		
     	lblOer.setText(i18n.GL1834()+i18n.GL_SPL_SEMICOLON());
+    	lblOer.getElement().setId("lblOer");
+    	lblOer.getElement().setAttribute("alt",i18n.GL1834()+i18n.GL_SPL_SEMICOLON());
+    	lblOer.getElement().setAttribute("title",i18n.GL1834()+i18n.GL_SPL_SEMICOLON());
+    	
+    	loadingImagePanel.getElement().setId("pnlLoadingImagePanel");
+    	gradesPanel.getElement().setId("pnlGradesPanel");
+    	gradesText.getElement().setId("pnlGradesText");
+    	panelStandrads.getElement().setId("pnlPanelStandrads");
+    	lblStandardsText.getElement().setId("lblStandardsText");
+    	standardsInfoConatiner.getElement().setId("fpnlStandardsInfoConatiner");
+    	panelDesc.getElement().setId("pnlPanelDesc");
+    	lblLanguageText.getElement().setId("lblLanguageText");
+    	dKnowledgePanel.getElement().setId("pnlDKnowledgePanel");
+    	dKnowledgeType.getElement().setId("htmlDKnowledgeType");
+    	learningSkillsMainPanel.getElement().setId("pnlLearningSkillsMainPanel");
+    	learningSkillsPanel.getElement().setId("pnlLearningSkillsPanel");
+    	panelAudience.getElement().setId("pnlPanelAudience");
+    	lblAudienceValue.getElement().setId("lblAudienceValue");
+    	panelInstructional.getElement().setId("pnlPanelInstructional");
+    	lblInstructionalValue.getElement().setId("lblInstructionalValue");
+    	panelOer.getElement().setId("pnlPanelOer");
+    	lblOerValue.getElement().setId("lblOerValue");
 	}
 
 
@@ -144,6 +194,8 @@ public class CollectionInfo extends Composite {
 	protected void setLanguageObjectiveText() {
 		if(collectionDo.getLanguageObjective()!=null){
 			lblLanguageText.setText(collectionDo.getLanguageObjective());
+			lblLanguageText.getElement().setAttribute("alt",collectionDo.getLanguageObjective());
+			lblLanguageText.getElement().setAttribute("title",collectionDo.getLanguageObjective());
 		}else{
 			panelDesc.setVisible(false);
 		}
@@ -157,6 +209,8 @@ public class CollectionInfo extends Composite {
 
 		if(gradesText!=null&&!gradesText.equalsIgnoreCase("")&&!gradesText.equalsIgnoreCase("null")){
 			this.gradesText.setText(InfoUtil.getGrades(gradesText));
+			this.gradesText.getElement().setAttribute("alt",InfoUtil.getGrades(gradesText));
+			this.gradesText.getElement().setAttribute("title",InfoUtil.getGrades(gradesText));
 			gradesPanel.setVisible(true);
 		}else{
 			gradesPanel.setVisible(false);
@@ -282,6 +336,8 @@ public class CollectionInfo extends Composite {
 					if(collectionDo.getAudience().get(i).isSelected())
 					{
 						lblAudienceValue.setText(collectionDo.getAudience().get(i).getValue());
+						lblAudienceValue.getElement().setAttribute("alt",collectionDo.getAudience().get(i).getValue());
+						lblAudienceValue.getElement().setAttribute("title",collectionDo.getAudience().get(i).getValue());
 					}
 				}
 				if(lblAudienceValue.getText().equalsIgnoreCase("")){
@@ -305,6 +361,8 @@ public class CollectionInfo extends Composite {
 					if(collectionDo.getInstructionalMethod().get(i).isSelected())
 					{
 						lblInstructionalValue.setText(collectionDo.getInstructionalMethod().get(i).getValue());
+						lblInstructionalValue.getElement().setAttribute("alt",collectionDo.getInstructionalMethod().get(i).getValue());
+						lblInstructionalValue.getElement().setAttribute("title",collectionDo.getInstructionalMethod().get(i).getValue());
 					}
 				}
 				if(lblInstructionalValue.getText().equalsIgnoreCase("")){
@@ -324,6 +382,8 @@ public class CollectionInfo extends Composite {
 		
 		if(collectionDo.getCustomFieldValues()!=null && collectionDo.getCustomFieldValues().getCfOER()!=null){
 			lblOerValue.setText(collectionDo.getCustomFieldValues().getCfOER());
+			lblOerValue.getElement().setAttribute("alt",collectionDo.getCustomFieldValues().getCfOER());
+			lblOerValue.getElement().setAttribute("title",collectionDo.getCustomFieldValues().getCfOER());
 			panelOer.setVisible(true);
 		}else{
 			panelOer.setVisible(false);

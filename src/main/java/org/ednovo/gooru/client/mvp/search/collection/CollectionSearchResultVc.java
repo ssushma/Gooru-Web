@@ -92,7 +92,7 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 	HTMLPanel containerPanel;
 
 	@UiField
-	FlowPanel metaDataPanelFloPanel, standardsFloPanel,teamFlowPanel;
+	FlowPanel collectionTitlePanel,metaDataPanelFloPanel, standardsFloPanel,teamFlowPanel;
 
 	@UiField
 	CollectionImageUc collectionImageUc;
@@ -141,6 +141,17 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 		wrapperVc.addStyleName("collectionSearchResultBox");
 		resourceCountLbl.setVisible(false);
 		
+		collectionTitlePanel.getElement().setId("fpnlCollectionTitlePanel");
+		collectionTitleLbl.getElement().setId("htmlCollectionTitleLbl");
+		creatorNameLbl.getElement().setId("lblCreatorNameLbl");
+		creatorNameLblValue.getElement().setId("lblCreatorNameLblValue");
+		teamFlowPanel.getElement().setId("fpnlTeamFlowPanel");
+		containerPanel.getElement().setId("pnlContainerPanel");
+		metaDataPanelFloPanel.getElement().setId("pnlMetaDataPanelFloPanel");
+		resourceCountLbl.getElement().setId("lblResourceCountLbl");
+		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
+		collectionDescriptionHtml.getElement().setId("htmlCollectionDescriptionHtml");
+		
 		AppClientFactory.getEventBus().addHandler(UpdateSearchResultMetaDataEvent.TYPE,setUpdateMetaData);
 	}
 	UpdateSearchResultMetaDataHandler setUpdateMetaData =new UpdateSearchResultMetaDataHandler(){
@@ -183,6 +194,8 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 			SearchUiUtil.renderMetaData(metaDataPanelFloPanel, count + "", (Integer.parseInt(count) >1 ? VIEWS : VIEW));
 			metaDataPanelFloPanel.add(new SeparatorUc());
 			resourceCountLbl.setText(collectionResultDo.getOnlyResourceCount() +" " + (collectionResultDo.getOnlyResourceCount()>1 ? RESOURCES : RESOURCE));
+			resourceCountLbl.getElement().setAttribute("alt",collectionResultDo.getOnlyResourceCount() +" " + (collectionResultDo.getOnlyResourceCount()>1 ? RESOURCES : RESOURCE));
+			resourceCountLbl.getElement().setAttribute("title",collectionResultDo.getOnlyResourceCount() +" " + (collectionResultDo.getOnlyResourceCount()>1 ? RESOURCES : RESOURCE));
 		}
 	}
 	
@@ -197,14 +210,22 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 		wrapperVc.setData(collectionResultDo);
 		//collectionTitleLbl.setText(StringUtil.truncateText(collectionResultDo.getResourceTitle(), 40));
 		collectionTitleLbl.setHTML(StringUtil.truncateText(collectionResultDo.getResourceTitle(), 40));
+		collectionTitleLbl.getElement().setAttribute("alt",StringUtil.truncateText(collectionResultDo.getResourceTitle(), 40));
+		collectionTitleLbl.getElement().setAttribute("title",StringUtil.truncateText(collectionResultDo.getResourceTitle(), 40));
 		teamFlowPanel.clear();
 		creatorNameLbl.setText(CREATED_BY);
+		creatorNameLbl.getElement().setAttribute("alt",CREATED_BY);
+		creatorNameLbl.getElement().setAttribute("title",CREATED_BY);
 		if (collectionResultDo.getCollaboratorCount()!=null && collectionResultDo.getCollaboratorCount()>0){
 			 CollaboratorsUc collaboratorsUc=new CollaboratorsUc(collectionResultDo);
 			 teamFlowPanel.add(collaboratorsUc);
 				creatorNameLblValue.setText(collectionResultDo.getOwner().getUsername() +" " + i18n.GL_GRR_AND() +" ");
+				creatorNameLblValue.getElement().setAttribute("alt",collectionResultDo.getOwner().getUsername() +" " + i18n.GL_GRR_AND() +" ");
+				creatorNameLblValue.getElement().setAttribute("title",collectionResultDo.getOwner().getUsername() +" " + i18n.GL_GRR_AND() +" ");
 		}else{
 			creatorNameLblValue.setText(collectionResultDo.getOwner().getUsername());
+			creatorNameLblValue.getElement().setAttribute("alt",collectionResultDo.getOwner().getUsername());
+			creatorNameLblValue.getElement().setAttribute("title",collectionResultDo.getOwner().getUsername());
 		}
 		System.out.println("collectionResultDo.getOwner().isProfileUserVisibility() : "+collectionResultDo.getOwner().isProfileUserVisibility());
 		if ((collectionResultDo.getOwner().isProfileUserVisibility())){
