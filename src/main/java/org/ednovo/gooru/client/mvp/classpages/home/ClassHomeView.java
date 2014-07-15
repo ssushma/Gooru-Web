@@ -44,7 +44,6 @@ import org.ednovo.gooru.shared.model.content.AttachToDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -139,7 +138,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						}
 						else
 						{
-							ownerClassesContainer.getElement().setInnerHTML(GL1929);
+							ownerClassesContainer.getElement().setInnerHTML(i18n.GL1929());
 						}
 						
 					}
@@ -169,7 +168,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						}
 						else
 						{
-							joinedClassesContainer.getElement().setInnerHTML(GL1930);
+							joinedClassesContainer.getElement().setInnerHTML(i18n.GL1930());
 						}
 						
 					}
@@ -384,7 +383,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 					 if(result.getGooruOid()==null){
 						 Window.enableScrolling(false);
 						 AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-						alertMessageUc=new AlertMessageUc(GL0061, new Label(GL0244));
+						alertMessageUc=new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0244()));
 						ClickHandler alertHandler=new ClickHandler() {
 
 							@Override
@@ -478,9 +477,9 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						else 
 						{
 							       if(AppClientFactory.isAnonymous()){
-							    	   new SentEmailSuccessVc(GL1177, GL1535);
+							    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535());
 							       }else{
-							    	   new SentEmailSuccessVc(GL1177, GL1535_1);
+							    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());
 							       }
 						}
 						

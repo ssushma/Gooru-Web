@@ -132,7 +132,15 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 			internalPanel1.getElement().getStyle().setBorderColor("#515151");
 			internalPanel1.getElement().getStyle().setWidth(497, Unit.PX);*/
 		}
-		
+		internalPanel1.getElement().setId("fpnlInternalPanel1");
+		collectionTitlePanel.getElement().setId("fpnlCollectionTitlePanel");
+		containerPanel.getElement().setId("pnlContainerPanel");
+		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
+		standardsDataPanel.getElement().setId("fpnlStandardsDataPanel");
+		resourceCountLbl.getElement().setId("lblResourceCountLbl");
+		questionCountLbl.getElement().setId("lblQuestionCountLbl");
+		collectionGradePanel.getElement().setId("fpnlCollectionGradePanel");
+		gradesLblValue.getElement().setId("lblGradesLblValue");
 	}
 
 	/**
@@ -143,8 +151,20 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 		this.collectionSearchResultDo = collectionSearchResultDo;
 		//collectionTitleLbl.setText(StringUtil.truncateText(collectionSearchResultDo.getResourceTitle(), 30));
 		collectionTitleLbl.setHTML(StringUtil.truncateText(collectionSearchResultDo.getResourceTitle(), 30));
+		collectionTitleLbl.getElement().setId("htmlCollectionTitleLbl");
+		collectionTitleLbl.getElement().setAttribute("alt",StringUtil.truncateText(collectionSearchResultDo.getResourceTitle(), 30));
+		collectionTitleLbl.getElement().setAttribute("title",StringUtil.truncateText(collectionSearchResultDo.getResourceTitle(), 30));
+		
 		creatorNameLbl.setText(i18n.GL0622());
+		creatorNameLbl.getElement().setId("lblCreatorNameLbl");
+		creatorNameLbl.getElement().setAttribute("alt",i18n.GL0622());
+		creatorNameLbl.getElement().setAttribute("title",i18n.GL0622());
+		
 		creatorNameLblValue.setText(collectionSearchResultDo.getOwner().getUsername());
+		creatorNameLblValue.getElement().setId("lblCreatorNameLblValue");
+		creatorNameLblValue.getElement().setAttribute("alt",collectionSearchResultDo.getOwner().getUsername());
+		creatorNameLblValue.getElement().setAttribute("title",collectionSearchResultDo.getOwner().getUsername());
+		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 			String grade =collectionSearchResultDo.getGrade();
 			if (grade != null) {
@@ -227,10 +247,14 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 				
 			
 				gradesLblValue.setText(finalGradeStringB.toString());
+				gradesLblValue.getElement().setAttribute("alt",finalGradeStringB.toString());
+				gradesLblValue.getElement().setAttribute("title",finalGradeStringB.toString());
 				collectionGradePanel.add(gradesLblValue);
 			}
 			else {
 				gradesLblValue.setText(null);
+				gradesLblValue.getElement().setAttribute("alt",null);
+				gradesLblValue.getElement().setAttribute("title",null);
 			}
 		}
 		
@@ -301,14 +325,22 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 		
 		if (resourceCount>1){
 			resourceCountLbl.setText(resourceCount + RESOURCES);
+			resourceCountLbl.getElement().setAttribute("alt",resourceCount + RESOURCES);
+			resourceCountLbl.getElement().setAttribute("title",resourceCount + RESOURCES);
 		} else if(resourceCount==0&&questionCount==0){
 			resourceCountLbl.setText(resourceCount + RESOURCE);
+			resourceCountLbl.getElement().setAttribute("alt",resourceCount + RESOURCE);
+			resourceCountLbl.getElement().setAttribute("title",resourceCount + RESOURCE);
 		}
 		
 		if (questionCount>1){
 			questionCountLbl.setText(questionCount + QUESTIONS);
+			questionCountLbl.getElement().setAttribute("alt",questionCount + QUESTIONS);
+			questionCountLbl.getElement().setAttribute("title",questionCount + QUESTIONS);
 		} else if (questionCount==1) {
 			questionCountLbl.setText(questionCount + QUESTION);
+			questionCountLbl.getElement().setAttribute("alt",questionCount + QUESTION);
+			questionCountLbl.getElement().setAttribute("title",questionCount + QUESTION);
 		}
 		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){

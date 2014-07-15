@@ -42,11 +42,13 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.ErrorPopup;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
@@ -82,6 +84,8 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	@NameToken(PlaceTokens.STUDENT)
 	public interface IsStudentAssignmentProxy extends ProxyPlace<StudentAssignmentPresenter> {
 	}
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	//IndirectProvider<AssignmentPresenter> assignmentFactory;
 	
@@ -163,7 +167,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 							triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
 							
 					}else{
-						ErrorPopup error = new ErrorPopup(GL1632);
+						ErrorPopup error = new ErrorPopup(i18n.GL1632());
 						error.center();
 						error.show();
 					}

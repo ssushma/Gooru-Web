@@ -38,10 +38,8 @@ import org.ednovo.gooru.client.mvp.profilepage.data.events.SetProfileCollectionS
 import org.ednovo.gooru.client.mvp.profilepage.event.OpenProfileCollectionEvent;
 import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

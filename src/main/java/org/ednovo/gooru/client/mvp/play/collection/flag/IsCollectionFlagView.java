@@ -4,6 +4,7 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
+
 import com.google.gwt.user.client.ui.Image;
 import com.gwtplatform.mvp.client.PopupView;
 

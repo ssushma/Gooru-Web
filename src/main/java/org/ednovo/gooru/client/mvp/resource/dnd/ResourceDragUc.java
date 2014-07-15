@@ -88,6 +88,12 @@ public class ResourceDragUc extends FocusPanel implements IsDraggableMirage {
 	public void setData(String category, String title) {
 	  //dragresourceTitle.setText(StringUtil.truncateText(title, 25));
 		dragresourceTitle.setHTML(title);
+		dragresourceTitle.getElement().setId("htmlDragresourceTitle");
+		dragresourceTitle.getElement().setAttribute("alt",title);
+		dragresourceTitle.getElement().setAttribute("title",title);
+		container.getElement().setId("apnlContainer");
+		labelPanel.getElement().setId("fpnlLabelPanel");
+		dragResourceImage.getElement().setId("lblDragResourceImage");
 		ImageUtil.renderResourceImage(dragResourceImage, category);
 	}
 

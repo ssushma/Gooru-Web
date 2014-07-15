@@ -29,6 +29,7 @@ package org.ednovo.gooru.server.service;
 
 
 import java.net.URLEncoder;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,7 +55,6 @@ import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,6 +100,10 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	private static final String COURSE_CODE_ID = "id";
 	
 	private static final String COLLECTION_EDIT_EVENT ="collection-edit";
+	
+	private static final String HTTPS = "https";
+	
+	private static final String HTTP = "http";
 	
 	@Autowired
 	private CollectionSearchResultDeSerializer collectionSearchResultDeSerializer;
@@ -182,7 +186,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}
 		
 		String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.RESOURCE_SEARCH, filtersMap, getLoggedInSessionToken(), query, searchDo.getPageNum() + "", searchDo.getPageSize() + "", SINGLE, "false", TRUE, TRUE);
-		if(getSearchEndPoint().contains(MessageProperties.HTTPS)){
+		if(getSearchEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
 		}
 		System.out.println("url:::"+url);
@@ -228,7 +232,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			}
 		}*/
 		String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.SIMPLE_COLLECTION_SEARCH, searchDo.getFilters(), getLoggedInSessionToken(), collectionQuery, searchDo.getPageNum() + "", searchDo.getPageSize() + "", MY_STRING);
-		if(getSearchEndPoint().contains(MessageProperties.HTTPS)){
+		if(getSearchEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
 		}
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
@@ -348,8 +352,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			
 		}
 		
-		if(getHttpRequest().getScheme().equalsIgnoreCase(MessageProperties.HTTPS)) {
-			shortenUrl.put(SHORTEN_URL, shortenUrl.get(SHORTEN_URL).replaceAll(MessageProperties.HTTP, MessageProperties.HTTPS));
+		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+			shortenUrl.put(SHORTEN_URL, shortenUrl.get(SHORTEN_URL).replaceAll(HTTP, HTTPS));
 		}
 		return shortenUrl;
 	}
@@ -387,8 +391,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 			
 		}
 		
-		if(getHttpRequest().getScheme().equalsIgnoreCase(MessageProperties.HTTPS)) {
-			shortenUrl.put(SHORTEN_URL, shortenUrl.get(SHORTEN_URL).replaceAll(MessageProperties.HTTP, MessageProperties.HTTPS));
+		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+			shortenUrl.put(SHORTEN_URL, shortenUrl.get(SHORTEN_URL).replaceAll(HTTP, HTTPS));
 		}
 		return shortenUrl;
 	}
@@ -524,7 +528,7 @@ public SearchDo<ResourceSearchResultDo> getCollectionSuggestedResourceSearchResu
 	//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.SEARCH_SUGGEST_RESOURCES, getLoggedInSessionToken(), URLEncoder.encode(searchDo.getSearchQuery()), COLLECTION_EDIT_EVENT ,"8c20a619-8aba-4b10-ae2c-6cf71d469a80");
 	String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.SEARCH_SUGGEST_RESOURCES, getLoggedInSessionToken(), URLEncoder.encode(searchDo.getSearchQuery()), COLLECTION_EDIT_EVENT ,contentGorruOid);
 
-	if(getSearchEndPoint().contains(MessageProperties.HTTPS)){
+	if(getSearchEndPoint().contains(HTTPS)){
 		url = appendHttpsURL(url);
 	}
 	System.out.println("search end point url::::::"+url);
