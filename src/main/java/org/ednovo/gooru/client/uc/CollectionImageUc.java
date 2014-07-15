@@ -78,6 +78,8 @@ public class CollectionImageUc extends Composite implements ClickHandler {
 	public CollectionImageUc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
+		collectionThumbnail.getElement().setId("fpnlCollectionThumbnail");
+		image.getElement().setId("imgImage");
 		image.addErrorHandler(new ErrorHandler() {
 
 			@Override

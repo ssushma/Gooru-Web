@@ -65,8 +65,14 @@ public class BalloonPopupVc extends Composite {
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 //		popupDesc.setText(StringUtil.truncateText(desc,60));
+		popupContainer.getElement().setId("pnlPopupContainer");
 		popupDesc.setText(i18n.GL1013());
+		popupDesc.getElement().setId("lblPopupDesc");
+		popupDesc.getElement().setAttribute("alt", i18n.GL1013());
+		popupDesc.getElement().setAttribute("title", i18n.GL1013());
 		popupDesc.setText(desc);
+		popupDesc.getElement().setAttribute("alt", desc);
+		popupDesc.getElement().setAttribute("title", desc);
 	}
 
 	

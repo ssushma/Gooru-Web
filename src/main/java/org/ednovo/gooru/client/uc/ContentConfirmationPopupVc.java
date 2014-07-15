@@ -36,6 +36,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -51,6 +52,8 @@ public abstract class ContentConfirmationPopupVc  extends Composite {
 	@UiField 
 	Label contentText;
 	
+	@UiField FlowPanel buttonContainer;
+	
 	private static ContentConfirmationPopupVcUiBinder uiBinder = GWT.create(ContentConfirmationPopupVcUiBinder.class);
 	
 	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
@@ -64,11 +67,19 @@ public abstract class ContentConfirmationPopupVc  extends Composite {
 		appPopUp.setStyleName("removeResourcePopup");
 		appPopUp.setContent(messageHeader, uiBinder.createAndBindUi(this));
 		contentText.setText(messageContent);
+		contentText.getElement().setId("lblContentText");
+		contentText.getElement().setAttribute("alt", messageContent);
+		contentText.getElement().setAttribute("title", messageContent);
+		buttonContainer.getElement().setId("fpnlButtonContainer");
 		appPopUp.getElement().getStyle().setZIndex(9999);
 		appPopUp.show();
 		appPopUp.center();
 		okButton.setText(i18n.GL0190());
+		okButton.getElement().setAttribute("alt", i18n.GL0190());
+		okButton.getElement().setAttribute("title", i18n.GL0190());
 		cancelButton.setText(i18n.GL0142());
+		cancelButton.getElement().setAttribute("alt", i18n.GL0142());
+		cancelButton.getElement().setAttribute("title", i18n.GL0142());
 		okButton.getElement().setId("btnOk");
 		cancelButton.getElement().setId("lnkCancel");
 	}

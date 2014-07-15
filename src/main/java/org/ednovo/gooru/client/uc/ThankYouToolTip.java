@@ -71,10 +71,27 @@ public class ThankYouToolTip extends PopupPanel{
 		setGlassEnabled(true);
 		FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().ensureInjected();
 		successPopupTitle.setText(i18n.GL0600());
+		successPopupTitle.getElement().setId("lblSuccessPopupTitle");
+		successPopupTitle.getElement().setAttribute("alt", i18n.GL0600());
+		successPopupTitle.getElement().setAttribute("title", i18n.GL0600());
+		closeButton.getElement().setId("epnlCloseButton");
+		popUpCloseButton.getElement().setId("imgPopUpCloseButton");
+		popUpCloseButton.getElement().setAttribute("alt", i18n.GL1050());
+		popUpCloseButton.getElement().setAttribute("title", i18n.GL1050());
 		popUpCloseButton.setAltText(i18n.GL1050());
 		successPopupMessage.setText(i18n.GL0615());
+		successPopupMessage.getElement().setId("lblSuccessPopupMessage");
+		successPopupMessage.getElement().setAttribute("alt", i18n.GL0615());
+		successPopupMessage.getElement().setAttribute("title", i18n.GL0615());
+		emailPopupThanksmsg.getElement().setId("pnlEmailPopupThanksmsg");
 		emailConfirmationText.setText(i18n.GL0648());
+		emailConfirmationText.getElement().setId("lblEmailConfirmationText");
+		emailConfirmationText.getElement().setAttribute("alt", i18n.GL0648());
+		emailConfirmationText.getElement().setAttribute("title", i18n.GL0648());
+		emailIdLbl.getElement().setId("lblEmailIdLbl");
 		okButton.setText(i18n.GL0190());
+		okButton.getElement().setAttribute("alt", i18n.GL0190());
+		okButton.getElement().setAttribute("title", i18n.GL0190());
 		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE.closeFlagPopUpImages());
 		okButton.getElement().setAttribute("id","okButton");
 		successPopupMessage.setVisible(true);
@@ -84,9 +101,13 @@ public class ThankYouToolTip extends PopupPanel{
 	
 	public void setTitleData(String title, String emailId) {
 		successPopupTitle.setText(title);
+		successPopupTitle.getElement().setAttribute("alt", title);
+		successPopupTitle.getElement().setAttribute("title", title);
 		successPopupMessage.setVisible(false);
 		emailPopupThanksmsg.setVisible(true);
 		emailIdLbl.setText(emailId);
+		emailIdLbl.getElement().setAttribute("alt", emailId);
+		emailIdLbl.getElement().setAttribute("title", emailId);
 
 	}
 	
