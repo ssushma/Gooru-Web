@@ -2043,7 +2043,7 @@ public interface MessageProperties {
     	String GL1582 = "Directions";
     	String GL1583 = "Please select the standards initiative(s) you prefer to view on Gooru. These standards will appear in libraries and in other places where resources and collections are visible.";
     	
-    	String GL1584="Invite your students to join this class!";
+    	String GL1584="Assign this class to your students the way you want";
     	String GL1585="Invite students to your class";
     	
     	
@@ -2052,8 +2052,8 @@ public interface MessageProperties {
     	String GL1588="{0} must contain atleast one character.";
     	
     	String GL1589="Invite Only!";
-    	String GL1590="Invite students to your class";
-    	String GL1591="Enter email addresses";
+    	String GL1590="Invite via Email";
+    	String GL1591="Enter email addresses--these students will have direct access to your class.";
     	String GL1592="Share in Your Classroom";
     	String GL1593="Class Codes are an easy way to share classes with your students in the classroom. Simply have students enter the class code in the My Classes tab to find their assignments.";
     	String GL1594="Share via E-mail or Online";
