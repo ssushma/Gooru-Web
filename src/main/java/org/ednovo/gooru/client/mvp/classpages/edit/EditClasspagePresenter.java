@@ -373,17 +373,19 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			getView().resetEditClasspageView();
 		}
-		classpageDo = null;
+		this.classpageId=getPlaceManager().getRequestParameter("classpageid");
+		if(classpageDo==null||(!classpageDo.getClasspageId().equals(classpageId))){
+			getView().resetEditClasspageView();
+		}
+	//	classpageDo = null;
 		getClasspage();
 	}
 	public void getClasspage(){
-		this.classpageId=getPlaceManager().getRequestParameter("classpageid");
 		this.analyticsId= getPlaceManager().getRequestParameter("analyticsId");
 		this.monitorId = getPlaceManager().getRequestParameter("monitorid");
 		final String sortingOrder=getPlaceManager().getRequestParameter("order",null);
-		//here
 		this.tab=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
-		if(classpageDo==null){
+		if(classpageDo==null||(!classpageDo.getClasspageId().equals(classpageId))){
 			this.classpageService.getClasspage(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
 				@Override
 				public void onSuccess(ClasspageDo classpageDo) {
@@ -404,7 +406,11 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 						limit=5;
 						generateShareLink(classpageDo.getClasspageId());
 						getView().setSortingOrderInDropdown(sortingOrder);
-						getClasspageItems(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder);
+						if(sortingOrder!=null&&(sortingOrder.equals("earliest")||sortingOrder.equals("latest"))){
+							getAssignmentsCount(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder);
+						}else{
+							getClasspageItems(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder,0);
+						}
 						getAssignmentsProgress(classpageId, "0", "20");	// to display assignment progress.
                         getView().setClasspageData(classpageDo);
                         classlistPresenter.setClassPageDo(classpageDo);
@@ -420,7 +426,11 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		}else{
 			getView().setSortingOrderInDropdown(sortingOrder);
 			getView().hideNoAssignmentsMessagePanel();
-			getClasspageItems(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder);
+			if(sortingOrder!=null&&(sortingOrder.equals("earliest")||sortingOrder.equals("latest"))){
+				getAssignmentsCount(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder);
+			}else{
+				getClasspageItems(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder,0);
+			}
 		}
 	}
 	
@@ -438,13 +448,25 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		
 	}
 	
-	public void getClasspageItems(String classpageId,String offset,String limit, final String tab, final String analyticsId, final String monitorId,final String sortingOrder){
+	public void getClasspageItems(String classpageId,String offset,String limit, final String tab, final String analyticsId, final String monitorId,final String sortingOrder,final int assignemntCount){
 		this.classpageService.getClassPageItems(classpageId, offset, limit,sortingOrder,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
-			
 			@Override
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
 				if(classpageItemsList!=null){
-					getView().showClasspageItems(classpageItemsList, tab, analyticsId,monitorId,classlistPresenter);
+					getView().showClasspageItems(classpageItemsList, tab, analyticsId,monitorId,classlistPresenter,assignemntCount);
+				}
+			}
+		});
+	}
+	
+	public void getAssignmentsCount(final String classpageId,final String offset,final String limit, final String tab, final String analyticsId, final String monitorId,final String sortingOrder){
+		this.classpageService.getClassPageItems(classpageId, "0", "1",null,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+			@Override
+			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
+				if(classpageItemsList!=null){
+					getClasspageItems(classpageId,offset,limit,tab,analyticsId,monitorId,sortingOrder,classpageItemsList.size());
+				}else{
+					getClasspageItems(classpageId,offset,limit,tab,analyticsId,monitorId,sortingOrder,0);
 				}
 			}
 		});
@@ -455,7 +477,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		String classpageId=getPlaceManager().getRequestParameter("classpageid");
 		String analyticsId=getPlaceManager().getRequestParameter("analyticsId");
 		String monitorId=getPlaceManager().getRequestParameter("monitorid");
-		getClasspageItems( classpageId,offset.toString(),limit.toString(), tab, analyticsId,monitorId,null);
+		//getClasspageItems( classpageId,offset.toString(),limit.toString(), tab, analyticsId,monitorId,null);
 	}
 	private void initParam() {
 		classpageId = getPlaceManager().getRequestParameter("classpageid");
@@ -563,7 +585,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
 				if(classpageItemsList!=null){
 					getView().displayAssignmentPath(classpageItemsList);
-					getClasspage();
+					//getClasspage();
 				}
 			}
 		});
