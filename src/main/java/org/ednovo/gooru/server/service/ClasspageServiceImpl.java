@@ -96,6 +96,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	private static final String COLLECTIONTYPE = "collectionType";
 	
 	private static final String TITLE="title";
+	private static final String ITEMCOUNT="itemCount";
 	
 	private static final String TASKRESOURCEASSOC = "taskResourceAssoc";
 	
@@ -128,6 +129,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	private static final String COLLECTION="collection";
 	private static final String SHARING="sharing";
 	private static final String STATUS="status";
+	private static final String MEMBERCOUNT="memberCount";
 	private static final String USERNAMEWDISPLAY="usernameDisplay";
 	private static final String PROFILEIMAGEURL="profileImageUrl";
 	private static final String USER="user";
@@ -553,6 +555,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,
 				getLoggedInSessionToken());
+		System.out.println("v2GetClasspageById::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -750,6 +753,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public CollectionDo v2getClasspageByCode(String classpageCode) throws GwtException{
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_BY_CODE, classpageCode, getLoggedInSessionToken());
+		System.out.println("v2getClasspageByCode:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		if(jsonRep!=null && jsonRep.getSize()!=1){	
@@ -1119,6 +1123,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 					classpageDo.setClasspageId(classpageJsonObject.getString(GOORUOID));
 					classpageDo.setClasspageCode(classpageJsonObject.getString(CLASSPAGECODE));
 					classpageDo.setTitle(classpageJsonObject.getString(TITLE));
+					classpageDo.setItemCount(classpageJsonObject.getString(ITEMCOUNT));
 					classpageDo.setThumbnailUrl(classpageJsonObject.getJSONObject(THUMBNAIL)!=null?classpageJsonObject.getJSONObject(THUMBNAIL).getString(THUMBNAILURL):"");
 					ArrayList<String> permissionList=new ArrayList<String>();
 					if(!classpageJsonObject.isNull(CREATOR)){
@@ -1135,6 +1140,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 					if(!classpageJsonObject.isNull(META)){
 						if(!classpageJsonObject.getJSONObject(META).isNull(STATUS)){
 							classpageDo.setStatus(classpageJsonObject.getJSONObject(META).getString(STATUS));
+						}
+						if(!classpageJsonObject.getJSONObject(META).isNull(MEMBERCOUNT)){
+							classpageDo.setMemberCount(classpageJsonObject.getJSONObject(META).getString(MEMBERCOUNT));
 						}
 						if(!classpageJsonObject.getJSONObject(META).isNull(PERMISSIONS)){
 							JSONArray permissionsArray=classpageJsonObject.getJSONObject(META).getJSONArray(PERMISSIONS);
