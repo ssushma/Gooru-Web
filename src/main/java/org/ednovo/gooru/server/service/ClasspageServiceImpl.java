@@ -25,6 +25,7 @@
 package org.ednovo.gooru.server.service;
 
 import java.io.IOException;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -63,7 +64,6 @@ import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.BitlyUrlDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -132,6 +132,10 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	private static final String PROFILEIMAGEURL="profileImageUrl";
 	private static final String USER="user";
 	private static final String ITEMSEQUENCE="itemSequence";
+
+	private static final String HTTPS = "https";
+	
+	private static final String HTTP = "http";
 
 	
 
@@ -781,8 +785,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			e.printStackTrace();
 		}
 		
-		if(getHttpRequest().getScheme().equalsIgnoreCase(MessageProperties.HTTPS)) {
-			bitlyLink = bitlyLink.replaceAll(MessageProperties.HTTP, MessageProperties.HTTPS);
+		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+			bitlyLink = bitlyLink.replaceAll(HTTP, HTTPS);
 		}
 		
 		listUrl.add(bitlyLink);

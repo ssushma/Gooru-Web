@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.profilepage;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -46,7 +45,6 @@ import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePage
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePagefollowingView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagsResourceView;
-
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.settings.UserSettingStyle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
@@ -57,7 +55,6 @@ import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.ProfilePageDescriptionEditUc;
 import org.ednovo.gooru.client.uc.ProfilePageGradeLabel;
-import org.ednovo.gooru.client.uc.ToolTipPopUp;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -72,8 +69,6 @@ import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
-
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;

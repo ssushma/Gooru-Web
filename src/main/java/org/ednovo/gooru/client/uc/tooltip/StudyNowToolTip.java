@@ -270,7 +270,7 @@ public class StudyNowToolTip extends PopupPanel {
 					 if(result.getGooruOid()==null){
 						 Window.enableScrolling(false);
 						 AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-						alertMessageUc=new AlertMessageUc(GL0061, new Label(GL0244));
+						alertMessageUc=new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0244()));
 						ClickHandler alertHandler=new ClickHandler() {
 
 							@Override
@@ -370,9 +370,9 @@ public class StudyNowToolTip extends PopupPanel {
 						else 
 						{
 							       if(AppClientFactory.isAnonymous()){
-							    	   new SentEmailSuccessVc(GL1177, GL1535);
+							    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535());
 							       }else{
-							    	   new SentEmailSuccessVc(GL1177, GL1535_1);
+							    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());
 							       }
 						}
 						
