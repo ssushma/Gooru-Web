@@ -216,6 +216,7 @@ public class LibraryTopicListView extends Composite{
 		topicTitleLbl.getElement().setAttribute("title",i18n.GL1171()+" "+topicNumber+": "+topicDo.getLabel());
 		searchTitle=topicDo.getLabel();
 		setIds();
+		setAssets();
 		if(topicDo.getLesson()!=null) {
 			setLessonData(topicDo.getLesson());
 		} else {
@@ -333,7 +334,16 @@ public class LibraryTopicListView extends Composite{
 		collectionTitle.getElement().setId("collectionTitle");
 		quizTitle.getElement().setId("quizTitle");
 	}
-
+	
+	private void setAssets() {
+		collectionTitle.setText(i18n.GL0645());
+		collectionTitle.getElement().setAttribute("alt",i18n.GL0645());
+		collectionTitle.getElement().setAttribute("title",i18n.GL0645());
+		quizTitle.setText(i18n.GL1670());
+		quizTitle.getElement().setAttribute("alt",i18n.GL1670());
+		quizTitle.getElement().setAttribute("title",i18n.GL1670());
+	}
+	
 	public LibraryTopicListView(ConceptDo conceptDo, Integer conceptNumber, String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
@@ -367,6 +377,7 @@ public class LibraryTopicListView extends Composite{
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
 		
 		setIds();
+		setAssets();
 		addCollectionQuizTitleData("concept");
 		lessonScrollPanel.setVisible(false);
 		collectionViewer.addStyleName(libraryStyle.collectionViewerSubStyle());
@@ -407,6 +418,7 @@ public class LibraryTopicListView extends Composite{
 		topicTitleLbl.getElement().setAttribute("title",partnerFolderDo.getTitle());
 		searchTitle=partnerFolderDo.getTitle();
 		setIds();
+		setAssets();
 		addCollectionQuizTitleData("partner");
 		if(partnerFolderDo.getCollections()!=null) {
 			setOnlyConceptData(partnerFolderDo.getCollections(), false, partnerFolderDo.getGooruOid(), partnerFolderDo.getItemCount());
@@ -1326,7 +1338,7 @@ public class LibraryTopicListView extends Composite{
 	};
 	
 	private void addCollectionQuizTitleData(String pageType) {
-		if(pageType.equals("lesson")&&conceptDoList.size()>1) {
+		if(pageType.equals("lesson")&&conceptDoList.size()>1&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
 			collectionTitle.addStyleName(libraryStyle.collectionQuizTabActive());
 		} else {
 			setCollectionQuizVisibility(false);
