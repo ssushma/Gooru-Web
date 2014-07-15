@@ -1,7 +1,7 @@
 package org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -24,6 +24,9 @@ public class ProfilePageUnFollowPopUp extends PopupPanel {
 	interface ProfilePageUnFollowPopUpUiBinder extends
 			UiBinder<Widget, ProfilePageUnFollowPopUp> {
 	}
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField Label popupHeaderTitleLbl;
 	@UiField Button okBtn;
 	@UiField InlineLabel inputTitleLbl,inputTitleLblName;
@@ -32,21 +35,21 @@ public class ProfilePageUnFollowPopUp extends PopupPanel {
 	public ProfilePageUnFollowPopUp() {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.setGlassEnabled(true);
-		okBtn.setText(MessageProperties.GL1386);
+		okBtn.setText(i18n.GL1386());
 		okBtn.getElement().setId("btnOkBtn");
-		okBtn.getElement().setAttribute("alt",MessageProperties.GL1386);
-		okBtn.getElement().setAttribute("title",MessageProperties.GL1386);
+		okBtn.getElement().setAttribute("alt",i18n.GL1386());
+		okBtn.getElement().setAttribute("title",i18n.GL1386());
 		
-		popupHeaderTitleLbl.setText(MessageProperties.GL1939);
+		popupHeaderTitleLbl.setText(i18n.GL1939());
 		popupHeaderTitleLbl.getElement().setId("lblPopupHeaderTitleLbl");
-		popupHeaderTitleLbl.getElement().setAttribute("alt",MessageProperties.GL1939);
-		popupHeaderTitleLbl.getElement().setAttribute("title",MessageProperties.GL1939);
+		popupHeaderTitleLbl.getElement().setAttribute("alt",i18n.GL1939());
+		popupHeaderTitleLbl.getElement().setAttribute("title",i18n.GL1939());
 		
 		String userName=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
-		inputTitleLbl.setText(MessageProperties.GL1940);
+		inputTitleLbl.setText(i18n.GL1940());
 		inputTitleLbl.getElement().setId("spnInputTitleLbl");
-		inputTitleLbl.getElement().setAttribute("alt",MessageProperties.GL1940);
-		inputTitleLbl.getElement().setAttribute("title",MessageProperties.GL1940);
+		inputTitleLbl.getElement().setAttribute("alt",i18n.GL1940());
+		inputTitleLbl.getElement().setAttribute("title",i18n.GL1940());
 		
 		inputTitleLblName.setText(userName);
 		inputTitleLblName.getElement().setId("spnInputTitleLblName");

@@ -8,9 +8,10 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -87,7 +88,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 	
 	private static FolderPopupUcUiBinder uiBinder = GWT.create(FolderPopupUcUiBinder.class);
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface FolderPopupUcUiBinder extends UiBinder<Widget, FolderPopupUc> {}
 
@@ -115,7 +116,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 		folderStructureTree.add(folderTreePanel);
 		folderTitle.getElement().setAttribute("maxlength", "50");
 		folderTitle.getElement().setAttribute("placeholder", i18n.GL1250());
-		folderTitle.getElement().setAttribute("spellcheck", "true");
+		StringUtil.setAttributes(folderTitle);
 		validationTitleLbl.getElement().getStyle().setDisplay(Display.NONE);
 		validationTitleLbl.getElement().getStyle().setTextAlign(TextAlign.RIGHT);
 		addingLbl.setVisible(false);

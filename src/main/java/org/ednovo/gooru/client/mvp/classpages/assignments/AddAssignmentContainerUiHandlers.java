@@ -38,8 +38,6 @@ package org.ednovo.gooru.client.mvp.classpages.assignments;
 *
 */
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.shared.model.content.AssignmentDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.user.client.ui.TreeItem;

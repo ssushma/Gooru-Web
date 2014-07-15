@@ -25,6 +25,7 @@
 package org.ednovo.gooru.server.service;
 
 import java.io.IOException;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -70,7 +71,6 @@ import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfanityDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,7 +84,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 @Service("resourceService")
 @ServiceURL("/resourceService")
-public class ResourceServiceImpl extends BaseServiceImpl implements MessageProperties,ResourceService {
+public class ResourceServiceImpl extends BaseServiceImpl implements ResourceService {
 
 	
 	private static final long serialVersionUID = 3247182821197046755L;
@@ -120,6 +120,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 	private static final String NEW_RESOURCE = "newResource";
 	
 	private static final String TAXONOMY_SET = "taxonomySet";
+	
+	private static final String CHOOSE = "Please choose one of the following...";
 	
 	@Autowired
 	ResourceDeserializer resourceDeserializer;
@@ -614,7 +616,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		educationalOfObj.setSelected(true);
 		educationalOfObj.setValue(edcuationalUse);
 		arrayOfEducational.add(educationalOfObj);
-		if(!edcuationalUse.equalsIgnoreCase(GL1684))
+		if(!edcuationalUse.equalsIgnoreCase(CHOOSE))
 		newResourceDo.setEducationalUse(arrayOfEducational);
 		
 		ArrayList<checkboxSelectedDo> arrayOfMoments=new ArrayList<checkboxSelectedDo>();
@@ -622,7 +624,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		momentsOfObj.setSelected(true);
 		momentsOfObj.setValue(momentsOfLearning);
 		arrayOfMoments.add(momentsOfObj);
-		if(!momentsOfLearning.equalsIgnoreCase(GL1684))
+		if(!momentsOfLearning.equalsIgnoreCase(CHOOSE))
 		newResourceDo.setMomentsOfLearning(arrayOfMoments);
 		
 		ResourceFormatDo resourceFormat = new ResourceFormatDo();

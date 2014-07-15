@@ -26,9 +26,8 @@ package org.ednovo.gooru.client.mvp.play.resource.framebreaker;
 
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -82,7 +81,7 @@ public class ResourceFrameBreakerView extends Composite{
 	interface ResourceFrameBreakerViewUiBinder extends UiBinder<Widget, ResourceFrameBreakerView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	
 	/*

@@ -34,18 +34,16 @@ import org.ednovo.gooru.client.mvp.home.library.events.OpenLessonConceptEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetConceptTitleStyleEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetConceptTitleStyleHandler;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconEvent;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -71,7 +69,7 @@ public class LibraryLessonUc extends Composite{
 	interface LibraryLessonUcUiBinder extends UiBinder<Widget, LibraryLessonUc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public LibraryLessonUc(LessonDo lessonDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
 		initWidget(uiBinder.createAndBindUi(this));

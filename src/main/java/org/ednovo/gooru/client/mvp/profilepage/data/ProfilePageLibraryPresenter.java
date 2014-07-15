@@ -34,8 +34,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
 /**
  * @author Search Team
  * 

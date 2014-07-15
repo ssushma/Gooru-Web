@@ -33,9 +33,8 @@ import org.ednovo.gooru.client.mvp.home.event.SetTexasAccountEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasAccountHandler;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -79,7 +78,7 @@ public class TeachersPickUc extends Composite{
 	interface TeachersPickUcUiBinder extends UiBinder<Widget, TeachersPickUc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public TeachersPickUc() {
 		initWidget(uiBinder.createAndBindUi(this));

@@ -28,7 +28,7 @@
 package org.ednovo.gooru.client.mvp.library.sausd;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -62,7 +62,7 @@ public class SausdBannerView extends Composite {
 	private static SausdBannerViewUiBinder uiBinder = GWT
 			.create(SausdBannerViewUiBinder.class);
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SausdBannerViewUiBinder extends
 			UiBinder<Widget, SausdBannerView> {

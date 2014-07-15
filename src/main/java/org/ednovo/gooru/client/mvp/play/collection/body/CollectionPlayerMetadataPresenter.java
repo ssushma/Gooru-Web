@@ -36,7 +36,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomePrese
 import org.ednovo.gooru.client.service.LibraryServiceAsync;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
@@ -45,7 +45,6 @@ import org.ednovo.gooru.shared.model.player.CommentsListDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -72,7 +71,7 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 	
 	private static final String PAGE = "course-page";
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@Inject
 	public CollectionPlayerMetadataPresenter(EventBus eventBus, IsCollectionPlayerMetadataView view,PreviewHomePresenter previewHomePresenter,

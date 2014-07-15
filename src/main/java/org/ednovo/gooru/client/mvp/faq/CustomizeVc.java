@@ -24,8 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.faq;
 
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -51,7 +50,7 @@ public class CustomizeVc extends Composite{
 	interface customizeUiBinder extends UiBinder<Widget, CustomizeVc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor

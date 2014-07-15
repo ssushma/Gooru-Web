@@ -27,8 +27,7 @@ package org.ednovo.gooru.client.mvp.play.collection.share.email;
 
 
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -49,7 +48,7 @@ public class SentEmailSuccessVc extends PopupPanel{
 			UiBinder<Widget, SentEmailSuccessVc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 
 	@UiField

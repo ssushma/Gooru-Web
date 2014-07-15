@@ -28,7 +28,7 @@ import java.util.List;
 
 import org.ednovo.gooru.client.effects.BackgroundColorEffect;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
@@ -59,7 +59,7 @@ public abstract class MembersViewVc extends Composite {
 	interface MembersViewVcUiBinder extends UiBinder<Widget, MembersViewVc> {
 	}
 	
-	public CopyOfMessageProperties i18N = GWT.create(CopyOfMessageProperties.class);
+	public MessageProperties i18N = GWT.create(MessageProperties.class);
 	List<ClassPageCollectionDo> classpageTitles = new ArrayList<ClassPageCollectionDo>();
 
 	CollaboratorsDo collaboratorsDo = null;

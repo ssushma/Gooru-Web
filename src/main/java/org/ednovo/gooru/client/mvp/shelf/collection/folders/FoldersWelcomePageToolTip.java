@@ -1,7 +1,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.folders;
 
 
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -19,7 +19,7 @@ public class FoldersWelcomePageToolTip extends Composite {
 
 	private static FoldersWelcomePageToolTipUiBinder uiBinder = GWT.create(FoldersWelcomePageToolTipUiBinder.class);
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface FoldersWelcomePageToolTipUiBinder extends UiBinder<Widget, FoldersWelcomePageToolTip> {
 	}

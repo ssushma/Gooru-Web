@@ -30,7 +30,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.CloseLabel;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -60,7 +60,7 @@ public class CollectionCollaboratorTabVc extends Composite {
 
 	interface EditCollaboratorVcUiBinder extends UiBinder<Widget, CollectionCollaboratorTabVc> {
 	}
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
     private static final String USER_DOES_NOT_EXIST = i18n.GL1488();
 	

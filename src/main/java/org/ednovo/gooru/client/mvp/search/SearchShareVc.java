@@ -33,7 +33,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareLinksView;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
@@ -58,7 +58,7 @@ public class SearchShareVc extends Composite {
 	private static SearchShareVcUiBinder uiBinder = GWT
 			.create(SearchShareVcUiBinder.class);
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SearchShareVcUiBinder extends UiBinder<Widget, SearchShareVc> {
 	}
@@ -99,6 +99,12 @@ public class SearchShareVc extends Composite {
 		socialShareLinksView = new SocialShareLinksView();
 		socialShareLinksView.getshareLinkTxtBox().setReadOnly(true);
 		shareViaText.setText(i18n.GL0638());
+		shareViaText.getElement().setId("lblShareViaText");
+		shareViaText.getElement().setAttribute("alt",i18n.GL0638());
+		shareViaText.getElement().setAttribute("title",i18n.GL0638());
+		socialContentPanel.getElement().setId("pnlSocialContentPanel");
+		socialShareLinksViewContainer.getElement().setId("fpnlSocialShareLinksViewContainer");
+		
 		socialShareLinksView.getShareLbl().setText(i18n.GL0511());
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setPaddingTop(0, Unit.PX);
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setWidth(22, Unit.PC);

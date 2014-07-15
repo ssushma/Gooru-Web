@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.home.landingpage;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -33,9 +32,8 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.LandingPageStyleCss;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -118,7 +116,7 @@ public class GooruInClassRoomVc extends Composite{
 			UiBinder<Widget, GooruInClassRoomVc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public GooruInClassRoomVc() {
 		initWidget(uiBinder.createAndBindUi(this));

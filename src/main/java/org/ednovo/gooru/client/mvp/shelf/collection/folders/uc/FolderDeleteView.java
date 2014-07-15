@@ -10,7 +10,7 @@ import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.core.client.GWT;
@@ -35,7 +35,7 @@ public class FolderDeleteView extends AppPopUp {
 	private static FolderDeleteViewUiBinder uiBinder = GWT
 			.create(FolderDeleteViewUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface FolderDeleteViewUiBinder extends
 			UiBinder<Widget, FolderDeleteView> {

@@ -41,7 +41,7 @@ import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.DateBoxUc;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -58,6 +58,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -74,7 +75,7 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 	@UiField(provided = true)
 	RegisterCBundle res;
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	private AppPopUp appPopUp;
 	
@@ -96,7 +97,8 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 	@UiField
 	SimplePanel dateSimPanel;
 	
-	@UiField Label birthdayLbl,emailLbl;
+	@UiField Label betaText,birthdayLbl,emailLbl;
+	@UiField FlowPanel buttonContainer;
 
 	private DateBoxUc dateBoxUc;
 
@@ -175,9 +177,25 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 		appPopUp.setStyleName(RegisterCBundle.INSTANCE.css().registerPopupStyle());
 		RegisterCBundle.INSTANCE.css().ensureInjected();
 		birthdayLbl.setText(i18n.GL0211());
+		birthdayLbl.getElement().setId("lblBirthdayLbl");
+		birthdayLbl.getElement().setAttribute("alt",i18n.GL0211());
+		birthdayLbl.getElement().setAttribute("title",i18n.GL0211());
+		
 		emailLbl.setText(i18n.GL0426());
+		emailLbl.getElement().setId("lblEmailLbl");
+		emailLbl.getElement().setAttribute("alt",i18n.GL0426());
+		emailLbl.getElement().setAttribute("title",i18n.GL0426());
+		
 		goBtnUc.setText(i18n.GL0213());
+		goBtnUc.getElement().setId("btnGoBtnUc");
+		goBtnUc.getElement().setAttribute("alt",i18n.GL0213());
+		goBtnUc.getElement().setAttribute("title",i18n.GL0213());
+		
 		cancelAnr.setText(i18n.GL0142());
+		cancelAnr.getElement().setId("lnkCancelAnr");
+		cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
+		cancelAnr.getElement().setAttribute("title",i18n.GL0142());
+		
 		dateBoxUc = new DateBoxUc(true,false,false);
 		dateSimPanel.add(dateBoxUc);
 		dateValidationUc.setStyleName(RegisterCBundle.INSTANCE.css()
@@ -195,6 +213,14 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 		
 		emailValidationUc.setVisible(false);
 		dateValidationUc.setVisible(false);
+		
+		
+		betaText.getElement().setId("lblBetaText");
+		dateSimPanel.getElement().setId("spnlDateSimPanel");
+		dateValidationUc.getElement().setId("errlblDateValidationUc");
+		emailIdTxtBox.getElement().setId("txtEmailIdTxtBox");
+		emailValidationUc.getElement().setId("errlblEmailValidationUc");
+		buttonContainer.getElement().setId("fpnlButtonContainer");
 		
 		this.setAutoHideOnNavigationEventEnabled(true);
 	    
@@ -374,9 +400,17 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 				&& (dob == null || (dob != null && dob.isEmpty()))) {
 			emailValidationUc
 					.setText(StringUtil.generateMessage(i18n.GL0082(), EMAIL));
+			emailValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0082(), EMAIL));
+			emailValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0082(), EMAIL));
+			
 			emailValidationUc.setVisible(true);
 			dateValidationUc.setText(StringUtil.generateMessage(i18n.GL0082(),
 					BIRTH_DAY));
+			dateValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0082(),
+					BIRTH_DAY));
+			dateValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0082(),
+					BIRTH_DAY));
+			
 			dateValidationUc.setVisible(true);
 			dateBoxUc.addStyleName(RegisterCBundle.INSTANCE.css()
 					.gooruDateBoxError());
@@ -389,6 +423,9 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 			emailValidationUc.setVisible(true);
 			emailValidationUc
 					.setText(StringUtil.generateMessage(i18n.GL0082(), EMAIL));
+			emailValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0082(), EMAIL));
+			emailValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0082(), EMAIL));
+			
 			emailIdTxtBox.addStyleName(RegisterCBundle.INSTANCE.css().errorBoxStyle());
 			isValid = false;
 		}
@@ -399,6 +436,10 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 					RegisterCBundle.INSTANCE.css().gooruDateError());
 			dateValidationUc.setText(StringUtil.generateMessage(i18n.GL0082(),
 					BIRTH_DAY));
+			dateValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0082(),
+					BIRTH_DAY));
+			dateValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0082(),
+					BIRTH_DAY));
 			dateValidationUc.setVisible(true);
 			isValid = false;
 		}
@@ -407,6 +448,8 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 			emailValidationUc.setVisible(true);
 			emailValidationUc
 					.setText(StringUtil.generateMessage(i18n.GL0067(), EMAIL));
+			emailValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0067(), EMAIL));
+			emailValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0067(), EMAIL));
 			isValid = false;
 		}
 		if (((email != null && !email.isEmpty()) && !email.contains(AT_SYMBOL))
@@ -418,6 +461,8 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 					RegisterCBundle.INSTANCE.css().gooruDateError());
 			emailValidationUc
 					.setText(StringUtil.generateMessage(i18n.GL0067(), EMAIL));
+			emailValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0067(), EMAIL));
+			emailValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0067(), EMAIL));
 			emailValidationUc.setVisible(true);
 			dateValidationUc.setVisible(true);
 			isValid = false;
