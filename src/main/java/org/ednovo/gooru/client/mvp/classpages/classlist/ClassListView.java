@@ -111,6 +111,8 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	
 	@UiField TextBox txtClasspageLinkShare,txtClasspageCodeShare;
 	
+	@UiField Label visibilityTitle,openClassLabelTitle,openClassLabelDesc,openClosedLabelTitle,openClosedLabelDesc;
+	
 	@UiField SimpleRadioButton visibilityRadioOpen,visibilityRadioInviteOnly;
 
 	@UiFactory
@@ -223,6 +225,12 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		btnInvite.getElement().setAttribute("title",i18n.GL0944());
 		btnInvite.setEnabled(true);
 		btnInvite.setVisible(true);
+		
+		visibilityTitle.setText(i18n.GL2019());
+		openClassLabelTitle.setText(i18n.GL2020());
+		openClassLabelDesc.setText(i18n.GL2021());
+		openClosedLabelTitle.setText(i18n.GL2022());
+		openClosedLabelDesc.setText(i18n.GL2023());
 		
 	
 		privateMsgPanel.getElement().setId("pnlPrivateMsg");
