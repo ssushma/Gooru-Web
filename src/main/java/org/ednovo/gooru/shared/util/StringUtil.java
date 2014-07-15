@@ -41,6 +41,9 @@ import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.RichTextArea;
+import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
 
 
 /**
@@ -309,5 +312,34 @@ public class StringUtil {
 		}
 		return libraryName;
 	}
+	
+	public static void setAttributes(TextBox txtBox){
+		txtBox.getElement().setAttribute("spellcheck", "true");
+	}
+	public static void setAttributes(TextArea tatBox){
+		tatBox.getElement().setAttribute("spellcheck", "true");
+	}
 
+	/**
+	 * @function setAttributes 
+	 * 
+	 * @created_date : Jul 15, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param msgTxa
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	public static void setAttributes(RichTextArea rtatBox) {
+		rtatBox.getElement().setAttribute("spellcheck", "true");
+	}
 }
