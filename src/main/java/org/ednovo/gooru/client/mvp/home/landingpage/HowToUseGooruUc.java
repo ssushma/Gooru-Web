@@ -25,7 +25,7 @@
 package org.ednovo.gooru.client.mvp.home.landingpage;
 
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -57,7 +57,7 @@ public class HowToUseGooruUc extends Composite{
 	interface HowToUseGooruUcUiBinder extends UiBinder<Widget, HowToUseGooruUc> {
 	}
 
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public HowToUseGooruUc() {
 		initWidget(uiBinder.createAndBindUi(this));

@@ -7,7 +7,7 @@ import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 
 import com.google.gwt.core.client.GWT;
@@ -31,7 +31,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class GoogleDocsResourceView extends Composite {
 	private static GoogleDocsResourceViewUiBinder uiBinder = GWT.create(GoogleDocsResourceViewUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface GoogleDocsResourceViewUiBinder extends
 			UiBinder<Widget, GoogleDocsResourceView> {

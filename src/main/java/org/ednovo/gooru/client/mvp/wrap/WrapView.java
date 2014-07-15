@@ -33,7 +33,7 @@ import org.ednovo.gooru.client.mvp.home.library.LibraryView;
 import org.ednovo.gooru.client.mvp.shelf.ShelfView;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 import org.ednovo.gooru.client.uc.tooltip.DiscoverToolTip;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
@@ -57,7 +57,7 @@ public class WrapView extends BaseView implements IsWrapView {
 
 	private static WrapViewUiBinder uiBinder = GWT.create(WrapViewUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface WrapViewUiBinder extends UiBinder<Widget, WrapView> {
 	}

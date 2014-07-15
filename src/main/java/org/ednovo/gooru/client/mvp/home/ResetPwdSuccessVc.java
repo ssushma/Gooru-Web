@@ -29,7 +29,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -66,7 +66,7 @@ public class ResetPwdSuccessVc extends Composite{
 			UiBinder<Widget, ResetPwdSuccessVc> {
 	}
 	
-	 private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	 private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor , assign user name in reset password success popup

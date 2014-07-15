@@ -33,7 +33,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.google.gwt.core.client.GWT;
@@ -94,7 +94,7 @@ public class LoginPopupInPlay extends PopupPanel {
 
     private static final Binder binder = GWT.create(Binder.class);
     
-    private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+    private MessageProperties i18n = GWT.create(MessageProperties.class);
 
     public LoginPopupInPlay() {
         super(true);

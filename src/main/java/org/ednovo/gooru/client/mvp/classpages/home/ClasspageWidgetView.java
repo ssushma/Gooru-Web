@@ -33,7 +33,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
@@ -66,7 +66,7 @@ public class ClasspageWidgetView extends Composite {
 
 	private static ClasspageWidgetViewUiBinder uiBinder = GWT.create(ClasspageWidgetViewUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface ClasspageWidgetViewUiBinder extends UiBinder<Widget, ClasspageWidgetView> {
 

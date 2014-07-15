@@ -34,7 +34,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
@@ -82,7 +82,7 @@ public abstract class SausdMenuNav extends Composite {
 	
     private static SausdMenuNavUiBinder uiBinder = GWT.create(SausdMenuNavUiBinder.class);
 
-    private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+    private MessageProperties i18n = GWT.create(MessageProperties.class);
     
 	interface SausdMenuNavUiBinder extends UiBinder<Widget, SausdMenuNav> {
 	}

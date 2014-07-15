@@ -41,7 +41,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetPanelVisibilityEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderEvent;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -73,7 +73,7 @@ public abstract class CollaboratorViewVc extends Composite {
 
 	private static CollaboratorViewVcUiBinder uiBinder = GWT.create(CollaboratorViewVcUiBinder.class);
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CollaboratorViewVcUiBinder extends UiBinder<Widget, CollaboratorViewVc> {
 	}

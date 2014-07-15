@@ -30,7 +30,7 @@ import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 
 import com.google.gwt.core.client.GWT;
@@ -53,7 +53,7 @@ public class ProfileUserTagView extends Composite{
 			UiBinder<Widget, ProfileUserTagView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	List<UserTagsDo> userTagDo = new ArrayList<UserTagsDo>();
 	

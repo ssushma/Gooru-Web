@@ -1,6 +1,6 @@
 package org.ednovo.gooru.client.mvp.classpages.classlist;
 
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -22,7 +22,7 @@ public class InviteStudentsPopup extends PopupPanel {
 
 	private static InviteStudentsPopupUiBinder uiBinder = GWT.create(InviteStudentsPopupUiBinder.class);
 	
-	 CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	 MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface InviteStudentsPopupUiBinder extends
 	UiBinder<Widget, InviteStudentsPopup> {

@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.mvp.home.register;
 
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -45,7 +45,7 @@ public class RegistrationWelcomePopup extends Composite{
 
 	interface RegistrationWelcomePopupUiBinder extends UiBinder<Widget, RegistrationWelcomePopup> {
 	}
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField
 	BlueButtonUc registerWelcomeUc;

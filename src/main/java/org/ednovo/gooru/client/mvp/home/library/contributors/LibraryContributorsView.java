@@ -43,7 +43,7 @@ import java.util.ArrayList;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 
 import com.google.gwt.core.client.GWT;
@@ -65,7 +65,7 @@ public class LibraryContributorsView extends Composite{
 			UiBinder<Widget, LibraryContributorsView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public LibraryContributorsView(String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));

@@ -10,7 +10,7 @@ import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.player.collection.client.view.add.AddResourceToCollectionStylesBundle;
 import org.ednovo.gooru.player.collection.client.view.add.tooltip.FlagBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
@@ -62,7 +62,7 @@ public class CollectionFlagView extends
 			UiBinder<Widget, CollectionFlagView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
 	HTMLEventPanel closeButton,flagCollections, flagResources, collectionCancelButton,

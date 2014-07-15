@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -54,7 +54,7 @@ public class FeaturedContentVc extends Composite implements MouseOverHandler, Mo
 	interface FeaturedContentVcUiBinder extends UiBinder<Widget, FeaturedContentVc> {
 	}
 
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField
 	FlowPanel featuredSlideFloPanel;

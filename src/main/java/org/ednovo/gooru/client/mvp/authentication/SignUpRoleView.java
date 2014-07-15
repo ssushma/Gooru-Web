@@ -30,7 +30,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.google.gwt.core.client.GWT;
@@ -70,7 +70,7 @@ public class SignUpRoleView extends PopupPanel{
 	interface SignUpRoleViewUiBinder extends UiBinder<Widget, SignUpRoleView> {
 	}
 	
-	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public SignUpRoleView(String email, UserDo userDo) {
 		this.res = SignUpCBundle.INSTANCE;

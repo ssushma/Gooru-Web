@@ -30,7 +30,7 @@ import org.ednovo.gooru.client.mvp.authentication.uc.SignUpGradeCourseView;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.google.gwt.core.client.GWT;
@@ -60,7 +60,7 @@ public class SignUpPresenter extends PresenterWidget<IsSignUpView> implements Si
 
 	private UserDo user;
 
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
+	private MessageProperties i18n = GWT.create(MessageProperties.class); 
 	/**
 	 * Class constructor
 	 * @param eventBus {@link EventBus}

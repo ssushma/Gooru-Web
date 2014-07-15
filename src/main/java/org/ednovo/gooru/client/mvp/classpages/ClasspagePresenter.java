@@ -48,7 +48,7 @@ import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AttachToDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -97,7 +97,7 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
     int resultSize;
 	private int offSet=0;
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
+	private MessageProperties i18n = GWT.create(MessageProperties.class); 
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.TEACH)

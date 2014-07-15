@@ -3,7 +3,7 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -35,7 +35,7 @@ public class RatingsConfirmationPopup extends PopupPanel{
 			UiBinder<Widget, RatingsConfirmationPopup> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public RatingsConfirmationPopup(String assocGooruOId, Integer score,
 			Integer count, double average,String createrName) {

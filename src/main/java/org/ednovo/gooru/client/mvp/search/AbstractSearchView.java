@@ -39,7 +39,7 @@ import org.ednovo.gooru.client.mvp.search.event.RequestShelfCollectionEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchPaginationEvent;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
@@ -67,7 +67,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 
 	private static AbstractSearchViewUiBinder uiBinder = GWT.create(AbstractSearchViewUiBinder.class);
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface AbstractSearchViewUiBinder extends UiBinder<Widget, AbstractSearchView<?>> {
 	}

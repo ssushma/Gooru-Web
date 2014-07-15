@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.mvp.image.upload;
 
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.LoadingUc;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.code.gwt.crop.client.GWTCropper;
 import com.google.gwt.core.client.GWT;
@@ -84,7 +84,7 @@ public abstract class ImageCropView extends Composite{
 	interface ImageCropViewUiBinder extends UiBinder<Widget, ImageCropView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor

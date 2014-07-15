@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.list;
 
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -43,7 +43,7 @@ public class NoCollectionInShelfListView extends Composite{
 	
 	private static NoCollectionInShelfListViewUiBinder uiBinder = GWT.create(NoCollectionInShelfListViewUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface NoCollectionInShelfListViewUiBinder extends UiBinder<Widget, NoCollectionInShelfListView> {
 	}

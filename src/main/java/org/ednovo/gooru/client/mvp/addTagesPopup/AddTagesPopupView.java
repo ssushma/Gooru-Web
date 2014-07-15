@@ -19,7 +19,7 @@ import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
@@ -57,7 +57,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	interface AddTagesPopupViewUiBinder extends
 			UiBinder<Widget, AddTagesPopupView> {
 	}
-	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField(provided = true)
 	AddTagesCBundle res;

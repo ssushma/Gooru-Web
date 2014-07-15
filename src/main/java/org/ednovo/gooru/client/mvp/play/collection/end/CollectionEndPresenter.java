@@ -36,7 +36,7 @@ import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.share.email.SummaryPageEmailShareUc;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
@@ -69,7 +69,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		this.collectionPlayerPresenter = collectionPlayerPresenter;
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@Inject
 	public CollectionEndPresenter(EventBus eventBus, IsCollectionEndView view) {

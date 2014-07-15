@@ -39,7 +39,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomePrese
 import org.ednovo.gooru.client.service.LibraryServiceAsync;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
@@ -85,7 +85,7 @@ public class PreviewPlayerMetadataPresenter extends PresenterWidget<IsPreviewPla
 	
 	private static final String PAGE = "course-page";
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@Inject
 	public PreviewPlayerMetadataPresenter(EventBus eventBus, IsPreviewPlayerMetadataView view,PreviewHomePresenter previewHomePresenter,

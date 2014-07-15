@@ -41,7 +41,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ActivateColle
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsList;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
@@ -85,7 +85,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField HTMLPanel dropdownListContainer,createCollectionLabelContainer,resourceImageContainerInAddResource,
 		addCollectionInsteadLabelContainer,addCollectionContainer,addresourceText,existingCollectionContainer;

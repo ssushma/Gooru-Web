@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc.tooltip;
 
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -36,7 +36,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class StudyToolTip extends Composite {
 	
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
+	private MessageProperties i18n = GWT.create(MessageProperties.class); 
 	
 	@UiField HTMLPanel studyText,guidanceText;
 	public StudyToolTip(){

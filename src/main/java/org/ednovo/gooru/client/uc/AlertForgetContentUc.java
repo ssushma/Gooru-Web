@@ -29,7 +29,7 @@ package org.ednovo.gooru.client.uc;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -67,7 +67,7 @@ public class AlertForgetContentUc extends PopupPanel {
 	@UiField(provided = true)
 	ForgetPopUpCBundle res;
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 		
 	private static final String FORGET_ERROR = i18n.GL1011();
 	

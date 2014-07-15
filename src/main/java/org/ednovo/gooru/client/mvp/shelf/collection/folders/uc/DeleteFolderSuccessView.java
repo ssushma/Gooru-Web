@@ -1,7 +1,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.folders.uc;
 
 import org.ednovo.gooru.client.uc.AppPopUp;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -25,7 +25,7 @@ public abstract class DeleteFolderSuccessView extends Composite {
 	private static DeleteFolderSuccessViewUiBinder uiBinder = GWT
 			.create(DeleteFolderSuccessViewUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface DeleteFolderSuccessViewUiBinder extends
 			UiBinder<Widget, DeleteFolderSuccessView> {
