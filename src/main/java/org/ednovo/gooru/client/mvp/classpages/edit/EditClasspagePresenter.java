@@ -52,14 +52,15 @@ import org.ednovo.gooru.client.mvp.shelf.ErrorPopup;
 import org.ednovo.gooru.client.mvp.shelf.event.AssignmentEvent;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -129,6 +130,9 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	public static boolean isLoggedInUser=false;
 	
 	private ClasspageDo classpageDo;
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
+	
 	//ShelfListPresenter shelfTabPresenter
 	@Inject
 	public EditClasspagePresenter(IsEditClasspageView view, IsEditClasspageProxy proxy, AddAssignmentContainerPresenter assignmentContainer,ImageUploadPresenter imageUploadPresenter, ClassListPresenter classlistPresenter) {
@@ -198,7 +202,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 						getView().setData(collectionDo);
 					}else{
 						isApiCalled = false;
-						ErrorPopup error = new ErrorPopup(GL0341);
+						ErrorPopup error = new ErrorPopup(i18n.GL0341());
 						error.center();
 						error.show();
 					}
@@ -411,7 +415,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
                         setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
 						triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
 					} else {
-						ErrorPopup error = new ErrorPopup(GL0341);
+						ErrorPopup error = new ErrorPopup(i18n.GL0341());
 						error.center();
 						error.show();
 					}

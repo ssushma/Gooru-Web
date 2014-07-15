@@ -28,7 +28,6 @@ package org.ednovo.gooru.client.mvp.play.collection.header;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -48,7 +47,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CollectionPlayerHeaderView extends Composite implements MessageProperties{
+public class CollectionPlayerHeaderView extends Composite{
 	
 	@UiField HTML resourceTitle;
 	

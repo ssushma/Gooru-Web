@@ -43,7 +43,6 @@ import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.uc.ValidTextUc;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;

@@ -45,7 +45,6 @@ import org.ednovo.gooru.shared.model.player.CommentsListDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;

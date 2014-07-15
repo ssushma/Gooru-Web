@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.play.collection;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.play.collection.event.ClosePreviewPlayerHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowCollectionTabWidgetEventHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceViewEventHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCollectionViewCountEventHandler;

@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
-import java.util.Date;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -48,7 +47,6 @@ import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;

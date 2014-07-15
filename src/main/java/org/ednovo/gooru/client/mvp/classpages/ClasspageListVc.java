@@ -135,6 +135,8 @@ public class ClasspageListVc extends PopupPanel {
 	private static ClasspageListVcUiBinder uiBinder = GWT.create(ClasspageListVcUiBinder.class);
 	interface ClasspageListVcUiBinder extends UiBinder<Widget, ClasspageListVc> {
 	}
+	
+	
 
 	@UiField(provided = true)
 	ClasspageListPopupViewCBundle res;
@@ -455,7 +457,7 @@ public class ClasspageListVc extends PopupPanel {
 												.fireEvent(new SetHeaderZIndexEvent(
 														98, false));
 										alertMessageUc = new AlertMessageUc(
-												GL0061, new Label(GL0244));
+												i18n.GL0061(), new Label(i18n.GL0244()));
 										ClickHandler alertHandler = new ClickHandler() {
 
 											@Override
@@ -596,11 +598,11 @@ public class ClasspageListVc extends PopupPanel {
 
 										} else {
 											if (AppClientFactory.isAnonymous()) {
-												new SentEmailSuccessVc(GL1177,
-														GL1535);
+												new SentEmailSuccessVc(i18n.GL1177(),
+														i18n.GL1535());
 											} else {
-												new SentEmailSuccessVc(GL1177,
-														GL1535_1);
+												new SentEmailSuccessVc(i18n.GL1177(),
+														i18n.GL1535_1());
 											}
 										}
 
@@ -902,7 +904,7 @@ public class ClasspageListVc extends PopupPanel {
 												.setClasspageId(classpageId);
 
 										TaskDo taskDo = new TaskDo();
-										taskDo.setTitle(GL0121);
+										taskDo.setTitle(i18n.GL0121());
 										taskDo.setTypeName("assignment");
 										assignmentDo.setTask(taskDo);
 

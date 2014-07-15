@@ -10,7 +10,6 @@ import java.util.Map;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
-import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
