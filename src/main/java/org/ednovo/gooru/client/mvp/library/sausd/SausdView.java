@@ -11,7 +11,7 @@ import org.ednovo.gooru.client.mvp.home.library.LibraryUnitMenuView;
 import org.ednovo.gooru.client.mvp.library.sausd.metadata.LibraryMetaDataContentUc;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 
@@ -63,7 +63,7 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 
 	private static SausdViewUiBinder uiBinder = GWT.create(SausdViewUiBinder.class);
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SausdViewUiBinder extends UiBinder<Widget, SausdView> {
 	}

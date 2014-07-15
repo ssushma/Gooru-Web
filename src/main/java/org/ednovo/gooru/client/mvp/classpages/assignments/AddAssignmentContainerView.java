@@ -33,7 +33,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.uc.DateBoxUcCustomizedForAssign;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
@@ -71,7 +71,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	
 	private static AddAssignmentContainerViewUiBinder uiBinder = GWT.create(AddAssignmentContainerViewUiBinder.class);
 	
-	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface AddAssignmentContainerViewUiBinder extends UiBinder<Widget, AddAssignmentContainerView> {
 	}

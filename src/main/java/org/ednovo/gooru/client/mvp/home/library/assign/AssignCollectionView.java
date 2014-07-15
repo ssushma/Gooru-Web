@@ -45,7 +45,7 @@ import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.DateBoxUcCustomizedForAssign;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -157,7 +157,7 @@ IsCollectionAssign {
 	interface AssignCollectionViewUiBinder extends UiBinder<Widget, AssignCollectionView> {
 	}
 
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	/**
 	 * Class constructor

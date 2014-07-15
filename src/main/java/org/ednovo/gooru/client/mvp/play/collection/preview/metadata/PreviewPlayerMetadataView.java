@@ -47,7 +47,7 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
@@ -153,7 +153,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	interface CollectionPlayerMetadataViewUiBinder extends UiBinder<Widget, PreviewPlayerMetadataView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@Inject
 	public PreviewPlayerMetadataView(){

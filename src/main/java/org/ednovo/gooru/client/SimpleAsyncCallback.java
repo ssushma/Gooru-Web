@@ -30,7 +30,7 @@ import java.io.IOException;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
@@ -38,7 +38,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T> {
 
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@Override
 	public void onFailure(Throwable caught) {

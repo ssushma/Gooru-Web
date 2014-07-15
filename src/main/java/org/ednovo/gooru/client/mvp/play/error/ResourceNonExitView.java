@@ -1,6 +1,6 @@
 package org.ednovo.gooru.client.mvp.play.error;
 
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -21,7 +21,7 @@ public class ResourceNonExitView extends Composite {
 			UiBinder<Widget, ResourceNonExitView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField Image defaultImage;
 	@UiField Label lblNoLongerMessage;

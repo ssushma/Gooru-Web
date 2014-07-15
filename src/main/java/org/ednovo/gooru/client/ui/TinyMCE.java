@@ -30,7 +30,7 @@ import java.util.List;
 
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddQuestionResourceView;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -70,7 +70,7 @@ public class TinyMCE extends Composite{
     private Label errorMessageLabel=null; 
     private HandlerRegistration nativePreviewHandlerRegistration=null;
     private int characterLimit=500;
-    private CopyOfMessageProperties i18n=GWT.create(CopyOfMessageProperties.class);
+    private MessageProperties i18n=GWT.create(MessageProperties.class);
     private String ERROR_MESSAGE=i18n.GL0143();
     public  class OpenRichTextToolBar implements ClickHandler{
 		@Override

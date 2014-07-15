@@ -19,16 +19,16 @@
 			
 			<g:HTMLPanel styleName="{res.css.assignDiv} {res.css.visibilityDivContainer}">
 				<g:HTMLPanel styleName="{res.css.subBody}">
-				<g:HTMLPanel styleName="{res.css.subTitle}" ui:field="visibilityTitle">Visibility Options</g:HTMLPanel>
+				<g:Label styleName="{res.css.subTitle}" ui:field="visibilityTitle"></g:Label>
 				<g:HTMLPanel>
 				<g:SimpleRadioButton name="visibility" ui:field="visibilityRadioOpen" styleName="{res.css.radioBtnVisiblity}"></g:SimpleRadioButton>
-				<g:Label styleName="{res.css.assignSecTitle}">Anyone with the link or code</g:Label>
-				<g:Label>Anyone who has the link can access and join. No sign-in required.</g:Label>
+				<g:Label ui:field="openClassLabelTitle" styleName="{res.css.assignSecTitle}"></g:Label>
+				<g:Label ui:field="openClassLabelDesc"></g:Label>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{res.css.radioBtnVisiblitySecondContainer}">
 				<g:SimpleRadioButton name="visibility" ui:field="visibilityRadioInviteOnly" styleName="{res.css.radioBtnVisiblity}"></g:SimpleRadioButton>
-				<g:Label styleName="{res.css.assignSecTitle}">Specific students</g:Label>
-				<g:Label>Only students you invite can access and join.</g:Label>
+				<g:Label ui:field="openClosedLabelTitle" styleName="{res.css.assignSecTitle}"></g:Label>
+				<g:Label ui:field="openClosedLabelDesc"></g:Label>
 				</g:HTMLPanel>
 				</g:HTMLPanel>
 				</g:HTMLPanel>

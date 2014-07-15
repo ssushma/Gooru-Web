@@ -56,7 +56,7 @@ import org.ednovo.gooru.client.uc.tooltip.OrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyNowToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -122,7 +122,7 @@ public class HeaderUc extends Composite implements
 	interface HeaderUcUiBinder extends UiBinder<Widget, HeaderUc> {
 	}
 
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	OpenClasspageListHandler openClasspageListHandler = new OpenClasspageListHandler() {
 

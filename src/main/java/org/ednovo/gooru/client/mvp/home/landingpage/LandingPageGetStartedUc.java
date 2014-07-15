@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.mvp.home.landingpage;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -54,7 +54,7 @@ public class LandingPageGetStartedUc extends Composite{
 			UiBinder<Widget, LandingPageGetStartedUc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public LandingPageGetStartedUc() {
 		initWidget(uiBinder.createAndBindUi(this));

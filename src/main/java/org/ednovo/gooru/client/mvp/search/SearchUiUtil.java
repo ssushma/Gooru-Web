@@ -36,7 +36,7 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.SeparatorUc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.UcCBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -56,7 +56,7 @@ public class SearchUiUtil{
 
 	public static final String STANDARD_DESCRIPTION = "description";
 	
-	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public static void renderStandards(FlowPanel standardsContainer, ResourceSearchResultDo searchResultDo) {
 		if (searchResultDo.getStandards() != null) {

@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -54,7 +54,7 @@ public  class CollectionConfirmationPopup extends PopupPanel {
 	private static CollectionConfirmationPopupUiBinder uiBinder = GWT
 			.create(CollectionConfirmationPopupUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CollectionConfirmationPopupUiBinder extends
 			UiBinder<Widget, CollectionConfirmationPopup> {

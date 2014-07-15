@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
@@ -82,7 +82,7 @@ public class FillIntheBlankQuestionView extends Composite{
 		
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public FillIntheBlankQuestionView(){
 		initWidget(uiBinder.createAndBindUi(this));

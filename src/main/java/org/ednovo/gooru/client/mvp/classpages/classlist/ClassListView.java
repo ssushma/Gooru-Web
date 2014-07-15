@@ -38,7 +38,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeleteP
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.EmailShareUc;
 import org.ednovo.gooru.client.uc.suggestbox.widget.AutoSuggestForm;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
@@ -111,6 +111,8 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	
 	@UiField TextBox txtClasspageLinkShare,txtClasspageCodeShare;
 	
+	@UiField Label visibilityTitle,openClassLabelTitle,openClassLabelDesc,openClosedLabelTitle,openClosedLabelDesc;
+	
 	@UiField SimpleRadioButton visibilityRadioOpen,visibilityRadioInviteOnly;
 
 	@UiFactory
@@ -128,7 +130,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	@UiField Anchor ancprivacy;
 		
 	MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
-    CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+    MessageProperties i18n = GWT.create(MessageProperties.class);
     
 	private static int studentsLimitCount = 500;
 
@@ -223,6 +225,12 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		btnInvite.getElement().setAttribute("title",i18n.GL0944());
 		btnInvite.setEnabled(true);
 		btnInvite.setVisible(true);
+		
+		visibilityTitle.setText(i18n.GL2019());
+		openClassLabelTitle.setText(i18n.GL2020());
+		openClassLabelDesc.setText(i18n.GL2021());
+		openClosedLabelTitle.setText(i18n.GL2022());
+		openClosedLabelDesc.setText(i18n.GL2023());
 		
 	
 		privateMsgPanel.getElement().setId("pnlPrivateMsg");

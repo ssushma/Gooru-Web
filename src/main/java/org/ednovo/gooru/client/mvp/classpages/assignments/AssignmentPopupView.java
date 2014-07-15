@@ -45,7 +45,7 @@ import java.util.Date;
 import org.ednovo.gooru.client.uc.DateBoxUc;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AttachToDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -88,7 +88,7 @@ public abstract class AssignmentPopupView extends Composite{
 	public static AssignmentPopupViewUiBinder uiBinder = GWT
 			.create(AssignmentPopupViewUiBinder.class);
 	
-	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private static final String MANDATORY_TITLE = i18n.GL0173();
 	private static final String CHARACTERS_LIMIT = i18n.GL0143();

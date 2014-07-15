@@ -12,7 +12,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
@@ -73,7 +73,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 
 	private static final Binder binder = GWT.create(Binder.class);
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private boolean isCustomizePopup = false,isHavingBadWords;
 	

@@ -51,7 +51,7 @@ import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.search.AbstractSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
@@ -107,7 +107,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 
 	private static SearchFilterVcUiBinder uiBinder = GWT.create(SearchFilterVcUiBinder.class);
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SearchFilterVcUiBinder extends UiBinder<Widget, SearchFilterVc> {
 	}

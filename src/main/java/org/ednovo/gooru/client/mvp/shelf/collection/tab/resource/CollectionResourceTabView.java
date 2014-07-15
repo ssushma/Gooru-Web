@@ -46,7 +46,7 @@ import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.tooltip.AddResourceToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
@@ -86,7 +86,7 @@ public class CollectionResourceTabView extends
 	private static CollectionResourceTabViewUiBinder uiBinder = GWT
 			.create(CollectionResourceTabViewUiBinder.class);
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CollectionResourceTabViewUiBinder extends
 			UiBinder<Widget, CollectionResourceTabView> {

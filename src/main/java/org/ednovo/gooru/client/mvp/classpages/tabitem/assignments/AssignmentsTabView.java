@@ -43,7 +43,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.Collection
 import org.ednovo.gooru.client.uc.DateBoxUc;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -169,7 +169,7 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 	private static AssignmentsTabViewUiBinder uiBinder = GWT
 			.create(AssignmentsTabViewUiBinder.class);
 	
-	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private static final String MANDATORY_TITLE = i18n.GL0173();
 	private static final String MANDATORY_DUEDATE = i18n.GL0235();

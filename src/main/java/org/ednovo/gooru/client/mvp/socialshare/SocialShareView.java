@@ -36,7 +36,7 @@ import org.ednovo.gooru.client.uc.EmailShareUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
@@ -77,7 +77,7 @@ IsSocialShareView {
 	private static SocialShareViewUiBinder uiBinder = GWT
 			.create(SocialShareViewUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SocialShareViewUiBinder extends UiBinder<Widget, SocialShareView> {
 	}

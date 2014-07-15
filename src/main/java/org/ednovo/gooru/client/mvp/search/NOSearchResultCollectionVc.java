@@ -33,7 +33,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;
 
 import com.google.gwt.core.client.GWT;
@@ -72,7 +72,7 @@ public class NOSearchResultCollectionVc extends Composite {
 	private static NOSearchResultCollectionVcUiBinder uiBinder = GWT
 			.create(NOSearchResultCollectionVcUiBinder.class);
 
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	interface NOSearchResultCollectionVcUiBinder extends
 			UiBinder<Widget, NOSearchResultCollectionVc> {

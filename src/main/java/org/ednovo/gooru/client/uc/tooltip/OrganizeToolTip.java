@@ -34,7 +34,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
@@ -75,7 +75,7 @@ public class OrganizeToolTip extends PopupPanel implements HasMouseOutHandlers{
 	private static OrganizeTipUiBinder uiBinder = GWT
 			.create(OrganizeTipUiBinder.class);
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
+	private MessageProperties i18n = GWT.create(MessageProperties.class); 
 
 	interface OrganizeTipUiBinder extends UiBinder<Widget, OrganizeToolTip> {
 	}

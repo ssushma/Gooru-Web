@@ -37,7 +37,7 @@ import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
@@ -104,7 +104,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 	interface CollectionPlayerViewUiBinder extends UiBinder<Widget, PreviewPlayerView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@Inject
 	public PreviewPlayerView(EventBus eventBus){

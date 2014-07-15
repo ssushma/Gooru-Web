@@ -38,7 +38,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.even
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 
@@ -111,7 +111,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 
 	interface CommentWidgetChildViewUiBinder extends UiBinder<Widget, CommentWidgetChildView> {}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public CommentWidgetChildView(CommentsDo commentsDo, CollectionDo collectionDo) {
 		initWidget(uiBinder.createAndBindUi(this));

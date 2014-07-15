@@ -30,7 +30,7 @@ import org.ednovo.gooru.client.mvp.search.event.SearchEvent;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
@@ -65,7 +65,7 @@ public class SearchBarVc extends Composite implements SelectionHandler<SuggestOr
 	private String initialSearchQuery = "";
 	private final String QUERY = "query";
 	private static SearchBarVcUiBinder uiBinder = GWT.create(SearchBarVcUiBinder.class);
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 	interface SearchBarVcUiBinder extends UiBinder<Widget, SearchBarVc> {
 	}
 

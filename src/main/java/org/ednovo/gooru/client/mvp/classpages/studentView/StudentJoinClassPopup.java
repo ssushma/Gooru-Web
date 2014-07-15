@@ -2,7 +2,7 @@ package org.ednovo.gooru.client.mvp.classpages.studentView;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -24,7 +24,7 @@ public abstract class StudentJoinClassPopup extends PopupPanel {
 	private static StudentJoinClassPopupUiBinder uiBinder = GWT
 			.create(StudentJoinClassPopupUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface StudentJoinClassPopupUiBinder extends
 			UiBinder<Widget, StudentJoinClassPopup> {

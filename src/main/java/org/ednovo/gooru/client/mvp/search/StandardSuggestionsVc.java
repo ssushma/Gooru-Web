@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search;
 
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -42,7 +42,7 @@ public class StandardSuggestionsVc extends Composite {
 
 	private static StandardSuggestionsUiBinder uiBinder = GWT.create(StandardSuggestionsUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface StandardSuggestionsUiBinder extends UiBinder<Widget, StandardSuggestionsVc> {
 	}

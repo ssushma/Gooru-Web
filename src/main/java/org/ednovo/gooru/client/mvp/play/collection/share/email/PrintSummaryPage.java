@@ -30,7 +30,7 @@ import java.util.TreeSet;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.player.collection.client.view.collectionoverview.CollectionPlayerImageBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
@@ -78,7 +78,7 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 			UiBinder<Widget, PrintSummaryPage> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public PrintSummaryPage(CollectionDo collectionDo, String timeSpent, String collectionBitlyLink,  Map<String,AttemptedAnswersDo> attemptedAnswerMap, String completedDate) {
 		initWidget(uiBinder.createAndBindUi(this));

@@ -45,7 +45,7 @@ import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AttachToDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -141,7 +141,7 @@ public class ClasspageListVc extends PopupPanel {
 	@UiField(provided = true)
 	ClasspageListPopupViewCBundle res;
 	
-	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private NewClasspagePopupView newPopup = null;
 

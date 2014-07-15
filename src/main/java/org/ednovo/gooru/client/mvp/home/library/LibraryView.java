@@ -57,7 +57,7 @@ import org.ednovo.gooru.client.mvp.home.library.events.SetSubjectDoEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetSubjectDoHandler;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.CourseDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
@@ -226,7 +226,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	interface LibraryViewUiBinder extends UiBinder<Widget, LibraryView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public LibraryView(String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));

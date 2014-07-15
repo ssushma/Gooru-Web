@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.mvp.faq;
 
 
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -57,7 +57,7 @@ public class DiscoverVc extends Composite{
 	interface DiscoverUiBinder extends UiBinder<Widget, DiscoverVc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField
 	HTMLEventPanel firstId,secondId,thirdId,fourthId,fifthId;
