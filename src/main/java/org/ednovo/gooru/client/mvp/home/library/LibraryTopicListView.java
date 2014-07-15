@@ -122,7 +122,9 @@ public class LibraryTopicListView extends Composite{
 	@UiField HTMLPanel loadingImage, collectionViewer;
 	
 	@UiField LibraryStyleBundle libraryStyle;
-
+	
+	@UiField Label collectionTitle, quizTitle;
+	
 	private HandlerRegistration imageHandler;
 
 	private HandlerRegistration titleHandler;
@@ -138,6 +140,8 @@ public class LibraryTopicListView extends Composite{
 	private boolean isCustomizePopup = false;
 	
 	private ConceptDo conceptDo;
+	
+	private ArrayList<ConceptDo> conceptDoList;
 	
 	private String searchTitle="";
 	
@@ -183,6 +187,8 @@ public class LibraryTopicListView extends Composite{
 
 	private static final String STANDARD_ID = "standardId";
 	
+	private TopicDo topicDo = null;
+	
 	interface LibraryTopicViewUiBinder extends
 			UiBinder<Widget, LibraryTopicListView> {
 	}
@@ -210,6 +216,7 @@ public class LibraryTopicListView extends Composite{
 		topicTitleLbl.getElement().setAttribute("title",i18n.GL1171()+" "+topicNumber+": "+topicDo.getLabel());
 		searchTitle=topicDo.getLabel();
 		setIds();
+		setAssets();
 		if(topicDo.getLesson()!=null) {
 			setLessonData(topicDo.getLesson());
 		} else {
@@ -217,17 +224,24 @@ public class LibraryTopicListView extends Composite{
 		}
 		
 		try {
+			this.topicDo = topicDo;
 			if(topicDo.getLesson()!=null) {
-				setConceptData(topicDo.getLesson().get(0).getCollection().get(0),topicDo.getCodeId(), topicDo.getLesson().get(0).getCodeId()+"", topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
+				if(topicDo.getLesson().get(0).getCollection().size()>1) {
+					this.conceptDoList = topicDo.getLesson().get(0).getCollection();
+				}
+				setConceptData(conceptDoList.get(0),topicDo.getCodeId(), topicDo.getLesson().get(0).getCodeId()+"", topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
 			} else if (topicDo.getCollection()!=null) {
-				setConceptData(topicDo.getCollection().get(0),topicDo.getCodeId(),null, topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
+				if(topicDo.getLesson().get(0).getCollection().size()>1) {
+					this.conceptDoList = topicDo.getLesson().get(0).getCollection();
+				}
+				setConceptData(conceptDoList.get(0),topicDo.getCodeId(),null, topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
 			} else {
 				setDefaultCollectionLbl();
 			}
 		} catch(Exception e) {
 			setDefaultCollectionLbl();
 		}
-		
+		addCollectionQuizTitleData("lesson");
 		
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
 		if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
@@ -317,8 +331,19 @@ public class LibraryTopicListView extends Composite{
 		customizeCollectionBtn.getElement().setId("btnCustomizeCollection");
 		resourcesInside.getElement().setId("pnlResourcesInside");
 		noCollectionLbl.getElement().setId("lnlNoCollectionLbl");
+		collectionTitle.getElement().setId("collectionTitle");
+		quizTitle.getElement().setId("quizTitle");
 	}
-
+	
+	private void setAssets() {
+		collectionTitle.setText(i18n.GL0645());
+		collectionTitle.getElement().setAttribute("alt",i18n.GL0645());
+		collectionTitle.getElement().setAttribute("title",i18n.GL0645());
+		quizTitle.setText(i18n.GL1670());
+		quizTitle.getElement().setAttribute("alt",i18n.GL1670());
+		quizTitle.getElement().setAttribute("title",i18n.GL1670());
+	}
+	
 	public LibraryTopicListView(ConceptDo conceptDo, Integer conceptNumber, String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
@@ -352,6 +377,8 @@ public class LibraryTopicListView extends Composite{
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
 		
 		setIds();
+		setAssets();
+		addCollectionQuizTitleData("concept");
 		lessonScrollPanel.setVisible(false);
 		collectionViewer.addStyleName(libraryStyle.collectionViewerSubStyle());
 		collectionInfo.addStyleName(libraryStyle.collectionInfoSubStyle());
@@ -369,10 +396,6 @@ public class LibraryTopicListView extends Composite{
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 	}
-
-
-	
-
 
 	public LibraryTopicListView(PartnerFolderDo partnerFolderDo, int topicNumber, String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -395,6 +418,8 @@ public class LibraryTopicListView extends Composite{
 		topicTitleLbl.getElement().setAttribute("title",partnerFolderDo.getTitle());
 		searchTitle=partnerFolderDo.getTitle();
 		setIds();
+		setAssets();
+		addCollectionQuizTitleData("partner");
 		if(partnerFolderDo.getCollections()!=null) {
 			setOnlyConceptData(partnerFolderDo.getCollections(), false, partnerFolderDo.getGooruOid(), partnerFolderDo.getItemCount());
 			try {
@@ -1311,4 +1336,39 @@ public class LibraryTopicListView extends Composite{
 			
 		}
 	};
+	
+	private void addCollectionQuizTitleData(String pageType) {
+		if(pageType.equals("lesson")&&conceptDoList.size()>1&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+			collectionTitle.addStyleName(libraryStyle.collectionQuizTabActive());
+		} else {
+			setCollectionQuizVisibility(false);
+		}
+	}
+	
+	private void setCollectionQuizVisibility(boolean isVisible) {
+		collectionTitle.setVisible(isVisible);
+		quizTitle.setVisible(isVisible);
+	}
+	
+	@UiHandler("collectionTitle")
+	public void clickCollectionTitle(ClickEvent event) {
+		collectionTitle.addStyleName(libraryStyle.collectionQuizTabActive());
+		quizTitle.removeStyleName(libraryStyle.collectionQuizTabActive());
+		setConceptDoData("scollection");
+	}
+	
+	@UiHandler("quizTitle")
+	public void clickQuizTitle(ClickEvent event) {
+		collectionTitle.removeStyleName(libraryStyle.collectionQuizTabActive());
+		quizTitle.addStyleName(libraryStyle.collectionQuizTabActive());
+		setConceptDoData("quiz");
+	}
+	
+	private void setConceptDoData(String collectionType) {
+		for(int i = 0; i<conceptDoList.size();i++) {
+			if(conceptDoList.get(i).getCollectionType().equalsIgnoreCase(collectionType)) {
+				setConceptData(conceptDoList.get(i),topicDo.getCodeId(),null, topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
+			}
+		}
+	}
 }

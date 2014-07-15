@@ -1082,3 +1082,18 @@ margin-bottom: 15px;
 	top: 103px;
 	right: 188px;
 }
+.collectionQuizTab {
+	float: left;
+	text-align: center;
+	width: 28.5%;
+	padding: 5px;
+	font-size: 15px;
+	cursor: pointer;
+	background: #f0f0f0;
+}
+.collectionQuizTab:hover {
+	background: #ffffff;
+}
+.collectionQuizTabActive {
+	background: #ffffff;
+}

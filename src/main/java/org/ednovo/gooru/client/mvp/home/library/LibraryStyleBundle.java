@@ -75,5 +75,8 @@ public interface LibraryStyleBundle extends CssResource {
 	String rusdPartnerLogo();
 	String sausdPartnerLogo();
 	String gradeOption();
+	
+	String collectionQuizTab();
+	String collectionQuizTabActive();
 
-}
+																																								}

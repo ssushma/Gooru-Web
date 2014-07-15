@@ -48,6 +48,7 @@ public class ConceptDo implements Serializable {
 	private ThumbnailDo thumbnails;
 	private CollectionMetaInfoDo metaInfo;
 	private List<Map<String, String>> standards;
+	private String collectionType;
 	public ConceptDo(){}
 	
 	public String getGoals() {
@@ -125,13 +126,23 @@ public class ConceptDo implements Serializable {
 		this.id = id;
 	}
 
-	
-
 	public List<Map<String, String>> getStandards() {
 		return standards;
 	}
 
 	public void setStandards(List<Map<String, String>> standards) {
 		this.standards = standards;
-	}		
+	}
+	/**
+	 * @return the collectionType
+	 */
+	public String getCollectionType() {
+		return collectionType;
+	}
+	/**
+	 * @param collectionType the collectionType to set
+	 */
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
+	}
 }
