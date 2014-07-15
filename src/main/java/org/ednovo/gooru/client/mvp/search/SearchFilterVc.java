@@ -139,7 +139,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiField HTMLPanel panelNotMobileFriendly;
 	
 	@UiField
-	HTMLPanel oerPanel;
+	HTMLPanel contentpanel,oerPanel;
 
 	@UiField(provided = true)
 	AppSuggestBox sourceSgstBox;
@@ -154,7 +154,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	AppSuggestBox aggregatorSgstBox;
 	
 	@UiField
-	FlowPanel authorContainerFloPanel;
+	FlowPanel flowpanel,myCollectionSearch,authorContainerFloPanel;
 
 	@UiField
 	FlowPanel sourceContainerFloPanel,aggregatorContainerFloPanel;
@@ -383,21 +383,74 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		standardSgstBox.addDomHandler(blurhander, BlurEvent.getType());
 		initWidget(uiBinder.createAndBindUi(this));
 		filtersText.setText(i18n.GL0719());
+		filtersText.getElement().setId("lblFiltersText");
+		filtersText.getElement().setAttribute("alt",i18n.GL0719());
+		filtersText.getElement().setAttribute("title",i18n.GL0719());
+		
 		resourceLinkLbl.setText(i18n.GL0174());
+		resourceLinkLbl.getElement().setAttribute("alt",i18n.GL0174());
+		resourceLinkLbl.getElement().setAttribute("title",i18n.GL0174());
+		
 		notifyText.setText(i18n.GL0720());
+		notifyText.getElement().setId("lblNotifyText");
+		notifyText.getElement().setAttribute("alt",i18n.GL0720());
+		notifyText.getElement().setAttribute("title",i18n.GL0720());
+		
 		collectionLinkLbl.setText(i18n.GL0175());
+		collectionLinkLbl.getElement().setAttribute("alt",i18n.GL0175());
+		collectionLinkLbl.getElement().setAttribute("title",i18n.GL0175());
+		
 		categoryPanelUc.setHeaderTitle(i18n.GL0721());
+		categoryPanelUc.getElement().setId("discpnlCategoryPanelUc");
+		categoryPanelUc.getElement().setAttribute("alt",i18n.GL0721());
+		categoryPanelUc.getElement().setAttribute("title",i18n.GL0721());
+		
 		sourcePanelUc.setHeaderTitle(i18n.GL0566());
+		sourcePanelUc.getElement().setId("discpnlSourcePanelUc");
+		sourcePanelUc.getElement().setAttribute("alt",i18n.GL0566());
+		sourcePanelUc.getElement().setAttribute("title",i18n.GL0566());
+		
 		//sourceHelpicon.setText(i18n.GL_SPL_QUESTION);
 		sourcesNotFoundLbl.setText(i18n.GL0723());
+		sourcesNotFoundLbl.getElement().setId("lblSourcesNotFoundLbl");
+		sourcesNotFoundLbl.getElement().setAttribute("alt",i18n.GL0723());
+		sourcesNotFoundLbl.getElement().setAttribute("title",i18n.GL0723());
+		
 		authorPanelUc.setHeaderTitle(i18n.GL0573());
+		authorPanelUc.getElement().setId("discpnlAuthorPanelUc");
+		authorPanelUc.getElement().setAttribute("alt",i18n.GL0573());
+		authorPanelUc.getElement().setAttribute("title",i18n.GL0573());
+		
 		standardPanelUc.setHeaderTitle(i18n.GL0724());
+		standardPanelUc.getElement().setId("discpnlStandardPanelUc");
+		standardPanelUc.getElement().setAttribute("alt",i18n.GL0724());
+		standardPanelUc.getElement().setAttribute("title",i18n.GL0724());
+		
 		standardHelpicon.setText(i18n.GL_SPL_QUESTION());
+		standardHelpicon.getElement().setId("lblStandardHelpicon");
+		standardHelpicon.getElement().setAttribute("alt",i18n.GL_SPL_QUESTION());
+		standardHelpicon.getElement().setAttribute("title",i18n.GL_SPL_QUESTION());
+		
 		standardsNotFoundLbl.setText(i18n.GL0723());
+		standardsNotFoundLbl.getElement().setId("lblStandardsNotFoundLbl");
+		standardsNotFoundLbl.getElement().setAttribute("alt",i18n.GL0723());
+		standardsNotFoundLbl.getElement().setAttribute("title",i18n.GL0723());
+		
 		subjectPanelUc.setHeaderTitle(i18n.GL0226());
+		subjectPanelUc.getElement().setId("discpnlSubjectPanelUc");
+		subjectPanelUc.getElement().setAttribute("alt",i18n.GL0226());
+		subjectPanelUc.getElement().setAttribute("title",i18n.GL0226());
+		
 		gradePanelUc.setHeaderTitle(i18n.GL0165());
+		gradePanelUc.getElement().setId("discpnlGradePanelUc");
+		gradePanelUc.getElement().setAttribute("alt",i18n.GL0165());
+		gradePanelUc.getElement().setAttribute("title",i18n.GL0165());
+		
 		clearAll.setText(i18n.GL0725());
-	
+		clearAll.getElement().setId("lblClearAll");
+		clearAll.getElement().setAttribute("alt",i18n.GL0725());
+		clearAll.getElement().setAttribute("title",i18n.GL0725());
+		
 		aggregatorPanelUc.setHeaderTitle(i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		if (resourceSearch) {
@@ -473,6 +526,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 							String text = authorTxtBox.getValue();
 							authorContainerFloPanel.add(new FilterLabelVc(text,true));
 							authorTxtBox.setText("");
+							authorTxtBox.getElement().setAttribute("alt","");
+							authorTxtBox.getElement().setAttribute("title","");
 							AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 						}
 					}
@@ -491,8 +546,32 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		collectionLinkLbl.getElement().setId("lblCollectionLink");
 		
 		resourceLinkLbl.setText(i18n.GL0174());
-		collectionLinkLbl.setText(i18n.GL0175());
+		resourceLinkLbl.getElement().setAttribute("alt",i18n.GL0174());
+		resourceLinkLbl.getElement().setAttribute("title",i18n.GL0174());
 		
+		collectionLinkLbl.setText(i18n.GL0175());
+		collectionLinkLbl.getElement().setAttribute("alt",i18n.GL0175());
+		collectionLinkLbl.getElement().setAttribute("title",i18n.GL0175());
+		
+		myCollectionSearch.getElement().setId("fpnlMyCollectionSearch");
+		flowpanel.getElement().setId("fpnlFlowpanel");
+		contentpanel.getElement().setId("pnlContentpanel");
+		panelNotMobileFriendly.getElement().setId("pnlPanelNotMobileFriendly");
+		oerPanel.getElement().setId("pnlOerPanel");
+		aggregatorPanelUc.getElement().setId("discpnlAggregatorPanelUc");
+		aggregatorTooltip.getElement().setId("lblAggregatorTooltip");
+		aggregatorToolTip.getElement().setId("epnlAggregatorToolTip");
+		aggregatorNotFoundLbl.getElement().setId("lblAggregatorNotFoundLbl");
+		aggregatorContainerFloPanel.getElement().setId("fpnlAggregatorContainerFloPanel");
+		publisherTooltip.getElement().setId("lblPublisherTooltip");
+		sourceToolTip.getElement().setId("epnlSourceToolTip");
+		sourcesNotFoundLbl.getElement().setId("lblSourcesNotFoundLbl");
+		sourceContainerFloPanel.getElement().setId("fpnlSourceContainerFloPanel");
+		authorContainerFloPanel.getElement().setId("fpnlAuthorContainerFloPanel");
+		standardSgstBox.getElement().setId("tbautoStandards");
+		standardToolTip.getElement().setId("epnlStandardToolTip");
+		standardsNotFoundLbl.getElement().setId("lblStandardsNotFoundLbl");
+		standardContainerFloPanel.getElement().setId("fpnlStandardContainerFloPanel");
 	}
 	
 
@@ -1073,9 +1152,20 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		setSelectedFilter(subjectPanelUc, subjects, "~~");
 		setSelectedFilter(gradePanelUc, grade);
 		standardSgstBox.setText("");
+		standardSgstBox.getElement().setAttribute("alt","");
+		standardSgstBox.getElement().setAttribute("title","");
+		
 		sourceSgstBox.setText("");
+		sourceSgstBox.getElement().setAttribute("alt","");
+		sourceSgstBox.getElement().setAttribute("title","");
+		
 		authorTxtBox.setText("");
+		authorTxtBox.getElement().setAttribute("alt","");
+		authorTxtBox.getElement().setAttribute("title","");
+		
 		aggregatorSgstBox.setText("");
+		aggregatorSgstBox.getElement().setAttribute("alt","");
+		aggregatorSgstBox.getElement().setAttribute("title","");
 		
 		if (standards != null) {
 			setFilterSuggestionData(standardContainerFloPanel, standards.split(COMMA_SEPARATOR), true);
@@ -1311,7 +1401,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		clearFilter(gradePanelUc);
 		clearFilter(subjectPanelUc);
 		standardSgstBox.setText("");
+		standardSgstBox.getElement().setAttribute("alt","");
+		standardSgstBox.getElement().setAttribute("title","");
+		
 		sourceSgstBox.setText("");
+		sourceSgstBox.getElement().setAttribute("alt","");
+		sourceSgstBox.getElement().setAttribute("title","");
+		
 		sourceContainerFloPanel.clear();
 		standardContainerFloPanel.clear();
 		authorContainerFloPanel.clear();
@@ -1330,6 +1426,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		clearFilter(subjectPanelUc);
 		standardSgstBox.setText("");
 		sourceSgstBox.setText("");
+		sourceSgstBox.getElement().setAttribute("alt","");
+		sourceSgstBox.getElement().setAttribute("title","");
+		
 		sourceContainerFloPanel.clear();
 		standardContainerFloPanel.clear();
 		authorContainerFloPanel.clear();
@@ -1349,6 +1448,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 			}
 			sourceSgstBox.setText("");
+			sourceSgstBox.getElement().setAttribute("alt","");
+			sourceSgstBox.getElement().setAttribute("title","");
 			sourceSuggestOracle.clear();
 			
 		} else if(event.getSource().equals(aggregatorSgstBox)){
@@ -1360,6 +1461,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 			}
 			aggregatorSgstBox.setText("");
+			aggregatorSgstBox.getElement().setAttribute("alt","");
+			aggregatorSgstBox.getElement().setAttribute("title","");
 			aggregatorSuggestOracle.clear();
 		}
 			
@@ -1372,6 +1475,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 			}
 			standardSgstBox.setText("");
+			standardSgstBox.getElement().setAttribute("alt","");
+			standardSgstBox.getElement().setAttribute("title","");
 			standardSuggestOracle.clear();
 		}
 	}

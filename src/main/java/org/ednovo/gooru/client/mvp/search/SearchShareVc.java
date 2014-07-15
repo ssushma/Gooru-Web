@@ -99,6 +99,12 @@ public class SearchShareVc extends Composite {
 		socialShareLinksView = new SocialShareLinksView();
 		socialShareLinksView.getshareLinkTxtBox().setReadOnly(true);
 		shareViaText.setText(i18n.GL0638());
+		shareViaText.getElement().setId("lblShareViaText");
+		shareViaText.getElement().setAttribute("alt",i18n.GL0638());
+		shareViaText.getElement().setAttribute("title",i18n.GL0638());
+		socialContentPanel.getElement().setId("pnlSocialContentPanel");
+		socialShareLinksViewContainer.getElement().setId("fpnlSocialShareLinksViewContainer");
+		
 		socialShareLinksView.getShareLbl().setText(i18n.GL0511());
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setPaddingTop(0, Unit.PX);
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setWidth(22, Unit.PC);

@@ -84,13 +84,23 @@ public class DisclosurePanelUc extends Composite implements ClickHandler {
 	public DisclosurePanelUc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
+		filterPanel.getElement().setId("discpnlFilterPanel");
+		headerPanel.getElement().setId("focuspnlHeaderPanel");
+		imagePanel.getElement().setId("spnlImagePanel");
 		titleImg.setAltText(i18n.GL1023());
+		titleImg.getElement().setId("imgTitleImg");
+		titleImg.getElement().setAttribute("alt", i18n.GL1023());
+		titleImg.getElement().setAttribute("title", i18n.GL1023());
+		titleLbl.getElement().setId("lblTitleLbl");
+		contentPanel.getElement().setId("fpnlContentPanel");
 		titleImg.setUrl("images/Collection-Search/dropdown-arrow-active.png");
 		headerPanel.addClickHandler(this);
 	}
 
 	public void setHeaderTitle(String title) {
 		titleLbl.setText(title);
+		titleLbl.getElement().setAttribute("alt", title);
+		titleLbl.getElement().setAttribute("title", title);
 	}
 
 	/**

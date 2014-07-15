@@ -21,10 +21,15 @@ public class StandardsPreferenceOrganizeToolTip extends PopupPanel {
 	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	@UiField
-	HTMLPanel lblTitle;
+	HTMLPanel lblTitle,panelCode;
+	
 	public StandardsPreferenceOrganizeToolTip() {
 		setWidget(uiBinder.createAndBindUi(this));
 		lblTitle.getElement().setInnerHTML(i18n.GL1613());
+		panelCode.getElement().setId("pnlPanelCode");
+		lblTitle.getElement().setId("pnlLblTitle");
+		lblTitle.getElement().setAttribute("alt", i18n.GL1613());
+		lblTitle.getElement().setAttribute("title", i18n.GL1613());
 	}
 
 }

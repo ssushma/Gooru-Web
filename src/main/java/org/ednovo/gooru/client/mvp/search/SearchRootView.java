@@ -89,6 +89,10 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		
 		resourceLinkLbl.setText(MessageProperties.GL0174);
 		collectionLinkLbl.setText(MessageProperties.GL0175);*/
+		queriedTextHtml.getElement().setId("htmlQueriedTextHtml");
+		searchWrapperSimPanel.getElement().setId("spnlSearchWrapperSimPanel");
+		shelfTabSimPanel.getElement().setId("spnlShelfTabSimPanel");
+		lodingImage.getElement().setId("lblLodingImage");
 	}
 
 	@Override
@@ -146,6 +150,8 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	public void reset() {
 		super.reset();
 		queriedTextHtml.setHTML("<p></p>");
+		queriedTextHtml.getElement().setAttribute("alt","<p></p>");
+		queriedTextHtml.getElement().setAttribute("title","<p></p>");
 	}
 
 	@Override
@@ -205,6 +211,8 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		}
 		
 		queriedTextHtml.setHTML(searchText);
+		queriedTextHtml.getElement().setAttribute("alt",searchText);
+		queriedTextHtml.getElement().setAttribute("title",searchText);
 		lodingImage.setVisible(false);
 	}
 	}

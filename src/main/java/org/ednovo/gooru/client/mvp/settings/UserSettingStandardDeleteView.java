@@ -55,10 +55,22 @@ public class UserSettingStandardDeleteView extends PopupPanel {
 	public void setTextAndUi()
 	{
 		titleLabel.setText(i18n.GL1162());	
+		titleLabel.getElement().setId("lblTitleLabel");
+		titleLabel.getElement().setAttribute("alt", i18n.GL1162());
+		titleLabel.getElement().setAttribute("title", i18n.GL1162());
 		//headerLabel.setText(MessageProperties.i18n.GL1565);	
-		descriptionLabel.setText(i18n.GL1564());	
+		descriptionLabel.setText(i18n.GL1564());
+		descriptionLabel.getElement().setId("lblDescriptionLabel");
+		descriptionLabel.getElement().setAttribute("alt", i18n.GL1564());
+		descriptionLabel.getElement().setAttribute("title", i18n.GL1564());
 		cancelButton.setText(i18n.GL0142());	
-		removeButton.setText(i18n.GL0237());	
+		cancelButton.getElement().setId("btnCancelButton");
+		cancelButton.getElement().setAttribute("alt", i18n.GL0142());
+		cancelButton.getElement().setAttribute("title", i18n.GL0142());
+		removeButton.setText(i18n.GL0237());
+		removeButton.getElement().setId("btnRemoveButton");
+		removeButton.getElement().setAttribute("alt", i18n.GL0237());
+		removeButton.getElement().setAttribute("title", i18n.GL0237());
 	}
 	 @UiHandler("cancelButton")
 	 public void onClickCancelButton(ClickEvent event)

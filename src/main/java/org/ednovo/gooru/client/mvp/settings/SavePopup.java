@@ -56,8 +56,17 @@ public class SavePopup extends PopupPanel{
 		super();
 		setWidget(uiBinder.createAndBindUi(this));
 		confirmEmail.getElement().setInnerText(i18n.GL1483());
+		confirmEmail.getElement().setId("pnlConfirmEmail");
+		confirmEmail.getElement().setAttribute("alt", i18n.GL1483());
+		confirmEmail.getElement().setAttribute("title", i18n.GL1483());
 		checkMailLbl.getElement().setInnerText(i18n.GL1484());
+		checkMailLbl.getElement().setId("pnlCheckMailLbl");
+		checkMailLbl.getElement().setAttribute("alt", i18n.GL1484());
+		checkMailLbl.getElement().setAttribute("title", i18n.GL1484());
 		lbOk.setText(i18n.GL1386());
+		lbOk.getElement().setId("lblLbOk");
+		lbOk.getElement().setAttribute("alt", i18n.GL1386());
+		lbOk.getElement().setAttribute("title", i18n.GL1386());
 		setGlassEnabled(true);
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));

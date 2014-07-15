@@ -32,6 +32,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -54,6 +55,8 @@ public class ErrorPopupVc extends Composite{
 	
 	@UiField
 	PopupPanel errorPopUpNew;
+	
+	@UiField FlowPanel captionTitle;
 
 	@UiField
 	Label okButton,errorPopupHeaderText,dragText,questionLabel,faqsText,cancelButton;
@@ -64,12 +67,32 @@ public class ErrorPopupVc extends Composite{
 	public ErrorPopupVc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
+		errorPopUpNew.getElement().setId("popupnlErrorPopUpNew");
+		captionTitle.getElement().setId("fpnlCaptionTitle");
 		errorPopupHeaderText.setText(i18n.GL0061());
+		errorPopupHeaderText.getElement().setId("lblErrorPopupHeaderText");
+		errorPopupHeaderText.getElement().setAttribute("alt", i18n.GL0061());
+		errorPopupHeaderText.getElement().setAttribute("title", i18n.GL0061());
 		dragText.setText(i18n.GL1028());
+		dragText.getElement().setId("lblDragText");
+		dragText.getElement().setAttribute("alt", i18n.GL1028());
+		dragText.getElement().setAttribute("title", i18n.GL1028());
 		questionLabel.setText(i18n.GL1029());
+		questionLabel.getElement().setId("lblQuestionLabel");
+		questionLabel.getElement().setAttribute("alt", i18n.GL1029());
+		questionLabel.getElement().setAttribute("title", i18n.GL1029());
 		faqsText.setText(i18n.GL1030());
+		faqsText.getElement().setId("lblFaqsText");
+		faqsText.getElement().setAttribute("alt", i18n.GL1030());
+		faqsText.getElement().setAttribute("title", i18n.GL1030());
 		okButton.setText(i18n.GL0190());
+		okButton.getElement().setId("lblOkButton");
+		okButton.getElement().setAttribute("alt", i18n.GL0190());
+		okButton.getElement().setAttribute("title", i18n.GL0190());
 		cancelButton.setText(i18n.GL0142());
+		cancelButton.getElement().setId("lblCancelButton");
+		cancelButton.getElement().setAttribute("alt", i18n.GL0142());
+		cancelButton.getElement().setAttribute("title", i18n.GL0142());
 		okButton.addClickHandler(new ClickHandler() {
 
 			@Override

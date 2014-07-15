@@ -105,6 +105,9 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		this.res = UcCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
+		resourceThumbnail.getElement().setId("fpnlResourceThumbnail");
+		image.getElement().setId("imgImage");
+		resourceType.getElement().setId("lblResourceType");
 		addDomHandler(this, ClickEvent.getType());
 		suggestFlag=false;
 	}

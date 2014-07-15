@@ -83,6 +83,10 @@ public class SearchEmbedVc extends Composite {
 		this.isEditable = isEditable;
 		initWidget(uiBinder.createAndBindUi(this));
 		embedlineText.setText(i18n.GL0718());
+		embedlineText.getElement().setId("tatEmbedlineText");
+		embedlineText.getElement().setAttribute("alt",i18n.GL0718());
+		embedlineText.getElement().setAttribute("title",i18n.GL0718());
+		
 		txtAreaEmbed.getElement().setAttribute("id", "txtAreaEmbed");
 		
 		//Handle click event for selecting all text inside text box.

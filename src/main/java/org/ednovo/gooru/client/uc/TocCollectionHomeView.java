@@ -66,6 +66,12 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 	public TocCollectionHomeView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		resourceTitle.getElement().setInnerHTML(i18n.GL1052());
+		homeContainer.getElement().setId("fpnlHomeContainer");
+		homeImageContainer.getElement().setId("fpnlHomeImageContainer");
+		resourceThumbnail.getElement().setId("imgResourceThumbnail");
+		resourceTitle.getElement().setId("pnlResourceTitle");
+		resourceTitle.getElement().setAttribute("alt", i18n.GL1052());
+		resourceTitle.getElement().setAttribute("title", i18n.GL1052());
 	}
 	
 	@UiConstructor
@@ -73,6 +79,12 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 		initWidget(uiBinder.createAndBindUi(this));
 		this.thumbnailUrl=thumbnailUrl;
 		resourceTitle.getElement().setInnerHTML(i18n.GL1052());
+		homeContainer.getElement().setId("fpnlHomeContainer");
+		homeImageContainer.getElement().setId("fpnlHomeImageContainer");
+		resourceThumbnail.getElement().setId("imgResourceThumbnail");
+		resourceTitle.getElement().setId("pnlResourceTitle");
+		resourceTitle.getElement().setAttribute("alt", i18n.GL1052());
+		resourceTitle.getElement().setAttribute("title", i18n.GL1052());
 		//setResourcePlayLink();
 		//this.addClickHandler(new ResourceRequest());
 	}

@@ -46,6 +46,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
@@ -94,6 +95,8 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 
 	@UiField Label lblErrorMessage;
 	
+	@UiField HTMLPanel duplicateTinyMce,fakeContent;
+	
 	@UiField(provided = true)
 	UcCBundle res;
 
@@ -104,10 +107,14 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
 		deckPanel.showWidget(0);
-		
+		focusPanel.getElement().setId("focuspnlFocusPanel");
+		deckPanel.getElement().setId("dpnlDeckPanel");
 		lblErrorMessage.setVisible(false);
+		lblErrorMessage.getElement().setId("lblLblErrorMessage");
 		lblErrorMessage.getElement().getStyle().setFloat(Float.LEFT);
-
+		html.getElement().setId("htmlHtml");
+		duplicateTinyMce.getElement().setId("pnlDuplicateTinyMce");
+		fakeContent.getElement().setId("pnlFakeContent");
 		textArea.addBlurHandler(new BlurHandler() {
 			
 			@Override
@@ -122,6 +129,8 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 						if (value){
 							textArea.getElement().getStyle().setBorderColor("orange");
 							lblErrorMessage.setText(i18n.GL0554());
+							lblErrorMessage.getElement().setAttribute("alt", i18n.GL0554());
+							lblErrorMessage.getElement().setAttribute("title", i18n.GL0554());
 							lblErrorMessage.setVisible(true);
 							showProfanityError(true);
 						}else{
@@ -160,6 +169,8 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 			return;
 		textArea.setText(html.getHTML().equals(getPlaceholder()) ? "" :
 		html.getHTML());
+		textArea.getElement().setAttribute("alt", html.getHTML().equals(getPlaceholder()) ? "" :html.getHTML());
+		textArea.getElement().setAttribute("title", html.getHTML().equals(getPlaceholder()) ? "" :html.getHTML());
 		deckPanel.showWidget(1);
 		textArea.setFocus(true);
 		textArea.addStyleName("shelfEditDesc");
@@ -184,6 +195,8 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 				if (value){
 					textArea.getElement().getStyle().setBorderColor("orange");
 					lblErrorMessage.setText(i18n.GL0554());
+					lblErrorMessage.getElement().setAttribute("alt", i18n.GL0554());
+					lblErrorMessage.getElement().setAttribute("title", i18n.GL0554());
 					lblErrorMessage.setVisible(true);
 					showProfanityError(true);
 				}else{
@@ -257,7 +270,11 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 			value = getPlaceholder();
 		}
 		html.setHTML(value);
+		html.getElement().setAttribute("alt", value);
+		html.getElement().setAttribute("title", value);
 		textArea.setText(value);
+		textArea.getElement().setAttribute("alt", value);
+		textArea.getElement().setAttribute("title", value);
 	}
 
 	public void setExtraHtmlStyleName(String style) {

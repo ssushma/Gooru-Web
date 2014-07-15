@@ -88,6 +88,10 @@ public class SettingEditLabelUc extends Composite implements HasValue<String> {
 	public SettingEditLabelUc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
+		focusPanel.getElement().setId("focuspnlFocusPanel");
+		deckPanel.getElement().setId("dpnlDeckPanel");
+		editLabel.getElement().setId("lblEditLabel");
+		errorLabel.getElement().setId("errlblErrorLabel");
 		deckPanel.showWidget(0);
 		
 		editTextBox.getElement().setAttribute("maxlength", "25");
@@ -113,6 +117,8 @@ public class SettingEditLabelUc extends Composite implements HasValue<String> {
 		if (deckPanel.getVisibleWidget() == 1)
 			return;
 		editTextBox.setText(getValue());	
+		editTextBox.getElement().setAttribute("alt", getValue());
+		editTextBox.getElement().setAttribute("title", getValue());
 		deckPanel.showWidget(1);
 		editTextBox.setFocus(true);
 		editTextBox.addStyleName("SettingEditName");
@@ -133,6 +139,8 @@ public class SettingEditLabelUc extends Composite implements HasValue<String> {
 			setValue(editTextBox.getText(), true); // fires events, too
 		}else {
 			errorLabel.setText(StringUtil.generateMessage(i18n.GL0082(), FNAME));
+			errorLabel.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0082(), FNAME));
+			errorLabel.getElement().setAttribute("title", StringUtil.generateMessage(i18n.GL0082(), FNAME));
 			errorLabel.setVisible(true);
 			return;
 		}
@@ -157,6 +165,8 @@ public class SettingEditLabelUc extends Composite implements HasValue<String> {
 	public void cancel() {
 		deckPanel.showWidget(0);
 		editTextBox.setText(editLabel.getText());
+		editTextBox.getElement().setAttribute("alt", editLabel.getText());
+		editTextBox.getElement().setAttribute("title", editLabel.getText());
 		errorLabel.setVisible(false);
 	}
 
@@ -192,7 +202,11 @@ public class SettingEditLabelUc extends Composite implements HasValue<String> {
 
 		editLabel.setText(value.length() > 50 ? value.substring(0, 50) + "..."
 				: value);
+		editLabel.getElement().setAttribute("alt", value);
+		editLabel.getElement().setAttribute("title", value);
 		editTextBox.setText(value);
+		editTextBox.getElement().setAttribute("alt", value);
+		editTextBox.getElement().setAttribute("title", value);
 	}
 
 	/**

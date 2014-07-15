@@ -27,7 +27,11 @@ public class StandardPreferenceTooltip extends PopupPanel {
 	HTMLPanel lblTitle;
 	public StandardPreferenceTooltip() {
 		setWidget(uiBinder.createAndBindUi(this));
+		panelCode.getElement().setId("pnlpanelCode");
 		lblTitle.getElement().setInnerHTML(i18n.GL1613());
+		lblTitle.getElement().setId("pnlLblTitle");
+		lblTitle.getElement().setAttribute("alt", i18n.GL1613());
+		lblTitle.getElement().setAttribute("title", i18n.GL1613());
 	}
 
 }

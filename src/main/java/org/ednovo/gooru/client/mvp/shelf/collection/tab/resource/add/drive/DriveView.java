@@ -88,7 +88,9 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	public DriveView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		driveScrollContainer.addScrollHandler(new DriveScrollEvent());
-
+		driveScrollContainer.getElement().setId("sbDriveScrollContainer");
+		panelDriveBreadCrums.getElement().setId("fpnlPanelDriveBreadCrums");
+		panelFileList.getElement().setId("fpnlPanelFileList");
 	}
 
 	

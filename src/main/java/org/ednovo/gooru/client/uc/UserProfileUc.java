@@ -82,9 +82,20 @@ public class UserProfileUc extends Composite{
 			}
 		}
 		userNameLbl.setText(i18n.GL1053());
+		userNameLbl.getElement().setId("lblUserNameLbl");
+		userNameLbl.getElement().setAttribute("alt", i18n.GL1053());
+		userNameLbl.getElement().setAttribute("title", i18n.GL1053());
 		userProfileDesc.setText(i18n.GL1054());
+		userProfileDesc.getElement().setId("lblUserProfileDesc");
+		userProfileDesc.getElement().setAttribute("alt", i18n.GL1054());
+		userProfileDesc.getElement().setAttribute("title", i18n.GL1054());
+		
 		userNameLbl.setText(userName);
+		userNameLbl.getElement().setAttribute("alt", userName);
+		userNameLbl.getElement().setAttribute("title", userName);
 		userProfileDesc.setText(this.aboutUser);
+		userProfileDesc.getElement().setAttribute("alt", this.aboutUser);
+		userProfileDesc.getElement().setAttribute("title", this.aboutUser);
 		profileImage.addErrorHandler(new ProfileDefaultImage());
 
 		if (!thumbnailImage.equalsIgnoreCase("") || thumbnailImage != null) {
@@ -92,6 +103,9 @@ public class UserProfileUc extends Composite{
 		}
 		profileImage.setAltText(userName);
 		profileImage.setTitle(userName);
+		profileImage.getElement().setId("imgProfileImage");
+		profileImage.getElement().setAttribute("alt", userName);
+		profileImage.getElement().setAttribute("title", userName);
 	}
 
 	private class ProfileDefaultImage implements ErrorHandler {

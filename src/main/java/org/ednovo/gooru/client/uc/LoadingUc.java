@@ -53,6 +53,7 @@ public class LoadingUc extends FlowPanel{
 		loadingImage =  new Image();
 		loadingMessage = new Label();
 		loadingImage.setUrl(LOADER_IMAGE);
+		loadingImage.getElement().setId("imgLoadingImage");
 		loadingImage.setAltText(i18n.GL0110());
 		loadingImage.setTitle(i18n.GL0110());
 //		loadingMessage.setText("please wait...");
