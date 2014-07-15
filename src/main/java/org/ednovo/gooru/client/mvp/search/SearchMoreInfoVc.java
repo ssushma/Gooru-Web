@@ -38,7 +38,7 @@ import org.ednovo.gooru.client.uc.ErrorMessagePanel;
 import org.ednovo.gooru.client.uc.LicencegItemVc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.TagDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
@@ -74,7 +74,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	protected static SearchMoreInfoVcUiBinder uiBinder = GWT
 			.create(SearchMoreInfoVcUiBinder.class);
 	
-	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SearchMoreInfoVcUiBinder extends
 			UiBinder<Widget, SearchMoreInfoVc<?, ?>> {
@@ -165,6 +165,9 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 		setWidget(uiBinder.createAndBindUi(this));
 
 		rightsLbl.setText("");
+		rightsLbl.getElement().setAttribute("alt","");
+		rightsLbl.getElement().setAttribute("title","");
+		
 		resourceSearchRightsFieldVc.setToolTip(i18n.GL0730());
 		imgQuestionImage.setTitle(i18n.GL0732());
 		imgQuestionImage.setAltText(i18n.GL0732());
@@ -218,6 +221,15 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 			shareField.setVisible(false);
 		}*/
 		setHandler();
+		
+		rightsLbl.getElement().setId("lblRightsLbl");
+		resourceScrPanel.getElement().setId("sbResourceScrPanel");
+		resourceMoreInfoRightPanel.getElement().setId("fpnlResourceMoreInfoRightPanel");
+		countLblTxt.getElement().setId("lblCountLblTxt");
+		countLbl.getElement().setId("lblCountLbl");
+		lblNotFriendly.getElement().setId("lblNotFriendly");
+		imgQuestionImage.getElement().setId("imgQuestionImage");
+		messageInfo.getElement().setId("errlblMessageInfo");
 	}
 
 	public void setHandler(){
@@ -651,6 +663,8 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	 */
 	public void setResourceCount(String text) {
 		countLbl.setText(text);
+		countLbl.getElement().setAttribute("alt",text);
+		countLbl.getElement().setAttribute("title",text);
 	}
 
 	/**
@@ -661,6 +675,8 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	 */
 	public void setResourceCountTxt(String text) {
 		countLblTxt.setText(text);
+		countLblTxt.getElement().setAttribute("alt",text);
+		countLblTxt.getElement().setAttribute("title",text);
 	}
 
 	/**
@@ -691,6 +707,8 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	
 	public void setNotFriendly(String text){
 		lblNotFriendly.setText(text);
+		lblNotFriendly.getElement().setAttribute("alt",text);
+		lblNotFriendly.getElement().setAttribute("title",text);
 	}
 	public void showNotFriendly(boolean visibility){
 		lblNotFriendly.setVisible(visibility);

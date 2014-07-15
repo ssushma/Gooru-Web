@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -71,7 +71,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	
 	private static DriveViewUiBinder uiBinder = GWT.create(DriveViewUiBinder.class);
 
-	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	
 	interface DriveViewUiBinder extends UiBinder<Widget, DriveView> {
@@ -88,7 +88,9 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	public DriveView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		driveScrollContainer.addScrollHandler(new DriveScrollEvent());
-
+		driveScrollContainer.getElement().setId("sbDriveScrollContainer");
+		panelDriveBreadCrums.getElement().setId("fpnlPanelDriveBreadCrums");
+		panelFileList.getElement().setId("fpnlPanelFileList");
 	}
 
 	

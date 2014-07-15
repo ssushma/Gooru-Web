@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.mvp.shelf.list;
 
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -44,7 +44,7 @@ public class MoreCollectionPrompt extends Composite {
 
 	private static MoreCollectionPromptUiBinder uiBinder = GWT.create(MoreCollectionPromptUiBinder.class);
 	
-	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	protected AppPopUp appPopUp;
 	@UiField Label manyResourcesText,tipLabelText,splitCollectionText;

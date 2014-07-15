@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -63,7 +63,7 @@ public abstract class ConfirmationPopupVc extends Composite {
 	
 	private static RemoveResourcePopupVcUiBinder uiBinder = GWT.create(RemoveResourcePopupVcUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface RemoveResourcePopupVcUiBinder extends UiBinder<Widget, ConfirmationPopupVc> {
 	}
@@ -79,14 +79,25 @@ public abstract class ConfirmationPopupVc extends Composite {
 		appPopUp.setStyleName("removeResourcePopup");
 		appPopUp.setContent(messageHeader, uiBinder.createAndBindUi(this));
 		contentText.setText(messageContent);
+		contentText.getElement().setId("lblContentText");
+		contentText.getElement().setAttribute("alt", messageContent);
+		contentText.getElement().setAttribute("title", messageContent);
 		appPopUp.show();
 		appPopUp.center();
 		cancelButton.setText(i18n.GL0142());
+		cancelButton.getElement().setAttribute("alt", i18n.GL0142());
+		cancelButton.getElement().setAttribute("title", i18n.GL0142());
 		okButton.setText(i18n.GL0190());
+		okButton.getElement().setAttribute("alt", i18n.GL0190());
+		okButton.getElement().setAttribute("title", i18n.GL0190());
 		okButton.getElement().setId("btnOk");
 		loadingTextLbl.setText(i18n.GL1021());
+		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
+		loadingTextLbl.getElement().setAttribute("alt", i18n.GL1021());
+		loadingTextLbl.getElement().setAttribute("title", i18n.GL1021());
 		cancelButton.getElement().setId("lnkCancel");
 		loadingTextLbl.setVisible(false);
+		buttonContainer.getElement().setId("fpnlButtonContainer");
         buttonContainer.setVisible(true);
 		cancelButton.getElement().getStyle().setMarginRight(10, Unit.PX);
 	}
@@ -140,6 +151,10 @@ public abstract class ConfirmationPopupVc extends Composite {
 
 	public void setDeleteData(String deleteMsg, String deleteBtnTxt) {
 		loadingTextLbl.setText(deleteMsg);
+		loadingTextLbl.getElement().setAttribute("alt", deleteMsg);
+		loadingTextLbl.getElement().setAttribute("title", deleteMsg);
 		okButton.setText(deleteBtnTxt);
+		okButton.getElement().setAttribute("alt", deleteBtnTxt);
+		okButton.getElement().setAttribute("title", deleteBtnTxt);
 	}
 }

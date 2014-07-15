@@ -25,8 +25,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
 import org.ednovo.gooru.client.ui.TinyMCE;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -54,7 +53,7 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 	@UiField HTMLPanel deleteButtonContainer;
 	@UiField AddResourceBundle addWebResourceStyle;
 	
-	private  CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private  MessageProperties i18n = GWT.create(MessageProperties.class);
 	public Label hintDelLbl=new Label();
 	private String hintText=null;
 	public AddHintsView(){

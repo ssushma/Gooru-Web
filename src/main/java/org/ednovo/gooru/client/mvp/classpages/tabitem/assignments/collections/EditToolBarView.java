@@ -1,8 +1,7 @@
 package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
 
 import org.ednovo.gooru.client.uc.DateBoxUc;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -24,7 +23,7 @@ public class EditToolBarView extends Composite{
 	
 	private static EditToolBarViewUiBinder uiBinder = GWT.create(EditToolBarViewUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public interface EditToolBarViewUiBinder extends UiBinder<Widget, EditToolBarView> {}
 	

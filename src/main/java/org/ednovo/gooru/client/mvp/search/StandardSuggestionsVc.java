@@ -24,12 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search;
 
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -41,18 +42,23 @@ public class StandardSuggestionsVc extends Composite {
 
 	private static StandardSuggestionsUiBinder uiBinder = GWT.create(StandardSuggestionsUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface StandardSuggestionsUiBinder extends UiBinder<Widget, StandardSuggestionsVc> {
 	}
 
 	@UiField Label seeMoreText;
+	@UiField FlowPanel contentPanel;
 	/**
 	 * Class constructor
 	 */
 	public StandardSuggestionsVc() {
 		initWidget(uiBinder.createAndBindUi(this));
 		seeMoreText.setText(i18n.GL0739());
+		seeMoreText.getElement().setId("lblSeeMoreText");
+		seeMoreText.getElement().setAttribute("alt",i18n.GL0739());
+		seeMoreText.getElement().setAttribute("title",i18n.GL0739());
+		contentPanel.getElement().setId("fpnlContentPanel");
 	}
 
 }

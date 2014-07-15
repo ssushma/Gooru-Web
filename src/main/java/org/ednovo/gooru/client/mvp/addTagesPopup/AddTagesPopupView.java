@@ -19,12 +19,11 @@ import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -37,7 +36,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -59,7 +57,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	interface AddTagesPopupViewUiBinder extends
 			UiBinder<Widget, AddTagesPopupView> {
 	}
-	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField(provided = true)
 	AddTagesCBundle res;
@@ -78,7 +76,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	
 	@UiField Label noAds,modAds,aggreAds,standardMaxMsg,standardsDefaultText;
 	
-	@UiField Label accessHazard,flashing,flashingHazard,motionSimulation,motionSimulationHazard,sound,soundHazard;
+	@UiField Label accessHazard,flashingHazard,motionSimulationHazard,soundHazard;
 	
 	@UiField InlineLabel addTagesTitle,popupContentText,moblieFriendly;
 	
@@ -321,30 +319,15 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		accessHazard.getElement().setAttribute("alt",i18n.GL1804());
 		accessHazard.getElement().setAttribute("title",i18n.GL1804());
 		
-		flashing.setText(i18n.GL1805());
-		flashing.getElement().setId("lblFlashing");
-		flashing.getElement().setAttribute("alt",i18n.GL1805());
-		flashing.getElement().setAttribute("title",i18n.GL1805());
-		
 		flashingHazard.setText(i18n.GL1806());
 		flashingHazard.getElement().setId("lblFlashingHazard");
 		flashingHazard.getElement().setAttribute("alt",i18n.GL1806());
 		flashingHazard.getElement().setAttribute("title",i18n.GL1806());
 		
-		motionSimulation.setText(i18n.GL1807());
-		motionSimulation.getElement().setId("lblMotionSimulation");
-		motionSimulation.getElement().setAttribute("alt",i18n.GL1807());
-		motionSimulation.getElement().setAttribute("title",i18n.GL1807());
-		
 		motionSimulationHazard.setText(i18n.GL1808());
 		motionSimulationHazard.getElement().setId("lblMotionSimulationHazard");
 		motionSimulationHazard.getElement().setAttribute("alt",i18n.GL1808());
 		motionSimulationHazard.getElement().setAttribute("title",i18n.GL1808());
-		
-		sound.setText(i18n.GL1809());
-		sound.getElement().setId("lblSound");
-		sound.getElement().setAttribute("alt",i18n.GL1809());
-		sound.getElement().setAttribute("title",i18n.GL1809());
 		
 		soundHazard.setText(i18n.GL1810());
 		soundHazard.getElement().setId("lblSoundHazard");
@@ -1027,29 +1010,11 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	}
 	
 	public void removeClassNamesForAllAccessHazard(){
-		flashing.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 		soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-		sound.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 		flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-		motionSimulation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 		motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 	}
-	@UiHandler("flashing")
-	public void onflashingClick(ClickEvent click){
-		if(flashing.getStyleName().toString().contains("select"))
-		{
-			flashing.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		/*else if(soundHazard.getStyleName().toString().contains("select") ||sound.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select") || motionSimulation.getStyleName().toString().contains("select"))
-		{
-			removeClassNamesForAllAccessHazard();
-			flashing.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}*/
-		else
-		{
-			flashing.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-	}
+
 	@UiHandler("flashingHazard")
 	public void onflashingHazardClick(ClickEvent click){
 		if(flashingHazard.getStyleName().toString().contains("select"))
@@ -1066,22 +1031,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 		}
 	}
-	@UiHandler("motionSimulation")
-	public void onmotionSimulationClick(ClickEvent click){
-		if(motionSimulation.getStyleName().toString().contains("select"))
-		{
-			motionSimulation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		/*else if(soundHazard.getStyleName().toString().contains("select") ||sound.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select"))
-		{
-			removeClassNamesForAllAccessHazard();
-			motionSimulation.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}*/
-		else
-		{
-			motionSimulation.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-	}
+
 	@UiHandler("motionSimulationHazard")
 	public void onmotionSimulationHazardClick(ClickEvent click){
 		if(motionSimulationHazard.getStyleName().toString().contains("select"))
@@ -1098,22 +1048,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 		}
 	}
-	@UiHandler("sound")
-	public void onsoundClick(ClickEvent click){
-		if(sound.getStyleName().toString().contains("select"))
-		{
-			sound.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		/*else if(soundHazard.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") ||motionSimulation.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select"))
-		{
-			removeClassNamesForAllAccessHazard();
-			sound.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}*/
-		else
-		{
-			sound.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-	}
+
 	@UiHandler("soundHazard")
 	public void onsoundHazardClick(ClickEvent click){
 		if(soundHazard.getStyleName().toString().contains("select"))
@@ -1299,21 +1234,9 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			{
 					flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 			}
-			if(stringArry[1].trim().equalsIgnoreCase(flashing.getText()))
-			{
-				flashing.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-			}
-			if(stringArry[1].trim().equalsIgnoreCase(motionSimulation.getText()))
-			{
-				motionSimulation.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-			}
 			if(stringArry[1].trim().equalsIgnoreCase(motionSimulationHazard.getText()))
 			{
 				motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-			}
-			if(stringArry[1].trim().equalsIgnoreCase(sound.getText()))
-			{
-				sound.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 			}
 			if(stringArry[1].trim().equalsIgnoreCase(soundHazard.getText()))
 			{
@@ -1487,19 +1410,9 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		String[] accessHazardsArr = null;
 		List<String> accessHazardsSelected = new ArrayList<String>();
 		
-		if(flashing.getElement().getClassName().contains("select"))
-		{
-			String hazardsStr = accessHazard.getText()+" : "+flashing.getText();
-			accessHazardsSelected.add(hazardsStr);
-		}
 		if(flashingHazard.getElement().getClassName().contains("select"))
 		{
 			String hazardsStr = accessHazard.getText()+" : "+flashingHazard.getText();
-			accessHazardsSelected.add(hazardsStr);
-		}
-		if(motionSimulation.getElement().getClassName().contains("select"))
-		{
-			String hazardsStr = accessHazard.getText()+" : "+motionSimulation.getText();
 			accessHazardsSelected.add(hazardsStr);
 		}
 		if(motionSimulationHazard.getElement().getClassName().contains("select"))
@@ -1507,17 +1420,11 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			String hazardsStr = accessHazard.getText()+" : "+motionSimulationHazard.getText();
 			accessHazardsSelected.add(hazardsStr);
 		}
-		if(sound.getElement().getClassName().contains("select"))
-		{
-			String hazardsStr = accessHazard.getText()+" : "+sound.getText();
-			accessHazardsSelected.add(hazardsStr);
-		}
 		if(soundHazard.getElement().getClassName().contains("select"))
 		{
 			String hazardsStr = accessHazard.getText()+" : "+soundHazard.getText();
 			accessHazardsSelected.add(hazardsStr);
 		}
-//		System.out.println("The linked list:" + accessHazardsSelected);
 		
 		accessHazardsArr = accessHazardsSelected.toArray(new String[accessHazardsSelected.size()]);
 		return accessHazardsArr;

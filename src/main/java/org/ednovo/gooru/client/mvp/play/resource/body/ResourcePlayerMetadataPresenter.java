@@ -46,7 +46,6 @@ import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
-import org.ednovo.gooru.shared.util.DOMUtils;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;

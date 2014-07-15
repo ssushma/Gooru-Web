@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection;
 
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -45,7 +45,7 @@ public class ShareTabToolTipVc extends PopupPanel {
 	private static ShareTabToolTipVcUiBinder uiBinder = GWT
 			.create(ShareTabToolTipVcUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface ShareTabToolTipVcUiBinder extends
 			UiBinder<Widget, ShareTabToolTipVc> {

@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.mvp.shelf.list;
 
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -51,7 +51,7 @@ public class NoResourceInShelfListView extends Composite {
 	}
 	private static NoResourceInShelfListViewUiBinder uiBinder = GWT.create(NoResourceInShelfListViewUiBinder.class);
 	
-	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private static final String  infoMsg_1 =i18n.GL0982();
 	private static final String  infoMsg_2 =i18n.GL0983();

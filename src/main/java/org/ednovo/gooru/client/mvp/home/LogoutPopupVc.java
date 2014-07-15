@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
-import java.util.Date;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -38,7 +37,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -48,7 +47,6 @@ import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -80,7 +78,7 @@ public class LogoutPopupVc extends Composite{
 	interface LogoutPopupVcUiBinder extends UiBinder<Widget, LogoutPopupVc> {
 	}
 
-	 private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	 private MessageProperties i18n = GWT.create(MessageProperties.class);
 	 
 	/**
 	 * Class constructor , get confirm logout popup

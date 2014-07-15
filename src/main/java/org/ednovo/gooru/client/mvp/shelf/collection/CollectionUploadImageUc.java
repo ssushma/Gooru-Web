@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection;
 
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -61,7 +61,7 @@ public class CollectionUploadImageUc extends Composite {
 
 	private static CollectionUploadImageUcUiBinder uiBinder = GWT.create(CollectionUploadImageUcUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CollectionUploadImageUcUiBinder extends UiBinder<Widget, CollectionUploadImageUc> {
 	}

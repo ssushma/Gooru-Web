@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.uc.LabelUc;
 import org.ednovo.gooru.client.uc.StatisticsItemUc;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
@@ -49,7 +49,7 @@ public class CollectionStatisticsTabVc extends FlowPanel {
 
 	private LabelUc statisticsLblUc;
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor, creates new objects for

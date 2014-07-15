@@ -47,7 +47,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.FlaggingPopUp;
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
@@ -72,7 +72,7 @@ public class ExistsResourceView extends AppPopUp {
 
 	private static ExistsResourceViewUiBinder uiBinder = GWT.create(ExistsResourceViewUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 

@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.mvp.search;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
 import com.google.gwt.core.client.GWT;
@@ -49,7 +49,7 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 
 	private static SearchRootViewUiBinder uiBinder = GWT.create(SearchRootViewUiBinder.class);
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SearchRootViewUiBinder extends UiBinder<Widget, SearchRootView> {
 	}
@@ -89,6 +89,10 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		
 		resourceLinkLbl.setText(MessageProperties.GL0174);
 		collectionLinkLbl.setText(MessageProperties.GL0175);*/
+		queriedTextHtml.getElement().setId("htmlQueriedTextHtml");
+		searchWrapperSimPanel.getElement().setId("spnlSearchWrapperSimPanel");
+		shelfTabSimPanel.getElement().setId("spnlShelfTabSimPanel");
+		lodingImage.getElement().setId("lblLodingImage");
 	}
 
 	@Override
@@ -146,6 +150,8 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	public void reset() {
 		super.reset();
 		queriedTextHtml.setHTML("<p></p>");
+		queriedTextHtml.getElement().setAttribute("alt","<p></p>");
+		queriedTextHtml.getElement().setAttribute("title","<p></p>");
 	}
 
 	@Override
@@ -205,6 +211,8 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		}
 		
 		queriedTextHtml.setHTML(searchText);
+		queriedTextHtml.getElement().setAttribute("alt",searchText);
+		queriedTextHtml.getElement().setAttribute("title",searchText);
 		lodingImage.setVisible(false);
 	}
 	}

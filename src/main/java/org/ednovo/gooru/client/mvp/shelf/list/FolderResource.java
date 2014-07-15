@@ -46,7 +46,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.RequestShelfEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.LabelGlassPanel;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -81,7 +81,7 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 	private static FolderResourceUiBinder uiBinder = GWT
 			.create(FolderResourceUiBinder.class);
 	
-	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface FolderResourceUiBinder extends UiBinder<Widget, FolderResource> {
 	}

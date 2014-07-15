@@ -34,14 +34,13 @@ import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
@@ -67,9 +66,9 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -252,7 +251,7 @@ public class EditClasspageView extends
 	private static EditClassPageViewUiBinder uiBinder = GWT
 			.create(EditClassPageViewUiBinder.class);
 	
-	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	String dropSortOptionsStr = i18n.GL1947();
 
@@ -517,15 +516,7 @@ public class EditClasspageView extends
 		monitorProgress.getElement().setAttribute("alt",i18n.GL1586());
 		monitorProgress.getElement().setAttribute("title",i18n.GL1586());
 		
-		assignmentsTab.setText(i18n.GL1623());
-		assignmentsTab.getElement().setId("btnAssignmentsTab");
-		assignmentsTab.getElement().setAttribute("alt",i18n.GL1623());
-		assignmentsTab.getElement().setAttribute("title",i18n.GL1623());
-		
-		classListTab.setText(i18n.GL1624());
-		classListTab.getElement().setId("btnClassListTab");
-		classListTab.getElement().setAttribute("alt",i18n.GL1624());
-		classListTab.getElement().setAttribute("title",i18n.GL1624());
+
 		
 		reportsTab.setText(i18n.GL1737());
 		reportsTab.getElement().setId("btnReportsTab");
@@ -983,6 +974,17 @@ public class EditClasspageView extends
 	
 	public void setClasspageData(ClasspageDo classpageDo){
 		this.classpageDo=classpageDo;
+		
+		assignmentsTab.setText(i18n.GL1623()+"("+classpageDo.getItemCount()+")");
+		assignmentsTab.getElement().setId("btnAssignmentsTab");
+		assignmentsTab.getElement().setAttribute("alt",i18n.GL1623());
+		assignmentsTab.getElement().setAttribute("title",i18n.GL1623());
+		
+		classListTab.setText(i18n.GL1624()+"("+classpageDo.getMemberCount()+")");
+		classListTab.getElement().setId("btnClassListTab");
+		classListTab.getElement().setAttribute("alt",i18n.GL1624());
+		classListTab.getElement().setAttribute("title",i18n.GL1624());
+		
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(classpageDo.getClasspageId()));

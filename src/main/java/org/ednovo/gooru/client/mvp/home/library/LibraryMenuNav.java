@@ -42,7 +42,7 @@ import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSetting
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.CourseDo;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.StandardCourseDo;
@@ -132,7 +132,7 @@ public class LibraryMenuNav extends Composite{
 	interface LibraryMenuNavUiBinder extends UiBinder<Widget, LibraryMenuNav> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public LibraryMenuNav(String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));

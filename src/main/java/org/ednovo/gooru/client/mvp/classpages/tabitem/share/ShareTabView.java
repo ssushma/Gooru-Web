@@ -26,9 +26,8 @@ package org.ednovo.gooru.client.mvp.classpages.tabitem.share;
 
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -60,7 +59,7 @@ public class ShareTabView extends
 	private static ShareTabViewUiBinder uiBinder = GWT
 			.create(ShareTabViewUiBinder.class);
 	
-	CopyOfMessageProperties i18n= GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n= GWT.create(MessageProperties.class);
 
 	interface ShareTabViewUiBinder extends
 			UiBinder<Widget, ShareTabView> {

@@ -5,9 +5,8 @@ import java.util.List;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -15,12 +14,11 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.Label;
 public class UserSettingStandardDeleteView extends PopupPanel {
 
 	private static UserSettingStandardDeleteViewUiBinder uiBinder = GWT
@@ -30,7 +28,7 @@ public class UserSettingStandardDeleteView extends PopupPanel {
 			UiBinder<Widget, UserSettingStandardDeleteView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField Label titleLabel,headerLabel,descriptionLabel;
 	@UiField Button cancelButton,removeButton;
@@ -57,10 +55,22 @@ public class UserSettingStandardDeleteView extends PopupPanel {
 	public void setTextAndUi()
 	{
 		titleLabel.setText(i18n.GL1162());	
+		titleLabel.getElement().setId("lblTitleLabel");
+		titleLabel.getElement().setAttribute("alt", i18n.GL1162());
+		titleLabel.getElement().setAttribute("title", i18n.GL1162());
 		//headerLabel.setText(MessageProperties.i18n.GL1565);	
-		descriptionLabel.setText(i18n.GL1564());	
+		descriptionLabel.setText(i18n.GL1564());
+		descriptionLabel.getElement().setId("lblDescriptionLabel");
+		descriptionLabel.getElement().setAttribute("alt", i18n.GL1564());
+		descriptionLabel.getElement().setAttribute("title", i18n.GL1564());
 		cancelButton.setText(i18n.GL0142());	
-		removeButton.setText(i18n.GL0237());	
+		cancelButton.getElement().setId("btnCancelButton");
+		cancelButton.getElement().setAttribute("alt", i18n.GL0142());
+		cancelButton.getElement().setAttribute("title", i18n.GL0142());
+		removeButton.setText(i18n.GL0237());
+		removeButton.getElement().setId("btnRemoveButton");
+		removeButton.getElement().setAttribute("alt", i18n.GL0237());
+		removeButton.getElement().setAttribute("title", i18n.GL0237());
 	}
 	 @UiHandler("cancelButton")
 	 public void onClickCancelButton(ClickEvent event)

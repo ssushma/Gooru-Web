@@ -30,7 +30,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 

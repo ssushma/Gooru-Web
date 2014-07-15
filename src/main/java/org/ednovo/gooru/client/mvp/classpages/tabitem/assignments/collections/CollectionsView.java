@@ -39,7 +39,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetMarkButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetMarkButtonHandler;
 import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataEvent;
 import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataHandler;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -125,7 +125,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	private static CollectionsViewUiBinder uiBinder = GWT.create(CollectionsViewUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public interface CollectionsViewUiBinder extends UiBinder<Widget, CollectionsView> {}
 	

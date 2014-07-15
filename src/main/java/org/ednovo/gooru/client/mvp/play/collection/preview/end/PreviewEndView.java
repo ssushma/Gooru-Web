@@ -27,21 +27,14 @@ package org.ednovo.gooru.client.mvp.play.collection.preview.end;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
-import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomeView.OnassignCollectionBtnMouseOut;
-import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomeView.OnassignCollectionBtnMouseOver;
-import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomeView.OncustomizeCollectionBtnMouseOut;
-import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomeView.OncustomizeCollectionBtnMouseOver;
-import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomeView.OnshareCollectionBtnMouseOut;
-import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomeView.OnshareCollectionBtnMouseOver;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopupPlayerVc;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.customize.RenameCustomizePopUp;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.share.SharePlayerVc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -90,7 +83,7 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 	interface PreviewEndViewUiBinder extends UiBinder<Widget, PreviewEndView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@Inject
 	public PreviewEndView(){

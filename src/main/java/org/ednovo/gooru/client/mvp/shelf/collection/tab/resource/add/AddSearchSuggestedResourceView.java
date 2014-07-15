@@ -51,7 +51,7 @@ import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -90,7 +90,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 	
 	public  AddSearchSuggestedResourceViewUiBinder uiBinder=GWT.create(AddSearchSuggestedResourceViewUiBinder.class);
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField SearchSuggestedResultWrapperCBundle res;
 	

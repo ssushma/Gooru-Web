@@ -32,9 +32,7 @@ import org.ednovo.gooru.client.mvp.home.event.SetUpdateProfileImageEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 
-
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 

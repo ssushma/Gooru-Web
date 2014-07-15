@@ -45,7 +45,7 @@ import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -78,7 +78,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 
 	private static ResourceSearchResultVcUiBinder uiBinder = GWT.create(ResourceSearchResultVcUiBinder.class);
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface ResourceSearchResultVcUiBinder extends UiBinder<Widget, ResourceSearchResultVc> {
 	}
@@ -91,7 +91,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	HTMLEventPanel resourceTitleContainer;
 
 	@UiField
-	FlowPanel metaDataFloPanel;
+	FlowPanel resourceTitlePanel,metaDataFloPanel;
 
 	@UiField
 	HTML resourceDescriptionHtml;
@@ -152,6 +152,13 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		ratingWidgetView=new RatingWidgetView();
 		wrapperVcr.ratingWidgetPanel.add(ratingWidgetView);
 		setData(resourceSearchResultDo);
+		
+		resourceTitlePanel.getElement().setId("fpnlResourceTitlePanel");
+		resourceTitleContainer.getElement().setId("epnlResourceTitleContainer");
+		imgNotFriendly.getElement().setId("imgNotFriendly");
+		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
+		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
+		resourceDescriptionHtml.getElement().setId("htmlResourceDescriptionHtml");
 	}
 	
 	public RatingWidgetView getRatingWidgetView(){

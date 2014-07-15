@@ -6,9 +6,8 @@ package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerView;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -47,7 +46,7 @@ public abstract class NarrationUc extends PopupPanel {
 	interface NarrationUcUiBinder extends UiBinder<Widget, NarrationUc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField Label lblResourceTitle,lblClose,lblUserName;
 
@@ -75,6 +74,11 @@ public abstract class NarrationUc extends PopupPanel {
 		setWidget(uiBinder.createAndBindUi(this));
 		setGlassEnabled(true);
 		this.getElement().getStyle().setBackgroundColor("transparent");
+		lblResourceTitle.getElement().setId("lblLblResourceTitle");
+		lblClose.getElement().setId("lblLblClose");
+		userImage.getElement().setId("imgUserImage");
+		lblAboutAuthor.getElement().setId("pnlLblAboutAuthor");
+		btnOk.getElement().setId("btnBtnOk");
 		center();
 		show();
 		}
@@ -86,8 +90,18 @@ public abstract class NarrationUc extends PopupPanel {
 		super(true);
 		setWidget(uiBinder.createAndBindUi(this));
 		lblResourceTitle.setText("1.Resource Title");
+		lblResourceTitle.getElement().setId("lblLblResourceTitle");
+		lblClose.getElement().setId("lblLblClose");
+		userImage.getElement().setId("imgUserImage");
 		lblUserName.setText(i18n.GL1035());
+		lblUserName.getElement().setId("lblLblUserName");
+		lblUserName.getElement().setAttribute("alt", i18n.GL1035());
+		lblUserName.getElement().setAttribute("title", i18n.GL1035());
+		lblAboutAuthor.getElement().setId("pnlLblAboutAuthor");
+		btnOk.getElement().setId("btnBtnOk");
 		btnOk.setText(i18n.GL0703());
+		btnOk.getElement().setAttribute("alt", i18n.GL0703());
+		btnOk.getElement().setAttribute("title", i18n.GL0703());
 		setUserProfileDetails(collectionItemDo);
 		setUserProfileImage(collectionItemDo.getResource().getUser().getGooruUId());
 		setGlassEnabled(true);
@@ -114,8 +128,13 @@ public abstract class NarrationUc extends PopupPanel {
 				int sequenceNumber=collectionItemDo.getItemSequence();
 				if(resourceName.length() > 50){
 					lblResourceTitle.setText(sequenceNumber+". "+resourceName.substring(0, 50)+"...");
+					lblResourceTitle.getElement().setAttribute("alt", sequenceNumber+". "+resourceName);
+					lblResourceTitle.getElement().setAttribute("title", sequenceNumber+". "+resourceName);
+					
 				}else{
 					lblResourceTitle.setText(sequenceNumber+". "+resourceName);
+					lblResourceTitle.getElement().setAttribute("alt", sequenceNumber+". "+resourceName);
+					lblResourceTitle.getElement().setAttribute("title", sequenceNumber+". "+resourceName);
 				}
 			}else{
 				lblResourceTitle.setText("");
@@ -130,6 +149,8 @@ public abstract class NarrationUc extends PopupPanel {
 			}
 			if(collectionItemDo.getResource().getUser().getUsername()!=null)
 				lblUserName.setText(collectionItemDo.getResource().getUser().getUsername());
+			lblUserName.getElement().setAttribute("alt", collectionItemDo.getResource().getUser().getUsername());
+			lblUserName.getElement().setAttribute("title", collectionItemDo.getResource().getUser().getUsername());
 		}
 
 		/**

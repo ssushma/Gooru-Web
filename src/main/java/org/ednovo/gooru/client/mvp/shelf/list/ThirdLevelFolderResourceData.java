@@ -36,10 +36,9 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshLevelFolderInShelfListEven
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.RequestShelfEvent;
 import org.ednovo.gooru.client.uc.LabelGlassPanel;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -67,7 +66,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHandler,MouseOverHandler,DropBox {
 	private static ThirdLevelFolderResourceDataUiBinder uiBinder = GWT.create(ThirdLevelFolderResourceDataUiBinder.class);
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	interface ThirdLevelFolderResourceDataUiBinder extends UiBinder<Widget, ThirdLevelFolderResourceData> {
 	}

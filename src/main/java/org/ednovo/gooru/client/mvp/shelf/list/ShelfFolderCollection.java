@@ -38,7 +38,7 @@ import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -71,7 +71,7 @@ public class ShelfFolderCollection extends FocusPanel implements DropBox,
 
 	private static ShelfCollectionUiBinder uiBinder = GWT
 			.create(ShelfCollectionUiBinder.class);
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	interface ShelfCollectionUiBinder extends UiBinder<Widget, ShelfFolderCollection> {
 	}

@@ -14,7 +14,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMeta
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.UcCBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -77,7 +77,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 
 	private static ShelfFolderItemChildViewUiBinder uiBinder = GWT.create(ShelfFolderItemChildViewUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface ShelfFolderItemChildViewUiBinder extends UiBinder<Widget, ShelfFolderItemChildView> {}
 	

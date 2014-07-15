@@ -41,7 +41,6 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.RequestShelfEvent;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -63,7 +62,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Gooru Team
  * 
  */
-public class FolderItemChildView extends ChildView<FolderItemChildPresenter> implements IsFolderItemView, MessageProperties {
+public class FolderItemChildView extends ChildView<FolderItemChildPresenter> implements IsFolderItemView {
 
 	@UiField(provided = true)
 	FolderItemCBundle res;

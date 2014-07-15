@@ -34,7 +34,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
 import org.ednovo.gooru.client.mvp.search.SearchMoreInfoVc;
 import org.ednovo.gooru.client.mvp.search.SimpleResourceVc;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -48,7 +48,7 @@ import com.google.gwt.dom.client.Style.Display;
  */
 public class CollectionMoreInfoVc extends SearchMoreInfoVc<CollectionSearchResultDo, CollectionItemSearchResultDo> {
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private static final String NO_RESOURCES_IN_THIS_COLLECTION = i18n.GL0684();
 	

@@ -36,7 +36,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.event.AddCourseEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -60,7 +60,7 @@ public class CourseListUc extends PopupPanel {
 	private static CourseListUcUiBinder uiBinder = GWT
 			.create(CourseListUcUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CourseListUcUiBinder extends UiBinder<Widget, CourseListUc> {
 	}
@@ -112,8 +112,23 @@ public class CourseListUc extends PopupPanel {
 		this.center();
 		this.show();
 		titleLbl.setText(i18n.GL0847());
+		titleLbl.getElement().setId("errlblErrorLabel");
+		titleLbl.getElement().setAttribute("alt", i18n.GL0847());
+		titleLbl.getElement().setAttribute("title", i18n.GL0847());
 		cancelCourseBtn.setText(i18n.GL0142());
+		cancelCourseBtn.getElement().setId("btnCancelCourseBtn");
+		cancelCourseBtn.getElement().setAttribute("alt", i18n.GL0142());
+		cancelCourseBtn.getElement().setAttribute("title", i18n.GL0142());
 		addCourseBtnLbl.setText(i18n.GL0590());
+		addCourseBtnLbl.getElement().setId("bluebtnAddCourseBtnLbl");
+		addCourseBtnLbl.getElement().setAttribute("alt", i18n.GL0590());
+		addCourseBtnLbl.getElement().setAttribute("title", i18n.GL0590());
+		loadingPanel.getElement().setId("pnlLoadingPanel");
+		addResourceTabContainer.getElement().setId("pnlAddResourceTabContainer");
+		contentPanel.getElement().setId("fpnlContentPanel");
+		buttonsPanel.getElement().setId("pnlButtonsPanel");
+		addCourseBtnPanel.getElement().setId("pnlAddCourseBtnPanel");
+		
 		loadingPanel.setVisible(true);
 		setCourseData();
 		collectionId=collectionDo.getGooruOid();
