@@ -89,6 +89,14 @@ public abstract class StarRatingsUc extends Composite {
 	public StarRatingsUc() {
 		initWidget(uiBinder.createAndBindUi(this));
 		starValue.setVisible(false);
+		starValue.getElement().setId("lblStarValue");
+		mouseOverStarValue.getElement().setId("lblMouseOverStarValue");
+		starOne.getElement().setId("simpleChkStarOne");
+		starTwo.getElement().setId("simpleChkStarTwo");
+		starThree.getElement().setId("simpleChkStarThree");
+		starFour.getElement().setId("simpleChkStarFour");
+		starFive.getElement().setId("simpleChkStarFive");
+		
 		starOne.addMouseOverHandler(new OnStarMouseOver(ONE_STAR));
 		starTwo.addMouseOverHandler(new OnStarMouseOver(TWO_STAR));
 		starThree.addMouseOverHandler(new OnStarMouseOver(THREE_STAR));
@@ -205,22 +213,32 @@ public abstract class StarRatingsUc extends Composite {
 			if(result.getScore()==1){
 				starValue.setVisible(true);
 				starValue.setText(POOR);
+				starValue.getElement().setAttribute("alt", POOR);
+				starValue.getElement().setAttribute("title", POOR);
 				setStarRatingValue(1); 
 			}else if(result.getScore()==2){
 				starValue.setVisible(true);
 				starValue.setText(FAIR);
+				starValue.getElement().setAttribute("alt", FAIR);
+				starValue.getElement().setAttribute("title", FAIR);
 			}else if(result.getScore()==3){
 				starValue.setVisible(true);
 				starValue.setText(GOOD);
+				starValue.getElement().setAttribute("alt", GOOD);
+				starValue.getElement().setAttribute("title", GOOD);
 				setStarRatingValue(2);
 			}else if(result.getScore()==4){
 				starValue.setVisible(true);
 				starValue.setText(VERY_GOOD);
+				starValue.getElement().setAttribute("alt", VERY_GOOD);
+				starValue.getElement().setAttribute("title", VERY_GOOD);
 				setStarRatingValue(4);
 				
 			}else if(result.getScore()==5){
 				starValue.setVisible(true);
 				starValue.setText(EXCELLENT);
+				starValue.getElement().setAttribute("alt", EXCELLENT);
+				starValue.getElement().setAttribute("title", EXCELLENT);
 				setStarRatingValue(5);
 			}else{
 				setStarRatingValue(0);
@@ -312,18 +330,28 @@ public abstract class StarRatingsUc extends Composite {
 			if(starScore.equalsIgnoreCase(ONE_STAR)){
 				starValue.setVisible(false);
 				mouseOverStarValue.setText(POOR);
+				mouseOverStarValue.getElement().setAttribute("alt", POOR);
+				mouseOverStarValue.getElement().setAttribute("title", POOR);
 			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
 				starValue.setVisible(false);
 				mouseOverStarValue.setText(FAIR);
+				mouseOverStarValue.getElement().setAttribute("alt", FAIR);
+				mouseOverStarValue.getElement().setAttribute("title", FAIR);
 			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
 				starValue.setVisible(false);
 				mouseOverStarValue.setText(GOOD);
+				mouseOverStarValue.getElement().setAttribute("alt", GOOD);
+				mouseOverStarValue.getElement().setAttribute("title", GOOD);
 			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
 				starValue.setVisible(false);
 				mouseOverStarValue.setText(VERY_GOOD);
+				mouseOverStarValue.getElement().setAttribute("alt", VERY_GOOD);
+				mouseOverStarValue.getElement().setAttribute("title", VERY_GOOD);
 			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
 				starValue.setVisible(false);
 				mouseOverStarValue.setText(EXCELLENT);
+				mouseOverStarValue.getElement().setAttribute("alt", EXCELLENT);
+				mouseOverStarValue.getElement().setAttribute("title", EXCELLENT);
 			}
 		}
 		

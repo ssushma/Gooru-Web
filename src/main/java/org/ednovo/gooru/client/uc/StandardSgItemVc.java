@@ -62,6 +62,10 @@ public class StandardSgItemVc extends Composite {
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 		standardsTitle.setHTML(title);
+		standardsTitle.getElement().setId("htmlStandardsTitle");
+		standardsTitle.getElement().setAttribute("alt", title);
+		standardsTitle.getElement().setAttribute("title", title);
+		standardsDesc.getElement().setId("htmlStandardsDesc");
 		// As per story : DO-1446
 //		standardsDesc.setHTML(StringUtil.truncateText(desc,60));
 		standardsDesc.setVisible(false);

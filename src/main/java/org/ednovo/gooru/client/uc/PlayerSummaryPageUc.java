@@ -34,6 +34,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -43,6 +44,7 @@ public class PlayerSummaryPageUc extends PopupPanel{
 	@UiField
 	Button leaveBtn, stayBtn;
 	@UiField Label alertMessageHeaderField,alertMessageField,alertMessageField1;
+	@UiField FlowPanel contentPanel;
 	
 	private static PlayerSummaryPageUcUiBinder uiBinder = GWT
 			.create(PlayerSummaryPageUcUiBinder.class);
@@ -62,10 +64,26 @@ public class PlayerSummaryPageUc extends PopupPanel{
 		this.show();
 		this.center();
 		alertMessageHeaderField.setText(i18n.GL1037());
+		alertMessageHeaderField.getElement().setId("lblAlertMessageHeaderField");
+		alertMessageHeaderField.getElement().setAttribute("alt", i18n.GL1037());
+		alertMessageHeaderField.getElement().setAttribute("title", i18n.GL1037());
 		alertMessageField.setText(i18n.GL1038());
+		alertMessageField.getElement().setId("lblAlertMessageField");
+		alertMessageField.getElement().setAttribute("alt", i18n.GL1038());
+		alertMessageField.getElement().setAttribute("title", i18n.GL1038());
 		alertMessageField1.setText(i18n.GL1039());
+		alertMessageField1.getElement().setId("lblAlertMessageField1");
+		alertMessageField1.getElement().setAttribute("alt", i18n.GL1039());
+		alertMessageField1.getElement().setAttribute("title",i18n.GL1039());
+		contentPanel.getElement().setId("fpnlContentPanel");
 		leaveBtn.setText(i18n.GL1040());
+		leaveBtn.getElement().setId("btnLeaveBtn");
+		leaveBtn.getElement().setAttribute("alt", i18n.GL1040());
+		leaveBtn.getElement().setAttribute("title",i18n.GL1040());
 		stayBtn.setText(i18n.GL1041());
+		stayBtn.getElement().setId("btnStayBtn");
+		stayBtn.getElement().setAttribute("alt", i18n.GL1041());
+		stayBtn.getElement().setAttribute("title",i18n.GL1041());
 	}
 
 	public Button getLeaveButton() {

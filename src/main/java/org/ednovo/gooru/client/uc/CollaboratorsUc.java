@@ -53,6 +53,7 @@ public class CollaboratorsUc extends Composite {
 	 */
 	public CollaboratorsUc(CollectionDo collectionDo) {
 		initWidget(uiBinder.createAndBindUi(this));
+		teamContainer.getElement().setId("fpnlTeamContainer");
 		AppClientFactory.getInjector().getCollaboratorsService().getAssociatedCollaborators(collectionDo.getGooruOid(), "active", new SimpleAsyncCallback<Map<String,ArrayList<CollaboratorsDo>>>() {
 			
 			@Override
@@ -68,6 +69,7 @@ public class CollaboratorsUc extends Composite {
 	
 	public CollaboratorsUc(CollectionSearchResultDo collectionResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
+		teamContainer.getElement().setId("fpnlTeamContainer");
 		AppClientFactory.getInjector().getCollaboratorsService().getAssociatedCollaborators(collectionResultDo.getGooruOid(), "active", new SimpleAsyncCallback<Map<String,ArrayList<CollaboratorsDo>>>() {
 			
 			@Override
