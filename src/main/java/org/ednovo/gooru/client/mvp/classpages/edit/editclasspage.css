@@ -215,7 +215,7 @@
 	position: relative;
 	display: inline-block;
 	text-align: center;
-	margin-left: 300px;
+	margin-left: 400px;
 }
 .myClassPageTitleButtonContainer {
 	float: right;
@@ -1223,4 +1223,15 @@ margin-top:20px !important;
 	text-align: center; 
 	font-size: 14px; 
 	font-weight: bold;
+}
+.errorMessage{
+	height: 170px;
+	width: 450px;
+	color: #999;
+	position: relative;
+	display: inline-block;
+	margin-left: 282px;
+	font-style: italic;
+	font-size: 14px;
+	margin-top: 10px;
 }
