@@ -3,9 +3,11 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="sausdStyleUc" src="sausd.css" type="org.ednovo.gooru.client.mvp.library.sausd.SausdStyleBundle" />
 	<g:HTMLPanel ui:field="landingBannerInner">
-	    <g:HTMLPanel ui:field="partnerLogo"/>
-		<g:Label styleName="{sausdStyleUc.header}" ui:field="headerTag"></g:Label>
-		<g:Label styleName="{sausdStyleUc.subheader}" ui:field="subHeaderTag"></g:Label>
+	    <g:HTMLPanel styleName="{sausdStyleUc.headerPanel}">
+		    <g:HTMLPanel ui:field="partnerLogo"/>
+			<g:Label styleName="{sausdStyleUc.header}" ui:field="headerTag"></g:Label>
+			<g:Label styleName="{sausdStyleUc.subheader}" ui:field="subHeaderTag"></g:Label>
+	    </g:HTMLPanel>
 		<g:HTMLPanel styleName="{sausdStyleUc.banner-container}">
 			<g:HTMLPanel styleName="{sausdStyleUc.banner-tabs}">
 			    <g:HTMLPanel styleName="{sausdStyleUc.box-inner}">
