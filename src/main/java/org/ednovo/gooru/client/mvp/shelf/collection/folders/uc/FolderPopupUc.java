@@ -115,6 +115,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 		folderStructureTree.add(folderTreePanel);
 		folderTitle.getElement().setAttribute("maxlength", "50");
 		folderTitle.getElement().setAttribute("placeholder", i18n.GL1250());
+		folderTitle.getElement().setAttribute("spellcheck", "true");
 		validationTitleLbl.getElement().getStyle().setDisplay(Display.NONE);
 		validationTitleLbl.getElement().getStyle().setTextAlign(TextAlign.RIGHT);
 		addingLbl.setVisible(false);

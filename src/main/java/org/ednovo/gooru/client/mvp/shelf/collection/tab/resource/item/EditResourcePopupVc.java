@@ -59,6 +59,7 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -285,8 +286,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		addResourceBtn.getElement().getStyle().setFloat(Float.LEFT);
 		uploadImageLbl.addClickHandler(new OnEditImageClick());
 		titleTextBox.getElement().setId("txtTitleTextBox");
+		StringUtil.setAttributes(titleTextBox);
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());
 		descriptionTxtAera.getElement().setId("tatDescriptionTxtAera");
+		StringUtil.setAttributes(descriptionTxtAera);
 		descriptionTxtAera.addKeyUpHandler(new DescriptionKeyUpHandler());
 		titleTextBox.getElement().setAttribute("maxlength", "50");
 		descriptionTxtAera.getElement().setAttribute("maxlength", "300");

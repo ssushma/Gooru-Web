@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -127,6 +128,7 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 		successMessageLabelText.getElement().setId("lblSuccessMessageLabelText");
 		addCollectionInsteadLabelContainer.getElement().setId("pnlAddCollectionInsteadLabelContainer");
 		collectionTitleInCoverPage.getElement().setId("txtCollectionTitleInCoverPage");
+		StringUtil.setAttributes(collectionTitleInCoverPage);
 		addingLabel.getElement().setId("lblAddingLabel");
 		addErrorLabel.getElement().setId("errlblAddErrorLabel");
 		hideButton.getElement().setId("epnlHideButton");

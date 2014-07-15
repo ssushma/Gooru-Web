@@ -162,6 +162,7 @@ public abstract class AddSearchResourceView extends Composite {
 		searchBox.getElement().setAttribute("placeholder", i18n.GL1967());
 		searchBox.setText(collectionTitle);
 		searchBox.getElement().setId("txtSearchBox");
+		searchBox.getElement().setAttribute("spellcheck", "true");
 		searchBox.getElement().setAttribute("alt", collectionTitle);
 		searchBox.getElement().setAttribute("title", collectionTitle);
 		searchBox.addKeyUpHandler(new SearchKeyUpHandler());

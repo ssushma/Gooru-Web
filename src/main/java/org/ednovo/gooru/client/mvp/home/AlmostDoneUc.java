@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -124,6 +125,7 @@ public class AlmostDoneUc extends PopupPanel{
 		fillOutText.getElement().setAttribute("title",i18n.GL1280()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		emailTxtBox.getElement().setId("txtEmail");
+		StringUtil.setAttributes(emailTxtBox);
 		cancelButton.getElement().setId("epnlCancelButton");
 		
 		emailText.getElement().setInnerText(i18n.GL0212());
@@ -164,6 +166,7 @@ public class AlmostDoneUc extends PopupPanel{
 		gooruText.setText(i18n.GL_GRR_OF()+" "+i18n.GL0733()+i18n.GL_SPL_FULLSTOP());
 		okButton.getElement().setInnerText(i18n.GL0190());
 		userNameTxtBox.getElement().setId("txtUserName");
+		StringUtil.setAttributes(userNameTxtBox);
 		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicy");
 		buttonContainer.getElement().setId("pnlButtonContainer");
 		copyRightAnr.getElement().setId("lnkCopyRight");

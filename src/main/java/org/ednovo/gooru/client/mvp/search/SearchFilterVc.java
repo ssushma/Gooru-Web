@@ -57,6 +57,7 @@ import org.ednovo.gooru.shared.model.search.AbstractSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -464,6 +465,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		} else {
 			authorPanelUc.setVisible(true);
 			authorTxtBox.getElement().setId("tbAuthor");
+			StringUtil.setAttributes(authorTxtBox);
 			authorTxtBox.addKeyUpHandler(new KeyUpHandler() {
 
 				@Override

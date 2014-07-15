@@ -190,7 +190,7 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 		dateBoxUc.addDomHandler(new OnDateFocus(), FocusEvent.getType());
 		emailIdTxtBox.addFocusHandler(new OnEmailFocus());
 		emailIdTxtBox.addBlurHandler(new OnEmailBlur());
-
+		StringUtil.setAttributes(emailIdTxtBox);
 		dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
 		
 		emailValidationUc.setVisible(false);

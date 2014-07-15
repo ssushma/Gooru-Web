@@ -28,6 +28,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.FontStyle;
@@ -93,6 +94,7 @@ public abstract class DeleteConfirmPopupVc extends AppPopUp {
 		setContent(title, uiBinder.createAndBindUi(this));
 		setStyleName("deleteResourcePopup");
 		inlineTxtBox.getElement().setAttribute("placeholder", i18n.GL0826());
+		StringUtil.setAttributes(inlineTxtBox);
 		inlineTxtBox.addKeyUpHandler(new ValidateConfirmText());
 		inlineTxtBox.getElement().setId("txtInline");
 		okButtonUc.getElement().setId("btnOk");

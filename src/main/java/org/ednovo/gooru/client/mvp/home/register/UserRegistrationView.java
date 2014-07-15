@@ -328,6 +328,7 @@ public class UserRegistrationView extends
 		userNameFieldTxtBox.addBlurHandler(new OnUserNameBlur());
 		userNameFieldTxtBox.addFocusHandler(new OnUserNameFocus());
 		userNameFieldTxtBox.getElement().setId("txtUserName");
+		StringUtil.setAttributes(userNameFieldTxtBox);
 		firstNameFieldUc.getElement().setId("txtFirstName");
 		lastNameFieldUc.getElement().setId("txtLastName");
 		passwordFieldTxtBox.getElement().setId("txtpassword");

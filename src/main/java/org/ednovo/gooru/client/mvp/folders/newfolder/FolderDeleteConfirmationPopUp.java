@@ -29,6 +29,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.DeleteConfirmPopupVc;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -90,6 +91,7 @@ public abstract class FolderDeleteConfirmationPopUp extends AppPopUp  {
 		entityLbl.getElement().setAttribute("alt",entityInfo);
 		entityLbl.getElement().setAttribute("title",entityInfo);
 		inlineTxtBox.getElement().setId("txtInlineTxtBox");
+		StringUtil.setAttributes(inlineTxtBox);
 		buttonContainer.getElement().setId("pnlButtonContainer");
 		okButtonUc.getElement().setId("btnDeleteCollectionDisabled");
 		cancelAnr.getElement().setId("lnkCancelAnr");

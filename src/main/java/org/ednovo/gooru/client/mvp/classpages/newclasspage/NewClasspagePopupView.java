@@ -46,6 +46,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -98,6 +99,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 		classpageTitleTxt.getElement().setAttribute("placeholder", i18n.GL1124());
 		classpageTitleTxt.getElement().setAttribute("maxlength", "50");
 		classpageTitleTxt.getElement().setId("txtClassPageTitle");
+		StringUtil.setAttributes(classpageTitleTxt);
 		
 		btnAdd.getElement().setId("btnAdd");
 		btnAdd.setText(i18n.GL0745());

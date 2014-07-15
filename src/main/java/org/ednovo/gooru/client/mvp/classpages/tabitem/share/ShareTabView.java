@@ -29,6 +29,7 @@ import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -110,6 +111,9 @@ public class ShareTabView extends
 		classcodeTxtBox.setReadOnly(true);
 		shortenUrlTxtBox.getElement().setId("txtShortenUrl");
 		classcodeTxtBox.getElement().setId("txtClasscode");
+		StringUtil.setAttributes(shortenUrlTxtBox);
+		StringUtil.setAttributes(classcodeTxtBox);
+		
 	}
 	
 	/**

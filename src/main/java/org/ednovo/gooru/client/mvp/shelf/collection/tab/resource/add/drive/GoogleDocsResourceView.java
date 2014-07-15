@@ -9,6 +9,7 @@ import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -117,6 +118,7 @@ public class GoogleDocsResourceView extends Composite {
 		resourceTypePanel.setVisible(false);
 		panelContentRights.setVisible(false);
 		titleTextBox.setText(driveDo.getTitle());
+		StringUtil.setAttributes(titleTextBox);
 		thumbnailText.getElement().setInnerText("");
 		descriptionTxtAera.setText(driveDo.getDescription());
 	}

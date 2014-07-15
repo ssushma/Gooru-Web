@@ -30,6 +30,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -169,6 +170,8 @@ public class AssignmentEditLabelUc extends Composite implements
 		editLabel.getElement().setId("lblEditLabel");
 		errorLabel.getElement().setId("lblErrorLabel");
 		editTextBox.getElement().setId("txtEditTextBox");
+		
+		StringUtil.setAttributes(editTextBox);
 	}
 
 	private class ValidateConfirmText implements KeyUpHandler {

@@ -94,6 +94,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 		copycollectionTextbox.getElement().setId("txtCopycollectionTextbox");
 		copycollectionTextbox.getElement().setAttribute("alt",collectionTitle);
 		copycollectionTextbox.getElement().setAttribute("title",collectionTitle);
+		copycollectionTextbox.getElement().setAttribute("spellcheck","true");
 		
 		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionId, new SimpleAsyncCallback<CollectionDo>(){
 

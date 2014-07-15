@@ -51,6 +51,7 @@ import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -216,6 +217,7 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		assignmentTitleTxt.getElement().setAttribute("maxlength", "50");
 		assignmentDescriptionTxtArea.getElement().setAttribute("maxlength",
 				"400");
+		StringUtil.setAttributes(assignmentTitleTxt);
 
 		assignmentTitleTxt.addKeyUpHandler(new TitleKeyUpHandler());
 		assignmentDescriptionTxtArea
