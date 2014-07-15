@@ -63,6 +63,7 @@ public class InviteStudentsPopup extends PopupPanel {
 		titlePanel.getElement().setAttribute("title",i18n.GL1521());
 		
 		emailTextArea.getElement().setId("tatEmail");
+		StringUtil.setAttributes(emailTextArea);
 		emailValidationLbl.getElement().setId("errlblEmailValidation");
 		
 		cancelBtn.setText(i18n.GL0142());

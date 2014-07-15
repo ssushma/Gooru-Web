@@ -14,6 +14,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -225,6 +226,7 @@ public class CollectionFlagView extends
 		resourceCheckBox2.getElement().setId("chkResourceCheckBox2");
 		resourceCheckBox1.getElement().setId("chkResourceCheckBox1");
 		resourceDescTextArea.getElement().setId("tatResourceDescTextArea");
+		StringUtil.setAttributes(resourceDescTextArea);
 		collectionFlagContainer.getElement().setId("pnlCollectionFlagContainer");
 		collectionTitleField.getElement().setId("htmlCollectionTitleField");
 		collectionCheckBox4.getElement().setId("chkCollectionCheckBox4");
@@ -232,6 +234,7 @@ public class CollectionFlagView extends
 		collectionCheckBox2.getElement().setId("chkCollectionCheckBox2");
 		collectionCheckBox1.getElement().setId("chkCollectionCheckBox1");
 		collectionDescTextArea.getElement().setId("tatCollectionDescTextArea");
+		StringUtil.setAttributes(collectionDescTextArea);
 	}
 
 	public void displayView(String collectionTitle,ArrayList<String> resourcesList,ArrayList<String> resourcesListId) {

@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.mvp.shelf.event.EmbedEnableEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.EmbedEnableHandler;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -88,6 +89,7 @@ public class SearchEmbedVc extends Composite {
 		embedlineText.getElement().setAttribute("title",i18n.GL0718());
 		
 		txtAreaEmbed.getElement().setAttribute("id", "txtAreaEmbed");
+		StringUtil.setAttributes(txtAreaEmbed);
 		
 		//Handle click event for selecting all text inside text box.
 		txtAreaEmbed.addClickHandler(new OnTextAreaClick());

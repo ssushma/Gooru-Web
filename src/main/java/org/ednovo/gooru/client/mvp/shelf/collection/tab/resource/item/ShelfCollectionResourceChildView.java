@@ -56,6 +56,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -475,6 +476,7 @@ public class ShelfCollectionResourceChildView extends
 		resourceNarrationHtml.getElement().setId("htmlResourceNarrationHtml");
 		narrationTxtArea.getElement().setAttribute("maxlength", "600");
 		narrationTxtArea.getElement().setId("tatNarrationTxtArea");
+		StringUtil.setAttributes(narrationTxtArea);
 	//	narrationTxtArea.addKeyUpHandler(new narationValidation());
 		fromTxt.addKeyUpHandler(new fromTxtKeyUpHandler());
 		toTxt.addKeyUpHandler(new toTxtKeyUpHandler());

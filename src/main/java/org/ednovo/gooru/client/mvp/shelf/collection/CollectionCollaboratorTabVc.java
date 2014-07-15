@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -102,6 +103,7 @@ public class CollectionCollaboratorTabVc extends Composite {
 		getCollaboratorUsers(collectionDo.getGooruOid());
 		collaboratorTxtBox.addKeyUpHandler(new OnTextPress());
 		collaboratorTxtBox.getElement().setId("txtCollaboratorTxtBox");
+		StringUtil.setAttributes(collaboratorTxtBox);
 		addedCollaboratorFloPanel.getElement().setId("fpnlAddedCollaboratorFloPanel");
 	}
 

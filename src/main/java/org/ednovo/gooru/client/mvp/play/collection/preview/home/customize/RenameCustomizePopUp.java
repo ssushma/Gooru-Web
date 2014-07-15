@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -238,6 +239,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		copyCollectionSuccess.getElement().setId("pnlCopyCollectionSuccess");
 		popupContentAssign.getElement().setId("pnlPopupContentAssign");
 		copycollectionTextbox.getElement().setId("txtCopycollectionTextbox");
+		StringUtil.setAttributes(copycollectionTextbox);
 		errorLabel.getElement().setId("errlblErrorLabel");
 		buttonsContainer.getElement().setId("pnlButtonsContainer");
 	}

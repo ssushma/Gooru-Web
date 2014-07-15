@@ -92,6 +92,7 @@ public class SettingLastNameEditLabelUC extends Composite implements HasValue<St
 		editTextBox.getElement().setAttribute("maxlength", "25");
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 		editTextBox.getElement().setId("txtName");
+		StringUtil.setAttributes(editTextBox);
 		errorLabel.getElement().setId("errlblErrorLabel");
 		errorLabel.getElement().setAttribute("style", "margin-left:20px");
 	}

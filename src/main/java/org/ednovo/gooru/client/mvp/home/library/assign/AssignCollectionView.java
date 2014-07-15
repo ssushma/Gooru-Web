@@ -52,6 +52,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -194,12 +195,14 @@ IsCollectionAssign {
 		textAreaVal.getElement().setAttribute("alt",i18n.GL1461());
 		textAreaVal.getElement().setAttribute("title",i18n.GL1461());
 		textAreaVal.getElement().getStyle().setColor("#999");
+		StringUtil.setAttributes(textAreaVal);
 		
 		dateBoxUc = new DateBoxUcCustomizedForAssign(false, false,false);
 		duedateContainer.add(dateBoxUc);
 		dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
 		textAreaVal.addKeyUpHandler(new DirectionsKeyUpHandler());
 		textAreaVal.getElement().setAttribute("maxlength", "400");
+		StringUtil.setAttributes(textAreaVal);
 		
 		textAreaVal.addFocusHandler(new FocusHandler() {
 			@Override

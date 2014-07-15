@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -144,6 +145,7 @@ public class RatingUserWidgetView extends Composite {
 		errorLbl.getElement().setId("lblErrorLbl");
 
 		editReviewText.getElement().setAttribute("maxlength", "500");
+		StringUtil.setAttributes(editReviewText);
 		editReview.setText(i18n.GL1860());
 		editReview.getElement().setId("btnEditReview");
 		editReview.getElement().setAttribute("alt",i18n.GL1860());

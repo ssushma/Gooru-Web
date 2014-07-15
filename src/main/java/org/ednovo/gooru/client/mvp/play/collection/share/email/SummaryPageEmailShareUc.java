@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.ThankYouToolTip;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.BodyElement;
@@ -156,12 +157,15 @@ public class SummaryPageEmailShareUc extends PopupPanel{
 		toValidation.setVisible(false);
 		toTxt.getElement().setId("tbTo");
 		subTxt.getElement().setId("tbSubject");
+		StringUtil.setAttributes(subTxt);
 		subTxt.setText(i18n.GL1443());
 		subTxt.getElement().setAttribute("alt",i18n.GL1443());
 		subTxt.getElement().setAttribute("title",i18n.GL1443());
+		StringUtil.setAttributes(subTxt);
 		
 		fromTxt.getElement().setId("tbFrom");
 		msgTxa.getElement().setId("taMessage");
+		StringUtil.setAttributes(msgTxa);
 		fromLbl.getElement().setId("lblFromLbl");
 		checkCopyEmail.getElement().setId("chkCheckCopyEmail");
 		mandatoryErrorLbl.getElement().setId("errlblMandatoryErrorLbl");

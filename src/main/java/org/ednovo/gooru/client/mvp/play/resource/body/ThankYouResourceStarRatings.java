@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -113,7 +114,7 @@ public class ThankYouResourceStarRatings extends PopupPanel{
 		saveAndPsotLbl.setVisible(false);
 		buttonsContainer.setVisible(true);
 		ratingCommentTxtArea.getElement().setAttribute("maxlength", "500");
-		
+		StringUtil.setAttributes(ratingCommentTxtArea);
 		reviewTextAreaTitle.getElement().setId("lblReviewTextAreaTitle");
 		ratingCommentTxtArea.getElement().setId("tatRatingCommentTxtArea");
 		mandatoryDescLblForSwareWords.getElement().setId("errlblMandatoryDescLblForSwareWords");

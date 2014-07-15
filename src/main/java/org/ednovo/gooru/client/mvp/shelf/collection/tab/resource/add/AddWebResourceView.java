@@ -53,6 +53,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -456,8 +457,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		addResourceBtnLbl.getElement().setId("btnAdd");
 		urlTextBox.getElement().setId("tbUrl");
 		titleTextBox.getElement().setId("tbTitle");
+		StringUtil.setAttributes(titleTextBox);
 		cancelResourcePopupBtnLbl.getElement().setId("lblCancel");
 		descriptionTxtAera.getElement().setId("taDescription");
+		StringUtil.setAttributes(descriptionTxtAera);
 		descriptionTxtAera.getElement().setAttribute("placeholder", i18n.GL0359());
 		if(!isGoogleDriveFile){
 			urlTextBox.addKeyUpHandler(new UrlKeyUpHandler());

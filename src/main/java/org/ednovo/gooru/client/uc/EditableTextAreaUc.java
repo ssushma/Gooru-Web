@@ -30,6 +30,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
@@ -115,6 +116,7 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 		html.getElement().setId("htmlHtml");
 		duplicateTinyMce.getElement().setId("pnlDuplicateTinyMce");
 		fakeContent.getElement().setId("pnlFakeContent");
+		StringUtil.setAttributes(textArea);
 		textArea.addBlurHandler(new BlurHandler() {
 			
 			@Override
