@@ -271,11 +271,11 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			String questionString = questionCount == 1? questionCount + " " + i18n.GL0308().toLowerCase() : questionCount + " " + i18n.GL1042().toLowerCase();
 			String finalMessage = "";
 			if (resourceCount >0 && questionCount > 0){
-				finalMessage = resourceString + " " + i18n.GL_GRR_AND() + " " + questionString + " " + i18n.GL0578() + i18n.GL_SPL_SEMICOLON();
+				finalMessage = resourceString + " " + i18n.GL_GRR_AND() + " " + questionString + " " + i18n.GL0578() + i18n.GL_SPL_SEMICOLON()+" ";
 			}else if (resourceCount >0){
-				finalMessage = resourceString + " " + i18n.GL0578() + i18n.GL_SPL_SEMICOLON();
+				finalMessage = resourceString + " " + i18n.GL0578() + i18n.GL_SPL_SEMICOLON()+" ";
 			}else if (questionCount >0){
-				finalMessage = questionString + " " + i18n.GL0578() + i18n.GL_SPL_SEMICOLON();
+				finalMessage = questionString + " " + i18n.GL0578() + i18n.GL_SPL_SEMICOLON()+" ";
 			}else{
 			
 			}

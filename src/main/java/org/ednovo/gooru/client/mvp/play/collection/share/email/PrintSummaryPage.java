@@ -193,7 +193,7 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 		metaDataUserNameLbl.setText(collectionUserName);
 		metaDataUserNameLbl.getElement().setAttribute("alt",collectionUserName);
 		metaDataUserNameLbl.getElement().setAttribute("title",collectionUserName);
-		timeTxt.setText(i18n.GL1447()+i18n.GL_SPL_SEMICOLON());
+		timeTxt.setText(i18n.GL1447()+i18n.GL_SPL_SEMICOLON()+" ");
 		timeTxt.getElement().setAttribute("alt",i18n.GL1447());
 		timeTxt.getElement().setAttribute("title",i18n.GL1447());
 		timeLbl.setText(completedDate);

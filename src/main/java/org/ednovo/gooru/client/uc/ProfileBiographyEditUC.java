@@ -75,6 +75,9 @@ public class ProfileBiographyEditUC extends Composite implements
 	public ProfileBiographyEditUC() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
+		focusPanel.getElement().setId("focuspnlFocusPanel");
+		deckPanel.getElement().setId("dpnlDeckPanel");
+		editLabel.getElement().setId("pnlEditLabel");
 		deckPanel.showWidget(0);
 		
 		biographyLabel = new InlineLabel();
@@ -199,6 +202,8 @@ public class ProfileBiographyEditUC extends Composite implements
 		editLabel.add(biographyLabel);
 		editLabel.add(biographyEditImage);
 		editTextBox.setText(value);
+		editTextBox.getElement().setAttribute("alt", value);
+		editTextBox.getElement().setAttribute("title", value);
 	}
 
 	/**

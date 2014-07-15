@@ -46,21 +46,27 @@ public abstract class CollectionAnalyticsUc extends PopupPanel {
 	
 	@UiField Label analyticsHeaderLbl,closeButton;
 
-	@UiField FlowPanel analyticsBodyLbl;
+	@UiField FlowPanel analyticsBodyLbl,headerPanel,contentPanel;
 
 	public CollectionAnalyticsUc(final String gooruOid ,String collectionName, CollectionTabTitleVc presentTab) {
 		setWidget(uiBinder.createAndBindUi(this));	
 		if (presentTab!=null){
 			this.presentTab = presentTab;
 		}
-		
+		headerPanel.getElement().setId("fpnlHeaderPanel");
+		contentPanel.getElement().setId("fpnlContentPanel");
+		analyticsBodyLbl.getElement().setId("fpnlAnalyticsBodyLbl");
 		this.getElement().getStyle().setWidth(100, Unit.PCT);
 		this.getElement().getStyle().setHeight(100, Unit.PCT);
 		this.getElement().getStyle().setPadding(0, Unit.PX);
 		this.getElement().getStyle().setZIndex(99999);
 		
 		final int height = Window.getClientHeight()-40;
+		analyticsHeaderLbl.getElement().setId("lblAnalyticsHeaderLbl");
 		analyticsHeaderLbl.setText(i18n.GL0831()+" "+i18n.GL_GRR_Hyphen()+" "+collectionName);
+		analyticsHeaderLbl.getElement().setAttribute("alt", i18n.GL0831()+" "+i18n.GL_GRR_Hyphen()+" "+collectionName);
+		analyticsHeaderLbl.getElement().setAttribute("title", i18n.GL0831()+" "+i18n.GL_GRR_Hyphen()+" "+collectionName);
+		closeButton.getElement().setId("lblCloseButton");
 		Window.scrollTo(0, 0);
 				
 		AppClientFactory.getInjector().getAppService().getAnalyticsURL("collection", gooruOid, new SimpleAsyncCallback<String>() {

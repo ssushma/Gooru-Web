@@ -97,6 +97,9 @@ public class AssignmentEditLabelUc extends Composite implements
 		
 		setIds();
 		errorLabel.setText(i18n.GL0173());
+		errorLabel.getElement().setId("errlblErrorLabel");
+		errorLabel.getElement().setAttribute("alt", i18n.GL0173());
+		errorLabel.getElement().setAttribute("title", i18n.GL0173());
 		errorLabel.setVisible(false);
 		deckPanel.showWidget(0);
 
@@ -115,6 +118,8 @@ public class AssignmentEditLabelUc extends Composite implements
 						if (value){
 							editTextBox.getElement().getStyle().setBorderColor("orange");
 							errorLabel.setText(i18n.GL0554());
+							errorLabel.getElement().setAttribute("alt", i18n.GL0554());
+							errorLabel.getElement().setAttribute("title", i18n.GL0554());
 							errorLabel.setVisible(true);
 						}else{
 							setValue(editTextBox.getText(), true); // fires events, too
@@ -144,6 +149,8 @@ public class AssignmentEditLabelUc extends Composite implements
 							if (value){
 								editTextBox.getElement().getStyle().setBorderColor("orange");
 								errorLabel.setText(i18n.GL0554());
+								errorLabel.getElement().setAttribute("alt", i18n.GL0554());
+								errorLabel.getElement().setAttribute("title", i18n.GL0554());
 								errorLabel.setVisible(true);
 							}else{
 								switchToLabel();
@@ -155,6 +162,8 @@ public class AssignmentEditLabelUc extends Composite implements
 					});
 				} else if (event.getCharCode() == KeyCodes.KEY_ESCAPE) {
 					editTextBox.setText(editLabel.getText()); // reset to the original value
+					editTextBox.getElement().setAttribute("alt", editLabel.getText());
+					editTextBox.getElement().setAttribute("title", editLabel.getText());
 				}
 			}
 		});
@@ -164,10 +173,9 @@ public class AssignmentEditLabelUc extends Composite implements
 	}
 
 	public void setIds() {
-		focusPanel.getElement().setId("focuspnlFocusPanel");
+		focusPanel.getElement().setId("fpnlFocusPanel");
 		deckPanel.getElement().setId("dpnlDeckPanel");
 		editLabel.getElement().setId("lblEditLabel");
-		errorLabel.getElement().setId("lblErrorLabel");
 		editTextBox.getElement().setId("txtEditTextBox");
 	}
 
@@ -195,7 +203,9 @@ public class AssignmentEditLabelUc extends Composite implements
 
 		if (deckPanel.getVisibleWidget() == 1)
 			return;
-		editTextBox.setText(getValue());	
+		editTextBox.setText(getValue());
+		editTextBox.getElement().setAttribute("alt", getValue());
+		editTextBox.getElement().setAttribute("title", getValue());
 		deckPanel.showWidget(1);
 		editTextBox.setFocus(true);
 		editTextBox.addStyleName("shelfEditTitleForAssignment");
@@ -219,8 +229,12 @@ public class AssignmentEditLabelUc extends Composite implements
 			
 			if (isHavingBadWords){
 				errorLabel.setText(i18n.GL0554());
+				errorLabel.getElement().setAttribute("alt", i18n.GL0554());
+				errorLabel.getElement().setAttribute("title", i18n.GL0554());
 			}else{
 				errorLabel.setText(i18n.GL0173());
+				errorLabel.getElement().setAttribute("alt", i18n.GL0173());
+				errorLabel.getElement().setAttribute("title", i18n.GL0173());
 			}
 			errorLabel.setVisible(true);
 //			new AlertContentUc("Oops", "Title Shouldn't be empty!");
@@ -248,6 +262,8 @@ public class AssignmentEditLabelUc extends Composite implements
 	public void cancel() {
 		deckPanel.showWidget(0);
 		editTextBox.setText(editLabel.getText());
+		editTextBox.getElement().setAttribute("alt", editLabel.getText());
+		editTextBox.getElement().setAttribute("title",editLabel.getText());
 		errorLabel.setVisible(false);
 	}
 
@@ -305,7 +321,11 @@ public class AssignmentEditLabelUc extends Composite implements
 
 		editLabel.setText(value.length() > 50 ? value.substring(0, 50) + "..."
 				: value);
+		editLabel.getElement().setAttribute("alt", value);
+		editLabel.getElement().setAttribute("title", value);
 		editTextBox.setText(value);
+		editTextBox.getElement().setAttribute("alt", value);
+		editTextBox.getElement().setAttribute("title", value);
 	}
 
 	/**

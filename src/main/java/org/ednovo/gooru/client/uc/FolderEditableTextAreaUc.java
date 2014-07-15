@@ -76,6 +76,10 @@ public class FolderEditableTextAreaUc extends Composite implements HasValue<Stri
 	public FolderEditableTextAreaUc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
+		focusPanel.getElement().setId("focuspnlFocusPanel");
+		deckPanel.getElement().setId("dpnlDeckPanel");
+		html.getElement().setId("htmlHtml");
+		textArea.getElement().setId("tatTextArea");
 		deckPanel.showWidget(0);
 		/*focusPanel.addClickHandler(new ClickHandler() {
 
@@ -187,7 +191,11 @@ public class FolderEditableTextAreaUc extends Composite implements HasValue<Stri
 			value = getPlaceholder();
 		}*/
 		html.setHTML(value);
+		html.getElement().setAttribute("alt", value);
+		html.getElement().setAttribute("title", value);
 		textArea.setText(value);
+		textArea.getElement().setAttribute("alt", value);
+		textArea.getElement().setAttribute("title", value);
 	}
 
 	public void setExtraHtmlStyleName(String style) {
