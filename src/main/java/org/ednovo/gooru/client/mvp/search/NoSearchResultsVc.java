@@ -102,12 +102,41 @@ public class NoSearchResultsVc extends Composite {
 	public NoSearchResultsVc() {
 		initWidget(uiBinder.createAndBindUi(this));
 		didnotFindText.setText(i18n.GL0711());
+		didnotFindText.getElement().setId("lblDidnotFindText");
+		didnotFindText.getElement().setAttribute("alt",i18n.GL0711());
+		didnotFindText.getElement().setAttribute("title",i18n.GL0711());
+		
 		tryText.setText(i18n.GL0712());
+		tryText.getElement().setId("lblTryText");
+		tryText.getElement().setAttribute("alt",i18n.GL0712());
+		tryText.getElement().setAttribute("title",i18n.GL0712());
+		
 		removeFiltersText.setText(i18n.GL0713());
+		removeFiltersText.getElement().setId("lblRemoveFiltersText");
+		removeFiltersText.getElement().setAttribute("alt",i18n.GL0713());
+		removeFiltersText.getElement().setAttribute("title",i18n.GL0713());
+		
 		checkSpellingText.setText(i18n.GL0714());
+		checkSpellingText.getElement().setId("lblCheckSpellingText");
+		checkSpellingText.getElement().setAttribute("alt",i18n.GL0714());
+		checkSpellingText.getElement().setAttribute("title",i18n.GL0714());
+		
 		differentKeywordText.setText(i18n.GL0715());
+		differentKeywordText.getElement().setId("lblDifferentKeywordText");
+		differentKeywordText.getElement().setAttribute("alt",i18n.GL0715());
+		differentKeywordText.getElement().setAttribute("title",i18n.GL0715());
+		
 		changeToggleText.setText(i18n.GL0716());
+		changeToggleText.getElement().setId("lblChangeToggleText");
+		changeToggleText.getElement().setAttribute("alt",i18n.GL0716());
+		changeToggleText.getElement().setAttribute("title",i18n.GL0716());
+		
 		suggestedresourcesText.setText(i18n.GL0717());
+		suggestedresourcesText.getElement().setId("lblSuggestedresourcesText");
+		suggestedresourcesText.getElement().setAttribute("alt",i18n.GL0717());
+		suggestedresourcesText.getElement().setAttribute("title",i18n.GL0717());
+		suggestedResourcesContainer.getElement().setId("pnlSuggestedResourcesContainer");
+		resourcesCount.getElement().setId("lblResourcesCount");
 		getSearchData();
 	}
 

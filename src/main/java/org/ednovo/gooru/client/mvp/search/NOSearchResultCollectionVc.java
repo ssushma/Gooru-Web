@@ -95,15 +95,53 @@ public class NOSearchResultCollectionVc extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		suggestedCollectionContainer.setVisible(false);
 		btnLibrary.setText(i18n.GL0506());
+		btnLibrary.getElement().setId("btnLibrary");
+		btnLibrary.getElement().setAttribute("alt",i18n.GL0506());
+		btnLibrary.getElement().setAttribute("title",i18n.GL0506());
+		
 		btnLibrary.getElement().getStyle().setMarginLeft(180, Unit.PX);
 		didnotFindText.setText(i18n.GL0704());
+		didnotFindText.getElement().setId("lblDidnotFindText");
+		didnotFindText.getElement().setAttribute("alt",i18n.GL0704());
+		didnotFindText.getElement().setAttribute("title",i18n.GL0704());
+		
 		orText.setText(i18n.GL0209().toUpperCase());
+		orText.getElement().setId("lblOrText");
+		orText.getElement().setAttribute("alt",i18n.GL0209().toUpperCase());
+		orText.getElement().setAttribute("title",i18n.GL0209().toUpperCase());
+		
 		tryTipsText.setText(i18n.GL0705());
+		tryTipsText.getElement().setId("lblTryTipsText");
+		tryTipsText.getElement().setAttribute("alt",i18n.GL0705());
+		tryTipsText.getElement().setAttribute("title",i18n.GL0705());
+		
 		removeFiltersText.setText(i18n.GL0706());
+		removeFiltersText.getElement().setId("lblRemoveFiltersText");
+		removeFiltersText.getElement().setAttribute("alt",i18n.GL0706());
+		removeFiltersText.getElement().setAttribute("title",i18n.GL0706());
+		
 		checkSpellingText.setText(i18n.GL0707());
+		checkSpellingText.getElement().setId("lblCheckSpellingText");
+		checkSpellingText.getElement().setAttribute("alt",i18n.GL0707());
+		checkSpellingText.getElement().setAttribute("title",i18n.GL0707());
+		
 		differentKeywordText.setText(i18n.GL0708());
+		differentKeywordText.getElement().setId("lblDifferentKeywordText");
+		differentKeywordText.getElement().setAttribute("alt",i18n.GL0708());
+		differentKeywordText.getElement().setAttribute("title",i18n.GL0708());
+		
 		changeToggleText.setText(i18n.GL0709());
+		changeToggleText.getElement().setId("lblChangeToggleText");
+		changeToggleText.getElement().setAttribute("alt",i18n.GL0709());
+		changeToggleText.getElement().setAttribute("title",i18n.GL0709());
+		
 		suggestedCollectionsText.setText(i18n.GL0710());
+		suggestedCollectionsText.getElement().setId("lblSuggestedCollectionsText");
+		suggestedCollectionsText.getElement().setAttribute("alt",i18n.GL0710());
+		suggestedCollectionsText.getElement().setAttribute("title",i18n.GL0710());
+		
+		suggestedCollectionContainer.getElement().setId("pnlSuggestedCollectionContainer");
+		suggestedCollectionCountLbl.getElement().setId("lblSuggestedCollectionCountLbl");
 		//getCollectionData();
 	}
 	
