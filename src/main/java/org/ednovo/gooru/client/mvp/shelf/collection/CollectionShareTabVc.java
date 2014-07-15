@@ -50,6 +50,7 @@ import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -241,7 +242,7 @@ public class CollectionShareTabVc extends Composite {
 		
 		teacherTipTextarea.addKeyUpHandler(new DirectionsKeyUpHandler());
 		teacherTipTextarea.getElement().setAttribute("maxlength", "500");
-		
+		StringUtil.setAttributes(teacherTipTextarea);
 		teacherTipTextarea.addFocusHandler(new FocusHandler() {
 			@Override
 			public void onFocus(FocusEvent event) {

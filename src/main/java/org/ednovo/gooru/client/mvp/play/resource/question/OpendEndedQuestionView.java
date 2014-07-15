@@ -97,6 +97,7 @@ public abstract class OpendEndedQuestionView extends Composite{
 		submitButton.getElement().setId("btnSubmitButton");
 		messageBodyText.getElement().setId("lblMessageBodyText");
 		openEndedAnswerTextArea.getElement().setId("tatOpenEndedAnswerTextArea");
+		StringUtil.setAttributes(openEndedAnswerTextArea);
 		errorMessageText.getElement().setId("lblErrorMessageText");
 		answetTextAfterSubmission.getElement().setId("pnlAnswetTextAfterSubmission");
 		submittedText.getElement().setId("lblSubmittedText");

@@ -221,6 +221,7 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		assignmentTitleTxt.addKeyUpHandler(new TitleKeyUpHandler());
 		assignmentDescriptionTxtArea
 				.addKeyUpHandler(new DirectionsKeyUpHandler());
+		StringUtil.setAttributes(assignmentDescriptionTxtArea);
 
 		dateBoxUc = new DateBoxUc(false,false,false);
 		dateSimPanel.add(dateBoxUc);

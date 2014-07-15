@@ -166,6 +166,7 @@ public class GoogleDocsResourceView extends Composite {
 		descriptionTxtAera.getElement().setId("pnlThumbnailText");
 		descriptionTxtAera.getElement().setAttribute("alt",driveDo.getDescription());
 		descriptionTxtAera.getElement().setAttribute("title",driveDo.getDescription());
+		StringUtil.setAttributes(descriptionTxtAera);
 		
 		contentPanel.getElement().setId("pnlContentPanel");
 		titleText.getElement().setId("pnlTitleText");

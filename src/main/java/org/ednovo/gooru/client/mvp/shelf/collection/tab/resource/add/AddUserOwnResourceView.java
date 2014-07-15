@@ -293,6 +293,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 		titleTextBox.getElement().setId("tbTitle");
 		StringUtil.setAttributes(titleTextBox);
 		descriptionTxtAera.getElement().setId("taDescription");
+		StringUtil.setAttributes(descriptionTxtAera);
 		descriptionTxtAera.getElement().setAttribute("placeholder", i18n.GL0359());
 		resourcePathTextBox.addKeyUpHandler(new ResourcePathKeyUpHandler());
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());

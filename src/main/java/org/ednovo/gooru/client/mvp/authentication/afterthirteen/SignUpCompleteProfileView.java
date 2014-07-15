@@ -161,12 +161,15 @@ public class SignUpCompleteProfileView extends
 		
 		txtFirstName.setPlaceholder(i18n.GL1140());
 		txtlastName.setPlaceholder(i18n.GL1141());
+		StringUtil.setAttributes(txtlastName);
+		StringUtil.setAttributes(txtFirstName);
 	
 		txtAreaAbout.getElement().setAttribute("placeholder",
 				i18n.GL1142());
 		txtAreaAbout.getElement().setId("tatAbout");
 		txtAreaAbout.getElement().setAttribute("alt","");
 		txtAreaAbout.getElement().setAttribute("title","");
+		StringUtil.setAttributes(txtAreaAbout);
 		
 		txtPassword.setPlaceholder(i18n.GL1143());
 		txtPassword.getElement().setId("txtPassword");

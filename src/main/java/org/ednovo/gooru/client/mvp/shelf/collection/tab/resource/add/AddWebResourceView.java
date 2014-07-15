@@ -460,6 +460,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		StringUtil.setAttributes(titleTextBox);
 		cancelResourcePopupBtnLbl.getElement().setId("lblCancel");
 		descriptionTxtAera.getElement().setId("taDescription");
+		StringUtil.setAttributes(descriptionTxtAera);
 		descriptionTxtAera.getElement().setAttribute("placeholder", i18n.GL0359());
 		if(!isGoogleDriveFile){
 			urlTextBox.addKeyUpHandler(new UrlKeyUpHandler());

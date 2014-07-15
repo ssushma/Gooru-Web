@@ -53,6 +53,7 @@ import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -302,6 +303,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		textAreaVal.getElement().setId("tatTextAreaVal");
 		textAreaVal.getElement().setAttribute("alt",i18n.GL1641());
 		textAreaVal.getElement().setAttribute("title",i18n.GL1641());
+		StringUtil.setAttributes(textAreaVal);
 		
 		languageObjectiveHeader.setText(i18n.GL1642());
 		languageObjectiveHeader.getElement().setId("lblLanguageObjectiveHeader");

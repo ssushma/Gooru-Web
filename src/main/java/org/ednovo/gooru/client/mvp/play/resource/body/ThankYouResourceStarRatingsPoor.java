@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -157,6 +158,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		resourceCheckBox2.getElement().setId("chkResourceCheckBox2");
 		resourceCheckBox1.getElement().setId("chkResourceCheckBox1");
 		ratingCommentTxtArea.getElement().setId("tatRatingCommentTxtArea");
+		StringUtil.setAttributes(ratingCommentTxtArea);
 		mandatoryDescLblForSwareWords.getElement().setId("lblMandatoryDescLblForSwareWords");
 		buttonsContainer.getElement().setId("pnlButtonsContainer");
 		btnSkip.getElement().setId("btnSkip");
