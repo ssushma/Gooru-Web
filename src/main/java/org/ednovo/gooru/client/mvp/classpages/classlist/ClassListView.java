@@ -38,7 +38,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeleteP
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.EmailShareUc;
 import org.ednovo.gooru.client.uc.suggestbox.widget.AutoSuggestForm;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
@@ -130,7 +130,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	@UiField Anchor ancprivacy;
 		
 	MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
-    CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+    MessageProperties i18n = GWT.create(MessageProperties.class);
     
 	private static int studentsLimitCount = 500;
 

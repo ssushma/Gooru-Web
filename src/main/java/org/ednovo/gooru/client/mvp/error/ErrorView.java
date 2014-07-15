@@ -25,7 +25,7 @@
 package org.ednovo.gooru.client.mvp.error;
 
 import org.ednovo.gooru.client.gin.BaseView;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.HTML;
@@ -38,7 +38,7 @@ public class ErrorView extends BaseView implements IsErrorView{
 	/**
 	 * Class constructor
 	 */
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public ErrorView() {
 		setWidget(new HTML("<body><div class='errorMessageMaindiv'><div class='errorMessageContent'><div class='errorMessageContentBg'><div class='errorMessageHeading'>"+i18n.GL1391()+"</div></div><div class='errorMessageDiv'>"+i18n.GL1392()+"<button type='button' class='detective'>"+i18n.GL1393()+"</button></div></div></div></body>"));

@@ -24,7 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -52,7 +53,7 @@ public class AddQuestionImg extends Composite
 	
 	public static AddQuestionImageUiBinder addQuestionImageUiBinder = GWT.create(AddQuestionImageUiBinder.class);
 	
-	private  CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private  MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public AddQuestionImg() {
 		initWidget(addQuestionImageUiBinder.createAndBindUi(this));

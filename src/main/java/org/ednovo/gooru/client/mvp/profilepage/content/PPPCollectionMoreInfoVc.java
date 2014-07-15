@@ -39,7 +39,7 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.ErrorMessagePanel;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.TagDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
@@ -76,7 +76,7 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 	interface PPPCollectionMoreInfoVcUiBinder extends UiBinder<Widget, PPPCollectionMoreInfoVc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 //	private static final String NO_RESOURCES_IN_THIS_COLLECTION =i18n.GL0684;
 //	private static final String RESOURCES_IN_THIS_COLLECTION= i18n.GL1094;

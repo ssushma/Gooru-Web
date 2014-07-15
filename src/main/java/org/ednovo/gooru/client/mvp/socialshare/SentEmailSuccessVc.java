@@ -30,7 +30,7 @@ import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.uc.AppPopUp;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -62,7 +62,7 @@ public class SentEmailSuccessVc extends Composite {
 	private static SentEmailSuccessVcUiBinder uiBinder = GWT
 			.create(SentEmailSuccessVcUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SentEmailSuccessVcUiBinder extends
 	UiBinder<Widget, SentEmailSuccessVc> {

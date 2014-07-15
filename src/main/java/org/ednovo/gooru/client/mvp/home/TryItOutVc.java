@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.mvp.home;
 
 import org.ednovo.gooru.client.GooruCBundle;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -60,7 +60,7 @@ public class TryItOutVc extends PopupPanel implements ClickHandler{
 	interface TryItOutUiBinder extends UiBinder<Widget, TryItOutVc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 
 	/**

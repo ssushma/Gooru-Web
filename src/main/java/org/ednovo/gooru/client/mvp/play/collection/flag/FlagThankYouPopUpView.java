@@ -1,7 +1,7 @@
 package org.ednovo.gooru.client.mvp.play.collection.flag;
 
 import org.ednovo.gooru.player.collection.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -22,7 +22,7 @@ public class FlagThankYouPopUpView extends PopupPanel
 			UiBinder<Widget, FlagThankYouPopUpView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField
 	HTMLEventPanel closeButton;

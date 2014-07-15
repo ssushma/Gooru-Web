@@ -34,7 +34,7 @@ import org.ednovo.gooru.player.resource.client.presenter.ResourcePlayerPresenter
 import org.ednovo.gooru.player.resource.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.player.resource.client.view.resourceplayer.QuestionResourceImageBundle;
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -62,7 +62,7 @@ public class ResourceContentReportView extends PopupPanel{
 	
 	private ResourcePlayerComponentServiceAsync  playerRpcService = GWT.create(ResourcePlayerComponentService.class);
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	ResourceContentReportView resourceFlagToolTip;
 	@UiField HTMLEventPanel closeButton;

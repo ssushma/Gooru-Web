@@ -65,7 +65,7 @@ import org.ednovo.gooru.client.uc.SettingEmailEditLabelUc;
 import org.ednovo.gooru.client.uc.SettingLastNameEditLabelUC;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
@@ -194,7 +194,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	
 	boolean isDriveConnected = false;
 	
-	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	/** 
 	 * This method is to get the settingDo

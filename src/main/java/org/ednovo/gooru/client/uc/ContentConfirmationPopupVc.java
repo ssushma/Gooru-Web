@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -56,7 +56,7 @@ public abstract class ContentConfirmationPopupVc  extends Composite {
 	
 	private static ContentConfirmationPopupVcUiBinder uiBinder = GWT.create(ContentConfirmationPopupVcUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface ContentConfirmationPopupVcUiBinder extends UiBinder<Widget, ContentConfirmationPopupVc> {
 	}

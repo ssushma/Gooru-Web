@@ -32,7 +32,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.core.client.GWT;
@@ -67,7 +67,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 
 	protected static SearchResultWrapperVcUiBinder uiBinder = GWT.create(SearchResultWrapperVcUiBinder.class);
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SearchResultWrapperVcUiBinder extends UiBinder<Widget, SearchResultWrapperVc<?, ?>> {
 	}

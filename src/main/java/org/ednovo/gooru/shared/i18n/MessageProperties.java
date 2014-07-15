@@ -28,7 +28,7 @@ import com.google.gwt.i18n.client.Constants;
 
 
 
-public interface CopyOfMessageProperties extends Constants {
+public interface MessageProperties extends Constants {
 	//Special Characters
 	String GL_SPL_SEMICOLON();
 	String GL_SPL_STAR();

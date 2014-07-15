@@ -38,7 +38,7 @@ import org.ednovo.gooru.client.uc.ErrorMessagePanel;
 import org.ednovo.gooru.client.uc.LicencegItemVc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.TagDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
@@ -74,7 +74,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	protected static SearchMoreInfoVcUiBinder uiBinder = GWT
 			.create(SearchMoreInfoVcUiBinder.class);
 	
-	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SearchMoreInfoVcUiBinder extends
 			UiBinder<Widget, SearchMoreInfoVc<?, ?>> {

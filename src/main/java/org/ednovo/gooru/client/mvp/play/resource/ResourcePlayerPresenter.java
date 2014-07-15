@@ -56,7 +56,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInRes
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
@@ -167,7 +167,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	 
 	private static final int CHILD_AGE=13;
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
     /**
 	 * @return the answerIdsObject

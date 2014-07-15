@@ -7,7 +7,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionTabTitleVc;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.BorderStyle;
@@ -33,7 +33,7 @@ public abstract class CollectionAnalyticsUc extends PopupPanel {
 	private static CollectionAnalyticsUcUiBinder uiBinder = GWT
 			.create(CollectionAnalyticsUcUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CollectionAnalyticsUcUiBinder extends
 			UiBinder<Widget, CollectionAnalyticsUc> {

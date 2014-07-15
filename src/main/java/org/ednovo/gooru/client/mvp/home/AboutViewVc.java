@@ -25,7 +25,7 @@
 package org.ednovo.gooru.client.mvp.home;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -50,7 +50,7 @@ public class AboutViewVc extends Composite {
 	interface AboutViewUiBinder extends UiBinder<Widget, AboutViewVc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField(provided=true)
 	HomeCBundle res;

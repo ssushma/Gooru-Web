@@ -30,7 +30,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -124,7 +124,7 @@ public abstract class AddCollectionsPopupVc extends AppPopUp {
 	private static AddCollectionsPopupVcUiBinder uiBinder = GWT
 			.create(AddCollectionsPopupVcUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface AddCollectionsPopupVcUiBinder extends
 			UiBinder<Widget, AddCollectionsPopupVc> {
