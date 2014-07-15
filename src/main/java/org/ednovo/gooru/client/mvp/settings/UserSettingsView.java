@@ -40,7 +40,6 @@ package org.ednovo.gooru.client.mvp.settings;
 */
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -74,7 +73,6 @@ import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
@@ -96,7 +94,6 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -138,8 +135,9 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	@UiField(provided = true)
 	SettingEmailEditLabelUc lbEmail;
 		
-	@UiField HTMLEventPanel pencilTextAreaImage,plAccount,plSecurity,plEducation,plContact,profileDescriptionlabel,biographyCancelButton,panelStandards;
-	@UiField HTMLPanel userAccount,userSecurity,userEducation,userContact,accountMiniusArrow,securityMiniusArrow,educationalMiniusArrow,contactMiniusArrow,standardsText,standardsSaveCancelButtonContainer,userStandardDefaultView,userStandardEditView,userStandardTextPanel;
+	@UiField HTMLEventPanel pencilTextAreaImage,plAccount,plSecurity,plEducation,plContact,profileDescriptionlabel,biographyCancelButton,panelStandards,panelDrive;
+	@UiField HTMLPanel userAccount,userSecurity,userEducation,userContact,accountMiniusArrow,securityMiniusArrow,educationalMiniusArrow,contactMiniusArrow,standardsText,standardsSaveCancelButtonContainer,userStandardDefaultView,userStandardEditView,userStandardTextPanel,panelUserNameLabelContainer,panelGoogleDrive,
+	standardsEditButtonContainer,standardsButtonContainer;
 	@UiField Label aboutUsCharacterValidation,lbMale,lbFemale,lbOther,lbShare,lbRole,lbName,lbUserName,lbUName,forgetPassword,forgetPasswordMsg;
 	@UiField HTMLPanel aboutUsContainer,profilePageText,aboutUsText,accountText,usernameText,nametext,genderText,securityText,settingsinfoText, panelHelp;
 	//@UiField TextBox tbLastName,tbFirstName;
@@ -281,69 +279,270 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		MixpanelUtil.Loading_SettingsPage();
 		
 		panelHeading.setText(i18n.GL2007());
+		panelHeading.getElement().setId("lblPanelHeading");
+		panelHeading.getElement().setAttribute("alt", i18n.GL2007());
+		panelHeading.getElement().setAttribute("title", i18n.GL2007());
+		panelStandards.getElement().setId("epnlPanelStandards");
+		collectionCourseLstPanel.getElement().setId("fpnlCollectionCourseLstPanel");
 		btnConnect.setText(i18n.GL2008());
+		standardsButtonContainer.getElement().setId("pnlStandardsButtonContainer");
+		standardsSaveCancelButtonContainer.getElement().setId("pnlStandardsSaveCancelButtonContainer");
+		standardSavingTextLabel.getElement().setId("lblStandardSavingTextLabel");
+		KinderGarten.getElement().setId("fpnlKinderGarten");
+		gradeTopList.getElement().setId("fpnlGradeTopList");
+		gradeMiddleList.getElement().setId("fpnlGradeMiddleList");
+		btnConnect.getElement().setId("btnBtnConnect");
+		btnConnect.getElement().setAttribute("alt", i18n.GL2008());
+		btnConnect.getElement().setAttribute("title", i18n.GL2008());
 		btnConnect.getElement().removeClassName("green");
+		userStandardEditView.getElement().setId("pnlUserStandardEditView");
+		userEducation.getElement().setId("pnlUserEducation");
+		higherEducation.getElement().setId("fpnlHigherEducation");
+		lbRole.getElement().setId("lblLbRole");
+		userCoursePopup.getElement().setId("epnlUserCoursePopup");
+		courseContainer.getElement().setId("pnlCourseContainer");
 		lblImageSubHeading.setText(i18n.GL2009());
+		lblImageSubHeading.getElement().setId("lblLblImageSubHeading");
+		lblImageSubHeading.getElement().setAttribute("alt", i18n.GL2009());
+		lblImageSubHeading.getElement().setAttribute("title", i18n.GL2009());
 		lblHeading.setText(i18n.GL2009());
+		lblHeading.getElement().setId("lblLblHeading");
+		lblHeading.getElement().setAttribute("alt", i18n.GL2009());
+		lblHeading.getElement().setAttribute("title", i18n.GL2009());
 		lblSubHeading.setText(i18n.GL2010());
+		lblSubHeading.getElement().setId("lblLblSubHeading");
+		lblSubHeading.getElement().setAttribute("alt", i18n.GL2010());
+		lblSubHeading.getElement().setAttribute("title", i18n.GL2010());
+		editButtonContainerEdu.getElement().setId("pnlEditButtonContainerEdu");
 		lblDisconnect.setText(i18n.GL2011());
+		lblDisconnect.getElement().setId("lblLblDisconnect");
+		lblDisconnect.getElement().setAttribute("alt", i18n.GL2011());
+		lblDisconnect.getElement().setAttribute("title", i18n.GL2011());
+		gradeContainer.getElement().setId("pnlGradeContainer");
 		lblDisconnect.setVisible(false); 
 		btnConnect.setEnabled(true);
-		
+		EduInfoButtonContainer.getElement().setId("pnlEduInfoButtonContainer");
+		plEducation.getElement().setId("epnlPlEducation");
+		plSecurity.getElement().setId("epnlPlSecurity");
+		courseData.getElement().setId("fpnlCourseData");
 		courseData.getElement().getStyle().setWidth(324, Unit.PX);
+		educationalMiniusArrow.getElement().setId("pnlEducationalMiniusArrow");
 		settingsText.getElement().setInnerHTML(i18n.GL0192());
+		settingsText.getElement().setId("pnlSettingsText");
+		settingsText.getElement().setAttribute("alt", i18n.GL0192());
+		settingsText.getElement().setAttribute("title", i18n.GL0192());
 		uploadProfilImageButton.setText(i18n.GL0800());
+		uploadProfilImageButton.getElement().setAttribute("alt", i18n.GL0800());
+		uploadProfilImageButton.getElement().setAttribute("title", i18n.GL0800());
 		profilePageText.getElement().setInnerHTML(i18n.GL0801());
+		profilePageText.getElement().setId("pnlProfilePageText");
+		profilePageText.getElement().setAttribute("alt", i18n.GL0801());
+		profilePageText.getElement().setAttribute("title", i18n.GL0801());
 		profileOnButton.setText(i18n.GL0802());
+		profileOnButton.getElement().setId("btnProfileOnButton");
+		profileOnButton.getElement().setAttribute("alt", i18n.GL0802());
+		profileOnButton.getElement().setAttribute("title", i18n.GL0802());
 		profileOffButton.setText(i18n.GL0803());
+		profileOffButton.getElement().setId("btnProfileOffButton");
+		profileOffButton.getElement().setAttribute("alt", i18n.GL0803());
+		profileOffButton.getElement().setAttribute("title", i18n.GL0803());
+		lbEmail.getElement().setId("lblLbEmail");
+		userContact.getElement().setId("pnlUserContact");
+		lbName.getElement().setId("lblLbName");
+		lbUserName.getElement().setId("lblLbUserName");
+		profileDescriptionlabel.getElement().setId("epnlProfileDescriptionlabel");
+		accountMiniusArrow.getElement().setId("pnlAccountMiniusArrow");
+		userAccount.getElement().setId("pnlUserAccount");
+		userSecurity.getElement().setId("pnlUserSecurity");
+		panelUserNameLabelContainer.getElement().setId("pnlPanelUserNameLabelContainer");
+		lbUName.getElement().setId("lblLbUName");
+		tbFirstNameUcLabel.getElement().setId("lblTbFirstNameUcLabel");
+		tbLastNameUcLabel.getElement().setId("lblTbLastNameUcLabel");
 		aboutUsText.getElement().setInnerHTML(i18n.GL0804());
+		contactMiniusArrow.getElement().setId("pnlContactMiniusArrow");
+		aboutUsText.getElement().setId("pnlAboutUsText");
+		aboutUsText.getElement().setAttribute("alt", i18n.GL0804());
+		aboutUsText.getElement().setAttribute("title", i18n.GL0804());
 		appearText.getElement().setInnerHTML(i18n.GL0805());
+		appearText.getElement().setId("pnlAppearText");
+		appearText.getElement().setAttribute("alt", i18n.GL0805());
+		appearText.getElement().setAttribute("title", i18n.GL0805());
 		aboutUsCharacterValidation.setText(i18n.GL0143());
+		plContact.getElement().setId("epnlPlContact");
+		emailbuttonContainer.getElement().setId("pnlEmailbuttonContainer");
+		aboutUsCharacterValidation.getElement().setId("lblAboutUsCharacterValidation");
+		aboutUsCharacterValidation.getElement().setAttribute("alt", i18n.GL0143());
+		aboutUsCharacterValidation.getElement().setAttribute("title", i18n.GL0143());
+		editButtonContainerContact.getElement().setId("pnlEditButtonContainerContact");
 		btnSave.setText(i18n.GL0141());
+		btnSave.getElement().setId("BtnSave");
+		btnSave.getElement().setAttribute("alt", i18n.GL0141());
+		btnSave.getElement().setAttribute("title", i18n.GL0141());
 		biographyCancelButton.getElement().setInnerHTML(i18n.GL0142());
+		biographyCancelButton.getElement().setId("epnlBiographyCancelButton");
+		biographyCancelButton.getElement().setAttribute("alt", i18n.GL0142());
+		biographyCancelButton.getElement().setAttribute("title", i18n.GL0142());
+		btnSave.getElement().setAttribute("alt", i18n.GL0141());
+		btnSave.getElement().setAttribute("title", i18n.GL0141());
 		btnSeeMyProfile.setText(i18n.GL0806());
+		btnSeeMyProfile.getElement().setId("btnBtnSeeMyProfile");
+		btnSeeMyProfile.getElement().setAttribute("alt", i18n.GL0806());
+		btnSeeMyProfile.getElement().setAttribute("title", i18n.GL0806());
 		accountText.getElement().setInnerHTML(i18n.GL0807());
+		accountText.getElement().setId("pnlAccountText");
+		accountText.getElement().setAttribute("alt", i18n.GL0807());
+		accountText.getElement().setAttribute("title", i18n.GL0807());
 		accountSavingTextLabel.setText(i18n.GL0808());
+		accountSavingTextLabel.getElement().setId("lblAccountSavingTextLabel");
+		accountSavingTextLabel.getElement().setAttribute("alt", i18n.GL0808());
+		accountSavingTextLabel.getElement().setAttribute("title", i18n.GL0808());
 		editButtonAccount.setText(i18n.GL0140());
+		editButtonAccount.getElement().setAttribute("alt", i18n.GL0140());
+		editButtonAccount.getElement().setAttribute("title", i18n.GL0140());
 		settingCancelButton.setText(i18n.GL0142());
+		settingCancelButton.getElement().setAttribute("alt", i18n.GL0142());
+		settingCancelButton.getElement().setAttribute("title", i18n.GL0142());
 		settingsSaveButton.setText(i18n.GL0141());
+		settingsSaveButton.getElement().setAttribute("alt", i18n.GL0141());
+		settingsSaveButton.getElement().setAttribute("title", i18n.GL0141());
 		usernameText.getElement().setInnerHTML(i18n.GL0652());
+		usernameText.getElement().setId("pnlUsernameText");
+		usernameText.getElement().setAttribute("alt",i18n.GL0652());
+		usernameText.getElement().setAttribute("title", i18n.GL0652());
 		nametext.getElement().setInnerHTML(i18n.GL0649());
+		nametext.getElement().setId("pnlNametext");
+		nametext.getElement().setAttribute("alt",i18n.GL0649());
+		nametext.getElement().setAttribute("title", i18n.GL0649());
 		uploadProfileImage.setTitle(i18n.GL0823());
+		uploadProfileImage.getElement().setId("imgUploadProfileImage");
+		uploadProfileImage.getElement().setAttribute("alt", i18n.GL0823());
+		uploadProfileImage.getElement().setAttribute("title", i18n.GL0823());
 		uploadProfileImage.setAltText(i18n.GL0823());
+		aboutUsContainer.getElement().setId("pnlAboutUsContainer");
+		editButtonContainerAccount.getElement().setId("pnlEditButtonContainerAccount");
+		securityMiniusArrow.getElement().setId("pnlSecurityMiniusArrow");
 		//i18n.GL0823
+
 		charLimitFNameLbl.setText(i18n.GL0143());
-		genderText.getElement().setInnerHTML(i18n.GL0809()+i18n.GL_SPL_SEMICOLON()+" ");
+		charLimitFNameLbl.getElement().setId("lblCharLimitFNameLbl");
+		charLimitFNameLbl.getElement().setAttribute("alt", i18n.GL0143());
+		charLimitFNameLbl.getElement().setAttribute("title", i18n.GL0143());
+		genderText.getElement().setInnerHTML(i18n.GL0809()+i18n.GL_SPL_SEMICOLON());
+		genderText.getElement().setId("pnlGenderText");
+		genderText.getElement().setAttribute("alt", i18n.GL0809());
+		genderText.getElement().setAttribute("title", i18n.GL0809());
 		lbMaleText.setText(i18n.GL0810());
+		lbMaleText.getElement().setId("lblLbMaleText");
+		lbMaleText.getElement().setAttribute("alt",i18n.GL0810());
+		lbMaleText.getElement().setAttribute("title", i18n.GL0810());
 		lbFemaleText.setText(i18n.GL0811());
+		lbFemaleText.getElement().setId("LbFemaleText");
+		lbFemaleText.getElement().setAttribute("alt",i18n.GL0811());
+		lbFemaleText.getElement().setAttribute("title", i18n.GL0811());
 		lbOtherText.setText(i18n.GL0419());
+		lbOtherText.getElement().setId("lblLbOtherText");
+		lbOtherText.getElement().setAttribute("alt",i18n.GL0419());
+		lbOtherText.getElement().setAttribute("title", i18n.GL0419());
 		notToShareText.setText(i18n.GL0812());
+		notToShareText.getElement().setId("lblNotToShareText");
+		notToShareText.getElement().setAttribute("alt",i18n.GL0812());
+		notToShareText.getElement().setAttribute("title", i18n.GL0812());
 		emailtext.getElement().setInnerHTML(i18n.GL0212());
+		emailtext.getElement().setId("pnlEmailtext");
+		emailtext.getElement().setAttribute("alt",i18n.GL0212());
+		emailtext.getElement().setAttribute("title", i18n.GL0212());
 		SavingTextLabel.setText(i18n.GL0808());
+		SavingTextLabel.getElement().setId("lblSavingTextLabel");
+		SavingTextLabel.getElement().setAttribute("alt",i18n.GL0808());
+		SavingTextLabel.getElement().setAttribute("title", i18n.GL0808());
 		editButtonContact.setText(i18n.GL0140());
+		editButtonContact.getElement().setAttribute("alt",i18n.GL0140());
+		editButtonContact.getElement().setAttribute("title", i18n.GL0140());
 		emailCancelButton.setText(i18n.GL0142());
+		emailCancelButton.getElement().setAttribute("alt",i18n.GL0142());
+		emailCancelButton.getElement().setAttribute("title", i18n.GL0142());
 		emailSaveButton.setText(i18n.GL0141());
-		email.setText(i18n.GL0212()+i18n.GL_SPL_SEMICOLON()+" ");
+		emailSaveButton.getElement().setAttribute("alt",i18n.GL0141());
+		emailSaveButton.getElement().setAttribute("title", i18n.GL0141());
+		email.setText(i18n.GL0212()+i18n.GL_SPL_SEMICOLON());
+		email.getElement().setId("lblEmail");
+		email.getElement().setAttribute("alt",i18n.GL0212());
+		email.getElement().setAttribute("title", i18n.GL0212());
 		emailTextConfirmation.setText(i18n.GL0813());
+		emailTextConfirmation.getElement().setId("lblEmailTextConfirmation");
+		panelGoogleDrive.getElement().setId("pnlPanelGoogleDrive");
+		panelDrive.getElement().setId("epnlPanelDrive");
+		emailTextConfirmation.getElement().setAttribute("alt",i18n.GL0813());
+		emailTextConfirmation.getElement().setAttribute("title", i18n.GL0813());
 		securityText.getElement().setInnerHTML(i18n.GL0814());
+		securityText.getElement().setId("pnlSecurityText");
+		securityText.getElement().setAttribute("alt",i18n.GL0814());
+		securityText.getElement().setAttribute("title", i18n.GL0814());
 		forgetPasswordMsg.setText(i18n.GL0815());
+		forgetPasswordMsg.getElement().setId("lblForgetPasswordMsg");
+		forgetPasswordMsg.getElement().setAttribute("alt",i18n.GL0815());
+		forgetPasswordMsg.getElement().setAttribute("title", i18n.GL0815());
 		forgetPassword.setText(" "+i18n.GL0816());
+		forgetPassword.getElement().setAttribute("alt", i18n.GL0816());
+		forgetPassword.getElement().setAttribute("title",i18n.GL0816());
 		lblPleaseWait.setText(i18n.GL0339());
+		lblPleaseWait.getElement().setId("lblLblPleaseWait");
+		lblPleaseWait.getElement().setAttribute("alt",i18n.GL0339());
+		lblPleaseWait.getElement().setAttribute("title", i18n.GL0339());
 		settingsinfoText.getElement().setInnerHTML(i18n.GL0817());
+		settingsinfoText.getElement().setId("pnlSettingsinfoText");
+		settingsinfoText.getElement().setAttribute("alt",i18n.GL0817());
+		settingsinfoText.getElement().setAttribute("title", i18n.GL0817());
 		EduSavingTextLabel.setText(i18n.GL0808());
+		EduSavingTextLabel.getElement().setId("lblEduSavingTextLabel");
+		EduSavingTextLabel.getElement().setAttribute("alt",i18n.GL0808());
+		EduSavingTextLabel.getElement().setAttribute("title", i18n.GL0808());
 		editButtonEdu.setText(i18n.GL0140());
+		editButtonEdu.getElement().setAttribute("alt",i18n.GL0140());
+		editButtonEdu.getElement().setAttribute("title", i18n.GL0140());
 		eduInfoCancelButton.setText(i18n.GL0142());
+		eduInfoCancelButton.getElement().setAttribute("alt",i18n.GL0142());
+		eduInfoCancelButton.getElement().setAttribute("title", i18n.GL0142());
 		eduInfoSaveButton.setText(i18n.GL0141());
+		eduInfoSaveButton.getElement().setAttribute("alt",i18n.GL0141());
+		eduInfoSaveButton.getElement().setAttribute("title", i18n.GL0141());
 		roleText.setText(" "+i18n.GL0818());
+		roleText.getElement().setId("lblRoleText");
+		roleText.getElement().setAttribute("alt",i18n.GL0818());
+		roleText.getElement().setAttribute("title", i18n.GL0818());
 		gradeText.setText(i18n.GL0819());
+		gradeText.getElement().setId("lblGradeText");
+		gradeText.getElement().setAttribute("alt",i18n.GL0819());
+		gradeText.getElement().setAttribute("title", i18n.GL0819());
 		gradeLbl.setText(i18n.GL0820());
+		gradeLbl.getElement().setId("lblGradeLbl");
+		gradeLbl.getElement().setAttribute("alt",i18n.GL0820());
+		gradeLbl.getElement().setAttribute("title", i18n.GL0820());
 		courseLabel.setText(i18n.GL0821());
+		courseLabel.getElement().setId("lblCourseLabel");
+		courseLabel.getElement().setAttribute("alt",i18n.GL0821());
+		courseLabel.getElement().setAttribute("title", i18n.GL0821());
 		courseLbl.setText(i18n.GL0820());
+		courseLbl.getElement().setId("lblCourseLbl");
+		courseLbl.getElement().setAttribute("alt",i18n.GL0820());
+		courseLbl.getElement().setAttribute("title", i18n.GL0820());
+
 		courseMaxMsg.setText(i18n.GL0822());
+		courseMaxMsg.getElement().setId("lblCourseMaxMsg");
+		courseMaxMsg.getElement().setAttribute("alt",i18n.GL0822());
+		courseMaxMsg.getElement().setAttribute("title", i18n.GL0822());
 		htmlToolTipDesc.setHTML(i18n.GL1539());
+		htmlToolTipDesc.getElement().setId("htmlHtmlToolTipDesc");
+		htmlToolTipDesc.getElement().setAttribute("alt", i18n.GL1539());
+		htmlToolTipDesc.getElement().setAttribute("title", i18n.GL1539());
+		plAccount.getElement().setId("epnlPlAccount");
+		panelToolTipContent.getElement().setId("pnlPanelToolTipContent");
 		panelToolTipContent.getElement().getStyle().setWidth(247, Unit.PX);
+		panelTooltipContainer.getElement().setId("pnlPanelTooltipContainer");
 		panelTooltipContainer.getElement().getStyle().setWidth(277, Unit.PX);
 		panelTooltipContainer.getElement().getStyle().setLeft(-127, Unit.PX);
+		userNameValidationUc.getElement().setId("errlblUserNameValidationUc");
+		emailPanel.getElement().setId("pnlEmailPanel");
 		emailPanel.setVisible(true);
 		//i18n.GL0820
 		//For 5.9 release
@@ -360,6 +559,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		editButtonAccount.getElement().setId("btnEditAccount");
 		settingCancelButton.getElement().setId("btnCancelAccount");
 		settingsSaveButton.getElement().setId("btnSaveAccount");
+		radioButtonContainer.getElement().setId("pnlRadioButtonContainer");
 		editButtonEdu.getElement().setId("btnEdit");
 		eduInfoCancelButton.getElement().setId("btnCancel");
 		eduInfoSaveButton.getElement().setId("btnSave");
@@ -374,25 +574,35 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		radioButtonContainer.setVisible(false);
 		accountSavingTextLabel.setVisible(false);
 		EduSavingTextLabel.setVisible(false);
+		txtUserName.getElement().setId("txtTxtUserName");
 		txtUserName.setVisible(false);
 		txtUserName.getElement().getStyle().setMarginLeft(5, Unit.PX);
+		panelHelp.getElement().setId("pnlPanelHelp");
 		panelHelp.setVisible(false);
 		txtUserName.getElement().setAttribute("maxlength", "20");
 		//end
 		getForgetPassword().setVisible(false);
 		getForgetPasswordMsg().setVisible(false); 
 		aboutUsCharacterValidation.setVisible(false);
-		
+		noAboutUsContainer.getElement().setId("focusPnlNoAboutUsContainer");
 		noAboutUsContainer.setVisible(false);
+		profileTextArea.getElement().setId("UCProfileTextArea");
 		profileTextArea.getBiographyEditImage().setVisible(false);
 		profileTextArea.getBiographyEditImage().getElement().setAttribute("style", "none");
 		btnSave.setVisible(false);
 		biographyCancelButton.setVisible(false);
+		pencilTextAreaImage.getElement().setId("epnlPencilTextAreaImage");
 		pencilTextAreaImage.setVisible(false);
+		buttonContainer.getElement().setId("pnlButtonContainer");
+		lblgender.getElement().setId("lblLblgender");
 		buttonContainer.setVisible(false);
 		uploadProfilImageButton.getElement().setId("lblUploadProfilImage");
 		uploadProfilImageButton.addClickHandler(new UploadProfileImage());
 		uploadProfileImage.addErrorHandler(new ProfileDefaultImage());
+		profileImageContainer.getElement().setId("epnlProfileImageContainer");
+		DefaultGardeContainer.getElement().setId("pnlDefaultGardeContainer");
+		collectionCourseDefaultLstPanel.getElement().setId("fpnlCollectionCourseDefaultLstPanel");
+		coursesPanel.getElement().setId("fpnlCoursesPanel");
 		profileImageContainer.addMouseOverHandler(new ShowUploadImageButton());
 		profileImageContainer.addMouseOutHandler(new HideUploadImageButton());
 		aboutUsContainer.setVisible(false);
@@ -415,18 +625,47 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		});*/
 		//added in 6.1
 		standardsEditButton.setText(i18n.GL0140());
+		standardsEditButton.getElement().setId("btnStandardsEditButton");
+		standardsEditButton.getElement().setAttribute("alt",i18n.GL0140());
+		standardsEditButton.getElement().setAttribute("title", i18n.GL0140());
 		standardsSaveButton.setText(i18n.GL0141());
+		standardsSaveButton.getElement().setId("btnStandardsSaveButton");
+		standardsSaveButton.getElement().setAttribute("alt",i18n.GL0141());
+		standardsSaveButton.getElement().setAttribute("title", i18n.GL0141());
 		standardsCancelButton.setText(i18n.GL0142());
+		standardsCancelButton.getElement().setId("btnStandardsCancelButton");
+		standardsCancelButton.getElement().setAttribute("alt",i18n.GL0142());
+		standardsCancelButton.getElement().setAttribute("title", i18n.GL0142());
 		standardsText.getElement().setInnerHTML(i18n.GL1559());
+		standardsText.getElement().setId("pnlStandardsText");
+		standardsText.getElement().setAttribute("alt",i18n.GL1559());
+		standardsText.getElement().setAttribute("title", i18n.GL1559());
+		standardsEditButtonContainer.getElement().setId("pnlStandardsEditButtonContainer");
+		userStandardDefaultView.getElement().setId("pnlUserStandardDefaultView");
 		standardsSaveCancelButtonContainer.setVisible(false);
 		
 		lblCommonCore.setText(i18n.GL1560());
+		lblCommonCore.getElement().setId("lblLblCommonCore");
+		lblCommonCore.getElement().setAttribute("alt",i18n.GL1560());
+		lblCommonCore.getElement().setAttribute("title", i18n.GL1560());
 		lblCaliforniaScience.setText(i18n.GL1561());
+		lblCaliforniaScience.getElement().setId("lblLblCaliforniaScience");
+		lblCaliforniaScience.getElement().setAttribute("alt",i18n.GL1561());
+		lblCaliforniaScience.getElement().setAttribute("title", i18n.GL1561());
 		lblTexas.setText(i18n.GL1562());
+		lblTexas.getElement().setId("lblLblTexas");
+		lblTexas.getElement().setAttribute("alt",i18n.GL1562());
+		lblTexas.getElement().setAttribute("title", i18n.GL1562());
 		lblNgss.setText(i18n.GL1655());
-		
+		lblNgss.getElement().setId("lblLblNgss");
+		lblNgss.getElement().setAttribute("alt",i18n.GL1655());
+		lblNgss.getElement().setAttribute("title", i18n.GL1655());
 		description.setText(i18n.GL1583());
+		description.getElement().setId("lblDescription");
+		description.getElement().setAttribute("alt",i18n.GL1583());
+		description.getElement().setAttribute("title", i18n.GL1583());
 		userStandardEditView.setVisible(false);
+		userStandardTextPanel.getElement().setId("pnlUserStandardTextPanel");
 		userStandardTextPanel.add(commonCoreChk);
 		userStandardTextPanel.add(californiaStandChk);
 		userStandardTextPanel.add(texasChk);
@@ -448,6 +687,10 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		ngssChk.setStyleName(Settings.standardsCheckBox());
 	//added in 6.4
 		btnViewAdmin.setText(i18n.GL1993() );
+		btnViewAdmin.getElement().setId("btnBtnViewAdmin");
+		btnViewAdmin.getElement().setAttribute("alt", i18n.GL1993() );
+		btnViewAdmin.getElement().setAttribute("title", i18n.GL1993() );
+		
 		if(AppClientFactory.getLoggedInUser().getUserRoleSetString().contains("Content_Admin")){
 			btnViewAdmin.setVisible(true);
 		}else{
@@ -464,6 +707,9 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		lblCommonCore.setVisible(false);
 		lblNgss.setVisible(false);
 		lblUserMessage.setText(i18n.GL1476());
+		lblUserMessage.getElement().setId("lblLblUserMessage");
+		lblUserMessage.getElement().setAttribute("alt", i18n.GL1476() );
+		lblUserMessage.getElement().setAttribute("title", i18n.GL1476() );
 		lblUserMessage.setVisible(false);
 		commonCoreChk.addClickHandler(new ClickHandler() {
 			
@@ -695,6 +941,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			
 			
 			txtUserName.setText(lbUName.getText());
+			txtUserName.getElement().setAttribute("alt", lbUName.getText());
+			txtUserName.getElement().setAttribute("title", lbUName.getText());
 			txtUserName.setFocus(true);
 //			disableAccSaveButton();
 			
@@ -798,6 +1046,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			
 			lbUName.setVisible(true);
 			lbUName.setText(txtUserName.getText());
+			lbUName.getElement().setAttribute("alt", txtUserName.getText());
+			lbUName.getElement().setAttribute("title", txtUserName.getText());
 			txtUserName.setVisible(false);
 			panelHelp.setVisible(false);
 			
@@ -822,6 +1072,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		txtUserName.setVisible(false);
 		panelHelp.setVisible(false);
 		txtUserName.setText(lbUName.getText());
+		txtUserName.getElement().setAttribute("alt", lbUName.getText());
+		txtUserName.getElement().setAttribute("title", lbUName.getText());
 		if(!AppClientFactory.loggedInUser.getLoginType().trim().equalsIgnoreCase("apps")&& AppClientFactory.loggedInUser.getAccountTypeId()!=2){
 			editButtonContact.setVisible(true);
 		}
@@ -1036,21 +1288,37 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		if(role != null){
 			if(role.equalsIgnoreCase("Teacher")){
 				gradeLbl.setText(i18n.GL1477());
+				gradeLbl.getElement().setAttribute("alt",i18n.GL1477());
+				gradeLbl.getElement().setAttribute("title", i18n.GL1477());
 				courseLbl.setText(i18n.GL1478());
+				courseLbl.getElement().setAttribute("alt",i18n.GL1478());
+				courseLbl.getElement().setAttribute("title", i18n.GL1478());
 			}
 			else if(role.equalsIgnoreCase("Student")){
 				gradeLbl.setText(i18n.GL1479());
+				gradeLbl.getElement().setAttribute("alt",i18n.GL1479());
+				gradeLbl.getElement().setAttribute("title", i18n.GL1479());
 				courseLbl.setText(i18n.GL1480());
+				courseLbl.getElement().setAttribute("alt",i18n.GL1480());
+				courseLbl.getElement().setAttribute("title", i18n.GL1480());
 			}
 			else{
 				gradeLbl.setText(i18n.GL1481());
+				gradeLbl.getElement().setAttribute("alt",i18n.GL1481());
+				gradeLbl.getElement().setAttribute("title",i18n.GL1481());
 				courseLbl.setText(i18n.GL1482());
+				courseLbl.getElement().setAttribute("alt",i18n.GL1482());
+				courseLbl.getElement().setAttribute("title", i18n.GL1482());
 			}
 		}
 		else{
 			if(v2userDo.getUser().getAccountTypeId() == 2){
 				gradeLbl.setText(i18n.GL1479());
+				gradeLbl.getElement().setAttribute("alt",i18n.GL1479());
+				gradeLbl.getElement().setAttribute("title", i18n.GL1479());
 				courseLbl.setText(i18n.GL1480());
+				courseLbl.getElement().setAttribute("alt",i18n.GL1480());
+				courseLbl.getElement().setAttribute("title", i18n.GL1480());
 			}
 			
 		}
@@ -1182,7 +1450,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		public void onError(ErrorEvent event) {
 			uploadProfileImage.setUrl(PROFILE_DEFAULT_IMAGE);
 			try{
-				
+				uploadProfileImage.getElement().setAttribute("alt", v2userDo.getUser().getUsername());
+				uploadProfileImage.getElement().setAttribute("title", v2userDo.getUser().getUsername());
 				uploadProfileImage.setAltText(v2userDo.getUser().getUsername());
 				uploadProfileImage.setTitle(v2userDo.getUser().getUsername());
 			}catch(Exception exception){
@@ -1196,6 +1465,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		double randomNumber=Math.random();
 		uploadProfileImage.setUrl(imageUrl+"?p="+randomNumber);
 		try{
+			uploadProfileImage.getElement().setAttribute("alt", v2userDo.getUser().getUsername());
+			uploadProfileImage.getElement().setAttribute("title", v2userDo.getUser().getUsername());
 			uploadProfileImage.setAltText(v2userDo.getUser().getUsername());
 			uploadProfileImage.setTitle(v2userDo.getUser().getUsername());
 		}catch(Exception exception){
@@ -1541,6 +1812,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		userNameValidationUc.setVisible(true);
 		userNameValidationUc.addStyleName("errorMessage");
 		userNameValidationUc.setText(errorMessage);
+		userNameValidationUc.getElement().setAttribute("alt", errorMessage);
+		userNameValidationUc.getElement().setAttribute("title", errorMessage);
 		
 		txtUserName.getElement().getStyle().setBorderColor("orange");
 	}
@@ -1820,9 +2093,13 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		if (isConnected){
 			btnConnect.getElement().addClassName("green");
 			btnConnect.setText(i18n.GL2012());
+			btnConnect.getElement().setAttribute("alt", i18n.GL2012());
+			btnConnect.getElement().setAttribute("title", i18n.GL2012());
 		}else{
 			btnConnect.getElement().removeClassName("green");
 			btnConnect.setText(i18n.GL2008());
+			btnConnect.getElement().setAttribute("alt", i18n.GL2008());
+			btnConnect.getElement().setAttribute("title", i18n.GL2008());
 			StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
 		}
 	}

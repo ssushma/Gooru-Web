@@ -30,8 +30,8 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresente
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
-import com.google.inject.Inject;
 import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
 public class CollectionPlayerTocPresenter extends PresenterWidget<IsCollectionPlayerTocView> implements CollectionPlayerTocUiHandlers{

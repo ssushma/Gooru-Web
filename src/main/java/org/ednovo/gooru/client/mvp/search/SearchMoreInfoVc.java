@@ -165,6 +165,9 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 		setWidget(uiBinder.createAndBindUi(this));
 
 		rightsLbl.setText("");
+		rightsLbl.getElement().setAttribute("alt","");
+		rightsLbl.getElement().setAttribute("title","");
+		
 		resourceSearchRightsFieldVc.setToolTip(i18n.GL0730());
 		imgQuestionImage.setTitle(i18n.GL0732());
 		imgQuestionImage.setAltText(i18n.GL0732());
@@ -218,6 +221,15 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 			shareField.setVisible(false);
 		}*/
 		setHandler();
+		
+		rightsLbl.getElement().setId("lblRightsLbl");
+		resourceScrPanel.getElement().setId("sbResourceScrPanel");
+		resourceMoreInfoRightPanel.getElement().setId("fpnlResourceMoreInfoRightPanel");
+		countLblTxt.getElement().setId("lblCountLblTxt");
+		countLbl.getElement().setId("lblCountLbl");
+		lblNotFriendly.getElement().setId("lblNotFriendly");
+		imgQuestionImage.getElement().setId("imgQuestionImage");
+		messageInfo.getElement().setId("errlblMessageInfo");
 	}
 
 	public void setHandler(){
@@ -651,6 +663,8 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	 */
 	public void setResourceCount(String text) {
 		countLbl.setText(text);
+		countLbl.getElement().setAttribute("alt",text);
+		countLbl.getElement().setAttribute("title",text);
 	}
 
 	/**
@@ -661,6 +675,8 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	 */
 	public void setResourceCountTxt(String text) {
 		countLblTxt.setText(text);
+		countLblTxt.getElement().setAttribute("alt",text);
+		countLblTxt.getElement().setAttribute("title",text);
 	}
 
 	/**
@@ -691,6 +707,8 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	
 	public void setNotFriendly(String text){
 		lblNotFriendly.setText(text);
+		lblNotFriendly.getElement().setAttribute("alt",text);
+		lblNotFriendly.getElement().setAttribute("title",text);
 	}
 	public void showNotFriendly(boolean visibility){
 		lblNotFriendly.setVisible(visibility);

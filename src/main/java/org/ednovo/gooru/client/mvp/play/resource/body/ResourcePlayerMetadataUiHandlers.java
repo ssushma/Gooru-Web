@@ -33,8 +33,6 @@ import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEventHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEventHandler;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-
 public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUserReviewEventHandler,OpenReviewPopUpEventHandler,UpdateUserStarReviewEventHandler,DeletePlayerStarReviewHandler {
 	
 	public void showQuestionView(CollectionItemDo collectionItemDo);

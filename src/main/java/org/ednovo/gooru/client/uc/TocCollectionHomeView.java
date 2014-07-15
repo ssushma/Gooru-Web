@@ -31,7 +31,6 @@ import java.util.Map;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -48,7 +47,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
@@ -68,6 +66,12 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 	public TocCollectionHomeView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		resourceTitle.getElement().setInnerHTML(i18n.GL1052());
+		homeContainer.getElement().setId("fpnlHomeContainer");
+		homeImageContainer.getElement().setId("fpnlHomeImageContainer");
+		resourceThumbnail.getElement().setId("imgResourceThumbnail");
+		resourceTitle.getElement().setId("pnlResourceTitle");
+		resourceTitle.getElement().setAttribute("alt", i18n.GL1052());
+		resourceTitle.getElement().setAttribute("title", i18n.GL1052());
 	}
 	
 	@UiConstructor
@@ -75,6 +79,12 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 		initWidget(uiBinder.createAndBindUi(this));
 		this.thumbnailUrl=thumbnailUrl;
 		resourceTitle.getElement().setInnerHTML(i18n.GL1052());
+		homeContainer.getElement().setId("fpnlHomeContainer");
+		homeImageContainer.getElement().setId("fpnlHomeImageContainer");
+		resourceThumbnail.getElement().setId("imgResourceThumbnail");
+		resourceTitle.getElement().setId("pnlResourceTitle");
+		resourceTitle.getElement().setAttribute("alt", i18n.GL1052());
+		resourceTitle.getElement().setAttribute("title", i18n.GL1052());
 		//setResourcePlayLink();
 		//this.addClickHandler(new ResourceRequest());
 	}

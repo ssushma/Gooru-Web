@@ -31,7 +31,6 @@ import java.util.Map;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -73,6 +72,8 @@ public class StandardsPopupVc extends PopupPanel  {
 	
 	@UiField
 	HTMLPanel mainHtmlPanel,standardsText;
+	
+	@UiField Label cancelButton;
 
 	Iterator<Map<String, String>> iterator = null;
 	
@@ -101,6 +102,12 @@ public class StandardsPopupVc extends PopupPanel  {
 		add(binder.createAndBindUi(this));
 		this.setGlassEnabled(true);
 		standardsText.getElement().setInnerHTML(i18n.GL0575());
+		standardsText.getElement().setId("pnlStandardsText");
+		standardsText.getElement().setAttribute("alt", i18n.GL0575());
+		standardsText.getElement().setAttribute("title", i18n.GL0575());
+		cancelButton.getElement().setId("lblCancelButton");
+		spanelStandardsPanel.getElement().setId("sbSpanelStandardsPanel");
+		mainHtmlPanel.getElement().setId("pnlMainHtmlPanel");
 		this.standards = standards;
 		this.iterator = standards.iterator();
 		this.getElement().setAttribute("style", "z-index:99999");

@@ -57,10 +57,12 @@ public class CollectionAcknowledgeView extends Composite implements HasClickHand
 	
 	public CollectionAcknowledgeView(){
 		initWidget(uiBinder.createAndBindUi(this));
+		acknowledgeContainer.getElement().setId("fpnlAcknowledgeContainer");
 	}
 	@UiConstructor
 	public CollectionAcknowledgeView(CollectionDo collectionDo){
 		initWidget(uiBinder.createAndBindUi(this));
+		acknowledgeContainer.getElement().setId("fpnlAcknowledgeContainer");
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		renderAcknowledgeResource(collectionDo);
 	}

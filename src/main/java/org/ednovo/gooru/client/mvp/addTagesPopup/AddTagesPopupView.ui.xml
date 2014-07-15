@@ -81,11 +81,8 @@
 		      <br />
 		      <g:Label styleName="{res.css.clearfix}"></g:Label>
 		      <g:Label styleName="{res.css.h5}" ui:field="accessHazard"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="flashing"></g:Label>
 		      <g:Label styleName="{res.css.li}" ui:field="flashingHazard"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="motionSimulation"></g:Label>
 		      <g:Label styleName="{res.css.li}" ui:field="motionSimulationHazard"></g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="sound"></g:Label>
 		      <g:Label styleName="{res.css.li}" ui:field="soundHazard"></g:Label>
 		      <g:Label styleName="{res.css.clearfix}"></g:Label>
 		      <br />

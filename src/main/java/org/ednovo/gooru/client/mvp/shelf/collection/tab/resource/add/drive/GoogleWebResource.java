@@ -45,6 +45,12 @@ public class GoogleWebResource extends Composite {
 		this.driveDo = driveDo;
 		System.out.println("value s enter  wideget" + driveDo.getTitle());
 		driveText.setText(driveDo.getTitle());
+		driveText.getElement().setId("htmlDriveText");
+		driveText.getElement().setAttribute("alt", driveDo.getTitle());
+		driveText.getElement().setAttribute("title", driveDo.getTitle());
+		contentPanel.getElement().setId("pnlContentPanel");
+		folderContent.getElement().setId("pnlFolderContent");
+		imageIcon.getElement().setId("lblImageIcon");
 		contentPanel.addDomHandler(contentClick, ClickEvent.getType());
 		type = driveDo.getMimeType();
 		String dataType[] = type.split("\\.");

@@ -32,7 +32,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -106,6 +105,9 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		this.res = UcCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
+		resourceThumbnail.getElement().setId("fpnlResourceThumbnail");
+		image.getElement().setId("imgImage");
+		resourceType.getElement().setId("lblResourceType");
 		addDomHandler(this, ClickEvent.getType());
 		suggestFlag=false;
 	}

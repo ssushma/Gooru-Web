@@ -91,7 +91,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	HTMLEventPanel resourceTitleContainer;
 
 	@UiField
-	FlowPanel metaDataFloPanel;
+	FlowPanel resourceTitlePanel,metaDataFloPanel;
 
 	@UiField
 	HTML resourceDescriptionHtml;
@@ -152,6 +152,13 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		ratingWidgetView=new RatingWidgetView();
 		wrapperVcr.ratingWidgetPanel.add(ratingWidgetView);
 		setData(resourceSearchResultDo);
+		
+		resourceTitlePanel.getElement().setId("fpnlResourceTitlePanel");
+		resourceTitleContainer.getElement().setId("epnlResourceTitleContainer");
+		imgNotFriendly.getElement().setId("imgNotFriendly");
+		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
+		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
+		resourceDescriptionHtml.getElement().setId("htmlResourceDescriptionHtml");
 	}
 	
 	public RatingWidgetView getRatingWidgetView(){

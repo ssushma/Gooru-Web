@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 
 import java.util.List;
-import java.util.Map;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.code.CodeDo;

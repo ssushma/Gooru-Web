@@ -25,20 +25,21 @@
 
 package org.ednovo.gooru.client;
 
-
 import java.io.IOException;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T>,MessageProperties {
+public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T> {
 
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@Override
 	public void onFailure(Throwable caught) {
 		String message = "";
@@ -66,22 +67,22 @@ public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T>,Message
 				message = ((GwtException) caught).getMessage();
 			} else if (caught.getMessage() != null) {
 				if (caught.getMessage().contains("Login")) {
-					message = GL1096;
+					message = i18n.GL1096();
 				}
 				if (caught.getMessage().contains("403")) {
-					message = GL1095;
+					message = i18n.GL1095();
 				} else if (caught.getMessage().contains("CODE_502")) {
-					message = GL0695;
+					message = i18n.GL0695();
 				} else {
 					message = caught.getMessage();
 				}
 			} else {
-				message = GL0839;
+				message = i18n.GL0839();
 			}
 			if (message.trim().toString().equalsIgnoreCase("0")){
 				
 			}else{
-				//new AlertContentUc(GL0844, message);
+				//new AlertContentUc(i18n.GL0844, message);
 			}
 		}
 	}

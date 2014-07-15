@@ -62,12 +62,14 @@ public class CollectionStandardsView extends Composite implements HasClickHandle
 	public CollectionStandardsView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
+		standardContainer.getElement().setId("fpnlStandardContainer");
 	}
 	
 	@UiConstructor
 	public CollectionStandardsView(List<StandardFo> standardsList){
 		initWidget(uiBinder.createAndBindUi(this));
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
+		standardContainer.getElement().setId("fpnlStandardContainer");
 		renderStandards(standardsList);
 	}
 

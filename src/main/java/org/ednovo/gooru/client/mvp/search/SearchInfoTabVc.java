@@ -135,6 +135,9 @@ public class SearchInfoTabVc extends Composite {
 			}
 		});
 		//socialShareLinksViewContainer.add(socialShareLinksView);
+		
+		resourceTypeImage.getElement().setId("lblResourceTypeImage");
+		lblResourceName.getElement().setId("htmlLblResourceName");
 	}
 	
 
@@ -166,6 +169,8 @@ public class SearchInfoTabVc extends Composite {
 				}
 				if(collectionItemDo.getResource().getTitle()!=null){
 					lblResourceName.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
+					lblResourceName.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
+					lblResourceName.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 				}
 				
 			/*	if(collectionItemDo.getStatusCode() != 200){

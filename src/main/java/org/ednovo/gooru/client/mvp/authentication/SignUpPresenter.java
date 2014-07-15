@@ -30,8 +30,10 @@ import org.ednovo.gooru.client.mvp.authentication.uc.SignUpGradeCourseView;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -58,7 +60,7 @@ public class SignUpPresenter extends PresenterWidget<IsSignUpView> implements Si
 
 	private UserDo user;
 
-
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
 	/**
 	 * Class constructor
 	 * @param eventBus {@link EventBus}
@@ -104,7 +106,7 @@ public class SignUpPresenter extends PresenterWidget<IsSignUpView> implements Si
 			public void onSuccess(UserDo result) {
 				if (result!=null){
 					if (result.getCode() !=null &&  result.getCode() >399){
-						new AlertContentUc(GL0061, result.getStatus());
+						new AlertContentUc(i18n.GL0061(), result.getStatus());
 						getView().toggleButtons();
 					}else if (result.getGooruUId() !=null && !result.getGooruUId().equalsIgnoreCase("")){
 						AppClientFactory.getInjector().getAppService().v2Signin(loginData, new SimpleAsyncCallback<UserDo>() {

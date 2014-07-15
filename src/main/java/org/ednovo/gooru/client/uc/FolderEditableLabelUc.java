@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -81,6 +80,10 @@ public class FolderEditableLabelUc extends Composite implements HasValue<String>
 	public FolderEditableLabelUc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
+		focusPanel.getElement().setId("focuspnlFocusPanel");
+		deckPanel.getElement().setId("dpnlDeckPanel");
+		editLabel.getElement().setId("lblEditLabel");
+		editTextBox.getElement().setId("txtEditTextBox");
 		deckPanel.showWidget(0);
 		/*focusPanel.addFocusHandler(new FocusHandler() {
 			@Override
@@ -141,6 +144,8 @@ public class FolderEditableLabelUc extends Composite implements HasValue<String>
 		if (deckPanel.getVisibleWidget() == 1)
 			return;
 		editTextBox.setText(getValue());
+		editTextBox.getElement().setAttribute("alt", getValue());
+		editTextBox.getElement().setAttribute("title", getValue());
 		deckPanel.showWidget(1);
 		editTextBox.setFocus(true);
 		editTextBox.addStyleName("shelfEditTitleForFolders");
@@ -198,7 +203,11 @@ public class FolderEditableLabelUc extends Composite implements HasValue<String>
 	@Override
 	public void setValue(String value) {
 		editLabel.setText(value);
+		editLabel.getElement().setAttribute("alt", value);
+		editLabel.getElement().setAttribute("title", value);
 		editTextBox.setText(value);
+		editTextBox.getElement().setAttribute("alt", value);
+		editTextBox.getElement().setAttribute("title", value);
 	}
 
 	/**
