@@ -176,7 +176,6 @@
 	vertical-align: top;
 	font-size: 16px;
 	font-weight: bold;
-	padding-bottom: 30px;
 	padding-top: 8px;
 }
 
@@ -217,7 +216,7 @@
 
 .teachDesc {
 	font-size: 12px;
-	margin-bottom: 40px;
+	margin-bottom: 10px;
 }
 .checkboxStyle
 {
@@ -239,13 +238,43 @@
 }
 
 .assignDiv {
-	text-align: center;
 	padding-bottom: 20px;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border: 1px solid #ddd;
 	background: #f0f0f0;
+}
+.visibilityDivContainer {
+	margin-bottom:10px;
+}
+
+.radioBtnVisiblity {
+    -webkit-appearance:none;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    outline:none;
+	margin:0px;
+	float: left;
+
+}
+.radioBtnVisiblitySecondContainer{
+	margin-top:20px;
+}
+
+.radioBtnVisiblity:before {
+    content:'';
+    display:block;
+    width:60%;
+    height:60%;
+    margin: 20% auto;    
+    border-radius:50%;  
+	border:1px solid #1076bb;
+    background-color:#fff;
+}
+.radioBtnVisiblity:checked:before {
+   background-color:#1076bb;
 }
 
 .assignTitle {
@@ -292,7 +321,6 @@
 
 .assignSec {
 	width: 320px;
-	padding: 10px 20px;
 	display: inline-block;
 	vertical-align: top;
 }
@@ -300,7 +328,6 @@
 .assignSecTitle {
 	color: #515151;
 	font-weight: bold;
-	padding: 20px 0px 10px 0px;
 }
 
 .codeContent .icon {
@@ -553,7 +580,6 @@
 	border: 1px solid #DDD;
 	font-family: arial, sans-serif;
 	font-size: 12px;
-	margin: 10px 3px 0px 10px;
 	background-color: #fff;
 }
 
@@ -724,6 +750,32 @@ button[disable]:hover, .buttonTooltip:hover .tooltipContainer{
 	padding: 10px 20px;
 	text-align: left;
 }
+
+.subBodyInviteContainer{
+	padding: 10px 20px;
+	width:100%;
+	
+}
+
+.leftInviteContainer{
+	width:20%;
+	float:left;
+	margin-top: 29px;
+	
+}
+
+.inviteDivContainer{
+	min-height: 167px;
+}
+
+.rightInviteContainer{
+width: 71%;
+float: left;
+margin-top: 18px;
+margin-left: 43px;
+	
+}
+
 
 .pendingMembers, .activeMembers{
 	color: #515151;

@@ -55,6 +55,7 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
@@ -66,6 +67,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SimpleCheckBox;
+import com.google.gwt.user.client.ui.SimpleRadioButton;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.TextBox;
@@ -97,25 +99,29 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	@UiField(provided = true)
 	ClasslistpageCBundle res;
 	
-	@UiField HTMLPanel publicAssignContainer, privateAssignContainer, panelSuggestBox, panelActions,publicClassTxt,publicTxt,invite,privacyPolicyPanel;
+	@UiField HTMLPanel publicAssignContainer, privateAssignContainer, panelSuggestBox, panelActions,privacyPolicyPanel;
 	
 	@UiField VerticalPanel panelActiveMembersList,panelPendingMembersList;
 
-	@UiField HTMLPanel panelCode,privateMsgPanel, publicMsgPanel, panelNoMembers, panelMembersList, panelPendingMembersContainer, panelActiveMembersContainter,assignHeader,assignSubHeader;
+	@UiField HTMLPanel panelCode,privateMsgPanel, publicMsgPanel, panelNoMembers, panelMembersList, panelPendingMembersContainer, panelActiveMembersContainter,assignHeader;
 	
 	@UiField Anchor ancPendingListSeeMore, ancActiveListSeeMore;
 	
 	@UiField HTMLPanel panelLoading,titleTxt,emailTxt,shareTxt,shareTitle,joinTxt,manageTxt,trackTxt,inviteTxt;
 	
 	@UiField TextBox txtClasspageLinkShare,txtClasspageCodeShare;
-	@UiField SimpleCheckBox checkbox;
 	
-	@UiField Label inviteOnlyTxt,publicTitleTxt;
+	@UiField SimpleRadioButton visibilityRadioOpen,visibilityRadioInviteOnly;
+
+	@UiFactory
+	public SimpleRadioButton createRadioButton() {
+	    return new SimpleRadioButton("");
+	}
 	
 	@UiField Button btnInvite;
 	
 	@UiField Label lblErrorMessage, lblPleaseWait, lblPendingMembers,lblActiveMembers,lblText, lblPendingPleaseWait, lblActivePleaseWait,lblActiveMembersDesc;
-	@UiField InlineHTML publicDescTxt,publicTxtDesc,inviteDesc,inviteTextDesc,shareDesc,shareTxtDesc,privateMsgDesc;
+	@UiField InlineHTML publicDescTxt;
 	AutoSuggestForm autoSuggetTextBox =null;
 	
 	@UiField InlineLabel lblPii,toUsText;
@@ -151,7 +157,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	private static final String PUBLIC="public";
 	private static final String SHORTEN_URL = "shortenUrl";
 	
-	@UiField Button emailShareBtn;
+
 	
 	interface ClassListViewUiBinder extends UiBinder<Widget, ClassListView> {
 	}
@@ -180,7 +186,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		button.setText("Click me"); */
 		txtClasspageLinkShare.addClickHandler(new TextCopyHandler());
 		txtClasspageCodeShare.addClickHandler(new ClassCodeCopy());
-		emailShareBtn.addClickHandler(new InviteStudentInClass());
+
 //		webLinkBtn.addClickHandler(new InviteStudentInClass());
 	}
 
@@ -218,47 +224,34 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		btnInvite.setEnabled(true);
 		btnInvite.setVisible(true);
 		
-		inviteOnlyTxt.getElement().setInnerHTML(i18n.GL1589());
-		inviteOnlyTxt.getElement().setId("lblInviteOnly");
-		inviteOnlyTxt.getElement().setAttribute("alt",i18n.GL1589());
-		inviteOnlyTxt.getElement().setAttribute("title",i18n.GL1589());
-		
-		publicTitleTxt.getElement().setInnerHTML(i18n.GL1621());
-		publicTitleTxt.getElement().setId("lblPublicTitle");
-		publicTitleTxt.getElement().setAttribute("alt",i18n.GL1621());
-		publicTitleTxt.getElement().setAttribute("title",i18n.GL1621());
-		
+	
 		privateMsgPanel.getElement().setId("pnlPrivateMsg");
 		
-		privateMsgDesc.setText(i18n.GL1599());
+/*		privateMsgDesc.setText(i18n.GL1599());
 		privateMsgDesc.getElement().setId("spnPrivateMsgDesc");
 		privateMsgDesc.getElement().setAttribute("alt",i18n.GL1599());
-		privateMsgDesc.getElement().setAttribute("title",i18n.GL1599());
+		privateMsgDesc.getElement().setAttribute("title",i18n.GL1599());*/
 		
 		//publicClassTxt.getElement().setInnerHTML(GL1601);
-		publicClassTxt.getElement().setId("pnlPublicClass");
+		//publicClassTxt.getElement().setId("pnlPublicClass");
 		publicDescTxt.getElement().setId("spnPublicDesc");
 		publicMsgPanel.getElement().setId("pnlPublicMsg");
 		//publicDescTxt.setText(GL1602);
-		publicTxt.getElement().setInnerHTML(i18n.GL1621()+i18n.GL_SPL_EXCLAMATION());
+/*		publicTxt.getElement().setInnerHTML(i18n.GL1621()+i18n.GL_SPL_EXCLAMATION());
 		publicTxt.getElement().setId("pnlPublic");
 		publicTxt.getElement().setAttribute("alt",i18n.GL1621());
-		publicTxt.getElement().setAttribute("title",i18n.GL1621());
+		publicTxt.getElement().setAttribute("title",i18n.GL1621());*/
 		
-		publicTxtDesc.setText(i18n.GL1599());
+/*		publicTxtDesc.setText(i18n.GL1599());
 		publicTxtDesc.getElement().setId("spnPublicTxtDesc");
 		publicTxtDesc.getElement().setAttribute("alt",i18n.GL1599());
-		publicTxtDesc.getElement().setAttribute("title",i18n.GL1599());
+		publicTxtDesc.getElement().setAttribute("title",i18n.GL1599());*/
+
 		
-		invite.getElement().setInnerHTML(i18n.GL1589());
-		invite.getElement().setId("pblInvite");
-		invite.getElement().setAttribute("alt",i18n.GL1589());
-		invite.getElement().setAttribute("title",i18n.GL1589());
-		
-		inviteDesc.setText(i18n.GL1604());
+/*		inviteDesc.setText(i18n.GL1604());
 		inviteDesc.getElement().setId("spnInviteDesc");
 		inviteDesc.getElement().setAttribute("alt",i18n.GL1604());
-		inviteDesc.getElement().setAttribute("title",i18n.GL1604());
+		inviteDesc.getElement().setAttribute("title",i18n.GL1604());*/
 		
 		titleTxt.getElement().setInnerHTML(i18n.GL1590());
 		titleTxt.getElement().setId("pnlTitle");
@@ -280,10 +273,10 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		shareTitle.getElement().setAttribute("alt",i18n.GL1594());
 		shareTitle.getElement().setAttribute("title",i18n.GL1594());
 		
-		shareDesc.setText(i18n.GL1595());
+/*		shareDesc.setText(i18n.GL1595());
 		shareDesc.getElement().setId("spnShareDesc");
 		shareDesc.getElement().setAttribute("alt",i18n.GL1595());
-		shareDesc.getElement().setAttribute("title",i18n.GL1595());
+		shareDesc.getElement().setAttribute("title",i18n.GL1595());*/
 		
 		joinTxt.getElement().setInnerHTML(i18n.GL1596());
 		joinTxt.getElement().setId("pnlJoinText");
@@ -300,34 +293,27 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		trackTxt.getElement().setAttribute("alt",i18n.GL1598());
 		trackTxt.getElement().setAttribute("title",i18n.GL1598());
 		
-		inviteTextDesc.setText(i18n.GL1600());
-		inviteTextDesc.getElement().setId("spnInviteTextDesc");
-		inviteTextDesc.getElement().setAttribute("alt",i18n.GL1600());
-		inviteTextDesc.getElement().setAttribute("title",i18n.GL1600());
+
 		
 		inviteTxt.getElement().setId("pnlInvite");
 		//inviteTxt.getElement().setInnerHTML(GL1589);
-		shareTxtDesc.setText(i18n.GL1593());
+/*		shareTxtDesc.setText(i18n.GL1593());
 		shareTxtDesc.getElement().setId("spnShareTxtDesc");
 		shareTxtDesc.getElement().setAttribute("alt",i18n.GL1593());
-		shareTxtDesc.getElement().setAttribute("title",i18n.GL1593());
+		shareTxtDesc.getElement().setAttribute("title",i18n.GL1593());*/
 		
-		emailShareBtn.setText(i18n.GL0212());
-		emailShareBtn.getElement().setId("btnEmaillShare");
-		emailShareBtn.getElement().setAttribute("alt",i18n.GL0212());
-		emailShareBtn.getElement().setAttribute("title",i18n.GL0212());
+
 		
 		assignHeader.getElement().setInnerText(i18n.GL1584());
 		assignHeader.getElement().setId("pnlAssignHeader");
 		assignHeader.getElement().setAttribute("alt",i18n.GL1584());
 		assignHeader.getElement().setAttribute("title",i18n.GL1584());
 		
-		assignSubHeader.getElement().setInnerText(i18n.GL1585());
+/*		assignSubHeader.getElement().setInnerText(i18n.GL1585());
 		assignSubHeader.getElement().setId("pnlAssignSubHeader");
 		assignSubHeader.getElement().setAttribute("alt",i18n.GL1585());
-		assignSubHeader.getElement().setAttribute("title",i18n.GL1585());
+		assignSubHeader.getElement().setAttribute("title",i18n.GL1585());*/
 
-		checkbox.getElement().setId("schkInvitePublic");
 		
 		lblPleaseWait.setText(i18n.GL1137());
 		lblPleaseWait.getElement().setId("lblPleaseWait");
@@ -543,23 +529,11 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  activeOffset, pageSize, "active");	//this will callback displayActiveMembersList method ....
 				
 		if(classpageDo.getSharing().equalsIgnoreCase(PUBLIC)){
-			publicAssignContainer.setVisible(true);
-			publicMsgPanel.setVisible(true);		
-			privateAssignContainer.setVisible(false);
-			privateMsgPanel.setVisible(false);
-			emailShareBtn.setVisible(true);
-			checkbox.setChecked(true);
-			inviteOnlyTxt.setVisible(false);
-			publicTitleTxt.setVisible(true);
+			visibilityRadioOpen.setChecked(true);
+			visibilityRadioInviteOnly.setChecked(false);
 		}else{
-			publicAssignContainer.setVisible(false);
-			publicMsgPanel.setVisible(false);
-			privateAssignContainer.setVisible(true);
-			emailShareBtn.setVisible(false);
-			privateMsgPanel.setVisible(true);
-			checkbox.setChecked(false);
-			inviteOnlyTxt.setVisible(true);
-			publicTitleTxt.setVisible(false);
+			visibilityRadioOpen.setChecked(false);
+			visibilityRadioInviteOnly.setChecked(true);
 		}
 	}
 	private void addShareClass() {
@@ -606,57 +580,23 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  activeOffset, pageSize, "active");	//this will callback displayActiveMembersList method ....
 	}
 	
-	@UiHandler("checkbox")
-	public void onCheckBoxClicked(ClickEvent click){
-		if(checkbox.isChecked()){
-			publicAssignContainer.setVisible(true);
-			publicMsgPanel.setVisible(true);
-			emailShareBtn.setVisible(true);
-			privateMsgPanel.setVisible(false);
-			privateAssignContainer.setVisible(false);
-			getUiHandlers().updateClassPageInfo(classpageDo.getClasspageId(), null, null, "public");
-			checkbox.setChecked(true);
-			inviteOnlyTxt.setVisible(false);
-			publicTitleTxt.setVisible(true);
-		}else{
-			publicAssignContainer.setVisible(false);
-			privateAssignContainer.setVisible(true);
-			publicMsgPanel.setVisible(false);
-			emailShareBtn.setVisible(false);
-			privateMsgPanel.setVisible(true);
-			getUiHandlers().updateClassPageInfo(classpageDo.getClasspageId(), null, null, "private");
-			checkbox.setChecked(false);
-			inviteOnlyTxt.setVisible(true);
-			publicTitleTxt.setVisible(false);
-		}
-	}
-	
-	@UiHandler("inviteOnlyTxt")
-	public void onInviteOnlytextclicked(ClickEvent click){
-		publicAssignContainer.setVisible(true);
-		publicMsgPanel.setVisible(true);
-		emailShareBtn.setVisible(true);
-		privateMsgPanel.setVisible(false);
-		privateAssignContainer.setVisible(false);
+	@UiHandler("visibilityRadioOpen")
+	public void onvisibilityRadioOpenClicked(ClickEvent click){
+		visibilityRadioOpen.setChecked(true);
+		visibilityRadioInviteOnly.setChecked(false);
 		getUiHandlers().updateClassPageInfo(classpageDo.getClasspageId(), null, null, "public");
-		checkbox.setChecked(true);	
-		inviteOnlyTxt.setVisible(false);
-		publicTitleTxt.setVisible(true);
+
 	}
 	
-	@UiHandler("publicTitleTxt")
-	public void onOpentextclicked(ClickEvent click){
-		publicAssignContainer.setVisible(false);
-		privateAssignContainer.setVisible(true);
-		publicMsgPanel.setVisible(false);
-		emailShareBtn.setVisible(false);
-		privateMsgPanel.setVisible(true);
+	@UiHandler("visibilityRadioInviteOnly")
+	public void onvisibilityRadioInviteOnlyClicked(ClickEvent click){
+		visibilityRadioOpen.setChecked(false);
+		visibilityRadioInviteOnly.setChecked(true);
 		getUiHandlers().updateClassPageInfo(classpageDo.getClasspageId(), null, null, "private");
-		checkbox.setChecked(false);
-		inviteOnlyTxt.setVisible(true);
-		publicTitleTxt.setVisible(false);
-		
+
 	}
+	
+	
 	
 	/**
 	 * 
