@@ -425,6 +425,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		editButtonContainerAccount.getElement().setId("pnlEditButtonContainerAccount");
 		securityMiniusArrow.getElement().setId("pnlSecurityMiniusArrow");
 		//i18n.GL0823
+
 		charLimitFNameLbl.setText(i18n.GL0143());
 		charLimitFNameLbl.getElement().setId("lblCharLimitFNameLbl");
 		charLimitFNameLbl.getElement().setAttribute("alt", i18n.GL0143());
@@ -528,6 +529,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		courseLbl.getElement().setId("lblCourseLbl");
 		courseLbl.getElement().setAttribute("alt",i18n.GL0820());
 		courseLbl.getElement().setAttribute("title", i18n.GL0820());
+
 		courseMaxMsg.setText(i18n.GL0822());
 		courseMaxMsg.getElement().setId("lblCourseMaxMsg");
 		courseMaxMsg.getElement().setAttribute("alt",i18n.GL0822());

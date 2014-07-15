@@ -162,14 +162,15 @@ public class EmailShareUc extends PopupPanel{
 		toValidation.getElement().setAttribute("alt", i18n.GL0216());
 		toValidation.getElement().setAttribute("title", i18n.GL0216());
 		lblEmailFriend.setText(i18n.GL0222());
+
 		lblEmailFriend.getElement().setId("lblLblEmailFriend");
 		lblEmailFriend.getElement().setAttribute("alt", i18n.GL0222());
 		lblEmailFriend.getElement().setAttribute("title", i18n.GL0222());
-		lblFrom.setText(i18n.GL0223()+i18n.GL_SPL_SEMICOLON());
+		lblFrom.setText(i18n.GL0223()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblFrom.getElement().setId("lblLblFrom");
 		lblFrom.getElement().setAttribute("alt", i18n.GL0223()+i18n.GL_SPL_SEMICOLON());
 		lblFrom.getElement().setAttribute("title", i18n.GL0223()+i18n.GL_SPL_SEMICOLON());
-		lblTo.setText(i18n.GL0224()+i18n.GL_SPL_SEMICOLON());
+		lblTo.setText(i18n.GL0224()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblTo.getElement().setId("lblLblTo");
 		lblTo.getElement().setAttribute("alt", i18n.GL0224()+i18n.GL_SPL_SEMICOLON());
 		lblTo.getElement().setAttribute("title", i18n.GL0224()+i18n.GL_SPL_SEMICOLON());
@@ -177,14 +178,15 @@ public class EmailShareUc extends PopupPanel{
 		lblSendMeCopy.getElement().setId("lblLblSendMeCopy");
 		lblSendMeCopy.getElement().setAttribute("alt", i18n.GL0225());
 		lblSendMeCopy.getElement().setAttribute("title", i18n.GL0225());
-		lblSubject.setText(i18n.GL0226()+i18n.GL_SPL_SEMICOLON());
+		lblSubject.setText(i18n.GL0226()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblSubject.getElement().setId("lblLblSubject");
 		lblSubject.getElement().setAttribute("alt", i18n.GL0226());
 		lblSubject.getElement().setAttribute("title", i18n.GL0226());
-		lblMessage.setText(i18n.GL0227()+i18n.GL_SPL_SEMICOLON());
+		lblMessage.setText(i18n.GL0227()+i18n.GL_SPL_SEMICOLON()+" ");
 		lblMessage.getElement().setId("lblLblMessage");
 		lblMessage.getElement().setAttribute("alt", i18n.GL0227());
 		lblMessage.getElement().setAttribute("title", i18n.GL0227());
+
 		btnSend.setText(i18n.GL0228());
 		btnSend.getElement().setAttribute("alt", i18n.GL0228());
 		btnSend.getElement().setAttribute("title", i18n.GL0228());

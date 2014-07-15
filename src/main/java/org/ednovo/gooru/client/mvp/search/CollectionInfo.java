@@ -105,14 +105,14 @@ public class CollectionInfo extends Composite {
 
 
 	private void setStaticText() {
-		lblGradeTitle.setText(i18n.GL0325()+i18n.GL_SPL_SEMICOLON());
-		lblStandrads.setText(i18n.GL0575()+i18n.GL_SPL_SEMICOLON());
-		lblLanguage.setText(i18n.GL1721()+i18n.GL_SPL_SEMICOLON());
-		lblDepthKnowledge.setText(i18n.GL1693()+i18n.GL_SPL_SEMICOLON());
-		lblLearningSkills.setText(i18n.GL1722()+i18n.GL_SPL_SEMICOLON());
-		lblAudience.setText(i18n.GL1723()+i18n.GL_SPL_SEMICOLON());
-		lblInstructional.setText(i18n.GL1724()+i18n.GL_SPL_SEMICOLON());
-    	lblOer.setText(i18n.GL1834()+i18n.GL_SPL_SEMICOLON());
+		lblGradeTitle.setText(i18n.GL0325()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblStandrads.setText(i18n.GL0575()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblLanguage.setText(i18n.GL1721()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblDepthKnowledge.setText(i18n.GL1693()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblLearningSkills.setText(i18n.GL1722()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblAudience.setText(i18n.GL1723()+i18n.GL_SPL_SEMICOLON()+" ");
+		lblInstructional.setText(i18n.GL1724()+i18n.GL_SPL_SEMICOLON()+" ");
+    	lblOer.setText(i18n.GL1834()+i18n.GL_SPL_SEMICOLON()+" ");
 	}
 
 

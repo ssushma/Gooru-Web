@@ -320,7 +320,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		lblWhatsNext.getElement().setAttribute("alt",i18n.GL0432());
 		lblWhatsNext.getElement().setAttribute("title",i18n.GL0432());
 		
-		lblSeeOtherRelatedConcepts.setText(i18n.GL0572() + i18n.GL_SPL_SEMICOLON());
+		lblSeeOtherRelatedConcepts.setText(i18n.GL0572() + i18n.GL_SPL_SEMICOLON()+" ");
 		lblSeeOtherRelatedConcepts.getElement().setId("lblSeeOtherRelatedConcepts");
 		lblSeeOtherRelatedConcepts.getElement().setAttribute("alt",i18n.GL0572());
 		lblSeeOtherRelatedConcepts.getElement().setAttribute("title",i18n.GL0572());
