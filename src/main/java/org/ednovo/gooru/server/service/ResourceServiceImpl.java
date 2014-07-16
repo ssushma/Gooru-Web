@@ -48,6 +48,7 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -464,14 +465,12 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	    String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionId, getLoggedInSessionToken());
 	    JSONObject classPageJsonObject=new JSONObject();
 		JSONObject collectionTypeJsonObject=new JSONObject();
-		JSONArray taxonomySetArray=new JSONArray();
-		JSONObject taxonomySetObject=new JSONObject();
 		try{
 			if(title!=null){
 				collectionTypeJsonObject.put(TITLE, title);
 			}
 			if(description != null){
-				collectionTypeJsonObject.put("description", description);
+				collectionTypeJsonObject.put("goals", description);
 			}
 			if(grade!=null){
 				collectionTypeJsonObject.put(GRADE, grade);
@@ -483,65 +482,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				collectionTypeJsonObject.put("vocabulary", vocabulary);
 			}
 			if(taxonomyCode!=null){
-				taxonomySetObject.put("codeId", taxonomyCode);
-				taxonomySetArray.put(taxonomySetObject);
-				collectionTypeJsonObject.put("taxonomySet", taxonomySetArray);
-			}
-			if(updateTaxonomyByCode!=null){
-				collectionTypeJsonObject.put("updateTaxonomyByCode", updateTaxonomyByCode);
-			}
-			if(mediaType!=null){
-				collectionTypeJsonObject.put("mediaType", mediaType);
-			}
-			if(action!=null){
-				collectionTypeJsonObject.put("action", action);
-			}
-			classPageJsonObject.put("collection", collectionTypeJsonObject);
-			  
-			
-		}catch(Exception e){
-			
-		}
-	    JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), classPageJsonObject.toString());
-	    jsonRep = jsonResponseRep.getJsonRepresentation();
-	    if(jsonResponseRep.getStatusCode()==200){
-			collectionDoObj = deserializeCollection(jsonRep);
-			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
-		}else{
-			collectionDoObj=new CollectionDo();
-			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
-		}
-	    return collectionDoObj;
-	}
-	
-	@Override
-	public CollectionDo deleteCollectionMetadata(String collectionId, String title, String description, String grade, String sharing, String vocabulary, String taxonomyCode, String updateTaxonomyByCode, String mediaType,String action) {
-		JsonRepresentation jsonRep = null;
-		CollectionDo collectionDoObj= new CollectionDo();
-	    String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionId, getLoggedInSessionToken());
-	    JSONObject classPageJsonObject=new JSONObject();
-		JSONObject collectionTypeJsonObject=new JSONObject();
-		try{
-			if(title!=null){
-				collectionTypeJsonObject.put(TITLE, title);
-			}
-			if(description != null){
-				collectionTypeJsonObject.put("description", description);
-			}
-			if(grade!=null){
-				collectionTypeJsonObject.put(GRADE, grade);
-			}
-			if(sharing!=null){
-				collectionTypeJsonObject.put("sharing", sharing);
-			}
-			if(vocabulary!=null){
-				collectionTypeJsonObject.put("vocabulary", vocabulary);
-			}
-			if(taxonomyCode!=null){
-				collectionTypeJsonObject.put("taxonomyCode", taxonomyCode);
-			}
-			if(updateTaxonomyByCode!=null){
-				collectionTypeJsonObject.put("updateTaxonomyByCode", updateTaxonomyByCode);
+				JSONArray taxonomySet = new JSONArray();
+ 				JSONObject code = new JSONObject();
+ 				code.put("codeId", taxonomyCode);
+ 				taxonomySet.put(code);
+ 				collectionTypeJsonObject.put("taxonomySet", taxonomySet);
 			}
 			if(mediaType!=null){
 				collectionTypeJsonObject.put("mediaType", mediaType);
@@ -930,6 +875,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj=new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid, getGuestSessionToken(""), "true");
+		System.out.println("getcollection:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -1422,7 +1368,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor
 					.put(url, getRestUsername(), getRestPassword(),
 							taxonomyObject.toString());
-			jsonRep = jsonResponseRep.getJsonRepresentation();
+			//jsonRep = jsonResponseRep.getJsonRepresentation();
 			
 		} catch (Exception ex) {
 			
@@ -1623,6 +1569,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
         }
         return new GoogleDriveItemDo();
 	}
+
 
 	
 	
