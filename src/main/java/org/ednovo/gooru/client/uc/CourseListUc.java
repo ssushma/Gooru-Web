@@ -269,7 +269,8 @@ public class CourseListUc extends PopupPanel {
 			for (CodeDo code : collectionDo.getTaxonomySet()) {
 				if(code.getDepth()==2){
 					oldCourseId=Integer.toString(code.getCodeId());
-					updateCourse(collectionId, oldCourseId,"delete");				}
+					//updateCourse(collectionId, oldCourseId,"delete");				
+					}
 				
 			}
 			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){

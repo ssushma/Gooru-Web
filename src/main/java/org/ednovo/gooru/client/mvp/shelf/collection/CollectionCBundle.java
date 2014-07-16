@@ -342,6 +342,7 @@ public interface CollectionCBundle extends ClientBundle{
 		String errorLabelColor();
 		String depthOfKnowledgeSubContainer();
 		String addQuestionStandard();
+		String btnOuterContainer();
 	}
 	@Source("Collection.css")
 	CollectionCss css();
