@@ -100,9 +100,9 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		shelfTabSimPanel.getElement().setId("spnlShelfTabSimPanel");
 		lodingImage.getElement().setId("lblLodingImage");
 
-		int windowHeight=Window.getClientHeight();
-		panelSearchPage.setStyleName(style.panelHeight());
-		panelSearchPage.getElement().getStyle().setHeight(windowHeight - 50, Unit.PX);
+//		int windowHeight=Window.getClientHeight();
+//		panelSearchPage.setStyleName(style.panelHeight());
+//		panelSearchPage.getElement().getStyle().setHeight(windowHeight - 50, Unit.PX);
 	}
 
 	@Override

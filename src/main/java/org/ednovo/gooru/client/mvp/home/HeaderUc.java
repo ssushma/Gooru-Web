@@ -821,13 +821,12 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void onClick(ClickEvent event) {
-			Window.enableScrolling(true);
-			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
-			
+
 			if (userDo != null
 					&& !userDo.getUserUid().equals(
 							AppClientFactory.GOORU_ANONYMOUS)) {
-				
+				Window.enableScrolling(true);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 //				OpenClasspageList();
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 				
