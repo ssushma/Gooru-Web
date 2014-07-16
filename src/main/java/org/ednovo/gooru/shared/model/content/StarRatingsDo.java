@@ -20,6 +20,10 @@ public class StarRatingsDo implements Serializable {
 	private CreatorDo creator;
 	private long lastModifiedOn;
 	private SearchRatingsDo ratings;
+	private Integer totalHitCount;
+	
+	
+	
 	public StarRatingsDo(){}
 	
 	/**
@@ -123,6 +127,20 @@ public class StarRatingsDo implements Serializable {
 	 */
 	public void setRatings(SearchRatingsDo ratings) {
 		this.ratings = ratings;
+	}
+
+	/**
+	 * @return the totalHitCount
+	 */
+	public Integer getTotalHitCount() {
+		return totalHitCount;
+	}
+
+	/**
+	 * @param totalHitCount the totalHitCount to set
+	 */
+	public void setTotalHitCount(Integer totalHitCount) {
+		this.totalHitCount = totalHitCount;
 	}
 
 
