@@ -1354,6 +1354,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 				for(int i=0;i<jsonArray.length();i++){
 					JSONObject resourceRatingsJsonObject=jsonArray.getJSONObject(i);
 					StarRatingsDo starRatingsDo =deserializeResourceStarRatings(resourceRatingsJsonObject);
+					starRatingsDo.setTotalHitCount(jsonObject.getInt("totalHitCount"));
 					starRatingsList.add(starRatingsDo);
 				}	
 			}
