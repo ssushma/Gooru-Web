@@ -48,6 +48,7 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -469,7 +470,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				collectionTypeJsonObject.put(TITLE, title);
 			}
 			if(description != null){
-				collectionTypeJsonObject.put("description", description);
+				collectionTypeJsonObject.put("goals", description);
 			}
 			if(grade!=null){
 				collectionTypeJsonObject.put(GRADE, grade);
@@ -481,10 +482,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				collectionTypeJsonObject.put("vocabulary", vocabulary);
 			}
 			if(taxonomyCode!=null){
-				collectionTypeJsonObject.put("taxonomyCode", taxonomyCode);
-			}
-			if(updateTaxonomyByCode!=null){
-				collectionTypeJsonObject.put("updateTaxonomyByCode", updateTaxonomyByCode);
+				JSONArray taxonomySet = new JSONArray();
+ 				JSONObject code = new JSONObject();
+ 				code.put("codeId", taxonomyCode);
+ 				taxonomySet.put(code);
+ 				collectionTypeJsonObject.put("taxonomySet", taxonomySet);
 			}
 			if(mediaType!=null){
 				collectionTypeJsonObject.put("mediaType", mediaType);
@@ -873,6 +875,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj=new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid, getGuestSessionToken(""), "true");
+		System.out.println("getcollection:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -1365,7 +1368,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor
 					.put(url, getRestUsername(), getRestPassword(),
 							taxonomyObject.toString());
-			jsonRep = jsonResponseRep.getJsonRepresentation();
+			//jsonRep = jsonResponseRep.getJsonRepresentation();
 			
 		} catch (Exception ex) {
 			
@@ -1566,6 +1569,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
         }
         return new GoogleDriveItemDo();
 	}
+
 
 	
 	

@@ -226,7 +226,7 @@ public class CollectionFlagView extends
 		resourceCheckBox2.getElement().setId("chkResourceCheckBox2");
 		resourceCheckBox1.getElement().setId("chkResourceCheckBox1");
 		resourceDescTextArea.getElement().setId("tatResourceDescTextArea");
-		StringUtil.setAttributes(resourceDescTextArea);
+		StringUtil.setAttributes(resourceDescTextArea, true);
 		collectionFlagContainer.getElement().setId("pnlCollectionFlagContainer");
 		collectionTitleField.getElement().setId("htmlCollectionTitleField");
 		collectionCheckBox4.getElement().setId("chkCollectionCheckBox4");
@@ -234,7 +234,7 @@ public class CollectionFlagView extends
 		collectionCheckBox2.getElement().setId("chkCollectionCheckBox2");
 		collectionCheckBox1.getElement().setId("chkCollectionCheckBox1");
 		collectionDescTextArea.getElement().setId("tatCollectionDescTextArea");
-		StringUtil.setAttributes(collectionDescTextArea);
+		StringUtil.setAttributes(collectionDescTextArea, true);
 	}
 
 	public void displayView(String collectionTitle,ArrayList<String> resourcesList,ArrayList<String> resourcesListId) {

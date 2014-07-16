@@ -92,7 +92,7 @@ public class ProfileBiographyEditUC extends Composite implements
 		editTextBox.getElement().setAttribute("maxlength", "500");
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 		editTextBox.getElement().setAttribute("id", "txtAreaAboutYourself");
-		StringUtil.setAttributes(editTextBox);
+		StringUtil.setAttributes(editTextBox, true);
 		
 	}
 

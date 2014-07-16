@@ -215,11 +215,11 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		
 		txtClasspageCodeShare.setReadOnly(true);
 		txtClasspageCodeShare.getElement().setId("txtClassPageCodeShare");
-		StringUtil.setAttributes(txtClasspageCodeShare);
+		StringUtil.setAttributes(txtClasspageCodeShare, true);
 		
 		txtClasspageLinkShare.setReadOnly(true);
 		txtClasspageLinkShare.getElement().setId("txtClassPageLinkShare");
-		StringUtil.setAttributes(txtClasspageLinkShare);
+		StringUtil.setAttributes(txtClasspageLinkShare, true);
 		
 		btnInvite.setText(i18n.GL0944());
 		btnInvite.getElement().setId("btnInvite");

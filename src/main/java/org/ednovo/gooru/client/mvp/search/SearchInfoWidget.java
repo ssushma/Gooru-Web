@@ -402,8 +402,8 @@ public class SearchInfoWidget extends Composite {
 				List<Integer> gradeListInt = new  ArrayList<Integer>();
 				String[] gradeslist=resourceDo.getGrade().split(",");
 				for (String eachGrade1 : gradeslist) {
-					if (!eachGrade1.equalsIgnoreCase("Kindergarten")
-							&& !eachGrade1.equalsIgnoreCase("Higher Education")) {
+					if (!eachGrade1.trim().equalsIgnoreCase("Kindergarten")
+							&& !eachGrade1.trim().equalsIgnoreCase("Higher Education")) {
 						eachGrade1 = eachGrade1.replaceAll("th", "")
 								.replaceAll("TH", "").replaceAll("st", "")
 								.replaceAll("ST", "").replaceAll("nd", "")

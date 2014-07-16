@@ -185,7 +185,7 @@ public class RegisterVc extends PopupPanel {
 		emailIdTxtBox.addFocusHandler(new OnEmailFocus());
 		emailIdTxtBox.addBlurHandler(new OnEmailBlur());
 		emailIdTxtBox.getElement().setId("tbEmail");
-		StringUtil.setAttributes(emailIdTxtBox);
+		StringUtil.setAttributes(emailIdTxtBox, true);
 		
 		emailValidationUc.getElement().setId("errlblEmailValidationUc");
 		dateValidationUc.getElement().setId("errlblDateValidationUc");

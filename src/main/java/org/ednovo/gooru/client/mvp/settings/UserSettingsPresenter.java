@@ -73,6 +73,7 @@ import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -168,19 +169,22 @@ public class UserSettingsPresenter
 				.getRequestParameter("newMailId");
 //		Cookies.setCookie("google-access-token", "ya29.PADXXYiamS8JHxsAAADsdCb743SQMuoXVuZlTw5kC3kLVP_-UThz6jTa0kv7NA");
 		final String access_token = Cookies.getCookie("google-access-token") !=null && !Cookies.getCookie("google-access-token").equalsIgnoreCase("") ? Cookies.getCookie("google-access-token") : null;
-
+//		StringUtil.consoleLog("access_token : "+access_token);
 		if (access_token !=null ){
 			
 			AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
 				@Override
 				public void onSuccess(GoogleDriveDo googleDriveDo) {
-
+//					StringUtil.consoleLog("OnSuccess");
 					if(googleDriveDo!=null){
 						if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+//							StringUtil.consoleLog("Error 401");
 							getView().googleDirveStatus(false);
 						}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+//							StringUtil.consoleLog("Error 403");
 							getView().googleDirveStatus(false);
 						}else{
+//							StringUtil.consoleLog("Not an error ..");
 							UserDo user = AppClientFactory.getLoggedInUser();
 							user.setAccessToken(access_token);
 							AppClientFactory.setLoggedInUser(user);
@@ -188,11 +192,13 @@ public class UserSettingsPresenter
 							getView().googleDirveStatus(true);
 						}
 					}else{
+//						StringUtil.consoleLog("Google Dirve Null");
 						getView().googleDirveStatus(false);
 					}
 				}
 			});
 		}else{
+//			StringUtil.consoleLog("Access token null");
 			getView().googleDirveStatus(false);
 		}
 		

@@ -158,7 +158,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		resourceCheckBox2.getElement().setId("chkResourceCheckBox2");
 		resourceCheckBox1.getElement().setId("chkResourceCheckBox1");
 		ratingCommentTxtArea.getElement().setId("tatRatingCommentTxtArea");
-		StringUtil.setAttributes(ratingCommentTxtArea);
+		StringUtil.setAttributes(ratingCommentTxtArea, true);
 		mandatoryDescLblForSwareWords.getElement().setId("lblMandatoryDescLblForSwareWords");
 		buttonsContainer.getElement().setId("pnlButtonsContainer");
 		btnSkip.getElement().setId("btnSkip");

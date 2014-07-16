@@ -343,7 +343,7 @@ public class ServiceProcessor {
                // Get the representation as an JsonRepresentation
                //return new JsonRepresentation(getRepresentation().getText());
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
-               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation(getRepresentation().getText()));
+               jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation((getRepresentation()!=null) ? getRepresentation().getText():""));
                return jsonResponseRepresentation;
            }
        }.execute();

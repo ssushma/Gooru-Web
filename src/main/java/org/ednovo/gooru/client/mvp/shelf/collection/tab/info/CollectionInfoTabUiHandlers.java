@@ -68,6 +68,8 @@ public interface CollectionInfoTabUiHandlers extends BaseUiHandlers {
 			String teacherTip);
 
 	void getCollectionTeacherTipInfo(String collectionId);*/
+
+	void deleteCourseOrStandard(String collectionId, String courseCode);
 	
 	
 
