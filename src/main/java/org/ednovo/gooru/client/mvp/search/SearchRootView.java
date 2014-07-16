@@ -191,7 +191,7 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 			Document doc = Document.get();
 			doc.getBody().setClassName(style.bodyHeight());
 		}
-		Window.enableScrolling(false);
+//		Window.enableScrolling(false);
 		int countValue = searchDo.getSearchResults().size();
 
 		String searchText = AppClientFactory.getPlaceManager()
