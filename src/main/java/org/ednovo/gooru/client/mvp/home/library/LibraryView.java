@@ -385,7 +385,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			contentScroll.setVisible(true);
 			loadingIconPanel.setVisible(false);
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 	}
 	
@@ -667,7 +667,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 *
 	 */
 	private void setFeaturedCourseWidgets(final ArrayList<CourseDo> courseDoList, boolean isFeaturedCourseSelected) {
-		System.out.println("inside this");
 		featuredCourses.clear();
 		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(COURSE_ID);
 		for(int i = 0; i<courseDoList.size(); i++) {
