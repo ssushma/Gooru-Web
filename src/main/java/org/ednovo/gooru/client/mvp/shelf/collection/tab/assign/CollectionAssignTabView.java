@@ -176,7 +176,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		textAreaVal.getElement().setId("tatTextAreaVal");
 		textAreaVal.getElement().setAttribute("alt",i18n.GL1389());
 		textAreaVal.getElement().setAttribute("title",i18n.GL1389());
-		StringUtil.setAttributes(textAreaVal);
+		StringUtil.setAttributes(textAreaVal, true);
 		
 		textAreaVal.getElement().getStyle().setColor("#999");
 		textAreaVal.getElement().setAttribute("maxlength", "400");

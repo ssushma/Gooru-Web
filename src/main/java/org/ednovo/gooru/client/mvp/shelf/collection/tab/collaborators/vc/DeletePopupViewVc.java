@@ -100,7 +100,7 @@ public abstract class DeletePopupViewVc extends PopupPanel {
 		
 		txtConfirmAction.addKeyUpHandler(new ValidateConfirmText());
 		txtConfirmAction.getElement().setAttribute("placeholder", i18n.GL1175());
-		StringUtil.setAttributes(txtConfirmAction);
+		StringUtil.setAttributes(txtConfirmAction, true);
 		btnNegitive.setText(StringUtil.generateMessage(i18n.GL0142()));
 		btnNegitive.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0142()));
 		btnNegitive.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0142()));

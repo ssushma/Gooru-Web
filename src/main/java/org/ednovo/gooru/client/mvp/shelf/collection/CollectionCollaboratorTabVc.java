@@ -103,7 +103,7 @@ public class CollectionCollaboratorTabVc extends Composite {
 		getCollaboratorUsers(collectionDo.getGooruOid());
 		collaboratorTxtBox.addKeyUpHandler(new OnTextPress());
 		collaboratorTxtBox.getElement().setId("txtCollaboratorTxtBox");
-		StringUtil.setAttributes(collaboratorTxtBox);
+		StringUtil.setAttributes(collaboratorTxtBox, true);
 		addedCollaboratorFloPanel.getElement().setId("fpnlAddedCollaboratorFloPanel");
 	}
 

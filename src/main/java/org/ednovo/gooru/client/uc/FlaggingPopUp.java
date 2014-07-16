@@ -132,7 +132,7 @@ public class FlaggingPopUp extends PopupPanel {
 		checkBox1.getElement().setId("chkCheckBox1");
 		checkBox4.getElement().setId("chkCheckBox4");
 		descriptionTextArea.getElement().setId("tatDescriptionTextArea");
-		StringUtil.setAttributes(descriptionTextArea);
+		StringUtil.setAttributes(descriptionTextArea, true);
 		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE.closeFlagPopUpImages());
 		submitButtonGray.setVisible(true);
 		submitButton.setVisible(false);

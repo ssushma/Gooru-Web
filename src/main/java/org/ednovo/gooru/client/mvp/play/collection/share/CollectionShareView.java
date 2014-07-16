@@ -146,12 +146,12 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		
 		resourceTitleText.getElement().setId("lblResourceTitleText");
 		resourceShareTextArea.getElement().setId("tatResourceShareTextArea");
-		StringUtil.setAttributes(resourceShareTextArea);
+		StringUtil.setAttributes(resourceShareTextArea, true);
 		socialSharePanel.getElement().setId("fpnlSocialSharePanel");
 		sharePanel.getElement().setId("fpnlSharePanel");
 		collectionShareContainer.getElement().setId("fpnlCollectionShareContainer");
 		collectionShareTextArea.getElement().setId("tatCollectionShareTextArea");
-		StringUtil.setAttributes(collectionShareTextArea);
+		StringUtil.setAttributes(collectionShareTextArea, true);
 		hideButton.getElement().setId("epnlHideButton");
 	}
 	

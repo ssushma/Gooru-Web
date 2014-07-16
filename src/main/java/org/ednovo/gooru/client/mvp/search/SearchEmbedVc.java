@@ -89,7 +89,7 @@ public class SearchEmbedVc extends Composite {
 		embedlineText.getElement().setAttribute("title",i18n.GL0718());
 		
 		txtAreaEmbed.getElement().setAttribute("id", "txtAreaEmbed");
-		StringUtil.setAttributes(txtAreaEmbed);
+		StringUtil.setAttributes(txtAreaEmbed, true);
 		
 		//Handle click event for selecting all text inside text box.
 		txtAreaEmbed.addClickHandler(new OnTextAreaClick());

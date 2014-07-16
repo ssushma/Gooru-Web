@@ -283,10 +283,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		addResourceBtn.getElement().getStyle().setFloat(Float.LEFT);
 		uploadImageLbl.addClickHandler(new OnEditImageClick());
 		titleTextBox.getElement().setId("txtTitleTextBox");
-		StringUtil.setAttributes(titleTextBox);
+		StringUtil.setAttributes(titleTextBox, true);
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());
 		descriptionTxtAera.getElement().setId("tatDescriptionTxtAera");
-		StringUtil.setAttributes(descriptionTxtAera);
+		StringUtil.setAttributes(descriptionTxtAera, true);
 		descriptionTxtAera.addKeyUpHandler(new DescriptionKeyUpHandler());
 		titleTextBox.getElement().setAttribute("maxlength", "50");
 		descriptionTxtAera.getElement().setAttribute("maxlength", "300");

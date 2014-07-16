@@ -242,7 +242,7 @@ public class CollectionShareTabVc extends Composite {
 		
 		teacherTipTextarea.addKeyUpHandler(new DirectionsKeyUpHandler());
 		teacherTipTextarea.getElement().setAttribute("maxlength", "500");
-		StringUtil.setAttributes(teacherTipTextarea);
+		StringUtil.setAttributes(teacherTipTextarea, true);
 		teacherTipTextarea.addFocusHandler(new FocusHandler() {
 			@Override
 			public void onFocus(FocusEvent event) {

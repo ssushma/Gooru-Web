@@ -291,12 +291,12 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 		descriptionTxtAera.getElement().setId("tatDescriptionTxtAera");
 		descriptionTxtAera.addKeyUpHandler(new DescriptionKeyUpHandler());
 		resourcePathTextBox.getElement().setId("txtResourcePathTextBox");
-		StringUtil.setAttributes(resourcePathTextBox);
+		StringUtil.setAttributes(resourcePathTextBox, true);
 		resourcePathTextBox.addKeyUpHandler(new ResourcePathKeyUpHandler());
 		titleTextBox.getElement().setAttribute("maxlength", "50");
-		StringUtil.setAttributes(titleTextBox);
+		StringUtil.setAttributes(titleTextBox, true);
 		descriptionTxtAera.getElement().setAttribute("maxlength", "300");
-		StringUtil.setAttributes(descriptionTxtAera);
+		StringUtil.setAttributes(descriptionTxtAera, true);
 		resourceContentChkLbl.getElement().setId("lblResourceContentChkLbl");
 		resourceContentChkLbl.setVisible(false);
 		mandatoryTitleLbl.setVisible(false);
