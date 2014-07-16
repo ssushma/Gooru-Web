@@ -22,63 +22,48 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.shared.model.library;
+package org.ednovo.gooru.client.mvp.home.library.events;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-import org.ednovo.gooru.shared.model.content.ThumbnailDo;
+import org.ednovo.gooru.shared.model.library.ConceptDo;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.event.shared.GwtEvent;
 
-@JsonInclude(Include.NON_NULL)
-public class LessonDo implements Serializable {
+/**
+ * @fileName : SetConceptQuizDataEvent.java
+ * @description : 
+ * @version : 1.0
+ * @date: 11-Dec-2013
+ * @Author Gooru Team
+ * @Reviewer:
+ */
+public class SetConceptQuizDataEvent extends GwtEvent<SetConceptQuizDataHandler> {
+	ArrayList<ConceptDo> conceptDoList;
+	Integer topicId;
+	String lessonId;
+	String lessonLabel;
+	String lessonCode;
+	String conceptId;
 	
-	private static final long serialVersionUID = 2411080367742513414L;
-	private Integer codeId;
-	private String label;
-	private ThumbnailDo thumbnails;
-	private ArrayList<ConceptDo> collection;
-	private String code;
-	private ArrayList<ConceptDo> concept;
+	public static final Type<SetConceptQuizDataHandler> TYPE = new Type<SetConceptQuizDataHandler>();
 	
-	public LessonDo(){}
+	public SetConceptQuizDataEvent(ArrayList<ConceptDo> conceptDoList, Integer topicId, String lessonId, String lessonLabel, String lessonCode, String conceptId) {
+		this.conceptDoList = conceptDoList;
+		this.topicId = topicId;
+		this.lessonId = lessonId;
+		this.lessonLabel = lessonLabel;
+		this.lessonCode = lessonCode;
+		this.conceptId = conceptId;
+	}
 	
-	public Integer getCodeId() {
-		return codeId;
+	@Override
+	public Type<SetConceptQuizDataHandler> getAssociatedType() {
+		return TYPE;
 	}
-	public void setCodeId(Integer codeId) {
-		this.codeId = codeId;
-	}
-	public String getLabel() {
-		return label;
-	}
-	public void setLabel(String label) {
-		this.label = label;
-	}
-	public ThumbnailDo getThumbnails() {
-		return thumbnails;
-	}
-	public void setThumbnails(ThumbnailDo thumbnails) {
-		this.thumbnails = thumbnails;
-	}
-	public ArrayList<ConceptDo> getCollection() {
-		return collection;
-	}
-	public void setCollection(ArrayList<ConceptDo> collection) {
-		this.collection = collection;
-	}
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
-	}
-	public ArrayList<ConceptDo> getConcept() {
-		return concept;
-	}
-	public void setConcept(ArrayList<ConceptDo> concept) {
-		this.concept = concept;
+
+	@Override
+	protected void dispatch(SetConceptQuizDataHandler handler) {
+		handler.setConceptQuizDataHandler(conceptDoList,topicId,lessonId,lessonLabel,lessonCode,conceptId);
 	}
 }
