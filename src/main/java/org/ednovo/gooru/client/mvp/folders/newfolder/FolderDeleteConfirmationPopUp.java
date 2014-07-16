@@ -91,7 +91,7 @@ public abstract class FolderDeleteConfirmationPopUp extends AppPopUp  {
 		entityLbl.getElement().setAttribute("alt",entityInfo);
 		entityLbl.getElement().setAttribute("title",entityInfo);
 		inlineTxtBox.getElement().setId("txtInlineTxtBox");
-		StringUtil.setAttributes(inlineTxtBox);
+		StringUtil.setAttributes(inlineTxtBox,true);
 		buttonContainer.getElement().setId("pnlButtonContainer");
 		okButtonUc.getElement().setId("btnDeleteCollectionDisabled");
 		cancelAnr.getElement().setId("lnkCancelAnr");

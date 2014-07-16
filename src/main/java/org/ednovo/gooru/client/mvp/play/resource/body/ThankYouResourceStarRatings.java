@@ -114,7 +114,7 @@ public class ThankYouResourceStarRatings extends PopupPanel{
 		saveAndPsotLbl.setVisible(false);
 		buttonsContainer.setVisible(true);
 		ratingCommentTxtArea.getElement().setAttribute("maxlength", "500");
-		StringUtil.setAttributes(ratingCommentTxtArea);
+		StringUtil.setAttributes(ratingCommentTxtArea, true);
 		reviewTextAreaTitle.getElement().setId("lblReviewTextAreaTitle");
 		ratingCommentTxtArea.getElement().setId("tatRatingCommentTxtArea");
 		mandatoryDescLblForSwareWords.getElement().setId("errlblMandatoryDescLblForSwareWords");

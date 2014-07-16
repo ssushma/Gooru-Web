@@ -150,7 +150,7 @@ public class GoogleDocsResourceView extends Composite {
 		panelContentRights.setVisible(false);
 		titleTextBox.setText(driveDo.getTitle());
 
-		StringUtil.setAttributes(titleTextBox);
+		StringUtil.setAttributes(titleTextBox, true);
 
 		titleTextBox.getElement().setId("txtTitleTextBox");
 		titleTextBox.getElement().setAttribute("alt",driveDo.getTitle());
@@ -166,7 +166,7 @@ public class GoogleDocsResourceView extends Composite {
 		descriptionTxtAera.getElement().setId("pnlThumbnailText");
 		descriptionTxtAera.getElement().setAttribute("alt",driveDo.getDescription());
 		descriptionTxtAera.getElement().setAttribute("title",driveDo.getDescription());
-		StringUtil.setAttributes(descriptionTxtAera);
+		StringUtil.setAttributes(descriptionTxtAera, true);
 		
 		contentPanel.getElement().setId("pnlContentPanel");
 		titleText.getElement().setId("pnlTitleText");

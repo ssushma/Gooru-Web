@@ -518,7 +518,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		} else {
 			authorPanelUc.setVisible(true);
 			authorTxtBox.getElement().setId("tbAuthor");
-			StringUtil.setAttributes(authorTxtBox);
+			StringUtil.setAttributes(authorTxtBox, true);
 			authorTxtBox.addKeyUpHandler(new KeyUpHandler() {
 
 				@Override

@@ -476,7 +476,7 @@ public class ShelfCollectionResourceChildView extends
 		resourceNarrationHtml.getElement().setId("htmlResourceNarrationHtml");
 		narrationTxtArea.getElement().setAttribute("maxlength", "600");
 		narrationTxtArea.getElement().setId("tatNarrationTxtArea");
-		StringUtil.setAttributes(narrationTxtArea);
+		StringUtil.setAttributes(narrationTxtArea, true);
 	//	narrationTxtArea.addKeyUpHandler(new narationValidation());
 		fromTxt.addKeyUpHandler(new fromTxtKeyUpHandler());
 		toTxt.addKeyUpHandler(new toTxtKeyUpHandler());

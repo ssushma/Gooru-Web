@@ -655,7 +655,7 @@ public class EditClasspageView extends
 		collectionTitleUc.getElement().setId("lblCollectionTitleUc");
 		panelUpdateActionContols.getElement().setId("pnlUpdateActionContols");
 		classCodeTextBox.getElement().setId("txtClassCode");
-		StringUtil.setAttributes(classCodeTextBox);
+		StringUtil.setAttributes(classCodeTextBox, true);
 		questionMarkPanel.getElement().setId("pnlQuestionMark");
 		mainContainer.getElement().setId("pnlMainContainer");
 		panelProgressContainer.getElement().setId("pnlProgressContainer");

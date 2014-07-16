@@ -305,7 +305,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		textAreaVal.getElement().setId("tatTextAreaVal");
 		textAreaVal.getElement().setAttribute("alt",i18n.GL1641());
 		textAreaVal.getElement().setAttribute("title",i18n.GL1641());
-		StringUtil.setAttributes(textAreaVal);
+		StringUtil.setAttributes(textAreaVal, true);
 		
 		languageObjectiveHeader.setText(i18n.GL1642());
 		languageObjectiveHeader.getElement().setId("lblLanguageObjectiveHeader");

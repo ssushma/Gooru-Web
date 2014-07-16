@@ -133,7 +133,7 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 		
 		resourceTitleText.getElement().setId("lblResourceTitleText");
 		resourceShareTextArea.getElement().setId("tatResourceShareTextArea");
-		StringUtil.setAttributes(resourceShareTextArea);
+		StringUtil.setAttributes(resourceShareTextArea, true);
 		socialSharePanel.getElement().setId("fpnlSocialSharePanel");
 		sharePanel.getElement().setId("pnlSharePanel");
 		hideButton.getElement().setId("epnlHideButton");
