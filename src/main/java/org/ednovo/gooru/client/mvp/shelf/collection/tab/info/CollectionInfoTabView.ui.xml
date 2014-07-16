@@ -44,9 +44,9 @@
 						ui:field="selectCourseLbl" />
 					<g:FlowPanel styleName="{res.css.floatLeftCollectionInputBox}"
 						ui:field="courseData">
-						<g:Label styleName="{res.css.addedCoursesList}" ui:field="courseLbl" />
+						<!-- <g:Label styleName="{res.css.addedCoursesList}" ui:field="courseLbl" /> -->
 					</g:FlowPanel>
-					<g:Button styleName="secondary" ui:field="addCourseBtn" />
+					<g:HTMLPanel styleName="{res.css.btnOuterContainer}"><g:Button styleName="secondary" ui:field="addCourseBtn" /></g:HTMLPanel>
 					<g:Button styleName="secondary" ui:field="removeCourseBtn" />
 				</g:FlowPanel>
 
