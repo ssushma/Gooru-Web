@@ -220,6 +220,7 @@ public interface EditClasspageCBundle extends ClientBundle{
         String section2Div();
         String section3Div();
         String assignementOrderHeader();
+        String errorMessage();
 
 	}
 	@NotStrict

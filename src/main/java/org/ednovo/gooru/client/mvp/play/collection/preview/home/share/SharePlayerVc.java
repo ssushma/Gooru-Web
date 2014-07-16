@@ -40,6 +40,7 @@ import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -277,6 +278,7 @@ public abstract class SharePlayerVc extends PopupPanel{
 		loadingImageLabel.getElement().setId("pnlLoadingImageLabel");
 		popupContentAssign.getElement().setId("pnlPopupContentAssign");
 		shareLinkTxtBox.getElement().setId("txtShareLinkTxtBox");
+		StringUtil.setAttributes(shareLinkTxtBox);
 		socialSharePanel.getElement().setId("pnlSocialSharePanel");
 	}
 

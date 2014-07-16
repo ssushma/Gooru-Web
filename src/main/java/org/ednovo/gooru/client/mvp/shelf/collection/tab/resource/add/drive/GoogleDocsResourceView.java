@@ -9,6 +9,7 @@ import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -148,10 +149,14 @@ public class GoogleDocsResourceView extends Composite {
 		resourceTypePanel.setVisible(false);
 		panelContentRights.setVisible(false);
 		titleTextBox.setText(driveDo.getTitle());
+
+		StringUtil.setAttributes(titleTextBox);
+
 		titleTextBox.getElement().setId("txtTitleTextBox");
 		titleTextBox.getElement().setAttribute("alt",driveDo.getTitle());
 		titleTextBox.getElement().setAttribute("title",driveDo.getTitle());
 		
+
 		thumbnailText.getElement().setInnerText("");
 		thumbnailText.getElement().setId("pnlThumbnailText");
 		thumbnailText.getElement().setAttribute("alt","");
@@ -161,6 +166,7 @@ public class GoogleDocsResourceView extends Composite {
 		descriptionTxtAera.getElement().setId("pnlThumbnailText");
 		descriptionTxtAera.getElement().setAttribute("alt",driveDo.getDescription());
 		descriptionTxtAera.getElement().setAttribute("title",driveDo.getDescription());
+		StringUtil.setAttributes(descriptionTxtAera);
 		
 		contentPanel.getElement().setId("pnlContentPanel");
 		titleText.getElement().setId("pnlTitleText");

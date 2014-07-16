@@ -7,6 +7,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderMetaDataEvent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -134,14 +135,17 @@ public class FolderItemMetaDataUc extends Composite {
 		bigIdeasPanel.getElement().setId("pnlBigIdeasPanel");
 		bigIdeasLbl.getElement().setId("htmlBigIdeasLbl");
 		bigIdeasHTML.getElement().setId("tatBigIdeasHTML");
+		StringUtil.setAttributes(bigIdeasHTML);
 		errorLabelbigIdeasHTML.getElement().setId("lblErrorLabelbigIdeasHTML");
 		essentialQuestionsPanel.getElement().setId("pnlEssentialQuestionsPanel");
 		essentialQuestionsLbl.getElement().setId("htmlEssentialQuestionsLbl");
 		essentialQuestionsHTML.getElement().setId("tatEssentialQuestionsHTML");
+		StringUtil.setAttributes(essentialQuestionsHTML);
 		errorLabelessentialQuestionsHTML.getElement().setId("lblErrorLabelessentialQuestionsHTML");
 		performanceTaskPanel.getElement().setId("pnlPerformanceTaskPanel");
 		performanceTaskLbl.getElement().setId("htmlPerformanceTaskLbl");
 		performanceTaskHTML.getElement().setId("tatPerformanceTaskHTML");
+		StringUtil.setAttributes(performanceTaskHTML);
 		errorLabelperformanceTaskHTML.getElement().setId("lblErrorLabelperformanceTaskHTML");
 		closeItem.getElement().setId("btnCloseItem");
 		formButtons.getElement().setId("pnlFormButtons");

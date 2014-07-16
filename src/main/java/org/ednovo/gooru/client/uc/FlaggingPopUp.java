@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.player.resource.client.view.resourceplayer.flag.FlagBundle;
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -131,6 +132,7 @@ public class FlaggingPopUp extends PopupPanel {
 		checkBox1.getElement().setId("chkCheckBox1");
 		checkBox4.getElement().setId("chkCheckBox4");
 		descriptionTextArea.getElement().setId("tatDescriptionTextArea");
+		StringUtil.setAttributes(descriptionTextArea);
 		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE.closeFlagPopUpImages());
 		submitButtonGray.setVisible(true);
 		submitButton.setVisible(false);

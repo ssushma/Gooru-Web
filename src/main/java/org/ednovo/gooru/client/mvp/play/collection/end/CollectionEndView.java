@@ -42,6 +42,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import br.com.freller.tool.client.Print;
 
@@ -137,6 +138,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		collectionReplayButtonImage.getElement().setId("epnlCollectionReplayButtonImage");
 		collectionSummaryShareButtonImage.getElement().setId("pnlCollectionSummaryShareButtonImage");
 		collectionPlayerSummaryShareTextBox.getElement().setId("txtCollectionPlayerSummaryShareTextBox");
+		StringUtil.setAttributes(collectionPlayerSummaryShareTextBox);
 		ftmSummaryPageContainer.getElement().setId("pnlFtmSummaryPageContainer");
 		printElementContainer.getElement().setId("epnlPrintElementContainer");
 		emailButton.getElement().setId("lblEmailButton");

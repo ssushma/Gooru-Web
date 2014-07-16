@@ -41,6 +41,7 @@ import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -162,6 +163,7 @@ public abstract class AddSearchResourceView extends Composite {
 		searchBox.getElement().setAttribute("placeholder", i18n.GL1967());
 		searchBox.setText(collectionTitle);
 		searchBox.getElement().setId("txtSearchBox");
+		StringUtil.setAttributes(searchBox);
 		searchBox.getElement().setAttribute("alt", collectionTitle);
 		searchBox.getElement().setAttribute("title", collectionTitle);
 		searchBox.addKeyUpHandler(new SearchKeyUpHandler());

@@ -115,9 +115,8 @@ public class ParentRegisterVc extends Composite {
 		parentEmailIdTxtBox.addFocusHandler(new OnEmailFocus());
 		parentEmailIdTxtBox.addBlurHandler(new OnEmailBlur());
 		parentEmailIdTxtBox.getElement().setId("txtParentEmailId");
-		emailValidationUc.getElement().setId("errlblEmailValidationUc");
-		
-		
+		StringUtil.setAttributes(parentEmailIdTxtBox);
+		emailValidationUc.getElement().setId("errlblEmailValidationUc");		
 	}
 	
 	/**

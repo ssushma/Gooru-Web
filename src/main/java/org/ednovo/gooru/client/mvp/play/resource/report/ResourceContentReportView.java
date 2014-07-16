@@ -35,6 +35,7 @@ import org.ednovo.gooru.player.resource.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.player.resource.client.view.resourceplayer.QuestionResourceImageBundle;
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -186,6 +187,7 @@ public class ResourceContentReportView extends PopupPanel{
 		checkBox2.getElement().setId("chkCheckBox2");
 		checkBox1.getElement().setId("chkCheckBox1");
 		descriptionTextArea.getElement().setId("tatDescriptionTextArea");
+		StringUtil.setAttributes(descriptionTextArea);
 	}
 
 	@UiHandler("closeButton")

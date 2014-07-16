@@ -100,6 +100,7 @@ public class SettingEmailEditLabelUc extends Composite implements HasValue<Strin
 		editTextBox.getElement().setAttribute("maxlength", "500");
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 		editTextBox.getElement().setId("txtEmail");
+		StringUtil.setAttributes(editTextBox);
 	}
 	private class ValidateConfirmText implements KeyUpHandler {
 

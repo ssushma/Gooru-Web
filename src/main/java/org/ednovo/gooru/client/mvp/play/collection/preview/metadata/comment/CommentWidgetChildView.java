@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -176,6 +177,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		editButton.getElement().setId("pnlEditButton");
 		deleteButton.getElement().setId("epnlDeleteButton");
 		commentField.getElement().setId("tatCommentField");
+		StringUtil.setAttributes(commentField);
 	}
 	
 	/*

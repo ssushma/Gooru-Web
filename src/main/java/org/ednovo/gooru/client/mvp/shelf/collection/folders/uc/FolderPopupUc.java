@@ -11,6 +11,7 @@ import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -115,6 +116,7 @@ public abstract class FolderPopupUc extends PopupPanel {
 		folderStructureTree.add(folderTreePanel);
 		folderTitle.getElement().setAttribute("maxlength", "50");
 		folderTitle.getElement().setAttribute("placeholder", i18n.GL1250());
+		StringUtil.setAttributes(folderTitle);
 		validationTitleLbl.getElement().getStyle().setDisplay(Display.NONE);
 		validationTitleLbl.getElement().getStyle().setTextAlign(TextAlign.RIGHT);
 		addingLbl.setVisible(false);

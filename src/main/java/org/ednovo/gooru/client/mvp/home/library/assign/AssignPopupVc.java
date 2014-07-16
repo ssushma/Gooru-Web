@@ -408,6 +408,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		loadingImageLabel.getElement().setId("pnlLoadingImageLabel");
 		popupContentAssign.getElement().setId("pnlPopupContentAssign");
 		shareLinkTxtBox.getElement().setId("tatShareLinkTxtBox");
+		StringUtil.setAttributes(shareLinkTxtBox);
 		swithUrlLbl.getElement().setId("lblSwithUrl");
 		swithToEmbedLbl.getElement().setId("lblSwithToEmbedLbl");
 		htmlLoginPanel.getElement().setId("epnlHtmlLoginPanel");

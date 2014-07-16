@@ -50,6 +50,7 @@ import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AttachToDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -153,7 +154,7 @@ public abstract class AssignmentPopupView extends Composite{
 		
 		assignmentTitleTxt.getElement().setAttribute("id", "txtAssignmentTitle");
 		assignmentDirectionsTxtArea.getElement().setAttribute("id", "txtAreaDirections");
-		
+		StringUtil.setAttributes(assignmentTitleTxt);
 		
 		cancelResourcePopupBtnLbl.addClickHandler(new CloseClickHandler());
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());

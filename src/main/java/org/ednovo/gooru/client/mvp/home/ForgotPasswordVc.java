@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AlertForgetContentUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -96,6 +97,7 @@ public class ForgotPasswordVc extends PopupPanel {
        	this.getElement().getStyle().setZIndex(99999);
        	setWidget(uiBinder.createAndBindUi(this));
   		forgotEmailIdTxtBox.getElement().setId("tbUsername");
+  		StringUtil.setAttributes(forgotEmailIdTxtBox);
 		sendMailBtnUc.getElement().setId("btnSubmit");
 		supportLink.getElement().setId("lnkSupport");
 		

@@ -1033,6 +1033,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	public ArrayList<UnitDo> getLibraryUnits(String subjectName, String courseId, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_UNITS_OPTIMIZED, subjectName, courseId, getLoggedInSessionToken());
+		url=url+getLibraryName(libraryName);
 		System.out.println("url "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
@@ -1055,6 +1056,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	public ArrayList<TopicDo> getLibraryTopics(String subjectName, String unitId, String libraryName, int offset, int limit) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_TOPICS_OPTIMIZED, subjectName, unitId, getLoggedInSessionToken(), offset+"", TOTAL_LIMIT);
+		url=url+getLibraryName(libraryName);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeTopicList(jsonRepresentation);
@@ -1064,6 +1066,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	public ArrayList<LessonDo> getLibraryLessons(String subjectName, String topicId, String libraryName, int offset, int limit) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_LESSONS_OPTIMIZED, subjectName, topicId, getLoggedInSessionToken(), ""+offset, ""+limit);
+		url=url+getLibraryName(libraryName);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeLessons(jsonRepresentation);
