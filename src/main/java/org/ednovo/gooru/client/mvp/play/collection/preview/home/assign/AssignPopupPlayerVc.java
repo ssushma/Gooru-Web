@@ -365,7 +365,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 		shareLinkTxtBox.setReadOnly(true);
 		shareLinkTxtBox.addClickHandler(new OnClickShareHandler());
 		shareLinkTxtBox.getElement().setId("tatShareLinkTxtBox");
-		StringUtil.setAttributes(shareLinkTxtBox);
+		StringUtil.setAttributes(shareLinkTxtBox, true);
 		
 		
 		assignDes.setText(i18n.GL0513());

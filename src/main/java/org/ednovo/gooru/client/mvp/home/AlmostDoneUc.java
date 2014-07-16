@@ -122,7 +122,7 @@ public class AlmostDoneUc extends PopupPanel{
 		fillOutText.getElement().setAttribute("title",i18n.GL1280()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		emailTxtBox.getElement().setId("txtEmail");
-		StringUtil.setAttributes(emailTxtBox);
+		StringUtil.setAttributes(emailTxtBox, true);
 		cancelButton.getElement().setId("epnlCancelButton");
 		
 		emailText.getElement().setInnerText(i18n.GL0212());
@@ -163,7 +163,7 @@ public class AlmostDoneUc extends PopupPanel{
 		gooruText.setText(i18n.GL_GRR_OF()+" "+i18n.GL0733()+i18n.GL_SPL_FULLSTOP());
 		okButton.getElement().setInnerText(i18n.GL0190());
 		userNameTxtBox.getElement().setId("txtUserName");
-		StringUtil.setAttributes(userNameTxtBox);
+		StringUtil.setAttributes(userNameTxtBox, true);
 		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicy");
 		buttonContainer.getElement().setId("pnlButtonContainer");
 		copyRightAnr.getElement().setId("lnkCopyRight");

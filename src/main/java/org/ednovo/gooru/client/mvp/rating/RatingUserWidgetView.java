@@ -145,7 +145,7 @@ public class RatingUserWidgetView extends Composite {
 		errorLbl.getElement().setId("lblErrorLbl");
 
 		editReviewText.getElement().setAttribute("maxlength", "500");
-		StringUtil.setAttributes(editReviewText);
+		StringUtil.setAttributes(editReviewText, true);
 		editReview.setText(i18n.GL1860());
 		editReview.getElement().setId("btnEditReview");
 		editReview.getElement().setAttribute("alt",i18n.GL1860());

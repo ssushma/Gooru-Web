@@ -177,7 +177,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		editButton.getElement().setId("pnlEditButton");
 		deleteButton.getElement().setId("epnlDeleteButton");
 		commentField.getElement().setId("tatCommentField");
-		StringUtil.setAttributes(commentField);
+		StringUtil.setAttributes(commentField, true);
 	}
 	
 	/*

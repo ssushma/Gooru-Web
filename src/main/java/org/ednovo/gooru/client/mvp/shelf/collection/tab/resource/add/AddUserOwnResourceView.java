@@ -289,11 +289,11 @@ public abstract class AddUserOwnResourceView extends Composite {
 		uploadImageLbl.getElement().setId("btnUploadImage");
 		addResourceBtnLbl.getElement().setId("btnAdd");
 		resourcePathTextBox.getElement().setId("tbUrl");
-		StringUtil.setAttributes(resourcePathTextBox);
+		StringUtil.setAttributes(resourcePathTextBox, true);
 		titleTextBox.getElement().setId("tbTitle");
-		StringUtil.setAttributes(titleTextBox);
+		StringUtil.setAttributes(titleTextBox, true);
 		descriptionTxtAera.getElement().setId("taDescription");
-		StringUtil.setAttributes(descriptionTxtAera);
+		StringUtil.setAttributes(descriptionTxtAera, true);
 		descriptionTxtAera.getElement().setAttribute("placeholder", i18n.GL0359());
 		resourcePathTextBox.addKeyUpHandler(new ResourcePathKeyUpHandler());
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());

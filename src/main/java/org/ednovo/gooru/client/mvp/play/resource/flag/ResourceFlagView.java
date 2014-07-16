@@ -142,7 +142,7 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 		checkBox2.getElement().setId("chkCheckBox2");
 		checkBox1.getElement().setId("chkCheckBox1");
 		descriptionTextArea.getElement().setId("tatDescriptionTextArea");
-		StringUtil.setAttributes(descriptionTextArea);
+		StringUtil.setAttributes(descriptionTextArea, true);
 		closeButton.addClickHandler(new CloseFlagPopupEvent());
 	}
 	@UiHandler("cancelButton")

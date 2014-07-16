@@ -195,14 +195,14 @@ IsCollectionAssign {
 		textAreaVal.getElement().setAttribute("alt",i18n.GL1461());
 		textAreaVal.getElement().setAttribute("title",i18n.GL1461());
 		textAreaVal.getElement().getStyle().setColor("#999");
-		StringUtil.setAttributes(textAreaVal);
+		StringUtil.setAttributes(textAreaVal, true);
 		
 		dateBoxUc = new DateBoxUcCustomizedForAssign(false, false,false);
 		duedateContainer.add(dateBoxUc);
 		dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
 		textAreaVal.addKeyUpHandler(new DirectionsKeyUpHandler());
 		textAreaVal.getElement().setAttribute("maxlength", "400");
-		StringUtil.setAttributes(textAreaVal);
+		StringUtil.setAttributes(textAreaVal, true);
 		
 		textAreaVal.addFocusHandler(new FocusHandler() {
 			@Override

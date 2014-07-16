@@ -278,7 +278,7 @@ public abstract class SharePlayerVc extends PopupPanel{
 		loadingImageLabel.getElement().setId("pnlLoadingImageLabel");
 		popupContentAssign.getElement().setId("pnlPopupContentAssign");
 		shareLinkTxtBox.getElement().setId("txtShareLinkTxtBox");
-		StringUtil.setAttributes(shareLinkTxtBox);
+		StringUtil.setAttributes(shareLinkTxtBox, true);
 		socialSharePanel.getElement().setId("pnlSocialSharePanel");
 	}
 
