@@ -237,10 +237,10 @@ public class EmailShareUc extends PopupPanel{
 		cancelLbl.getElement().setId("lblCancel");
 		toTxt.getElement().setId("tbTo");
 		subTxt.getElement().setId("tbSubject");
-		StringUtil.setAttributes(subTxt);
+		StringUtil.setAttributes(subTxt, true);
 		fromTxt.getElement().setId("tbFrom");
 		msgTxa.getElement().setId("taMessage");
-		StringUtil.setAttributes(msgTxa);
+		StringUtil.setAttributes(msgTxa, true);
 		btnSend.getElement().setId("btnSend");
 		checkCopyEmail.getElement().setId("lblCheckCopyEmail");
 		//fromTxt.getElement().getStyle().setBorderWidth(0, Unit.PX);

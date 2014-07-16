@@ -124,7 +124,7 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 		successMessageLabelText.getElement().setId("lblSuccessMessageLabelText");
 		addCollectionInsteadLabelContainer.getElement().setId("pnlAddCollectionInsteadLabelContainer");
 		collectionTitleInCoverPage.getElement().setId("txtCollectionTitleInCoverPage");
-		StringUtil.setAttributes(collectionTitleInCoverPage);
+		StringUtil.setAttributes(collectionTitleInCoverPage, true);
 		addingLabel.getElement().setId("lblAddingLabel");
 		addErrorLabel.getElement().setId("errlblAddErrorLabel");
 		hideButton.getElement().setId("epnlHideButton");

@@ -223,7 +223,7 @@ public class ResourceRegister extends PopupPanel{
 		emailIdTxtBox.addFocusHandler(new OnEmailFocus());
 		emailIdTxtBox.addBlurHandler(new OnEmailBlur());
 		emailIdTxtBox.getElement().setId("txtEmail");
-		StringUtil.setAttributes(emailIdTxtBox);
+		StringUtil.setAttributes(emailIdTxtBox, true);
 	
 	
 	

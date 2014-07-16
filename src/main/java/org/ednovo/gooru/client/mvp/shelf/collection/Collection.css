@@ -1350,3 +1350,8 @@ height: 73px;
 .depthOfKnowledgeSubContainer{
 	display: inline-flex;
 }
+.btnOuterContainer{
+width: 100%;
+float: right;
+padding-top: 10px;
+}

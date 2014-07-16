@@ -52,7 +52,11 @@
 		.bodyHeight {
 			height: auto !important;
 		}
-		
+		.panelHeight{
+			overflow-y: auto;
+			width: 1000px;
+			margin: 0px auto;
+		}
 		.searchResultPanel {
 		    clear: both;
 		    height: 34px;
@@ -86,14 +90,15 @@
 			<g:Label text="|" styleName="{style.notifyLinks}" />
 			<g:Anchor text="Collections" styleName="{style.notifyLink}" ui:field="collectionLinkLbl" />
 		</g:FlowPanel> -->
-		
-		<g:FlowPanel styleName="{style.searchResultPanel}">
-			<g:HTML styleName="{style.searchResult}" ui:field="queriedTextHtml" />
+		<g:FlowPanel styleName="" ui:field="panelSearchPage">
+			<g:FlowPanel styleName="{style.searchResultPanel}">
+				<g:HTML styleName="{style.searchResult}" ui:field="queriedTextHtml" />
+			</g:FlowPanel>
+			<g:SimplePanel styleName="{style.searchWrapper}"  ui:field="searchWrapperSimPanel"/>
+			<g:SimplePanel styleName="searchResults" ui:field="shelfTabSimPanel"/>
+			<g:Label ui:field="lodingImage" styleName="{style.loadingImageContainer}" />
+			<sg:FooterUc />
 		</g:FlowPanel>
-		<g:SimplePanel styleName="{style.searchWrapper}"  ui:field="searchWrapperSimPanel"/>
-		<g:SimplePanel styleName="searchResults" ui:field="shelfTabSimPanel"/>
-		<g:Label ui:field="lodingImage" styleName="{style.loadingImageContainer}" />
-		<sg:FooterUc />
 	</g:HTMLPanel>
 
 </ui:UiBinder> 

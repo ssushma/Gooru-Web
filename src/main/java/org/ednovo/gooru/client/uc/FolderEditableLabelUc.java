@@ -85,7 +85,7 @@ public class FolderEditableLabelUc extends Composite implements HasValue<String>
 		deckPanel.getElement().setId("dpnlDeckPanel");
 		editLabel.getElement().setId("lblEditLabel");
 		editTextBox.getElement().setId("txtEditTextBox");
-		StringUtil.setAttributes(editTextBox);
+		StringUtil.setAttributes(editTextBox, true);
 		deckPanel.showWidget(0);
 		/*focusPanel.addFocusHandler(new FocusHandler() {
 			@Override

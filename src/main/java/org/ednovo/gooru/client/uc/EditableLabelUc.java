@@ -109,7 +109,7 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 		deckPanel.getElement().setId("dpnlDeckPanel");
 		editLabel.getElement().setId("lblEditLabel");
 		editTextBox.getElement().setId("txtEditTextBox");
-		StringUtil.setAttributes(editTextBox);
+		StringUtil.setAttributes(editTextBox, true);
 		/*
 		 * focusPanel.addFocusHandler(new FocusHandler() {
 		 * 

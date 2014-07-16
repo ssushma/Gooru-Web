@@ -239,7 +239,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		copyCollectionSuccess.getElement().setId("pnlCopyCollectionSuccess");
 		popupContentAssign.getElement().setId("pnlPopupContentAssign");
 		copycollectionTextbox.getElement().setId("txtCopycollectionTextbox");
-		StringUtil.setAttributes(copycollectionTextbox);
+		StringUtil.setAttributes(copycollectionTextbox, true);
 		errorLabel.getElement().setId("errlblErrorLabel");
 		buttonsContainer.getElement().setId("pnlButtonsContainer");
 	}

@@ -190,13 +190,13 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 		toValidation.setVisible(false);
 		toTxt.getElement().setId("tbTo");
 		subTxt.getElement().setId("tbSubject");
-		StringUtil.setAttributes(subTxt);
+		StringUtil.setAttributes(subTxt, true);
 		subTxt.setText(StringUtil.generateMessage(i18n.GL1997(),i18n.GL2000())); 
 		subTxt.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1997(),i18n.GL2000()));
 		subTxt.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1997(),i18n.GL2000()));
 		fromTxt.getElement().setId("tbFrom");
 		msgTxa.getElement().setId("taMessage");
-		StringUtil.setAttributes(msgTxa);
+		StringUtil.setAttributes(msgTxa, true);
 		fromLbl.getElement().setId("lblFromLbl");
 		checkCopyEmail.getElement().setId("chkCheckCopyEmail");
 		mandatoryErrorLbl.getElement().setId("errlblMandatoryErrorLbl");

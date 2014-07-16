@@ -74,6 +74,7 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 		getView().setUiHandlers(this);
 		this.signUpViewPresenter = signUpViewPresenter;
 		
+		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 	}
 	
@@ -131,6 +132,7 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		callBackMethods();
+		Window.enableScrolling(true);
 	}
 	
 	@Override

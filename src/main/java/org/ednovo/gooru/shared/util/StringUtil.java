@@ -313,11 +313,11 @@ public class StringUtil {
 		return libraryName;
 	}
 	
-	public static void setAttributes(TextBox txtBox){
-		txtBox.getElement().setAttribute("spellcheck", "true");
+	public static void setAttributes(TextBox txtBox, boolean isTrue){
+		txtBox.getElement().setAttribute("spellcheck", isTrue+"");
 	}
-	public static void setAttributes(TextArea tatBox){
-		tatBox.getElement().setAttribute("spellcheck", "true");
+	public static void setAttributes(TextArea tatBox, boolean isTrue){
+		tatBox.getElement().setAttribute("spellcheck", isTrue+"");
 	}
 
 	/**
@@ -339,7 +339,7 @@ public class StringUtil {
 	 * 
 	*/
 	
-	public static void setAttributes(RichTextArea rtatBox) {
-		rtatBox.getElement().setAttribute("spellcheck", "true");
+	public static void setAttributes(RichTextArea rtatBox, boolean isTrue) {
+		rtatBox.getElement().setAttribute("spellcheck", isTrue+"");
 	}
 }

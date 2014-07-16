@@ -97,7 +97,7 @@ public class SettingEditLabelUc extends Composite implements HasValue<String> {
 		editTextBox.getElement().setAttribute("maxlength", "25");
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 		editTextBox.getElement().setId("txtName");
-		StringUtil.setAttributes(editTextBox);
+		StringUtil.setAttributes(editTextBox, true);
 		errorLabel.getElement().setAttribute("style", "margin-left:20px");
 	}
 

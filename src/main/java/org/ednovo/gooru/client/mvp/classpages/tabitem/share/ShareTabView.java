@@ -110,8 +110,8 @@ public class ShareTabView extends
 		classcodeTxtBox.setReadOnly(true);
 		shortenUrlTxtBox.getElement().setId("txtShortenUrl");
 		classcodeTxtBox.getElement().setId("txtClasscode");
-		StringUtil.setAttributes(shortenUrlTxtBox);
-		StringUtil.setAttributes(classcodeTxtBox);
+		StringUtil.setAttributes(shortenUrlTxtBox, true);
+		StringUtil.setAttributes(classcodeTxtBox, true);
 		
 	}
 	

@@ -103,7 +103,7 @@ body.popupBG {
 .popupContent {
 	padding: 12px;
 	height: 400px;
-	overflow: auto;
+/* 	overflow: auto; */
 	width: 94%;
 }
 
