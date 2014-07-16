@@ -1033,7 +1033,9 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
 				addCourseBtn.getElement().setAttribute("title",ADD_COURSE);
 				removeCourseBtn.setVisible(false);
-				getUiHandlers().updateCourse(collectionDo.getGooruOid(), courseCode, "delete");
+				if(courseCode!=null&&!courseCode.equals("")){
+				getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
+				}
 				courseCode="";
 			}else{
 				for (CodeDo code : collectionDoVal.getTaxonomySet()) {
@@ -1115,7 +1117,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
 				this.removeFromParent();
-				getUiHandlers().updateCourse(collectionDo.getGooruOid(), courseCode, "delete");
+				getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
 				resetCourseCount();
 			
 			}
@@ -1406,7 +1408,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			public void onCloseLabelClick(ClickEvent event) {
 				this.getParent().removeFromParent();
 				resetCourseCount();
-				getUiHandlers().updateStandard(collectionDo.getGooruOid(), id, "delete");
+				getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), id);
 				resetStandardCount();				
 			}
 		};
@@ -1421,7 +1423,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				for(int i=0;i<courseDo.size();i++){
 					if(courseDo.get(i).toString().equalsIgnoreCase(standardCode)){
 						courseDo.remove(courseDo.get(i).toString());
-						updateCourse(collectionDo.getGooruOid(), id,"delete");	
+						deleteCourse(collectionDo.getGooruOid(), id,"delete");	
 					}
 				}
 				this.getParent().removeFromParent();
@@ -1430,13 +1432,15 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		return new DownToolTipWidgetUc(closeLabel, description);
 	}
 	
-public void updateCourse(String collectionId, String courseCode, String action) {
+public void deleteCourse(String collectionId, String courseCode, String action) {
 	  	
-		AppClientFactory.getInjector().getResourceService().deleteCollectionMetadata(collectionId, null, null, null, null, null, courseCode, null, null, action, new SimpleAsyncCallback<CollectionDo>() {
-
+		AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionId, Integer.parseInt(courseCode), new SimpleAsyncCallback<Void>() {
 			@Override
-			public void onSuccess(CollectionDo result) {	
-				collectionDo=result;
+			public void onSuccess(Void result) {
+			/*	CodeDo deletedObj=new CodeDo();
+				deletedObj.setCodeId(codeObj.getCodeId());
+				deletedStandardsDo.add(deletedObj);
+				standardsDo.remove(codeObj);*/								
 			}
 		});
 
