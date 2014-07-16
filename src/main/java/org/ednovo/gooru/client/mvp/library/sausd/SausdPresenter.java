@@ -79,10 +79,8 @@ public class SausdPresenter extends BasePlacePresenter<IsSausdView, SausdPresent
 				addToPopupSlot(signUpViewPresenter);
 			}
 		}
-		if(AppClientFactory.getLoggedInUser()!=null) {
+		if(AppClientFactory.getLoggedInUser()!=null&&AppClientFactory.getPlaceManager().refreshPlace()) {
 			getIntoLibrarypage();
-		} else {
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.ERROR);
 		}
 	}
 	
