@@ -138,7 +138,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		collectionReplayButtonImage.getElement().setId("epnlCollectionReplayButtonImage");
 		collectionSummaryShareButtonImage.getElement().setId("pnlCollectionSummaryShareButtonImage");
 		collectionPlayerSummaryShareTextBox.getElement().setId("txtCollectionPlayerSummaryShareTextBox");
-		StringUtil.setAttributes(collectionPlayerSummaryShareTextBox);
+		StringUtil.setAttributes(collectionPlayerSummaryShareTextBox, true);
 		ftmSummaryPageContainer.getElement().setId("pnlFtmSummaryPageContainer");
 		printElementContainer.getElement().setId("epnlPrintElementContainer");
 		emailButton.getElement().setId("lblEmailButton");

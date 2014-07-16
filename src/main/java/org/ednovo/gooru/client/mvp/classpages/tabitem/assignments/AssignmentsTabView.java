@@ -216,12 +216,12 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		assignmentTitleTxt.getElement().setAttribute("maxlength", "50");
 		assignmentDescriptionTxtArea.getElement().setAttribute("maxlength",
 				"400");
-		StringUtil.setAttributes(assignmentTitleTxt);
+		StringUtil.setAttributes(assignmentTitleTxt, true);
 
 		assignmentTitleTxt.addKeyUpHandler(new TitleKeyUpHandler());
 		assignmentDescriptionTxtArea
 				.addKeyUpHandler(new DirectionsKeyUpHandler());
-		StringUtil.setAttributes(assignmentDescriptionTxtArea);
+		StringUtil.setAttributes(assignmentDescriptionTxtArea, true);
 
 		dateBoxUc = new DateBoxUc(false,false,false);
 		dateSimPanel.add(dateBoxUc);

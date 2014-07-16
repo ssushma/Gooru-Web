@@ -85,7 +85,7 @@ public class SocialShareLinksView extends Composite {
 		shareLinkContainer.getElement().setId("fpnlShareLinkContainer");
 		shareLinkTxtBox.addClickHandler(new OnTextBoxClick());
 		shareLinkTxtBox.getElement().setId("tatShareLink");
-		StringUtil.setAttributes(shareLinkTxtBox);
+		StringUtil.setAttributes(shareLinkTxtBox, true);
 		swithUrlLbl.setText(i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("alt", i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("title", i18n.GL0639());

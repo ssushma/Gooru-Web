@@ -90,6 +90,10 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	
 	private boolean apiInprogress=true;
 	
+	private int totalHitCount=0;
+	
+	private int reviewSize=0;
+	
 	private RatingWidgetView ratingWidgetView= new RatingWidgetView();
 
 	private static ResourceNarrationViewUiBinder uiBinder = GWT.create(ResourceNarrationViewUiBinder.class);
@@ -284,6 +288,8 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public void setUserRatingsAndReviews(ArrayList<StarRatingsDo> result) {
 		if(result.size()>0)
 		{
+			totalHitCount = result.get(0).getTotalHitCount();
+			reviewSize = reviewSize+result.size();
 			for(int i=0;i<result.size();i++){
 				if(result.get(i).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
 					isRated=true;
@@ -309,6 +315,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 			}
 		}
 		
+
 		for(int userReviews=0; userReviews<result.size(); userReviews++)
 		{
 			if(result.get(userReviews).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
@@ -399,9 +406,9 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	
 	@UiHandler("reviewScrollPanel")
 	public void onScrollReviews(ScrollEvent event){
-		if(!apiInprogress){
+		if(!apiInprogress&&reviewScrollPanel.getVerticalScrollPosition() == reviewScrollPanel.getMaximumVerticalScrollPosition()&&(reviewSize)<(totalHitCount)){
 			apiInprogress=true;
-			getUiHandlers().getUserRatingsReviews(gooruOid,reviewsContainer.getWidgetCount());
+			getUiHandlers().getUserRatingsReviews(gooruOid,(reviewSize));
 		}
 	}
 	private String removeHtmlTags(String html){

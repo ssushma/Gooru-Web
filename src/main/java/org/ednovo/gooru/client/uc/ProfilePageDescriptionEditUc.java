@@ -108,7 +108,7 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 		editTextBox.getElement().setAttribute("maxlength", "725");
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 		editTextBox.getElement().setAttribute("id", "txtAreaAboutYourself");
-		StringUtil.setAttributes(editTextBox);
+		StringUtil.setAttributes(editTextBox, true);
 		editTextBox.addBlurHandler(new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {

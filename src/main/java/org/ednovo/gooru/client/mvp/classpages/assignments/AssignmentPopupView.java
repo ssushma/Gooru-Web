@@ -154,7 +154,7 @@ public abstract class AssignmentPopupView extends Composite{
 		
 		assignmentTitleTxt.getElement().setAttribute("id", "txtAssignmentTitle");
 		assignmentDirectionsTxtArea.getElement().setAttribute("id", "txtAreaDirections");
-		StringUtil.setAttributes(assignmentTitleTxt);
+		StringUtil.setAttributes(assignmentTitleTxt, true);
 		
 		cancelResourcePopupBtnLbl.addClickHandler(new CloseClickHandler());
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());

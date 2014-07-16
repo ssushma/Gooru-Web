@@ -179,7 +179,7 @@ public class AssignmentEditLabelUc extends Composite implements
 		editLabel.getElement().setId("lblEditLabel");
 		editTextBox.getElement().setId("txtEditTextBox");
 		
-		StringUtil.setAttributes(editTextBox);
+		StringUtil.setAttributes(editTextBox, true);
 	}
 
 	private class ValidateConfirmText implements KeyUpHandler {

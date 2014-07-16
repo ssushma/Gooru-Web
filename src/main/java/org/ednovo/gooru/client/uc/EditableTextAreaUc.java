@@ -116,7 +116,7 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 		html.getElement().setId("htmlHtml");
 		duplicateTinyMce.getElement().setId("pnlDuplicateTinyMce");
 		fakeContent.getElement().setId("pnlFakeContent");
-		StringUtil.setAttributes(textArea);
+		StringUtil.setAttributes(textArea, true);
 		textArea.addBlurHandler(new BlurHandler() {
 			
 			@Override

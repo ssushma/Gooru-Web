@@ -580,7 +580,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		panelHelp.getElement().setId("pnlPanelHelp");
 		panelHelp.setVisible(false);
 		txtUserName.getElement().setAttribute("maxlength", "20");
-		StringUtil.setAttributes(txtUserName);
+		StringUtil.setAttributes(txtUserName, true);
 		//end
 		getForgetPassword().setVisible(false);
 		getForgetPasswordMsg().setVisible(false); 

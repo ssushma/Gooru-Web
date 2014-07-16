@@ -97,7 +97,7 @@ public class ForgotPasswordVc extends PopupPanel {
        	this.getElement().getStyle().setZIndex(99999);
        	setWidget(uiBinder.createAndBindUi(this));
   		forgotEmailIdTxtBox.getElement().setId("tbUsername");
-  		StringUtil.setAttributes(forgotEmailIdTxtBox);
+  		StringUtil.setAttributes(forgotEmailIdTxtBox, true);
 		sendMailBtnUc.getElement().setId("btnSubmit");
 		supportLink.getElement().setId("lnkSupport");
 		

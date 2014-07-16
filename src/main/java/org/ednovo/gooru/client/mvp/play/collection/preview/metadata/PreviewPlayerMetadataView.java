@@ -387,7 +387,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		addComment.getElement().setId("pnlAddComment");
 		userPhoto.getElement().setId("imgUserPhoto");
 		commentField.getElement().setId("tatCommentField");
-		StringUtil.setAttributes(commentField);
+		StringUtil.setAttributes(commentField, true);
 		whatNextPanel.getElement().setId("pnlWhatNextPanel");
 		relatedConceptsEndPage.getElement().setId("pnlRelatedConceptsEndPage");
 		authorPanel.getElement().setId("pnlAuthorPanel");

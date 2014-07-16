@@ -94,7 +94,7 @@ public abstract class DeleteConfirmPopupVc extends AppPopUp {
 		setContent(title, uiBinder.createAndBindUi(this));
 		setStyleName("deleteResourcePopup");
 		inlineTxtBox.getElement().setAttribute("placeholder", i18n.GL0826());
-		StringUtil.setAttributes(inlineTxtBox);
+		StringUtil.setAttributes(inlineTxtBox, true);
 		inlineTxtBox.addKeyUpHandler(new ValidateConfirmText());
 		inlineTxtBox.getElement().setId("txtInline");
 		okButtonUc.getElement().setId("btnOk");

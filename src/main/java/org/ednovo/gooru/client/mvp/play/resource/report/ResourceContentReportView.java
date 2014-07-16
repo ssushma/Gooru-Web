@@ -187,7 +187,7 @@ public class ResourceContentReportView extends PopupPanel{
 		checkBox2.getElement().setId("chkCheckBox2");
 		checkBox1.getElement().setId("chkCheckBox1");
 		descriptionTextArea.getElement().setId("tatDescriptionTextArea");
-		StringUtil.setAttributes(descriptionTextArea);
+		StringUtil.setAttributes(descriptionTextArea, true);
 	}
 
 	@UiHandler("closeButton")

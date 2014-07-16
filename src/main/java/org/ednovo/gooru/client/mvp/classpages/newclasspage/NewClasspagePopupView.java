@@ -98,7 +98,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 		classpageTitleTxt.getElement().setAttribute("placeholder", i18n.GL1124());
 		classpageTitleTxt.getElement().setAttribute("maxlength", "50");
 		classpageTitleTxt.getElement().setId("txtClassPageTitle");
-		StringUtil.setAttributes(classpageTitleTxt);
+		StringUtil.setAttributes(classpageTitleTxt, true);
 		
 		btnAdd.getElement().setId("btnAdd");
 		btnAdd.setText(i18n.GL0745());
