@@ -258,7 +258,11 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             @Override
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
-                    isCollResourceTabView.insertData(result);
+            		/**
+    				 * Tagging Quest resource for 6.5 release
+    				 */
+            		tagResourceAsOER(result); 
+//                    isCollResourceTabView.insertData(result);
                     MixpanelUtil.AddQuestion();
             }
 		});
