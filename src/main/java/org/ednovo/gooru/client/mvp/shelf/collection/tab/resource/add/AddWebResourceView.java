@@ -1620,6 +1620,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private RegExp urlPlusTldValidator;
 
 	public boolean isValidUrl(String url, boolean topLevelDomainRequired) {
+		int count = returnCount(url);
+		 if(count > 2)
+	         return false;
+		
 		if (urlValidator == null || urlPlusTldValidator == null) {
 			/*urlValidator = RegExp
 					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+(:\\d{1,5})?(/[\\w#!:.?+=&%@!\\_\\-/\\()]+)*){1}$");
@@ -1637,7 +1641,43 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		return (topLevelDomainRequired ? urlPlusTldValidator : urlValidator)
 				.exec(url) != null;
 	}
-	
+
+	public Integer returnCount(String url) {
+
+		String string = url;
+		String substring1 = "http:";
+		String substring2 = "https:";
+		String substring3 = "ftp:";
+		String substring4 = "www";
+
+		Integer count = 0;
+		Integer idx = 0;
+
+		while ((idx = string.indexOf(substring1, idx)) != -1) {
+			idx++;
+			count++;
+		}
+
+		idx = 0;
+		while ((idx = string.indexOf(substring2, idx)) != -1) {
+			idx++;
+			count++;
+		}
+		idx = 0;
+		while ((idx = string.indexOf(substring3, idx)) != -1) {
+			idx++;
+			count++;
+		}
+
+		idx = 0;
+		while ((idx = string.indexOf(substring4, idx)) != -1) {
+			idx++;
+			count++;
+		}
+
+		return count;
+
+	}
 	public String getYoutubeVideoId(String youtubeUrl) {
 
 		youtubeUrl=youtubeUrl.replaceAll("feature=player_detailpage&", "");
