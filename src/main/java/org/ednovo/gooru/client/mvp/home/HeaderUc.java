@@ -525,6 +525,7 @@ public class HeaderUc extends Composite implements
 		headerSearchBarVerPanel.getElement().setId("vsbHeaderSearchBarVerPanel");
 		headerSearchBarFloPanel.getElement().setId("fpnlHeaderSearchBarFloPanel");
 		editSearchTxtBox.getElement().setId("tbautoEditSearchTxtBox");
+		StringUtil.setAttributes(editSearchTxtBox, true);
 		mainDotsPanel.getElement().setId("pnlMainDotsPanel");
 		mainInnerDotsPanel.getElement().setId("pnlMainInnerDotsPanel");
 		dotsPanel.getElement().setId("pnlDotsPanel");
