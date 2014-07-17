@@ -174,13 +174,16 @@ public class UserSettingsPresenter
 		//Make an API call to get the accesstoken using refresh token.
 		
 		final String refresh_token = Cookies.getCookie(GOOGLE_REFRESH_TOKEN) !=null && !Cookies.getCookie(GOOGLE_REFRESH_TOKEN).equalsIgnoreCase("") ? Cookies.getCookie(GOOGLE_REFRESH_TOKEN) : null;
+		StringUtil.consoleLog("refresh token : "+refresh_token);
 		if (refresh_token != null){
 			
 			AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(refresh_token, new SimpleAsyncCallback<Void>() {
 
 				@Override
 				public void onSuccess(Void result) {
+					StringUtil.consoleLog("refreshGoogleAccessToken : Success");
 					final String access_token = Cookies.getCookie(GOOGLE_ACCESS_TOKEN) !=null && !Cookies.getCookie(GOOGLE_ACCESS_TOKEN).equalsIgnoreCase("") ? Cookies.getCookie(GOOGLE_ACCESS_TOKEN) : null;
+					StringUtil.consoleLog("access_token : Success : "+access_token);
 					if (access_token !=null ){
 						
 						AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
@@ -188,10 +191,13 @@ public class UserSettingsPresenter
 							public void onSuccess(GoogleDriveDo googleDriveDo) {
 								if(googleDriveDo!=null){
 									if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+										StringUtil.consoleLog("access_token : 401");
 										getView().googleDirveStatus(false);
 									}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+										StringUtil.consoleLog("access_token : 403");
 										getView().googleDirveStatus(false);
 									}else{
+										StringUtil.consoleLog("access_token : no error");
 										UserDo user = AppClientFactory.getLoggedInUser();
 										user.setAccessToken(access_token);
 										AppClientFactory.setLoggedInUser(user);
@@ -199,11 +205,13 @@ public class UserSettingsPresenter
 										getView().googleDirveStatus(true);
 									}
 								}else{
+									StringUtil.consoleLog("google drive file list empty");
 									getView().googleDirveStatus(false);
 								}
 							}
 						});
 					}else{
+						StringUtil.consoleLog("refresh token null");
 						getView().googleDirveStatus(false);
 					}
 				}
