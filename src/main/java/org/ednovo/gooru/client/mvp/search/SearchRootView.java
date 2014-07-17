@@ -100,9 +100,9 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		shelfTabSimPanel.getElement().setId("spnlShelfTabSimPanel");
 		lodingImage.getElement().setId("lblLodingImage");
 
-//		int windowHeight=Window.getClientHeight();
-//		panelSearchPage.setStyleName(style.panelHeight());
-//		panelSearchPage.getElement().getStyle().setHeight(windowHeight - 50, Unit.PX);
+		int windowHeight=Window.getClientHeight();
+		panelSearchPage.setStyleName(style.panelHeight());
+		panelSearchPage.getElement().getStyle().setHeight(windowHeight - 50, Unit.PX);
 	}
 
 	@Override
@@ -191,7 +191,7 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 			Document doc = Document.get();
 			doc.getBody().setClassName(style.bodyHeight());
 		}
-//		Window.enableScrolling(false);
+		Window.enableScrolling(false);
 		int countValue = searchDo.getSearchResults().size();
 
 		String searchText = AppClientFactory.getPlaceManager()

@@ -441,6 +441,9 @@ public class LoginPopupUc extends PopupPanel{
 								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 								AppClientFactory.fireEvent(new SetButtonEvent());
 								openClasspage();
+							}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_SEARCH) && AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_SEARCH) ){
+								Window.enableScrolling(false);
+								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 							}else{
 								AppClientFactory.resetPlace();
 								Window.enableScrolling(true);
@@ -557,7 +560,7 @@ public class LoginPopupUc extends PopupPanel{
 	    	AppClientFactory.fireEvent(new ShowResourceTabWidgetEvent(getWidgetMode(), true));
 		}
 	    else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT))
-	    {
+	    {	    	
 	    	if(!StudentAssignmentView.getMainContainerStatus())
 	    	{
 	    		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
@@ -568,8 +571,13 @@ public class LoginPopupUc extends PopupPanel{
 	    	}
 	    }*/
 	    else{
-			Window.enableScrolling(true);
-			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+	    	if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
+	    		Window.enableScrolling(false);
+	    		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+	    	}else{
+	    		Window.enableScrolling(true);
+	    		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+	    	}
 			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF) && AppClientFactory.getPlaceManager().getRequestParameter("id") != null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("")){
 				hide();
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
