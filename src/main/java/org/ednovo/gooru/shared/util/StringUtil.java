@@ -298,7 +298,7 @@ public class StringUtil {
 	
 	public static void clearCookies(String key, String path, String domain){
 		Cookies.setCookie(key, "",  new Date(), "."+Window.Location.getHost(), path, false);
-		Cookies.removeCookie("google-access-token", "/");
+		Cookies.removeCookie(key, "/");
 	}
 	
 	

@@ -394,6 +394,28 @@ public interface ResourceService extends BaseService {
 	
 	public GoogleDriveDo updateFileShareToAnyoneWithLink(String driveFileId) throws GwtException, ServerDownException;
 
+	/**
+	 * @function refreshGoogleAccessToken 
+	 * 
+	 * @created_date : Jul 17, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param refreshToken
+	 * @throws GwtException
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void refreshGoogleAccessToken(String refreshToken) throws GwtException, ServerDownException;
+
 	//List<DriveDo> getfolderList(String id)throws GwtException, ServerDownException;
 
 	//DriveDo updatePermissions(DriveDo driveObject)throws GwtException, ServerDownException;
