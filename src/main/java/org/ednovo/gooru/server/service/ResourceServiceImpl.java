@@ -1570,7 +1570,14 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
         return new GoogleDriveItemDo();
 	}
 
-
+	@Override
+	public void refreshGoogleAccessToken(String refreshToken) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(),
+				UrlToken.REFRESH_TOKEN, refreshToken);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+	}
 	
 	
 }

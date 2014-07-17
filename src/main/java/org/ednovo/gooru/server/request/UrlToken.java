@@ -586,7 +586,9 @@ public enum UrlToken {
 	
 	V2_GET_LIBRARY_TOPICS_OPTIMIZED("/v2/library/{0}/item/unit/{1}?sessionToken={2}&offset={3}&limit={4}"),
 	
-	V2_GET_LIBRARY_LESSONS_OPTIMIZED("/v2/library/{0}/item/topic/{1}?sessionToken={2}&offset={3}&limit={4}");
+	V2_GET_LIBRARY_LESSONS_OPTIMIZED("/v2/library/{0}/item/topic/{1}?sessionToken={2}&offset={3}&limit={4}"),
+	
+	REFRESH_TOKEN("/gooru-auth/google/new/token.g?refreshToken={0}");
 
 
 	
