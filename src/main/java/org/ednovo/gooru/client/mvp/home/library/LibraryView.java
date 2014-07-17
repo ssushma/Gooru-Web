@@ -755,7 +755,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 								getPartnerWorkspaceFolders(courseDoList.get(widgetCountTemp).getCreator().getUsername());
 							}
 						} else {
-							setUnitListData(courseDoList.get(widgetCountTemp).getUnit());
+							getUnitDataFromService(courseDoList.get(widgetCountTemp), "featured", courseDoList.get(widgetCountTemp).getCodeId()+"");
+							//setUnitListData(courseDoList.get(widgetCountTemp).getUnit());
 						}
 					}
 					else{
