@@ -37,6 +37,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.user.client.Cookies;
@@ -341,5 +342,30 @@ public class StringUtil {
 	
 	public static void setAttributes(RichTextArea rtatBox, boolean isTrue) {
 		rtatBox.getElement().setAttribute("spellcheck", isTrue+"");
+	}
+
+	/**
+	 * @function setAttributes 
+	 * 
+	 * @created_date : Jul 17, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param editSearchTxtBox
+	 * @param isTrue
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	public static void setAttributes(AppSuggestBox editSearchTxtBox,
+			boolean isTrue) {
+		editSearchTxtBox.getElement().setAttribute("spellcheck", isTrue+"");
 	}
 }

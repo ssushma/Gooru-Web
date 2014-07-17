@@ -52,6 +52,8 @@ import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.home.library.customize.RenameAndCustomizeLibraryPopUp;
 import org.ednovo.gooru.client.mvp.home.library.events.OpenLessonConceptEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.OpenLessonConceptHandler;
+import org.ednovo.gooru.client.mvp.home.library.events.SetConceptQuizDataEvent;
+import org.ednovo.gooru.client.mvp.home.library.events.SetConceptQuizDataHandler;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconHandler;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
@@ -189,6 +191,8 @@ public class LibraryTopicListView extends Composite{
 	
 	private TopicDo topicDo = null;
 	
+	Map<String,String> topicDetails = new HashMap<String,String>();
+	
 	interface LibraryTopicViewUiBinder extends
 			UiBinder<Widget, LibraryTopicListView> {
 	}
@@ -222,19 +226,22 @@ public class LibraryTopicListView extends Composite{
 		} else {
 			setOnlyConceptData(topicDo.getCollection(), true, null, 0);
 		}
-		
 		try {
 			this.topicDo = topicDo;
 			if(topicDo.getLesson()!=null) {
-				if(topicDo.getLesson().get(0).getCollection().size()>1) {
-					this.conceptDoList = topicDo.getLesson().get(0).getCollection();
+				if(topicDo.getLesson().get(0).getConcept()!=null&&topicDo.getLesson().get(0).getConcept().size()>0) {
+					setConceptDoList(topicDo.getLesson().get(0).getConcept().get(0).getCollection());
+					setConceptData(conceptDoList.get(0),topicDo.getCodeId(), topicDo.getLesson().get(0).getCodeId()+"", topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
+				} else {
+					setConceptData(topicDo.getLesson().get(0).getCollection().get(0),topicDo.getCodeId(), topicDo.getLesson().get(0).getCodeId()+"", topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
 				}
-				setConceptData(conceptDoList.get(0),topicDo.getCodeId(), topicDo.getLesson().get(0).getCodeId()+"", topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
 			} else if (topicDo.getCollection()!=null) {
-				if(topicDo.getLesson().get(0).getCollection().size()>1) {
-					this.conceptDoList = topicDo.getLesson().get(0).getCollection();
+				if(topicDo.getLesson().get(0).getConcept()!=null&&topicDo.getLesson().get(0).getConcept().size()>0) {
+					setConceptDoList(topicDo.getLesson().get(0).getConcept().get(0).getCollection());
+					setConceptData(conceptDoList.get(0),topicDo.getCodeId(),null, topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
+				} else {
+					setConceptData(topicDo.getCollection().get(0),topicDo.getCodeId(),null, topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
 				}
-				setConceptData(conceptDoList.get(0),topicDo.getCodeId(),null, topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
 			} else {
 				setDefaultCollectionLbl();
 			}
@@ -272,6 +279,7 @@ public class LibraryTopicListView extends Composite{
 		AppClientFactory.getEventBus().addHandler(SetLoadingIconEvent.TYPE, setLoadingIconHandler);
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
+		AppClientFactory.getEventBus().addHandler(SetConceptQuizDataEvent.TYPE,setConceptQuizDataHandler);
 	}
 	
 	StandardPreferenceSettingHandler standardPreferenceSettingHandler= new StandardPreferenceSettingHandler(){
@@ -539,7 +547,11 @@ public class LibraryTopicListView extends Composite{
 				} else {
 					isLessonHighlighted = false;
 				}
-				overallCount = ++overallCount + lessonDoList.get(i).getCollection().size();
+				if(lessonDoList.get(i).getConcept()!=null&&lessonDoList.get(i).getConcept().size()>0) {
+					overallCount = ++overallCount + lessonDoList.get(i).getConcept().size();
+				} else {
+					overallCount = ++overallCount + lessonDoList.get(i).getCollection().size();
+				}
 				conceptList.add(new LibraryLessonUc(lessonDoList.get(i),topicId,isLessonHighlighted, (i+1)));
 			}
 
@@ -549,7 +561,7 @@ public class LibraryTopicListView extends Composite{
 					if(isScrollable) {
 						isScrollable = false;
 						AppClientFactory.getInjector().getLibraryService().getLessonsOnPagination(subject, ""+topicId, LESSON_PAGE_INITIAL_LIMIT, 20, getPlaceToken(), new SimpleAsyncCallback<ArrayList<LessonDo>>() {
-														@Override
+							@Override
 							public void onSuccess(ArrayList<LessonDo> result) {
 								for(int i=0;i<result.size();i++) {
 									conceptList.add(new LibraryLessonUc(result.get(i),topicId,false,((LESSON_PAGE_INITIAL_LIMIT+1)+i)));
@@ -1092,6 +1104,8 @@ public class LibraryTopicListView extends Composite{
 		@Override
 		public void openLessonConcept(ConceptDo conceptDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode) {
 			setConceptData(conceptDo, topicId, lessonId, lessonLabel,lessonCode);
+			setConceptDoList(null);
+			addCollectionQuizTitleData("lesson");
 		}
 	};
 	
@@ -1337,8 +1351,23 @@ public class LibraryTopicListView extends Composite{
 		}
 	};
 	
+	SetConceptQuizDataHandler setConceptQuizDataHandler = new SetConceptQuizDataHandler() {
+		@Override
+		public void setConceptQuizDataHandler(ArrayList<ConceptDo> conceptDoList, Integer topicId,
+				String lessonId, String lessonLabel, String lessonCode, String conceptId) {
+			setConceptDoList(conceptDoList);
+			for(int i = 0; i<conceptDoList.size();i++) {
+				if(conceptDoList.get(i).getGooruOid().equalsIgnoreCase(conceptId)) {
+					setConceptData(conceptDoList.get(i),topicId,lessonId,lessonLabel,lessonCode);
+				}
+			}
+			addCollectionQuizTitleData("lesson");
+		}
+	};
+	
 	private void addCollectionQuizTitleData(String pageType) {
-		if(pageType.equals("lesson")&&conceptDoList.size()>1&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+		if(pageType.equals("lesson")&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+			setCollectionQuizVisibility(true);
 			collectionTitle.addStyleName(libraryStyle.collectionQuizTabActive());
 		} else {
 			setCollectionQuizVisibility(false);
@@ -1354,7 +1383,7 @@ public class LibraryTopicListView extends Composite{
 	public void clickCollectionTitle(ClickEvent event) {
 		collectionTitle.addStyleName(libraryStyle.collectionQuizTabActive());
 		quizTitle.removeStyleName(libraryStyle.collectionQuizTabActive());
-		setConceptDoData("scollection");
+		setConceptDoData("collection");
 	}
 	
 	@UiHandler("quizTitle")
@@ -1370,5 +1399,11 @@ public class LibraryTopicListView extends Composite{
 				setConceptData(conceptDoList.get(i),topicDo.getCodeId(),null, topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
 			}
 		}
+	}
+	public ArrayList<ConceptDo> getConceptDoList() {
+		return conceptDoList;
+	}
+	public void setConceptDoList(ArrayList<ConceptDo> conceptDoList) {
+		this.conceptDoList = conceptDoList;
 	}
 }
