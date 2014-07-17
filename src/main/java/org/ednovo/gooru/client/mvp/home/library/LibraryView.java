@@ -540,7 +540,9 @@ public class LibraryView extends Composite implements  ClickHandler {
 			featuredCousesLbl.setVisible(true);
 			if((callBack!=previousCallBack)||(courseId!=previousCourseId)) {
 				if(courseMap!=null&&courseMap.get("featured")!=null) {
-					setFeaturedCourseWidgets(courseMap.get("featured").getData(), true);
+					if(!(featuredCourses.getWidgetCount()>0)) {
+						setFeaturedCourseWidgets(courseMap.get("featured").getData(), true);
+					}
 				} else {
 					getFeaturedCourses(FEATURED_LABEL, false);
 				}
@@ -605,18 +607,25 @@ public class LibraryView extends Composite implements  ClickHandler {
 				final JsonWriter<HashMap<String, SubjectDo>> courseMapWriter = factory.getWriter();
 				final JsonReader<HashMap<String, SubjectDo>> courseMapReader = factory.getReader();
 				String map = null;
-				if(stockStore!=null&&stockStore.getItem("courseMapDataSerializedStr")!=null){
-					map = stockStore.getItem("courseMapDataSerializedStr");
+				final String libraryToken = StringUtil.getPublicLibraryName(getPlaceToken());
+				Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
+				
+				if(stockStore!=null&&stockStore.getItem(libraryToken+"courseMapDataSerializedStr")!=null&&params.size()==0){
+					map = stockStore.getItem(libraryToken+"courseMapDataSerializedStr");
 					courseMap = courseMapReader.read(map);
 					setLibraryInitialData(featuredLabel,isNotHomePage);
 				} else {
-					AppClientFactory.getInjector().getLibraryService().getLibrarySubjects(featuredLabel, null, StringUtil.getPublicLibraryName(getPlaceToken()), new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
+					AppClientFactory.getInjector().getLibraryService().getLibrarySubjects(featuredLabel, null, libraryToken, new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
 						@Override
 						public void onFailure(Throwable caught) {
 							
 						}
 						@Override
 						public void onSuccess(HashMap<String, SubjectDo> subjectDoList) {
+							String courseMapWriterString = courseMapWriter.write(subjectDoList);
+							if(stockStore!=null) {
+								stockStore.setItem(libraryToken+"courseMapDataSerializedStr", courseMapWriterString);
+							}
 							courseMap = subjectDoList;
 							setLibraryInitialData(featuredLabel,isNotHomePage);
 						}
