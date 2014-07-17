@@ -22,17 +22,11 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.collection.body;
+package org.ednovo.gooru.client.mvp.play.collection.end.study;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewHandler;
-import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusHandler;
-import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewHandler;
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 
-public interface CollectionPlayerMetadataUiHandlers extends BaseUiHandlers,SetPlayerLoginStatusHandler,UpdateCommentChildViewHandler,EditCommentChildViewHandler {
-	public void createCommentForCollection(String gooruOid, String comment);
-	
-	public void deleteCommentFromCollection(String gooruOid,String commentUid, String offset, String limit);
-	
-	public void getPaginationResults(String gooruOid, String offset, String limit);
+public interface IsCollectionHomeMetadataView extends IsViewWithHandlers<CollectionHomeMetadataUiHandlers>{
+	public void setCollectionMetadata(CollectionDo collectionDo);
 }

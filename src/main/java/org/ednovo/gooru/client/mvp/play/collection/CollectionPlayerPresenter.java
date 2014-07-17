@@ -596,7 +596,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		if(!AppClientFactory.isAnonymous()){
 			metadataPresenter.getFlagedReport(collectionDo.getGooruOid());
 		}
-		metadataPresenter.setPreviewHomePresenter();
+		metadataPresenter.setCollectionHomeMetadata();
 		metadataPresenter.getBackToClassButton().setVisible(false);
 		makeButtonActive(tabView);
 		stopResourceDataLogFromHomePage();// if resource event is not stoped , then this method 
