@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.mvp.play.collection.header;
 
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -47,7 +47,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CollectionPlayerHeaderView extends Composite implements MessageProperties{
+public class CollectionPlayerHeaderView extends Composite{
 	
 	@UiField HTML resourceTitle;
 	
@@ -72,16 +72,29 @@ public class CollectionPlayerHeaderView extends Composite implements MessageProp
 	interface CollectionPlayerHeaderViewUiBinder extends UiBinder<Widget, CollectionPlayerHeaderView> {
 	}
 	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	public CollectionPlayerHeaderView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		navigationButton.getElement().setId("navigationButton");
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
-		studentViewButton.setText(GL0139);
+		studentViewButton.setText(i18n.GL0139());
+		studentViewButton.getElement().setId("lnkStudentViewButton");
+		studentViewButton.getElement().setAttribute("alt",i18n.GL0139());
+		studentViewButton.getElement().setAttribute("title",i18n.GL0139());
+		  
 		studentViewButton.addMouseOverHandler(new OnStudentViewButtonMouseOver());
 		studentViewButton.addMouseOutHandler(new OnStudentViewButtonMouseOut());
 		shareButton.addMouseOverHandler(new ShareButtonMouseOver());
 		shareButton.addMouseOutHandler(new ShareButtonMouseOut());
 		addButton.getElement().setId("addButton");
+		flagButton.getElement().setId("btnFlagButton");
+		infoButton.getElement().setId("btnInfoButton");
+		shareButton.getElement().setId("btnShareButton");
+		narrationButton.getElement().setId("btnNarrationButton");
+		navigationButton.getElement().setId("btnNavigationButton");
+		closeButtonForCollection.getElement().setId("lblCloseButtonForCollection");
+		resourceTitle.getElement().setId("htmlResourceTitle");
 		
 	}
 	
@@ -468,7 +481,7 @@ public class CollectionPlayerHeaderView extends Composite implements MessageProp
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanel.clear();
-			toolTipPopupPanel.setWidget(new GlobalToolTip(GL0668,true));
+			toolTipPopupPanel.setWidget(new GlobalToolTip(i18n.GL0668(),true));
 			toolTipPopupPanel.setStyleName("");
 			toolTipPopupPanel.setPopupPosition(studentViewButton.getElement().getAbsoluteLeft()-35, studentViewButton.getElement().getAbsoluteTop()+4);
 			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
@@ -494,7 +507,7 @@ public class CollectionPlayerHeaderView extends Composite implements MessageProp
 		public void onMouseOver(MouseOverEvent event) {
 			if(!isShareButtonEnabled){
 			toolTipPopupPanel.clear();
-			toolTipPopupPanel.setWidget(new GlobalToolTip(GL0679));
+			toolTipPopupPanel.setWidget(new GlobalToolTip(i18n.GL0679()));
 			toolTipPopupPanel.setStyleName("");
 			toolTipPopupPanel.setPopupPosition(shareButton.getElement().getAbsoluteLeft()+7, shareButton.getElement().getAbsoluteTop()+21);
 			toolTipPopupPanel.getElement().getStyle().clearMarginLeft();

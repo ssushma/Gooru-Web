@@ -107,11 +107,20 @@ public class ProfilePageCollectionFolder extends FocusPanel implements ClickHand
 		titleFocPanel.getElement().getStyle().setPaddingLeft(15, Unit.PX);
 		titleFocPanel.setStyleName(res.css().foldersLi());
 		wrapperFocPanel.addClickHandler(this);
+		titleFocPanel.getElement().setId("focuspnlTitleFocPanel");
+		folderIcon.getElement().setId("fpnlFolderIcon");
+		collectionIcon.getElement().setId("fpnlCollectionIcon");
+		titleLbl.getElement().setId("htmlTitleLbl");
+		disPanel.getElement().setId("discpnlDisPanel");
+		wrapperFocPanel.getElement().setId("focuspnlWrapperFocPanel");
+		contentVerPanel.getElement().setId("vpnlContentVerPanel");
 	}
 
 	public void setData(CollectionItemDo collectionItemDo) {
 		this.collectionItemDo = collectionItemDo;
 		titleLbl.setHTML(this.collectionItemDo.getResource().getTitle());
+		titleLbl.getElement().setAttribute("alt",this.collectionItemDo.getResource().getTitle());
+		titleLbl.getElement().setAttribute("title",this.collectionItemDo.getResource().getTitle());
 		titleLbl.getElement().getStyle().setWidth(280, Unit.PX);
 		if (this.collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("folder")) {
 			collectionIcon.removeFromParent();

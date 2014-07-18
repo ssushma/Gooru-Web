@@ -25,6 +25,7 @@
 package org.ednovo.gooru.server.service;
 
 import java.io.IOException;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -47,6 +48,7 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -70,7 +72,6 @@ import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfanityDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,7 +85,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 @Service("resourceService")
 @ServiceURL("/resourceService")
-public class ResourceServiceImpl extends BaseServiceImpl implements MessageProperties,ResourceService {
+public class ResourceServiceImpl extends BaseServiceImpl implements ResourceService {
 
 	
 	private static final long serialVersionUID = 3247182821197046755L;
@@ -120,6 +121,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 	private static final String NEW_RESOURCE = "newResource";
 	
 	private static final String TAXONOMY_SET = "taxonomySet";
+	
+	private static final String CHOOSE = "Please choose one of the following...";
 	
 	@Autowired
 	ResourceDeserializer resourceDeserializer;
@@ -484,6 +487,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 				code.put("codeId", taxonomyCode);
 				taxonomySet.put(code);
 				collectionTypeJsonObject.put("taxonomySet", taxonomySet);
+
 			}
 			if(mediaType!=null){
 				collectionTypeJsonObject.put("mediaType", mediaType);
@@ -615,7 +619,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		educationalOfObj.setSelected(true);
 		educationalOfObj.setValue(edcuationalUse);
 		arrayOfEducational.add(educationalOfObj);
-		if(!edcuationalUse.equalsIgnoreCase(GL1684))
+		if(!edcuationalUse.equalsIgnoreCase(CHOOSE))
 		newResourceDo.setEducationalUse(arrayOfEducational);
 		
 		ArrayList<checkboxSelectedDo> arrayOfMoments=new ArrayList<checkboxSelectedDo>();
@@ -623,7 +627,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		momentsOfObj.setSelected(true);
 		momentsOfObj.setValue(momentsOfLearning);
 		arrayOfMoments.add(momentsOfObj);
-		if(!momentsOfLearning.equalsIgnoreCase(GL1684))
+		if(!momentsOfLearning.equalsIgnoreCase(CHOOSE))
 		newResourceDo.setMomentsOfLearning(arrayOfMoments);
 		
 		ResourceFormatDo resourceFormat = new ResourceFormatDo();
@@ -872,6 +876,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj=new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid, getGuestSessionToken(""), "true");
+		System.out.println("getcollection:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -1363,7 +1368,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor
 					.put(url, getRestUsername(), getRestPassword(),
 							taxonomyObject.toString());
-		//	jsonRep = jsonResponseRep.getJsonRepresentation();
 			
 		} catch (Exception ex) {
 			
@@ -1565,6 +1569,14 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
         return new GoogleDriveItemDo();
 	}
 
+	@Override
+	public void refreshGoogleAccessToken(String refreshToken) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(),
+				UrlToken.REFRESH_TOKEN, refreshToken);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+	}
 	
 	
 }

@@ -32,9 +32,10 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.flag.FlagThankYouPopUpView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -54,7 +55,7 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHandler> implements IsResourceFlag,MessageProperties {
+public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHandler> implements IsResourceFlag {
 
 	private static FlaggingPopUpUiBinder uiBinder = GWT
 			.create(FlaggingPopUpUiBinder.class);
@@ -62,6 +63,8 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 	interface FlaggingPopUpUiBinder extends
 			UiBinder<Widget, ResourceFlagView> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField HTMLEventPanel closeButton;
 	@UiField Button cancelButton,submitButton,submitButtonGray;
@@ -85,19 +88,61 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 		super(eventBus);
 		appPopUp = new FlagPopupPanel(false);
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
-		cancelButton.setText(GL0608);
-		submitButton.setText(GL0486);
-		submitButtonGray.setText(GL0486);
+		cancelButton.setText(i18n.GL0608());
 		cancelButton.getElement().setAttribute("id", "cancelButton");
+		cancelButton.getElement().setAttribute("alt",i18n.GL0608());
+		cancelButton.getElement().setAttribute("title",i18n.GL0608());
+		
+		submitButton.setText(i18n.GL0486());
 		submitButton.getElement().setAttribute("id", "SubmitButton");
+		submitButton.getElement().setAttribute("alt",i18n.GL0486());
+		submitButton.getElement().setAttribute("title",i18n.GL0486());
+		
+		submitButtonGray.setText(i18n.GL0486());
+		submitButtonGray.getElement().setId("btnSubmitButtonGray");
+		submitButtonGray.getElement().setAttribute("alt",i18n.GL0486());
+		submitButtonGray.getElement().setAttribute("title",i18n.GL0486());
+		
 		submitButtonGray.setVisible(true);
 		submitButton.setVisible(false);
-		flagText.setText(GL0600);
-		inappropriateText.setText(GL0612);
-		inaccurateText.setText(GL0614);
-		unavailableText.setText(GL0613);
-		otherReasonText.setText(GL0606);
-		provideMoreText.setText(GL0607);
+		flagText.setText(i18n.GL0600());
+		flagText.getElement().setId("lblFlagText");
+		flagText.getElement().setAttribute("alt",i18n.GL0600());
+		flagText.getElement().setAttribute("title",i18n.GL0600());
+		
+		inappropriateText.setText(i18n.GL0612());
+		inappropriateText.getElement().setId("lblInappropriateText");
+		inappropriateText.getElement().setAttribute("alt",i18n.GL0612());
+		inappropriateText.getElement().setAttribute("title",i18n.GL0612());
+		
+		inaccurateText.setText(i18n.GL0614());
+		inaccurateText.getElement().setId("lblInaccurateText");
+		inaccurateText.getElement().setAttribute("alt",i18n.GL0614());
+		inaccurateText.getElement().setAttribute("title",i18n.GL0614());
+		
+		unavailableText.setText(i18n.GL0613());
+		unavailableText.getElement().setId("lblUnavailableText");
+		unavailableText.getElement().setAttribute("alt",i18n.GL0613());
+		unavailableText.getElement().setAttribute("title",i18n.GL0613());
+		
+		otherReasonText.setText(i18n.GL0606());
+		otherReasonText.getElement().setId("lblOtherReasonText");
+		otherReasonText.getElement().setAttribute("alt",i18n.GL0606());
+		otherReasonText.getElement().setAttribute("title",i18n.GL0606());
+		
+		provideMoreText.setText(i18n.GL0607());
+		provideMoreText.getElement().setId("lblProvideMoreText");
+		provideMoreText.getElement().setAttribute("alt",i18n.GL0607());
+		provideMoreText.getElement().setAttribute("title",i18n.GL0607());
+		
+		closeButton.getElement().setId("epnlCloseButton");
+		titleText.getElement().setId("htmlTitleText");
+		checkBox4.getElement().setId("chkCheckBox4");
+		checkBox3.getElement().setId("chkCheckBox3");
+		checkBox2.getElement().setId("chkCheckBox2");
+		checkBox1.getElement().setId("chkCheckBox1");
+		descriptionTextArea.getElement().setId("tatDescriptionTextArea");
+		StringUtil.setAttributes(descriptionTextArea, true);
 		closeButton.addClickHandler(new CloseFlagPopupEvent());
 	}
 	@UiHandler("cancelButton")
@@ -217,7 +262,9 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 		resourceGooruId=collectionItemDo.getResource().getGooruOid();
 		collectionItemId=collectionItemDo.getCollectionItemId();
 		resourceTitle=resourceTitle.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
-		titleText.setHTML(GL1430 +resourceTitle+" \" "+GL1431+"");
+		titleText.setHTML(i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
+		titleText.getElement().setAttribute("alt",i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
+		titleText.getElement().setAttribute("title",i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
 	}
 
 	@Override
@@ -243,6 +290,8 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 		checkBox3.setChecked(false);
 		checkBox4.setChecked(false);
 		descriptionTextArea.setText("");
+		descriptionTextArea.getElement().setAttribute("alt","");
+		descriptionTextArea.getElement().setAttribute("title","");
 		submitButtonGray.setVisible(true);
 		submitButton.setVisible(false);
 		contentReportList.clear();

@@ -40,6 +40,7 @@ import org.ednovo.gooru.shared.model.library.StandardCourseDo;
 import org.ednovo.gooru.shared.model.library.StandardsDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.library.TopicDo;
+import org.ednovo.gooru.shared.model.library.UnitDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -65,5 +66,11 @@ public interface LibraryServiceAsync extends BaseServiceAsync {
 	void getLibraryCoursesList(String parentId,String sharingType, String offset, AsyncCallback<ProfileLibraryListDo> callback);
 	
 	public void  getStandardLibraryMenuList(String subjectCode,String libraryName,AsyncCallback<ArrayList<StandardCourseDo>> callback);
+	/** New Library Optimized APIs **/
+	void getLibrarySubjects(String subjectName, String courseId, String libraryName, AsyncCallback<HashMap<String, SubjectDo>> callback);
+	void getLibraryCourses(String subjectName, String libraryName, AsyncCallback<ArrayList<CourseDo>> callback);
+	void getLibraryUnits(String subjectName, String courseId, String libraryName, AsyncCallback<ArrayList<UnitDo>> callback);
+	void getLibraryTopics(String subjectName, String unitId, String libraryName, int offset, int limit, AsyncCallback<ArrayList<TopicDo>> callback);
+	void getLibraryLessons(String subjectName, String topicId, String libraryName, int offset, int limit, AsyncCallback<ArrayList<LessonDo>> callback);
 
 }

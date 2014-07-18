@@ -34,9 +34,9 @@ import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -76,20 +76,18 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
-import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 
-public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements MessageProperties  {
+public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 	CollectionItemDo collectionItemDo;
 
 	@UiField
-	public Button addResourceBtn,changeFileBtn,browseResourceBtn;
+	public Button addResourceBtn,changeFileBtn,browseResourceBtn,cancelResourcePopupBtnLbl;
 	
 	@UiField
 	FormPanel fileuploadForm;
 	
 	@UiField
-	HTMLPanel uploadContainer,uploadName,defaultFileTxtContainer,panelContentRights,imagesText,textsText;
+	HTMLPanel uploadContainer,uploadName,defaultFileTxtContainer,panelContentRights,imagesText,textsText,imageContainer,rightsContent;
 	
 
 	@UiField
@@ -109,7 +107,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	
 	@UiField Label lblAdding,resoureDropDownLbl;
 	
-	@UiField HTMLEventPanel lblContentRights;
+	@UiField HTMLEventPanel lblContentRights,imageResourcePanel,textResourcePanel;
 
 	@UiField
 	Image setThumbnailImage,clipImage;
@@ -122,7 +120,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	@UiField HTMLPanel categorypanel,texts,image,resourceTypePanel,panelAction,fileTitleText,
 	descriptionText,categoryLabel,thumbnailImageText;
 	@UiField Anchor copyRightAnr,rollBackToPaperClip;
-	@UiField Anchor termsAndPolicyAnr,privacyAnr,cancelResourcePopupBtnLbl;
+	@UiField Anchor termsAndPolicyAnr,privacyAnr;
 	@UiField Anchor commuGuideLinesAnr;
 	private CopyRightPolicyVc copyRightPolicy;
 	private TermsAndPolicyVc termsAndPolicyVc;
@@ -138,8 +136,10 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	public boolean resoureDropDownLblOpen = false;
 	
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	private static final String PNG =GL0899;
+	private static final String PNG = i18n.GL0899();
 	public boolean fileChanged=false;
 	String mediaFileName=null;
 	String originalFileName=null;
@@ -148,7 +148,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	String filePath;
 	
 	private static final String RESOURCE_UPLOAD_FILE_PATTERN = "([^\\s]+([^?#]*\\.(?:jpg|jpeg|pdf))$)";
-	private static final String RESOURCE_FILE_SUPPORT_MSG =GL0955;
+	private static final String RESOURCE_FILE_SUPPORT_MSG =i18n.GL0955();
 	private static final String IMAGE_UPLOAD_URL = "/v2/media?sessionToken={0}";
 	
 	private static EditUserOwnResourcePopupVcUiBinder uiBinder = GWT.create(EditUserOwnResourcePopupVcUiBinder.class);
@@ -162,71 +162,169 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 		
 		super();
 		this.collectionItemDo = collectionItemDo;
-		setContent(GL0949, uiBinder.createAndBindUi(this));
-		uploadName.getElement().setInnerHTML(" "+GL0948);
-		browseResourceBtn.setText(GL0902);
-		rollBackToPaperClip.setText(GL0950);
-		changeFileBtn.setText(GL0951);
-		fileTitleText.getElement().setInnerHTML(GL0952);
-		mandatoryTitleLbl.setText(GL0173);
-		descriptionText.getElement().setInnerHTML(GL0904);
-		categoryLabel.getElement().setInnerHTML(GL0906);
-		mandatoryCategoryLbl.setText(GL0917);
-		/*videoLabel.getElement().setInnerHTML(GL0918);
-		interactiveText.getElement().setInnerHTML(GL0919);
-		websiteText.getElement().setInnerHTML(GL0920);*/
-		/*slideText.getElement().setInnerHTML(GL0908);
-		handoutText.getElement().setInnerHTML(GL0907);
-		textbookLabel.getElement().setInnerHTML(GL0909);
-		lessonText.getElement().setInnerHTML(GL0910);
-		examText.getElement().setInnerHTML(GL0921);*/
-		textsText.getElement().setInnerHTML(GL1044);
-		//audioText.getElement().setInnerHTML(GL1045);
-		imagesText.getElement().setInnerHTML(GL1046);
-		//otherText.getElement().setInnerHTML(GL1047);
+		setContent(i18n.GL0949(), uiBinder.createAndBindUi(this));
+		uploadName.getElement().setInnerHTML(" "+i18n.GL0948());
+		uploadName.getElement().setId("pnlUploadName");
+		uploadName.getElement().setAttribute("alt", i18n.GL0948());
+		uploadName.getElement().setAttribute("title", i18n.GL0948());
+		uploadContainer.getElement().setId("pnlUploadContainer");
+		browseResourceBtn.setText(i18n.GL0902());
+		browseResourceBtn.getElement().setId("btnBrowseResourceBtn");
+		browseResourceBtn.getElement().setAttribute("alt", i18n.GL0902());
+		browseResourceBtn.getElement().setAttribute("title", i18n.GL0902());
+		fileuploadForm.getElement().setId("fpFileuploadForm");
+		rollBackToPaperClip.setText(i18n.GL0950());
+		rollBackToPaperClip.getElement().setId("lnkRollBackToPaperClip");
+		rollBackToPaperClip.getElement().setAttribute("alt", i18n.GL0950());
+		rollBackToPaperClip.getElement().setAttribute("title", i18n.GL0950());
+		changeFileBtn.setText(i18n.GL0951());
+		changeFileBtn.getElement().setId("btnChangeFileBtn");
+		changeFileBtn.getElement().setAttribute("alt", i18n.GL0951());
+		changeFileBtn.getElement().setAttribute("title", i18n.GL0951());
+		fileTitleText.getElement().setInnerHTML(i18n.GL0952());
+		fileTitleText.getElement().setId("pnlFileTitleText");
+		fileTitleText.getElement().setAttribute("alt", i18n.GL0952());
+		fileTitleText.getElement().setAttribute("title", i18n.GL0952());
+		mandatoryTitleLbl.setText(i18n.GL0173());
+		mandatoryTitleLbl.getElement().setId("lblMandatoryTitleLbl");
+		mandatoryTitleLbl.getElement().setAttribute("alt", i18n.GL0173());
+		mandatoryTitleLbl.getElement().setAttribute("title", i18n.GL0173());
+		descriptionText.getElement().setInnerHTML(i18n.GL0904());
+		descriptionText.getElement().setId("pnlDescriptionText");
+		descriptionText.getElement().setAttribute("alt", i18n.GL0904());
+		descriptionText.getElement().setAttribute("title", i18n.GL0904());
+		categoryLabel.getElement().setInnerHTML(i18n.GL0906());
+		categoryLabel.getElement().setId("pnlCategoryLabel");
+		categoryLabel.getElement().setAttribute("alt", i18n.GL0906());
+		categoryLabel.getElement().setAttribute("title", i18n.GL0906());
+		mandatoryCategoryLbl.setText(i18n.GL0917());
+		mandatoryCategoryLbl.getElement().setId("lblMandatoryCategoryLbl");
+		mandatoryCategoryLbl.getElement().setAttribute("alt", i18n.GL0917());
+		mandatoryCategoryLbl.getElement().setAttribute("title", i18n.GL0917());
+		/*videoLabel.getElement().setInnerHTML(i18n.GL0918);
+		interactiveText.getElement().setInnerHTML(i18n.GL0919);
+		websiteText.getElement().setInnerHTML(i18n.GL0920);*/
+		/*slideText.getElement().setInnerHTML(i18n.GL0908);
+		handoutText.getElement().setInnerHTML(i18n.GL0907);
+		textbookLabel.getElement().setInnerHTML(i18n.GL0909);
+		lessonText.getElement().setInnerHTML(i18n.GL0910);
+		examText.getElement().setInnerHTML(i18n.GL0921);*/
+		textsText.getElement().setInnerHTML(i18n.GL1044());
+		textsText.getElement().setId("pnlTextsText");
+		textsText.getElement().setAttribute("alt", i18n.GL1044());
+		textsText.getElement().setAttribute("title", i18n.GL1044());
+		//audioText.getElement().setInnerHTML(i18n.GL1045);
+		imagesText.getElement().setInnerHTML(i18n.GL1046());
+		imagesText.getElement().setId("pnlImagesText");
+		imagesText.getElement().setAttribute("alt", i18n.GL1046());
+		imagesText.getElement().setAttribute("title", i18n.GL1046());
+		//otherText.getElement().setInnerHTML(i18n.GL1047);
 		
 		
 		
-		/*slideText.getElement().setInnerHTML(GL0908);
-		handoutText.getElement().setInnerHTML(GL0907);
-		textbookLabel.getElement().setInnerHTML(GL0909);
-		lessonText.getElement().setInnerHTML(GL0910);*/
-		thumbnailImageText.getElement().setInnerHTML(GL0911);
-		uploadImageLbl.setText(GL0912);
-		rightsLbl.setText(GL0869);
-		agreeText.setText(GL0870);
-		commuGuideLinesAnr.setText(GL0871);
-		termsAndPolicyAnr.setText(" "+GL0872+GL_GRR_COMMA);
-		privacyAnr.setText(" "+GL0873);
-		andText.setText(" "+GL_GRR_AND+" ");
-		copyRightAnr.setText(" "+GL0875);
-		additionalText.setText(GL0874);
-		addResourceBtn.setText(GL0141);
-		cancelResourcePopupBtnLbl.setText(GL0142);
-		lblAdding.setText(GL0591.toLowerCase());
+		/*slideText.getElement().setInnerHTML(i18n.GL0908);
+		handoutText.getElement().setInnerHTML(i18n.GL0907);
+		textbookLabel.getElement().setInnerHTML(i18n.GL0909);
+		lessonText.getElement().setInnerHTML(i18n.GL0910);*/
+		thumbnailImageText.getElement().setInnerHTML(i18n.GL0911());
+		thumbnailImageText.getElement().setId("pnlThumbnailImageText");
+		thumbnailImageText.getElement().setAttribute("alt", i18n.GL0911());
+		thumbnailImageText.getElement().setAttribute("title", i18n.GL0911());
+		uploadImageLbl.setText(i18n.GL0912());
+		uploadImageLbl.getElement().setId("lblUploadImageLbl");
+		uploadImageLbl.getElement().setAttribute("alt", i18n.GL0912());
+		uploadImageLbl.getElement().setAttribute("title", i18n.GL0912());
+		rightsLbl.setText(i18n.GL0869());
+		rightsLbl.getElement().setId("lblRightsLbl");
+		rightsLbl.getElement().setAttribute("alt", i18n.GL0869());
+		rightsLbl.getElement().setAttribute("title", i18n.GL0869());
+		agreeText.setText(i18n.GL0870());
+		agreeText.getElement().setId("lblAgreeText");
+		agreeText.getElement().setAttribute("alt", i18n.GL0870());
+		agreeText.getElement().setAttribute("title", i18n.GL0870());
+		commuGuideLinesAnr.setText(i18n.GL0871());
+		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
+		commuGuideLinesAnr.getElement().setAttribute("alt", i18n.GL0871());
+		commuGuideLinesAnr.getElement().setAttribute("title", i18n.GL0871());
+		termsAndPolicyAnr.setText(" "+i18n.GL0872()+i18n.GL_GRR_COMMA());
+		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicyAnr");
+		termsAndPolicyAnr.getElement().setAttribute("alt", i18n.GL0872());
+		termsAndPolicyAnr.getElement().setAttribute("title", i18n.GL0872());
+		privacyAnr.setText(" "+i18n.GL0873());
+		privacyAnr.getElement().setId("lnkPrivacyAnr");
+		privacyAnr.getElement().setAttribute("alt", i18n.GL0873());
+		privacyAnr.getElement().setAttribute("title", i18n.GL0873());
+		andText.setText(" "+i18n.GL_GRR_AND()+" ");
+		andText.getElement().setId("lblAndText");
+		andText.getElement().setAttribute("alt", i18n.GL_GRR_AND());
+		andText.getElement().setAttribute("title", i18n.GL_GRR_AND());
+		copyRightAnr.setText(" "+i18n.GL0875());
+		copyRightAnr.getElement().setId("lnkCopyRightAnr");
+		copyRightAnr.getElement().setAttribute("alt", i18n.GL0875());
+		copyRightAnr.getElement().setAttribute("title", i18n.GL0875());
+		additionalText.setText(i18n.GL0874());
+		additionalText.getElement().setId("lblAdditionalText");
+		additionalText.getElement().setAttribute("alt", i18n.GL0874());
+		additionalText.getElement().setAttribute("title", i18n.GL0874());
+		addResourceBtn.setText(i18n.GL0590());
+		addResourceBtn.getElement().setId("btnAddResourceBtn");
+		addResourceBtn.getElement().setAttribute("alt", i18n.GL0141());
+		addResourceBtn.getElement().setAttribute("title", i18n.GL0141());
+		cancelResourcePopupBtnLbl.setText(i18n.GL0142());
+		cancelResourcePopupBtnLbl.getElement().setId("lnkCancelResourcePopupBtnLbl");
+		cancelResourcePopupBtnLbl.getElement().setAttribute("alt", i18n.GL0142());
+		cancelResourcePopupBtnLbl.getElement().setAttribute("title", i18n.GL0142());
+		cancelResourcePopupBtnLbl.getElement().setAttribute("style","margin-left:10px");
+		lblAdding.setText(i18n.GL0591().toLowerCase());
+		lblAdding.getElement().setId("lblLblAdding");
+		lblAdding.getElement().setAttribute("alt", i18n.GL0591());
+		lblAdding.getElement().setAttribute("title", i18n.GL0591());
+		clipImage.getElement().setId("imgClipImage");
 		clipImage.setUrl("images/paperclip.png");
 		addResourceBtn.addClickHandler(new AddClickHandler());
 		addResourceBtn.getElement().getStyle().setFloat(Float.LEFT);
 		uploadImageLbl.addClickHandler(new OnEditImageClick());
 		
 		changeFileBtn.addClickHandler(new ChangeFileBtnClick());
-
+		titleTextBox.getElement().setId("txtTitleTextBox");
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());
+		descriptionTxtAera.getElement().setId("tatDescriptionTxtAera");
 		descriptionTxtAera.addKeyUpHandler(new DescriptionKeyUpHandler());
+		resourcePathTextBox.getElement().setId("txtResourcePathTextBox");
+		StringUtil.setAttributes(resourcePathTextBox, true);
 		resourcePathTextBox.addKeyUpHandler(new ResourcePathKeyUpHandler());
 		titleTextBox.getElement().setAttribute("maxlength", "50");
+		StringUtil.setAttributes(titleTextBox, true);
 		descriptionTxtAera.getElement().setAttribute("maxlength", "300");
+		StringUtil.setAttributes(descriptionTxtAera, true);
+		resourceContentChkLbl.getElement().setId("lblResourceContentChkLbl");
 		resourceContentChkLbl.setVisible(false);
 		mandatoryTitleLbl.setVisible(false);
 		mandatoryCategoryLbl.setVisible(false);
+		descCharcterLimit.getElement().setId("lblDescCharcterLimit");
 		descCharcterLimit.setVisible(false);
+		setThumbnailImage.getElement().setId("imgSetThumbnailImage");
 		setThumbnailImage.setVisible(true);
 		resourceTypePanel.setVisible(false);
 		chooseResourceBtn.getElement().setId("uploadFile");
+		panelContentRights.getElement().setId("pnlPanelContentRights");
 		panelContentRights.setVisible(false);
 		rightsChkBox.addClickHandler(new rightsChecked());
 		rightsChkBox.getElement().setId("chkRights");
-
+		categorypanel.getElement().setId("pnlCategorypanel");
+		resourceCategoryLabel.getElement().setId("lblResourceCategoryLabel");
+		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
+		resoureDropDownLbl.getElement().setId("lblResoureDropDownLbl");
+		resourceTypePanel.getElement().setId("pnlResourceTypePanel");
+		imageResourcePanel.getElement().setId("epnlImageResourcePanel");
+		image.getElement().setId("pnlImage");
+		textResourcePanel.getElement().setId("epnlTextResourcePanel");
+		texts.getElement().setId("pnlTexts");
+		imageContainer.getElement().setId("pnlImageContainer");
+		lblContentRights.getElement().setId("epnlLblContentRights");
+		rightsContent.getElement().setId("pnlRightsContent");
+		panelAction.getElement().setId("pnlPanelAction");
+		
         setModal(true);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
@@ -241,11 +339,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 		
 		lblAdding.getElement().getStyle().setDisplay(Display.NONE);
 		panelAction.getElement().getStyle().setDisplay(Display.BLOCK);
-		
+		defaultFileTxtContainer.getElement().setId("pnlDefaultFileTxtContainer");
 		defaultFileTxtContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		uploadContainer.getElement().getStyle().setDisplay(Display.NONE);
 		uploadName.getElement().getStyle().setDisplay(Display.NONE);
-		fileTextLbl.setText(GL0954);
+		fileTextLbl.setText(i18n.GL0954());
+		fileTextLbl.getElement().setId("lblFileTextLbl");
+		fileTextLbl.getElement().setAttribute("alt", i18n.GL0954());
+		fileTextLbl.getElement().setAttribute("title", i18n.GL0954());
 		browseResourceBtn.getElement().getStyle().setMarginRight(9, Unit.PX);
 		copyRightAnr.addClickHandler(new ClickHandler() {
 			@Override
@@ -372,6 +473,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	
 	public void setResourceDescription(){
 		descriptionTxtAera.setText(collectionItemDo.getResource().getDescription());
+		descriptionTxtAera.getElement().setAttribute("alt", collectionItemDo.getResource().getDescription());
+		descriptionTxtAera.getElement().setAttribute("title", collectionItemDo.getResource().getDescription());
 	}
 	
 	@UiHandler("chooseResourceBtn")
@@ -381,7 +484,9 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 			double sizeOfImage=Double.parseDouble(size);
 			if(sizeOfImage>5){
 				isValidImageSize=false;
-				resourceContentChkLbl.setText(GL0913);
+				resourceContentChkLbl.setText(i18n.GL0913());
+				resourceContentChkLbl.getElement().setAttribute("alt", i18n.GL0913());
+				resourceContentChkLbl.getElement().setAttribute("title", i18n.GL0913());
 				resourceContentChkLbl.setVisible(true);
 				fileuploadForm.reset();
 				if(!resourcePathTextBox.getText().equalsIgnoreCase("")){
@@ -397,37 +502,48 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 		if (collectionItemDo.getResource().getDescription().length() >= 300) {
 			descriptionTxtAera.setText(collectionItemDo.getResource()
 					.getDescription().substring(0, 300));
+			descriptionTxtAera.getElement().setAttribute("alt", collectionItemDo.getResource().getDescription());
+			descriptionTxtAera.getElement().setAttribute("title", collectionItemDo.getResource().getDescription());
 		} else {
 			descriptionTxtAera.setText(collectionItemDo.getResource()
 					.getDescription());
+			descriptionTxtAera.getElement().setAttribute("alt", collectionItemDo.getResource().getDescription());
+			descriptionTxtAera.getElement().setAttribute("title", collectionItemDo.getResource().getDescription());
 		}
 		if (collectionItemDo.getResource().getTitle().length() >= 50) {
 			titleTextBox.setText(collectionItemDo.getResource().getTitle()
 					.substring(0, 50));
+			titleTextBox.getElement().setAttribute("alt", collectionItemDo.getResource().getTitle());
+			titleTextBox.getElement().setAttribute("title", collectionItemDo.getResource().getTitle());
+			
 		} else {
 			titleTextBox.setText(collectionItemDo.getResource().getTitle());
+			titleTextBox.getElement().setAttribute("alt", collectionItemDo.getResource().getTitle());
+			titleTextBox.getElement().setAttribute("title", collectionItemDo.getResource().getTitle());
 		}
 
 		setThumbnailImage.setVisible(true);
 		String category = collectionItemDo.getResource().getCategory();
 		
-		/* if (category.equalsIgnoreCase(GL0918)) {
-			resourceCategoryLabel.setText(GL0918 );
+		/* if (category.equalsIgnoreCase(i18n.GL0918)) {
+			resourceCategoryLabel.setText(i18n.GL0918 );
 			categorypanel.setStyleName(video.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-		} else if (category.equalsIgnoreCase(GL0919)) {
-			resourceCategoryLabel.setText(GL0919);
+		} else if (category.equalsIgnoreCase(i18n.GL0919)) {
+			resourceCategoryLabel.setText(i18n.GL0919);
 			categorypanel.setStyleName(interactive.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-		} else if (category.equalsIgnoreCase(GL0920)|| category.equalsIgnoreCase("Exam")) {
-			resourceCategoryLabel.setText(GL0920);
+		} else if (category.equalsIgnoreCase(i18n.GL0920)|| category.equalsIgnoreCase("Exam")) {
+			resourceCategoryLabel.setText(i18n.GL0920);
 			categorypanel.setStyleName(website.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-		} */  if (category.equalsIgnoreCase(GL1046) || category.equalsIgnoreCase("slide")||category.equalsIgnoreCase("image")) {
-			resourceCategoryLabel.setText(GL1046);
+		} */  if (category.equalsIgnoreCase(i18n.GL1046()) || category.equalsIgnoreCase("slide")||category.equalsIgnoreCase("image")) {
+			resourceCategoryLabel.setText(i18n.GL1046());
+			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1046());
+			resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1046());
 			categorypanel.setStyleName(image.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
@@ -436,18 +552,20 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 //			categorypanel.setStyleName(question.getStyleName());
 //			resourceTypePanel.setVisible(false);
 //			resoureDropDownLblOpen=false;
-		} else if (category.equalsIgnoreCase(GL1044)|| category.equalsIgnoreCase("Textbook")|| category.equalsIgnoreCase("Lesson")|| category.equalsIgnoreCase("Handout")||category.equalsIgnoreCase("Text")) {
-			resourceCategoryLabel.setText(GL1044);
+		} else if (category.equalsIgnoreCase(i18n.GL1044())|| category.equalsIgnoreCase("Textbook")|| category.equalsIgnoreCase("Lesson")|| category.equalsIgnoreCase("Handout")||category.equalsIgnoreCase("Text")) {
+			resourceCategoryLabel.setText(i18n.GL1044());
+			resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
+			resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());
 			categorypanel.setStyleName(texts.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-		/*}else if (category.equalsIgnoreCase(GL1045)) {
-			resourceCategoryLabel.setText(GL1045);
+		/*}else if (category.equalsIgnoreCase(i18n.GL1045)) {
+			resourceCategoryLabel.setText(i18n.GL1045);
 			categorypanel.setStyleName(audio.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-		}else if (category.equalsIgnoreCase(GL1047)) {
-			resourceCategoryLabel.setText(GL1047);
+		}else if (category.equalsIgnoreCase(i18n.GL1047)) {
+			resourceCategoryLabel.setText(i18n.GL1047);
 			categorypanel.setStyleName(other.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;*/
@@ -534,7 +652,9 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 				}
 			 if(uploadContainer.isVisible()){
 				 if(resourcePathTextBox.getText().trim() == null || resourcePathTextBox.getText().trim().equalsIgnoreCase("")){
-					 resourceContentChkLbl.setText(GL0914);
+					 resourceContentChkLbl.setText(i18n.GL0914());
+					 resourceContentChkLbl.getElement().setAttribute("alt", i18n.GL0914());
+					 resourceContentChkLbl.getElement().setAttribute("title", i18n.GL0914());
 					 resourceContentChkLbl.setVisible(true);
 					 isValidate = false;
 				 }
@@ -542,7 +662,9 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 			
 			
 			if (titleStr == null || titleStr.equalsIgnoreCase("")) {
-				mandatoryTitleLbl.setText(GL0173);
+				mandatoryTitleLbl.setText(i18n.GL0173());
+				mandatoryTitleLbl.getElement().setAttribute("alt", i18n.GL0173());
+				mandatoryTitleLbl.getElement().setAttribute("title", i18n.GL0173());
 				mandatoryTitleLbl.setVisible(true);
 				isValidate = false;
 			}
@@ -552,11 +674,15 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 			}
 			if(descriptionTxtAera.getText().trim()==null || descriptionTxtAera.getText().trim().equals("")){
 				isValidate = false;
-				descCharcterLimit.setText(GL0905);
+				descCharcterLimit.setText(i18n.GL0905());
+				descCharcterLimit.getElement().setAttribute("alt", i18n.GL0905());
+				descCharcterLimit.getElement().setAttribute("title", i18n.GL0905());
 				descCharcterLimit.setVisible(true);
 			}
 			if (categoryStr == null	|| categoryStr.equalsIgnoreCase("-1")|| categoryStr.equalsIgnoreCase("Choose a resource category")) {
-				mandatoryCategoryLbl.setText(GL0917);
+				mandatoryCategoryLbl.setText(i18n.GL0917());
+				mandatoryCategoryLbl.getElement().setAttribute("alt", i18n.GL0917());
+				mandatoryCategoryLbl.getElement().setAttribute("title", i18n.GL0917());
 				mandatoryCategoryLbl.setVisible(true);
 				isValidate = false;
 			}
@@ -635,7 +761,9 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 		public void onKeyUp(KeyUpEvent event) {
 			mandatoryTitleLbl.setVisible(false);
 			if (titleTextBox.getText().length() >= 50) {
-				mandatoryTitleLbl.setText(GL0143);
+				mandatoryTitleLbl.setText(i18n.GL0143());
+				mandatoryTitleLbl.getElement().setAttribute("alt", i18n.GL0143());
+				mandatoryTitleLbl.getElement().setAttribute("title", i18n.GL0143());
 				mandatoryTitleLbl.setVisible(true);
 			}
 		}
@@ -647,7 +775,11 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 			descCharcterLimit.setVisible(false);
 			if (descriptionTxtAera.getText().length() >= 300) {
 				descriptionTxtAera.setText(descriptionTxtAera.getText().trim().substring(0,300));
-				descCharcterLimit.setText(GL0143);
+				descriptionTxtAera.getElement().setAttribute("alt", descriptionTxtAera.getText());
+				descriptionTxtAera.getElement().setAttribute("title",descriptionTxtAera.getText());
+				descCharcterLimit.setText(i18n.GL0143());
+				descCharcterLimit.getElement().setAttribute("alt", i18n.GL0143());
+				descCharcterLimit.getElement().setAttribute("title", i18n.GL0143());
 				descCharcterLimit.setVisible(true);
 			}
 		}
@@ -658,7 +790,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	/*@UiHandler("videoResourcePanel")
 	void videoResourcePanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_video_selected");
-		resourceCategoryLabel.setText(GL0918);
+		resourceCategoryLabel.setText(i18n.GL0918);
 		categorypanel.setStyleName(video.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
@@ -668,7 +800,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	/*@UiHandler("interactiveResourcePanel")
 	void interactiveResourcePanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_interactive_selected");
-		resourceCategoryLabel.setText(GL0919);
+		resourceCategoryLabel.setText(i18n.GL0919);
 		categorypanel.setStyleName(interactive.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
@@ -678,7 +810,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	@UiHandler("websiteResourcePanel")
 	void websiteResourcePanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_website_selected");
-		resourceCategoryLabel.setText(GL0920);
+		resourceCategoryLabel.setText(i18n.GL0920);
 		categorypanel.setStyleName(website.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
@@ -688,7 +820,9 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	@UiHandler("imageResourcePanel")
 	void slideResourcePanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_image_selected");
-		resourceCategoryLabel.setText(GL1046);
+		resourceCategoryLabel.setText(i18n.GL1046());
+		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1046());
+		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1046());
 		categorypanel.setStyleName(image.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
@@ -698,7 +832,9 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	@UiHandler("textResourcePanel")
 	void handoutResourcePanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_text_selected");
-		resourceCategoryLabel.setText(GL1044);
+		resourceCategoryLabel.setText(i18n.GL1044());
+		resourceCategoryLabel.getElement().setAttribute("alt", i18n.GL1044());
+		resourceCategoryLabel.getElement().setAttribute("title", i18n.GL1044());
 		categorypanel.setStyleName(texts.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
@@ -708,7 +844,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	/*@UiHandler("audioResourcePanel")
 	void textbookResourcePanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_audio_selected");
-		resourceCategoryLabel.setText(GL1045);
+		resourceCategoryLabel.setText(i18n.GL1045);
 		categorypanel.setStyleName(audio.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
@@ -718,7 +854,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	@UiHandler("otherResourcePanel")
 	void lessonResourcePanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_other_selected");
-		resourceCategoryLabel.setText(GL1047);
+		resourceCategoryLabel.setText(i18n.GL1047);
 		categorypanel.setStyleName(other.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
@@ -778,12 +914,16 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 					 isValidImageSize=true;
 					 resourceContentChkLbl.setVisible(false);
 					 resourcePathTextBox.setText(chooseResourceBtn.getFilename().trim());
+					 resourcePathTextBox.getElement().setAttribute("alt", chooseResourceBtn.getFilename().trim());
+					 resourcePathTextBox.getElement().setAttribute("title", chooseResourceBtn.getFilename().trim());
 					 fileChanged=true;
 					 
 				 }
 				 else{
 						if(!chooseResourceBtn.getFilename().trim().equalsIgnoreCase("")){
 							 resourceContentChkLbl.setText(RESOURCE_FILE_SUPPORT_MSG);
+							 resourceContentChkLbl.getElement().setAttribute("alt", RESOURCE_FILE_SUPPORT_MSG);
+							 resourceContentChkLbl.getElement().setAttribute("title", RESOURCE_FILE_SUPPORT_MSG);
 							 resourceContentChkLbl.setVisible(true);
 							 
 						 }

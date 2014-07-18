@@ -28,10 +28,8 @@ package org.ednovo.gooru.client.mvp.play.resource.question;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
@@ -57,6 +55,13 @@ public class CheckBoxAnswerOptionView extends Composite{
 		answerOptionText.setHTML(questionSerialNum+" "+removeHtmlTags(questionText));
 		answerOptionYesRadioButton.setName(questionSerialNum);
 		answerOptionNoRadioButton.setName(questionSerialNum);
+		
+		answerChoiceResult.getElement().setId("lblAnswerChoiceResult");
+		radioYesButton.getElement().setId("lblRadioYesButton");
+		radioNoButton.getElement().setId("lblRadioNoButton");
+		answerOptionText.getElement().setId("htmlAnswerOptionText");
+		answerOptionYesRadioButton.getElement().setId("rdAnswerOptionYesRadioButton");
+		answerOptionNoRadioButton.getElement().setId("rdAnswerOptionNoRadioButton");
 	}
 	private HTML getHTML(String html){
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");

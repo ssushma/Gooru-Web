@@ -24,17 +24,20 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 
-public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandler,MessageProperties{
+public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandler{
 	private Label label;
 
 	private Label removeLabel;
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 	/**
 	 * Class constructor
 	 * @param text for label
@@ -42,7 +45,7 @@ public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandl
 	public CloseLabelSetting(String text) {
 		removeLabel = new Label();
 		removeLabel.setStyleName(UcCBundle.INSTANCE.css().closeLabelRemoveInSetting());
-		removeLabel.setText(GL_GRR_Close+" ");
+		removeLabel.setText(i18n.GL_GRR_Close()+" ");
 		label = new Label();
 		label.setStyleName(UcCBundle.INSTANCE.css().closeLabelText());
 		label.setText(text);

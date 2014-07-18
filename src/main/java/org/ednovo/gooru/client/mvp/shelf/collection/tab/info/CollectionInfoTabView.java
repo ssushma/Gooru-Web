@@ -47,13 +47,13 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.GradeLabel;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -89,7 +89,7 @@ import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
  * @author Search Team
  * 
  */
-public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTabUiHandlers> implements IsCollectionInfoTabView, SelectionHandler<SuggestOracle.Suggestion>,MessageProperties {
+public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTabUiHandlers> implements IsCollectionInfoTabView, SelectionHandler<SuggestOracle.Suggestion> {
 
 	/*@UiField
 	FlowPanel collectionCourseLstPanel;
@@ -101,7 +101,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	FlowPanel gradeTopList, gradeMiddleList, gradeBottomList, courseData, standardsPanel, KinderGarten, higherEducation,standardContainer;
 
 	@UiField
-	Label  standardMaxMsg, courseLabel, standardLabel,courseLbl, standardsDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl,toggleArrowButtonPrimary,toggleArrowButtonSecondary,instructionalMethod,audienceLabel,audienceTitle,instructionalTitle,languageObjectiveHeader,depthOfKnowledgeHeader,depthOfKnowledgeTitle,learningInnovationHeader,learningInnovationTitle;
+	Label  languageObjectiveTitle,standardMaxMsg, courseLabel, standardLabel, standardsDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl,toggleArrowButtonPrimary,toggleArrowButtonSecondary,instructionalMethod,audienceLabel,audienceTitle,instructionalTitle,languageObjectiveHeader,depthOfKnowledgeHeader,depthOfKnowledgeTitle,learningInnovationHeader,learningInnovationTitle;
 	
 	@UiField Label lblAudiencePlaceHolder,lblAudienceArrow,lblInstructionalPlaceHolder,lblInstructionalArrow,languageObjectiveerrLabel;
 	
@@ -139,9 +139,11 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 
 	private AlertContentUc alertContentUc;
 	
-	private static final String ADD_COURSE=GL0847;
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	private static final String CHANGE_COURSE=GL1496;
+	private static final String ADD_COURSE=i18n.GL0847();
+	
+	private static final String CHANGE_COURSE=i18n.GL1496();
 	
 	private static final String FLT_CODE_ID = "id";
 	
@@ -149,9 +151,11 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	List<String> standardPreflist=null;
 	
-	String InstructionalMethodStr = GL1729;
+	String InstructionalMethodStr = i18n.GL1729();
 	
-	String AudienceStr = GL1730;
+	String AudienceStr = i18n.GL1730();
+	
+	ArrayList<String> courseDo = new ArrayList<String>();
 	
 	String newInstructionalVal = "";
 	
@@ -208,7 +212,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 						standardsPreferenceOrganizeToolTip.show();
 						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
 	
-						//standardSuggestOracle.add(GL1613);
+						//standardSuggestOracle.add(i18n.GL1613);
 						
 					}
 					}
@@ -236,47 +240,159 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			}
 		};
 		standardSgstBox.addDomHandler(blurhander, BlurEvent.getType());
-		gradeLbl.setText(GL1076.toUpperCase());
-		selectGradeLbl.setText(GL0820);
-		selectCourseLbl.setText(GL0846);
-		addCourseBtn.setText(GL0847);
-		removeCourseBtn.setText(GL0848);
-		standardLabel.setText(GL0575.toUpperCase());
-		addStandardBtn.setText(GL0590);
-		standardMaxMsg.setText(GL0849);
-		instructionalMethod.setText(GL1637);
-		audienceLabel.setText(GL1638);
-		instructionalTitle.setText(GL1639);
-		audienceTitle.setText(GL1640);
-		textAreaVal.setText(GL1641);
-		languageObjectiveHeader.setText(GL1642);
-		depthOfKnowledgeHeader.setText(GL1643);
-		depthOfKnowledgeTitle.setText(GL1644);
+		standardSgstBox.getElement().setId("tbautoStandardSgstBox");
+		gradeLbl.setText(i18n.GL1076().toUpperCase());
+		gradeLbl.getElement().setId("lblGradeLbl");
+		gradeLbl.getElement().setAttribute("alt",i18n.GL1076().toUpperCase());
+		gradeLbl.getElement().setAttribute("title",i18n.GL1076().toUpperCase());
+		
+		selectGradeLbl.setText(i18n.GL0820());
+		selectGradeLbl.getElement().setId("lblSelectGradeLbl");
+		selectGradeLbl.getElement().setAttribute("alt",i18n.GL0820());
+		selectGradeLbl.getElement().setAttribute("title",i18n.GL0820());
+		
+		selectCourseLbl.setText(i18n.GL0846());
+		selectCourseLbl.getElement().setId("lblSelectCourseLbl");
+		selectCourseLbl.getElement().setAttribute("alt",i18n.GL0846());
+		selectCourseLbl.getElement().setAttribute("title",i18n.GL0846());
+		
+		addCourseBtn.setText(i18n.GL0847());
+		addCourseBtn.getElement().setId("btnAddCourseBtn");
+		addCourseBtn.getElement().setAttribute("alt",i18n.GL0847());
+		addCourseBtn.getElement().setAttribute("title",i18n.GL0847());
+		
+		removeCourseBtn.setText(i18n.GL0848());
+		removeCourseBtn.getElement().setId("btnRemoveCourseBtn");
+		removeCourseBtn.getElement().setAttribute("alt",i18n.GL0848());
+		removeCourseBtn.getElement().setAttribute("title",i18n.GL0848());
+		
+		standardLabel.setText(i18n.GL0575().toUpperCase());
+		standardLabel.getElement().setId("lblStandardLabel");
+		standardLabel.getElement().setAttribute("alt",i18n.GL0575().toUpperCase());
+		standardLabel.getElement().setAttribute("title",i18n.GL0575().toUpperCase());
+		
+		addStandardBtn.setText(i18n.GL0590());
+		addStandardBtn.getElement().setId("btnAddStandardBtn");
+		addStandardBtn.getElement().setAttribute("alt",i18n.GL0590());
+		addStandardBtn.getElement().setAttribute("title",i18n.GL0590());
+		
+		standardMaxMsg.setText(i18n.GL0849());
+		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
+		standardMaxMsg.getElement().setAttribute("alt",i18n.GL0849());
+		standardMaxMsg.getElement().setAttribute("title",i18n.GL0849());
+		
+		instructionalMethod.setText(i18n.GL1637());
+		instructionalMethod.getElement().setId("lblInstructionalMethod");
+		instructionalMethod.getElement().setAttribute("alt",i18n.GL1637());
+		instructionalMethod.getElement().setAttribute("title",i18n.GL1637());
+		
+		audienceLabel.setText(i18n.GL1638());
+		audienceLabel.getElement().setId("lblAudienceLabel");
+		audienceLabel.getElement().setAttribute("alt",i18n.GL1638());
+		audienceLabel.getElement().setAttribute("title",i18n.GL1638());
+		
+		instructionalTitle.setText(i18n.GL1639());
+		instructionalTitle.getElement().setId("lblInstructionalTitle");
+		instructionalTitle.getElement().setAttribute("alt",i18n.GL1639());
+		instructionalTitle.getElement().setAttribute("title",i18n.GL1639());
+		
+		audienceTitle.setText(i18n.GL1640());
+		audienceTitle.getElement().setId("lblAdienceTitle");
+		audienceTitle.getElement().setAttribute("alt",i18n.GL1640());
+		audienceTitle.getElement().setAttribute("title",i18n.GL1640());
+		
+		textAreaVal.setText(i18n.GL1641());
+		textAreaVal.getElement().setId("tatTextAreaVal");
+		textAreaVal.getElement().setAttribute("alt",i18n.GL1641());
+		textAreaVal.getElement().setAttribute("title",i18n.GL1641());
+		StringUtil.setAttributes(textAreaVal, true);
+		
+		languageObjectiveHeader.setText(i18n.GL1642());
+		languageObjectiveHeader.getElement().setId("lblLanguageObjectiveHeader");
+		languageObjectiveHeader.getElement().setAttribute("alt",i18n.GL1642());
+		languageObjectiveHeader.getElement().setAttribute("title",i18n.GL1642());
+		
+		depthOfKnowledgeHeader.setText(i18n.GL1643());
+		depthOfKnowledgeHeader.getElement().setId("lblDepthOfKnowledgeHeader");
+		depthOfKnowledgeHeader.getElement().setAttribute("alt",i18n.GL1643());
+		depthOfKnowledgeHeader.getElement().setAttribute("title",i18n.GL1643());
+		
+		depthOfKnowledgeTitle.setText(i18n.GL1644());
+		depthOfKnowledgeTitle.getElement().setId("lblDepthOfKnowledgeTitle");
+		depthOfKnowledgeTitle.getElement().setAttribute("alt",i18n.GL1644());
+		depthOfKnowledgeTitle.getElement().setAttribute("title",i18n.GL1644());
 	
-		chkLevelRecall.setText(GL1645);
-		chkLevelSkillConcept.setText(GL1646);
-		chkLevelStrategicThinking.setText(GL1647);
-		chkLevelExtendedThinking.setText(GL1648);
+		chkLevelRecall.setText(i18n.GL1645());
+		chkLevelRecall.getElement().setId("chkLevelRecall");
+		chkLevelRecall.getElement().setAttribute("alt",i18n.GL1645());
+		chkLevelRecall.getElement().setAttribute("title",i18n.GL1645());
 		
-		learningInnovationHeader.setText(GL1649);
-		learningInnovationTitle.setText(GL1650);
+		chkLevelSkillConcept.setText(i18n.GL1646());
+		chkLevelSkillConcept.getElement().setId("chkLevelSkillConcept");
+		chkLevelSkillConcept.getElement().setAttribute("alt",i18n.GL1646());
+		chkLevelSkillConcept.getElement().setAttribute("title",i18n.GL1646());
 		
-		learninglevel1.setText(GL1651);
-		learninglevel2.setText(GL1652);
-		learninglevel3.setText(GL1653);
+		chkLevelStrategicThinking.setText(i18n.GL1647());
+		chkLevelStrategicThinking.getElement().setId("chkLevelStrategicThinking");
+		chkLevelStrategicThinking.getElement().setAttribute("alt",i18n.GL1647());
+		chkLevelStrategicThinking.getElement().setAttribute("title",i18n.GL1647());
 		
-		lblInstructionalPlaceHolder.setText(GL0105);
-		lblAudiencePlaceHolder.setText(GL0105);
+		chkLevelExtendedThinking.setText(i18n.GL1648());
+		chkLevelExtendedThinking.getElement().setId("chkLevelExtendedThinking");
+		chkLevelExtendedThinking.getElement().setAttribute("alt",i18n.GL1648());
+		chkLevelExtendedThinking.getElement().setAttribute("title",i18n.GL1648());
+		
+		learningInnovationHeader.setText(i18n.GL1649());
+		learningInnovationHeader.getElement().setId("lblLearningInnovationHeader");
+		learningInnovationHeader.getElement().setAttribute("alt",i18n.GL1649());
+		learningInnovationHeader.getElement().setAttribute("title",i18n.GL1649());
+		
+		learningInnovationTitle.setText(i18n.GL1650());
+		learningInnovationTitle.getElement().setId("lblLearningInnovationTitle");
+		learningInnovationTitle.getElement().setAttribute("alt",i18n.GL1650());
+		learningInnovationTitle.getElement().setAttribute("title",i18n.GL1650());
+		
+		learninglevel1.setText(i18n.GL1651());
+		learninglevel1.getElement().setId("chkLearninglevel1");
+		learninglevel1.getElement().setAttribute("alt",i18n.GL1651());
+		learninglevel1.getElement().setAttribute("title",i18n.GL1651());
+		
+		learninglevel2.setText(i18n.GL1652());
+		learninglevel2.getElement().setId("chkLearninglevel2");
+		learninglevel2.getElement().setAttribute("alt",i18n.GL1652());
+		learninglevel2.getElement().setAttribute("title",i18n.GL1652());
+		
+		learninglevel3.setText(i18n.GL1653());
+		learninglevel3.getElement().setId("chkLearninglevel3");
+		learninglevel3.getElement().setAttribute("alt",i18n.GL1653());
+		learninglevel3.getElement().setAttribute("title",i18n.GL1653());
+		
+		lblInstructionalPlaceHolder.setText(i18n.GL0105());
+		lblInstructionalPlaceHolder.getElement().setId("lblInstructionalPlaceHolder");
+		lblInstructionalPlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
+		lblInstructionalPlaceHolder.getElement().setAttribute("title",i18n.GL0105());
+		
+		lblAudiencePlaceHolder.setText(i18n.GL0105());
+		lblAudiencePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
+		lblAudiencePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
 		
 		configureClickEvents();
 		
 		toggleArrowButtonPrimary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
 		toggleArrowButtonSecondary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
 		
-	
+		toggleArrowButtonPrimary.getElement().setId("lblToggleArrowButtonPrimary");
+		toggleArrowButtonSecondary.getElement().setId("lblToggleArrowButtonSecondary");
 		
-		primaryLabelTag.getElement().setInnerHTML(GL1656);
-		secondaryHeaderLabel.getElement().setInnerHTML(GL1657);
+		primaryLabelTag.getElement().setInnerHTML(i18n.GL1656());
+		primaryLabelTag.getElement().setId("pnlPrimaryLabelTag");
+		primaryLabelTag.getElement().setAttribute("alt",i18n.GL1656());
+		primaryLabelTag.getElement().setAttribute("title",i18n.GL1656());
+		
+		secondaryHeaderLabel.getElement().setInnerHTML(i18n.GL1657());
+		secondaryHeaderLabel.getElement().setId("pnlSecondaryHeaderLabel");
+		secondaryHeaderLabel.getElement().setAttribute("alt",i18n.GL1657());
+		secondaryHeaderLabel.getElement().setAttribute("title",i18n.GL1657());
 		
 		textAreaVal.getElement().removeAttribute("style");
 
@@ -288,8 +404,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			@Override
 			public void onFocus(FocusEvent event) {
 				String directionText=textAreaVal.getText().trim();
-				if(directionText.equalsIgnoreCase(GL1641)){
+				if(directionText.equalsIgnoreCase(i18n.GL1641())){
 					textAreaVal.setText("");
+					textAreaVal.getElement().setAttribute("alt","");
+					textAreaVal.getElement().setAttribute("title","");
 				}
 				textAreaVal.getElement().getStyle().setColor("black");
 			}
@@ -310,7 +428,9 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			public void onBlur(BlurEvent event) {
 				
 				if(textAreaVal.getText().length() == 0){
-					textAreaVal.setText(GL1641);
+					textAreaVal.setText(i18n.GL1641());
+					textAreaVal.getElement().setAttribute("alt",i18n.GL1641());
+					textAreaVal.getElement().setAttribute("title",i18n.GL1641());
 					textAreaVal.getElement().getStyle().setColor("#999");
 				}
 				else
@@ -338,7 +458,9 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 							else
 							{
 								textAreaVal.getElement().getStyle().setBorderColor("orange");
-								languageObjectiveerrLabel.setText(GL0554);
+								languageObjectiveerrLabel.setText(i18n.GL0554());
+								languageObjectiveerrLabel.getElement().setAttribute("alt",i18n.GL0554());
+								languageObjectiveerrLabel.getElement().setAttribute("title",i18n.GL0554());
 								languageObjectiveerrLabel.setVisible(true);
 							}
 						}
@@ -365,6 +487,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					public void onClick(ClickEvent event) {		
 						String optionSelected = titleLabel.getElement().getId();
 						lblInstructionalPlaceHolder.setText(optionSelected);
+						lblInstructionalPlaceHolder.getElement().setAttribute("alt",optionSelected);
+						lblInstructionalPlaceHolder.getElement().setAttribute("title",optionSelected);
 						spanelInstructionalPanel.setVisible(false);
 						lblInstructionalPlaceHolder.getElement().setId(titleLabel.getElement().getId());
 						lblInstructionalPlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
@@ -397,12 +521,12 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 							});
 
 							lblInstructionalPlaceHolder.setText(optionSelected);
+							lblInstructionalPlaceHolder.getElement().setAttribute("alt",optionSelected);
+							lblInstructionalPlaceHolder.getElement().setAttribute("title",optionSelected);
 				
 					}
 				});
 				htmlInstructionalListContainer.add(titleLabel);
-				
-			
 		}
 		
 	List<String> audienceList = Arrays.asList(AudienceStr.split(","));
@@ -422,6 +546,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					public void onClick(ClickEvent event) {		
 						String optionSelected = titleLabel.getElement().getId();
 						lblAudiencePlaceHolder.setText(optionSelected);
+						lblAudiencePlaceHolder.getElement().setAttribute("alt",optionSelected);
+						lblAudiencePlaceHolder.getElement().setAttribute("title",optionSelected);
 						spanelAudiencePanel.setVisible(false);
 						lblAudiencePlaceHolder.getElement().setId(titleLabel.getElement().getId());
 						lblAudiencePlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
@@ -457,6 +583,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 							});
 
 							lblAudiencePlaceHolder.setText(optionSelected);
+							lblAudiencePlaceHolder.getElement().setAttribute("alt",optionSelected);
+							lblAudiencePlaceHolder.getElement().setAttribute("title",optionSelected);
 				
 					}
 				});
@@ -511,8 +639,33 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				
 			}
 		});
-		teacherTipTextLabel.setText(MessageProperties.GL0750);*/
-		standardsDefaultText.setText(GL0749);
+		teacherTipTextLabel.setText(MessageProperties.i18n.GL0750);*/
+		standardsDefaultText.setText(i18n.GL0749());
+		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
+		standardsDefaultText.getElement().setAttribute("alt",i18n.GL0139());
+		standardsDefaultText.getElement().setAttribute("title",i18n.GL0139());
+		
+		panelLoading.getElement().setId("pnlPanelLoading");
+		mainInfoPanel.getElement().setId("pnlMainInfoPanel");
+		KinderGarten.getElement().setId("fpnlKinderGarten");
+		gradeTopList.getElement().setId("fpnlGradeTopList");
+		gradeMiddleList.getElement().setId("fpnlGradeMiddleList");
+		gradeBottomList.getElement().setId("fpnlGradeBottomList");
+		higherEducation.getElement().setId("fpnlHigherEducation");
+		courseLabel.getElement().setId("lblCourseLabel");
+		courseData.getElement().setId("fpnlCourseData");
+		//courseLbl.getElement().setId("lblCourseLbl");
+		standardsPanel.getElement().setId("fpnlStandardsPanel");
+		secondaryContentsContainer.getElement().setId("pnlSecondaryContentsContainer");
+		languageObjectiveTitle.getElement().setId("lblLanguageObjectiveTitle");
+		languageObjectiveerrLabel.getElement().setId("lblLanguageObjectiveerrLabel");
+		lblInstructionalArrow.getElement().setId("lblInstructionalArrow");
+		spanelInstructionalPanel.getElement().setId("sbSpanelInstructionalPanel");
+		htmlInstructionalListContainer.getElement().setId("pnlHtmlInstructionalListContainer");
+		lblAudienceArrow.getElement().setId("lblAudienceArrow");
+		spanelAudiencePanel.getElement().setId("sbSpanelAudiencePanel");
+		htmlAudienceListContainer.getElement().setId("pnlHtmlAudienceListContainer");
+		
 		addStandardBtn.setVisible(false);
 		panelLoading.setVisible(true);
 		mainInfoPanel.setVisible(false);
@@ -520,7 +673,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		addCourseBtn.getElement().getStyle().setMarginRight(10, Unit.PX);
 		removeCourseBtn.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		removeCourseBtn.setVisible(false);
-		courseLbl.getElement().getStyle().setDisplay(Display.NONE);
+		courseData.getElement().getStyle().setDisplay(Display.NONE);
 		
 		spanelInstructionalPanel.setVisible(false);
 		spanelAudiencePanel.setVisible(false);
@@ -535,7 +688,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				  CheckBox checkBox = (CheckBox) event.getSource();
 			        boolean checked = checkBox.getValue();
 
-					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, GL1645,checked, new SimpleAsyncCallback<CollectionDo>() {
+					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, i18n.GL1645(),checked, new SimpleAsyncCallback<CollectionDo>() {
 						@Override
 						public void onSuccess(CollectionDo result) {
 							
@@ -552,7 +705,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				  CheckBox checkBox = (CheckBox) event.getSource();
 			        boolean checked = checkBox.getValue();
 
-					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, GL1646,checked, new SimpleAsyncCallback<CollectionDo>() {
+					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, i18n.GL1646(),checked, new SimpleAsyncCallback<CollectionDo>() {
 						@Override
 						public void onSuccess(CollectionDo result) {
 							
@@ -569,7 +722,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				  CheckBox checkBox = (CheckBox) event.getSource();
 			        boolean checked = checkBox.getValue();
 
-					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, GL1647,checked, new SimpleAsyncCallback<CollectionDo>() {
+					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, i18n.GL1647(),checked, new SimpleAsyncCallback<CollectionDo>() {
 						@Override
 						public void onSuccess(CollectionDo result) {
 							
@@ -586,7 +739,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				  CheckBox checkBox = (CheckBox) event.getSource();
 			        boolean checked = checkBox.getValue();
 
-					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, GL1648,checked, new SimpleAsyncCallback<CollectionDo>() {
+					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, i18n.GL1648(),checked, new SimpleAsyncCallback<CollectionDo>() {
 						@Override
 						public void onSuccess(CollectionDo result) {
 							
@@ -603,7 +756,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				  CheckBox checkBox = (CheckBox) event.getSource();
 			        boolean checked = checkBox.getValue();
 
-					AppClientFactory.getInjector().getResourceService().updateCollectionLearningSkills(collectionDo, GL1651,checked, new SimpleAsyncCallback<CollectionDo>() {
+					AppClientFactory.getInjector().getResourceService().updateCollectionLearningSkills(collectionDo, i18n.GL1651(),checked, new SimpleAsyncCallback<CollectionDo>() {
 						@Override
 						public void onSuccess(CollectionDo result) {
 							
@@ -620,7 +773,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				  CheckBox checkBox = (CheckBox) event.getSource();
 			        boolean checked = checkBox.getValue();		
 
-					AppClientFactory.getInjector().getResourceService().updateCollectionLearningSkills(collectionDo, GL1652,checked, new SimpleAsyncCallback<CollectionDo>() {
+					AppClientFactory.getInjector().getResourceService().updateCollectionLearningSkills(collectionDo, i18n.GL1652(),checked, new SimpleAsyncCallback<CollectionDo>() {
 						@Override
 						public void onSuccess(CollectionDo result) {
 							
@@ -638,7 +791,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			        boolean checked = checkBox.getValue();
 
 
-					AppClientFactory.getInjector().getResourceService().updateCollectionLearningSkills(collectionDo, GL1653,checked, new SimpleAsyncCallback<CollectionDo>() {
+					AppClientFactory.getInjector().getResourceService().updateCollectionLearningSkills(collectionDo, i18n.GL1653(),checked, new SimpleAsyncCallback<CollectionDo>() {
 						@Override
 						public void onSuccess(CollectionDo result) {
 							
@@ -687,9 +840,15 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		higherEducation.clear();
 		standardSuggestOracle.clear();
 		standardCodesMap.clear();
-		courseLbl.setText("");
-		courseLbl.getElement().getStyle().setDisplay(Display.NONE);
+		courseDo.clear();
+		courseData.clear();
+/*		courseLbl.setText("");
+		courseLbl.getElement().setAttribute("alt","");
+		courseLbl.getElement().setAttribute("title","");
+		courseLbl.getElement().getStyle().setDisplay(Display.NONE);*/
 		addCourseBtn.setText(ADD_COURSE);
+		addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
+		addCourseBtn.getElement().setAttribute("title",ADD_COURSE);
 		addCourseBtn.setVisible(true);
 		removeCourseBtn.setVisible(false);
 		
@@ -704,10 +863,14 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			{
 
 				textAreaVal.setText(collectionDo.getLanguageObjective());
+				textAreaVal.getElement().setAttribute("alt",collectionDo.getLanguageObjective());
+				textAreaVal.getElement().setAttribute("title",collectionDo.getLanguageObjective());
 			}
 			else
 			{
-				textAreaVal.setText(GL1641);
+				textAreaVal.setText(i18n.GL1641());
+				textAreaVal.getElement().setAttribute("alt",i18n.GL1641());
+				textAreaVal.getElement().setAttribute("title",i18n.GL1641());
 			}
 			
 
@@ -819,16 +982,22 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					if(collectionDoVal.getInstructionalMethod().get(m).isSelected()==true)
 					{
 						lblInstructionalPlaceHolder.setText(collectionDoVal.getInstructionalMethod().get(m).getValue());
+						lblInstructionalPlaceHolder.getElement().setAttribute("alt",collectionDoVal.getInstructionalMethod().get(m).getValue());
+						lblInstructionalPlaceHolder.getElement().setAttribute("title",collectionDoVal.getInstructionalMethod().get(m).getValue());
 						break;
 					}
 					else
 					{
-					lblInstructionalPlaceHolder.setText(GL0105);
+					lblInstructionalPlaceHolder.setText(i18n.GL0105());
+					lblInstructionalPlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
+					lblInstructionalPlaceHolder.getElement().setAttribute("title",i18n.GL0105());
 					}
 				}
 				else
 				{
-				lblInstructionalPlaceHolder.setText(GL0105);
+				lblInstructionalPlaceHolder.setText(i18n.GL0105());
+				lblInstructionalPlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
+				lblInstructionalPlaceHolder.getElement().setAttribute("title",i18n.GL0105());
 				}
 			}
 			
@@ -839,22 +1008,30 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					if(collectionDoVal.getAudience().get(n).isSelected()==true)
 					{
 						lblAudiencePlaceHolder.setText(collectionDoVal.getAudience().get(n).getValue());
+						lblAudiencePlaceHolder.getElement().setAttribute("alt",collectionDoVal.getAudience().get(n).getValue());
+						lblAudiencePlaceHolder.getElement().setAttribute("title",collectionDoVal.getAudience().get(n).getValue());
 						break;
 					}
 					else
 					{
-						lblAudiencePlaceHolder.setText(GL0105);
+						lblAudiencePlaceHolder.setText(i18n.GL0105());
+						lblAudiencePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
+						lblAudiencePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
 					}
 				}
 				else
 				{
-				lblAudiencePlaceHolder.setText(GL0105);
+				lblAudiencePlaceHolder.setText(i18n.GL0105());
+				lblAudiencePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
+				lblAudiencePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
 				}
 			}
 		
 			if(collectionDoVal.getTaxonomySet().size()==0){
-				courseLbl.getElement().getStyle().setDisplay(Display.NONE);
+				courseData.getElement().getStyle().setDisplay(Display.NONE);
 				addCourseBtn.setText(ADD_COURSE);
+				addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
+				addCourseBtn.getElement().setAttribute("title",ADD_COURSE);
 				removeCourseBtn.setVisible(false);
 				if(courseCode!=null&&!courseCode.equals("")){
 					getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
@@ -862,12 +1039,19 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				courseCode="";
 			}else{
 				for (CodeDo code : collectionDoVal.getTaxonomySet()) {
+				
 					if (code.getDepth() == 2) {
-						courseLbl.setText(code.getLabel());
-						courseLbl.getElement().getStyle().setDisplay(Display.BLOCK);
+						courseDo.add(code.getLabel());
+						courseData.add(createCourseLabel(code.getLabel(), code.getCodeId() + "", code.getLabel()));
+						//courseLbl.setText(code.getLabel());
+					/*	courseLbl.getElement().setAttribute("alt",code.getLabel());
+						courseLbl.getElement().setAttribute("title",code.getLabel());*/
+						courseData.getElement().getStyle().setDisplay(Display.BLOCK);
 						courseCode=Integer.toString(code.getCodeId());
-						addCourseBtn.setText(CHANGE_COURSE);
-						removeCourseBtn.setVisible(true);
+						addCourseBtn.setText(ADD_COURSE);
+						addCourseBtn.getElement().setAttribute("alt",CHANGE_COURSE);
+						addCourseBtn.getElement().setAttribute("title",CHANGE_COURSE);
+						removeCourseBtn.setVisible(false);
 					}
 					
 				}
@@ -1027,6 +1211,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	public void onSelection(SelectionEvent<Suggestion> event) {
 		addStandard(standardSgstBox.getValue(), getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults()));
 		standardSgstBox.setText("");
+		standardSgstBox.getElement().setAttribute("alt","");
+		standardSgstBox.getElement().setAttribute("title","");
 		standardSuggestOracle.clear();
 	}
 
@@ -1067,9 +1253,13 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 */
 	private void resetStandardCount() {
 		if (standardsPanel.getWidgetCount() > 0) {
-			standardLabel.setText(GL0575.toUpperCase() + " (" + standardsPanel.getWidgetCount() + ")");
+			standardLabel.setText(i18n.GL0575().toUpperCase() + " (" + standardsPanel.getWidgetCount() + ")");
+			standardLabel.getElement().setAttribute("alt",i18n.GL0575().toUpperCase() + " (" + standardsPanel.getWidgetCount() + ")");
+			standardLabel.getElement().setAttribute("title",i18n.GL0575().toUpperCase() + " (" + standardsPanel.getWidgetCount() + ")");
 		} else {
-			standardLabel.setText(GL0575.toUpperCase());
+			standardLabel.setText(i18n.GL0575().toUpperCase());
+			standardLabel.getElement().setAttribute("alt",i18n.GL0575().toUpperCase());
+			standardLabel.getElement().setAttribute("title",i18n.GL0575().toUpperCase());
 		}
 	}
 
@@ -1077,7 +1267,9 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 * set the course text with count while adding and removing the course
 	 */
 	private void resetCourseCount() {		
-		courseLabel.setText(GL0574.toUpperCase());
+		courseLabel.setText(i18n.GL0574().toUpperCase());
+		courseLabel.getElement().setAttribute("alt",i18n.GL0574().toUpperCase());
+		courseLabel.getElement().setAttribute("title",i18n.GL0574().toUpperCase());
 		/*if (coursesPanel.getWidgetCount() > 0) {
 			courseLabel.setText("COURSE" + " (" + coursesPanel.getWidgetCount() + ")");
 		} else {
@@ -1088,10 +1280,15 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	AddCourseHandler addCourseHandler=new AddCourseHandler() {
 		@Override
 		public void onAddCourse(String courseName, String courseId) {
-			courseLbl.setText(courseName);
-			courseLbl.setVisible(true);
-			addCourseBtn.setText(CHANGE_COURSE);
-			removeCourseBtn.setVisible(true);
+			courseData.add(createCourseLabel(courseName, courseId + "", courseName));
+		//.	courseLbl.setText(courseName);
+			courseLabel.getElement().setAttribute("alt",courseName);
+			courseLabel.getElement().setAttribute("title",courseName);
+			courseData.setVisible(true);
+			addCourseBtn.setText(ADD_COURSE);
+			addCourseBtn.getElement().setAttribute("alt",CHANGE_COURSE);
+			addCourseBtn.getElement().setAttribute("title",CHANGE_COURSE);
+			removeCourseBtn.setVisible(false);
 			courseCode=courseId;
 		}
 	};
@@ -1099,8 +1296,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	@UiHandler("removeCourseBtn")
 	public void onClickRemoveCourseBtn(ClickEvent clickEvent){
-		courseLbl.getElement().getStyle().setDisplay(Display.NONE);
+		courseData.getElement().getStyle().setDisplay(Display.NONE);
 		addCourseBtn.setText(ADD_COURSE);
+		addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
+		addCourseBtn.getElement().setAttribute("title",ADD_COURSE);
 		removeCourseBtn.setVisible(false);
 		getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
 		courseCode="";
@@ -1150,7 +1349,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 /*	public void displayErrorMsgTeacherTip(){
 
 		errorLabelForTeacherTip.setVisible(true);
-		errorLabelForTeacherTip.setText(MessageProperties.GL1116);
+		errorLabelForTeacherTip.setText(MessageProperties.i18n.GL1116);
 		
 	}*/
 	/**
@@ -1190,6 +1389,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		} else {
 			standardMaxShow();
 			standardSgstBox.setText("");
+			standardSgstBox.getElement().setAttribute("alt","");
+			standardSgstBox.getElement().setAttribute("title","");
 		}
 	}
 
@@ -1207,11 +1408,42 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			public void onCloseLabelClick(ClickEvent event) {
 				this.getParent().removeFromParent();
 				resetCourseCount();
-				getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), id); 
+				getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), id);
 				resetStandardCount();				
 			}
 		};
 		return new DownToolTipWidgetUc(closeLabel, description);
+	}
+	
+	public DownToolTipWidgetUc createCourseLabel(final String standardCode, final String id, String description) {
+		CloseLabel closeLabel = new CloseLabel(standardCode) {
+
+			@Override
+			public void onCloseLabelClick(ClickEvent event) {
+				for(int i=0;i<courseDo.size();i++){
+					if(courseDo.get(i).toString().equalsIgnoreCase(standardCode)){
+						courseDo.remove(courseDo.get(i).toString());
+						deleteCourse(collectionDo.getGooruOid(), id,"delete");	
+					}
+				}
+				this.getParent().removeFromParent();
+			}
+		};
+		return new DownToolTipWidgetUc(closeLabel, description);
+	}
+	
+public void deleteCourse(String collectionId, String courseCode, String action) {
+	  	
+		AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionId, Integer.parseInt(courseCode), new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+			/*	CodeDo deletedObj=new CodeDo();
+				deletedObj.setCodeId(codeObj.getCodeId());
+				deletedStandardsDo.add(deletedObj);
+				standardsDo.remove(codeObj);*/								
+			}
+		});
+
 	}
 
 	@Override

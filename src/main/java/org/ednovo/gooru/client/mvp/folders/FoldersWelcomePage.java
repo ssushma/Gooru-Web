@@ -28,16 +28,13 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetButtonHandler;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -51,7 +48,7 @@ public class FoldersWelcomePage extends Composite {
 	private static FoldersWelcomePageUiBinder uiBinder = GWT
 			.create(FoldersWelcomePageUiBinder.class);
 
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField
 	Label lblStartCreateingCollection, lblCollectionDesc, lblViewWalkthrough,

@@ -57,6 +57,9 @@ public class ToolTipPopUp extends PopupPanel {
 		text.setHTML(description);
 		setContentPanel(text);
 		setPopupPosition(leftPos, rightPos);
+		popupArrow.getElement().setId("pnlPopupArrow");
+		contentPanel.getElement().setId("spnlContentPanel");
+		downPopupArrow.getElement().setId("pnlDownPopupArrow");
 	}
 	
 	
@@ -65,6 +68,9 @@ public class ToolTipPopUp extends PopupPanel {
 		setWidget(uiBinder.createAndBindUi(this));
 		setContentPanel(widget);
 		setPopupPosition(leftPos, rightPos);
+		popupArrow.getElement().setId("pnlPopupArrow");
+		contentPanel.getElement().setId("spnlContentPanel");
+		downPopupArrow.getElement().setId("pnlDownPopupArrow");
 	}
 
 

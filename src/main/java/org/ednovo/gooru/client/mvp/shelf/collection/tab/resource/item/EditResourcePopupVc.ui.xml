@@ -386,6 +386,7 @@
 							<g:FlowPanel styleName="{res1.css.standardsEditResourceCont}">
 								<uc:AppSuggestBox ui:field="standardSgstBox"
 									width="255px" height="19px" />
+								 <g:HTMLPanel ui:field="errorContainer"></g:HTMLPanel>
 								<g:Label styleName="{res1.css.standardMaxHide}" ui:field="standardMaxMsg" />
 								<g:FlowPanel ui:field="standardsPanel"
 									styleName="{res1.css.collectionStandardsMargin}" />
@@ -455,8 +456,9 @@
 		
 		<g:HTMLPanel styleName="{res.css.myFolderEditButtonContainer}" ui:field="saveButtonContainer">
 			<g:Button styleName="primary" ui:field="addResourceBtn" />
-			<g:Anchor styleName="{res.css.myFolderCollectionCancel}" 
-				ui:field="cancelResourcePopupBtnLbl" />
+			<!-- <g:Anchor styleName="{res.css.myFolderCollectionCancel}" 
+				ui:field="cancelResourcePopupBtnLbl" /> -->
+				<g:Button styleName="grayPrimaryButton" ui:field="cancelResourcePopupBtnLbl"></g:Button>
 		</g:HTMLPanel>
 		<g:Label styleName="{res.css.myFolderEditButtonContainer}" ui:field="loadingTextLbl"></g:Label>
 	</g:HTMLPanel>

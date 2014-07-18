@@ -50,13 +50,13 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.ednovo.gooru.shared.model.library.PartnerConceptListDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -88,7 +88,7 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class ProfileTopicListView extends Composite implements MessageProperties{
+public class ProfileTopicListView extends Composite{
 
 	@UiField ScrollPanel lessonScrollPanel;
 	@UiField HTMLPanel topicBlock, conceptList,collectionInfo,resourcesInside;
@@ -162,6 +162,8 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 	interface ProfileTopicListViewUiBinder extends
 			UiBinder<Widget, ProfileTopicListView> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public ProfileTopicListView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -171,9 +173,18 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicNumber;
 		setPlaceToken(placeToken);
-		assignCollectionBtn.setText(GL0104);
-		customizeCollectionBtn.setText(GL0631);
-		noCollectionLbl.setText(GL1170);
+		assignCollectionBtn.setText(i18n.GL0104());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
+		
+		customizeCollectionBtn.setText(i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
+		
+		noCollectionLbl.setText(i18n.GL1170());
+		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());
+		noCollectionLbl.getElement().setAttribute("title",i18n.GL1170());
+		
 		setTopicLabel(profileFolderDo.getTitle());
 		collectionInfo.setVisible(false);
 		if(profileFolderDo.getCollections()!=null) {
@@ -210,15 +221,39 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		AppClientFactory.getEventBus().addHandler(OpenProfileCollectionEvent.TYPE, openProfileCollectionHandler);
 		AppClientFactory.getEventBus().addHandler(SetLoadingIconEvent.TYPE, setLoadingIconHandler);
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
+		setId();
 	}
-	
+	public void setId(){
+		assignCollectionBtn.getElement().setId("btnAssignCollectionBtn");
+		customizeCollectionBtn.getElement().setId("btnCustomizeCollectionBtn");
+		noCollectionLbl.getElement().setId("lblNoCollectionLbl");
+		topicBlock.getElement().setId("pnlTopicBlock");
+		topicTitleLbl.getElement().setId("lblTopicTitleLbl");
+		libraryTopicLbl.getElement().setId("lblLibraryTopicLbl");
+		lessonScrollPanel.getElement().setId("sbLessonScrollPanel");
+		conceptList.getElement().setId("pnlConceptList");
+		loadingImage.getElement().setId("pnlLoadingImage");
+		collectionViewer.getElement().setId("pnlCollectionViewer");
+		collectionInfo.getElement().setId("pnlCollectionInfo");
+		collectionImage.getElement().setId("imgCollectionImage");
+		collectionTitleLbl.getElement().setId("htmlCollectionTitleLbl");
+		collectionDescriptionLbl.getElement().setId("htmlCollectionDescriptionLbl");
+		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
+		resourcesInside.getElement().setId("htmlResourcesInside");
+	}
 
 	public ProfileTopicListView(ProfileLibraryDo profileFolderDo, Integer conceptNumber, String placeToken, String collectionType) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
 		setPlaceToken(placeToken);
-		assignCollectionBtn.setText(GL0104);
-		customizeCollectionBtn.setText(GL0631);
+		assignCollectionBtn.setText(i18n.GL0104());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
+		
+		customizeCollectionBtn.setText(i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
+		
 		setTopicLabel(profileFolderDo.getTitle());
 		topicTitleLbl.addStyleName(style.collection());
 		searchTitle=profileFolderDo.getTitle();
@@ -254,6 +289,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		}
 		
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
+		setId();
 	}
 	
 	private void setOnlyConceptData(ArrayList<ProfileLibraryDo> profileFolderDoList, boolean isTopicCalled, final String parentId, final int partnerItemCount) {
@@ -378,7 +414,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 					if(libraryResources!=null) {
 						int resourceCount = libraryResources.size();
 						int resources=resourceCount<=4?resourceCount:4;
-						final Label resourceCountLbl = new Label(resources+" "+GL_GRR_OF+" "+GL_GRR_THE+" "+resourceCount+" "+GL1094.toLowerCase());
+						final Label resourceCountLbl = new Label(resources+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+resourceCount+" "+i18n.GL1094().toLowerCase());
 						resourcesInside.add(resourceCountLbl);
 						for(int i=0;i<resources;i++) {
 							try {
@@ -649,7 +685,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanelNew.clear();
-			toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL0676));
+			toolTipPopupPanelNew.setWidget(new GlobalToolTip(i18n.GL0676()));
 			toolTipPopupPanelNew.setStyleName("");
 			toolTipPopupPanelNew.setPopupPosition(assignCollectionBtn.getElement().getAbsoluteLeft()+8, assignCollectionBtn.getElement().getAbsoluteTop()+10);
 			toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
@@ -669,7 +705,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanelNew.clear();
-			toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL0677));
+			toolTipPopupPanelNew.setWidget(new GlobalToolTip(i18n.GL0677()));
 			toolTipPopupPanelNew.setStyleName("");
 			toolTipPopupPanelNew.setPopupPosition(customizeCollectionBtn.getElement().getAbsoluteLeft()+18, customizeCollectionBtn.getElement().getAbsoluteTop()+10);
 			toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
@@ -929,10 +965,14 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 			topicTitleLbl.setVisible(true);
 			libraryTopicLbl.setVisible(false);
 			topicTitleLbl.setText(title);
+			topicTitleLbl.getElement().setAttribute("alt",title);
+			topicTitleLbl.getElement().setAttribute("title",title);
 		} else {
 			topicTitleLbl.setVisible(false);
 			libraryTopicLbl.setVisible(true);
 			libraryTopicLbl.setText(title);
+			libraryTopicLbl.getElement().setAttribute("alt",title);
+			libraryTopicLbl.getElement().setAttribute("title",title);
 		}
 	}
 }

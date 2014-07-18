@@ -197,6 +197,7 @@ public interface ResourceService extends BaseService {
 	 */
 	public CollectionDo updateCollectionMetadata(String collectionId, String title, String description, String grade, String sharing, String vocabulary, String taxonomyCode, String updateTaxonomyByCode,String mediaType, String action)  throws GwtException, ServerDownException;
 	
+	
 	/**
 	 * Update collection metadata item info
 	 * @param collectionItemId of the collection item
@@ -392,6 +393,28 @@ public interface ResourceService extends BaseService {
 	public GoogleDriveDo getGoogleDriveFilesList(String folderId,String nextPageToken) throws GwtException, ServerDownException;
 	
 	public GoogleDriveDo updateFileShareToAnyoneWithLink(String driveFileId) throws GwtException, ServerDownException;
+
+	/**
+	 * @function refreshGoogleAccessToken 
+	 * 
+	 * @created_date : Jul 17, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param refreshToken
+	 * @throws GwtException
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void refreshGoogleAccessToken(String refreshToken) throws GwtException, ServerDownException;
 
 	//List<DriveDo> getfolderList(String id)throws GwtException, ServerDownException;
 

@@ -3,7 +3,7 @@ package org.ednovo.gooru.client.uc.suggestbox.widget;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -44,11 +44,13 @@ import com.google.gwt.user.client.ui.TextBox;
  *
  * @Reviewer:
  */
-public abstract class AutoSuggestForm extends Composite implements MessageProperties {
+public abstract class AutoSuggestForm extends Composite {
 	FlowPanel form;
 	InputListWidget txtInput = null;
 
 	String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public AutoSuggestForm(MultiWordSuggestOracle oracle) {
 		form = new FlowPanel();
@@ -179,7 +181,7 @@ public abstract class AutoSuggestForm extends Composite implements MessageProper
 			final ListItem item = new ListItem();
 			item.setStyleName("token-input-input-token-gooru");
 			txtInputBox = new TextBox();
-			txtInputBox.getElement().setAttribute("placeholder", GL1111);
+			txtInputBox.getElement().setAttribute("placeholder", i18n.GL1111());
 			txtInputBox.getElement()
 					.setAttribute(
 							"style",

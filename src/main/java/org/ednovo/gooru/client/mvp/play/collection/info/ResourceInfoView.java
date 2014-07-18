@@ -26,9 +26,6 @@ package org.ednovo.gooru.client.mvp.play.collection.info;
 
 
 import java.util.ArrayList;
-
-import java.util.Arrays;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -53,16 +50,14 @@ import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.ToolTipPopUp;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
 import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -71,9 +66,6 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
-import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.resources.css.ast.CssProperty.Value;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -90,7 +82,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandlers> implements IsResourceInfoView,MessageProperties{
+public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandlers> implements IsResourceInfoView{
 	
 	public static final String STANDARD_CODE = "code";
 	public static final String STANDARD_DESCRIPTION = "description";
@@ -123,7 +115,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	
 	@UiField static Label standaInfo;
 	
-	@UiField FlowPanel standardsInfoConatiner,licenceContainer,ratingWidgetPanel;
+	@UiField FlowPanel standardsInfoConatiner,licenceContainer,ratingWidgetPanel,resourceInfoContainerPanel;
 	
 	@UiField HTML resourceInfoSeparator,resourcetypeSeparator,lblcollectionName;
 	@UiField
@@ -177,25 +169,199 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	interface ResourceInfoViewUiBinder extends UiBinder<Widget, ResourceInfoView> {
 		
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@Inject
 	public ResourceInfoView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		standardsInfoConatiner.clear();
-		publisherText.setText(GL1835+GL_SPL_SEMICOLON);
-		courseText.setText(GL1701+GL_SPL_SEMICOLON);
-		legalText.setText(GL0730+GL_SPL_SEMICOLON);
-		standardsText.setText(GL1877+GL_SPL_SEMICOLON);
-		collectionsText.getElement().setInnerHTML(GL0620);
-		hideText.setText(GL0592);
-		resourceInfoText.setText(GL0621);
-		gradeTitle.setText(GL0165+GL_SPL_SEMICOLON+" ");
-		originalUrlTitle.setText(GL0976+GL_SPL_SEMICOLON);
-		generalLbl.setText(GL1708);
-		resourceInfoLbl.setText(GL1716);
-		educationallLbl.setText(GL1720);
-		addTagsBtn.setText(GL1795);
-		timeRequiredLabel.setText(GL1685+GL_SPL_SEMICOLON);
+
+		publisherText.setText(i18n.GL1835()+i18n.GL_SPL_SEMICOLON()+" ");
+		publisherText.getElement().setId("lblPublisherText");
+		publisherText.getElement().setAttribute("alt",i18n.GL1835());
+		publisherText.getElement().setAttribute("title",i18n.GL1835());
+
+		courseText.setText(i18n.GL1701()+i18n.GL_SPL_SEMICOLON()+" ");
+		courseText.getElement().setId("lblCourseText");
+		courseText.getElement().setAttribute("alt",i18n.GL1701());
+		courseText.getElement().setAttribute("title",i18n.GL1701());
+		
+		legalText.setText(i18n.GL0730()+i18n.GL_SPL_SEMICOLON()+" ");
+		legalText.getElement().setId("lblLegalText");
+		legalText.getElement().setAttribute("alt",i18n.GL0730());
+		legalText.getElement().setAttribute("title",i18n.GL0730());
+		
+		standardsText.setText(i18n.GL1877()+i18n.GL_SPL_SEMICOLON()+" ");
+		standardsText.getElement().setId("lblStandardsText");
+		standardsText.getElement().setAttribute("alt",i18n.GL1877());
+		standardsText.getElement().setAttribute("title",i18n.GL1877());
+
+		collectionsText.getElement().setInnerHTML(i18n.GL0620());
+		collectionsText.getElement().setId("pnlCollectionsText");
+		collectionsText.getElement().setAttribute("alt",i18n.GL0620());
+		collectionsText.getElement().setAttribute("title",i18n.GL0620());
+		
+		hideText.setText(i18n.GL0592());
+		hideText.getElement().setId("lblHideText");
+		hideText.getElement().setAttribute("alt",i18n.GL0592());
+		hideText.getElement().setAttribute("title",i18n.GL0592());
+		
+		resourceInfoText.setText(i18n.GL0621());
+		resourceInfoText.getElement().setId("lblResourceInfoText");
+		resourceInfoText.getElement().setAttribute("alt",i18n.GL0621());
+		resourceInfoText.getElement().setAttribute("title",i18n.GL0621());
+		
+		gradeTitle.setText(i18n.GL0165()+i18n.GL_SPL_SEMICOLON()+" ");
+		gradeTitle.getElement().setId("lblGradeTitle");
+		gradeTitle.getElement().setAttribute("alt",i18n.GL0165());
+		gradeTitle.getElement().setAttribute("title",i18n.GL0165());
+
+		originalUrlTitle.setText(i18n.GL0976()+i18n.GL_SPL_SEMICOLON()+" ");
+		originalUrlTitle.getElement().setId("lblOriginalUrlTitle");
+		originalUrlTitle.getElement().setAttribute("alt",i18n.GL0976());
+		originalUrlTitle.getElement().setAttribute("title",i18n.GL0976());
+
+		generalLbl.setText(i18n.GL1708());
+		generalLbl.getElement().setId("lblGeneralLbl");
+		generalLbl.getElement().setAttribute("alt",i18n.GL1708());
+		generalLbl.getElement().setAttribute("title",i18n.GL1708());
+		
+		resourceInfoLbl.setText(i18n.GL1716());
+		resourceInfoLbl.getElement().setId("lblResourceInfoLbl");
+		resourceInfoLbl.getElement().setAttribute("alt",i18n.GL1716());
+		resourceInfoLbl.getElement().setAttribute("title",i18n.GL1716());
+		
+		educationallLbl.setText(i18n.GL1720());
+		educationallLbl.getElement().setId("lblEducationallLbl");
+		educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
+		educationallLbl.getElement().setAttribute("title",i18n.GL1720());
+		
+		addTagsBtn.setText(i18n.GL1795());
+		addTagsBtn.getElement().setId("btnAddTagsBtn");
+		addTagsBtn.getElement().setAttribute("alt",i18n.GL1795());
+		addTagsBtn.getElement().setAttribute("title",i18n.GL1795());
+		
+		timeRequiredLabel.setText(i18n.GL1685()+i18n.GL_SPL_SEMICOLON()+" ");
+		timeRequiredLabel.getElement().setId("lblTimeRequiredLabel");
+		timeRequiredLabel.getElement().setAttribute("alt",i18n.GL1685());
+		timeRequiredLabel.getElement().setAttribute("title",i18n.GL1685());
+		
 		timeRequiredvalue.setText("");
+		timeRequiredvalue.getElement().setId("lblTimeRequiredvalue");
+		timeRequiredvalue.getElement().setAttribute("alt","");
+		timeRequiredvalue.getElement().setAttribute("title","");
+		
+		
+		resourceInfoContainerPanel.getElement().setId("fpnlResourceInfoContainerPanel");
+		resourceTypeImage.getElement().setId("lblResourceTypeImage");
+		lblcollectionName.getElement().setId("htmlLblcollectionName");
+		mobileFriendly.getElement().setId("pnlMobileFriendly");
+		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
+		lblresourceType.getElement().setId("lblresourceType");
+		resourceInfoSeparator.getElement().setId("htmlResourceInfoSeparator");
+		resourceView.getElement().setId("lblResourceView");
+		resourcetypeSeparator.getElement().setId("htmlResourcetypeSeparator");
+		learningobjectiveText.getElement().setId("lblLearningobjectiveText");
+		resourceDescriptionTitle.getElement().setId("pnlResourceDescriptionTitle");
+		resourceDescription.getElement().setId("pnlResourceDescription");
+		gradesPanel.getElement().setId("pnlGradesPanel");
+		gradesText.getElement().setId("pnlGradesText");
+		coursePanel.getElement().setId("pnlCoursePanel");
+		courseInfo.getElement().setId("pnlCourseInfo");
+		standardsContentContainer.getElement().setId("pnlStandardsContentContainer");
+		standaInfo.getElement().setId("lblStandaInfo");
+		standardsInfoConatiner.getElement().setId("fpnlStandardsInfoConatiner");
+		originalUrlText.getElement().setId("pnlOriginalUrlText");
+		thumbnailPanel.getElement().setId("pnlThumbnailPanel");
+		thumbnailurlValue.getElement().setId("pnlThumbnailurlValue");
+		thumbnailText.getElement().setId("lblThumbnailText");
+		aggregatorPanel.getElement().setId("pnlAggregatorPanel");
+		aggregatorVal.getElement().setId("pnlAggregatorVal");
+		aggregatorText.getElement().setId("lblAggregatorText");
+		publisherPanel.getElement().setId("pnlPublisherPanel");
+		lblPublisher.getElement().setId("pnlLblPublisher");
+		hostPanel.getElement().setId("pnlHostPanel");
+		hostLbl.getElement().setId("lblHostLbl");
+		hostType.getElement().setId("lblHostType");
+		licenceContainer.getElement().setId("pnlLicenceContainer");
+		rightsLogoContainer.getElement().setId("pnlRightsLogoContainer");
+		oerPanel.getElement().setId("pnlOerPanel");
+		oerAvailability.getElement().setId("lblOerAvailability");
+		oerLbl.getElement().setId("lblOerLbl");
+		eduAllignPanel.getElement().setId("pnlEduAllignPanel");
+		eduAllignLbl.getElement().setId("lblEduAllignLbl");
+		eduAllignType.getElement().setId("lblEduAllignType");
+		eduUsePanel.getElement().setId("pnlEduUsePanel");
+		eduUseLbl.getElement().setId("lblEduUseLbl");
+		eduUseType.getElement().setId("pnlEduUseType");
+		eduRolePanel.getElement().setId("pnlEduRolePanel");
+		eduRoleLbl.getElement().setId("pnlEduRoleLbl");
+		eduRoleType.getElement().setId("lblEduRoleType");
+		interactivityTypePanel.getElement().setId("pnlInteractivityTypePanel");
+		interactiveLbl.getElement().setId("lblInteractiveLbl");
+		interactiveType.getElement().setId("lblInteractiveType");
+		ageRangePanel.getElement().setId("pnlAgeRangePanel");
+		ageRangeLbl.getElement().setId("lblAgeRangeLbl");
+		ageRangeType.getElement().setId("lblAgeRangeType");
+		dKnowledgePanel.getElement().setId("pnlDKnowledgePanel");
+		dKnowledgeLbl.getElement().setId("lblDKnowledgeLbl");
+		dKnowledgeType.getElement().setId("pnlDKnowledgeType");
+		momentsoflearningPanel.getElement().setId("pnlMomentsoflearningPanel");
+		momentsoflearningLbl.getElement().setId("lblMomentsoflearningLbl");
+		momentsoflearningType.getElement().setId("pnlMomentsoflearningType");
+		readingLevelPanel.getElement().setId("pnlReadingLevelPanel");
+		readingLevelLbl.getElement().setId("lblReadingLevelLbl");
+		readingLevelType.getElement().setId("pnlReadingLevelType");
+		schoolLevelPanel.getElement().setId("pnlSchoolLevelPanel");
+		schoolLevelLbl.getElement().setId("lblSchoolLevelLbl");
+		schoolLevelType.getElement().setId("lblSchoolLevelType");
+		resourceInfoLbl.getElement().setId("lblResourceInfoLbl");
+		dateCreatedPanel.getElement().setId("pnlDateCreatedPanel");
+		dateCreatedLbl.getElement().setId("lblDateCreatedLbl");
+		createdDateInfo.getElement().setId("lblCreatedDateInfo");
+		countryCodePanel.getElement().setId("pnlCountryCodePanel");
+		countryCodeLbl.getElement().setId("lblCountryCodeLbl");
+		countryCodeType.getElement().setId("lblCountryCodeType");
+		languagePanel.getElement().setId("pnlLanguagePanel");
+		languageLbl.getElement().setId("lblLanguageLbl");
+		languageType.getElement().setId("lblLanguageType");
+		DataTypePanel.getElement().setId("pnlDataTypePanel");
+		dataTypeLbl.getElement().setId("lblDataTypeLbl");
+		dataTypeFormat.getElement().setId("lblDataTypeFormat");
+		authorPanel.getElement().setId("pnlAuthorPanel");
+		authorLbl.getElement().setId("lblAuthorLbl");
+		authorName.getElement().setId("lblAuthorName");
+		copyRightPanel.getElement().setId("pnlCopyRightPanel");
+		copyRightLbl.getElement().setId("lblCopyRightLbl");
+		copyRightType.getElement().setId("lblCopyRightType");
+		keyWordsPanel.getElement().setId("pnlKeyWordsPanel");
+		keywordsTitle.getElement().setId("lblKeywordsTitle");
+		keywordsInfo.getElement().setId("lblKeywordsInfo");
+		addsPanel.getElement().setId("pnlAddsPanel");
+		addsTitle.getElement().setId("lblAddsTitle");
+		addsInfo.getElement().setId("pnlAddsInfo");
+		accessibilityPanel.getElement().setId("pnlAccessibilityPanel");
+		accesibilityLbl.getElement().setId("lblAccesibilityLbl");
+		mobileFriendlyPanel.getElement().setId("pnlMobileFriendlyPanel");
+		mbFriendlyLbl.getElement().setId("lblMbFriendlyLbl");
+		mbFriendlyText.getElement().setId("lblMbFriendlyText");
+		accessModePanel.getElement().setId("pnlAccessModePanel");
+		accessModelLbl.getElement().setId("lblAccessModelLbl");
+		accessModeType.getElement().setId("lblAccessModeType");
+		mediaFeaturePanel.getElement().setId("pnlMediaFeaturePanel");
+		mediaFeatureLbl.getElement().setId("lblMediaFeatureLbl");
+		mediaFeatureType.getElement().setId("pnlMediaFeatureType");
+		controlPanel.getElement().setId("pnlControlPanel");
+		controlLbl.getElement().setId("lblControlLbl");
+		controlType.getElement().setId("lblControlType");
+		accessHazardPanel.getElement().setId("pnlAccessHazardPanel");
+		acessHazardlLbl.getElement().setId("lblAcessHazardlLbl");
+		acessHazardType.getElement().setId("lblAcessHazardType");
+		collectionsCount.getElement().setId("lblCollectionsCount");
+		scrollPanel.getElement().setId("sbScrollPanel");
+		reosourceReleatedCollections.getElement().setId("pnlReosourceReleatedCollections");
+		hideButton.getElement().setId("btnHideButton");
 		
 		resourceDescription.getElement().setAttribute("style", "margin-top:5px;");
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
@@ -278,8 +444,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			List<Integer> gradeListInt = new  ArrayList<Integer>();
 			String[] gradeslist=collectionItemDo.getResource().getGrade().split(",");
 			for (String eachGrade1 : gradeslist) {
-				if (!eachGrade1.equalsIgnoreCase("Kindergarten")
-						&& !eachGrade1.equalsIgnoreCase("Higher Education")) {
+				if (!eachGrade1.trim().equalsIgnoreCase("Kindergarten")
+						&& !eachGrade1.trim().equalsIgnoreCase("Higher Education")) {
 					eachGrade1 = eachGrade1.replaceAll("th", "")
 							.replaceAll("TH", "").replaceAll("st", "")
 							.replaceAll("ST", "").replaceAll("nd", "")
@@ -329,6 +495,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 		
 			lblcollectionName.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
+			lblcollectionName.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
+			lblcollectionName.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			lblcollectionName.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTitleStyleName());
 			
 			if(collectionItemDo.getResource().getCustomFieldValues()!=null ){
@@ -517,7 +685,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 	}
 		if(isAccessibilityInfo){
-			accesibilityLbl.setText(GL1703);
+			accesibilityLbl.setText(i18n.GL1703());
+			accesibilityLbl.getElement().setAttribute("alt",i18n.GL1703());
+			accesibilityLbl.getElement().setAttribute("title",i18n.GL1703());
 			accesibilityLbl.setVisible(true);
 			accessibilityPanel.setVisible(true);
 		}else{
@@ -703,7 +873,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			
 			if(isAggregator){
 				aggregatorPanel.setVisible(true);
-				aggregatorText.setText(GL1748);
+				aggregatorText.setText(i18n.GL1748());
+				aggregatorText.getElement().setAttribute("alt",i18n.GL1748());
+				aggregatorText.getElement().setAttribute("title",i18n.GL1748());
 				aggregatorText.setVisible(true);
 				aggregatorVal.setVisible(true);
 			}else{
@@ -732,8 +904,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 	
 	private void setGrades(List<String> gradesdetails) {
-		// TODO Auto-generated method stub
-		
 		gradesText.clear();
 		if(gradesdetails == null || gradesdetails.size() == 0 || gradesdetails.contains(null) || gradesdetails.contains("") ){
 		}else{
@@ -766,7 +936,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setPublisherDetails(List<String> publisher) {
-		// TODO Auto-generated method stub
+	
 		lblPublisher.clear();
 		if(publisher == null || publisher.size() == 0 || publisher.contains(null) || publisher.contains("") ){
 		}else{
@@ -800,7 +970,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setAggregatorvalues(List<String> aggregatorlist) {
-		// TODO Auto-generated method stub
+	
 		aggregatorVal.clear();
 		if(aggregatorlist == null || aggregatorlist.size() == 0 || aggregatorlist.contains(null) || aggregatorlist.contains("") ){
 		}else{
@@ -833,7 +1003,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setTimeDurationDetails(String cfDuration) {
-		// TODO Auto-generated method stub
+	
 		if(cfDuration.contains(" ")){
 			String[] spiltTimeBySpace	= cfDuration.split(" ");
 		if(spiltTimeBySpace.length>0){
@@ -841,7 +1011,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					String[] 	spiltTimeAfterColon = spiltTimeBySpace[1].split(":");
 					if(spiltTimeAfterColon.length>2){
 						if(spiltTimeAfterColon[2].length()>2){
-							timeRequiredvalue.setText(spiltTimeAfterColon[1]+GL0958+" "+spiltTimeAfterColon[2].substring(0, 2)+GL0959);
+							timeRequiredvalue.setText(spiltTimeAfterColon[1]+i18n.GL0958()+" "+spiltTimeAfterColon[2].substring(0, 2)+i18n.GL0959());
+							timeRequiredvalue.getElement().setAttribute("alt",spiltTimeAfterColon[1]+i18n.GL0958()+" "+spiltTimeAfterColon[2].substring(0, 2)+i18n.GL0959());
+							timeRequiredvalue.getElement().setAttribute("title",spiltTimeAfterColon[1]+i18n.GL0958()+" "+spiltTimeAfterColon[2].substring(0, 2)+i18n.GL0959());
 							isTimeDuration =true;
 						}
 					}
@@ -853,12 +1025,14 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 	
 	private void setaddsDetails(List<String> addsdetails) {
-		// TODO Auto-generated method stub
+	
 		addsInfo.clear();
 		if(addsdetails == null || addsdetails.size() == 0 || addsdetails.contains(null) || addsdetails.contains("") ){
 			addsPanel.setVisible(false);
 		}else{
-			addsTitle.setText(GL1878+GL_SPL_SEMICOLON);
+			addsTitle.setText(i18n.GL1878()+i18n.GL_SPL_SEMICOLON()+" ");
+			addsTitle.getElement().setAttribute("alt",i18n.GL1878());
+			addsTitle.getElement().setAttribute("title",i18n.GL1878());
 		if(addsdetails.size()>0){
 			if(addsdetails.size()==1){
 				final Label addsLabel=new Label(" "+addsdetails.get(0));
@@ -891,18 +1065,22 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setSchoolLevelDetails(String cfSchoolLevel) {
-		// TODO Auto-generated method stub
+	
 		if(cfSchoolLevel!=null&&!cfSchoolLevel.equalsIgnoreCase("")&&!cfSchoolLevel.equalsIgnoreCase("null")){
 			schoolLevelPanel.setVisible(true);
-			schoolLevelLbl.setText(GL1868+GL_SPL_SEMICOLON);
+			schoolLevelLbl.setText(i18n.GL1868()+i18n.GL_SPL_SEMICOLON()+" ");
+			schoolLevelLbl.getElement().setAttribute("alt",i18n.GL1868());
+			schoolLevelLbl.getElement().setAttribute("title",i18n.GL1868());
 			schoolLevelType.setText(" "+cfSchoolLevel);
+			schoolLevelType.getElement().setAttribute("alt"," "+cfSchoolLevel);
+			schoolLevelType.getElement().setAttribute("title"," "+cfSchoolLevel);
 		}else{
 			schoolLevelPanel.setVisible(false);
 		}
 	}
 
 	private void clearALlPanels() {
-		// TODO Auto-generated method stub
+	
 		hostPanel.setVisible(false);
 		oerPanel.setVisible(false);
 		eduAllignPanel.setVisible(false);
@@ -925,11 +1103,15 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setOerDetails(String oerdetails) {
-		// TODO Auto-generated method stub
+	
 		if(oerdetails!=null&&!oerdetails.equalsIgnoreCase("")&&!oerdetails.equalsIgnoreCase("null")){
 			oerPanel.setVisible(true);
-			oerLbl.setText(GL1834+GL_SPL_SEMICOLON);
+			oerLbl.setText(i18n.GL1834()+i18n.GL_SPL_SEMICOLON()+" ");
+			oerLbl.getElement().setAttribute("alt",i18n.GL1834());
+			oerLbl.getElement().setAttribute("title",i18n.GL1834());
 			oerAvailability.setText(" "+oerdetails);
+			oerAvailability.getElement().setAttribute("alt"," "+oerdetails);
+			oerAvailability.getElement().setAttribute("title"," "+oerdetails);
 		}else{
 			oerPanel.setVisible(false);
 		}
@@ -940,7 +1122,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(momentoflearningdetails == null || momentoflearningdetails.size() == 0 || momentoflearningdetails.contains(null) || momentoflearningdetails.contains("") ){
 			momentsoflearningPanel.setVisible(false);
 		}else{
-			momentsoflearningLbl.setText(GL1678+GL_SPL_SEMICOLON);
+	        momentsoflearningLbl.setText(i18n.GL1678()+i18n.GL_SPL_SEMICOLON()+" ");
+			momentsoflearningLbl.getElement().setAttribute("alt",i18n.GL1678());
+			momentsoflearningLbl.getElement().setAttribute("title",i18n.GL1678());
 		if(momentoflearningdetails.size()>0){
 			final Label momentsofLabel=new Label(" "+momentoflearningdetails.get(0));
 			momentsofLabel.getElement().setAttribute("style", "float: left;");
@@ -961,12 +1145,14 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setDepthofknowledgeDetails(List<String> depthOfKnowledgedetails) {
-		// TODO Auto-generated method stub
+	
 		dKnowledgeType.clear();
 		if(depthOfKnowledgedetails == null || depthOfKnowledgedetails.size() == 0 || depthOfKnowledgedetails.contains(null) || depthOfKnowledgedetails.contains("") ){
 			dKnowledgePanel.setVisible(false);
 		}else{
-			dKnowledgeLbl.setText(GL1693+GL_SPL_SEMICOLON);
+			dKnowledgeLbl.setText(i18n.GL1693()+i18n.GL_SPL_SEMICOLON()+" ");
+			dKnowledgeLbl.getElement().setAttribute("alt",i18n.GL1693());
+			dKnowledgeLbl.getElement().setAttribute("title",i18n.GL1693());
 		if(depthOfKnowledgedetails.size()>0){
 			if(depthOfKnowledgedetails.size()==1){
 				final Label deapthknowledgeLabel=new Label(" "+depthOfKnowledgedetails.get(0));
@@ -998,19 +1184,25 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void seteducationaluseDetails(List<String> eduUsedetails) {
-		// TODO Auto-generated method stub
+	
 		eduUseType.clear();
 		if(eduUsedetails == null || eduUsedetails.size() == 0 || eduUsedetails.contains(null) || eduUsedetails.contains("") ){
 			eduUsePanel.setVisible(false);
 		}else{
-			educationallLbl.setText(GL1720);
+			educationallLbl.setText(i18n.GL1720());
+			educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
+			educationallLbl.getElement().setAttribute("title",i18n.GL1720());
 		if(eduUsedetails.size()>0){
 			final Label eduUseLabel=new Label(" "+eduUsedetails.get(0));
 			eduUseLabel.getElement().setAttribute("style", "float: left;");
 			eduUseType.add(eduUseLabel);
 			eduUsePanel.setVisible(true);
-			educationallLbl.setText(GL1720);
-			eduUseLbl.setText(GL1664+GL_SPL_SEMICOLON);
+			educationallLbl.setText(i18n.GL1720());
+			educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
+			educationallLbl.getElement().setAttribute("title",i18n.GL1720());
+			eduUseLbl.setText(i18n.GL1664()+i18n.GL_SPL_SEMICOLON()+" ");
+			eduUseLbl.getElement().setAttribute("alt",i18n.GL1664());
+			eduUseLbl.getElement().setAttribute("title",i18n.GL1664());
 			educationallLbl.setVisible(true);
 		}
 		if(eduUsedetails.size()>2){
@@ -1021,42 +1213,56 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			eduUseLabel.addMouseOverHandler(new MouseOverShowToolTip(eduusewidget));
 			eduUseLabel.addMouseOutHandler(new MouseOutHideToolTip());
 			eduUsePanel.setVisible(true);
-			educationallLbl.setText(GL1720);
-			eduUseLbl.setText(GL1664+GL_SPL_SEMICOLON);
+			educationallLbl.setText(i18n.GL1720());
+			educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
+			educationallLbl.getElement().setAttribute("title",i18n.GL1720());
+			eduUseLbl.setText(i18n.GL1664()+i18n.GL_SPL_SEMICOLON()+" ");
+			eduUseLbl.getElement().setAttribute("alt",i18n.GL1664());
+			eduUseLbl.getElement().setAttribute("title",i18n.GL1664());
 			educationallLbl.setVisible(true);
 		}
 		}
 	}
 
 	private void setAcessHazardDetails(String accesshazard) {
-		// TODO Auto-generated method stub
+	
 		if(accesshazard!=null&&!accesshazard.equalsIgnoreCase("")&&!accesshazard.equalsIgnoreCase("null")){
 			accessHazardPanel.setVisible(true);
 			acessHazardType.setText(" "+accesshazard);
-			acessHazardlLbl.setText(GL1705+GL_SPL_SEMICOLON);
+			acessHazardType.getElement().setAttribute("alt"," "+accesshazard);
+			acessHazardType.getElement().setAttribute("title"," "+accesshazard);
+			acessHazardlLbl.setText(i18n.GL1705()+i18n.GL_SPL_SEMICOLON()+" ");
+			acessHazardlLbl.getElement().setAttribute("alt",i18n.GL1705());
+			acessHazardlLbl.getElement().setAttribute("title",i18n.GL1705());
 		}else{
 		accessHazardPanel.setVisible(false);
 		}
 	}
 
 	private void setcontrolflexibilityDetails(String controlflexibility) {
-		// TODO Auto-generated method stub
+	
 		if(controlflexibility!=null&&!controlflexibility.equalsIgnoreCase("")&&!controlflexibility.equalsIgnoreCase("null")){
 			controlPanel.setVisible(true);
 			controlType.setText(" "+controlflexibility);
-			controlLbl.setText(GL1704+GL_SPL_SEMICOLON);
+			controlType.getElement().setAttribute("alt"," "+controlflexibility);
+			controlType.getElement().setAttribute("title"," "+controlflexibility);
+			controlLbl.setText(i18n.GL1704()+i18n.GL_SPL_SEMICOLON()+" ");
+			controlLbl.getElement().setAttribute("alt",i18n.GL1704());
+			controlLbl.getElement().setAttribute("title",i18n.GL1704());
 		}else{
 			controlPanel.setVisible(false);
 		}
 	}
 
 	private void setmediafeaturesDetails(List<String> mediaFeatures) {
-		// TODO Auto-generated method stub
+	
 		mediaFeatureType.clear();
 		if(mediaFeatures == null || mediaFeatures.size() == 0 || mediaFeatures.contains(null) || mediaFeatures.contains("") ){
 			mediaFeaturePanel.setVisible(false);
 		}else{
-			mediaFeatureLbl.setText(GL1706+GL_SPL_SEMICOLON);
+            mediaFeatureLbl.setText(i18n.GL1706()+i18n.GL_SPL_SEMICOLON()+" ");
+			mediaFeatureLbl.getElement().setAttribute("alt",i18n.GL1706());
+			mediaFeatureLbl.getElement().setAttribute("title",i18n.GL1706());
 		if(mediaFeatures.size()>0){
 			
 			if(mediaFeatures.size()==1){
@@ -1092,7 +1298,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(acessmode == null || acessmode.size() == 0 || acessmode.contains(null) || acessmode.contains("") ){
 			accessModePanel.setVisible(false);
 		}else{
-			accessModelLbl.setText(GL1707+GL_SPL_SEMICOLON);
+			accessModelLbl.setText(i18n.GL1707()+i18n.GL_SPL_SEMICOLON()+" ");
+			accessModelLbl.getElement().setAttribute("alt",i18n.GL1707());
+			accessModelLbl.getElement().setAttribute("title",i18n.GL1707());
 		if(acessmode.size()>0){
 			
 			if(acessmode.size()==1){
@@ -1124,17 +1332,25 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setmobilefriendlynessdetails(String mediaType) {
-		// TODO Auto-generated method stub
+	
 		if(mediaType!=null&&!mediaType.equalsIgnoreCase("")&&!mediaType.equalsIgnoreCase("null")){
 			if(mediaType.equals(NOT_FRIENDY_TAG)){
 				mobileFriendlyPanel.setVisible(true);
-				mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
-				mbFriendlyText.setText(" "+GL1735.toUpperCase());
+				mbFriendlyLbl.setText(i18n.GL1687()+i18n.GL_SPL_SEMICOLON()+" ");
+				mbFriendlyLbl.getElement().setAttribute("alt",i18n.GL1687());
+				mbFriendlyLbl.getElement().setAttribute("title",i18n.GL1687());
+				mbFriendlyText.setText(" "+i18n.GL1735().toUpperCase());
+				mbFriendlyText.getElement().setAttribute("alt"," "+i18n.GL1735().toUpperCase());
+				mbFriendlyText.getElement().setAttribute("title"," "+i18n.GL1735().toUpperCase());
 				isAccessibilityInfo=true;
 			}else{
 				mobileFriendlyPanel.setVisible(true);
-				mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
-				mbFriendlyText.setText(" "+GL_GRR_YES.toUpperCase());
+				mbFriendlyLbl.setText(i18n.GL1687()+i18n.GL_SPL_SEMICOLON()+" ");
+				mbFriendlyLbl.getElement().setAttribute("alt",i18n.GL1687());
+				mbFriendlyLbl.getElement().setAttribute("title",i18n.GL1687());
+				mbFriendlyText.setText(" "+i18n.GL_GRR_YES().toUpperCase());
+				mbFriendlyText.getElement().setAttribute("alt"," "+i18n.GL_GRR_YES().toUpperCase());
+				mbFriendlyText.getElement().setAttribute("title"," "+i18n.GL_GRR_YES().toUpperCase());
 				isAccessibilityInfo=true;
 			}
 		}else{
@@ -1143,20 +1359,24 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void showreadingLevelDetails(List<String> readinglevel) {
-		// TODO Auto-generated method stub
+	
 		readingLevelType.clear();
 		if(readinglevel == null || readinglevel.size() == 0 || readinglevel.contains(null) || readinglevel.contains("") ){
 			readingLevelPanel.setVisible(false);
 		}else{
 		if(readinglevel.size()>0){
 			if(readinglevel.size()==1){
-				readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
+				readingLevelLbl.setText(i18n.GL1694()+i18n.GL_SPL_SEMICOLON()+" ");
+				readingLevelLbl.getElement().setAttribute("alt",i18n.GL1694());
+				readingLevelLbl.getElement().setAttribute("title",i18n.GL1694());
 				final Label readingLabel=new Label(" "+readinglevel.get(0));
 				readingLabel.getElement().setAttribute("style", "float: left;");
 				readingLevelType.add(readingLabel);
 				readingLevelPanel.setVisible(true);
 			} if(readinglevel.size()==2){
-				readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
+				readingLevelLbl.setText(i18n.GL1694()+i18n.GL_SPL_SEMICOLON()+" ");
+				readingLevelLbl.getElement().setAttribute("alt",i18n.GL1694());
+				readingLevelLbl.getElement().setAttribute("title",i18n.GL1694());
 				final Label readingLabel=new Label(" "+readinglevel.get(0)+","+readinglevel.get(1));
 				readingLabel.getElement().setAttribute("style", "float: left;");
 				readingLevelType.add(readingLabel);
@@ -1165,7 +1385,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 		if(readinglevel.size()>2){
 			
-			readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
+			readingLevelLbl.setText(i18n.GL1694()+i18n.GL_SPL_SEMICOLON()+" ");
+			readingLevelLbl.getElement().setAttribute("alt",i18n.GL1694());
+			readingLevelLbl.getElement().setAttribute("title",i18n.GL1694());
 			final Label readingCountLabel=new Label("+"+(readinglevel.size()-2)); 
 			readingCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
 			final Label readingLabelNew=new Label(" "+readinglevel.get(0)+","+readinglevel.get(1));
@@ -1181,20 +1403,24 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setkeywordsDetails(List<String> keywords) {
-		// TODO Auto-generated method stub
+	
 		keywordsInfo.clear();
 		if(keywords == null || keywords.size() == 0 || keywords.contains(null) || keywords.contains("") ){
 			keyWordsPanel.setVisible(false);
 		}else{
 		if(keywords.size()>0){
 			if(keywords.size()==1){
-				keywordsTitle.setText(GL1876+GL_SPL_SEMICOLON);
+				keywordsTitle.setText(i18n.GL1876()+i18n.GL_SPL_SEMICOLON()+" ");
+				keywordsTitle.getElement().setAttribute("alt",i18n.GL1876());
+				keywordsTitle.getElement().setAttribute("title",i18n.GL1876());
 				final Label keywordLabel=new Label(" "+keywords.get(0));
 				keywordLabel.getElement().setAttribute("style", "float: left;");
 				keywordsInfo.add(keywordLabel);
 				keyWordsPanel.setVisible(true);
 			} if(keywords.size()==2){
-				keywordsTitle.setText(GL1876+GL_SPL_SEMICOLON);
+				keywordsTitle.setText(i18n.GL1876()+i18n.GL_SPL_SEMICOLON()+" ");
+				keywordsTitle.getElement().setAttribute("alt",i18n.GL1876());
+				keywordsTitle.getElement().setAttribute("title",i18n.GL1876());
 				final Label keywordLabel=new Label(" "+keywords.get(0)+","+keywords.get(1));
 				keywordLabel.getElement().setAttribute("style", "float: left;");
 				keywordsInfo.add(keywordLabel);
@@ -1202,7 +1428,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}
 		}
 		if(keywords.size()>2){
-			keywordsTitle.setText(GL1876+GL_SPL_SEMICOLON);
+			keywordsTitle.setText(i18n.GL1876()+i18n.GL_SPL_SEMICOLON()+" ");
+			keywordsTitle.getElement().setAttribute("alt",i18n.GL1876());
+			keywordsTitle.getElement().setAttribute("title",i18n.GL1876());
 			final Label keywordCountLabel=new Label("+"+(keywords.size()-2)); 
 			keywordCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
 			final Label keywordsLabelNew=new Label(" "+keywords.get(0)+","+keywords.get(1));
@@ -1218,77 +1446,105 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 
 	private void setCopyRightHolderDetails(String copyRightHolder) {
-		// TODO Auto-generated method stub
+	
 		if(copyRightHolder!=null&&!copyRightHolder.equalsIgnoreCase("")&&!copyRightHolder.equalsIgnoreCase("null")){
 			copyRightPanel.setVisible(true);
 			copyRightType.setText(" "+copyRightHolder);
-			copyRightLbl.setText(GL1699+GL_SPL_SEMICOLON);
+			copyRightType.getElement().setAttribute("alt",copyRightHolder);
+			copyRightType.getElement().setAttribute("title",copyRightHolder);
+			copyRightLbl.setText(i18n.GL1699()+i18n.GL_SPL_SEMICOLON()+" ");
+			copyRightLbl.getElement().setAttribute("alt",i18n.GL1699());
+			copyRightLbl.getElement().setAttribute("title",i18n.GL1699());
 		}else{
 			copyRightPanel.setVisible(false);
 		}
 	}
 
 	private void setAuthorDetails(String author) {
-		// TODO Auto-generated method stub
+	
 		if(author!=null&&!author.equalsIgnoreCase("")&&!author.equalsIgnoreCase("null")){
 			authorPanel.setVisible(true);
-			authorLbl.setText(GL0573+GL_SPL_SEMICOLON);
+			authorLbl.setText(i18n.GL0573()+i18n.GL_SPL_SEMICOLON()+" ");
+			authorLbl.getElement().setAttribute("alt",i18n.GL0573());
+			authorLbl.getElement().setAttribute("title",i18n.GL0573());
 			authorName.setText(" "+author);
+			authorName.getElement().setAttribute("alt",author);
+			authorName.getElement().setAttribute("title",author);
 		}else{
 			authorPanel.setVisible(false);
 		}
 	}
 
 	private void setdataTypeDetails(String dataType) {
-		// TODO Auto-generated method stub
+	
 		if(dataType!=null&&!dataType.equalsIgnoreCase("")&&!dataType.equalsIgnoreCase("null")){
 			DataTypePanel.setVisible(true);
 			dataTypeFormat.setText(" "+dataType);
-			dataTypeLbl.setText(GL1688+GL_SPL_SEMICOLON);
+			dataTypeFormat.getElement().setAttribute("alt",dataType);
+			dataTypeFormat.getElement().setAttribute("title",dataType);
+			dataTypeLbl.setText(i18n.GL1688()+i18n.GL_SPL_SEMICOLON()+" ");
+			dataTypeLbl.getElement().setAttribute("alt",i18n.GL1688());
+			dataTypeLbl.getElement().setAttribute("title",i18n.GL1688());
 		}else{
 			DataTypePanel.setVisible(false);
 		}
 	}
 
 	private void setlanguageDetails(String language) {
-		// TODO Auto-generated method stub
+	
 		if(language!=null&&!language.equalsIgnoreCase("")&&!language.equalsIgnoreCase("null")){
 			languagePanel.setVisible(true);
 			languageType.setText(" "+language);
-			languageLbl.setText(GL1696+GL_SPL_SEMICOLON);
+			languageType.getElement().setAttribute("alt",language);
+			languageType.getElement().setAttribute("title",language);
+			languageLbl.setText(i18n.GL1696()+i18n.GL_SPL_SEMICOLON()+" ");
+			languageLbl.getElement().setAttribute("alt",i18n.GL1696());
+			languageLbl.getElement().setAttribute("title",i18n.GL1696());
 		}else{
 			languagePanel.setVisible(false);
 		}
 	}
 
 	private void setCountryCodeDetails(String countryCode) {
-		// TODO Auto-generated method stub
+	
 		if(countryCode!=null&&!countryCode.equalsIgnoreCase("")&&!countryCode.equalsIgnoreCase("null")){
 			countryCodePanel.setVisible(true);
 			countryCodeType.setText(" "+countryCode);
-			countryCodeLbl.setText(GL1697+GL_SPL_SEMICOLON);
+			countryCodeType.getElement().setAttribute("alt",countryCode);
+			countryCodeType.getElement().setAttribute("title",countryCode);
+			countryCodeLbl.setText(i18n.GL1697()+i18n.GL_SPL_SEMICOLON()+" ");
+			countryCodeLbl.getElement().setAttribute("alt",i18n.GL1697());
+			countryCodeLbl.getElement().setAttribute("title",i18n.GL1697());
 		}else{
 			countryCodePanel.setVisible(false);
 		}
 	}
 
 	private void setageRangeDetails(String ageRange) {
-		// TODO Auto-generated method stub
+	
 		if(ageRange!=null&&!ageRange.equalsIgnoreCase("")&&!ageRange.equalsIgnoreCase("null")){
 			ageRangePanel.setVisible(true);
 			ageRangeType.setText(" "+ageRange);
-			ageRangeLbl.setText(GL1692+GL_SPL_SEMICOLON);
+			ageRangeType.getElement().setAttribute("alt",ageRange);
+			ageRangeType.getElement().setAttribute("title",ageRange);
+			ageRangeLbl.setText(i18n.GL1692()+i18n.GL_SPL_SEMICOLON()+" ");
+			ageRangeLbl.getElement().setAttribute("alt",i18n.GL1692());
+			ageRangeLbl.getElement().setAttribute("title",i18n.GL1692());
 		}else{
 			ageRangePanel.setVisible(false);
 		}
 	}
 
 	private void setinteractivityTypeDetails(String interactivityType) {
-		// TODO Auto-generated method stub
+	
 		if(interactivityType!=null&&!interactivityType.equalsIgnoreCase("")&&!interactivityType.equalsIgnoreCase("null")){
 			interactivityTypePanel.setVisible(true);
 			interactiveType.setText(" "+interactivityType);
-			interactiveLbl.setText(GL1689+GL_SPL_SEMICOLON);
+			interactiveType.getElement().setAttribute("alt",interactivityType);
+			interactiveType.getElement().setAttribute("title",interactivityType);
+			interactiveLbl.setText(i18n.GL1689()+i18n.GL_SPL_SEMICOLON()+" ");
+			interactiveLbl.getElement().setAttribute("alt",i18n.GL1689());
+			interactiveLbl.getElement().setAttribute("title",i18n.GL1689());
 		}else{
 			interactivityTypePanel.setVisible(false);
 		}
@@ -1298,7 +1554,11 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(educationalRole!=null&&!educationalRole.equalsIgnoreCase("")&&!educationalRole.equalsIgnoreCase("null")){
 			eduRolePanel.setVisible(true);
 			eduRoleType.setText(" "+educationalRole);
-			eduRoleLbl.setText(GL1691+GL_SPL_SEMICOLON);
+			eduRoleType.getElement().setAttribute("alt",educationalRole);
+			eduRoleType.getElement().setAttribute("title",educationalRole);
+			interactiveLbl.setText(i18n.GL1689()+i18n.GL_SPL_SEMICOLON()+" ");
+			eduRoleLbl.getElement().setAttribute("alt",i18n.GL1691());
+			eduRoleLbl.getElement().setAttribute("title",i18n.GL1691());
 		}else{
 			eduRolePanel.setVisible(false);
 		}
@@ -1309,7 +1569,11 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(educationalAlignment!=null&&!educationalAlignment.equalsIgnoreCase("")&&!educationalAlignment.equalsIgnoreCase("null")){
 			eduAllignPanel.setVisible(true);
 			eduAllignType.setText(" "+educationalAlignment);
-			eduAllignLbl.setText(GL1690+GL_SPL_SEMICOLON);
+			eduAllignType.getElement().setAttribute("alt",educationalAlignment);
+			eduAllignType.getElement().setAttribute("title",educationalAlignment);
+			eduAllignLbl.setText(i18n.GL1690()+i18n.GL_SPL_SEMICOLON()+" ");
+			eduAllignLbl.getElement().setAttribute("alt",i18n.GL1690());
+			eduAllignLbl.getElement().setAttribute("title",i18n.GL1690());
 		}else{
 			eduAllignPanel.setVisible(false);
 		}
@@ -1318,8 +1582,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	private void setHostDetails(String host) {
 		if(host!=null&&!host.equalsIgnoreCase("")&&!host.equalsIgnoreCase("null")){
 			hostPanel.setVisible(true);
-			hostLbl.setText(GL1700+GL_SPL_SEMICOLON);
+			hostLbl.setText(i18n.GL1700()+i18n.GL_SPL_SEMICOLON()+" ");
+			hostLbl.getElement().setAttribute("alt",i18n.GL1700());
+			hostLbl.getElement().setAttribute("title",i18n.GL1700());
 			hostType.setText(" "+host);
+			hostType.getElement().setAttribute("alt",host);
+			hostType.getElement().setAttribute("title",host);
 		}else{
 			hostPanel.setVisible(false);
 		}
@@ -1345,7 +1613,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			if(resourceDescription.length()>415){
 				resourceDescription =(resourceDescription.substring(0, 415))+"...";
 				this.resourceDescription.add(setText(resourceDescription));
-				this.resourceDescriptionTitle.add(setText(GL1242+GL_SPL_SEMICOLON));
+				this.resourceDescriptionTitle.add(setText(i18n.GL1242()+i18n.GL_SPL_SEMICOLON()+" "));
 			}
 			else{
 				if(setText(resourceDescription).equals("")){
@@ -1356,14 +1624,14 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					this.resourceDescriptionTitle.setVisible(true);
 					//this.resourceDescriptionTitle.setVisible(false);
 					this.resourceDescription.add(setText(resourceDescription));
-					this.resourceDescriptionTitle.add(setText(GL1242+GL_SPL_SEMICOLON));
+					this.resourceDescriptionTitle.add(setText(i18n.GL1242()+i18n.GL_SPL_SEMICOLON()+" "));
 				}
 				
 			}
 		}
 		else
 		{
-			//this.resourceDescription.add(setText(GL0977));
+			//this.resourceDescription.add(setText(i18n.GL0977));
 			this.resourceDescription.setVisible(false);
 			this.resourceDescriptionTitle.setVisible(false);
 			this.learningobjectiveText.setVisible(false);
@@ -1424,8 +1692,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		return toolTipwidgets;
 	}
 	public void setResourceViewsCount(String viewCount){
-		String viewCountLabel=viewCount.equals("1")?viewCount+" "+GL1428:viewCount+" "+GL0934;
+		String viewCountLabel=viewCount.equals("1")?viewCount+" "+i18n.GL1428():viewCount+" "+i18n.GL0934();
 		resourceView.setText(viewCountLabel);
+		resourceView.getElement().setAttribute("alt",viewCountLabel);
+		resourceView.getElement().setAttribute("title",viewCountLabel);
 		//resourceViewsCount.setText(viewCountLabel);
 	}
 	
@@ -1525,12 +1795,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			else{
 				licenceContainer.setVisible(false);
 				rightsLogoContainer.clear();
-				//rightsLogoContainer.add(setText(GL0977));
+				//rightsLogoContainer.add(setText(i18n.GL0977));
 			}
 		}else{
 			licenceContainer.setVisible(false);
 			rightsLogoContainer.clear();
-			//rightsLogoContainer.add(setText(GL0977));
+			//rightsLogoContainer.add(setText(i18n.GL0977));
 		}		
 	}	
 	
@@ -1649,6 +1919,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				resourceType=resourceType.replaceAll("exam","Webpage").replaceAll("challenge", "Webpage").replaceAll("website", "Webpage");
 			}
 			lblresourceType.setText(resourceType);
+			lblresourceType.getElement().setAttribute("alt",resourceType);
+			lblresourceType.getElement().setAttribute("title",resourceType);
 			resourceTypeImage.setStyleName(getResourceTypeImage(resourceType));
 		}
 	}
@@ -1661,6 +1933,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public void loadResourceCollection(ResoruceCollectionDo resoruceCollectionDo) {
 		List<ResourceSearchResultDo> resourceSearchResultList=resoruceCollectionDo.getSearchResults();
 		collectionsCount.setText("("+resoruceCollectionDo.getTotalHitCount()+")");
+		collectionsCount.getElement().setAttribute("alt","("+resoruceCollectionDo.getTotalHitCount()+")");
+		collectionsCount.getElement().setAttribute("title","("+resoruceCollectionDo.getTotalHitCount()+")");
 		totalItemSize = resoruceCollectionDo.getTotalHitCount();
 		collectionItemSizeData=currentPageSize*Integer.parseInt(PAGE_SIZES);
 		for(int i=0;i<resourceSearchResultList.size();i++){
@@ -1800,7 +2074,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	@Override
 	public void setCollectionTitle(String mycollectionTitle) {
-		// TODO Auto-generated method stub
+	
 		this.title =mycollectionTitle;
 	}
 	
@@ -1827,10 +2101,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 							success.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTagsGlassPanel());
 							success.setHeight("253px");
 							success.setWidth("450px");
-							success.setPopupTitle(GL1795);
-							success.setDescText(GL1796);
+							success.setPopupTitle(i18n.GL1795());
+							success.setDescText(i18n.GL1796());
 							success.enableTaggingImage();
-							success.setPositiveButtonText(GL0190);
+							success.setPositiveButtonText(i18n.GL0190());
 							success.center();
 							success.show();
 							success.getElement().getStyle().setZIndex(99999);

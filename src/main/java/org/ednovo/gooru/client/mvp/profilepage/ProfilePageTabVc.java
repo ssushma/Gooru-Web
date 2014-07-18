@@ -1,8 +1,8 @@
 package org.ednovo.gooru.client.mvp.profilepage;
 
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
+
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -34,6 +34,10 @@ public class ProfilePageTabVc extends FocusPanel {
 	
 	public ProfilePageTabVc() {
 		setWidget(uiBinder.createAndBindUi(this));
+		wrapperFloPanel.getElement().setId("fpnlWrapperFloPanel");
+		imageSimPanel.getElement().setId("spnlImageSimPanel");
+		labelcount.getElement().setId("labelcount");
+		labelLbl.getElement().setId("labelLbl");
 	}
 
 	/** 
@@ -70,6 +74,8 @@ public class ProfilePageTabVc extends FocusPanel {
 	public void setLabel(String label) {
 		title = label;
 		labelLbl.setText(label);
+		labelLbl.getElement().setAttribute("alt",label);
+		labelLbl.getElement().setAttribute("title",label);
 	}
 
 	public FlowPanel getWrapperFloPanel() {
@@ -78,7 +84,8 @@ public class ProfilePageTabVc extends FocusPanel {
 	public void setLabelCount(String label)
 	{
 		labelcount.setText(label);
-		
+		labelcount.getElement().setAttribute("alt",label);
+		labelcount.getElement().setAttribute("title",label);
 	}
 	public Label getLabelCount()
 	{

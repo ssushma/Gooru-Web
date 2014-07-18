@@ -34,14 +34,14 @@ import org.ednovo.gooru.player.resource.client.presenter.ResourcePlayerPresenter
 import org.ednovo.gooru.player.resource.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.player.resource.client.view.resourceplayer.QuestionResourceImageBundle;
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTML;
@@ -51,7 +51,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ResourceContentReportView extends PopupPanel implements MessageProperties{
+public class ResourceContentReportView extends PopupPanel{
 
 	private static ResourceFlagToolTipUiBinder uiBinder = GWT
 			.create(ResourceFlagToolTipUiBinder.class);
@@ -59,7 +59,12 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 	interface ResourceFlagToolTipUiBinder extends
 			UiBinder<Widget, ResourceContentReportView> {
 	}
+	
+	
 	private ResourcePlayerComponentServiceAsync  playerRpcService = GWT.create(ResourcePlayerComponentService.class);
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	ResourceContentReportView resourceFlagToolTip;
 	@UiField HTMLEventPanel closeButton;
 	@UiField Button cancelButton,submitButton,submitButtonGray;
@@ -73,7 +78,7 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 	private String assocGooruOid;
 	int formateSize=0;
 	HTMLEventPanel resourceflagButton=new HTMLEventPanel("");
-	private static final String HEADER_LINK = GL1430;
+//	private static final String HEADER_LINK = i18n.GL1430;
 	String gooruOid="";
 	String contentResourceGooruOid="";
 	String formatting1="";
@@ -90,27 +95,65 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 		this.getElement().getStyle().setZIndex(999999);
 		this.setGlassStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().glassStyle());
 		setGlassEnabled(true);
-		flagText.setText(GL0600);
-		inappropriateText.setText(GL0612);
-		unavailableText.setText(GL0613);
-		inaccurateText.setText(GL0614);
-		otherReasonText.setText(GL0606);
-		provideMoreText.setText(GL0607);
-		cancelButton.setText(GL0608);
-		submitButton.setText(GL0486);
-		submitButtonGray.setText(GL0486);
+		flagText.setText(i18n.GL0600());
+		flagText.getElement().setId("lblFlagText");
+		flagText.getElement().setAttribute("alt",i18n.GL0600());
+		flagText.getElement().setAttribute("title",i18n.GL0600());
+		
+		inappropriateText.setText(i18n.GL0612());
+		inappropriateText.getElement().setId("lblInappropriateText");
+		inappropriateText.getElement().setAttribute("alt",i18n.GL0612());
+		inappropriateText.getElement().setAttribute("title",i18n.GL0612());
+		
+		unavailableText.setText(i18n.GL0613());
+		unavailableText.getElement().setId("lblUnavailableText");
+		unavailableText.getElement().setAttribute("alt",i18n.GL0613());
+		unavailableText.getElement().setAttribute("title",i18n.GL0613());
+		
+		inaccurateText.setText(i18n.GL0614());
+		inaccurateText.getElement().setId("lblInaccurateText");
+		inaccurateText.getElement().setAttribute("alt",i18n.GL0614());
+		inaccurateText.getElement().setAttribute("title",i18n.GL0614());
+		
+		otherReasonText.setText(i18n.GL0606());
+		otherReasonText.getElement().setId("lblOtherReasonText");
+		otherReasonText.getElement().setAttribute("alt",i18n.GL0606());
+		otherReasonText.getElement().setAttribute("title",i18n.GL0606());
+		
+		provideMoreText.setText(i18n.GL0607());
+		provideMoreText.getElement().setId("lblProvideMoreText");
+		provideMoreText.getElement().setAttribute("alt",i18n.GL0607());
+		provideMoreText.getElement().setAttribute("title",i18n.GL0607());
+		
+		cancelButton.setText(i18n.GL0608());
+		cancelButton.getElement().setAttribute("id", "cancelButton");
+		cancelButton.getElement().setAttribute("alt",i18n.GL0608());
+		cancelButton.getElement().setAttribute("title",i18n.GL0608());
+		
+		submitButton.setText(i18n.GL0486());
+		submitButton.getElement().setAttribute("id", "SubmitButton");
+		submitButton.getElement().setAttribute("alt",i18n.GL0486());
+		submitButton.getElement().setAttribute("title",i18n.GL0486());
+		
+		submitButtonGray.setText(i18n.GL0486());
+		submitButtonGray.getElement().setAttribute("id", "SubmitButtonInactive");
+		submitButtonGray.getElement().setAttribute("alt",i18n.GL0486());
+		submitButtonGray.getElement().setAttribute("title",i18n.GL0486());
 		
 		this.restEndPoint=restEndPoint;
 		this.session=session;
 		this.assocGooruOid=assocGooruOid;
 		this.resourceflagButton=resourceflagButton;
 		resourceTitle=resourceTitle.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
-		titleText.setHTML(GL1430 +resourceTitle+" \" "+GL1431+"");
+		titleText.setHTML(i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
+		titleText.getElement().setAttribute("alt",i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
+		titleText.getElement().setAttribute("title",i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
+		
 		submitButtonGray.setVisible(true);
 		submitButton.setVisible(false);
-		cancelButton.getElement().setAttribute("id", "cancelButton");
-		submitButton.getElement().setAttribute("id", "SubmitButton");
-		submitButtonGray.getElement().setAttribute("id", "SubmitButtonInactive");
+		
+	
+	
 		resourcePlayerPresenter=new ResourcePlayerPresenter();
 		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE.closeFlagPopUpImages());
 
@@ -136,6 +179,15 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 			}
 		});
 		
+		closeButton.getElement().setId("epnlCloseButton");
+		popUpCloseButton.getElement().setId("imgPopUpCloseButton");
+		titleText.getElement().setId("htmlTitleText");
+		checkBox4.getElement().setId("chkCheckBox4");
+		checkBox3.getElement().setId("chkCheckBox3");
+		checkBox2.getElement().setId("chkCheckBox2");
+		checkBox1.getElement().setId("chkCheckBox1");
+		descriptionTextArea.getElement().setId("tatDescriptionTextArea");
+		StringUtil.setAttributes(descriptionTextArea, true);
 	}
 
 	@UiHandler("closeButton")

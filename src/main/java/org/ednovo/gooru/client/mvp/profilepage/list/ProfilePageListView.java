@@ -93,6 +93,8 @@ public class ProfilePageListView extends BaseViewWithHandlers<ProfilePageListUiH
 		res.css().ensureInjected();
 		ShelfCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
+		collectionListScrollpanel.getElement().setId("sbCollectionListScrollpanel");
+		myShelfVerPanel.getElement().setId("vpnlMyShelfVerPanel");
 	}
 
 	@Override

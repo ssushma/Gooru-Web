@@ -46,9 +46,9 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.RequestShelfEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.LabelGlassPanel;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -66,7 +66,6 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -77,10 +76,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class FolderResource extends FocusPanel implements ClickHandler,
-		MouseOverHandler, DropBox,MessageProperties {
+		MouseOverHandler, DropBox {
 
 	private static FolderResourceUiBinder uiBinder = GWT
 			.create(FolderResourceUiBinder.class);
+	
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface FolderResourceUiBinder extends UiBinder<Widget, FolderResource> {
 	}
@@ -121,8 +122,8 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 	AlertContentUc alertContentUc;
 
 	private ResourceDropController dropController;
-	private static final String EDIT_THIS_COLLECTION = GL0991;
-	private static final String ADD_TO_THIS_COLLECTION = GL0990;
+	private static final String EDIT_THIS_COLLECTION = i18n.GL0991();
+	private static final String ADD_TO_THIS_COLLECTION = i18n.GL0990();
 
 	private static FolderResource folderResource;
 
@@ -133,10 +134,10 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 		res = ShelfListCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		glassContainer.setGlassText(GL0991);
+		glassContainer.setGlassText(i18n.GL0991());
 		glassContainer.getElement().setId("GlassContainer");
-		glassContainer.getElement().setAttribute("alt", GL0991);
-		glassContainer.getElement().setAttribute("title", GL0991);
+		glassContainer.getElement().setAttribute("alt", i18n.GL0991());
+		glassContainer.getElement().setAttribute("title", i18n.GL0991());
 
 		glassContainer.setGlassVisible(false);
 		this.collectionItemDo = collectionItem;
@@ -273,7 +274,7 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 											List<CollectionItemDo> result) {
 										if (result.size() == 0) {
 											htmlPanel = new HTMLPanel(
-													GL0989);
+													i18n.GL0989());
 											htmlPanel
 													.getElement()
 													.getStyle()
@@ -351,9 +352,9 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 			}
 		} else {
 			if (collectionDo.getCollectionType().equals("folder")) {
-				htmlPanel = new HTMLPanel(GL0989);
+				htmlPanel = new HTMLPanel(i18n.GL0989());
 			} else if (collectionDo.getCollectionType().equals("collection")) {
-				htmlPanel = new HTMLPanel(GL0854);
+				htmlPanel = new HTMLPanel(i18n.GL0854());
 			}
 
 			htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
@@ -475,8 +476,8 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 						draggable.getDragId()));
 			} else {
 				   alertContentUc = new AlertContentUc(
-						   GL0061,
-						   GL0302);
+						   i18n.GL0061(),
+						   i18n.GL0302());
 			}
 		} else if (draggable.getType().equals(DRAG_TYPE.COLLECTION)) {
 			AppClientFactory.fireEvent(new CreateCollectionItemInFoldersEvent(

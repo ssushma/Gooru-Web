@@ -29,11 +29,11 @@ import java.util.List;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -49,7 +49,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
-public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceUiHandlers> implements IsQuestionResourceView,MessageProperties{
+public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceUiHandlers> implements IsQuestionResourceView{
 	
 	@UiField HTMLPanel explanationContainer,questiontext;
 	@UiField Image openEndedQuestionImage;
@@ -71,12 +71,32 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		
 	}
 	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@Inject
 	public QuestionResourceView(){
 		setWidget(uiBinder.createAndBindUi(this));
-		questiontext.getElement().setInnerHTML(GL0308);
-		hintsButton.setText(GL0667);
-		explanaionButton.setText(GL0316);
+		questiontext.getElement().setInnerHTML(i18n.GL0308());
+		questiontext.getElement().setId("pnlQuestiontext");
+		questiontext.getElement().setAttribute("alt",i18n.GL0308());
+		questiontext.getElement().setAttribute("title",i18n.GL0308());
+		
+		hintsButton.setText(i18n.GL0667());
+		hintsButton.getElement().setId("btnHintsButton");
+		hintsButton.getElement().setAttribute("alt",i18n.GL0667());
+		hintsButton.getElement().setAttribute("title",i18n.GL0667());
+		
+		explanaionButton.setText(i18n.GL0316());
+		explanaionButton.getElement().setId("btnexplanaionButton");
+		explanaionButton.getElement().setAttribute("alt",i18n.GL0316());
+		explanaionButton.getElement().setAttribute("title",i18n.GL0316());
+		
+		openEndedQuestionText.getElement().setId("htmlOpenEndedQuestionText");
+		questionContainer.getElement().setId("fpnlQuestionContainer");
+		openEndedQuestionImage.getElement().setId("imgOpenEndedQuestionImage");
+		hintsContainer.getElement().setId("fpnlHintsContainer");
+		explanationContainer.getElement().setId("pnlExplanationContainer");
+		
 	}
 	
 	@Override
@@ -89,8 +109,12 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	private void renderQuestionView(){
 		hintsLength=0;
 		openEndedQuestionText.setHTML(removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+		openEndedQuestionText.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+		openEndedQuestionText.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
 		if(collectionItemDo.getResource().getHints().size()>0){
-			hintsButton.setText(" "+GL0317+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
+			hintsButton.setText(" "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
+			hintsButton.getElement().setAttribute("alt"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
+			hintsButton.getElement().setAttribute("title"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
 		}else{
 			hintsButton.setStyleName(oeStyle.hintsInActiveButton());
 		}
@@ -134,7 +158,9 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			if(collectionItemDo.getResource().getHints().size()>hintsLength){
 				startHintDataLogEvent(getQuestionHintsDo(hintsLength).getHintId());
 				hintsContainer.add(getHTML(getQuestionHintsDo(hintsLength).getHintText(),oeStyle.hintsText()));
-				hintsButton.setText(""+GL0317+" ("+((collectionItemDo.getResource().getHints().size()-hintsLength)-1)+" Left)");
+				hintsButton.setText(""+i18n.GL0317()+" ("+((collectionItemDo.getResource().getHints().size()-hintsLength)-1)+" Left)");
+				hintsButton.getElement().setAttribute("alt"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
+				hintsButton.getElement().setAttribute("title"," "+i18n.GL0317()+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
 				hintsLength++;
 				if(collectionItemDo.getResource().getHints().size()==hintsLength){
 					hintsButton.setStyleName(oeStyle.hintsInActiveButton());
@@ -192,7 +218,9 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	@Override
 	public void resetQuestionView() {
 		openEndedQuestionText.setHTML("");
-		hintsButton.setText(GL0667);
+		hintsButton.setText(i18n.GL0667());
+		hintsButton.getElement().setAttribute("alt",i18n.GL0667());
+		hintsButton.getElement().setAttribute("title",i18n.GL0667());
 		hintsButton.setStyleName(oeStyle.hintsActiveButton());
 		explanaionButton.setStyleName(oeStyle.hintsActiveButton());
 		explanationContainer.removeStyleName(oeStyle.explanationTextBorder());

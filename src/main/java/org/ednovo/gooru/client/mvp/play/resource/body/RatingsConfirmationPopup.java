@@ -3,7 +3,7 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -18,14 +18,15 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RatingsConfirmationPopup extends PopupPanel implements MessageProperties {
+public class RatingsConfirmationPopup extends PopupPanel{
 
 	@UiField Button btnOk;
 	@UiField public FlowPanel ratingWidgetPanel;
 	private RatingWidgetView ratingWidgetView=null;
 	String assocGooruOId,createrName;
-	@UiField Label reviewRatingText;
-	@UiField HTMLPanel averageRationPanel;
+	@UiField Label reviewRatingText,saveAndPsotLbl;
+	@UiField HTMLPanel averageRationPanel,buttonsContainer;
+	@UiField HTMLPanel imgSuccessIcon;
 	
 	private static RatingsConfirmationPopupUiBinder uiBinder = GWT
 			.create(RatingsConfirmationPopupUiBinder.class);
@@ -34,15 +35,33 @@ public class RatingsConfirmationPopup extends PopupPanel implements MessagePrope
 			UiBinder<Widget, RatingsConfirmationPopup> {
 	}
 	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	public RatingsConfirmationPopup(String assocGooruOId, Integer score,
 			Integer count, double average,String createrName) {
 			setWidget(uiBinder.createAndBindUi(this));
 			this.assocGooruOId=assocGooruOId;
 			this.createrName = createrName;
-			reviewRatingText.setText(GL1856);
-			averageRationPanel.getElement().setInnerHTML(GL1848);
-			btnOk.setText(GL0190);
+			reviewRatingText.setText(i18n.GL1856());
+			reviewRatingText.getElement().setId("lblReviewRatingText");
+			reviewRatingText.getElement().setAttribute("alt",i18n.GL1856());
+			reviewRatingText.getElement().setAttribute("title",i18n.GL1856());
+			
+			averageRationPanel.getElement().setInnerHTML(i18n.GL1848());
+			averageRationPanel.getElement().setId("pnlAverageRationPanel");
+			averageRationPanel.getElement().setAttribute("alt",i18n.GL1848());
+			averageRationPanel.getElement().setAttribute("title",i18n.GL1848());
+			
+			btnOk.setText(i18n.GL0190());
+			btnOk.getElement().setId("btnOk");
+			btnOk.getElement().setAttribute("alt",i18n.GL0190());
+			btnOk.getElement().setAttribute("title",i18n.GL0190());
 			setAvgRatingWidget(assocGooruOId,score,count,average,createrName);
+			
+			imgSuccessIcon.getElement().setId("btnOk");
+			ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
+			buttonsContainer.getElement().setId("pnlButtonsContainer");
+			saveAndPsotLbl.getElement().setId("lblSaveAndPsotLbl");
 	}
 	/**
 	 * Average star ratings widget will get integrated.

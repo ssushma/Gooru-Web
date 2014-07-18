@@ -38,9 +38,10 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.even
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -63,7 +64,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresenter> implements IsCommentWidgetView, MessageProperties {
+public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresenter> implements IsCommentWidgetView{
 
 	@UiField HTMLPanel authorBadge, editButton, messageInfo,tooltipDeletetext;
 	
@@ -110,6 +111,8 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	private static CommentWidgetChildViewUiBinder uiBinder = GWT.create(CommentWidgetChildViewUiBinder.class);
 
 	interface CommentWidgetChildViewUiBinder extends UiBinder<Widget, CommentWidgetChildView> {}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public CommentWidgetChildView(CommentsDo commentsDo, CollectionDo collectionDo) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -118,14 +121,45 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		successPostMsg.setVisible(false);
 		commentField.addKeyUpHandler(new ValidateConfirmText());
 		commentField.addBlurHandler(new OnCommentsFieldBlur());
-		authorBadge.getElement().setInnerHTML(GL0573);
-		editPanel.getElement().setInnerHTML(GL0140);
-		deletePanel.getElement().setInnerHTML(GL0558);
-		tooltipDeletetext.getElement().setInnerHTML(GL0558);
-		postCommentBtn.setText(GL0571);
-		postCommentCancel.setText(GL0142);
-		characterLimit.setText(GL0143);
-		successPostMsg.setText(GL0570);
+		authorBadge.getElement().setInnerHTML(i18n.GL0573());
+		authorBadge.getElement().setId("pnlAuthorBadge");
+		authorBadge.getElement().setAttribute("alt",i18n.GL0573());
+		authorBadge.getElement().setAttribute("title",i18n.GL0573());
+		
+		editPanel.getElement().setInnerHTML(i18n.GL0140());
+		editPanel.getElement().setId("epnlEditPanel");
+		editPanel.getElement().setAttribute("alt",i18n.GL0140());
+		editPanel.getElement().setAttribute("title",i18n.GL0140());
+		
+		deletePanel.getElement().setInnerHTML(i18n.GL0558());
+		deletePanel.getElement().setId("epnlDeletePanel");
+		deletePanel.getElement().setAttribute("alt",i18n.GL0558());
+		deletePanel.getElement().setAttribute("title",i18n.GL0558());
+		
+		tooltipDeletetext.getElement().setInnerHTML(i18n.GL0558());
+		tooltipDeletetext.getElement().setId("epnlTooltipDeletetext");
+		tooltipDeletetext.getElement().setAttribute("alt",i18n.GL0558());
+		tooltipDeletetext.getElement().setAttribute("title",i18n.GL0558());
+		
+		postCommentBtn.setText(i18n.GL0571());
+		postCommentBtn.getElement().setId("btnPostCommentBtn");
+		postCommentBtn.getElement().setAttribute("alt",i18n.GL0571());
+		postCommentBtn.getElement().setAttribute("title",i18n.GL0571());
+		
+		postCommentCancel.setText(i18n.GL0142());
+		postCommentCancel.getElement().setId("btnPostCommentCancel");
+		postCommentCancel.getElement().setAttribute("alt",i18n.GL0142());
+		postCommentCancel.getElement().setAttribute("title",i18n.GL0142());
+		
+		characterLimit.setText(i18n.GL0143());
+		characterLimit.getElement().setId("lblCharacterLimit");
+		characterLimit.getElement().setAttribute("alt",i18n.GL0143());
+		characterLimit.getElement().setAttribute("title",i18n.GL0143());
+		
+		successPostMsg.setText(i18n.GL0570());
+		successPostMsg.getElement().setId("lblSuccessPostMsg");
+		successPostMsg.getElement().setAttribute("alt",i18n.GL0570());
+		successPostMsg.getElement().setAttribute("title",i18n.GL0570());
 		
 		editButton.setVisible(false);
 		deleteButton.setVisible(false);		
@@ -134,6 +168,16 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		
 		setCommentData(commentsDo, collectionDo);
 		
+		
+		userPhoto.getElement().setId("imgUserPhoto");
+		messageInfo.getElement().setId("pnlMessageInfo");
+		userName.getElement().setId("lblUserName");
+		timestamp.getElement().setId("lblTimestamp");
+		commentHtml.getElement().setId("htmlCommentHtml");
+		editButton.getElement().setId("pnlEditButton");
+		deleteButton.getElement().setId("epnlDeleteButton");
+		commentField.getElement().setId("tatCommentField");
+		StringUtil.setAttributes(commentField, true);
 	}
 	
 	/*
@@ -190,13 +234,18 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			String commentTime = getCreatedTime(commentsDo.getCreatedOn());
 
 			if (commentsDo.getLastModifiedOn() !=null){
-				commentTime = commentTime+ " "+GL_GRR_Hyphen+" "+GL1434;
+				commentTime = commentTime+ " "+i18n.GL_GRR_Hyphen()+" "+i18n.GL1434();
 			}
 			
 			timestamp.setText(commentTime); 
+			timestamp.getElement().setAttribute("alt",commentTime);
+			timestamp.getElement().setAttribute("title",commentTime);
 			commentHtml.setHTML(commentsDo.getComment());
+			commentHtml.getElement().setAttribute("alt",commentsDo.getComment());
+			commentHtml.getElement().setAttribute("title",commentsDo.getComment());
 			commentField.setText(commentsDo.getComment());
-
+			commentField.getElement().setAttribute("alt",commentsDo.getComment());
+			commentField.getElement().setAttribute("title",commentsDo.getComment());
 			setOptionsButtons();
 			
 		}catch(Exception e){
@@ -240,12 +289,12 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	
 	@UiHandler("deletePanel")
 	public void clickOnDeletePanel(ClickEvent event) {
-		deleteConfirmationPopupVc=new DeleteConfirmationPopupVc(GL0558,GL0559);
+		deleteConfirmationPopupVc=new DeleteConfirmationPopupVc(i18n.GL0558(),i18n.GL0559());
 	}
 	
 	@UiHandler("deleteButton")
 	public void clickOnDeleteButton(ClickEvent event) {
-		deleteConfirmationPopupVc=new DeleteConfirmationPopupVc(GL0558,GL0559);
+		deleteConfirmationPopupVc=new DeleteConfirmationPopupVc(i18n.GL0558(),i18n.GL0559());
 	}
 	
 	@UiHandler("editPanel")
@@ -257,7 +306,11 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	@UiHandler("postCommentCancel")
 	public void clickOnPostCommentCancel(ClickEvent event) {
     	commentHtml.setHTML(commentsDo.getComment());
+    	commentHtml.getElement().setAttribute("alt",commentsDo.getComment());
+		commentHtml.getElement().setAttribute("title",commentsDo.getComment());
     	commentField.setText(commentsDo.getComment());
+    	commentField.getElement().setAttribute("alt",commentsDo.getComment());
+    	commentField.getElement().setAttribute("title",commentsDo.getComment());
 		AppClientFactory.fireEvent(new UpdateCommentChildViewEvent("",EDIT));
 		enableEditFunction(false);
 		characterLimit.setVisible(false);
@@ -275,7 +328,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 					boolean isHavingBadWords = value;
 					if (isHavingBadWords){
 						commentField.getElement().getStyle().setBorderColor("orange");
-						characterLimit.setText(GL0554);
+						characterLimit.setText(i18n.GL0554());
 						characterLimit.setVisible(true);
 					}else{
 						commentField.getElement().getStyle().clearBackgroundColor();
@@ -290,8 +343,10 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 				            	commentsDo.setComment(commentField.getText());
 				            	commentHtml.setHTML(commentsDo.getComment());
 				            	String commentTime = getCreatedTime(commentsDo.getCreatedOn());
-				    			commentTime = commentTime+ " "+GL_GRR_Hyphen+" "+GL1434;
+				    			commentTime = commentTime+ " "+i18n.GL_GRR_Hyphen()+" "+i18n.GL1434();
 				    			timestamp.setText(commentTime);
+				    			timestamp.getElement().setAttribute("alt",commentTime);
+				    			timestamp.getElement().setAttribute("title",commentTime);
 				            	successPostMsg.setVisible(false);
 				            	enableEditFunction(false);
 				            }
@@ -304,7 +359,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		}else{
 			//Ask user to delete the comment.
 			commentHtml.setHTML(commentsDo.getComment());
-			deleteConfirmationPopupVc=new DeleteConfirmationPopupVc(GL0558,GL0559);
+			deleteConfirmationPopupVc=new DeleteConfirmationPopupVc(i18n.GL0558(),i18n.GL0559());
 			enableEditFunction(true);
 		}
 	}		
@@ -357,7 +412,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 					public void onSuccess(Boolean value) {
 						if (value){
 							commentField.getElement().getStyle().setBorderColor("orange");
-							characterLimit.setText(GL0554);
+							characterLimit.setText(i18n.GL0554());
 							characterLimit.setVisible(true);
 						}else{
 							commentField.getElement().getStyle().clearBackgroundColor();
@@ -388,7 +443,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		public void onKeyUp(KeyUpEvent event) {
 			if(commentField.getText().length()>415) {
 				commentField.setText(commentField.getText().substring(0,415));
-				characterLimit.setText(GL0143);
+				characterLimit.setText(i18n.GL0143());
 				characterLimit.setVisible(true);
 			} else {
 				if(commentField.getText().trim().length()==0){
@@ -406,7 +461,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			super(messageHeader, messageContent);
 			setPopupZindex(100000);
 			setGlassZindex(100000);
-			setDeleteData(GL0560, GL0558);
+			setDeleteData(i18n.GL0560(), i18n.GL0558());
 		}
 		@Override
 		public void onDelete(ClickEvent clickEvent) {
@@ -452,13 +507,13 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			createdTime = fmt.format (currentDate);
 		}
 		else if(days>0&&days<=6) {
-			createdTime = days + getTimePrefix(days," "+GL0562, GL0579, GL0580);
+			createdTime = days + getTimePrefix(days," "+i18n.GL0562(), i18n.GL0579(), i18n.GL0580());
 		} else if(hours>0&&hours<24) {
-			createdTime = hours + getTimePrefix(hours," "+GL0563, GL1435, GL1436);
+			createdTime = hours + getTimePrefix(hours," "+i18n.GL0563(), i18n.GL1435(), i18n.GL1436());
 		} else if(minutes>0&&minutes<60) {
-			createdTime = minutes + getTimePrefix(minutes," "+GL0564, GL1437, GL1438);
+			createdTime = minutes + getTimePrefix(minutes," "+i18n.GL0564(), i18n.GL1437(), i18n.GL1438());
 		} else if(seconds<=60) {
-			createdTime = GL0561;
+			createdTime = i18n.GL0561();
 		}
 		return createdTime;
 	}

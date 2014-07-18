@@ -26,21 +26,16 @@ package org.ednovo.gooru.client.mvp.rating;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
-import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
-import org.ednovo.gooru.shared.util.DOMUtils;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -66,7 +61,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
-public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndReviewPopupUiHandlers> implements IsRatingAndReviewPopupView,MessageProperties{
+public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndReviewPopupUiHandlers> implements IsRatingAndReviewPopupView{
 
 	public PopupPanel appPopUp =new PopupPanel();
 
@@ -78,7 +73,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 	/*@UiField InlineLabel oneStar,twoStar,threeStar,fourStar,fiveStar,averageStarRating;*/
 
-	@UiField HTMLPanel userRatingContainer, dataOne, dataTwo, dataThree, dataFour, dataFive;
+	@UiField HTMLPanel panelRatingValues,panelRatingLabels,userRatingContainer, dataOne, dataTwo, dataThree, dataFour, dataFive;
 	
 	@UiField VerticalPanel reviewsContainer;
 
@@ -95,9 +90,15 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	
 	private boolean apiInprogress=true;
 	
+	private int totalHitCount=0;
+	
+	private int reviewSize=0;
+	
 	private RatingWidgetView ratingWidgetView= new RatingWidgetView();
 
 	private static ResourceNarrationViewUiBinder uiBinder = GWT.create(ResourceNarrationViewUiBinder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface ResourceNarrationViewUiBinder extends UiBinder<Widget, RatingAndReviewPopupView> {
 
@@ -148,7 +149,27 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		this.gooruOid = gooruOid;
 		this.createrName = createrName;
 		userRatingContainer.setVisible(false);
-		lblResourceTitle.setHTML(GL1840+" "+removeHtmlTags(resourceTitle));
+		lblResourceTitle.setHTML(i18n.GL1840()+" "+removeHtmlTags(resourceTitle));
+		lblResourceTitle.getElement().setId("lblResourceTitle");
+		lblResourceTitle.getElement().setAttribute("alt",i18n.GL1840()+" "+removeHtmlTags(resourceTitle));
+		lblResourceTitle.getElement().setAttribute("title",i18n.GL1840()+" "+removeHtmlTags(resourceTitle));
+		
+		closeButton.getElement().setId("lblCloseButton");
+		panelRatingLabels.getElement().setId("pnlPanelRatingLabels");
+		panelRatingValues.getElement().setId("pnlPanelRatingValues");
+		dataFive.getElement().setId("pnlDataFive");
+		excellentScore.getElement().setId("lblExcellentScore");
+		dataFour.getElement().setId("pnlDataFour");
+		verygoodScore.getElement().setId("lblVerygoodScore");
+		dataThree.getElement().setId("pnlDataThree");
+		goodScore.getElement().setId("lblGoodScore");
+		dataTwo.getElement().setId("pnlDataTwo");
+		fairScore.getElement().setId("lblFairScore");
+		dataOne.getElement().setId("pnlDataOne");
+		poorScore.getElement().setId("lblPoorScore");
+		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
+		userRatingContainer.getElement().setId("pnlUserRatingContainer");
+		reviewsContainer.getElement().setId("vpnlReviewsContainer");
 		setStaticText();
 		clearContainer();
 		getAverageRatingForContent(gooruOid);
@@ -160,15 +181,50 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	}
 
 	private void setStaticText() {
-		excellentLbl.setText(GL1842);
-		veryGoodLbl.setText(GL1843);
-		goodLbl.setText(GL1844);
-		fairLbl.setText(GL1845);
-		poorLbl.setText(GL1846);
-		avgLbl.setText(GL1848);
-		rateResourceBtn.setText(GL1849);
-		ratingDistributionLbl.setText(GL1841);
-		rateMsg.setText(GL1992);
+		excellentLbl.setText(i18n.GL1842());
+		excellentLbl.getElement().setId("lblExcellentLbl");
+		excellentLbl.getElement().setAttribute("alt",i18n.GL1842());
+		excellentLbl.getElement().setAttribute("title",i18n.GL1842());
+		
+		veryGoodLbl.setText(i18n.GL1843());
+		veryGoodLbl.getElement().setId("lblVeryGoodLbl");
+		veryGoodLbl.getElement().setAttribute("alt",i18n.GL1843());
+		veryGoodLbl.getElement().setAttribute("title",i18n.GL1843());
+		
+		goodLbl.setText(i18n.GL1844());
+		goodLbl.getElement().setId("lblGoodLbl");
+		goodLbl.getElement().setAttribute("alt",i18n.GL1844());
+		goodLbl.getElement().setAttribute("title",i18n.GL1844());
+		
+		fairLbl.setText(i18n.GL1845());
+		fairLbl.getElement().setId("lblFairLbl");
+		fairLbl.getElement().setAttribute("alt",i18n.GL1845());
+		fairLbl.getElement().setAttribute("title",i18n.GL1845());
+		
+		poorLbl.setText(i18n.GL1846());
+		poorLbl.getElement().setId("lblPoorLbl");
+		poorLbl.getElement().setAttribute("alt",i18n.GL1846());
+		poorLbl.getElement().setAttribute("title",i18n.GL1846());
+		
+		avgLbl.setText(i18n.GL1848());
+		avgLbl.getElement().setId("lblAvgLbl");
+		avgLbl.getElement().setAttribute("alt",i18n.GL1848());
+		avgLbl.getElement().setAttribute("title",i18n.GL1848());
+		
+		rateResourceBtn.setText(i18n.GL1849());
+		rateResourceBtn.getElement().setId("btnRateResourceBtn");
+		rateResourceBtn.getElement().setAttribute("alt",i18n.GL1849());
+		rateResourceBtn.getElement().setAttribute("title",i18n.GL1849());
+		
+		ratingDistributionLbl.setText(i18n.GL1841());
+		ratingDistributionLbl.getElement().setId("lblRatingDistributionLbl");
+		ratingDistributionLbl.getElement().setAttribute("alt",i18n.GL1841());
+		ratingDistributionLbl.getElement().setAttribute("title",i18n.GL1841());
+		
+		rateMsg.setText(i18n.GL1992());
+		rateMsg.getElement().setId("lblRateMsg");
+		rateMsg.getElement().setAttribute("alt",i18n.GL1992());
+		rateMsg.getElement().setAttribute("title",i18n.GL1992());
 	}
 
 	public void getUserRatingsAndReviews(String resourceId)
@@ -200,10 +256,24 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		dataOne.getElement().getStyle().setWidth(getBarGraphWidth(result.getScores().getOne(), totalReviewCount), Unit.PCT);
 		
 		excellentScore.setText("("+result.getScores().getFive()+")");
+		excellentScore.getElement().setAttribute("alt","("+result.getScores().getFive()+")");
+		excellentScore.getElement().setAttribute("title","("+result.getScores().getFive()+")");
+		
 		verygoodScore.setText("("+result.getScores().getFour()+")");
+		verygoodScore.getElement().setAttribute("alt","("+result.getScores().getFour()+")");
+		verygoodScore.getElement().setAttribute("title","("+result.getScores().getFour()+")");
+		
 		goodScore.setText("("+result.getScores().getThree()+")");
+		goodScore.getElement().setAttribute("alt","("+result.getScores().getThree()+")");
+		goodScore.getElement().setAttribute("title","("+result.getScores().getThree()+")");
+		
 		fairScore.setText("("+result.getScores().getTwo()+")");
+		fairScore.getElement().setAttribute("alt","("+result.getScores().getTwo()+")");
+		fairScore.getElement().setAttribute("title","("+result.getScores().getTwo()+")");
+		
 		poorScore.setText("("+result.getScores().getOne()+")");
+		poorScore.getElement().setAttribute("alt","("+result.getScores().getOne()+")");
+		poorScore.getElement().setAttribute("title","("+result.getScores().getOne()+")");
 	}
 
 	private double getBarGraphWidth(Integer count, Integer totalCount) {
@@ -218,6 +288,8 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public void setUserRatingsAndReviews(ArrayList<StarRatingsDo> result) {
 		if(result.size()>0)
 		{
+			totalHitCount = result.get(0).getTotalHitCount();
+			reviewSize = reviewSize+result.size();
 			for(int i=0;i<result.size();i++){
 				if(result.get(i).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
 					isRated=true;
@@ -243,6 +315,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 			}
 		}
 		
+
 		for(int userReviews=0; userReviews<result.size(); userReviews++)
 		{
 			if(result.get(userReviews).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
@@ -333,9 +406,9 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	
 	@UiHandler("reviewScrollPanel")
 	public void onScrollReviews(ScrollEvent event){
-		if(!apiInprogress){
+		if(!apiInprogress&&reviewScrollPanel.getVerticalScrollPosition() == reviewScrollPanel.getMaximumVerticalScrollPosition()&&(reviewSize)<(totalHitCount)){
 			apiInprogress=true;
-			getUiHandlers().getUserRatingsReviews(gooruOid,reviewsContainer.getWidgetCount());
+			getUiHandlers().getUserRatingsReviews(gooruOid,(reviewSize));
 		}
 	}
 	private String removeHtmlTags(String html){

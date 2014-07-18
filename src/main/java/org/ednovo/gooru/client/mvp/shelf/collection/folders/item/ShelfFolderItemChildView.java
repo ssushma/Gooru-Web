@@ -7,8 +7,6 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
-import org.ednovo.gooru.client.mvp.dnd.IsDraggable.DRAG_TYPE;
-import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragUc;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleEvent;
@@ -16,9 +14,9 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMeta
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.UcCBundle;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -40,7 +38,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPresenter> implements
-		IsShelfFolderItemView, MessageProperties {
+		IsShelfFolderItemView {
 
 	@UiField FolderStyleBundle folderStyle;
 
@@ -78,6 +76,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
 
 	private static ShelfFolderItemChildViewUiBinder uiBinder = GWT.create(ShelfFolderItemChildViewUiBinder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface ShelfFolderItemChildViewUiBinder extends UiBinder<Widget, ShelfFolderItemChildView> {}
 	
@@ -85,6 +85,12 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		initWidget(uiBinder.createAndBindUi(this));
 		this.folderDo = folderDo;
 		setFolderData(folderDo);
+		
+		contentBlock.getElement().setId("fpnlContentBlock");
+		folderImage.getElement().setId("epnlFolderImage");
+		collectionImage.getElement().setId("imgCollectionImage");
+		itemTitle.getElement().setId("lblItemTitle");
+		contents.getElement().setId("fpnlContents");
 	}
 	
 	public void setFolderData(final FolderDo folderDo) {
@@ -162,7 +168,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 				}
 			}
 			if(folderDo.getItemCount()-folderItemDo.size()>0) {
-				Anchor seeMoreLbl = new Anchor(GL_SPL_PLUS+" "+ (folderDo.getItemCount()-folderItemDo.size())+" "+GL1152);
+				Anchor seeMoreLbl = new Anchor(i18n.GL_SPL_PLUS()+" "+ (folderDo.getItemCount()-folderItemDo.size())+" "+i18n.GL1152());
 				seeMoreLbl.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
@@ -180,6 +186,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			contents.addStyleName(folderStyle.empty());
 		}
 		itemTitle.setText(folderDo.getTitle());	
+		itemTitle.getElement().setAttribute("alt",folderDo.getTitle());
+		itemTitle.getElement().setAttribute("title",folderDo.getTitle());
 	}
 	
 	@UiHandler("folderImage")

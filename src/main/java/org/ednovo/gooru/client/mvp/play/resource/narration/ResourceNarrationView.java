@@ -29,12 +29,11 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -46,7 +45,6 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
@@ -57,7 +55,7 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarrationUiHandlers> implements IsResourceNarrationView,MessageProperties{
+public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarrationUiHandlers> implements IsResourceNarrationView{
 	
 	@UiField Image authorImage;
 	@UiField HTML resourceTitle,narrationText;
@@ -72,6 +70,8 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 	interface ResourceNarrationViewUiBinder extends UiBinder<Widget, ResourceNarrationView> {
 	}
 	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@Inject
 	public ResourceNarrationView(EventBus eventsBus){
 		super(eventsBus);
@@ -79,8 +79,20 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
 		narrationCloseButton.addClickHandler(new CloseNarrationPopupEvent());
 		okButton.addClickHandler(new CloseNarrationPopupEvent());
-		authorName.setText(GL0423);
-		okButton.setText(GL0703);
+		authorName.setText(i18n.GL0423());
+		authorName.getElement().setId("lblAuthorName");
+		authorName.getElement().setAttribute("alt",i18n.GL0423());
+		authorName.getElement().setAttribute("title",i18n.GL0423());
+		
+		okButton.setText(i18n.GL0703());
+		okButton.getElement().setId("btnOkButton");
+		okButton.getElement().setAttribute("alt",i18n.GL0703());
+		okButton.getElement().setAttribute("title",i18n.GL0703());
+		
+		resourceTitle.getElement().setId("htmlResourceTitle");
+		narrationCloseButton.getElement().setId("lblNarrationCloseButton");
+		authorImage.getElement().setId("imgAuthorImage");
+		narrationText.getElement().setId("htmlNarrationText");
 	}
 	@Override
 	public void setNarrationMetadata(CollectionItemDo collectionItemDo,String userName,String gooruUid){
@@ -90,9 +102,15 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 				narration=narration.replaceAll("background-color", "");
 			}
 			narrationText.setHTML(narration !=null ? narration : "");
+			narrationText.getElement().setAttribute("alt",narration !=null ? narration : "");
+			narrationText.getElement().setAttribute("title",narration !=null ? narration : "");
 			resourceTitle.setHTML(collectionItemDo.getItemSequence()+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
+			resourceTitle.getElement().setAttribute("alt",collectionItemDo.getItemSequence()+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
+			resourceTitle.getElement().setAttribute("title",collectionItemDo.getItemSequence()+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			setUserProfileImage(gooruUid);
 			authorName.setText(userName);
+			authorName.getElement().setAttribute("alt",userName);
+			authorName.getElement().setAttribute("title",userName);
 		}
 	}
 	private void setUserProfileImage(String profileUserId) {
@@ -104,9 +122,15 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 	}
 	public void resetNattationData(){
 		narrationText.setHTML("");
+		narrationText.getElement().setAttribute("alt","");
+		narrationText.getElement().setAttribute("title","");
 		authorImage.getElement().removeAttribute("src");
 		resourceTitle.setHTML("");
+		resourceTitle.getElement().setAttribute("alt","");
+		resourceTitle.getElement().setAttribute("title","");
 		authorName.setText("");
+		authorName.getElement().setAttribute("alt","");
+		authorName.getElement().setAttribute("title","");
 	}
 	private String removeHtmlTags(String html){
         html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
@@ -178,7 +202,7 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 		resourcePlayerFirstTimeUser =Cookies.getCookie("resourcePlayerFirstTimeUser");
 		if(resourcePlayerFirstTimeUser==null){
 			Cookies.setCookie("resourcePlayerFirstTimeUser", "1");
-			globalTooltipWithButton=new GlobalTooltipWithButton(GL0681, GL0543);
+			globalTooltipWithButton=new GlobalTooltipWithButton(i18n.GL0681, i18n.GL0543);
 			globalTooltipWithButton.setGlassStyleName(HomeCBundle.INSTANCE.css().playerAddToolTipGlassStyle());
 			globalTooltipWithButton.setStyleName("");
 			globalTooltipWithButton.getElement().getStyle().setZIndex(999999);

@@ -99,11 +99,21 @@ public class ProfilePageCollection extends FocusPanel implements ClickHandler {
 		titleFocPanel.addClickHandler(this);
 		wrapperFocPanel.addClickHandler(this);
 		titleFocPanel.setStyleName(res.css().foldersLi());
+		
+		titleFocPanel.getElement().setId("focuspnlTitleFocPanel");
+		folderIcon.getElement().setId("fpnlFolderIcon");
+		collectionIcon.getElement().setId("fpnlCollectionIcon");
+		titleLbl.getElement().setId("htmlTitleLbl");
+		disPanel.getElement().setId("discpnlDisPanel");
+		wrapperFocPanel.getElement().setId("focuspnlWrapperFocPanel");
+		contentVerPanel.getElement().setId("vpnlContentVerPanel");
 	}
 
 	public void setData(CollectionItemDo collectionItemDo) {
 		this.collectionItemDo = collectionItemDo;
 		titleLbl.setHTML(this.collectionItemDo.getResource().getTitle());
+		titleLbl.getElement().setAttribute("alt",this.collectionItemDo.getResource().getTitle());
+		titleLbl.getElement().setAttribute("title",this.collectionItemDo.getResource().getTitle());
 		if (this.collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("folder")) {
 			collectionIcon.removeFromParent();
 		} else {

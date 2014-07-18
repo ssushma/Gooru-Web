@@ -28,10 +28,8 @@ package org.ednovo.gooru.client.mvp.play.resource.question;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
@@ -55,6 +53,11 @@ public class QuestionAnswerOptionView extends Composite{
 		this.answerText=questionText;
 		//optionAlpahabeticSerialNo.setText(questionSerialNum);
 		answerOptionText.setHTML(questionSerialNum+" "+removeHtmlTags(questionText));
+		
+		answerChoiceResult.getElement().setId("lblAnswerChoiceResult");
+		radioButton.getElement().setId("lblRadioButton");
+		answerOptionText.getElement().setId("htmlAnswerOptionText");
+		answerOptionRadioButton.getElement().setId("rdAnswerOptionRadioButton");
 	}
 	private HTML getHTML(String html){
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");

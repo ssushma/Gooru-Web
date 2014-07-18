@@ -38,10 +38,8 @@ import org.ednovo.gooru.client.mvp.profilepage.data.events.SetProfileCollectionS
 import org.ednovo.gooru.client.mvp.profilepage.event.OpenProfileCollectionEvent;
 import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -53,7 +51,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PartnerLessonUc extends Composite implements MessageProperties {
+public class PartnerLessonUc extends Composite{
 
 	@UiField HTMLPanel lessonList;
 	@UiField ProfilePageLibraryStyleBundle style;
@@ -109,6 +107,7 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 	 * 
 	 */
 	private void setLessonData(final LessonDo lessonDo, final ProfileLibraryDo profileLibraryDo, ArrayList<ProfileLibraryDo> profileLibraryDoList, boolean isLessonHighlighted, Integer lessonNumber, boolean isPaginated) {
+		lessonList.getElement().setId("pnlLessonList");
 		if(profileLibraryDo!=null) {
 			lessonTitle.setHTML(profileLibraryDo.getTitle());
 			lessonList.add(lessonTitle);

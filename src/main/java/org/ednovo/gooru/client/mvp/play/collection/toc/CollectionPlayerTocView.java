@@ -39,9 +39,9 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.TocCollectionEndView;
 import org.ednovo.gooru.client.uc.TocCollectionHomeView;
 import org.ednovo.gooru.client.uc.TocResourceView;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -55,7 +55,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlayerTocUiHandlers> implements IsCollectionPlayerTocView,MessageProperties{
+public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlayerTocUiHandlers> implements IsCollectionPlayerTocView{
 
 	@UiField FlowPanel navgationTocContainer;
 	@UiField Label previousButton,nextButton,hideText;
@@ -69,10 +69,20 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 	interface CollectionPlayerTocViewUiBinder extends UiBinder<Widget, CollectionPlayerTocView> {
 	}
 	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@Inject
 	public CollectionPlayerTocView(){
 		setWidget(uiBinder.createAndBindUi(this));
-		hideText.setText(GL0592);
+		hideText.setText(i18n.GL0592());
+		hideText.getElement().setId("lblHideText");
+		hideText.getElement().setAttribute("alt",i18n.GL0592());
+		hideText.getElement().setAttribute("title",i18n.GL0592());
+		
+		previousButton.getElement().setId("lblPreviousButton");
+		navgationTocContainer.getElement().setId("fpnlNavgationTocContainer");
+		nextButton.getElement().setId("lblNextButton");
+		hideButton.getElement().setId("epnlHideButton");
 	}
 	public void clearNavigationPanel(){
 		navgationTocContainer.clear();

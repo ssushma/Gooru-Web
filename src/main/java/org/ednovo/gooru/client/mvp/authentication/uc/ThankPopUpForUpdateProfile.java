@@ -29,8 +29,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.util.MessageProperties;
-
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -45,7 +44,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ThankPopUpForUpdateProfile extends PopupPanel implements MessageProperties {
+public class ThankPopUpForUpdateProfile extends PopupPanel{
 
 	private static ThankPopUpForUpdateProfileUiBinder uiBinder = GWT
 			.create(ThankPopUpForUpdateProfileUiBinder.class);
@@ -53,6 +52,9 @@ public class ThankPopUpForUpdateProfile extends PopupPanel implements MessagePro
 	interface ThankPopUpForUpdateProfileUiBinder extends
 			UiBinder<Widget, ThankPopUpForUpdateProfile> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField(provided = true)
 	SignUpCBundle res;
 	@UiField
@@ -77,45 +79,45 @@ public class ThankPopUpForUpdateProfile extends PopupPanel implements MessagePro
 		setUiAndIds();
 	}
 	public void setUiAndIds() {
-		lblTitle.setText(GL0481
-				+GL_SPL_EXCLAMATION);
+		lblTitle.setText(i18n.GL0481()
+				+i18n.GL_SPL_EXCLAMATION());
 		lblTitle.getElement().setId("lblTitle");
-		lblTitle.getElement().setAttribute("alt",GL0481);
-		lblTitle.getElement().setAttribute("title",GL0481);
+		lblTitle.getElement().setAttribute("alt",i18n.GL0481());
+		lblTitle.getElement().setAttribute("title",i18n.GL0481());
 		
 		lblCancel.getElement().setId("lblCancel");
 		
-		lblHeading.setText(GL0498+GL_SPL_EXCLAMATION);
+		lblHeading.setText(i18n.GL0498()+i18n.GL_SPL_EXCLAMATION());
 		lblHeading.getElement().setId("lblHeading");
-		lblHeading.getElement().setAttribute("alt",GL0498);
-		lblHeading.getElement().setAttribute("title",GL0498);
+		lblHeading.getElement().setAttribute("alt",i18n.GL0498());
+		lblHeading.getElement().setAttribute("title",i18n.GL0498());
 		lblHeading.getElement().setAttribute("style", "margin-bottom:0px");
 		
-		lblSubHeading.setText(GL0499);
+		lblSubHeading.setText(i18n.GL0499());
 		lblSubHeading.getElement().setId("lblSubHeading");
-		lblSubHeading.getElement().setAttribute("alt",GL0499);
-		lblSubHeading.getElement().setAttribute("title",GL0499);
+		lblSubHeading.getElement().setAttribute("alt",i18n.GL0499());
+		lblSubHeading.getElement().setAttribute("title",i18n.GL0499());
 		
 		btnOk.getElement().setId("btnOk");
-		btnOk.setText(GL0190);
-		btnOk.getElement().setAttribute("alt",GL0190);
-		btnOk.getElement().setAttribute("title",GL0190);
+		btnOk.setText(i18n.GL0190());
+		btnOk.getElement().setAttribute("alt",i18n.GL0190());
+		btnOk.getElement().setAttribute("title",i18n.GL0190());
 		
-		queriesText.setText(GL1139+GL_GRR_COMMA+" ");
+		queriesText.setText(i18n.GL1139()+i18n.GL_GRR_COMMA()+" ");
 		queriesText.getElement().setId("lblQuriesText");
-		queriesText.getElement().setAttribute("alt",GL1139);
-		queriesText.getElement().setAttribute("title",GL1139);
+		queriesText.getElement().setAttribute("alt",i18n.GL1139());
+		queriesText.getElement().setAttribute("title",i18n.GL1139());
 		
-		contactText.setText(GL1145);
+		contactText.setText(i18n.GL1145());
 		contactText.getElement().setId("spnContactText");
-		contactText.getElement().setAttribute("alt",GL1145);
-		contactText.getElement().setAttribute("title",GL1145);
+		contactText.getElement().setAttribute("alt",i18n.GL1145());
+		contactText.getElement().setAttribute("title",i18n.GL1145());
 		
-		supportLink.setText(GL0299);
+		supportLink.setText(i18n.GL0299());
 		supportLink.getElement().setId("lnkSupportLink");
-		supportLink.getElement().setAttribute("alt",GL0299);
-		supportLink.getElement().setAttribute("title",GL0299);
-		supportLink.setHref(GL1055);		
+		supportLink.getElement().setAttribute("alt",i18n.GL0299());
+		supportLink.getElement().setAttribute("title",i18n.GL0299());
+		supportLink.setHref(i18n.GL1055());		
 	}
 
 	@UiHandler("lblCancel")

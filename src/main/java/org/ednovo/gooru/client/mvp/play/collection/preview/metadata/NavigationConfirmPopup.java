@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.mvp.play.collection.preview.metadata;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -47,7 +47,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public abstract class NavigationConfirmPopup extends PopupPanel implements MessageProperties{
+public abstract class NavigationConfirmPopup extends PopupPanel{
 	
 	@UiField Button continueButton,backToResponseButton;
 	@UiField Label popupHeader,popupText;
@@ -57,6 +57,8 @@ public abstract class NavigationConfirmPopup extends PopupPanel implements Messa
 
 	interface NavigationConfirmPopupUiBinder extends UiBinder<Widget, NavigationConfirmPopup> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	/**
 	 * default constructor of CopyConfirmPopupVc
@@ -76,11 +78,24 @@ public abstract class NavigationConfirmPopup extends PopupPanel implements Messa
 		this.setModal(true);
 	}
 	public void setStaticTexts(){
-		popupHeader.setText(GL1660);
-		popupText.setText(GL1661);
-		continueButton.setText(GL1663);
-		backToResponseButton.setText(GL1662);
+		popupHeader.setText(i18n.GL1660());
+		popupHeader.getElement().setId("lblPopupHeader");
+		popupHeader.getElement().setAttribute("alt",i18n.GL1660());
+		popupHeader.getElement().setAttribute("title",i18n.GL1660());
+		
+		popupText.setText(i18n.GL1661());
+		popupText.getElement().setId("lblPopupText");
+		popupText.getElement().setAttribute("alt",i18n.GL1661());
+		popupText.getElement().setAttribute("title",i18n.GL1661());
+		
+		continueButton.setText(i18n.GL1663());
 		continueButton.getElement().setId("backtoresponse");
+		continueButton.getElement().setAttribute("alt",i18n.GL1663());
+		continueButton.getElement().setAttribute("title",i18n.GL1663());
+		
+		backToResponseButton.setText(i18n.GL1662());
+		backToResponseButton.getElement().setAttribute("alt",i18n.GL1662());
+		backToResponseButton.getElement().setAttribute("title",i18n.GL1662());
 		backToResponseButton.getElement().setId("continue");
 	}
 	

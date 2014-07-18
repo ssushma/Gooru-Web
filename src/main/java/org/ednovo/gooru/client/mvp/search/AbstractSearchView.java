@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.dnd.AppMirageDragContainer;
@@ -40,13 +39,12 @@ import org.ednovo.gooru.client.mvp.search.event.RequestShelfCollectionEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchPaginationEvent;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -65,9 +63,11 @@ import com.google.gwt.user.client.ui.Widget;
  * @param <T>
  *            type of ResourceSearchResultDo
  */
-public abstract class AbstractSearchView<T extends ResourceSearchResultDo> extends BaseViewWithHandlers<SearchUiHandlers> implements IsSearchView<T>, ClickHandler,MessageProperties {
+public abstract class AbstractSearchView<T extends ResourceSearchResultDo> extends BaseViewWithHandlers<SearchUiHandlers> implements IsSearchView<T>, ClickHandler {
 
 	private static AbstractSearchViewUiBinder uiBinder = GWT.create(AbstractSearchViewUiBinder.class);
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface AbstractSearchViewUiBinder extends UiBinder<Widget, AbstractSearchView<?>> {
 	}
@@ -86,9 +86,9 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	
 	protected ResourceDragController dragController;
 
-	private static final String PREVIOUS = GL1462.toUpperCase();
+	private static final String PREVIOUS = i18n.GL1462().toUpperCase();
 
-	private static final String NEXT = GL1463.toUpperCase();
+	private static final String NEXT = i18n.GL1463().toUpperCase();
 
 	protected final List<FolderDo> SHELF_COLLECTIONS = new ArrayList<FolderDo>();
 
@@ -108,6 +108,9 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		searchFilterVc = new SearchFilterVc(resourceSearch);
 		setWidget(uiBinder.createAndBindUi(this));
 		searchFilterPanel.getElement().setId("searchFilterPanelDiv");
+		searchFilterVc.getElement().setId("searchFilterVcsearchFilterVc");
+		paginationFocPanel.getElement().setId("fnlPaginationFocPanel");
+		searchResultPanel.getElement().setId("appMirageDragContainer");
 	}
 
 	@Override

@@ -31,7 +31,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -53,12 +53,14 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  * @author Search Team
  * 
  */
-public class ResourceImageUc extends Composite implements ClickHandler,MessageProperties {
+public class ResourceImageUc extends Composite implements ClickHandler {
 
 	private static ResourceImageUcUiBinder uiBinder = GWT.create(ResourceImageUcUiBinder.class);
 
 	interface ResourceImageUcUiBinder extends UiBinder<Widget, ResourceImageUc> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
 	Label resourceType;
@@ -93,9 +95,9 @@ public class ResourceImageUc extends Composite implements ClickHandler,MessagePr
 	/**
 	 * Class constructor
 	 */
-	private static final String SMALL = GL0900;
+//	private static final String SMALL = i18n.GL0900;
 
-	private static final String PNG = GL0899;
+//	private static final String PNG = i18n.GL0899;
 	
 	boolean suggestFlag;
 
@@ -103,6 +105,9 @@ public class ResourceImageUc extends Composite implements ClickHandler,MessagePr
 		this.res = UcCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
+		resourceThumbnail.getElement().setId("fpnlResourceThumbnail");
+		image.getElement().setId("imgImage");
+		resourceType.getElement().setId("lblResourceType");
 		addDomHandler(this, ClickEvent.getType());
 		suggestFlag=false;
 	}
@@ -136,7 +141,7 @@ public class ResourceImageUc extends Composite implements ClickHandler,MessagePr
 	 */
 	public void renderSearch(String category, String thumbnailUrl, String realUrl, String gooruOid, String playerName, String title, boolean generateYoutube, String collectionId) {
 		final String categoryString = category == null || category.startsWith("assessment") ? ImageUtil.QUESTION : category.toLowerCase();
-		resourceType.addStyleName(categoryString + SMALL);
+		resourceType.addStyleName(categoryString + i18n.GL0900());
 		setUrl(thumbnailUrl, realUrl, categoryString, title, generateYoutube);
 		setResourceId(gooruOid);
 		setPlayerName(playerName);
@@ -150,7 +155,7 @@ public class ResourceImageUc extends Composite implements ClickHandler,MessagePr
 	}
 	public void renderSearch(String category, String thumbnailUrl, String realUrl, String gooruOid, String playerName, String title, boolean generateYoutube, String collectionId, String suggestedtype) {
 			final String categoryString = category == null || category.startsWith("assessment") ? ImageUtil.QUESTION : category.toLowerCase();
-		resourceType.addStyleName(categoryString + SMALL);
+		resourceType.addStyleName(categoryString + i18n.GL0900());
 		suggestFlag=true;
 		setUrl(thumbnailUrl, realUrl, categoryString, title, generateYoutube);
 		setResourceId(gooruOid);
@@ -165,7 +170,7 @@ public class ResourceImageUc extends Composite implements ClickHandler,MessagePr
 	}
 	public void renderSearch(String category, String thumbnailUrl, String realUrl,String collectionItemId,String title, boolean youtube, String narration) {
 		String categoryString = category == null || category.startsWith("assessment") ? ImageUtil.QUESTION : category.toLowerCase();
-		resourceType.addStyleName(categoryString + SMALL);
+		resourceType.addStyleName(categoryString + i18n.GL0900());
 		setUrl(thumbnailUrl, realUrl, categoryString, title, youtube);
 		setResourceId(collectionItemId);
 		setNarration(narration);
@@ -173,7 +178,7 @@ public class ResourceImageUc extends Composite implements ClickHandler,MessagePr
 	
 	public void renderSearch(String category, String thumbnailUrl, String realUrl,String collectionItemId, String title, boolean youtube,String narration, String collectionId) {
 		final String categoryString = category == null || category.startsWith("assessment") ? ImageUtil.QUESTION : category.toLowerCase();
-		resourceType.addStyleName(categoryString + SMALL);
+		resourceType.addStyleName(categoryString + i18n.GL0900());
 		setUrl(thumbnailUrl, realUrl, categoryString, title, youtube);
 		setResourceId(collectionItemId);
 		setNarration(narration);
@@ -219,9 +224,9 @@ public class ResourceImageUc extends Composite implements ClickHandler,MessagePr
 		} else if (!failedThumbnailGeneration && thumbnailUrl!=null && thumbnailUrl.endsWith("/")) {
 			//image.setUrl(thumbnailUrl + DEFAULT_THUMBNAIL);
 			
-			image.setUrl(DEFULT_IMAGE_PREFIX + categoryString + PNG);
+			image.setUrl(DEFULT_IMAGE_PREFIX + categoryString + i18n.GL0899());
 		} else {
-			image.setUrl(DEFULT_IMAGE_PREFIX + categoryString + PNG);
+			image.setUrl(DEFULT_IMAGE_PREFIX + categoryString + i18n.GL0899());
 		}
 	}
 

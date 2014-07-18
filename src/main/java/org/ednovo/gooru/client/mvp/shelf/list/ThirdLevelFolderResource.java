@@ -45,8 +45,8 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.RequestShelfEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.LabelGlassPanel;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
@@ -72,8 +72,11 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ThirdLevelFolderResource extends FocusPanel implements ClickHandler,MouseOverHandler,DropBox,MessageProperties {
+public class ThirdLevelFolderResource extends FocusPanel implements ClickHandler,MouseOverHandler,DropBox {
 	private static ThirdLevelFolderResourceUiBinder uiBinder = GWT.create(ThirdLevelFolderResourceUiBinder.class);
+
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	interface ThirdLevelFolderResourceUiBinder extends UiBinder<Widget,ThirdLevelFolderResource>{
 		
 	}
@@ -107,8 +110,8 @@ public class ThirdLevelFolderResource extends FocusPanel implements ClickHandler
 	@UiField(provided = true)
 	ShelfListCBundle res;
 	
-	private static final String EDIT_THIS_COLLECTION = GL0991;
-	private static final String ADD_TO_THIS_COLLECTION =GL0990;
+	private static final String EDIT_THIS_COLLECTION = i18n.GL0991();
+	private static final String ADD_TO_THIS_COLLECTION =i18n.GL0990();
 	
 	private CollectionItemDo collectionItemDo = null;
 	private static ThirdLevelFolderResource thirdLevelFolderResource;
@@ -120,10 +123,10 @@ public class ThirdLevelFolderResource extends FocusPanel implements ClickHandler
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 //		this.setCollectionItemDo(collectionItem);
-		glassContainer.setGlassText(GL0991);
+		glassContainer.setGlassText(i18n.GL0991());
 		glassContainer.getElement().setId("GlassContainer");
-		glassContainer.getElement().setAttribute("alt", GL0991);
-		glassContainer.getElement().setAttribute("title", GL0991);
+		glassContainer.getElement().setAttribute("alt", i18n.GL0991());
+		glassContainer.getElement().setAttribute("title", i18n.GL0991());
 		this.collectionItemDo = collectionItem;
 		glassContainer.setGlassVisible(false);
 		this.setStyleName(ShelfListCBundle.INSTANCE.css().shelfResourcePanel());
@@ -200,7 +203,7 @@ public class ThirdLevelFolderResource extends FocusPanel implements ClickHandler
 					public void onSuccess(List<CollectionItemDo> result) {
 						if(result.size()==0)
 						{
-							htmlPanel = new HTMLPanel(GL0989);
+							htmlPanel = new HTMLPanel(i18n.GL0989());
 							htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 							htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
 							htmlPanel.getElement().getStyle().setColor("#999999");
@@ -398,7 +401,7 @@ public class ThirdLevelFolderResource extends FocusPanel implements ClickHandler
 					doc.getElementById(getCollectionItemDo().getCollection().getGooruOid()).removeFromParent();
 				AppClientFactory.fireEvent(new CreateCollectionItemEvent(getCollectionItemDo().getCollection().getGooruOid(), draggable.getDragId()));
 			}else{
-				AlertContentUc alertContentUc = new AlertContentUc(GL0061,GL0302);
+				AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),i18n.GL0302());
 			}
 		} else if (draggable.getType().equals(DRAG_TYPE.COLLECTION)) {
 			AppClientFactory.fireEvent(new CreateCollectionItemInFoldersEvent(

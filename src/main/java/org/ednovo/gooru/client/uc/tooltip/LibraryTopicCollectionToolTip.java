@@ -4,7 +4,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -26,7 +26,7 @@ public class LibraryTopicCollectionToolTip extends Composite {
 	
 	public static DiscoverToolTipUiBinder discoverToolTipUiBinder=GWT.create(DiscoverToolTipUiBinder.class);
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
+	private MessageProperties i18n = GWT.create(MessageProperties.class); 
 	
 	@UiField HTMLPanel arowPanel;
 	

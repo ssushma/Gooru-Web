@@ -24,8 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -34,13 +35,15 @@ import com.google.gwt.user.client.ui.Label;
  * @author Search Team
  *
  */
-public class LoadingUc extends FlowPanel implements MessageProperties {
+public class LoadingUc extends FlowPanel{
 
 	private Image loadingImage;
 	
 	private Label loadingMessage;
 	
 	private static  final String LOADER_IMAGE = "images/core/B-Dot.gif";   
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	/**
 	 * Class constructor
@@ -50,8 +53,9 @@ public class LoadingUc extends FlowPanel implements MessageProperties {
 		loadingImage =  new Image();
 		loadingMessage = new Label();
 		loadingImage.setUrl(LOADER_IMAGE);
-		loadingImage.setAltText(GL0110);
-		loadingImage.setTitle(GL0110);
+		loadingImage.getElement().setId("imgLoadingImage");
+		loadingImage.setAltText(i18n.GL0110());
+		loadingImage.setTitle(i18n.GL0110());
 //		loadingMessage.setText("please wait...");
 		this.add(loadingImage);
 //		this.add(loadingMessage);

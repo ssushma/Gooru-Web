@@ -31,7 +31,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.core.client.GWT;
@@ -75,7 +75,7 @@ public class AssignmentProgressVc extends Composite{
 	private static AssignmentProgressVcUiBinder uiBinder = GWT
 			.create(AssignmentProgressVcUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface AssignmentProgressVcUiBinder extends UiBinder<Widget, AssignmentProgressVc> {
 	}

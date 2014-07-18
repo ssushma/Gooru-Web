@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection;
 
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -49,7 +49,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class CollectionUploadImageUc extends Composite implements MessageProperties {
+public class CollectionUploadImageUc extends Composite {
 
 	@UiField
 	Image collectionImg;
@@ -60,6 +60,8 @@ public class CollectionUploadImageUc extends Composite implements MessagePropert
 	@UiField HTMLEventPanel collectionEditImageContainer;
 
 	private static CollectionUploadImageUcUiBinder uiBinder = GWT.create(CollectionUploadImageUcUiBinder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CollectionUploadImageUcUiBinder extends UiBinder<Widget, CollectionUploadImageUc> {
 	}
@@ -69,8 +71,11 @@ public class CollectionUploadImageUc extends Composite implements MessagePropert
 	 */
 	public CollectionUploadImageUc() {
 		initWidget(uiBinder.createAndBindUi(this));
-		changeImgLbl.setText(GL0800);
+		changeImgLbl.setText(i18n.GL0800());
+		changeImgLbl.getElement().setAttribute("alt",i18n.GL0800());
+		changeImgLbl.getElement().setAttribute("title",i18n.GL0800());
 		changeImgLbl.getElement().setId("lblChangeImg");
+		
 		collectionImg.addErrorHandler(new ErrorHandler() {
 
 			@Override
@@ -81,6 +86,8 @@ public class CollectionUploadImageUc extends Composite implements MessagePropert
 		
 		collectionEditImageContainer.addMouseOverHandler(new ShowUploadImageButton());
 		collectionEditImageContainer.addMouseOutHandler(new HideUploadImageButton());
+		collectionEditImageContainer.getElement().setId("epnlCollectionEditImageContainer");
+		collectionImg.getElement().setId("imgCollectionImg");
 	}
 
 	/**

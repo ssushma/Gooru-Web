@@ -29,7 +29,8 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -66,13 +67,15 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer: 
  */
-public class EditableLabelUc extends Composite implements HasValue<String>,MessageProperties {
+public class EditableLabelUc extends Composite implements HasValue<String> {
 
 	private static EditableLabelUcUiBinder uiBinder = GWT
 			.create(EditableLabelUcUiBinder.class);
 
 	interface EditableLabelUcUiBinder extends UiBinder<Widget, EditableLabelUc> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
 	protected Label editLabel;
@@ -102,6 +105,11 @@ public class EditableLabelUc extends Composite implements HasValue<String>,Messa
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
 		deckPanel.showWidget(0);
+		focusPanel.getElement().setId("focuspnlFocusPanel");
+		deckPanel.getElement().setId("dpnlDeckPanel");
+		editLabel.getElement().setId("lblEditLabel");
+		editTextBox.getElement().setId("txtEditTextBox");
+		StringUtil.setAttributes(editTextBox, true);
 		/*
 		 * focusPanel.addFocusHandler(new FocusHandler() {
 		 * 
@@ -177,6 +185,8 @@ public class EditableLabelUc extends Composite implements HasValue<String>,Messa
 					});
 				} else if (event.getCharCode() == KeyCodes.KEY_ESCAPE) {
 					editTextBox.setText(editLabel.getText()); // reset to the original value
+					editTextBox.getElement().setAttribute("alt", editLabel.getText());
+					editTextBox.getElement().setAttribute("title", editLabel.getText());
 				}
 			}
 		});
@@ -205,6 +215,8 @@ public class EditableLabelUc extends Composite implements HasValue<String>,Messa
 		if (deckPanel.getVisibleWidget() == 1)
 			return;
 		editTextBox.setText(getValue());
+		editTextBox.getElement().setAttribute("alt", getValue());
+		editTextBox.getElement().setAttribute("title", getValue());
 		deckPanel.showWidget(1);
 		editTextBox.setFocus(true);
 		editTextBox.addStyleName("shelfEditTitle");
@@ -224,7 +236,7 @@ public class EditableLabelUc extends Composite implements HasValue<String>,Messa
 			if (isHavingBadWords){
 				editTextBox.getElement().getStyle().setBorderColor("orange");
 			}else{
-				new AlertContentUc(GL0061,GL1026+GL_SPL_EXCLAMATION);
+				new AlertContentUc(i18n.GL0061(),i18n.GL1026()+i18n.GL_SPL_EXCLAMATION());
 			}
 			return;
 		}
@@ -281,7 +293,11 @@ public class EditableLabelUc extends Composite implements HasValue<String>,Messa
 	@Override
 	public void setValue(String value) {
 		editLabel.setText(value);
+		editLabel.getElement().setAttribute("alt", value);
+		editLabel.getElement().setAttribute("title", value);
 		editTextBox.setText(value);
+		editTextBox.getElement().setAttribute("alt", value);
+		editTextBox.getElement().setAttribute("title", value);
 	}
 
 	/**

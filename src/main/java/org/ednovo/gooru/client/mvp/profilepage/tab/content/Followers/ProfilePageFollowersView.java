@@ -5,12 +5,11 @@ import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -18,10 +17,9 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProfilePageFollowersView extends Composite implements MessageProperties {
+public class ProfilePageFollowersView extends Composite{
 
 	private static ProfilePageFollowersViewUiBinder uiBinder = GWT
 			.create(ProfilePageFollowersViewUiBinder.class);
@@ -29,6 +27,9 @@ public class ProfilePageFollowersView extends Composite implements MessageProper
 	interface ProfilePageFollowersViewUiBinder extends
 			UiBinder<Widget, ProfilePageFollowersView> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField HTMLPanel followersUserConatiner;
 	List<UserFollowDo> userFollowDo = new ArrayList<UserFollowDo>();
 	@UiField InlineLabel followersTextMessage,followersTextMessageNormal;
@@ -58,9 +59,17 @@ public class ProfilePageFollowersView extends Composite implements MessageProper
 	public void setData()
 	{
 		
-		followersTextMessage.setText(GL1914);
+		followersTextMessage.setText(i18n.GL1914());
+		followersTextMessage.getElement().setId("spnFollowersTextMessage");
+		followersTextMessage.getElement().setAttribute("alt",i18n.GL1914());
+		followersTextMessage.getElement().setAttribute("title",i18n.GL1914());
+		
 		followersTextMessage.getElement().setAttribute("style", "font-weight:bold");
-		followersTextMessageNormal.setText(GL1914_1);
+		followersTextMessageNormal.setText(i18n.GL1914_1());
+		followersTextMessageNormal.getElement().setId("spnFollowersTextMessageNormal");
+		followersTextMessageNormal.getElement().setAttribute("alt",i18n.GL1914_1());
+		followersTextMessageNormal.getElement().setAttribute("title",i18n.GL1914_1());
+		
 		followersUserConatiner.clear();
 		
 		if(totalHitCount>pageInitialLimit)
@@ -77,7 +86,8 @@ public class ProfilePageFollowersView extends Composite implements MessageProper
 			followersUserConatiner.add(profilePageUserInfoWidget);
 		}
 		
-		
+		followersUserConatiner.getElement().setId("pnlFollowersUserConatiner");
+		seeMorebtn.getElement().setId("btnSeeMorebtn");
 	}
 	@UiHandler("seeMorebtn")
 	public void onSeeMoreClick(ClickEvent event) {

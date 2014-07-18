@@ -24,8 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.wrap;
 
-import java.util.HashMap;
-
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseView;
@@ -33,23 +31,18 @@ import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
 import org.ednovo.gooru.client.mvp.shelf.ShelfView;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 import org.ednovo.gooru.client.uc.tooltip.DiscoverToolTip;
-import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
-import org.ednovo.gooru.shared.util.PlayerConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
-import com.anotherbigidea.flash.movie.Image;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -60,9 +53,11 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  * 
  */
-public class WrapView extends BaseView implements IsWrapView,MessageProperties {
+public class WrapView extends BaseView implements IsWrapView {
 
 	private static WrapViewUiBinder uiBinder = GWT.create(WrapViewUiBinder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface WrapViewUiBinder extends UiBinder<Widget, WrapView> {
 	}
@@ -130,6 +125,7 @@ public class WrapView extends BaseView implements IsWrapView,MessageProperties {
 			  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 		  }
+		 
 		  setUiText();
 	}
 
@@ -224,24 +220,24 @@ public class WrapView extends BaseView implements IsWrapView,MessageProperties {
 	}
 	public void setUiText()
 	{
-		  msgPanel.getElement().setInnerHTML(GL1983);
-		  msgPanel.getElement().setAttribute("alt", GL1983);
-		  msgPanel.getElement().setAttribute("title", GL1983);
-		  msglinkPanel.getElement().setInnerHTML(GL1984);
-		  msglinkPanel.getElement().setAttribute("alt", GL1984);
-		  msglinkPanel.getElement().setAttribute("title", GL1984);
-		  gooruPanel.getElement().setInnerHTML(GL0733);
-		  gooruPanel.getElement().setAttribute("alt", GL0733);
-		  gooruPanel.getElement().setAttribute("title", GL0733);
-		  ednovoPanel.getElement().setInnerHTML(GL1985);
-		  ednovoPanel.getElement().setAttribute("alt", GL1985);
-		  ednovoPanel.getElement().setAttribute("title", GL1985);
-		  appstorePanel.getElement().setInnerHTML(GL1986);
-		  appstorePanel.getElement().setAttribute("alt", GL1986);
-		  appstorePanel.getElement().setAttribute("title", GL1986);
-		  viewAnchor.setText(GL1428);
-		  viewAnchor.getElement().setAttribute("alt", GL1428);
-		  viewAnchor.getElement().setAttribute("title", GL1428);
+		  msgPanel.getElement().setInnerHTML(i18n.GL1983());
+		  msgPanel.getElement().setAttribute("alt", i18n.GL1983());
+		  msgPanel.getElement().setAttribute("title", i18n.GL1983());
+		  msglinkPanel.getElement().setInnerHTML(i18n.GL1984());
+		  msglinkPanel.getElement().setAttribute("alt", i18n.GL1984());
+		  msglinkPanel.getElement().setAttribute("title",i18n.GL1984());
+		  gooruPanel.getElement().setInnerHTML(i18n.GL0733());
+		  gooruPanel.getElement().setAttribute("alt", i18n.GL0733());
+		  gooruPanel.getElement().setAttribute("title", i18n.GL0733());
+		  ednovoPanel.getElement().setInnerHTML(i18n.GL1985());
+		  ednovoPanel.getElement().setAttribute("alt", i18n.GL1985());
+		  ednovoPanel.getElement().setAttribute("title", i18n.GL1985());
+		  appstorePanel.getElement().setInnerHTML(i18n.GL1986());
+		  appstorePanel.getElement().setAttribute("alt", i18n.GL1986());
+		  appstorePanel.getElement().setAttribute("title", i18n.GL1986());
+		  viewAnchor.setText(i18n.GL1428());
+		  viewAnchor.getElement().setAttribute("alt", i18n.GL1428());
+		  viewAnchor.getElement().setAttribute("title", i18n.GL1428());
 		  
 	}
 }

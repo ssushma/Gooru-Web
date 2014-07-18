@@ -27,9 +27,8 @@ package org.ednovo.gooru.client.mvp.home;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -75,7 +74,7 @@ public class LogoutPanelVc extends PopupPanel{
 	interface logoutPanelVcUiBinder extends UiBinder<Widget, LogoutPanelVc> {
 	}
 
-	 private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	 private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	/**
 	 * Class constructor

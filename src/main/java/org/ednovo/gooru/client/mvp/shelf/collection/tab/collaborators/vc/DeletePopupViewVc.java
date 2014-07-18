@@ -27,8 +27,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsCBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -44,6 +43,7 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -53,8 +53,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author BLR Team
  * 
  */
-public abstract class DeletePopupViewVc extends PopupPanel implements
-		MessageProperties {
+public abstract class DeletePopupViewVc extends PopupPanel {
 
 	@UiField(provided = true)
 	CollectionCollaboratorsCBundle collaborators;
@@ -68,6 +67,8 @@ public abstract class DeletePopupViewVc extends PopupPanel implements
 	
 	@UiField TextBox txtConfirmAction;
 	
+	@UiField HTMLPanel imgDeleteIcon;
+	
 	boolean isValidate=false;
 
 	private String deleteCode=null;
@@ -78,7 +79,7 @@ public abstract class DeletePopupViewVc extends PopupPanel implements
 	}
 
 	private static final Binder binder = GWT.create(Binder.class);
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * 
@@ -98,9 +99,16 @@ public abstract class DeletePopupViewVc extends PopupPanel implements
 		setElementId();
 		
 		txtConfirmAction.addKeyUpHandler(new ValidateConfirmText());
-		txtConfirmAction.getElement().setAttribute("placeholder", GL1175);
+		txtConfirmAction.getElement().setAttribute("placeholder", i18n.GL1175());
+		StringUtil.setAttributes(txtConfirmAction, true);
 		btnNegitive.setText(StringUtil.generateMessage(i18n.GL0142()));
+		btnNegitive.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0142()));
+		btnNegitive.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0142()));
+		
 		btnPositive.setText(StringUtil.generateMessage(i18n.GL0190()));
+		btnPositive.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0190()));
+		btnPositive.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0190()));
+		
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		this.center();
@@ -129,6 +137,12 @@ public abstract class DeletePopupViewVc extends PopupPanel implements
 	private void setElementId() {
 		btnPositive.getElement().setId("btnPositive");
 		btnNegitive.getElement().setId("btnNegitive");
+		lblTitle.getElement().setId("lblTitle");
+		imgDeleteIcon.getElement().setId("pnlImgDeleteIcon");
+		htmlNotes.getElement().setId("htmlNotes");
+		htmlDescription.getElement().setId("htmlDescription");
+		txtConfirmAction.getElement().setId("txtConfirmAction");
+		lblRemoving.getElement().setId("lblRemoving");
 	}
 
 	/* Setters */
@@ -153,6 +167,8 @@ public abstract class DeletePopupViewVc extends PopupPanel implements
 	 */
 	public void setPositiveButtonText(String text) {
 		btnPositive.setText(text);
+		btnPositive.getElement().setAttribute("alt",text);
+		btnPositive.getElement().setAttribute("title",text);
 	}
 	/**
 	 * 
@@ -175,6 +191,8 @@ public abstract class DeletePopupViewVc extends PopupPanel implements
 	 */
 	public void setNegitiveButtonText(String text) {
 		btnNegitive.setText(text);
+		btnNegitive.getElement().setAttribute("alt",text);
+		btnNegitive.getElement().setAttribute("title",text);
 	}
 	/**
 	 * 
@@ -197,6 +215,8 @@ public abstract class DeletePopupViewVc extends PopupPanel implements
 	 */
 	public void setPleaseWaitText(String text){
 		lblRemoving.setText(text);
+		lblRemoving.getElement().setAttribute("alt",text);
+		lblRemoving.getElement().setAttribute("title",text);
 	}
 	/**
 	 * 
@@ -219,6 +239,8 @@ public abstract class DeletePopupViewVc extends PopupPanel implements
 	 */
 	public void setPopupTitle(String title) {
 		lblTitle.setText(title);
+		lblTitle.getElement().setAttribute("alt",title);
+		lblTitle.getElement().setAttribute("title",title);
 	}
 	/**
 	 * 

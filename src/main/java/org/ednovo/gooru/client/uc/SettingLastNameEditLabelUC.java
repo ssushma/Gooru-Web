@@ -23,7 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -55,7 +55,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public class SettingLastNameEditLabelUC extends Composite implements MessageProperties,HasValue<String>{
+public class SettingLastNameEditLabelUC extends Composite implements HasValue<String>{
 
 	private static SettingLastNameEditLabelUCUiBinder uiBinder = GWT
 			.create(SettingLastNameEditLabelUCUiBinder.class);
@@ -63,6 +63,9 @@ public class SettingLastNameEditLabelUC extends Composite implements MessageProp
 	interface SettingLastNameEditLabelUCUiBinder extends
 			UiBinder<Widget, SettingLastNameEditLabelUC> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField
 	protected Label editLabel,errorLabel;
 
@@ -75,17 +78,22 @@ public class SettingLastNameEditLabelUC extends Composite implements MessageProp
 	@UiField
 	protected FocusPanel focusPanel;
 	protected String text;
-	private static final String LNAME = GL1048;
+//	private static final String LNAME = i18n.GL1048;
 	
 	@UiField(provided = true)
 	UcCBundle res;
 	public SettingLastNameEditLabelUC() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
+		focusPanel.getElement().setId("focuspnlFocusPanel");
+		deckPanel.getElement().setId("dpnlDeckPanel");
+		editLabel.getElement().setId("lblEditLabel");
 		deckPanel.showWidget(0);
 		editTextBox.getElement().setAttribute("maxlength", "25");
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 		editTextBox.getElement().setId("txtName");
+		StringUtil.setAttributes(editTextBox, true);
+		errorLabel.getElement().setId("errlblErrorLabel");
 		errorLabel.getElement().setAttribute("style", "margin-left:20px");
 	}
 
@@ -106,6 +114,8 @@ public class SettingLastNameEditLabelUC extends Composite implements MessageProp
 		if (deckPanel.getVisibleWidget() == 1)
 			return;
 		editTextBox.setText(getValue());	
+		editTextBox.getElement().setAttribute("alt", getValue());
+		editTextBox.getElement().setAttribute("title", getValue());
 		deckPanel.showWidget(1);
 		editTextBox.setFocus(true);
 		editTextBox.addStyleName("SettingEditLastName");
@@ -125,7 +135,9 @@ public class SettingLastNameEditLabelUC extends Composite implements MessageProp
 		if (editTextBox.getText().trim().length() > 0) {
 			setValue(editTextBox.getText(), true); // fires events, too
 		}else {
-		errorLabel.setText(StringUtil.generateMessage(GL0082, LNAME));
+		errorLabel.setText(StringUtil.generateMessage(i18n.GL0082(), i18n.GL1048()));
+		errorLabel.getElement().setAttribute("alt", StringUtil.generateMessage(i18n.GL0082(), i18n.GL1048()));
+		errorLabel.getElement().setAttribute("title", StringUtil.generateMessage(i18n.GL0082(), i18n.GL1048()));
 			errorLabel.setVisible(true);
 			return;
 		}
@@ -150,6 +162,8 @@ public class SettingLastNameEditLabelUC extends Composite implements MessageProp
 	public void cancel() {
 		deckPanel.showWidget(0);
 		editTextBox.setText(editLabel.getText());
+		editTextBox.getElement().setAttribute("alt",editLabel.getText());
+		editTextBox.getElement().setAttribute("title", editLabel.getText());
 		errorLabel.setVisible(false);
 	}
 
@@ -185,7 +199,11 @@ public class SettingLastNameEditLabelUC extends Composite implements MessageProp
 
 		editLabel.setText(value.length() > 50 ? value.substring(0, 50) + "..."
 				: value);
+		editLabel.getElement().setAttribute("alt", value);
+		editLabel.getElement().setAttribute("title", value);
 		editTextBox.setText(value);
+		editTextBox.getElement().setAttribute("alt",value);
+		editTextBox.getElement().setAttribute("title", value);
 	}
 
 	/**

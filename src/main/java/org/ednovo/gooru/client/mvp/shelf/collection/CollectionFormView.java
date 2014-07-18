@@ -28,25 +28,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.bcel.generic.GETSTATIC;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePopupViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
-import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.DownToolTipUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -66,15 +64,10 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.query.client.css.HeightProperty;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -101,7 +94,7 @@ import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
  */
 public class CollectionFormView extends
 		BasePopupViewWithHandlers<CollectionFormUiHandlers> implements
-		IsCollectionFormView,MessageProperties {
+		IsCollectionFormView {
 
 	@UiField
 	TextBoxWithPlaceholder collectionTitleTxtBox;
@@ -129,7 +122,7 @@ public class CollectionFormView extends
 	Button btnOk;
 	
 	@UiField
-	Label mandatoryErrorLbl, lblVisibility,lblPublic,lblAllow,lblShareable,lblShareableDesc,lblPrivate, lblPrivateDesc;
+	Label publicLbl,mandatoryErrorLbl, lblVisibility,lblPublic,lblAllow,lblShareable,lblShareableDesc,lblPrivate, lblPrivateDesc;
 
 	@UiField
 	FlowPanel  linkShareFloPanel, privateShareFloPanel;
@@ -167,11 +160,13 @@ public class CollectionFormView extends
 	private  boolean isCheckedValue;
 	
 	boolean isHavingBadWords;
+	
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	private static String TITLE_THIS_COLLECTION = GL0322;
+	private static String TITLE_THIS_COLLECTION = i18n.GL0322();
 
 	
-	private static String CONFIRM_MESSAGE =GL1490+GL_SPL_EXCLAMATION;
+	private static String CONFIRM_MESSAGE =i18n.GL1490()+i18n.GL_SPL_EXCLAMATION();
 	
 	private static String REQ_COLLECTION_TITLE="collectionTitle";
 	
@@ -213,14 +208,19 @@ public class CollectionFormView extends
 		mandatoryErrorLbl.setVisible(false);
 		isCheckedValue=false;
 		publicShareFloPanel.setVisible(false);
-		loadingTextLbl.setText(GL0591.toLowerCase());
+		loadingTextLbl.setText(i18n.GL0591().toLowerCase());
+		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
+		loadingTextLbl.getElement().setAttribute("alt",i18n.GL0591().toLowerCase());
+		loadingTextLbl.getElement().setAttribute("title",i18n.GL0591().toLowerCase());
+		  
+		
 		collectionTitleTxtBox.getElement().setAttribute("maxlength", "50");
-//		collectionTitleTxtBox.getElement().setAttribute("placeholder", MessageProperties.GL0319);
+//		collectionTitleTxtBox.getElement().setAttribute("placeholder", MessageProperties.i18n.GL0319);
 		radioButtonPublic.getElement().setId("rdPublic");
 		radioButtonShare.getElement().setId("rdShare");
 		radioButtonPrivate.getElement().setId("rdPrivate");
 		collectionTitleTxtBox.getElement().setId("txtCollectionTitle");
-		appPopUp.setTitle(GL0993);
+		appPopUp.setTitle(i18n.GL0993());
 		
 		buttonFloPanel.setVisible(false);
 		
@@ -238,7 +238,9 @@ public class CollectionFormView extends
 							btnOk.getElement().removeClassName("disabled");
 							if (value){
 								collectionTitleTxtBox.getElement().getStyle().setBorderColor("orange");
-								mandatoryErrorLbl.setText(GL0554);
+								mandatoryErrorLbl.setText(i18n.GL0554());
+								mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0554());
+								mandatoryErrorLbl.getElement().setAttribute("title",i18n.GL0554());
 								mandatoryErrorLbl.setVisible(true);
 								mandatoryErrorLbl.getElement().getStyle().setMarginRight(63,Unit.PX);
 							}else{
@@ -280,7 +282,9 @@ public class CollectionFormView extends
 //						btnOk.getElement().addClassName("disabled");
 						if (value){
 							collectionTitleTxtBox.getElement().getStyle().setBorderColor("orange");
-							mandatoryErrorLbl.setText(GL0554);
+							mandatoryErrorLbl.setText(i18n.GL0554());
+							mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0554());
+							mandatoryErrorLbl.getElement().setAttribute("title",i18n.GL0554());
 							mandatoryErrorLbl.setVisible(true);
 							mandatoryErrorLbl.getElement().getStyle().setMarginRight(63,Unit.PX);
 							btnOk.setEnabled(true);
@@ -385,22 +389,79 @@ public class CollectionFormView extends
 	}
 	
 	public void setTextAndIds(){
-		collectionTitleTxtBox.setPlaceholder(GL0319);
-		mandatoryErrorLbl.setText(GL0173);
-		lblVisibility.setText(GL0328);
-		lblPublic.setText(GL0329);
-		lblAllow.setText(GL0330);
-		lblShareable.setText(GL0331);
-		lblShareableDesc.setText(GL0332);
-		lblPrivate.setText(GL0333);
-		lblPrivateDesc.setText(GL0334);
+		collectionTitleTxtBox.setPlaceholder(i18n.GL0319());
+		mandatoryErrorLbl.setText(i18n.GL0173());
+		mandatoryErrorLbl.getElement().setId("lblMandatoryErrorLbl");
+		mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0173());
+		mandatoryErrorLbl.getElement().setAttribute("title",i18n.GL0173());
+		  
+		lblVisibility.setText(i18n.GL0328());
+		lblVisibility.getElement().setId("lblVisibility");
+		lblVisibility.getElement().setAttribute("alt",i18n.GL0328());
+		lblVisibility.getElement().setAttribute("title",i18n.GL0328());
 		
-		gradeLbl.setText(GL0325+GL_SPL_SEMICOLON);
-		courseLbl.setText(GL0326+GL_SPL_SEMICOLON);
+		lblPublic.setText(i18n.GL0329());
+		lblPublic.getElement().setId("lblPublic");
+		lblPublic.getElement().setAttribute("alt",i18n.GL0329());
+		lblPublic.getElement().setAttribute("title",i18n.GL0329());
+		
+		lblAllow.setText(i18n.GL0330());
+		lblAllow.getElement().setId("lblAllow");
+		lblAllow.getElement().setAttribute("alt",i18n.GL0330());
+		lblAllow.getElement().setAttribute("title",i18n.GL0330());
+		
+		lblShareable.setText(i18n.GL0331());
+		lblShareable.getElement().setId("lblShareable");
+		lblShareable.getElement().setAttribute("alt",i18n.GL0331());
+		lblShareable.getElement().setAttribute("title",i18n.GL0331());
+		
+		lblShareableDesc.setText(i18n.GL0332());
+		lblShareableDesc.getElement().setId("lblShareableDesc");
+		lblShareableDesc.getElement().setAttribute("alt",i18n.GL0332());
+		lblShareableDesc.getElement().setAttribute("title",i18n.GL0332());
+		
+		lblPrivate.setText(i18n.GL0333());
+		lblPrivate.getElement().setId("lblPrivate");
+		lblPrivate.getElement().setAttribute("alt",i18n.GL0333());
+		lblPrivate.getElement().setAttribute("title",i18n.GL0333());
+		
+		lblPrivateDesc.setText(i18n.GL0334());
+		lblPrivateDesc.getElement().setId("lblPrivateDesc");
+		lblPrivateDesc.getElement().setAttribute("alt",i18n.GL0334());
+		lblPrivateDesc.getElement().setAttribute("title",i18n.GL0334());
+		
+		gradeLbl.setText(i18n.GL0325()+i18n.GL_SPL_SEMICOLON()+" ");
+		gradeLbl.getElement().setId("lblGradeLbl");
+		gradeLbl.getElement().setAttribute("alt",i18n.GL0325());
+		gradeLbl.getElement().setAttribute("title",i18n.GL0325());
+		
+		courseLbl.setText(i18n.GL0326()+i18n.GL_SPL_SEMICOLON()+" ");
+		courseLbl.getElement().setId("lblCourseLbl");
+		courseLbl.getElement().setAttribute("alt",i18n.GL0326());
+		courseLbl.getElement().setAttribute("title",i18n.GL0326());
+		
 		btnOk.getElement().setId("btnOk");
 		cancelAnr.getElement().setId("lnkCancel");
-		/*btnOk.setText(GL0636);
-		cancelAnr.setText(MessageProperties.GL0142);*/
+		/*btnOk.setText(i18n.GL0636);
+		cancelAnr.setText(MessageProperties.i18n.GL0142);*/
+		shelfItemContent.getElement().setId("pnlShelfItemContent");
+		collPopUpMainheading.getElement().setId("lblCollPopUpMainheading");
+		collPopUpSubheading.getElement().setId("lblCollPopUpSubheading");
+		collTitleLbl.getElement().setId("lblCollTitleLbl");
+		gradeContainer.getElement().setId("pnlGradeContainer");
+		collectionGradeTxtBox.getElement().setId("spnlCollectionGradeTxtBox");
+		courseContainer.getElement().setId("pnlCourseContainer");
+		groupSimPanel.getElement().setId("spnlGroupSimPanel");
+		buttonFloPanel.getElement().setId("fpnlButtonFloPanel");
+		visibilitySection.getElement().setId("pnlVisibilitySection");
+		publicShareFloPanel.getElement().setId("epnlPublicShareFloPanel");
+		publicRadioButtonPanel.getElement().setId("pnlPublicRadioButtonPanel");
+		publicLbl.getElement().setId("lblPublicLbl");
+		linkShareFloPanel.getElement().setId("fpnlLinkShareFloPanel");
+		shareRadioButtonPanel.getElement().setId("pnlShareRadioButtonPanel");
+		privateShareFloPanel.getElement().setId("fpnlPrivateShareFloPanel");
+		privateRadioButtonPanel.getElement().setId("pnlPrivateRadioButtonPanel");
+		buttonMainContainer.getElement().setId("pnlButtonMainContainer");
 	}
 
 	/**
@@ -433,7 +494,9 @@ public class CollectionFormView extends
 			btnOk.setEnabled(true);
 			btnOk.getElement().removeClassName("disabled");
 			if (collectionTitleTxtBox.getText().length() >= 50) {
-				mandatoryErrorLbl.setText(GL0143);
+				mandatoryErrorLbl.setText(i18n.GL0143());
+				mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0143());
+				mandatoryErrorLbl.getElement().setAttribute("title",i18n.GL0143());
 				mandatoryErrorLbl.setVisible(true);
 			}
 		}
@@ -495,44 +558,88 @@ public class CollectionFormView extends
 		
 		
 		if(AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE)!=null&&!AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE).equalsIgnoreCase("")){
-			collPopUpMainheading.setText(GL1421);
-			collPopUpSubheading.setText(GL1365);
-			collTitleLbl.setText(GL0553);
+			collPopUpMainheading.setText(i18n.GL1421());
+			collPopUpMainheading.getElement().setAttribute("alt",i18n.GL1421());
+			collPopUpMainheading.getElement().setAttribute("title",i18n.GL1421());
+			collPopUpSubheading.setText(i18n.GL1365());
+			collPopUpSubheading.getElement().setAttribute("alt",i18n.GL1365());
+			collPopUpSubheading.getElement().setAttribute("title",i18n.GL1365());
+			collTitleLbl.setText(i18n.GL0553());
+			collTitleLbl.getElement().setAttribute("alt",i18n.GL0553());
+			collTitleLbl.getElement().setAttribute("title",i18n.GL0553());
 			collectionTitleTxtBox.setText(AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE));
-			btnOk.setText(GL0636);
-			cancelAnr.setText(GL0142);
-			appPopUp.setViewTitle(GL1421);
+			collectionTitleTxtBox.getElement().setAttribute("alt",AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE));
+			collectionTitleTxtBox.getElement().setAttribute("title",AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE));
+			btnOk.setText(i18n.GL0636());
+			btnOk.getElement().setAttribute("alt",i18n.GL0636());
+			btnOk.getElement().setAttribute("title",i18n.GL0636());
+			cancelAnr.setText(i18n.GL0142());
+			cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
+			cancelAnr.getElement().setAttribute("title",i18n.GL0142());
+			appPopUp.setViewTitle(i18n.GL1421());
 			setPopUpStyle();
 		}else if(AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE)!=null&&!AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE).equalsIgnoreCase("")){
-			collPopUpMainheading.setText(GL1421);
-			collPopUpSubheading.setText(GL1365);
-			collTitleLbl.setText(GL0553);
+			collPopUpMainheading.setText(i18n.GL1421());
+			collPopUpMainheading.getElement().setAttribute("alt",i18n.GL1421());
+			collPopUpMainheading.getElement().setAttribute("title",i18n.GL1421());
+			collPopUpSubheading.setText(i18n.GL1365());
+			collPopUpSubheading.getElement().setAttribute("alt",i18n.GL1365());
+			collPopUpSubheading.getElement().setAttribute("title",i18n.GL1365());
+			collTitleLbl.setText(i18n.GL0553());
+			collTitleLbl.getElement().setAttribute("alt",i18n.GL0553());
+			collTitleLbl.getElement().setAttribute("title",i18n.GL0553());
 			collectionTitleTxtBox.setText(AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE));
-			btnOk.setText(GL0636);
-			cancelAnr.setText(GL0142);
-			appPopUp.setViewTitle(GL1421);
+			collectionTitleTxtBox.getElement().setAttribute("alt",AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE));
+			collectionTitleTxtBox.getElement().setAttribute("title",AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE));
+			btnOk.setText(i18n.GL0636());
+			btnOk.getElement().setAttribute("alt",i18n.GL0636());
+			btnOk.getElement().setAttribute("title",i18n.GL0636());
+			cancelAnr.setText(i18n.GL0142());
+			cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
+			cancelAnr.getElement().setAttribute("title",i18n.GL0142());
+			appPopUp.setViewTitle(i18n.GL1421());
 			setPopUpStyle();
 		}else{
 			if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.HOME)){
-				collPopUpMainheading.setText(GL0993);
-				collPopUpSubheading.setText(GL1033);
-				collTitleLbl.setText(GL0993+GL_SPL_SEMICOLON);
-				btnOk.setText(GL0141);
-				cancelAnr.setText(GL0142);
-				appPopUp.setViewTitle(GL0322);
+				collPopUpMainheading.setText(i18n.GL0993());
+				collPopUpMainheading.getElement().setAttribute("alt",i18n.GL0993());
+				collPopUpMainheading.getElement().setAttribute("title",i18n.GL0993());
+				collPopUpSubheading.setText(i18n.GL1033());
+				collPopUpSubheading.getElement().setAttribute("alt",i18n.GL1033());
+				collPopUpSubheading.getElement().setAttribute("title",i18n.GL1033());
+				collTitleLbl.setText(i18n.GL0993()+i18n.GL_SPL_SEMICOLON()+" ");
+				collTitleLbl.getElement().setAttribute("alt",i18n.GL0993());
+				collTitleLbl.getElement().setAttribute("title",i18n.GL0993());
+				btnOk.setText(i18n.GL0141());
+				btnOk.getElement().setAttribute("alt",i18n.GL0141());
+				btnOk.getElement().setAttribute("title",i18n.GL0141());
+				cancelAnr.setText(i18n.GL0142());
+				cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
+				cancelAnr.getElement().setAttribute("title",i18n.GL0142());
+				appPopUp.setViewTitle(i18n.GL0322());
 			}else{
-				collPopUpMainheading.setText(GL0993);
-				collPopUpSubheading.setText(GL1033);
-				collTitleLbl.setText(GL0651);
-				btnOk.setText(GL0636);
-				cancelAnr.setText(GL0142);
-				appPopUp.setViewTitle(GL0322);
+				collPopUpMainheading.setText(i18n.GL0993());
+				collPopUpMainheading.getElement().setAttribute("alt",i18n.GL0993());
+				collPopUpMainheading.getElement().setAttribute("title",i18n.GL0993());
+				collPopUpSubheading.setText(i18n.GL1033());
+				collPopUpSubheading.getElement().setAttribute("alt",i18n.GL1033());
+				collPopUpSubheading.getElement().setAttribute("title",i18n.GL1033());
+				collTitleLbl.setText(i18n.GL0651());
+				collTitleLbl.getElement().setAttribute("alt",i18n.GL0651());
+				collTitleLbl.getElement().setAttribute("title",i18n.GL0651());
+				btnOk.setText(i18n.GL0636());
+				btnOk.getElement().setAttribute("alt",i18n.GL0636());
+				btnOk.getElement().setAttribute("title",i18n.GL0636());
+				cancelAnr.setText(i18n.GL0142());
+				cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
+				cancelAnr.getElement().setAttribute("title",i18n.GL0142());
+				appPopUp.setViewTitle(i18n.GL0322());
 			}
 			
 		}
 		
 		if(AppClientFactory.getPlaceManager().getRequestParameter("resourceId")!=null&&!AppClientFactory.getPlaceManager().getRequestParameter("resourceId").equalsIgnoreCase("")){
-			appPopUp.setViewTitle(GL0322);
+			appPopUp.setViewTitle(i18n.GL0322());
 		}
 //		validationErrorLbl.setVisible(false);
 		mandatoryErrorLbl.setVisible(false);
@@ -634,18 +741,24 @@ public class CollectionFormView extends
 				|| tiltle.toLowerCase().contains("http://")
 				|| tiltle.toLowerCase().contains("https://")
 				|| tiltle.toLowerCase().contains("ftp://")) {
-			mandatoryErrorLbl.setText(GL0323);
+			mandatoryErrorLbl.setText(i18n.GL0323());
+			mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0323());
+			mandatoryErrorLbl.getElement().setAttribute("title",i18n.GL0323());
 			mandatoryErrorLbl.setVisible(true);
-			errorList.put("title", GL0323.toLowerCase());
+			errorList.put("title", i18n.GL0323().toLowerCase());
 		} else if (tiltle.trim().equals("")
-				|| tiltle.equalsIgnoreCase(GL0319)) {
-			errorList.put("title", GL0324);
-			mandatoryErrorLbl.setText(GL0173);
+				|| tiltle.equalsIgnoreCase(i18n.GL0319())) {
+			errorList.put("title", i18n.GL0324());
+			mandatoryErrorLbl.setText(i18n.GL0173());
+			mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0173());
+			mandatoryErrorLbl.getElement().setAttribute("title",i18n.GL0173());
 			mandatoryErrorLbl.setVisible(true);
 			mandatoryErrorLbl.getElement().getStyle().setMarginRight(62,Unit.PX);
 		}else if (isHavingBadWords){
-			errorList.put("title", GL0554);
-			mandatoryErrorLbl.setText(GL0554);
+			errorList.put("title", i18n.GL0554());
+			mandatoryErrorLbl.setText(i18n.GL0554());
+			mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0554());
+			mandatoryErrorLbl.getElement().setAttribute("title",i18n.GL0554());
 			mandatoryErrorLbl.setVisible(true);
 		}
 		return errorList;

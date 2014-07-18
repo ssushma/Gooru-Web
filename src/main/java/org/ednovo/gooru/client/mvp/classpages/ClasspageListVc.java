@@ -45,13 +45,12 @@ import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AttachToDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -136,11 +135,13 @@ public class ClasspageListVc extends PopupPanel {
 	private static ClasspageListVcUiBinder uiBinder = GWT.create(ClasspageListVcUiBinder.class);
 	interface ClasspageListVcUiBinder extends UiBinder<Widget, ClasspageListVc> {
 	}
+	
+	
 
 	@UiField(provided = true)
 	ClasspageListPopupViewCBundle res;
 	
-	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private NewClasspagePopupView newPopup = null;
 
@@ -456,7 +457,7 @@ public class ClasspageListVc extends PopupPanel {
 												.fireEvent(new SetHeaderZIndexEvent(
 														98, false));
 										alertMessageUc = new AlertMessageUc(
-												GL0061, new Label(GL0244));
+												i18n.GL0061(), new Label(i18n.GL0244()));
 										ClickHandler alertHandler = new ClickHandler() {
 
 											@Override
@@ -597,11 +598,11 @@ public class ClasspageListVc extends PopupPanel {
 
 										} else {
 											if (AppClientFactory.isAnonymous()) {
-												new SentEmailSuccessVc(GL1177,
-														GL1535);
+												new SentEmailSuccessVc(i18n.GL1177(),
+														i18n.GL1535());
 											} else {
-												new SentEmailSuccessVc(GL1177,
-														GL1535_1);
+												new SentEmailSuccessVc(i18n.GL1177(),
+														i18n.GL1535_1());
 											}
 										}
 
@@ -903,7 +904,7 @@ public class ClasspageListVc extends PopupPanel {
 												.setClasspageId(classpageId);
 
 										TaskDo taskDo = new TaskDo();
-										taskDo.setTitle(GL0121);
+										taskDo.setTitle(i18n.GL0121());
 										taskDo.setTypeName("assignment");
 										assignmentDo.setTask(taskDo);
 

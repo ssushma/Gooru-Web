@@ -10,8 +10,8 @@ import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -30,10 +30,12 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  * 
  */
-public class FolderDeleteView extends AppPopUp implements MessageProperties{
+public class FolderDeleteView extends AppPopUp {
 
 	private static FolderDeleteViewUiBinder uiBinder = GWT
 			.create(FolderDeleteViewUiBinder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface FolderDeleteViewUiBinder extends
 			UiBinder<Widget, FolderDeleteView> {
@@ -80,15 +82,41 @@ public class FolderDeleteView extends AppPopUp implements MessageProperties{
 	*/
 	public void setView()
 	{
-		titleLabel.setText(GL1176);
-		cancelButton.setText(GL0142);
-		okButton.setText(GL0190);
-		headerLabel.setText(GL1174);
-		descriptionLabel.setText(GL1328);
-		txtDelete.setPlaceholder(GL1175);
+		titleLabel.setText(i18n.GL1176());
+		titleLabel.getElement().setId("lblTitleLabel");
+		titleLabel.getElement().setAttribute("alt",i18n.GL1176());
+		titleLabel.getElement().setAttribute("title",i18n.GL1176());
+		
+		cancelButton.setText(i18n.GL0142());
+		cancelButton.getElement().setId("btnCancelButton");
+		cancelButton.getElement().setAttribute("alt",i18n.GL0142());
+		cancelButton.getElement().setAttribute("title",i18n.GL0142());
+		
+		okButton.setText(i18n.GL0190());
+		okButton.getElement().setId("btnOkButton");
+		okButton.getElement().setAttribute("alt",i18n.GL0190());
+		okButton.getElement().setAttribute("title",i18n.GL0190());
+		
+		headerLabel.setText(i18n.GL1174());
+		headerLabel.getElement().setId("lblHeaderLabel");
+		headerLabel.getElement().setAttribute("alt",i18n.GL1174());
+		headerLabel.getElement().setAttribute("title",i18n.GL1174());
+		
+		descriptionLabel.setText(i18n.GL1328());
+		descriptionLabel.getElement().setId("lblDescriptionLabel");
+		descriptionLabel.getElement().setAttribute("alt",i18n.GL1328());
+		descriptionLabel.getElement().setAttribute("title",i18n.GL1328());
+		
+		txtDelete.setPlaceholder(i18n.GL1175());
+		txtDelete.getElement().setId("txtTxtDelete");
+		
 		txtDelete.addKeyUpHandler(new ValidateConfirmText());
 		okButton.getElement().addClassName("disabled");
-		deleteText.setText(GL0560);
+		deleteText.setText(i18n.GL0560());
+		deleteText.getElement().setId("lblDeleteText");
+		deleteText.getElement().setAttribute("alt",i18n.GL0560());
+		deleteText.getElement().setAttribute("title",i18n.GL0560());
+		
 		deleteText.setVisible(false);
 	}
 	/**

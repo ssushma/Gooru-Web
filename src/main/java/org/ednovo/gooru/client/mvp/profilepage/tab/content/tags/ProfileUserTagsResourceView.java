@@ -29,8 +29,8 @@ import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -38,14 +38,13 @@ import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProfileUserTagsResourceView extends Composite implements MessageProperties {
+public class ProfileUserTagsResourceView extends Composite{
 
 	private static ProfileUserTagsResourceViewUiBinder uiBinder = GWT
 			.create(ProfileUserTagsResourceViewUiBinder.class);
@@ -53,6 +52,9 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 	interface ProfileUserTagsResourceViewUiBinder extends
 			UiBinder<Widget, ProfileUserTagsResourceView> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField HTMLPanel userTagsResourceContainerConatiner,tagContainer;
 	@UiField Label TagTextMessage,tagType,tagCount;
 	@UiField
@@ -101,8 +103,16 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 	public void setData(List<UserTagsResourceDO> result){
 		
 		tagContainer.setVisible(true);
-		TagTextMessage.setText(GL1915);
-		tagMessage.setText(GL1944);
+		TagTextMessage.setText(i18n.GL1915());
+		TagTextMessage.getElement().setId("lblTagTextMessage");
+		TagTextMessage.getElement().setAttribute("alt",i18n.GL1915());
+		TagTextMessage.getElement().setAttribute("title",i18n.GL1915());
+		
+		tagMessage.setText(i18n.GL1944());
+		tagMessage.getElement().setId("lblTagMessage");
+		tagMessage.getElement().setAttribute("alt",i18n.GL1944());
+		tagMessage.getElement().setAttribute("title",i18n.GL1944());
+		
 		tagContainer.getElement().setAttribute("alt", labelName);
 		tagContainer.setTitle(labelName);
 		
@@ -110,14 +120,24 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 			labelName = labelName.substring(0, 12) + "...";
 		}*/
 		tagType.setText(labelName);
+		tagType.getElement().setId("lblTagType");
+		tagType.getElement().setAttribute("alt",labelName);
+		tagType.getElement().setAttribute("title",labelName);
+		
 		tagCount.setText(count);
+		tagCount.getElement().setId("lblTagCount");
+		tagCount.getElement().setAttribute("alt",count);
+		tagCount.getElement().setAttribute("title",count);
+		
 		userTagsResourceContainerConatiner.clear();
 		for(int i=0;i<result.size();i++){
 			ProfileUserTagsResourceWidget profileUserTagsResourceWidget=new ProfileUserTagsResourceWidget(result.get(i));
 			userTagsResourceContainerConatiner.add(profileUserTagsResourceWidget);
 		}
 			
-		
+		tagContainer.getElement().setId("pnlTagContainer");
+		tagScrollPanel.getElement().setId("sbTagScrollPanel");
+		userTagsResourceContainerConatiner.getElement().setId("pnlUserTagsResourceContainerConatiner");
 	}
 	@UiHandler("tagMessage")
 	public void onclickOnBackButton(ClickEvent event){

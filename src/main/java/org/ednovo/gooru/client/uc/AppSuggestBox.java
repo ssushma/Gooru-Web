@@ -25,8 +25,9 @@
 package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
@@ -39,11 +40,13 @@ import com.google.gwt.user.client.ui.SuggestBox;
  * @author Search Team
  *
  */
-public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, KeyDownHandler,HasClickHandlers,MessageProperties {
+public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, KeyDownHandler,HasClickHandlers {
 
 	private boolean validation = true;
 
 	private AppMultiWordSuggestOracle suggestionOrcl;
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor
@@ -62,12 +65,12 @@ public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, 
 //		this.getTextBox().getElement().setAttribute("placeholder", "e.g. CCSS.M.8.F.A.3");
 		if (AppClientFactory.getLoggedInUser().getUsername()!=null){
 			if(AppClientFactory.getLoggedInUser().getUsername().equalsIgnoreCase("TexasTeacher")) {
-				this.getTextBox().getElement().setAttribute("placeholder", GL1502);
+				this.getTextBox().getElement().setAttribute("placeholder", i18n.GL1502());
 			}else{
-				this.getTextBox().getElement().setAttribute("placeholder", GL1503);
+				this.getTextBox().getElement().setAttribute("placeholder", i18n.GL1503());
 			}
 		}else{
-			this.getTextBox().getElement().setAttribute("placeholder", GL1503);
+			this.getTextBox().getElement().setAttribute("placeholder", i18n.GL1503());
 		}
 		this.getValueBox().addKeyUpHandler(this);
 		this.getValueBox().addKeyDownHandler(this);

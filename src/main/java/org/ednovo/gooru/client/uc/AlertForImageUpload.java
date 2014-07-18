@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.uc;
 
  
 
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -42,9 +42,11 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class AlertForImageUpload extends Composite implements MessageProperties {
+public class AlertForImageUpload extends Composite {
 
 	private static AlertContentUcUiBinder uiBinder = GWT.create(AlertContentUcUiBinder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
 	Button okButton;
@@ -69,10 +71,23 @@ public class AlertForImageUpload extends Composite implements MessageProperties 
 		alertBoxUc = new AlertBoxUc();
 		alertBoxUc.setContent(uiBinder.createAndBindUi(this));
 		alertMessageField.setText(messageContent);
+		alertMessageField.getElement().setId("lblAlertMessageField");
+		alertMessageField.getElement().setAttribute("alt",messageContent);
+		alertMessageField.getElement().setAttribute("title",messageContent);
+		
 		alertMessageHeaderField.setText(messageHeader);
+		alertMessageHeaderField.getElement().setId("lblAlertMessageHeaderField");
+		alertMessageHeaderField.getElement().setAttribute("alt",messageHeader);
+		alertMessageHeaderField.getElement().setAttribute("title",messageHeader);
+		
+		okButton.setText(i18n.GL0190());
+		okButton.getElement().setId("btnOkButton");
+		okButton.getElement().setAttribute("alt",i18n.GL0190());
+		okButton.getElement().setAttribute("title",i18n.GL0190());
+		
 		alertBoxUc.show();
 		alertBoxUc.center();
-		okButton.setText(GL0190);
+		
 	}
 
 	/**
@@ -80,6 +95,8 @@ public class AlertForImageUpload extends Composite implements MessageProperties 
 	 */
 	public void setAlertMessage(String messageContent) {
 		alertMessageField.setText(messageContent);
+		alertMessageField.getElement().setAttribute("alt",messageContent);
+		alertMessageField.getElement().setAttribute("title",messageContent);
 	}
 
 	/**
@@ -87,6 +104,8 @@ public class AlertForImageUpload extends Composite implements MessageProperties 
 	 */
 	public void setAlertHeaderMessage(String messageHeader) {
 		alertMessageHeaderField.setText(messageHeader);
+		alertMessageHeaderField.getElement().setAttribute("alt",messageHeader);
+		alertMessageHeaderField.getElement().setAttribute("title",messageHeader);
 	}
 
 	/**

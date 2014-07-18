@@ -29,13 +29,11 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
@@ -65,9 +63,11 @@ import com.google.gwt.user.client.ui.Widget;
  * @param <T>
  * @param <C>
  */
-public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C extends ResourceSearchResultDo> extends FocusPanel implements MouseOverHandler, MouseOutHandler,MessageProperties {
+public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C extends ResourceSearchResultDo> extends FocusPanel implements MouseOverHandler, MouseOutHandler {
 
 	protected static SearchResultWrapperVcUiBinder uiBinder = GWT.create(SearchResultWrapperVcUiBinder.class);
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SearchResultWrapperVcUiBinder extends UiBinder<Widget, SearchResultWrapperVc<?, ?>> {
 	}
@@ -110,9 +110,9 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	
 	@UiField public FlowPanel ratingWidgetPanel;
 
-	private static String DRAG_TO_ADD = GL0735;
+	private static String DRAG_TO_ADD = i18n.GL0735();
 
-	private static String ADDED = GL0736;
+	private static String ADDED = i18n.GL0736();
 
 	private SearchShareVc searchShareVc;
 
@@ -144,10 +144,13 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		setWidget(uiBinder.createAndBindUi(this));
 		setAddedStatus(true);
 
-		moreInfoLbl.setText(GL1756);
-		
+		moreInfoLbl.setText(i18n.GL1756());
+		moreInfoLbl.getElement().setAttribute("alt",i18n.GL1756());
+		moreInfoLbl.getElement().setAttribute("title",i18n.GL1756());
 	
-		shareLbl.setText(GL0526);
+		shareLbl.setText(i18n.GL0526());
+		shareLbl.getElement().setAttribute("alt",i18n.GL0526());
+		shareLbl.getElement().setAttribute("title",i18n.GL0526());
 		
 		moreInfoLbl.getElement().setId("lblMoreInfo");
 		collcResLbl.getElement().setId("lblResColle");
@@ -172,10 +175,17 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		else{
 			addStyleName(SearchResultWrapperCBundle.INSTANCE.css().searchPanel());
 			addedStatusLbl.setText(DRAG_TO_ADD);
+			addedStatusLbl.getElement().setAttribute("alt",DRAG_TO_ADD);
+			addedStatusLbl.getElement().setAttribute("title",DRAG_TO_ADD);
 		}
-		
-
-		
+		dragHandleFocPanel.getElement().setId("focuspnlDragHandleFocPanel");
+		contentSimPanel.getElement().setId("spnlContentSimPanel");
+		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
+		addedStatusLbl.getElement().setId("lblAddedStatusLbl");
+		resourcePlayerClickPanel.getElement().setId("lblResourcePlayerClickPanel");
+		disclosureHeaderFloPanel.getElement().setId("fpnlDisclosureHeaderFloPanel");
+		disclosureDisPanel.getElement().setId("discpnlDisclosureDisPanel");
+		disclosureContentSimPanel.getElement().setId("spnlDisclosureContentSimPanel");
 	}
 
 	void setResourcePlayerClickPanelMobile() {
@@ -332,6 +342,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	 */
 	public void setAddedToShelf(boolean addedToShelf) {
 		addedStatusLbl.setText(addedToShelf ? ADDED : DRAG_TO_ADD);
+		addedStatusLbl.getElement().setAttribute("alt",addedToShelf ? ADDED : DRAG_TO_ADD);
+		addedStatusLbl.getElement().setAttribute("title",addedToShelf ? ADDED : DRAG_TO_ADD);
 		if (addedToShelf) {
 			addedStatusLbl.addStyleName(SearchResultWrapperCBundle.INSTANCE.css().added());
 			if (getDisclosurePanel().isOpen()) {
@@ -377,9 +389,13 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	
 		
 		if(rootWebUrl.contains("collection-search")){
-			collcResLbl.setText(GL1755+ " ("+searchResultDo.getResourceCount()+")");
+			collcResLbl.setText(i18n.GL1755()+ " ("+searchResultDo.getResourceCount()+")");
+			collcResLbl.getElement().setAttribute("alt",i18n.GL1755()+ " ("+searchResultDo.getResourceCount()+")");
+			collcResLbl.getElement().setAttribute("title",i18n.GL1755()+ " ("+searchResultDo.getResourceCount()+")");
 		} else if (rootWebUrl.contains("resource-search")) {
-			collcResLbl.setText(GL1754 + " ("+searchResultDo.getScollectionCount()+")");
+			collcResLbl.setText(i18n.GL1754() + " ("+searchResultDo.getScollectionCount()+")");
+			collcResLbl.getElement().setAttribute("alt",i18n.GL1754() + " ("+searchResultDo.getScollectionCount()+")");
+			collcResLbl.getElement().setAttribute("title",i18n.GL1754() + " ("+searchResultDo.getScollectionCount()+")");
 		}
 		
 		final String gooruOid = searchResultDo.getGooruOid();

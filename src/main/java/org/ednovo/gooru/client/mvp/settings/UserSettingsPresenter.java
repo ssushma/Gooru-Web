@@ -61,6 +61,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
@@ -72,9 +73,9 @@ import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
@@ -109,6 +110,9 @@ public class UserSettingsPresenter
 	private SimpleAsyncCallback<BiographyDo> userProfileBiographyAsyncCallback;
 	
 	private SimpleAsyncCallback<V2UserDo> userV2ProfilePageAsyncCallback;
+	
+	private static final String GOOGLE_REFRESH_TOKEN = "google-refresh-token";
+	private static final String GOOGLE_ACCESS_TOKEN = "google-access-token";
 
 	Date dob;
 	SettingDo user = null;
@@ -141,6 +145,8 @@ public class UserSettingsPresenter
 			ProxyPlace<UserSettingsPresenter> {
 
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@Inject
 	public UserSettingsPresenter(final IsUserSettingsView view,
@@ -164,28 +170,48 @@ public class UserSettingsPresenter
 		boolean isConfirmStatus = true;
 		String newMailId = AppClientFactory.getPlaceManager()
 				.getRequestParameter("newMailId");
-//		Cookies.setCookie("google-access-token", "ya29.PADXXYiamS8JHxsAAADsdCb743SQMuoXVuZlTw5kC3kLVP_-UThz6jTa0kv7NA");
-		final String access_token = Cookies.getCookie("google-access-token") !=null && !Cookies.getCookie("google-access-token").equalsIgnoreCase("") ? Cookies.getCookie("google-access-token") : null;
-
-		if (access_token !=null ){
+//		Cookies.setCookie("GOOGLE_ACCESS_TOKEN", "ya29.PADXXYiamS8JHxsAAADsdCb743SQMuoXVuZlTw5kC3kLVP_-UThz6jTa0kv7NA");
+		//Make an API call to get the accesstoken using refresh token.
+		
+		final String refresh_token = Cookies.getCookie(GOOGLE_REFRESH_TOKEN) !=null && !Cookies.getCookie(GOOGLE_REFRESH_TOKEN).equalsIgnoreCase("") ? Cookies.getCookie(GOOGLE_REFRESH_TOKEN) : null;
+//		StringUtil.consoleLog("refresh token : "+refresh_token);
+		if (refresh_token != null){
 			
-			AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
-				@Override
-				public void onSuccess(GoogleDriveDo googleDriveDo) {
+			AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(refresh_token, new SimpleAsyncCallback<Void>() {
 
-					if(googleDriveDo!=null){
-						if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
-							getView().googleDirveStatus(false);
-						}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
-							getView().googleDirveStatus(false);
-						}else{
-							UserDo user = AppClientFactory.getLoggedInUser();
-							user.setAccessToken(access_token);
-							AppClientFactory.setLoggedInUser(user);
-							
-							getView().googleDirveStatus(true);
-						}
+				@Override
+				public void onSuccess(Void result) {
+//					StringUtil.consoleLog("refreshGoogleAccessToken : Success");
+					final String access_token = Cookies.getCookie(GOOGLE_ACCESS_TOKEN) !=null && !Cookies.getCookie(GOOGLE_ACCESS_TOKEN).equalsIgnoreCase("") ? Cookies.getCookie(GOOGLE_ACCESS_TOKEN) : null;
+//					StringUtil.consoleLog("access_token : Success : "+access_token);
+					if (access_token !=null ){
+						
+						AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
+							@Override
+							public void onSuccess(GoogleDriveDo googleDriveDo) {
+								if(googleDriveDo!=null){
+									if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+//										StringUtil.consoleLog("access_token : 401");
+										getView().googleDirveStatus(false);
+									}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+//										StringUtil.consoleLog("access_token : 403");
+										getView().googleDirveStatus(false);
+									}else{
+//										StringUtil.consoleLog("access_token : no error");
+										UserDo user = AppClientFactory.getLoggedInUser();
+										user.setAccessToken(access_token);
+										AppClientFactory.setLoggedInUser(user);
+										
+										getView().googleDirveStatus(true);
+									}
+								}else{
+//									StringUtil.consoleLog("google drive file list empty");
+									getView().googleDirveStatus(false);
+								}
+							}
+						});
 					}else{
+//						StringUtil.consoleLog("refresh token null");
 						getView().googleDirveStatus(false);
 					}
 				}
@@ -193,6 +219,7 @@ public class UserSettingsPresenter
 		}else{
 			getView().googleDirveStatus(false);
 		}
+		
 		
 		String userId = AppClientFactory.getPlaceManager().getRequestParameter(
 				"userId");
@@ -325,8 +352,8 @@ public class UserSettingsPresenter
 									+ user.getGender().getName().substring(1);
 							if ("Do not wish to share".equalsIgnoreCase(gender)) {
 								String gender1 = gender.replace(
-										GL1199,
-										GL0812);
+										i18n.GL1199(),
+										i18n.GL0812());
 								getView().getGenderText().setText(gender1);
 							} else {
 								getView().getGenderText().setText(gender);
@@ -365,14 +392,14 @@ public class UserSettingsPresenter
 							getView().getLbUName().getElement()
 									.setAttribute("date", "" + age);
 							if (age < 13) {
-								getView().getLbRole().setText(GL0417);
+								getView().getLbRole().setText(i18n.GL0417());
 							} else {
 								getView().getLbRole().setText(
 										user.getUserType());
 							}
 						} else if (user.getUser().getAccountTypeId() != null) {
 							if (user.getUser().getAccountTypeId() == 2) {
-								getView().getLbRole().setText(GL0417);
+								getView().getLbRole().setText(i18n.GL0417());
 								
 							} else {
 								getView().getLbRole().setText(
@@ -620,8 +647,8 @@ public class UserSettingsPresenter
 									+ user.getGender().getName().substring(1);
 							if ("Do not wish to share".equalsIgnoreCase(gender)) {
 								String gender1 = gender.replace(
-										GL1199,
-										GL0812);
+										i18n.GL1199(),
+										i18n.GL0812());
 								getView().getGenderText().setText(gender1);
 							} else {
 								getView().getGenderText().setText(gender);
@@ -655,14 +682,14 @@ public class UserSettingsPresenter
 							getView().getLbUName().getElement()
 									.setAttribute("date", "" + age);
 							if (age < 13) {
-								getView().getLbRole().setText(GL0417);
+								getView().getLbRole().setText(i18n.GL0417());
 							} else {
 								getView().getLbRole().setText(
 										user.getUserType());
 							}
 						} else if (user.getUser().getAccountTypeId() != null) {
 							if (user.getUser().getAccountTypeId() == 2) {
-								getView().getLbRole().setText(GL0417);
+								getView().getLbRole().setText(i18n.GL0417());
 								
 							} else {
 								getView().getLbRole().setText(
@@ -1084,7 +1111,7 @@ public class UserSettingsPresenter
 
 	@Override
 	public void updatePartyCustomField(String optionKey, String optionValue) {
-		getView().getStandardSavingTextLabel().setText(MessageProperties.GL0808);
+		getView().getStandardSavingTextLabel().setText(i18n.GL0808());
 		getView().getstandardsSaveCancelButtonContainer().setVisible(false);
 		getView().getstandardsEditButton().setVisible(false);
 		AppClientFactory.getInjector().getUserService().updatePartyCustomField(gooruUid,optionKey,optionValue,new SimpleAsyncCallback<Void>() {

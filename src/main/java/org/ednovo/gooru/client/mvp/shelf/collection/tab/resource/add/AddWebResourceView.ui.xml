@@ -363,7 +363,7 @@
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="readingPanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="readingText"></g:HTMLPanel>
-					</g:HTMLPanel>
+					</g:HTMLPanel>pnlPreparingTheLearningText
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="textbookPanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
@@ -433,6 +433,7 @@
 							<g:FlowPanel styleName="{res1.css.standardsCont}">
 								<uc:AppSuggestBox ui:field="standardSgstBox"
 									width="255px" height="19px" />
+								 <g:HTMLPanel ui:field="errorContainer"></g:HTMLPanel>
 								<g:Label styleName="{res1.css.standardMaxHide}" ui:field="standardMaxMsg" />
 								<g:FlowPanel ui:field="standardsPanel"
 									styleName="{res1.css.collectionStandardsMargin}" />
@@ -466,7 +467,8 @@
           <g:HTMLPanel styleName="{res.css.myFolderCollectionOk}" ui:field="addResourceBtnPanel">
 	          <gg:BlueButtonUc styleName="primary" ui:field="addResourceBtnLbl"/>
           </g:HTMLPanel>
-          <g:Label styleName="{res.css.myFolderCollectionCancel}" ui:field="cancelResourcePopupBtnLbl"/>
+       <g:Button styleName="grayPrimaryButton" ui:field="cancelResourcePopupBtnLbl"></g:Button>
+       <!--    <g:Label styleName="{res.css.myFolderCollectionCancel}" ui:field="cancelResourcePopupBtnLbl"/> -->
         </g:HTMLPanel>
          <g:Label styleName="{res.css.myFolderCollectionButtonContainer}" ui:field="loadingTextLbl"></g:Label>
       </g:HTMLPanel>

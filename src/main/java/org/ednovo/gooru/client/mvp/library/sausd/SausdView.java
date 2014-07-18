@@ -11,7 +11,7 @@ import org.ednovo.gooru.client.mvp.home.library.LibraryUnitMenuView;
 import org.ednovo.gooru.client.mvp.library.sausd.metadata.LibraryMetaDataContentUc;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 
@@ -63,7 +63,7 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 
 	private static SausdViewUiBinder uiBinder = GWT.create(SausdViewUiBinder.class);
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SausdViewUiBinder extends UiBinder<Widget, SausdView> {
 	}
@@ -82,10 +82,24 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 		contentScroll.getElement().setId("contentScroll");
 		courseBanner.getElement().setId("courseBanner");
 		featuredEducator.getElement().setId("featuredEducator");
+		featuredCousesLbl.getElement().setId("lblFeaturedCousesLbl");
+		featuredCourses.getElement().setId("pnlFeaturedCourses");
+		partnerLogo.getElement().setId("pnlPartnerLogo");
+		courseImage.getElement().setId("imgCourseImage");
+		courseTitle.getElement().setId("lblCourseTitle");
+		educatorPhoto.getElement().setId("imgEducatorPhoto");
+		featuredContributor.getElement().setId("lblFeaturedContributor");
+		featuredContributorsLink.getElement().setId("lnkFeaturedContributorsLink");
+		scrollPanel.getElement().setId("sbScrollPanel");
+		libraryMetaDataContainer.getElement().setId("pnlLibraryMetaDataContainer");
+		loadingIconPanel.getElement().setId("pnlLoadingIconPanel");
+		contributorsContainer.getElement().setId("pnlContributorsContainer");
 		
 		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
 			landingBanner.getElement().setId("landingSausdBanner");
 			featuredCousesLbl.setText(i18n.GL1901());
+			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL1901());
+			featuredCousesLbl.getElement().setAttribute("title",i18n.GL1901());
 		}
 	}
 	
@@ -296,7 +310,8 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 		courseTabs.add(sausdMenuNav);
 		landingBanner.add(new SausdBannerView(getPlaceToken()));
 		featuredContributorsLink.setText(i18n.GL1005());
-		featuredContributorsLink.setTitle(i18n.GL0680());
+		featuredContributorsLink.getElement().setAttribute("alt",i18n.GL1005());
+		featuredContributorsLink.setTitle(i18n.GL1005());
 		courseImage.setWidth("1000px");
 		courseImage.setHeight("300px");
 	}
@@ -320,6 +335,8 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 				}
 			});
 			courseTitle.setText(profileLibraryDo.getTitle());
+			courseTitle.getElement().setAttribute("alt",profileLibraryDo.getTitle());
+			courseTitle.getElement().setAttribute("title",profileLibraryDo.getTitle());
 		}
 	}
 }

@@ -38,7 +38,6 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -278,6 +277,15 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 			}
 		});
 		
+	}
+	
+	@Override
+	public void deleteCourseOrStandard(String collectionId, String courseCode) {
+		AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionId, Integer.valueOf(courseCode), new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+			}
+		});
 	}
 
 	@Override

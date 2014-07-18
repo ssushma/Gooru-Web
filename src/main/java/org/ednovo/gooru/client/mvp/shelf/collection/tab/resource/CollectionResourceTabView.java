@@ -46,11 +46,11 @@ import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.tooltip.AddResourceToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -81,10 +81,12 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class CollectionResourceTabView extends
 		BaseViewWithHandlers<CollectionResourceTabUiHandlers> implements
-		IsCollectionResourceTabView, MessageProperties {
+		IsCollectionResourceTabView {
 
 	private static CollectionResourceTabViewUiBinder uiBinder = GWT
 			.create(CollectionResourceTabViewUiBinder.class);
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CollectionResourceTabViewUiBinder extends
 			UiBinder<Widget, CollectionResourceTabView> {
@@ -137,25 +139,70 @@ public class CollectionResourceTabView extends
 	private String clickType;
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
 
-	private static final String MESSAGE_HEADER = GL0748;
-	private static final String MESSAGE_CONTENT = GL0891;
+	private static final String MESSAGE_HEADER = i18n.GL0748();
+	private static final String MESSAGE_CONTENT = i18n.GL0891();
 
 	/**
 	 * Class constructor
 	 */
 	public CollectionResourceTabView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		buttonContainer.setText(GL0851);
-		buttonContainerAddGray.setText(GL0851);
-		buttonContainerForQuestion.setText(GL0852);
-		buttonContainerForQuestionGreay.setText(GL0852);
-		dragAndDropLabel.setText(GL0853);
-		noResourceLineOneLabel.setText(GL0854);
-		noResourceLineTwoLabel.setText(GL0855);
-		noResourceLineThreeLabel.setText(" "+GL0856);
-		noResourceLineSixLabel.setText(" "+GL0209+" ");
-		noResourceLineFiveLabel.setText(" "+GL0857);
-		noResourceLineFourLabel.setText(" "+GL0858);
+		buttonContainer.setText(i18n.GL0851());
+		buttonContainer.getElement().setId("btnNewResource");
+		buttonContainer.getElement().setAttribute("alt",i18n.GL0851());
+		buttonContainer.getElement().setAttribute("title",i18n.GL0851());
+		
+		buttonContainerAddGray.setText(i18n.GL0851());
+		buttonContainerAddGray.getElement().setId("btnButtonContainerAddGray");
+		buttonContainerAddGray.getElement().setAttribute("alt",i18n.GL0851());
+		buttonContainerAddGray.getElement().setAttribute("title",i18n.GL0851());
+		
+		buttonContainerForQuestion.setText(i18n.GL0852());
+		buttonContainerForQuestion.getElement().setId("btnNewQuestion");
+		buttonContainerForQuestion.getElement().setAttribute("alt",i18n.GL0852());
+		buttonContainerForQuestion.getElement().setAttribute("title",i18n.GL0852());
+		
+		buttonContainerForQuestionGreay.setText(i18n.GL0852());
+		buttonContainerForQuestionGreay.getElement().setId("btnButtonContainerForQuestionGreay");
+		buttonContainerForQuestionGreay.getElement().setAttribute("alt",i18n.GL0852());
+		buttonContainerForQuestionGreay.getElement().setAttribute("title",i18n.GL0852());
+		
+		dragAndDropLabel.setText(i18n.GL0853());
+		dragAndDropLabel.getElement().setId("lblDragAndDropLabel");
+		dragAndDropLabel.getElement().setAttribute("alt",i18n.GL0853());
+		dragAndDropLabel.getElement().setAttribute("title",i18n.GL0853());
+		
+		noResourceLineOneLabel.setText(i18n.GL0854());
+		noResourceLineOneLabel.getElement().setId("lblNoResourceLineOneLabel");
+		noResourceLineOneLabel.getElement().setAttribute("alt",i18n.GL0854());
+		noResourceLineOneLabel.getElement().setAttribute("title",i18n.GL0854());
+		
+		
+		noResourceLineTwoLabel.setText(i18n.GL0855());
+		noResourceLineTwoLabel.getElement().setId("lblNoResourceLineTwoLabel");
+		noResourceLineTwoLabel.getElement().setAttribute("alt",i18n.GL0855());
+		noResourceLineTwoLabel.getElement().setAttribute("title",i18n.GL0855());
+		
+		noResourceLineThreeLabel.setText(" "+i18n.GL0856());
+		noResourceLineThreeLabel.getElement().setId("lblNoResourceLineThreeLabel");
+		noResourceLineThreeLabel.getElement().setAttribute("alt",i18n.GL0856());
+		noResourceLineThreeLabel.getElement().setAttribute("title",i18n.GL0856());
+		
+		noResourceLineSixLabel.setText(" "+i18n.GL0209()+" ");
+		noResourceLineSixLabel.getElement().setId("lblNoResourceLineSixLabel");
+		noResourceLineSixLabel.getElement().setAttribute("alt",i18n.GL0209());
+		noResourceLineSixLabel.getElement().setAttribute("title",i18n.GL0209());
+		
+		noResourceLineFiveLabel.setText(" "+i18n.GL0857());
+		noResourceLineFiveLabel.getElement().setId("lblNoResourceLineFiveLabel");
+		noResourceLineFiveLabel.getElement().setAttribute("alt",i18n.GL0857());
+		noResourceLineFiveLabel.getElement().setAttribute("title",i18n.GL0857());
+		
+		noResourceLineFourLabel.setText(" "+i18n.GL0858());
+		noResourceLineFourLabel.getElement().setId("lblNoResourceLineFourLabel");
+		noResourceLineFourLabel.getElement().setAttribute("alt",i18n.GL0858());
+		noResourceLineFourLabel.getElement().setAttribute("title",i18n.GL0858());
+		
 		CollectionEditResourceCBundle.INSTANCE.css().ensureInjected();
 		css = CollectionEditResourceCBundle.INSTANCE.css();
 
@@ -165,8 +212,8 @@ public class CollectionResourceTabView extends
 		noResourceLineThreeLabel.setVisible(false);
 		noResourceLineFourLabel.setVisible(false);
 		// popupPanel.setVisible(false);
-		buttonContainer.getElement().setId("btnNewResource");
-		buttonContainerForQuestion.getElement().setId("btnNewQuestion");
+		
+		
 		buttonContainer.addClickHandler(new NewResourceClickEvent());
 		buttonContainerForQuestion.addClickHandler(new NewQuestionClickEvent());
 		// searchLabel.addClickHandler(new NewSearchResourceClickEvent());
@@ -176,7 +223,13 @@ public class CollectionResourceTabView extends
 		panelLoading.getElement().getStyle().setDisplay(Display.BLOCK);
 		// downArrowPanel.addClickHandler(new ShowPopupClickHandler());
 		collectionResourcePanelVc.getElement().setId("editPanelShelf");
-
+		panelLoading.getElement().setId("pnlPanelLoading");
+		contentPanel.getElement().setId("pnlContentPanel");
+		sequenceVerPanel.getElement().setId("vpnlSequenceVerPanel");
+		panelNoResourceContainer.getElement().setId("pnlPanelNoResourceContainer");
+		
+		
+		
 	}
 
 	@Override
@@ -962,8 +1015,8 @@ public class CollectionResourceTabView extends
 	public void showMaximumCollectionItemsPopup() {
 
 		AlertContentUc alertContentUc = new AlertContentUc(
-				GL0061,
-				GL0302);
+				i18n.GL0061(),
+				i18n.GL0302());
 
 	}
 
