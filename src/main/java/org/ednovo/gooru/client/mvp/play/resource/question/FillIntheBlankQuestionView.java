@@ -32,11 +32,11 @@ import java.util.List;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -57,7 +57,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class FillIntheBlankQuestionView extends Composite implements MessageProperties{
+public class FillIntheBlankQuestionView extends Composite{
 	
 	@UiField Button checkAnswer;
 	@UiField FlowPanel optionsContainer,resultPanel;
@@ -69,7 +69,7 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 	private String[] enteredAnswerText=new String[3];
 	private CollectionItemDo collectionItemDo=null;
 	private boolean isCheckButtonEnabled=false;
-	private static final String FIB_BODY_TEXT=GL1454;
+//	private static final String FIB_BODY_TEXT=i18n.GL1454;
 	private static final String FIB_SEPARATOR = "_______";
 	
 	private boolean isFirstTry=false;
@@ -82,14 +82,31 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 		
 	}
 	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	public FillIntheBlankQuestionView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		setQuestionTypeCaption();
-		answerText.getElement().setInnerHTML(GL0665);
-		checkAnswer.setText(GL0666);
+		answerText.getElement().setInnerHTML(i18n.GL0665());
+		answerText.getElement().setAttribute("alt",i18n.GL0665());
+		answerText.getElement().setAttribute("title",i18n.GL0665());
+		
+		checkAnswer.setText(i18n.GL0666());
+		checkAnswer.getElement().setAttribute("alt",i18n.GL0666());
+		checkAnswer.getElement().setAttribute("title",i18n.GL0666());
+		
+		messageBodyText.getElement().setAttribute("title",i18n.GL0666());
+		
 		renderFibQuestion();
+		setId();
 	}
-	
+	public void setId(){
+		answerText.getElement().setId("pnlAnswerText");
+		checkAnswer.getElement().setId("btnCheckAnswer");
+		messageBodyText.getElement().setId("lblMessageBodyText");
+		optionsContainer.getElement().setId("fpnlOptionsContainer");
+		resultPanel.getElement().setId("fpnlResultPanel");
+	}
 	@UiConstructor
 	public FillIntheBlankQuestionView(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
 		initWidget(uiBinder.createAndBindUi(this));
@@ -97,12 +114,19 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 		this.attemptedAnswerDo=attemptedAnswerDo;
 		setQuestionTypeCaption();
 		renderFibQuestion();
-		answerText.getElement().setInnerHTML(GL0665);
-		checkAnswer.setText(GL0666);
+		answerText.getElement().setInnerHTML(i18n.GL0665());
+		answerText.getElement().setAttribute("alt",i18n.GL0665());
+		answerText.getElement().setAttribute("title",i18n.GL0665());
+		checkAnswer.setText(i18n.GL0666());
+		checkAnswer.getElement().setAttribute("alt",i18n.GL0666());
+		checkAnswer.getElement().setAttribute("title",i18n.GL0666());
+		setId();
 	}
 	
 	public void setQuestionTypeCaption(){
-		messageBodyText.setText(FIB_BODY_TEXT);
+		messageBodyText.setText(i18n.GL1454());
+		messageBodyText.getElement().setAttribute("alt",i18n.GL1454());
+		messageBodyText.getElement().setAttribute("title",i18n.GL1454());
 	}
 	
 	public void renderFibQuestion(){
@@ -265,14 +289,14 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 	private void showResultPanel(int blankNum,String correctAnswer){
 		FlowPanel resultContianer=new FlowPanel();
 		resultContianer.setStyleName(oeStyle.resultPanelConatiner());
-		HTMLPanel blankHtml=new HTMLPanel(GL1455+" "+(blankNum+1)+GL_SPL_SEMICOLON);
+		HTMLPanel blankHtml=new HTMLPanel(i18n.GL1455()+" "+(blankNum+1)+i18n.GL_SPL_SEMICOLON()+" ");
 		blankHtml.setStyleName(oeStyle.resultPanelText());
 		Label answerWrongImagePanel=new Label();
 		answerWrongImagePanel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
 		answerWrongImagePanel.addStyleName(oeStyle.resultPanelAnswerImageFIB());
 		
 		HTML answerOptiontext=new HTML();
-		answerOptiontext.setHTML(GL1456+GL_SPL_SEMICOLON+" "+correctAnswer);
+		answerOptiontext.setHTML(i18n.GL1456()+i18n.GL_SPL_SEMICOLON()+" "+correctAnswer);
 		answerOptiontext.setStyleName(oeStyle.resultPanelText());
 		resultContianer.add(blankHtml);
 		resultContianer.add(answerWrongImagePanel);

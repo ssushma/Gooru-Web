@@ -26,14 +26,12 @@ package org.ednovo.gooru.client.mvp.authentication.uc;
 
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
-import com.gargoylesoftware.htmlunit.html.applets.AppletClassLoader;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.FontWeight;
 import com.google.gwt.dom.client.Style.Unit;
@@ -64,7 +62,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer:
  */
-public class ThanksEmailConfirmPopupUc extends PopupPanel implements MessageProperties{
+public class ThanksEmailConfirmPopupUc extends PopupPanel{
  
 	@UiField Label lblLoginHeading, lblCongratsHeader, lblClose,lblCheckYourEmail; //lblDiscover,lblOrganize,lblTeach
 	
@@ -86,6 +84,8 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel implements MessageProp
 	}
 
 	private static final Binder binder = GWT.create(Binder.class);
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	/**
 	 * Class constructor , to create Login Popup. 
@@ -160,22 +160,22 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel implements MessageProp
 	 *
 	 */
 	public void setTextAndIds(){
-		lblLoginHeading.setText(GL0501);
+		lblLoginHeading.setText(i18n.GL0501());
 		lblLoginHeading.getElement().setId("lblLoginHeading");
-		lblLoginHeading.getElement().setAttribute("alt",GL0501);
-		lblLoginHeading.getElement().setAttribute("title",GL0501);
+		lblLoginHeading.getElement().setAttribute("alt",i18n.GL0501());
+		lblLoginHeading.getElement().setAttribute("title",i18n.GL0501());
 		
-		lblCongratsHeader.setText(GL0502);
+		lblCongratsHeader.setText(i18n.GL0502());
 		lblCongratsHeader.getElement().setId("lblCongratsHeader");
-		lblCongratsHeader.getElement().setAttribute("alt",GL0502);
-		lblCongratsHeader.getElement().setAttribute("title",GL0502);
+		lblCongratsHeader.getElement().setAttribute("alt",i18n.GL0502());
+		lblCongratsHeader.getElement().setAttribute("title",i18n.GL0502());
 		lblCongratsHeader.getElement().getStyle().setFontWeight(FontWeight.BOLD);
 
-		btnStartUsingGooru.setText(GL0431);						
+		btnStartUsingGooru.setText(i18n.GL0431());						
 		btnStartUsingGooru.setVisible(true);
 		btnStartUsingGooru.getElement().setId("btnStartUsingGooru");
-		btnStartUsingGooru.getElement().setAttribute("alt",GL0431);
-		btnStartUsingGooru.getElement().setAttribute("title",GL0431);
+		btnStartUsingGooru.getElement().setAttribute("alt",i18n.GL0431());
+		btnStartUsingGooru.getElement().setAttribute("title",i18n.GL0431());
 		
 		lblClose.getElement().setId("lblClose");
 		panelPopupInner.getElement().setId("pnlPopupInner");

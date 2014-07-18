@@ -32,7 +32,6 @@ import java.util.List;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchView;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 

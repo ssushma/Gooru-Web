@@ -34,11 +34,11 @@ import org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle;
 import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
 import org.ednovo.gooru.client.mvp.home.library.LibraryUnitMenuView;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.library.CourseDo;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -53,7 +53,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
 ` * 
  */
-public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHandlers> implements IsPartnerLibraryView, MessageProperties {
+public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHandlers> implements IsPartnerLibraryView{
 
 	@UiField HTMLPanel partnerPanel;
 	
@@ -71,6 +71,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 
 	interface PartnerLibraryViewUiBinder extends UiBinder<Widget, PartnerLibraryView> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor
@@ -168,56 +170,56 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			
 			courseDo.setLabel("Autodesk® Digital STEAM Workshop");
 			thumbnailDo.setUrl("../images/library/partners/autodesk.png");
-			libraryUserDo.setPartnerName(GL1566);
-			libraryUserDo.setPartnerUrl(GL1567);
+			libraryUserDo.setPartnerName(i18n.GL1566());
+			libraryUserDo.setPartnerUrl(i18n.GL1567());
 			
 		} else if(partnerPlace.equals(PlaceTokens.ONR)) {
 			
 			courseDo.setLabel("Oceanography & Space Sciences");
 			thumbnailDo.setUrl("../images/library/partners/onr.png");
-			libraryUserDo.setPartnerName(GL1568);
-			libraryUserDo.setPartnerUrl(GL1569);
+			libraryUserDo.setPartnerName(i18n.GL1568());
+			libraryUserDo.setPartnerUrl(i18n.GL1569());
 			
 		} else if(partnerPlace.equals(PlaceTokens.FTE)) {
 			courseDo.setLabel("Introduction to Economics & Hot Topics");
 			thumbnailDo.setUrl("../images/library/partners/fte.png");
-			libraryUserDo.setPartnerName(GL1570);
-			libraryUserDo.setPartnerUrl(GL1571);
+			libraryUserDo.setPartnerName(i18n.GL1570());
+			libraryUserDo.setPartnerUrl(i18n.GL1571());
 			
 		} else if(partnerPlace.equals(PlaceTokens.NGC)) {
 			
 			courseDo.setLabel("NGC Global Issues");
 			thumbnailDo.setUrl("../images/library/partners/ngc.png");
-			libraryUserDo.setPartnerName(GL1572);
-			libraryUserDo.setPartnerUrl(GL1573);
+			libraryUserDo.setPartnerName(i18n.GL1572());
+			libraryUserDo.setPartnerUrl(i18n.GL1573());
 
 		} else if(partnerPlace.equals(PlaceTokens.WSPWH)) {
 			
 			courseDo.setLabel("Literary-Based Civic Education");
 			thumbnailDo.setUrl("../images/library/partners/wspwh.png");
-			libraryUserDo.setPartnerName(GL1574);
-			libraryUserDo.setPartnerUrl(GL1575);
+			libraryUserDo.setPartnerName(i18n.GL1574());
+			libraryUserDo.setPartnerUrl(i18n.GL1575());
 
 		} else if(partnerPlace.equals(PlaceTokens.LESSONOPOLY)) {
 			
 			courseDo.setLabel("Lessonopoly");
 			thumbnailDo.setUrl("../images/library/partners/lessonopoly.png");
-			libraryUserDo.setPartnerName(GL1576);
-			libraryUserDo.setPartnerUrl(GL1577);
+			libraryUserDo.setPartnerName(i18n.GL1576());
+			libraryUserDo.setPartnerUrl(i18n.GL1577());
 
 		} else if(partnerPlace.equals(PlaceTokens.FINCAPINC)) {
 			
 			courseDo.setLabel("Personal Finance");
 			thumbnailDo.setUrl("../images/library/partners/cfci.png");
-			libraryUserDo.setPartnerName(GL1765);
-			libraryUserDo.setPartnerUrl(GL1766);
+			libraryUserDo.setPartnerName(i18n.GL1765());
+			libraryUserDo.setPartnerUrl(i18n.GL1766());
 
 		} else if(partnerPlace.equals(PlaceTokens.PSDPAL)) {
 			
 			courseDo.setLabel("K-12 Arabic lessons");
 			thumbnailDo.setUrl("../images/library/partners/psd.png");
-			libraryUserDo.setPartnerName(GL1763);
-			libraryUserDo.setPartnerUrl(GL1764);
+			libraryUserDo.setPartnerName(i18n.GL1763());
+			libraryUserDo.setPartnerUrl(i18n.GL1764());
 
 		}
 		

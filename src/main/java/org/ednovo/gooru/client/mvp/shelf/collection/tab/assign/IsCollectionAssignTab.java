@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.assign;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 

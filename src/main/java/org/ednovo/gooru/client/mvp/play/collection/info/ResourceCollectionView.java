@@ -24,17 +24,15 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.info;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.ToolTipPopUp;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -55,7 +53,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ResourceCollectionView extends Composite implements MessageProperties{
+public class ResourceCollectionView extends Composite{
 	
 	@UiField HTMLPanel imageContainer;
 	
@@ -79,19 +77,34 @@ public class ResourceCollectionView extends Composite implements MessageProperti
 		
 	}
 	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	public ResourceCollectionView(){
 		initWidget(uiBinder.createAndBindUi(this));
-		createdByText.setText(GL0622);
+		createdByText.setText(i18n.GL0622());
+		createdByText.getElement().setAttribute("alt",i18n.GL0622());
+		createdByText.getElement().setAttribute("title",i18n.GL0622());
+		setId();
+		
 	}
-	
+	public void setId(){
+		createdByText.getElement().setId("lblCreatedByText");
+		imageContainer.getElement().setId("pnlImageContainer");
+		collectionThumbnail.getElement().setId("imgCollectionThumbnail");
+		collectionTitle.getElement().setId("lnkCollectionTitle");
+		userName.getElement().setId("lblUserName");
+		metadataContainer.getElement().setId("pnlMetadataContainer");
+	}
 	@UiConstructor
 	public ResourceCollectionView(final ResourceSearchResultDo resourceSearchResultDo){
 		initWidget(uiBinder.createAndBindUi(this));
-		createdByText.setText(GL0622);
+		createdByText.setText(i18n.GL0622());
+		createdByText.getElement().setAttribute("alt",i18n.GL0622());
+		createdByText.getElement().setAttribute("title",i18n.GL0622());
 		this.resourceSearchResultDo=resourceSearchResultDo;
 		setCollectionTitle(resourceSearchResultDo.getResourceTitle());
 		//This is used for to enable partner names hyperlinks (FTE, Lessonopoly, and Autodesk)
-		
+		setId();
 		String ownerUserName = resourceSearchResultDo.getOwner().getUsername();
 			AppClientFactory.getInjector().getPlayerAppService().getUserProfileVisibility(resourceSearchResultDo.getGooruUId(), new SimpleAsyncCallback<Boolean>() {
 				@Override
@@ -185,7 +198,7 @@ public class ResourceCollectionView extends Composite implements MessageProperti
 
 	
 	private Label getViewsLabel(){
-		String views=resourceSearchResultDo.getTotalViews()==1?resourceSearchResultDo.getTotalViews()+" "+GL1428:resourceSearchResultDo.getTotalViews()+" "+GL1099;
+		String views=resourceSearchResultDo.getTotalViews()==1?resourceSearchResultDo.getTotalViews()+" "+i18n.GL1428():resourceSearchResultDo.getTotalViews()+" "+i18n.GL1099();
 		Label viewsLabel=new Label(views);
 		viewsLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getCourseTitle());
 		return viewsLabel;
@@ -198,14 +211,14 @@ public class ResourceCollectionView extends Composite implements MessageProperti
 	}
 	
 	private Label setResourceCount(int count){
-		String resourcesCount=count==1?count+" "+GL1110:count+" "+GL0174;
+		String resourcesCount=count==1?count+" "+i18n.GL1110():count+" "+i18n.GL0174();
 		Label resourceCountLabel=new Label(resourcesCount);
 		resourceCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getResourceCount());
 		return resourceCountLabel;
 	}
 
 	private Label setQuestionCount(int count){
-		String questionCount=count==1?count+" "+GL0308:count+" "+GL1042;
+		String questionCount=count==1?count+" "+i18n.GL0308():count+" "+i18n.GL1042();
 		Label resourceCountLabel=new Label(questionCount);
 		resourceCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getResourceCount());
 		return resourceCountLabel;

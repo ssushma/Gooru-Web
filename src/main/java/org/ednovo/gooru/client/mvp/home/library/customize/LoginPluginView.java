@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home.library.customize;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -41,16 +40,14 @@ import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.DataLogEvents;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -133,7 +130,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	interface LoginPluginUiBinder extends UiBinder<Widget, LoginPluginView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor
@@ -405,6 +402,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 			@Override
 			public void onSuccess(String result) {
 //				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
+				System.out.println("replace::"+result);
 				Window.Location.replace(result);
 			
 			}

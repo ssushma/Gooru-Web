@@ -30,9 +30,10 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.CloseLabel;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -53,16 +54,18 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class CollectionCollaboratorTabVc extends Composite implements MessageProperties {
+public class CollectionCollaboratorTabVc extends Composite {
 	
-	private static final String USER_DOES_NOT_EXIST = GL1488;
-	
-	private static final String COLLABORATOR_ALREADY_ADDED = GL1489; 
-
 	private static EditCollaboratorVcUiBinder uiBinder = GWT.create(EditCollaboratorVcUiBinder.class);
 
 	interface EditCollaboratorVcUiBinder extends UiBinder<Widget, CollectionCollaboratorTabVc> {
 	}
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+    private static final String USER_DOES_NOT_EXIST = i18n.GL1488();
+	
+	private static final String COLLABORATOR_ALREADY_ADDED = i18n.GL1489(); 
+
 
 	@UiField
 	FlowPanel addedCollaboratorFloPanel;
@@ -82,11 +85,26 @@ public class CollectionCollaboratorTabVc extends Composite implements MessagePro
 	public CollectionCollaboratorTabVc(CollectionDo collectionDo) {
 		this.collection = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
-		collaboratorsText.setText(GL0832);
-		gooruBlueLbl.setText(GL0590);
-		addRecentText.setText(GL0833);
+		collaboratorsText.setText(i18n.GL0832());
+		collaboratorsText.getElement().setId("lblCollaboratorsText");
+		collaboratorsText.getElement().setAttribute("alt",i18n.GL0832());
+		collaboratorsText.getElement().setAttribute("title",i18n.GL0832());
+		
+		gooruBlueLbl.setText(i18n.GL0590());
+		gooruBlueLbl.getElement().setId("lblGooruBlueLbl");
+		gooruBlueLbl.getElement().setAttribute("alt",i18n.GL0590());
+		gooruBlueLbl.getElement().setAttribute("title",i18n.GL0590());
+		
+		addRecentText.setText(i18n.GL0833());
+		addRecentText.getElement().setId("lblAddRecentText");
+		addRecentText.getElement().setAttribute("alt",i18n.GL0833());
+		addRecentText.getElement().setAttribute("title",i18n.GL0833());
+		
 		getCollaboratorUsers(collectionDo.getGooruOid());
 		collaboratorTxtBox.addKeyUpHandler(new OnTextPress());
+		collaboratorTxtBox.getElement().setId("txtCollaboratorTxtBox");
+		StringUtil.setAttributes(collaboratorTxtBox, true);
+		addedCollaboratorFloPanel.getElement().setId("fpnlAddedCollaboratorFloPanel");
 	}
 
 	/**
@@ -147,7 +165,7 @@ public class CollectionCollaboratorTabVc extends Composite implements MessagePro
 	 */
 	private void checkAvailability(UserDo user, String email) {
 		if (user.isAvailability() && user.getConfirmStatus() == 0) {
-			new AlertContentUc(GL0065, GL0092);
+			new AlertContentUc(i18n.GL0065(), i18n.GL0092());
 
 		} else if (user.isAvailability() && user.getConfirmStatus() == 1) {
 			AppClientFactory.getInjector().getResourceService().addCollaborator(collection.getGooruOid(), user.getExternalId(), new SimpleAsyncCallback<UserDo>() {
@@ -158,7 +176,7 @@ public class CollectionCollaboratorTabVc extends Composite implements MessagePro
 			});
 
 		} else {
-			new AlertContentUc(GL0061, USER_DOES_NOT_EXIST);
+			new AlertContentUc(i18n.GL0061(), USER_DOES_NOT_EXIST);
 		}
 	}
 
@@ -176,7 +194,7 @@ public class CollectionCollaboratorTabVc extends Composite implements MessagePro
 					}
 				});
 			} else {
-				new AlertContentUc(GL0061,COLLABORATOR_ALREADY_ADDED);
+				new AlertContentUc(i18n.GL0061(),COLLABORATOR_ALREADY_ADDED);
 				collaboratorTxtBox.setText("");
 			}
 		}

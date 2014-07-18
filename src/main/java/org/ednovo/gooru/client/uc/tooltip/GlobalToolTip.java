@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.uc.tooltip;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Position;
@@ -57,7 +57,7 @@ public class GlobalToolTip extends Composite {
 	public static GlobalToolTipUiBinder toolTipGlobalUiBinder=GWT.create(GlobalToolTipUiBinder.class);{
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
+	private MessageProperties i18n = GWT.create(MessageProperties.class); 
 	
 	public GlobalToolTip(){
 		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));

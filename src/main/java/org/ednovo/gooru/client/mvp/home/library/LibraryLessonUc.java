@@ -31,21 +31,20 @@ import java.util.Map;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.OpenLessonConceptEvent;
+import org.ednovo.gooru.client.mvp.home.library.events.SetConceptQuizDataEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetConceptTitleStyleEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetConceptTitleStyleHandler;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconEvent;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -65,36 +64,40 @@ public class LibraryLessonUc extends Composite{
 	private static final String SUBJECT_NAME = "subject";
 	private static final String STANDARDS="standard";
 	
-	private static LibraryLessonUcUiBinder uiBinder = GWT
-			.create(LibraryLessonUcUiBinder.class);
+	private static LibraryLessonUcUiBinder uiBinder = GWT.create(LibraryLessonUcUiBinder.class);
 
 	interface LibraryLessonUcUiBinder extends UiBinder<Widget, LibraryLessonUc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public LibraryLessonUc(LessonDo lessonDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
 		initWidget(uiBinder.createAndBindUi(this));
 		AppClientFactory.getEventBus().addHandler(SetConceptTitleStyleEvent.TYPE, setConceptTitleStyleHandler);
 		this.topicId = topicId;
-		setLessonData(lessonDo,null,lessonDo.getCollection(),isLessonHighlighted,lessonNumber);
+		if(lessonDo.getConcept()!=null&&lessonDo.getConcept().size()>0) {
+			setLessonData(lessonDo,null,null,lessonDo.getConcept(),isLessonHighlighted,lessonNumber);
+		} else {
+			setLessonData(lessonDo,null,lessonDo.getCollection(),null,isLessonHighlighted,lessonNumber);
+		}
 	}
 	
 	public LibraryLessonUc(ArrayList<ConceptDo> conceptDoList, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
 		initWidget(uiBinder.createAndBindUi(this));
 		AppClientFactory.getEventBus().addHandler(SetConceptTitleStyleEvent.TYPE, setConceptTitleStyleHandler);
 		this.topicId = topicId;
-		setLessonData(null, null, conceptDoList, isLessonHighlighted,lessonNumber);
+		setLessonData(null, null, conceptDoList, null, isLessonHighlighted,lessonNumber);
 	}
 	
 	public LibraryLessonUc(PartnerFolderDo partnerFolderDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
 		initWidget(uiBinder.createAndBindUi(this));
 		AppClientFactory.getEventBus().addHandler(SetConceptTitleStyleEvent.TYPE, setConceptTitleStyleHandler);
 		this.topicId = topicId;
-		setLessonData(null, partnerFolderDo,partnerFolderDo.getCollections(),isLessonHighlighted,lessonNumber);
+		setLessonData(null, partnerFolderDo,partnerFolderDo.getCollections(),null, isLessonHighlighted,lessonNumber);
 	}
 	/**
 	 * 
+	 * @param arrayList 
 	 * @param arrayList 
 	 * @param lessonNumber 
 	 * @function setLessonData 
@@ -115,7 +118,7 @@ public class LibraryLessonUc extends Composite{
 	 *
 	 *
 	 */
-	private void setLessonData(final LessonDo lessonDo, final PartnerFolderDo partnerFolderDo, ArrayList<ConceptDo> conceptDoList, boolean isLessonHighlighted, Integer lessonNumber) {
+	private void setLessonData(final LessonDo lessonDo, final PartnerFolderDo partnerFolderDo, ArrayList<ConceptDo> conceptDoList, ArrayList<ConceptDo> conceptQuizList, boolean isLessonHighlighted, Integer lessonNumber) {
 		lessonList.getElement().setId("pnlLessonList");
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
 		if(lessonDo!=null) {
@@ -144,34 +147,60 @@ public class LibraryLessonUc extends Composite{
 			lessonId = lessonNumber;
 		}
 		
-		for(int i = 0; i<conceptDoList.size(); i++) {
-			String conceptTitle = "";
-			final ConceptDo conceptDo = conceptDoList.get(i);
-			if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
-				conceptTitle = lessonDo.getCode();
-				lessonCode = lessonDo.getCode();
-				lessonLabel = lessonDo.getLabel();
-			} else {
-				conceptTitle = conceptDo.getTitle();
-			}
-			
-			Label conceptTitleLbl = new Label(conceptTitle);
-			conceptTitleLbl.addStyleName(libraryStyleUc.conceptTitle());
-			lessonList.add(conceptTitleLbl);
-			conceptTitles.put(conceptDo.getGooruOid(), conceptTitleLbl);
-			if(i==0&&isLessonHighlighted) {
-				conceptTitleLbl.addStyleName(libraryStyleUc.conceptTitleActive());
-				isLessonHighlighted = false;
-			}
-			conceptTitleLbl.addClickHandler(new ClickHandler() {
-				@Override
-				public void onClick(ClickEvent event) {
-					conceptId = conceptDo.getGooruOid();
-					AppClientFactory.fireEvent(new SetConceptTitleStyleEvent(conceptId,topicId,lessonId));
-					AppClientFactory.fireEvent(new SetLoadingIconEvent(true,topicId));
-					getConceptDetails(conceptId);
+		if(conceptQuizList!=null&&conceptQuizList.size()>0) {
+			for(int i = 0; i<conceptQuizList.size(); i++) {
+				String conceptTitle = "";
+				final ConceptDo conceptDo = conceptQuizList.get(i);
+				conceptTitle = conceptDo.getLabel();
+				Label conceptTitleLbl = new Label(conceptTitle);
+				conceptTitleLbl.addStyleName(libraryStyleUc.conceptTitle());
+				lessonList.add(conceptTitleLbl);
+				conceptTitles.put(conceptDo.getCollection().get(0).getGooruOid(), conceptTitleLbl);
+				if(i==0&&isLessonHighlighted) {
+					conceptTitleLbl.addStyleName(libraryStyleUc.conceptTitleActive());
+					isLessonHighlighted = false;
 				}
-			});
+				conceptTitleLbl.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						conceptId = conceptDo.getCollection().get(0).getGooruOid();
+						AppClientFactory.fireEvent(new SetConceptTitleStyleEvent(conceptId,topicId,lessonId));
+						AppClientFactory.fireEvent(new SetLoadingIconEvent(true,topicId));
+						AppClientFactory.fireEvent(new SetConceptQuizDataEvent(conceptDo.getCollection(),topicId,lessonId+"",lessonLabel,lessonCode,conceptId));
+						//getConceptDetails(conceptId);
+					}
+				});
+			}
+		} else {
+			for(int i = 0; i<conceptDoList.size(); i++) {
+				String conceptTitle = "";
+				final ConceptDo conceptDo = conceptDoList.get(i);
+				if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
+					conceptTitle = lessonDo.getCode();
+					lessonCode = lessonDo.getCode();
+					lessonLabel = lessonDo.getLabel();
+				} else {
+					conceptTitle = conceptDo.getTitle();
+				}
+				
+				Label conceptTitleLbl = new Label(conceptTitle);
+				conceptTitleLbl.addStyleName(libraryStyleUc.conceptTitle());
+				lessonList.add(conceptTitleLbl);
+				conceptTitles.put(conceptDo.getGooruOid(), conceptTitleLbl);
+				if(i==0&&isLessonHighlighted) {
+					conceptTitleLbl.addStyleName(libraryStyleUc.conceptTitleActive());
+					isLessonHighlighted = false;
+				}
+				conceptTitleLbl.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						conceptId = conceptDo.getGooruOid();
+						AppClientFactory.fireEvent(new SetConceptTitleStyleEvent(conceptId,topicId,lessonId));
+						AppClientFactory.fireEvent(new SetLoadingIconEvent(true,topicId));
+						getConceptDetails(conceptId);
+					}
+				});
+			}
 		}
 	}
 	
@@ -193,15 +222,13 @@ public class LibraryLessonUc extends Composite{
 	private void getConceptDetails(String gooruOid) {
 		if(AppClientFactory.getPlaceManager().getRequestParameter("standardId")!=null){
 			String standardsId = AppClientFactory.getPlaceManager().getRequestParameter("standardId");
-		AppClientFactory.getInjector().getLibraryService().getConceptForStandards(gooruOid,standardsId, false, new SimpleAsyncCallback<ConceptDo>() {
-			@Override
-			public void onSuccess(ConceptDo conceptDo) {
-				AppClientFactory.fireEvent(new OpenLessonConceptEvent(conceptDo,topicId,lessonId+"",lessonLabel,lessonCode));
-			}			
-		});
-		}
-		else
-		{
+			AppClientFactory.getInjector().getLibraryService().getConceptForStandards(gooruOid,standardsId, false, new SimpleAsyncCallback<ConceptDo>() {
+				@Override
+				public void onSuccess(ConceptDo conceptDo) {
+					AppClientFactory.fireEvent(new OpenLessonConceptEvent(conceptDo,topicId,lessonId+"",lessonLabel,lessonCode));
+				}			
+			});
+		} else {
 			AppClientFactory.getInjector().getLibraryService().getConcept(gooruOid, false, new SimpleAsyncCallback<ConceptDo>() {
 				@Override
 				public void onSuccess(ConceptDo conceptDo) {
@@ -210,7 +237,6 @@ public class LibraryLessonUc extends Composite{
 			});
 		}
 	}
-	
 	
 	SetConceptTitleStyleHandler setConceptTitleStyleHandler = new SetConceptTitleStyleHandler() {
 		@Override

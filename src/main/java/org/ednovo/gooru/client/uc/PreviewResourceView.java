@@ -9,9 +9,7 @@ import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
-import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -33,7 +31,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PreviewResourceView extends Composite implements HasClickHandlers,MessageProperties{
+public class PreviewResourceView extends Composite implements HasClickHandlers{
 
 	@UiField Image resourceThumbnail;
 	@UiField Label resourceTypeImage,resourceCategory,resourceSourceName,resourceIndex,resourceNumber;
@@ -54,11 +52,34 @@ public class PreviewResourceView extends Composite implements HasClickHandlers,M
 	
 	public PreviewResourceView(){
 		initWidget(uiBinder.createAndBindUi(this));
+		resourceThumbContainer.getElement().setId("fpnlResourceThumbContainer");
+		resourceImageContainer.getElement().setId("fpnlResourceImageContainer");
+		resourceThumbnail.getElement().setId("imgResourceThumbnail");
+		resourceTypeImage.getElement().setId("lblResourceTypeImage");
+		resourceNumber.getElement().setId("lblResourceNumber");
+		resourceTitle.getElement().setId("htmlResourceTitle");
+		resourceIndex.getElement().setId("lblResourceIndex");
+		resourceHoverTitle.getElement().setId("htmlResourceHoverTitle");
+		resourceCategory.getElement().setId("lblResourceCategory");
+		resourceSourceName.getElement().setId("lblResourceSourceName");
+		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 	}
+	
 	
 	@UiConstructor
 	public PreviewResourceView(CollectionItemDo collectionItemDo, int itemIndex){
 		initWidget(uiBinder.createAndBindUi(this));
+		resourceThumbContainer.getElement().setId("fpnlResourceThumbContainer");
+		resourceImageContainer.getElement().setId("fpnlResourceImageContainer");
+		resourceThumbnail.getElement().setId("imgResourceThumbnail");
+		resourceTypeImage.getElement().setId("lblResourceTypeImage");
+		resourceNumber.getElement().setId("lblResourceNumber");
+		resourceTitle.getElement().setId("htmlResourceTitle");
+		resourceIndex.getElement().setId("lblResourceIndex");
+		resourceHoverTitle.getElement().setId("htmlResourceHoverTitle");
+		resourceCategory.getElement().setId("lblResourceCategory");
+		resourceSourceName.getElement().setId("lblResourceSourceName");
+		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 		this.collectionItemDo=collectionItemDo;
 		setNavigationResourceTitle(collectionItemDo.getResource().getTitle());
 		if(collectionItemDo.getResource().getResourceFormat()!=null){
@@ -101,6 +122,7 @@ public class PreviewResourceView extends Composite implements HasClickHandlers,M
 		//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 		ratingWidgetPanel.clear();
 		ratingWidgetPanel.add(ratingWidgetView);
+		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 	}
 	
 	/**
@@ -177,7 +199,11 @@ public class PreviewResourceView extends Composite implements HasClickHandlers,M
 	
 	public void setNavigationResourceTitle(String title){
 		resourceTitle.setHTML(getHTML(title));
+		resourceTitle.getElement().setAttribute("alt", getHTML(title));
+		resourceTitle.getElement().setAttribute("title", getHTML(title));
 		resourceHoverTitle.setHTML(getHTML(title));
+		resourceHoverTitle.getElement().setAttribute("alt", getHTML(title));
+		resourceHoverTitle.getElement().setAttribute("title", getHTML(title));
 	}
 	public void setResourceCategory(){
 		if(collectionItemDo.getResource().getResourceFormat()!=null){
@@ -197,12 +223,16 @@ public class PreviewResourceView extends Composite implements HasClickHandlers,M
 				resourceType=resourceType.replaceAll("exam","webpage").replaceAll("website","webpage").replaceAll("challenge","webpage");
 			}
 			resourceCategory.setText(resourceType);
+			resourceCategory.getElement().setAttribute("alt", resourceType);
+			resourceCategory.getElement().setAttribute("title", resourceType);
 		}
 	}
 	public void setReourceSourceName(){
 		if(collectionItemDo.getResource().getResourceSource()!=null){
 			if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
 			resourceSourceName.setText(collectionItemDo.getResource().getResourceSource().getAttribution()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():"");
+			resourceSourceName.getElement().setAttribute("alt", collectionItemDo.getResource().getResourceSource().getAttribution()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():"");
+			resourceSourceName.getElement().setAttribute("title", collectionItemDo.getResource().getResourceSource().getAttribution()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():"");
 			}
 			}else{
 			resourceSourceName.setText("");
@@ -211,7 +241,11 @@ public class PreviewResourceView extends Composite implements HasClickHandlers,M
 	}
 	public void setResourceSequence(int itemIndex){
 		resourceIndex.setText(itemIndex<10?"0"+itemIndex:""+itemIndex);
+		resourceIndex.getElement().setAttribute("alt", itemIndex<10?"0"+itemIndex:""+itemIndex);
+		resourceIndex.getElement().setAttribute("title", itemIndex<10?"0"+itemIndex:""+itemIndex);
 		resourceNumber.setText(itemIndex<10?"0"+itemIndex:""+itemIndex);
+		resourceNumber.getElement().setAttribute("alt", itemIndex<10?"0"+itemIndex:""+itemIndex);
+		resourceNumber.getElement().setAttribute("title", itemIndex<10?"0"+itemIndex:""+itemIndex);
 	}
 	
 	public HandlerRegistration addClickHandler(ClickHandler handler) {

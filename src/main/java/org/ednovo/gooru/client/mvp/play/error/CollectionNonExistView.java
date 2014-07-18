@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.mvp.play.error;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -54,13 +54,15 @@ import com.google.gwt.user.client.ui.Widget;
 * 
 * @Reviewer: Gooru Team.
 */
-public class CollectionNonExistView extends Composite implements MessageProperties{
+public class CollectionNonExistView extends Composite{
 	
 	public interface CollectionNonExistViewUiBinder extends UiBinder<Widget,CollectionNonExistView>{
 		
 	}
 	
 	public static CollectionNonExistViewUiBinder collectionNonExistViewUiBinder=GWT.create(CollectionNonExistViewUiBinder.class);
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField public FlowPanel feautredCollectionContainer;
 	@UiField Button btnLibrary;
@@ -72,13 +74,35 @@ public class CollectionNonExistView extends Composite implements MessageProperti
 	 */
 	public CollectionNonExistView(){
 		initWidget(collectionNonExistViewUiBinder.createAndBindUi(this));
-		btnLibrary.setText(GL1831);
-		noLongerText.getElement().setInnerHTML(GL0655);
+		btnLibrary.setText(i18n.GL1831());
+		btnLibrary.getElement().setId("btnLibrary");
+		btnLibrary.getElement().setAttribute("alt",i18n.GL1831());
+		btnLibrary.getElement().setAttribute("title",i18n.GL1831());
+		
+		noLongerText.getElement().setInnerHTML(i18n.GL0655());
+		noLongerText.getElement().setId("pnlNoLongerText");
+		noLongerText.getElement().setAttribute("alt",i18n.GL0655());
+		noLongerText.getElement().setAttribute("title",i18n.GL0655());
+		
 		recycleImage.setUrl("images/collection_error.png");
-		madePrivateOrDeletedText.getElement().setInnerHTML(GL0656);
-		meanTimetext.getElement().setInnerHTML(GL0657);
-		btnLibrary.setText(GL1831);
+		madePrivateOrDeletedText.getElement().setInnerHTML(i18n.GL0656());
+		madePrivateOrDeletedText.getElement().setId("pnlMadePrivateOrDeletedText");
+		madePrivateOrDeletedText.getElement().setAttribute("alt",i18n.GL0656());
+		madePrivateOrDeletedText.getElement().setAttribute("title",i18n.GL0656());
+		
+		meanTimetext.getElement().setInnerHTML(i18n.GL0657());
+		meanTimetext.getElement().setId("pnlMeanTimetext");
+		meanTimetext.getElement().setAttribute("alt",i18n.GL0657());
+		meanTimetext.getElement().setAttribute("title",i18n.GL0657());
+		
+		btnLibrary.setText(i18n.GL1831());
+		btnLibrary.getElement().setAttribute("alt",i18n.GL1831());
+		btnLibrary.getElement().setAttribute("title",i18n.GL1831());
+		
 		btnLibrary.getElement().getStyle().setMarginLeft(50, Unit.PX);
+		feautredCollectionContainer.getElement().setId("fpnlFeautredCollectionContainer");
+		
+		recycleImage.getElement().setId("imgRecycleImage");
 //		getFeaturedCollections();
 	}
 	

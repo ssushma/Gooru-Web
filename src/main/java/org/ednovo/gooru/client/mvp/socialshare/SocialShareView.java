@@ -36,17 +36,16 @@ import org.ednovo.gooru.client.uc.EmailShareUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ErrorEvent;
-import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -73,10 +72,12 @@ import com.google.gwt.user.client.ui.Widget;
 */
 
 public class SocialShareView extends Composite implements
-IsSocialShareView, MessageProperties {
+IsSocialShareView {
 
 	private static SocialShareViewUiBinder uiBinder = GWT
 			.create(SocialShareViewUiBinder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SocialShareViewUiBinder extends UiBinder<Widget, SocialShareView> {
 	}
@@ -144,18 +145,18 @@ IsSocialShareView, MessageProperties {
 		emailPanel.getElement().setId("epnlEmailPanel");
 		panelTwitter.getElement().setId("pnlPanelTwitter");
 		panelEmail.getElement().setId("pnlPanelEmail");
-		emailText.getElement().setInnerHTML(GL0212);
+		emailText.getElement().setInnerHTML(i18n.GL0212());
 		emailText.getElement().setId("pnlEmailText");
-		emailText.getElement().setAttribute("alt", GL0212);
-		emailText.getElement().setAttribute("title", GL0212);
-		twitterText.getElement().setInnerHTML(GL0647);
+		emailText.getElement().setAttribute("alt", i18n.GL0212());
+		emailText.getElement().setAttribute("title", i18n.GL0212());
+		twitterText.getElement().setInnerHTML(i18n.GL0647());
 		twitterText.getElement().setId("pnlTwitterText");
-		twitterText.getElement().setAttribute("alt", GL0647);
-		twitterText.getElement().setAttribute("title", GL0647);
-		facbookText.getElement().setInnerHTML(GL0646);
+		twitterText.getElement().setAttribute("alt", i18n.GL0647());
+		twitterText.getElement().setAttribute("title", i18n.GL0647());
+		facbookText.getElement().setInnerHTML(i18n.GL0646());
 		facbookText.getElement().setId("pnlFacbookText");
-		facbookText.getElement().setAttribute("alt", GL0646);
-		facbookText.getElement().setAttribute("title", GL0646);
+		facbookText.getElement().setAttribute("alt", i18n.GL0646());
+		facbookText.getElement().setAttribute("title", i18n.GL0646());
 		shareIconPanel.getElement().setId("pnlShareIconPanel");
 		fbIconPanel.getElement().setId("epnlFbIconPanel");
 		panelfbIcon.getElement().setId("pnlPanelfbIcon");
@@ -199,7 +200,7 @@ IsSocialShareView, MessageProperties {
 
 
 		if(title.contains("img")){
-			socialDo.setTitle(GL0308);
+			socialDo.setTitle(i18n.GL0308());
 		}else{
 			if (title.length() > 50) {
 				title = title.substring(0,50)+ "...";
@@ -486,7 +487,7 @@ IsSocialShareView, MessageProperties {
 			}
 			else{
 				triggerShareDataEvent(PlayerDataLogEvents.FACEBOOK,false);
-				String title=GL1995+" "+GL1433;
+				String title=i18n.GL1995()+" "+i18n.GL1433();
 				String token= Window.Location.getHref();
 				SocialShareView.postOnFacebook(title,socialDo.getRawUrl(),getAsHtml(description)+" "+token,categoryImage.getUrl());
 //				Window.open(
@@ -521,7 +522,7 @@ IsSocialShareView, MessageProperties {
 			}else{
 				triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
 //				Window.open("http://twitter.com/intent/tweet?text=" + "Check out "+socialDo.getTitle().replaceAll("\\+", "%2B")+ "'s Gooru Profile Page - " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
-				Window.open("http://twitter.com/intent/tweet?text=" + getEncodedUrl(GL1085_1) + socialDo.getBitlylink() , "_blank", "width=600,height=300");
+				Window.open("http://twitter.com/intent/tweet?text=" + getEncodedUrl(i18n.GL1085_1()) + socialDo.getBitlylink() , "_blank", "width=600,height=300");
 			}
 		}else{
 			triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);

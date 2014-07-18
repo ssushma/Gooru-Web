@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.home;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
@@ -33,9 +32,9 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -46,7 +45,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -97,7 +95,7 @@ public class AlmostDoneUc extends PopupPanel{
 		
 	}
 	private static final Binder binder = GWT.create(Binder.class);
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	/**
 	 * Class constructor , to create Almost done popup
 	 * @param userEmail 
@@ -124,6 +122,7 @@ public class AlmostDoneUc extends PopupPanel{
 		fillOutText.getElement().setAttribute("title",i18n.GL1280()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		emailTxtBox.getElement().setId("txtEmail");
+		StringUtil.setAttributes(emailTxtBox, true);
 		cancelButton.getElement().setId("epnlCancelButton");
 		
 		emailText.getElement().setInnerText(i18n.GL0212());
@@ -164,6 +163,7 @@ public class AlmostDoneUc extends PopupPanel{
 		gooruText.setText(i18n.GL_GRR_OF()+" "+i18n.GL0733()+i18n.GL_SPL_FULLSTOP());
 		okButton.getElement().setInnerText(i18n.GL0190());
 		userNameTxtBox.getElement().setId("txtUserName");
+		StringUtil.setAttributes(userNameTxtBox, true);
 		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicy");
 		buttonContainer.getElement().setId("pnlButtonContainer");
 		copyRightAnr.getElement().setId("lnkCopyRight");

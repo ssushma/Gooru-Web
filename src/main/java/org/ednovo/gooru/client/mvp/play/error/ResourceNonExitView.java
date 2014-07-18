@@ -1,6 +1,6 @@
 package org.ednovo.gooru.client.mvp.play.error;
 
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -20,6 +20,9 @@ public class ResourceNonExitView extends Composite {
 	interface ResourceNonExitViewUiBinder extends
 			UiBinder<Widget, ResourceNonExitView> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField Image defaultImage;
 	@UiField Label lblNoLongerMessage;
 	@UiField HTMLPanel lblDesc;
@@ -28,10 +31,24 @@ public class ResourceNonExitView extends Composite {
 	public ResourceNonExitView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		defaultImage.setUrl("images/resource_error.png");
-		ancLearnMore.setText(MessageProperties.GL0343);
-		lblNoLongerMessage.setText(MessageProperties.GL1760);
-		//lblNextResourceMsg.setText(MessageProperties.GL1761);
-		lblDesc.getElement().setInnerHTML(MessageProperties.GL1762);
+		
+		defaultImage.getElement().setId("imgDefaultImage");
+		
+		ancLearnMore.setText(i18n.GL0343());
+		ancLearnMore.getElement().setId("lnkAncLearnMore");
+		ancLearnMore.getElement().setAttribute("alt",i18n.GL0343());
+		ancLearnMore.getElement().setAttribute("title",i18n.GL0343());
+		
+		lblNoLongerMessage.setText(i18n.GL1760());
+		lblNoLongerMessage.getElement().setId("lblNoLongerMessage");
+		lblNoLongerMessage.getElement().setAttribute("alt",i18n.GL1760());
+		lblNoLongerMessage.getElement().setAttribute("title",i18n.GL1760());
+		
+		//lblNextResourceMsg.setText(MessageProperties.i18n.GL1761);
+		lblDesc.getElement().setInnerHTML(i18n.GL1762());
+		lblDesc.getElement().setId("lblDesc");
+		lblDesc.getElement().setAttribute("alt",i18n.GL1762());
+		lblDesc.getElement().setAttribute("title",i18n.GL1762());
 }
 
 }

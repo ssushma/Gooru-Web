@@ -5,7 +5,6 @@ import org.ednovo.gooru.client.mvp.dnd.AppVerticalPanelDropController;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.ShelfCollectionResourceChildView;
 
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;

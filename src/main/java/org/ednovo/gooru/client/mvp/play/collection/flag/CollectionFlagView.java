@@ -1,24 +1,20 @@
 package org.ednovo.gooru.client.mvp.play.collection.flag;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.GooruCBundle;
-import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
-import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
-import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.player.collection.client.view.add.AddResourceToCollectionStylesBundle;
 import org.ednovo.gooru.player.collection.client.view.add.tooltip.FlagBundle;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -32,8 +28,8 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
@@ -59,21 +55,23 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class CollectionFlagView extends
 		PopupViewWithUiHandlers<CollectionFlagUiHandler> implements
-		IsCollectionFlagView,MessageProperties {
+		IsCollectionFlagView {
 	private static CollectionFlagPopUpUiBinder uiBinder = GWT
 			.create(CollectionFlagPopUpUiBinder.class);
 
 	interface CollectionFlagPopUpUiBinder extends
 			UiBinder<Widget, CollectionFlagView> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
-	HTMLEventPanel flagCollections, flagResources, collectionCancelButton,
+	HTMLEventPanel closeButton,flagCollections, flagResources, collectionCancelButton,
 			collectionSubmitButton, submitButtonGray;
 	
 	@UiField
 	HTMLPanel resourceFlagContainer, collectionFlagContainer,
-			dropdownListContainer;
+			dropdownListContainer,flagresourceleftpart;
 	@UiField
 	CheckBox resourceCheckBox1, resourceCheckBox2, resourceCheckBox3,
 			resourceCheckBox4, collectionCheckBox1, collectionCheckBox2,
@@ -93,7 +91,7 @@ public class CollectionFlagView extends
 	@UiField HTMLPanel flagCollectionText,flagResourceText;
 	HTMLEventPanel flagButtonOnCover = new HTMLEventPanel("");
 	HTMLEventPanel flagButtonOnSummary = new HTMLEventPanel("");
-	private static final String HEADER_LINK =GL1430;
+//	private static final String HEADER_LINK =i18n.GL1430;
 	
 	String collectionGooruOid = "";
 	String getDeleteContentGooruOid="";
@@ -112,26 +110,102 @@ public class CollectionFlagView extends
 		appPopUp = new FlagPopupPanel(false);
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
 		popUpCloseButton.addClickHandler(new CloseFlagPopupEvent());
-		headerflagtext.setText(GL0600);
-		flagCollectionText.getElement().setInnerHTML(GL0601);
-		flagResourceText.getElement().setInnerHTML(GL0601);
-		flagResourceText.getElement().setInnerHTML(GL0602);
-		incorporateText.setText(GL0603);
-		notAppropriateText.setText(GL0604);
-		inaccurateText.setText(GL0605);
-		otherReasonText.setText(GL0606);
-		provideMoreDetails.setText(GL0607);
-		collectionCancelButton.getElement().setInnerHTML(GL0608);
-		collectionSubmitButton.getElement().setInnerHTML(GL0486);
-		submitButtonGray.getElement().setInnerHTML(GL0486);
-		chooseResourceText.setText(GL0609);
-		dropdownListPlaceHolder.getElement().setInnerHTML(GL0610);
-		becauseText.setText(GL0611);
-		incorporateresourceText.setText(GL0612);
-		unavailableresourceText.setText(GL0613);
-		inaccurateTextresource.setText(GL0614);
-		otherReason.setText(GL0606);
-		provideMore.setText(GL0607);
+		headerflagtext.setText(i18n.GL0600());
+		headerflagtext.getElement().setId("lblHeaderflagtext");
+		headerflagtext.getElement().setAttribute("alt",i18n.GL0600());
+		headerflagtext.getElement().setAttribute("title",i18n.GL0600());
+		
+		flagCollectionText.getElement().setInnerHTML(i18n.GL0601());
+		flagCollectionText.getElement().setId("pnlFlagCollectionText");
+		flagCollectionText.getElement().setAttribute("alt",i18n.GL0601());
+		flagCollectionText.getElement().setAttribute("title",i18n.GL0601());
+		
+		flagResourceText.getElement().setInnerHTML(i18n.GL0601());
+		flagResourceText.getElement().setInnerHTML(i18n.GL0602());
+		flagResourceText.getElement().setId("pnlFlagResourceText");
+		flagResourceText.getElement().setAttribute("alt",i18n.GL0602());
+		flagResourceText.getElement().setAttribute("title",i18n.GL0602());
+		
+		incorporateText.setText(i18n.GL0603());
+		incorporateText.getElement().setId("lblIncorporateText");
+		incorporateText.getElement().setAttribute("alt",i18n.GL0603());
+		incorporateText.getElement().setAttribute("title",i18n.GL0603());
+		
+		notAppropriateText.setText(i18n.GL0604());
+		notAppropriateText.getElement().setId("lblNotAppropriateText");
+		notAppropriateText.getElement().setAttribute("alt",i18n.GL0604());
+		notAppropriateText.getElement().setAttribute("title",i18n.GL0604());
+		
+		inaccurateText.setText(i18n.GL0605());
+		inaccurateText.getElement().setId("lblInaccurateText");
+		inaccurateText.getElement().setAttribute("alt",i18n.GL0605());
+		inaccurateText.getElement().setAttribute("title",i18n.GL0605());
+		
+		otherReasonText.setText(i18n.GL0606());
+		otherReasonText.getElement().setId("lblOtherReasonText");
+		otherReasonText.getElement().setAttribute("alt",i18n.GL0606());
+		otherReasonText.getElement().setAttribute("title",i18n.GL0606());
+		
+		provideMoreDetails.setText(i18n.GL0607());
+		provideMoreDetails.getElement().setId("lblProvideMoreDetails");
+		provideMoreDetails.getElement().setAttribute("alt",i18n.GL0607());
+		provideMoreDetails.getElement().setAttribute("title",i18n.GL0607());
+		
+		collectionCancelButton.getElement().setInnerHTML(i18n.GL0608());
+		collectionCancelButton.getElement().setId("epnlCollectionCancelButton");
+		collectionCancelButton.getElement().setAttribute("alt",i18n.GL0608());
+		collectionCancelButton.getElement().setAttribute("title",i18n.GL0608());
+		
+		collectionSubmitButton.getElement().setInnerHTML(i18n.GL0486());
+		collectionSubmitButton.getElement().setId("epnlCollectionSubmitButton");
+		collectionSubmitButton.getElement().setAttribute("alt",i18n.GL0486());
+		collectionSubmitButton.getElement().setAttribute("title",i18n.GL0486());
+		
+		submitButtonGray.getElement().setInnerHTML(i18n.GL0486());
+		submitButtonGray.getElement().setId("epnlSubmitButtonGray");
+		submitButtonGray.getElement().setAttribute("alt",i18n.GL0486());
+		submitButtonGray.getElement().setAttribute("title",i18n.GL0486());
+		
+		chooseResourceText.setText(i18n.GL0609());
+		chooseResourceText.getElement().setId("lblChooseResourceText");
+		chooseResourceText.getElement().setAttribute("alt",i18n.GL0609());
+		chooseResourceText.getElement().setAttribute("title",i18n.GL0609());
+		
+		dropdownListPlaceHolder.getElement().setInnerHTML(i18n.GL0610());
+		dropdownListPlaceHolder.getElement().setId("htmlDropdownListPlaceHolder");
+		dropdownListPlaceHolder.getElement().setAttribute("alt",i18n.GL0610());
+		dropdownListPlaceHolder.getElement().setAttribute("title",i18n.GL0610());
+		
+		becauseText.setText(i18n.GL0611());
+		becauseText.getElement().setId("lblBecauseText");
+		becauseText.getElement().setAttribute("alt",i18n.GL0611());
+		becauseText.getElement().setAttribute("title",i18n.GL0611());
+		
+		incorporateresourceText.setText(i18n.GL0612());
+		incorporateresourceText.getElement().setId("lblIncorporateresourceText");
+		incorporateresourceText.getElement().setAttribute("alt",i18n.GL0612());
+		incorporateresourceText.getElement().setAttribute("title",i18n.GL0612());
+		
+		unavailableresourceText.setText(i18n.GL0613());
+		unavailableresourceText.getElement().setId("lblUnavailableresourceText");
+		unavailableresourceText.getElement().setAttribute("alt",i18n.GL0613());
+		unavailableresourceText.getElement().setAttribute("title",i18n.GL0613());
+		
+		inaccurateTextresource.setText(i18n.GL0614());
+		inaccurateTextresource.getElement().setId("lblInaccurateTextresource");
+		inaccurateTextresource.getElement().setAttribute("alt",i18n.GL0614());
+		inaccurateTextresource.getElement().setAttribute("title",i18n.GL0614());
+		
+		otherReason.setText(i18n.GL0606());
+		otherReason.getElement().setId("lblOtherReason");
+		otherReason.getElement().setAttribute("alt",i18n.GL0606());
+		otherReason.getElement().setAttribute("title",i18n.GL0606());
+		
+		provideMore.setText(i18n.GL0607());
+		provideMore.getElement().setId("lblProvideMore");
+		provideMore.getElement().setAttribute("alt",i18n.GL0607());
+		provideMore.getElement().setAttribute("title",i18n.GL0607());
+		
 		resourceFlagContainer.setVisible(false);
 		submitButtonGray.setVisible(true);
 		collectionSubmitButton.setVisible(false);
@@ -139,6 +213,28 @@ public class CollectionFlagView extends
 		dropdownListPlaceHolder
 		.addClickHandler(new OnDropdownListPlaceHolderClick());
 		
+		closeButton.getElement().setId("epnlCloseButton");
+		popUpCloseButton.getElement().setId("imgPopUpCloseButton");
+		flagresourceleftpart.getElement().setId("pnlFlagresourceleftpart");
+		flagCollections.getElement().setId("epnlFlagCollections");
+		flagResources.getElement().setId("epnlFlagResources");
+		resourceFlagContainer.getElement().setId("pnlResourceFlagContainer");
+		dropdownListContainerScrollPanel.getElement().setId("sbDropdownListContainerScrollPanel");
+		dropdownListContainer.getElement().setId("pnlDropdownListContainer");
+		resourceCheckBox4.getElement().setId("chkResourceCheckBox4");
+		resourceCheckBox3.getElement().setId("chkResourceCheckBox3");
+		resourceCheckBox2.getElement().setId("chkResourceCheckBox2");
+		resourceCheckBox1.getElement().setId("chkResourceCheckBox1");
+		resourceDescTextArea.getElement().setId("tatResourceDescTextArea");
+		StringUtil.setAttributes(resourceDescTextArea, true);
+		collectionFlagContainer.getElement().setId("pnlCollectionFlagContainer");
+		collectionTitleField.getElement().setId("htmlCollectionTitleField");
+		collectionCheckBox4.getElement().setId("chkCollectionCheckBox4");
+		collectionCheckBox3.getElement().setId("chkCollectionCheckBox3");
+		collectionCheckBox2.getElement().setId("chkCollectionCheckBox2");
+		collectionCheckBox1.getElement().setId("chkCollectionCheckBox1");
+		collectionDescTextArea.getElement().setId("tatCollectionDescTextArea");
+		StringUtil.setAttributes(collectionDescTextArea, true);
 	}
 
 	public void displayView(String collectionTitle,ArrayList<String> resourcesList,ArrayList<String> resourcesListId) {
@@ -153,7 +249,9 @@ public class CollectionFlagView extends
 				.replaceAll("<p>", "")
 				.replaceAll("<br data-mce-bogus=\"1\">", "")
 				.replaceAll("<br>", "").replaceAll("</br>", "");
-		collectionTitleField.setHTML(HEADER_LINK+" "+ collectionTitle+ " \" "+GL1431+"");
+		collectionTitleField.setHTML(i18n.GL1430()+" "+ collectionTitle+ " \" "+i18n.GL1431()+"");
+		collectionTitleField.getElement().setAttribute("alt",i18n.GL1430()+" "+ collectionTitle+ " \" "+i18n.GL1431()+"");
+		collectionTitleField.getElement().setAttribute("title",i18n.GL1430()+" "+ collectionTitle+ " \" "+i18n.GL1431()+"");
 		flagCollections.setStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle()
 				.flagButtonselected());
 		flagResources.setStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle()

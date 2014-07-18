@@ -36,9 +36,8 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
 import org.ednovo.gooru.client.mvp.classpages.resource.item.ClasspageResourceItemChildView;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -133,7 +132,7 @@ public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> imp
 
 	private static ClasspageViewUiBinder uiBinder = GWT.create(ClasspageViewUiBinder.class);
 	
-	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	interface ClasspageViewUiBinder extends UiBinder<Widget, ClasspageView>{
 		

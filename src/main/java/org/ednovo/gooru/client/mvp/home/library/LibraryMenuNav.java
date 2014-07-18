@@ -42,14 +42,14 @@ import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSetting
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.CourseDo;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.StandardCourseDo;
 import org.ednovo.gooru.shared.model.library.StandardsDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.library.UnitDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StorageJsonSerializationFactory;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -61,8 +61,10 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -86,7 +88,7 @@ public class LibraryMenuNav extends Composite{
 	
 	@UiField Anchor aboutGooruAnr;
 	
-	private static final String SCIENCE = "science", MATH = "math", SOCIAL="social-sciences", LANGUAGE="language-arts", FEATURED = "featured", STANDARDS="standard";
+	private static final String SCIENCE = "Science", MATH = "Math", SOCIAL="Social Sciences", LANGUAGE="Language Arts", FEATURED = "featured", STANDARDS="standard";
 	
 	private static final String LIBRARY_PAGE = "page";
 	
@@ -120,12 +122,18 @@ public class LibraryMenuNav extends Composite{
 	
 	private boolean isStandardToolTipShow=false;
 	
+	StorageJsonSerializationFactory factory = GWT.create(StorageJsonSerializationFactory.class);
+
+	private Storage stockStore = Storage.getLocalStorageIfSupported();
+
+	HashMap<String, SubjectDo> courseMap = new HashMap<String, SubjectDo>();
+
     private static LibraryMenuNavUiBinder uiBinder = GWT.create(LibraryMenuNavUiBinder.class);
 
 	interface LibraryMenuNavUiBinder extends UiBinder<Widget, LibraryMenuNav> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public LibraryMenuNav(String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -228,73 +236,50 @@ public class LibraryMenuNav extends Composite{
 			}
 		});
 		
-/*		if(!getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
-*/			sciencePanel.addMouseOverHandler(new MouseOverHandler() {
-				@Override
-				public void onMouseOver(MouseOverEvent event) {
-					if(!isScienceHovered) {
-						isScienceHovered = true;
-						String codeId = getSubjectIdBySubjectName(subjectIdList, SCIENCE);
-						getTaxonomyData(codeId,null);
-					}
+		sciencePanel.addMouseOverHandler(new MouseOverHandler() {
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				if(!isScienceHovered) {
+					isScienceHovered = true;
+					String codeId = getSubjectIdBySubjectName(subjectIdList, SCIENCE);
+					getTaxonomyData(SCIENCE,codeId,null);
 				}
-			});
-/*		} else {
-			sciencePanel.removeStyleName("courseScrollStyle");
-			sciencePanel.removeStyleName(libraryStyleUc.tabsLi());
-			sciencePanel.addStyleName(libraryStyleUc.tabsLiInactive());
-		}
-*/		
-//		if(!getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
-			mathPanel.addMouseOverHandler(new MouseOverHandler() {
-				@Override
-				public void onMouseOver(MouseOverEvent event) {
-					if(!isMathHovered) {
-						isMathHovered = true;
-						String codeId = getSubjectIdBySubjectName(subjectIdList, MATH);
-						getTaxonomyData(codeId,null);
-					}
-				}
-			});
-//		} else {
-//			mathPanel.removeStyleName("courseScrollStyle");
-//			mathPanel.removeStyleName(libraryStyleUc.tabsLi());
-//			mathPanel.addStyleName(libraryStyleUc.tabsLiInactive());
-//		}
+			}
+		});
 
-//		if(!getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
-			socialPanel.addMouseOverHandler(new MouseOverHandler() {
-				@Override
-				public void onMouseOver(MouseOverEvent event) {
-					if(!isSocialHovered) {
-						isSocialHovered = true;
-						String codeId = getSubjectIdBySubjectName(subjectIdList, SOCIAL);
-						getTaxonomyData(codeId,null);
-					}
+		mathPanel.addMouseOverHandler(new MouseOverHandler() {
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				if(!isMathHovered) {
+					isMathHovered = true;
+					String codeId = getSubjectIdBySubjectName(subjectIdList, MATH);
+					getTaxonomyData(MATH,codeId,null);
 				}
-			});
-//		} else {
-//			socialPanel.removeStyleName("courseScrollStyle");
-//			socialPanel.removeStyleName(libraryStyleUc.tabsLi());
-//			socialPanel.addStyleName(libraryStyleUc.tabsLiInactive());
-//		}
-		
-//		if(!getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
-			elaPanel.addMouseOverHandler(new MouseOverHandler() {
-				@Override
-				public void onMouseOver(MouseOverEvent event) {
-					if(!isLanguageHovered) {
-						isLanguageHovered = true;
-						String codeId = getSubjectIdBySubjectName(subjectIdList, LANGUAGE);
-						getTaxonomyData(codeId,null);
-					}
+			}
+		});
+
+		socialPanel.addMouseOverHandler(new MouseOverHandler() {
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				if(!isSocialHovered) {
+					isSocialHovered = true;
+					String codeId = getSubjectIdBySubjectName(subjectIdList, SOCIAL);
+					getTaxonomyData(SOCIAL,codeId,null);
 				}
-			});
-//		} else {
-//			elaPanel.removeStyleName("courseScrollStyle");
-//			elaPanel.removeStyleName(libraryStyleUc.tabsLi());
-//			elaPanel.addStyleName(libraryStyleUc.tabsLiInactive());
-//		}
+			}
+		});
+
+		elaPanel.addMouseOverHandler(new MouseOverHandler() {
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				if(!isLanguageHovered) {
+					isLanguageHovered = true;
+					String codeId = getSubjectIdBySubjectName(subjectIdList, LANGUAGE);
+					getTaxonomyData(LANGUAGE,codeId,null);
+				}
+			}
+		});
+
 		if(!(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY))) {
 			standardPanel.addMouseOverHandler(new MouseOverHandler() {
 				@Override
@@ -311,7 +296,8 @@ public class LibraryMenuNav extends Composite{
 					if(!isStandatdHover && isStandardCode){
 						isStandatdHover = true;
 						String codeId = STANDARDS;
-						getTaxonomyData(codeId,null);
+						String courseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId");
+						getTaxonomyData(STANDARDS,codeId,courseId);
 					}
 				}
 			});
@@ -346,14 +332,15 @@ public class LibraryMenuNav extends Composite{
 		
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
 		tabsInner.getElement().setId("pnlTabsInner");
-	
 	}
 	
 	StandardPreferenceSettingHandler standardPreferenceSettingHandler= new StandardPreferenceSettingHandler(){
 		@Override
 		public List<String> getCode(List<String> standPrefCode) {
 			try {
-				getStandardPrefCode(standPrefCode);
+				if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
+					getStandardPrefCode(standPrefCode);
+				}
 			} catch (Exception e) {}
 			return standPrefCode;
 			
@@ -463,23 +450,13 @@ public class LibraryMenuNav extends Composite{
 	 * @throws : <Mentioned if any exceptions>
 	 *
 	 */
-	public void getTaxonomyData(final String subjectCode, final String courseId) {
+	public void getTaxonomyData(final String subjectName, final String subjectCode, final String courseId) {
 		
 	
 			if (subjectCode!=null){
 				if(subjectCode.equalsIgnoreCase(STANDARDS)){
-					AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(subjectCode, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, StandardsDo>>() {
 
-						@Override
-						public void onSuccess(HashMap<String, StandardsDo> result) {
-							setSubjectPanelIdsForStandards(result);
-							AppClientFactory.fireEvent(new SetStandardDoEvent(STANDARDS,result.get(STANDARDS)));
-							if(!getSubjectSelected(STANDARDS)) {
-								setTaxonomyDataforStandards(STANDARDS, subjectCode, courseId, result.get(STANDARDS).getData());
-							}
-						}
-					});
-				/*	AppClientFactory.getInjector().getLibraryService().getStandardLibraryMenuList(subjectCode, getPlaceToken(), new SimpleAsyncCallback<ArrayList<StandardCourseDo>>(){
+					AppClientFactory.getInjector().getLibraryService().getStandardLibraryMenuList(subjectCode, getPlaceToken(), new SimpleAsyncCallback<ArrayList<StandardCourseDo>>(){
 						@Override
 						public void onSuccess(ArrayList<StandardCourseDo> standardCourseList) {
 							setSubjectPanelIdsForStandardsCustomized(standardCourseList);
@@ -491,34 +468,96 @@ public class LibraryMenuNav extends Composite{
 							}
 						}
 						
+					});
+					
+/*					AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(subjectCode, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, StandardsDo>>() {
+
+						@Override
+						public void onSuccess(HashMap<String, StandardsDo> result) {
+						//	setSubjectPanelIdsForStandards(result);
+						//	AppClientFactory.fireEvent(new SetStandardDoEvent(STANDARDS,result.get(STANDARDS)));
+							if(!getSubjectSelected(STANDARDS)) {
+								setTaxonomyDataforStandards(STANDARDS, subjectCode, courseId, result.get(STANDARDS).getData());
+							}
+						}
 					});*/
 					
 				}
 				else
 				{
-					AppClientFactory.getInjector().getLibraryService().getSubjects(subjectCode, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
-						@Override
-						public void onSuccess(HashMap<String, SubjectDo> subjectListDo) {
-					
-							if(subjectIdList.size()<=0) {
-								setSubjectPanelIds(subjectListDo);
-							}
-							String subjectName = getSubjectNameBySubjectId(subjectListDo, subjectCode);
-							AppClientFactory.fireEvent(new SetSubjectDoEvent(subjectName,subjectListDo.get(subjectName)));
-							if(!getSubjectSelected(subjectName)) {
-								setTaxonomyData(subjectName, subjectCode, courseId, subjectListDo.get(subjectName).getData());
-							}
+/*					final JsonWriter<HashMap<String, SubjectDo>> courseMapWriter = factory.getWriter();
+					final JsonReader<HashMap<String, SubjectDo>> courseMapReader = factory.getReader();
+					String map = null;
+					if(stockStore!=null&&stockStore.getItem(subjectCode)!=null){
+						map = stockStore.getItem(subjectCode);
+						courseMap = courseMapReader.read(map);
+						//String subjectName = getSubjectNameBySubjectId(courseMap, subjectCode);
+						AppClientFactory.fireEvent(new SetSubjectDoEvent(subjectName,courseMap.get(subjectName)));
+						setTaxonomyData(subjectName, subjectCode, courseId, courseMap.get(subjectName).getData());
+					} else {
+*/						
+						if(subjectName==null) {
+							AppClientFactory.getInjector().getLibraryService().getLibrarySubjects(null, null, StringUtil.getPublicLibraryName(getPlaceToken()), new AsyncCallback<HashMap<String, SubjectDo>>() {
+								@Override
+								public void onFailure(Throwable caught) {
+									
+								}
+								@Override
+								public void onSuccess(HashMap<String, SubjectDo> subjectDoList) {
+									setSubjectPanelIds(subjectDoList);
+									if(subjectIdList.size()<=0) {
+										setSubjectPanelIds(subjectDoList);
+									}
+									getSubjects(subjectCode, subjectName, courseId);
+								}
+							});
+						} else {
+							getSubjects(subjectCode, subjectName, courseId);
 						}
-					});
-				}
-				
-			}
+/*
+						AppClientFactory.getInjector().getLibraryService().getSubjects(subjectCode, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
+							@Override
+							public void onSuccess(HashMap<String, SubjectDo> subjectListDo) {
+								String courseMapWriterString = courseMapWriter.write(subjectListDo);
+								if(stockStore!=null) {
+									stockStore.setItem(subjectCode, courseMapWriterString);
+								}							
+								if(subjectIdList.size()<=0) {
+									setSubjectPanelIds(subjectListDo);
+								}
+								AppClientFactory.fireEvent(new SetSubjectDoEvent(subjectName,subjectListDo.get(subjectName)));
+								if(!getSubjectSelected(subjectName)) {
+									setTaxonomyData(subjectName, subjectCode, courseId, subjectListDo.get(subjectName).getData());
+								}
+							}
+						});
+*/					}
+/*				}
+*/			}
 /*			}
 		} catch (Exception e) {
 		      e.printStackTrace(); 
 		}
 */	}
 
+	public void getSubjects(final String subjectCode, final String subjectName, final String courseId) {
+		AppClientFactory.getInjector().getLibraryService().getLibraryCourses(subjectCode, StringUtil.getPublicLibraryName(getPlaceToken()), new AsyncCallback<ArrayList<CourseDo>>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+			@Override
+			public void onSuccess(ArrayList<CourseDo> courseDoList) {
+				SubjectDo subjectDo = new SubjectDo();
+				subjectDo.setLabel(subjectName);
+				subjectDo.setSubjectCode(subjectCode);
+				subjectDo.setData(courseDoList);
+				AppClientFactory.fireEvent(new SetSubjectDoEvent(subjectName,subjectDo));
+				setTaxonomyData(subjectName, subjectCode, courseId, courseDoList);
+			}
+		});
+	}
+	
 	public boolean getSubjectSelected(String subjectName) {
 		boolean isSelected = false;
 		if(subjectName.equalsIgnoreCase(SCIENCE)&&scienceCourses.getWidgetCount()>0) {
@@ -575,7 +614,6 @@ public class LibraryMenuNav extends Composite{
 		
 		if (courseDoList != null) {
 			for (final CourseDo courseDo : courseDoList) {
-				if(courseDo.getUnit()!=null&&courseDo.getUnit().size()>0) {
 					Label courseTitle = new Label(courseDo.getLabel());
 					if(subjectname.equalsIgnoreCase(SCIENCE)) {
 						courseTitle.setStyleName(libraryStyleUc.courseOption());
@@ -655,7 +693,6 @@ public class LibraryMenuNav extends Composite{
 							highSchoolCoursePanel.add(courseTitle);
 						}
 					}
-				}
 			}
 		}
 		if(courseIdRefresh!=null) {
@@ -672,7 +709,7 @@ public class LibraryMenuNav extends Composite{
 			}
 			
 			setTabSelection(subjectname);
-			AppClientFactory.fireEvent(new OpenSubjectCourseEvent(subjectname, courseDoMap.get(courseIdRefresh)));
+			AppClientFactory.fireEvent(new OpenSubjectCourseEvent(subjectCode, courseDoMap.get(courseIdRefresh)));
 		}
 		setLibraryGrades(subjectname, elementaryCoursePanel, middleSchoolCoursePanel, highSchoolCoursePanel);
 	}
@@ -708,7 +745,7 @@ public class LibraryMenuNav extends Composite{
 		}
 	}
 	
-	protected void setTaxonomyDataforStandards(String subjectname, final String subjectCode, String courseIdRefresh, ArrayList<StandardCourseDo> courseDoList) {
+	protected void setTaxonomyDataforStandards(final String subjectname, final String subjectCode, final String courseIdRefresh, ArrayList<StandardCourseDo> courseDoList) {
 		if (courseDoList != null) {
 			for (final StandardCourseDo standardsCourseDo : courseDoList) {
 	
@@ -737,18 +774,35 @@ public class LibraryMenuNav extends Composite{
 								
 								@Override
 								public void onClick(ClickEvent event) {
-									setHeaderBrowserTitle(standardsCourseDo.getLabel());
-									//MixpanelUtil.mixpanelEvent("Library_"+STANDARDS+"_"+standardsCourseDo.getLabel());
-									MixpanelUtil.mixpanelEvent("standardlibrary_select_course");
-									Map<String,String> params = new HashMap<String, String>();
-									params.put(LIBRARY_PAGE, "course-page");
-									params.put(SUBJECT, STANDARDS);
-									params.put("courseId", courseId);
-									params.put("standardId", standardsId);
-									if(courseTitle.getText().contains("Texas")) {
-										params.put("libtype", "TEKS");
-									}
-									AppClientFactory.getPlaceManager().revealPlace(getPlaceToken(),params);
+									
+									//here u add
+									AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(subjectCode, subjectname, new SimpleAsyncCallback<HashMap<String, StandardsDo>>() {
+
+										@Override
+										public void onSuccess(HashMap<String, StandardsDo> result) {
+											
+											setHeaderBrowserTitle(standardsCourseDo.getLabel());
+											//MixpanelUtil.mixpanelEvent("Library_"+STANDARDS+"_"+standardsCourseDo.getLabel());
+											MixpanelUtil.mixpanelEvent("standardlibrary_select_course");
+											Map<String,String> params = new HashMap<String, String>();
+											params.put(LIBRARY_PAGE, "course-page");
+											params.put(SUBJECT, STANDARDS);
+											params.put("courseId", courseId);
+											params.put("standardId", standardsId);
+											if(courseTitle.getText().contains("Texas")) {
+												params.put("libtype", "TEKS");
+											}
+											AppClientFactory.getPlaceManager().revealPlace(getPlaceToken(),params);
+											
+											setSubjectPanelIdsForStandards(result);
+											AppClientFactory.fireEvent(new SetStandardDoEvent(STANDARDS,result.get(STANDARDS)));
+											if(!getSubjectSelected(STANDARDS)) {
+												setTaxonomyDataforStandards(STANDARDS, subjectCode, courseId, result.get(STANDARDS).getData());
+											}
+											
+										}
+									});
+									
 									
 								}
 							});
@@ -846,22 +900,30 @@ public class LibraryMenuNav extends Composite{
 	 */
 	public void setSubjectPanelIds(HashMap<String, SubjectDo> subjectList) {
 		for (Map.Entry<String, SubjectDo> entry : subjectList.entrySet()) {
-			subjectIdList.put(entry.getKey(), entry.getValue().getCode()+"");
-			/*if(entry.getKey().equals(SCIENCE)) {
-				sciencePanel.getElement().setAttribute(CODE_ID, entry.getValue().getCode());
-				sciencePanel.getElement().setAttribute(SUBJECT, entry.getKey());
-			} else if(entry.getKey().equals(MATH)) {
-				mathPanel.getElement().setAttribute(CODE_ID, entry.getValue().getCode());
-				mathPanel.getElement().setAttribute(SUBJECT, entry.getKey());
-			} else if(entry.getKey().equals(SOCIAL)) {
-				socialPanel.getElement().setAttribute(CODE_ID, entry.getValue().getCode());
-				socialPanel.getElement().setAttribute(SUBJECT, entry.getKey());
-			} else if(entry.getKey().equals(LANGUAGE)) {
-				elaPanel.getElement().setAttribute(CODE_ID, entry.getValue().getCode());
-				elaPanel.getElement().setAttribute(SUBJECT, entry.getKey());				
-			}
-			tabsInner.getElement().setId(TABS_INNER);*/
+			subjectIdList.put(entry.getKey(), entry.getValue().getSubjectCode()+"");
 		}
+		Timer timer = new Timer(){
+            @Override
+            public void run() {
+            	if(!isScienceHovered) {
+                	isScienceHovered = true;
+                	getTaxonomyData(SCIENCE,getSubjectIdBySubjectName(subjectIdList, SCIENCE),null);
+            	}
+            	if(!isMathHovered) {
+                	isMathHovered = true;
+                	getTaxonomyData(MATH,getSubjectIdBySubjectName(subjectIdList, MATH),null);
+            	}
+            	if(!isSocialHovered) {
+                	isSocialHovered = true;
+                	getTaxonomyData(SOCIAL,getSubjectIdBySubjectName(subjectIdList, SOCIAL),null);
+            	}
+            	if(!isLanguageHovered) {
+                	isLanguageHovered = true;
+                	getTaxonomyData(LANGUAGE,getSubjectIdBySubjectName(subjectIdList, LANGUAGE),null);
+            	}
+            }
+        };
+        timer.schedule(5000);
 	}
 	
 	public void setSubjectPanelIdsForStandards(HashMap<String, StandardsDo> subjectList) {
@@ -895,7 +957,7 @@ public class LibraryMenuNav extends Composite{
 	 */
 	public String getSubjectNameBySubjectId(HashMap<String, SubjectDo> subjectList, String subjectId) {
 		for (Map.Entry<String, SubjectDo> entry : subjectList.entrySet()) {
-			if(entry.getValue().getCode().equals(subjectId)) {
+			if(entry.getValue().getSubjectCode().equals(subjectId)) {
 				return entry.getKey();
 			}
 		}

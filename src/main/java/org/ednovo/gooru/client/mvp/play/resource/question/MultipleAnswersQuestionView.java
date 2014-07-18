@@ -32,11 +32,11 @@ import java.util.Map;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -53,7 +53,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract  class MultipleAnswersQuestionView extends Composite implements MessageProperties{
+public abstract  class MultipleAnswersQuestionView extends Composite{
 	
 	@UiField Button checkAnswer;
 	@UiField FlowPanel optionsContainer;
@@ -65,7 +65,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 	
 	private boolean isChekcAnswerButtonClicked=false;
 	
-	private static final String TRUE_FALSE_BODY_TEXT=GL1457+GL_SPL_FULLSTOP;
+//	private static final String TRUE_FALSE_BODY_TEXT=i18n.GL1457+i18n.GL_SPL_FULLSTOP;
 	private CollectionItemDo collectionItemDo;
 	
 	private AttemptedAnswersDo attemptedAnswerDo=null;
@@ -75,6 +75,8 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 	interface MultipleAnswerQuestionViewUiBinder extends UiBinder<Widget, MultipleAnswersQuestionView> {
 		
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public MultipleAnswersQuestionView(){
 		initWidget(uiBinder.createAndBindUi(this));
@@ -90,14 +92,14 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 		setQuestionTypeCaption();
 		this.attemptedAnswerDo=attemptedAnswerDo;
 		renderQuestionAnswerOptions();
-		answerText.getElement().setInnerHTML(GL0665);
-		checkAnswer.setText(GL0666);
+		answerText.getElement().setInnerHTML(i18n.GL0665());
+		checkAnswer.setText(i18n.GL0666());
 	}
 	
 	private void setQuestionTypeCaption(){
-		messageBodyText.setText(TRUE_FALSE_BODY_TEXT);
-		btnYes.setText(GL_GRR_YES);
-		btnNo.setText(GL_GRR_NO);
+		messageBodyText.setText(i18n.GL1457()+i18n.GL_SPL_FULLSTOP());
+		btnYes.setText(i18n.GL_GRR_YES());
+		btnNo.setText(i18n.GL_GRR_NO());
 	}
 	
 	private void renderQuestionAnswerOptions(){

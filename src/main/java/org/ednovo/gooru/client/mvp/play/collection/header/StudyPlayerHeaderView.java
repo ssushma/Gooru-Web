@@ -29,7 +29,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -46,14 +46,13 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class StudyPlayerHeaderView extends Composite implements MessageProperties{
+public class StudyPlayerHeaderView extends Composite{
 	
 	@UiField HTML resourceTitle;
 	
@@ -84,6 +83,8 @@ public class StudyPlayerHeaderView extends Composite implements MessagePropertie
 	interface CollectionPlayerHeaderViewUiBinder extends UiBinder<Widget, StudyPlayerHeaderView> {
 	}
 	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	public interface StudyPlayerStyle extends CssResource{
 		public String loggedIn();
 		public String loggedOut();
@@ -93,13 +94,28 @@ public class StudyPlayerHeaderView extends Composite implements MessagePropertie
 		initWidget(uiBinder.createAndBindUi(this));
 		navigationButton.getElement().setId("navigationButton");
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
-		studentViewButton.setText(GL0139);
+		studentViewButton.setText(i18n.GL0139());
+		studentViewButton.getElement().setId("lnkStudentViewButton");
+		studentViewButton.getElement().setAttribute("alt",i18n.GL0139());
+		studentViewButton.getElement().setAttribute("title",i18n.GL0139());
+		
 		studentViewButton.addMouseOverHandler(new OnStudentViewButtonMouseOver());
 		studentViewButton.addMouseOutHandler(new OnStudentViewButtonMouseOut());
 		shareButton.addMouseOverHandler(new ShareButtonMouseOver());
 		shareButton.addMouseOutHandler(new ShareButtonMouseOut());
 		addButton.getElement().setId("addButton");
-		
+		flagButton.getElement().setId("btnFlagButton");
+		infoButton.getElement().setId("btnInfoButton");
+		shareButton.getElement().setId("btnShareButton");
+		narrationButton.getElement().setId("btnNarrationButton");
+		navigationButton.getElement().setId("btnNavigationButton");
+		closeButtonForCollection.getElement().setId("lblCloseButtonForCollection");
+		resourceTitle.getElement().setId("htmlResourceTitle");
+		authorContainer.getElement().setId("epnlAuthorContainer");
+		wishLabel.getElement().setId("spnWishLabel");
+		loginUserName.getElement().setId("spnLoginUserName");
+		wishingText.getElement().setId("spnWishingText");
+		loginMessageText.getElement().setId("lblLoginMessageText");
 	}
 	
 	public void setResourceTitle(String title){
@@ -140,18 +156,32 @@ public class StudyPlayerHeaderView extends Composite implements MessagePropertie
 			authorContainer.removeStyleName(headerStyle.loggedOut());
 			authorContainer.addStyleName(headerStyle.loggedIn());
 			setLoggedInWishingText();
-			loginMessageText.setText(StringUtil.generateMessage(GL1616, AppClientFactory.getLoggedInUser().getUsernameDisplay()));
+			loginMessageText.setText(StringUtil.generateMessage(i18n.GL1616(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
+			loginMessageText.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1616(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
+			loginMessageText.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1616(), AppClientFactory.getLoggedInUser().getUsernameDisplay()));
 		}
 	}
 	public void setLoggedOutWishingText(){
 		wishLabel.setText("");
+		wishLabel.getElement().setAttribute("alt","");
+		wishLabel.getElement().setAttribute("title","");
 		loginUserName.setText("");
-		wishingText.setText(GL1531);
+		loginUserName.getElement().setAttribute("alt","");
+		loginUserName.getElement().setAttribute("title","");
+		wishingText.setText(i18n.GL1531());
+		wishingText.getElement().setAttribute("alt","");
+		wishingText.getElement().setAttribute("title","");
 	}
 	public void setLoggedInWishingText(){
-		wishLabel.setText(GL1529);
+		wishLabel.setText(i18n.GL1529());
+		wishLabel.getElement().setAttribute("alt",i18n.GL1529());
+		wishLabel.getElement().setAttribute("title",i18n.GL1529());
 		loginUserName.setText(AppClientFactory.getLoggedInUser().getUsernameDisplay());
-		wishingText.setText(GL1530);
+		loginUserName.getElement().setAttribute("alt",AppClientFactory.getLoggedInUser().getUsernameDisplay());
+		loginUserName.getElement().setAttribute("title",AppClientFactory.getLoggedInUser().getUsernameDisplay());
+		wishingText.setText(i18n.GL1530());
+		wishingText.getElement().setAttribute("alt",i18n.GL1530());
+		wishingText.getElement().setAttribute("title",i18n.GL1530());
 	}
 	
 	public void makeButtonActive(boolean makeAddButtonActive,boolean makeInfoButtionActive, boolean  makeShareButtonActive, boolean makeNarrationButtonActive, boolean makeNavigationButtonActive,boolean makeFlagButtonActive){
@@ -502,7 +532,7 @@ public class StudyPlayerHeaderView extends Composite implements MessagePropertie
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanel.clear();
-			toolTipPopupPanel.setWidget(new GlobalToolTip(GL0668,true));
+			toolTipPopupPanel.setWidget(new GlobalToolTip(i18n.GL0668(),true));
 			toolTipPopupPanel.setStyleName("");
 			toolTipPopupPanel.setPopupPosition(studentViewButton.getElement().getAbsoluteLeft()-35, studentViewButton.getElement().getAbsoluteTop()+4);
 			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
@@ -528,7 +558,7 @@ public class StudyPlayerHeaderView extends Composite implements MessagePropertie
 		public void onMouseOver(MouseOverEvent event) {
 			if(!isShareButtonEnabled){
 			toolTipPopupPanel.clear();
-			toolTipPopupPanel.setWidget(new GlobalToolTip(GL0679));
+			toolTipPopupPanel.setWidget(new GlobalToolTip(i18n.GL0679()));
 			toolTipPopupPanel.setStyleName("");
 			toolTipPopupPanel.setPopupPosition(shareButton.getElement().getAbsoluteLeft()+7, shareButton.getElement().getAbsoluteTop()+21);
 			toolTipPopupPanel.getElement().getStyle().clearMarginLeft();

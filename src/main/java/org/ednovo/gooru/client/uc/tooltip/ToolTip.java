@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.uc.tooltip;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -58,7 +58,7 @@ public class ToolTip extends PopupPanel implements HasMouseOutHandlers{
 	public static ToolTipUiBinder toolTipUiBinder=GWT.create(ToolTipUiBinder.class);{
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
+	private MessageProperties i18n = GWT.create(MessageProperties.class); 
 	
 	public ToolTip(){
 		setWidget(toolTipUiBinder.createAndBindUi(this));

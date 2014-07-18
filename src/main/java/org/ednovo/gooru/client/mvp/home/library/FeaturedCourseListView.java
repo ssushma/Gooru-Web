@@ -40,9 +40,8 @@ package org.ednovo.gooru.client.mvp.home.library;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.CourseDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -72,10 +71,6 @@ public class FeaturedCourseListView extends Composite{
 	
 	private static final String PNG = ".png";
 	
-//	private final static String MR =i18n.GL_GRR_BYMR+" ";
-	
-//	private final static String MS =i18n.GL_GRR_BYMS+" ";
-
 	private final static String FEMALE = "female";
 
 	private final static String MALE = "male";
@@ -89,7 +84,7 @@ public class FeaturedCourseListView extends Composite{
 			UiBinder<Widget, FeaturedCourseListView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public FeaturedCourseListView(CourseDo courseDo) {
 		initWidget(uiBinder.createAndBindUi(this));

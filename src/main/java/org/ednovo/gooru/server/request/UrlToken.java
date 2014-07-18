@@ -574,7 +574,21 @@ public enum UrlToken {
 	
 	GET_GOOGLEDRIVE_FIlES("/v2/files?maxResults=20&q={0}"),
 	
-	UPDATE_FILE_PERMISSION("/v2/files/{0}/permissions");
+	GET_COURSE_DETAILS_STANDARDS("/v2/library/{0}/item/course/{1}?sessionToken={2}"),
+	
+	UPDATE_FILE_PERMISSION("/v2/files/{0}/permissions"),
+	
+	V2_GET_LIBRARY_SUBJECTS_OPTIMIZED("/v2/library?sessionToken={0}&libraryName={1}"),
+	
+	V2_GET_LIBRARY_COURSES_OPTIMIZED("/v2/library/{0}/item?sessionToken={1}&libraryName={2}"),
+	
+	V2_GET_LIBRARY_UNITS_OPTIMIZED("/v2/library/{0}/item/course/{1}?sessionToken={2}"),
+	
+	V2_GET_LIBRARY_TOPICS_OPTIMIZED("/v2/library/{0}/item/unit/{1}?sessionToken={2}&offset={3}&limit={4}"),
+	
+	V2_GET_LIBRARY_LESSONS_OPTIMIZED("/v2/library/{0}/item/topic/{1}?sessionToken={2}&offset={3}&limit={4}"),
+	
+	REFRESH_TOKEN("/gooru-auth/google/new/token.g?refreshToken={0}");
 
 
 	

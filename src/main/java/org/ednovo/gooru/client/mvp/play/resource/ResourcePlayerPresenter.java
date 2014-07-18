@@ -54,28 +54,26 @@ import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInResourcePlayEvent;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
-import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.PlayerConstants;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -84,7 +82,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootPopupContentEvent;
 
-public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayerView, ResourcePlayerPresenter.IsResourcePlayerProxy> implements ResourcePlayerUiHandlers,MessageProperties{
+public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayerView, ResourcePlayerPresenter.IsResourcePlayerProxy> implements ResourcePlayerUiHandlers{
 	
 	@Inject
 	private PlayerAppServiceAsync playerAppService;
@@ -169,6 +167,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	 
 	private static final int CHILD_AGE=13;
 	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
     /**
 	 * @return the answerIdsObject
@@ -292,9 +291,9 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	
     public static final  Object TAB_PRESENTER_SLOT = new Object(); 
     public static final  Object METADATA_PRESENTER_SLOT = new Object();
-    public static final String ADD_WIDGET_MODE=GL0590.toUpperCase();
+//    public static final String ADD_WIDGET_MODE=i18n.GL0590.toUpperCase();
     public static final String RESOURCE_THUMBS_WIDGET_MODE="RESOURCE_RATING";
-    public static final String FLAG_WIDGET_MODE=GL0600.toUpperCase();
+//    public static final String FLAG_WIDGET_MODE=i18n.GL0600.toUpperCase();
 	
 	
 	@Inject
@@ -500,7 +499,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		 else if(tabView.equals("flag")){
 			 if(AppClientFactory.isAnonymous()){
 				 clearSlot(TAB_PRESENTER_SLOT);
-				 showLoginPopupWidget(FLAG_WIDGET_MODE);
+				 showLoginPopupWidget(i18n.GL0600().toUpperCase());
 			}else{
 				setResourceFlagView(resourceId);
 			 }
@@ -511,7 +510,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	public void setAddResourceCollectionView(String resourceId){
 		if(AppClientFactory.isAnonymous()){
 			clearSlot(TAB_PRESENTER_SLOT);
-			showLoginPopupWidget(ADD_WIDGET_MODE);
+			showLoginPopupWidget(i18n.GL0590().toUpperCase());
 		}else{
 			addResourceCollectionPresnter.setCollectionItemData(null, collectionItemDo);
 			setInSlot(TAB_PRESENTER_SLOT, addResourceCollectionPresnter,false);
@@ -818,12 +817,12 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	@Override
 	public void showTabWidget(String widgetMode,boolean isLoginRequestCancel) {
 		  String resourceId=getPlaceManager().getRequestParameter("id", null);
-		  if(!isLoginRequestCancel&&widgetMode.equals(ADD_WIDGET_MODE)){
+		  if(!isLoginRequestCancel&&widgetMode.equals(i18n.GL0590().toUpperCase())){
 			 // getResource(resourceId);
 			  setAddResourceCollectionView(resourceId);
 		  } else if(!isLoginRequestCancel&&widgetMode.equals(RESOURCE_THUMBS_WIDGET_MODE)){
 			  //getResource(resourceId);
-		  }else if(!isLoginRequestCancel&&widgetMode.equals(FLAG_WIDGET_MODE)){
+		  }else if(!isLoginRequestCancel&&widgetMode.equals(i18n.GL0600().toUpperCase())){
 			  getContentReport(collectionItemDo.getResource().getGooruOid());
 		  } 
 		  else if(isLoginRequestCancel){

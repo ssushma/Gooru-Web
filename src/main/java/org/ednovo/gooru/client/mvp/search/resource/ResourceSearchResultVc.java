@@ -45,8 +45,8 @@ import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -74,9 +74,11 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class ResourceSearchResultVc extends Composite implements IsDraggable, IsSearchResultVc,MessageProperties {
+public class ResourceSearchResultVc extends Composite implements IsDraggable, IsSearchResultVc {
 
 	private static ResourceSearchResultVcUiBinder uiBinder = GWT.create(ResourceSearchResultVcUiBinder.class);
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface ResourceSearchResultVcUiBinder extends UiBinder<Widget, ResourceSearchResultVc> {
 	}
@@ -89,7 +91,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	HTMLEventPanel resourceTitleContainer;
 
 	@UiField
-	FlowPanel metaDataFloPanel;
+	FlowPanel resourceTitlePanel,metaDataFloPanel;
 
 	@UiField
 	HTML resourceDescriptionHtml;
@@ -119,11 +121,11 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	
 	private static final String QUESTION = "Question";
 	
-	private static final String PAGES = " "+GL1471;
+	private static final String PAGES = " "+i18n.GL1471();
 	
-	private static final String VIEW = " "+GL1428;
+	private static final String VIEW = " "+i18n.GL1428();
 	
-	private static final String VIEWS = " "+GL0934;
+	private static final String VIEWS = " "+i18n.GL0934();
 	
 	private static final String NULL = "null";
 	private static String publisherData = "";
@@ -141,8 +143,8 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		this.res = ResourceSearchResultCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
-		imgNotFriendly.setTitle(GL0737);
-		imgNotFriendly.setAltText(GL0737);
+		imgNotFriendly.setTitle(i18n.GL0737());
+		imgNotFriendly.setAltText(i18n.GL0737());
 		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
 		wrapperVcr.addStyleName("resourceSearchResultBox");
 		AppClientFactory.getEventBus().addHandler(UpdateSearchResultMetaDataEvent.TYPE,setUpdateMetaData);
@@ -150,6 +152,13 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		ratingWidgetView=new RatingWidgetView();
 		wrapperVcr.ratingWidgetPanel.add(ratingWidgetView);
 		setData(resourceSearchResultDo);
+		
+		resourceTitlePanel.getElement().setId("fpnlResourceTitlePanel");
+		resourceTitleContainer.getElement().setId("epnlResourceTitleContainer");
+		imgNotFriendly.getElement().setId("imgNotFriendly");
+		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
+		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
+		resourceDescriptionHtml.getElement().setId("htmlResourceDescriptionHtml");
 	}
 	
 	public RatingWidgetView getRatingWidgetView(){
@@ -181,7 +190,22 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			metaDataFloPanel.clear();
 			String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 			boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO) || category.equalsIgnoreCase(QUESTION) ? true : false;
-			
+			if(resourceSearchResultDo.getPublisher()!=null){
+				String publisherData = "";
+				for (String publisher: resourceSearchResultDo.getPublisher()) {
+					if(resourceSearchResultDo.getPublisher().size()>1){
+						publisherData = publisherData+publisher+",";
+					}else
+					{
+						publisherData = publisher;
+					}
+				
+				}
+				if(publisherData.endsWith(",")){
+					publisherData=publisherData.substring(0, publisherData.length()-1);
+				}
+				SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
+			}
 			//String source = resourceSearchResultDo.getResourceSource() != null ? resourceSearchResultDo.getResourceSource().getAttribution() : null;
 			//SearchUiUtil.renderSourceMetadata(metaDataFloPanel, source ,null, shortenMetaLength ? 15 : 25);
 			if(resourceSearchResultDo.getAggregator()!=null){
@@ -201,22 +225,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 				SearchUiUtil.renderSourceMetadata(metaDataFloPanel, aggregatorData ,null, shortenMetaLength ? 15 : 25);
 			}
 			
-			if(resourceSearchResultDo.getPublisher()!=null){
-				String publisherData = "";
-				for (String publisher: resourceSearchResultDo.getPublisher()) {
-					if(resourceSearchResultDo.getPublisher().size()>1){
-						publisherData = publisherData+publisher+",";
-					}else
-					{
-						publisherData = publisher;
-					}
-				
-				}
-				if(publisherData.endsWith(",")){
-					publisherData=publisherData.substring(0, publisherData.length()-1);
-				}
-				SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
-			}
+			
 			SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
 			
 	        SearchUiUtil.renderMetaData(metaDataFloPanel, count + (Integer.parseInt(count) == 1 ? VIEW : VIEWS));
@@ -251,6 +260,22 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
         }
 		boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO) || category.equalsIgnoreCase(QUESTION) ? true : false;
 		
+		if(resourceSearchResultDo.getPublisher()!=null){
+			String publisherData = "";
+			for (String publisher: resourceSearchResultDo.getPublisher()) {
+				if(resourceSearchResultDo.getPublisher().size()>1){
+					publisherData = publisherData+publisher+",";
+				}else
+				{
+					publisherData = publisher;
+				}
+			
+			}
+			if(publisherData.endsWith(",")){
+				publisherData=publisherData.substring(0, publisherData.length()-1);
+			}
+			SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
+		}
 		
 		//String source = resourceSearchResultDo.getResourceSource() != null ? resourceSearchResultDo.getResourceSource().getAttribution() : null;
 		if(resourceSearchResultDo.getAggregator()!=null){
@@ -270,22 +295,6 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			SearchUiUtil.renderSourceMetadata(metaDataFloPanel, aggregatorData ,null, shortenMetaLength ? 15 : 25);
 		}
 		
-		if(resourceSearchResultDo.getPublisher()!=null){
-			String publisherData = "";
-			for (String publisher: resourceSearchResultDo.getPublisher()) {
-				if(resourceSearchResultDo.getPublisher().size()>1){
-					publisherData = publisherData+publisher+",";
-				}else
-				{
-					publisherData = publisher;
-				}
-			
-			}
-			if(publisherData.endsWith(",")){
-				publisherData=publisherData.substring(0, publisherData.length()-1);
-			}
-			SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
-		}
 		
 		SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
         SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + (resourceSearchResultDo.getTotalViews() == 1 ? VIEW : VIEWS));
@@ -321,7 +330,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(GL0454+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+GL04431);
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setZIndex(9999999);
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);

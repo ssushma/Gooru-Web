@@ -43,14 +43,13 @@ import org.ednovo.gooru.client.uc.CollectionImageUc;
 import org.ednovo.gooru.client.uc.SeparatorUc;
 import org.ednovo.gooru.client.uc.UserProfileUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
-import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -72,9 +71,11 @@ import com.google.inject.Inject;
  * @author Search Team
  *
  */
-public class CollectionSearchResultVc extends Composite implements IsDraggable, IsSearchResultVc , MessageProperties{
+public class CollectionSearchResultVc extends Composite implements IsDraggable, IsSearchResultVc{
 
 	private static CollectionSearchResultVcUiBinder uiBinder = GWT.create(CollectionSearchResultVcUiBinder.class);
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CollectionSearchResultVcUiBinder extends UiBinder<Widget, CollectionSearchResultVc> {
 	}
@@ -91,7 +92,7 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 	HTMLPanel containerPanel;
 
 	@UiField
-	FlowPanel metaDataPanelFloPanel, standardsFloPanel,teamFlowPanel;
+	FlowPanel collectionTitlePanel,metaDataPanelFloPanel, standardsFloPanel,teamFlowPanel;
 
 	@UiField
 	CollectionImageUc collectionImageUc;
@@ -111,18 +112,18 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 	
 	private CollectionSearchResultDo collectionResultDo;
 	
-	private static final String VIEWS = " "+GL1099;
-	private static final String VIEW = " "+GL1428;
+	private static final String VIEWS = " "+i18n.GL1099();
+	private static final String VIEW = " "+i18n.GL1428();
 	
-	private static final String CREATED_BY = GL0622;
+	private static final String CREATED_BY = i18n.GL0622();
 	
-	private static final String RESOURCES = " "+GL0174;
+	private static final String RESOURCES = " "+i18n.GL0174();
 	
-	private static final String RESOURCE = " "+GL1110;
+	private static final String RESOURCE = " "+i18n.GL1110();
 
-	private static final String QUESTIONS = " "+GL1042;
+	private static final String QUESTIONS = " "+i18n.GL1042();
 	
-	private static final String QUESTION = " "+GL0308;
+	private static final String QUESTION = " "+i18n.GL0308();
 
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	/**
@@ -139,6 +140,17 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 		setData(collectionResultDo);
 		wrapperVc.addStyleName("collectionSearchResultBox");
 		resourceCountLbl.setVisible(false);
+		
+		collectionTitlePanel.getElement().setId("fpnlCollectionTitlePanel");
+		collectionTitleLbl.getElement().setId("htmlCollectionTitleLbl");
+		creatorNameLbl.getElement().setId("lblCreatorNameLbl");
+		creatorNameLblValue.getElement().setId("lblCreatorNameLblValue");
+		teamFlowPanel.getElement().setId("fpnlTeamFlowPanel");
+		containerPanel.getElement().setId("pnlContainerPanel");
+		metaDataPanelFloPanel.getElement().setId("pnlMetaDataPanelFloPanel");
+		resourceCountLbl.getElement().setId("lblResourceCountLbl");
+		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
+		collectionDescriptionHtml.getElement().setId("htmlCollectionDescriptionHtml");
 		
 		AppClientFactory.getEventBus().addHandler(UpdateSearchResultMetaDataEvent.TYPE,setUpdateMetaData);
 	}
@@ -182,6 +194,8 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 			SearchUiUtil.renderMetaData(metaDataPanelFloPanel, count + "", (Integer.parseInt(count) >1 ? VIEWS : VIEW));
 			metaDataPanelFloPanel.add(new SeparatorUc());
 			resourceCountLbl.setText(collectionResultDo.getOnlyResourceCount() +" " + (collectionResultDo.getOnlyResourceCount()>1 ? RESOURCES : RESOURCE));
+			resourceCountLbl.getElement().setAttribute("alt",collectionResultDo.getOnlyResourceCount() +" " + (collectionResultDo.getOnlyResourceCount()>1 ? RESOURCES : RESOURCE));
+			resourceCountLbl.getElement().setAttribute("title",collectionResultDo.getOnlyResourceCount() +" " + (collectionResultDo.getOnlyResourceCount()>1 ? RESOURCES : RESOURCE));
 		}
 	}
 	
@@ -196,14 +210,22 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 		wrapperVc.setData(collectionResultDo);
 		//collectionTitleLbl.setText(StringUtil.truncateText(collectionResultDo.getResourceTitle(), 40));
 		collectionTitleLbl.setHTML(StringUtil.truncateText(collectionResultDo.getResourceTitle(), 40));
+		collectionTitleLbl.getElement().setAttribute("alt",StringUtil.truncateText(collectionResultDo.getResourceTitle(), 40));
+		collectionTitleLbl.getElement().setAttribute("title",StringUtil.truncateText(collectionResultDo.getResourceTitle(), 40));
 		teamFlowPanel.clear();
 		creatorNameLbl.setText(CREATED_BY);
+		creatorNameLbl.getElement().setAttribute("alt",CREATED_BY);
+		creatorNameLbl.getElement().setAttribute("title",CREATED_BY);
 		if (collectionResultDo.getCollaboratorCount()!=null && collectionResultDo.getCollaboratorCount()>0){
 			 CollaboratorsUc collaboratorsUc=new CollaboratorsUc(collectionResultDo);
 			 teamFlowPanel.add(collaboratorsUc);
-				creatorNameLblValue.setText(collectionResultDo.getOwner().getUsername() +" " + GL_GRR_AND +" ");
+				creatorNameLblValue.setText(collectionResultDo.getOwner().getUsername() +" " + i18n.GL_GRR_AND() +" ");
+				creatorNameLblValue.getElement().setAttribute("alt",collectionResultDo.getOwner().getUsername() +" " + i18n.GL_GRR_AND() +" ");
+				creatorNameLblValue.getElement().setAttribute("title",collectionResultDo.getOwner().getUsername() +" " + i18n.GL_GRR_AND() +" ");
 		}else{
 			creatorNameLblValue.setText(collectionResultDo.getOwner().getUsername());
+			creatorNameLblValue.getElement().setAttribute("alt",collectionResultDo.getOwner().getUsername());
+			creatorNameLblValue.getElement().setAttribute("title",collectionResultDo.getOwner().getUsername());
 		}
 		System.out.println("collectionResultDo.getOwner().isProfileUserVisibility() : "+collectionResultDo.getOwner().isProfileUserVisibility());
 		if ((collectionResultDo.getOwner().isProfileUserVisibility())){

@@ -33,13 +33,12 @@ import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragWithImgUc;
-import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -68,9 +67,11 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class SimpleResourceVc extends Composite implements IsDraggable,MessageProperties {
+public class SimpleResourceVc extends Composite implements IsDraggable {
 
 	private static SimpleResourceVcUiBinder uiBinder = GWT.create(SimpleResourceVcUiBinder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SimpleResourceVcUiBinder extends UiBinder<Widget, SimpleResourceVc> {
 	}
@@ -87,7 +88,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable,MessagePr
 	Label positionLbl;
 
 	@UiField
-	FlowPanel metaDataFloPanel,ratingWidgetPanel;
+	FlowPanel resourceTitlePanel,internalPanel1,metaDataFloPanel,ratingWidgetPanel;
 	
 	@UiField Image imgNotFriendly;
 
@@ -107,10 +108,22 @@ public class SimpleResourceVc extends Composite implements IsDraggable,MessagePr
 	public SimpleResourceVc(CollectionItemSearchResultDo resourceSearchResultDo, int position) {
 		initWidget(uiBinder.createAndBindUi(this));
 		positionLbl.setText(position + "");
-		imgNotFriendly.setTitle(GL0737);
-		imgNotFriendly.setAltText(GL0737);
+		positionLbl.getElement().setId("lblPositionLbl");
+		positionLbl.getElement().setAttribute("alt",position + "");
+		positionLbl.getElement().setAttribute("title",position + "");
+		
+		imgNotFriendly.setTitle(i18n.GL0737());
+		imgNotFriendly.getElement().setId("imgNotFriendly");
+		imgNotFriendly.setAltText(i18n.GL0737());
 		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
 		setData(resourceSearchResultDo);
+		
+		internalPanel1.getElement().setId("fpnlInternalPanel1");
+		resourceTitlePanel.getElement().setId("fpnlResourceTitlePanel");
+		resourceTitleContainer.getElement().setId("pnlResourceTitleContainer");
+		resourceTitleLbl.getElement().setId("pnlResourceTitleLbl");
+		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
+		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 	}
 
@@ -124,6 +137,8 @@ public class SimpleResourceVc extends Composite implements IsDraggable,MessagePr
 		this.collectionItemSearchResultDo = resourceSearchResultDo;
 		/*resourceTitleLbl.setText(StringUtil.truncateText(resourceSearchResultDo.getResourceTitle(), 30));*/
 		resourceTitleLbl.setHTML(resourceSearchResultDo.getResourceTitle());
+		resourceTitleLbl.getElement().setAttribute("alt",resourceSearchResultDo.getResourceTitle());
+		resourceTitleLbl.getElement().setAttribute("title",resourceSearchResultDo.getResourceTitle());
 		setResourcePlayLink();
 		final String gooruOid = resourceSearchResultDo.getCollectionItemId();
 		final String collectionId = resourceSearchResultDo.getCollectionId();
@@ -162,7 +177,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable,MessagePr
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				
-				toolTip = new ToolTip(GL0454+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+GL04431);
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 				toolTip.setPopupPosition(imgNotFriendly.getAbsoluteLeft()-(50+22), imgNotFriendly.getAbsoluteTop()+22);

@@ -37,10 +37,14 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.RichTextArea;
+import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
 
 
 /**
@@ -294,6 +298,74 @@ public class StringUtil {
 	
 	public static void clearCookies(String key, String path, String domain){
 		Cookies.setCookie(key, "",  new Date(), "."+Window.Location.getHost(), path, false);
-		Cookies.removeCookie("google-access-token", "/");
+		Cookies.removeCookie(key, "/");
+	}
+	
+	
+	public static String getPublicLibraryName(String placeToken) {
+		String libraryName = null;
+		if(placeToken.equals(PlaceTokens.RUSD_LIBRARY)) {
+			libraryName = "rusd";
+		} else if(placeToken.equals(PlaceTokens.SAUSD_LIBRARY)) {
+			libraryName = "sausd";
+		} else {
+			libraryName = "gooru";
+		}
+		return libraryName;
+	}
+	
+	public static void setAttributes(TextBox txtBox, boolean isTrue){
+		txtBox.getElement().setAttribute("spellcheck", isTrue+"");
+	}
+	public static void setAttributes(TextArea tatBox, boolean isTrue){
+		tatBox.getElement().setAttribute("spellcheck", isTrue+"");
+	}
+
+	/**
+	 * @function setAttributes 
+	 * 
+	 * @created_date : Jul 15, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param msgTxa
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	public static void setAttributes(RichTextArea rtatBox, boolean isTrue) {
+		rtatBox.getElement().setAttribute("spellcheck", isTrue+"");
+	}
+
+	/**
+	 * @function setAttributes 
+	 * 
+	 * @created_date : Jul 17, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param editSearchTxtBox
+	 * @param isTrue
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	public static void setAttributes(AppSuggestBox editSearchTxtBox,
+			boolean isTrue) {
+		editSearchTxtBox.getElement().setAttribute("spellcheck", isTrue+"");
 	}
 }

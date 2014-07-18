@@ -36,7 +36,6 @@ import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInSearchEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEventHandler;
-import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataHandler;
@@ -52,9 +51,9 @@ import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
@@ -82,7 +81,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 
-public abstract  class AddSearchSuggestedResourceView extends Composite implements MessageProperties{
+public abstract  class AddSearchSuggestedResourceView extends Composite {
 	
 
 	public interface AddSearchSuggestedResourceViewUiBinder extends UiBinder<Widget, AddSearchSuggestedResourceView> {
@@ -90,6 +89,8 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 	}
 	
 	public  AddSearchSuggestedResourceViewUiBinder uiBinder=GWT.create(AddSearchSuggestedResourceViewUiBinder.class);
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField SearchSuggestedResultWrapperCBundle res;
 	
@@ -106,7 +107,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 	FlowPanel metaDataFloPanel;
 
 	@UiField
-	FlowPanel ratingWidgetPanel,resourceHeaderPanel;
+	FlowPanel ratingWidgetPanel,resourceHeaderPanel,contentPanel,resourceTitlePanel;
 	
 	@UiField
 	HTML resourceDescriptionHtml;
@@ -135,11 +136,11 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 	
 	private static final String QUESTION = "Question";
 	
-	private static final String PAGES = " "+GL1471;
+	private static final String PAGES = " "+i18n.GL1471();
 	
-	private static final String VIEW = " "+GL1428;
+	private static final String VIEW = " "+i18n.GL1428();
 	
-	private static final String VIEWS = " "+GL0934;
+	private static final String VIEWS = " "+i18n.GL0934();
 	
 	private static final String NULL = "null";
 	private static String publisherData = "";
@@ -157,6 +158,20 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 		initWidget(uiBinder.createAndBindUi(this));
 		res.css().ensureInjected();
 		res1.css().ensureInjected();
+		suggestedWrapperPanel.getElement().setId("pnlSuggestedWrapperPanel");
+		addResourceBtnPanel.getElement().setId("pnlAddResourceBtnPanel");
+		addResourceBtnLbl.getElement().setId("bluebtnAddResourceBtnLbl");
+		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
+		contentPanel.getElement().setId("fpnlContentPanel");
+		resourceHeaderPanel.getElement().setId("fpnlResourceHeaderPanel");
+		resourceImageUc.getElement().setId("resourceImageUc");
+		resourceTitlePanel.getElement().setId("fpnlResourceTitlePanel");
+		resourceTitleContainer.getElement().setId("epnlResourceTitleContainer");
+		imgNotFriendly.getElement().setId("imgImgNotFriendly");
+		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
+		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
+		resourceDescriptionHtml.getElement().setId("htmlResourceDescriptionHtml");
+		buttonsPanel.getElement().setId("pnlButtonsPanel");
 	}
 
 	public AddSearchSuggestedResourceView(
@@ -165,15 +180,32 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 		res.css().ensureInjected();
 		buttonsPanel.setVisible(true);
 		this.collectionId = collectionid;
-		addResourceBtnLbl.setText(GL0590_1);
+		addResourceBtnLbl.setText(i18n.GL0590_1());
+		addResourceBtnLbl.getElement().setAttribute("alt", i18n.GL0590_1());
+		addResourceBtnLbl.getElement().setAttribute("title", i18n.GL0590_1());
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());
-		imgNotFriendly.setTitle(GL0737);
-		imgNotFriendly.setAltText(GL0737);
+		imgNotFriendly.setTitle(i18n.GL0737());
+		
+		suggestedWrapperPanel.getElement().setId("pnlSuggestedWrapperPanel");
+		addResourceBtnPanel.getElement().setId("pnlAddResourceBtnPanel");
+		addResourceBtnLbl.getElement().setId("bluebtnAddResourceBtnLbl");
+		imgNotFriendly.setAltText(i18n.GL0737());
+		imgNotFriendly.getElement().setId("imgImgNotFriendly");
 		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
 		AppClientFactory.getEventBus().addHandler(UpdateSearchResultMetaDataEvent.TYPE,setUpdateMetaData);
 		AppClientFactory.getEventBus().addHandler(UpdateResourceRatingCountEvent.TYPE,setRatingCount);
 		ratingWidgetView=new RatingWidgetView();
 		ratingWidgetPanel.add(ratingWidgetView);
+		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
+		contentPanel.getElement().setId("fpnlContentPanel");
+		resourceHeaderPanel.getElement().setId("fpnlResourceHeaderPanel");
+		resourceImageUc.getElement().setId("resourceImageUc");
+		resourceTitlePanel.getElement().setId("fpnlResourceTitlePanel");
+		resourceTitleContainer.getElement().setId("epnlResourceTitleContainer");
+		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
+		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
+		resourceDescriptionHtml.getElement().setId("htmlResourceDescriptionHtml");
+		buttonsPanel.getElement().setId("pnlButtonsPanel");
 		setData(resourceSearchResultDo);
 	/*	MouseOutHandler mouseouthandler = new MouseOutHandler() {
 			
@@ -319,6 +351,8 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 		}
 		title = title.replaceAll("<p>", "").replaceAll("</p>", "");
 		lblResourceTitle.setHTML(title);
+		lblResourceTitle.getElement().setAttribute("alt", title);
+		lblResourceTitle.getElement().setAttribute("title", title);
 		resourceTitle=resourceSearchResultDo.getResourceTitle();
 		lblResourceTitle.getElement().setId(resourceSearchResultDo.getGooruOid());
 		if (lblResourceTitle.getText().length()>38){
@@ -340,7 +374,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(GL0454+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+GL04431);
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setZIndex(9999999);
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -462,7 +496,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 		}
 		if (datas != null && datas.size() > 1) {
 			Integer moreCount = datas.size() - 1;
-			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(GL_SPL_PLUS + moreCount), toolTipwidgets);
+			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreCount), toolTipwidgets);
 			toolTipUc.setStyleName(SearchSuggestedResultWrapperCBundle.INSTANCE.css().blueLinkPad());
 			flowPanel.add(toolTipUc);
 		}
@@ -509,12 +543,12 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 				count++;
 			}
 			if (standards.size()>18){
-				final Label left = new Label(GL_SPL_PLUS+(standards.size() - 18));
+				final Label left = new Label(i18n.GL_SPL_PLUS()+(standards.size() - 18));
 				toolTipwidgets.add(left);
 			}
 			if (searchResultDo.getStandards().size() > 1) {
 				Integer moreStandardsCount = searchResultDo.getStandards().size() - 1;
-				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(GL_SPL_PLUS + moreStandardsCount), toolTipwidgets, standards);
+				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreStandardsCount), toolTipwidgets, standards);
 				toolTipUc.setStyleName(SearchSuggestedResultWrapperCBundle.INSTANCE.css().blueLink());
 				standardsContainer.add(toolTipUc);
 				toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);

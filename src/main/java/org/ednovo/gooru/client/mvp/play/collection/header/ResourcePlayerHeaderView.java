@@ -25,14 +25,8 @@
 package org.ednovo.gooru.client.mvp.play.collection.header;
 
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
@@ -64,6 +58,12 @@ public class ResourcePlayerHeaderView extends Composite{
 	public ResourcePlayerHeaderView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
+		resourceTitle.getElement().setId("htmlResourceTitle");
+		addButton.getElement().setId("addButton");
+		flagButton.getElement().setId("btnFlagButton");
+		infoButton.getElement().setId("btnInfoButton");
+		shareButton.getElement().setId("btnShareButton");
+		closeButton.getElement().setId("lblCloseButton");
 	}
 
 	public void setResourceTitle(String title){

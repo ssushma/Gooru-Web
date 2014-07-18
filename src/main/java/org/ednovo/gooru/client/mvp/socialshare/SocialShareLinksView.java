@@ -29,7 +29,8 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -44,7 +45,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SocialShareLinksView extends Composite implements MessageProperties {
+public class SocialShareLinksView extends Composite {
 
 	@UiField
 	TextArea shareLinkTxtBox;
@@ -54,15 +55,17 @@ public class SocialShareLinksView extends Composite implements MessageProperties
 
 	@UiField Label swithUrlLbl, swithToEmbedLbl, shareLbl;
 	
-	private static final String SWITCH_FULL_URL =GL0643;
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	private static final String SWITCH_EMBED_CODE = GL0640;
-
-	private static final String SWITCH_BITLY =GL0639;
+	private static final String SWITCH_FULL_URL = i18n.GL0643();
 	
-	private static final String SWITCH_URL_LABEL = GL0641;
+	private static final String SWITCH_EMBED_CODE = i18n.GL0640();
 
-	private static final String SWITCH_TO_EMBED_LABEL = GL0642;
+	private static final String SWITCH_BITLY =i18n.GL0639();
+	
+	private static final String SWITCH_URL_LABEL = i18n.GL0641();
+
+	private static final String SWITCH_TO_EMBED_LABEL = i18n.GL0642();
 
 	private String bitlyLink, decodeRawUrl, embedBitlyLink;
 	
@@ -82,18 +85,19 @@ public class SocialShareLinksView extends Composite implements MessageProperties
 		shareLinkContainer.getElement().setId("fpnlShareLinkContainer");
 		shareLinkTxtBox.addClickHandler(new OnTextBoxClick());
 		shareLinkTxtBox.getElement().setId("tatShareLink");
-		swithUrlLbl.setText(GL0639);
-		swithUrlLbl.getElement().setAttribute("alt", GL0639);
-		swithUrlLbl.getElement().setAttribute("title", GL0639);
-		swithToEmbedLbl.setText(GL0640);
-		swithToEmbedLbl.getElement().setAttribute("alt", GL0640);
-		swithToEmbedLbl.getElement().setAttribute("title", GL0640);
+		StringUtil.setAttributes(shareLinkTxtBox, true);
+		swithUrlLbl.setText(i18n.GL0639());
+		swithUrlLbl.getElement().setAttribute("alt", i18n.GL0639());
+		swithUrlLbl.getElement().setAttribute("title", i18n.GL0639());
+		swithToEmbedLbl.setText(i18n.GL0640());
+		swithToEmbedLbl.getElement().setAttribute("alt", i18n.GL0640());
+		swithToEmbedLbl.getElement().setAttribute("title", i18n.GL0640());
 		swithUrlLbl.getElement().setId("lblSwithUrl");
 		swithToEmbedLbl.getElement().setId("lblSwithToEmbedLbl");
-		shareLbl.setText(GL0512);
+		shareLbl.setText(i18n.GL0512());
 		shareLbl.getElement().setId("lblShareLbl");
-		shareLbl.getElement().setAttribute("alt", GL0512);
-		shareLbl.getElement().setAttribute("title", GL0512);
+		shareLbl.getElement().setAttribute("alt", i18n.GL0512());
+		shareLbl.getElement().setAttribute("title", i18n.GL0512());
 	}
 
 	public void setData(Map<String, String> shortenUrl) {

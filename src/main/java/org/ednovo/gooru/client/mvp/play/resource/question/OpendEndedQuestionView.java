@@ -31,17 +31,15 @@ import java.util.List;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -55,36 +53,54 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
-public abstract class OpendEndedQuestionView extends Composite implements MessageProperties{
+public abstract class OpendEndedQuestionView extends Composite{
 	
 	@UiField HTMLPanel answetTextAfterSubmission,answertext;
 	@UiField Button submitButton;
 	@UiField TextArea openEndedAnswerTextArea;
 	@UiField QuestionStyleResource oeStyle;
 	@UiField Label submittedText,errorMessageText,messageBodyText;
-	private static final String ERROR_MESSAGE=GL1458+GL_SPL_FULLSTOP;
-	private static final String EMPTY_ERROR_MESSAGE=GL1459+GL_SPL_FULLSTOP;
-	private static final String OPEN_ENDED_BODY_TEXT=GL1460;
+//	private static final String ERROR_MESSAGE=i18n.GL1458+i18n.GL_SPL_FULLSTOP;
+//	private static final String EMPTY_ERROR_MESSAGE=i18n.GL1459+i18n.GL_SPL_FULLSTOP;
+//	private static final String OPEN_ENDED_BODY_TEXT=i18n.GL1460;
 	private String answerText="";
 	private CollectionItemDo collectionItemDo;
+	private boolean isCheckButtonEnabled=false;
 	private static OpendEndedQuestionViewUiBinder uiBinder = GWT.create(OpendEndedQuestionViewUiBinder.class);
 
 	interface OpendEndedQuestionViewUiBinder extends UiBinder<Widget, OpendEndedQuestionView> {
 		
 	}
 	
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@Inject
 	public OpendEndedQuestionView(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
 		initWidget(uiBinder.createAndBindUi(this));
 		this.collectionItemDo=collectionItemDo;
 		setQuestionTypeCaption();
-		answertext.getElement().setInnerHTML(GL0665);
-		submitButton.setText(GL0666);
+		answertext.getElement().setInnerHTML(i18n.GL0665());
+		answertext.getElement().setAttribute("alt",i18n.GL0665());
+		answertext.getElement().setAttribute("title",i18n.GL0665());
+		submitButton.setText(i18n.GL0666());
+		submitButton.getElement().setAttribute("alt",i18n.GL0666());
+		submitButton.getElement().setAttribute("title",i18n.GL0666());
 		showPreviousAttemptResult(attemptedAnswerDo);
 	}
 	
 	public void setQuestionTypeCaption(){
-		messageBodyText.setText(OPEN_ENDED_BODY_TEXT);
+		messageBodyText.setText(i18n.GL1460());
+		messageBodyText.getElement().setAttribute("alt",i18n.GL1460());
+		messageBodyText.getElement().setAttribute("title",i18n.GL1460());
+		answertext.getElement().setId("pnlAnswertext");
+		submitButton.getElement().setId("btnSubmitButton");
+		messageBodyText.getElement().setId("lblMessageBodyText");
+		openEndedAnswerTextArea.getElement().setId("tatOpenEndedAnswerTextArea");
+		StringUtil.setAttributes(openEndedAnswerTextArea, false);
+		errorMessageText.getElement().setId("lblErrorMessageText");
+		answetTextAfterSubmission.getElement().setId("pnlAnswetTextAfterSubmission");
+		submittedText.getElement().setId("lblSubmittedText");
 	}
 	
 	public void showPreviousAttemptResult(AttemptedAnswersDo attemptedAnswerDo){
@@ -99,11 +115,16 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 		setOeQuestionAnswerText(answerText);
 		//saveOeAnswerData();
 		 if(answerText!=null){
+			 enableSubmitButton();
 			 if(answerText.trim().length()>=1000){
-				 errorMessageText.setText(ERROR_MESSAGE);
+				 errorMessageText.setText(i18n.GL1458()+i18n.GL_SPL_FULLSTOP());
+				 errorMessageText.getElement().setAttribute("alt",i18n.GL1458()+i18n.GL_SPL_FULLSTOP());
+				 errorMessageText.getElement().setAttribute("title",i18n.GL1458()+i18n.GL_SPL_FULLSTOP());
 				 event.preventDefault();
 			 }else{
 				 errorMessageText.setText("");
+				 errorMessageText.getElement().setAttribute("alt","");
+				 errorMessageText.getElement().setAttribute("title","");
 			 }
 			 if(answerText.length()>0){
 				 isOeAnswerSubmited(false);
@@ -116,6 +137,11 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 	
 	@UiHandler("submitButton")
 	public void clickOnSubmitButton(ClickEvent clickEvent){
+		if(isCheckButtonEnabled){
+		isCheckButtonEnabled=false;
+		submitButton.removeStyleName(oeStyle.openEndedQuestionSubmitButton());
+		submitButton.addStyleName(oeStyle.hintsInActiveButton());
+		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 			MixpanelUtil.ClickOpenEndedQuestionSubmitButtonFromCollectionPlayer();
 		}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
@@ -125,22 +151,31 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 		 answerText=openEndedAnswerTextArea.getValue();
 		 if(answerText!=null&&answerText.trim().length()>0){
 			 if(answerText.trim().length()>1000){
-				 errorMessageText.setText(ERROR_MESSAGE);
+				 errorMessageText.setText(i18n.GL1458()+i18n.GL_SPL_FULLSTOP());
+				 errorMessageText.getElement().setAttribute("alt",i18n.GL1458()+i18n.GL_SPL_FULLSTOP());
+				 errorMessageText.getElement().setAttribute("title",i18n.GL1458()+i18n.GL_SPL_FULLSTOP());
 			 }else{
 				 errorMessageText.setText("");
+				 errorMessageText.getElement().setAttribute("alt","");
+				 errorMessageText.getElement().setAttribute("title","");
 				 submitButton.removeFromParent();
-				 submittedText.setText(GL1138);
+				 submittedText.setText(i18n.GL1138());
+				 submittedText.getElement().setAttribute("alt",i18n.GL1138());
+				 submittedText.getElement().setAttribute("title",i18n.GL1138());
 				 //TODO answer submit API
 				 showSubmitedText();
 				 isOeAnswerSubmited(true);
 			 }
 		 }else{
-			 errorMessageText.setText(EMPTY_ERROR_MESSAGE);
+			 errorMessageText.setText(i18n.GL1459()+i18n.GL_SPL_FULLSTOP());
 		 }
+		}
 	}
 	
 	public void showSubmitedText(){
 		submittedText.setText("");
+		submittedText.getElement().setAttribute("alt","");
+		submittedText.getElement().setAttribute("title","");
 		answetTextAfterSubmission.add(new HTML(openEndedAnswerTextArea.getValue().replaceAll("<", "&lt;").replaceAll(">", "&gt;")));
 		createSesstionItemAttemptOe("",openEndedAnswerTextArea.getValue());
 		saveOeAnswerData();
@@ -169,6 +204,11 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 	}
 	public void createSesstionItemAttemptOeWhenNavigation(){
 		createSesstionItemAttemptOe("",openEndedAnswerTextArea.getValue());
+	}
+	private void enableSubmitButton(){
+		isCheckButtonEnabled=true;
+		submitButton.removeStyleName(oeStyle.hintsInActiveButton());
+		submitButton.addStyleName(oeStyle.openEndedQuestionSubmitButton());
 	}
 	public abstract void createSesstionItemAttemptOe(String answerId,String answerText);
 	public abstract void setAttemptStatus(String collecionItemId, AttemptedAnswersDo attempteAnswersDo);

@@ -34,10 +34,10 @@ import org.ednovo.gooru.client.mvp.socialshare.SocialShareLinksView;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
@@ -45,22 +45,20 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.inject.Inject;
 
 /**
  * @author Search Team
  * 
  */
-public class SearchInfoTabVc extends Composite implements MessageProperties {
+public class SearchInfoTabVc extends Composite {
 
 	private static SearchShareVcUiBinder uiBinder = GWT
 			.create(SearchShareVcUiBinder.class);
 	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	private PlayerAppServiceAsync playerAppService;
 
@@ -105,7 +103,7 @@ public class SearchInfoTabVc extends Composite implements MessageProperties {
 		socialShareLinksView = new SocialShareLinksView();
 		socialShareLinksView.getshareLinkTxtBox().setReadOnly(true);
 		//shareViaText.setText(GL0638);
-		socialShareLinksView.getShareLbl().setText(GL0511);
+		socialShareLinksView.getShareLbl().setText(i18n.GL0511());
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setPaddingTop(0, Unit.PX);
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setWidth(22, Unit.PC);
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setFloat(Float.LEFT);
@@ -137,6 +135,9 @@ public class SearchInfoTabVc extends Composite implements MessageProperties {
 			}
 		});
 		//socialShareLinksViewContainer.add(socialShareLinksView);
+		
+		resourceTypeImage.getElement().setId("lblResourceTypeImage");
+		lblResourceName.getElement().setId("htmlLblResourceName");
 	}
 	
 
@@ -168,6 +169,8 @@ public class SearchInfoTabVc extends Composite implements MessageProperties {
 				}
 				if(collectionItemDo.getResource().getTitle()!=null){
 					lblResourceName.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
+					lblResourceName.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
+					lblResourceName.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 				}
 				
 			/*	if(collectionItemDo.getStatusCode() != 200){

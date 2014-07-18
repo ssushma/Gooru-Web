@@ -25,14 +25,12 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -44,7 +42,6 @@ import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -57,7 +54,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team ` *
  */
 public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
-		IsDriveView, MessageProperties {
+		IsDriveView {
 
 	public static final String DOCUMENT_MIMETYPE="application/vnd.google-apps.document";
 	public static final String DRAWING_MIMETYPE="application/vnd.google-apps.drawing";
@@ -74,7 +71,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	
 	private static DriveViewUiBinder uiBinder = GWT.create(DriveViewUiBinder.class);
 
-	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	
 	interface DriveViewUiBinder extends UiBinder<Widget, DriveView> {
@@ -91,7 +88,9 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	public DriveView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		driveScrollContainer.addScrollHandler(new DriveScrollEvent());
-
+		driveScrollContainer.getElement().setId("sbDriveScrollContainer");
+		panelDriveBreadCrums.getElement().setId("fpnlPanelDriveBreadCrums");
+		panelFileList.getElement().setId("fpnlPanelFileList");
 	}
 
 	

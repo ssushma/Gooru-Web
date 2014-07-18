@@ -39,42 +39,32 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsGraphEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.event.dom.client.ScrollEvent;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
-
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RatingUserWidgetView extends Composite implements MessageProperties {
+public class RatingUserWidgetView extends Composite {
 
 	@UiField HTMLEventPanel reviewContainer;
 	
@@ -101,12 +91,14 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	private static final String FOUR_STAR="fourStar";
 	private static final String FIVE_STAR="fiveStar";
 	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	private StarRatingsDo starRatingsDo;
-	private static final String POOR=GL1846;
-	private static final String FAIR=GL1845;
-	private static final String GOOD=GL1844;
-	private static final String VERY_GOOD=GL1843;
-	private static final String EXCELLENT=GL1842;
+	private static final String POOR = i18n.GL1846();
+	private static final String FAIR=i18n.GL1845();
+	private static final String GOOD=i18n.GL1844();
+	private static final String VERY_GOOD=i18n.GL1843();
+	private static final String EXCELLENT=i18n.GL1842();
 	
 	int currentRating=0,clickedRating;
 	private static final String FILLED_BLUE = "filled filledBlue";
@@ -133,17 +125,64 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	}
 	
 	public void setData(final StarRatingsDo starRatingsDo,final String createrName) {
+		reviewContainer.getElement().setId("epnlReviewContainer");
+		userName.getElement().setId("lblUserName");
+		editReviewLabelContainer.getElement().setId("pnlEditReviewLabelContainer");
+		starOne.getElement().setId("divStarOne");
+		starTwo.getElement().setId("divStarTwo");
+		starThree.getElement().setId("divStarThree");
+		starFour.getElement().setId("divStarFour");
+		starFive.getElement().setId("divStarFive");
+		editReviewTextareaContainer.getElement().setId("pnlEditReviewTextareaContainer");
+		userratingOne.getElement().setId("divUserratingOne");
+		userratingTwo.getElement().setId("divUserratingTwo");
+		userratingThree.getElement().setId("divUserratingThree");
+		userratingFour.getElement().setId("divUserratingFour");
+		userratingFive.getElement().setId("divUserratingFive");
+		starValue.getElement().setId("lblStarValue");
+		mouseOverStarValue.getElement().setId("lblMouseOverStarValue");
+		mandatoryDescLblForSwareWords.getElement().setId("lblMandatoryDescLblForSwareWords");
+		errorLbl.getElement().setId("lblErrorLbl");
+
 		editReviewText.getElement().setAttribute("maxlength", "500");
-		editReview.setText(GL1860);
-		editReviewBtn.setText(GL0141);
-		cancelReviewBtn.setText(GL0142);
+		StringUtil.setAttributes(editReviewText, true);
+		editReview.setText(i18n.GL1860());
+		editReview.getElement().setId("btnEditReview");
+		editReview.getElement().setAttribute("alt",i18n.GL1860());
+		editReview.getElement().setAttribute("title",i18n.GL1860());
+		
+		editReviewBtn.setText(i18n.GL0141());
+		editReviewBtn.getElement().setId("btnEditReviewBtn");
+		editReviewBtn.getElement().setAttribute("alt",i18n.GL0141());
+		editReviewBtn.getElement().setAttribute("title",i18n.GL0141());
+		
+		cancelReviewBtn.setText(i18n.GL0142());
+		cancelReviewBtn.getElement().setId("btnCancelReviewBtn");
+		cancelReviewBtn.getElement().setAttribute("alt",i18n.GL0142());
+		cancelReviewBtn.getElement().setAttribute("title",i18n.GL0142());
+		
 		String commentTime = getCreatedTime(Long.toString(starRatingsDo.getCreatedDate())); 
 		long lastModifiedOn = starRatingsDo.getLastModifiedOn();
-		timeStamp.setText(commentTime +""+ (lastModifiedOn > 0 ? " " + GL_GRR_Hyphen + " " + GL1434 : ""));
-		deleteReview.setText(GL1861);
+		timeStamp.setText(commentTime +""+ (lastModifiedOn > 0 ? " " + i18n.GL_GRR_Hyphen() + " " + i18n.GL1434() : ""));
+		timeStamp.getElement().setId("lblTimeStamp");
+		timeStamp.getElement().setAttribute("alt",commentTime +""+ (lastModifiedOn > 0 ? " " + i18n.GL_GRR_Hyphen() + " " + i18n.GL1434() : ""));
+		timeStamp.getElement().setAttribute("title",commentTime +""+ (lastModifiedOn > 0 ? " " + i18n.GL_GRR_Hyphen() + " " + i18n.GL1434() : ""));
+		
+		deleteReview.setText(i18n.GL1861());
+		deleteReview.getElement().setId("btnDeleteReview");
+		deleteReview.getElement().setAttribute("alt",i18n.GL1861());
+		deleteReview.getElement().setAttribute("title",i18n.GL1861());
 		
 		review.setText(starRatingsDo.getFreeText());
+		review.getElement().setId("lblReview");
+		review.getElement().setAttribute("alt",starRatingsDo.getFreeText());
+		review.getElement().setAttribute("title",starRatingsDo.getFreeText());
+		
 		editReviewText.setText(starRatingsDo.getFreeText());
+		editReviewText.getElement().setId("tatEditReviewText");
+		editReviewText.getElement().setAttribute("alt",starRatingsDo.getFreeText());
+		editReviewText.getElement().setAttribute("title",starRatingsDo.getFreeText());
+		
 		editReview.setVisible(false);
 		deleteReview.addStyleName(style.deleteButtonAlign());
 		
@@ -152,6 +191,8 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			reviewContainer.setVisible(true);
 			editReviewLabelContainer.setVisible(true);
 			userName.setText(starRatingsDo.getCreator().getUsername());
+			userName.getElement().setAttribute("alt",starRatingsDo.getCreator().getUsername());
+			userName.getElement().setAttribute("title",starRatingsDo.getCreator().getUsername());
 			clearAllStarsReadOnly();
 			this.currentRating = starRatingsDo.getScore();
 			if(starRatingsDo.getScore() == 1)
@@ -181,11 +222,15 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		  }else{
 			//reviewContainer.setVisible(false);
 			userName.setText(starRatingsDo.getCreator().getUsername());
+			userName.getElement().setAttribute("alt",starRatingsDo.getCreator().getUsername());
+			userName.getElement().setAttribute("title",starRatingsDo.getCreator().getUsername());
 			//editReviewLabelContainer.setVisible(false);
 		}
 			
 		}else{
 			userName.setText(starRatingsDo.getCreator().getUsername());
+			userName.getElement().setAttribute("alt",starRatingsDo.getCreator().getUsername());
+			userName.getElement().setAttribute("title",starRatingsDo.getCreator().getUsername());
 			clearAllStarsReadOnly();
 			this.currentRating = starRatingsDo.getScore();
 			if(starRatingsDo.getScore() == 1)
@@ -243,7 +288,9 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			editReviewBtn.removeStyleName(style.editReview());
 			cancelReviewBtn.removeStyleName(style.editReview());
 			//editReview.setVisible(true);
-			userName.setText(GL1850);
+			userName.setText(i18n.GL1850());
+			userName.getElement().setAttribute("alt",i18n.GL1850());
+			userName.getElement().setAttribute("title",i18n.GL1850());
 			deleteReview.removeStyleName(style.editReview());
 		} else {
 			editReview.removeStyleName(style.editReview());
@@ -439,11 +486,17 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	public void keyRatingTextArea(KeyUpEvent event){
 		String review=editReviewText.getText();
 		errorLbl.setText("");
+		errorLbl.getElement().setAttribute("alt","");
+		errorLbl.getElement().setAttribute("title","");
 		if(review.length()>0){
 			errorLbl.setText("");
+			errorLbl.getElement().setAttribute("alt","");
+			errorLbl.getElement().setAttribute("title","");
 		}
 		if(review.length()==500){
-			errorLbl.setText(GL0143);
+			errorLbl.setText(i18n.GL0143());
+			errorLbl.getElement().setAttribute("alt",i18n.GL0143());
+			errorLbl.getElement().setAttribute("title",i18n.GL0143());
 			errorLbl.setVisible(true);
 		//	fieldValidationStaus=false;
 		}else{
@@ -465,9 +518,13 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 						if(result.size()>0){
 							AppClientFactory.fireEvent(new UpdateUserStarReviewEvent(result));
 							String commentTime = getCreatedTime(Long.toString(starRatingsDo.getCreatedDate())); 
-							timeStamp.setText(commentTime +""+ (" " + GL_GRR_Hyphen + " " + GL1434));
+							timeStamp.setText(commentTime +""+ (" " + i18n.GL_GRR_Hyphen() + " " + i18n.GL1434()));
+							timeStamp.getElement().setAttribute("alt",commentTime +""+ (" " + i18n.GL_GRR_Hyphen() + " " + i18n.GL1434()));
+							timeStamp.getElement().setAttribute("title",commentTime +""+ (" " + i18n.GL_GRR_Hyphen() + " " + i18n.GL1434()));
 							editReviewTextareaContainer.setVisible(false);
 							review.setText(result.get(0).getFreeText());
+							review.getElement().setAttribute("alt",result.get(0).getFreeText());
+							review.getElement().setAttribute("title",result.get(0).getFreeText());
 							editReviewLabelContainer.setVisible(true);
 							editReviewBtn.removeStyleName(style.editReview());
 							cancelReviewBtn.removeStyleName(style.editReview());
@@ -616,6 +673,9 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	public void cancelReview(ClickEvent event) {
 		this.currentRating =starRatingsDo.getScore();
 		editReviewText.setText(starRatingsDo.getFreeText());
+		editReviewText.getElement().setAttribute("alt",starRatingsDo.getFreeText());
+		editReviewText.getElement().setAttribute("title",starRatingsDo.getFreeText());
+		
 		editReviewTextareaContainer.setVisible(false);
 		editReviewLabelContainer.setVisible(true);
 		editReviewBtn.removeStyleName(style.editReview());
@@ -634,7 +694,9 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 				AppClientFactory.fireEvent(new DeletePlayerStarReviewEvent());
 				final HTMLPanel deletePanel = new HTMLPanel("");
 				Label deleteMsg = new Label();
-				deleteMsg.setText(MessageProperties.GL1853);
+				deleteMsg.setText(i18n.GL1853());
+				deleteMsg.getElement().setAttribute("alt",i18n.GL1853());
+				deleteMsg.getElement().setAttribute("title",i18n.GL1853());
 				deleteMsg.setStyleName(style.lbldeleteMsg());
 				deletePanel.add(deleteMsg);
 				reviewContainer.add(deletePanel);
@@ -672,13 +734,13 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			createdTime = fmt.format (currentDate);
 		}
 		else if(days>0&&days<=6) {
-			createdTime = days + getTimePrefix(days," "+GL0562, GL0579, GL0580);
+			createdTime = days + getTimePrefix(days," "+i18n.GL0562(), i18n.GL0579(), i18n.GL0580());
 		} else if(hours>0&&hours<24) {
-			createdTime = hours + getTimePrefix(hours," "+GL0563, GL1435, GL1436);
+			createdTime = hours + getTimePrefix(hours," "+i18n.GL0563(), i18n.GL1435(), i18n.GL1436());
 		} else if(minutes>0&&minutes<60) {
-			createdTime = minutes + getTimePrefix(minutes," "+GL0564, GL1437, GL1438);
+			createdTime = minutes + getTimePrefix(minutes," "+i18n.GL0564(), i18n.GL1437(), i18n.GL1438());
 		} else if(seconds<=60) {
-			createdTime = GL0561;
+			createdTime = i18n.GL0561();
 		}
 		return createdTime;
 
@@ -698,24 +760,34 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			clearAllStars();
 			if(starScore.equalsIgnoreCase(ONE_STAR)){
 				mouseOverStarValue.setText(POOR);
+				mouseOverStarValue.getElement().setAttribute("alt",POOR);
+				mouseOverStarValue.getElement().setAttribute("title",POOR);
 				userratingOne.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
 				mouseOverStarValue.setText(FAIR);
+				mouseOverStarValue.getElement().setAttribute("alt",FAIR);
+				mouseOverStarValue.getElement().setAttribute("title",FAIR);
 				userratingOne.getElement().addClassName(FILLED_BLUE);
 				userratingTwo.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
 				mouseOverStarValue.setText(GOOD);
+				mouseOverStarValue.getElement().setAttribute("alt",GOOD);
+				mouseOverStarValue.getElement().setAttribute("title",GOOD);
 				userratingOne.getElement().addClassName(FILLED_BLUE);
 				userratingTwo.getElement().addClassName(FILLED_BLUE);
 				userratingThree.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
 				mouseOverStarValue.setText(VERY_GOOD);
+				mouseOverStarValue.getElement().setAttribute("alt",VERY_GOOD);
+				mouseOverStarValue.getElement().setAttribute("title",VERY_GOOD);
 				userratingOne.getElement().addClassName(FILLED_BLUE);
 				userratingTwo.getElement().addClassName(FILLED_BLUE);
 				userratingThree.getElement().addClassName(FILLED_BLUE);
 				userratingFour.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
 				mouseOverStarValue.setText(EXCELLENT);
+				mouseOverStarValue.getElement().setAttribute("alt",EXCELLENT);
+				mouseOverStarValue.getElement().setAttribute("title",EXCELLENT);
 				userratingOne.getElement().addClassName(FILLED_BLUE);
 				userratingTwo.getElement().addClassName(FILLED_BLUE);
 				userratingThree.getElement().addClassName(FILLED_BLUE);
@@ -738,18 +810,28 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			if(starScore.equalsIgnoreCase(ONE_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}
 			setStarRatingValue(currentRating);
 		}

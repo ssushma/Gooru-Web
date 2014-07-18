@@ -823,3 +823,12 @@ button.backArrowButton:hover {
 	font-weight: bold;
 	padding-bottom: 10px;
 }
+
+/* Media Css for hiding specif objects */
+
+/* @media screen and (min-width: 0px) and (max-width: 1000px) {
+	#focuspnlShelfFocPanel{
+		display: none;
+	}
+} */
+

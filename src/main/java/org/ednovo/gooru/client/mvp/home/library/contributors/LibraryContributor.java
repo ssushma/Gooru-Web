@@ -28,9 +28,8 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.player.resource.shared.StringUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -61,7 +60,7 @@ public class LibraryContributor extends Composite {
 
 	interface LibraryContributorUiBinder extends UiBinder<Widget, LibraryContributor> {}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public LibraryContributor(LibraryUserDo libraryUserDo, String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));

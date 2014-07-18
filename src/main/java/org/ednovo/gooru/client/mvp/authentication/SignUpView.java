@@ -39,14 +39,12 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -83,7 +81,7 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		
 	interface SignUpViewUiBinder extends UiBinder<Widget, SignUpView> {
 	}
-	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	public MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField Label lblTitle,lblJoinGooruCommunity,lblDescription,lblWhyWithGoogle,lblQuestionMark,lblPopupWhyWithGoogle,lblParentInfo;
 	

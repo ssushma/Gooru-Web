@@ -28,7 +28,6 @@ package org.ednovo.gooru.client.mvp.play.resource;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePopupViewWithHandlers;
-import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.collection.header.ResourcePlayerHeaderView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
@@ -36,7 +35,7 @@ import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
@@ -47,7 +46,6 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -61,7 +59,7 @@ import com.gwtplatform.mvp.client.proxy.NavigationEvent;
 import com.gwtplatform.mvp.client.proxy.NavigationHandler;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayerUiHandlers> implements IsResourcePlayerView, MessageProperties{
+public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayerUiHandlers> implements IsResourcePlayerView{
 	
 	
 	@UiField FlowPanel playerBodyContainer,navigationContainer;
@@ -92,6 +90,8 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 
 	interface CollectionPlayerViewUiBinder extends UiBinder<Widget, ResourcePlayerView> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@Inject
 	public ResourcePlayerView(EventBus eventBus){
@@ -348,7 +348,7 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 /*		String resourcePlayerFirstTimeUser = Cookies.getCookie("resourcePlayerFirstTimeUser");
 		if(resourcePlayerFirstTimeUser==null){
 			Cookies.setCookie("resourcePlayerFirstTimeUser", "1");
-			globalTooltipWithButton=new GlobalTooltipWithButton(GL0681, GL0543);
+			globalTooltipWithButton=new GlobalTooltipWithButton(i18n.GL0681, i18n.GL0543);
 			globalTooltipWithButton.setGlassStyleName(HomeCBundle.INSTANCE.css().playerAddToolTipGlassStyle());
 			globalTooltipWithButton.setStyleName("");
 			globalTooltipWithButton.getElement().getStyle().setZIndex(999999);
@@ -402,13 +402,44 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		headerView.makeFlagButtonOrange();
 	}
 	public void setUiText()
-	{
-		msgPanel.getElement().setInnerHTML(GL1983);
-		  msglinkPanel.getElement().setInnerHTML(GL1984);
-		  gooruPanel.getElement().setInnerHTML(GL0733);
-		  ednovoPanel.getElement().setInnerHTML(GL1985);
-		  appstorePanel.getElement().setInnerHTML(GL1986);
-		  viewAnchor.setText(GL1428);
+	{ 
+		  androidSectiondiv.getElement().setId("pnlAndroidSectiondiv");
+		  closeAndriodBtn.getElement().setId("imgCloseAndriodBtn");
+		  ipadSectiondiv.getElement().setId("pnlIpadSectiondiv");
+		  closeIpadBtn.getElement().setId("imgCloseIpadBtn");
+		  headerView.getElement().setId("collectionPlayerHeaderView");
+		  navigationContainer.getElement().setId("fpnlNavigationContainer");
+		  playerBodyContainer.getElement().setId("fpnlPlayerBodyContainer");
+		  
+		  msgPanel.getElement().setInnerHTML(i18n.GL1983());
+		  msgPanel.getElement().setId("pnlMsgPanel");
+		  msgPanel.getElement().setAttribute("alt",i18n.GL1983());
+		  msgPanel.getElement().setAttribute("title",i18n.GL1983());
+		  
+		  msglinkPanel.getElement().setInnerHTML(i18n.GL1984());
+		  msglinkPanel.getElement().setId("pnlMsglinkPanel");
+		  msglinkPanel.getElement().setAttribute("alt",i18n.GL1984());
+		  msglinkPanel.getElement().setAttribute("title",i18n.GL1984());
+		  
+		  gooruPanel.getElement().setInnerHTML(i18n.GL0733());
+		  gooruPanel.getElement().setId("pnlGooruPanel");
+		  gooruPanel.getElement().setAttribute("alt",i18n.GL0733());
+		  gooruPanel.getElement().setAttribute("title",i18n.GL0733());
+		  
+		  ednovoPanel.getElement().setInnerHTML(i18n.GL1985());
+		  ednovoPanel.getElement().setId("pnlEdnovoPanel");
+		  ednovoPanel.getElement().setAttribute("alt",i18n.GL1985());
+		  ednovoPanel.getElement().setAttribute("title",i18n.GL1985());
+		  
+		  appstorePanel.getElement().setInnerHTML(i18n.GL1986());
+		  appstorePanel.getElement().setId("pnlAppstorePanel");
+		  appstorePanel.getElement().setAttribute("alt",i18n.GL1986());
+		  appstorePanel.getElement().setAttribute("title",i18n.GL1986());
+		  
+		  viewAnchor.setText(i18n.GL1428());
+		  viewAnchor.getElement().setId("lnkViewAnchor");
+		  viewAnchor.getElement().setAttribute("alt",i18n.GL1428());
+		  viewAnchor.getElement().setAttribute("title",i18n.GL1428());
 		  
 	}
 }

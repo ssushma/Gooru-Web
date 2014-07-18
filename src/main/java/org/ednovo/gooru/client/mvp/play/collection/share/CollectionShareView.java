@@ -37,9 +37,9 @@ import org.ednovo.gooru.client.mvp.play.collection.share.email.SentEmailSuccessV
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -56,7 +56,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiHandlers> implements IsCollectionShareView,MessageProperties{
+public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiHandlers> implements IsCollectionShareView{
 
 
 	private static CollectionShareViewUiBinder uiBinder = GWT.create(CollectionShareViewUiBinder.class);
@@ -64,6 +64,8 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 	interface CollectionShareViewUiBinder extends UiBinder<Widget, CollectionShareView> {
 
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField HTMLPanel sharePanel,shareMainTitle;
 
@@ -87,11 +89,11 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 	
 	private String embedBitlyUrl="";
 
-	private static final String SWITCH_FULL_URL = GL0643;
+//	private static final String SWITCH_FULL_URL = i18n.GL0643;
 
-	private static final String SWITCH_EMBED_CODE = GL0640;
+//	private static final String SWITCH_EMBED_CODE = i18n.GL0640;
 
-	private static final String SWITCH_BITLY = GL0639;
+//	private static final String SWITCH_BITLY = i18n.GL0639;
 	
 	private CollectionEmailShareView emailShareView=null;
 	
@@ -104,14 +106,53 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		setWidget(uiBinder.createAndBindUi(this));		
 		resourceShareTextArea.setReadOnly(true);
 		resourceShareTextArea.getElement().setAttribute("readOnly", "");
-		embedLink.setText(SWITCH_EMBED_CODE);
-		bitlyLink.setText(SWITCH_BITLY);
-		shareMainTitle.getElement().setInnerHTML(GL0644);
-		collectionShareText.setText(GL0645);
-		bitlyLink.getElement().setInnerHTML(GL0639);
-		embedLink.getElement().setInnerHTML(GL0640);
-		hideText.setText(GL0592);
-		shareText.setText(GL0638);
+		embedLink.setText(i18n.GL0640());
+		embedLink.getElement().setId("spnEmbedLink");
+		embedLink.getElement().setAttribute("alt",i18n.GL0640());
+		embedLink.getElement().setAttribute("title",i18n.GL0640());
+		
+		bitlyLink.setText(i18n.GL0639());
+		bitlyLink.getElement().setId("spnBitlyLink");
+		bitlyLink.getElement().setAttribute("alt",i18n.GL0639());
+		bitlyLink.getElement().setAttribute("title",i18n.GL0639());
+		
+		shareMainTitle.getElement().setInnerHTML(i18n.GL0644());
+		shareMainTitle.getElement().setId("pnlShareMainTitle");
+		shareMainTitle.getElement().setAttribute("alt",i18n.GL0644());
+		shareMainTitle.getElement().setAttribute("title",i18n.GL0644());
+		
+		collectionShareText.setText(i18n.GL0645());
+		collectionShareText.getElement().setId("lblCollectionShareText");
+		collectionShareText.getElement().setAttribute("alt",i18n.GL0645());
+		collectionShareText.getElement().setAttribute("title",i18n.GL0645());
+		
+		bitlyLink.getElement().setInnerHTML(i18n.GL0639());
+		bitlyLink.getElement().setAttribute("alt",i18n.GL0639());
+		bitlyLink.getElement().setAttribute("title",i18n.GL0639());
+		
+		embedLink.getElement().setInnerHTML(i18n.GL0640());
+		embedLink.getElement().setAttribute("alt",i18n.GL0640());
+		embedLink.getElement().setAttribute("title",i18n.GL0640());
+		
+		hideText.setText(i18n.GL0592());
+		hideText.getElement().setId("lblHideText");
+		hideText.getElement().setAttribute("alt",i18n.GL0592());
+		hideText.getElement().setAttribute("title",i18n.GL0592());
+		
+		shareText.setText(i18n.GL0638());
+		shareText.getElement().setId("lblShareText");
+		shareText.getElement().setAttribute("alt",i18n.GL0638());
+		shareText.getElement().setAttribute("title",i18n.GL0638());
+		
+		resourceTitleText.getElement().setId("lblResourceTitleText");
+		resourceShareTextArea.getElement().setId("tatResourceShareTextArea");
+		StringUtil.setAttributes(resourceShareTextArea, true);
+		socialSharePanel.getElement().setId("fpnlSocialSharePanel");
+		sharePanel.getElement().setId("fpnlSharePanel");
+		collectionShareContainer.getElement().setId("fpnlCollectionShareContainer");
+		collectionShareTextArea.getElement().setId("tatCollectionShareTextArea");
+		StringUtil.setAttributes(collectionShareTextArea, true);
+		hideButton.getElement().setId("epnlHideButton");
 	}
 	
 	public void showShareView(boolean isResourceView){
@@ -122,7 +163,9 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 			collectionShareContainer.setVisible(false);
 //			resourceTitleText.setText("Resource");
 		}else{
-			resourceTitleText.setText(GL0645);
+			resourceTitleText.setText(i18n.GL0645());
+			resourceTitleText.getElement().setAttribute("alt",i18n.GL0645());
+			resourceTitleText.getElement().setAttribute("title",i18n.GL0645());
 			collectionShareContainer.setVisible(false);
 			socialSharePanel.setVisible(true);
 		}	
@@ -136,11 +179,19 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		originalUrl=shareUrlsList.get("rawUrl").toString();
 		embedurl=shareUrlsList.get("embedUrlRawUrl").toString();
 		setIframeUrl(embedurl);		
-		collectionShareMap.put(SWITCH_FULL_URL, shareUrl);
-		collectionShareMap.put(SWITCH_BITLY, shareBitlyUrl);
-		embedLink.setText(SWITCH_EMBED_CODE);
-		bitlyLink.setText(SWITCH_BITLY);
+		collectionShareMap.put(i18n.GL0643(), shareUrl);
+		collectionShareMap.put(i18n.GL0639(), shareBitlyUrl);
+		embedLink.setText(i18n.GL0640());
+		embedLink.getElement().setAttribute("alt",i18n.GL0640());
+		embedLink.getElement().setAttribute("title",i18n.GL0640());
+		
+		bitlyLink.setText(i18n.GL0639());
+		bitlyLink.getElement().setAttribute("alt",i18n.GL0639());
+		bitlyLink.getElement().setAttribute("title",i18n.GL0639());
+		
 		resourceShareTextArea.setText(shareUrl);
+		resourceShareTextArea.getElement().setAttribute("alt",shareUrl);
+		resourceShareTextArea.getElement().setAttribute("title",shareUrl);
 	}
 	
 	public void setResourceShareData(Map<String, String> shareUrlsList){
@@ -150,26 +201,42 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		String resourceShareBitlyUrl = shareUrlsList.get("shortenUrl").toString();
 		resourceShareUrl= shareUrlsList.get("decodeRawUrl").toString();
 		setResourceIframeUrl(resourceShareUrl);	
-		resourceShareMap.put(SWITCH_FULL_URL, resourceShareUrl);
-		resourceShareMap.put(SWITCH_BITLY, resourceShareBitlyUrl);
+		resourceShareMap.put(i18n.GL0643(), resourceShareUrl);
+		resourceShareMap.put(i18n.GL0639(), resourceShareBitlyUrl);
 		resourceShareTextArea.setText(resourceShareUrl);
-		embedLink.setText(SWITCH_EMBED_CODE);
-		bitlyLink.setText(SWITCH_BITLY);
+		resourceShareTextArea.getElement().setAttribute("alt",resourceShareUrl);
+		resourceShareTextArea.getElement().setAttribute("title",resourceShareUrl);
+		embedLink.setText(i18n.GL0640());
+		embedLink.getElement().setAttribute("alt",i18n.GL0640());
+		embedLink.getElement().setAttribute("title",i18n.GL0640());
+		bitlyLink.setText(i18n.GL0639());
+		bitlyLink.getElement().setAttribute("alt",i18n.GL0639());
+		bitlyLink.getElement().setAttribute("title",i18n.GL0639());
 	}
 	public void setCollectionShareData(){
-		embedLink.setText(SWITCH_EMBED_CODE);
-		bitlyLink.setText(SWITCH_BITLY);
+		embedLink.setText(i18n.GL0640());
+		embedLink.getElement().setAttribute("alt",i18n.GL0640());
+		embedLink.getElement().setAttribute("title",i18n.GL0640());
+		bitlyLink.setText(i18n.GL0639());
+		bitlyLink.getElement().setAttribute("alt",i18n.GL0639());
+		bitlyLink.getElement().setAttribute("title",i18n.GL0639());
 		if(isResourceView){
 			collectionShareTextArea.setText(shareUrl);
+			collectionShareTextArea.getElement().setAttribute("alt",shareUrl);
+			collectionShareTextArea.getElement().setAttribute("title",shareUrl);
 		}else{
 			resourceShareTextArea.setText(shareUrl);
+			resourceShareTextArea.getElement().setAttribute("alt",shareUrl);
+			resourceShareTextArea.getElement().setAttribute("title",shareUrl);
 		}
 	}
 	
 	public void setResourceShareData(){
 		resourceShareTextArea.setValue("");
-		String resourceShareUrl=resourceShareMap.get(SWITCH_FULL_URL);
+		String resourceShareUrl=resourceShareMap.get(i18n.GL0643());
 		resourceShareTextArea.setText(resourceShareUrl);
+		resourceShareTextArea.getElement().setAttribute("alt",resourceShareUrl);
+		resourceShareTextArea.getElement().setAttribute("title",resourceShareUrl);
 	}
 	
 	
@@ -180,7 +247,7 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 
 			@Override
 			public void onTwitter() {
-				Window.open("http://twitter.com/intent/tweet?text=" + GL1439+collectionDo.getTitle().replaceAll("\\+", "%2B") +": " + shareBitlyUrl, "_blank", "width=600,height=300");
+				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL1439()+collectionDo.getTitle().replaceAll("\\+", "%2B") +": " + shareBitlyUrl, "_blank", "width=600,height=300");
 			}
 			
 			@Override
@@ -190,8 +257,8 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 
 			@Override
 			public void onEmail() {
-				String emailSubject=GL1439+collectionDo.getTitle();
-				String emailDescription= collectionDo.getTitle()+"<div><br/></div><div>"+shareUrl+"</div><div><br/></div><div>"+GL1440+" "+AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()+" "+GL1441+"</div>";
+				String emailSubject=i18n.GL1439()+collectionDo.getTitle();
+				String emailDescription= collectionDo.getTitle()+"<div><br/></div><div>"+shareUrl+"</div><div><br/></div><div>"+i18n.GL1440()+" "+AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()+" "+i18n.GL1441()+"</div>";
 				 emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){
 					@Override
 					public void sendEmail(String fromEmail, String toEmail,
@@ -217,11 +284,11 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 	
 	public void setIframeUrl(String iframeBitlyUrl){
 		embedBitlyUrl = "<iframe width=\"1024px\" height=\"768px\" src=\"" + iframeBitlyUrl + "\" frameborder=\"0\" ></iframe>";
-		collectionShareMap.put(SWITCH_EMBED_CODE, embedBitlyUrl);
+		collectionShareMap.put(i18n.GL0640(), embedBitlyUrl);
 	}
 	public void setResourceIframeUrl(String iframeBitlyUrl){
 		String resourceEmbedBitlyUrl = "<iframe width=\"1024px\" height=\"768px\" src=\"" + iframeBitlyUrl + "\" frameborder=\"0\" ></iframe>";
-		resourceShareMap.put(SWITCH_EMBED_CODE, resourceEmbedBitlyUrl);
+		resourceShareMap.put(i18n.GL0640(), resourceEmbedBitlyUrl);
 	}
 	
 	@Override
@@ -230,7 +297,7 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		if (embedLink != null && embedLink.containsKey("shortenUrl")) {
 			embedurl = embedLink.get("decodeRawUrl").toString();
 			iframeText = "<iframe width=\"1024px\" height=\"768px\" src=\"" + embedurl + "\" frameborder=\"0\" ></iframe>";
-			collectionShareMap.put(SWITCH_EMBED_CODE, iframeText);
+			collectionShareMap.put(i18n.GL0640(), iframeText);
 		}
 	}
 
@@ -249,10 +316,16 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 			String value= isResourceView?resourceShareMap.get(key):collectionShareMap.get(key);
 			if(shareTxt.equalsIgnoreCase(value)){
 				embedLink.setText(key);
+				embedLink.getElement().setAttribute("alt",key);
+				embedLink.getElement().setAttribute("title",key);
 				if(isResourceView){
 					resourceShareTextArea.setText(resourceShareMap.get(embed));
+					resourceShareTextArea.getElement().setAttribute("alt",resourceShareMap.get(embed));
+					resourceShareTextArea.getElement().setAttribute("title",resourceShareMap.get(embed));
 				}else{
 					resourceShareTextArea.setText(collectionShareMap.get(embed));
+					resourceShareTextArea.getElement().setAttribute("alt",resourceShareMap.get(embed));
+					resourceShareTextArea.getElement().setAttribute("title",resourceShareMap.get(embed));
 				}
 			}
 		}
@@ -281,11 +354,17 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 			String value= isResourceView?resourceShareMap.get(key):collectionShareMap.get(key);
 			if(shareTxt.equalsIgnoreCase(value)){
 				bitlyLink.setText(key);
+				bitlyLink.getElement().setAttribute("alt",key);
+				bitlyLink.getElement().setAttribute("title",key);
 				if(isResourceView){
 					resourceShareTextArea.setText(resourceShareMap.get(linkUrl));
+					resourceShareTextArea.getElement().setAttribute("alt",resourceShareMap.get(linkUrl));
+					resourceShareTextArea.getElement().setAttribute("title",resourceShareMap.get(linkUrl));
 					//collectionShareTextArea.setText(collectionShareMap.get(linkUrl));
 				}else{
 					resourceShareTextArea.setText(collectionShareMap.get(linkUrl));
+					resourceShareTextArea.getElement().setAttribute("alt",resourceShareMap.get(linkUrl));
+					resourceShareTextArea.getElement().setAttribute("title",resourceShareMap.get(linkUrl));
 				}
 			}
 		}
@@ -397,7 +476,7 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 			@Override
 			public void onTwitter() {
 				getUiHandlers().triggerShareDatalogEvent(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getCollectionItemId(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.TWITTER,false);
-				Window.open("http://twitter.com/intent/tweet?text=" + GL1439+removeHtmlTags(collectionItemDo.getResource().getTitle()).replaceAll("\\+", "%2B") +": " + SocialShareView.getEncodedUrl(resourceShareUrl), "_blank", "width=600,height=300");
+				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL1439()+removeHtmlTags(collectionItemDo.getResource().getTitle()).replaceAll("\\+", "%2B") +": " + SocialShareView.getEncodedUrl(resourceShareUrl), "_blank", "width=600,height=300");
 			}
 			@Override
 			public void onFacebook() {
@@ -410,10 +489,10 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 			 */
 			@Override
 			public void onEmail() {
-//				String emailSubject=GL1439+removeHtmlTags(collectionItemDo.getResource().getTitle());
+//				String emailSubject=i18n.GL1439+removeHtmlTags(collectionItemDo.getResource().getTitle());
 				String emailSubject=removeHtmlTags(collectionItemDo.getResource().getTitle());
 				
-				String emailDescription = StringUtil.generateMessage(GL1999,AppClientFactory.getLoggedInUser().getUsername(),GL2000,collectionItemDo.getResource().getTitle(),resourceShareUrl,AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint());
+				String emailDescription = StringUtil.generateMessage(i18n.GL1999(),AppClientFactory.getLoggedInUser().getUsername(),i18n.GL2000(),collectionItemDo.getResource().getTitle(),resourceShareUrl,AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint());
 				
 //				String emailDescription= AppClientFactory.getLoggedInUser().getUsername()+" has shared a Gooru resource with you called, "+collectionItemDo.getResource().getTitle()+". Click the link below to view it: "+"<div><br/></div><div>"+resourceShareUrl+"</div><div><br/></div><div>"+"What is Gooru?"+"<div><br/></div><div>"+"Gooru is a free personalized learning solution that helps users find and remix the best K-12 learning resources on the web. With Gooru, you can organize these materials into teachable and shareable playlists, called collections. In the classroom, Gooru makes it easy to assign collections to students and monitor their progress."+"</div><div><br/></div><div>"+"Visit "+" "+AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()+" "+"to find more great resources. Happy learning!"+"</div>";
 				emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){

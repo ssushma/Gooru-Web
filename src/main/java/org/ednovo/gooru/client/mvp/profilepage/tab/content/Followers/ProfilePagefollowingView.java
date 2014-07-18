@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProfilePagefollowingView extends Composite implements MessageProperties {
+public class ProfilePagefollowingView extends Composite {
 
 	private static ProfilePagefollowingViewUiBinder uiBinder = GWT
 			.create(ProfilePagefollowingViewUiBinder.class);
@@ -27,6 +27,8 @@ public class ProfilePagefollowingView extends Composite implements MessageProper
 	interface ProfilePagefollowingViewUiBinder extends
 			UiBinder<Widget, ProfilePagefollowingView> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel userConatiner;
 	@UiField InlineLabel follwingTextMessage,follwingTextMessageDes;
@@ -60,8 +62,15 @@ public class ProfilePagefollowingView extends Composite implements MessageProper
 	}
 	public void setData(){
 		
-		follwingTextMessage.setText(GL1913);
-		follwingTextMessageDes.setText(GL1914_1);
+		follwingTextMessage.setText(i18n.GL1913());
+		follwingTextMessage.getElement().setId("spnFollwingTextMessage");
+		follwingTextMessage.getElement().setAttribute("alt",i18n.GL1913());
+		follwingTextMessage.getElement().setAttribute("title",i18n.GL1913());
+		follwingTextMessageDes.setText(i18n.GL1914_1());
+		follwingTextMessageDes.getElement().setId("spnFollwingTextMessageDes");
+		follwingTextMessageDes.getElement().setAttribute("alt",i18n.GL1914_1());
+		follwingTextMessageDes.getElement().setAttribute("title",i18n.GL1914_1());
+		
 		follwingTextMessageDes.getElement().setAttribute("style", "font-weight: normal;");
 		userConatiner.clear();
 		
@@ -78,7 +87,8 @@ public class ProfilePagefollowingView extends Composite implements MessageProper
 			ProfilePageUserInfoWidget profilePageUserInfo=new ProfilePageUserInfoWidget(userFollowDo.get(i),tab);
 			userConatiner.add(profilePageUserInfo);
 		}
-		
+		userConatiner.getElement().setId("pnlUserConatiner");
+		seeMorebtn.getElement().setId("btnSeeMorebtn");
 		
 	}
 	@UiHandler("seeMorebtn")

@@ -32,7 +32,6 @@ import org.ednovo.gooru.client.mvp.profilepage.event.RequestFolderOpenHandler;
 import org.ednovo.gooru.client.mvp.profilepage.event.SetUserPublicProfileImageEventHandler;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
 
 import com.google.gwt.event.shared.GwtEvent.Type;

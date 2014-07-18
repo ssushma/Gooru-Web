@@ -28,6 +28,7 @@
 package org.ednovo.gooru.server.service;
 
 import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,7 +48,6 @@ import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.model.user.FilterSettings;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -154,6 +154,10 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	private static final String GOOGLE_RESTENDPOINT="google.restendpoint";
 	
+	private static final String HTTPS = "https";
+	
+	private static final String HTTP = "http";
+	
 	public BaseServiceImpl() {
 
 	}
@@ -199,16 +203,16 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	public String getRestEndPoint() {
 		String restEndPoint = restConstants.getProperty(REST_ENDPOINT);
-		if(getHttpRequest().getScheme().equalsIgnoreCase(MessageProperties.HTTPS)) {
-			restEndPoint = restEndPoint.replaceAll(MessageProperties.HTTP, MessageProperties.HTTPS);
+		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+			restEndPoint = restEndPoint.replaceAll(HTTP, HTTPS);
 		}
 		return restEndPoint;
 	}
 
 	public String getSearchEndPoint() {
 		String searchEndPoint = restConstants.getProperty(SEARCH_ENDPOINT);
-		if(getHttpRequest().getScheme().equalsIgnoreCase(MessageProperties.HTTPS)) {
-			searchEndPoint = searchEndPoint.replaceAll(MessageProperties.HTTP, MessageProperties.HTTPS);
+		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+			searchEndPoint = searchEndPoint.replaceAll(HTTP, HTTPS);
 		}
 		return searchEndPoint;
 	}
@@ -235,18 +239,18 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	public String getHomeEndPoint() {
 		String homeEndPoint = restConstants.getProperty(HOME_ENDPOINT);
-		if(getHttpRequest().getScheme().equalsIgnoreCase(MessageProperties.HTTPS)) {
-			homeEndPoint = homeEndPoint.replaceAll(MessageProperties.HTTP, MessageProperties.HTTPS);
-			ResourceImageUtil.protocol=MessageProperties.HTTPS;
+		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+			homeEndPoint = homeEndPoint.replaceAll(HTTP, HTTPS);
+			ResourceImageUtil.protocol=HTTPS;
 		}
 		return homeEndPoint;
 	}
 	
 	public String getAnalyticsEndPoint() {
 		String analyticsEndPoint = restConstants.getProperty(ANALYTICS_ENDPOINT);
-		if(getHttpRequest().getScheme().equalsIgnoreCase(MessageProperties.HTTPS)) {
-			analyticsEndPoint = analyticsEndPoint.replaceAll(MessageProperties.HTTP, MessageProperties.HTTPS);
-			ResourceImageUtil.protocol=MessageProperties.HTTPS;
+		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+			analyticsEndPoint = analyticsEndPoint.replaceAll(HTTP, HTTPS);
+			ResourceImageUtil.protocol=HTTPS;
 		}
 		return analyticsEndPoint;
 	}
@@ -261,8 +265,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	public String getDocViewerHome() {
 		String docViewerHome = restConstants.getProperty(DOCVIEWER_HOME);
-		if(getHttpRequest().getScheme().equalsIgnoreCase(MessageProperties.HTTPS)) {
-			docViewerHome = docViewerHome.replaceAll(MessageProperties.HTTP, MessageProperties.HTTPS);
+		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+			docViewerHome = docViewerHome.replaceAll(HTTP, HTTPS);
 		}
 		return docViewerHome;
 	}
@@ -273,8 +277,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	public String getProfileImageUrl() {
 		String profileImageUrl = restConstants.getProperty(PROFILE_IMAGE_RESPOSITORY_URL);
-		if(getHttpRequest().getScheme().equalsIgnoreCase(MessageProperties.HTTPS)) {
-			profileImageUrl = profileImageUrl.replaceAll(MessageProperties.HTTP, MessageProperties.HTTPS);
+		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+			profileImageUrl = profileImageUrl.replaceAll(HTTP, HTTPS);
 		}
 		return profileImageUrl;
 	}
@@ -293,8 +297,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	public String getCdnEndPoint() {
 		String cdnEndPoint = restConstants.getProperty(CDN_ENDPOINT);
-		if(getHttpRequest().getScheme().equalsIgnoreCase(MessageProperties.HTTPS)) {
-			cdnEndPoint = cdnEndPoint.replaceAll(MessageProperties.HTTP, MessageProperties.HTTPS);
+		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
+			cdnEndPoint = cdnEndPoint.replaceAll(HTTP, HTTPS);
 		}
 		return cdnEndPoint;
 	}

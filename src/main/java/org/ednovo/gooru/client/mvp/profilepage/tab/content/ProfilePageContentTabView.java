@@ -64,6 +64,8 @@ public class ProfilePageContentTabView extends BaseViewWithHandlers<ProfilePageC
 	 */
 	public ProfilePageContentTabView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		shelfTabSimPanel.getElement().setId("spnlShelfTabSimPanel");
+		publicPPRightContainer.getElement().setId("pnlPublicPPRightContainer");
 	}
 
 	@Override

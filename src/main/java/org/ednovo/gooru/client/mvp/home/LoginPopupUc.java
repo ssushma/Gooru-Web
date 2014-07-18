@@ -55,13 +55,11 @@ import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.DataLogEvents;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -77,6 +75,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -85,7 +84,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-import com.itextpdf.text.log.SysoCounter;
 
 
 /**
@@ -140,6 +138,7 @@ public class LoginPopupUc extends PopupPanel{
 
 	private static final String LOGINEVENT = "loginEvent";
 	private static final int UNAUTHORISED_STATUS_CODE = 401;
+	private static final String GOOGLE_REFRESH_TOKEN = "google-refresh-token";
 	
 	@UiTemplate("LoginPopupUc.ui.xml")
 	interface Binder extends UiBinder<Widget, LoginPopupUc> {
@@ -148,7 +147,7 @@ public class LoginPopupUc extends PopupPanel{
 
 	private static final Binder binder = GWT.create(Binder.class);
 	
-	 private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	 private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	/**
 	 * Class constructor , to create Login Popup. 
@@ -361,24 +360,33 @@ public class LoginPopupUc extends PopupPanel{
 				AppClientFactory.getInjector().getAppService().v2Signin(login.toString(), new SimpleAsyncCallback<UserDo>() {
 					@Override
 					public void onSuccess(UserDo result) {
+						
 						if(result.getStatusCode()!=UNAUTHORISED_STATUS_CODE){
 							MixpanelUtil.Regular_User_Logged_In();
 							if(result.getDateOfBirth()!=null && result.getAccountTypeId()==2){
-							MixpanelUtil.Registration_turns13(); 
-							com.google.gwt.i18n.client.DateTimeFormat dateFormat = com.google.gwt.i18n.client.DateTimeFormat
-										.getFormat("yyyy-MM-dd hh:mm:ss.S");
-							Date convertedCurrentDate = null;
-							convertedCurrentDate = dateFormat.parse(result.getDateOfBirth());
-							age = getAge(convertedCurrentDate);
-							 if(age>=13){
-								 Map<String, String> map = StringUtil.splitQuery(Window.Location
-											.getHref());
+								MixpanelUtil.Registration_turns13(); 
+								com.google.gwt.i18n.client.DateTimeFormat dateFormat = com.google.gwt.i18n.client.DateTimeFormat
+											.getFormat("yyyy-MM-dd hh:mm:ss.S");
+								Date convertedCurrentDate = null;
+								convertedCurrentDate = dateFormat.parse(result.getDateOfBirth());
+								age = getAge(convertedCurrentDate);
+								if(age>=13){
+									Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());
 									map.put("callback", "turn13");
 									AppClientFactory.getPlaceManager().revealPlace(
 											AppClientFactory.getCurrentPlaceToken(), map);
-								  }
+								}
 							}
 							AppClientFactory.setLoggedInUser(result);
+							final String refresh_token = Cookies.getCookie(GOOGLE_REFRESH_TOKEN) !=null && !Cookies.getCookie(GOOGLE_REFRESH_TOKEN).equalsIgnoreCase("") ? Cookies.getCookie(GOOGLE_REFRESH_TOKEN) : null;
+							//Refresh token will be available only if user login using google.
+							if (refresh_token != null){
+								UserDo user = AppClientFactory.getLoggedInUser();
+								user.setRefreshToken(refresh_token);
+							
+								AppClientFactory.setLoggedInUser(user);
+							}
+							
 							AppClientFactory.fireEvent(new SetUserDetailsInPlayEvent(result.getToken()));
 							AppClientFactory.fireEvent(new SetUserDetailsInCollectionPlayEvent(result.getToken(),result.getGooruUId()));
 							//to Set the Options butts visibility in Player for comments.
@@ -433,6 +441,9 @@ public class LoginPopupUc extends PopupPanel{
 								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 								AppClientFactory.fireEvent(new SetButtonEvent());
 								openClasspage();
+							}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_SEARCH) && AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_SEARCH) ){
+								Window.enableScrolling(false);
+								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 							}else{
 								AppClientFactory.resetPlace();
 								Window.enableScrolling(true);
@@ -549,7 +560,7 @@ public class LoginPopupUc extends PopupPanel{
 	    	AppClientFactory.fireEvent(new ShowResourceTabWidgetEvent(getWidgetMode(), true));
 		}
 	    else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT))
-	    {
+	    {	    	
 	    	if(!StudentAssignmentView.getMainContainerStatus())
 	    	{
 	    		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
@@ -560,8 +571,13 @@ public class LoginPopupUc extends PopupPanel{
 	    	}
 	    }*/
 	    else{
-			Window.enableScrolling(true);
-			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+	    	if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
+	    		Window.enableScrolling(false);
+	    		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+	    	}else{
+	    		Window.enableScrolling(true);
+	    		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+	    	}
 			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF) && AppClientFactory.getPlaceManager().getRequestParameter("id") != null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("")){
 				hide();
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);

@@ -28,7 +28,7 @@ import com.google.gwt.i18n.client.Constants;
 
 
 
-public interface CopyOfMessageProperties extends Constants {
+public interface MessageProperties extends Constants {
 	//Special Characters
 	String GL_SPL_SEMICOLON();
 	String GL_SPL_STAR();
@@ -2504,4 +2504,10 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL2016();
 	String GL2017();
 	String GL2018();
+	String GL2019();
+	String GL2020();
+	String GL2021();
+	String GL2022();
+	String GL2023();
+	
 }

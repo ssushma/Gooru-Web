@@ -24,8 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.body;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.nitrous.gwt.earth.client.api.GELayerId;
 import com.nitrous.gwt.earth.client.api.GEPlugin;
 import com.nitrous.gwt.earth.client.api.GEPluginReadyListener;
@@ -35,9 +36,6 @@ import com.nitrous.gwt.earth.client.api.GoogleEarthWidget;
 import com.nitrous.gwt.earth.client.api.KmlObject;
 import com.nitrous.gwt.earth.client.api.KmlTour;
 import com.nitrous.gwt.earth.client.api.event.KmlLoadCallback;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.user.client.Window;
 
 public class GwtEarthWidget extends Composite {
 	 private GoogleEarthWidget earth;

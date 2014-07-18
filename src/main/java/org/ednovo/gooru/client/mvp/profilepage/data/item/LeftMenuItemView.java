@@ -55,6 +55,9 @@ public class LeftMenuItemView extends Composite {
 	public LeftMenuItemView(ProfileLibraryDo profileLibraryDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		unitMenuItem.setText(profileLibraryDo.getTitle());
+		unitMenuItem.getElement().setId("lblUnitMenuItem");
+		unitMenuItem.getElement().setAttribute("alt",profileLibraryDo.getTitle());
+		unitMenuItem.getElement().setAttribute("title",profileLibraryDo.getTitle());
 		setUnitId(profileLibraryDo.getGooruOid());
 	}
 

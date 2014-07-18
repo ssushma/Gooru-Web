@@ -3,7 +3,6 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.DriveEvent;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -16,7 +15,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GoogleWebResource extends Composite implements MessageProperties {
+public class GoogleWebResource extends Composite {
 	private static GoogleWebResourceUiBinder uiBinder = GWT
 			.create(GoogleWebResourceUiBinder.class);
 
@@ -46,6 +45,12 @@ public class GoogleWebResource extends Composite implements MessageProperties {
 		this.driveDo = driveDo;
 		System.out.println("value s enter  wideget" + driveDo.getTitle());
 		driveText.setText(driveDo.getTitle());
+		driveText.getElement().setId("htmlDriveText");
+		driveText.getElement().setAttribute("alt", driveDo.getTitle());
+		driveText.getElement().setAttribute("title", driveDo.getTitle());
+		contentPanel.getElement().setId("pnlContentPanel");
+		folderContent.getElement().setId("pnlFolderContent");
+		imageIcon.getElement().setId("lblImageIcon");
 		contentPanel.addDomHandler(contentClick, ClickEvent.getType());
 		type = driveDo.getMimeType();
 		String dataType[] = type.split("\\.");

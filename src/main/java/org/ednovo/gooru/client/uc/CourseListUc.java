@@ -38,10 +38,10 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.event.AddCourseEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -57,10 +57,12 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CourseListUc extends PopupPanel implements MessageProperties {
+public class CourseListUc extends PopupPanel {
 
 	private static CourseListUcUiBinder uiBinder = GWT
 			.create(CourseListUcUiBinder.class);
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CourseListUcUiBinder extends UiBinder<Widget, CourseListUc> {
 	}
@@ -111,9 +113,24 @@ public class CourseListUc extends PopupPanel implements MessageProperties {
 		isSelected=false;
 		this.center();
 		this.show();
-		titleLbl.setText(GL0847);
-		cancelCourseBtn.setText(GL0142);
-		addCourseBtnLbl.setText(GL0590);
+		titleLbl.setText(i18n.GL0847());
+		titleLbl.getElement().setId("errlblErrorLabel");
+		titleLbl.getElement().setAttribute("alt", i18n.GL0847());
+		titleLbl.getElement().setAttribute("title", i18n.GL0847());
+		cancelCourseBtn.setText(i18n.GL0142());
+		cancelCourseBtn.getElement().setId("btnCancelCourseBtn");
+		cancelCourseBtn.getElement().setAttribute("alt", i18n.GL0142());
+		cancelCourseBtn.getElement().setAttribute("title", i18n.GL0142());
+		addCourseBtnLbl.setText(i18n.GL0590());
+		addCourseBtnLbl.getElement().setId("bluebtnAddCourseBtnLbl");
+		addCourseBtnLbl.getElement().setAttribute("alt", i18n.GL0590());
+		addCourseBtnLbl.getElement().setAttribute("title", i18n.GL0590());
+		loadingPanel.getElement().setId("pnlLoadingPanel");
+		addResourceTabContainer.getElement().setId("pnlAddResourceTabContainer");
+		contentPanel.getElement().setId("fpnlContentPanel");
+		buttonsPanel.getElement().setId("pnlButtonsPanel");
+		addCourseBtnPanel.getElement().setId("pnlAddCourseBtnPanel");
+		
 		loadingPanel.setVisible(true);
 		setCourseData();
 		collectionId=collectionDo.getGooruOid();
@@ -253,8 +270,13 @@ public class CourseListUc extends PopupPanel implements MessageProperties {
 			collectionId=collectionDo.getGooruOid();
 			for (CodeDo code : collectionDo.getTaxonomySet()) {
 				if(code.getDepth()==2){
+
 					deleteCourse(collectionId, code.getCodeId());	
 				}
+
+					//oldCourseId=Integer.toString(code.getCodeId());
+					//updateCourse(collectionId, oldCourseId,"delete");					
+
 			}
 			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
 				MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
@@ -264,7 +286,7 @@ public class CourseListUc extends PopupPanel implements MessageProperties {
 			hide();
 			Window.enableScrolling(true);
 		}else{
-			new AlertContentUc(GL0061,GL1022);
+			new AlertContentUc(i18n.GL0061(),i18n.GL1022());
 		}
 		
 		
@@ -277,16 +299,15 @@ public class CourseListUc extends PopupPanel implements MessageProperties {
 			@Override
 			public void onSuccess(CollectionDo result) {	
 				if(collectionDo!=null){
-					Set<CodeDo> codeSet=new HashSet<CodeDo>();
-					CodeDo codeDo=new CodeDo();
-					codeDo.setCodeId(Integer.valueOf(courseCode));
-					codeDo.setDepth((short)2);
-					codeSet.add(codeDo);
-					collectionDo.setTaxonomySet(codeSet);
-				}
+ 					Set<CodeDo> codeSet=new HashSet<CodeDo>();
+ 					CodeDo codeDo=new CodeDo();
+ 					codeDo.setCodeId(Integer.valueOf(courseCode));
+ 					codeDo.setDepth((short)2);
+ 					codeSet.add(codeDo);
+ 					collectionDo.setTaxonomySet(codeSet);
+ 				}
 			}
 		});
-
 	}
 	public void deleteCourse(String collectionId, int courseCode) {
 		AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionId, courseCode, new SimpleAsyncCallback<Void>() {
@@ -297,6 +318,4 @@ public class CourseListUc extends PopupPanel implements MessageProperties {
 			}
 		});
 	}
-	
-	
 }

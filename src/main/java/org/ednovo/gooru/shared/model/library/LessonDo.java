@@ -41,6 +41,7 @@ public class LessonDo implements Serializable {
 	private ThumbnailDo thumbnails;
 	private ArrayList<ConceptDo> collection;
 	private String code;
+	private ArrayList<ConceptDo> concept;
 	
 	public LessonDo(){}
 	
@@ -73,5 +74,11 @@ public class LessonDo implements Serializable {
 	}
 	public void setCode(String code) {
 		this.code = code;
+	}
+	public ArrayList<ConceptDo> getConcept() {
+		return concept;
+	}
+	public void setConcept(ArrayList<ConceptDo> concept) {
+		this.concept = concept;
 	}
 }

@@ -577,6 +577,12 @@
 	font-weight:bold;
 }
 
+.headerPanel {
+	position: relative;
+	width: 1000px;
+	margin: 0 auto;
+}
+
 #landingBanner .header {
 	color:white;
 	font-size:38px;
@@ -1070,7 +1076,7 @@ margin-bottom: 15px;
 	height: 78px;
 	position: absolute;
 	top: 103px;
-	right: 188px;
+	right: 9px;
 }
 
 /* SAUSD Banner View */

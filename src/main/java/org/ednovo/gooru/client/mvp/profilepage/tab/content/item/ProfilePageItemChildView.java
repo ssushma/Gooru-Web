@@ -33,8 +33,8 @@ import org.ednovo.gooru.client.mvp.profilepage.event.RefreshProfileListEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.RequestCollectionOpenEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.RequestFolderOpenEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -54,7 +54,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Gooru Team
  * 
  */
-public class ProfilePageItemChildView extends ChildView<ProfilePageItemChildPresenter> implements IsProfilePageItemView,MessageProperties {
+public class ProfilePageItemChildView extends ChildView<ProfilePageItemChildPresenter> implements IsProfilePageItemView {
 
 	@UiField
 	FlowPanel childItemFolderIcon, actionVerPanel;
@@ -68,6 +68,8 @@ public class ProfilePageItemChildView extends ChildView<ProfilePageItemChildPres
 	private static ProfilePageItemChildViewUiBinder uiBinder = GWT.create(ProfilePageItemChildViewUiBinder.class);
 
 	interface ProfilePageItemChildViewUiBinder extends UiBinder<Widget, ProfilePageItemChildView> {}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
 	 * Class constructor
@@ -81,6 +83,13 @@ public class ProfilePageItemChildView extends ChildView<ProfilePageItemChildPres
 		addDomHandler(new ActionPanelHover(), MouseOverEvent.getType());
 		addDomHandler(new ActionPanelOut(), MouseOutEvent.getType());
 		actionVerPanel.setVisible(false);
+		
+		
+		childItemFolderIcon.getElement().setId("fpnlChildItemFolderIcon");
+		lblChildItemTitle.getElement().setId("lblChildItemTitle");
+		lblChildItemDescription.getElement().setId("lblChildItemDescription");
+		actionVerPanel.getElement().setId("fpnlActionVerPanel");
+		childItemOpenBtn.getElement().setId("btnChildItemOpenBtn");
 	}
 
 	/**
@@ -105,8 +114,12 @@ public class ProfilePageItemChildView extends ChildView<ProfilePageItemChildPres
 
 	private void setData(final CollectionItemDo collectionItemDo) {
 		lblChildItemTitle.setText(collectionItemDo.getResource().getTitle());
+		lblChildItemTitle.getElement().setAttribute("alt",collectionItemDo.getResource().getTitle());
+		lblChildItemTitle.getElement().setAttribute("title",collectionItemDo.getResource().getTitle());
 		lblChildItemDescription.setText(collectionItemDo.getResource().getGoals());
-		childItemOpenBtn.setText(GL1115);
+		lblChildItemDescription.getElement().setAttribute("alt",collectionItemDo.getResource().getGoals());
+		lblChildItemDescription.getElement().setAttribute("title",collectionItemDo.getResource().getGoals());
+		childItemOpenBtn.setText(i18n.GL1115());
 		childItemOpenBtn.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {

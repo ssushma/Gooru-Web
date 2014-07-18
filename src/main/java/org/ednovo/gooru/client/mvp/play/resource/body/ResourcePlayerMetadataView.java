@@ -30,7 +30,6 @@ import java.util.Date;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.classpages.event.GetStudentJoinListEvent;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
@@ -42,10 +41,10 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
@@ -77,7 +76,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePlayerMetadataUiHandlers> implements IsResourcePlayerMetadataView, MessageProperties{
+public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePlayerMetadataUiHandlers> implements IsResourcePlayerMetadataView{
 
 	@UiField FlowPanel resourceWidgetContainer;
 	@UiField
@@ -154,6 +153,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	interface ResourcePlayerMetadataViewUiBinder extends UiBinder<Widget, ResourcePlayerMetadataView> {
 	}
 	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 //	@UiFactory
 //	public SimpleRadioButton createRadioButton() {
 //	    return new SimpleRadioButton("");
@@ -174,11 +175,30 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		singleEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
 		//emoticsContainer.addMouseOverHandler(new OnEmoticsMouseOver());
 		//emoticsContainer.addMouseOutHandler(new OnEmoticsMouseOut());
-		reactionToolTipOne.setText(GL0581); 
-		reactionToolTipTwo.setText(GL0582); 
-		reactionToolTipThree.setText(GL0583); 
-		reactionToolTipFour.setText(GL0584); 
-		reactionToolTipFive.setText(GL0585); 
+		reactionToolTipOne.setText(i18n.GL0581()); 
+		reactionToolTipOne.getElement().setId("lblReactionToolTipOne");
+		reactionToolTipOne.getElement().setAttribute("alt",i18n.GL0581());
+		reactionToolTipOne.getElement().setAttribute("title",i18n.GL0581());
+		
+		reactionToolTipTwo.setText(i18n.GL0582()); 
+		reactionToolTipTwo.getElement().setId("lblReactionToolTipTwo");
+		reactionToolTipTwo.getElement().setAttribute("alt",i18n.GL0582());
+		reactionToolTipTwo.getElement().setAttribute("title",i18n.GL0582());
+		
+		reactionToolTipThree.setText(i18n.GL0583()); 
+		reactionToolTipThree.getElement().setId("lblReactionToolTipThree");
+		reactionToolTipThree.getElement().setAttribute("alt",i18n.GL0583());
+		reactionToolTipThree.getElement().setAttribute("title",i18n.GL0583());
+		
+		reactionToolTipFour.setText(i18n.GL0584()); 
+		reactionToolTipFour.getElement().setId("lblReactionToolTipFour");
+		reactionToolTipFour.getElement().setAttribute("alt",i18n.GL0584());
+		reactionToolTipFour.getElement().setAttribute("title",i18n.GL0584());
+		
+		reactionToolTipFive.setText(i18n.GL0585()); 
+		reactionToolTipFive.getElement().setId("lblReactionToolTipFive");
+		reactionToolTipFive.getElement().setAttribute("alt",i18n.GL0585());
+		reactionToolTipFive.getElement().setAttribute("title",i18n.GL0585());
 		
 		/*rating1 = new SimpleRadioButton("rating");
 		rating2 = new SimpleRadioButton("rating");
@@ -188,7 +208,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 //		starValue.setVisible(false);
 		starValue.setVisible(true);
-		starValue.setText(GL1879);
+		starValue.setText(i18n.GL1879());
+		starValue.getElement().setId("lblStarValue");
+		starValue.getElement().setAttribute("alt",i18n.GL1879());
+		starValue.getElement().setAttribute("title",i18n.GL1879());
 		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			emoticsContainer.removeFromParent();
@@ -240,6 +263,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			four_star.addMouseOutHandler(new OnStarMouseOut(FOUR_STAR));
 			five_star.addMouseOutHandler(new OnStarMouseOut(FIVE_STAR));
 		
+			setId();
 	}
 
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
@@ -253,8 +277,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 		if(collectionItemDo.getResource().getTitle()!=null){
 			resourceTitleLbl.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
+			resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
+			resourceTitleLbl.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 		}else{
 			resourceTitleLbl.setHTML("");
+			resourceTitleLbl.getElement().setAttribute("alt","");
+			resourceTitleLbl.getElement().setAttribute("title","");
 		}
 		getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
 		if(collectionItemDo.getResource().getResourceSource()!=null){
@@ -264,9 +292,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				String resourceSource=collectionItemDo.getResource().getResourceSource().getAttribution();
 				if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
 					if(resourceSource.length() > 100){
-					resourcePublisher.setText(GL0566+resourceSource.substring(0, 100)+"...");
+					resourcePublisher.setText(i18n.GL0566()+resourceSource.substring(0, 100)+"...");
 					}else{
-						resourcePublisher.setText(GL0566+resourceSource);
+						resourcePublisher.setText(i18n.GL0566()+resourceSource);
 					}
 				}else
 				{
@@ -321,8 +349,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			if(collectionItemDo.getResource().getTitle()!=null){
 				int sequenceNumber=collectionItemDo.getItemSequence();
 				resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
+				resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
+				resourceTitleLbl.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			}else{
 				resourceTitleLbl.setHTML("");
+				resourceTitleLbl.getElement().setAttribute("alt","");
+				resourceTitleLbl.getElement().setAttribute("title","");
 			}
 			getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
 			if(collectionItemDo.getResource().getResourceSource()!=null){
@@ -332,9 +364,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					if(resourceSource != null && !resourceSource.equals("") && !resourceSource.equals("null")){
 						if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
 							if(resourceSource.length() > 100){
-							resourcePublisher.setText(GL0566+resourceSource.substring(0, 100)+"...");
+							resourcePublisher.setText(i18n.GL0566()+resourceSource.substring(0, 100)+"...");
 							}else{
-								resourcePublisher.setText(GL0566+resourceSource);
+								resourcePublisher.setText(i18n.GL0566()+resourceSource);
 							}
 						}else{resourcePublisher.setText("");
 						}
@@ -365,6 +397,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		resourceWidgetContainer.clear();
 		String resourceTypeName=collectionItemDo.getResource().getResourceType().getName();
 		wrapperContainerField.getElement().getStyle().clearHeight();
+		System.out.println("resourceTypeName:::"+resourceTypeName);
+		System.out.println("collectionItemDo.getResource().getUrl():::"+collectionItemDo.getResource().getUrl());
 		if(resourceTypeName.equalsIgnoreCase("video/youtube")){
 			wrapperContainerField.getElement().getStyle().setHeight(525	, Unit.PX);
 			resourceWidgetContainer.add(new FlashAndVideoPlayerWidget(ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl()), collectionItemDo.getStart(), collectionItemDo.getStop()));
@@ -409,6 +443,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				}
 			}
 		}else {
+
+			
 			String[] urlFormat = collectionItemDo.getResource().getUrl().split("\\.");
 			String urlExtension = urlFormat[urlFormat.length - 1];
 			if(urlExtension.equalsIgnoreCase("pdf")){
@@ -423,6 +459,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				String signedFlag=resourceSourceUrl.contains("http")||resourceSourceUrl.contains("https")?"0":"1";
 				String startPage=collectionItemDo.getStart()!=null?collectionItemDo.getStart():"1";
 				resourceWidgetContainer.add(new WebResourceWidget(AppClientFactory.getLoggedInUser().getSettings().getDocViewerHome()+"?startPage="+startPage+"&endPage=&signedFlag="+signedFlag+"&oid="+collectionItemDo.getResource().getGooruOid()+"&appKey="+AppClientFactory.getLoggedInUser().getSettings().getDocViewerPoint()+"&url="+resourceSourceUrl));
+			}
+			else
+			{
+				String resourceSourceUrl="";
+				if(!collectionItemDo.getResource().getUrl().substring(0, 4).equalsIgnoreCase("http")){
+					resourceSourceUrl = collectionItemDo.getResource().getUrl();
+					resourceSourceUrl=collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+resourceSourceUrl;
+				}else{
+					resourceSourceUrl=collectionItemDo.getResource().getUrl();
+				}
+				resourceWidgetContainer.add(new WebResourceWidget(resourceSourceUrl));
 			}
 		}
 	}
@@ -1250,7 +1297,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}else{
 			starValue.setVisible(true);
-			starValue.setText(GL1879);
+			starValue.setText(i18n.GL1879());
 			setStarRatingValue(0);
 		}
 	
@@ -1331,6 +1378,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					clearAllStars();
 					one_star.getElement().addClassName(FILLED_BLUE);
 					mouseOverStarValue.setText(POOR);
+					mouseOverStarValue.getElement().setAttribute("alt",POOR);
+					mouseOverStarValue.getElement().setAttribute("title",POOR);
 				}else{
 					starValue.setVisible(true);
 				}
@@ -1340,6 +1389,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					one_star.getElement().addClassName(FILLED_BLUE);
 					two_star.getElement().addClassName(FILLED_BLUE);
 					mouseOverStarValue.setText(FAIR);
+					mouseOverStarValue.getElement().setAttribute("alt",FAIR);
+					mouseOverStarValue.getElement().setAttribute("title",FAIR);
 				}else{
 					starValue.setVisible(true);
 				}
@@ -1350,6 +1401,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					two_star.getElement().addClassName(FILLED_BLUE);
 					three_star.getElement().addClassName(FILLED_BLUE);
 					mouseOverStarValue.setText(GOOD);
+					mouseOverStarValue.getElement().setAttribute("alt",GOOD);
+					mouseOverStarValue.getElement().setAttribute("title",GOOD);
 				}else{
 					starValue.setVisible(true);
 				}
@@ -1361,6 +1414,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					three_star.getElement().addClassName(FILLED_BLUE);
 					four_star.getElement().addClassName(FILLED_BLUE);
 					mouseOverStarValue.setText(VERY_GOOD);
+					mouseOverStarValue.getElement().setAttribute("alt",VERY_GOOD);
+					mouseOverStarValue.getElement().setAttribute("title",VERY_GOOD);
 				}else{
 					starValue.setVisible(true);
 				}
@@ -1373,6 +1428,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					four_star.getElement().addClassName(FILLED_BLUE);
 					five_star.getElement().addClassName(FILLED_BLUE);
 					mouseOverStarValue.setText(EXCELLENT);
+					mouseOverStarValue.getElement().setAttribute("alt",EXCELLENT);
+					mouseOverStarValue.getElement().setAttribute("title",EXCELLENT);
 				}
 
 			}
@@ -1392,18 +1449,28 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			if(starScore.equalsIgnoreCase(ONE_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
+				mouseOverStarValue.getElement().setAttribute("alt","");
+				mouseOverStarValue.getElement().setAttribute("title","");
 			}
 			
 			if(!starValue.getText().equals(DEFAULT_RATING_TEXT)){
@@ -1556,5 +1623,28 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		starValue.setText(DEFAULT_RATING_TEXT);
 		clearAllStars();
 	}
-	
+	public void setId(){
+		wrapperContainerField.getElement().setId("fpnlWrapperContainerField");
+		collectionContainer.getElement().setId("pnlCollectionContainer");
+		ratingsContainer.getElement().setId("pnlRatingsContainer");
+		mouseOverStarValue.getElement().setId("lblMouseOverStarValue");
+		one_star.getElement().setId("divOne_star");
+		two_star.getElement().setId("divTwo_star");
+		three_star.getElement().setId("divThree_star");
+		four_star.getElement().setId("divFour_star");
+		five_star.getElement().setId("divFive_star");
+		emoticsContainer.getElement().setId("epnlEmoticsContainer");
+		singleEmoticsContainer.getElement().setId("pnlSingleEmoticsContainer");
+		selectedEmoticButton.getElement().setId("btnSelectedEmoticButton");
+		needHelpButton.getElement().setId("btnNeedHelpButton");
+		doNotUnderstandEmoticButton.getElement().setId("btnDoNotUnderstandEmoticButton");
+		mehEmoticButton.getElement().setId("btnMehEmoticButton");
+		understandEmoticButton.getElement().setId("btnUnderstandEmoticButton");
+		canExplainEmoticButton.getElement().setId("btnCanExplainEmoticButton");
+		forwardButton.getElement().setId("btnForwardButton");
+		backwardButton.getElement().setId("btnBackwardButton");
+		resourceTitleLbl.getElement().setId("htmlResourceTitleLbl");
+		resourcePublisher.getElement().setId("lblResourcePublisher");
+		resourceWidgetContainer.getElement().setId("fpnlResourceWidgetContainer");
+	}
 }

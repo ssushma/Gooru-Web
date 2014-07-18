@@ -212,6 +212,7 @@
 							<g:FlowPanel styleName="{res1.css.standardsCont}">
 								<uc:AppSuggestBox ui:field="standardSgstBox"
 									width="271px" height="19px" />
+								<g:HTMLPanel ui:field="errorContainer"></g:HTMLPanel>
 								<g:Label styleName="{res1.css.standardMaxHide}" ui:field="standardMaxMsg" />
 								<g:FlowPanel ui:field="standardsPanel"
 									styleName="{res1.css.collectionStandardsMargin}" />
@@ -247,10 +248,11 @@
          
 	
      <g:HTMLPanel styleName="{addWebResourceStyle.addResourceButtonContainer}" ui:field="buttonContainer">
-     	<g:Button styleName="grayPrimaryButton" ui:field="cancelButton"></g:Button>
-        <uc:HTMLEventPanel styleName="{addWebResourceStyle.addResourceOk}" ui:field="addQuestionResourceButton">
+         <uc:HTMLEventPanel styleName="{addWebResourceStyle.addResourceOk}" ui:field="addQuestionResourceButton">
           <gg:BlueButtonUc styleName="primary" ui:field="addbutton"></gg:BlueButtonUc>
         </uc:HTMLEventPanel>
+     	<g:Button styleName="grayPrimaryButton" ui:field="cancelButton"></g:Button>
+        
       </g:HTMLPanel>
       <g:Label  styleName="{addWebResourceStyle.addResourceButtonContainer}" ui:field="loadingTextLbl"></g:Label>
       </g:FlowPanel>
