@@ -42,6 +42,7 @@ import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
@@ -414,7 +415,7 @@ public interface ResourceService extends BaseService {
 	 * 
 	*/
 	
-	void refreshGoogleAccessToken(String refreshToken) throws GwtException, ServerDownException;
+	public GoogleToken refreshGoogleAccessToken(String refreshToken) throws GwtException, ServerDownException;
 
 	//List<DriveDo> getfolderList(String id)throws GwtException, ServerDownException;
 
