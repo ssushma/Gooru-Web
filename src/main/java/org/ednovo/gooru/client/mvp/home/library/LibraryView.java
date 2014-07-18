@@ -608,7 +608,12 @@ public class LibraryView extends Composite implements  ClickHandler {
 				final JsonReader<HashMap<String, SubjectDo>> courseMapReader = factory.getReader();
 				String map = null;
 				final String libraryToken = StringUtil.getPublicLibraryName(getPlaceToken());
-				Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
+				Map<String, String> params = new HashMap<String,String>();
+				try {
+					params = StringUtil.splitQuery(Window.Location.getHref());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				
 				if(stockStore!=null&&stockStore.getItem(libraryToken+"courseMapDataSerializedStr")!=null&&params.size()==0){
 					map = stockStore.getItem(libraryToken+"courseMapDataSerializedStr");
