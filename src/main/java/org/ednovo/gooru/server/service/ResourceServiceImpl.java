@@ -480,10 +480,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 			if(taxonomyCode!=null){
 				JSONArray taxonomySet = new JSONArray();
- 				JSONObject code = new JSONObject();
- 				code.put("codeId", taxonomyCode);
- 				taxonomySet.put(code);
- 				collectionTypeJsonObject.put("taxonomySet", taxonomySet);
+				JSONObject code = new JSONObject();
+				code.put("codeId", taxonomyCode);
+				taxonomySet.put(code);
+				collectionTypeJsonObject.put("taxonomySet", taxonomySet);
+
 			}
 			if(mediaType!=null){
 				collectionTypeJsonObject.put("mediaType", mediaType);
@@ -1361,11 +1362,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 			taxonomySetObj.put("taxonomySet", codeIdJsonArray);
 			taxonomyObject.put("resource", taxonomySetObj);
-		
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor
 					.put(url, getRestUsername(), getRestPassword(),
 							taxonomyObject.toString());
-			//jsonRep = jsonResponseRep.getJsonRepresentation();
 			
 		} catch (Exception ex) {
 			
