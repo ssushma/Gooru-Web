@@ -596,6 +596,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		if(!AppClientFactory.isAnonymous()){
 			metadataPresenter.getFlagedReport(collectionDo.getGooruOid());
 		}
+		getView().getNavigationContainer().setVisible(true);
+		setNavigationResourcesView(collectionDo.getGooruOid(), null, true);
 		metadataPresenter.setCollectionHomeMetadata();
 		metadataPresenter.getBackToClassButton().setVisible(false);
 		makeButtonActive(tabView);
@@ -638,7 +640,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		clearIframeContent();
 		this.collectionItemDo=collectionItemDo;
-		clearSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT);
+		//clearSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT);
+		getView().getNavigationContainer().setVisible(true);
+		setNavigationResourcesView(collectionDo.getGooruOid(), collectionItemDo.getCollectionItemId(), false);
 		updateResourceViewCount(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getViews().toString(),RESOURCE,collectionItemId);
 		createPlayerDataLogs();
 		setTotalTimeSpentOnSummaryPage();
@@ -798,7 +802,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			}
 		}
 		else if(tabView.equals("navigation")){
-			setNavigationResourcesView(collectionId,resourceId,isCollectionHome);
+			//setNavigationResourcesView(collectionId,resourceId,isCollectionHome);
 		}else if(tabView.equals("share")){
 			setCollectionShareView(collectionId,resourceId);
 		}else if(tabView.equals("narration")){
@@ -1006,15 +1010,14 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 
 	public void setNavigationResourcesView(String collectionId,String resourceId,boolean isCollectionHome){
-		collectionPlayerTocPresenter.setNavigationResources(collectionDo);
+		collectionPlayerTocPresenter.setNavigationResources(collectionDo,isCollectionHome);
 		collectionPlayerTocPresenter.setResourceActive(collectionId, resourceId, isCollectionHome);
 		setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, collectionPlayerTocPresenter,false);
-		new CustomAnimation(getView().getNavigationContainer()).run(400);
-
+		//new CustomAnimation(getView().getNavigationContainer()).run(400);
 	}
 	public void showNarrationPopup(String resourceId){
 		CollectionItemDo collectionItemDo=getCollectionItemDo(resourceId);
-		clearSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT);
+		//clearSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT);
 		resourceNarrationPresenter.setNarrationMetadata(collectionItemDo,collectionDo.getUser().getUsernameDisplay(),collectionDo.getUser().getGooruUId());
 		try{
 			if(Document.get().getElementById("playerid")!=null){
@@ -1026,7 +1029,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}catch(Exception e){
 			
 		}
-		addToPopupSlot(resourceNarrationPresenter);
+	//	addToPopupSlot(resourceNarrationPresenter);
 	}
 	
 	public void setResourceInfoView(String resourceId){

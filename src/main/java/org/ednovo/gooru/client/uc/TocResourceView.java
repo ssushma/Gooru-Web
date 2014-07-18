@@ -66,7 +66,7 @@ public class TocResourceView extends Composite implements HasClickHandlers{
 	@UiField Label resourceTypeImage,resourceIndex,resourceCategory,resourceSourceName;
 	@UiField HTMLPanel resourceTitle;
 	@UiField HTML resourceHoverTitle;
-	@UiField FlowPanel tocResourceImageContainer,tocResourceContainer,ratingWidgetPanel;
+	@UiField FlowPanel tocResourceImageContainer,tocResourceContainer,ratingWidgetPanel,resourceThumbnailContainer;
 	private CollectionItemDo collectionItemDo=null;
 	
 	private String collectionItemId=null;
@@ -291,7 +291,7 @@ public class ResourceRequest implements ClickHandler{
 		resourceHoverTitle.getElement().setAttribute("title", getHTML(title).toString());
 	}
 	public void setNavigationResourceTitle(String title,Integer itemIndex){
-		resourceTitle.add(getHTML(itemIndex+". "+title));
+		resourceTitle.add(getHTML(itemIndex+""));
 		resourceTitle.getElement().setAttribute("alt", itemIndex+". "+title);
 		resourceTitle.getElement().setAttribute("title", itemIndex+". "+title);
 		resourceHoverTitle.setHTML(title.toString());
@@ -417,8 +417,16 @@ public class ResourceRequest implements ClickHandler{
 	private HTML getHTML(String html){
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		contentHtml.setHTML(html);
-		contentHtml.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setEllipses());
+		contentHtml.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sequenceNumber());
 		return contentHtml;
+	}
+	
+	public void hideResourceThumbnailContainer(boolean hide){
+		if(hide){
+			resourceThumbnailContainer.setVisible(false);
+		}else{
+			resourceThumbnailContainer.setVisible(true);
+		}
 	}
 	
 	UpdateRatingsInRealTimeHandler setRatingWidgetMetaData = new UpdateRatingsInRealTimeHandler() {	

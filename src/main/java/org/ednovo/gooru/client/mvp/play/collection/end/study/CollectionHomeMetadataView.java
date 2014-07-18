@@ -24,17 +24,26 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.end.study;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCollectionViewCountEvent;
+import org.ednovo.gooru.client.mvp.play.collection.event.UpdatePreviewViewCountEvent;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopupPlayerVc;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.customize.RenameCustomizePopUp;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.share.SharePlayerVc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
+import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -44,6 +53,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -58,6 +68,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionHomeMetadataUiHandlers> implements IsCollectionHomeMetadataView{
 	
@@ -76,7 +87,10 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 	
+	private HandlerRegistration studyButtonClickHandler;
+	
 	private String collectionTitle;
+	
 	private static PreviewEndViewUiBinder uiBinder = GWT.create(PreviewEndViewUiBinder.class);
 
 	interface PreviewEndViewUiBinder extends UiBinder<Widget, CollectionHomeMetadataView> {
@@ -138,6 +152,46 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		shareCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		//setReplyLink();
 		collectionTitle = collectionDo.getTitle();
+		if(studyButtonClickHandler!=null) {
+			studyButtonClickHandler.removeHandler();
+		}
+		studyButtonClickHandler=studyButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				Map<String,String> params = new LinkedHashMap<String,String>();
+				params.put("id", collectionDo.getGooruOid());
+				params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
+				
+				MixpanelUtil.Preview_Player_Click_Preview();
+				List<CollectionItemDo> collectionItems=collectionDo.getCollectionItems();
+				if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
+					AppClientFactory.fireEvent(new UpdatePreviewViewCountEvent());
+				}else{
+					AppClientFactory.fireEvent(new UpdateCollectionViewCountEvent());
+				}
+				if(collectionItems.size()>0){
+					CollectionItemDo collectionItemDo=collectionItems.get(0);
+					if(collectionItemDo.getCollectionItemId() != null)
+					{
+						if(collectionItemDo.getNarration()!=null&&!collectionItemDo.getNarration().trim().equals("")){
+							params.put("rid", collectionItemDo.getCollectionItemId());
+							params.put("tab", "narration");
+							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+							AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+						}else{
+							params.put("rid", collectionItemDo.getCollectionItemId());
+							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+							AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+						}
+					}
+				}
+				else{
+					params.put("view", "end");
+					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+				}
+			}
+		});
 	}
 	public void setReplyLink(){
 		Anchor resourceAnchor=new Anchor();
