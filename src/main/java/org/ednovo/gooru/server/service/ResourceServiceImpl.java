@@ -24,10 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.service;
 
-import java.io.IOException;
-
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -48,7 +45,6 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
-import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -70,6 +66,7 @@ import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfanityDo;
+import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.json.JSONArray;
@@ -483,10 +480,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 			if(taxonomyCode!=null){
 				JSONArray taxonomySet = new JSONArray();
- 				JSONObject code = new JSONObject();
- 				code.put("codeId", taxonomyCode);
- 				taxonomySet.put(code);
- 				collectionTypeJsonObject.put("taxonomySet", taxonomySet);
+				JSONObject code = new JSONObject();
+				code.put("codeId", taxonomyCode);
+				taxonomySet.put(code);
+				collectionTypeJsonObject.put("taxonomySet", taxonomySet);
+
 			}
 			if(mediaType!=null){
 				collectionTypeJsonObject.put("mediaType", mediaType);
@@ -1364,11 +1362,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 			taxonomySetObj.put("taxonomySet", codeIdJsonArray);
 			taxonomyObject.put("resource", taxonomySetObj);
-		
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor
 					.put(url, getRestUsername(), getRestPassword(),
 							taxonomyObject.toString());
-			//jsonRep = jsonResponseRep.getJsonRepresentation();
 			
 		} catch (Exception ex) {
 			
@@ -1571,13 +1567,21 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	}
 
 	@Override
-	public void refreshGoogleAccessToken(String refreshToken) throws GwtException {
+	public GoogleToken refreshGoogleAccessToken(String refreshToken) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getHomeEndPoint(),
 				UrlToken.REFRESH_TOKEN, refreshToken);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeGoogleToken(jsonRep.toString());
 	}
 	
+	public GoogleToken deserializeGoogleToken(String jsonRep) {
+        if (jsonRep != null) {
+                return (GoogleToken) JsonDeserializer.deserialize(jsonRep, new TypeReference<GoogleToken>() {
+                });
+        }
+        return new GoogleToken();
+	}
 	
 }

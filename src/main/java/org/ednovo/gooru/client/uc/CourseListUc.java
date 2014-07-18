@@ -270,10 +270,13 @@ public class CourseListUc extends PopupPanel {
 			collectionId=collectionDo.getGooruOid();
 			for (CodeDo code : collectionDo.getTaxonomySet()) {
 				if(code.getDepth()==2){
+
+					deleteCourse(collectionId, code.getCodeId());	
+				}
+
 					//oldCourseId=Integer.toString(code.getCodeId());
-					//updateCourse(collectionId, oldCourseId,"delete");				
-					}
-				
+					//updateCourse(collectionId, oldCourseId,"delete");					
+
 			}
 			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
 				MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
@@ -305,18 +308,14 @@ public class CourseListUc extends PopupPanel {
  				}
 			}
 		});
-
 	}
-	
 	public void deleteCourse(String collectionId, int courseCode) {
 		AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionId, courseCode, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				Set<CodeDo> codeSet=new HashSet<CodeDo>();
- 				collectionDo.setTaxonomySet(codeSet);
+				collectionDo.setTaxonomySet(codeSet);
 			}
 		});
 	}
-	
-	
 }
