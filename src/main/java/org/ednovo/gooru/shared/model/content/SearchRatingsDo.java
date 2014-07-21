@@ -9,8 +9,8 @@ public class SearchRatingsDo implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Integer count;
-	private double average;
+	private Integer count=0;
+	private double average=0.0;
 	
 	public SearchRatingsDo(){
 	}
