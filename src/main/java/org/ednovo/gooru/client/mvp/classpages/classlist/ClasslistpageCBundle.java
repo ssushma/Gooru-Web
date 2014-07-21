@@ -142,6 +142,7 @@ public interface ClasslistpageCBundle extends ClientBundle{
 		String leftInviteContainer();
 		String rightInviteContainer();
 		String inviteDivContainer();
+		String assignSecTitleheader();
 	}
 	@NotStrict
 	@Source("classlistPage.css")
