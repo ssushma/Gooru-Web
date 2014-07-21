@@ -559,7 +559,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,
 				getLoggedInSessionToken());
-		System.out.println("v2GetClasspageById::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -757,7 +756,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public CollectionDo v2getClasspageByCode(String classpageCode) throws GwtException{
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_BY_CODE, classpageCode, getLoggedInSessionToken());
-		System.out.println("v2getClasspageByCode:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		if(jsonRep!=null && jsonRep.getSize()!=1){	
@@ -904,7 +902,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		if(classpageId != null)
 		{
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,getLoggedInSessionToken());
-		System.out.println("getClasspage::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		if(jsonResponseRep.getStatusCode()==200){
 			jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1006,7 +1003,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			if(studyStatus!=null){
 				url=url+"&status="+studyStatus;
 			}
-			System.out.println("getClasspageItems API:"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		
 		if(jsonResponseRep.getStatusCode()==200){
@@ -1127,7 +1123,14 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 					classpageDo.setClasspageId(classpageJsonObject.getString(GOORUOID));
 					classpageDo.setClasspageCode(classpageJsonObject.getString(CLASSPAGECODE));
 					classpageDo.setTitle(classpageJsonObject.getString(TITLE));
+					if(!classpageJsonObject.isNull(ITEMCOUNT))
+					{
 					classpageDo.setItemCount(classpageJsonObject.getString(ITEMCOUNT));
+					}
+					else
+					{
+					classpageDo.setItemCount("0");
+					}
 					classpageDo.setThumbnailUrl(classpageJsonObject.getJSONObject(THUMBNAIL)!=null?classpageJsonObject.getJSONObject(THUMBNAIL).getString(THUMBNAILURL):"");
 					ArrayList<String> permissionList=new ArrayList<String>();
 					if(!classpageJsonObject.isNull(CREATOR)){
@@ -1161,6 +1164,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 					classpageDo.setPermissions(permissionList);
 				}
 			} catch (JSONException e) {
+				e.printStackTrace();
 				classpageDo=new ClasspageDo();
 			}
 		return classpageDo;
