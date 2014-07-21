@@ -319,7 +319,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		for(int userReviews=0; userReviews<result.size(); userReviews++)
 		{
 			if(result.get(userReviews).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
-				reviewsContainer.insert(new RatingUserWidgetView(result.get(userReviews),createrName),0);
+				reviewsContainer.add(new RatingUserWidgetView(result.get(userReviews),createrName));
 			}else{
 				if(!result.get(userReviews).getFreeText().equals("")){
 					reviewsContainer.add(new RatingUserWidgetView(result.get(userReviews),createrName));

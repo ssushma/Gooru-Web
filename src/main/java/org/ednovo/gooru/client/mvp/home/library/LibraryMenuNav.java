@@ -64,6 +64,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -901,6 +902,28 @@ public class LibraryMenuNav extends Composite{
 		for (Map.Entry<String, SubjectDo> entry : subjectList.entrySet()) {
 			subjectIdList.put(entry.getKey(), entry.getValue().getSubjectCode()+"");
 		}
+		Timer timer = new Timer(){
+            @Override
+            public void run() {
+            	if(!isScienceHovered) {
+                	isScienceHovered = true;
+                	getTaxonomyData(SCIENCE,getSubjectIdBySubjectName(subjectIdList, SCIENCE),null);
+            	}
+            	if(!isMathHovered) {
+                	isMathHovered = true;
+                	getTaxonomyData(MATH,getSubjectIdBySubjectName(subjectIdList, MATH),null);
+            	}
+            	if(!isSocialHovered) {
+                	isSocialHovered = true;
+                	getTaxonomyData(SOCIAL,getSubjectIdBySubjectName(subjectIdList, SOCIAL),null);
+            	}
+            	if(!isLanguageHovered) {
+                	isLanguageHovered = true;
+                	getTaxonomyData(LANGUAGE,getSubjectIdBySubjectName(subjectIdList, LANGUAGE),null);
+            	}
+            }
+        };
+        timer.schedule(5000);
 	}
 	
 	public void setSubjectPanelIdsForStandards(HashMap<String, StandardsDo> subjectList) {
