@@ -1295,7 +1295,7 @@ public class EditClasspageView extends
 		collectionTitleUc.setText("");
 		collectionTitleUc.getElement().removeAttribute("title");
 		collectionTitleUc.getElement().removeAttribute("alt");
-		classCodeTextBox.setText("");
+		//classCodeTextBox.setText("");
 		classCodeTextBox.getElement().removeAttribute("title");
 		classCodeTextBox.getElement().removeAttribute("alt");
 		imgClasspageImage.setUrl("/d");
