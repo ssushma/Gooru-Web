@@ -9,6 +9,7 @@ import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
@@ -49,6 +50,9 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 
 	interface TocResourceViewUiBinder extends UiBinder<Widget, PreviewResourceView> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+
 	
 	public PreviewResourceView(){
 		initWidget(uiBinder.createAndBindUi(this));
