@@ -69,7 +69,6 @@ import org.ednovo.gooru.shared.model.library.ProfanityDo;
 import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1574,7 +1573,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				UrlToken.REFRESH_TOKEN, refreshToken);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
-		StringUtil.consoleLog("jsonRep.toString() :"+jsonRep.toString());
+		System.out.println("jsonRep.toString() :"+jsonRep.toString());
 		return deserializeGoogleToken(jsonRep.toString());
 	}
 	
