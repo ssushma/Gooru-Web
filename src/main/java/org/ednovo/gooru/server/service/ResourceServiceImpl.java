@@ -1471,8 +1471,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.GET_GOOGLEDRIVE_FIlES, enocodedString);
 		
 		String response=new WebService(url,false).webInvokeforget("GET", "", contentType, access_token);
-		
-		
+		System.out.println("getGoogleDriveFilesList - url : "+url);
+		System.out.println("getGoogleDriveFilesList - response : "+response);
 		if (response!=null){
 			googleDriveDo=deserializeGoogleDriveFilesList(response);
 		}else{
