@@ -874,7 +874,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj=new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid, getGuestSessionToken(""), "true");
-		System.out.println("getcollection:::"+url);
+//		System.out.println("getcollection:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -1471,9 +1471,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.GET_GOOGLEDRIVE_FIlES, enocodedString);
 		
 		String response=new WebService(url,false).webInvokeforget("GET", "", contentType, access_token);
-		System.out.println("getGoogleDriveFilesList - access_token : "+access_token);
-		System.out.println("getGoogleDriveFilesList - url : "+url);
-		System.out.println("getGoogleDriveFilesList - response : "+response);
+//		System.out.println("getGoogleDriveFilesList - access_token : "+access_token);
+//		System.out.println("getGoogleDriveFilesList - url : "+url);
+//		System.out.println("getGoogleDriveFilesList - response : "+response);
 		if (response!=null){
 			googleDriveDo=deserializeGoogleDriveFilesList(response);
 		}else{
@@ -1578,13 +1578,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		String str = null;
 		try {
-			System.out.println("jsonRep.toString() :"+jsonRep.getText().toString());
+//			System.out.println("jsonRep.toString() :"+jsonRep.getText().toString());
 			str = jsonRep.getJsonObject().toString();
 			token =  deserializeGoogleToken(str);
 			setLoggedInAccessToken(token != null && token.getAccess_token() != null ? token.getAccess_token() : null);
-		} catch (IOException e) {
-			e.printStackTrace(); 
-		}catch (JSONException eJson) {
+		} catch (JSONException eJson) {
 			eJson.printStackTrace(); 
 		}
 		
