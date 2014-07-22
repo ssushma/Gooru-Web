@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.service;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -1573,8 +1574,16 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				UrlToken.REFRESH_TOKEN, refreshToken);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
-		System.out.println("jsonRep.toString() :"+jsonRep.toString());
-		return deserializeGoogleToken(jsonRep.toString());
+		String str = null;
+		try {
+			System.out.println("jsonRep.toString() :"+jsonRep.getText().toString());
+			str = jsonRep.getJsonObject().toString();
+		} catch (IOException e) {
+			e.printStackTrace(); 
+		}catch (JSONException eJson) {
+			eJson.printStackTrace(); 
+		}
+		return deserializeGoogleToken(str);
 	}
 	
 	public GoogleToken deserializeGoogleToken(String jsonRep) {
