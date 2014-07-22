@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.service;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -69,7 +70,6 @@ import org.ednovo.gooru.shared.model.library.ProfanityDo;
 import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1471,8 +1471,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.GET_GOOGLEDRIVE_FIlES, enocodedString);
 		
 		String response=new WebService(url,false).webInvokeforget("GET", "", contentType, access_token);
-		
-		
+		System.out.println("getGoogleDriveFilesList - url : "+url);
+		System.out.println("getGoogleDriveFilesList - response : "+response);
 		if (response!=null){
 			googleDriveDo=deserializeGoogleDriveFilesList(response);
 		}else{
@@ -1574,8 +1574,16 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				UrlToken.REFRESH_TOKEN, refreshToken);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
-		StringUtil.consoleLog("jsonRep.toString() :"+jsonRep.toString());
-		return deserializeGoogleToken(jsonRep.toString());
+		String str = null;
+		try {
+			System.out.println("jsonRep.toString() :"+jsonRep.getText().toString());
+			str = jsonRep.getJsonObject().toString();
+		} catch (IOException e) {
+			e.printStackTrace(); 
+		}catch (JSONException eJson) {
+			eJson.printStackTrace(); 
+		}
+		return deserializeGoogleToken(str);
 	}
 	
 	public GoogleToken deserializeGoogleToken(String jsonRep) {

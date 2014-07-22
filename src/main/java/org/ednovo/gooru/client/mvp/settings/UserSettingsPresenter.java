@@ -187,6 +187,10 @@ public class UserSettingsPresenter
 					StringUtil.consoleLog("access_token : Success : "+access_token);
 					if (access_token !=null ){
 						
+						UserDo user = AppClientFactory.getLoggedInUser();
+						user.setAccessToken(access_token);
+						AppClientFactory.setLoggedInUser(user);
+						
 						AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
 							@Override
 							public void onSuccess(GoogleDriveDo googleDriveDo) {
