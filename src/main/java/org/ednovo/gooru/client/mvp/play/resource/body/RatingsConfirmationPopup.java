@@ -68,8 +68,12 @@ public class RatingsConfirmationPopup extends PopupPanel{
 	 */
 	private void setAvgRatingWidget(String assocGooruOId, Integer score,Integer count, double average,String createrName){
 		ratingWidgetView=new RatingWidgetView();
-		if(count!=null)
-		ratingWidgetView.getRatingCountLabel().setText(count.toString());
+		if(count!=null){
+			ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
+			ratingWidgetView.getRatingCountLabel().setText(count.toString());
+			ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
+		}
+		
 		ratingWidgetView.setAvgStarRating(average);
 		if(count>0)
 		{
