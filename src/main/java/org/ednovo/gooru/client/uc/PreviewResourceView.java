@@ -117,7 +117,9 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 	 */
 	private void setAvgRatingWidget() {
 		ratingWidgetView=new RatingWidgetView();
+		ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 		ratingWidgetView.getRatingCountLabel().setText(collectionItemDo.getResource().getRatings().getCount().toString());
+		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetView.setAvgStarRating(collectionItemDo.getResource().getRatings().getAverage());
 		//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 		ratingWidgetPanel.clear();

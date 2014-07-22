@@ -37,8 +37,24 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class RatingWidgetView extends Composite{
 
-	@UiField InlineLabel ratingCountLabel,star_1,star_2,star_3,star_4,star_5,avgRatingLabel;
+	@UiField InlineLabel ratingCountLabel,star_1,star_2,star_3,star_4,star_5,avgRatingLabel,ratingCountOpenBrace,ratingCountCloseBrace;
 	
+
+	public InlineLabel getRatingCountOpenBrace() {
+		return ratingCountOpenBrace;
+	}
+
+	public void setRatingCountOpenBrace(InlineLabel ratingCountOpenBrace) {
+		this.ratingCountOpenBrace = ratingCountOpenBrace;
+	}
+
+	public InlineLabel getRatingCountCloseBrace() {
+		return ratingCountCloseBrace;
+	}
+
+	public void setRatingCountCloseBrace(InlineLabel ratingCountCloseBrace) {
+		this.ratingCountCloseBrace = ratingCountCloseBrace;
+	}
 
 	private static RatingWidgetViewUiBinder uiBinder = GWT.create(RatingWidgetViewUiBinder.class);
 
@@ -50,7 +66,13 @@ public class RatingWidgetView extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		
-		
+		/*if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			ratingCountCloseBrace.getElement().getStyle().setDisplay(Display.NONE);
+			ratingCountOpenBrace.getElement().getStyle().setDisplay(Display.NONE);
+		}else{
+			ratingCountCloseBrace.getElement().getStyle().setDisplay(Display.BLOCK);
+			ratingCountOpenBrace.getElement().getStyle().setDisplay(Display.BLOCK);
+		}*/
 		star_1.getElement().setId("spnStar_1");
 		star_2.getElement().setId("spnStar_2");
 		star_3.getElement().setId("spnStar_3");
@@ -58,6 +80,8 @@ public class RatingWidgetView extends Composite{
 		star_5.getElement().setId("spnStar_5");
 		ratingCountLabel.getElement().setId("spnRatingCountLabel");
 		avgRatingLabel.getElement().setId("spnAvgRatingLabel");
+		ratingCountOpenBrace.getElement().setId("spnRatingOpenBrace");
+		ratingCountCloseBrace.getElement().setId("spnRatingCloseBrace");
 		
 	}
 

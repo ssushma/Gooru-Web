@@ -11,8 +11,8 @@
 		<g:InlineLabel ui:field="star_3" styleName="{style.star}"></g:InlineLabel>
 		<g:InlineLabel ui:field="star_4" styleName="{style.star}"></g:InlineLabel>
 		<g:InlineLabel ui:field="star_5" styleName="{style.star}"></g:InlineLabel>
-	<!-- 	<g:InlineLabel styleName="">(</g:InlineLabel> -->
+		<g:InlineLabel styleName="" ui:field="ratingCountOpenBrace"></g:InlineLabel>
 		<g:InlineLabel styleName="{style.ratingCountLabel}" ui:field="ratingCountLabel"></g:InlineLabel>
-		<!-- <g:InlineLabel styleName="">)</g:InlineLabel> -->
+		<g:InlineLabel styleName="" ui:field="ratingCountCloseBrace"></g:InlineLabel>
 	</g:FlowPanel>
 </ui:UiBinder>
