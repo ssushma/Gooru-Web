@@ -54,8 +54,8 @@
 		}
 		.panelHeight{
 			overflow-y: auto;
-			width: 1000px;
-			margin: 0px auto;
+			width: 63%;
+			margin: 0px 0px 0px 12%;
 		}
 		.searchResultPanel {
 		    clear: both;
