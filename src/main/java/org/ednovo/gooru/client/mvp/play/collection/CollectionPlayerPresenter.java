@@ -392,7 +392,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		this.resourceFlagPresenter=resourceFlagPresenter;
 		this.signUpViewPresenter=signUpViewPresenter;
 		resoruceMetadataPresenter.setCollectionPlayerPresnter(this,true);
-		resoruceMetadataPresenter.removeRatingContainer(true);
+		resoruceMetadataPresenter.removeRatingContainer(false);
 		resourceFlagPresenter.setCollectionPlayerPresenter(this);
 		collectionFlagPresenter.setCollectionPlayerPresenter(this);
 		metadataPresenter.setCollectionPlayerPresenter(this);

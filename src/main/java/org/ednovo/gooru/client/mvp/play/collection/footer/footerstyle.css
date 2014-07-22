@@ -1,0 +1,129 @@
+.footerContainer{
+	background:#333333;
+	padding:10px 0 5px 0;
+	width:100%;
+	float:left;
+	position:fixed;
+	bottom:0;
+}
+.footerContainer .info{
+	display:inline-block;
+	background:url(images/player/player_sprite_new.png) no-repeat -3px -4px;
+	transition:all 0.5s ease-in-out 0s;
+	width:31px;
+	height:30px;
+}
+
+.footerContainer .info:hover{
+
+	background:url(images/player/player_sprite_new.png) no-repeat -3px -44px;
+	opacity:1;
+
+}
+
+.footerContainer .infoactive{
+display:inline-block;
+	width:31px;
+	height:30px;
+	background:url(images/player/player_sprite_new.png) no-repeat -3px -44px;
+	opacity:1;
+
+}
+
+.footerContainer .narration{
+	display:inline-block;
+	background:url(images/player/player_sprite_new.png) no-repeat -74px -4px;
+	transition:all 0.5s ease-in-out 0s;
+	width:31px;
+	height:30px;
+}
+
+.footerContainer .narration:hover{
+
+	background:url(images/player/player_sprite_new.png) no-repeat -74px -44px;
+	opacity:1;
+
+}
+
+.footerContainer .narrationactive{
+	display:inline-block;
+background:url(images/player/player_sprite_new.png) no-repeat -74px -44px;
+	opacity:1;
+	width:31px;
+	height:30px;
+}
+
+
+
+.footerContainer .add{
+	display:inline-block;
+	background:url(images/player/player_sprite_new.png) no-repeat -138px -4px;
+	transition:all 0.5s ease-in-out 0s;
+	width:31px;
+	height:30px;
+}
+
+.footerContainer .add:hover{
+
+	background:url(images/player/player_sprite_new.png) no-repeat -138px -44px;
+	opacity:1;
+
+}
+.footerContainer .addactive{
+	display:inline-block;
+	background:url(images/player/player_sprite_new.png) no-repeat -138px -4px;
+	opacity:1;
+		width:31px;
+	height:30px;
+
+}
+
+.footerContainer .share{
+	display:inline-block;
+	background:url(images/player/player_sprite_new.png) no-repeat -188px -4px;
+	transition:all 0.5s ease-in-out 0s;
+	width:31px;
+	height:30px;
+}
+
+.footerContainer .share:hover{
+
+	background:url(images/player/player_sprite_new.png) no-repeat -188px -44px;
+	opacity:1;
+}
+.footerContainer .shareactive{
+	display:inline-block;
+	background:url(images/player/player_sprite_new.png) no-repeat -188px -44px;
+	opacity:1;
+	width:31px;
+	height:30px;
+}
+
+.footerContainer .flag{
+	display:inline-block;
+	background:url(images/player/player_sprite_new.png) no-repeat -240px -4px;
+	transition:all 0.5s ease-in-out 0s;
+	width:31px;
+	height:30px;
+}
+
+.footerContainer .flag:hover{
+	background:url(images/player/player_sprite_new.png) no-repeat -240px -44px;
+	opacity:1;
+
+}
+
+.footerContainer .flagactive{
+	display:inline-block;
+	background:url(images/player/player_sprite_new.png) no-repeat -240px -44px;
+	opacity:1;
+	width:31px;
+	height:30px;
+}
+
+.text-right{
+	text-align:right;
+	width: 25%;
+	position: relative;
+	float: left;
+}
