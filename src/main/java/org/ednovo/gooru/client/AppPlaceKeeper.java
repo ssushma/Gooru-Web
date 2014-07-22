@@ -60,6 +60,7 @@ public class AppPlaceKeeper implements Gatekeeper {
 	public boolean canReveal() {
 		// Add place validations
 		return true;
+		
 	}
 
 }
