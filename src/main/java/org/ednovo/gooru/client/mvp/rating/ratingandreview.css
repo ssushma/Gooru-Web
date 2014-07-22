@@ -513,7 +513,7 @@ fieldset {
 	cursor: none !important;
 	text-decoration: none !important;
 	color: #4e9746;
-	padding: 0px 5px;
+	/* padding: 0px 5px; */
 }
 
 .ratingCountLabelHighlighted {
