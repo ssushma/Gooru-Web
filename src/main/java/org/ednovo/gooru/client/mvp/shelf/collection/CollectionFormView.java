@@ -570,9 +570,9 @@ public class CollectionFormView extends
 			collectionTitleTxtBox.setText(AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE));
 			collectionTitleTxtBox.getElement().setAttribute("alt",AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE));
 			collectionTitleTxtBox.getElement().setAttribute("title",AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE));
-			btnOk.setText(i18n.GL0636());
-			btnOk.getElement().setAttribute("alt",i18n.GL0636());
-			btnOk.getElement().setAttribute("title",i18n.GL0636());
+			btnOk.setText(i18n.GL0590());
+			btnOk.getElement().setAttribute("alt",i18n.GL0590());
+			btnOk.getElement().setAttribute("title",i18n.GL0590());
 			cancelAnr.setText(i18n.GL0142());
 			cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
 			cancelAnr.getElement().setAttribute("title",i18n.GL0142());
