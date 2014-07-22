@@ -48,7 +48,8 @@
 }
 
 .contentPanel {
-	width: 420px;
+	/* width: 420px; */
+	width: 365px;
 	float: left;
 	padding: 10px 10px 0px;
 }

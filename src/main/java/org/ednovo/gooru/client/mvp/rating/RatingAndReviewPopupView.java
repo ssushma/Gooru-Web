@@ -241,7 +241,9 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public void setGraphAndAvgContentRating(ContentStarRatingsDo result) {
 		setContentGraph(result); 
 		ratingWidgetView.setAvgStarRating(result.getAverage());
+		ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 		ratingWidgetView.getRatingCountLabel().setText(result.getCount().toString());
+		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
 
