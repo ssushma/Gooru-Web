@@ -512,7 +512,8 @@ fieldset {
 .ratingCountLabel {
 	cursor: none !important;
 	text-decoration: none !important;
-	color: grey;
+	color: #4e9746;
+	padding: 0px 5px;
 }
 
 .ratingCountLabelHighlighted {
