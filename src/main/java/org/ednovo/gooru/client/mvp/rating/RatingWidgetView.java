@@ -37,7 +37,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class RatingWidgetView extends Composite{
 
-	@UiField InlineLabel ratingCountLabel,star_1,star_2,star_3,star_4,star_5;
+	@UiField InlineLabel ratingCountLabel,star_1,star_2,star_3,star_4,star_5,avgRatingLabel;
 	
 
 	private static RatingWidgetViewUiBinder uiBinder = GWT.create(RatingWidgetViewUiBinder.class);
@@ -57,11 +57,16 @@ public class RatingWidgetView extends Composite{
 		star_4.getElement().setId("spnStar_4");
 		star_5.getElement().setId("spnStar_5");
 		ratingCountLabel.getElement().setId("spnRatingCountLabel");
+		avgRatingLabel.getElement().setId("spnAvgRatingLabel");
 		
 	}
 
 	public InlineLabel getRatingCountLabel(){
 		return ratingCountLabel;
+	}
+	
+	public InlineLabel getAverageRatingLabel(){
+		return avgRatingLabel;
 	}
 
 	public void setAvgStarRating(double averageRating) {
