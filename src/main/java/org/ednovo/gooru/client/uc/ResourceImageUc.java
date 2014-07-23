@@ -259,18 +259,18 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 					String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 					if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){
 						
-						PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).with("id", collectionId).with("rid", gooruOid).with("tab", "narration");
+						PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", collectionId).with("rid", gooruOid).with("tab", "narration");
 						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
 					}else{
-						PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).with("id", collectionId).with("rid", gooruOid);
+						PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", collectionId).with("rid", gooruOid);
 						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
 					}
 				}else if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 					if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){
-						PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).with("id", getProfilePageMoreInfoCollectionId()).with("rid", gooruOid).with("tab", "narration");
+						PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", getProfilePageMoreInfoCollectionId()).with("rid", gooruOid).with("tab", "narration");
 						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
 					}else{
-						PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).with("id", getProfilePageMoreInfoCollectionId()).with("rid", gooruOid);
+						PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", getProfilePageMoreInfoCollectionId()).with("rid", gooruOid);
 						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
 					}
 				}

@@ -1458,7 +1458,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		MixpanelUtil.Preview_Collection_From_CollectionEdit();
 		HashMap<String,String> params = new HashMap<String,String>();
 		params.put("id", collectionDo.getGooruOid());
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 	}
 

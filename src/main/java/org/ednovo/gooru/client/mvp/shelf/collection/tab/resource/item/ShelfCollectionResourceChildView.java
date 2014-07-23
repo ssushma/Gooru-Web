@@ -1143,10 +1143,10 @@ public class ShelfCollectionResourceChildView extends
 	public String getResourceLink(){
 		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 		if(collectionItemDo.getNarration()!=null&&!collectionItemDo.getNarration().trim().equals("")){
-			String resourceLink="#"+PlaceTokens.PREVIEW_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId()+"&tab=narration";
+			String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId()+"&tab=narration";
 			return resourceLink;
 		}else{
-			String resourceLink="#"+PlaceTokens.PREVIEW_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId();
+			String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemDo.getCollectionItemId();
 			return resourceLink;
 		}
 	}

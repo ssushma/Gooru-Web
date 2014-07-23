@@ -123,19 +123,17 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				}
 				navgationTocContainer.add(tocCollectionEndView);
 				if(resourcesSize>6){
-					new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize, 120);
+					new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize, 102);
 				}
 				//resources width with padding and margin constitutes 102px for each and collection home and end with padding and margin width
 				//have 150px each. navgationTocContainer width is derived from this.
-				if(resourcesSize>0)
-				{
-				navgationTocContainer.getElement().setAttribute("style", "width:"+((resourcesSize*(102))+300)+"px !important;");
+				if(resourcesSize>0){
+					navgationTocContainer.getElement().setAttribute("style", "width:"+((resourcesSize*(102))+204)+"px !important;");
 				}
-				else
-				{
+				else{
 					nextButton.setVisible(false);
 					previousButton.setVisible(false);
-				navgationTocContainer.getElement().setAttribute("style", "width:"+(300)+"px !important;");
+					navgationTocContainer.getElement().setAttribute("style", "width:"+(300)+"px !important;");
 				}
 			}else{
 				setResourceThumbnailVisibility(isCollectionHome);

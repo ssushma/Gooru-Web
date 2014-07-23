@@ -6,7 +6,7 @@
 	position:fixed;
 	bottom:0;
 }
-.footerContainer .info{
+.footerContainer .infoButtonNormal{
 	display:inline-block;
 	background:url(images/player/player_sprite_new.png) no-repeat -3px -4px;
 	transition:all 0.5s ease-in-out 0s;
@@ -14,23 +14,30 @@
 	height:30px;
 }
 
-.footerContainer .info:hover{
-
+.footerContainer .infoButtonNormal:hover{
 	background:url(images/player/player_sprite_new.png) no-repeat -3px -44px;
 	opacity:1;
-
+	cursor: pointer;
 }
 
-.footerContainer .infoactive{
+.footerContainer .infoButtonActive{
 display:inline-block;
 	width:31px;
 	height:30px;
 	background:url(images/player/player_sprite_new.png) no-repeat -3px -44px;
 	opacity:1;
-
+	cursor: pointer;
 }
 
-.footerContainer .narration{
+.infoButtonDisabled{
+	display:inline-block;
+	background:url(images/player/player_sprite_new.png) no-repeat -3px -4px;
+	transition:all 0.5s ease-in-out 0s;
+	width:31px;
+	height:30px;
+}
+
+.footerContainer .narrationButtonNormal{
 	display:inline-block;
 	background:url(images/player/player_sprite_new.png) no-repeat -74px -4px;
 	transition:all 0.5s ease-in-out 0s;
@@ -38,47 +45,61 @@ display:inline-block;
 	height:30px;
 }
 
-.footerContainer .narration:hover{
+.footerContainer .narrationButtonNormal:hover{
 
 	background:url(images/player/player_sprite_new.png) no-repeat -74px -44px;
 	opacity:1;
+	cursor: pointer;
 
 }
 
-.footerContainer .narrationactive{
+.footerContainer .narrationButtonActive{
 	display:inline-block;
 background:url(images/player/player_sprite_new.png) no-repeat -74px -44px;
 	opacity:1;
 	width:31px;
 	height:30px;
+	cursor: pointer;
+}
+.narrationButtonDisabled{
+	display:inline-block;
+	background:url(images/player/player_sprite_new.png) no-repeat -74px -4px;
+	width:31px;
+	height:30px;
 }
 
 
-
-.footerContainer .add{
+.footerContainer .addButtonNormal{
 	display:inline-block;
 	background:url(images/player/player_sprite_new.png) no-repeat -138px -4px;
 	transition:all 0.5s ease-in-out 0s;
 	width:31px;
 	height:30px;
+	
 }
 
-.footerContainer .add:hover{
-
+.footerContainer .addButtonNormal:hover{
 	background:url(images/player/player_sprite_new.png) no-repeat -138px -44px;
 	opacity:1;
-
+	cursor: pointer;
 }
-.footerContainer .addactive{
+.footerContainer .addButtonActive{
+	display:inline-block;
+	background:url(images/player/player_sprite_new.png) no-repeat -138px -44px;
+	opacity:1;
+	width:31px;
+	height:30px;
+	cursor: pointer;
+}
+
+.addButtonDisabled{
 	display:inline-block;
 	background:url(images/player/player_sprite_new.png) no-repeat -138px -4px;
-	opacity:1;
-		width:31px;
+	width:31px;
 	height:30px;
-
 }
 
-.footerContainer .share{
+.footerContainer .shareButtonNormal{
 	display:inline-block;
 	background:url(images/player/player_sprite_new.png) no-repeat -188px -4px;
 	transition:all 0.5s ease-in-out 0s;
@@ -86,20 +107,29 @@ background:url(images/player/player_sprite_new.png) no-repeat -74px -44px;
 	height:30px;
 }
 
-.footerContainer .share:hover{
+.footerContainer .shareButtonNormal:hover{
 
 	background:url(images/player/player_sprite_new.png) no-repeat -188px -44px;
 	opacity:1;
+	cursor: pointer;
 }
-.footerContainer .shareactive{
+.footerContainer .shareButtonActive{
 	display:inline-block;
 	background:url(images/player/player_sprite_new.png) no-repeat -188px -44px;
 	opacity:1;
 	width:31px;
 	height:30px;
+	cursor: pointer;
 }
 
-.footerContainer .flag{
+.shareButtonDisabled{
+	display:inline-block;
+	background:url(images/player/player_sprite_new.png) no-repeat -188px -4px;
+	width:31px;
+	height:30px;
+}
+
+.footerContainer .flagButtonNormal{
 	display:inline-block;
 	background:url(images/player/player_sprite_new.png) no-repeat -240px -4px;
 	transition:all 0.5s ease-in-out 0s;
@@ -107,20 +137,41 @@ background:url(images/player/player_sprite_new.png) no-repeat -74px -44px;
 	height:30px;
 }
 
-.footerContainer .flag:hover{
+.footerContainer .flagButtonNormal:hover{
 	background:url(images/player/player_sprite_new.png) no-repeat -240px -44px;
 	opacity:1;
+	cursor: pointer;
 
 }
 
-.footerContainer .flagactive{
+.footerContainer .flagButtonActive{
 	display:inline-block;
 	background:url(images/player/player_sprite_new.png) no-repeat -240px -44px;
 	opacity:1;
 	width:31px;
 	height:30px;
+	cursor: pointer;
 }
-
+.flagButtonDisable{
+	display:inline-block;
+	background:url(images/player/player_sprite_new.png) no-repeat -240px -4px;
+	width:31px;
+	height:30px;
+}
+.flagButtonOrange{
+	display:inline-block;
+	background:url(images/player/player_sprite_new.png) no-repeat -240px -4px;
+	width:31px;
+	height:30px;
+	cursor: pointer;
+}
+.flagButtonOrangeActive{
+	display:inline-block;
+	background:url(images/player/player_sprite_new.png) no-repeat -240px -4px;
+	width:31px;
+	height:30px;
+	cursor: pointer;
+}
 .text-right{
 	text-align:right;
 	width: 25%;

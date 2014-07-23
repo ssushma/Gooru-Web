@@ -90,7 +90,7 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 		setResourceSequence(itemIndex+1);
 		setResourcePlayLink();
 		
-		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 			setAvgRatingWidget();
 			AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 		}
