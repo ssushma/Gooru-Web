@@ -335,6 +335,9 @@ public class EmailShareUc extends PopupPanel{
 		if(!placeToken.equals(PlaceTokens.COLLECTION_PLAY) || !placeToken.equals(PlaceTokens.PREVIEW_PLAY)|| !placeToken.equals(PlaceTokens.RESOURCE_PLAY)) {
 			Window.enableScrolling(true);
 		}
+		if (!placeToken.equals(PlaceTokens.RESOURCE_SEARCH) && !placeToken.equals(PlaceTokens.COLLECTION_SEARCH)){
+			Window.enableScrolling(true);
+		}
 	}
 
 	/**

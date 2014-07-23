@@ -811,7 +811,7 @@ public class HeaderUc extends Composite implements
 				stockStore.setItem("tabKey", "resourceTab");
 			}
 			name = "organize";
-			Window.enableScrolling(true);
+//			Window.enableScrolling(true);
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 			manageDotsMenuSelection(organizeLink);
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
@@ -979,7 +979,6 @@ public class HeaderUc extends Composite implements
 		public void onMouseOver(final MouseOverEvent event) {
 			if (!AppClientFactory.isAnonymous()){
 				if (!AppClientFactory.isAnonymous()) {
-					Window.enableScrolling(true);
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 //					tooltipTimer = new Timer() {
 //						public void run() {
@@ -992,8 +991,7 @@ public class HeaderUc extends Composite implements
 					{
 						organizeToolTip.hide();
 					}
-
-							OpenClasspageList();
+					OpenClasspageList();
 //						}
 //					};
 //					tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
@@ -1161,7 +1159,7 @@ public class HeaderUc extends Composite implements
 	 */
 	@UiHandler("editSearchBtn")
 	public void OnSearchClick(ClickEvent clickEvent) {
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		if (getEditSearchTxtBox().getText() != null
 				&& getEditSearchTxtBox().getText().length() > 0) {
