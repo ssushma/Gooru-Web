@@ -383,6 +383,7 @@ public class SearchInfoWidget extends Composite {
 			System.out.println("publisherPanel11::"+resourceDo.getPublisher());
 			System.out.println("publisherPanel::"+CollectiongenealInfo.getResource().getPublisher());
 			
+			if(resourceDo.getPublisher()!=null || CollectiongenealInfo.getResource().getResourceFormat()!=null){
 			if(resourceDo.getPublisher()!=null){
 				if(resourceDo.getPublisher().size()>0){
 				InfoUtil.setDepthofknowledgeDetails(CollectiongenealInfo.getResource().getPublisher(), publisherType, publisherText, publisherPanel);
@@ -391,9 +392,15 @@ public class SearchInfoWidget extends Composite {
 				else{
 					publisherPanel.setVisible(false);
 				}
-			}else{
-				publisherPanel.setVisible(false);
 			}
+			if(CollectiongenealInfo.getResource().getResourceFormat()!=null){
+				if(CollectiongenealInfo.getResource().getResourceFormat()!=null && CollectiongenealInfo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+					List<String> publisherQuestionUserName = new ArrayList<String>();
+					publisherQuestionUserName.add(CollectiongenealInfo.getResource().getUser().getUsername());
+					InfoUtil.setDepthofknowledgeDetails(publisherQuestionUserName, publisherType, publisherText, publisherPanel);
+				}
+			}
+		}
 			
 			if(resourceDo.getAggregator()!=null){
 //				setAggregatorvalues(collectionItemDo.getResource().getAggregator());

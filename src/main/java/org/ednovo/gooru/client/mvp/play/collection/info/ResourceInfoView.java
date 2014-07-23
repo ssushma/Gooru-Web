@@ -453,8 +453,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			List<Integer> gradeListInt = new  ArrayList<Integer>();
 			String[] gradeslist=collectionItemDo.getResource().getGrade().split(",");
 			for (String eachGrade1 : gradeslist) {
-				if (!eachGrade1.equalsIgnoreCase("Kindergarten")
-						&& !eachGrade1.equalsIgnoreCase("Higher Education")) {
+				if (!eachGrade1.trim().equalsIgnoreCase("Kindergarten")
+						&& !eachGrade1.trim().equalsIgnoreCase("Higher Education")) {
 					eachGrade1 = eachGrade1.replaceAll("th", "")
 							.replaceAll("TH", "").replaceAll("st", "")
 							.replaceAll("ST", "").replaceAll("nd", "")
@@ -489,11 +489,19 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 							collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
 		loadResourceReleatedCollections(collectionItemDo.getResource().getGooruOid());
 		
-		if(collectionItemDo.getResource().getPublisher()!=null){
-			setPublisherDetails(collectionItemDo.getResource().getPublisher());
+		if(collectionItemDo.getResource().getPublisher()!=null || collectionItemDo.getResource().getResourceFormat()!=null){
+			
+			if(collectionItemDo.getResource().getPublisher()!=null){
+				setPublisherDetails(collectionItemDo.getResource().getPublisher());
+			}
+			if(collectionItemDo.getResource().getResourceFormat()!=null){
+				if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+					List<String> publisherQuestionUserName = new ArrayList<String>();
+					publisherQuestionUserName.add(collectionItemDo.getResource().getUser().getUsername());
+					setPublisherDetails(publisherQuestionUserName);
+				}
+			}
 		}
-		
-		
 		/*if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){*/
 		if(collectionItemDo.getResource().getThumbnails()!=null){
 			setThumbnailUrl(collectionItemDo.getResource().getThumbnails().getUrl());
