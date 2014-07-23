@@ -467,7 +467,9 @@
     overflow-x: hidden;
     position:relative; */
 }
+.editPanel{
 
+}
 
 .editPanel {
     background-color:#f0f0f0;
@@ -482,10 +484,9 @@
     -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
     box-shadow: 0 0 10px rgba(0,0,0,.1); 
     float:right;
-    overflow-y: hidden;
     overflow-x: hidden;
     position:relative;
-    min-height: 638px;
+	overflow-y: hidden;	
 }
 
 .editPanel > div:first-child {
@@ -522,6 +523,12 @@
     padding:5px 30px;
     background: #f0f0f0;
 }
+/* .mainSection{
+	min-height: 340px;
+	overflow-y: scroll;
+	height: 340px;
+} */
+
 
 .editPanelContent .mainSection .addButtons {
     overflow:auto;
@@ -675,6 +682,9 @@
     font-size: 12px;
     vertical-align:top;
 }
+
+
+
 
 .editPanelContent .titleSection .saveCancelContainer {
     width:125px;
