@@ -22,15 +22,6 @@
             		<g:Label styleName="{headerStyle.tooltipText}" ui:field="loginMessageText"></g:Label>
        		    </g:FlowPanel>
             </panel:HTMLEventPanel>
-			<g:FlowPanel styleName="{headerStyle.tabs} {headerStyle.player_buttons}">
-			    <g:Button styleName="{palyerBundle.getPlayerStyle.flagButtonDisable}" ui:field="flagButton"></g:Button>
-				<g:Button styleName="{palyerBundle.getPlayerStyle.addButtonDisabled}" ui:field="addButton"></g:Button>
-				<g:Button styleName="{palyerBundle.getPlayerStyle.infoButtonDisabled}" ui:field="infoButton"></g:Button>
-				<g:Button styleName="{palyerBundle.getPlayerStyle.shareButtonDisabled}" ui:field="shareButton"></g:Button>
-				<g:Button styleName="{palyerBundle.getPlayerStyle.narrationButtonDisabled}" ui:field="narrationButton"></g:Button>
-				<g:Button styleName="{palyerBundle.getPlayerStyle.navigationButtonDisabled}" ui:field="navigationButton"></g:Button>
-				<g:Anchor styleName="{headerStyle.player-studentview-button}" ui:field="studentViewButton"></g:Anchor>
-			</g:FlowPanel>
 		</g:FlowPanel>
 		<g:Label ui:field="closeButtonForCollection" styleName="{headerStyle.close-button}"></g:Label>
 	</g:FlowPanel>

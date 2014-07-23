@@ -253,10 +253,10 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 	public String getResourceLink(){
 		String collectionId=collectionItemSearchResultDo.getCollectionId();
 		if(collectionItemSearchResultDo.getNarration()!=null&&!collectionItemSearchResultDo.getNarration().trim().equals("")){
-			String resourceLink="#"+PlaceTokens.PREVIEW_PLAY+"&id="+collectionId+"&rid="+collectionItemSearchResultDo.getCollectionItemId()+"&tab=narration";
+			String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemSearchResultDo.getCollectionItemId()+"&tab=narration";
 			return resourceLink;
 		}else{
-			String resourceLink="#"+PlaceTokens.PREVIEW_PLAY+"&id="+collectionId+"&rid="+collectionItemSearchResultDo.getCollectionItemId();
+			String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemSearchResultDo.getCollectionItemId();
 			return resourceLink;
 		}
 	}

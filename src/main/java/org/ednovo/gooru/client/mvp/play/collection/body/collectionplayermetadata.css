@@ -6,7 +6,7 @@
     box-sizing:border-box;
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
-     margin-top:50px;
+   /*   margin-top:50px; */
 }
 .clearfix:after { 
    content: "."; 

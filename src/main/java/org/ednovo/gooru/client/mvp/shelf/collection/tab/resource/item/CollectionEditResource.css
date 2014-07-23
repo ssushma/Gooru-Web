@@ -2720,7 +2720,7 @@ margin-top: 18px; */
 	margin-top: -265px;
 }
 .dDriveSlides{
-background-position: 0px -55px;
+	background-position: 0px -55px;
     width: 28px;
     height: 22px;
     float: left;
@@ -2728,4 +2728,23 @@ background-position: 0px -55px;
 .driveWebContainer{
 	float: left;
 	padding: 0 21px 0 18px;
+}
+.errorMsgLabel{
+	color: #fbb03b;
+	text-align: center;
+	width: 525px;
+}
+.editpdfContainer{
+	float: left;
+	width: 386px;
+}
+.stopPdfLbl {
+	color: #515151;
+	font-size: 12px;
+	float: left;
+	padding-top: 5px;
+	padding-left: 0px;
+	padding-right: 5px;
+	font-weight: bold;
+	margin-left:10px;
 }

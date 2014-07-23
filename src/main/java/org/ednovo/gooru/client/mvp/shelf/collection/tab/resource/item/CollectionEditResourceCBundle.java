@@ -470,6 +470,9 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
         String dDriveSlides();
         
         String driveWebContainer();
+        String errorMsgLabel();
+        String editpdfContainer();
+        String stopPdfLbl();
 	}
 
 	@Source("CollectionEditResource.css")

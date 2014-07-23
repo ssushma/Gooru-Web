@@ -429,7 +429,7 @@ public class CollectionShareTabVc extends Composite {
 			}
 		});
 		
-		String params = "/#"+PlaceTokens.PREVIEW_PLAY+"&id="+this.collection.getGooruOid();
+		String params = "/#"+PlaceTokens.COLLECTION_PLAY+"&id="+this.collection.getGooruOid();
 		AppClientFactory.getInjector().getSearchService().getCollectionPlayDirectLink(params, new SimpleAsyncCallback<String>() {
 
 			@Override
