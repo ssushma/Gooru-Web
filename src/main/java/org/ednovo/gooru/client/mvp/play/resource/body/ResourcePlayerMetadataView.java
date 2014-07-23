@@ -407,8 +407,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		setResourceWidgetContainerHeight();
 		String resourceTypeName=collectionItemDo.getResource().getResourceType().getName();
 		wrapperContainerField.getElement().getStyle().clearHeight();
-		System.out.println("resourceTypeName:::"+resourceTypeName);
-		System.out.println("collectionItemDo.getResource().getUrl():::"+collectionItemDo.getResource().getUrl());
 		if(resourceTypeName.equalsIgnoreCase("video/youtube")){
 			//wrapperContainerField.getElement().getStyle().setHeight(525	, Unit.PX);
 			resourceWidgetContainer.add(new FlashAndVideoPlayerWidget(ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl()), collectionItemDo.getStart(), collectionItemDo.getStop()));
@@ -1004,6 +1002,16 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}else{
 			isRated=false;
 		}
+		
+		if(thankYouResourceStarRatingsPoor!=null){
+			if(thankYouResourceStarRatingsPoor.isVisible()){
+				thankYouResourceStarRatingsPoor.hide();
+				if(isFromThanksPopup){
+					displaySuccessPopup();
+				}
+			}
+		}
+		
 		if(thankYouResourceStarRatings!=null){
 			if(thankYouResourceStarRatings.isVisible()){
 				thankYouResourceStarRatings.hide();
@@ -1546,8 +1554,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		this.score=score;
 		this.count=count;
 		this.average=average;
-//		if(score > 1)
-//		{
+		/*if(score > 1)
+		{*/
 		thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
 		thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
 		thankYouResourceStarRatings.getElement().getStyle().setPadding(0, Unit.PX);
@@ -1559,16 +1567,16 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 		thankYouResourceStarRatings.show();
 		thankYouResourceStarRatings.setAutoHideEnabled(true);
-//		}
-//		else
-//		{
-//			thankYouResourceStarRatingsPoor = new ThankYouResourceStarRatingsPoor(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
-//			thankYouResourceStarRatingsPoor.getElement().getStyle().setZIndex(999999);
-//			thankYouResourceStarRatings.getElement().getStyle().setPadding(0, Unit.PX);
-//			thankYouResourceStarRatingsPoor.setPopupPosition(300,Window.getScrollTop()+48);
-//			thankYouResourceStarRatingsPoor.show();
-//			thankYouResourceStarRatingsPoor.setAutoHideEnabled(true);	
-//		}
+		/*}
+		else
+		{
+			thankYouResourceStarRatingsPoor = new ThankYouResourceStarRatingsPoor(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
+			thankYouResourceStarRatingsPoor.getElement().getStyle().setZIndex(999999);
+			thankYouResourceStarRatingsPoor.getElement().getStyle().setPadding(0, Unit.PX);
+			thankYouResourceStarRatingsPoor.setPopupPosition(175,Window.getScrollTop()+100);
+			thankYouResourceStarRatingsPoor.show();
+			thankYouResourceStarRatingsPoor.setAutoHideEnabled(true);	
+		}*/
 	}
 	
 	

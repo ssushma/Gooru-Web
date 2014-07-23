@@ -722,7 +722,7 @@ fieldset {
 }
 
 .ratingConfirmationContainer .rating {
-	margin-bottom: 20px;
+	margin-bottom: 6px;
 }
 
 .ratingConfirmationContainer label {
@@ -805,6 +805,7 @@ fieldset {
 }
 .okContainer{
 	text-align: center;
+	margin-top: 8px;
 }
 
 .errorLblBottomText {
@@ -832,6 +833,26 @@ fieldset {
 	margin-bottom: 10px;
 }
 
+
+.ratingPoorConfirmationContainer {
+	padding: 20px;
+	border: 1px solid #ddd;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	width: 300px;
+	border-radius: 4px;
+	position: absolute;
+	/* top: 425px;
+	left: 295px; */
+	white-space: normal;
+	background-color: white;
+}
+
+.ratingPoorHeader{
+	text-align: center;
+	font-size: 16px;
+}
 /*==============New Player css==================*/
 
 .blocksmall{
