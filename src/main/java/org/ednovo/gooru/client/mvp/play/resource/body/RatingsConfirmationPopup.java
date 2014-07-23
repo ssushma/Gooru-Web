@@ -77,9 +77,9 @@ public class RatingsConfirmationPopup extends PopupPanel{
 		ratingWidgetView.setAvgStarRating(average);
 		if(count>0)
 		{
-		ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
+		/*ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
 		ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
-		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());*/
 		}
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
