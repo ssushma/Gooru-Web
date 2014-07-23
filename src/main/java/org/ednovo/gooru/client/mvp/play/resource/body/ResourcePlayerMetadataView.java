@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
+import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
@@ -54,6 +55,7 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -247,7 +249,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		  }
 		  else
 		  {
-			  wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
+			 // wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
 			  
 		  }
 		  
@@ -262,7 +264,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			three_star.addMouseOutHandler(new OnStarMouseOut(THREE_STAR));
 			four_star.addMouseOutHandler(new OnStarMouseOut(FOUR_STAR));
 			five_star.addMouseOutHandler(new OnStarMouseOut(FIVE_STAR));
-		
 			setId();
 	}
 
@@ -395,10 +396,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 	public void previewResouceWidget(CollectionItemDo collectionItemDo){
 		resourceWidgetContainer.clear();
+		setResourceWidgetContainerHeight();
 		String resourceTypeName=collectionItemDo.getResource().getResourceType().getName();
 		wrapperContainerField.getElement().getStyle().clearHeight();
 		if(resourceTypeName.equalsIgnoreCase("video/youtube")){
-			wrapperContainerField.getElement().getStyle().setHeight(525	, Unit.PX);
+			//wrapperContainerField.getElement().getStyle().setHeight(525	, Unit.PX);
 			resourceWidgetContainer.add(new FlashAndVideoPlayerWidget(ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl()), collectionItemDo.getStart(), collectionItemDo.getStop()));
 		}else if(resourceTypeName.equalsIgnoreCase("animation/kmz")){
 			resourceWidgetContainer.add(new GwtEarthWidget(collectionItemDo.getResource().getUrl()));
@@ -471,7 +473,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}
 	}
-	
+	public void setResourceWidgetContainerHeight(){
+		int windowHeight=Window.getClientHeight();
+		resourceWidgetContainer.setHeight((windowHeight-202)+"px");
+	}
 	public void setGoogleDriveFileStatusCode(Integer statusCode){
 		if(statusCode==302){
 			ResourceFrameBreakerView resourceFrameBreakerViewnew =new ResourceFrameBreakerView(collectionItemDo,true);
@@ -881,11 +886,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 	}
 	public static void addPadding(){
-		wrapperContainerField.setStyleName(playerStyle.collectionPlayerWrapperPadding());
+		//wrapperContainerField.removeStyleName(playerStyle.collectionPlayerWrapper());
+		//wrapperContainerField.addStyleName(playerStyle.collectionPlayerWrapperPadding());
 	}
 	
 	public static void removePadding(){
-		wrapperContainerField.setStyleName(playerStyle.collectionPlayerWrapper());
+		//wrapperContainerField.removeStyleName(playerStyle.collectionPlayerWrapperPadding());
+		//wrapperContainerField.addStyleName(playerStyle.collectionPlayerWrapper());
 	}
 
 	/**
@@ -1490,7 +1497,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	public static void onClosingAndriodorIpaddiv()
 	{
-		  wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
+		 // wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
 	}
 
 	/**

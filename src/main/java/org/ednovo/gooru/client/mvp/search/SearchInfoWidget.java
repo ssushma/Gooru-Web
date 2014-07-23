@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -1206,7 +1207,12 @@ public class SearchInfoWidget extends Composite {
 							@Override
 							public void onClickPositiveButton(ClickEvent event) {
 								this.hide();
-								Window.enableScrolling(true);
+								
+								if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+									Window.enableScrolling(false);
+								}else{
+									Window.enableScrolling(true);
+								}
 							}
 							
 						};
@@ -1219,7 +1225,11 @@ public class SearchInfoWidget extends Composite {
 						success.center();
 						success.show();
 					 }else{
-						 Window.enableScrolling(true);
+						 if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+								Window.enableScrolling(false);
+							}else{
+								Window.enableScrolling(true);
+							}
 					 }
 				}
 			};

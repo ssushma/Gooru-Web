@@ -31,12 +31,14 @@ import java.util.Map;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.AppInjector;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
+import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
@@ -88,6 +90,9 @@ public class GooruEntry implements EntryPoint {
 			});
 			AppClientFactory.setAppGinjector(appInjector);
 		}
+		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 767px) {" + PlayerStyleBundle.INSTANCE.getPlayerMobileStyle().getText() + "}");
+		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 1000px) {" + PlayerStyleBundle.INSTANCE.getPlayerTabletStyle().getText() + "}");
+		PlayerStyleBundle.INSTANCE.getPlayerStyleResource().ensureInjected();
 	}
 	
 	/* 

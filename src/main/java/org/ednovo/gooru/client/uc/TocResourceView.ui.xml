@@ -6,7 +6,7 @@
 	<ui:style field= "playerStyle" src="resourcetocview.css"/>
 	<g:FlowPanel styleName="{playerStyle.resource-container}" ui:field="tocResourceContainer">
 		<g:FlowPanel ui:field="tocResourceImageContainer">
-			<g:FlowPanel styleName="{playerStyle.resource-thumbnail}"> 
+			<g:FlowPanel styleName="{playerStyle.resource-thumbnail}" ui:field="resourceThumbnailContainer"> 
 				<g:Image styleName="{playerStyle.resource-image}" ui:field="resourceThumbnail"></g:Image>
 				<g:Label styleName="{playerStyle.resource-type}" ui:field="resourceTypeImage"></g:Label>
 			</g:FlowPanel>

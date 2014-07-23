@@ -57,7 +57,7 @@ public class TocCollectionEndView extends Composite implements HasClickHandlers{
 	
 	@UiField HTMLPanel resourceTitle;
 	
-	@UiField FlowPanel endImageContainer,endContainer;
+	@UiField FlowPanel endImageContainer,endContainer,resourceThumbnailContainer;
 	
 	private String thumbnailUrl;
 	
@@ -126,6 +126,13 @@ public class TocCollectionEndView extends Composite implements HasClickHandlers{
 			String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		}
+	}
+	public void hideResourceThumbnailContainer(boolean hide){
+		if(hide){
+			resourceThumbnailContainer.setVisible(false);
+		}else{
+			resourceThumbnailContainer.setVisible(true);
 		}
 	}
 	

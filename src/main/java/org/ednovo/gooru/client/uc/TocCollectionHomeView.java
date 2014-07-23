@@ -54,7 +54,7 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 
 	@UiField Image resourceThumbnail;
 	@UiField HTMLPanel resourceTitle;
-	@UiField FlowPanel homeImageContainer,homeContainer;
+	@UiField FlowPanel homeImageContainer,homeContainer,resourceThumbnailContainer;
 	private String thumbnailUrl;
 	private static TocResourceViewUiBinder uiBinder = GWT.create(TocResourceViewUiBinder.class);
 
@@ -121,6 +121,14 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 			String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		}
+	}
+	
+	public void hideResourceThumbnailContainer(boolean hide){
+		if(hide){
+			resourceThumbnailContainer.setVisible(false);
+		}else{
+			resourceThumbnailContainer.setVisible(true);
 		}
 	}
 	

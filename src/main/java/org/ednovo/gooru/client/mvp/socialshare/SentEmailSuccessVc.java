@@ -161,7 +161,7 @@ public class SentEmailSuccessVc extends Composite {
 			Window.enableScrolling(true);
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 		}
-		else if(!(placeToken.equals(PlaceTokens.COLLECTION_PLAY) ||placeToken.equals(PlaceTokens.PREVIEW_PLAY)||placeToken.equals(PlaceTokens.RESOURCE_PLAY))) {
+		else if(!(placeToken.equals(PlaceTokens.RESOURCE_SEARCH) || placeToken.equals(PlaceTokens.COLLECTION_SEARCH) || placeToken.equals(PlaceTokens.COLLECTION_PLAY) ||placeToken.equals(PlaceTokens.PREVIEW_PLAY)||placeToken.equals(PlaceTokens.RESOURCE_PLAY))) {
 			Window.enableScrolling(true);
 		}
 	}

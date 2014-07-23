@@ -54,6 +54,7 @@
 		}
 		.panelHeight{
 			overflow-y: auto;
+			overflow-x: hidden;
 			width: 63%;
 			margin: 0px 0px 0px 12%;
 		}
