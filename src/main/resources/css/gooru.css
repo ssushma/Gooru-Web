@@ -1868,7 +1868,11 @@ fieldset {
     font-size:14px;
     color:#999;
 }
-.rating .star.filled,
+.playerrating .star{
+	font-size:28px !important;
+    color:#999;
+}
+.rating .star.filled, .playerrating .star.filled,
 .rating .ratingItems .star.filled {
     color:#4e9746;
 }

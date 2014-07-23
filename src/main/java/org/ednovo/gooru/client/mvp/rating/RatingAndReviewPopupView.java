@@ -108,7 +108,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public RatingAndReviewPopupView(EventBus eventsBus){
 		super(eventsBus);
 		appPopUp.setGlassEnabled(true);
-		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY) || AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			appPopUp.setGlassStyleName("setGlassPanelZIndex");
 		}
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));	
@@ -122,7 +122,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 		
 		hide();
-		if (!currentToken.equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY) && !currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+		if (!currentToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && !currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			Window.enableScrolling(true);
 		}
 	}

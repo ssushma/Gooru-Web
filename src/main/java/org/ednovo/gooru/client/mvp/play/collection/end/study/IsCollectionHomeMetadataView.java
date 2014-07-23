@@ -22,17 +22,11 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.collection.toc;
+package org.ednovo.gooru.client.mvp.play.collection.end.study;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
-public interface IsCollectionPlayerTocView extends IsViewWithHandlers<CollectionPlayerTocUiHandlers>{
-	
-	public void setNavigationResources(CollectionDo collectionDo,boolean isCollectionHome);
-	
-	public void setResourceActive(String collectionId,String collectionItemid,boolean isCollectionHome);
-	
-	public void clearNavigationPanel();
-	
+public interface IsCollectionHomeMetadataView extends IsViewWithHandlers<CollectionHomeMetadataUiHandlers>{
+	public void setCollectionMetadata(CollectionDo collectionDo);
 }

@@ -948,7 +948,7 @@ public class LibraryTopicListView extends Composite{
 										params.put("rootNodeId", standardId);
 									}
 									
-									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
+									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 									AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 								}
 							});
@@ -1099,7 +1099,7 @@ public class LibraryTopicListView extends Composite{
 				if(standardId!=null){
 					params.put("rootNodeId", standardId);
 				}
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 			}
 	}
 	

@@ -35,10 +35,10 @@
 	cursor:pointer;
 }
 .collectionPlayerContainer{
-	width: 960px;
-	min-height: 500px;
+	width: 1000px;
 	margin: 0 auto;
 	height: 95%;
+	float:left;
 	/* margin-top: 141px; */
 }
 .resourcePlayerRightArrowContainer{
@@ -93,6 +93,11 @@
 .collectionNormalTxt {
 	font-size: 12px;
 	color: rgb(81,81,81);
+	display: inline-block;
+	border-left: 2px solid #999999;
+	margin-left: 5px;
+	padding-left: 5px;
+	padding-top: 2px;
 }
 .icon {
 	position: absolute;
@@ -826,3 +831,28 @@ fieldset {
 	font-weight: bold;
 	margin-bottom: 10px;
 }
+
+/*==============New Player css==================*/
+
+.blocksmall{
+	float: left;
+    padding: 10px 10px;
+    width: 100%;
+    box-sizing: border-box;
+    background: #ffffff;
+}
+
+.blocksmall:before, .blocksmall:after {
+	box-sizing: border-box;
+}
+.mainDisc{
+	display:inline-block;
+	vertical-align:middle;
+}
+.resourceTitleStyle{
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	display: inline-block;
+}
+

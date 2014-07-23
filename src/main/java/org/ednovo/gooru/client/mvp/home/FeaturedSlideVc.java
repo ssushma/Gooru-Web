@@ -154,6 +154,6 @@ public class FeaturedSlideVc extends Composite{
 
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", this.collectionGooruOid.getValue());
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 	}
 }

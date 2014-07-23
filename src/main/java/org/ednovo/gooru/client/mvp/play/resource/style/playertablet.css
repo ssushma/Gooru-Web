@@ -1,0 +1,44 @@
+@charset "utf-8";
+/* CSS Document */
+
+.container{
+	width:auto;
+	padding-left:15px;
+	padding-right:15px;
+
+}
+.whitebg{}
+.navigationWrapper{}
+.animationWrapper{}
+.loginStatus{
+	margin-right:50px;
+}
+.collectionItem {
+    margin: 5px;
+}
+
+.leftPanel{
+	width:75%;
+}
+
+.rightPanel{
+	width:25%;
+}
+.ojectimg{
+	width:150px;
+}
+
+.avatarblock .commentsSection {
+    width: 68%;
+}
+
+.description{
+	margin-bottom:15px;
+}
+
+.collectionSlider{
+	text-align:center;
+}
+.rightWrapper{}
+.animationWrapper{}
+.tabButtonsContainer{}

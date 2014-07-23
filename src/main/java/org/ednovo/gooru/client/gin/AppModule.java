@@ -155,6 +155,9 @@ import org.ednovo.gooru.client.mvp.play.collection.body.IsCollectionPlayerMetada
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndView;
 import org.ednovo.gooru.client.mvp.play.collection.end.IsCollectionEndView;
+import org.ednovo.gooru.client.mvp.play.collection.end.study.CollectionHomeMetadataPresenter;
+import org.ednovo.gooru.client.mvp.play.collection.end.study.CollectionHomeMetadataView;
+import org.ednovo.gooru.client.mvp.play.collection.end.study.IsCollectionHomeMetadataView;
 import org.ednovo.gooru.client.mvp.play.collection.flag.CollectionFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.flag.CollectionFlagView;
 import org.ednovo.gooru.client.mvp.play.collection.flag.IsCollectionFlagView;
@@ -277,9 +280,9 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResource
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourceView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.IsAddResourceView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter.IsDriveyProxy;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DriveView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.IsDriveView;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter.IsDriveyProxy;
 import org.ednovo.gooru.client.mvp.shelf.list.IsShelfListView;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
@@ -476,6 +479,8 @@ public class AppModule extends AppPresenterModule {
 
 		bindPresenter(SausdPresenter.class, IsSausdView.class, SausdView.class,IsSausdProxy.class);
 		bindPresenter(DrivePresenter.class, IsDriveView.class, DriveView.class,IsDriveyProxy.class);
+		
+		bindPresenterWidget(CollectionHomeMetadataPresenter.class, IsCollectionHomeMetadataView.class, CollectionHomeMetadataView.class);
 
 	}
 }

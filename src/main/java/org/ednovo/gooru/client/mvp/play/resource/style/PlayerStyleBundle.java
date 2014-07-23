@@ -22,17 +22,43 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.collection.toc;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.play.resource.style;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.NotStrict;
 
-public interface IsCollectionPlayerTocView extends IsViewWithHandlers<CollectionPlayerTocUiHandlers>{
+/**
+ * @author Search Team
+ * 
+ */
+public interface PlayerStyleBundle extends ClientBundle {
+
+	public static final PlayerStyleBundle INSTANCE = GWT.create(PlayerStyleBundle.class);
 	
-	public void setNavigationResources(CollectionDo collectionDo,boolean isCollectionHome);
 	
-	public void setResourceActive(String collectionId,String collectionItemid,boolean isCollectionHome);
+	@NotStrict
+	@Source("playerstyle.css")
+	PlayerStyleResource getPlayerStyleResource();
 	
-	public void clearNavigationPanel();
+	@NotStrict
+	@Source("playermobile.css")
+	PlayerStyleResource getPlayerMobileStyle();
 	
+	@NotStrict
+	@Source("playertablet.css")
+	PlayerStyleResource getPlayerTabletStyle();
+	
+	public interface PlayerStyleResource extends CssResource {
+		String container();
+		String whitebg();
+		String navigationWrapper();
+		String rightWrapper();
+		String animationWrapper();
+		String tabButtonsContainer();
+	}
 }
