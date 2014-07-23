@@ -468,7 +468,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 										@Override
 										public void onClickPositiveButton(
 												ClickEvent event) {
-											Window.enableScrolling(true);
+											if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+												Window.enableScrolling(false);
+											}else{
+												Window.enableScrolling(true);
+											}
 											btnJoinClass.setVisible(false);
 											userImage.setVisible(true);
 											lblWebHelp.setVisible(false);
@@ -572,7 +576,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												@Override
 												public void onClickPositiveButton(
 														ClickEvent event) {
-													Window.enableScrolling(true);
+													if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+														Window.enableScrolling(false);
+													}else{
+														Window.enableScrolling(true);
+													}
 													btnJoinClass.setVisible(false);
 													userImage.setVisible(true);
 													lblWebHelp.setVisible(false);
@@ -896,7 +904,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									@Override
 									public void onClickPositiveButton(
 											ClickEvent event) {
-										Window.enableScrolling(true);
+										if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+											Window.enableScrolling(false);
+										}else{
+											Window.enableScrolling(true);
+										}
 										btnJoinClass.setVisible(false);
 										userImage.setVisible(true);
 										lblWebHelp.setVisible(false);
@@ -1050,7 +1062,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 								@Override
 								public void onClickPositiveButton(
 										ClickEvent event) {
-									Window.enableScrolling(true);
+									if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+										Window.enableScrolling(false);
+									}else{
+										Window.enableScrolling(true);
+									}
 									btnJoinClass.setVisible(false);
 									userImage.setVisible(true);
 									lblWebHelp.setVisible(false);
@@ -1145,7 +1161,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									@Override
 									public void onClickPositiveButton(
 											ClickEvent event) {
-										Window.enableScrolling(true);
+										if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+											Window.enableScrolling(false);
+										}else{
+											Window.enableScrolling(true);
+										}
 										btnJoinClass.setVisible(false);
 										userImage.setVisible(true);
 										lblWebHelp.setVisible(false);
@@ -1284,7 +1304,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												@Override
 												public void onClickPositiveButton(
 														ClickEvent event) {
-													Window.enableScrolling(true);
+													if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+														Window.enableScrolling(false);
+													}else{
+														Window.enableScrolling(true);
+													}
 													btnJoinClass.setVisible(false);
 													userImage.setVisible(true);
 													lblWebHelp.setVisible(false);
@@ -1389,7 +1413,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 														@Override
 														public void onClickPositiveButton(
 																ClickEvent event) {
-															Window.enableScrolling(true);
+															if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+																Window.enableScrolling(false);
+															}else{
+																Window.enableScrolling(true);
+															}
 															btnJoinClass.setVisible(false);
 															userImage.setVisible(true);
 															lblWebHelp.setVisible(false);

@@ -1184,7 +1184,11 @@ public class ShelfCollectionResourceChildView extends
 						@Override
 						public void onClickPositiveButton(ClickEvent event) {
 							this.hide();
-							Window.enableScrolling(true);
+							if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+								Window.enableScrolling(false);
+							}else{
+								Window.enableScrolling(true);
+							}
 						}
 						
 					};
@@ -1197,7 +1201,11 @@ public class ShelfCollectionResourceChildView extends
 					success.center();
 					success.show();
 			        }else{
-			        	Window.enableScrolling(true);
+			        	if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			    			Window.enableScrolling(false);
+			    		}else{
+			    			Window.enableScrolling(true);
+			    		}
 			        }
 				}
 			};

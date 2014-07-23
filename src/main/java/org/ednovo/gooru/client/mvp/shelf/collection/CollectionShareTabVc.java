@@ -1088,7 +1088,11 @@ public class CollectionShareTabVc extends Composite {
 								this.hide();
 								updateShare("public");
 								selectPrivateResource("public");
-								Window.enableScrolling(true);
+								if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+									Window.enableScrolling(false);
+								}else{
+									Window.enableScrolling(true);
+								}
 							}
 						};
 						success.setPopupTitle(i18n.GL1921());
