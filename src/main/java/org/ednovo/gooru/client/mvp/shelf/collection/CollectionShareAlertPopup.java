@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
@@ -62,7 +62,7 @@ public abstract class CollectionShareAlertPopup extends PopupPanel {
 	private static CollectionShareAlertPopupUiBinder uiBinder = GWT
 			.create(CollectionShareAlertPopupUiBinder.class);
 	
-    CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+    MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CollectionShareAlertPopupUiBinder extends
 			UiBinder<Widget, CollectionShareAlertPopup> {

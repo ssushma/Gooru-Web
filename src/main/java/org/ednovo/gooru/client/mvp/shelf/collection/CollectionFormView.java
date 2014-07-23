@@ -40,7 +40,7 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -161,7 +161,7 @@ public class CollectionFormView extends
 	
 	boolean isHavingBadWords;
 	
-	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	private static String TITLE_THIS_COLLECTION = i18n.GL0322();
 
@@ -574,9 +574,9 @@ public class CollectionFormView extends
 			collectionTitleTxtBox.setText(AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE));
 			collectionTitleTxtBox.getElement().setAttribute("alt",AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE));
 			collectionTitleTxtBox.getElement().setAttribute("title",AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE));
-			btnOk.setText(i18n.GL0636());
-			btnOk.getElement().setAttribute("alt",i18n.GL0636());
-			btnOk.getElement().setAttribute("title",i18n.GL0636());
+			btnOk.setText(i18n.GL0590());
+			btnOk.getElement().setAttribute("alt",i18n.GL0590());
+			btnOk.getElement().setAttribute("title",i18n.GL0590());
 			cancelAnr.setText(i18n.GL0142());
 			cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
 			cancelAnr.getElement().setAttribute("title",i18n.GL0142());

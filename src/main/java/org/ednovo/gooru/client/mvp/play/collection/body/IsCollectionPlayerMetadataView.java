@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
@@ -65,5 +64,17 @@ public interface IsCollectionPlayerMetadataView extends IsViewWithHandlers<Colle
 	public void clearDashBoardIframe();
 	
 	public void setClasspageInsightsUrl(String classpageId, String sessionId);
+	
+	public void setCommentsData(CommentsListDo commentDoList, CollectionDo collectionDo, boolean isToClearCommentContainer);
+	
+	public void setCommentsWidget(CommentsDo commentsDo, String action);
+	
+	public void displaySuccessMsg(boolean isVisible);
+	
+	public void updateCommentChildView(String commentUid, String action);
+	
+	public void clearCommentContainer(boolean isClear);
+	
+	public void setPlayerLoginStatus(boolean isLoggedIn);
 	
 }

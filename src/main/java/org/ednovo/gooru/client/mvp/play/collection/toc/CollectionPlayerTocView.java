@@ -39,10 +39,9 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.TocCollectionEndView;
 import org.ednovo.gooru.client.uc.TocCollectionHomeView;
 import org.ednovo.gooru.client.uc.TocResourceView;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -70,7 +69,7 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 	interface CollectionPlayerTocViewUiBinder extends UiBinder<Widget, CollectionPlayerTocView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@Inject
 	public CollectionPlayerTocView(){
@@ -84,14 +83,17 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 		navgationTocContainer.getElement().setId("fpnlNavgationTocContainer");
 		nextButton.getElement().setId("lblNextButton");
 		hideButton.getElement().setId("epnlHideButton");
+		if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.COLLECTION_PLAY)){
+			hideButton.setVisible(false);
+		}
 	}
 	public void clearNavigationPanel(){
 		navgationTocContainer.clear();
 	}
 	@Override
-	public void setNavigationResources(CollectionDo collectionDo){
-		int resourcesSize=collectionDo.getCollectionItems()!=null?collectionDo.getCollectionItems().size():0;
+	public void setNavigationResources(CollectionDo collectionDo,boolean isCollectionHome){
 		if(collectionDo!=null){
+			int resourcesSize=collectionDo.getCollectionItems()!=null?collectionDo.getCollectionItems().size():0;
 			if(navgationTocContainer.getWidgetCount()==0){
 				navgationTocContainer.clear();
 				nextButton.setVisible(true);
@@ -99,6 +101,9 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				List<CollectionItemDo> collectionItems=collectionDo.getCollectionItems();
 			
 				TocCollectionHomeView tocCollectionHomeView=new TocCollectionHomeView(collectionDo.getThumbnails().getUrl());
+				if(!isCollectionHome){
+					tocCollectionHomeView.hideResourceThumbnailContainer(true);
+				}
 				tocCollectionHomeView.addClickHandler(new HomeRequest());
 				navgationTocContainer.add(tocCollectionHomeView);
 				for(int i=0;i<collectionItems.size();i++){
@@ -106,32 +111,48 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 					TocResourceView tocResoruceView=new TocResourceView(collectionItemDo,i+1,true,false);
 					tocResoruceView.addClickHandler(new ResourceRequest(collectionItemDo));
 					tocResoruceView.setCollectionItemId(collectionItemDo.getCollectionItemId());
+					if(!isCollectionHome){
+						tocResoruceView.hideResourceThumbnailContainer(true);
+					}
 					navgationTocContainer.add(tocResoruceView);
 				}
 				TocCollectionEndView tocCollectionEndView=new TocCollectionEndView(collectionDo.getThumbnails().getUrl());
 				tocCollectionEndView.addClickHandler(new EndRequest());
+				if(!isCollectionHome){
+					tocCollectionEndView.hideResourceThumbnailContainer(true);
+				}
 				navgationTocContainer.add(tocCollectionEndView);
 				if(resourcesSize>6){
-					new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize, 120);
+					new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize, 102);
 				}
 				//resources width with padding and margin constitutes 102px for each and collection home and end with padding and margin width
 				//have 150px each. navgationTocContainer width is derived from this.
-				if(resourcesSize>0)
-				{
-				navgationTocContainer.getElement().setAttribute("style", "width:"+((resourcesSize*(102))+300)+"px !important;");
+				if(resourcesSize>0){
+					navgationTocContainer.getElement().setAttribute("style", "width:"+((resourcesSize*(102))+204)+"px !important;");
 				}
-				else
-				{
+				else{
 					nextButton.setVisible(false);
 					previousButton.setVisible(false);
-				navgationTocContainer.getElement().setAttribute("style", "width:"+(300)+"px !important;");
+					navgationTocContainer.getElement().setAttribute("style", "width:"+(300)+"px !important;");
 				}
+			}else{
+				setResourceThumbnailVisibility(isCollectionHome);
 			}
-
-			
+		}
+	}
+	public void setResourceThumbnailVisibility(boolean visibility){
+		int widgetsCount=navgationTocContainer.getWidgetCount();
+		for(int i=0;i<widgetsCount;i++){
+			Widget widget=navgationTocContainer.getWidget(i);
+			if(widget instanceof TocCollectionHomeView){
+				((TocCollectionHomeView)widget).hideResourceThumbnailContainer(!visibility);
+			}else if(widget instanceof TocResourceView){
+				((TocResourceView)widget).hideResourceThumbnailContainer(!visibility);
+			} else if(widget instanceof TocCollectionEndView){
+				((TocCollectionEndView)widget).hideResourceThumbnailContainer(!visibility);
+			}
 		}
 		
-	
 	}
 	@Override
 	public void setResourceActive(String collectionId,String collectionItemid,boolean isCollectionHome){

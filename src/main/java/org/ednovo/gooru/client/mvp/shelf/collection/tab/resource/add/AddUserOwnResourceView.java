@@ -38,7 +38,7 @@ import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -84,7 +84,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 	}
 	public static AddUserOwnResourceViewUiBinder uiBinder = GWT.create(AddUserOwnResourceViewUiBinder.class);
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel loadingImagePanel,rightsContent;
 	
@@ -289,8 +289,11 @@ public abstract class AddUserOwnResourceView extends Composite {
 		uploadImageLbl.getElement().setId("btnUploadImage");
 		addResourceBtnLbl.getElement().setId("btnAdd");
 		resourcePathTextBox.getElement().setId("tbUrl");
-		titleTextBox.getElement().setId("tbTitle");	
+		StringUtil.setAttributes(resourcePathTextBox, true);
+		titleTextBox.getElement().setId("tbTitle");
+		StringUtil.setAttributes(titleTextBox, true);
 		descriptionTxtAera.getElement().setId("taDescription");
+		StringUtil.setAttributes(descriptionTxtAera, true);
 		descriptionTxtAera.getElement().setAttribute("placeholder", i18n.GL0359());
 		resourcePathTextBox.addKeyUpHandler(new ResourcePathKeyUpHandler());
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());

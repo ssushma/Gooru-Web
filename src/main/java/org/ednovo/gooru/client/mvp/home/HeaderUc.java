@@ -56,13 +56,12 @@ import org.ednovo.gooru.client.uc.tooltip.OrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyNowToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.DataLogEvents;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -123,7 +122,7 @@ public class HeaderUc extends Composite implements
 	interface HeaderUcUiBinder extends UiBinder<Widget, HeaderUc> {
 	}
 
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	OpenClasspageListHandler openClasspageListHandler = new OpenClasspageListHandler() {
 
@@ -460,23 +459,23 @@ public class HeaderUc extends Composite implements
 		editSearchBtn.getElement().setAttribute("alt",i18n.GL0176());
 		editSearchBtn.getElement().setAttribute("title",i18n.GL0176());
 		
-		confirmEmailText.getElement().setAttribute("style", "float: left;");
+		confirmEmailText.getElement().setAttribute("style", "float: left;font-size:11px;");
 		confirmEmailText.setText(i18n.GL1248());
 		confirmEmailText.getElement().setId("lblConfirmEmailText");
 		confirmEmailText.getElement().setAttribute("alt",i18n.GL1248());
 		confirmEmailText.getElement().setAttribute("title",i18n.GL1248());
 		
-		resendEmailAncr.getElement().setAttribute("style", "float: left;padding-left:5px;");
-		resendEmailAncr.setText(i18n.GL1249()+i18n.GL_GRR_COMMA());
+		resendEmailAncr.getElement().setAttribute("style", "float: left;font-size:11px;");
+		resendEmailAncr.setText(i18n.GL1249());
 		resendEmailAncr.getElement().setId("lnkResendEmail");
 		resendEmailAncr.getElement().setAttribute("alt",i18n.GL1249());
 		resendEmailAncr.getElement().setAttribute("title",i18n.GL1249());
 		
-		thanksLbl.getElement().setAttribute("style", "padding-left:5px;");
+		/*thanksLbl.getElement().setAttribute("style", "padding-left:5px;");
 		thanksLbl.setText(i18n.GL0498()+i18n.GL_SPL_EXCLAMATION());
 		thanksLbl.getElement().setId("lblThanksLbl");
 		thanksLbl.getElement().setAttribute("alt",i18n.GL0498());
-		thanksLbl.getElement().setAttribute("title",i18n.GL0498());
+		thanksLbl.getElement().setAttribute("title",i18n.GL0498());*/
 		
 		getEditSearchTxtBox().getElement().setAttribute("placeholder",
 				i18n.GL0177());
@@ -526,6 +525,7 @@ public class HeaderUc extends Composite implements
 		headerSearchBarVerPanel.getElement().setId("vsbHeaderSearchBarVerPanel");
 		headerSearchBarFloPanel.getElement().setId("fpnlHeaderSearchBarFloPanel");
 		editSearchTxtBox.getElement().setId("tbautoEditSearchTxtBox");
+		StringUtil.setAttributes(editSearchTxtBox, true);
 		mainDotsPanel.getElement().setId("pnlMainDotsPanel");
 		mainInnerDotsPanel.getElement().setId("pnlMainInnerDotsPanel");
 		dotsPanel.getElement().setId("pnlDotsPanel");
@@ -811,7 +811,7 @@ public class HeaderUc extends Composite implements
 				stockStore.setItem("tabKey", "resourceTab");
 			}
 			name = "organize";
-			Window.enableScrolling(true);
+//			Window.enableScrolling(true);
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 			manageDotsMenuSelection(organizeLink);
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
@@ -822,12 +822,12 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void onClick(ClickEvent event) {
-
+			Window.enableScrolling(true);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 			if (userDo != null
 					&& !userDo.getUserUid().equals(
 							AppClientFactory.GOORU_ANONYMOUS)) {
-				Window.enableScrolling(true);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
+				
 //				OpenClasspageList();
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 				
@@ -979,7 +979,6 @@ public class HeaderUc extends Composite implements
 		public void onMouseOver(final MouseOverEvent event) {
 			if (!AppClientFactory.isAnonymous()){
 				if (!AppClientFactory.isAnonymous()) {
-					Window.enableScrolling(true);
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 //					tooltipTimer = new Timer() {
 //						public void run() {
@@ -992,8 +991,7 @@ public class HeaderUc extends Composite implements
 					{
 						organizeToolTip.hide();
 					}
-
-							OpenClasspageList();
+					OpenClasspageList();
 //						}
 //					};
 //					tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
@@ -1161,7 +1159,7 @@ public class HeaderUc extends Composite implements
 	 */
 	@UiHandler("editSearchBtn")
 	public void OnSearchClick(ClickEvent clickEvent) {
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		if (getEditSearchTxtBox().getText() != null
 				&& getEditSearchTxtBox().getText().length() > 0) {

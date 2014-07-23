@@ -27,15 +27,19 @@ package org.ednovo.gooru.client.mvp.search;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -49,13 +53,14 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 
 	private static SearchRootViewUiBinder uiBinder = GWT.create(SearchRootViewUiBinder.class);
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface SearchRootViewUiBinder extends UiBinder<Widget, SearchRootView> {
 	}
 
 	public interface Style extends CssResource {
 		String bodyHeight();
+		String panelHeight();
 	}
 
 	/*@UiField
@@ -66,6 +71,7 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	HTMLPanel contentpanel;*/
 	@UiField
 	SimplePanel searchWrapperSimPanel, shelfTabSimPanel;
+	@UiField FlowPanel panelSearchPage;
 
 	/*@UiField
 	Anchor resourceLinkLbl, collectionLinkLbl;*/
@@ -89,6 +95,14 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		
 		resourceLinkLbl.setText(MessageProperties.GL0174);
 		collectionLinkLbl.setText(MessageProperties.GL0175);*/
+		queriedTextHtml.getElement().setId("htmlQueriedTextHtml");
+		searchWrapperSimPanel.getElement().setId("spnlSearchWrapperSimPanel");
+		shelfTabSimPanel.getElement().setId("spnlShelfTabSimPanel");
+		lodingImage.getElement().setId("lblLodingImage");
+
+		int windowHeight=Window.getClientHeight();
+		panelSearchPage.setStyleName(style.panelHeight());
+		panelSearchPage.getElement().getStyle().setHeight(windowHeight - 50, Unit.PX);
 	}
 
 	@Override
@@ -146,6 +160,8 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	public void reset() {
 		super.reset();
 		queriedTextHtml.setHTML("<p></p>");
+		queriedTextHtml.getElement().setAttribute("alt","<p></p>");
+		queriedTextHtml.getElement().setAttribute("title","<p></p>");
 	}
 
 	@Override
@@ -167,46 +183,54 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 
 	@Override
 	public void postSearch(SearchDo<?> searchDo) {
-//		String searchText = searchBarVc.getSearchText();
-		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)|| AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
+		// String searchText = searchBarVc.getSearchText();
+		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+				PlaceTokens.RESOURCE_SEARCH)
+				|| AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+						PlaceTokens.COLLECTION_SEARCH)) {
 			Document doc = Document.get();
-			doc.getBody().setClassName(style.bodyHeight());  
+			doc.getBody().setClassName(style.bodyHeight());
 		}
-		
-		int countValue=searchDo.getSearchResults().size();
-		
-		String searchText = AppClientFactory.getPlaceManager().getRequestParameter("query");
-		
+		Window.enableScrolling(false);
+		int countValue = searchDo.getSearchResults().size();
+
+		String searchText = AppClientFactory.getPlaceManager()
+				.getRequestParameter("query");
+
 		if (searchText == null) {
 			searchText = "";
 			lodingImage.setVisible(false);
 		} else {
-			if(searchText.contains("252")){
-			searchText=searchText.replaceAll("%"," ").replaceAll("2", "").replaceAll("5", "").replaceAll("B", "");
+			if (searchText.contains("252")) {
+				searchText = searchText.replaceAll("%", " ")
+						.replaceAll("2", "").replaceAll("5", "")
+						.replaceAll("B", "");
 			}
-			searchText=searchText.trim();
-			if(searchText.length()>50)
-		     {
-				if(countValue > 0){
-					searchText=searchText.substring(0, 50)+"...";
-					searchText = " "+i18n.GL1468()+" <b>" + searchText + "</b>";
-				}else{
-					searchText=searchText.substring(0, 50)+"...";
-					searchText = i18n.GL0507()+" <b>" + searchText + "</b>";
+			searchText = searchText.trim();
+			if (searchText.length() > 50) {
+				if (countValue > 0) {
+					searchText = searchText.substring(0, 50) + "...";
+					searchText = " " + i18n.GL1468() + " <b>" + searchText
+							+ "</b>";
+				} else {
+					searchText = searchText.substring(0, 50) + "...";
+					searchText = i18n.GL0507() + " <b>" + searchText + "</b>";
 				}
-				
-		     }
-		     else{
-		    	 if(countValue > 0){
-		    		 searchText = ""+i18n.GL1468()+" <b>" + searchText + "</b>";
-		    	 }else{
-		    		 searchText =i18n.GL0507()+" <b>" + searchText + "</b>";
-		    	 }
+
+			} else {
+				if (countValue > 0) {
+					searchText = "" + i18n.GL1468() + " <b>" + searchText
+							+ "</b>";
+				} else {
+					searchText = i18n.GL0507() + " <b>" + searchText + "</b>";
+				}
+			}
+
+			queriedTextHtml.setHTML(searchText);
+			queriedTextHtml.getElement().setAttribute("alt", searchText);
+			queriedTextHtml.getElement().setAttribute("title", searchText);
+			lodingImage.setVisible(false);
 		}
-		
-		queriedTextHtml.setHTML(searchText);
-		lodingImage.setVisible(false);
-	}
 	}
 
 	/*@Override

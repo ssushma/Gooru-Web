@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Document;
@@ -36,7 +36,7 @@ public class DateBoxUcCustomizedForAssign extends FlowPanel {
 	private DatePickerUc datePickerUc;
 //	private DatePicker datePicker;
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	boolean isRegistration = true;
 

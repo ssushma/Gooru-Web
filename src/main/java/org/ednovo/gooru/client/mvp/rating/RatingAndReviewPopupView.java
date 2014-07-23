@@ -31,7 +31,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 
@@ -90,11 +90,15 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	
 	private boolean apiInprogress=true;
 	
+	private int totalHitCount=0;
+	
+	private int reviewSize=0;
+	
 	private RatingWidgetView ratingWidgetView= new RatingWidgetView();
 
 	private static ResourceNarrationViewUiBinder uiBinder = GWT.create(ResourceNarrationViewUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface ResourceNarrationViewUiBinder extends UiBinder<Widget, RatingAndReviewPopupView> {
 
@@ -104,7 +108,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public RatingAndReviewPopupView(EventBus eventsBus){
 		super(eventsBus);
 		appPopUp.setGlassEnabled(true);
-		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY) || AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			appPopUp.setGlassStyleName("setGlassPanelZIndex");
 		}
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));	
@@ -118,7 +122,12 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 		
 		hide();
-		if (!currentToken.equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY) && !currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+		if (!currentToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && !currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			Window.enableScrolling(true);
+		}
+		if (currentToken.equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			Window.enableScrolling(false);
+		}else{
 			Window.enableScrolling(true);
 		}
 	}
@@ -144,6 +153,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public void displayPopUp(String resourceTitle, String gooruOid,String createrName) {
 		this.gooruOid = gooruOid;
 		this.createrName = createrName;
+		reviewSize=0;
 		userRatingContainer.setVisible(false);
 		lblResourceTitle.setHTML(i18n.GL1840()+" "+removeHtmlTags(resourceTitle));
 		lblResourceTitle.getElement().setId("lblResourceTitle");
@@ -237,7 +247,9 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public void setGraphAndAvgContentRating(ContentStarRatingsDo result) {
 		setContentGraph(result); 
 		ratingWidgetView.setAvgStarRating(result.getAverage());
+		ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 		ratingWidgetView.getRatingCountLabel().setText(result.getCount().toString());
+		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
 
@@ -284,6 +296,8 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public void setUserRatingsAndReviews(ArrayList<StarRatingsDo> result) {
 		if(result.size()>0)
 		{
+			totalHitCount = result.get(0).getTotalHitCount();
+			reviewSize = reviewSize+result.size();
 			for(int i=0;i<result.size();i++){
 				if(result.get(i).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
 					isRated=true;
@@ -309,10 +323,11 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 			}
 		}
 		
+
 		for(int userReviews=0; userReviews<result.size(); userReviews++)
 		{
 			if(result.get(userReviews).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
-				reviewsContainer.insert(new RatingUserWidgetView(result.get(userReviews),createrName),0);
+				reviewsContainer.add(new RatingUserWidgetView(result.get(userReviews),createrName));
 			}else{
 				if(!result.get(userReviews).getFreeText().equals("")){
 					reviewsContainer.add(new RatingUserWidgetView(result.get(userReviews),createrName));
@@ -399,14 +414,13 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	
 	@UiHandler("reviewScrollPanel")
 	public void onScrollReviews(ScrollEvent event){
-		if(!apiInprogress){
+		if(!apiInprogress&&reviewScrollPanel.getVerticalScrollPosition() == reviewScrollPanel.getMaximumVerticalScrollPosition()&&(reviewSize)<(totalHitCount)){
 			apiInprogress=true;
-			getUiHandlers().getUserRatingsReviews(gooruOid,reviewsContainer.getWidgetCount());
+			getUiHandlers().getUserRatingsReviews(gooruOid,(reviewSize));
 		}
 	}
 	private String removeHtmlTags(String html){
         html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
         return html;
 	}
-
 }

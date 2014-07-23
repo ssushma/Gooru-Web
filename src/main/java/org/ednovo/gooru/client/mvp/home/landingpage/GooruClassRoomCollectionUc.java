@@ -31,9 +31,8 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.LandingPageStyleCss;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -87,7 +86,7 @@ public class GooruClassRoomCollectionUc extends Composite{
 			UiBinder<Widget, GooruClassRoomCollectionUc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public GooruClassRoomCollectionUc(FeaturedCollectionContentDo featuredCollectionContentDo, String tabfilter, String title, String useCase, String description, String collectionId) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -117,7 +116,7 @@ public class GooruClassRoomCollectionUc extends Composite{
 				SetTab(Tabfilter);
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("id", featuredCollectionContentDo.getScollections().get(0).getGooruOid());
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 			}
 		});
 		methodsCollection.addErrorHandler(new ErrorHandler() {
@@ -149,7 +148,7 @@ public class GooruClassRoomCollectionUc extends Composite{
 				public void onClick(ClickEvent event) {
 					Map<String, String> params = new HashMap<String, String>();
 					params.put("id", collectionId);
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 				}
 			});
 		} else {

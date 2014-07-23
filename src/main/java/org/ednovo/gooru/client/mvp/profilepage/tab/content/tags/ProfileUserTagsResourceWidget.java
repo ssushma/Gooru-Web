@@ -30,6 +30,7 @@ import java.util.List;
 
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
 
 import com.google.gwt.core.client.GWT;
@@ -40,9 +41,9 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.Image;
 
 public class ProfileUserTagsResourceWidget extends Composite {
 
@@ -52,6 +53,9 @@ public class ProfileUserTagsResourceWidget extends Composite {
 	interface ProfileUserTagsResourceWidgetUiBinder extends
 			UiBinder<Widget, ProfileUserTagsResourceWidget> {
 	}
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField Label resourceType,resourceSource;
 	@UiField HTMLPanel ratingContainer;
 	@UiField Image resourceImage,resourceTypeIcon;
@@ -99,7 +103,9 @@ public class ProfileUserTagsResourceWidget extends Composite {
 	private void setAvgRatingWidget(int ratingCount,double averageRating) {
 		ratingContainer.clear();
 		ratingWidgetView=new RatingWidgetView();
+		ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 		ratingWidgetView.getRatingCountLabel().setText(ratingCount+"");
+		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetView.setAvgStarRating(averageRating);
 		ratingContainer.add(ratingWidgetView);
 	}

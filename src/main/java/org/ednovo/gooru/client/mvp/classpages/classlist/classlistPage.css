@@ -290,6 +290,7 @@
 	font-size: 16px;
 	line-height: 240%;
 	text-align: left;
+	font-weight:bold;
 }
 
 .assignTextArea {
@@ -328,6 +329,15 @@
 .assignSecTitle {
 	color: #515151;
 	font-weight: bold;
+
+}
+
+.assignSecTitleheader {
+	color: #515151;
+	font-weight: bold;
+	padding-top: 8px;
+	display: inline-block;
+	vertical-align: top;
 }
 
 .codeContent .icon {

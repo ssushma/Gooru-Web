@@ -13,6 +13,8 @@
 	         <g:ScrollPanel styleName="{libraryStyle.conceptList}" ui:field="lessonScrollPanel">
 	             <g:HTMLPanel ui:field="conceptList"/>
 	         </g:ScrollPanel>
+	         <g:Label styleName="{libraryStyle.collectionQuizTab}" ui:field="collectionTitle"></g:Label>
+	         <g:Label styleName="{libraryStyle.collectionQuizTab}" ui:field="quizTitle"></g:Label>
 	         <g:HTMLPanel styleName="loadingImage {libraryStyle.loadingIcon}" ui:field="loadingImage"></g:HTMLPanel>
 	         <g:HTMLPanel styleName="{libraryStyle.collectionViewer}" ui:field="collectionViewer">
 	            <g:HTMLPanel styleName="{libraryStyle.collectionInfo}" ui:field="collectionInfo">

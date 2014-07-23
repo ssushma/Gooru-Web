@@ -36,9 +36,8 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -88,7 +87,7 @@ public class EmailShareUc extends PopupPanel{
 	interface EmailShareUcUiBinder extends UiBinder<Widget, EmailShareUc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
 	Label  cancelLbl, fromValidation, toValidation, checkCopyEmail, lblEmailFriend,lblFrom, lblTo,lblSendMeCopy,lblSubject,lblMessage,mandatoryErrorLbl,mandatoryErrorRichTextArea,noteTxt;
@@ -238,8 +237,10 @@ public class EmailShareUc extends PopupPanel{
 		cancelLbl.getElement().setId("lblCancel");
 		toTxt.getElement().setId("tbTo");
 		subTxt.getElement().setId("tbSubject");
+		StringUtil.setAttributes(subTxt, true);
 		fromTxt.getElement().setId("tbFrom");
 		msgTxa.getElement().setId("taMessage");
+		StringUtil.setAttributes(msgTxa, true);
 		btnSend.getElement().setId("btnSend");
 		checkCopyEmail.getElement().setId("lblCheckCopyEmail");
 		//fromTxt.getElement().getStyle().setBorderWidth(0, Unit.PX);
@@ -332,6 +333,9 @@ public class EmailShareUc extends PopupPanel{
 		String placeToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		triggerEmailEvent(false);
 		if(!placeToken.equals(PlaceTokens.COLLECTION_PLAY) || !placeToken.equals(PlaceTokens.PREVIEW_PLAY)|| !placeToken.equals(PlaceTokens.RESOURCE_PLAY)) {
+			Window.enableScrolling(true);
+		}
+		if (!placeToken.equals(PlaceTokens.RESOURCE_SEARCH) && !placeToken.equals(PlaceTokens.COLLECTION_SEARCH)){
 			Window.enableScrolling(true);
 		}
 	}

@@ -24,8 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -53,7 +53,7 @@ public class FolderEditableLabelUc extends Composite implements HasValue<String>
 
 	interface EditableLabelUc1UiBinder extends UiBinder<Widget, FolderEditableLabelUc> {
 	}
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField
 	protected Label editLabel;
@@ -85,6 +85,7 @@ public class FolderEditableLabelUc extends Composite implements HasValue<String>
 		deckPanel.getElement().setId("dpnlDeckPanel");
 		editLabel.getElement().setId("lblEditLabel");
 		editTextBox.getElement().setId("txtEditTextBox");
+		StringUtil.setAttributes(editTextBox, true);
 		deckPanel.showWidget(0);
 		/*focusPanel.addFocusHandler(new FocusHandler() {
 			@Override

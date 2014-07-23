@@ -30,8 +30,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -48,7 +47,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
@@ -56,14 +54,14 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 
 	@UiField Image resourceThumbnail;
 	@UiField HTMLPanel resourceTitle;
-	@UiField FlowPanel homeImageContainer,homeContainer;
+	@UiField FlowPanel homeImageContainer,homeContainer,resourceThumbnailContainer;
 	private String thumbnailUrl;
 	private static TocResourceViewUiBinder uiBinder = GWT.create(TocResourceViewUiBinder.class);
 
 	interface TocResourceViewUiBinder extends UiBinder<Widget, TocCollectionHomeView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public TocCollectionHomeView(){
 		initWidget(uiBinder.createAndBindUi(this));
@@ -123,6 +121,14 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 			String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		}
+	}
+	
+	public void hideResourceThumbnailContainer(boolean hide){
+		if(hide){
+			resourceThumbnailContainer.setVisible(false);
+		}else{
+			resourceThumbnailContainer.setVisible(true);
 		}
 	}
 	

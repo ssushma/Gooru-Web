@@ -64,7 +64,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.service.ShelfServiceAsync;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
@@ -74,6 +74,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -148,7 +149,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	
 	Map<String,String> folderMetaData = new HashMap<String,String>();
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private static final String CALLBACK = "callback";
 	
@@ -225,6 +226,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		callBackMethods();
+		Window.enableScrolling(false);
 	}
 
 	private void callBackMethods(){
@@ -311,7 +313,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			if(id.equalsIgnoreCase("INVALID") && !AppClientFactory.isAnonymous())
 			{
 				getView().setNoDataCollection();
-				Window.enableScrolling(true);
+//				Window.enableScrolling(true);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 			}
 			getView().setBalloonPopup();
@@ -320,7 +322,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 			//Call Event for Setting Confirm popup
 			AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
-		}
+		}		
 	}
 
 	@Override
@@ -358,7 +360,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 				}else{
 					getView().getFolderListPanel().setVisible(true);
 					setFoldersSlot(null);
-					Window.enableScrolling(true);
+//					Window.enableScrolling(true);
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				}
 				collectionInfoTabPresenter.getView().reset();
@@ -371,6 +373,17 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 		}else{
 //			getView().setOnlyNoDataCollection();
 		}
+		String idParm = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
+		System.out.println("idParm : "+idParm);
+//		if (idParm == null){
+			int windowHeight=Window.getClientHeight();
+			System.out.println("windowHeight :"+windowHeight);
+			getView().getEditPanel().getElement().getStyle().setHeight(windowHeight, Unit.PX);
+			getView().getEditPanel().getElement().getStyle().setOverflowY(Overflow.AUTO);
+//		}else{
+//			getView().getEditPanel().getElement().getStyle().clearHeight();
+//			getView().getEditPanel().getElement().getStyle().clearOverflowY();
+//		}
 	}
 	
 	@Override

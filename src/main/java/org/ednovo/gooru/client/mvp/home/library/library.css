@@ -886,7 +886,7 @@
 	height: 45px;
 	position: absolute;
 	top: 61px;
-	right: 188px;
+	right: 9px;
 }
 .resourcesInsideSubStyle {
 	width: 263px !important;
@@ -1081,4 +1081,24 @@ margin-bottom: 15px;
 	position: absolute;
 	top: 103px;
 	right: 188px;
+}
+.collectionQuizTab {
+	float: left;
+	text-align: center;
+	width: 28.5%;
+	padding: 5px;
+	font-size: 15px;
+	cursor: pointer;
+	background: #f0f0f0;
+}
+.collectionQuizTab:hover {
+	background: #ffffff;
+}
+.collectionQuizTabActive {
+	background: #ffffff;
+}
+.headerPanel {
+	position: relative;
+	width: 1000px;
+	margin: 0 auto;
 }

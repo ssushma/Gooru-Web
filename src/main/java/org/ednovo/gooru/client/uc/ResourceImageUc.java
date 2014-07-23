@@ -31,8 +31,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -61,7 +60,7 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 	interface ResourceImageUcUiBinder extends UiBinder<Widget, ResourceImageUc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
 	Label resourceType;
@@ -260,18 +259,18 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 					String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 					if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){
 						
-						PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).with("id", collectionId).with("rid", gooruOid).with("tab", "narration");
+						PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", collectionId).with("rid", gooruOid).with("tab", "narration");
 						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
 					}else{
-						PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).with("id", collectionId).with("rid", gooruOid);
+						PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", collectionId).with("rid", gooruOid);
 						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
 					}
 				}else if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 					if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){
-						PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).with("id", getProfilePageMoreInfoCollectionId()).with("rid", gooruOid).with("tab", "narration");
+						PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", getProfilePageMoreInfoCollectionId()).with("rid", gooruOid).with("tab", "narration");
 						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
 					}else{
-						PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).with("id", getProfilePageMoreInfoCollectionId()).with("rid", gooruOid);
+						PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", getProfilePageMoreInfoCollectionId()).with("rid", gooruOid);
 						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
 					}
 				}

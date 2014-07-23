@@ -140,12 +140,13 @@
 	margin-right: 0;
 }
 .sausdContent {
-	width: 320px;
+	width: 322px;
 	background: white;
 	margin-right: 6px;
 	margin-top: 0px;
 	height: 100px;
 	border: 1px solid #ddd;
+	float: left;
 }
 .sausdContentLast {
 	width: 325px;

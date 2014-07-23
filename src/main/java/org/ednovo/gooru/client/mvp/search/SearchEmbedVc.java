@@ -29,7 +29,8 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.mvp.shelf.event.EmbedEnableEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.EmbedEnableHandler;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -63,7 +64,7 @@ public class SearchEmbedVc extends Composite {
 	boolean isEditable;
 	
 	private static SearchEmbedVcUiBinder uiBinder = GWT.create(SearchEmbedVcUiBinder.class);
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 	interface SearchEmbedVcUiBinder extends UiBinder<Widget, SearchEmbedVc> {
 	}
 	
@@ -83,7 +84,12 @@ public class SearchEmbedVc extends Composite {
 		this.isEditable = isEditable;
 		initWidget(uiBinder.createAndBindUi(this));
 		embedlineText.setText(i18n.GL0718());
+		embedlineText.getElement().setId("tatEmbedlineText");
+		embedlineText.getElement().setAttribute("alt",i18n.GL0718());
+		embedlineText.getElement().setAttribute("title",i18n.GL0718());
+		
 		txtAreaEmbed.getElement().setAttribute("id", "txtAreaEmbed");
+		StringUtil.setAttributes(txtAreaEmbed, true);
 		
 		//Handle click event for selecting all text inside text box.
 		txtAreaEmbed.addClickHandler(new OnTextAreaClick());

@@ -10,7 +10,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
@@ -32,7 +32,7 @@ public class CollaboratorsUc extends Composite {
 	private static CollaboratorsUcUiBinder uiBinder = GWT
 			.create(CollaboratorsUcUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CollaboratorsUcUiBinder extends UiBinder<Widget, CollaboratorsUc> {
 	}

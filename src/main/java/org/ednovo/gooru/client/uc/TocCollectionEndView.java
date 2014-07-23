@@ -31,8 +31,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -58,7 +57,7 @@ public class TocCollectionEndView extends Composite implements HasClickHandlers{
 	
 	@UiField HTMLPanel resourceTitle;
 	
-	@UiField FlowPanel endImageContainer,endContainer;
+	@UiField FlowPanel endImageContainer,endContainer,resourceThumbnailContainer;
 	
 	private String thumbnailUrl;
 	
@@ -67,7 +66,7 @@ public class TocCollectionEndView extends Composite implements HasClickHandlers{
 	interface TocCollectionEndViewUiBinder extends UiBinder<Widget, TocCollectionEndView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public TocCollectionEndView(){
 		initWidget(uiBinder.createAndBindUi(this));
@@ -127,6 +126,13 @@ public class TocCollectionEndView extends Composite implements HasClickHandlers{
 			String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		}
+	}
+	public void hideResourceThumbnailContainer(boolean hide){
+		if(hide){
+			resourceThumbnailContainer.setVisible(false);
+		}else{
+			resourceThumbnailContainer.setVisible(true);
 		}
 	}
 	

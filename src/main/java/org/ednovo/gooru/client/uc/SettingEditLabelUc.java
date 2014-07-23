@@ -25,8 +25,7 @@
 package org.ednovo.gooru.client.uc;
 
 
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -68,7 +67,7 @@ public class SettingEditLabelUc extends Composite implements HasValue<String> {
 			UiBinder<Widget, SettingEditLabelUc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField
 	protected Label editLabel,errorLabel;
@@ -98,6 +97,7 @@ public class SettingEditLabelUc extends Composite implements HasValue<String> {
 		editTextBox.getElement().setAttribute("maxlength", "25");
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 		editTextBox.getElement().setId("txtName");
+		StringUtil.setAttributes(editTextBox, true);
 		errorLabel.getElement().setAttribute("style", "margin-left:20px");
 	}
 

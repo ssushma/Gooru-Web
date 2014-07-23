@@ -49,7 +49,7 @@ import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
@@ -82,7 +82,7 @@ public class StudyNowToolTip extends PopupPanel {
 	private static StudyNowToolTipUiBinder uiBinder = GWT
 			.create(StudyNowToolTipUiBinder.class);
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
+	private MessageProperties i18n = GWT.create(MessageProperties.class); 
 
 	interface StudyNowToolTipUiBinder extends UiBinder<Widget, StudyNowToolTip> {
 	}
@@ -270,7 +270,7 @@ public class StudyNowToolTip extends PopupPanel {
 					 if(result.getGooruOid()==null){
 						 Window.enableScrolling(false);
 						 AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-						alertMessageUc=new AlertMessageUc(GL0061, new Label(GL0244));
+						alertMessageUc=new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0244()));
 						ClickHandler alertHandler=new ClickHandler() {
 
 							@Override
@@ -370,9 +370,9 @@ public class StudyNowToolTip extends PopupPanel {
 						else 
 						{
 							       if(AppClientFactory.isAnonymous()){
-							    	   new SentEmailSuccessVc(GL1177, GL1535);
+							    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535());
 							       }else{
-							    	   new SentEmailSuccessVc(GL1177, GL1535_1);
+							    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());
 							       }
 						}
 						

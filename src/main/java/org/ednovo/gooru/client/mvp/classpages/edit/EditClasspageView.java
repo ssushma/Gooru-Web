@@ -34,14 +34,13 @@ import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
@@ -67,9 +66,9 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -252,7 +251,7 @@ public class EditClasspageView extends
 	private static EditClassPageViewUiBinder uiBinder = GWT
 			.create(EditClassPageViewUiBinder.class);
 	
-	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	String dropSortOptionsStr = i18n.GL1947();
 
@@ -517,15 +516,7 @@ public class EditClasspageView extends
 		monitorProgress.getElement().setAttribute("alt",i18n.GL1586());
 		monitorProgress.getElement().setAttribute("title",i18n.GL1586());
 		
-		assignmentsTab.setText(i18n.GL1623());
-		assignmentsTab.getElement().setId("btnAssignmentsTab");
-		assignmentsTab.getElement().setAttribute("alt",i18n.GL1623());
-		assignmentsTab.getElement().setAttribute("title",i18n.GL1623());
-		
-		classListTab.setText(i18n.GL1624());
-		classListTab.getElement().setId("btnClassListTab");
-		classListTab.getElement().setAttribute("alt",i18n.GL1624());
-		classListTab.getElement().setAttribute("title",i18n.GL1624());
+
 		
 		reportsTab.setText(i18n.GL1737());
 		reportsTab.getElement().setId("btnReportsTab");
@@ -664,6 +655,7 @@ public class EditClasspageView extends
 		collectionTitleUc.getElement().setId("lblCollectionTitleUc");
 		panelUpdateActionContols.getElement().setId("pnlUpdateActionContols");
 		classCodeTextBox.getElement().setId("txtClassCode");
+		StringUtil.setAttributes(classCodeTextBox, true);
 		questionMarkPanel.getElement().setId("pnlQuestionMark");
 		mainContainer.getElement().setId("pnlMainContainer");
 		panelProgressContainer.getElement().setId("pnlProgressContainer");
@@ -983,6 +975,17 @@ public class EditClasspageView extends
 	
 	public void setClasspageData(ClasspageDo classpageDo){
 		this.classpageDo=classpageDo;
+		
+		assignmentsTab.setText(i18n.GL1623()+"("+classpageDo.getItemCount()+")");
+		assignmentsTab.getElement().setId("btnAssignmentsTab");
+		assignmentsTab.getElement().setAttribute("alt",i18n.GL1623());
+		assignmentsTab.getElement().setAttribute("title",i18n.GL1623());
+		
+		classListTab.setText(i18n.GL1624()+"("+classpageDo.getMemberCount()+")");
+		classListTab.getElement().setId("btnClassListTab");
+		classListTab.getElement().setAttribute("alt",i18n.GL1624());
+		classListTab.getElement().setAttribute("title",i18n.GL1624());
+		
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(classpageDo.getClasspageId()));
@@ -1027,7 +1030,7 @@ public class EditClasspageView extends
 		}
 		
 	}
-	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList1,String tab, String analyticsId, String monitorId,ClassListPresenter classlistPresenter){
+	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList1,String tab, String analyticsId, String monitorId,ClassListPresenter classlistPresenter,int assignmentsCount){
 		this.classlistPresenter = classlistPresenter;
 
 		classpageItemsList.clear();
@@ -1110,7 +1113,6 @@ public class EditClasspageView extends
 			paginationFocPanel1.setVisible(false);
 		}
 		else{
-			
 			removeLoadingPanel();
 			panelAssignmentPath.setVisible(true);
 			headerAssignments.setVisible(true);
@@ -1127,6 +1129,7 @@ public class EditClasspageView extends
 			monitorProgress.setVisible(false);
 			assignmentsDirectionsLabel.setVisible(false);
 			getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+			String order=AppClientFactory.getPlaceManager().getRequestParameter("order",null);
 			if(classpageItemsList!=null&&classpageItemsList.size()>0){
 				dropDownListDiv.setVisible(true);
 				assignmentsContainerPanel.clear();
@@ -1138,6 +1141,14 @@ public class EditClasspageView extends
 				}
 //				displayAssignmentPath(classpageItemsList1);
 				setPagination();
+			}else if(classpageItemsList!=null&&order!=null&&(order.equals("earliest")||order.equals("latest"))&&assignmentsCount>0){
+				paginationFocPanel.clear();
+				paginationFocPanel1.clear();
+				dropDownListDiv.setVisible(true);
+				assignmentsContainerPanel.clear();
+				Label label=new Label("It looks like none of the assignments for this class have due dates.");
+				label.setStyleName(EditClasspageCBundle.INSTANCE.css().errorMessage());
+				assignmentsContainerPanel.add(label);
 			}else{
 				panelAssignmentPath.setVisible(false);
 				headerAssignments.setVisible(false);
@@ -1281,6 +1292,15 @@ public class EditClasspageView extends
 		}
 	}
 	public void resetEditClasspageView(){
+		collectionTitleUc.setText("");
+		collectionTitleUc.getElement().removeAttribute("title");
+		collectionTitleUc.getElement().removeAttribute("alt");
+		//classCodeTextBox.setText("");
+		classCodeTextBox.getElement().removeAttribute("title");
+		classCodeTextBox.getElement().removeAttribute("alt");
+		imgClasspageImage.setUrl("/d");
+		imgClasspageImage.getElement().removeAttribute("title");
+		imgClasspageImage.getElement().removeAttribute("alt");
 		paginationFocPanel.clear();
 		paginationFocPanel1.clear();
 		assignmentsContainerPanel.clear();
@@ -1983,6 +2003,10 @@ public class EditClasspageView extends
 			dropdownPlaceHolder.setText(i18n.GL1994());
 			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1994());
 			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1994());
+		}else{
+			dropdownPlaceHolder.setText(i18n.GL1948());
+			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1948());
+			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1948());
 		}
 	}
 	

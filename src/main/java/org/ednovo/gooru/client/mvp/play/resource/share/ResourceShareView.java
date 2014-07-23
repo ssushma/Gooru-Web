@@ -39,9 +39,9 @@ import org.ednovo.gooru.client.mvp.play.collection.share.email.SentEmailSuccessV
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -67,7 +67,7 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 
 	 }
 	 
-	 private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	 private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 		@UiField HTMLPanel sharePanel,shareMainTitle;
 
@@ -133,6 +133,7 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 		
 		resourceTitleText.getElement().setId("lblResourceTitleText");
 		resourceShareTextArea.getElement().setId("tatResourceShareTextArea");
+		StringUtil.setAttributes(resourceShareTextArea, true);
 		socialSharePanel.getElement().setId("fpnlSocialSharePanel");
 		sharePanel.getElement().setId("pnlSharePanel");
 		hideButton.getElement().setId("epnlHideButton");

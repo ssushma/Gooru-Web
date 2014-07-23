@@ -43,12 +43,13 @@ import org.ednovo.gooru.client.uc.DateBoxUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -114,7 +115,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 
 	private static CollectionAssignViewTabUiBinder uiBinder = GWT.create(CollectionAssignViewTabUiBinder.class);
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CollectionAssignViewTabUiBinder extends UiBinder<Widget, CollectionAssignTabView> {
 	}
@@ -175,6 +176,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		textAreaVal.getElement().setId("tatTextAreaVal");
 		textAreaVal.getElement().setAttribute("alt",i18n.GL1389());
 		textAreaVal.getElement().setAttribute("title",i18n.GL1389());
+		StringUtil.setAttributes(textAreaVal, true);
 		
 		textAreaVal.getElement().getStyle().setColor("#999");
 		textAreaVal.getElement().setAttribute("maxlength", "400");

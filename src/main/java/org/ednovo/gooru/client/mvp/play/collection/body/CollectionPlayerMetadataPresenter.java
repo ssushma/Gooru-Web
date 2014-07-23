@@ -31,21 +31,25 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
+import org.ednovo.gooru.client.mvp.play.collection.end.study.CollectionHomeMetadataPresenter;
+import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewEvent;
+import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusEvent;
+import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.preview.end.PreviewEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomePresenter;
 import org.ednovo.gooru.client.service.LibraryServiceAsync;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
+import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -68,24 +72,46 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 	
 	private PreviewEndPresenter previewEndPresenter;
 	
+	private CollectionHomeMetadataPresenter collectionHomeMetadataPresenter;
+	
 	public static final  Object METADATA_PRESENTER_SLOT = new Object();
 	
 	private static final String PAGE = "course-page";
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static final String CREATE = "CREATE";
+	
+	private static final String EDIT = "EDIT";
+	
+	private static final String FEATCHINGCOMMENT = "FEATCHINGCOMMENT";
+	
+	private static final String INITIAL_COMMENT_LIMIT = "10";
+	
+	private static final String INITIAL_OFFSET = "0";
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@Inject
 	public CollectionPlayerMetadataPresenter(EventBus eventBus, IsCollectionPlayerMetadataView view,PreviewHomePresenter previewHomePresenter,
-			PreviewEndPresenter previewEndPresenter) {
+			PreviewEndPresenter previewEndPresenter,CollectionHomeMetadataPresenter collectionHomeMetadataPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.previewHomePresenter=previewHomePresenter;
 		this.previewEndPresenter=previewEndPresenter;
+		this.collectionHomeMetadataPresenter=collectionHomeMetadataPresenter;
+		addRegisteredHandler(SetPlayerLoginStatusEvent.TYPE, this);
+		addRegisteredHandler(UpdateCommentChildViewEvent.TYPE, this);
+		addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
 	}
 	
 	public void setCollectionMetadata(final CollectionDo collectionDo){
 		this.collectionDo=collectionDo;
 		getView().setCollectionMetadata(collectionDo);
+		if(AppClientFactory.isAnonymous()) {
+			getView().setPlayerLoginStatus(false);
+		} else {
+			getView().setPlayerLoginStatus(true);
+		}
+		getCollectionCommentsList(collectionDo.getGooruOid(), INITIAL_OFFSET, INITIAL_COMMENT_LIMIT);
 		setRelatedConcepts(collectionDo);
 	}
 	
@@ -106,6 +132,11 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 		previewHomePresenter.setCollectionMetadata(collectionDo);
 		previewHomePresenter.removeAssignmentImagetButtons(); 
 		setInSlot(METADATA_PRESENTER_SLOT, previewHomePresenter,false);
+	}
+	
+	public void setCollectionHomeMetadata(){
+		collectionHomeMetadataPresenter.setCollectionMetadata(collectionDo);
+		setInSlot(METADATA_PRESENTER_SLOT, collectionHomeMetadataPresenter,false);
 	}
 	
 	public void setViewCount(String viewCount){
@@ -138,6 +169,70 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 
 	public void setCommentsListDoAsync(SimpleAsyncCallback<CommentsListDo> commentsListDoAsync) {
 		this.commentsListDoAsync = commentsListDoAsync;
+	}
+	
+
+	@Override
+	public void setPlayerLoginStatusHandler(boolean isLoggedIn) {
+		getView().setPlayerLoginStatus(isLoggedIn);
+	}
+	
+	private void getCollectionCommentsList(String gooruOid, final String offset, String limit) {
+		this.playerAppService.getCollectionCommentsList(gooruOid, offset, limit, new SimpleAsyncCallback<CommentsListDo>() {
+			@Override
+			public void onSuccess(CommentsListDo commentDoList) {
+				getView().setCommentsData(commentDoList,collectionDo, Integer.parseInt(offset) >0 ? false : true);
+			}
+		});
+	}
+
+	@Override
+	public void createCommentForCollection(String gooruOid, String comment) {
+		this.playerAppService.createCommentForCollection(gooruOid, comment, new SimpleAsyncCallback<CommentsDo>() {
+			@Override
+			public void onSuccess(CommentsDo commentsDo) {
+				getView().setCommentsWidget(commentsDo, CREATE);
+				getView().displaySuccessMsg(false);
+			}
+		});
+	}
+
+	@Override
+	public void updateCommentChildView(String commentUid, String action) {
+		getView().updateCommentChildView(commentUid, action);
+	}
+
+	@Override
+	public void deleteCommentFromCollection(final String gooruOid,String commentUid,final String offset, final String limit) {
+		this.playerAppService.deleteCollectionCommentbyCommentUid(commentUid, new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void noResult) {
+				if(Integer.parseInt(offset)>=9)
+				insertCommentAfterDeletion(gooruOid, offset, limit);
+			}
+		});
+	}
+	public void insertCommentAfterDeletion(final String gooruOid,final String offset, String limit){
+		this.playerAppService.getCollectionCommentsList(gooruOid, offset, limit, new SimpleAsyncCallback<CommentsListDo>() {
+			@Override
+			public void onSuccess(CommentsListDo commentDoList) {
+				getView().setCommentsWidget(commentDoList.getSearchResults().get(0), FEATCHINGCOMMENT);
+			}
+		});
+	}
+	@Override
+	public void editCommentChildView(String commentUid, String commentText, String action) {
+		this.playerAppService.updateCollectionCommentbyCommentUid(commentUid, commentText, new SimpleAsyncCallback<CommentsDo>() {
+			@Override
+			public void onSuccess(CommentsDo result) {
+				getView().updateCommentChildView("", EDIT);
+			}
+		});
+	}
+
+	@Override
+	public void getPaginationResults(String gooruOid, String offset, String limit) {
+		getCollectionCommentsList(gooruOid, offset, limit);
 	}
 
 	

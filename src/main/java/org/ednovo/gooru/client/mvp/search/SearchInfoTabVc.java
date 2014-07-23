@@ -34,7 +34,7 @@ import org.ednovo.gooru.client.mvp.socialshare.SocialShareLinksView;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
@@ -58,7 +58,7 @@ public class SearchInfoTabVc extends Composite {
 	private static SearchShareVcUiBinder uiBinder = GWT
 			.create(SearchShareVcUiBinder.class);
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	private PlayerAppServiceAsync playerAppService;
 
@@ -135,6 +135,9 @@ public class SearchInfoTabVc extends Composite {
 			}
 		});
 		//socialShareLinksViewContainer.add(socialShareLinksView);
+		
+		resourceTypeImage.getElement().setId("lblResourceTypeImage");
+		lblResourceName.getElement().setId("htmlLblResourceName");
 	}
 	
 
@@ -166,6 +169,8 @@ public class SearchInfoTabVc extends Composite {
 				}
 				if(collectionItemDo.getResource().getTitle()!=null){
 					lblResourceName.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
+					lblResourceName.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
+					lblResourceName.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 				}
 				
 			/*	if(collectionItemDo.getStatusCode() != 200){

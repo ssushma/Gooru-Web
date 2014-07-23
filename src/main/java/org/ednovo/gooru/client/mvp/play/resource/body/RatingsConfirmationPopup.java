@@ -3,8 +3,7 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -15,7 +14,6 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -37,7 +35,7 @@ public class RatingsConfirmationPopup extends PopupPanel{
 			UiBinder<Widget, RatingsConfirmationPopup> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public RatingsConfirmationPopup(String assocGooruOId, Integer score,
 			Integer count, double average,String createrName) {
@@ -70,8 +68,12 @@ public class RatingsConfirmationPopup extends PopupPanel{
 	 */
 	private void setAvgRatingWidget(String assocGooruOId, Integer score,Integer count, double average,String createrName){
 		ratingWidgetView=new RatingWidgetView();
-		if(count!=null)
-		ratingWidgetView.getRatingCountLabel().setText(count.toString());
+		if(count!=null){
+			ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
+			ratingWidgetView.getRatingCountLabel().setText(count.toString());
+			ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
+		}
+		
 		ratingWidgetView.setAvgStarRating(average);
 		if(count>0)
 		{

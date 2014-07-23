@@ -29,7 +29,8 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -54,7 +55,7 @@ public class SocialShareLinksView extends Composite {
 
 	@UiField Label swithUrlLbl, swithToEmbedLbl, shareLbl;
 	
-	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private static final String SWITCH_FULL_URL = i18n.GL0643();
 	
@@ -84,6 +85,7 @@ public class SocialShareLinksView extends Composite {
 		shareLinkContainer.getElement().setId("fpnlShareLinkContainer");
 		shareLinkTxtBox.addClickHandler(new OnTextBoxClick());
 		shareLinkTxtBox.getElement().setId("tatShareLink");
+		StringUtil.setAttributes(shareLinkTxtBox, true);
 		swithUrlLbl.setText(i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("alt", i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("title", i18n.GL0639());

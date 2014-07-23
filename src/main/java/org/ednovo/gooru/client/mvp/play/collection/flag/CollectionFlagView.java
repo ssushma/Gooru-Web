@@ -1,25 +1,20 @@
 package org.ednovo.gooru.client.mvp.play.collection.flag;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.GooruCBundle;
-import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
-import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
-import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.player.collection.client.view.add.AddResourceToCollectionStylesBundle;
 import org.ednovo.gooru.player.collection.client.view.add.tooltip.FlagBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -33,8 +28,8 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
@@ -68,7 +63,7 @@ public class CollectionFlagView extends
 			UiBinder<Widget, CollectionFlagView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
 	HTMLEventPanel closeButton,flagCollections, flagResources, collectionCancelButton,
@@ -231,6 +226,7 @@ public class CollectionFlagView extends
 		resourceCheckBox2.getElement().setId("chkResourceCheckBox2");
 		resourceCheckBox1.getElement().setId("chkResourceCheckBox1");
 		resourceDescTextArea.getElement().setId("tatResourceDescTextArea");
+		StringUtil.setAttributes(resourceDescTextArea, true);
 		collectionFlagContainer.getElement().setId("pnlCollectionFlagContainer");
 		collectionTitleField.getElement().setId("htmlCollectionTitleField");
 		collectionCheckBox4.getElement().setId("chkCollectionCheckBox4");
@@ -238,6 +234,7 @@ public class CollectionFlagView extends
 		collectionCheckBox2.getElement().setId("chkCollectionCheckBox2");
 		collectionCheckBox1.getElement().setId("chkCollectionCheckBox1");
 		collectionDescTextArea.getElement().setId("tatCollectionDescTextArea");
+		StringUtil.setAttributes(collectionDescTextArea, true);
 	}
 
 	public void displayView(String collectionTitle,ArrayList<String> resourcesList,ArrayList<String> resourcesListId) {

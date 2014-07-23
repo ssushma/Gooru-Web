@@ -40,7 +40,7 @@ package org.ednovo.gooru.client.mvp.home.library;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.CourseDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -84,7 +84,7 @@ public class FeaturedCourseListView extends Composite{
 			UiBinder<Widget, FeaturedCourseListView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	public FeaturedCourseListView(CourseDo courseDo) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -135,65 +135,62 @@ public class FeaturedCourseListView extends Composite{
 
 		contributorImage.setHeight("46px");
 		contributorImage.setWidth("46px");
-		if(courseDo.getCreator()!=null) {
-			courseAuthor.setVisible(true);
-			String authorName = "";
-			String contributorProfileImage = "";
-			/// In User Object is null
-			if (courseDo.getUser()!=null &&  courseDo.getUser().size()>0){
-				int j=0;
-				for (int i=0;i<courseDo.getUser().size();i++){
-					j = i;
-					if (courseDo.getUser().get(i).getIsOwner() !=null &&  courseDo.getUser().get(i).getIsOwner().equalsIgnoreCase("1")){
-						break;
-					}
+		
+		courseAuthor.setVisible(true);
+		String authorName = "";
+		String contributorProfileImage = "";
+		/// In User Object is null
+		if (courseDo.getUser()!=null &&  courseDo.getUser().size()>0){
+			int j=0;
+			for (int i=0;i<courseDo.getUser().size();i++){
+				j = i;
+				if (courseDo.getUser().get(i).getIsOwner() !=null &&  courseDo.getUser().get(i).getIsOwner().equalsIgnoreCase("1")){
+					break;
 				}
-				
-				if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(MALE)) {
-					authorName = (i18n.GL_GRR_BYMR()+" ")+courseDo.getUser().get(j).getLastName();
-				} else if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(FEMALE)) {
-			 	    authorName = (i18n.GL_GRR_BYMS()+" ")+courseDo.getUser().get(j).getLastName();
-				} else {
-					authorName = courseDo.getUser().get(j).getLastName();
-				}
-				
-				if (courseDo.getUser().size()>1){
-					courseAuthor.setText(authorName +" "+i18n.GL_GRR_AND()+" "+i18n.GL1117());
-					courseAuthor.getElement().setAttribute("alt",authorName +" "+i18n.GL_GRR_AND()+" "+i18n.GL1117());
-					courseAuthor.getElement().setAttribute("title",authorName +" "+i18n.GL_GRR_AND()+" "+i18n.GL1117());
-				}else{
-					courseAuthor.setText(authorName);
-					courseAuthor.getElement().setAttribute("alt",authorName );
-					courseAuthor.getElement().setAttribute("title",authorName);
-				}
-				contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getUser().get(j).getGooruUId()+PNG;
+			}
+			
+			if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(MALE)) {
+				authorName = (i18n.GL_GRR_BYMR()+" ")+courseDo.getUser().get(j).getLastName();
+			} else if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(FEMALE)) {
+		 	    authorName = (i18n.GL_GRR_BYMS()+" ")+courseDo.getUser().get(j).getLastName();
+			} else {
+				authorName = courseDo.getUser().get(j).getLastName();
+			}
+			
+			if (courseDo.getUser().size()>1){
+				courseAuthor.setText(authorName +" "+i18n.GL_GRR_AND()+" "+i18n.GL1117());
+				courseAuthor.getElement().setAttribute("alt",authorName +" "+i18n.GL_GRR_AND()+" "+i18n.GL1117());
+				courseAuthor.getElement().setAttribute("title",authorName +" "+i18n.GL_GRR_AND()+" "+i18n.GL1117());
 			}else{
-				if(courseDo.getCreator().getGender().equalsIgnoreCase(MALE)) {
-					authorName = (i18n.GL_GRR_BYMR()+" ")+courseDo.getCreator().getLastName();
-				} else if(courseDo.getCreator().getGender().equalsIgnoreCase(FEMALE)) {
-					authorName = (i18n.GL_GRR_BYMS()+" ")+courseDo.getCreator().getLastName();
-				} else {
-					authorName = courseDo.getCreator().getLastName();
-					if(courseDo.getCreator().getLastName().contains("RUSD")) {
-						authorName = i18n.GL1747() +" "+authorName;
-					}
-				}
 				courseAuthor.setText(authorName);
 				courseAuthor.getElement().setAttribute("alt",authorName );
 				courseAuthor.getElement().setAttribute("title",authorName);
-				contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG; 
 			}
-			contributorImage.setUrl(contributorProfileImage);			
-			contributorImage.addErrorHandler(new ErrorHandler() {
-				@Override
-				public void onError(ErrorEvent event) {
-					contributorImage.setUrl(DEFAULT_USER_IMG);
+			contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getUser().get(j).getGooruUId()+PNG;
+		}else{
+			if(courseDo.getCreator().getGender().equalsIgnoreCase(MALE)) {
+				authorName = (i18n.GL_GRR_BYMR()+" ")+courseDo.getCreator().getLastName();
+			} else if(courseDo.getCreator().getGender().equalsIgnoreCase(FEMALE)) {
+				authorName = (i18n.GL_GRR_BYMS()+" ")+courseDo.getCreator().getLastName();
+			} else {
+				authorName = courseDo.getCreator().getLastName();
+				if(courseDo.getCreator().getLastName().contains("RUSD")) {
+					authorName = i18n.GL1747() +" "+authorName;
 				}
-			});
-		} else {
-			courseAuthor.setVisible(false);
-			contributorImage.setUrl(DEFAULT_USER_IMG);
+			}
+			courseAuthor.setText(authorName);
+			courseAuthor.getElement().setAttribute("alt",authorName );
+			courseAuthor.getElement().setAttribute("title",authorName);
+			contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG; 
 		}
+		contributorImage.setUrl(contributorProfileImage);
+		contributorImage.addErrorHandler(new ErrorHandler() {
+			@Override
+			public void onError(ErrorEvent event) {
+				contributorImage.setUrl(DEFAULT_USER_IMG);
+			}
+		});
+		
 		if(courseDo.getCodeId()!=null) {
 			setCourseId(courseDo.getCodeId());
 		} else {

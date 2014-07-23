@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.info;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
 /**
@@ -69,7 +68,7 @@ public interface CollectionInfoTabUiHandlers extends BaseUiHandlers {
 			String teacherTip);
 
 	void getCollectionTeacherTipInfo(String collectionId);*/
-	
-	
+
+	void deleteCourseOrStandard(String collectionId, String courseCode);
 
 }

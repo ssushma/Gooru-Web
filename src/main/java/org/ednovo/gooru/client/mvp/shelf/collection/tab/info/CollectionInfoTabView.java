@@ -47,12 +47,13 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.GradeLabel;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -100,7 +101,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	FlowPanel gradeTopList, gradeMiddleList, gradeBottomList, courseData, standardsPanel, KinderGarten, higherEducation,standardContainer;
 
 	@UiField
-	Label  languageObjectiveTitle,standardMaxMsg, courseLabel, standardLabel,courseLbl, standardsDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl,toggleArrowButtonPrimary,toggleArrowButtonSecondary,instructionalMethod,audienceLabel,audienceTitle,instructionalTitle,languageObjectiveHeader,depthOfKnowledgeHeader,depthOfKnowledgeTitle,learningInnovationHeader,learningInnovationTitle;
+	Label  languageObjectiveTitle,standardMaxMsg, courseLabel, standardLabel, standardsDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl,toggleArrowButtonPrimary,toggleArrowButtonSecondary,instructionalMethod,audienceLabel,audienceTitle,instructionalTitle,languageObjectiveHeader,depthOfKnowledgeHeader,depthOfKnowledgeTitle,learningInnovationHeader,learningInnovationTitle;
 	
 	@UiField Label lblAudiencePlaceHolder,lblAudienceArrow,lblInstructionalPlaceHolder,lblInstructionalArrow,languageObjectiveerrLabel;
 	
@@ -138,7 +139,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 
 	private AlertContentUc alertContentUc;
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private static final String ADD_COURSE=i18n.GL0847();
 	
@@ -153,6 +154,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	String InstructionalMethodStr = i18n.GL1729();
 	
 	String AudienceStr = i18n.GL1730();
+	
+	ArrayList<String> courseDo = new ArrayList<String>();
 	
 	String newInstructionalVal = "";
 	
@@ -302,6 +305,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		textAreaVal.getElement().setId("tatTextAreaVal");
 		textAreaVal.getElement().setAttribute("alt",i18n.GL1641());
 		textAreaVal.getElement().setAttribute("title",i18n.GL1641());
+		StringUtil.setAttributes(textAreaVal, true);
 		
 		languageObjectiveHeader.setText(i18n.GL1642());
 		languageObjectiveHeader.getElement().setId("lblLanguageObjectiveHeader");
@@ -650,7 +654,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		higherEducation.getElement().setId("fpnlHigherEducation");
 		courseLabel.getElement().setId("lblCourseLabel");
 		courseData.getElement().setId("fpnlCourseData");
-		courseLbl.getElement().setId("lblCourseLbl");
+		//courseLbl.getElement().setId("lblCourseLbl");
 		standardsPanel.getElement().setId("fpnlStandardsPanel");
 		secondaryContentsContainer.getElement().setId("pnlSecondaryContentsContainer");
 		languageObjectiveTitle.getElement().setId("lblLanguageObjectiveTitle");
@@ -669,7 +673,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		addCourseBtn.getElement().getStyle().setMarginRight(10, Unit.PX);
 		removeCourseBtn.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		removeCourseBtn.setVisible(false);
-		courseLbl.getElement().getStyle().setDisplay(Display.NONE);
+		courseData.getElement().getStyle().setDisplay(Display.NONE);
 		
 		spanelInstructionalPanel.setVisible(false);
 		spanelAudiencePanel.setVisible(false);
@@ -836,10 +840,12 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		higherEducation.clear();
 		standardSuggestOracle.clear();
 		standardCodesMap.clear();
-		courseLbl.setText("");
+		courseDo.clear();
+		courseData.clear();
+/*		courseLbl.setText("");
 		courseLbl.getElement().setAttribute("alt","");
 		courseLbl.getElement().setAttribute("title","");
-		courseLbl.getElement().getStyle().setDisplay(Display.NONE);
+		courseLbl.getElement().getStyle().setDisplay(Display.NONE);*/
 		addCourseBtn.setText(ADD_COURSE);
 		addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
 		addCourseBtn.getElement().setAttribute("title",ADD_COURSE);
@@ -1022,25 +1028,30 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			}
 		
 			if(collectionDoVal.getTaxonomySet().size()==0){
-				courseLbl.getElement().getStyle().setDisplay(Display.NONE);
+				courseData.getElement().getStyle().setDisplay(Display.NONE);
 				addCourseBtn.setText(ADD_COURSE);
 				addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
 				addCourseBtn.getElement().setAttribute("title",ADD_COURSE);
 				removeCourseBtn.setVisible(false);
-				getUiHandlers().updateCourse(collectionDo.getGooruOid(), courseCode, "delete");
+				if(courseCode!=null&&!courseCode.equals("")){
+					getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
+				}
 				courseCode="";
 			}else{
 				for (CodeDo code : collectionDoVal.getTaxonomySet()) {
+				
 					if (code.getDepth() == 2) {
-						courseLbl.setText(code.getLabel());
-						courseLbl.getElement().setAttribute("alt",code.getLabel());
-						courseLbl.getElement().setAttribute("title",code.getLabel());
-						courseLbl.getElement().getStyle().setDisplay(Display.BLOCK);
+						courseDo.add(code.getLabel());
+						courseData.add(createCourseLabel(code.getLabel(), code.getCodeId() + "", code.getLabel()));
+						//courseLbl.setText(code.getLabel());
+					/*	courseLbl.getElement().setAttribute("alt",code.getLabel());
+						courseLbl.getElement().setAttribute("title",code.getLabel());*/
+						courseData.getElement().getStyle().setDisplay(Display.BLOCK);
 						courseCode=Integer.toString(code.getCodeId());
-						addCourseBtn.setText(CHANGE_COURSE);
+						addCourseBtn.setText(ADD_COURSE);
 						addCourseBtn.getElement().setAttribute("alt",CHANGE_COURSE);
 						addCourseBtn.getElement().setAttribute("title",CHANGE_COURSE);
-						removeCourseBtn.setVisible(true);
+						removeCourseBtn.setVisible(false);
 					}
 					
 				}
@@ -1106,7 +1117,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
 				this.removeFromParent();
-				getUiHandlers().updateCourse(collectionDo.getGooruOid(), courseCode, "delete");
+				getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
 				resetCourseCount();
 			
 			}
@@ -1269,14 +1280,15 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	AddCourseHandler addCourseHandler=new AddCourseHandler() {
 		@Override
 		public void onAddCourse(String courseName, String courseId) {
-			courseLbl.setText(courseName);
+			courseData.add(createCourseLabel(courseName, courseId + "", courseName));
+		//.	courseLbl.setText(courseName);
 			courseLabel.getElement().setAttribute("alt",courseName);
 			courseLabel.getElement().setAttribute("title",courseName);
-			courseLbl.setVisible(true);
-			addCourseBtn.setText(CHANGE_COURSE);
+			courseData.setVisible(true);
+			addCourseBtn.setText(ADD_COURSE);
 			addCourseBtn.getElement().setAttribute("alt",CHANGE_COURSE);
 			addCourseBtn.getElement().setAttribute("title",CHANGE_COURSE);
-			removeCourseBtn.setVisible(true);
+			removeCourseBtn.setVisible(false);
 			courseCode=courseId;
 		}
 	};
@@ -1284,12 +1296,12 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	@UiHandler("removeCourseBtn")
 	public void onClickRemoveCourseBtn(ClickEvent clickEvent){
-		courseLbl.getElement().getStyle().setDisplay(Display.NONE);
+		courseData.getElement().getStyle().setDisplay(Display.NONE);
 		addCourseBtn.setText(ADD_COURSE);
 		addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
 		addCourseBtn.getElement().setAttribute("title",ADD_COURSE);
 		removeCourseBtn.setVisible(false);
-		getUiHandlers().updateCourse(collectionDo.getGooruOid(), courseCode, "delete");
+		getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
 		courseCode="";
 	}
 	
@@ -1396,11 +1408,42 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			public void onCloseLabelClick(ClickEvent event) {
 				this.getParent().removeFromParent();
 				resetCourseCount();
-				getUiHandlers().updateStandard(collectionDo.getGooruOid(), id, "delete");
+				getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), id);
 				resetStandardCount();				
 			}
 		};
 		return new DownToolTipWidgetUc(closeLabel, description);
+	}
+	
+	public DownToolTipWidgetUc createCourseLabel(final String standardCode, final String id, String description) {
+		CloseLabel closeLabel = new CloseLabel(standardCode) {
+
+			@Override
+			public void onCloseLabelClick(ClickEvent event) {
+				for(int i=0;i<courseDo.size();i++){
+					if(courseDo.get(i).toString().equalsIgnoreCase(standardCode)){
+						courseDo.remove(courseDo.get(i).toString());
+						deleteCourse(collectionDo.getGooruOid(), id,"delete");	
+					}
+				}
+				this.getParent().removeFromParent();
+			}
+		};
+		return new DownToolTipWidgetUc(closeLabel, description);
+	}
+	
+public void deleteCourse(String collectionId, String courseCode, String action) {
+	  	
+		AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionId, Integer.parseInt(courseCode), new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+			/*	CodeDo deletedObj=new CodeDo();
+				deletedObj.setCodeId(codeObj.getCodeId());
+				deletedStandardsDo.add(deletedObj);
+				standardsDo.remove(codeObj);*/								
+			}
+		});
+
 	}
 
 	@Override

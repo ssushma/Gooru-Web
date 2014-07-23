@@ -28,8 +28,7 @@
 package org.ednovo.gooru.client.mvp.home.library;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -75,7 +74,7 @@ public class LibraryBannerView extends Composite{
 		getLandingBannerText(placeToken);
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@Override
 	public void onLoad() {

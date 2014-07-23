@@ -30,8 +30,8 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresente
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
-import com.google.inject.Inject;
 import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
 public class CollectionPlayerTocPresenter extends PresenterWidget<IsCollectionPlayerTocView> implements CollectionPlayerTocUiHandlers{
@@ -55,8 +55,8 @@ public class CollectionPlayerTocPresenter extends PresenterWidget<IsCollectionPl
 		getView().setUiHandlers(this);
 	}
 	
-	public void setNavigationResources(CollectionDo collectionDo){
-		getView().setNavigationResources(collectionDo);
+	public void setNavigationResources(CollectionDo collectionDo,boolean isCollectionHome){
+		getView().setNavigationResources(collectionDo,isCollectionHome);
 	}
 	
 	public void setResourceActive(String collectionId,String collectionItemid,boolean isCollectionHome){

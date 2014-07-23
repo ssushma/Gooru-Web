@@ -25,7 +25,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item;
 
 import org.ednovo.gooru.client.ui.TinyMCE;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -59,7 +59,7 @@ public class UpdateQuestionHints extends Composite implements HasMouseOutHandler
 	  }
 	  public static UpdateQuestionHintsUiBinder uiBinder=GWT.create(UpdateQuestionHintsUiBinder.class);
 	  
-	  private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	  private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	  public UpdateQuestionHints(){
 		  initWidget(uiBinder.createAndBindUi(this));

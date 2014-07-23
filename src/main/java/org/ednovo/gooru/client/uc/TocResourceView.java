@@ -36,9 +36,8 @@ import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -68,7 +67,7 @@ public class TocResourceView extends Composite implements HasClickHandlers{
 	@UiField Label resourceTypeImage,resourceIndex,resourceCategory,resourceSourceName;
 	@UiField HTMLPanel resourceTitle;
 	@UiField HTML resourceHoverTitle;
-	@UiField FlowPanel tocResourceImageContainer,tocResourceContainer,ratingWidgetPanel;
+	@UiField FlowPanel tocResourceImageContainer,tocResourceContainer,ratingWidgetPanel,resourceThumbnailContainer;
 	private CollectionItemDo collectionItemDo=null;
 	
 	private String collectionItemId=null;
@@ -81,6 +80,7 @@ public class TocResourceView extends Composite implements HasClickHandlers{
 	interface TocResourceViewUiBinder extends UiBinder<Widget, TocResourceView> {
 	}
 	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	
 	public TocResourceView(){
@@ -139,7 +139,9 @@ public class TocResourceView extends Composite implements HasClickHandlers{
 	private void setAvgRatingWidget() {
 		ratingWidgetView=new RatingWidgetView();
 		if(collectionItemDo.getResource().getRatings()!=null){
+			ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 			ratingWidgetView.getRatingCountLabel().setText(collectionItemDo.getResource().getRatings().getCount()!=null ?collectionItemDo.getResource().getRatings().getCount().toString(): "0");
+			ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 			ratingWidgetView.setAvgStarRating(collectionItemDo.getResource().getRatings().getAverage());
 		}
 //		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
@@ -293,7 +295,7 @@ public class ResourceRequest implements ClickHandler{
 		resourceHoverTitle.getElement().setAttribute("title", getHTML(title).toString());
 	}
 	public void setNavigationResourceTitle(String title,Integer itemIndex){
-		resourceTitle.add(getHTML(itemIndex+". "+title));
+		resourceTitle.add(getHTML(itemIndex+""));
 		resourceTitle.getElement().setAttribute("alt", itemIndex+". "+title);
 		resourceTitle.getElement().setAttribute("title", itemIndex+". "+title);
 		resourceHoverTitle.setHTML(title.toString());
@@ -419,8 +421,16 @@ public class ResourceRequest implements ClickHandler{
 	private HTML getHTML(String html){
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		contentHtml.setHTML(html);
-		contentHtml.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setEllipses());
+		contentHtml.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sequenceNumber());
 		return contentHtml;
+	}
+	
+	public void hideResourceThumbnailContainer(boolean hide){
+		if(hide){
+			resourceThumbnailContainer.setVisible(false);
+		}else{
+			resourceThumbnailContainer.setVisible(true);
+		}
 	}
 	
 	UpdateRatingsInRealTimeHandler setRatingWidgetMetaData = new UpdateRatingsInRealTimeHandler() {	

@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.util.StringUtil;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -80,6 +82,7 @@ public class FolderEditableTextAreaUc extends Composite implements HasValue<Stri
 		deckPanel.getElement().setId("dpnlDeckPanel");
 		html.getElement().setId("htmlHtml");
 		textArea.getElement().setId("tatTextArea");
+		StringUtil.setAttributes(textArea, true);
 		deckPanel.showWidget(0);
 		/*focusPanel.addClickHandler(new ClickHandler() {
 

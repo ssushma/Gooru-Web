@@ -6,7 +6,8 @@ import java.util.Map;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderMetaDataEvent;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -45,7 +46,7 @@ public class FolderItemMetaDataUc extends Composite {
 	private static FolderItemMetaDataUcUiBinder uiBinder = GWT
 			.create(FolderItemMetaDataUcUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface FolderItemMetaDataUcUiBinder extends
 			UiBinder<Widget, FolderItemMetaDataUc> {
@@ -134,14 +135,17 @@ public class FolderItemMetaDataUc extends Composite {
 		bigIdeasPanel.getElement().setId("pnlBigIdeasPanel");
 		bigIdeasLbl.getElement().setId("htmlBigIdeasLbl");
 		bigIdeasHTML.getElement().setId("tatBigIdeasHTML");
+		StringUtil.setAttributes(bigIdeasHTML, true);
 		errorLabelbigIdeasHTML.getElement().setId("lblErrorLabelbigIdeasHTML");
 		essentialQuestionsPanel.getElement().setId("pnlEssentialQuestionsPanel");
 		essentialQuestionsLbl.getElement().setId("htmlEssentialQuestionsLbl");
 		essentialQuestionsHTML.getElement().setId("tatEssentialQuestionsHTML");
+		StringUtil.setAttributes(essentialQuestionsHTML, true);
 		errorLabelessentialQuestionsHTML.getElement().setId("lblErrorLabelessentialQuestionsHTML");
 		performanceTaskPanel.getElement().setId("pnlPerformanceTaskPanel");
 		performanceTaskLbl.getElement().setId("htmlPerformanceTaskLbl");
 		performanceTaskHTML.getElement().setId("tatPerformanceTaskHTML");
+		StringUtil.setAttributes(performanceTaskHTML, true);
 		errorLabelperformanceTaskHTML.getElement().setId("lblErrorLabelperformanceTaskHTML");
 		closeItem.getElement().setId("btnCloseItem");
 		formButtons.getElement().setId("pnlFormButtons");

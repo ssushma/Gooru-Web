@@ -47,12 +47,13 @@ import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -99,7 +100,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	public static AddWebResourceViewUiBinder uiBinder = GWT
 			.create(AddWebResourceViewUiBinder.class);
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
 	public Label standardsDefaultText,mandatoryEducationalLbl, generateImageLbl,agreeText,andText,additionalText,mandatorymomentsOfLearninglLbl,driveFileInfoLbl;
@@ -456,8 +457,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		addResourceBtnLbl.getElement().setId("btnAdd");
 		urlTextBox.getElement().setId("tbUrl");
 		titleTextBox.getElement().setId("tbTitle");
+		StringUtil.setAttributes(titleTextBox, true);
 		cancelResourcePopupBtnLbl.getElement().setId("lblCancel");
 		descriptionTxtAera.getElement().setId("taDescription");
+		StringUtil.setAttributes(descriptionTxtAera, true);
 		descriptionTxtAera.getElement().setAttribute("placeholder", i18n.GL0359());
 		if(!isGoogleDriveFile){
 			urlTextBox.addKeyUpHandler(new UrlKeyUpHandler());
@@ -1617,6 +1620,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private RegExp urlPlusTldValidator;
 
 	public boolean isValidUrl(String url, boolean topLevelDomainRequired) {
+		int count = returnCount(url);
+		 if(count > 2)
+	         return false;
+		
 		if (urlValidator == null || urlPlusTldValidator == null) {
 			/*urlValidator = RegExp
 					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+(:\\d{1,5})?(/[\\w#!:.?+=&%@!\\_\\-/\\()]+)*){1}$");
@@ -1634,7 +1641,43 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		return (topLevelDomainRequired ? urlPlusTldValidator : urlValidator)
 				.exec(url) != null;
 	}
-	
+
+	public Integer returnCount(String url) {
+
+		String string = url;
+		String substring1 = "http:";
+		String substring2 = "https:";
+		String substring3 = "ftp:";
+		String substring4 = "www";
+
+		Integer count = 0;
+		Integer idx = 0;
+
+		while ((idx = string.indexOf(substring1, idx)) != -1) {
+			idx++;
+			count++;
+		}
+
+		idx = 0;
+		while ((idx = string.indexOf(substring2, idx)) != -1) {
+			idx++;
+			count++;
+		}
+		idx = 0;
+		while ((idx = string.indexOf(substring3, idx)) != -1) {
+			idx++;
+			count++;
+		}
+
+		idx = 0;
+		while ((idx = string.indexOf(substring4, idx)) != -1) {
+			idx++;
+			count++;
+		}
+
+		return count;
+
+	}
 	public String getYoutubeVideoId(String youtubeUrl) {
 
 		youtubeUrl=youtubeUrl.replaceAll("feature=player_detailpage&", "");

@@ -45,11 +45,12 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -89,7 +90,7 @@ public class CollectionShareTabVc extends Composite {
 	private static CollectionShareTabVcUiBinder uiBinder = GWT
 			.create(CollectionShareTabVcUiBinder.class);
 	
-	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField
 	HTMLEventPanel publicShareFloPanel;
@@ -241,7 +242,7 @@ public class CollectionShareTabVc extends Composite {
 		
 		teacherTipTextarea.addKeyUpHandler(new DirectionsKeyUpHandler());
 		teacherTipTextarea.getElement().setAttribute("maxlength", "500");
-		
+		StringUtil.setAttributes(teacherTipTextarea, true);
 		teacherTipTextarea.addFocusHandler(new FocusHandler() {
 			@Override
 			public void onFocus(FocusEvent event) {
@@ -428,7 +429,7 @@ public class CollectionShareTabVc extends Composite {
 			}
 		});
 		
-		String params = "/#"+PlaceTokens.PREVIEW_PLAY+"&id="+this.collection.getGooruOid();
+		String params = "/#"+PlaceTokens.COLLECTION_PLAY+"&id="+this.collection.getGooruOid();
 		AppClientFactory.getInjector().getSearchService().getCollectionPlayDirectLink(params, new SimpleAsyncCallback<String>() {
 
 			@Override
@@ -1087,7 +1088,11 @@ public class CollectionShareTabVc extends Composite {
 								this.hide();
 								updateShare("public");
 								selectPrivateResource("public");
-								Window.enableScrolling(true);
+								if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+									Window.enableScrolling(false);
+								}else{
+									Window.enableScrolling(true);
+								}
 							}
 						};
 						success.setPopupTitle(i18n.GL1921());

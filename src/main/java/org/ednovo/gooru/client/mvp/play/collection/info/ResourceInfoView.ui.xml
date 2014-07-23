@@ -5,6 +5,10 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field= "playerStyle" src="resourceinfo.css"/>
     <g:HTMLPanel styleName="{playerStyle.resource-info-backgroundContainer}">
+	     <uc:HTMLEventPanel styleName="{playerStyle.resource-info-bottomImageContainer}" ui:field="hideButton">
+	      	<g:Label styleName="{playerStyle.resource-info-hideImage}"/>
+	      	<g:Label styleName="{playerStyle.resource-info-hideText}" ui:field="hideText"></g:Label>
+	 	</uc:HTMLEventPanel>
         <g:Label styleName="{playerStyle.resource-info-name}" ui:field="resourceInfoText"></g:Label>
 	<g:FlowPanel ui:field="resourceInfoContainerPanel" styleName="{playerStyle.resource-info-container}">
       <g:FlowPanel styleName="{playerStyle.resource-info-Wrapper}">
@@ -275,9 +279,5 @@
           </g:HTMLPanel>
        </g:FlowPanel>
     </g:FlowPanel>
-   <uc:HTMLEventPanel styleName="{playerStyle.resource-info-bottomImageContainer}" ui:field="hideButton">
-      <g:Label styleName="{playerStyle.resource-info-hideImage}"/>
-      <g:Label styleName="{playerStyle.resource-info-hideText}" ui:field="hideText"></g:Label>
- </uc:HTMLEventPanel>
     </g:HTMLPanel>
 </ui:UiBinder>

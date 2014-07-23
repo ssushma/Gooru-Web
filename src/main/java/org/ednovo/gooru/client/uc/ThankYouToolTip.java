@@ -26,8 +26,7 @@ package org.ednovo.gooru.client.uc;
 
 
 import org.ednovo.gooru.player.resource.client.view.resourceplayer.flag.FlagBundle;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -50,7 +49,7 @@ public class ThankYouToolTip extends PopupPanel{
 	interface ThankYouToolTipUiBinder extends UiBinder<Widget, ThankYouToolTip> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField
 	HTMLEventPanel closeButton;

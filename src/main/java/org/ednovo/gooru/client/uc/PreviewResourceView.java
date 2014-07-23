@@ -9,10 +9,8 @@ import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
-import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -52,6 +50,9 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 
 	interface TocResourceViewUiBinder extends UiBinder<Widget, PreviewResourceView> {
 	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+
 	
 	public PreviewResourceView(){
 		initWidget(uiBinder.createAndBindUi(this));
@@ -93,7 +94,7 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 		setResourceSequence(itemIndex+1);
 		setResourcePlayLink();
 		
-		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 			setAvgRatingWidget();
 			AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 		}
@@ -120,7 +121,9 @@ public class PreviewResourceView extends Composite implements HasClickHandlers{
 	 */
 	private void setAvgRatingWidget() {
 		ratingWidgetView=new RatingWidgetView();
+		ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 		ratingWidgetView.getRatingCountLabel().setText(collectionItemDo.getResource().getRatings().getCount().toString());
+		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetView.setAvgStarRating(collectionItemDo.getResource().getRatings().getAverage());
 		//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 		ratingWidgetPanel.clear();

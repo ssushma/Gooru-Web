@@ -39,8 +39,9 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsGraphEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -90,7 +91,7 @@ public class RatingUserWidgetView extends Composite {
 	private static final String FOUR_STAR="fourStar";
 	private static final String FIVE_STAR="fiveStar";
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private StarRatingsDo starRatingsDo;
 	private static final String POOR = i18n.GL1846();
@@ -144,6 +145,7 @@ public class RatingUserWidgetView extends Composite {
 		errorLbl.getElement().setId("lblErrorLbl");
 
 		editReviewText.getElement().setAttribute("maxlength", "500");
+		StringUtil.setAttributes(editReviewText, true);
 		editReview.setText(i18n.GL1860());
 		editReview.getElement().setId("btnEditReview");
 		editReview.getElement().setAttribute("alt",i18n.GL1860());

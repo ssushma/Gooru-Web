@@ -35,12 +35,13 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -69,7 +70,7 @@ public abstract class AddSearchResourceView extends Composite {
 	private String gradeDoFilter = "";
 	private SearchDo<ResourceSearchResultDo> filterSearchDo = new SearchDo<ResourceSearchResultDo>();
 	
-	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 //	private static final AppConstants CONSTANTS = GWT.create(AppConstants.class);
 	
@@ -162,6 +163,7 @@ public abstract class AddSearchResourceView extends Composite {
 		searchBox.getElement().setAttribute("placeholder", i18n.GL1967());
 		searchBox.setText(collectionTitle);
 		searchBox.getElement().setId("txtSearchBox");
+		StringUtil.setAttributes(searchBox, true);
 		searchBox.getElement().setAttribute("alt", collectionTitle);
 		searchBox.getElement().setAttribute("title", collectionTitle);
 		searchBox.addKeyUpHandler(new SearchKeyUpHandler());

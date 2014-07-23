@@ -13,6 +13,7 @@ import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -57,6 +58,7 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 		super.onReveal();
 		getView().onLoad();
 		getView().reset();
+		Window.enableScrolling(false);
 	}
 	@Override
 	protected void onHide() {

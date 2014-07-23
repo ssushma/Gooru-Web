@@ -35,10 +35,8 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
-import org.ednovo.gooru.client.uc.EmailShareUc.CheckProfanityInOnBlur;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -103,7 +101,7 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 			UiBinder<Widget, CollectionEmailShareView> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 
 	public CollectionEmailShareView( String mailSubject, String mailDescription) {
@@ -192,11 +190,13 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 		toValidation.setVisible(false);
 		toTxt.getElement().setId("tbTo");
 		subTxt.getElement().setId("tbSubject");
+		StringUtil.setAttributes(subTxt, true);
 		subTxt.setText(StringUtil.generateMessage(i18n.GL1997(),i18n.GL2000())); 
 		subTxt.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1997(),i18n.GL2000()));
 		subTxt.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1997(),i18n.GL2000()));
 		fromTxt.getElement().setId("tbFrom");
 		msgTxa.getElement().setId("taMessage");
+		StringUtil.setAttributes(msgTxa, true);
 		fromLbl.getElement().setId("lblFromLbl");
 		checkCopyEmail.getElement().setId("chkCheckCopyEmail");
 		mandatoryErrorLbl.getElement().setId("errlblMandatoryErrorLbl");

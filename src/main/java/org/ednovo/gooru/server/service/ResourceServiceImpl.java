@@ -24,9 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.service;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -68,9 +66,9 @@ import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfanityDo;
+import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,7 +82,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 @Service("resourceService")
 @ServiceURL("/resourceService")
-public class ResourceServiceImpl extends BaseServiceImpl implements MessageProperties,ResourceService {
+public class ResourceServiceImpl extends BaseServiceImpl implements ResourceService {
 
 	
 	private static final long serialVersionUID = 3247182821197046755L;
@@ -120,6 +118,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 	private static final String NEW_RESOURCE = "newResource";
 	
 	private static final String TAXONOMY_SET = "taxonomySet";
+	
+	private static final String CHOOSE = "Please choose one of the following...";
 	
 	@Autowired
 	ResourceDeserializer resourceDeserializer;
@@ -467,7 +467,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 				collectionTypeJsonObject.put(TITLE, title);
 			}
 			if(description != null){
-				collectionTypeJsonObject.put("description", description);
+				collectionTypeJsonObject.put("goals", description);
 			}
 			if(grade!=null){
 				collectionTypeJsonObject.put(GRADE, grade);
@@ -479,10 +479,12 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 				collectionTypeJsonObject.put("vocabulary", vocabulary);
 			}
 			if(taxonomyCode!=null){
-				collectionTypeJsonObject.put("taxonomyCode", taxonomyCode);
-			}
-			if(updateTaxonomyByCode!=null){
-				collectionTypeJsonObject.put("updateTaxonomyByCode", updateTaxonomyByCode);
+				JSONArray taxonomySet = new JSONArray();
+				JSONObject code = new JSONObject();
+				code.put("codeId", taxonomyCode);
+				taxonomySet.put(code);
+				collectionTypeJsonObject.put("taxonomySet", taxonomySet);
+
 			}
 			if(mediaType!=null){
 				collectionTypeJsonObject.put("mediaType", mediaType);
@@ -614,7 +616,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		educationalOfObj.setSelected(true);
 		educationalOfObj.setValue(edcuationalUse);
 		arrayOfEducational.add(educationalOfObj);
-		if(!edcuationalUse.equalsIgnoreCase(GL1684))
+		if(!edcuationalUse.equalsIgnoreCase(CHOOSE))
 		newResourceDo.setEducationalUse(arrayOfEducational);
 		
 		ArrayList<checkboxSelectedDo> arrayOfMoments=new ArrayList<checkboxSelectedDo>();
@@ -622,7 +624,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		momentsOfObj.setSelected(true);
 		momentsOfObj.setValue(momentsOfLearning);
 		arrayOfMoments.add(momentsOfObj);
-		if(!momentsOfLearning.equalsIgnoreCase(GL1684))
+		if(!momentsOfLearning.equalsIgnoreCase(CHOOSE))
 		newResourceDo.setMomentsOfLearning(arrayOfMoments);
 		
 		ResourceFormatDo resourceFormat = new ResourceFormatDo();
@@ -1359,11 +1361,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 
 			taxonomySetObj.put("taxonomySet", codeIdJsonArray);
 			taxonomyObject.put("resource", taxonomySetObj);
-		
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor
 					.put(url, getRestUsername(), getRestPassword(),
 							taxonomyObject.toString());
-			jsonRep = jsonResponseRep.getJsonRepresentation();
 			
 		} catch (Exception ex) {
 			
@@ -1469,8 +1469,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.GET_GOOGLEDRIVE_FIlES, enocodedString);
 		
 		String response=new WebService(url,false).webInvokeforget("GET", "", contentType, access_token);
-		
-		
 		if (response!=null){
 			googleDriveDo=deserializeGoogleDriveFilesList(response);
 		}else{
@@ -1565,6 +1563,34 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
         return new GoogleDriveItemDo();
 	}
 
+	@Override
+	public GoogleToken refreshGoogleAccessToken(String refreshToken) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		GoogleToken token = null;
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(),
+				UrlToken.REFRESH_TOKEN, refreshToken);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		String str = null;
+		try {
+			str = jsonRep.getJsonObject().toString();
+			token =  deserializeGoogleToken(str);
+			setLoggedInAccessToken(token != null && token.getAccess_token() != null ? token.getAccess_token() : null);
+		} catch (JSONException eJson) {
+			eJson.printStackTrace(); 
+		}
+		
+		
+		
+		return token;
+	}
 	
+	public GoogleToken deserializeGoogleToken(String jsonRep) {
+        if (jsonRep != null) {
+                return (GoogleToken) JsonDeserializer.deserialize(jsonRep, new TypeReference<GoogleToken>() {
+                });
+        }
+        return new GoogleToken();
+	}
 	
 }

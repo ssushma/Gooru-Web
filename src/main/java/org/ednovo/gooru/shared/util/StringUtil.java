@@ -37,10 +37,14 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.RichTextArea;
+import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
 
 
 /**
@@ -185,13 +189,21 @@ public class StringUtil {
 	 */
 	public static Map<String, String> splitQuery(String url)  {
 	    Map<String, String> query_pairs = new LinkedHashMap<String, String>();
-	    String[] query = url.split("#");
-	    String[] pairs = query[1].split("&");
-	    for (String pair : pairs) {
-	    	if (pair.indexOf("=")>0){
-	    		int idx = pair.indexOf("=");
-	    		query_pairs.put(pair.substring(0, idx), pair.substring(idx + 1));
-	    	}
+	    try {
+		    if(url.contains("#")) {
+		    	String[] query = url.split("#");
+		    	if(query[1].contains("&")) {
+			    	String[] pairs = query[1].split("&");
+				    for (String pair : pairs) {
+				    	if (pair.indexOf("=")>0){
+				    		int idx = pair.indexOf("=");
+				    		query_pairs.put(pair.substring(0, idx), pair.substring(idx + 1));
+				    	}
+				    }
+		    	}
+		    }
+	    } catch (ArrayIndexOutOfBoundsException e) {
+	    	e.printStackTrace();
 	    }
 	    return query_pairs;
 	}
@@ -294,7 +306,7 @@ public class StringUtil {
 	
 	public static void clearCookies(String key, String path, String domain){
 		Cookies.setCookie(key, "",  new Date(), "."+Window.Location.getHost(), path, false);
-		Cookies.removeCookie("google-access-token", "/");
+		Cookies.removeCookie(key, "/");
 	}
 	
 	
@@ -309,5 +321,59 @@ public class StringUtil {
 		}
 		return libraryName;
 	}
+	
+	public static void setAttributes(TextBox txtBox, boolean isTrue){
+		txtBox.getElement().setAttribute("spellcheck", isTrue+"");
+	}
+	public static void setAttributes(TextArea tatBox, boolean isTrue){
+		tatBox.getElement().setAttribute("spellcheck", isTrue+"");
+	}
 
+	/**
+	 * @function setAttributes 
+	 * 
+	 * @created_date : Jul 15, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param msgTxa
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	public static void setAttributes(RichTextArea rtatBox, boolean isTrue) {
+		rtatBox.getElement().setAttribute("spellcheck", isTrue+"");
+	}
+
+	/**
+	 * @function setAttributes 
+	 * 
+	 * @created_date : Jul 17, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param editSearchTxtBox
+	 * @param isTrue
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	public static void setAttributes(AppSuggestBox editSearchTxtBox,
+			boolean isTrue) {
+		editSearchTxtBox.getElement().setAttribute("spellcheck", isTrue+"");
+	}
 }

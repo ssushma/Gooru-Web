@@ -3,7 +3,7 @@ package org.ednovo.gooru.client.uc.suggestbox.widget;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -50,7 +50,7 @@ public abstract class AutoSuggestForm extends Composite {
 
 	String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public AutoSuggestForm(MultiWordSuggestOracle oracle) {
 		form = new FlowPanel();

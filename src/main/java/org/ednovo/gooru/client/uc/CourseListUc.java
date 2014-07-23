@@ -26,9 +26,11 @@ package org.ednovo.gooru.client.uc;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -36,7 +38,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.event.AddCourseEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -60,7 +62,7 @@ public class CourseListUc extends PopupPanel {
 	private static CourseListUcUiBinder uiBinder = GWT
 			.create(CourseListUcUiBinder.class);
 	
-	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface CourseListUcUiBinder extends UiBinder<Widget, CourseListUc> {
 	}
@@ -268,9 +270,13 @@ public class CourseListUc extends PopupPanel {
 			collectionId=collectionDo.getGooruOid();
 			for (CodeDo code : collectionDo.getTaxonomySet()) {
 				if(code.getDepth()==2){
-					oldCourseId=Integer.toString(code.getCodeId());
-					updateCourse(collectionId, oldCourseId,"delete");				}
-				
+
+					deleteCourse(collectionId, code.getCodeId());	
+				}
+
+					//oldCourseId=Integer.toString(code.getCodeId());
+					//updateCourse(collectionId, oldCourseId,"delete");					
+
 			}
 			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
 				MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
@@ -286,17 +292,30 @@ public class CourseListUc extends PopupPanel {
 		
 	}
 	
-	public void updateCourse(String collectionId, String courseCode, String action) {
+	public void updateCourse(String collectionId, final String courseCode, String action) {
 	  	
 		AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionId, null, null, null, null, null, courseCode, null, null, action, new SimpleAsyncCallback<CollectionDo>() {
 
 			@Override
 			public void onSuccess(CollectionDo result) {	
-				collectionDo=result;
+				if(collectionDo!=null){
+ 					Set<CodeDo> codeSet=new HashSet<CodeDo>();
+ 					CodeDo codeDo=new CodeDo();
+ 					codeDo.setCodeId(Integer.valueOf(courseCode));
+ 					codeDo.setDepth((short)2);
+ 					codeSet.add(codeDo);
+ 					collectionDo.setTaxonomySet(codeSet);
+ 				}
 			}
 		});
-
 	}
-	
-	
+	public void deleteCourse(String collectionId, int courseCode) {
+		AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionId, courseCode, new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				Set<CodeDo> codeSet=new HashSet<CodeDo>();
+				collectionDo.setTaxonomySet(codeSet);
+			}
+		});
+	}
 }

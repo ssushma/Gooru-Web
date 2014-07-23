@@ -29,8 +29,8 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
@@ -76,7 +76,7 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 			UiBinder<Widget, EditableTextAreaUc> {
 	}
 	
-	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@UiField
 	protected HTML html;
@@ -116,6 +116,7 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 		html.getElement().setId("htmlHtml");
 		duplicateTinyMce.getElement().setId("pnlDuplicateTinyMce");
 		fakeContent.getElement().setId("pnlFakeContent");
+		StringUtil.setAttributes(textArea, true);
 		textArea.addBlurHandler(new BlurHandler() {
 			
 			@Override

@@ -49,10 +49,9 @@ import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
-import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -103,7 +102,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	
 	private static StudentAssignmentViewUiBinder uiBinder = GWT.create(StudentAssignmentViewUiBinder.class);
 	
-	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface StudentAssignmentViewUiBinder extends UiBinder<Widget, StudentAssignmentView> {    
 
@@ -180,6 +178,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	
 	private Integer defaultOffsetForPath=0;
 	private Integer defaultLimitForPath=20;
+	
+	public static final MessageProperties i18n = GWT.create(MessageProperties.class); 
 	
 	@Inject
 	public StudentAssignmentView() {
@@ -468,13 +468,17 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 										@Override
 										public void onClickPositiveButton(
 												ClickEvent event) {
-											Window.enableScrolling(true);
+											if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+												Window.enableScrolling(false);
+											}else{
+												Window.enableScrolling(true);
+											}
 											btnJoinClass.setVisible(false);
 											userImage.setVisible(true);
 											lblWebHelp.setVisible(false);
 											btnWithDraw.setVisible(true);
 											LblMember.setVisible(true);
-											LblMember.setText(i18n.GL1549());
+											LblMember.setText(StudentAssignmentView.i18n.GL1549());
 											mainContainer.setVisible(true);
 											this.hide();
 											isJoinPopupPublic=false;
@@ -484,9 +488,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									};
 									success.setHeight("248px");
                                     success.setWidth("450px");
-                                    success.setPopupTitle(i18n.GL1553());
-                                    success.setDescText(i18n.GL1554()+classpageDo.getTitle()+i18n.GL_SPL_EXCLAMATION()+'\n'+i18n.GL1552());
-                                    success.setPositiveButtonText(i18n.GL0190());
+                                    success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
+                                    success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+                                    success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
                                     success.center();
                                     success.show();
 						
@@ -572,13 +576,17 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												@Override
 												public void onClickPositiveButton(
 														ClickEvent event) {
-													Window.enableScrolling(true);
+													if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+														Window.enableScrolling(false);
+													}else{
+														Window.enableScrolling(true);
+													}
 													btnJoinClass.setVisible(false);
 													userImage.setVisible(true);
 													lblWebHelp.setVisible(false);
 													btnWithDraw.setVisible(false);
 													LblMember.setVisible(true);
-													LblMember.setText(i18n.GL1549());
+													LblMember.setText(StudentAssignmentView.i18n.GL1549());
 													mainContainer.setVisible(true);
 													this.hide();
 													isJoinPopupPrivateStatic=false;
@@ -588,9 +596,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 											};
 											success.setHeight("248px");
                                             success.setWidth("450px");
-                                            success.setPopupTitle(i18n.GL1553());
-                                            success.setDescText(i18n.GL1554()+classpageDo.getTitle()+i18n.GL_SPL_EXCLAMATION()+'\n'+i18n.GL1552());
-                                            success.setPositiveButtonText(i18n.GL0190());
+                                            success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
+                                            success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+                                            success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
                                             success.center();
                                             success.show();
 								
@@ -896,13 +904,17 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									@Override
 									public void onClickPositiveButton(
 											ClickEvent event) {
-										Window.enableScrolling(true);
+										if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+											Window.enableScrolling(false);
+										}else{
+											Window.enableScrolling(true);
+										}
 										btnJoinClass.setVisible(false);
 										userImage.setVisible(true);
 										lblWebHelp.setVisible(false);
 										btnWithDraw.setVisible(true);
 										LblMember.setVisible(true);
-										LblMember.setText(i18n.GL1549());
+										LblMember.setText(StudentAssignmentView.i18n.GL1549());
 										mainContainer.setVisible(true);
 										this.hide();
 										isJoinPopupButtonclick=false;
@@ -911,9 +923,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 								};
 								success.setHeight("248px");
                                 success.setWidth("450px");
-                                success.setPopupTitle(i18n.GL1553());
-                                success.setDescText(i18n.GL1554()+classpageDo.getTitle()+i18n.GL_SPL_EXCLAMATION()+'\n'+i18n.GL1552());
-                                success.setPositiveButtonText(i18n.GL0190());
+                                success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
+                                success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+                                success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
                                 success.center();
                                 success.show();
 								
@@ -1050,13 +1062,17 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 								@Override
 								public void onClickPositiveButton(
 										ClickEvent event) {
-									Window.enableScrolling(true);
+									if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+										Window.enableScrolling(false);
+									}else{
+										Window.enableScrolling(true);
+									}
 									btnJoinClass.setVisible(false);
 									userImage.setVisible(true);
 									lblWebHelp.setVisible(false);
 									btnWithDraw.setVisible(false);
 									LblMember.setVisible(true);
-									LblMember.setText(i18n.GL1549());
+									LblMember.setText(StudentAssignmentView.i18n.GL1549());
 									mainContainer.setVisible(true);
 									this.hide();
 									isJoinPopupPrivate=false;
@@ -1066,9 +1082,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 							};
 							success.setHeight("248px");
                             success.setWidth("450px");
-                            success.setPopupTitle(i18n.GL1553());
-                            success.setDescText(i18n.GL1554()+classpageDo.getTitle()+i18n.GL_SPL_EXCLAMATION()+'\n'+i18n.GL1552());
-                            success.setPositiveButtonText(i18n.GL0190());
+                            success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
+                            success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+                            success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
                             success.center();
                             success.show();
 				
@@ -1145,13 +1161,17 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									@Override
 									public void onClickPositiveButton(
 											ClickEvent event) {
-										Window.enableScrolling(true);
+										if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+											Window.enableScrolling(false);
+										}else{
+											Window.enableScrolling(true);
+										}
 										btnJoinClass.setVisible(false);
 										userImage.setVisible(true);
 										lblWebHelp.setVisible(false);
 										btnWithDraw.setVisible(true);
 										LblMember.setVisible(true);
-										LblMember.setText(i18n.GL1549());
+										LblMember.setText(StudentAssignmentView.i18n.GL1549());
 										mainContainer.setVisible(true);
 										this.hide();
 										isJoinPopupPublicStatic=false;
@@ -1161,9 +1181,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 								};
 								success.setHeight("248px");
                                 success.setWidth("450px");
-                                success.setPopupTitle(i18n.GL1553());
-                                success.setDescText(i18n.GL1554()+classpageDo.getTitle()+i18n.GL_SPL_EXCLAMATION()+'\n'+i18n.GL1552());
-                                success.setPositiveButtonText(i18n.GL0190());
+                                success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
+                                success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+                                success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
                                 success.center();
                                 success.show();
 					
@@ -1284,13 +1304,17 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												@Override
 												public void onClickPositiveButton(
 														ClickEvent event) {
-													Window.enableScrolling(true);
+													if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+														Window.enableScrolling(false);
+													}else{
+														Window.enableScrolling(true);
+													}
 													btnJoinClass.setVisible(false);
 													userImage.setVisible(true);
 													lblWebHelp.setVisible(false);
 													btnWithDraw.setVisible(true);
 													LblMember.setVisible(true);
-													LblMember.setText(i18n.GL1549());
+													LblMember.setText(StudentAssignmentView.i18n.GL1549());
 													mainContainer.setVisible(true);
 													this.hide();
 													isJoinPopupPublic=false;
@@ -1300,9 +1324,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 											};
 											success.setHeight("248px");
 		                                    success.setWidth("450px");
-		                                    success.setPopupTitle(i18n.GL1553());
-		                                    success.setDescText(i18n.GL1554()+classpageDo.getTitle()+i18n.GL_SPL_EXCLAMATION()+'\n'+i18n.GL1552());
-		                                    success.setPositiveButtonText(i18n.GL0190());
+		                                    success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
+		                                    success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+		                                    success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
 		                                    success.center();
 		                                    success.show();
 								
@@ -1389,13 +1413,17 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 														@Override
 														public void onClickPositiveButton(
 																ClickEvent event) {
-															Window.enableScrolling(true);
+															if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+																Window.enableScrolling(false);
+															}else{
+																Window.enableScrolling(true);
+															}
 															btnJoinClass.setVisible(false);
 															userImage.setVisible(true);
 															lblWebHelp.setVisible(false);
 															btnWithDraw.setVisible(false);
 															LblMember.setVisible(true);
-															LblMember.setText(i18n.GL1549());
+															LblMember.setText(StudentAssignmentView.i18n.GL1549());
 															mainContainer.setVisible(true);
 															this.hide();
 															isJoinPopupPrivateStatic=false;
@@ -1405,9 +1433,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 													};
 													success.setHeight("248px");
 		                                            success.setWidth("450px");
-		                                            success.setPopupTitle(i18n.GL1553());
-		                                            success.setDescText(i18n.GL1554()+classpageDo.getTitle()+i18n.GL_SPL_EXCLAMATION()+'\n'+i18n.GL1552());
-		                                            success.setPositiveButtonText(i18n.GL0190());
+		                                            success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
+		                                            success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
+		                                            success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
 		                                            success.center();
 		                                            success.show();
 										
