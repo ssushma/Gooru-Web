@@ -182,6 +182,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		contentSimPanel.getElement().setId("spnlContentSimPanel");
 		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 		addedStatusLbl.getElement().setId("lblAddedStatusLbl");
+
 		resourcePlayerClickPanel.getElement().setId("lblResourcePlayerClickPanel");
 		disclosureHeaderFloPanel.getElement().setId("fpnlDisclosureHeaderFloPanel");
 		disclosureDisPanel.getElement().setId("discpnlDisclosureDisPanel");
@@ -366,7 +367,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	 */
 	public void setAddedStatus(Boolean added) {
 //		addedStatusLbl.setVisible(added != null ? added : !addedStatusLbl.getText().equals(DRAG_TO_ADD));
-		addedStatusLbl.setVisible(true);
+		addedStatusLbl.setVisible(false);
 	}
 
 	/**
