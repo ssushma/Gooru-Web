@@ -775,7 +775,20 @@ public class LibraryMenuNav extends Composite{
 								@Override
 								public void onClick(ClickEvent event) {
 									
-									//here u add
+									setHeaderBrowserTitle(standardsCourseDo.getLabel());
+									//MixpanelUtil.mixpanelEvent("Library_"+STANDARDS+"_"+standardsCourseDo.getLabel());
+									MixpanelUtil.mixpanelEvent("standardlibrary_select_course");
+									final Map<String,String> params = new HashMap<String, String>();
+									params.put(LIBRARY_PAGE, "course-page");
+									params.put(SUBJECT, STANDARDS);
+									params.put("courseId", courseId);
+									params.put("standardId", standardsId);
+									if(courseTitle.getText().contains("Texas")) {
+										params.put("libtype", "TEKS");
+									}
+									
+									AppClientFactory.getPlaceManager().revealPlace(getPlaceToken(),params);
+									
 									AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(subjectCode, subjectname, new SimpleAsyncCallback<HashMap<String, StandardsDo>>() {
 
 										@Override
@@ -784,7 +797,7 @@ public class LibraryMenuNav extends Composite{
 											setHeaderBrowserTitle(standardsCourseDo.getLabel());
 											//MixpanelUtil.mixpanelEvent("Library_"+STANDARDS+"_"+standardsCourseDo.getLabel());
 											MixpanelUtil.mixpanelEvent("standardlibrary_select_course");
-											Map<String,String> params = new HashMap<String, String>();
+											final Map<String,String> params = new HashMap<String, String>();
 											params.put(LIBRARY_PAGE, "course-page");
 											params.put(SUBJECT, STANDARDS);
 											params.put("courseId", courseId);
@@ -792,6 +805,7 @@ public class LibraryMenuNav extends Composite{
 											if(courseTitle.getText().contains("Texas")) {
 												params.put("libtype", "TEKS");
 											}
+											
 											AppClientFactory.getPlaceManager().revealPlace(getPlaceToken(),params);
 											
 											setSubjectPanelIdsForStandards(result);
