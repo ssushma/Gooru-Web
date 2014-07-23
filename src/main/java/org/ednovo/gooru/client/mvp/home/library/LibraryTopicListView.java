@@ -275,7 +275,6 @@ public class LibraryTopicListView extends Composite{
 			standardsFloPanel.setVisible(true);
 		}
 		
-		System.out.println("constructor::");
 		showPopupAfterGmailSignin();
 		
 		AppClientFactory.getEventBus().addHandler(OpenLessonConceptEvent.TYPE, openLessonConceptHandler);

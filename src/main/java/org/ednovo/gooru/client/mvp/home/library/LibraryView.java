@@ -808,6 +808,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 		final String standardsLibraryType = AppClientFactory.getPlaceManager().getRequestParameter("libtype");
 		final String subjectId = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME, FEATURED_LABEL);
 		leftNav.clear();
+		if(unitDoList != null)
+		{
 		for(int i = 0; i<unitDoList.size(); i++) {
 			leftNav.add(new LibraryUnitMenuView(unitDoList.get(i)));
 			if(i==0&&(unitId==null)) {
@@ -819,6 +821,12 @@ public class LibraryView extends Composite implements  ClickHandler {
 					setLibraryConceptOnlyData(unitDoList.get(i).getCollection(), unitDoList.get(i).getCount());
 				}
 			}
+		}
+		}
+		else
+		{
+			contentScroll.setVisible(false);
+			loadingIconPanel.setVisible(true);
 		}
 		
 		int widgetCount = 0;
