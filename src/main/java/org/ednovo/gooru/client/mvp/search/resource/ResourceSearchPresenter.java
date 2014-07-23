@@ -36,8 +36,8 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInSearchEvent;
-import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchPresenter;
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
@@ -47,6 +47,8 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -64,6 +66,8 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	
 	private RatingAndReviewPopupPresenter ratingAndReviewPopup;
 	
+	private AddResourceContainerPresenter addResourceContainerPresenter;
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.RESOURCE_SEARCH)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -77,9 +81,11 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public ResourceSearchPresenter(IsResourceSearchView view, IsResourceSearchProxy proxy,SignUpPresenter signUpViewPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup) {
+	public ResourceSearchPresenter(IsResourceSearchView view, IsResourceSearchProxy proxy,SignUpPresenter signUpViewPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup,
+			AddResourceContainerPresenter addResourceContainerPresenter) {
 		super(view, proxy, signUpViewPresenter);
 		this.ratingAndReviewPopup=ratingAndReviewPopup;
+		this.addResourceContainerPresenter=addResourceContainerPresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(UpdateRatingsInSearchEvent.TYPE,this);
 	}
@@ -147,5 +153,25 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	@Override
 	public void updateRatingInSearch(ResourceSearchResultDo searchResultDo) {
 		showRatingAndReviewPopup(searchResultDo);
+	}
+
+
+	@Override
+	public AddResourceContainerPresenter getAddResourceContainerPresenter() {
+		return addResourceContainerPresenter;
+	}
+
+	@Override
+	public void showAddResourceToShelfView(SimplePanel addResourceContainerPanel,ResourceSearchResultDo searchResultDo,String Type) {
+		addResourceContainerPanel.clear();
+		addResourceContainerPresenter.getUserShelfData(searchResultDo,Type);
+		addResourceContainerPanel.setWidget(addResourceContainerPresenter.getWidget());
+		
+	}
+
+	@Override
+	public void showAddCollectionToShelfView(SimplePanel addResourceContainerPanel,CollectionSearchResultDo collectionsearchResultDo,String searchType) {
+		// TODO Auto-generated method stub
+		
 	}
 }

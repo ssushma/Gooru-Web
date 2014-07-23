@@ -231,6 +231,9 @@ import org.ednovo.gooru.client.mvp.register.IsRegisterView;
 import org.ednovo.gooru.client.mvp.register.RegisterPresenter;
 import org.ednovo.gooru.client.mvp.register.RegisterPresenter.IsRegisterProxy;
 import org.ednovo.gooru.client.mvp.register.RegisterView;
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerView;
+import org.ednovo.gooru.client.mvp.search.IsAddResourceContainerView;
 import org.ednovo.gooru.client.mvp.search.IsSearchRootView;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter.IsSearchRootProxy;
@@ -476,6 +479,7 @@ public class AppModule extends AppPresenterModule {
 
 		bindPresenter(SausdPresenter.class, IsSausdView.class, SausdView.class,IsSausdProxy.class);
 		bindPresenter(DrivePresenter.class, IsDriveView.class, DriveView.class,IsDriveyProxy.class);
+		bindPresenterWidget(AddResourceContainerPresenter.class, IsAddResourceContainerView.class, AddResourceContainerView.class);
 
 	}
 }

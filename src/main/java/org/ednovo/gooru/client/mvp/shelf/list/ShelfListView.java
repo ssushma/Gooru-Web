@@ -171,6 +171,8 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	private static final String NO_COLLECTION_MESSAGE = i18n.GL0995();
 	
 	private static final String LOADING_COLLECTION_MESSAGE = i18n.GL0996();
+	
+	boolean isFromAddResourcePresenter=false;
 
 	@Inject
 	ShelfView shelfView;
@@ -1164,6 +1166,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	
 	@Override
 	public void refreshFolderItemData(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String, String> params) {
+		isFromAddResourcePresenter	=params.containsKey("from");
 		if(refreshFolderType.equals(RefreshFolderType.INSERT) || refreshFolderType.equals(RefreshFolderType.INSERT_AND_VIEW) ) {
 			if(params!=null) {
 				if(params.get(O3_LEVEL)!=null) {
@@ -1826,14 +1829,22 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	public void setCreatedFolderActiveStatus(String gooruOid,FolderDo folderDo, HashMap<String, String> params, int level){ 
 		if(level==1){
 			params.put(O2_LEVEL, folderDo.getGooruOid());
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params); 
+			if(!isFromAddResourcePresenter){
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params); 
+			}
 		}else if(level==2){
 			params.put(O3_LEVEL, folderDo.getGooruOid());
+			if(!isFromAddResourcePresenter){
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params); 
+			}
 		}else if(level==3){
+			if(!isFromAddResourcePresenter){
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params); 
+			}
 		}else if(level==0){
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params); 
+			if(!isFromAddResourcePresenter){
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
+			}
 			for(int i = 0; i < myShelfVerPanel.getItemCount(); i++) {
 				TreeItem item = myShelfVerPanel.getItem(i);
 				 getMovedCollectionWidget(item,folderDo.getGooruOid());

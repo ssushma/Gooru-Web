@@ -274,5 +274,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	public void resetFilters(){
 		searchFilterVc.clearAllFields();
 	}
+	
+	public abstract void setAddResourceContainerPresenter(AddResourceContainerPresenter addResourceContainerPresenter);
 
 }

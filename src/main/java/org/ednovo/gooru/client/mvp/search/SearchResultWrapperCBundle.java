@@ -96,6 +96,8 @@ public interface SearchResultWrapperCBundle extends ClientBundle {
 		String embedActive();
 		
 		String ratingWidgetPanel();
+		
+		String addLblActive();
 	}
 
 	@Source("SearchResultWrapper.css")

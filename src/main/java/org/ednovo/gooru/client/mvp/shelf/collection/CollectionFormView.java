@@ -299,6 +299,7 @@ public class CollectionFormView extends
 								final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
 								final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
 								final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+								final String resourceidonclick 	= AppClientFactory.getPlaceManager().getRequestParameter("resourceid");
 								btnOk.setEnabled(false);
 //								btnOk.getElement().addClassName("disabled");
 								buttonMainContainer.setVisible(false);
@@ -307,7 +308,10 @@ public class CollectionFormView extends
 									getUiHandlers().copyCollection(collectionTitleTxtBox.getText().trim(),AppClientFactory.getPlaceManager().getRequestParameter("collectionId"));
 								}else if(AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE)!=null&&!AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE).equalsIgnoreCase("")){
 									getUiHandlers().copyDraggedCollection(collectionTitleTxtBox.getText().trim(),AppClientFactory.getPlaceManager().getRequestParameter("collectionId"),AppClientFactory.getPlaceManager().getRequestParameter("selectedFolderId"));
-								}else{
+								}else if(resourceidonclick!=null){
+									getUiHandlers().saveCollectionForSearch(folderId,o1,o2,o3,resourceidonclick);
+									}
+								else{
 									getUiHandlers().saveCollection(folderId,o1,o2,o3); 
 								}
 								
