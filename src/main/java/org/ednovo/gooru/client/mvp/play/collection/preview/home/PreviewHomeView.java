@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.preview.home;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -159,7 +160,6 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 		resourceCurosalContainer.getElement().setId("fpnlResourceCurosalContainer");
 		nextButton.getElement().setId("lblNextButton");
 		
-		
 	}
 	@UiHandler("collectionImage")
 	public void thumbnailErrorImage(ErrorEvent event){
@@ -218,6 +218,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			}
 		});
 		setReplyLink();
+		
 	}
 	public void setCollectionImage(String thumbnailUrl){
 		collectionImage.setUrl(thumbnailUrl);
@@ -239,6 +240,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 	@Override
 	public void setCollectionResources(CollectionDo collectionDo) {
 		resourceCurosalContainer.clear();
+		showPopupAfterGmailSignin();
 		int resourceCount=0;
 		int questionCount=0;
 		FlowPanel curosalPanel=new FlowPanel();
@@ -319,7 +321,8 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 	@UiHandler("assignCollectionBtn")
 	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Preview_Click_Assign();
-		String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
+		   String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
+		    System.out.println("assign-collectionId:"+collectionId);
 
 				if(!isAssignPopup){
 					isAssignPopup=true;
@@ -345,6 +348,16 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 				{
 				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
 				}
+				
+				Map<String,String> params = new HashMap<String,String>();
+				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
+				if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null)
+					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
+				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
+					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
+				params.put("assign", "yes");
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				
 			}
 		
@@ -379,7 +392,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			{
 				loginFlag = false;
 			}
-			RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag,collectionTitle) {
+			RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag, collectionTitle) {
 
 				@Override
 				public void closePoup() {
@@ -393,6 +406,16 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			successPopupVc.setHeight("440px");
 			successPopupVc.show();
 			successPopupVc.center();
+			
+			Map<String,String> params = new HashMap<String,String>();
+			params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
+			if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null)
+				params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
+			if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
+				params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
+			params.put("customize", "yes");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 		}
 		
 	}
@@ -440,6 +463,70 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			}
 		
 	}
+	
+	/**
+	 * 
+	 * Showing Customize or Assign popup after login with gmail account.
+	 * 
+	 */
+	
+	private void showPopupAfterGmailSignin() {
+		// TODO Auto-generated method stub
+		String collectionId = AppClientFactory.getPlaceManager().getRequestParameter("id")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
+		String customize = AppClientFactory.getPlaceManager().getRequestParameter("customize")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("customize") : null;
+		String assign = AppClientFactory.getPlaceManager().getRequestParameter("Assign")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("Assign") : null;
+		if(customize!=null && customize.equals("yes")){
+			Boolean loginFlag = false;
+			if (AppClientFactory.isAnonymous()){
+				loginFlag = true;
+			}
+			else
+			{
+				loginFlag = false;
+			}
+			RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag, collectionTitle) {
+
+				@Override
+				public void closePoup() {
+					Window.enableScrolling(true);
+					this.hide();	
+					isCustomizePopup = false;
+				}
+			};
+			Window.scrollTo(0, 0);
+			successPopupVc.setWidth("500px");
+			successPopupVc.setHeight("440px");
+			successPopupVc.show();
+			successPopupVc.center();
+		}
+		if(assign!=null && assign.equals("yes")){
+			AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {
+				
+				@Override
+				public void closePoup() {
+					Window.enableScrolling(true);
+			        this.hide();
+			    	isAssignPopup=false;
+				}
+			};
+			Window.scrollTo(0, 0);
+			successPopupVc.setWidth("500px");
+			successPopupVc.setHeight("635px");
+
+			successPopupVc.show();
+			successPopupVc.center();
+			if (AppClientFactory.isAnonymous()){
+			successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+			}
+			else
+			{
+			successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+			}
+		}
+
+
+	}
+
 	
 	public class OnassignCollectionBtnMouseOver implements MouseOverHandler{
 

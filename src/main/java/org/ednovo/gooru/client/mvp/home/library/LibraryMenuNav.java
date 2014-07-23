@@ -64,6 +64,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -774,7 +775,20 @@ public class LibraryMenuNav extends Composite{
 								@Override
 								public void onClick(ClickEvent event) {
 									
-									//here u add
+									setHeaderBrowserTitle(standardsCourseDo.getLabel());
+									//MixpanelUtil.mixpanelEvent("Library_"+STANDARDS+"_"+standardsCourseDo.getLabel());
+									MixpanelUtil.mixpanelEvent("standardlibrary_select_course");
+									final Map<String,String> params = new HashMap<String, String>();
+									params.put(LIBRARY_PAGE, "course-page");
+									params.put(SUBJECT, STANDARDS);
+									params.put("courseId", courseId);
+									params.put("standardId", standardsId);
+									if(courseTitle.getText().contains("Texas")) {
+										params.put("libtype", "TEKS");
+									}
+									
+									AppClientFactory.getPlaceManager().revealPlace(getPlaceToken(),params);
+									
 									AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(subjectCode, subjectname, new SimpleAsyncCallback<HashMap<String, StandardsDo>>() {
 
 										@Override
@@ -783,7 +797,7 @@ public class LibraryMenuNav extends Composite{
 											setHeaderBrowserTitle(standardsCourseDo.getLabel());
 											//MixpanelUtil.mixpanelEvent("Library_"+STANDARDS+"_"+standardsCourseDo.getLabel());
 											MixpanelUtil.mixpanelEvent("standardlibrary_select_course");
-											Map<String,String> params = new HashMap<String, String>();
+											final Map<String,String> params = new HashMap<String, String>();
 											params.put(LIBRARY_PAGE, "course-page");
 											params.put(SUBJECT, STANDARDS);
 											params.put("courseId", courseId);
@@ -791,6 +805,7 @@ public class LibraryMenuNav extends Composite{
 											if(courseTitle.getText().contains("Texas")) {
 												params.put("libtype", "TEKS");
 											}
+											
 											AppClientFactory.getPlaceManager().revealPlace(getPlaceToken(),params);
 											
 											setSubjectPanelIdsForStandards(result);
@@ -901,6 +916,28 @@ public class LibraryMenuNav extends Composite{
 		for (Map.Entry<String, SubjectDo> entry : subjectList.entrySet()) {
 			subjectIdList.put(entry.getKey(), entry.getValue().getSubjectCode()+"");
 		}
+		Timer timer = new Timer(){
+            @Override
+            public void run() {
+            	if(!isScienceHovered) {
+                	isScienceHovered = true;
+                	getTaxonomyData(SCIENCE,getSubjectIdBySubjectName(subjectIdList, SCIENCE),null);
+            	}
+            	if(!isMathHovered) {
+                	isMathHovered = true;
+                	getTaxonomyData(MATH,getSubjectIdBySubjectName(subjectIdList, MATH),null);
+            	}
+            	if(!isSocialHovered) {
+                	isSocialHovered = true;
+                	getTaxonomyData(SOCIAL,getSubjectIdBySubjectName(subjectIdList, SOCIAL),null);
+            	}
+            	if(!isLanguageHovered) {
+                	isLanguageHovered = true;
+                	getTaxonomyData(LANGUAGE,getSubjectIdBySubjectName(subjectIdList, LANGUAGE),null);
+            	}
+            }
+        };
+        timer.schedule(5000);
 	}
 	
 	public void setSubjectPanelIdsForStandards(HashMap<String, StandardsDo> subjectList) {

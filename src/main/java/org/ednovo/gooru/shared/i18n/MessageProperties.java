@@ -36,6 +36,8 @@ public interface MessageProperties extends Constants {
 	String GL_SPL_QUESTION();
 	String GL_SPL_EXCLAMATION();
 	String GL_SPL_FULLSTOP();
+	String GL_SPL_OPEN_SMALL_BRACKET();
+	String GL_SPL_CLOSE_SMALL_BRACKET();
 	String GL_GRR_ARE();
 	String GL_GRR_AND();
 	String GL_GRR_YES();
@@ -2509,5 +2511,8 @@ public interface MessageProperties extends Constants {
 	String GL2021();
 	String GL2022();
 	String GL2023();
+	
+	String GL2024();
+	
 	
 }

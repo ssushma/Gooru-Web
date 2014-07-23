@@ -24,10 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.service;
 
-import java.io.IOException;
-
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -48,7 +45,6 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
-import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -70,6 +66,7 @@ import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfanityDo;
+import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.json.JSONArray;
@@ -483,10 +480,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			}
 			if(taxonomyCode!=null){
 				JSONArray taxonomySet = new JSONArray();
- 				JSONObject code = new JSONObject();
- 				code.put("codeId", taxonomyCode);
- 				taxonomySet.put(code);
- 				collectionTypeJsonObject.put("taxonomySet", taxonomySet);
+				JSONObject code = new JSONObject();
+				code.put("codeId", taxonomyCode);
+				taxonomySet.put(code);
+				collectionTypeJsonObject.put("taxonomySet", taxonomySet);
+
 			}
 			if(mediaType!=null){
 				collectionTypeJsonObject.put("mediaType", mediaType);
@@ -875,7 +873,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj=new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid, getGuestSessionToken(""), "true");
-		System.out.println("getcollection:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -1364,11 +1361,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 			taxonomySetObj.put("taxonomySet", codeIdJsonArray);
 			taxonomyObject.put("resource", taxonomySetObj);
-		
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor
 					.put(url, getRestUsername(), getRestPassword(),
 							taxonomyObject.toString());
-			//jsonRep = jsonResponseRep.getJsonRepresentation();
 			
 		} catch (Exception ex) {
 			
@@ -1474,8 +1469,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.GET_GOOGLEDRIVE_FIlES, enocodedString);
 		
 		String response=new WebService(url,false).webInvokeforget("GET", "", contentType, access_token);
-		
-		
 		if (response!=null){
 			googleDriveDo=deserializeGoogleDriveFilesList(response);
 		}else{
@@ -1570,7 +1563,34 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
         return new GoogleDriveItemDo();
 	}
 
-
+	@Override
+	public GoogleToken refreshGoogleAccessToken(String refreshToken) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		GoogleToken token = null;
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(),
+				UrlToken.REFRESH_TOKEN, refreshToken);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		String str = null;
+		try {
+			str = jsonRep.getJsonObject().toString();
+			token =  deserializeGoogleToken(str);
+			setLoggedInAccessToken(token != null && token.getAccess_token() != null ? token.getAccess_token() : null);
+		} catch (JSONException eJson) {
+			eJson.printStackTrace(); 
+		}
+		
+		
+		
+		return token;
+	}
 	
+	public GoogleToken deserializeGoogleToken(String jsonRep) {
+        if (jsonRep != null) {
+                return (GoogleToken) JsonDeserializer.deserialize(jsonRep, new TypeReference<GoogleToken>() {
+                });
+        }
+        return new GoogleToken();
+	}
 	
 }

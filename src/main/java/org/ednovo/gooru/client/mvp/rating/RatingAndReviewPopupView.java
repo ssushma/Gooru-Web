@@ -148,6 +148,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public void displayPopUp(String resourceTitle, String gooruOid,String createrName) {
 		this.gooruOid = gooruOid;
 		this.createrName = createrName;
+		reviewSize=0;
 		userRatingContainer.setVisible(false);
 		lblResourceTitle.setHTML(i18n.GL1840()+" "+removeHtmlTags(resourceTitle));
 		lblResourceTitle.getElement().setId("lblResourceTitle");
@@ -241,7 +242,9 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public void setGraphAndAvgContentRating(ContentStarRatingsDo result) {
 		setContentGraph(result); 
 		ratingWidgetView.setAvgStarRating(result.getAverage());
+		ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 		ratingWidgetView.getRatingCountLabel().setText(result.getCount().toString());
+		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
 
@@ -319,7 +322,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		for(int userReviews=0; userReviews<result.size(); userReviews++)
 		{
 			if(result.get(userReviews).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
-				reviewsContainer.insert(new RatingUserWidgetView(result.get(userReviews),createrName),0);
+				reviewsContainer.add(new RatingUserWidgetView(result.get(userReviews),createrName));
 			}else{
 				if(!result.get(userReviews).getFreeText().equals("")){
 					reviewsContainer.add(new RatingUserWidgetView(result.get(userReviews),createrName));
@@ -415,5 +418,4 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
         html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
         return html;
 	}
-
 }

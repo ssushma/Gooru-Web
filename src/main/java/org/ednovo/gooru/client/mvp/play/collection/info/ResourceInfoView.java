@@ -375,13 +375,15 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		ratingWidgetPanel.clear();
 		ratingWidgetView=new RatingWidgetView();
 		if(collectionItemDoGlobal.getResource().getRatings()!=null){
-			ratingWidgetView.getRatingCountLabel().setText(collectionItemDoGlobal.getResource().getRatings().getCount().toString());
+			ratingWidgetView.getRatingCountLabel().setText(" "+collectionItemDoGlobal.getResource().getRatings().getCount().toString()+" "+i18n.GL2024());
 			if(collectionItemDoGlobal.getResource().getRatings().getCount()>0)
 			{
 				ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
 				ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
 				ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 			}
+			ratingWidgetView.getRatingCountLabel().getElement().getStyle().setPadding(4,Unit.PX);
+			ratingWidgetView.getAverageRatingLabel().setText(Double.toString(collectionItemDoGlobal.getResource().getRatings().getAverage())+" ");
 			ratingWidgetView.setAvgStarRating(collectionItemDoGlobal.getResource().getRatings().getAverage());
 		}
 		
