@@ -79,8 +79,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 	
 	@UiField Button btnSkip,btnPost;
 	@UiField TextArea ratingCommentTxtArea;
-	@UiField public FlowPanel ratingWidgetPanel;
-	@UiField HTMLPanel buttonsContainer,ratingText;
+	@UiField HTMLPanel buttonsContainer;
 	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle;
 	
 	@UiField Label incorporateresourceText, unavailableresourceText,inaccurateTextresource,otherReason;
@@ -137,21 +136,20 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		otherReason.getElement().setAttribute("title",i18n.GL0606());
 		
 		setUserReview(review);
-		setAvgRatingWidget();
+//		setAvgRatingWidget();
 		setGlassEnabled(true);
 		saveAndPsotLbl.setVisible(false);
 		buttonsContainer.setVisible(true);
-		ratingText.getElement().setInnerHTML(i18n.GL1991());
+		/*ratingText.getElement().setInnerHTML(i18n.GL1991());
 		ratingText.getElement().setId("pnlRatingText");
 		ratingText.getElement().setAttribute("alt",i18n.GL1991());
-		ratingText.getElement().setAttribute("title",i18n.GL1991());
+		ratingText.getElement().setAttribute("title",i18n.GL1991());*/
 		
 		btnSkip.setText(i18n.GL1004());
 		btnSkip.getElement().setId("btnSkip");
 		btnSkip.getElement().setAttribute("alt",i18n.GL1004());
 		btnSkip.getElement().setAttribute("title",i18n.GL1004());
 	
-		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 		reviewTextAreaTitle.getElement().setId("lblReviewTextAreaTitle");
 		resourceCheckBox4.getElement().setId("chkResourceCheckBox4");
 		resourceCheckBox3.getElement().setId("chkResourceCheckBox3");
@@ -176,7 +174,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetView.setAvgStarRating(average);
 		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
-		ratingWidgetPanel.add(ratingWidgetView);
+//		ratingWidgetPanel.add(ratingWidgetView);
 	}
 	
 	/**
@@ -235,6 +233,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 							}
 							if(resourceCheckBox4.isChecked())
 							{
+								System.out.println("--- in other ----");
 								reourceContentReportList.add("other");
 							}
 							
@@ -243,6 +242,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 								@Override
 								public void onSuccess(ContentReportDo result) {
 									//getView().showSuccesmessagePopup();
+									System.out.println("--- i am here ----");
 									AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));
 
 								}
