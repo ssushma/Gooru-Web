@@ -168,55 +168,55 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		
 		if(partnerPlace.equals(PlaceTokens.AUTODESK)) {
 			
-			courseDo.setLabel("Autodesk® Digital STEAM Workshop");
+			courseDo.setLabel(i18n.GL2027());
 			thumbnailDo.setUrl("../images/library/partners/autodesk.png");
 			libraryUserDo.setPartnerName(i18n.GL1566());
 			libraryUserDo.setPartnerUrl(i18n.GL1567());
 			
 		} else if(partnerPlace.equals(PlaceTokens.ONR)) {
 			
-			courseDo.setLabel("Oceanography & Space Sciences");
+			courseDo.setLabel(i18n.GL2028());
 			thumbnailDo.setUrl("../images/library/partners/onr.png");
 			libraryUserDo.setPartnerName(i18n.GL1568());
 			libraryUserDo.setPartnerUrl(i18n.GL1569());
 			
 		} else if(partnerPlace.equals(PlaceTokens.FTE)) {
-			courseDo.setLabel("Introduction to Economics & Hot Topics");
+			courseDo.setLabel(i18n.GL2029());
 			thumbnailDo.setUrl("../images/library/partners/fte.png");
 			libraryUserDo.setPartnerName(i18n.GL1570());
 			libraryUserDo.setPartnerUrl(i18n.GL1571());
 			
 		} else if(partnerPlace.equals(PlaceTokens.NGC)) {
 			
-			courseDo.setLabel("NGC Global Issues");
+			courseDo.setLabel(i18n.GL2030());
 			thumbnailDo.setUrl("../images/library/partners/ngc.png");
 			libraryUserDo.setPartnerName(i18n.GL1572());
 			libraryUserDo.setPartnerUrl(i18n.GL1573());
 
 		} else if(partnerPlace.equals(PlaceTokens.WSPWH)) {
 			
-			courseDo.setLabel("Literary-Based Civic Education");
+			courseDo.setLabel(i18n.GL2031());
 			thumbnailDo.setUrl("../images/library/partners/wspwh.png");
 			libraryUserDo.setPartnerName(i18n.GL1574());
 			libraryUserDo.setPartnerUrl(i18n.GL1575());
 
 		} else if(partnerPlace.equals(PlaceTokens.LESSONOPOLY)) {
 			
-			courseDo.setLabel("Lessonopoly");
+			courseDo.setLabel(i18n.GL2032());
 			thumbnailDo.setUrl("../images/library/partners/lessonopoly.png");
 			libraryUserDo.setPartnerName(i18n.GL1576());
 			libraryUserDo.setPartnerUrl(i18n.GL1577());
 
 		} else if(partnerPlace.equals(PlaceTokens.FINCAPINC)) {
 			
-			courseDo.setLabel("Personal Finance");
+			courseDo.setLabel(i18n.GL2033());
 			thumbnailDo.setUrl("../images/library/partners/cfci.png");
 			libraryUserDo.setPartnerName(i18n.GL1765());
 			libraryUserDo.setPartnerUrl(i18n.GL1766());
 
 		} else if(partnerPlace.equals(PlaceTokens.PSDPAL)) {
 			
-			courseDo.setLabel("K-12 Arabic lessons");
+			courseDo.setLabel(i18n.GL2034());
 			thumbnailDo.setUrl("../images/library/partners/psd.png");
 			libraryUserDo.setPartnerName(i18n.GL1763());
 			libraryUserDo.setPartnerUrl(i18n.GL1764());
