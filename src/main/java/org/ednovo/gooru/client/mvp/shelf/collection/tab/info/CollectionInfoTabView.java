@@ -403,7 +403,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		textAreaVal.addFocusHandler(new FocusHandler() {
 			@Override
 			public void onFocus(FocusEvent event) {
-				String directionText=textAreaVal.getText().trim();
+				String directionText=textAreaVal.getText();		
 				if(directionText.equalsIgnoreCase(i18n.GL1641())){
 					textAreaVal.setText("");
 					textAreaVal.getElement().setAttribute("alt","");
