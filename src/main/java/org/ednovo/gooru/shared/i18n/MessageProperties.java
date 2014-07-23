@@ -2513,6 +2513,7 @@ public interface MessageProperties extends Constants {
 	String GL2023();
 	
 	String GL2024();
-	
+	String GL2025();
+	String GL2026();
 	
 }
