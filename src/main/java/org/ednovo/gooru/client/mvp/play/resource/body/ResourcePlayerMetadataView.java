@@ -1558,7 +1558,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			thankYouResourceStarRatings.setPopupPosition(685,Window.getScrollTop()+48);
 		}else{
-			thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
+			thankYouResourceStarRatings.setPopupPosition(800,Window.getScrollTop()+153);
 		}
 		
 		thankYouResourceStarRatings.show();
@@ -1569,7 +1569,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			thankYouResourceStarRatingsPoor = new ThankYouResourceStarRatingsPoor(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
 			thankYouResourceStarRatingsPoor.getElement().getStyle().setZIndex(999999);
 			thankYouResourceStarRatingsPoor.getElement().getStyle().setPadding(0, Unit.PX);
-			thankYouResourceStarRatingsPoor.setPopupPosition(175,Window.getScrollTop()+100);
+			thankYouResourceStarRatingsPoor.setPopupPosition(800,Window.getScrollTop()+153);
 			thankYouResourceStarRatingsPoor.show();
 			thankYouResourceStarRatingsPoor.setAutoHideEnabled(true);	
 		}*/
@@ -1594,7 +1594,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			ratingsConfirmationPopup.setPopupPosition(685,Window.getScrollTop()+60);
 		}else{
-			ratingsConfirmationPopup.setPopupPosition(314,Window.getScrollTop()+60);
+			ratingsConfirmationPopup.setPopupPosition(800,Window.getScrollTop()+153);
 		}
 		
 		ratingsConfirmationPopup.setAutoHideEnabled(true);
