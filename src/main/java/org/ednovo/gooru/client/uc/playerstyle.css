@@ -769,6 +769,19 @@ float: left;
 	text-align: center;
 	cursor: pointer;
 }
+.collectionreplayContainer{
+	width: 230px;
+	height: 160px;
+	box-sizing: border-box;
+	text-indent: -228px;
+	position: relative;
+	background: url('images/replay.png') center 30px no-repeat, rgba(0, 0, 0, .6);
+	transition: background-color 0.5s ease;
+	color: white;
+	text-align: center;
+	cursor: pointer;
+}
+}
 .collectionreplayText {
 	padding-top:85px;
 }
@@ -776,7 +789,7 @@ float: left;
 	color: #0f76bb;
     cursor: pointer;
 }
-.collectionreplay:hover{
+.collectionreplay:hover, .collectionreplayContainer:hover{
 	background: url('images/replay.png') center 30px no-repeat, rgba(0, 0, 0, .8);
 }
 .collectionPlayerWrapper{

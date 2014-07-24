@@ -5,10 +5,10 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field= "playerStyle" src="collectionplayertoc.css"/>
 	<g:HTMLPanel styleName="{playerStyle.nav-toc-wrapperContainer}">
+		<g:Label ui:field="resourceCountLabel" styleName="{playerStyle.resourceCountStyle}"></g:Label>
 		<g:HTMLPanel styleName="{playerStyle.nav-toc-wrapperContainerMain}">
 			<g:Label styleName="{playerStyle.leftArrow}" ui:field="previousButton"></g:Label>
 		<g:FlowPanel  styleName="{playerStyle.nav-toc-wrapper}  carousel">	
-	
 			<g:FlowPanel ui:field="navgationTocContainer" styleName="{playerStyle.nav-toc-container}">
 		</g:FlowPanel>		
 		

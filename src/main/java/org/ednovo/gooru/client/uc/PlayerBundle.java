@@ -405,6 +405,7 @@ public interface PlayerBundle extends ClientBundle {
 		public String textAreaRating();
 		public String noresourcesAvailable();
 		public String sequenceNumber();
+		public String collectionreplayContainer();
 		
 		
 	}
