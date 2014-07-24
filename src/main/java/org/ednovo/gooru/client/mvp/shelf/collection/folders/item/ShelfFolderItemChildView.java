@@ -51,6 +51,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	
 	private static final String SMALL = "Small";
 	
+	private static final String SMALL_NEW = "SmallNew";
+	
 	private static final String FOLDER = "folder";
 	
 	private static final String COLLECTION = "collection";
@@ -153,8 +155,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 					resourcePanel.addStyleName(folderStyle.resource());
 					if(folderItem.getResourceFormat()!=null) {
 						HTMLPanel resourceCategoryPanel = new HTMLPanel("");
-						resourceCategoryPanel.addStyleName(UcCBundle.INSTANCE.css().resourceName());
-						resourceCategoryPanel.addStyleName(folderItem.getResourceFormat().getDisplayName().toLowerCase() + SMALL);
+						resourceCategoryPanel.addStyleName(UcCBundle.INSTANCE.css().resourceNameNew());
+						resourceCategoryPanel.addStyleName(folderItem.getResourceFormat().getDisplayName().toLowerCase() + SMALL_NEW);
 						resourceCategoryPanel.getElement().getStyle().setPosition(Position.STATIC);
 						resourceCategoryPanel.getElement().getStyle().setFloat(Float.LEFT);
 						resourcePanel.add(resourceCategoryPanel);
