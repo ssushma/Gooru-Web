@@ -100,7 +100,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
     
     private CollectionFormInPlayPresenter collectionFormInPlayPresenter;
     
-    private AddResourceContainerPresenter addResourceContainerPresenter;
+   // private AddResourceContainerPresenter addResourceContainerPresenter;
     
     private CollectionItemDo collectionItemDo;
     
@@ -302,7 +302,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	@Inject
 	public ResourcePlayerPresenter(ResourcePlayerMetadataPresenter resoruceMetadataPresenter,ResourceSharePresenter resourceSharePresenter,
 			ResourceInfoPresenter resourceInfoPresenter,EventBus eventBus, CollectionFormInPlayPresenter collectionFormInPlayPresenter,
-			IsResourcePlayerView view, IsResourcePlayerProxy proxy,AddResourceCollectionPresenter addResourceCollectionPresnter,ResourceFlagPresenter resourceFlagPresenter,AddResourceContainerPresenter addResourceContainerPresenter) {
+			IsResourcePlayerView view, IsResourcePlayerProxy proxy,AddResourceCollectionPresenter addResourceCollectionPresnter,ResourceFlagPresenter resourceFlagPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.resoruceMetadataPresenter=resoruceMetadataPresenter;
@@ -312,7 +312,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		addResourceCollectionPresnter.getAddNewCollectionButton().addClickHandler(new ShowNewCollectionWidget());
 		this.collectionFormInPlayPresenter=collectionFormInPlayPresenter;
 		this.resourceFlagPresenter=resourceFlagPresenter;
-		this.addResourceContainerPresenter=addResourceContainerPresenter;
+		//this.addResourceContainerPresenter=addResourceContainerPresenter;
 		resourceFlagPresenter.setResourcePlayerPresenter(this);
 		resourceSharePresenter.setResourcePlayerPresenter(this);
 		addResourceCollectionPresnter.getAddCollectionViewButton().setVisible(false);
@@ -512,14 +512,15 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		 }
 	}
 	public void setAddResourceCollectionView(String resourceId){
+	
 		if(AppClientFactory.isAnonymous()){
 			clearSlot(TAB_PRESENTER_SLOT);
 			showLoginPopupWidget(i18n.GL0590().toUpperCase());
 		}else{
-			addResourceContainerPresenter.setplayerStyle();
-			addResourceContainerPresenter.setCollectionItemData("", collectionItemDo);
-			//addResourceCollectionPresnter.setCollectionItemData(null, collectionItemDo);
-			setInSlot(TAB_PRESENTER_SLOT, addResourceContainerPresenter,false);
+			//addResourceContainerPresenter.setplayerStyle();
+			//addResourceContainerPresenter.setCollectionItemData("", collectionItemDo);
+			addResourceCollectionPresnter.setCollectionItemData(null, collectionItemDo);
+			setInSlot(TAB_PRESENTER_SLOT, addResourceCollectionPresnter,false);
 			new CustomAnimation(getView().getNavigationContainer()).run(400);
 		}
 	}
