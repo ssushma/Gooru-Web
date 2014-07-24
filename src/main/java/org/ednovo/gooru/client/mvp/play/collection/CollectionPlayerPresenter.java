@@ -57,8 +57,12 @@ import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPres
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.resource.flag.ResourceFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.narration.ResourceNarrationPresenter;
+
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
+
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEvent;
+
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
@@ -122,6 +126,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
     private ResourceFlagPresenter resourceFlagPresenter;
     
     private SignUpPresenter signUpViewPresenter = null;
+    
+    private AddResourceContainerPresenter addResourceContainerPresenter;
     
     private CollectionDo collectionDo=null;
     
@@ -380,7 +386,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			ResourceInfoPresenter resourceInfoPresenter,ResourceNarrationPresenter resourceNarrationPresenter,
 			EventBus eventBus,IsCollectionPlayerView view, IsCollectionPlayerProxy proxy, AddResourceCollectionPresenter addResourcePresenter,
      		AddCollectionPresenter addCollectionPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter,CollectionFlagPresenter collectionFlagPresenter,
-     		ResourceFlagPresenter resourceFlagPresenter,SignUpPresenter signUpViewPresenter) {
+     		ResourceFlagPresenter resourceFlagPresenter,SignUpPresenter signUpViewPresenter, AddResourceContainerPresenter addResourceContainerPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.metadataPresenter=metadataPresenter;
@@ -395,6 +401,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		this.collectionFlagPresenter=collectionFlagPresenter;
 		this.resourceFlagPresenter=resourceFlagPresenter;
 		this.signUpViewPresenter=signUpViewPresenter;
+		this.addResourceContainerPresenter=addResourceContainerPresenter;
 		resoruceMetadataPresenter.setCollectionPlayerPresnter(this,true);
 		resoruceMetadataPresenter.removeRatingContainer(false);
 		resourceFlagPresenter.setCollectionPlayerPresenter(this);
@@ -406,7 +413,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		addCollectionPresenter.getAddResourceViewButton().setVisible(false);
 		//addResourcePresenter.getAddCollectionViewButton().addClickHandler(new showAddCollectionView());
 		//addCollectionPresenter.getAddResourceViewButton().addClickHandler(new showAddResourceView());
-		addResourcePresenter.getAddNewCollectionButton().addClickHandler(new ShowNewCollectionWidget());
+		//addResourcePresenter.getAddNewCollectionButton().addClickHandler(new ShowNewCollectionWidget());
 		getView().removeStudentViewButton();
 		getView().hideFlagButton(false);
 		addRegisteredHandler(UpdateFlagIconColorEvent.TYPE,this);
@@ -1006,11 +1013,15 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 
 	public void setAddResourcesView(String collectionId,String resourceId){	
-		addResourcePresenter.setCollectionItemData(collectionId, getCollectionItemDo(resourceId));
-		setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, addResourcePresenter,false);
+		
+		addResourceContainerPresenter.setplayerStyle();
+		addResourceContainerPresenter.setCollectionItemData(collectionId, getCollectionItemDo(resourceId));
+		//addResourceContainerPresenter.getUserShelfCollectionsData(collectionsearchResultDo,"player");
+		setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, addResourceContainerPresenter,false);
 		new CustomAnimation(getView().getResourceAnimationContainer()).run(400);		
 	}
 	public void setAddCollectionView(String collectionId){
+		
 		addCollectionPresenter.setCollectionDo(collectionDo);
 		setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, addCollectionPresenter,false);
 		new CustomAnimation(getView().getResourceAnimationContainer()).run(400);		
@@ -1431,6 +1442,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	public class ShowNewCollectionWidget implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
+			
 			String resourceId=collectionItemDo.getResource().getGooruOid();
 			addToPopupSlot(collectionFormInPlayPresenter);
 			collectionFormInPlayPresenter.setResourceUid(resourceId);
