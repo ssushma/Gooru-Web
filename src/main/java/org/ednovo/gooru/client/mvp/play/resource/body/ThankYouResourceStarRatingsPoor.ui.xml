@@ -11,10 +11,7 @@
 			<g:HTMLPanel styleName="{playerStyle.arrowBorder}"></g:HTMLPanel>
 			<g:HTMLPanel styleName="{playerStyle.arrow}"></g:HTMLPanel>
 			<g:Label styleName ="{playerStyle.ratingPoorHeader}">Thank you for rating!</g:Label>
-			<!-- <g:HTMLPanel styleName="{playerStyle.rating}" ui:field="ratingText">
-				<br />
-				<g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
-			</g:HTMLPanel> -->
+			<g:Label styleName ="{flagPopUpstyle.ratingPoorSubHeader}">Resource not up to par? Please help us improve our resources by letting us know if you encountered any of these issues.</g:Label>
 			<g:HTMLPanel styleName="{flagPopUpstyle.playerflagradiobutton}">
 				<g:CheckBox ui:field="resourceCheckBox3"
 					styleName="{flagPopUpstyle.ckeckBoxPlyerStyle}"/>
@@ -44,7 +41,7 @@
 			<g:Label styleName="{flagPopUpstyle.reviewTxtareaTitle}" ui:field="reviewTextAreaTitle"></g:Label>
 			<g:TextArea styleName="{flagPopUpstyle.poorRatingTxtarea}" ui:field="ratingCommentTxtArea"></g:TextArea>
 			<g:Label ui:field="mandatoryDescLblForSwareWords"></g:Label>
-			<g:HTMLPanel styleName="{playerStyle.saveCancelContainer}"
+			<g:HTMLPanel styleName="{playerStyle.ratingPoorSaveCancelContainer}"
 				ui:field="buttonsContainer">
 				<g:Button ui:field="btnSkip" styleName="secondary"></g:Button>
 				<g:Button ui:field="btnPost" styleName="primary"></g:Button>

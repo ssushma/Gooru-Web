@@ -307,7 +307,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}else{
 			resourcePublisher.setText("");
 		}
-
+		if(collectionItemDo.getResource().getResourceFormat()!=null){
+			if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+				resourcePublisher.setText(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+			}
+		}
 		if(forwardButton!=null){
 			forwardButton.removeFromParent();
 		}
@@ -380,7 +384,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				resourcePublisher.setText("");
 			}
-
+			if(collectionItemDo.getResource().getResourceFormat()!=null){
+				if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+					resourcePublisher.setText(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+				}
+			}
 			if(forwardButtonHandler!=null||backwardButtonHandler!=null){
 				forwardButtonHandler.removeHandler();
 				backwardButtonHandler.removeHandler();
@@ -1550,29 +1558,33 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		this.score=score;
 		this.count=count;
 		this.average=average;
-		/*if(score > 1)
-		{*/
-		thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
-		thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
-		thankYouResourceStarRatings.getElement().getStyle().setPadding(0, Unit.PX);
-		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-			thankYouResourceStarRatings.setPopupPosition(685,Window.getScrollTop()+48);
-		}else{
-			thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
+		if(score > 1)
+		{
+			thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
+			thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
+			thankYouResourceStarRatings.getElement().getStyle().setPadding(0, Unit.PX);
+			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+				thankYouResourceStarRatings.setPopupPosition(685,Window.getScrollTop()+48);
+			}else{
+				thankYouResourceStarRatings.setPopupPosition(800,Window.getScrollTop()+153);
+			}
+			
+			thankYouResourceStarRatings.show();
+			thankYouResourceStarRatings.setAutoHideEnabled(true);
 		}
-		
-		thankYouResourceStarRatings.show();
-		thankYouResourceStarRatings.setAutoHideEnabled(true);
-		/*}
 		else
 		{
 			thankYouResourceStarRatingsPoor = new ThankYouResourceStarRatingsPoor(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
 			thankYouResourceStarRatingsPoor.getElement().getStyle().setZIndex(999999);
 			thankYouResourceStarRatingsPoor.getElement().getStyle().setPadding(0, Unit.PX);
-			thankYouResourceStarRatingsPoor.setPopupPosition(175,Window.getScrollTop()+100);
+			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+				thankYouResourceStarRatingsPoor.setPopupPosition(685,Window.getScrollTop()+48);
+			}else{
+				thankYouResourceStarRatingsPoor.setPopupPosition(800,Window.getScrollTop()+153);
+			}
 			thankYouResourceStarRatingsPoor.show();
 			thankYouResourceStarRatingsPoor.setAutoHideEnabled(true);	
-		}*/
+		}
 	}
 	
 	
@@ -1594,7 +1606,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			ratingsConfirmationPopup.setPopupPosition(685,Window.getScrollTop()+60);
 		}else{
-			ratingsConfirmationPopup.setPopupPosition(314,Window.getScrollTop()+60);
+			ratingsConfirmationPopup.setPopupPosition(800,Window.getScrollTop()+153);
 		}
 		
 		ratingsConfirmationPopup.setAutoHideEnabled(true);

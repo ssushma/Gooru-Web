@@ -415,7 +415,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		// TODO Auto-generated method stub
 		String collectionId = AppClientFactory.getPlaceManager().getRequestParameter("id")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter("customize")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("customize") : null;
-		String assign = AppClientFactory.getPlaceManager().getRequestParameter("Assign")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("Assign") : null;
+		String assign = AppClientFactory.getPlaceManager().getRequestParameter("assign")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("assign") : null;
 		if(customize!=null && customize.equals("yes")){
 			Boolean loginFlag = false;
 			if (AppClientFactory.isAnonymous()){

@@ -482,11 +482,19 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 							collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
 		loadResourceReleatedCollections(collectionItemDo.getResource().getGooruOid());
 		
-		if(collectionItemDo.getResource().getPublisher()!=null){
-			setPublisherDetails(collectionItemDo.getResource().getPublisher());
+		if(collectionItemDo.getResource().getPublisher()!=null || collectionItemDo.getResource().getResourceFormat()!=null){
+			
+			if(collectionItemDo.getResource().getPublisher()!=null){
+				setPublisherDetails(collectionItemDo.getResource().getPublisher());
+			}
+			if(collectionItemDo.getResource().getResourceFormat()!=null){
+				if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+					List<String> publisherQuestionUserName = new ArrayList<String>();
+					publisherQuestionUserName.add(collectionItemDo.getResource().getUser().getUsername());
+					setPublisherDetails(publisherQuestionUserName);
+				}
+			}
 		}
-		
-		
 		/*if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){*/
 		if(collectionItemDo.getResource().getThumbnails()!=null){
 			setThumbnailUrl(collectionItemDo.getResource().getThumbnails().getUrl());
