@@ -336,7 +336,7 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", collectionResultDo.getGooruOid());
 		com.google.gwt.user.client.Window.scrollTo(0, 0);
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 	}
 	
 	/**

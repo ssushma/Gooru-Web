@@ -116,7 +116,7 @@ public class GooruClassRoomCollectionUc extends Composite{
 				SetTab(Tabfilter);
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("id", featuredCollectionContentDo.getScollections().get(0).getGooruOid());
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 			}
 		});
 		methodsCollection.addErrorHandler(new ErrorHandler() {
@@ -148,7 +148,7 @@ public class GooruClassRoomCollectionUc extends Composite{
 				public void onClick(ClickEvent event) {
 					Map<String, String> params = new HashMap<String, String>();
 					params.put("id", collectionId);
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 				}
 			});
 		} else {

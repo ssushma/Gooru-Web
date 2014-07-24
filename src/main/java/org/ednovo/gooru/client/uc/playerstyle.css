@@ -441,7 +441,7 @@
 }
 
 .toc-resource-selected{
-	background-color: #414141;
+	background-color: #FFFFFF;
 	-moz-box-shadow: inset 0px 0px 5px rgba(100,100,100,.3);
 	-webkit-box-shadow: inset 0px 0px 5px rgba(100, 100, 100, .3);
 	box-shadow: inset 0px 0px 6px rgba(100, 100, 100, .3);
@@ -927,9 +927,9 @@ padding-top: 2px;
 margin-top: 22px;
 }
 .editRatingBtn{
-float: right;
-margin-right: 2px;
-margin-top: 4px;
+	float: right;
+	margin-right: 2px;
+	margin-top: 4px;
 }
 .noresourcesAvailable{
 font-weight: bold;
@@ -940,4 +940,12 @@ padding-top: 50px;
 .textAreaRating{
 	width:96%;
 	
+}
+.sequenceNumber{
+	padding: 0px 7px;
+	background: #555555;
+	color: #ffffff;
+	font-size: 15px;
+	text-align: center;
+	font-weight: bold;
 }

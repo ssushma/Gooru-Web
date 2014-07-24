@@ -174,7 +174,7 @@ public class FolderItemChildView extends ChildView<FolderItemChildPresenter> imp
 				CollectionDo collectionDo = null;
 				getPresenter().deleteMyFolder(collectionItemDo.getResource().getGooruOid(), collectionItemDo);
 				folderDeleteConfirmationPopUp.hide();
-				Window.enableScrolling(true);
+//				Window.enableScrolling(true);
 		        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 
 //					AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(collectionDo, RefreshType.DELETE));

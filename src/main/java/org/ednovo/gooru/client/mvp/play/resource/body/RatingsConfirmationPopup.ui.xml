@@ -12,8 +12,8 @@
                <!--  <h3>Thank you for reviewing this resource!</h3> -->
                   <g:HTMLPanel styleName="{playerStyle.rating}" ui:field="averageRationPanel">
                       <br/>
-                   <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
                     </g:HTMLPanel>
+                     <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
                     <g:HTMLPanel styleName="{playerStyle.okContainer}" ui:field="buttonsContainer">
                         <g:Button ui:field="btnOk" styleName="primary"></g:Button>
                     </g:HTMLPanel>

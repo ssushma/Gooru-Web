@@ -350,14 +350,16 @@ fieldset {
 }
 
 .ratingContainer {
-    height:60px;
+    /* height:60px; */
     white-space:nowrap;
     overflow:hidden;
     text-align:center;
     -webkit-font-smoothing: antialiased !important;
-    margin-left:10px;
+   /*  margin-left:10px; */
     position:relative;
-    float:left;
+   /*  float:left; */
+   display: inline-block;
+   vertical-align: middle;
 }
 
 .editRatingContainer {
@@ -543,5 +545,5 @@ left: -10px;
 	margin-bottom: 2px;
 }
 .subRatingContainer{
-	width: 115px;
+	width: 160px;
 }

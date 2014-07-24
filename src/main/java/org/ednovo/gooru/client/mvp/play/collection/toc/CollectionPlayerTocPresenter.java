@@ -55,8 +55,8 @@ public class CollectionPlayerTocPresenter extends PresenterWidget<IsCollectionPl
 		getView().setUiHandlers(this);
 	}
 	
-	public void setNavigationResources(CollectionDo collectionDo){
-		getView().setNavigationResources(collectionDo);
+	public void setNavigationResources(CollectionDo collectionDo,boolean isCollectionHome){
+		getView().setNavigationResources(collectionDo,isCollectionHome);
 	}
 	
 	public void setResourceActive(String collectionId,String collectionItemid,boolean isCollectionHome){
