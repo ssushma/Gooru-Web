@@ -151,7 +151,7 @@ public class LibraryLessonUc extends Composite{
 			for(int i = 0; i<conceptQuizList.size(); i++) {
 				String conceptTitle = "";
 				final ConceptDo conceptDo = conceptQuizList.get(i);
-				conceptTitle = conceptDo.getLabel();
+				conceptTitle = conceptDo.getCode();
 				Label conceptTitleLbl = new Label(conceptTitle);
 				conceptTitleLbl.addStyleName(libraryStyleUc.conceptTitle());
 				lessonList.add(conceptTitleLbl);

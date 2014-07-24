@@ -761,11 +761,21 @@ public class LibraryTopicListView extends Composite{
 			standardsDescription.clear();
 			InlineLabel headerLbl = new InlineLabel(i18n.GL1363()+i18n.GL_SPL_SEMICOLON()+" ");
 			headerLbl.getElement().getStyle().setFontWeight(FontWeight.BOLD);
+			InlineLabel textLbl = new InlineLabel("");
+			System.out.println("conceptDo.getLabel():::"+lessonCode);
+			if(lessonLabel != null)
+			{
 			if(lessonLabel.length() > 400)
 			{
-				lessonLabel = lessonLabel.substring(0, 400) + "...";
+			lessonLabel = lessonLabel.substring(0, 400) + "...";
 			}
-			InlineLabel textLbl = new InlineLabel(lessonLabel);
+			textLbl = new InlineLabel(lessonLabel);
+			}
+			else
+			{				
+			textLbl = new InlineLabel(conceptDo.getLabel());
+			}
+			
 			standardsDescription.add(headerLbl);
 			standardsDescription.add(textLbl);
 			standardsDescription.setVisible(true);
@@ -1440,7 +1450,7 @@ public class LibraryTopicListView extends Composite{
 	};
 	
 	private void addCollectionQuizTitleData(String pageType) {
-		if(pageType.equals("lesson")&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+		if(pageType.equals("lesson")&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)&&AppClientFactory.getPlaceManager().getRequestParameter("standardId")==null) {
 			setCollectionQuizVisibility(true);
 			collectionTitle.addStyleName(libraryStyle.collectionQuizTabActive());
 		} else {
