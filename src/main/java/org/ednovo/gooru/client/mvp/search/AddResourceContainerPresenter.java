@@ -42,6 +42,8 @@ import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -180,15 +182,20 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 	@Override
 	public void setplayerStyle() {
 		isPlayer=true;
-		getView().setPlayerStyle();
+		getView().setPlayerStyle(isPlayer);
 		
 	}
 
 	@Override
 	public void removePlayerStyle() {
 		isPlayer=false;
-		getView().removePlayerStyle();
+		getView().removePlayerStyle(isPlayer);
 		
+	}
+
+	@Override
+	public Anchor getAddButton() {
+		return getView().getAddButton();
 	}
 	
 }

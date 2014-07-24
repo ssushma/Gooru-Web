@@ -109,7 +109,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	private static final String O2_LEVEL = "o2";
 	
 	private static final String O3_LEVEL = "o3";
-	
+	boolean isPlayer=false;
 	
 	private Tree folderTreePanel = new Tree(new TreeMenuImages()){
 		 @Override
@@ -374,6 +374,8 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 			addResourceText.getElement().setAttribute("style", "display: inline-block;");
 			addCollectiorOrReourceText.getElement().setAttribute("style", "display: inline-block;");
 			createCollectionbuttonsContainer.getElement().setAttribute("style", "margin-left: 44px;margin-top: 10px;");
+			System.out.println("isPlayer.."+isPlayer);
+			if(isPlayer==false){
 			addCollectiorOrReourceText.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
@@ -406,6 +408,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 					Window.enableScrolling(false);
 				}
 			});
+		}
 		}
 		resetEmptyCollMsg();
 		if(!dropdownListContainerScrollPanel.isVisible()){
@@ -589,13 +592,15 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	}
 
 	@Override
-	public void setPlayerStyle() {
+	public void setPlayerStyle(boolean isPlayer) {
+		this.isPlayer=isPlayer;
 		addContent.setStyleName(AddResourceContainerCBundle.INSTANCE.css().addPlayerStyle());
 		dropdownListContainerScrollPanel.getElement().setAttribute("style","height: 135px !important;border: 1px solid #fff;");
 	}
 
 	@Override
-	public void removePlayerStyle() {
+	public void removePlayerStyle(boolean isPlayer) {
+		this.isPlayer=isPlayer;
 		addContent.removeStyleName(AddResourceContainerCBundle.INSTANCE.css().addPlayerStyle());
 		dropdownListContainerScrollPanel.getElement().setAttribute("style","height: 275px !important;border: 1px solid #ddd;");
 	}
@@ -605,6 +610,11 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 		addingText.setVisible(false);
 		addResourceBtnLbl.setVisible(true);
 		
+	}
+
+	@Override
+	public Anchor getAddButton() {
+		return addCollectiorOrReourceText;
 	}
 	}
 
