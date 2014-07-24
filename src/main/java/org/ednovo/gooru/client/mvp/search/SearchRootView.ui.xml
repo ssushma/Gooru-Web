@@ -62,7 +62,7 @@
 		    clear: both;
 		    height: 34px;
 		    margin: 20px auto 0;
-		    width: 968px;
+		    <!-- width: 796px; -->
 		}
 		
 		.searchResult {
