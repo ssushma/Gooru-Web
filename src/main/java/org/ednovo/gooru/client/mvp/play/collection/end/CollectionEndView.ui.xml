@@ -2,45 +2,93 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header" xmlns:htmleventpanel="urn:import:org.ednovo.gooru.client.uc">
-	<ui:style field= "collectionSummaryPageStyle" src="collectionend.css"/>
-	<g:HTMLPanel styleName="{collectionSummaryPageStyle.collectionxPlayerSummaryWrapper}">	   
-  			<div class="{collectionSummaryPageStyle.collectionPlayerReplayContainer}">
-   			<div class="{collectionSummaryPageStyle.collectionxPlayerSummaryTitle}">
-      			<g:Label styleName="{collectionSummaryPageStyle.collectionxPlayerSummaryTitleText}" ui:field="endLabelText"></g:Label>
-   			</div>
-			<htmleventpanel:HTMLEventPanel ui:field="collectionReplayButtonImage" styleName="{collectionSummaryPageStyle.collectionxPlayerRefreshContainer}">
-     			<div class="{collectionSummaryPageStyle.collectionxPlayerRefreshImage}">
-		    		<g:Label styleName="{collectionSummaryPageStyle.collectionxPlayerRefreshText}" ui:field="replayText"></g:Label>
-        			<g:Label></g:Label>
-        			<g:Label styleName="{collectionSummaryPageStyle.replayButtonNormal}"></g:Label>
-     			</div>
-			</htmleventpanel:HTMLEventPanel>
-		</div>
-		<g:HTMLPanel styleName="{collectionSummaryPageStyle.collectionxPlayerShareContainer}">
-			<g:HTMLPanel  styleName="{collectionSummaryPageStyle.collectionPlayerSummaryShareContainer}">
-				<g:HTMLPanel ui:field="collectionSummaryShareButtonImage">
-   					 <g:Label styleName="{collectionSummaryPageStyle.collection-share-view-text}" ui:field="shareCollectionText"></g:Label>
-	    			 <div class="{collectionSummaryPageStyle.collectionPlayerSumShareContainer}">
-        				<g:Label styleName="{collectionSummaryPageStyle.collectionxPlayerShareText}"></g:Label>
-       					<g:TextBox styleName="{collectionSummaryPageStyle.collectionPlayerSummaryShareTextBox}" ui:field="collectionPlayerSummaryShareTextBox"></g:TextBox>
-       				</div>
-         				<div class="{collectionSummaryPageStyle.collectionPlayerInputSeparatorLine}"></div>	
-	   				<g:HTMLPanel ui:field="ftmSummaryPageContainer" styleName="{collectionSummaryPageStyle.ftmSummaryPageContainer}"></g:HTMLPanel> 
-	   			</g:HTMLPanel>
- 				 </g:HTMLPanel>
- 			 </g:HTMLPanel>
-		<!-- Inline CSS for print/pdf/email functionality -->
-  			<htmleventpanel:HTMLEventPanel  ui:field="printElementContainer" styleName="{collectionSummaryPageStyle.printElementContainer}">
-   			<g:HTMLPanel styleName="{collectionSummaryPageStyle.cpIconsContainer}">
-   				<g:Label styleName="{collectionSummaryPageStyle.cpSummaryText}" ui:field="saveSummaryText"></g:Label>
-   				<g:Label ui:field="emailButton" styleName="{collectionSummaryPageStyle.collection-email-icon}"></g:Label>
-   				<g:Label ui:field="printButton" styleName="{collectionSummaryPageStyle.collection-print-icon}"></g:Label>
-   				<g:HTML ui:field="resourceInfoSeparator"/>
-   				<g:Label ui:field="flagButton"></g:Label>
-   			</g:HTMLPanel>
-   			<g:HTMLPanel ui:field="summaryQuestionsContainer">
-   			</g:HTMLPanel>
-  		</htmleventpanel:HTMLEventPanel >
-	</g:HTMLPanel>
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:style field= "playerStyle" src="collectionend.css" type="org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerStyleBundle" />
+	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle" field="palyerStyleResource"/>
+	      <g:FlowPanel ui:field="studyMainContianer" styleName="{playerStyle.container} {playerStyle.clearfix}">
+            <g:FlowPanel styleName="{playerStyle.leftPanel}">
+	            <g:FlowPanel styleName="{playerStyle.collections} {playerStyle.Playlast}">
+					<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.container}">
+						<g:Label styleName="colleDescriptionBig">Congratulations! You have reached the end of collection.</g:Label>
+					</g:FlowPanel>
+				</g:FlowPanel>
+				<g:FlowPanel styleName="bodyContent">
+					<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.container} {playerStyle.whitebg}">
+						<g:FlowPanel styleName="{playerStyle.block}">
+							<g:FlowPanel styleName="{playerStyle.timespend}">
+								<g:HTMLPanel styleName="{playerStyle.playImg}">
+									<g:Image url="images/collection-play.png"></g:Image>
+								</g:HTMLPanel>
+								<g:FlowPanel styleName="{playerStyle.playRight}">	
+									<g:FlowPanel styleName="{playerStyle.playBlockTop}">
+										<g:FlowPanel styleName="{playerStyle.PlayBox}">
+											<g:Label styleName="{playerStyle.smallTxt}">Time Spent</g:Label>
+											<g:Label styleName="{playerStyle.bigTxt}">12</g:Label>
+											<g:Label styleName="{playerStyle.smallerTxt}"> min</g:Label>
+										</g:FlowPanel>
+										<g:FlowPanel styleName="{playerStyle.PlayBox}">
+											<g:Label styleName="{playerStyle.smallTxt}">Correct Answers</g:Label>
+											<g:Label styleName="{playerStyle.bigTxt}">3</g:Label>
+											<g:Label styleName="{playerStyle.smallerTxt}">/6</g:Label>
+										</g:FlowPanel>
+										<g:FlowPanel styleName="{playerStyle.PlayBox}">
+											<g:Label styleName="{playerStyle.smallTxt}">Average Reaction</g:Label>
+												<g:FlowPanel styleName="{playerStyle.bigTxt}">
+													<g:Image url="images/similiy.png}"></g:Image>
+												</g:FlowPanel>
+										</g:FlowPanel>
+										<g:FlowPanel styleName="{playerStyle.whatsnext}">
+											<g:Label styleName="{playerStyle.smallTxt}">What's Next?</g:Label>
+											<g:Image url="images/whats-next.png}"/>
+											<g:Label styleName="{playerStyle.bigTxt}">Soil Types</g:Label>
+											<g:Label styleName="{playerStyle.smallerTxt}">4 Resources</g:Label>
+											<g:Label styleName="{playerStyle.smallerTxt}">4 Questions</g:Label>
+										</g:FlowPanel>
+									</g:FlowPanel>
+								<g:FlowPanel styleName="{playerStyle.playBlockbottom}">
+									<g:FlowPanel styleName="{playerStyle.buttons}">
+										<g:Button styleName="ActiveButton" >Share</g:Button> 
+										<g:Button styleName="ActiveButton" >Remix</g:Button> 
+									</g:FlowPanel>
+								</g:FlowPanel>
+								<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+							</g:FlowPanel>
+							<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+						</g:FlowPanel>
+					</g:FlowPanel>
+					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+				</g:FlowPanel>
+			</g:FlowPanel>
+            	<g:FlowPanel ui:field="metadataContainer"></g:FlowPanel>
+           	    <g:FlowPanel styleName="{playerStyle.insightsFrame}" ui:field="dataInsightsPanel">
+	             	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer"/>
+	                <g:FlowPanel styleName="{playerStyle.messageContainer}" ui:field="messageContainer">
+	                	<g:Label styleName="{playerStyle.messageTextHeader}" ui:field="insightsHeaderText"></g:Label>
+	                	<g:Label styleName="{playerStyle.messagecontentText}" ui:field="insightsContentText"></g:Label>
+	                </g:FlowPanel>
+            		</g:FlowPanel>
+            <g:Label styleName="{playerStyle.hrShadow}"></g:Label>
+				<g:HTMLPanel styleName="{playerStyle.commentsSection}">
+					   <g:Label ui:field="commentCount" styleName="{playerStyle.commentsH2}"></g:Label>
+					   <g:VerticalPanel ui:field="commentsContainer"/>
+					   <g:Label ui:field="seeMoreButton" styleName="{playerStyle.seeMore}" />
+					   <g:Label ui:field="noCommentsLbl"/>
+					   <g:HTMLPanel styleName="{playerStyle.addComment}" ui:field="addComment">
+					      <g:HTMLPanel styleName="{playerStyle.loginMessaging}" ui:field="loginMessaging">
+						      	<g:Label ui:field="loginMessagingText"></g:Label>
+						      	<g:Anchor ui:field="loginUrl"/> 
+						      	<g:Label ui:field="orText"></g:Label> 
+						      	<g:Anchor ui:field="signupUrl" />
+						      	<g:Label ui:field="toCommentText"></g:Label>
+					      </g:HTMLPanel>
+					      <g:Image styleName="{playerStyle.userPhoto}" ui:field="userPhoto"></g:Image>
+					      <g:TextArea styleName="{playerStyle.commentField}" ui:field="commentField"></g:TextArea>
+					      <g:Label styleName="{playerStyle.successPostMsg}" ui:field="successPostMsg" />
+					      <g:Button styleName="secondary disabled" ui:field="postCommentBtn"/>
+					      <g:Button styleName="secondary {playerStyle.marginTop10}" ui:field="postCommentCancel"/>
+					      <g:Label ui:field="characterLimit" styleName="errorMessage {playerStyle.errorMessage}"/>
+					    </g:HTMLPanel>
+					</g:HTMLPanel>
+			</g:FlowPanel>
+        </g:FlowPanel>
 </ui:UiBinder>

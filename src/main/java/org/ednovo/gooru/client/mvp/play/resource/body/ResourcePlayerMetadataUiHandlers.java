@@ -60,4 +60,5 @@ public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUse
 			String deleteContentReportGooruOids);
 	
 	public void getGoogleDriveFile(String fileUrl);
+	public void getResourceTagsToDisplay(String resourceId);
 }

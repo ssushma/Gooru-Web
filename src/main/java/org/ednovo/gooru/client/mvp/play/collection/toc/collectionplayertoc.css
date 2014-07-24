@@ -7,6 +7,7 @@
 	white-space: nowrap;
 	display: inline-block;
 	vertical-align: middle;
+	position:relative;
 }
 .nav-toc-wrapperContainerMain{
 	margin:0 auto;
