@@ -57,7 +57,12 @@ import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPres
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.resource.flag.ResourceFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.narration.ResourceNarrationPresenter;
+
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
+
+import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEvent;
+
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
@@ -411,6 +416,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		//addResourcePresenter.getAddNewCollectionButton().addClickHandler(new ShowNewCollectionWidget());
 		getView().removeStudentViewButton();
 		getView().hideFlagButton(false);
+		addRegisteredHandler(UpdateFlagIconColorEvent.TYPE,this);
 	}
 
 	@ProxyCodeSplit
@@ -1954,6 +1960,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			newCollectionStartTime=resourceStartTime;
 			collectionEndTime=0L;
 		}
+	}
+
+	@Override
+	public void updateFlagColor() {
+		getView().makeFlagButtonOrange();
 	}
 
 }

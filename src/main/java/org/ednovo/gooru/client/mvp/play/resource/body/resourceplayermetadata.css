@@ -873,6 +873,13 @@ fieldset {
 	margin-bottom: 10px;
 	display: inline-block;
 }
+.collectionPlayerImage{
+	text-align: center;
+	height: 448px;
+	display: table-cell;
+	vertical-align: middle;
+	width: 960px;
+}
 
 
 .ratingPoorSaveCancelContainer {

@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEvent;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
@@ -49,7 +50,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -97,6 +97,9 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 	double average;
 	final String saving="Saving..";
 	final String posting="Posting..";
+	
+	private boolean isFlagged=false;
+	
 	/**
 	 * Class Constructor
 	 * @param assocGooruOId 
@@ -231,18 +234,22 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 							saveAndPsotLbl.getElement().setAttribute("title",posting);
 							if(resourceCheckBox1.isChecked())
 							{
+								isFlagged = true;
 								reourceContentReportList.add("missing-concept");
 							}
 							if(resourceCheckBox2.isChecked())
 							{
+								isFlagged = true;
 								reourceContentReportList.add("not-loading");
 							}
 							if(resourceCheckBox3.isChecked())
 							{
+								isFlagged = true;
 								reourceContentReportList.add("inappropriate");
 							}
 							if(resourceCheckBox4.isChecked())
 							{
+								isFlagged = true;
 								reourceContentReportList.add("other");
 							}
 							
@@ -250,9 +257,11 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 								@Override
 								public void onSuccess(ContentReportDo result) {
 									//getView().showSuccesmessagePopup();
+									isResourceflagged();
 									AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));
 
 								}
+
 							});	
 							  
 						}
@@ -261,6 +270,16 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 			}
 		});
 	}
+	
+	
+	private void isResourceflagged() {
+		if(isFlagged){
+			isFlagged=false;
+			AppClientFactory.fireEvent(new UpdateFlagIconColorEvent()); 
+			
+		}
+	}
+	
 	
 	/**
 	 * On click Skip button user user can skip by giving review and thank you tool tip will close.
