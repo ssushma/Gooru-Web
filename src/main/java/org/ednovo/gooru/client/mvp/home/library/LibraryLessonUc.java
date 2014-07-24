@@ -75,11 +75,11 @@ public class LibraryLessonUc extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		AppClientFactory.getEventBus().addHandler(SetConceptTitleStyleEvent.TYPE, setConceptTitleStyleHandler);
 		this.topicId = topicId;
-		if(lessonDo.getConcept()!=null&&lessonDo.getConcept().size()>0) {
+		/*if(lessonDo.getConcept()!=null&&lessonDo.getConcept().size()>0) {
 			setLessonData(lessonDo,null,null,lessonDo.getConcept(),isLessonHighlighted,lessonNumber);
-		} else {
+		} else {*/
 			setLessonData(lessonDo,null,lessonDo.getCollection(),null,isLessonHighlighted,lessonNumber);
-		}
+		/*}*/
 	}
 	
 	public LibraryLessonUc(ArrayList<ConceptDo> conceptDoList, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
