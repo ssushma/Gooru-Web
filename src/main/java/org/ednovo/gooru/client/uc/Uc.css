@@ -599,6 +599,17 @@
 
 /**************/
 .resourceName {
+	color: #FFFFFF;
+	font-size: 12px;
+	height: 61px;
+	/* left: -8px; */
+	position: relative;
+	text-align: center;
+	top: -63px;
+	width: 81px;
+}
+
+.resourceNameNew {
 	background: url("../images/resource-type-icons.png") no-repeat
 		transparent;
 	color: #FFFFFF;
@@ -664,6 +675,64 @@
 	background-position: 0px -307px !important;
 }
 /**************/
+
+
+/******/
+
+
+.videoSmallNew {
+	background-position: 0px 0px !important;
+}
+
+.interactiveSmallNew {
+	background-position: 0px -28px !important;
+}
+
+.websiteSmallNew {
+	background-position: 0px -224px !important;
+}
+.webpageSmallNew {
+	background-position: 0px -224px !important;
+}
+.examSmallNew {
+	background-position: 0px -224px !important;
+	/* background-position: 0px -84px !important; */
+}
+.textSmallNew {
+	background-position: 0px -55px !important;
+}
+.textbookSmallNew {
+	background-position: 0px -196px !important;
+}
+
+.handoutSmallNew {
+	background-position: 0px -196px !important;
+	/* background-position: 0px -56px !important; */
+}
+
+.lessonSmallNew {
+	background-position: 0px -196px !important;
+	/* background-position: 0px -112px !important; */
+}
+
+.slideSmallNew {
+	background-position: 0px -251px !important;
+	/* background-position: 0px -168px !important; */
+}
+
+.questionSmallNew {
+	background-position: 0px -140px !important;
+}
+.imageSmallNew {
+	background-position: 0px -251px !important;
+}
+.audioSmallNew{
+	background-position: 0px -279px !important;
+}
+.otherSmallNew{
+	background-position: 0px -307px !important;
+}
+/*********/
 .imageUploadPopup {
 	width: 500px;
 	height: 247px;

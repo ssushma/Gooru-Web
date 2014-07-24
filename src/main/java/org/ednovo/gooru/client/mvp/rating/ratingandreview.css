@@ -512,7 +512,7 @@ fieldset {
 .ratingCountLabel {
 	cursor: none !important;
 	text-decoration: none !important;
-	color: #4e9746;
+	color: grey;
 	/* padding: 0px 5px; */
 }
 
@@ -616,3 +616,4 @@ fieldset {
 .posValue{
 	margin-left: 10px;
 }
+
