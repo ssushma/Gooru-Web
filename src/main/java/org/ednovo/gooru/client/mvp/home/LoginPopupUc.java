@@ -390,7 +390,10 @@ public class LoginPopupUc extends PopupPanel{
 							AppClientFactory.fireEvent(new SetUserDetailsInPlayEvent(result.getToken()));
 							AppClientFactory.fireEvent(new SetUserDetailsInCollectionPlayEvent(result.getToken(),result.getGooruUId()));
 							//to Set the Options butts visibility in Player for comments.
-							if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+							/**
+							 * Changed to collection player, as preview player feature removed.
+							 */
+							if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 								AppClientFactory.fireEvent(new SetCommentsOptionsEvent());
 							}
 							if(getWidgetMode()!=null){
@@ -414,6 +417,7 @@ public class LoginPopupUc extends PopupPanel{
 						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
 						    	AppClientFactory.fireEvent(new ShowCollectionTabWidgetEvent(getWidgetMode(), false));
 						    }
+						    
 						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY)){
 						    	AppClientFactory.fireEvent(new ShowPreviewTabWidgetEvent(getWidgetMode(), false));
 						    }
