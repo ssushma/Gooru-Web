@@ -874,3 +874,8 @@ fieldset {
 	display: inline-block;
 }
 
+
+.ratingPoorSaveCancelContainer {
+	text-align: center;
+	margin-top:8px;
+}
