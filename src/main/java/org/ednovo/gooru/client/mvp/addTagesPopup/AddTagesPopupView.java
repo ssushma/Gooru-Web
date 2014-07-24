@@ -1131,14 +1131,14 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		deleteTagsServiceRequest(tagListGlobal.toString(), tagList.toString());
 	}
 	
-	public void addTagsServiceRequest(String frameTagsStr, String resourceId)
-	{
+	public void addTagsServiceRequest(String frameTagsStr, String resourceId){
 		
 		AppClientFactory.getInjector().getResourceService().addTagsToResource(resourceId, frameTagsStr, new SimpleAsyncCallback<List<ResourceTagsDo>>() {
 			@Override
 			public void onSuccess(List<ResourceTagsDo> result) {
 			//	bindObjectsToUI(result);
 				closeFunction();
+				getAddedResourceTags();
 			}
 		});
 	
@@ -1150,6 +1150,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			@Override
 			public void onSuccess(Void result) {
 				addTagsServiceRequest(addingNewTags.toString(), resourceId);
+				//getAddedResourceTags();
 			}
 		});
 	}
@@ -1612,4 +1613,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	}
 	
 	public abstract void closePoup(boolean isCancelclicked);
+	
+	public void getAddedResourceTags(){
+		
+	}
 }

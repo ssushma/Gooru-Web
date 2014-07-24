@@ -24,9 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
+import java.util.List;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
+import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -53,4 +56,5 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public void childLoggedIn(boolean isChild);
 	public void deleteRatingsValue(); 
 	public void setGoogleDriveFileStatusCode(Integer statusCode);
+	public void displayResourceTags(List<ResourceTagsDo> resourceTagsList);
 }
