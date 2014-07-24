@@ -80,7 +80,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 	@UiField Button btnSkip,btnPost;
 	@UiField TextArea ratingCommentTxtArea;
 	@UiField HTMLPanel buttonsContainer;
-	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle;
+	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle,poorRatingHeaderLbl,poorRatingSubHeaderLbl;
 	
 	@UiField Label incorporateresourceText, unavailableresourceText,inaccurateTextresource,otherReason;
 	
@@ -134,6 +134,16 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		otherReason.getElement().setId("lblOtherReason");
 		otherReason.getElement().setAttribute("alt",i18n.GL0606());
 		otherReason.getElement().setAttribute("title",i18n.GL0606());
+		
+		poorRatingHeaderLbl.setText(i18n.GL1854());
+		poorRatingHeaderLbl.getElement().setId("lblPoorRatingHeader");
+		poorRatingHeaderLbl.getElement().setAttribute("alt",i18n.GL1854());
+		poorRatingHeaderLbl.getElement().setAttribute("title",i18n.GL1854());
+		
+		poorRatingSubHeaderLbl.setText(i18n.GL2035());
+		poorRatingSubHeaderLbl.getElement().setId("lblPoorRatingSubHeader");
+		poorRatingSubHeaderLbl.getElement().setAttribute("alt",i18n.GL2035());
+		poorRatingSubHeaderLbl.getElement().setAttribute("title",i18n.GL2035());
 		
 		setUserReview(review);
 //		setAvgRatingWidget();
@@ -277,7 +287,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 			ratingCommentTxtArea.getElement().setAttribute("alt",review.trim());
 			ratingCommentTxtArea.getElement().setAttribute("title",review.trim());
 		}else{
-			reviewTextAreaTitle.setText("Post your review");
+			reviewTextAreaTitle.setText(i18n.GL2036());
 			reviewTextAreaTitle.getElement().setAttribute("alt",i18n.GL1855());
 			reviewTextAreaTitle.getElement().setAttribute("title",i18n.GL1855());
 			btnPost.setText("Submit");
