@@ -762,7 +762,6 @@ public class LibraryTopicListView extends Composite{
 			InlineLabel headerLbl = new InlineLabel(i18n.GL1363()+i18n.GL_SPL_SEMICOLON()+" ");
 			headerLbl.getElement().getStyle().setFontWeight(FontWeight.BOLD);
 			InlineLabel textLbl = new InlineLabel("");
-			System.out.println("conceptDo.getLabel():::"+lessonCode);
 			if(lessonLabel != null)
 			{
 			if(lessonLabel.length() > 400)
