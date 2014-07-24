@@ -911,26 +911,31 @@ body {
 }
 .examSmall {
 	/* background-position: 0px -84px !important; */
-	background-position: 0px -224px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 }
 
 .textbookSmall {
 	/* background-position: 0px -196px !important; */
-	background-position: 0px -55px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 }
 
 .handoutSmall {
 	/* background-position: 0px -56px !important; */
-	background-position: 0px -55px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 }
 
 .lessonSmall {
 	/* background-position: 0px -112px !important; */
-	background-position: 0px -55px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 }
 
 .slideSmall {
-	background-position: 0px -251px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 	/* background-position: 0px -168px !important; */
 }
 
@@ -939,7 +944,8 @@ body {
 		transparent;
 }
 .challengeSmall {
-	background-position: 0px -307px !important;	
+	background:url("../images/Text_1.png") no-repeat
+		transparent;	
 }
 .textSmall {
 	background:url("../images/Text_1.png") no-repeat
@@ -954,7 +960,8 @@ body {
 		transparent;
 }
 .otherSmall{
-	background-position: 0px -307px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 }
 /*******/
 .videoSmallNew {

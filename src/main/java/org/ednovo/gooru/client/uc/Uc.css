@@ -623,56 +623,70 @@
 }
 
 .videoSmall {
-	background-position: 0px 0px !important;
+	background:url("../images/Video_1.png") no-repeat
+		transparent;
 }
 
 .interactiveSmall {
-	background-position: 0px -28px !important;
+	background:url("../images/Interactive_1.png") no-repeat
+		transparent;
 }
 
 .websiteSmall {
-	background-position: 0px -224px !important;
+	background:url("../images/Website_1.png") no-repeat
+		transparent;
 }
 .webpageSmall {
-	background-position: 0px -224px !important;
+	background:url("../images/Website_1.png") no-repeat
+		transparent;
 }
 .examSmall {
-	background-position: 0px -224px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 	/* background-position: 0px -84px !important; */
 }
 .textSmall {
-	background-position: 0px -55px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 }
 .textbookSmall {
-	background-position: 0px -196px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 }
 
 .handoutSmall {
-	background-position: 0px -196px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 	/* background-position: 0px -56px !important; */
 }
 
 .lessonSmall {
-	background-position: 0px -196px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 	/* background-position: 0px -112px !important; */
 }
 
 .slideSmall {
-	background-position: 0px -251px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 	/* background-position: 0px -168px !important; */
 }
 
 .questionSmall {
-	background-position: 0px -140px !important;
+	background:url("../images/Question_1.png") no-repeat
+		transparent;
 }
 .imageSmall {
-	background-position: 0px -251px !important;
+	background:url("../images/Image_1.png") no-repeat
+		transparent;
 }
 .audioSmall{
-	background-position: 0px -279px !important;
+	background:url("../images/Audio_1.png") no-repeat
+		transparent;
 }
 .otherSmall{
-	background-position: 0px -307px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 }
 /**************/
 
