@@ -418,10 +418,10 @@
 }
 
 .folderStucture {
-    width:395px;
+    /* width:395px; */
 }
 .folderStucture table {
-    width:395px;
+   /*  width:395px; */
 }
 .folderStucture > div > div > div > div {
     margin-left:0px !important;
@@ -563,9 +563,11 @@
 
 .foldercollection.selected {
     background-color:#CFE3F1;
+    width: 456px;
 }
 .folderLevel.selected {
     background-color:#CFE3F1;
+    width: 456px;
 }
  .dropdowncontainer{
 	 width: 324px;
@@ -693,6 +695,19 @@
 	margin-top:5px;
 	font-weight: bold;
 	height:10px;
+}
+.selectionErrorLabel{
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+	margin-top: 5px;
+	font-weight: bold;
+	height: 10px;
+	color: #fab03a;
+	font: 12px arial;
+	float: right;
+	position: relative;
+	left: 37%;
 }
 .assignmentButtonsContainerCopy {
 	float: left;

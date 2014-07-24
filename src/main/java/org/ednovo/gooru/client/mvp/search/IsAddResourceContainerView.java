@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TreeItem;
 
 public interface IsAddResourceContainerView extends IsViewWithHandlers<AddResourceContainerUiHandlers>{
@@ -49,5 +50,6 @@ public interface IsAddResourceContainerView extends IsViewWithHandlers<AddResour
 	public void clearShelfData();
 	public void setFolderItems(TreeItem item,FolderListDo folderListDo);
 	public void displayNoCollectionsMsg();
-	public void setSearchResultDo(ResourceSearchResultDo searchResultDo); 
+	public void setSearchResultDo(ResourceSearchResultDo searchResultDo);
+	public void restrictionToAddResourcesData(); 
 }

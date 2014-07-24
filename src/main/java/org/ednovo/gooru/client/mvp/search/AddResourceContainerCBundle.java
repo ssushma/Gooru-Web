@@ -143,6 +143,7 @@ public interface AddResourceContainerCBundle extends ClientBundle {
 		String emptyCollMsg();
 		String subHeadingCollMsg();
 		String selectionCountLabel();
+		String selectionErrorLabel();
 		String assignmentButtonsContainerCopy();
 		String addTextButtonsContainer();
 	}

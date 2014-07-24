@@ -83,7 +83,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	
 	@UiField Button addResourceBtnLbl;
 	
-	@UiField Label addingText,displayCountLabel,addResourceText;
+	@UiField Label addingText,displayCountLabel,addResourceText,displayErrorLabel;
 	
 	@UiField Anchor addCollectiorOrReourceText;
 	
@@ -130,9 +130,11 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 		setWidget(uiBinder.createAndBindUi(this));
 		AddResourceContainerCBundle.INSTANCE.css().ensureInjected();
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
+		displayCountLabel.setVisible(false);
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			  @Override
 			  public void onSelection(SelectionEvent<TreeItem> event) {
+				  displayErrorLabel.setText("");
 			   final TreeItem item = (TreeItem) event.getSelectedItem();
 			    Widget folderWidget= item.getWidget();
 			    FolderTreeItem folderTreeItemWidget=null;
@@ -162,7 +164,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 				    if(parent != null)
 				    	parent.setSelected(false);   // TODO FIX ME
 				    item.setState(!item.getState(), false);
-				    setSelectedCollectionsCount(item.getChildCount());
+				  //  setSelectedCollectionsCount(item.getChildCount());
 			    }else if(folderWidget instanceof CollectionTreeItem){
 			    	removePreviousSelectedItem();
 			    	cureentcollectionTreeItem=(CollectionTreeItem)folderWidget;
@@ -172,7 +174,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 			    	selectedCollectionGooruOid	= cureentcollectionTreeItem.getGooruOid();
 			    	isSelectedCollection=true;
 			    	isSelectedFolder=false;
-			    	setSelectedCollectionTitle();
+			    	//setSelectedCollectionTitle();
 			    	//closeDropDown();
 			    }
 			  }
@@ -453,7 +455,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	private void displayWorkspaceData(TreeItem item, FolderListDo folderListDo) {
 		if(folderListDo!=null){
 			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
-			 setSelectedCollectionsCount(folderListDo.getCount());
+			// setSelectedCollectionsCount(folderListDo.getCount());
 			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
 				 FolderTreeItem folderTreeItemWidget=(FolderTreeItem)item.getWidget();
 				 int folderLevel=folderTreeItemWidget.getFolerLevel();
@@ -528,7 +530,8 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	@Override
 	public void displayNoCollectionsMsg() {
 		dropdownListContainerScrollPanel.setVisible(false);
-		addResourceBtnLbl.setText(i18n.GL1964());
+		System.out.println("No data Availble");
+		//addResourceBtnLbl.setText(i18n.GL1964());
 	}
 	public void resetEmptyCollMsg(){
 		dropdownListContainerScrollPanel.setVisible(true);
@@ -549,7 +552,8 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 			if(isSelectedCollection){
 				getUiHandlers().addResourceToCollection(selectedCollectionGooruOid,currentsearchType);
 			}else if(isSelectedFolder){
-				
+				displayErrorLabel.setText("Add me into a Collection");
+				displayErrorLabel.getElement().setAttribute("style", "left:37%;");
 			}else{
 				
 			}
@@ -569,6 +573,13 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	public void setSearchResultDo(ResourceSearchResultDo searchResultDo) {
 		// TODO Auto-generated method stub
 		this.searchResultDo = searchResultDo;
+	}
+
+	@Override
+	public void restrictionToAddResourcesData() {
+		// TODO Auto-generated method stub
+		displayErrorLabel.setText("You Can't add more than 25 resources to a collection");
+		displayErrorLabel.getElement().setAttribute("style", "left:24%;");
 	}
 	}
 

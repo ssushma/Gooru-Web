@@ -225,7 +225,6 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 							});
 							fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
 						}else  if(nameToken.equals(PlaceTokens.COLLECTION_SEARCH)){
-							System.out.println("else loop 5::::"+nameToken);
 							fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
 						}else{
 						fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT_AND_VIEW));

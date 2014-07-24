@@ -131,7 +131,16 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			collection.setGooruOid(searchResultDo.getGooruOid());
 			AppClientFactory.fireEvent(new CopyDraggedCollectionEvent(collection,searchResultDo.getGooruOid(),selectedFolderOrCollectionid));
 		}else if(searchType.equalsIgnoreCase("resource")){
-			AppClientFactory.fireEvent(new CreateCollectionItemEvent(selectedFolderOrCollectionid,searchResultDo.getGooruOid()));
+			AppClientFactory.getInjector().getfolderService().getCollectionResources(selectedFolderOrCollectionid,null, null, new SimpleAsyncCallback<FolderListDo>(){
+				@Override
+				public void onSuccess(FolderListDo result) {
+					if (result.getCount()<25){
+					AppClientFactory.fireEvent(new CreateCollectionItemEvent(selectedFolderOrCollectionid,searchResultDo.getGooruOid()));
+					}else{
+						getView().restrictionToAddResourcesData();
+					}
+					}
+    		});
 		}
 	}
 
