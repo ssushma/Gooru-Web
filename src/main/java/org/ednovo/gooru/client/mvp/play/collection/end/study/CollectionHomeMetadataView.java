@@ -74,7 +74,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	
 	@UiField Image collectionThumbnail;
 	@UiField HTML collectionGoal;
-	@UiField Button assignCollectionBtn,customizeCollectionBtn,shareCollectionBtn,studyButton;
+	@UiField Button customizeCollectionBtn,shareCollectionBtn,studyButton;
 	@UiField HTMLPanel learningobjectiveText;
 	/*@UiField FlowPanel thumbnailContainer;*/
 	
@@ -101,12 +101,12 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	@Inject
 	public CollectionHomeMetadataView(){
 		setWidget(uiBinder.createAndBindUi(this));
-		assignCollectionBtn.setText(i18n.GL0104());
-		assignCollectionBtn.getElement().setId("btnAssignCollectionBtn");
-		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
+//		assignCollectionBtn.setText(i18n.GL0104());
+//		assignCollectionBtn.getElement().setId("btnAssignCollectionBtn");
+//		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
+//		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
 		
-		customizeCollectionBtn.setText(i18n.GL0631());
+		customizeCollectionBtn.setText(i18n.GL2025());
 		customizeCollectionBtn.getElement().setId("btnCustomizeCollectionBtn");
 		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
 		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
@@ -131,8 +131,8 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		studyButton.getElement().setAttribute("title",i18n.GL0594());
 		
 		
-		assignCollectionBtn.addMouseOverHandler(new OnassignCollectionBtnMouseOver());
-		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
+//		assignCollectionBtn.addMouseOverHandler(new OnassignCollectionBtnMouseOver());
+//		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
 		shareCollectionBtn.addMouseOverHandler(new OnshareCollectionBtnMouseOver());
@@ -147,7 +147,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	public void setCollectionMetadata(final CollectionDo collectionDo){
 		setCollectionImage(collectionDo.getThumbnails().getUrl());
 		setCollectionGoal(collectionDo.getGoals());
-		assignCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
+		//assignCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		customizeCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		shareCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		//setReplyLink();
@@ -257,38 +257,38 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	 *
 	 * 
 	 */
-	@UiHandler("assignCollectionBtn")
-	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
-		String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-
-				if(!isAssignPopup){
-					isAssignPopup=true;
-				AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {
-					
-					@Override
-					public void closePoup() {
-						Window.enableScrolling(true);
-				        this.hide();
-				    	isAssignPopup=false;
-					}
-				};
-				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("635px");
-
-				successPopupVc.show();
-				successPopupVc.center();
-				if (AppClientFactory.isAnonymous()){
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
-				}
-				else
-				{
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
-				}
-				
-			}
-		
-	}
+//	@UiHandler("assignCollectionBtn")
+//	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
+//		String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
+//
+//				if(!isAssignPopup){
+//					isAssignPopup=true;
+//				AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {
+//					
+//					@Override
+//					public void closePoup() {
+//						Window.enableScrolling(true);
+//				        this.hide();
+//				    	isAssignPopup=false;
+//					}
+//				};
+//				Window.scrollTo(0, 0);
+//				successPopupVc.setWidth("500px");
+//				successPopupVc.setHeight("635px");
+//
+//				successPopupVc.show();
+//				successPopupVc.center();
+//				if (AppClientFactory.isAnonymous()){
+//				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+//				}
+//				else
+//				{
+//				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+//				}
+//				
+//			}
+//		
+//	}
 	/**
 	 * 
 	 * @function oncustomizeCollectionBtnClicked 
@@ -382,19 +382,19 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		
 	}
 	
-	public class OnassignCollectionBtnMouseOver implements MouseOverHandler{
-
-		@Override
-		public void onMouseOver(MouseOverEvent event) {
-			toolTipPopupPanel.clear();
-			toolTipPopupPanel.setWidget(new GlobalToolTip(i18n.GL0676()));
-			toolTipPopupPanel.setStyleName("");
-			toolTipPopupPanel.setPopupPosition(assignCollectionBtn.getElement().getAbsoluteLeft()+8, assignCollectionBtn.getElement().getAbsoluteTop()+10);
-			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
-			toolTipPopupPanel.show();
-		}
-		
-	}
+//	public class OnassignCollectionBtnMouseOver implements MouseOverHandler{
+//
+//		@Override
+//		public void onMouseOver(MouseOverEvent event) {
+//			toolTipPopupPanel.clear();
+//			toolTipPopupPanel.setWidget(new GlobalToolTip(i18n.GL0676()));
+//			toolTipPopupPanel.setStyleName("");
+//			toolTipPopupPanel.setPopupPosition(assignCollectionBtn.getElement().getAbsoluteLeft()+8, assignCollectionBtn.getElement().getAbsoluteTop()+10);
+//			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
+//			toolTipPopupPanel.show();
+//		}
+//		
+//	}
 	
 	public class OnassignCollectionBtnMouseOut implements MouseOutHandler{
 

@@ -847,12 +847,27 @@ fieldset {
 }
 .mainDisc{
 	display:inline-block;
-	vertical-align:middle;
+	vertical-align:top;
+	width:80%;
 }
 .resourceTitleStyle{
 	font-size: 16px;
 	font-weight: bold;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 	display: inline-block;
 }
-
+.tagsWrapperStyle{
+	display: inline-block;
+	position: relative;
+}
+.selectedTags{
+	padding: 4px 5px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	background: #a6cba2;
+	display: inline-block;
+	margin-right: 5px;
+}
+.plusAddButton{
+	padding:3px 3px !important;
+}

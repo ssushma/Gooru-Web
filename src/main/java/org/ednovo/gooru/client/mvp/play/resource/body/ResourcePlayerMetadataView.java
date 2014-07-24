@@ -26,10 +26,13 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 
 
 import java.util.Date;
+import java.util.List;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
@@ -39,12 +42,15 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
+import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
+import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -82,8 +88,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 	@UiField FlowPanel resourceWidgetContainer;
 	@UiField
-	static FlowPanel wrapperContainerField;
-	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,needHelpButton;
+	static FlowPanel wrapperContainerField,tagsContainer;
+	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,needHelpButton,plusAddTagsButton;
 	@UiField HTMLEventPanel emoticsContainer;
 	@UiField HTMLPanel singleEmoticsContainer,collectionContainer,ratingsContainer;
 	@UiField Label resourcePublisher,reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
@@ -201,6 +207,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		reactionToolTipFive.getElement().setId("lblReactionToolTipFive");
 		reactionToolTipFive.getElement().setAttribute("alt",i18n.GL0585());
 		reactionToolTipFive.getElement().setAttribute("title",i18n.GL0585());
+		
+		plusAddTagsButton.setText("+ "+i18n.GL1795());
+		plusAddTagsButton.getElement().setId("plusAddTagsButton");
+		plusAddTagsButton.getElement().setAttribute("alt",i18n.GL1795());
+		plusAddTagsButton.getElement().setAttribute("title",i18n.GL1795());
 		
 		/*rating1 = new SimpleRadioButton("rating");
 		rating2 = new SimpleRadioButton("rating");
@@ -1653,5 +1664,59 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		resourceTitleLbl.getElement().setId("htmlResourceTitleLbl");
 		resourcePublisher.getElement().setId("lblResourcePublisher");
 		resourceWidgetContainer.getElement().setId("fpnlResourceWidgetContainer");
+	}
+
+	@Override
+	public void displayResourceTags(List<ResourceTagsDo> resourceTagsList) {
+		tagsContainer.clear();
+		if(resourceTagsList!=null){
+			for(int i=0;i<resourceTagsList.size();i++){
+				System.out.println("resourceTagsList.get(i).getLabel()==>"+resourceTagsList.get(i).getLabel());
+				if(resourceTagsList.get(i).getLabel().contains("Educational Use")){
+					tagsContainer.add(new HTML(resourceTagsList.get(i).getLabel()));
+				}
+			}
+		}
+	}
+	@UiHandler("plusAddTagsButton")
+	public void onAddTagsBtnClicked(ClickEvent clickEvent) {
+		addResourceTags();
+	}
+	
+	public void addResourceTags(){
+		if(AppClientFactory.isAnonymous()) {
+			AppClientFactory.fireEvent(new InvokeLoginEvent());
+		} else {
+			AddTagesPopupView addTagesPopupView=new AddTagesPopupView(collectionItemDo.getResource().getGooruOid()) {
+				public void getAddedResourceTags(){
+					getUiHandlers().getResourceTagsToDisplay(collectionItemDo.getResource().getGooruOid());
+				}
+				@Override
+				public void closePoup(boolean isCancelclicked) {
+			        this.hide();
+			        if(!isCancelclicked){
+			        	 SuccessPopupViewVc success = new SuccessPopupViewVc() {
+
+								@Override
+								public void onClickPositiveButton(ClickEvent event) {
+									this.hide();
+								}
+							};
+							success.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTagsGlassPanel());
+							success.setHeight("253px");
+							success.setWidth("450px");
+							success.setPopupTitle(i18n.GL1795());
+							success.setDescText(i18n.GL1796());
+							success.enableTaggingImage();
+							success.setPositiveButtonText(i18n.GL0190());
+							success.center();
+							success.show();
+							success.getElement().getStyle().setZIndex(99999);
+			        }
+				}
+			};
+			addTagesPopupView.show();
+			addTagesPopupView.setPopupPosition(addTagesPopupView.getAbsoluteLeft(),Window.getScrollTop()+10);
+		}
 	}
 }

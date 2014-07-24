@@ -160,14 +160,14 @@ background:url(images/player/player_sprite_new.png) no-repeat -74px -44px;
 }
 .flagButtonOrange{
 	display:inline-block;
-	background:url(images/player/player_sprite_new.png) no-repeat -240px -4px;
+	background:url(images/player/player_sprite_new.png) no-repeat -281px -4px;
 	width:31px;
 	height:30px;
 	cursor: pointer;
 }
 .flagButtonOrangeActive{
 	display:inline-block;
-	background:url(images/player/player_sprite_new.png) no-repeat -240px -4px;
+	background:url(images/player/player_sprite_new.png) no-repeat -281px -4px;
 	width:31px;
 	height:30px;
 	cursor: pointer;
