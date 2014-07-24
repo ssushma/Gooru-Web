@@ -744,30 +744,27 @@ fieldset {
 }
 
 .arrowBorder {
-	width: 0px;
-	height: 0px;
-	border: 10px solid;
-	border-style: inset solid inset none;
-	border-color: transparent #DDD transparent transparent;
+	top: -13px;
+	width: 0;
+	height: 0;
+	z-index: 100;
 	position: absolute;
-	top: 15px;
-	margin: auto;
-	border-left: none;
-	left: -10px;
+	left: 150px;
+	border-left: 15px solid transparent;
+	border-right: 15px solid transparent;
+	border-bottom: 15px solid #ddd;
 }
 
 .arrow {
-	width: 0px;
-	height: 0px;
-	border: 10px solid;
-	border-style: inset solid inset none;
-	border-color: transparent white transparent transparent;
-	position: absolute;
-	margin: auto;
-	top: 15px;
-	border-left: none;
+	top: -11px;
+	width: 0;
+	height: 0;
 	z-index: 100;
-	left: -9px;
+	position: absolute;
+	left: 150px;
+	border-left: 15px solid transparent;
+	border-right: 15px solid transparent;
+	border-bottom: 15px solid #fff;
 }
 
 .confirmationIcon {
@@ -884,3 +881,8 @@ fieldset {
 	width: 960px;
 }
 
+
+.ratingPoorSaveCancelContainer {
+	text-align: center;
+	margin-top:8px;
+}

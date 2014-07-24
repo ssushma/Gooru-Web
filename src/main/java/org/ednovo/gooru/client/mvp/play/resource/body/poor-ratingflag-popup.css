@@ -686,3 +686,9 @@ vertical-align: top;
 	box-sizing: border-box;
 	margin-top: 14px;
 }
+
+.ratingPoorSubHeader{
+	font-size: 12px;
+	margin-top: 11px;
+	margin-bottom: 5px;
+}
