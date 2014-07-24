@@ -85,6 +85,7 @@ import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -124,7 +125,9 @@ public class LibraryView extends Composite implements  ClickHandler {
 	@UiField
 	HTMLPanel featuredCourses;
 
-	@UiField Label courseTitle, featuredCousesLbl,featuredContributor;
+	@UiField Label featuredCousesLbl,featuredContributor;
+	
+	@UiField HTML courseTitle;
 	
 	@UiField Anchor featuredContributorsLink;
 	
@@ -1007,7 +1010,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			if(StringUtil.isPartnerUser(AppClientFactory.getCurrentPlaceToken())){
 				educatorPhoto.setVisible(false);
 				featuredContributor.setVisible(false);
-				courseTitle.setText(courseDo.getLabel());
+				courseTitle.setHTML(courseDo.getLabel());
 				courseTitle.getElement().setAttribute("alt",courseDo.getLabel());
 				courseTitle.getElement().setAttribute("title",courseDo.getLabel());
 				courseImage.setUrl(courseDo.getThumbnails().getUrl());
@@ -1033,7 +1036,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 						}
 					});
 					
-					courseTitle.setText(courseDo.getLabel());
+					courseTitle.setHTML(courseDo.getLabel());
 					courseTitle.getElement().setAttribute("alt",courseDo.getLabel());
 					courseTitle.getElement().setAttribute("title",courseDo.getLabel());
 					try {
