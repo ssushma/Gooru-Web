@@ -111,7 +111,7 @@ public class ShelfCollectionResourceChildView extends
 	@UiField HTMLPanel resourceTitle1,resourceTitleContainer,minsText,secondsText,endMinsText,endSecondsText;
 
 	@UiField
-	Label  confirmDeleteLbl, fromLbl,updatePDFLabelText,startStopTimeDisplayText,editSartPageText,StartPageLbl;
+	Label  confirmDeleteLbl, fromLbl,updatePDFLabelText,startStopTimeDisplayText,editSartPageText,StartPageLbl,errorMsgLabelForPDF;
 	
 	@UiField
 	HTML resourceTitleLbl;
@@ -129,7 +129,7 @@ public class ShelfCollectionResourceChildView extends
 	FlowPanel editFloPanel, editFieldsFloPanel,actionVerPanel,actionVerPanelForUpdateTime;
 
 	@UiField
-	TextBox fromTxt, toTxt,EndTimeTxt1,EndTimeTxt2,startpdfPageNumber;
+	TextBox fromTxt, toTxt,EndTimeTxt1,EndTimeTxt2,startpdfPageNumber,stoppdfPageNumber;
 
 	@UiField
 	TextArea narrationTxtArea;
@@ -141,10 +141,10 @@ public class ShelfCollectionResourceChildView extends
 	FlowPanel narationFloPanel,resourceFlowPanel,ResourceEditButtonContainer,videoDisplay,narrationConatainer,videoImage,editPdfFlowPanel,actionVerPanelForUpdatePDF;
 
 	@UiField
-	Label pencilEditNarationLbl,updateResourceBtn,addTages;
+	Label pencilEditNarationLbl,updateResourceBtn,addTages,endPageLbl;
 
 	@UiField
-	Label narrationAlertMessageLbl,videoTimeField,fromLblDisplayText,ToLbl,UpdateTextMessage,editStartPageLbl,editVideoTimeLbl;
+	Label narrationAlertMessageLbl,videoTimeField,fromLblDisplayText,ToLbl,UpdateTextMessage,editStartPageLbl,editVideoTimeLbl,errorMsgLabel;
 
 	@UiField Image imgNotFriendly;
 	
@@ -222,8 +222,11 @@ public class ShelfCollectionResourceChildView extends
 	private static final String VALID_START_STOP_TIME = i18n.GL0970();
 
 	private static final String YOUTUBE_START_END_TIME = i18n.GL0971();
-
+	
+	private static final String VALID_END_PAGE = i18n.GL2025();
+	
 	private static final String FROM_START_TIME =i18n.GL0972();
+	
 	private static final String FROM_STOP_TIME = i18n.GL0973();
 //	private static final String FROM_START_PAGE = "Start page";
 	private static final String VIDEO_TIME =i18n.GL0974();
@@ -251,6 +254,8 @@ public class ShelfCollectionResourceChildView extends
 	boolean setVisibility = false;
 	
 	boolean isHavingBadWords=false;
+	
+	Integer totalPages;
 	
 	private static ShelfCollectionResourceChildViewUiBinder uiBinder = GWT
 			.create(ShelfCollectionResourceChildViewUiBinder.class);
@@ -496,7 +501,9 @@ public class ShelfCollectionResourceChildView extends
 		fromLbl.getElement().setId("lblFromLbl");
 		ToLbl.getElement().setId("lblToLbl");
 		updatePDFLabelText.getElement().setId("lblUpdatePDFLabelText");
-		
+		//endPageLbl.setVisible(false);
+		endPageLbl.setText(i18n.GL2026());
+		endPageLbl.getElement().setId("endPageLbl");
 		// To check whether resource is public and is created by logged in user
 		String resourceShare = collectionItemDo.getResource().getSharing();
 		String resourceCategory = collectionItemDo.getResource().getCategory();
@@ -1074,6 +1081,9 @@ public class ShelfCollectionResourceChildView extends
 			videoImage.removeStyleName(CollectionEditResourceCBundle.INSTANCE.css().videoImageContainer());
 			videoImage.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().pdfImageContainer());
 			String startPageNumber=collectionItemDo.getStart();
+			totalPages = collectionItemDo.getTotalPages();
+			String endPageNumber=collectionItemDo.getStop();
+			
 		//	String endPageNumber=collectionItemDo.getStop();
 			
 			//updatePDFLabelText.setText("0f "+endPageNumber+" pages");
@@ -1088,11 +1098,19 @@ public class ShelfCollectionResourceChildView extends
 			//fromLblDisplayText.setText(START_PAGE+DEFAULT_START_PAGE+" of "+DEFAULT_END_PAGE+" pages");
 			}
 			else{
-				fromLblDisplayText.setText(START_PAGE+startPageNumber);
+				if(endPageNumber.equalsIgnoreCase("")){
+					fromLblDisplayText.setText(START_PAGE+startPageNumber+" - "+ i18n.GL2026()+totalPages);
+					stoppdfPageNumber.setText(totalPages+"");
+				}
+				else{
+					fromLblDisplayText.setText(START_PAGE+startPageNumber+" - "+i18n.GL2026()+endPageNumber);	
+					stoppdfPageNumber.setText(endPageNumber+"");
+				}
 				fromLblDisplayText.getElement().setAttribute("alt", START_PAGE+startPageNumber);
 				fromLblDisplayText.getElement().setAttribute("title", START_PAGE+startPageNumber);
 				
 				startpdfPageNumber.setText(startPageNumber);
+			
 				startpdfPageNumber.getElement().setAttribute("alt", startPageNumber);
 				startpdfPageNumber.getElement().setAttribute("title", startPageNumber);
 			//fromLblDisplayText.setText(START_PAGE+startPageNumber+" of "+endPageNumber+" pages");
@@ -1184,7 +1202,11 @@ public class ShelfCollectionResourceChildView extends
 						@Override
 						public void onClickPositiveButton(ClickEvent event) {
 							this.hide();
-							Window.enableScrolling(true);
+							if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+								Window.enableScrolling(false);
+							}else{
+								Window.enableScrolling(true);
+							}
 						}
 						
 					};
@@ -1197,7 +1219,11 @@ public class ShelfCollectionResourceChildView extends
 					success.center();
 					success.show();
 			        }else{
-			        	Window.enableScrolling(true);
+			        	if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			    			Window.enableScrolling(false);
+			    		}else{
+			    			Window.enableScrolling(true);
+			    		}
 			        }
 				}
 			};
@@ -1211,7 +1237,9 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("editStartPageLbl")
 	public void oneditStartPageLblClick(ClickEvent clickEvent) {
 		MixpanelUtil.Organize_Click_Edit_Start_Page();
+		errorMsgLabelForPDF.setText("");
 		actionVerPanelForUpdatePDF.setVisible(true);
+		//endPageLbl.setVisible(true);
 		editPdfFlowPanel.setVisible(true);
 		ResourceEditButtonContainer.getElement().getStyle()
 		.setVisibility(Visibility.HIDDEN);
@@ -1237,11 +1265,12 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("cancelpdfBtn")
 	public void cancelpdfBtnClick(ClickEvent clickEvent) {
 		fromLblDisplayText.setVisible(true);
+		errorMsgLabel.setText("");
+		errorMsgLabelForPDF.setText("");
 		videoDisplay.setVisible(true);
 		actionVerPanelForUpdatePDF.setVisible(false);
 		editPdfFlowPanel.setVisible(false);
 		narrationConatainer.setVisible(true);
-		videoDisplay.setVisible(true);
 		startpdfPageNumber.setFocus(true);
 		editFloPanel.setVisible(false);
 		isEdited=false;
@@ -1361,7 +1390,13 @@ public class ShelfCollectionResourceChildView extends
 	 */
 	public void updatePdfStartPage()
 	{
+		String start=startpdfPageNumber.getText();
+		String enteredStopPage = stoppdfPageNumber.getText();
+		boolean isValid = this.validatePDF(start,enteredStopPage,totalPages);
+		if(isValid){
 		MixpanelUtil.Organize_Click_Edit_Start_Page_Update();
+		errorMsgLabel.setText("");
+		errorMsgLabelForPDF.setText("");
 		actionVerPanelForUpdatePDF.setVisible(false);
 		editFloPanel.setVisible(false);
 		editPdfFlowPanel.setVisible(false);
@@ -1371,27 +1406,32 @@ public class ShelfCollectionResourceChildView extends
 		narrationConatainer.setVisible(true);
 		UpdateTextMessage.setVisible(true);
 		actionVerPanel.setVisible(false);
-		String start=startpdfPageNumber.getText();
 		
 		//collectionItemDo.setStart(start);
+		
+		
+		
+		
 		getPresenter().updateCollectionItem(
 				collectionItemDo.getCollectionItemId(),narrationData,
-				start, "");
+				start, enteredStopPage);
 		isEdited = false;
-		
+		}
 	}
 	/*
 	 * This clickEvent is used to update video
 	 */
 	public void editAndUpdateVideoTime()
 	{
+		
 		MixpanelUtil.Organize_Click_Edit_Start_Time_Update();
+		errorMsgLabel.setText("");
 		actionVerPanelForUpdateTime.setVisible(false);
 		actionVerPanelForUpdatePDF.setVisible(false);
 		actionVerPanel.setVisible(false);
 		editFloPanel.setVisible(false);
 		UpdateTextMessage.setVisible(true);
-		videoDisplay.setVisible(true);
+		//videoDisplay.setVisible(true);
 		narrationConatainer.setVisible(true);
 		editFieldsFloPanel.setVisible(false);
 		
@@ -1477,7 +1517,11 @@ public class ShelfCollectionResourceChildView extends
 				&& (!from.equals(FROM_START_TIME) || !to
 						.equals(FROM_STOP_TIME))) {
 			this.youtubeValidation(narration, from, to);
-		} else {
+		} 
+		
+		
+		else {
+					
 					getPresenter().updateCollectionItem(
 					collectionItemDo.getCollectionItemId(),narrationData,
 					from, to);
@@ -1614,6 +1658,7 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("cancelVideoTimeBtn")
 	public void cancelVideoTimeBtnClickEvent(ClickEvent event)
 	{
+		errorMsgLabel.setText("");
 		videoDisplay.setVisible(true);
 		narrationConatainer.setVisible(true);
 		editFieldsFloPanel.setVisible(false);
@@ -1800,7 +1845,9 @@ public class ShelfCollectionResourceChildView extends
 		RegExp regExp = RegExp.compile(REG_EXP);
 		if (!(regExp.test(start)) || !(regExp.test(stop))) {
 			UpdateTextMessage.setVisible(false);
-			new AlertContentUc(i18n.GL0061(), YOUTUBE_START_END_TIME);
+			errorMsgLabel.setText("");
+			errorMsgLabel.setText(YOUTUBE_START_END_TIME);
+			//new AlertContentUc(i18n.GL0061(), YOUTUBE_START_END_TIME);
 			return;
 		}
 		String videoId = ResourceImageUtil.getYoutubeVideoId(collectionItemDo
@@ -1847,9 +1894,18 @@ public class ShelfCollectionResourceChildView extends
 														narrationData, start, stop);
 										///setEditMode(false);
 									} else {
-										UpdateTextMessage.setVisible(false);
-										new AlertContentUc(i18n.GL0061(),
-												VALID_START_STOP_TIME);
+										actionVerPanelForUpdateTime.setVisible(true);
+										videoDisplay.setVisible(false);
+										narrationConatainer.setVisible(false);
+										editFieldsFloPanel.setVisible(true);
+										ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+										fromTxt.setFocus(true);
+										UpdateTextMessage.setVisible(false);		
+										errorMsgLabel.setText("");
+										errorMsgLabel.setText(VALID_START_STOP_TIME);
+										//setEditMode(true);
+										/*new AlertContentUc(i18n.GL0061(),
+												VALID_START_STOP_TIME);*/
 									}
 								}
 								}
@@ -1861,7 +1917,28 @@ public class ShelfCollectionResourceChildView extends
 		}
 	}
 
-	
+	public boolean validatePDF(String startpage,String stopPage,Integer totalPage){
+		boolean isValid;
+		Integer enteredStopPage =	Integer.parseInt(stopPage);
+		Integer startpdfpage = Integer.parseInt(startpage);
+		if(enteredStopPage > totalPage){
+			errorMsgLabelForPDF.setText(VALID_END_PAGE);
+			isValid = false;
+		}else if( startpdfpage > totalPage){
+			errorMsgLabelForPDF.setText(VALID_END_PAGE);
+			isValid = false;	
+		}
+		else if( enteredStopPage < startpdfpage){
+			errorMsgLabelForPDF.setText(VALID_END_PAGE);
+			isValid = false;	
+		}
+		else
+		{
+			isValid = true;
+			errorMsgLabelForPDF.setText("");
+		}
+		return isValid;
+	}
 	@Override
 	public void onPostUserCollections(List<CollectionDo> result) {
 //		int count = 0;

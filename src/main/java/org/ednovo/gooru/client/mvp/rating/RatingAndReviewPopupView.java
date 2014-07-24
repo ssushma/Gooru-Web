@@ -125,6 +125,11 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		if (!currentToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && !currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			Window.enableScrolling(true);
 		}
+		if (currentToken.equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			Window.enableScrolling(false);
+		}else{
+			Window.enableScrolling(true);
+		}
 	}
 
 	@Override

@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -1109,7 +1110,11 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			public void onClickPositiveButton(ClickEvent event) {
 				// TODO Auto-generated method stub
 				this.hide();
-				Window.enableScrolling(true);
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+					Window.enableScrolling(false);
+				}else{
+					Window.enableScrolling(true);
+				}
 			}
 			
 		};

@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.end.study;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,7 +107,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 //		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
 //		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
 		
-		customizeCollectionBtn.setText(i18n.GL2025());
+		customizeCollectionBtn.setText(i18n.GL2037());
 		customizeCollectionBtn.getElement().setId("btnCustomizeCollectionBtn");
 		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
 		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
@@ -147,6 +148,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	public void setCollectionMetadata(final CollectionDo collectionDo){
 		setCollectionImage(collectionDo.getThumbnails().getUrl());
 		setCollectionGoal(collectionDo.getGoals());
+		showPopupAfterGmailSignin();
 		//assignCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		customizeCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		shareCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
@@ -289,6 +291,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 //			}
 //		
 //	}
+
 	/**
 	 * 
 	 * @function oncustomizeCollectionBtnClicked 
@@ -334,6 +337,16 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				successPopupVc.setHeight("440px");
 				successPopupVc.show();
 				successPopupVc.center();
+				
+				Map<String,String> params = new HashMap<String,String>();
+				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
+				if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null)
+					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
+				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
+					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
+				params.put("customize", "yes");
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 			}
 		
 	}
@@ -382,6 +395,70 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		
 	}
 	
+	/**
+	 * 
+	 * Showing Customize or Assign popup after login with gmail account.
+	 * 
+	 */
+	
+	private void showPopupAfterGmailSignin() {
+		// TODO Auto-generated method stub
+		String collectionId = AppClientFactory.getPlaceManager().getRequestParameter("id")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
+		String customize = AppClientFactory.getPlaceManager().getRequestParameter("customize")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("customize") : null;
+		String assign = AppClientFactory.getPlaceManager().getRequestParameter("assign")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("assign") : null;
+		if(customize!=null && customize.equals("yes")){
+			Boolean loginFlag = false;
+			if (AppClientFactory.isAnonymous()){
+				loginFlag = true;
+			}
+			else
+			{
+				loginFlag = false;
+			}
+			RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag, collectionTitle) {
+
+				@Override
+				public void closePoup() {
+					Window.enableScrolling(true);
+					this.hide();	
+					isCustomizePopup = false;
+				}
+			};
+			Window.scrollTo(0, 0);
+			successPopupVc.setWidth("500px");
+			successPopupVc.setHeight("440px");
+			successPopupVc.show();
+			successPopupVc.center();
+		}
+		if(assign!=null && assign.equals("yes")){
+			AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {
+				
+				@Override
+				public void closePoup() {
+					Window.enableScrolling(true);
+			        this.hide();
+			    	isAssignPopup=false;
+				}
+			};
+			Window.scrollTo(0, 0);
+			successPopupVc.setWidth("500px");
+			successPopupVc.setHeight("635px");
+
+			successPopupVc.show();
+			successPopupVc.center();
+			if (AppClientFactory.isAnonymous()){
+			successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+			}
+			else
+			{
+			successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+			}
+		}
+
+
+	}
+
+	
 //	public class OnassignCollectionBtnMouseOver implements MouseOverHandler{
 //
 //		@Override
@@ -396,16 +473,16 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 //		
 //	}
 	
-	public class OnassignCollectionBtnMouseOut implements MouseOutHandler{
-
-		@Override
-		public void onMouseOut(MouseOutEvent event) {
-			toolTipPopupPanel.hide();
-		}
-
-		
-		
-	}
+//	public class OnassignCollectionBtnMouseOut implements MouseOutHandler{
+//
+//		@Override
+//		public void onMouseOut(MouseOutEvent event) {
+//			toolTipPopupPanel.hide();
+//		}
+//
+//		
+//		
+//	}
 	
 	public class OncustomizeCollectionBtnMouseOver implements MouseOverHandler{
 

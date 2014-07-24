@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEvent;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
@@ -49,7 +50,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -79,9 +79,8 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 	
 	@UiField Button btnSkip,btnPost;
 	@UiField TextArea ratingCommentTxtArea;
-	@UiField public FlowPanel ratingWidgetPanel;
-	@UiField HTMLPanel buttonsContainer,ratingText;
-	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle;
+	@UiField HTMLPanel buttonsContainer;
+	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle,poorRatingHeaderLbl,poorRatingSubHeaderLbl;
 	
 	@UiField Label incorporateresourceText, unavailableresourceText,inaccurateTextresource,otherReason;
 	
@@ -98,6 +97,9 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 	double average;
 	final String saving="Saving..";
 	final String posting="Posting..";
+	
+	private boolean isFlagged=false;
+	
 	/**
 	 * Class Constructor
 	 * @param assocGooruOId 
@@ -136,22 +138,31 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		otherReason.getElement().setAttribute("alt",i18n.GL0606());
 		otherReason.getElement().setAttribute("title",i18n.GL0606());
 		
+		poorRatingHeaderLbl.setText(i18n.GL1854());
+		poorRatingHeaderLbl.getElement().setId("lblPoorRatingHeader");
+		poorRatingHeaderLbl.getElement().setAttribute("alt",i18n.GL1854());
+		poorRatingHeaderLbl.getElement().setAttribute("title",i18n.GL1854());
+		
+		poorRatingSubHeaderLbl.setText(i18n.GL2035());
+		poorRatingSubHeaderLbl.getElement().setId("lblPoorRatingSubHeader");
+		poorRatingSubHeaderLbl.getElement().setAttribute("alt",i18n.GL2035());
+		poorRatingSubHeaderLbl.getElement().setAttribute("title",i18n.GL2035());
+		
 		setUserReview(review);
-		setAvgRatingWidget();
+//		setAvgRatingWidget();
 		setGlassEnabled(true);
 		saveAndPsotLbl.setVisible(false);
 		buttonsContainer.setVisible(true);
-		ratingText.getElement().setInnerHTML(i18n.GL1991());
+		/*ratingText.getElement().setInnerHTML(i18n.GL1991());
 		ratingText.getElement().setId("pnlRatingText");
 		ratingText.getElement().setAttribute("alt",i18n.GL1991());
-		ratingText.getElement().setAttribute("title",i18n.GL1991());
+		ratingText.getElement().setAttribute("title",i18n.GL1991());*/
 		
-		btnSkip.setText(i18n.GL1004());
+		btnSkip.setText(i18n.GL0142());
 		btnSkip.getElement().setId("btnSkip");
 		btnSkip.getElement().setAttribute("alt",i18n.GL1004());
 		btnSkip.getElement().setAttribute("title",i18n.GL1004());
 	
-		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 		reviewTextAreaTitle.getElement().setId("lblReviewTextAreaTitle");
 		resourceCheckBox4.getElement().setId("chkResourceCheckBox4");
 		resourceCheckBox3.getElement().setId("chkResourceCheckBox3");
@@ -176,7 +187,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetView.setAvgStarRating(average);
 		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
-		ratingWidgetPanel.add(ratingWidgetView);
+//		ratingWidgetPanel.add(ratingWidgetView);
 	}
 	
 	/**
@@ -217,35 +228,40 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 							saveAndPsotLbl.getElement().setAttribute("alt",saving);
 							saveAndPsotLbl.getElement().setAttribute("title",saving);
 							AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,true));  
-						}else if(btnPost.getText().equalsIgnoreCase("Post")){
+						}else if(btnPost.getText().equalsIgnoreCase("Submit")){
 							saveAndPsotLbl.setText(posting);
 							saveAndPsotLbl.getElement().setAttribute("alt",posting);
 							saveAndPsotLbl.getElement().setAttribute("title",posting);
 							if(resourceCheckBox1.isChecked())
 							{
+								isFlagged = true;
 								reourceContentReportList.add("missing-concept");
 							}
 							if(resourceCheckBox2.isChecked())
 							{
+								isFlagged = true;
 								reourceContentReportList.add("not-loading");
 							}
 							if(resourceCheckBox3.isChecked())
 							{
+								isFlagged = true;
 								reourceContentReportList.add("inappropriate");
 							}
 							if(resourceCheckBox4.isChecked())
 							{
+								isFlagged = true;
 								reourceContentReportList.add("other");
 							}
 							
 							AppClientFactory.getInjector().getPlayerAppService().createContentReport(assocGooruOId, ratingCommentTxtArea.getText().trim(), reourceContentReportList, "", new SimpleAsyncCallback<ContentReportDo>() {
-								
 								@Override
 								public void onSuccess(ContentReportDo result) {
 									//getView().showSuccesmessagePopup();
+									isResourceflagged();
 									AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));
 
 								}
+
 							});	
 							  
 						}
@@ -254,6 +270,16 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 			}
 		});
 	}
+	
+	
+	private void isResourceflagged() {
+		if(isFlagged){
+			isFlagged=false;
+			AppClientFactory.fireEvent(new UpdateFlagIconColorEvent()); 
+			
+		}
+	}
+	
 	
 	/**
 	 * On click Skip button user user can skip by giving review and thank you tool tip will close.
@@ -280,10 +306,10 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 			ratingCommentTxtArea.getElement().setAttribute("alt",review.trim());
 			ratingCommentTxtArea.getElement().setAttribute("title",review.trim());
 		}else{
-			reviewTextAreaTitle.setText(i18n.GL1855());
+			reviewTextAreaTitle.setText(i18n.GL2036());
 			reviewTextAreaTitle.getElement().setAttribute("alt",i18n.GL1855());
 			reviewTextAreaTitle.getElement().setAttribute("title",i18n.GL1855());
-			btnPost.setText("Post");
+			btnPost.setText("Submit");
 			btnPost.getElement().setAttribute("alt","Post");
 			btnPost.getElement().setAttribute("title","Post");
 		}
@@ -311,7 +337,29 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 								saveAndPsotLbl.setText(posting);
 								saveAndPsotLbl.getElement().setAttribute("alt",posting);
 								saveAndPsotLbl.getElement().setAttribute("title",posting);
-								AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));  
+								if(resourceCheckBox1.isChecked())
+								{
+									reourceContentReportList.add("missing-concept");
+								}
+								if(resourceCheckBox2.isChecked())
+								{
+									reourceContentReportList.add("not-loading");
+								}
+								if(resourceCheckBox3.isChecked())
+								{
+									reourceContentReportList.add("inappropriate");
+								}
+								if(resourceCheckBox4.isChecked())
+								{
+									reourceContentReportList.add("other");
+								}
+								
+								AppClientFactory.getInjector().getPlayerAppService().createContentReport(assocGooruOId, ratingCommentTxtArea.getText().trim(), reourceContentReportList, "", new SimpleAsyncCallback<ContentReportDo>() {
+									@Override
+									public void onSuccess(ContentReportDo result) {
+										AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));
+									}
+								});	  
 							}
 						}
 						SetStyleForProfanity.SetStyleForProfanityForTextArea(ratingCommentTxtArea, mandatoryDescLblForSwareWords, value);
