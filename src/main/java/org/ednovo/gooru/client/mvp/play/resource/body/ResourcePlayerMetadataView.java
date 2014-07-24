@@ -994,7 +994,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
 				}
 				
-			}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			}
+			/**
+			 * Changed to collection player, as preview player feature removed.
+			 */
+			else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 				if(result.getRatings()!=null){
 					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
 				}
@@ -1630,7 +1634,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				collectionContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 			}
-		}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+		}
+		/**
+		 * Changed to collection player, as preview player feature removed.
+		 */
+		else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 			if(isChild){
 				ratingsContainer.setVisible(false);
 			}else{
