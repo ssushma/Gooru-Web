@@ -274,7 +274,7 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 		for(int i=0;i<partnersList.size();i++) {
 			final LibraryUserDo libraryUserDo = partnersList.get(i);
 			
-			final Label partnerTitle = new Label(StringUtil.getPartnerName(libraryUserDo.getUsername()));
+			final Label partnerTitle = new Label(libraryUserDo.getDisplayName());
 			partnerTitle.addStyleName("courseOption");
 			partnerTitle.addClickHandler(new ClickHandler() {
 				@Override
@@ -287,23 +287,6 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 		}
 	}
 	
-//	private void getPartnersData() {
-//		List<String> partnersData = new ArrayList<String>();
-//		partnersData.add("Autodesk® ");
-//		partnersData.add("8a6b75b8-0537-492e-8970-c41ade8723a6");
-//		partnersData.add("Foundation for Teaching Economics (FTE)");
-//		partnersData.add("de182361-8379-4d82-9168-e5bd8b658cff");
-//		partnersData.add("SVEF's Lessonopoly");
-//		partnersData.add("cd46b323-83d6-44ef-acf1-cef0705623db");
-//		partnersData.add("New Global Citizens (NGC)");
-//		partnersData.add("bac737f6-4945-4990-b3d6-8c07ec09f9c8");
-//		partnersData.add("Office of Naval Research (ONR)");
-//		partnersData.add("2e8dd71c-cef6-435d-bfd8-0afad9939b07");
-//		partnersData.add("What So Proudly We Hail");
-//		partnersData.add("593eeff6-2fa2-487b-941d-67d197e10201");
-//		setPartnersData(partnersData);
-//	}
-
 	public class RedirectToPartnerPage implements ClickHandler {
 		private String folderId;
 		public RedirectToPartnerPage(String folderId) {
@@ -325,5 +308,4 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 		publicPartners.put(i18n.GL1898(),PlaceTokens.SAUSD_LIBRARY);
 		return publicPartners;
 	}
-	
 }
