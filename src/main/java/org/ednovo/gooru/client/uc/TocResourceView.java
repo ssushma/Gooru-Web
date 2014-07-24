@@ -127,7 +127,7 @@ public class TocResourceView extends Composite implements HasClickHandlers{
 		setResourceSequence(itemIndex);
 		setResourceCategory();
 		setReourceSourceName();
-		if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+		if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 			setAvgRatingWidget();
 		}
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
