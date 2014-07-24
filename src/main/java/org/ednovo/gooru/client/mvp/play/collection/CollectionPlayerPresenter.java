@@ -656,6 +656,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		resoruceMetadataPresenter.showResourceWidget(collectionItemDo,nextResoruceRequest,previousResoruceRequest);
 		if(!AppClientFactory.isAnonymous()){
 			resoruceMetadataPresenter.setReaction(collectionItemDo); 
+			resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
+		}else{
+			resoruceMetadataPresenter.clearStarRatings();
 		}
 		setOpenEndedAnswerSubmited(true);
 		setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
