@@ -52,4 +52,7 @@ public interface IsAddResourceContainerView extends IsViewWithHandlers<AddResour
 	public void displayNoCollectionsMsg();
 	public void setSearchResultDo(ResourceSearchResultDo searchResultDo);
 	public void restrictionToAddResourcesData(); 
+	public void setPlayerStyle();
+	public void removePlayerStyle();
+	public void getButtonVisiblity();
 }
