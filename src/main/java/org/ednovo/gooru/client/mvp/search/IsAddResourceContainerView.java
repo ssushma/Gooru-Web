@@ -22,85 +22,34 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
 package org.ednovo.gooru.client.mvp.search;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
-
 /**
- * @author Search Team
- * 
- */
-public interface SearchResultWrapperCBundle extends ClientBundle {
-	
-	static final SearchResultWrapperCBundle INSTANCE = GWT.create(SearchResultWrapperCBundle.class);
+* @fileName : IsAddResourceView.java 
+*
+* @description :This file is responsible for UI Handlers.
+*
+* @version :5.1
+*
+* @date: Apr 6 2013
+   	
+* @Author  Gooru Team
+* 
+* @Reviewer 
+*
+*/
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
-	/**
-	 * SearchResultWrapperCss.
-	 */
-	public interface SearchResultWrapperCss extends CssResource {
-		
-		String searchPanel();
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TreeItem;
 
-		String contentPanel();
-
-		String statusLbl();
-
-		String hiddenPanel();
-
-		String share();
-		
-		String shareActive();
-		
-		String moreInfoActive();
-
-		String moreInfo();
-		
-		String infoLblActive();
-
-		String infoLbl();
-
-		String disclosurePanel();
-		
-		String disclosureContentPanel();
-		
-/*		String disclosurePanelHeader();*/
-		
-		String disclosureMainHeader();
-		
-		String blueLink();
-		
-		String blueLinkPad();
-		
-		String moreMetaLbl();
-		
-		String tagText();
-		
-		String searchResultWrapper();
-		
-		String added();
-		
-		String disclosureHeader();
-		
-		// PPP Css //
-		
-		String collectionPPPPanel();
-		String collectionPPPDisclosureHeader();
-		
-		String embed();
-		
-		String embedActive();
-		
-		String ratingWidgetPanel();
-		
-		String addLblActive();
-	}
-
-	@Source("SearchResultWrapper.css")
-	SearchResultWrapperCss css();
-
+public interface IsAddResourceContainerView extends IsViewWithHandlers<AddResourceContainerUiHandlers>{
+	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel,String searchType);
+	public void clearShelfData();
+	public void setFolderItems(TreeItem item,FolderListDo folderListDo);
+	public void displayNoCollectionsMsg();
+	public void setSearchResultDo(ResourceSearchResultDo searchResultDo);
+	public void restrictionToAddResourcesData(); 
 }

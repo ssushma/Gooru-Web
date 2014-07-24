@@ -307,7 +307,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}else{
 			resourcePublisher.setText("");
 		}
-
+		if(collectionItemDo.getResource().getResourceFormat()!=null){
+			if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+				resourcePublisher.setText(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+			}
+		}
 		if(forwardButton!=null){
 			forwardButton.removeFromParent();
 		}
@@ -380,7 +384,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				resourcePublisher.setText("");
 			}
-
+			if(collectionItemDo.getResource().getResourceFormat()!=null){
+				if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+					resourcePublisher.setText(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+				}
+			}
 			if(forwardButtonHandler!=null||backwardButtonHandler!=null){
 				forwardButtonHandler.removeHandler();
 				backwardButtonHandler.removeHandler();
