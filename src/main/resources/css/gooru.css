@@ -892,18 +892,22 @@ body {
 
 /*********/
 .videoSmall {
-	background-position: 0px 0px !important;
+	background:url("../images/Video_1.png") no-repeat
+		transparent;
 }
 
 .interactiveSmall {
-	background-position: 0px -28px !important;
+	background:url("../images/Interactive_1.png") no-repeat
+		transparent;
 }
 
 .websiteSmall {
-	background-position: 0px -224px !important;
+	background:url("../images/Website_1.png") no-repeat
+		transparent;
 }
 .webpageSmall {
-	background-position: 0px -224px !important;
+	background:url("../images/Website_1.png") no-repeat
+		transparent;
 }
 .examSmall {
 	/* background-position: 0px -84px !important; */
@@ -931,21 +935,78 @@ body {
 }
 
 .questionSmall {
-	background-position: 0px -140px !important;
+	background:url("../images/Question_1.png") no-repeat
+		transparent;
 }
 .challengeSmall {
 	background-position: 0px -307px !important;	
 }
 .textSmall {
-	background-position: 0px -55px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 }
 .imageSmall {
-	background-position: 0px -251px !important;
+	background:url("../images/Image_1.png") no-repeat
+		transparent;
 }
 .audioSmall{
-	background-position: 0px -279px !important;
+	background:url("../images/Audio_1.png") no-repeat
+		transparent;
 }
 .otherSmall{
+	background-position: 0px -307px !important;
+}
+/*******/
+.videoSmallNew {
+	background-position: 0px 0px !important;
+}
+
+.interactiveSmallNew {
+	background-position: 0px -28px !important;
+}
+
+.websiteSmallNew {
+	background-position: 0px -224px !important;
+}
+.webpageSmallNew {
+	background-position: 0px -224px !important;
+}
+.examSmallNew {
+	background-position: 0px -224px !important;
+	/* background-position: 0px -84px !important; */
+}
+.textSmallNew {
+	background-position: 0px -55px !important;
+}
+.textbookSmallNew {
+	background-position: 0px -196px !important;
+}
+
+.handoutSmallNew {
+	background-position: 0px -196px !important;
+	/* background-position: 0px -56px !important; */
+}
+
+.lessonSmallNew {
+	background-position: 0px -196px !important;
+	/* background-position: 0px -112px !important; */
+}
+
+.slideSmallNew {
+	background-position: 0px -251px !important;
+	/* background-position: 0px -168px !important; */
+}
+
+.questionSmallNew {
+	background-position: 0px -140px !important;
+}
+.imageSmallNew {
+	background-position: 0px -251px !important;
+}
+.audioSmallNew{
+	background-position: 0px -279px !important;
+}
+.otherSmallNew{
 	background-position: 0px -307px !important;
 }
 /*********/
