@@ -423,9 +423,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		isGrades =false;
 		
 		collectionItemDoGlobal = collectionItemDo;
-		if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+		/*if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
 			setAvgRatingWidget();
-		}
+		}*/
+		setAvgRatingWidget();
 		if(collectionItemDo.getResource().getMediaType()!=null){
 			if(collectionItemDo.getResource().getMediaType().equals(NOT_FRIENDY_TAG)){	
 				//mobileFriendly.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().ipadFriendlyIconBlock());

@@ -80,7 +80,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 	@UiField Button btnSkip,btnPost;
 	@UiField TextArea ratingCommentTxtArea;
 	@UiField HTMLPanel buttonsContainer;
-	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle;
+	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle,poorRatingHeaderLbl,poorRatingSubHeaderLbl;
 	
 	@UiField Label incorporateresourceText, unavailableresourceText,inaccurateTextresource,otherReason;
 	
@@ -135,6 +135,16 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		otherReason.getElement().setAttribute("alt",i18n.GL0606());
 		otherReason.getElement().setAttribute("title",i18n.GL0606());
 		
+		poorRatingHeaderLbl.setText(i18n.GL1854());
+		poorRatingHeaderLbl.getElement().setId("lblPoorRatingHeader");
+		poorRatingHeaderLbl.getElement().setAttribute("alt",i18n.GL1854());
+		poorRatingHeaderLbl.getElement().setAttribute("title",i18n.GL1854());
+		
+		poorRatingSubHeaderLbl.setText(i18n.GL2035());
+		poorRatingSubHeaderLbl.getElement().setId("lblPoorRatingSubHeader");
+		poorRatingSubHeaderLbl.getElement().setAttribute("alt",i18n.GL2035());
+		poorRatingSubHeaderLbl.getElement().setAttribute("title",i18n.GL2035());
+		
 		setUserReview(review);
 //		setAvgRatingWidget();
 		setGlassEnabled(true);
@@ -145,7 +155,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 		ratingText.getElement().setAttribute("alt",i18n.GL1991());
 		ratingText.getElement().setAttribute("title",i18n.GL1991());*/
 		
-		btnSkip.setText(i18n.GL1004());
+		btnSkip.setText(i18n.GL0142());
 		btnSkip.getElement().setId("btnSkip");
 		btnSkip.getElement().setAttribute("alt",i18n.GL1004());
 		btnSkip.getElement().setAttribute("title",i18n.GL1004());
@@ -215,7 +225,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 							saveAndPsotLbl.getElement().setAttribute("alt",saving);
 							saveAndPsotLbl.getElement().setAttribute("title",saving);
 							AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,true));  
-						}else if(btnPost.getText().equalsIgnoreCase("Post")){
+						}else if(btnPost.getText().equalsIgnoreCase("Submit")){
 							saveAndPsotLbl.setText(posting);
 							saveAndPsotLbl.getElement().setAttribute("alt",posting);
 							saveAndPsotLbl.getElement().setAttribute("title",posting);
@@ -233,16 +243,13 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 							}
 							if(resourceCheckBox4.isChecked())
 							{
-								System.out.println("--- in other ----");
 								reourceContentReportList.add("other");
 							}
 							
 							AppClientFactory.getInjector().getPlayerAppService().createContentReport(assocGooruOId, ratingCommentTxtArea.getText().trim(), reourceContentReportList, "", new SimpleAsyncCallback<ContentReportDo>() {
-								
 								@Override
 								public void onSuccess(ContentReportDo result) {
 									//getView().showSuccesmessagePopup();
-									System.out.println("--- i am here ----");
 									AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));
 
 								}
@@ -280,10 +287,10 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 			ratingCommentTxtArea.getElement().setAttribute("alt",review.trim());
 			ratingCommentTxtArea.getElement().setAttribute("title",review.trim());
 		}else{
-			reviewTextAreaTitle.setText(i18n.GL1855());
+			reviewTextAreaTitle.setText(i18n.GL2036());
 			reviewTextAreaTitle.getElement().setAttribute("alt",i18n.GL1855());
 			reviewTextAreaTitle.getElement().setAttribute("title",i18n.GL1855());
-			btnPost.setText("Post");
+			btnPost.setText("Submit");
 			btnPost.getElement().setAttribute("alt","Post");
 			btnPost.getElement().setAttribute("title","Post");
 		}
@@ -311,7 +318,29 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 								saveAndPsotLbl.setText(posting);
 								saveAndPsotLbl.getElement().setAttribute("alt",posting);
 								saveAndPsotLbl.getElement().setAttribute("title",posting);
-								AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));  
+								if(resourceCheckBox1.isChecked())
+								{
+									reourceContentReportList.add("missing-concept");
+								}
+								if(resourceCheckBox2.isChecked())
+								{
+									reourceContentReportList.add("not-loading");
+								}
+								if(resourceCheckBox3.isChecked())
+								{
+									reourceContentReportList.add("inappropriate");
+								}
+								if(resourceCheckBox4.isChecked())
+								{
+									reourceContentReportList.add("other");
+								}
+								
+								AppClientFactory.getInjector().getPlayerAppService().createContentReport(assocGooruOId, ratingCommentTxtArea.getText().trim(), reourceContentReportList, "", new SimpleAsyncCallback<ContentReportDo>() {
+									@Override
+									public void onSuccess(ContentReportDo result) {
+										AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));
+									}
+								});	  
 							}
 						}
 						SetStyleForProfanity.SetStyleForProfanityForTextArea(ratingCommentTxtArea, mandatoryDescLblForSwareWords, value);
