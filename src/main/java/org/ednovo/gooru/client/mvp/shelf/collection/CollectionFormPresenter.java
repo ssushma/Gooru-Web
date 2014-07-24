@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.OpenParentFol
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CopyCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CopyDraggedCollectionEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertFolderInShelfViewEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
@@ -59,6 +60,7 @@ import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -114,6 +116,8 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 	
 	private static final String O3_LEVEL = "o3";
 
+	private static String RESOURCE_ID_TO_ADD = "resourceId";
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.COLLECTION)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -139,7 +143,7 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 			@Override
 			public void onSuccess(CollectionDo result) {
 		
-
+			
 				Map<String, String> params = new HashMap<String, String>();
 				String level = AppClientFactory.getPlaceManager().getRequestParameter("level");
 				String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderid");
@@ -148,7 +152,7 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 				getView().hide();
 				
 				String mycollection=AppClientFactory.getPlaceManager().getRequestParameter("myCollection");
-
+				System.out.println("before shelf refresh list in setSaveCollectionAsyncCallback::::"+previousNameToken);
 				if(mycollection != null)
 				{
 				if(mycollection.equals("true")){
@@ -156,7 +160,10 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 						Map<String,String> params1 = new HashMap<String,String>();
 						//String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 						params1.put("id", result.getGooruOid());
+						System.out.println("before shelf refresh list");
 						fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT_AND_VIEW));
+						System.out.println("after shelf refresh list");
+						Window.alert("here changing place url");
 						PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, params1);
 						AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
 					}
@@ -164,7 +171,7 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 				}
 				else
 				{
-
+					System.out.println("before shelf refresh list in side else loop setSaveCollectionAsyncCallback::::"+previousNameToken);
 				if(previousNameToken.equalsIgnoreCase(PlaceTokens.EDIT_FOLDERS)||previousNameToken.equalsIgnoreCase(PlaceTokens.FOLDERS)) {
 					if(level!=null||folderId!=null) {
 						params.put("level", level);
@@ -173,7 +180,6 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 								RefreshFolderType.INSERT));
 						
 						if(level.equalsIgnoreCase(FOLDER_LEVEL_ONE)||level.equalsIgnoreCase(FOLDER_LEVEL_TWO)||level.equalsIgnoreCase(FOLDER_LEVEL_THREE)) {
-							
 							CollectionItemDo collectionItemDo = new CollectionItemDo();
 							ResourceDo resourceDo = new ResourceDo();
 							ResourceTypeDo resourceTypeDo = new ResourceTypeDo();
@@ -206,11 +212,27 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 						PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, params1);
 						AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
 					} else {
+						if(nameToken.equals(PlaceTokens.RESOURCE_SEARCH )&& RESOURCE_ID_TO_ADD!=null){
+							Map<String,String> params1 = new HashMap<String,String>();
+							params1.put("id", result.getGooruOid());
+							//fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
+							AppClientFactory.getInjector().getResourceService().createCollectionItem(result.getGooruOid(), RESOURCE_ID_TO_ADD, new SimpleAsyncCallback<CollectionItemDo>() {
+
+								@Override
+								public void onSuccess(CollectionItemDo result) {
+								
+								}
+							});
+							fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
+						}else  if(nameToken.equals(PlaceTokens.COLLECTION_SEARCH)){
+							fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
+						}else{
 						fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT_AND_VIEW));
 						Map<String,String> params1 = new HashMap<String,String>();
 						params1.put("id", result.getGooruOid());
 						PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, params1);
 						AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
+						}
 					}
 				}
 				}
@@ -239,7 +261,8 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 			if (resourceUid == null) {
 				if(folderId==null) {
 					getResourceService().createCollection(getView().getData(), getView().getCourseCodeId(), getSaveCollectionAsyncCallback());
-
+					System.out.println("inside save collection");
+					
 				} else {
 					AppClientFactory.getInjector().getfolderService().createCollectionInParent(getView().getData(), getView().getCourseCodeId(), folderId,new SimpleAsyncCallback<CollectionDo>() {
 						@Override
@@ -425,6 +448,18 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 			folderDo.setCollectionItems(folderItems);
 		}
 		return folderDo;
+	}
+
+	@Override
+	public void saveCollectionForSearch(String folderId, String o1, String o2,
+			String o3, String resourceidonclick) {
+		if(resourceidonclick!=null) {
+			RESOURCE_ID_TO_ADD =resourceidonclick;
+			getResourceService().createCollection(getView().getData(), getView().getCourseCodeId(), getSaveCollectionAsyncCallback());
+			System.out.println("inside save collection");
+			
+		}
+		
 	}
 	
 	

@@ -134,5 +134,7 @@ public interface IsSearchView<T extends ResourceSearchResultDo> extends IsViewWi
 	 * @param aggregatorSuggestions instance of {@link SearchDo} type 
 	 */
 	void setAggregatorSuggestions(SearchDo<String> aggregatorSuggestions);
+	
+	public void setAddResourceContainerPresenter(AddResourceContainerPresenter addResourceContainerPresenter);
 
 }

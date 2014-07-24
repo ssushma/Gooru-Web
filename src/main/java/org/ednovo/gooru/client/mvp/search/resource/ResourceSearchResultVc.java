@@ -68,6 +68,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -163,6 +165,13 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	
 	public RatingWidgetView getRatingWidgetView(){
 		return ratingWidgetView;
+	}
+	
+	public Label getAddButton(){
+		return wrapperVcr.addLbl;
+	}
+	public SimplePanel getAddResourceContainerPanel(){
+		return wrapperVcr.disclosureContentSimPanel;
 	}
 	/**
 	 * 
