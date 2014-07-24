@@ -307,7 +307,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}else{
 			resourcePublisher.setText("");
 		}
-
+		if(collectionItemDo.getResource().getResourceFormat()!=null){
+			if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+				resourcePublisher.setText(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+			}
+		}
 		if(forwardButton!=null){
 			forwardButton.removeFromParent();
 		}
@@ -380,7 +384,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				resourcePublisher.setText("");
 			}
-
+			if(collectionItemDo.getResource().getResourceFormat()!=null){
+				if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+					resourcePublisher.setText(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+				}
+			}
 			if(forwardButtonHandler!=null||backwardButtonHandler!=null){
 				forwardButtonHandler.removeHandler();
 				backwardButtonHandler.removeHandler();
@@ -986,7 +994,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
 				}
 				
-			}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			}
+			/**
+			 * Changed to collection player, as preview player feature removed.
+			 */
+			else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 				if(result.getRatings()!=null){
 					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
 				}
@@ -1622,7 +1634,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				collectionContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 			}
-		}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+		}
+		/**
+		 * Changed to collection player, as preview player feature removed.
+		 */
+		else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 			if(isChild){
 				ratingsContainer.setVisible(false);
 			}else{

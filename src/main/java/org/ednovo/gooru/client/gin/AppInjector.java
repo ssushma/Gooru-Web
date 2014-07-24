@@ -61,6 +61,7 @@ import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
 import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.register.RegisterPresenter;
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
@@ -198,6 +199,8 @@ public interface AppInjector extends ServiceInjector {
 	
 	AsyncProvider<SausdPresenter> getSausdPresenter();
 
-	AsyncProvider<DrivePresenter>getDrivePresenter();
+	AsyncProvider<DrivePresenter> getDrivePresenter();
+	
+	AsyncProvider<AddResourceContainerPresenter> getAddResourceContainerPresenter();
 
 }
