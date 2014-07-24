@@ -32,21 +32,16 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateFolderItemEvent;
+
 import org.ednovo.gooru.client.mvp.shelf.event.CopyDraggedCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent;
-
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -69,6 +64,8 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class AddResourceContainerPresenter extends PresenterWidget<IsAddResourceContainerView> implements AddResourceContainerUiHandlers{
 	
 	ResourceSearchResultDo searchResultDo =null;
+	CollectionItemDo collectionItemDo;
+	boolean isPlayer=false;
 	@Inject
 	public AddResourceContainerPresenter(EventBus eventBus, IsAddResourceContainerView view) {
 		super(eventBus, view);
@@ -134,9 +131,15 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			AppClientFactory.getInjector().getfolderService().getCollectionResources(selectedFolderOrCollectionid,null, null, new SimpleAsyncCallback<FolderListDo>(){
 				@Override
 				public void onSuccess(FolderListDo result) {
+					getView().getButtonVisiblity();
 					if (result.getCount()<25){
-					AppClientFactory.fireEvent(new CreateCollectionItemEvent(selectedFolderOrCollectionid,searchResultDo.getGooruOid()));
-					}else{
+						if(isPlayer){
+								AppClientFactory.fireEvent(new CreateCollectionItemEvent(selectedFolderOrCollectionid,collectionItemDo.getGooruOid()));	
+						}
+						else{
+							AppClientFactory.fireEvent(new CreateCollectionItemEvent(selectedFolderOrCollectionid,searchResultDo.getGooruOid()));
+						}
+						}else{
 						getView().restrictionToAddResourcesData();
 					}
 					}
@@ -159,8 +162,33 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 				final CollectionDo collection = new CollectionDo();
 				collection.setGooruOid(searchResultDo.getGooruOid());
 				AppClientFactory.fireEvent(new CopyDraggedCollectionEvent(collection,searchResultDo.getGooruOid(),result.getGooruOid())); 
+				
 			}
 		});
 		
 	}
+
+	@Override
+	public void setCollectionItemData(String collectionId,
+			CollectionItemDo collectionItemDo) {
+		this.collectionItemDo = collectionItemDo;
+		getView().clearShelfData();
+		getWorkspaceData(0,20,true,"resource");
+		
+	}
+
+	@Override
+	public void setplayerStyle() {
+		isPlayer=true;
+		getView().setPlayerStyle();
+		
+	}
+
+	@Override
+	public void removePlayerStyle() {
+		isPlayer=false;
+		getView().removePlayerStyle();
+		
+	}
+	
 }

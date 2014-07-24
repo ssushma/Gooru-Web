@@ -87,6 +87,8 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	
 	@UiField Anchor addCollectiorOrReourceText;
 	
+	@UiField FlowPanel addContent;
+	
 	private boolean isLeftFolderClicked=false;
 	
 	private int offset=0;
@@ -131,6 +133,8 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 		AddResourceContainerCBundle.INSTANCE.css().ensureInjected();
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		displayCountLabel.setVisible(false);
+		addingText.setVisible(false);
+		addingText.setText(i18n.GL0591());
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			  @Override
 			  public void onSelection(SelectionEvent<TreeItem> event) {
@@ -541,6 +545,8 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	
 	@UiHandler("addResourceBtnLbl")
 	public void addResourceBtnLblClick(ClickEvent event){
+		addingText.setVisible(true);
+		addResourceBtnLbl.setVisible(false);
 		if(currentsearchType.equalsIgnoreCase("collection")){
 			isCollectionSearch =true;
 			isResourceSearch=false;
@@ -580,6 +586,25 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 		// TODO Auto-generated method stub
 		displayErrorLabel.setText("You Can't add more than 25 resources to a collection");
 		displayErrorLabel.getElement().setAttribute("style", "left:24%;");
+	}
+
+	@Override
+	public void setPlayerStyle() {
+		addContent.setStyleName(AddResourceContainerCBundle.INSTANCE.css().addPlayerStyle());
+		dropdownListContainerScrollPanel.getElement().setAttribute("style","height: 135px !important;border: 1px solid #fff;");
+	}
+
+	@Override
+	public void removePlayerStyle() {
+		addContent.removeStyleName(AddResourceContainerCBundle.INSTANCE.css().addPlayerStyle());
+		dropdownListContainerScrollPanel.getElement().setAttribute("style","height: 275px !important;border: 1px solid #ddd;");
+	}
+
+	@Override
+	public void getButtonVisiblity() {
+		addingText.setVisible(false);
+		addResourceBtnLbl.setVisible(true);
+		
 	}
 	}
 

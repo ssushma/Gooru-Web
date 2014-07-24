@@ -716,9 +716,16 @@
 	margin-top:88px;
 }
 .addTextButtonsContainer{
-float: left;
-width: 174px;
-left: 10%;
-position: relative;
+	float: left;
+	width: 174px;
+	left: 10%;
+	position: relative;
+}
+.addPlayerStyle{
+	display: inline-block;
+	float: center;
+	margin-left: 275px;
+	height: 258px;
+	background-color: #fff;
 }
  
