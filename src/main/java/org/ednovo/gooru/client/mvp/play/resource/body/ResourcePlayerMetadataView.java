@@ -1717,7 +1717,16 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(resourceTagsList!=null){
 			for(int i=0;i<resourceTagsList.size();i++){
 				if(resourceTagsList.get(i).getLabel().contains("Educational Use")){
-					tagsContainer.add(new HTML(resourceTagsList.get(i).getLabel()));
+					String tagsdefaultLabel = i18n.GL1664() + " : ";
+					String tagLabel = resourceTagsList.get(i).getLabel();
+					HTMLPanel tagPanel = new HTMLPanel("");
+					if(resourceTagsList.get(i).getLabel().contains(i18n.GL1664()))
+					{
+						tagLabel = resourceTagsList.get(i).getLabel().replace(i18n.GL1664(), "").replaceAll(" ", "").replace(":", "");
+					}
+					tagPanel.setStyleName(playerStyle.eductaionalUseDesign());
+					tagPanel.getElement().setInnerHTML(tagLabel);
+					tagsContainer.add(tagPanel);
 				}
 			}
 		}
