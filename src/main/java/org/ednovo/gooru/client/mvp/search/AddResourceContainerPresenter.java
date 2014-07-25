@@ -143,6 +143,8 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			collection.setGooruOid(searchResultDo.getGooruOid());
 			AppClientFactory.fireEvent(new CopyDraggedCollectionEvent(collection,searchResultDo.getGooruOid(),selectedFolderOrCollectionid));
 			}else if(searchType.equalsIgnoreCase("resource")){
+				System.out.println("selectedFolderOrCollectionid::::"+selectedFolderOrCollectionid);
+				if(selectedFolderOrCollectionid!=null){
 			AppClientFactory.getInjector().getfolderService().getCollectionResources(selectedFolderOrCollectionid,null, null, new SimpleAsyncCallback<FolderListDo>(){
 				@Override
 				public void onSuccess(FolderListDo result) {
@@ -166,10 +168,14 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 							AppClientFactory.fireEvent(new CreateCollectionItemEvent(selectedFolderOrCollectionid,searchResultDo.getGooruOid()));
 						}
 						}else{
-						getView().restrictionToAddResourcesData();
+						getView().restrictionToAddResourcesData("You Can't add more than 25 resources to a collection");
 					}
 					}
     		});
+			
+				}else{
+					getView().restrictionToAddResourcesData("Please select collection");
+				}
 		}
 	}
 
@@ -230,6 +236,12 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 		isPlayer=false;
 		getView().removePlayerStyle(isPlayer);
 		
+	}
+
+	public void cleartheSelecteGooruOid() {
+		// TODO Auto-generated method stub
+		getView().clearSelectedId();
+		getView().getButtonVisiblity();
 	}
 
 	
