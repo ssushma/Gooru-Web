@@ -164,6 +164,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 				    	getFolderItems(item,folderTreeItemWidget.getGooruOid());
 				    }
 				    selectedFolderGooruOid = folderTreeItemWidget.getGooruOid();
+				    System.out.println("inside treepane::::"+selectedFolderGooruOid);
 				    isSelectedFolder=true;
 				    isSelectedCollection=false;
 				    if(parent != null)
@@ -376,6 +377,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 						 folderTreePanel.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }else if(floderDo.getType().equals("scollection")){
+						  System.out.println("inside treepanel inside folderdo::::"+floderDo.getGooruOid());
 						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(null,floderDo.getTitle(),floderDo.getGooruOid()));
 						 folderTreePanel.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
@@ -532,9 +534,9 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	}
 
 	@Override
-	public void restrictionToAddResourcesData() {
+	public void restrictionToAddResourcesData(String message) {
 		// TODO Auto-generated method stub
-		displayErrorLabel.setText("You Can't add more than 25 resources to a collection");
+		displayErrorLabel.setText(message);
 		displayErrorLabel.getElement().setAttribute("style", "left:24%;");
 	}
 
@@ -567,6 +569,14 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 		addResourceBtnLbl.setVisible(true);
 		
 	}
+
+	@Override
+	public void clearSelectedId() {
+		// TODO Auto-generated method stub
+		selectedCollectionGooruOid= null;
+	}
+
+	
 
 	}
 
