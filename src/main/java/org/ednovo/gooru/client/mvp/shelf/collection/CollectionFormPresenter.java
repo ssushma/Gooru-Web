@@ -118,6 +118,9 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 
 	private static String RESOURCE_ID_TO_ADD = "resourceId";
 	
+	private static String IS_FROM_ADDRESOURCE = "fromAddResource";
+	
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.COLLECTION)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -212,7 +215,9 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 						PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, params1);
 						AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
 					} else {
-						if(nameToken.equals(PlaceTokens.RESOURCE_SEARCH )&& RESOURCE_ID_TO_ADD!=null){
+						System.out.println("inside redirection else:::::"+IS_FROM_ADDRESOURCE);
+						if(IS_FROM_ADDRESOURCE.equalsIgnoreCase("resourceidfromAddResourcePresenter")){
+							System.out.println("inside this in add param1");
 							Map<String,String> params1 = new HashMap<String,String>();
 							params1.put("id", result.getGooruOid());
 							//fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
@@ -224,9 +229,12 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 								}
 							});
 							fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
+							
+							
 						}else  if(nameToken.equals(PlaceTokens.COLLECTION_SEARCH)){
 							fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
 						}else{
+							System.out.println("inside this in add param2");
 						fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT_AND_VIEW));
 						Map<String,String> params1 = new HashMap<String,String>();
 						params1.put("id", result.getGooruOid());
@@ -452,10 +460,35 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 
 	@Override
 	public void saveCollectionForSearch(String folderId, String o1, String o2,
-			String o3, String resourceidonclick) {
+			String o3, String resourceidonclick,String fromAddResource) {
 		if(resourceidonclick!=null) {
 			RESOURCE_ID_TO_ADD =resourceidonclick;
-			getResourceService().createCollection(getView().getData(), getView().getCourseCodeId(), getSaveCollectionAsyncCallback());
+			IS_FROM_ADDRESOURCE=fromAddResource;
+			
+			getResourceService().createCollection(getView().getData(), getView().getCourseCodeId(),new SimpleAsyncCallback<CollectionDo>() {
+
+				@Override
+				public void onSuccess(CollectionDo result) {
+					if(IS_FROM_ADDRESOURCE.equalsIgnoreCase("resourceidfromAddResourcePresenter")){
+						System.out.println("inside this in add param1");
+						Map<String,String> params1 = new HashMap<String,String>();
+						params1.put("id", result.getGooruOid());
+						//fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
+						AppClientFactory.getInjector().getResourceService().createCollectionItem(result.getGooruOid(), RESOURCE_ID_TO_ADD, new SimpleAsyncCallback<CollectionItemDo>() {
+
+							@Override
+							public void onSuccess(CollectionItemDo result) {
+								getView().hide();
+							}
+						});
+						fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
+						
+						
+					}	// TODO Auto-generated method stub
+					
+				}
+			});
+		//	getResourceService().createCollection(getView().getData(), getView().getCourseCodeId(), getSaveCollectionAsyncCallback());
 			System.out.println("inside save collection");
 			
 		}

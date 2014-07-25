@@ -79,7 +79,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	
-	@UiField HTMLPanel floderTreeContainer,buttonsContainer,createCollectionbuttonsContainer;
+	@UiField HTMLPanel floderTreeContainer,buttonsContainer,createCollectionbuttonsContainer,loadingImage;
 	
 	@UiField Button addResourceBtnLbl;
 	
@@ -129,6 +129,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	public AddResourceContainerView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		AddResourceContainerCBundle.INSTANCE.css().ensureInjected();
+		loadingImage.setVisible(true);
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		displayCountLabel.setVisible(false);
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
@@ -181,6 +182,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 			});
 		floderTreeContainer.clear();
 		floderTreeContainer.add(folderTreePanel);
+		loadingImage.setVisible(false);
 		//folderTreePanel.addItem(loadingTreeItem());
 	}
 
@@ -331,6 +333,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	@Override
 	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel,String searchType) {
 		currentsearchType=	searchType;
+		System.out.println("searchType::::::::::"+searchType+":::"+clearShelfPanel);
 		if(searchType.equalsIgnoreCase("collection")){
 			isCollectionSearch =true;
 			isResourceSearch=false;
@@ -339,29 +342,6 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 			addResourceText.getElement().setAttribute("style", "display: inline-block;");
 			addCollectiorOrReourceText.getElement().setAttribute("style", "display: inline-block;");
 			createCollectionbuttonsContainer.getElement().setAttribute("style", "margin-left: 44px;margin-top: 10px;");
-			addCollectiorOrReourceText.addClickHandler(new ClickHandler() {
-				@Override
-				public void onClick(ClickEvent event) {
-					// TODO Auto-generated method stub
-					isLeftFolderClicked=true;
-					FolderPopupUc folderPopupUc = new FolderPopupUc("", true) {
-						@Override
-						public void onClickPositiveButton(ClickEvent event, String folderName, String parentId, HashMap<String,String> params) {
-							if(!folderName.isEmpty()) {
-								getUiHandlers().createFolderInParent(folderName, parentId, params); 
-								Window.enableScrolling(true);
-								this.hide();
-							}
-						}
-					};
-					folderPopupUc.setGlassEnabled(true);
-					folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
-					folderPopupUc.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() + (110), Window.getScrollTop() + 50);
-					Window.enableScrolling(false);
-					folderPopupUc.show();
-				}
-			});
-		
 		}else if(searchType.equalsIgnoreCase("resource")){
 			isResourceSearch=true;
 			isCollectionSearch =false;
@@ -370,38 +350,6 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 			addResourceText.getElement().setAttribute("style", "display: inline-block;");
 			addCollectiorOrReourceText.getElement().setAttribute("style", "display: inline-block;");
 			createCollectionbuttonsContainer.getElement().setAttribute("style", "margin-left: 44px;margin-top: 10px;");
-			addCollectiorOrReourceText.addClickHandler(new ClickHandler() {
-				@Override
-				public void onClick(ClickEvent event) {
-					// TODO Auto-generated method stub
-					final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
-					final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
-					final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
-					Map<String, String> params = new HashMap<String, String>();
-					if(o3!=null) {
-						params.put(O1_LEVEL, o1);
-						params.put(O2_LEVEL, o2);
-						params.put(O3_LEVEL, o3);
-						params.put("folderId", o3);
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
-					} else if(o2!=null) {
-						params.put(O1_LEVEL, o1);
-						params.put(O2_LEVEL, o2);
-						params.put("folderId", o2);
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
-					} else if(o1!=null){
-						params.put(O1_LEVEL, o1);
-						params.put("folderId", o1);
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
-					} else {
-						params.put("resourceid", searchResultDo.getGooruOid());
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
-					}
-					//dropdownListContainerScrollPanel.clear();
-					getUiHandlers().getWorkspaceData(0, 20, false, "resource");
-					Window.enableScrolling(false);
-				}
-			});
 		}
 		resetEmptyCollMsg();
 		if(!dropdownListContainerScrollPanel.isVisible()){
@@ -411,6 +359,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 		if(clearShelfPanel){
 			folderTreePanel.clear();
 		}
+		System.out.println("folderListDo::::::::::"+folderListDo.getSearchResult().size());
 		if(folderListDo!=null){
 			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
 			 setPagination(folderListDo.getCount());
@@ -580,6 +529,16 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 		// TODO Auto-generated method stub
 		displayErrorLabel.setText("You Can't add more than 25 resources to a collection");
 		displayErrorLabel.getElement().setAttribute("style", "left:24%;");
+	}
+
+	@Override
+	public Anchor getAddButton() {
+		return addCollectiorOrReourceText;
+	}
+
+	@Override
+	public Tree getfolderTreePanel() {
+		return folderTreePanel;
 	}
 	}
 
