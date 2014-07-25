@@ -1635,7 +1635,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		ratingsConfirmationPopup.show();
 		ratingsConfirmationPopup.getElement().getStyle().setZIndex(99999);
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-			ratingsConfirmationPopup.setPopupPosition(685,Window.getScrollTop()+60);
+			ratingsConfirmationPopup.setPopupPosition(451,Window.getScrollTop()+120);
 		}else{
 			ratingsConfirmationPopup.setPopupPosition(800,Window.getScrollTop()+153);
 		}
@@ -1719,7 +1719,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		tagsContainer.clear();
 		if(resourceTagsList!=null){
 			FlowPanel toolTipwidgets = new FlowPanel();
-			for(int i=0;i<resourceTagsList.size();i++){	
+	
+			for(int i=0;i<resourceTagsList.size();i++){
 				if(i<3)
 				{
 				
@@ -1729,6 +1730,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					if(resourceTagsList.get(i).getLabel().toLowerCase().contains(i18n.GL1664().toLowerCase()))
 					{
 						tagLabel = resourceTagsList.get(i).getLabel().toLowerCase().replace(tagsdefaultLabel.toLowerCase(), "");
+						tagLabel = tagLabel.substring(0, 1).toUpperCase() + tagLabel.substring(1);
 					}
 					tagPanel.setStyleName(playerStyle.eductaionalUseDesign());
 					tagPanel.getElement().setInnerHTML(tagLabel);
@@ -1743,6 +1745,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					if(resourceTagsList.get(i).getLabel().toLowerCase().contains(i18n.GL1664().toLowerCase()))
 					{
 						tagLabel = resourceTagsList.get(i).getLabel().toLowerCase().replace(tagsdefaultLabel.toLowerCase(), "");
+						tagLabel = tagLabel.substring(0, 1).toUpperCase() + tagLabel.substring(1);
 					}
 					tagPanel.getElement().setInnerHTML(tagLabel);
 					toolTipwidgets.add(tagPanel);
@@ -1750,9 +1753,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 				}
 			}
-			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + (resourceTagsList.size()-3)), toolTipwidgets);
-			toolTipUc.setStyleName(playerStyle.educationalUseMoretags());
-			tagsContainer.add(toolTipUc);
+			if(resourceTagsList.size()>3)
+			{
+				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + (resourceTagsList.size()-3)), toolTipwidgets);
+				toolTipUc.setStyleName(playerStyle.educationalUseMoretags());
+				tagsContainer.add(toolTipUc);
+			}
+			
 		}
 	}
 	@UiHandler("plusAddTagsButton")
