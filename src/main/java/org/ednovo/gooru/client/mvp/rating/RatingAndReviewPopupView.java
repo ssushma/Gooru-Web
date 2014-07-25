@@ -108,7 +108,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public RatingAndReviewPopupView(EventBus eventsBus){
 		super(eventsBus);
 		appPopUp.setGlassEnabled(true);
-		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY) || AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			appPopUp.setGlassStyleName("setGlassPanelZIndex");
 		}
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));	
@@ -122,7 +122,12 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 		
 		hide();
-		if (!currentToken.equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY) && !currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+		if (!currentToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && !currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			Window.enableScrolling(true);
+		}
+		if (currentToken.equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			Window.enableScrolling(false);
+		}else{
 			Window.enableScrolling(true);
 		}
 	}
@@ -148,6 +153,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public void displayPopUp(String resourceTitle, String gooruOid,String createrName) {
 		this.gooruOid = gooruOid;
 		this.createrName = createrName;
+		reviewSize=0;
 		userRatingContainer.setVisible(false);
 		lblResourceTitle.setHTML(i18n.GL1840()+" "+removeHtmlTags(resourceTitle));
 		lblResourceTitle.getElement().setId("lblResourceTitle");
@@ -241,7 +247,9 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public void setGraphAndAvgContentRating(ContentStarRatingsDo result) {
 		setContentGraph(result); 
 		ratingWidgetView.setAvgStarRating(result.getAverage());
+		ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 		ratingWidgetView.getRatingCountLabel().setText(result.getCount().toString());
+		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
 
@@ -415,5 +423,4 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
         html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
         return html;
 	}
-
 }

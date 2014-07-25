@@ -27,6 +27,7 @@
  */
 package org.ednovo.gooru.client.mvp.search.collection;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.AppPlaceKeeper;
@@ -35,13 +36,20 @@ import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchPresenter;
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -55,8 +63,12 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  * @author Search Team
  * 
  */
-public class CollectionSearchPresenter extends AbstractSearchPresenter<CollectionSearchResultDo, ResourceSearchResultDo, IsCollectionSearchView, CollectionSearchPresenter.IsCollectionSearchProxy> implements SearchUiHandlers {
+public class CollectionSearchPresenter extends AbstractSearchPresenter<CollectionSearchResultDo, ResourceSearchResultDo, IsCollectionSearchView, CollectionSearchPresenter.IsCollectionSearchProxy> implements SearchUiHandlers,RefreshDisclosurePanelForFoldersEventHandler {
 
+	private AddResourceContainerPresenter addResourceContainerPresenter;
+	
+	private boolean isLeftFolderClicked=false;
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.COLLECTION_SEARCH)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -72,9 +84,11 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 	 *            {@link Proxy}
 	 */
 	@Inject
-	public CollectionSearchPresenter(IsCollectionSearchView view, IsCollectionSearchProxy proxy, SignUpPresenter signUpViewPresenter) {
+	public CollectionSearchPresenter(IsCollectionSearchView view, IsCollectionSearchProxy proxy, SignUpPresenter signUpViewPresenter,AddResourceContainerPresenter addResourceContainerPresenter) {
 		super(view, proxy, signUpViewPresenter);
+		this.addResourceContainerPresenter = addResourceContainerPresenter;
 		getView().setUiHandlers(this);
+		addRegisteredHandler(RefreshDisclosurePanelForFoldersEvent.TYPE, this);
 	}
 
 //	@Override
@@ -135,4 +149,65 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public AddResourceContainerPresenter getAddResourceContainerPresenter() {
+		// TODO Auto-generated method stub
+		return addResourceContainerPresenter;
+	}
+
+	@Override
+	public void showAddResourceToShelfView(SimplePanel addResourceContainerPanel,ResourceSearchResultDo searchResultDo,String Type) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showAddCollectionToShelfView(SimplePanel addResourceContainerPanel,CollectionSearchResultDo collectionsearchResultDo,String searchType) {
+		// TODO Auto-generated method stub
+		addResourceContainerPresenter.removePlayerStyle();
+		addResourceContainerPanel.clear();
+		System.out.println("inside collection search showAddCollectionToShelfView");
+		addResourceContainerPresenter.getUserShelfCollectionsData(collectionsearchResultDo,searchType);
+		addResourceContainerPanel.setWidget(addResourceContainerPresenter.getWidget());
+		addResourceContainerPresenter.getAddButton().addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+
+				// TODO Auto-generated method stub
+				isLeftFolderClicked=true;
+				FolderPopupUc folderPopupUc = new FolderPopupUc("", true) {
+					@Override
+					public void onClickPositiveButton(ClickEvent event, String folderName, String parentId, HashMap<String,String> params) {
+						if(!folderName.isEmpty()) {
+							addResourceContainerPresenter.createFolderInParent(folderName, parentId, params);
+						//	getUiHandlers().createFolderInParent(folderName, parentId, params); 
+							Window.enableScrolling(true);
+							this.hide();
+						}
+					}
+				};
+				folderPopupUc.setGlassEnabled(true);
+				folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
+				//folderPopupUc.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() + (110), Window.getScrollTop() + 50);
+				folderPopupUc.setPopupPosition(400, Window.getScrollTop() + 50);
+				Window.enableScrolling(false);
+				folderPopupUc.show();
+			
+				
+			}
+		});
+		
+	}
+
+	@Override
+	public void refreshDisclosurePanelForFoldersinSearch(String collectionId) {
+		// TODO Auto-generated method stub
+		System.out.println("event fired in collection search presenter");
+		addResourceContainerPresenter.getfolderTreePanel().clear();
+		addResourceContainerPresenter.getWorkspaceData(0, 20, false, "collection");
+	}
+
+	
 }

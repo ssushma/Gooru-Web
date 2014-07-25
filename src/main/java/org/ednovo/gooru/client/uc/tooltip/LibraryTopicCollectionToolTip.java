@@ -131,7 +131,9 @@ public class LibraryTopicCollectionToolTip extends Composite {
 	private void setAvgRatingWidget(int ratingCount,double averageRating) {
 		ratingWidgetPanel.clear();
 		ratingWidgetView=new RatingWidgetView();
+		ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 		ratingWidgetView.getRatingCountLabel().setText(ratingCount+"");
+		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetView.setAvgStarRating(averageRating);
 		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 		ratingWidgetPanel.add(ratingWidgetView);

@@ -68,6 +68,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -164,6 +166,13 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	public RatingWidgetView getRatingWidgetView(){
 		return ratingWidgetView;
 	}
+	
+	public Label getAddButton(){
+		return wrapperVcr.addLbl;
+	}
+	public SimplePanel getAddResourceContainerPanel(){
+		return wrapperVcr.disclosureContentSimPanel;
+	}
 	/**
 	 * 
 	 * @function updateViews 
@@ -245,9 +254,10 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	 */
 	public void setData(ResourceSearchResultDo resourceSearchResultDo) {
 		this.resourceSearchResultDo = resourceSearchResultDo;
-		ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount().toString()); 
+		ratingWidgetView.getAverageRatingLabel().setText(Double.toString(resourceSearchResultDo.getRatings().getAverage())+" ");
+		ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
+		ratingWidgetView.getRatingCountLabel().setText(" "+resourceSearchResultDo.getRatings().getCount().toString()+" "+i18n.GL2024()); 
 		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
-//		ratingWidgetView.setAvgStarRating(2); 
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 		wrapperVcr.setData(resourceSearchResultDo);
         String description = resourceSearchResultDo.getDescription();
@@ -311,7 +321,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		resourceTitle=resourceSearchResultDo.getResourceTitle();
 		lblResourceTitle.getElement().setId(resourceSearchResultDo.getGooruOid());
 		if (lblResourceTitle.getText().length()>38){
-			lblResourceTitle.getElement().getStyle().setWidth(350, Unit.PX);
+			lblResourceTitle.getElement().getStyle().setWidth(275, Unit.PX);
 		}
 		String mediaType = resourceSearchResultDo.getMediaType();
 		

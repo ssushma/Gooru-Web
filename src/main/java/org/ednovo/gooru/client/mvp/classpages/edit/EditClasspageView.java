@@ -1156,6 +1156,7 @@ public class EditClasspageView extends
 				assignmentsDirectionsLabel.setVisible(true);
 				getstarteddiv.addStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
 				noAssignmentsMessagePanel.setVisible(true);
+				assignmentsTab.setText(i18n.GL1623()+"("+0+")");
 				dropDownListDiv.setVisible(false);
 				/*droplistContianer.setVisible(false);*/
 				
@@ -1217,6 +1218,7 @@ public class EditClasspageView extends
 				assignmentsDirectionsLabel.setVisible(true);
 				getstarteddiv.addStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
 				noAssignmentsMessagePanel.setVisible(true);
+				assignmentsTab.setText(i18n.GL1623()+"("+0+")");
 				/*droplistContianer.setVisible(false);*/
 				dropDownListDiv.setVisible(false);
 			}
@@ -1574,6 +1576,7 @@ public class EditClasspageView extends
 			assignmentsDirectionsLabel.setVisible(true);
 			getstarteddiv.addStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
 			noAssignmentsMessagePanel.setVisible(true);
+			assignmentsTab.setText(i18n.GL1623()+"("+0+")");
 			/*droplistContianer.setVisible(false);*/
 			dropDownListDiv.setVisible(false);
 		}
@@ -1932,12 +1935,17 @@ public class EditClasspageView extends
 	public void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageProcess){			
 		boolean isLast = false;
 		
+		
+		
 		if (offsetProgress <= 0){
 			lblPrevious.setVisible(false);
 		}else{
 			lblPrevious.setVisible(true);
 		}
 		if (classpageProcess.size() > 0){
+					
+			assignmentsTab.setText(i18n.GL1623()+"("+classpageProcess.get(0).getTotalHitCount()+")");
+			
 			panelAssignmentProgress.clear();
 			//hide/show the next and previous buttons
 			if (classpageProcess.get(0).getTotalHitCount() > limitProgress && classpageProcess.size() == limitProgress){
@@ -1949,6 +1957,7 @@ public class EditClasspageView extends
 			}
 		}
 		//display the assignments progress (DOTS)
+
 		for (int i=0; i<classpageProcess.size(); i++){
 			panelAssignmentProgress.add(new AssignmentProgressVc(isLast, 
 					classpageProcess.get(i), classpageProcess.get(i).getSequenceNumber(), classpageProcess.get(0).getTotalHitCount()));

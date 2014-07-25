@@ -33,7 +33,7 @@ import com.gwtplatform.mvp.client.PopupView;
 public interface IsCollectionPlayerView extends PopupView, IsViewWithHandlers<CollectionPlayerUiHandlers>{
 	public FlowPanel getPlayerBodyContainer();
 	public void setResourceTitle(String resourceTitle);
-	public FlowPanel getNavigationContainer();
+	public FlowPanel getResourceAnimationContainer();
 	public void enablePlayerButton(boolean isAddButtonEnable,boolean isInfoButtonEnable,boolean isShareButtonEnable, boolean isNarrationButtonEnable,boolean isNavigationButtonEnable,boolean isFlagButtonActive);
 	public void makeButtonActive(boolean makeAddButtionActive,boolean makeInfoButtionActive, boolean  makeShareButtonActive, boolean makeNarrationButtonActive, boolean makeNavigationButtonActive,boolean makeFlagButtonActive);
 	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectNarrationButton,boolean deselectNavigationButton,boolean deselectFlagButton);

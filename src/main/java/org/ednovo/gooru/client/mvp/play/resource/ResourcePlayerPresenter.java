@@ -49,6 +49,7 @@ import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPres
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.resource.flag.ResourceFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.share.ResourceSharePresenter;
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
@@ -98,6 +99,8 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
     private AddResourceCollectionPresenter addResourceCollectionPresnter;
     
     private CollectionFormInPlayPresenter collectionFormInPlayPresenter;
+    
+   // private AddResourceContainerPresenter addResourceContainerPresenter;
     
     private CollectionItemDo collectionItemDo;
     
@@ -309,6 +312,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		addResourceCollectionPresnter.getAddNewCollectionButton().addClickHandler(new ShowNewCollectionWidget());
 		this.collectionFormInPlayPresenter=collectionFormInPlayPresenter;
 		this.resourceFlagPresenter=resourceFlagPresenter;
+		//this.addResourceContainerPresenter=addResourceContainerPresenter;
 		resourceFlagPresenter.setResourcePlayerPresenter(this);
 		resourceSharePresenter.setResourcePlayerPresenter(this);
 		addResourceCollectionPresnter.getAddCollectionViewButton().setVisible(false);
@@ -508,10 +512,13 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		 }
 	}
 	public void setAddResourceCollectionView(String resourceId){
+	
 		if(AppClientFactory.isAnonymous()){
 			clearSlot(TAB_PRESENTER_SLOT);
 			showLoginPopupWidget(i18n.GL0590().toUpperCase());
 		}else{
+			//addResourceContainerPresenter.setplayerStyle();
+			//addResourceContainerPresenter.setCollectionItemData("", collectionItemDo);
 			addResourceCollectionPresnter.setCollectionItemData(null, collectionItemDo);
 			setInSlot(TAB_PRESENTER_SLOT, addResourceCollectionPresnter,false);
 			new CustomAnimation(getView().getNavigationContainer()).run(400);

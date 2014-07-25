@@ -35,10 +35,10 @@
 	cursor:pointer;
 }
 .collectionPlayerContainer{
-	width: 960px;
-	min-height: 500px;
+	width: 1000px;
 	margin: 0 auto;
 	height: 95%;
+	float:left;
 	/* margin-top: 141px; */
 }
 .resourcePlayerRightArrowContainer{
@@ -93,6 +93,11 @@
 .collectionNormalTxt {
 	font-size: 12px;
 	color: rgb(81,81,81);
+	display: inline-block;
+	border-left: 2px solid #999999;
+	margin-left: 5px;
+	padding-left: 5px;
+	padding-top: 2px;
 }
 .icon {
 	position: absolute;
@@ -242,9 +247,9 @@
 }
 
 .emoticsContainer{
-	position: absolute;
-	top: 13px;
-	width: 310px;
+	text-align: center;
+	position: relative;
+	margin-top: 5px;
 }
 
 #resourcePlayerContainer{
@@ -717,7 +722,7 @@ fieldset {
 }
 
 .ratingConfirmationContainer .rating {
-	margin-bottom: 20px;
+	margin-bottom: 6px;
 }
 
 .ratingConfirmationContainer label {
@@ -739,30 +744,27 @@ fieldset {
 }
 
 .arrowBorder {
-	width: 0px;
-	height: 0px;
-	border: 10px solid;
-	border-style: inset solid inset none;
-	border-color: transparent #DDD transparent transparent;
+	top: -13px;
+	width: 0;
+	height: 0;
+	z-index: 100;
 	position: absolute;
-	top: 15px;
-	margin: auto;
-	border-left: none;
-	left: -10px;
+	left: 150px;
+	border-left: 15px solid transparent;
+	border-right: 15px solid transparent;
+	border-bottom: 15px solid #ddd;
 }
 
 .arrow {
-	width: 0px;
-	height: 0px;
-	border: 10px solid;
-	border-style: inset solid inset none;
-	border-color: transparent white transparent transparent;
-	position: absolute;
-	margin: auto;
-	top: 15px;
-	border-left: none;
+	top: -11px;
+	width: 0;
+	height: 0;
 	z-index: 100;
-	left: -9px;
+	position: absolute;
+	left: 150px;
+	border-left: 15px solid transparent;
+	border-right: 15px solid transparent;
+	border-bottom: 15px solid #fff;
 }
 
 .confirmationIcon {
@@ -800,6 +802,7 @@ fieldset {
 }
 .okContainer{
 	text-align: center;
+	margin-top: 8px;
 }
 
 .errorLblBottomText {
@@ -825,4 +828,106 @@ fieldset {
 	font-size: 12px;
 	font-weight: bold;
 	margin-bottom: 10px;
+}
+
+
+.ratingPoorConfirmationContainer {
+	padding: 20px;
+	border: 1px solid #ddd;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	width: 300px;
+	border-radius: 4px;
+	position: absolute;
+	/* top: 425px;
+	left: 295px; */
+	white-space: normal;
+	background-color: white;
+}
+
+.ratingPoorHeader{
+	text-align: center;
+	font-size: 16px;
+}
+/*==============New Player css==================*/
+
+.blocksmall{
+	float: left;
+    padding: 10px 10px;
+    width: 100%;
+    box-sizing: border-box;
+    background: #ffffff;
+}
+
+.blocksmall:before, .blocksmall:after {
+	box-sizing: border-box;
+}
+.mainDisc{
+	display:inline-block;
+	vertical-align:top;
+	width:80%;
+}
+.resourceTitleStyle{
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: -2px;
+	display: inline-block;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 400px;
+	max-height: 18px;
+	overflow: hidden;
+	
+}
+.tagsWrapperStyle{
+	display: inline-block;
+	position: relative;
+}
+.selectedTags{
+	padding: 4px 5px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	background: #a6cba2;
+	display: inline-block;
+	margin-right: 5px;
+}
+.plusAddButton{
+	padding:3px 3px !important;
+}
+.collectionPlayerImage{
+	text-align: center;
+	height: 448px;
+	display: table-cell;
+	vertical-align: middle;
+	width: 960px;
+}
+
+
+.ratingPoorSaveCancelContainer {
+	text-align: center;
+	margin-top:8px;
+}
+
+.savePostLbl{
+	font-style: italic;
+	text-align: center;
+}
+
+.btnSpace{
+	margin-left: 10px;
+}
+
+.eductaionalUseDesign{
+	padding: 4px 4px;
+border-radius: 4px;
+-moz-border-radius: 4px;
+background: #a6cba2;
+display:inline-block;
+margin:2px 2px;
+}
+.educationalUseMoretags{
+color: #0f76bb;
+cursor: pointer;
+display: inline-block;
 }

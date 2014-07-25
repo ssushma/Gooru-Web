@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
@@ -44,6 +45,12 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.dom.client.HasMouseOutHandlers;
+import com.google.gwt.event.dom.client.HasMouseOverHandlers;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiConstructor;
@@ -60,16 +67,17 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class TocResourceView extends Composite implements HasClickHandlers{
+public class TocResourceView extends Composite implements HasClickHandlers,HasMouseOverHandlers,HasMouseOutHandlers{
 
 	@UiField Image resourceThumbnail;
-	@UiField Label resourceTypeImage,resourceIndex,resourceCategory,resourceSourceName;
+	@UiField Label resourceTypeImage;
 	@UiField HTMLPanel resourceTitle;
-	@UiField HTML resourceHoverTitle;
-	@UiField FlowPanel tocResourceImageContainer,tocResourceContainer,ratingWidgetPanel;
+	@UiField FlowPanel tocResourceImageContainer,tocResourceContainer,resourceThumbnailContainer;
 	private CollectionItemDo collectionItemDo=null;
 	
 	private String collectionItemId=null;
+	
+	private TocResourceToolTip tocResourceToolTip;
 	
 	private HTML contentHtml=new HTML();
 	private RatingWidgetView ratingWidgetView=null;
@@ -79,6 +87,7 @@ public class TocResourceView extends Composite implements HasClickHandlers{
 	interface TocResourceViewUiBinder extends UiBinder<Widget, TocResourceView> {
 	}
 	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	
 	public TocResourceView(){
@@ -88,15 +97,15 @@ public class TocResourceView extends Composite implements HasClickHandlers{
 		resourceThumbnail.getElement().setId("imgResourceThumbnail");
 		resourceTypeImage.getElement().setId("lblResourceTypeImage");
 		resourceTitle.getElement().setId("pnlResourceTitle");
-		resourceIndex.getElement().setId("lblResourceIndex");
-		resourceHoverTitle.getElement().setId("htmlResourceHoverTitle");
-		resourceCategory.getElement().setId("lblResourceCategory");
-		resourceSourceName.getElement().setId("lblResourceSourceName");
-		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
+//		resourceIndex.getElement().setId("lblResourceIndex");
+//		resourceHoverTitle.getElement().setId("htmlResourceHoverTitle");
+//		resourceCategory.getElement().setId("lblResourceCategory");
+//		resourceSourceName.getElement().setId("lblResourceSourceName");
+//		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 	}
 	
 	@UiConstructor
-	public TocResourceView(CollectionItemDo collectionItemDo,Integer itemIndex,boolean showItemIndex, boolean addHyperlink){
+	public TocResourceView(final CollectionItemDo collectionItemDo,final Integer itemIndex,final boolean showItemIndex, final boolean addHyperlink){
 		initWidget(uiBinder.createAndBindUi(this));
 		this.collectionItemDo=collectionItemDo;
 		tocResourceContainer.getElement().setId("fpnlTocResourceContainer");
@@ -104,11 +113,35 @@ public class TocResourceView extends Composite implements HasClickHandlers{
 		resourceThumbnail.getElement().setId("imgResourceThumbnail");
 		resourceTypeImage.getElement().setId("lblResourceTypeImage");
 		resourceTitle.getElement().setId("pnlResourceTitle");
-		resourceIndex.getElement().setId("lblResourceIndex");
-		resourceHoverTitle.getElement().setId("htmlResourceHoverTitle");
-		resourceCategory.getElement().setId("lblResourceCategory");
-		resourceSourceName.getElement().setId("lblResourceSourceName");
-		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
+//		resourceIndex.getElement().setId("lblResourceIndex");
+//		resourceHoverTitle.getElement().setId("htmlResourceHoverTitle");
+//		resourceCategory.getElement().setId("lblResourceCategory");
+//		resourceSourceName.getElement().setId("lblResourceSourceName");
+//		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
+		this.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				if(tocResourceToolTip!=null){
+					tocResourceToolTip.hide();
+				}
+			}
+		});
+		this.addMouseOverHandler(new MouseOverHandler() {
+			
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				tocResourceToolTip=new TocResourceToolTip( collectionItemDo,itemIndex,showItemIndex,addHyperlink);
+				if(AppClientFactory.getPlaceManager().getRequestParameter("rid")!=null){
+				tocResourceToolTip.setPopupPosition(TocResourceView.this.getElement().getAbsoluteLeft()-112, TocResourceView.this.getElement().getAbsoluteTop()+30);
+				}else{
+					tocResourceToolTip.setPopupPosition(TocResourceView.this.getElement().getAbsoluteLeft()-112, TocResourceView.this.getElement().getAbsoluteTop()+90);
+				}
+				tocResourceToolTip.setStyleName("");
+				tocResourceToolTip.getElement().getStyle().setZIndex(999999);
+				tocResourceToolTip.show();
+				}
+		});
 		if(showItemIndex){
 			setNavigationResourceTitle(collectionItemDo.getResource().getTitle(),itemIndex);
 		}else{
@@ -125,7 +158,7 @@ public class TocResourceView extends Composite implements HasClickHandlers{
 		setResourceSequence(itemIndex);
 		setResourceCategory();
 		setReourceSourceName();
-		if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+		if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 			setAvgRatingWidget();
 		}
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
@@ -137,11 +170,12 @@ public class TocResourceView extends Composite implements HasClickHandlers{
 	private void setAvgRatingWidget() {
 		ratingWidgetView=new RatingWidgetView();
 		if(collectionItemDo.getResource().getRatings()!=null){
+			ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 			ratingWidgetView.getRatingCountLabel().setText(collectionItemDo.getResource().getRatings().getCount()!=null ?collectionItemDo.getResource().getRatings().getCount().toString(): "0");
+			ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 			ratingWidgetView.setAvgStarRating(collectionItemDo.getResource().getRatings().getAverage());
 		}
-//		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
-		ratingWidgetPanel.add(ratingWidgetView);
+		//ratingWidgetPanel.add(ratingWidgetView);
 	}
 
 	/**
@@ -162,12 +196,12 @@ public class TocResourceView extends Composite implements HasClickHandlers{
 	public void setReourceSourceName(){
 		if(collectionItemDo.getResource().getResourceSource()!=null){
 			if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
-			resourceSourceName.setText(collectionItemDo.getResource().getResourceSource().getAttribution()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():"");
-			resourceTitle.getElement().setAttribute("alt", collectionItemDo.getResource().getResourceSource().getAttribution()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():"");
-			resourceTitle.getElement().setAttribute("title", collectionItemDo.getResource().getResourceSource().getAttribution()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():"");
+//			resourceSourceName.setText(collectionItemDo.getResource().getResourceSource().getAttribution()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():"");
+//			resourceTitle.getElement().setAttribute("alt", collectionItemDo.getResource().getResourceSource().getAttribution()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():"");
+//			resourceTitle.getElement().setAttribute("title", collectionItemDo.getResource().getResourceSource().getAttribution()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():"");
 			}
 			}else{
-			resourceSourceName.setText("");
+//			resourceSourceName.setText("");
 		}
 		
 	}
@@ -188,15 +222,15 @@ public class TocResourceView extends Composite implements HasClickHandlers{
 			{
 				resourceType=resourceType.replaceAll("exam","webpage").replaceAll("website","webpage").replaceAll("challenge","webpage");
 			}
-			resourceCategory.setText(resourceType);
-			resourceCategory.getElement().setAttribute("alt", resourceType);
-			resourceCategory.getElement().setAttribute("title", resourceType);
+//			resourceCategory.setText(resourceType);
+//			resourceCategory.getElement().setAttribute("alt", resourceType);
+//			resourceCategory.getElement().setAttribute("title", resourceType);
 		}
 	}
 	public void setResourceSequence(int itemIndex){
-		resourceIndex.setText(itemIndex<10?"0"+itemIndex:""+itemIndex);
-		resourceIndex.getElement().setAttribute("alt", itemIndex<10?"0"+itemIndex:""+itemIndex);
-		resourceIndex.getElement().setAttribute("title", itemIndex<10?"0"+itemIndex:""+itemIndex);
+//		resourceIndex.setText(itemIndex<10?"0"+itemIndex:""+itemIndex);
+//		resourceIndex.getElement().setAttribute("alt", itemIndex<10?"0"+itemIndex:""+itemIndex);
+//		resourceIndex.getElement().setAttribute("title", itemIndex<10?"0"+itemIndex:""+itemIndex);
 	}
 	
 	public void setResourceTitleColor(){
@@ -286,17 +320,17 @@ public class ResourceRequest implements ClickHandler{
 		resourceTitle.add(getHTML(title));
 		resourceTitle.getElement().setAttribute("alt", getHTML(title).toString());
 		resourceTitle.getElement().setAttribute("title", ""+getHTML(title).toString());
-		resourceHoverTitle.setHTML(getHTML(title).toString());
-		resourceHoverTitle.getElement().setAttribute("alt", getHTML(title).toString());
-		resourceHoverTitle.getElement().setAttribute("title", getHTML(title).toString());
+//		resourceHoverTitle.setHTML(getHTML(title).toString());
+//		resourceHoverTitle.getElement().setAttribute("alt", getHTML(title).toString());
+//		resourceHoverTitle.getElement().setAttribute("title", getHTML(title).toString());
 	}
 	public void setNavigationResourceTitle(String title,Integer itemIndex){
-		resourceTitle.add(getHTML(itemIndex+". "+title));
+		resourceTitle.add(getHTML(itemIndex+""));
 		resourceTitle.getElement().setAttribute("alt", itemIndex+". "+title);
 		resourceTitle.getElement().setAttribute("title", itemIndex+". "+title);
-		resourceHoverTitle.setHTML(title.toString());
-		resourceHoverTitle.getElement().setAttribute("alt", title.toString());
-		resourceHoverTitle.getElement().setAttribute("title", title.toString());
+//		resourceHoverTitle.setHTML(title.toString());
+//		resourceHoverTitle.getElement().setAttribute("alt", title.toString());
+//		resourceHoverTitle.getElement().setAttribute("title", title.toString());
 	}
 	
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
@@ -417,8 +451,16 @@ public class ResourceRequest implements ClickHandler{
 	private HTML getHTML(String html){
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		contentHtml.setHTML(html);
-		contentHtml.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setEllipses());
+		contentHtml.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sequenceNumber());
 		return contentHtml;
+	}
+	
+	public void hideResourceThumbnailContainer(boolean hide){
+		if(hide){
+			resourceThumbnailContainer.setVisible(false);
+		}else{
+			resourceThumbnailContainer.setVisible(true);
+		}
 	}
 	
 	UpdateRatingsInRealTimeHandler setRatingWidgetMetaData = new UpdateRatingsInRealTimeHandler() {	
@@ -433,4 +475,15 @@ public class ResourceRequest implements ClickHandler{
 			}
 		}
 	};
+
+
+	@Override
+	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
+		return addDomHandler(handler, MouseOutEvent.getType());
+	}
+
+	@Override
+	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
+		return addDomHandler(handler, MouseOverEvent.getType());
+	}
 }

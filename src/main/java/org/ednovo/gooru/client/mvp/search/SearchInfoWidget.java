@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -18,6 +19,7 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.ToolTipPopUp;
+
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -442,7 +444,9 @@ public class SearchInfoWidget extends Composite {
 			
 			setOriginalUrl(CollectiongenealInfo.getResource().getAssetURI(),CollectiongenealInfo.getResource().getFolder(),
 					CollectiongenealInfo.getResource().getUrl(),CollectiongenealInfo.getResource().getResourceType().getName());
-			
+
+			if(resourceDo.getPublisher()!=null || CollectiongenealInfo.getResource().getResourceFormat()!=null){
+
 			if(resourceDo.getPublisher()!=null){
 				if(resourceDo.getPublisher().size()>0){
 				InfoUtil.setDepthofknowledgeDetails(CollectiongenealInfo.getResource().getPublisher(), publisherType, publisherText, publisherPanel);
@@ -451,9 +455,15 @@ public class SearchInfoWidget extends Composite {
 				else{
 					publisherPanel.setVisible(false);
 				}
-			}else{
-				publisherPanel.setVisible(false);
 			}
+			if(CollectiongenealInfo.getResource().getResourceFormat()!=null){
+				if(CollectiongenealInfo.getResource().getResourceFormat()!=null && CollectiongenealInfo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+					List<String> publisherQuestionUserName = new ArrayList<String>();
+					publisherQuestionUserName.add(CollectiongenealInfo.getResource().getUser().getUsername());
+					InfoUtil.setDepthofknowledgeDetails(publisherQuestionUserName, publisherType, publisherText, publisherPanel);
+				}
+			}
+		}
 			
 			if(resourceDo.getAggregator()!=null){
 //				setAggregatorvalues(collectionItemDo.getResource().getAggregator());
@@ -1206,7 +1216,12 @@ public class SearchInfoWidget extends Composite {
 							@Override
 							public void onClickPositiveButton(ClickEvent event) {
 								this.hide();
-								Window.enableScrolling(true);
+								
+								if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+									Window.enableScrolling(false);
+								}else{
+									Window.enableScrolling(true);
+								}
 							}
 							
 						};
@@ -1219,7 +1234,11 @@ public class SearchInfoWidget extends Composite {
 						success.center();
 						success.show();
 					 }else{
-						 Window.enableScrolling(true);
+						 if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+								Window.enableScrolling(false);
+							}else{
+								Window.enableScrolling(true);
+							}
 					 }
 				}
 			};

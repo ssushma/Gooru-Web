@@ -64,6 +64,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -227,7 +228,6 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 			creatorNameLblValue.getElement().setAttribute("alt",collectionResultDo.getOwner().getUsername());
 			creatorNameLblValue.getElement().setAttribute("title",collectionResultDo.getOwner().getUsername());
 		}
-		System.out.println("collectionResultDo.getOwner().isProfileUserVisibility() : "+collectionResultDo.getOwner().isProfileUserVisibility());
 		if ((collectionResultDo.getOwner().isProfileUserVisibility())){
 			if(StringUtil.isPartnerUser(collectionResultDo.getOwner().getUsername())) {
 				creatorNameLblValue.getElement().getStyle().setColor("#1076bb");
@@ -336,7 +336,7 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", collectionResultDo.getGooruOid());
 		com.google.gwt.user.client.Window.scrollTo(0, 0);
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 	}
 	
 	/**
@@ -421,5 +421,11 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 
 	public SimpleAsyncCallback<ProfileDo> getUserprofileAsyncCallback() {
 		return userProfileAsyncCallback;
+	}
+	public Label getAddButton(){
+		return wrapperVc.addLbl;
+	}
+	public SimplePanel getAddResourceContainerPanel(){
+		return wrapperVc.disclosureContentSimPanel;
 	}
 }

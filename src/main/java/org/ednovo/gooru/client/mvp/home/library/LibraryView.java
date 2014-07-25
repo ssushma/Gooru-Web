@@ -85,6 +85,7 @@ import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -124,7 +125,9 @@ public class LibraryView extends Composite implements  ClickHandler {
 	@UiField
 	HTMLPanel featuredCourses;
 
-	@UiField Label courseTitle, featuredCousesLbl,featuredContributor;
+	@UiField Label featuredCousesLbl,featuredContributor;
+	
+	@UiField HTML courseTitle;
 	
 	@UiField Anchor featuredContributorsLink;
 	
@@ -808,6 +811,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 		final String standardsLibraryType = AppClientFactory.getPlaceManager().getRequestParameter("libtype");
 		final String subjectId = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME, FEATURED_LABEL);
 		leftNav.clear();
+		if(unitDoList != null)
+		{
 		for(int i = 0; i<unitDoList.size(); i++) {
 			leftNav.add(new LibraryUnitMenuView(unitDoList.get(i)));
 			if(i==0&&(unitId==null)) {
@@ -819,6 +824,12 @@ public class LibraryView extends Composite implements  ClickHandler {
 					setLibraryConceptOnlyData(unitDoList.get(i).getCollection(), unitDoList.get(i).getCount());
 				}
 			}
+		}
+		}
+		else
+		{
+			contentScroll.setVisible(false);
+			loadingIconPanel.setVisible(true);
 		}
 		
 		int widgetCount = 0;
@@ -999,7 +1010,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			if(StringUtil.isPartnerUser(AppClientFactory.getCurrentPlaceToken())){
 				educatorPhoto.setVisible(false);
 				featuredContributor.setVisible(false);
-				courseTitle.setText(courseDo.getLabel());
+				courseTitle.setHTML(courseDo.getLabel());
 				courseTitle.getElement().setAttribute("alt",courseDo.getLabel());
 				courseTitle.getElement().setAttribute("title",courseDo.getLabel());
 				courseImage.setUrl(courseDo.getThumbnails().getUrl());
@@ -1025,7 +1036,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 						}
 					});
 					
-					courseTitle.setText(courseDo.getLabel());
+					courseTitle.setHTML(courseDo.getLabel());
 					courseTitle.getElement().setAttribute("alt",courseDo.getLabel());
 					courseTitle.getElement().setAttribute("title",courseDo.getLabel());
 					try {

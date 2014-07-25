@@ -1285,4 +1285,10 @@ public class MixpanelUtil {
 	public static native String getIP() /*-{
     	return $wnd._ipAddress;
 	}-*/;
+
+	public static native void Click_addInfo()/*-{
+  		$wnd.mixpanel.track("Clicked_AddTab_Search",{},function() { });
+  	}-*/;
+	
+	
 }

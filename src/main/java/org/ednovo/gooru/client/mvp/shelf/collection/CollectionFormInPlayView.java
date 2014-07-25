@@ -213,6 +213,12 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		isCheckedValue=false;
 		appPopUp.setTitle(i18n.GL0993());
 		buttonFloPanel.setVisible(false);
+		btnOk.getElement().setAttribute("style", "margin-left:10px"); 
+		loadingTextLbl.setText(i18n.GL0591().toLowerCase());
+		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
+		loadingTextLbl.getElement().setAttribute("alt",i18n.GL0591().toLowerCase());
+		loadingTextLbl.getElement().setAttribute("title",i18n.GL0591().toLowerCase());
+		  
 		/*imgQuestionImage.getElement().getStyle().setPaddingTop(16, Unit.PX);
 		imgQuestionImage.addMouseOverHandler(new MouseOverHandler() {
 
@@ -241,39 +247,7 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 			}
 		});*/
 		
-		btnOk.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				
-				Map<String, String> parms = new HashMap<String, String>();
-				parms.put("text", collectionTitleTxtBox.getText());
-				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-					
-					@Override
-					public void onSuccess(Boolean value) {
-						isHavingBadWords = value;
-						btnOk.setEnabled(true);
-						if (value){
-							collectionTitleTxtBox.getElement().getStyle().setBorderColor("orange");
-							mandatoryErrorLbl.setText(i18n.GL0554());
-							mandatoryErrorLbl.setVisible(true);
-						}else{
-							collectionTitleTxtBox.getElement().getStyle().clearBackgroundColor();
-							collectionTitleTxtBox.getElement().getStyle().setBorderColor("#ccc");
-							mandatoryErrorLbl.setVisible(false);
-							
-							if (validateCollectionForm().size() == 0) {
-								btnOk.setEnabled(false);
-								btnOk.getElement().addClassName("disabled");
-								buttonMainContainer.setVisible(false);
-								loadingTextLbl.getElement().getStyle().setDisplay(Display.BLOCK);
-								getUiHandlers().saveCollection();
-							}
-						}
-					}
-				});
-			}
-		});
+		
 		cancelAnr.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -287,23 +261,26 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 			
 			@Override
 			public void onBlur(BlurEvent event) {
+				
 				if (collectionTitleTxtBox.getText().length() > 0){
 					Map<String, String> parms = new HashMap<String, String>();
 					parms.put("text", collectionTitleTxtBox.getText());
-					btnOk.setEnabled(false);
-					btnOk.getElement().addClassName("disabled");
+					//btnOk.setEnabled(false);
+					//btnOk.getElement().addClassName("disabled");
 					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 	
 						@Override
 						public void onSuccess(Boolean value) {
+							
 							isHavingBadWords = value;
-							btnOk.setEnabled(true);
-							btnOk.getElement().removeClassName("disabled");
+							
 							if (value){
 								collectionTitleTxtBox.getElement().getStyle().setBorderColor("orange");
 								mandatoryErrorLbl.setText(i18n.GL0554());
 								mandatoryErrorLbl.setVisible(true);
 							}else{
+								btnOk.setEnabled(true);
+								btnOk.getElement().removeClassName("disabled");
 								collectionTitleTxtBox.getElement().getStyle().clearBackgroundColor();
 								collectionTitleTxtBox.getElement().getStyle().setBorderColor("#ccc");
 								mandatoryErrorLbl.setVisible(false);
@@ -315,6 +292,48 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		});
 		
 		collectionTitleTxtBox.addKeyUpHandler(new TitleKeyUpHandler());
+		btnOk.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				//loadingTextLbl.setVisible(true);
+				
+				btnOk.setEnabled(false);
+				btnOk.getElement().addClassName("disabled");
+				Map<String, String> parms = new HashMap<String, String>();
+				parms.put("text", collectionTitleTxtBox.getText());
+				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+					
+					@Override
+					public void onSuccess(Boolean value) {
+						isHavingBadWords = value;
+						//btnOk.setEnabled(true);
+						if (value){
+							collectionTitleTxtBox.getElement().getStyle().setBorderColor("orange");
+							mandatoryErrorLbl.setText(i18n.GL0554());
+							mandatoryErrorLbl.setVisible(true);
+							btnOk.setEnabled(true);
+							btnOk.getElement().removeClassName("disabled");
+						}else{
+							collectionTitleTxtBox.getElement().getStyle().clearBackgroundColor();
+							collectionTitleTxtBox.getElement().getStyle().setBorderColor("#ccc");
+							mandatoryErrorLbl.setVisible(false);
+							
+							if (validateCollectionForm().size() == 0) {
+								
+								//loadingTextLbl.setVisible(true);
+								loadingTextLbl.getElement().getStyle().setDisplay(Display.BLOCK); 
+								
+								btnOk.setEnabled(false);
+								btnOk.getElement().addClassName("disabled");
+								buttonMainContainer.setVisible(false);
+								//loadingTextLbl.getElement().getStyle().setDisplay(Display.BLOCK);
+								getUiHandlers().saveCollection();
+							}
+						}
+					}
+				});
+			}
+		});
 		getGradeList();
 		publicRadioButtonPanel.add(radioButtonPublic);
 		shareRadioButtonPanel.add(radioButtonShare);
@@ -545,6 +564,7 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		btnOk.getElement().removeClassName("disabled");
 		collectionDo = null;
 		buttonMainContainer.setVisible(true);
+		
 		loadingTextLbl.setVisible(false);
 		collectionTitleTxtBox.setText("");
 //		validationErrorLbl.setVisible(false);

@@ -203,8 +203,9 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 	private void setAvgRatingWidget(CollectionItemSearchResultDo resourceSearchResultDo) {
 		ratingWidgetView=new RatingWidgetView();
 		if(resourceSearchResultDo.getRatings()!=null){
-
+			ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 			ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount()!=null?resourceSearchResultDo.getRatings().getCount().toString():"0");
+			ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 			ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage());
 		}
 		//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
@@ -252,10 +253,10 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 	public String getResourceLink(){
 		String collectionId=collectionItemSearchResultDo.getCollectionId();
 		if(collectionItemSearchResultDo.getNarration()!=null&&!collectionItemSearchResultDo.getNarration().trim().equals("")){
-			String resourceLink="#"+PlaceTokens.PREVIEW_PLAY+"&id="+collectionId+"&rid="+collectionItemSearchResultDo.getCollectionItemId()+"&tab=narration";
+			String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemSearchResultDo.getCollectionItemId()+"&tab=narration";
 			return resourceLink;
 		}else{
-			String resourceLink="#"+PlaceTokens.PREVIEW_PLAY+"&id="+collectionId+"&rid="+collectionItemSearchResultDo.getCollectionItemId();
+			String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemSearchResultDo.getCollectionItemId();
 			return resourceLink;
 		}
 	}

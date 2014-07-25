@@ -25,6 +25,9 @@ xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:rating="urn:import
 				<g:FocusPanel ui:field="shareLinkFocPanel">
 					<g:Label styleName="{res.css.share}" ui:field="shareLbl" />
 				</g:FocusPanel>
+				<g:FocusPanel ui:field="addLinkFocPanel">
+					<g:Label styleName="{res.css.share}" ui:field="addLbl" />
+				</g:FocusPanel>
 			</g:FlowPanel>
 		</g:FlowPanel>
 		<g:DisclosurePanel styleName="{res.css.disclosurePanel}" animationEnabled="true" ui:field="disclosureDisPanel">

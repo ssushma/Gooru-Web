@@ -166,7 +166,7 @@ public class PPPCollectionResult extends Composite{
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", collectionItemDo.getResource().getGooruOid());
 		com.google.gwt.user.client.Window.scrollTo(0, 0);
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 	}
 	

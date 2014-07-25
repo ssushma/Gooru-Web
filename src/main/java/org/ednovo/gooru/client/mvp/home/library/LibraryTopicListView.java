@@ -198,7 +198,7 @@ public class LibraryTopicListView extends Composite{
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-
+	
 	public LibraryTopicListView(TopicDo topicDo, Integer topicNumber, String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicDo.getCodeId();
@@ -275,6 +275,8 @@ public class LibraryTopicListView extends Composite{
 			standardsFloPanel.setVisible(true);
 		}
 		
+		showPopupAfterGmailSignin();
+		
 		AppClientFactory.getEventBus().addHandler(OpenLessonConceptEvent.TYPE, openLessonConceptHandler);
 		AppClientFactory.getEventBus().addHandler(SetLoadingIconEvent.TYPE, setLoadingIconHandler);
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
@@ -282,6 +284,7 @@ public class LibraryTopicListView extends Composite{
 		AppClientFactory.getEventBus().addHandler(SetConceptQuizDataEvent.TYPE,setConceptQuizDataHandler);
 	}
 	
+
 	StandardPreferenceSettingHandler standardPreferenceSettingHandler= new StandardPreferenceSettingHandler(){
 		@Override
 		public List<String> getCode(List<String> standPrefCode) {
@@ -758,11 +761,20 @@ public class LibraryTopicListView extends Composite{
 			standardsDescription.clear();
 			InlineLabel headerLbl = new InlineLabel(i18n.GL1363()+i18n.GL_SPL_SEMICOLON()+" ");
 			headerLbl.getElement().getStyle().setFontWeight(FontWeight.BOLD);
+			InlineLabel textLbl = new InlineLabel("");
+			if(lessonLabel != null)
+			{
 			if(lessonLabel.length() > 400)
 			{
-				lessonLabel = lessonLabel.substring(0, 400) + "...";
+			lessonLabel = lessonLabel.substring(0, 400) + "...";
 			}
-			InlineLabel textLbl = new InlineLabel(lessonLabel);
+			textLbl = new InlineLabel(lessonLabel);
+			}
+			else
+			{				
+			textLbl = new InlineLabel(conceptDo.getLabel());
+			}
+			
 			standardsDescription.add(headerLbl);
 			standardsDescription.add(textLbl);
 			standardsDescription.setVisible(true);
@@ -945,7 +957,7 @@ public class LibraryTopicListView extends Composite{
 										params.put("rootNodeId", standardId);
 									}
 									
-									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
+									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 									AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 								}
 							});
@@ -1096,7 +1108,7 @@ public class LibraryTopicListView extends Composite{
 				if(standardId!=null){
 					params.put("rootNodeId", standardId);
 				}
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 			}
 	}
 	
@@ -1168,6 +1180,10 @@ public class LibraryTopicListView extends Composite{
 				{
 				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
 				}
+				Map<String,String> params = new HashMap<String,String>();
+				params.put("Assign", "yes");
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.HOME, params);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				
 			}
 			
@@ -1199,34 +1215,101 @@ public class LibraryTopicListView extends Composite{
 		}
 		String collectionId = getConceptDo().getGooruOid();
 		MixpanelUtil.mixpanelEvent("LandingPage_customize_collection");
-
-				if(!isCustomizePopup){
-					isCustomizePopup=true;
-				Boolean loginFlag = false;
-				if (AppClientFactory.isAnonymous()){
-					loginFlag = true;
-				}
-				else
-				{
-					loginFlag = false;
-				}
-				RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getConceptDo().getTitle()) {
-
-					@Override
-					public void closePoup() {
-						Window.enableScrolling(true);
-						this.hide();	
-						isCustomizePopup = false;
-					}
-				};
-				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("440px");
-				successPopupVc.show();
-				successPopupVc.center();
+		if(!isCustomizePopup){
+			isCustomizePopup=true;
+			Boolean loginFlag = false;
+			if (AppClientFactory.isAnonymous()){
+				loginFlag = true;
 			}
-		
+			else
+			{
+				loginFlag = false;
+			}
+			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getConceptDo().getTitle()) {
+
+				@Override
+				public void closePoup() {
+					Window.enableScrolling(true);
+					this.hide();	
+					isCustomizePopup = false;
+				}
+			};
+			Window.scrollTo(0, 0);
+			successPopupVc.setWidth("500px");
+			successPopupVc.setHeight("440px");
+			successPopupVc.show();
+			successPopupVc.center();
+			
+			Map<String,String> params = new HashMap<String,String>();
+			params.put("customize", "yes");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.HOME, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			
+		}
+
 	}	
+	/**
+	 * 
+	 * Showing Customize or Assign popup after login with gmail account.
+	 * 
+	 */
+	
+	private void showPopupAfterGmailSignin() {
+		// TODO Auto-generated method stub
+		String collectionId = getConceptDo().getGooruOid();
+		String customize = AppClientFactory.getPlaceManager().getRequestParameter("customize")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("customize") : null;
+		String assign = AppClientFactory.getPlaceManager().getRequestParameter("Assign")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("Assign") : null;
+		if(customize!=null && customize.equals("yes")){
+			Boolean loginFlag = false;
+			if (AppClientFactory.isAnonymous()){
+				loginFlag = true;
+			}
+			else
+			{
+				loginFlag = false;
+			}
+			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getConceptDo().getTitle()) {
+
+				@Override
+				public void closePoup() {
+					Window.enableScrolling(true);
+					this.hide();	
+					isCustomizePopup = false;
+				}
+			};
+			Window.scrollTo(0, 0);
+			successPopupVc.setWidth("500px");
+			successPopupVc.setHeight("440px");
+			successPopupVc.show();
+			successPopupVc.center();
+		}
+		if(assign!=null && assign.equals("yes")){
+			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals()) {
+
+				@Override
+				public void closePoup() {
+					Window.enableScrolling(true);
+					this.hide();
+					isAssignPopup=false;
+				}
+			};
+			Window.scrollTo(0, 0);
+			successPopupVc.setWidth("500px");
+			successPopupVc.setHeight("635px");
+
+			successPopupVc.show();
+			successPopupVc.center();
+			if (AppClientFactory.isAnonymous()){
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+			}
+			else
+			{
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+			}
+		}
+
+
+	}
 
 	public void renderStandards(FlowPanel standardsContainer, ResourceSearchResultDo searchResultDo) {
 		if (searchResultDo.getStandards() != null) {
@@ -1366,7 +1449,7 @@ public class LibraryTopicListView extends Composite{
 	};
 	
 	private void addCollectionQuizTitleData(String pageType) {
-		if(pageType.equals("lesson")&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+		if(pageType.equals("lesson")&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)&&AppClientFactory.getPlaceManager().getRequestParameter("standardId")==null) {
 			setCollectionQuizVisibility(true);
 			collectionTitle.addStyleName(libraryStyle.collectionQuizTabActive());
 		} else {

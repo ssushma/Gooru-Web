@@ -74,6 +74,7 @@ import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -186,6 +187,10 @@ public class UserSettingsPresenter
 //					StringUtil.consoleLog("access_token : Success : "+access_token);
 					if (access_token !=null ){
 						
+						UserDo user = AppClientFactory.getLoggedInUser();
+						user.setAccessToken(access_token);
+						AppClientFactory.setLoggedInUser(user);
+						
 						AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
 							@Override
 							public void onSuccess(GoogleDriveDo googleDriveDo) {
@@ -211,12 +216,13 @@ public class UserSettingsPresenter
 							}
 						});
 					}else{
-//						StringUtil.consoleLog("refresh token null");
+//						StringUtil.consoleLog("access token null");
 						getView().googleDirveStatus(false);
 					}
 				}
 			});
 		}else{
+//			StringUtil.consoleLog("refresh token null");
 			getView().googleDirveStatus(false);
 		}
 		

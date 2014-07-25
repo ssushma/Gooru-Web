@@ -204,7 +204,7 @@ public class FeaturedCollectionUc extends Composite{
 					MixpanelUtil.ClickTheCollectionsFromLandingPage();
 					Map<String, String> params = new HashMap<String, String>();
 					params.put("id", collectionDo.getGooruOid());
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 				}
 			});
 			

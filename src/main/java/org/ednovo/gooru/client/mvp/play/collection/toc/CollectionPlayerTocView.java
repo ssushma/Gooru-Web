@@ -58,7 +58,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlayerTocUiHandlers> implements IsCollectionPlayerTocView{
 
 	@UiField FlowPanel navgationTocContainer;
-	@UiField Label previousButton,nextButton,hideText;
+	@UiField Label previousButton,nextButton,hideText,resourceCountLabel;
 	
 	@UiField HTMLEventPanel hideButton;
 	
@@ -83,54 +83,99 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 		navgationTocContainer.getElement().setId("fpnlNavgationTocContainer");
 		nextButton.getElement().setId("lblNextButton");
 		hideButton.getElement().setId("epnlHideButton");
+		if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.COLLECTION_PLAY)){
+			hideButton.setVisible(false);
+		}
 	}
 	public void clearNavigationPanel(){
 		navgationTocContainer.clear();
 	}
+	public void hideResourceCountLabel(boolean hide){
+		resourceCountLabel.setVisible(!hide);
+	}
 	@Override
-	public void setNavigationResources(CollectionDo collectionDo){
-		int resourcesSize=collectionDo.getCollectionItems()!=null?collectionDo.getCollectionItems().size():0;
+	public void setNavigationResources(CollectionDo collectionDo,boolean isCollectionHome){
 		if(collectionDo!=null){
+			int resourcesSize=collectionDo.getCollectionItems()!=null?collectionDo.getCollectionItems().size():0;
 			if(navgationTocContainer.getWidgetCount()==0){
+				int resourceCount=0;
+				int questionCount=0;
 				navgationTocContainer.clear();
 				nextButton.setVisible(true);
 				previousButton.setVisible(true);
 				List<CollectionItemDo> collectionItems=collectionDo.getCollectionItems();
 			
 				TocCollectionHomeView tocCollectionHomeView=new TocCollectionHomeView(collectionDo.getThumbnails().getUrl());
+				if(!isCollectionHome){
+					tocCollectionHomeView.hideResourceThumbnailContainer(true);
+				}
 				tocCollectionHomeView.addClickHandler(new HomeRequest());
 				navgationTocContainer.add(tocCollectionHomeView);
 				for(int i=0;i<collectionItems.size();i++){
+					if(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat()!=null){
+						if(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat().getDisplayName().equalsIgnoreCase("Question")){
+							questionCount++;
+						}else{
+							resourceCount++;
+						}
+					}
 					CollectionItemDo collectionItemDo=collectionItems.get(i);
 					TocResourceView tocResoruceView=new TocResourceView(collectionItemDo,i+1,true,false);
 					tocResoruceView.addClickHandler(new ResourceRequest(collectionItemDo));
 					tocResoruceView.setCollectionItemId(collectionItemDo.getCollectionItemId());
+					if(!isCollectionHome){
+						tocResoruceView.hideResourceThumbnailContainer(true);
+					}
 					navgationTocContainer.add(tocResoruceView);
 				}
 				TocCollectionEndView tocCollectionEndView=new TocCollectionEndView(collectionDo.getThumbnails().getUrl());
 				tocCollectionEndView.addClickHandler(new EndRequest());
+				if(!isCollectionHome){
+					tocCollectionEndView.hideResourceThumbnailContainer(true);
+				}
 				navgationTocContainer.add(tocCollectionEndView);
 				if(resourcesSize>6){
-					new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize, 120);
+					new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize, 102);
 				}
+				String resourceString = resourceCount == 1? resourceCount + " " + i18n.GL1110().toLowerCase() : resourceCount + " " + i18n.GL0174().toLowerCase();
+				String questionString = questionCount == 1? questionCount + " " + i18n.GL0308().toLowerCase() : questionCount + " " + i18n.GL1042().toLowerCase();
+				String finalMessage = "";
+				if (resourceCount >0 && questionCount > 0){
+					finalMessage = resourceString + " " + i18n.GL_GRR_AND() + " " + questionString + " " + i18n.GL0578() + i18n.GL_SPL_SEMICOLON()+" ";
+				}else if (resourceCount >0){
+					finalMessage = resourceString + " " + i18n.GL0578() + i18n.GL_SPL_SEMICOLON()+" ";
+				}else if (questionCount >0){
+					finalMessage = questionString + " " + i18n.GL0578() + i18n.GL_SPL_SEMICOLON()+" ";
+				}
+				resourceCountLabel.setText(finalMessage);
 				//resources width with padding and margin constitutes 102px for each and collection home and end with padding and margin width
 				//have 150px each. navgationTocContainer width is derived from this.
-				if(resourcesSize>0)
-				{
-				navgationTocContainer.getElement().setAttribute("style", "width:"+((resourcesSize*(102))+300)+"px !important;");
+				if(resourcesSize>0){
+					navgationTocContainer.getElement().setAttribute("style", "width:"+((resourcesSize*(102))+204)+"px !important;");
 				}
-				else
-				{
+				else{
 					nextButton.setVisible(false);
 					previousButton.setVisible(false);
-				navgationTocContainer.getElement().setAttribute("style", "width:"+(300)+"px !important;");
+					navgationTocContainer.getElement().setAttribute("style", "width:"+(300)+"px !important;");
 				}
+			}else{
+				setResourceThumbnailVisibility(isCollectionHome);
 			}
-
-			
+		}
+	}
+	public void setResourceThumbnailVisibility(boolean visibility){
+		int widgetsCount=navgationTocContainer.getWidgetCount();
+		for(int i=0;i<widgetsCount;i++){
+			Widget widget=navgationTocContainer.getWidget(i);
+			if(widget instanceof TocCollectionHomeView){
+				((TocCollectionHomeView)widget).hideResourceThumbnailContainer(!visibility);
+			}else if(widget instanceof TocResourceView){
+				((TocResourceView)widget).hideResourceThumbnailContainer(!visibility);
+			} else if(widget instanceof TocCollectionEndView){
+				((TocCollectionEndView)widget).hideResourceThumbnailContainer(!visibility);
+			}
 		}
 		
-	
 	}
 	@Override
 	public void setResourceActive(String collectionId,String collectionItemid,boolean isCollectionHome){

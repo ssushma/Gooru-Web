@@ -459,23 +459,23 @@ public class HeaderUc extends Composite implements
 		editSearchBtn.getElement().setAttribute("alt",i18n.GL0176());
 		editSearchBtn.getElement().setAttribute("title",i18n.GL0176());
 		
-		confirmEmailText.getElement().setAttribute("style", "float: left;");
+		confirmEmailText.getElement().setAttribute("style", "float: left;font-size:11px;");
 		confirmEmailText.setText(i18n.GL1248());
 		confirmEmailText.getElement().setId("lblConfirmEmailText");
 		confirmEmailText.getElement().setAttribute("alt",i18n.GL1248());
 		confirmEmailText.getElement().setAttribute("title",i18n.GL1248());
 		
-		resendEmailAncr.getElement().setAttribute("style", "float: left;padding-left:5px;");
-		resendEmailAncr.setText(i18n.GL1249()+i18n.GL_GRR_COMMA());
+		resendEmailAncr.getElement().setAttribute("style", "float: left;font-size:11px;");
+		resendEmailAncr.setText(i18n.GL1249());
 		resendEmailAncr.getElement().setId("lnkResendEmail");
 		resendEmailAncr.getElement().setAttribute("alt",i18n.GL1249());
 		resendEmailAncr.getElement().setAttribute("title",i18n.GL1249());
 		
-		thanksLbl.getElement().setAttribute("style", "padding-left:5px;");
+		/*thanksLbl.getElement().setAttribute("style", "padding-left:5px;");
 		thanksLbl.setText(i18n.GL0498()+i18n.GL_SPL_EXCLAMATION());
 		thanksLbl.getElement().setId("lblThanksLbl");
 		thanksLbl.getElement().setAttribute("alt",i18n.GL0498());
-		thanksLbl.getElement().setAttribute("title",i18n.GL0498());
+		thanksLbl.getElement().setAttribute("title",i18n.GL0498());*/
 		
 		getEditSearchTxtBox().getElement().setAttribute("placeholder",
 				i18n.GL0177());
@@ -811,7 +811,7 @@ public class HeaderUc extends Composite implements
 				stockStore.setItem("tabKey", "resourceTab");
 			}
 			name = "organize";
-			Window.enableScrolling(true);
+//			Window.enableScrolling(true);
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 			manageDotsMenuSelection(organizeLink);
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
@@ -979,7 +979,6 @@ public class HeaderUc extends Composite implements
 		public void onMouseOver(final MouseOverEvent event) {
 			if (!AppClientFactory.isAnonymous()){
 				if (!AppClientFactory.isAnonymous()) {
-					Window.enableScrolling(true);
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 //					tooltipTimer = new Timer() {
 //						public void run() {
@@ -992,8 +991,7 @@ public class HeaderUc extends Composite implements
 					{
 						organizeToolTip.hide();
 					}
-
-							OpenClasspageList();
+					OpenClasspageList();
 //						}
 //					};
 //					tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
@@ -1161,7 +1159,7 @@ public class HeaderUc extends Composite implements
 	 */
 	@UiHandler("editSearchBtn")
 	public void OnSearchClick(ClickEvent clickEvent) {
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		if (getEditSearchTxtBox().getText() != null
 				&& getEditSearchTxtBox().getText().length() > 0) {

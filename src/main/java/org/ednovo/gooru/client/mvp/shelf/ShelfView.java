@@ -72,10 +72,12 @@ import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
+import com.gargoylesoftware.htmlunit.html.applets.AppletClassLoader;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -511,7 +513,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		shelfTabSimPanel.getElement().setId("spnlShelfTabSimPanel");
 		noCollectionResetPanel.getElement().setId("fpnlNoCollectionResetPanel");
 		loadingImageLabel.getElement().setId("pnlLoadingImageLabel");
-		editPanel.getElement().setId("pnlEditPanel");
+		editPanel.getElement().setId("pnlEditPanel");		
 		folderListPanel.getElement().setId("spnlFolderListPanel");
 		collectionFloPanel.getElement().setId("fpnlCollectionFloPanel");
 		lblLastEditedBy.getElement().setId("lblLastEditedBy");
@@ -717,7 +719,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 //			shelfViewMainContainer.getElement().getStyle().setMarginTop(-28, Unit.PX);
 //		}
 //		
-		
+		Window.enableScrolling(false);
 	}
 	
 	
@@ -1029,7 +1031,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	 *            which needs to be viewed
 	 */
 	public void setTab(Object tab) {
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		setIpadFriendly();
 //		panelFriendly.setVisible(false);
@@ -1458,7 +1460,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		MixpanelUtil.Preview_Collection_From_CollectionEdit();
 		HashMap<String,String> params = new HashMap<String,String>();
 		params.put("id", collectionDo.getGooruOid());
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 	}
 
@@ -1758,7 +1760,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		//temporary fix
 //		noCollectionResetPanel.getElement().getStyle().setDisplay(Display.NONE);
 		////
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		
 		noCollectionResetPanel.clear();
@@ -1777,7 +1779,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public void setOnlyNoDataCollection() {
 		
 		getLoadingImageInvisible();
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		
 		shelfTabSimPanel.setVisible(false);
@@ -1906,7 +1908,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		final DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView(folderName) { 
 			@Override
 			public void onClickPositiveButton(ClickEvent event) {
-				Window.enableScrolling(true);
+//				Window.enableScrolling(true);
 				appPopUp.hide();
 				AppClientFactory.fireEvent(new SetCollectionMovedStyleEvent(folderDo.getGooruOid()));  
 			}
@@ -1962,7 +1964,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		deleteUserCollectionLbl.setVisible(true);
 		lblDeleting.setVisible(false);
 		
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
 	
@@ -2023,5 +2025,20 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			$wnd.element.parentNode.className = "wrapperParent";
 		}
 	}-*/;
+
+	/** 
+	 * This method is to get the editPanel
+	 */
+	@Override
+	public HTMLPanel getEditPanel() {
+		return editPanel;
+	}
+
+	/** 
+	 * This method is to set the editPanel
+	 */
+	public void setEditPanel(HTMLPanel editPanel) {
+		this.editPanel = editPanel;
+	}
 
 }

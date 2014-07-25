@@ -873,7 +873,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj=new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid, getGuestSessionToken(""), "true");
-		System.out.println("getcollection:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -1470,8 +1469,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.GET_GOOGLEDRIVE_FIlES, enocodedString);
 		
 		String response=new WebService(url,false).webInvokeforget("GET", "", contentType, access_token);
-		
-		
 		if (response!=null){
 			googleDriveDo=deserializeGoogleDriveFilesList(response);
 		}else{
@@ -1569,11 +1566,23 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	@Override
 	public GoogleToken refreshGoogleAccessToken(String refreshToken) throws GwtException {
 		JsonRepresentation jsonRep = null;
+		GoogleToken token = null;
 		String url = UrlGenerator.generateUrl(getHomeEndPoint(),
 				UrlToken.REFRESH_TOKEN, refreshToken);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
-		return deserializeGoogleToken(jsonRep.toString());
+		String str = null;
+		try {
+			str = jsonRep.getJsonObject().toString();
+			token =  deserializeGoogleToken(str);
+			setLoggedInAccessToken(token != null && token.getAccess_token() != null ? token.getAccess_token() : null);
+		} catch (JSONException eJson) {
+			eJson.printStackTrace(); 
+		}
+		
+		
+		
+		return token;
 	}
 	
 	public GoogleToken deserializeGoogleToken(String jsonRep) {

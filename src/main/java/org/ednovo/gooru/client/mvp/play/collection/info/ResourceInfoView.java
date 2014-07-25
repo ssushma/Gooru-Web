@@ -163,7 +163,16 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
     boolean isPublisher =false;
     
     boolean isGrades =false;
+    
+    public Button plusAddTagsButton=new Button();
    
+	/**
+	 * @return the plusAddTagsButton
+	 */
+	public Button getPlusAddTagsButton() {
+		return plusAddTagsButton;
+	}
+
 	private static ResourceInfoViewUiBinder uiBinder = GWT.create(ResourceInfoViewUiBinder.class);
 
 	interface ResourceInfoViewUiBinder extends UiBinder<Widget, ResourceInfoView> {
@@ -176,7 +185,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public ResourceInfoView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		standardsInfoConatiner.clear();
-
 		publisherText.setText(i18n.GL1835()+i18n.GL_SPL_SEMICOLON()+" ");
 		publisherText.getElement().setId("lblPublisherText");
 		publisherText.getElement().setAttribute("alt",i18n.GL1835());
@@ -241,6 +249,11 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		addTagsBtn.getElement().setId("btnAddTagsBtn");
 		addTagsBtn.getElement().setAttribute("alt",i18n.GL1795());
 		addTagsBtn.getElement().setAttribute("title",i18n.GL1795());
+		
+		plusAddTagsButton.setText("+ "+i18n.GL1795());
+		plusAddTagsButton.getElement().setId("plusAddTagsButton");
+		plusAddTagsButton.getElement().setAttribute("alt",i18n.GL1795());
+		plusAddTagsButton.getElement().setAttribute("title",i18n.GL1795());
 		
 		timeRequiredLabel.setText(i18n.GL1685()+i18n.GL_SPL_SEMICOLON()+" ");
 		timeRequiredLabel.getElement().setId("lblTimeRequiredLabel");
@@ -375,13 +388,15 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		ratingWidgetPanel.clear();
 		ratingWidgetView=new RatingWidgetView();
 		if(collectionItemDoGlobal.getResource().getRatings()!=null){
-			ratingWidgetView.getRatingCountLabel().setText(collectionItemDoGlobal.getResource().getRatings().getCount().toString());
+			ratingWidgetView.getRatingCountLabel().setText(" "+collectionItemDoGlobal.getResource().getRatings().getCount().toString()+" "+i18n.GL2024());
 			if(collectionItemDoGlobal.getResource().getRatings().getCount()>0)
 			{
 				ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
 				ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
 				ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 			}
+			ratingWidgetView.getRatingCountLabel().getElement().getStyle().setPadding(4,Unit.PX);
+			ratingWidgetView.getAverageRatingLabel().setText(Double.toString(collectionItemDoGlobal.getResource().getRatings().getAverage())+" ");
 			ratingWidgetView.setAvgStarRating(collectionItemDoGlobal.getResource().getRatings().getAverage());
 		}
 		
@@ -421,9 +436,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		isGrades =false;
 		
 		collectionItemDoGlobal = collectionItemDo;
-		if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+		/*if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
 			setAvgRatingWidget();
-		}
+		}*/
+		setAvgRatingWidget();
 		if(collectionItemDo.getResource().getMediaType()!=null){
 			if(collectionItemDo.getResource().getMediaType().equals(NOT_FRIENDY_TAG)){	
 				//mobileFriendly.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().ipadFriendlyIconBlock());
@@ -480,11 +496,19 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 							collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
 		loadResourceReleatedCollections(collectionItemDo.getResource().getGooruOid());
 		
-		if(collectionItemDo.getResource().getPublisher()!=null){
-			setPublisherDetails(collectionItemDo.getResource().getPublisher());
+		if(collectionItemDo.getResource().getPublisher()!=null || collectionItemDo.getResource().getResourceFormat()!=null){
+			
+			if(collectionItemDo.getResource().getPublisher()!=null){
+				setPublisherDetails(collectionItemDo.getResource().getPublisher());
+			}
+			if(collectionItemDo.getResource().getResourceFormat()!=null){
+				if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+					List<String> publisherQuestionUserName = new ArrayList<String>();
+					publisherQuestionUserName.add(collectionItemDo.getResource().getUser().getUsername());
+					setPublisherDetails(publisherQuestionUserName);
+				}
+			}
 		}
-		
-		
 		/*if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){*/
 		if(collectionItemDo.getResource().getThumbnails()!=null){
 			setThumbnailUrl(collectionItemDo.getResource().getThumbnails().getUrl());
@@ -2078,8 +2102,19 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		this.title =mycollectionTitle;
 	}
 	
+	public class AddTagsClickEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			addResourceTags();
+		}
+	}
+	
 	@UiHandler("addTagsBtn")
 	public void onAddTagsBtnClicked(ClickEvent clickEvent) {
+		addResourceTags();
+	}
+	
+	public void addResourceTags(){
 		if(AppClientFactory.isAnonymous()) {
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
 		} else {
@@ -2134,7 +2169,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}
 		}
 	};
-	
 	
 	DeletePlayerStarReviewHandler deleteStarRating = new DeletePlayerStarReviewHandler(){
 

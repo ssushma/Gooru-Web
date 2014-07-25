@@ -26,10 +26,15 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
@@ -38,12 +43,16 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
+import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
+import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
+import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -53,6 +62,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.FontStyle;
+import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -70,6 +80,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -78,10 +89,10 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePlayerMetadataUiHandlers> implements IsResourcePlayerMetadataView{
 
-	@UiField FlowPanel resourceWidgetContainer;
+	@UiField FlowPanel resourceWidgetContainer,tagsButtonContainer;
 	@UiField
-	static FlowPanel wrapperContainerField;
-	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,needHelpButton;
+	static FlowPanel wrapperContainerField,tagsContainer;
+	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,needHelpButton,plusAddTagsButton;
 	@UiField HTMLEventPanel emoticsContainer;
 	@UiField HTMLPanel singleEmoticsContainer,collectionContainer,ratingsContainer;
 	@UiField Label resourcePublisher,reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
@@ -171,7 +182,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 		setWidget(uiBinder.createAndBindUi(this));
 		//allEmoticsContainer.getElement().getStyle().setDisplay(Display.BLOCK);
-		//singleEmoticsContainer.setVisible(false);
+		////singleEmoticsContainer.setVisible(false);
 		singleEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
 		//emoticsContainer.addMouseOverHandler(new OnEmoticsMouseOver());
 		//emoticsContainer.addMouseOutHandler(new OnEmoticsMouseOut());
@@ -199,6 +210,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		reactionToolTipFive.getElement().setId("lblReactionToolTipFive");
 		reactionToolTipFive.getElement().setAttribute("alt",i18n.GL0585());
 		reactionToolTipFive.getElement().setAttribute("title",i18n.GL0585());
+		
+		plusAddTagsButton.setText("+ "+i18n.GL1795());
+		plusAddTagsButton.getElement().setId("plusAddTagsButton");
+		plusAddTagsButton.getElement().setAttribute("alt",i18n.GL1795());
+		plusAddTagsButton.getElement().setAttribute("title",i18n.GL1795());
 		
 		/*rating1 = new SimpleRadioButton("rating");
 		rating2 = new SimpleRadioButton("rating");
@@ -247,7 +263,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		  }
 		  else
 		  {
-			  wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
+			 // wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
 			  
 		  }
 		  
@@ -262,13 +278,14 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			three_star.addMouseOutHandler(new OnStarMouseOut(THREE_STAR));
 			four_star.addMouseOutHandler(new OnStarMouseOut(FOUR_STAR));
 			five_star.addMouseOutHandler(new OnStarMouseOut(FIVE_STAR));
-		
 			setId();
 	}
 
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
 		this.collectionItemDo = collectionItemDo;
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			collectionContainer.getElement().getStyle().setMarginTop(51, Unit.PX);
+			tagsButtonContainer.setVisible(false);
 			if(isChildAccount()){
 				collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
 			}else{
@@ -306,7 +323,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}else{
 			resourcePublisher.setText("");
 		}
-
+		if(collectionItemDo.getResource().getResourceFormat()!=null){
+			if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+				resourcePublisher.setText(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+			}
+		}
 		if(forwardButton!=null){
 			forwardButton.removeFromParent();
 		}
@@ -379,7 +400,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				resourcePublisher.setText("");
 			}
-
+			if(collectionItemDo.getResource().getResourceFormat()!=null){
+				if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+					resourcePublisher.setText(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+				}
+			}
 			if(forwardButtonHandler!=null||backwardButtonHandler!=null){
 				forwardButtonHandler.removeHandler();
 				backwardButtonHandler.removeHandler();
@@ -395,12 +420,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 	public void previewResouceWidget(CollectionItemDo collectionItemDo){
 		resourceWidgetContainer.clear();
+		setResourceWidgetContainerHeight();
 		String resourceTypeName=collectionItemDo.getResource().getResourceType().getName();
 		wrapperContainerField.getElement().getStyle().clearHeight();
-		System.out.println("resourceTypeName:::"+resourceTypeName);
-		System.out.println("collectionItemDo.getResource().getUrl():::"+collectionItemDo.getResource().getUrl());
 		if(resourceTypeName.equalsIgnoreCase("video/youtube")){
-			wrapperContainerField.getElement().getStyle().setHeight(525	, Unit.PX);
+			//wrapperContainerField.getElement().getStyle().setHeight(525	, Unit.PX);
 			resourceWidgetContainer.add(new FlashAndVideoPlayerWidget(ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl()), collectionItemDo.getStart(), collectionItemDo.getStop()));
 		}else if(resourceTypeName.equalsIgnoreCase("animation/kmz")){
 			resourceWidgetContainer.add(new GwtEarthWidget(collectionItemDo.getResource().getUrl()));
@@ -427,8 +451,14 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 			else{
 				if(resourceTypeName.equalsIgnoreCase("image/png")){
-					final WebResourceWidget webResourceWidget=new WebResourceWidget(collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+collectionItemDo.getResource().getUrl());
-					resourceWidgetContainer.add(webResourceWidget);
+//					final WebResourceWidget webResourceWidget=new WebResourceWidget(collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+collectionItemDo.getResource().getUrl());
+//					System.out.println("webResourceWidget"+webResourceWidget);
+					HTMLPanel htmlPanel = new HTMLPanel("");
+					htmlPanel.addStyleName(playerStyle.collectionPlayerImage());
+					Image img = new Image();
+					img.setUrl(collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+collectionItemDo.getResource().getUrl());
+					htmlPanel.add(img);
+					resourceWidgetContainer.add(htmlPanel);
 				}
 				else{
 					if(!collectionItemDo.getResource().getUrl().startsWith("http")){
@@ -473,7 +503,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}
 	}
-	
+	public void setResourceWidgetContainerHeight(){
+		int windowHeight=Window.getClientHeight();
+		resourceWidgetContainer.setHeight((windowHeight-202)+"px");
+	}
 	public void setGoogleDriveFileStatusCode(Integer statusCode){
 		if(statusCode==302){
 			ResourceFrameBreakerView resourceFrameBreakerViewnew =new ResourceFrameBreakerView(collectionItemDo,true);
@@ -883,11 +916,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 	}
 	public static void addPadding(){
-		wrapperContainerField.setStyleName(playerStyle.collectionPlayerWrapperPadding());
+		//wrapperContainerField.removeStyleName(playerStyle.collectionPlayerWrapper());
+		//wrapperContainerField.addStyleName(playerStyle.collectionPlayerWrapperPadding());
 	}
 	
 	public static void removePadding(){
-		wrapperContainerField.setStyleName(playerStyle.collectionPlayerWrapper());
+		//wrapperContainerField.removeStyleName(playerStyle.collectionPlayerWrapperPadding());
+		//wrapperContainerField.addStyleName(playerStyle.collectionPlayerWrapper());
 	}
 
 	/**
@@ -981,7 +1016,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
 				}
 				
-			}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			}
+			/**
+			 * Changed to collection player, as preview player feature removed.
+			 */
+			else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 				if(result.getRatings()!=null){
 					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
 				}
@@ -989,6 +1028,16 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}else{
 			isRated=false;
 		}
+		
+		if(thankYouResourceStarRatingsPoor!=null){
+			if(thankYouResourceStarRatingsPoor.isVisible()){
+				thankYouResourceStarRatingsPoor.hide();
+				if(isFromThanksPopup){
+					displaySuccessPopup();
+				}
+			}
+		}
+		
 		if(thankYouResourceStarRatings!=null){
 			if(thankYouResourceStarRatings.isVisible()){
 				thankYouResourceStarRatings.hide();
@@ -1060,16 +1109,18 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	public void removeRatingContainer(boolean flag){
 		if(flag){
-//			ratingsContainer.removeFromParent();
+	//		ratingsContainer.removeFromParent();
 			ratingsContainer.setVisible(false);
 		}else{
 			if(isChildAccount()){
-//				ratingsContainer.removeFromParent();
+	//			ratingsContainer.removeFromParent();
 				ratingsContainer.setVisible(false);
 			}else{
 				ratingsContainer.setVisible(true);
 			}
-			emoticsContainer.removeFromParent();
+			System.out.println("else statement");
+			emoticsContainer.setVisible(false);
+			//emoticsContainer.removeFromParent();
 		}
 	}
 	
@@ -1482,7 +1533,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	public static void onClosingAndriodorIpaddiv()
 	{
-		  wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
+		 // wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
 	}
 
 	/**
@@ -1513,8 +1564,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	@Override
 	public void hideThankYouPopUp() {
-		thankYouResourceStarRatings.hide();
-		displaySuccessPopup();
+		if(thankYouResourceStarRatings!=null){
+			thankYouResourceStarRatings.hide();
+			displaySuccessPopup();
+		}
+		
+		if(thankYouResourceStarRatingsPoor!=null){
+			thankYouResourceStarRatingsPoor.hide();
+			displaySuccessPopup();
+		}
 	}
 
 	/**
@@ -1531,29 +1589,33 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		this.score=score;
 		this.count=count;
 		this.average=average;
-//		if(score > 1)
-//		{
-		thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
-		thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
-		thankYouResourceStarRatings.getElement().getStyle().setPadding(0, Unit.PX);
-		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-			thankYouResourceStarRatings.setPopupPosition(685,Window.getScrollTop()+48);
-		}else{
-			thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
+		if(score > 1)
+		{
+			thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
+			thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
+			thankYouResourceStarRatings.getElement().getStyle().setPadding(0, Unit.PX);
+			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+				thankYouResourceStarRatings.setPopupPosition(451,Window.getScrollTop()+120);
+			}else{
+				thankYouResourceStarRatings.setPopupPosition(800,Window.getScrollTop()+153);
+			}
+			
+			thankYouResourceStarRatings.show();
+			thankYouResourceStarRatings.setAutoHideEnabled(true);
 		}
-		
-		thankYouResourceStarRatings.show();
-		thankYouResourceStarRatings.setAutoHideEnabled(true);
-//		}
-//		else
-//		{
-//			thankYouResourceStarRatingsPoor = new ThankYouResourceStarRatingsPoor(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
-//			thankYouResourceStarRatingsPoor.getElement().getStyle().setZIndex(999999);
-//			thankYouResourceStarRatings.getElement().getStyle().setPadding(0, Unit.PX);
-//			thankYouResourceStarRatingsPoor.setPopupPosition(300,Window.getScrollTop()+48);
-//			thankYouResourceStarRatingsPoor.show();
-//			thankYouResourceStarRatingsPoor.setAutoHideEnabled(true);	
-//		}
+		else
+		{
+			thankYouResourceStarRatingsPoor = new ThankYouResourceStarRatingsPoor(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
+			thankYouResourceStarRatingsPoor.getElement().getStyle().setZIndex(999999);
+			thankYouResourceStarRatingsPoor.getElement().getStyle().setPadding(0, Unit.PX);
+			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+				thankYouResourceStarRatingsPoor.setPopupPosition(451,Window.getScrollTop()+120);
+			}else{
+				thankYouResourceStarRatingsPoor.setPopupPosition(800,Window.getScrollTop()+153);
+			}
+			thankYouResourceStarRatingsPoor.show();
+			thankYouResourceStarRatingsPoor.setAutoHideEnabled(true);	
+		}
 	}
 	
 	
@@ -1575,7 +1637,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			ratingsConfirmationPopup.setPopupPosition(685,Window.getScrollTop()+60);
 		}else{
-			ratingsConfirmationPopup.setPopupPosition(314,Window.getScrollTop()+60);
+			ratingsConfirmationPopup.setPopupPosition(800,Window.getScrollTop()+153);
 		}
 		
 		ratingsConfirmationPopup.setAutoHideEnabled(true);
@@ -1607,7 +1669,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				collectionContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 			}
-		}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+		}
+		/**
+		 * Changed to collection player, as preview player feature removed.
+		 */
+		else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 			if(isChild){
 				ratingsContainer.setVisible(false);
 			}else{
@@ -1646,5 +1712,88 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		resourceTitleLbl.getElement().setId("htmlResourceTitleLbl");
 		resourcePublisher.getElement().setId("lblResourcePublisher");
 		resourceWidgetContainer.getElement().setId("fpnlResourceWidgetContainer");
+	}
+
+	@Override
+	public void displayResourceTags(List<ResourceTagsDo> resourceTagsList) {
+		tagsContainer.clear();
+		if(resourceTagsList!=null){
+			FlowPanel toolTipwidgets = new FlowPanel();
+			for(int i=0;i<resourceTagsList.size();i++){	
+				if(i<3)
+				{
+				
+					String tagsdefaultLabel = i18n.GL1664() + " : ";
+					String tagLabel = resourceTagsList.get(i).getLabel();
+					HTMLPanel tagPanel = new HTMLPanel("");
+					if(resourceTagsList.get(i).getLabel().toLowerCase().contains(i18n.GL1664().toLowerCase()))
+					{
+						tagLabel = resourceTagsList.get(i).getLabel().toLowerCase().replace(tagsdefaultLabel, "");
+					}
+					tagPanel.setStyleName(playerStyle.eductaionalUseDesign());
+					tagPanel.getElement().setInnerHTML(tagLabel);
+					tagsContainer.add(tagPanel);
+				
+				}
+				else
+				{
+					HTMLPanel tagPanel = new HTMLPanel("");
+					String tagsdefaultLabel = i18n.GL1664() + " : ";
+					String tagLabel = resourceTagsList.get(i).getLabel();
+					if(resourceTagsList.get(i).getLabel().toLowerCase().contains(i18n.GL1664().toLowerCase()))
+					{
+						tagLabel = resourceTagsList.get(i).getLabel().toLowerCase().replace(tagsdefaultLabel, "");
+					}
+					tagPanel.getElement().setInnerHTML(tagLabel);
+					toolTipwidgets.add(tagPanel);
+					
+		
+				}
+			}
+			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + (resourceTagsList.size()-3)), toolTipwidgets);
+			toolTipUc.setStyleName(playerStyle.educationalUseMoretags());
+			tagsContainer.add(toolTipUc);
+		}
+	}
+	@UiHandler("plusAddTagsButton")
+	public void onAddTagsBtnClicked(ClickEvent clickEvent) {
+		addResourceTags();
+	}
+	
+	public void addResourceTags(){
+		if(AppClientFactory.isAnonymous()) {
+			AppClientFactory.fireEvent(new InvokeLoginEvent());
+		} else {
+			AddTagesPopupView addTagesPopupView=new AddTagesPopupView(collectionItemDo.getResource().getGooruOid()) {
+				public void getAddedResourceTags(){
+					getUiHandlers().getResourceTagsToDisplay(collectionItemDo.getResource().getGooruOid());
+				}
+				@Override
+				public void closePoup(boolean isCancelclicked) {
+			        this.hide();
+			        if(!isCancelclicked){
+			        	 SuccessPopupViewVc success = new SuccessPopupViewVc() {
+
+								@Override
+								public void onClickPositiveButton(ClickEvent event) {
+									this.hide();
+								}
+							};
+							success.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTagsGlassPanel());
+							success.setHeight("253px");
+							success.setWidth("450px");
+							success.setPopupTitle(i18n.GL1795());
+							success.setDescText(i18n.GL1796());
+							success.enableTaggingImage();
+							success.setPositiveButtonText(i18n.GL0190());
+							success.center();
+							success.show();
+							success.getElement().getStyle().setZIndex(99999);
+			        }
+				}
+			};
+			addTagesPopupView.show();
+			addTagesPopupView.setPopupPosition(addTagesPopupView.getAbsoluteLeft(),Window.getScrollTop()+10);
+		}
 	}
 }
