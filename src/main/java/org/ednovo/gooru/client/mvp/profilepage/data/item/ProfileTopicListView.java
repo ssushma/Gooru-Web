@@ -454,6 +454,21 @@ public class ProfileTopicListView extends Composite{
 									sourceAttribution = profileLibraryItem.getResourceSource().getAttribution();
 								}
 								final String attribution = sourceAttribution;
+								
+								final HTMLEventPanel resourceCategoryIcon = new HTMLEventPanel("");
+								
+								resourceCategoryIcon.addMouseOverHandler(new MouseOverHandler() {
+								   	
+									@Override
+									public void onMouseOver(MouseOverEvent event) {
+										toolTipPopupPanel.clear();
+										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(profileLibraryItem.getTitle(),categoryImage,attribution,profileLibraryItem.getRatings().getCount(),profileLibraryItem.getRatings().getAverage()));
+										toolTipPopupPanel.setStyleName("");
+										toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
+										toolTipPopupPanel.show();
+									}
+								});
+								
 								resourceImage.addMouseOverHandler(new MouseOverHandler() {
 								   	
 									@Override
@@ -466,6 +481,13 @@ public class ProfileTopicListView extends Composite{
 									}
 								});
 								
+								resourceCategoryIcon.addMouseOutHandler(new MouseOutHandler() {
+									
+									@Override
+									public void onMouseOut(MouseOutEvent event) {
+										toolTipPopupPanel.hide();
+									}
+								});
 								resourceImage.addMouseOutHandler(new MouseOutHandler() {
 									
 									@Override
@@ -528,8 +550,38 @@ public class ProfileTopicListView extends Composite{
 										AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 									}
 								});
+								resourceCategoryIcon.addClickHandler(new ClickHandler() {
+									@Override
+									public void onClick(ClickEvent event) {
+										String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
+										if(page.equals(COURSE_PAGE)) {
+											MixpanelUtil.mixpanelEvent("CoursePage_Plays_Resource");
+										} else {
+											MixpanelUtil.mixpanelEvent("LandingPage_Plays_Resource");
+										}
+										Map<String, String> params = new HashMap<String, String>();
+										params.put("id", conceptDo.getGooruOid());
+										
+										String resourceId = profileLibraryItem.getCollectionItemId();
+										if(resourceId==null) {
+											resourceId = profileLibraryItem.getCollectionItemId();
+										}
+										params.put("rid", resourceId);
+										params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
+										params.put("lessonId", lessonId);
+										if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+											params.put("library", getPlaceToken());
+										}
+										String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
+										if(standardId!=null){
+											params.put("rootNodeId", standardId);
+										}
+										
+										PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+										AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+									}
+								});
 								
-								final HTMLPanel resourceCategoryIcon = new HTMLPanel("");
 								resourceCategoryIcon.addStyleName(UcCBundle.INSTANCE.css().resourceName());
 								resourceCategoryIcon.addStyleName(getDetaultResourceImage(category.toLowerCase()) + SMALL);
 								resourcePanel.add(resourceImage);
