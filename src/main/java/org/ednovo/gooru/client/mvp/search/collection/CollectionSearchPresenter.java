@@ -167,7 +167,6 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 		// TODO Auto-generated method stub
 		addResourceContainerPresenter.removePlayerStyle();
 		addResourceContainerPanel.clear();
-		System.out.println("inside collection search showAddCollectionToShelfView");
 		addResourceContainerPresenter.getUserShelfCollectionsData(collectionsearchResultDo,searchType);
 		addResourceContainerPanel.setWidget(addResourceContainerPresenter.getWidget());
 		addResourceContainerPresenter.getAddButton().addClickHandler(new ClickHandler() {
@@ -204,7 +203,6 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 	@Override
 	public void refreshDisclosurePanelForFoldersinSearch(String collectionId) {
 		// TODO Auto-generated method stub
-		System.out.println("event fired in collection search presenter");
 		addResourceContainerPresenter.getfolderTreePanel().clear();
 		addResourceContainerPresenter.getWorkspaceData(0, 20, false, "collection");
 	}
