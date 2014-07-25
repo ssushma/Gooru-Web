@@ -61,7 +61,6 @@ import org.ednovo.gooru.client.mvp.play.resource.narration.ResourceNarrationPres
 
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 
-import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEvent;
 
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -407,11 +406,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		this.collectionEndPresenter=collectionEndPresenter;
 		this.addResourceContainerPresenter=addResourceContainerPresenter;
 		resoruceMetadataPresenter.setCollectionPlayerPresnter(this,true);
-		resoruceMetadataPresenter.removeRatingContainer(false);
+		/*resoruceMetadataPresenter.removeRatingContainer(false);*/
 		resourceFlagPresenter.setCollectionPlayerPresenter(this);
 		collectionFlagPresenter.setCollectionPlayerPresenter(this);
 		metadataPresenter.setCollectionPlayerPresenter(this);
 		collectionPlayerTocPresenter.setCollectionPlayerPresnter(this);
+		collectionEndPresenter.setCollectionPlayerPresenter(this);
 		collectionSharePresenter.setCollectionPlayerPresenter(this);
 		addResourcePresenter.getAddCollectionViewButton().setVisible(false);
 		addCollectionPresenter.getAddResourceViewButton().setVisible(false);
@@ -597,7 +597,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		setCollectionDetails(collectionDo);
 		metadataPresenter.setCollectionMetadata(collectionDo);
 		//clearDashBoardIframe();
-		setClassCollectionDataInsightsUrl(true);
+		//setClassCollectionDataInsightsUrl(true);
 		showSignupPopup();
 		setOpenEndedAnswerSubmited(true);
 		if(this.collectionMetadataId!=null){
@@ -607,6 +607,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			}
 		}
 		this.collectionMetadataId=collectionDo.getGooruOid();
+		collectionPlayerTocPresenter.hideResourceCountLabel(false);
 		clearIframeContent();
 		getProfilUserVisibility(collectionDo.getUser().getGooruUId());
 //	    enablePlayerButton(true,false, isSharable, false, true,false);
@@ -644,6 +645,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				}
 			}
 			//TODO need to check is collection sharable or not, need to enable narration button if narration exist.
+			if(AppClientFactory.getPlaceManager().getRequestParameter("cid")!=null){
+				resoruceMetadataPresenter.removeRatingContainer(true);
+			}else{
+				resoruceMetadataPresenter.removeRatingContainer(false);
+			}
 			boolean isSharable=true;
 			if(PRIVATE.equalsIgnoreCase(collectionDo.getSharing())){
 				isSharable=false;
@@ -655,6 +661,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				enablePlayerButton(true,true, isSharable, false, true,true);
 				makeButtonActive(tabView);
 			}
+			collectionPlayerTocPresenter.hideResourceCountLabel(true);
 			clearIframeContent();
 			this.collectionItemDo=collectionItemDo;
 			clearSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT);
@@ -738,13 +745,13 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			}
 		}else{
 			String sessionHomeId=isHomeView?null:sessionId;
-			metadataPresenter.setDataInsightsSummaryUrl(sessionHomeId);
+			collectionEndPresenter.setDataInsightsSummaryUrl(sessionHomeId);
 		}
 	}
 	
 	public void setClasspageInsightsUrl(boolean isHomeView){
 		String sessionHomeId=isHomeView?null:sessionId;
-		metadataPresenter.setClasspageInsightsUrl(classpageId,sessionHomeId);
+		collectionEndPresenter.setClasspageInsightsUrl(classpageId,sessionHomeId);
 	}
 	private void showClasspageButton(){
 		String classpageItemId=getPlaceManager().getRequestParameter("cid", null);
@@ -1951,6 +1958,18 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		String playerMode=getPlayerMode();
 		PlayerDataLogEvents.triggerItemShareDataLogEvent(resourceGooruOid, collectionItemId, collectionDo.getGooruOid(), "", sessionId, itemType, shareType, confirmStatus, playerMode, path, null);
+	}
+	
+	public void triggerCollectionShareDataEvent( String collectionId, String itemType, String shareType, boolean confirmStatus){
+		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
+		String path="";
+		if(classpageId!=null&&!classpageId.equals("")){
+			path=classpageId+"/"+collectionDo.getGooruOid();
+		}else{
+			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid();
+		}
+		String playerMode=AppClientFactory.getPlaceManager().getPlayerMode();
+		PlayerDataLogEvents.triggerItemShareDataLogEvent(collectionId, "", classpageId, "", sessionId, itemType, shareType, confirmStatus, playerMode, path, null);
 	}
 	
 	public String getPlayerMode(){

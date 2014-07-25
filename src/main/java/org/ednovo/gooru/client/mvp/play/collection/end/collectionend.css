@@ -167,7 +167,9 @@
 	display: block;
 	margin: 10px 0px;
 }
-
+.commentsSection{
+	padding:30px;
+}
 .commentsSection .userPhoto {
     margin-right:10px;
     width:40px;
@@ -585,4 +587,34 @@
 }
 .playBlockbottom .buttons{
 	margin-top:25px;
+}
+.collectionImageContainer {
+	width: 230px;
+	height: 160px;
+	float: left;
+	margin-right: 15px;
+}
+.collectionImage {
+	width: 220px;
+	height: 160px;
+	border-left: 10px solid #1076bb;
+	float: left;
+}
+.collectionreplay {
+	width: 230px;
+	height: 160px;
+	box-sizing: border-box;
+	text-indent: -234px;
+	position: relative;
+	background: url(images/replay.png) center 30px no-repeat, rgba(0, 0, 0, 0.6);
+	transition: background-color 0.5s ease;
+	color: white;
+	text-align: center;
+	cursor: pointer;
+}
+.collectionreplayText {
+	padding-top: 85px;
+}
+.buttonmargin{
+	margin-left:10px;
 }
