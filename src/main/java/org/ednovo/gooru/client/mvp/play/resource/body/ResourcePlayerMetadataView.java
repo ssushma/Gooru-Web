@@ -1729,6 +1729,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					if(resourceTagsList.get(i).getLabel().toLowerCase().contains(i18n.GL1664().toLowerCase()))
 					{
 						tagLabel = resourceTagsList.get(i).getLabel().toLowerCase().replace(tagsdefaultLabel.toLowerCase(), "");
+						tagLabel = tagLabel.substring(0, 1).toUpperCase() + tagLabel.substring(1);
 					}
 					tagPanel.setStyleName(playerStyle.eductaionalUseDesign());
 					tagPanel.getElement().setInnerHTML(tagLabel);
@@ -1743,6 +1744,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					if(resourceTagsList.get(i).getLabel().toLowerCase().contains(i18n.GL1664().toLowerCase()))
 					{
 						tagLabel = resourceTagsList.get(i).getLabel().toLowerCase().replace(tagsdefaultLabel.toLowerCase(), "");
+						tagLabel = tagLabel.substring(0, 1).toUpperCase() + tagLabel.substring(1);
 					}
 					tagPanel.getElement().setInnerHTML(tagLabel);
 					toolTipwidgets.add(tagPanel);
