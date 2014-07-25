@@ -146,6 +146,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			AppClientFactory.getInjector().getfolderService().getCollectionResources(selectedFolderOrCollectionid,null, null, new SimpleAsyncCallback<FolderListDo>(){
 				@Override
 				public void onSuccess(FolderListDo result) {
+					System.out.println("here ButtonVisiblity");
 					getView().getButtonVisiblity();
 					if (result.getCount()<25){
 						if(isPlayer){

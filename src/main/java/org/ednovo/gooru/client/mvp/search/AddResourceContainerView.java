@@ -509,6 +509,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 			}else if(isSelectedFolder){
 				displayErrorLabel.setText("Add me into a Collection");
 				displayErrorLabel.getElement().setAttribute("style", "left:37%;");
+				getButtonVisiblity();
 			}else{
 				
 			}
