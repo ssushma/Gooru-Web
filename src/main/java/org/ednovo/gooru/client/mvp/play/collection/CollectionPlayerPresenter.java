@@ -417,7 +417,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		addCollectionPresenter.getAddResourceViewButton().setVisible(false);
 		//addResourcePresenter.getAddCollectionViewButton().addClickHandler(new showAddCollectionView());
 		//addCollectionPresenter.getAddResourceViewButton().addClickHandler(new showAddResourceView());
-		//addResourcePresenter.getAddNewCollectionButton().addClickHandler(new ShowNewCollectionWidget());
+	//	addResourcePresenter.getAddNewCollectionButton().addClickHandler(new ShowNewCollectionWidget());
+		addResourceContainerPresenter.getAddButton().addClickHandler(new ShowNewCollectionWidget());
 		getView().removeStudentViewButton();
 		getView().hideFlagButton(false);
 		addRegisteredHandler(UpdateFlagIconColorEvent.TYPE,this);

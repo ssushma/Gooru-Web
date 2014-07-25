@@ -26,10 +26,14 @@
 	height: 60px;
 }
 .resource-type{
+	color: #FFFFFF;
+	font-size: 12px;
+	height: 61px;
+	/* left: -8px; */
 	position: relative;
-	top: -19px;
-	z-index: 10;
-	margin-left: 0 !important;
+	text-align: center;
+	top: -63px;
+	width: 81px;
 }
 .nav-resource-title{
 	display: block;

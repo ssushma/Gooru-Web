@@ -42,6 +42,9 @@ import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -133,8 +136,24 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 				public void onSuccess(FolderListDo result) {
 					getView().getButtonVisiblity();
 					if (result.getCount()<25){
+					
+						
 						if(isPlayer){
-								AppClientFactory.fireEvent(new CreateCollectionItemEvent(selectedFolderOrCollectionid,collectionItemDo.getGooruOid()));	
+							AppClientFactory.getInjector().getResourceService().createCollectionItem(selectedFolderOrCollectionid, collectionItemDo.getResource().getGooruOid(), new AsyncCallback<CollectionItemDo>() {
+								
+								@Override
+								public void onSuccess(CollectionItemDo result) {
+									// TODO Auto-generated method stub
+									
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									// TODO Auto-generated method stub
+									
+								}
+							});
+							//	AppClientFactory.fireEvent(new CreateCollectionItemEvent(selectedFolderOrCollectionid,collectionItemDo.getResource().getGooruOid()));	
 						}
 						else{
 							AppClientFactory.fireEvent(new CreateCollectionItemEvent(selectedFolderOrCollectionid,searchResultDo.getGooruOid()));
@@ -180,15 +199,20 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 	@Override
 	public void setplayerStyle() {
 		isPlayer=true;
-		getView().setPlayerStyle();
+		getView().setPlayerStyle(isPlayer);
 		
 	}
 
 	@Override
 	public void removePlayerStyle() {
 		isPlayer=false;
-		getView().removePlayerStyle();
+		getView().removePlayerStyle(isPlayer);
 		
+	}
+
+	@Override
+	public Anchor getAddButton() {
+		return getView().getAddButton();
 	}
 	
 }
