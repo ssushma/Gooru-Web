@@ -2121,7 +2121,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			/*		PlaceRequest collectionRequest = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 			String resourceIdVal = collectionRequest.getParameter("rid", null);*/
 			popup=new AddTagesPopupView(collectionItemDoGlobal.getResource().getGooruOid()) {
-				
+				public void getAddedResourceTags(){
+					getUiHandlers().getAddedResourceTags(collectionItemDoGlobal.getResource().getGooruOid());
+				}
 				@Override
 				public void closePoup(boolean isCancelclicked) {
 			        this.hide();
