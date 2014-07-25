@@ -570,7 +570,30 @@ IsCollectionAssign {
 							{
 								dueDateVal = null;
 							}
-							AppClientFactory.getInjector().getClasspageService().createClassPageItem(classpageId, resourceDo.getGooruOid(),dueDateVal,directionsVal, new SimpleAsyncCallback<ClasspageItemDo>() {
+							AppClientFactory.getInjector().getClasspageService().assignItemToClass(classpageId, resourceDo.getGooruOid(),dueDateVal,directionsVal, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+
+								@Override
+								public void onSuccess(ArrayList<ClasspageItemDo> result) {
+									// TODO Auto-generated method stub
+									MixpanelUtil.mixpanelEvent("Library_Assign_Successful");
+									
+									AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(
+											collectionDoResult, RefreshType.INSERT));
+									
+									controlsContainer.setVisible(false);
+									btnAssign.setVisible(false);
+									
+									assignMoreCpContainer.setVisible(true);
+									assignMoreCpLbl.setText(i18n.GL0521()+ " ");
+									assignMoreCpLbl.getElement().setAttribute("alt",i18n.GL0521());
+									assignMoreCpLbl.getElement().setAttribute("title",i18n.GL0521());
+									
+									ancClasspageTitle.setText(lblClasspagePlaceHolder.getText());
+									ancClasspageTitle.getElement().setAttribute("alt",lblClasspagePlaceHolder.getText());
+									ancClasspageTitle.getElement().setAttribute("title",lblClasspagePlaceHolder.getText());
+								}
+							});
+							/*AppClientFactory.getInjector().getClasspageService().createClassPageItem(classpageId, resourceDo.getGooruOid(),dueDateVal,directionsVal, new SimpleAsyncCallback<ClasspageItemDo>() {
 								@Override
 								public void onSuccess(ClasspageItemDo result) {
 
@@ -591,7 +614,7 @@ IsCollectionAssign {
 									ancClasspageTitle.getElement().setAttribute("alt",lblClasspagePlaceHolder.getText());
 									ancClasspageTitle.getElement().setAttribute("title",lblClasspagePlaceHolder.getText());
 								}
-							});
+							});*/
 						}
 						
 					});
@@ -617,7 +640,27 @@ IsCollectionAssign {
 					{
 						dueDateVal = null;
 					}
-					AppClientFactory.getInjector().getClasspageService().createClassPageItem(classpageId,collectionDoGlobal.getGooruOid(),dueDateVal,directionsVal, new SimpleAsyncCallback<ClasspageItemDo>() {
+					
+					AppClientFactory.getInjector().getClasspageService().assignItemToClass(classpageId, collectionDoGlobal.getGooruOid(), dueDateVal, directionsVal, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+
+						@Override
+						public void onSuccess(ArrayList<ClasspageItemDo> result) {
+							// TODO Auto-generated method stub
+							MixpanelUtil.mixpanelEvent("Library_Assign_Successful");
+							
+							controlsContainer.setVisible(false);
+							btnAssign.setVisible(false);
+							assignMoreCpContainer.setVisible(true);
+							assignMoreCpLbl.setText(i18n.GL0521()+" ");
+							assignMoreCpLbl.getElement().setAttribute("alt",i18n.GL0521()+" ");
+							assignMoreCpLbl.getElement().setAttribute("title",i18n.GL0521());
+							ancClasspageTitle.setText(lblClasspagePlaceHolder.getText());
+							ancClasspageTitle.getElement().setAttribute("alt",lblClasspagePlaceHolder.getText());
+							ancClasspageTitle.getElement().setAttribute("title",lblClasspagePlaceHolder.getText());
+						}
+					});
+					
+					/*AppClientFactory.getInjector().getClasspageService().createClassPageItem(classpageId,collectionDoGlobal.getGooruOid(),dueDateVal,directionsVal, new SimpleAsyncCallback<ClasspageItemDo>() {
 						@Override
 						public void onSuccess(ClasspageItemDo result) {
 							//closePoupfromChild();
@@ -634,7 +677,7 @@ IsCollectionAssign {
 							ancClasspageTitle.getElement().setAttribute("alt",lblClasspagePlaceHolder.getText());
 							ancClasspageTitle.getElement().setAttribute("title",lblClasspagePlaceHolder.getText());
 						}
-					});	
+					});	*/
 				}
 					MixpanelUtil.mixpanelEvent("CoursePage_Assign_Collection");
 					btnAssign.setEnabled(true);
