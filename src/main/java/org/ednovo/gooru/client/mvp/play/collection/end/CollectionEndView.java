@@ -213,6 +213,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		seeMoreButton.setVisible(false);
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
+		customizeCollectionBtn.addBlurHandler(new customizeCollectionBtnOnBlur());
 		shareCollectionBtn.addMouseOverHandler(new OnshareCollectionBtnMouseOver());
 		shareCollectionBtn.addMouseOutHandler(new OnshareCollectionBtnMouseOut());
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
@@ -260,7 +261,16 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		
 		
 	}
-	
+	public class customizeCollectionBtnOnBlur implements BlurHandler
+	{
+
+		@Override
+		public void onBlur(BlurEvent event) {
+			toolTipPopupPanel.hide();
+			
+		}
+		
+	}
 	public class OnshareCollectionBtnMouseOver implements MouseOverHandler{
 
 		@Override
@@ -550,15 +560,17 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
+				
 				if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null){
 					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
-					params.put("view", "end");
+					
 				}
 				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null){
 					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
 					params.put("customize", "yes");
-					params.put("view", "end");
+					
 				}
+				params.put("view", "end");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				
