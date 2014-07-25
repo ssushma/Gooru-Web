@@ -543,13 +543,18 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null)
+				if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null){
 					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
+					params.put("view", "end");
+				}
+				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null){
 					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
-				params.put("customize", "yes");
+					params.put("customize", "yes");
+					params.put("view", "end");
+				}
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+				
 			}
 		
 	}
