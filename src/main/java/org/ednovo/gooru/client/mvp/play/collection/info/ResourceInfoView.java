@@ -388,6 +388,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		ratingWidgetPanel.clear();
 		ratingWidgetView=new RatingWidgetView();
 		if(collectionItemDoGlobal.getResource().getRatings()!=null){
+			ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
 			ratingWidgetView.getRatingCountLabel().setText(" "+collectionItemDoGlobal.getResource().getRatings().getCount().toString()+" "+i18n.GL2024());
 			if(collectionItemDoGlobal.getResource().getRatings().getCount()>0)
 			{
@@ -2159,7 +2160,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		public void updateRatingInRealTime(String gooruOid, double average,Integer count) {
 			if(collectionItemDoGlobal.getResource()!=null){
 				if(collectionItemDoGlobal.getResource().getGooruOid().equals(gooruOid)){
-					ratingWidgetView.getRatingCountLabel().setText(count.toString()); 
+					ratingWidgetView.getRatingCountLabel().setText(" "+count.toString()+" "+i18n.GL2024()); 
+					ratingWidgetView.getAverageRatingLabel().setText(Double.toString(average)+" ");
 					ratingWidgetView.setAvgStarRating(average);
 					if(count==1&&isRatingUpdated){
 						isRatingUpdated=false;
