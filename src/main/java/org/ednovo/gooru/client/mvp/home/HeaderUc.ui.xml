@@ -365,7 +365,6 @@
 		}
 		.loginInfo{
 	         float: right;
-			 <!-- width: 235px; -->
 			width: 148px;
 		}
 		.classCodeTxtBox{
@@ -514,7 +513,7 @@
          <uc:HTMLEventPanel styleName="{style.resourceRightsPopupContainer}"  ui:field="acctActivationPl">
 					<g:HTMLPanel styleName="{style.resourceRightsInnerPopup}">
 						<!-- <g:HTMLPanel ui:field="htmlContentRightsDesc"></g:HTMLPanel> -->
-						<g:HTMLPanel styleName={style.container}>
+						<g:HTMLPanel styleName="{style.container}">
      						<g:Label ui:field="confirmEmailText"></g:Label>
      						<g:Anchor styleName="{style.anchorText}" ui:field="resendEmailAncr"/>
      						<g:Label ui:field="thanksLbl"></g:Label>

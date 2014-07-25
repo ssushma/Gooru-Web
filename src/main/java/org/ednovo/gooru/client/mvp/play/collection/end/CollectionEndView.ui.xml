@@ -38,13 +38,13 @@
 													<g:Label styleName="{playerStyle.timeTextBig}">-</g:Label>
 												</g:FlowPanel>
 										</g:FlowPanel>
-										<!-- <g:FlowPanel styleName="{playerStyle.whatsnext}">
+										<g:FlowPanel styleName="{playerStyle.whatsnext}" ui:field="nextCollectionContainer">
 											<g:Label styleName="{playerStyle.smallTxt}">What's Next?</g:Label>
-											<g:Image url="images/whats-next.png}"/>
-											<g:Label styleName="{playerStyle.bigTxt}">Soil Types</g:Label>
-											<g:Label styleName="{playerStyle.smallerTxt}">4 Resources</g:Label>
-											<g:Label styleName="{playerStyle.smallerTxt}">4 Questions</g:Label>
-										</g:FlowPanel> -->
+											<g:Image ui:field="nextCollectionThumbnail"></g:Image>
+											<g:Label styleName="{playerStyle.bigTxt}" ui:field="whatNextCollectionTitle">Soil Types</g:Label>
+											<g:Label styleName="{playerStyle.smallerTxt}" ui:field="resourceCount"></g:Label>
+											<g:Label styleName="{playerStyle.smallerTxt}" ui:field="questionCount">4 Questions</g:Label>
+										</g:FlowPanel>
 									</g:FlowPanel>
 								<g:FlowPanel styleName="{playerStyle.playBlockbottom}">
 									<g:FlowPanel styleName="{playerStyle.buttons}">

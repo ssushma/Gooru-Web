@@ -56,6 +56,7 @@ import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -266,22 +267,40 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		
 	}
 
-	public void setRelatedConcepts(CollectionDo collectionDo) {
+	public void setRelatedConcepts(final CollectionDo collectionDo) {
 		final String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject");
 		final String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", "123");
 		final String libraryType = AppClientFactory.getPlaceManager().getRequestParameter("library", PlaceTokens.HOME);
-		
+		getView().hideNextCollectionContainer(true);
 		if(subject!=null) {
 			this.libraryService.getLibraryCollections(subject, lessonId, libraryType, new SimpleAsyncCallback<ArrayList<ConceptDo>>() {
 				@Override
 				public void onSuccess(ArrayList<ConceptDo> conceptDoList) {
 					getView().isConceptsContainerVisible(true);
 					getView().setRelatedConceptsContent(conceptDoList, PAGE, subject, lessonId, libraryType);
+					if(conceptDoList!=null){
+						for(int i=0;i<conceptDoList.size();i++){
+							if(!conceptDoList.get(i).getGooruOid().equals(collectionDo.getGooruOid())){
+								getNextCollectionDetails(conceptDoList.get(i).getGooruOid(),PAGE,subject,lessonId,libraryType);
+								return;
+							}
+						}
+					}
 				}
 			});
 		} else {
 			getView().isConceptsContainerVisible(false);
 		}
+	}
+	
+	public void getNextCollectionDetails(String gooruOid, String page, final String subject,final  String lessonId, final String libraryType){
+		getView().hideNextCollectionContainer(false);
+		AppClientFactory.getInjector().getPlayerAppService().getSimpleCollectionDetils(null, gooruOid, null, null, null, new SimpleAsyncCallback<CollectionDo>() {
+			@Override
+			public void onSuccess(CollectionDo result) {
+				getView().displayNextCollectionDetails(result,subject, lessonId,libraryType);
+			}
+		});
 	}
 
 	public void setCollectionDoOnRefresh(CollectionDo collectionDo) { 
