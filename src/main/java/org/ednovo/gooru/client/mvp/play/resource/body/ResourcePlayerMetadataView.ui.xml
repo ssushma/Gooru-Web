@@ -28,7 +28,7 @@
 						<g:HTML ui:field="resourceTitleLbl" styleName="{playerStyle.resourceTitleStyle}"></g:HTML>
 						<g:Label styleName="{playerStyle.collectionNormalTxt}" ui:field="resourcePublisher"></g:Label>
 					</g:FlowPanel>
-					<g:FlowPanel styleName="{playerStyle.tagsWrapperStyle}">
+					<g:FlowPanel ui:field="tagsButtonContainer" styleName="{playerStyle.tagsWrapperStyle}">
 						<g:FlowPanel ui:field="tagsContainer"></g:FlowPanel>
 						<g:FlowPanel> <g:Button styleName="{playerStyle.plusAddButton} green" ui:field="plusAddTagsButton"></g:Button></g:FlowPanel>
 					</g:FlowPanel>
@@ -87,7 +87,7 @@
 				<g:HTMLPanel  styleName="{ratingstyle.ratingContainer}" ui:field="ratingsContainer">
 				    <g:Label styleName="{playerStyle.ratingValue}" ui:field="starValue"></g:Label>
 	                <g:Label styleName="{playerStyle.ratingValue}" ui:field="mouseOverStarValue"></g:Label> 
-	                <g:HTMLPanel styleName="{ratingstyle.subRatingContainer} rating playerrating">
+	                <g:HTMLPanel styleName="{ratingstyle.subRatingContainer} rating playerrating"> 
 	                    <g:InlineHTML ui:field="one_star" styleName="ratingItems star"></g:InlineHTML>
 	                    <g:InlineHTML ui:field="two_star" styleName="ratingItems star"></g:InlineHTML>
 	                    <g:InlineHTML ui:field="three_star" styleName="ratingItems star"></g:InlineHTML>

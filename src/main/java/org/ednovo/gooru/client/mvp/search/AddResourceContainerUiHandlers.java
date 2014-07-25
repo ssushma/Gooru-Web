@@ -40,14 +40,13 @@ package org.ednovo.gooru.client.mvp.search;
 import java.util.HashMap;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateFolderItemHandler;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 
 public interface AddResourceContainerUiHandlers extends BaseUiHandlers,EventHandler{
@@ -58,9 +57,9 @@ public interface AddResourceContainerUiHandlers extends BaseUiHandlers,EventHand
 	public void addResourceToCollection(String gooruOid,String searchType);
 	public void createFolderInParent(String folderName, String parentId,
 			HashMap<String, String> params);
-	
+	public Anchor getAddButton(); 
+	public Tree getfolderTreePanel() ;
 	public void setCollectionItemData(String collectionId,CollectionItemDo collectionItemDo);
 	public void setplayerStyle();
 	public void removePlayerStyle();
-	public Anchor getAddButton();
 }

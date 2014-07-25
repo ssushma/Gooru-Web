@@ -24,29 +24,27 @@
   								</g:FlowPanel>
 								<g:FlowPanel styleName="{playerStyle.playRight}">	
 									<g:FlowPanel styleName="{playerStyle.playBlockTop}">
-										<g:FlowPanel styleName="{playerStyle.PlayBox}">
+										<g:FlowPanel styleName="{playerStyle.PlayBoxTime}">
 											<g:Label styleName="{playerStyle.smallTxt}">Time Spent</g:Label>
-											<g:Label styleName="{playerStyle.bigTxt}">12</g:Label>
-											<g:Label styleName="{playerStyle.smallerTxt}"> min</g:Label>
+											<g:FlowPanel ui:field="spendTimeContainer"></g:FlowPanel>
 										</g:FlowPanel>
 										<g:FlowPanel styleName="{playerStyle.PlayBox}">
 											<g:Label styleName="{playerStyle.smallTxt}">Correct Answers</g:Label>
-											<g:Label styleName="{playerStyle.bigTxt}">3</g:Label>
-											<g:Label styleName="{playerStyle.smallerTxt}">/6</g:Label>
+											<g:FlowPanel ui:field="scoreContainer"></g:FlowPanel>
 										</g:FlowPanel>
 										<g:FlowPanel styleName="{playerStyle.PlayBox}">
 											<g:Label styleName="{playerStyle.smallTxt}">Average Reaction</g:Label>
 												<g:FlowPanel styleName="{playerStyle.bigTxt}">
-													<g:Image url="images/similiy.png}"></g:Image>
+													<g:Label styleName="{playerStyle.timeTextBig}">-</g:Label>
 												</g:FlowPanel>
 										</g:FlowPanel>
-										<g:FlowPanel styleName="{playerStyle.whatsnext}">
+										<!-- <g:FlowPanel styleName="{playerStyle.whatsnext}">
 											<g:Label styleName="{playerStyle.smallTxt}">What's Next?</g:Label>
 											<g:Image url="images/whats-next.png}"/>
 											<g:Label styleName="{playerStyle.bigTxt}">Soil Types</g:Label>
 											<g:Label styleName="{playerStyle.smallerTxt}">4 Resources</g:Label>
 											<g:Label styleName="{playerStyle.smallerTxt}">4 Questions</g:Label>
-										</g:FlowPanel>
+										</g:FlowPanel> -->
 									</g:FlowPanel>
 								<g:FlowPanel styleName="{playerStyle.playBlockbottom}">
 									<g:FlowPanel styleName="{playerStyle.buttons}">

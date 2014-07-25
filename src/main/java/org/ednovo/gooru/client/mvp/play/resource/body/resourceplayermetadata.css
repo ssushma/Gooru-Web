@@ -247,9 +247,9 @@
 }
 
 .emoticsContainer{
-	position: absolute;
-	top: 13px;
-	width: 310px;
+	text-align: center;
+	position: relative;
+	margin-top: 5px;
 }
 
 #resourcePlayerContainer{
@@ -916,4 +916,13 @@ fieldset {
 
 .btnSpace{
 	margin-left: 10px;
+}
+
+.eductaionalUseDesign{
+	padding: 4px 4px;
+border-radius: 4px;
+-moz-border-radius: 4px;
+background: #a6cba2;
+display:inline-block;
+margin:2px 2px;
 }
