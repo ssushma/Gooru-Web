@@ -1635,7 +1635,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		ratingsConfirmationPopup.show();
 		ratingsConfirmationPopup.getElement().getStyle().setZIndex(99999);
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-			ratingsConfirmationPopup.setPopupPosition(685,Window.getScrollTop()+60);
+			ratingsConfirmationPopup.setPopupPosition(451,Window.getScrollTop()+120);
 		}else{
 			ratingsConfirmationPopup.setPopupPosition(800,Window.getScrollTop()+153);
 		}
