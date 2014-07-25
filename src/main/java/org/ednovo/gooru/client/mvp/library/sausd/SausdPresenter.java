@@ -68,6 +68,7 @@ public class SausdPresenter extends BasePlacePresenter<IsSausdView, SausdPresent
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
+		Window.enableScrolling(true);
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
 			//To show SignUp (Registration popup)
 			if (AppClientFactory.isAnonymous()){
