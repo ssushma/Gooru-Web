@@ -602,6 +602,7 @@
 	background-color: #F9F9F9; */
 	margin-top:20px;
 	margin-left: 50px;
+	overflow-x: hidden;
  }
  .assignmentsystemMessage{
  	font-family: Arial, Helvetica, sans-serif;
