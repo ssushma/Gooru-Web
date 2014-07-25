@@ -66,8 +66,9 @@
 				<g:HTMLPanel styleName="{createCollectionStyle.formViewButtonContainer}" ui:field="buttonMainContainer">
 					<g:Button styleName="secondary" ui:field="cancelAnr"> </g:Button>
 					<g:Button ui:field="btnOk" styleName="primary"></g:Button>
+					
 				</g:HTMLPanel>
-				<g:Label styleName="{createCollectionStyle.formViewButtonContainer}" ui:field="loadingTextLbl"></g:Label>
+				<g:Label  styleName="{createCollectionStyle.formViewButtonContainer}" ui:field="loadingTextLbl"></g:Label>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:HTMLPanel>

@@ -32,7 +32,7 @@ body {
 }
 .shelfItemContentDiv {
 	border: 1px solid #CCC;
-	min-height: 400px;
+	min-height: 300px;
 	height: auto;
 	margin: -4px 4px 4px;
 }
