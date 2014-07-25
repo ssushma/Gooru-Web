@@ -7,66 +7,6 @@
 	<ui:style field="ratingstyle" src="ratings.css"></ui:style>
 	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle" field="palyerStyleResource" />
 	<g:FlowPanel ui:field="wrapperContainerField" styleName="{palyerStyleResource.getPlayerStyleResource.container} {palyerStyleResource.getPlayerStyleResource.whitebg}">
-		<!-- <g:HTMLPanel styleName="{playerStyle.collectionContainer}" ui:field="collectionContainer">
-			<g:HTMLPanel styleName="{playerStyle.collectionHeader}">
-			<g:HTMLPanel  styleName="{ratingstyle.ratingContainer}" ui:field="ratingsContainer">
-			    <g:Label styleName="{playerStyle.ratingValue}" ui:field="starValue"></g:Label>
-                <g:Label styleName="{playerStyle.ratingValue}" ui:field="mouseOverStarValue"></g:Label> 
-                <g:HTMLPanel styleName="{ratingstyle.subRatingContainer} rating">
-                    <g:InlineHTML ui:field="one_star" styleName="ratingItems star"></g:InlineHTML>
-                    <g:InlineHTML ui:field="two_star" styleName="ratingItems star"></g:InlineHTML>
-                    <g:InlineHTML ui:field="three_star" styleName="ratingItems star"></g:InlineHTML>
-                    <g:InlineHTML ui:field="four_star" styleName="ratingItems star"></g:InlineHTML>
-                    <g:InlineHTML ui:field="five_star" styleName="ratingItems star"></g:InlineHTML>
-                </g:HTMLPanel>
-            </g:HTMLPanel> -->
-
-			    <htmlevents:HTMLEventPanel ui:field="emoticsContainer" styleName="{playerStyle.emoticsContainer}">
-				    <g:HTMLPanel ui:field="singleEmoticsContainer">
-						<g:HTMLPanel styleName="{playerStyle.iconOuter}">
-							<g:Button styleName="{playerStyle.spriteType} {playerStyle.emoticon_ii}" ui:field="selectedEmoticButton"></g:Button>
-						</g:HTMLPanel>
-				   	 </g:HTMLPanel>
-				   		 
-				    <g:HTMLPanel>
-							<g:HTMLPanel styleName="{playerStyle.iconOuter}">
-								<g:Button  ui:field="needHelpButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_iv}"></g:Button>
-								<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
-									<g:HTMLPanel styleName="{playerStyle.spriteType} {playerStyle.emoticonArrow}"></g:HTMLPanel>
-									<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipFive"></g:Label>
-								</g:HTMLPanel>
-							</g:HTMLPanel>
-							<g:HTMLPanel styleName="{playerStyle.iconOuter}">
-								<g:Button ui:field="doNotUnderstandEmoticButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_iii}"></g:Button>
-								<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
-									<g:HTMLPanel styleName="{playerStyle.spriteType} {playerStyle.emoticonArrow}"></g:HTMLPanel>
-									<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipFour"> </g:Label>
-								</g:HTMLPanel>
-							</g:HTMLPanel>
-							<g:HTMLPanel styleName="{playerStyle.iconOuter}">
-								<g:Button  ui:field="mehEmoticButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_viii}"></g:Button>
-								<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
-									<g:HTMLPanel styleName="{playerStyle.spriteType} {playerStyle.emoticonArrow}"></g:HTMLPanel>
-									<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipThree"></g:Label>
-								</g:HTMLPanel>
-							</g:HTMLPanel>
-							<g:HTMLPanel styleName="{playerStyle.iconOuter}">
-							<g:Button ui:field="understandEmoticButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_ii}"></g:Button>
-								<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
-									<g:HTMLPanel styleName="{playerStyle.spriteType} {playerStyle.emoticonArrow}"></g:HTMLPanel>
-									<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipTwo"></g:Label>
-								</g:HTMLPanel>
-							</g:HTMLPanel>
-							<g:HTMLPanel styleName="{playerStyle.iconOuter}">
-							<g:Button ui:field="canExplainEmoticButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_i}"></g:Button>
-								<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
-									<g:HTMLPanel styleName="{playerStyle.spriteType} {playerStyle.emoticonArrow}"></g:HTMLPanel>
-									<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipOne"></g:Label>
-								</g:HTMLPanel>
-						</g:HTMLPanel>
-					</g:HTMLPanel>
-			    </htmlevents:HTMLEventPanel>
-			   
 				<!-- <g:HTMLPanel styleName="{playerStyle.arrowOuter}">
 					<g:Button styleName="{playerStyle.spriteType} {playerStyle.prev}" ui:field="forwardButton"></g:Button>
 				</g:HTMLPanel>
@@ -84,8 +24,14 @@
 			<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.navigationWrapper}">
 				<g:FlowPanel styleName="leftBigarrow"><g:Button styleName="{playerStyle.spriteType} {playerStyle.next}" ui:field="backwardButton"></g:Button></g:FlowPanel>
 				<g:FlowPanel styleName="{playerStyle.mainDisc}">
-					<g:HTML ui:field="resourceTitleLbl" styleName="{playerStyle.resourceTitleStyle}">Introduction to Rocks and Minerals</g:HTML>
-					<g:Label styleName="{playerStyle.collectionNormalTxt}" ui:field="resourcePublisher"></g:Label>
+					<g:FlowPanel>
+						<g:HTML ui:field="resourceTitleLbl" styleName="{playerStyle.resourceTitleStyle}"></g:HTML>
+						<g:Label styleName="{playerStyle.collectionNormalTxt}" ui:field="resourcePublisher"></g:Label>
+					</g:FlowPanel>
+					<g:FlowPanel styleName="{playerStyle.tagsWrapperStyle}">
+						<g:FlowPanel ui:field="tagsContainer"></g:FlowPanel>
+						<g:FlowPanel> <g:Button styleName="{playerStyle.plusAddButton} green" ui:field="plusAddTagsButton"></g:Button></g:FlowPanel>
+					</g:FlowPanel>
 					<!-- <div class="boxes"><a href="#">geography</a> <a href="#">chemistry</a> <a class="active" href="#">+ add tags</a></div> -->
 				</g:FlowPanel>
 			</g:FlowPanel>
@@ -93,6 +39,51 @@
 				<g:FlowPanel styleName="rightBigarrow">
 					<g:Button styleName="{playerStyle.spriteType} {playerStyle.prev}" ui:field="forwardButton"></g:Button>
 				</g:FlowPanel>
+				<htmlevents:HTMLEventPanel ui:field="emoticsContainer" styleName="{playerStyle.emoticsContainer}">
+			    <g:HTMLPanel ui:field="singleEmoticsContainer">
+					<g:HTMLPanel styleName="{playerStyle.iconOuter}">
+						<g:Button styleName="{playerStyle.spriteType} {playerStyle.emoticon_ii}" ui:field="selectedEmoticButton"></g:Button>
+					</g:HTMLPanel>
+			   	 </g:HTMLPanel>
+			   		 
+			    <g:HTMLPanel>
+						<g:HTMLPanel styleName="{playerStyle.iconOuter}">
+							<g:Button  ui:field="needHelpButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_iv}"></g:Button>
+							<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
+								<g:HTMLPanel styleName="{playerStyle.spriteType} {playerStyle.emoticonArrow}"></g:HTMLPanel>
+								<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipFive"></g:Label>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{playerStyle.iconOuter}">
+							<g:Button ui:field="doNotUnderstandEmoticButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_iii}"></g:Button>
+							<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
+								<g:HTMLPanel styleName="{playerStyle.spriteType} {playerStyle.emoticonArrow}"></g:HTMLPanel>
+								<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipFour"> </g:Label>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{playerStyle.iconOuter}">
+							<g:Button  ui:field="mehEmoticButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_viii}"></g:Button>
+							<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
+								<g:HTMLPanel styleName="{playerStyle.spriteType} {playerStyle.emoticonArrow}"></g:HTMLPanel>
+								<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipThree"></g:Label>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{playerStyle.iconOuter}">
+						<g:Button ui:field="understandEmoticButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_ii}"></g:Button>
+							<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
+								<g:HTMLPanel styleName="{playerStyle.spriteType} {playerStyle.emoticonArrow}"></g:HTMLPanel>
+								<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipTwo"></g:Label>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{playerStyle.iconOuter}">
+						<g:Button ui:field="canExplainEmoticButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_i}"></g:Button>
+							<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
+								<g:HTMLPanel styleName="{playerStyle.spriteType} {playerStyle.emoticonArrow}"></g:HTMLPanel>
+								<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipOne"></g:Label>
+							</g:HTMLPanel>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+		    </htmlevents:HTMLEventPanel>
 				<g:HTMLPanel  styleName="{ratingstyle.ratingContainer}" ui:field="ratingsContainer">
 				    <g:Label styleName="{playerStyle.ratingValue}" ui:field="starValue"></g:Label>
 	                <g:Label styleName="{playerStyle.ratingValue}" ui:field="mouseOverStarValue"></g:Label> 

@@ -97,5 +97,9 @@ public class CollectionPlayerTocPresenter extends PresenterWidget<IsCollectionPl
 		}
 		return true;
 	}
+	
+	public void hideResourceCountLabel(boolean hide){
+		getView().hideResourceCountLabel(hide);
+	}
 
 }

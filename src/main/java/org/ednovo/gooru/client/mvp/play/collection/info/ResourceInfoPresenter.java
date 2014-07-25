@@ -40,7 +40,6 @@ public class ResourceInfoPresenter extends PresenterWidget<IsResourceInfoView> i
 	
 	public String mycollectionTitle;
 	
-	
 	@Inject
 	private PlayerAppServiceAsync playerAppService;
 	

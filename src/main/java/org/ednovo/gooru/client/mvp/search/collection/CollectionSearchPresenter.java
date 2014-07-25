@@ -165,6 +165,7 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 	@Override
 	public void showAddCollectionToShelfView(SimplePanel addResourceContainerPanel,CollectionSearchResultDo collectionsearchResultDo,String searchType) {
 		// TODO Auto-generated method stub
+		addResourceContainerPresenter.removePlayerStyle();
 		addResourceContainerPanel.clear();
 		System.out.println("inside collection search showAddCollectionToShelfView");
 		addResourceContainerPresenter.getUserShelfCollectionsData(collectionsearchResultDo,searchType);

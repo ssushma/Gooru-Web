@@ -75,7 +75,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	
 	@UiField Image collectionThumbnail;
 	@UiField HTML collectionGoal;
-	@UiField Button assignCollectionBtn,customizeCollectionBtn,shareCollectionBtn,studyButton;
+	@UiField Button customizeCollectionBtn,shareCollectionBtn,studyButton;
 	@UiField HTMLPanel learningobjectiveText;
 	/*@UiField FlowPanel thumbnailContainer;*/
 	
@@ -102,12 +102,12 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	@Inject
 	public CollectionHomeMetadataView(){
 		setWidget(uiBinder.createAndBindUi(this));
-		assignCollectionBtn.setText(i18n.GL0104());
-		assignCollectionBtn.getElement().setId("btnAssignCollectionBtn");
-		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
+//		assignCollectionBtn.setText(i18n.GL0104());
+//		assignCollectionBtn.getElement().setId("btnAssignCollectionBtn");
+//		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
+//		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
 		
-		customizeCollectionBtn.setText(i18n.GL0631());
+		customizeCollectionBtn.setText(i18n.GL2037());
 		customizeCollectionBtn.getElement().setId("btnCustomizeCollectionBtn");
 		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
 		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
@@ -132,8 +132,8 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		studyButton.getElement().setAttribute("title",i18n.GL0594());
 		
 		
-		assignCollectionBtn.addMouseOverHandler(new OnassignCollectionBtnMouseOver());
-		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
+//		assignCollectionBtn.addMouseOverHandler(new OnassignCollectionBtnMouseOver());
+//		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
 		shareCollectionBtn.addMouseOverHandler(new OnshareCollectionBtnMouseOver());
@@ -149,7 +149,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		setCollectionImage(collectionDo.getThumbnails().getUrl());
 		setCollectionGoal(collectionDo.getGoals());
 		showPopupAfterGmailSignin();
-		assignCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
+		//assignCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		customizeCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		shareCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		//setReplyLink();
@@ -259,49 +259,39 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	 *
 	 * 
 	 */
-	@UiHandler("assignCollectionBtn")
-	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
-		String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
+//	@UiHandler("assignCollectionBtn")
+//	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
+//		String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
+//
+//				if(!isAssignPopup){
+//					isAssignPopup=true;
+//				AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {
+//					
+//					@Override
+//					public void closePoup() {
+//						Window.enableScrolling(true);
+//				        this.hide();
+//				    	isAssignPopup=false;
+//					}
+//				};
+//				Window.scrollTo(0, 0);
+//				successPopupVc.setWidth("500px");
+//				successPopupVc.setHeight("635px");
+//
+//				successPopupVc.show();
+//				successPopupVc.center();
+//				if (AppClientFactory.isAnonymous()){
+//				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+//				}
+//				else
+//				{
+//				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+//				}
+//				
+//			}
+//		
+//	}
 
-				if(!isAssignPopup){
-					isAssignPopup=true;
-				AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {
-					
-					@Override
-					public void closePoup() {
-						Window.enableScrolling(true);
-				        this.hide();
-				    	isAssignPopup=false;
-					}
-				};
-				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("635px");
-
-				successPopupVc.show();
-				successPopupVc.center();
-				if (AppClientFactory.isAnonymous()){
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
-				}
-				else
-				{
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
-				}
-				
-				Map<String,String> params = new HashMap<String,String>();
-				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("subject")!=null)
-					params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject"));
-				if(AppClientFactory.getPlaceManager().getRequestParameter("lessonId")!=null)
-					params.put("lessonId", AppClientFactory.getPlaceManager().getRequestParameter("lessonId"));
-				params.put("assign", "yes");
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
-				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-				
-				
-			}
-		
-	}
 	/**
 	 * 
 	 * @function oncustomizeCollectionBtnClicked 
@@ -415,7 +405,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		// TODO Auto-generated method stub
 		String collectionId = AppClientFactory.getPlaceManager().getRequestParameter("id")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter("customize")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("customize") : null;
-		String assign = AppClientFactory.getPlaceManager().getRequestParameter("Assign")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("Assign") : null;
+		String assign = AppClientFactory.getPlaceManager().getRequestParameter("assign")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("assign") : null;
 		if(customize!=null && customize.equals("yes")){
 			Boolean loginFlag = false;
 			if (AppClientFactory.isAnonymous()){
@@ -469,30 +459,30 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	}
 
 	
-	public class OnassignCollectionBtnMouseOver implements MouseOverHandler{
-
-		@Override
-		public void onMouseOver(MouseOverEvent event) {
-			toolTipPopupPanel.clear();
-			toolTipPopupPanel.setWidget(new GlobalToolTip(i18n.GL0676()));
-			toolTipPopupPanel.setStyleName("");
-			toolTipPopupPanel.setPopupPosition(assignCollectionBtn.getElement().getAbsoluteLeft()+8, assignCollectionBtn.getElement().getAbsoluteTop()+10);
-			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
-			toolTipPopupPanel.show();
-		}
-		
-	}
+//	public class OnassignCollectionBtnMouseOver implements MouseOverHandler{
+//
+//		@Override
+//		public void onMouseOver(MouseOverEvent event) {
+//			toolTipPopupPanel.clear();
+//			toolTipPopupPanel.setWidget(new GlobalToolTip(i18n.GL0676()));
+//			toolTipPopupPanel.setStyleName("");
+//			toolTipPopupPanel.setPopupPosition(assignCollectionBtn.getElement().getAbsoluteLeft()+8, assignCollectionBtn.getElement().getAbsoluteTop()+10);
+//			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
+//			toolTipPopupPanel.show();
+//		}
+//		
+//	}
 	
-	public class OnassignCollectionBtnMouseOut implements MouseOutHandler{
-
-		@Override
-		public void onMouseOut(MouseOutEvent event) {
-			toolTipPopupPanel.hide();
-		}
-
-		
-		
-	}
+//	public class OnassignCollectionBtnMouseOut implements MouseOutHandler{
+//
+//		@Override
+//		public void onMouseOut(MouseOutEvent event) {
+//			toolTipPopupPanel.hide();
+//		}
+//
+//		
+//		
+//	}
 	
 	public class OncustomizeCollectionBtnMouseOver implements MouseOverHandler{
 

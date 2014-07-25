@@ -2523,6 +2523,10 @@ public interface MessageProperties extends Constants {
 	String GL2032();
 	String GL2033();
 	String GL2034();
+	
+	String GL2035();
+	String GL2036();
+	String GL2037();
 
 
 }

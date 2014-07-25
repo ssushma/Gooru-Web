@@ -40,6 +40,7 @@ package org.ednovo.gooru.client.mvp.search;
 import java.util.HashMap;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
@@ -58,4 +59,7 @@ public interface AddResourceContainerUiHandlers extends BaseUiHandlers,EventHand
 			HashMap<String, String> params);
 	public Anchor getAddButton(); 
 	public Tree getfolderTreePanel() ;
+	public void setCollectionItemData(String collectionId,CollectionItemDo collectionItemDo);
+	public void setplayerStyle();
+	public void removePlayerStyle();
 }

@@ -172,6 +172,7 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	@Override
 	public void showAddResourceToShelfView(SimplePanel addResourceContainerPanel,ResourceSearchResultDo searchResultDo,String Type) {
 		addResourceContainerPanel.clear();
+		addResourceContainerPresenter.removePlayerStyle();
 		addResourceContainerPresenter.getUserShelfData(searchResultDo,Type);
 		addResourceContainerPanel.setWidget(addResourceContainerPresenter.getWidget());
 		addResourceContainerPresenter.getAddButton().addClickHandler(new ShowNewCollectionWidget(searchResultDo.getGooruOid()));
