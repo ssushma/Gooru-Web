@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.play.collection.end;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -99,17 +100,17 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField
 	FlowPanel metadataContainer;
 	@UiField
-	FlowPanel messageContainer,thumbnailContainer,spendTimeContainer,scoreContainer;
+	FlowPanel messageContainer,thumbnailContainer,spendTimeContainer,scoreContainer,nextCollectionContainer;
 	@UiField
 	FlowPanel frameContainer,dataInsightsPanel;
 	@UiField VerticalPanel commentsContainer;
-	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection;
+	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,resourceCount,questionCount;
 	@UiField HTMLPanel addComment,loginMessaging;
 	@UiField TextArea commentField;
 	@UiField Button postCommentBtn,postCommentCancel;
 	@UiField Anchor loginUrl, signupUrl;
 	@UiField CollectionPlayerStyleBundle playerStyle;
-	@UiField Image userPhoto,collectionThumbnail;
+	@UiField Image userPhoto,collectionThumbnail,nextCollectionThumbnail;
 	@UiField Button customizeCollectionBtn,shareCollectionBtn;
 	/*@UiField Frame insightsFrame;*/
 	private String languageObjectiveValue;
@@ -472,6 +473,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiHandler("collectionThumbnail")
 	public void thumbnailErrorImage(ErrorEvent event){
 		collectionThumbnail.setUrl("images/default-collection-image-160x120.png");
+	}
+	
+	@UiHandler("nextCollectionThumbnail")
+	public void nextThumbnailErrorImage(ErrorEvent event){
+		nextCollectionThumbnail.setUrl("images/default-collection-image-160x120.png");
 	}
 	
 
@@ -1420,6 +1426,57 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		}else{
 			displayScore(collectionScore.toString(),noOfQuestions.toString());
 		}
-		
+	}
+	
+	public void displayNextCollectionDetails(final CollectionDo collectionDo,final String subjectId,final String lessonId,final String libraryType){
+		if(collectionDo!=null){
+			hideNextCollectionContainer(true);
+			whatNextCollectionTitle.setText(collectionDo.getTitle().substring(0,10)+"...");
+			whatNextCollectionTitle.setTitle(collectionDo.getTitle());
+			nextCollectionThumbnail.setUrl(collectionDo.getThumbnails().getUrl());
+			if(collectionDo!=null&&collectionDo.getCollectionItems()!=null){
+				hideNextCollectionContainer(false);
+				int questionCount=0;
+				int resourceCount=0;
+				for(int i=0;i<collectionDo.getCollectionItems().size();i++){
+					if(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat()!=null){
+						if(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat().getDisplayName().equalsIgnoreCase("Question")){
+							questionCount++;
+						}else{
+							resourceCount++;
+						}
+					}
+				}
+				if(resourceCount>0){
+					this.resourceCount.setText(resourceCount==1?resourceCount+" Resource":resourceCount+" Resources");
+				}
+				if(questionCount>0){
+					this.questionCount.setText(resourceCount==1?resourceCount+" Question":resourceCount+" Questions");
+				}
+				nextCollectionThumbnail.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						Map<String,String> params = new LinkedHashMap<String,String>();
+						params.put("id", collectionDo.getGooruOid());
+						if(subjectId!=null){
+							params.put("subject", subjectId);
+						}
+						if(lessonId!=null){
+							params.put("lessonId", lessonId);
+						}
+						if(libraryType!=null){
+							params.put("library", libraryType);
+						}
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+					}
+				});
+			}
+		}else{
+			hideNextCollectionContainer(true);
+		}
+	}
+	
+	public void hideNextCollectionContainer(boolean hide){
+		nextCollectionContainer.setVisible(!hide);
 	}
 }

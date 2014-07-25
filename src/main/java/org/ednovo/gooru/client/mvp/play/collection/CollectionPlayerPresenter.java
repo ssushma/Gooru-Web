@@ -2040,7 +2040,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	public void refreshDisclosurePanelinSearch(String collectionId) {
 	
 		addResourceContainerPresenter.getfolderTreePanel().clear();
-		addResourceContainerPresenter.getWorkspaceData(0, 20, false, "resource");
+	
+		addResourceContainerPresenter.setCollectionItemData(collectionId, getCollectionItemDo(getPlaceManager().getRequestParameter("rid", null)));
+		//addResourceContainerPresenter.getWorkspaceData(0, 20, false, "resource");
 	}
 	public void getResourceTagsToDisplay(String resourceId){
 		if(!AppClientFactory.isAnonymous()){
