@@ -319,6 +319,19 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	public void setClasspageInsightsUrl(String classpageId, String sessionId){
 		getView().setClasspageInsightsUrl(classpageId, sessionId);
 	}
+
+	@Override
+	public void resetCollectionActivityEventId() {
+		collectionPlayerPresenter.resetcollectionActivityEventId();
+	}
+	
+	@Override
+	public void triggerCollectionShareDataEvent(String collectionId,String itemType, String shareType, boolean confirmStatus) {
+		if(collectionPlayerPresenter!=null){
+			collectionPlayerPresenter.triggerCollectionShareDataEvent( collectionId, itemType,  shareType,  confirmStatus);
+		}
+		
+	}
 	
 	
 }

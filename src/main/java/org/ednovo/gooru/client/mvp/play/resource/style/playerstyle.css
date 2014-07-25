@@ -796,7 +796,6 @@ background:url(../images/player_sprite_new.png) no-repeat -74px -44px;
 
 }
 
-
 .collectionsblock {
     float: left;
     margin-bottom: 16px;
@@ -806,7 +805,8 @@ background:url(../images/player_sprite_new.png) no-repeat -74px -44px;
 .colleDescriptionBig{
 	font-weight:bold;
 	font-size:20px;
-	color:#ffffff
+	color:#ffffff;
+	margin-left: 10px;
 }
 .Playlast{
 	min-height:180px;
