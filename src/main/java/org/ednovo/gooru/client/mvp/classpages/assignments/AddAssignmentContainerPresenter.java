@@ -112,7 +112,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	}
 	
 	public void addCollectionToAssign(String collectionId){
-		AppClientFactory.getInjector().getClasspageService().assignItemToClass(this.classpageId, collectionId, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+		AppClientFactory.getInjector().getClasspageService().assignItemToClass(this.classpageId, collectionId, null, null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			@Override
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemDoList) {
 				if(classpageItemDoList!=null&&classpageItemDoList.size()>0){
