@@ -464,7 +464,7 @@ display: inline-block;
 
 
 .navigationWrapper{
-	width:75%;
+	width:70%;
 	position:relative;
 	float:left;
 }
@@ -550,7 +550,7 @@ display: inline-block;
 
 .rightWrapper{
 	text-align:right;
-	width: 25%;
+	width: 30%;
 	position: relative;
 	float: left;
 }

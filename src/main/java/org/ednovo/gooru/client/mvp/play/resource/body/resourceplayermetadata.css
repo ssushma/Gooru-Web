@@ -247,9 +247,9 @@
 }
 
 .emoticsContainer{
-	position: absolute;
-	top: 13px;
-	width: 310px;
+	text-align: center;
+	position: relative;
+	margin-top: 5px;
 }
 
 #resourcePlayerContainer{

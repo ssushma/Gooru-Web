@@ -241,6 +241,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
     private static final String PRIVATE="private";
     
+    private Long totalTimeSpendInMs=0L;
+    
     /**
 	 * @return the answerIdsObject
 	 */
@@ -728,6 +730,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		resetAnswerLists();
 		stopCollectionDataLog();
 		setClassCollectionDataInsightsUrl(false);
+		convertMilliSecondsToTime(totalTimeSpendInMs);
+		displayScoreCount();
 		updateSession(sessionId);
 		setUserAttemptedQuestionTypeAndStatus(false,0);
 		setInSlot(METADATA_PRESENTER_SLOT, collectionEndPresenter,false);
@@ -1664,6 +1668,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			collectionNewDataLogEventId=null;
 			resourceNewDataLogEventId=null;
 			collectionStartTime=0L;
+			totalTimeSpendInMs=0L;
 			resourceStartTime=0L;
 			hintOrExplanationStartTime=0L;
 			hintOrExplanationEventName=null;
@@ -1820,6 +1825,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		String playerMode=getPlayerMode();
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(collectionDo.getGooruOid(), classpageId, classpageEventId, eventType, playerMode,"",null,path,null));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		totalTimeSpendInMs=collectionEndTime-newCollectionStartTime;
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(collectionEndTime-newCollectionStartTime, getCollectionScore()));
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,new JSONString(new JSONObject().toString()));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
@@ -1999,6 +2005,32 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	@Override
 	public void updateFlagColor() {
 		getView().makeFlagButtonOrange();
+	}
+	public void convertMilliSecondsToTime(Long milliSeconds){
+		long totalSecs = milliSeconds/1000;
+	    long hours = (totalSecs / 3600);
+	    long mins = (totalSecs / 60) % 60;
+	    long secs = totalSecs % 60;
+	    collectionEndPresenter.displaySpendTime(hours,mins,secs);
+    }
+	
+	public void displayScoreCount(){
+		if(collectionDo!=null&&collectionDo.getCollectionItems()!=null){
+			int questionCount=0;
+			for(int i=0;i<collectionDo.getCollectionItems().size();i++){
+				if(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat()!=null){
+					if(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat().getDisplayName().equalsIgnoreCase("Question")){
+						questionCount++;
+					}
+				}
+			}
+			if(questionCount==0){
+				collectionEndPresenter.displayScoreCount(questionCount,questionCount);
+			}else{
+				collectionEndPresenter.displayScoreCount(getCollectionScore(),questionCount);
+			}
+			
+		}
 	}
 
 }

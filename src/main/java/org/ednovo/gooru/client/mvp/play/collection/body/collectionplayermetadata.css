@@ -491,4 +491,11 @@
 .clearBoth{
 	clear: both;
 }
-
+.timeTextBig{
+	color:#fff;
+	font-size:30px;
+}
+.timeTextSmall{
+	color:#fff;
+	font-size:20px;
+}
