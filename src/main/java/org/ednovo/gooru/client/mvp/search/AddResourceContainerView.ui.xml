@@ -14,6 +14,7 @@
 				<g:Label ui:field="addResourceText" styleName=""></g:Label>
 				<g:Anchor ui:field="addCollectiorOrReourceText"></g:Anchor>
 				</g:HTMLPanel>
+				<g:HTMLPanel ui:field="loadingImage" styleName="loadingImage"/>
 				<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="{res.css.dropdownListContainerScrollPanel}">
 	            	<g:HTMLPanel ui:field="floderTreeContainer" styleName="{res.css.folderStucture}">
 			   		</g:HTMLPanel>

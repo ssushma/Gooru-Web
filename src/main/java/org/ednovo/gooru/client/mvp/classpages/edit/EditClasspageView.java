@@ -1935,10 +1935,7 @@ public class EditClasspageView extends
 	public void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageProcess){			
 		boolean isLast = false;
 		
-		System.out.println("iam in delete method::"+classpageProcess.get(0).getTotalHitCount());
-		System.out.println("iam in delete methodclasspageProcess.size()::"+classpageProcess.size());
 		
-		assignmentsTab.setText(i18n.GL1623()+"("+classpageProcess.get(0).getTotalHitCount()+")");
 		
 		if (offsetProgress <= 0){
 			lblPrevious.setVisible(false);
@@ -1946,6 +1943,9 @@ public class EditClasspageView extends
 			lblPrevious.setVisible(true);
 		}
 		if (classpageProcess.size() > 0){
+					
+			assignmentsTab.setText(i18n.GL1623()+"("+classpageProcess.get(0).getTotalHitCount()+")");
+			
 			panelAssignmentProgress.clear();
 			//hide/show the next and previous buttons
 			if (classpageProcess.get(0).getTotalHitCount() > limitProgress && classpageProcess.size() == limitProgress){
