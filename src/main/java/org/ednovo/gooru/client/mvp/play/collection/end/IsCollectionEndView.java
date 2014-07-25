@@ -79,4 +79,8 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public void clearCommentContainer(boolean isClear);
 	
 	public void setPlayerLoginStatus(boolean isLoggedIn);
+	
+	public void displaySpendTime(Long hours,Long mins, Long secs);
+	
+	public void displayScoreCount(Integer collectionScore,Integer noOfQuestions);
 }

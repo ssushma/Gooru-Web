@@ -538,8 +538,14 @@
 	   text-align:center;
 	   vertical-align:top;
 }
+.PlayBoxTime{
+	  display: inline-block;
+	   width:200px;
+	   text-align:center;
+	   vertical-align:top;
+}
 
-.PlayBox .smallTxt{
+.PlayBox .smallTxt, .PlayBoxTime .smallTxt{
 	font-size:14px;
 	color:#ffffff;
 	margin-bottom:7px;
@@ -617,4 +623,12 @@
 }
 .buttonmargin{
 	margin-left:10px;
+}
+.timeTextBig{
+	color:#fff;
+	font-size:30px;
+}
+.timeTextSmall{
+	color:#fff;
+	font-size:20px;
 }

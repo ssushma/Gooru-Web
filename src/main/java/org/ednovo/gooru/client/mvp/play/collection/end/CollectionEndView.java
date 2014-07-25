@@ -84,6 +84,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -98,7 +99,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField
 	FlowPanel metadataContainer;
 	@UiField
-	FlowPanel messageContainer,thumbnailContainer;
+	FlowPanel messageContainer,thumbnailContainer,spendTimeContainer,scoreContainer;
 	@UiField
 	FlowPanel frameContainer,dataInsightsPanel;
 	@UiField VerticalPanel commentsContainer;
@@ -1353,6 +1354,55 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@Override
 	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
 		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void displaySpendTime(Long hours, Long mins, Long secs) {
+		spendTimeContainer.clear();
+		String minsString = (mins == 0)? "00": ((mins < 10)? "0"+mins : ""+mins );
+	    String secsString = (secs == 0)? "00": ((secs < 10)? "0" + secs : "" + secs);
+	        if (hours > 0){
+	        	displayTime(hours.toString(),hours==1?"hr":"hrs");
+	        	displayTime(" "+minsString.toString(),minsString.equals("01")?"min":"mins");
+	        	displayTime(" "+secsString.toString(),secsString.equals("01")?"sec":"secs");
+	        }
+	        else if (mins > 0){
+	        	displayTime(minsString.toString(),minsString.equals("01")?"min":"mins");
+	        	displayTime(" "+secsString.toString(),secsString.equals("01")?"sec":"sec");
+	        }
+	        else {
+	        	displayTime(secsString.toString(),secsString.equals("01")?"sec":"sec");
+	        }
+	}
+	public void displayTime(String time, String timeText){
+		InlineLabel inlineTimeLabel=new InlineLabel(time);
+		inlineTimeLabel.setStyleName(playerStyle.timeTextBig());
+		InlineLabel inlineTimeString=new InlineLabel(timeText);
+		inlineTimeString.setStyleName(playerStyle.timeTextSmall());
+		spendTimeContainer.add(inlineTimeLabel);
+		spendTimeContainer.add(inlineTimeString);
+	}
+	public void displayScore(String collectionScore, String noOfQuestions){
+		InlineLabel inlineTimeLabel=new InlineLabel(collectionScore);
+		inlineTimeLabel.setStyleName(playerStyle.timeTextBig());
+		InlineLabel inlineTimeString=new InlineLabel("/"+noOfQuestions);
+		inlineTimeString.setStyleName(playerStyle.timeTextSmall());
+		scoreContainer.add(inlineTimeLabel);
+		scoreContainer.add(inlineTimeString);
+	}
+
+
+	@Override
+	public void displayScoreCount(Integer collectionScore, Integer noOfQuestions) {
+		if(noOfQuestions==0){
+			InlineLabel inlineTimeLabel=new InlineLabel("-");
+			inlineTimeLabel.setStyleName(playerStyle.timeTextBig());
+			spendTimeContainer.add(inlineTimeLabel);
+		}else{
+			displayScore(collectionScore.toString(),noOfQuestions.toString());
+		}
 		
 	}
 }
