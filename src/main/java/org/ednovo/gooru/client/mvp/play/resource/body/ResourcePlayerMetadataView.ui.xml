@@ -25,7 +25,7 @@
 				<g:FlowPanel styleName="leftBigarrow"><g:Button styleName="{playerStyle.spriteType} {playerStyle.next}" ui:field="backwardButton"></g:Button></g:FlowPanel>
 				<g:FlowPanel styleName="{playerStyle.mainDisc}">
 					<g:FlowPanel>
-						<g:HTML ui:field="resourceTitleLbl" styleName="{playerStyle.resourceTitleStyle}">Introduction to Rocks and Minerals</g:HTML>
+						<g:HTML ui:field="resourceTitleLbl" styleName="{playerStyle.resourceTitleStyle}"></g:HTML>
 						<g:Label styleName="{playerStyle.collectionNormalTxt}" ui:field="resourcePublisher"></g:Label>
 					</g:FlowPanel>
 					<g:FlowPanel styleName="{playerStyle.tagsWrapperStyle}">
