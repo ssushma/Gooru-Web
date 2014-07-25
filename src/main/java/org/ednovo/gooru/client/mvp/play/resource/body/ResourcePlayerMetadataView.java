@@ -1717,29 +1717,30 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		tagsContainer.clear();
 		if(resourceTagsList!=null){
 			FlowPanel toolTipwidgets = new FlowPanel();
-			for(int i=0;i<resourceTagsList.size();i++){
-				if(i<=3)
+			for(int i=0;i<resourceTagsList.size();i++){	
+				if(i<3)
 				{
-				if(resourceTagsList.get(i).getLabel().contains("Educational Use")){
+				
 					String tagsdefaultLabel = i18n.GL1664() + " : ";
 					String tagLabel = resourceTagsList.get(i).getLabel();
 					HTMLPanel tagPanel = new HTMLPanel("");
-					if(resourceTagsList.get(i).getLabel().contains(i18n.GL1664()))
+					if(resourceTagsList.get(i).getLabel().toLowerCase().contains(i18n.GL1664().toLowerCase()))
 					{
-						tagLabel = resourceTagsList.get(i).getLabel().replace(i18n.GL1664()+" ", "").replace(": ", "");
+						tagLabel = resourceTagsList.get(i).getLabel().toLowerCase().replace(tagsdefaultLabel, "");
 					}
 					tagPanel.setStyleName(playerStyle.eductaionalUseDesign());
 					tagPanel.getElement().setInnerHTML(tagLabel);
 					tagsContainer.add(tagPanel);
-				}
+				
 				}
 				else
 				{
 					HTMLPanel tagPanel = new HTMLPanel("");
+					String tagsdefaultLabel = i18n.GL1664() + " : ";
 					String tagLabel = resourceTagsList.get(i).getLabel();
-					if(resourceTagsList.get(i).getLabel().contains(i18n.GL1664()))
+					if(resourceTagsList.get(i).getLabel().toLowerCase().contains(i18n.GL1664().toLowerCase()))
 					{
-						tagLabel = resourceTagsList.get(i).getLabel().replace(i18n.GL1664()+" ", "").replace(": ", "");
+						tagLabel = resourceTagsList.get(i).getLabel().toLowerCase().replace(tagsdefaultLabel, "");
 					}
 					tagPanel.getElement().setInnerHTML(tagLabel);
 					toolTipwidgets.add(tagPanel);
