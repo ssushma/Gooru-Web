@@ -8,7 +8,7 @@
 	      <g:FlowPanel ui:field="studyMainContianer" styleName="{playerStyle.container} {playerStyle.clearfix}">
             <g:FlowPanel styleName="{playerStyle.leftPanel}">
 	            <g:FlowPanel styleName="{playerStyle.collections} {playerStyle.Playlast}">
-					<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.container}">
+					<g:FlowPanel styleName="">
 						<g:Label styleName="colleDescriptionBig">Congratulations! You have reached the end of collection.</g:Label>
 					</g:FlowPanel>
 				</g:FlowPanel>
@@ -16,9 +16,12 @@
 					<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.container} {playerStyle.whitebg}">
 						<g:FlowPanel styleName="{playerStyle.block}">
 							<g:FlowPanel styleName="{playerStyle.timespend}">
-								<g:HTMLPanel styleName="{playerStyle.playImg}">
-									<g:Image url="images/collection-play.png"></g:Image>
-								</g:HTMLPanel>
+								<g:FlowPanel styleName="{playerStyle.collectionImageContainer}" >
+  									<g:Image ui:field="collectionThumbnail" styleName="{playerStyle.collectionImage}"></g:Image>
+  									<g:FlowPanel ui:field="thumbnailContainer">
+  										<g:HTMLPanel styleName="{playerStyle.collectionreplay}"><g:Label styleName="{playerStyle.collectionreplayText}" ui:field="replayCollection"></g:Label></g:HTMLPanel>
+  									</g:FlowPanel>
+  								</g:FlowPanel>
 								<g:FlowPanel styleName="{playerStyle.playRight}">	
 									<g:FlowPanel styleName="{playerStyle.playBlockTop}">
 										<g:FlowPanel styleName="{playerStyle.PlayBox}">
@@ -47,8 +50,8 @@
 									</g:FlowPanel>
 								<g:FlowPanel styleName="{playerStyle.playBlockbottom}">
 									<g:FlowPanel styleName="{playerStyle.buttons}">
-										<g:Button styleName="ActiveButton" >Share</g:Button> 
-										<g:Button styleName="ActiveButton" >Remix</g:Button> 
+										<g:Button styleName="secondary" ui:field="shareCollectionBtn"></g:Button>
+            							<g:Button styleName="secondary  {playerStyle.buttonmargin}" ui:field="customizeCollectionBtn"></g:Button>
 									</g:FlowPanel>
 								</g:FlowPanel>
 								<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>

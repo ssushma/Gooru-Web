@@ -871,8 +871,14 @@ fieldset {
 .resourceTitleStyle{
 	font-size: 16px;
 	font-weight: bold;
-	margin-bottom: 5px;
+	margin-bottom: -2px;
 	display: inline-block;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 400px;
+	max-height: 18px;
+	overflow: hidden;
+	
 }
 .tagsWrapperStyle{
 	display: inline-block;
@@ -901,4 +907,13 @@ fieldset {
 .ratingPoorSaveCancelContainer {
 	text-align: center;
 	margin-top:8px;
+}
+
+.savePostLbl{
+	font-style: italic;
+	text-align: center;
+}
+
+.btnSpace{
+	margin-left: 10px;
 }

@@ -7,7 +7,39 @@
 	<ui:style field="ratingstyle" src="ratings.css"></ui:style>
 	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle" field="palyerStyleResource" />
 	<g:FlowPanel ui:field="wrapperContainerField" styleName="{palyerStyleResource.getPlayerStyleResource.container} {palyerStyleResource.getPlayerStyleResource.whitebg}">
-		    <htmlevents:HTMLEventPanel ui:field="emoticsContainer" styleName="{playerStyle.emoticsContainer}">
+				<!-- <g:HTMLPanel styleName="{playerStyle.arrowOuter}">
+					<g:Button styleName="{playerStyle.spriteType} {playerStyle.prev}" ui:field="forwardButton"></g:Button>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{playerStyle.arrowOuter}">
+					<g:Button styleName="{playerStyle.spriteType} {playerStyle.next}" ui:field="backwardButton"></g:Button>
+				</g:HTMLPanel>
+				<htmlevents:HTMLEventPanel styleName="{playerStyle.collectionHeaderTitle}">
+					<g:HTML ui:field="resourceTitleLbl" styleName="{playerStyle.truncate} navigationText"></g:HTML>
+					<g:Label styleName="{playerStyle.collectionNormalTxt}" ui:field="resourcePublisher"></g:Label>
+				</htmlevents:HTMLEventPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel> -->
+	<!-- <div class="container whitebg"> -->
+		<g:HTMLPanel styleName="{playerStyle.blocksmall}" ui:field="collectionContainer">
+			<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.navigationWrapper}">
+				<g:FlowPanel styleName="leftBigarrow"><g:Button styleName="{playerStyle.spriteType} {playerStyle.next}" ui:field="backwardButton"></g:Button></g:FlowPanel>
+				<g:FlowPanel styleName="{playerStyle.mainDisc}">
+					<g:FlowPanel>
+						<g:HTML ui:field="resourceTitleLbl" styleName="{playerStyle.resourceTitleStyle}"></g:HTML>
+						<g:Label styleName="{playerStyle.collectionNormalTxt}" ui:field="resourcePublisher"></g:Label>
+					</g:FlowPanel>
+					<g:FlowPanel styleName="{playerStyle.tagsWrapperStyle}">
+						<g:FlowPanel ui:field="tagsContainer"></g:FlowPanel>
+						<g:FlowPanel> <g:Button styleName="{playerStyle.plusAddButton} green" ui:field="plusAddTagsButton"></g:Button></g:FlowPanel>
+					</g:FlowPanel>
+					<!-- <div class="boxes"><a href="#">geography</a> <a href="#">chemistry</a> <a class="active" href="#">+ add tags</a></div> -->
+				</g:FlowPanel>
+			</g:FlowPanel>
+			<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.rightWrapper}">
+				<g:FlowPanel styleName="rightBigarrow">
+					<g:Button styleName="{playerStyle.spriteType} {playerStyle.prev}" ui:field="forwardButton"></g:Button>
+				</g:FlowPanel>
+				<htmlevents:HTMLEventPanel ui:field="emoticsContainer" styleName="{playerStyle.emoticsContainer}">
 			    <g:HTMLPanel ui:field="singleEmoticsContainer">
 					<g:HTMLPanel styleName="{playerStyle.iconOuter}">
 						<g:Button styleName="{playerStyle.spriteType} {playerStyle.emoticon_ii}" ui:field="selectedEmoticButton"></g:Button>
@@ -52,39 +84,6 @@
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 		    </htmlevents:HTMLEventPanel>
-		   
-				<!-- <g:HTMLPanel styleName="{playerStyle.arrowOuter}">
-					<g:Button styleName="{playerStyle.spriteType} {playerStyle.prev}" ui:field="forwardButton"></g:Button>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{playerStyle.arrowOuter}">
-					<g:Button styleName="{playerStyle.spriteType} {playerStyle.next}" ui:field="backwardButton"></g:Button>
-				</g:HTMLPanel>
-				<htmlevents:HTMLEventPanel styleName="{playerStyle.collectionHeaderTitle}">
-					<g:HTML ui:field="resourceTitleLbl" styleName="{playerStyle.truncate} navigationText"></g:HTML>
-					<g:Label styleName="{playerStyle.collectionNormalTxt}" ui:field="resourcePublisher"></g:Label>
-				</htmlevents:HTMLEventPanel>
-			</g:HTMLPanel>
-		</g:HTMLPanel> -->
-	<!-- <div class="container whitebg"> -->
-		<g:HTMLPanel styleName="{playerStyle.blocksmall}" ui:field="collectionContainer">
-			<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.navigationWrapper}">
-				<g:FlowPanel styleName="leftBigarrow"><g:Button styleName="{playerStyle.spriteType} {playerStyle.next}" ui:field="backwardButton"></g:Button></g:FlowPanel>
-				<g:FlowPanel styleName="{playerStyle.mainDisc}">
-					<g:FlowPanel>
-						<g:HTML ui:field="resourceTitleLbl" styleName="{playerStyle.resourceTitleStyle}">Introduction to Rocks and Minerals</g:HTML>
-						<g:Label styleName="{playerStyle.collectionNormalTxt}" ui:field="resourcePublisher"></g:Label>
-					</g:FlowPanel>
-					<g:FlowPanel styleName="{playerStyle.tagsWrapperStyle}">
-						<g:FlowPanel ui:field="tagsContainer"></g:FlowPanel>
-						<g:FlowPanel> <g:Button styleName="{playerStyle.plusAddButton} green" ui:field="plusAddTagsButton"></g:Button></g:FlowPanel>
-					</g:FlowPanel>
-					<!-- <div class="boxes"><a href="#">geography</a> <a href="#">chemistry</a> <a class="active" href="#">+ add tags</a></div> -->
-				</g:FlowPanel>
-			</g:FlowPanel>
-			<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.rightWrapper}">
-				<g:FlowPanel styleName="rightBigarrow">
-					<g:Button styleName="{playerStyle.spriteType} {playerStyle.prev}" ui:field="forwardButton"></g:Button>
-				</g:FlowPanel>
 				<g:HTMLPanel  styleName="{ratingstyle.ratingContainer}" ui:field="ratingsContainer">
 				    <g:Label styleName="{playerStyle.ratingValue}" ui:field="starValue"></g:Label>
 	                <g:Label styleName="{playerStyle.ratingValue}" ui:field="mouseOverStarValue"></g:Label> 
