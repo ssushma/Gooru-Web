@@ -26,7 +26,9 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
@@ -42,6 +44,7 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
+import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -1632,7 +1635,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		ratingsConfirmationPopup.show();
 		ratingsConfirmationPopup.getElement().getStyle().setZIndex(99999);
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-			ratingsConfirmationPopup.setPopupPosition(685,Window.getScrollTop()+60);
+			ratingsConfirmationPopup.setPopupPosition(451,Window.getScrollTop()+120);
 		}else{
 			ratingsConfirmationPopup.setPopupPosition(800,Window.getScrollTop()+153);
 		}
@@ -1715,20 +1718,48 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	public void displayResourceTags(List<ResourceTagsDo> resourceTagsList) {
 		tagsContainer.clear();
 		if(resourceTagsList!=null){
+			FlowPanel toolTipwidgets = new FlowPanel();
+	
 			for(int i=0;i<resourceTagsList.size();i++){
-				if(resourceTagsList.get(i).getLabel().contains("Educational Use")){
+				if(i<3)
+				{
+				
 					String tagsdefaultLabel = i18n.GL1664() + " : ";
 					String tagLabel = resourceTagsList.get(i).getLabel();
 					HTMLPanel tagPanel = new HTMLPanel("");
-					if(resourceTagsList.get(i).getLabel().contains(i18n.GL1664()))
+					if(resourceTagsList.get(i).getLabel().toLowerCase().contains(i18n.GL1664().toLowerCase()))
 					{
-						tagLabel = resourceTagsList.get(i).getLabel().replace(i18n.GL1664(), "").replaceAll(" ", "").replace(":", "");
+						tagLabel = resourceTagsList.get(i).getLabel().toLowerCase().replace(tagsdefaultLabel.toLowerCase(), "");
+						tagLabel = tagLabel.substring(0, 1).toUpperCase() + tagLabel.substring(1);
 					}
 					tagPanel.setStyleName(playerStyle.eductaionalUseDesign());
 					tagPanel.getElement().setInnerHTML(tagLabel);
 					tagsContainer.add(tagPanel);
+				
+				}
+				else
+				{
+					HTMLPanel tagPanel = new HTMLPanel("");
+					String tagsdefaultLabel = i18n.GL1664() + " : ";
+					String tagLabel = resourceTagsList.get(i).getLabel();
+					if(resourceTagsList.get(i).getLabel().toLowerCase().contains(i18n.GL1664().toLowerCase()))
+					{
+						tagLabel = resourceTagsList.get(i).getLabel().toLowerCase().replace(tagsdefaultLabel.toLowerCase(), "");
+						tagLabel = tagLabel.substring(0, 1).toUpperCase() + tagLabel.substring(1);
+					}
+					tagPanel.getElement().setInnerHTML(tagLabel);
+					toolTipwidgets.add(tagPanel);
+					
+		
 				}
 			}
+			if(resourceTagsList.size()>3)
+			{
+				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + (resourceTagsList.size()-3)), toolTipwidgets);
+				toolTipUc.setStyleName(playerStyle.educationalUseMoretags());
+				tagsContainer.add(toolTipUc);
+			}
+			
 		}
 	}
 	@UiHandler("plusAddTagsButton")

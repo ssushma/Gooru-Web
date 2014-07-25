@@ -375,7 +375,9 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		@Override
 		public void setResourceRatingCount(String resourceId,double avg,Integer count) { 
 			if(resourceSearchResultDo.getGooruOid().equals(resourceId)){
-				ratingWidgetView.getRatingCountLabel().setText(Integer.toString(count)); 
+				ratingWidgetView.getAverageRatingLabel().setText(Double.toString(avg)+" ");
+				ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
+				ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024()); 
 				ratingWidgetView.setAvgStarRating(avg);
 				if(count==1 && isRatingUpdated){
 					isRatingUpdated=false;

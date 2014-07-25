@@ -57,12 +57,13 @@ public interface IsAddResourceContainerView extends IsViewWithHandlers<AddResour
 	public void setFolderItems(TreeItem item,FolderListDo folderListDo);
 	public void displayNoCollectionsMsg();
 	public void setSearchResultDo(ResourceSearchResultDo searchResultDo);
-	public void restrictionToAddResourcesData(); 
 	public Anchor getAddButton(); 
 	public Tree getfolderTreePanel(); 
 	public void setPlayerStyle(boolean isPlayer);
 	public void removePlayerStyle(boolean isPlayer);
 	public void getButtonVisiblity();
+	public void clearSelectedId();
+	void restrictionToAddResourcesData(String message);
 
 
 }

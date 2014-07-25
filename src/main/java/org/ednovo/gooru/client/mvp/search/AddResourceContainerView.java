@@ -135,11 +135,13 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		displayCountLabel.setVisible(false);
 		addingText.setVisible(false);
+		//selectedCollectionGooruOid =null;
 		addingText.setText(i18n.GL0591());
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			  @Override
 			  public void onSelection(SelectionEvent<TreeItem> event) {
 				  displayErrorLabel.setText("");
+				  getButtonVisiblity();
 			   final TreeItem item = (TreeItem) event.getSelectedItem();
 			    Widget folderWidget= item.getWidget();
 			    FolderTreeItem folderTreeItemWidget=null;
@@ -337,7 +339,6 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	@Override
 	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel,String searchType) {
 		currentsearchType=	searchType;
-		System.out.println("searchType::::::::::"+searchType+":::"+clearShelfPanel);
 		if(searchType.equalsIgnoreCase("collection")){
 			isCollectionSearch =true;
 			isResourceSearch=false;
@@ -363,7 +364,6 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 		if(clearShelfPanel){
 			folderTreePanel.clear();
 		}
-		System.out.println("folderListDo::::::::::"+folderListDo.getSearchResult().size());
 		if(folderListDo!=null){
 			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
 			 setPagination(folderListDo.getCount());
@@ -483,7 +483,6 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	@Override
 	public void displayNoCollectionsMsg() {
 		dropdownListContainerScrollPanel.setVisible(false);
-		System.out.println("No data Availble");
 		//addResourceBtnLbl.setText(i18n.GL1964());
 	}
 	public void resetEmptyCollMsg(){
@@ -532,9 +531,9 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	}
 
 	@Override
-	public void restrictionToAddResourcesData() {
+	public void restrictionToAddResourcesData(String message) {
 		// TODO Auto-generated method stub
-		displayErrorLabel.setText("You Can't add more than 25 resources to a collection");
+		displayErrorLabel.setText(message);
 		displayErrorLabel.getElement().setAttribute("style", "left:24%;");
 	}
 
@@ -567,6 +566,14 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 		addResourceBtnLbl.setVisible(true);
 		
 	}
+
+	@Override
+	public void clearSelectedId() {
+		// TODO Auto-generated method stub
+		selectedCollectionGooruOid= null;
+	}
+
+	
 
 	}
 

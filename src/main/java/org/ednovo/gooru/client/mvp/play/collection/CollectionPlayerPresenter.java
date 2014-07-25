@@ -67,6 +67,8 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayEvent;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -96,7 +98,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootPopupContentEvent;
 
-public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPlayerView, CollectionPlayerPresenter.IsCollectionPlayerProxy> implements CollectionPlayerUiHandlers{
+public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPlayerView, CollectionPlayerPresenter.IsCollectionPlayerProxy> implements CollectionPlayerUiHandlers,RefreshDisclosurePanelHandler{
 
 	@Inject
 	private PlayerAppServiceAsync playerAppService;
@@ -415,6 +417,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		collectionPlayerTocPresenter.setCollectionPlayerPresnter(this);
 		collectionEndPresenter.setCollectionPlayerPresenter(this);
 		collectionSharePresenter.setCollectionPlayerPresenter(this);
+		resourceInfoPresenter.setCollectionPlayerPresenter(this);
 		addResourcePresenter.getAddCollectionViewButton().setVisible(false);
 		addCollectionPresenter.getAddResourceViewButton().setVisible(false);
 		//addResourcePresenter.getAddCollectionViewButton().addClickHandler(new showAddCollectionView());
@@ -424,6 +427,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		getView().removeStudentViewButton();
 		getView().hideFlagButton(false);
 		addRegisteredHandler(UpdateFlagIconColorEvent.TYPE,this);
+		addRegisteredHandler(RefreshDisclosurePanelEvent.TYPE, this);
 	}
 
 	@ProxyCodeSplit
@@ -677,7 +681,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				getReportData(collectionItemDo.getResource().getGooruOid());
 			}
 			if(!AppClientFactory.isAnonymous()){
-				System.out.println("gooruOIdd===>"+collectionItemDo.getResource().getGooruOid());
 				resoruceMetadataPresenter.getResourceTagsToDisplay(collectionItemDo.getResource().getGooruOid());
 			}else{
 				
@@ -2030,6 +2033,18 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				collectionEndPresenter.displayScoreCount(getCollectionScore(),questionCount);
 			}
 			
+		}
+	}
+
+	@Override
+	public void refreshDisclosurePanelinSearch(String collectionId) {
+	
+		addResourceContainerPresenter.getfolderTreePanel().clear();
+		addResourceContainerPresenter.getWorkspaceData(0, 20, false, "resource");
+	}
+	public void getResourceTagsToDisplay(String resourceId){
+		if(!AppClientFactory.isAnonymous()){
+			resoruceMetadataPresenter.getResourceTagsToDisplay(resourceId);
 		}
 	}
 
