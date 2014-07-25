@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.play.collection.info;
 
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
@@ -37,6 +38,8 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class ResourceInfoPresenter extends PresenterWidget<IsResourceInfoView> implements ResourceInfoUiHandlers{
 
 	private CollectionItemDo collectionItemDo=null;
+	
+	private CollectionPlayerPresenter collectionPlayerPresenter;
 	
 	public String mycollectionTitle;
 	
@@ -94,6 +97,22 @@ public class ResourceInfoPresenter extends PresenterWidget<IsResourceInfoView> i
 	
 	public String getMycollectionTitle() {
 		return mycollectionTitle;
+	}
+
+	@Override
+	public void getAddedResourceTags(String resourceId) {
+		if(collectionPlayerPresenter!=null){
+			collectionPlayerPresenter.getResourceTagsToDisplay(resourceId);
+		}
+		
+	}
+
+	public CollectionPlayerPresenter getCollectionPlayerPresenter() {
+		return collectionPlayerPresenter;
+	}
+
+	public void setCollectionPlayerPresenter(CollectionPlayerPresenter collectionPlayerPresenter) {
+		this.collectionPlayerPresenter = collectionPlayerPresenter;
 	}
 
 }

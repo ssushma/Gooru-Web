@@ -417,6 +417,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		collectionPlayerTocPresenter.setCollectionPlayerPresnter(this);
 		collectionEndPresenter.setCollectionPlayerPresenter(this);
 		collectionSharePresenter.setCollectionPlayerPresenter(this);
+		resourceInfoPresenter.setCollectionPlayerPresenter(this);
 		addResourcePresenter.getAddCollectionViewButton().setVisible(false);
 		addCollectionPresenter.getAddResourceViewButton().setVisible(false);
 		//addResourcePresenter.getAddCollectionViewButton().addClickHandler(new showAddCollectionView());
@@ -680,7 +681,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				getReportData(collectionItemDo.getResource().getGooruOid());
 			}
 			if(!AppClientFactory.isAnonymous()){
-				System.out.println("gooruOIdd===>"+collectionItemDo.getResource().getGooruOid());
 				resoruceMetadataPresenter.getResourceTagsToDisplay(collectionItemDo.getResource().getGooruOid());
 			}else{
 				
@@ -2041,7 +2041,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	
 		addResourceContainerPresenter.getfolderTreePanel().clear();
 		addResourceContainerPresenter.getWorkspaceData(0, 20, false, "resource");
-		
+	}
+	public void getResourceTagsToDisplay(String resourceId){
+		if(!AppClientFactory.isAnonymous()){
+			resoruceMetadataPresenter.getResourceTagsToDisplay(resourceId);
+		}
 	}
 
 }
