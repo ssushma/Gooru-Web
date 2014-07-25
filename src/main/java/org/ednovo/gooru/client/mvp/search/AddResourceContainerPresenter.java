@@ -96,11 +96,11 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,"public,anyonewithlink", type, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
+				
 				if(folderListDo!=null && folderListDo.getCount()!=null){
 				if(folderListDo.getCount()==0){
 					getView().displayNoCollectionsMsg();
 				}else{
-					System.out.println("inside collection search showAddCollectionToShelfView123");
 					getView().displayWorkspaceData(folderListDo,clearShelfPanel,searchType);
 				}
 			}else{
@@ -143,12 +143,10 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			collection.setGooruOid(searchResultDo.getGooruOid());
 			AppClientFactory.fireEvent(new CopyDraggedCollectionEvent(collection,searchResultDo.getGooruOid(),selectedFolderOrCollectionid));
 			}else if(searchType.equalsIgnoreCase("resource")){
-				System.out.println("selectedFolderOrCollectionid::::"+selectedFolderOrCollectionid);
 				if(selectedFolderOrCollectionid!=null){
 			AppClientFactory.getInjector().getfolderService().getCollectionResources(selectedFolderOrCollectionid,null, null, new SimpleAsyncCallback<FolderListDo>(){
 				@Override
 				public void onSuccess(FolderListDo result) {
-					System.out.println("here ButtonVisiblity");
 					getView().getButtonVisiblity();
 					if (result.getCount()<25){
 						if(isPlayer){
@@ -184,7 +182,6 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 	@Override
 	public void createFolderInParent(String folderName, final String parentId,final HashMap<String, String> params) {
 		boolean addToShelf = false;
-		System.out.println("inside create folder parent handler");
 		if(parentId.isEmpty()) {
 			addToShelf = true;
 		}
@@ -198,9 +195,9 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 				AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,searchResultDo.getGooruOid(),result.getGooruOid(),false,new SimpleAsyncCallback<CollectionDo>() { 
 					@Override
 					public void onSuccess(CollectionDo result1) {
-						System.out.println("inside copyDraggedCollection API");
 						AppClientFactory.fireEvent(new RefreshFolderItemEvent(result, RefreshFolderType.INSERT, params));
 						fireEvent(new RefreshDisclosurePanelForFoldersEvent(result1.getGooruOid()));
+						getView().getButtonVisiblity();
 					}
 				});
 				//AppClientFactory.fireEvent(new CopyDraggedCollectionEvent(collection,searchResultDo.getGooruOid(),result.getGooruOid())); 
