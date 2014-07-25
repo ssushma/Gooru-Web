@@ -229,13 +229,15 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 	@Override
 	protected void onReset() {
 		super.onReset();
+		
 		String count = Cookies.getCookie("MyCookie");
 			if(count!= null && Integer.parseInt(count)==7){
 				Window.enableScrolling(false);
 				Cookies.setCookie("MyCookie","8");
 			}
 			else{
-				Window.enableScrolling(true);
+				Window.enableScrolling(false);
+				//Window.enableScrolling(true);
 			}
 		
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));

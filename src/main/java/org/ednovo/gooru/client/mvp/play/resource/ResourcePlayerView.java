@@ -46,6 +46,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -213,6 +214,11 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	
 	public class CloseResourcePlayerEvent implements ClickHandler{
 		public void onClick(ClickEvent event) {
+		
+			if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equalsIgnoreCase("resource-search")||(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equalsIgnoreCase("collection-search"))){
+				Window.enableScrolling(false);
+			}
+		
 			if(!getUiHandlers().isOpenEndedAnswerSubmited()){
 				new NavigationConfirmPopup() {
 					@Override

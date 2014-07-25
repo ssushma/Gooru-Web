@@ -67,6 +67,8 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayEvent;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -96,7 +98,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootPopupContentEvent;
 
-public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPlayerView, CollectionPlayerPresenter.IsCollectionPlayerProxy> implements CollectionPlayerUiHandlers{
+public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPlayerView, CollectionPlayerPresenter.IsCollectionPlayerProxy> implements CollectionPlayerUiHandlers,RefreshDisclosurePanelHandler{
 
 	@Inject
 	private PlayerAppServiceAsync playerAppService;
@@ -240,6 +242,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
     public static final String UPDATE_HEADER="UPDATE_HEADER";
 
     private static final String PRIVATE="private";
+    
+    private Long totalTimeSpendInMs=0L;
     
     /**
 	 * @return the answerIdsObject
@@ -413,6 +417,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		collectionPlayerTocPresenter.setCollectionPlayerPresnter(this);
 		collectionEndPresenter.setCollectionPlayerPresenter(this);
 		collectionSharePresenter.setCollectionPlayerPresenter(this);
+		resourceInfoPresenter.setCollectionPlayerPresenter(this);
 		addResourcePresenter.getAddCollectionViewButton().setVisible(false);
 		addCollectionPresenter.getAddResourceViewButton().setVisible(false);
 		//addResourcePresenter.getAddCollectionViewButton().addClickHandler(new showAddCollectionView());
@@ -422,6 +427,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		getView().removeStudentViewButton();
 		getView().hideFlagButton(false);
 		addRegisteredHandler(UpdateFlagIconColorEvent.TYPE,this);
+		addRegisteredHandler(RefreshDisclosurePanelEvent.TYPE, this);
 	}
 
 	@ProxyCodeSplit
@@ -675,7 +681,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				getReportData(collectionItemDo.getResource().getGooruOid());
 			}
 			if(!AppClientFactory.isAnonymous()){
-				System.out.println("gooruOIdd===>"+collectionItemDo.getResource().getGooruOid());
 				resoruceMetadataPresenter.getResourceTagsToDisplay(collectionItemDo.getResource().getGooruOid());
 			}else{
 				
@@ -728,6 +733,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		resetAnswerLists();
 		stopCollectionDataLog();
 		setClassCollectionDataInsightsUrl(false);
+		convertMilliSecondsToTime(totalTimeSpendInMs);
+		displayScoreCount();
 		updateSession(sessionId);
 		setUserAttemptedQuestionTypeAndStatus(false,0);
 		setInSlot(METADATA_PRESENTER_SLOT, collectionEndPresenter,false);
@@ -1664,6 +1671,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			collectionNewDataLogEventId=null;
 			resourceNewDataLogEventId=null;
 			collectionStartTime=0L;
+			totalTimeSpendInMs=0L;
 			resourceStartTime=0L;
 			hintOrExplanationStartTime=0L;
 			hintOrExplanationEventName=null;
@@ -1820,6 +1828,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		String playerMode=getPlayerMode();
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(collectionDo.getGooruOid(), classpageId, classpageEventId, eventType, playerMode,"",null,path,null));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		totalTimeSpendInMs=collectionEndTime-newCollectionStartTime;
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(collectionEndTime-newCollectionStartTime, getCollectionScore()));
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,new JSONString(new JSONObject().toString()));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
@@ -1999,6 +2008,44 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	@Override
 	public void updateFlagColor() {
 		getView().makeFlagButtonOrange();
+	}
+	public void convertMilliSecondsToTime(Long milliSeconds){
+		long totalSecs = milliSeconds/1000;
+	    long hours = (totalSecs / 3600);
+	    long mins = (totalSecs / 60) % 60;
+	    long secs = totalSecs % 60;
+	    collectionEndPresenter.displaySpendTime(hours,mins,secs);
+    }
+	
+	public void displayScoreCount(){
+		if(collectionDo!=null&&collectionDo.getCollectionItems()!=null){
+			int questionCount=0;
+			for(int i=0;i<collectionDo.getCollectionItems().size();i++){
+				if(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat()!=null){
+					if(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat().getDisplayName().equalsIgnoreCase("Question")){
+						questionCount++;
+					}
+				}
+			}
+			if(questionCount==0){
+				collectionEndPresenter.displayScoreCount(questionCount,questionCount);
+			}else{
+				collectionEndPresenter.displayScoreCount(getCollectionScore(),questionCount);
+			}
+			
+		}
+	}
+
+	@Override
+	public void refreshDisclosurePanelinSearch(String collectionId) {
+	
+		addResourceContainerPresenter.getfolderTreePanel().clear();
+		addResourceContainerPresenter.getWorkspaceData(0, 20, false, "resource");
+	}
+	public void getResourceTagsToDisplay(String resourceId){
+		if(!AppClientFactory.isAnonymous()){
+			resoruceMetadataPresenter.getResourceTagsToDisplay(resourceId);
+		}
 	}
 
 }

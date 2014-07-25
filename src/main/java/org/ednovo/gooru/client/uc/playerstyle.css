@@ -197,11 +197,11 @@
 .resource-type-handout,.resource-type-lesson,.resource-type-exam,.resource-type-audio,.resource-type-imageIcon,.resource-type-other,.resource-type-text{
 	color: #FFFFFF;
 	font-size: 12px;
-	height: 61px;
+	height: 60px;
 	/* left: -8px; */
 	position: relative;
 	text-align: center;
-	top: -63px;
+	/* top: -63px; */
 	width: 81px;
 }
 

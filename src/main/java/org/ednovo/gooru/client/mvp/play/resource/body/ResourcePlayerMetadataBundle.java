@@ -55,4 +55,8 @@ public interface ResourcePlayerMetadataBundle extends CssResource {
 	
 	String collectionPlayerImage();
 	
+	String eductaionalUseDesign();
+	
+	String educationalUseMoretags();
+	
 }
