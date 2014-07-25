@@ -135,6 +135,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		displayCountLabel.setVisible(false);
 		addingText.setVisible(false);
+		//selectedCollectionGooruOid =null;
 		addingText.setText(i18n.GL0591());
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			  @Override

@@ -169,12 +169,14 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 						}
 						}else{
 						getView().restrictionToAddResourcesData("You Can't add more than 25 resources to a collection");
+						getView().getButtonVisiblity();
 					}
 					}
     		});
 			
 				}else{
 					getView().restrictionToAddResourcesData("Please select collection");
+					getView().getButtonVisiblity();
 				}
 		}
 	}
