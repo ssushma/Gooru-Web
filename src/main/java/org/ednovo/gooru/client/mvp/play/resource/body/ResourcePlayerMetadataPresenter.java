@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -45,6 +46,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
+import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 
 import com.google.gwt.dom.client.Document;
@@ -82,7 +84,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	public ResourcePlayerMetadataPresenter(EventBus eventBus, IsResourcePlayerMetadataView view,QuestionResourcePresenter questionResourcePresenter,CollectionEndPresenter collectionEndPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup) {
 		super(eventBus, view);
 		this.questionResourcePresenter=questionResourcePresenter;
-		this.collectionEndPresenter=collectionEndPresenter;
+		//this.collectionEndPresenter=collectionEndPresenter;
 		this.ratingAndReviewPopup = ratingAndReviewPopup;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(PostUserReviewEvent.TYPE, this);
@@ -101,9 +103,9 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	
 	public void showResourceWidget(CollectionDo collectionDo,PlaceRequest previousResourceRequest){
 		getView().showResourceWidget(previousResourceRequest);
-		collectionEndPresenter.showCollectionEndPreview(collectionDo,collectionPlayerPresenter.getAttemptAnswersMap());
+		//collectionEndPresenter.showCollectionEndPreview(collectionDo,collectionPlayerPresenter.getAttemptAnswersMap());
 		getView().getResourceWidgetContainer().clear();
-		getView().getResourceWidgetContainer().add(collectionEndPresenter.getWidget());
+		//getView().getResourceWidgetContainer().add(collectionEndPresenter.getWidget());
 	}
 
 	@Override
@@ -121,7 +123,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	
 	public void setCollectionPlayerPresnter(CollectionPlayerPresenter collectionPlayerPresenter,boolean isCollectionPlayer){
 		this.collectionPlayerPresenter=collectionPlayerPresenter;
-		collectionEndPresenter.setCollectionPlayerPresenter(collectionPlayerPresenter);
+		//collectionEndPresenter.setCollectionPlayerPresenter(collectionPlayerPresenter);
 		this.isCollectionPlayer=true;
 		this.isResourcePlayer=false;
 		this.isPreviewPlayer=false;
@@ -224,7 +226,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	}
 	
 	public void updateFlagImageOnEndView(){
-		collectionEndPresenter.updateFlagImageOnEndView();
+		//collectionEndPresenter.updateFlagImageOnEndView();
 	}
 	
 	public void clearIfrmaeContent(){
@@ -423,8 +425,17 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 				getView().setGoogleDriveFileStatusCode(statusCode);
 			}
 		});
-		
 	}
+	
+	public void getResourceTagsToDisplay(String resourceId){
+		AppClientFactory.getInjector().getResourceService().getTagsToResource(resourceId, new SimpleAsyncCallback<List<ResourceTagsDo>>() {
+			@Override
+			public void onSuccess(List<ResourceTagsDo> resourceTagsList) {
+				getView().displayResourceTags(resourceTagsList);
+			}
+		});
+	}
+
 
 	
 	/*@Override

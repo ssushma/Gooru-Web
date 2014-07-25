@@ -62,7 +62,6 @@ public class CollectionSearchView extends AbstractSearchView<CollectionSearchRes
 		collectionSearchResultVc.getAddButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				System.out.println("button clicked collection search::::");
 				if(AppClientFactory.isAnonymous()){
 					LoginPopupUc loginPopupUc=new LoginPopupUc();
 				}else{

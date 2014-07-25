@@ -163,7 +163,16 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
     boolean isPublisher =false;
     
     boolean isGrades =false;
+    
+    public Button plusAddTagsButton=new Button();
    
+	/**
+	 * @return the plusAddTagsButton
+	 */
+	public Button getPlusAddTagsButton() {
+		return plusAddTagsButton;
+	}
+
 	private static ResourceInfoViewUiBinder uiBinder = GWT.create(ResourceInfoViewUiBinder.class);
 
 	interface ResourceInfoViewUiBinder extends UiBinder<Widget, ResourceInfoView> {
@@ -176,7 +185,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public ResourceInfoView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		standardsInfoConatiner.clear();
-
 		publisherText.setText(i18n.GL1835()+i18n.GL_SPL_SEMICOLON()+" ");
 		publisherText.getElement().setId("lblPublisherText");
 		publisherText.getElement().setAttribute("alt",i18n.GL1835());
@@ -241,6 +249,11 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		addTagsBtn.getElement().setId("btnAddTagsBtn");
 		addTagsBtn.getElement().setAttribute("alt",i18n.GL1795());
 		addTagsBtn.getElement().setAttribute("title",i18n.GL1795());
+		
+		plusAddTagsButton.setText("+ "+i18n.GL1795());
+		plusAddTagsButton.getElement().setId("plusAddTagsButton");
+		plusAddTagsButton.getElement().setAttribute("alt",i18n.GL1795());
+		plusAddTagsButton.getElement().setAttribute("title",i18n.GL1795());
 		
 		timeRequiredLabel.setText(i18n.GL1685()+i18n.GL_SPL_SEMICOLON()+" ");
 		timeRequiredLabel.getElement().setId("lblTimeRequiredLabel");
@@ -2089,15 +2102,28 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		this.title =mycollectionTitle;
 	}
 	
+	public class AddTagsClickEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			addResourceTags();
+		}
+	}
+	
 	@UiHandler("addTagsBtn")
 	public void onAddTagsBtnClicked(ClickEvent clickEvent) {
+		addResourceTags();
+	}
+	
+	public void addResourceTags(){
 		if(AppClientFactory.isAnonymous()) {
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
 		} else {
 			/*		PlaceRequest collectionRequest = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 			String resourceIdVal = collectionRequest.getParameter("rid", null);*/
 			popup=new AddTagesPopupView(collectionItemDoGlobal.getResource().getGooruOid()) {
-				
+				public void getAddedResourceTags(){
+					getUiHandlers().getAddedResourceTags(collectionItemDoGlobal.getResource().getGooruOid());
+				}
 				@Override
 				public void closePoup(boolean isCancelclicked) {
 			        this.hide();
@@ -2145,7 +2171,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}
 		}
 	};
-	
 	
 	DeletePlayerStarReviewHandler deleteStarRating = new DeletePlayerStarReviewHandler(){
 
