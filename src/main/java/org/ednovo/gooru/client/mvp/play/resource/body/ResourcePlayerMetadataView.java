@@ -179,7 +179,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 		setWidget(uiBinder.createAndBindUi(this));
 		//allEmoticsContainer.getElement().getStyle().setDisplay(Display.BLOCK);
-		//singleEmoticsContainer.setVisible(false);
+		////singleEmoticsContainer.setVisible(false);
 		singleEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
 		//emoticsContainer.addMouseOverHandler(new OnEmoticsMouseOver());
 		//emoticsContainer.addMouseOutHandler(new OnEmoticsMouseOut());
@@ -1104,16 +1104,18 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	public void removeRatingContainer(boolean flag){
 		if(flag){
-//			ratingsContainer.removeFromParent();
+	//		ratingsContainer.removeFromParent();
 			ratingsContainer.setVisible(false);
 		}else{
 			if(isChildAccount()){
-//				ratingsContainer.removeFromParent();
+	//			ratingsContainer.removeFromParent();
 				ratingsContainer.setVisible(false);
 			}else{
 				ratingsContainer.setVisible(true);
 			}
-			emoticsContainer.removeFromParent();
+			System.out.println("else statement");
+			emoticsContainer.setVisible(false);
+			//emoticsContainer.removeFromParent();
 		}
 	}
 	
@@ -1705,7 +1707,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		tagsContainer.clear();
 		if(resourceTagsList!=null){
 			for(int i=0;i<resourceTagsList.size();i++){
-				System.out.println("resourceTagsList.get(i).getLabel()==>"+resourceTagsList.get(i).getLabel());
 				if(resourceTagsList.get(i).getLabel().contains("Educational Use")){
 					tagsContainer.add(new HTML(resourceTagsList.get(i).getLabel()));
 				}

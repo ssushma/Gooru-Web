@@ -406,7 +406,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		this.collectionEndPresenter=collectionEndPresenter;
 		this.addResourceContainerPresenter=addResourceContainerPresenter;
 		resoruceMetadataPresenter.setCollectionPlayerPresnter(this,true);
-		resoruceMetadataPresenter.removeRatingContainer(false);
+		/*resoruceMetadataPresenter.removeRatingContainer(false);*/
 		resourceFlagPresenter.setCollectionPlayerPresenter(this);
 		collectionFlagPresenter.setCollectionPlayerPresenter(this);
 		metadataPresenter.setCollectionPlayerPresenter(this);
@@ -644,6 +644,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				}
 			}
 			//TODO need to check is collection sharable or not, need to enable narration button if narration exist.
+			if(AppClientFactory.getPlaceManager().getRequestParameter("cid")!=null){
+				resoruceMetadataPresenter.removeRatingContainer(true);
+			}else{
+				resoruceMetadataPresenter.removeRatingContainer(false);
+			}
 			boolean isSharable=true;
 			if(PRIVATE.equalsIgnoreCase(collectionDo.getSharing())){
 				isSharable=false;
