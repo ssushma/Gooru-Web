@@ -902,3 +902,12 @@ fieldset {
 	text-align: center;
 	margin-top:8px;
 }
+
+.savePostLbl{
+	font-style: italic;
+	text-align: center;
+}
+
+.btnSpace{
+	margin-left: 10px;
+}
