@@ -880,17 +880,76 @@ public class LibraryTopicListView extends Composite{
 								sourceAttribution = libraryResourceDo.getResourceSource().getAttribution();
 							}
 							final String attribution = sourceAttribution;
+							final HTMLEventPanel resourceCategoryIcon = new HTMLEventPanel("");
+							resourceCategoryIcon.addMouseOverHandler(new MouseOverHandler() {
+							   	
+								@Override
+								public void onMouseOver(MouseOverEvent event) {
+									try
+									{
+										toolTipPopupPanel.clear();
+										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(libraryResourceDo.getTitle(),categoryImage,attribution,libraryResourceDo.getRatings().getCount(),libraryResourceDo.getRatings().getAverage()));
+										toolTipPopupPanel.setStyleName("");
+										toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
+										toolTipPopupPanel.show();
+									}
+									catch(Exception ex)
+									{
+										
+									}
+								}
+							});
+							resourceCategoryIcon.addMouseOutHandler(new MouseOutHandler() {
+								
+								@Override
+								public void onMouseOut(MouseOutEvent event) {
+									toolTipPopupPanel.hide();
+								}
+							});
+							
+							resourceCategoryIcon.addClickHandler(new ClickHandler() {
+								@Override
+								public void onClick(ClickEvent event) {
+									String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
+									if(page.equals(COURSE_PAGE)) {
+										MixpanelUtil.mixpanelEvent("CoursePage_Plays_Resource");
+									} else {
+										MixpanelUtil.mixpanelEvent("LandingPage_Plays_Resource");
+									}
+									Map<String, String> params = new HashMap<String, String>();
+									params.put("id", conceptDo.getGooruOid());
+									
+									String resourceId = libraryItem.getCollectionItemId();
+									if(resourceId==null) {
+										resourceId = libraryResourceDo.getCollectionItemId();
+									}
+									params.put("rid", resourceId);
+									params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
+									params.put("lessonId", lessonId);
+									if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY) || getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+										params.put("library", getPlaceToken());
+									}
+									String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
+									if(standardId!=null){
+										params.put("rootNodeId", standardId);
+									}
+									
+									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+									AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+								}
+							});
+							
 							resourceImage.addMouseOverHandler(new MouseOverHandler() {
 							   	
 								@Override
 								public void onMouseOver(MouseOverEvent event) {
 									try
 									{
-									toolTipPopupPanel.clear();
-									toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(libraryResourceDo.getTitle(),categoryImage,attribution,libraryResourceDo.getRatings().getCount(),libraryResourceDo.getRatings().getAverage()));
-									toolTipPopupPanel.setStyleName("");
-									toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
-									toolTipPopupPanel.show();
+										toolTipPopupPanel.clear();
+										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(libraryResourceDo.getTitle(),categoryImage,attribution,libraryResourceDo.getRatings().getCount(),libraryResourceDo.getRatings().getAverage()));
+										toolTipPopupPanel.setStyleName("");
+										toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
+										toolTipPopupPanel.show();
 									}
 									catch(Exception ex)
 									{
@@ -962,7 +1021,7 @@ public class LibraryTopicListView extends Composite{
 								}
 							});
 							
-							final HTMLPanel resourceCategoryIcon = new HTMLPanel("");
+							
 							resourceCategoryIcon.addStyleName(UcCBundle.INSTANCE.css().resourceName());
 							resourceCategoryIcon.addStyleName(getDetaultResourceImage(category.toLowerCase()) + SMALL);
 							resourcePanel.add(resourceImage);
