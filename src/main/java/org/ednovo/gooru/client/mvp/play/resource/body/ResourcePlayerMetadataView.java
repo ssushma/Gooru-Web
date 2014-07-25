@@ -1557,8 +1557,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	@Override
 	public void hideThankYouPopUp() {
-		thankYouResourceStarRatings.hide();
-		displaySuccessPopup();
+		if(thankYouResourceStarRatings!=null){
+			thankYouResourceStarRatings.hide();
+			displaySuccessPopup();
+		}
+		
+		if(thankYouResourceStarRatingsPoor!=null){
+			thankYouResourceStarRatingsPoor.hide();
+			displaySuccessPopup();
+		}
 	}
 
 	/**
