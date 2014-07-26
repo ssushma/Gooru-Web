@@ -90,7 +90,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 	@UiField
 	FlowPanel resourceTitlePanel,internalPanel1,metaDataFloPanel,ratingWidgetPanel;
 	
-	@UiField Image imgNotFriendly;
+	@UiField Image imgNotFriendly, imgOER;
 
 	ToolTip toolTip = null;
 	
@@ -116,6 +116,13 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 		imgNotFriendly.getElement().setId("imgNotFriendly");
 		imgNotFriendly.setAltText(i18n.GL0737());
 		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
+		
+		
+		imgOER.setUrl("images/oer_icon.png");
+		imgOER.getElement().setAttribute("id", i18n.GL1834());
+		imgOER.getElement().setAttribute("alt", i18n.GL1834());
+		imgOER.getElement().setAttribute("title", i18n.GL1834());
+		
 		setData(resourceSearchResultDo);
 		
 		internalPanel1.getElement().setId("fpnlInternalPanel1");
@@ -198,6 +205,19 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 			}
 		});
 		imgNotFriendly.setVisible(setVisibility);
+		
+		
+		boolean oerVisibility = resourceSearchResultDo.getLicense() !=null &&  resourceSearchResultDo.getLicense().getCode() !=null ? resourceSearchResultDo.getLicense().getCode().contains("CC") ? true : false : false;
+
+		imgOER.setVisible(oerVisibility);
+		
+		if (setVisibility || oerVisibility){
+			resourceTitleContainer.getElement().getStyle().setFloat(Float.LEFT);
+		}else{
+			resourceTitleContainer.getElement().getStyle().clearFloat();
+		}
+
+		
 		setAvgRatingWidget(resourceSearchResultDo);
 	}
 	private void setAvgRatingWidget(CollectionItemSearchResultDo resourceSearchResultDo) {
