@@ -87,7 +87,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	
 	@UiField HTML lblResourceTitle;
 	
-	@UiField Image imgNotFriendly;
+	@UiField Image imgNotFriendly, imgOER;
 	
 	@UiField
 	HTMLEventPanel resourceTitleContainer;
@@ -161,6 +161,11 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
 		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
 		resourceDescriptionHtml.getElement().setId("htmlResourceDescriptionHtml");
+//		imgOER.setVisible(false);
+		imgOER.setUrl("images/oer_icon.png");
+		imgOER.getElement().setAttribute("id", i18n.GL1834());
+		imgOER.getElement().setAttribute("alt", i18n.GL1834());
+		imgOER.getElement().setAttribute("title", i18n.GL1834());
 	}
 	
 	public RatingWidgetView getRatingWidgetView(){
@@ -317,6 +322,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getNumOfPages() + PAGES);
 		}
 		title = title.replaceAll("<p>", "").replaceAll("</p>", "");
+		
 		lblResourceTitle.setHTML(title);
 		resourceTitle=resourceSearchResultDo.getResourceTitle();
 		lblResourceTitle.getElement().setId(resourceSearchResultDo.getGooruOid());
@@ -325,11 +331,16 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		}
 		String mediaType = resourceSearchResultDo.getMediaType();
 		
+		boolean oerVisibility = resourceSearchResultDo.getLicense() !=null &&  resourceSearchResultDo.getLicense().getCode() !=null ? resourceSearchResultDo.getLicense().getCode().contains("CC") ? true : false : false;
+
+		
+		imgOER.setVisible(oerVisibility);
+		
 		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? true : false : false;
 		
 		imgNotFriendly.setVisible(setVisibility);
 		
-		if (imgNotFriendly.isVisible()){
+		if (setVisibility || oerVisibility){
 			lblResourceTitle.getElement().getStyle().setFloat(Float.LEFT);
 		}else{
 			lblResourceTitle.getElement().getStyle().clearFloat();
