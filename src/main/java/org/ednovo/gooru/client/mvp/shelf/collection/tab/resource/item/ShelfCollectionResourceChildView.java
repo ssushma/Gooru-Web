@@ -342,7 +342,7 @@ public class ShelfCollectionResourceChildView extends
 		editFloPanel.setVisible(false);
 		editFloPanel.getElement().setId("fpnlEditFloPanel");
 		imgNotFriendly.getElement().setId("imgImgNotFriendly");
-		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
+		imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
 		startStopTimeDisplayText.setText(i18n.GL0957());
 		startStopTimeDisplayText.getElement().setId("lblStartStopTimeDisplayText");
 		startStopTimeDisplayText.getElement().setAttribute("alt", i18n.GL0957());
@@ -609,7 +609,7 @@ public class ShelfCollectionResourceChildView extends
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431());
 				
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -797,6 +797,8 @@ public class ShelfCollectionResourceChildView extends
 
 		mediaType = collectionItem.getResource().getMediaType();
 		setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? true : false : false;
+		//setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? false : true : true;
+		
 		imgNotFriendly.setVisible(setVisibility);
 		resourceTitle=resourceTitleLbl.getText();
 		if (resourceTitleLbl.getText().length()>=70){
