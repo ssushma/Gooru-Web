@@ -499,7 +499,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		final String view=getPlaceManager().getRequestParameter("view", null);
 		final String rootNodeId=getPlaceManager().getRequestParameter("rootNodeId", null);
 		
-		if(this.collectionDo!=null){
+		if(this.collectionDo!=null&&this.collectionDo.getGooruOid().equals(collectionId)){
 			if(resourceId!=null&&!resourceId.equals("")){
 				showResourceView(resourceId,tabView);
 				showTabWidget(tabView,collectionId,resourceId,false,false);
@@ -515,6 +515,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			}
 		}else{
 			if(collectionId!=null && !collectionId.equalsIgnoreCase("")){
+				resetCollectionPlayer();
 				if(getPlaceManager().getRequestParameter("view")!=null){
 				}else{
 					sessionId=GwtUUIDGenerator.uuid();

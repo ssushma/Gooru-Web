@@ -1419,10 +1419,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 
 	@Override
 	public void displayScoreCount(Integer collectionScore, Integer noOfQuestions) {
+		scoreContainer.clear();
 		if(noOfQuestions==0){
 			InlineLabel inlineTimeLabel=new InlineLabel("-");
 			inlineTimeLabel.setStyleName(playerStyle.timeTextBig());
-			spendTimeContainer.add(inlineTimeLabel);
+			scoreContainer.add(inlineTimeLabel);
 		}else{
 			displayScore(collectionScore.toString(),noOfQuestions.toString());
 		}
@@ -1451,7 +1452,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					this.resourceCount.setText(resourceCount==1?resourceCount+" Resource":resourceCount+" Resources");
 				}
 				if(questionCount>0){
-					this.questionCount.setText(resourceCount==1?resourceCount+" Question":resourceCount+" Questions");
+					this.questionCount.setText(questionCount==1?questionCount+" Question":questionCount+" Questions");
 				}
 				nextCollectionThumbnail.addClickHandler(new ClickHandler() {
 					@Override
