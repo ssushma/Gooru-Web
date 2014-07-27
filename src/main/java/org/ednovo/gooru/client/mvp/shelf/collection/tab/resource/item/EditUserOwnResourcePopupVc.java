@@ -430,7 +430,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 	public void cancelPopUp(ClickEvent clickEvent) {
 		AppClientFactory.fireEvent(new GetEditPageHeightEvent(this, true));
 
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 
 		hide();

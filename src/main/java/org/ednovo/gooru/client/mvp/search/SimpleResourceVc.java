@@ -115,7 +115,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 		imgNotFriendly.setTitle(i18n.GL0737());
 		imgNotFriendly.getElement().setId("imgNotFriendly");
 		imgNotFriendly.setAltText(i18n.GL0737());
-		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
+		imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
 		
 		
 		imgOER.setUrl("images/oer_icon.png");
@@ -170,6 +170,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 		String mediaType = resourceSearchResultDo.getMediaType();
 		
 		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? true : false : false;
+		//boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? false : true : true;
 		
 		if (resourceTitleLbl.getText().length() > 30){
 			resourceTitleLbl.getElement().getStyle().setWidth(210, Unit.PX);
@@ -184,7 +185,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				
-				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px'/>"+" "+i18n.GL04431());
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 				toolTip.setPopupPosition(imgNotFriendly.getAbsoluteLeft()-(50+22), imgNotFriendly.getAbsoluteTop()+22);
