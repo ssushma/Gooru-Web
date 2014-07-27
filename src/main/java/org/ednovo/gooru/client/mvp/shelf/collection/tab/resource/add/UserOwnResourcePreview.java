@@ -152,7 +152,7 @@ public abstract class UserOwnResourcePreview extends PopupPanel {
 	
 	@UiHandler("previewCloseButton")
 	public void onClickClosePreviewBtn(ClickEvent event){
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		hide();
 		closeAppPopUp();

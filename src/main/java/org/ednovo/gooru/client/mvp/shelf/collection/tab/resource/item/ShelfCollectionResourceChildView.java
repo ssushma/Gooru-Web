@@ -783,7 +783,7 @@ public class ShelfCollectionResourceChildView extends
 	 *            instance of {@link CollectionItemDo}
 	 */
 	public void setData(CollectionItemDo collectionItem) {
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		String tumbnailUrl;
 		//resourceTitleLbl.setText(StringUtil.truncateText(collectionItem.getResource().getTitle(), 70));
 		String resourceTitle = collectionItem.getResource().getTitle()==null?"":collectionItem.getResource().getTitle();
@@ -1127,6 +1127,7 @@ public class ShelfCollectionResourceChildView extends
 				editVideoTimeLbl.setVisible(false);
 			}
 		}
+//		Window.enableScrolling(false);
 	}
 		
 	/**
@@ -1791,7 +1792,11 @@ public class ShelfCollectionResourceChildView extends
 		collectionResourceTabView.removeCollectionItem(collectionItemDo, this);
 		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(
 				collectionItemDo, RefreshType.DELETE));
-		Window.enableScrolling(true);
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			Window.enableScrolling(false);
+		}else{
+			Window.enableScrolling(true);
+		}
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 
 
@@ -1804,7 +1809,11 @@ public class ShelfCollectionResourceChildView extends
 			AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(
 					collectionItem, RefreshType.INSERT));
 		}
-		Window.enableScrolling(true);
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			Window.enableScrolling(false);
+		}else{
+			Window.enableScrolling(true);
+		}
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	
 	}
