@@ -88,6 +88,7 @@ public class CollectionMoreInfoVc extends SearchMoreInfoVc<CollectionSearchResul
 			
 			String mediaType = getUsedInSearchDo().getSearchResults().get(j).getMediaType();
 			boolean notFriendly = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? true : false : false;
+			//boolean notFriendly = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? false : true : true;
 			if (notFriendly){
 				notMobileFriendly++;
 			}

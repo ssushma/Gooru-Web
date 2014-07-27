@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RichTextArea;
@@ -375,5 +376,33 @@ public class StringUtil {
 	public static void setAttributes(AppSuggestBox editSearchTxtBox,
 			boolean isTrue) {
 		editSearchTxtBox.getElement().setAttribute("spellcheck", isTrue+"");
+	}
+	
+	/**
+	 * 
+	 * @function setAttributes 
+	 * 
+	 * @created_date : Jul 26, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param object
+	 * @param idValue
+	 * @param altValue
+	 * @param titleValue
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public static void setAttributes(Element object, String idValue, String altValue, String titleValue){
+		object.setAttribute("id",idValue);
+		object.setAttribute("alt",altValue);
+		object.setAttribute("title",titleValue);
 	}
 }

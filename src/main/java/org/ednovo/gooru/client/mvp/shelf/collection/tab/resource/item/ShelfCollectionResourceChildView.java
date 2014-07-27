@@ -342,8 +342,8 @@ public class ShelfCollectionResourceChildView extends
 		editFloPanel.setVisible(false);
 		editFloPanel.getElement().setId("fpnlEditFloPanel");
 		imgNotFriendly.getElement().setId("imgImgNotFriendly");
-		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
-		startStopTimeDisplayText.setText(i18n.GL0957());
+		imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
+		
 		startStopTimeDisplayText.getElement().setId("lblStartStopTimeDisplayText");
 		startStopTimeDisplayText.getElement().setAttribute("alt", i18n.GL0957());
 		startStopTimeDisplayText.getElement().setAttribute("title", i18n.GL0957());
@@ -363,7 +363,7 @@ public class ShelfCollectionResourceChildView extends
 		endSecondsText.getElement().setId("pnlEndSecondsText");
 		endSecondsText.getElement().setAttribute("alt", i18n.GL0959());
 		endSecondsText.getElement().setAttribute("title", i18n.GL0959());
-		editSartPageText.setText(i18n.GL0960());
+		
 		editSartPageText.getElement().setId("lblEditSartPageText");
 		editSartPageText.getElement().setAttribute("alt", i18n.GL0960());
 		editSartPageText.getElement().setAttribute("title", i18n.GL0960());
@@ -609,7 +609,7 @@ public class ShelfCollectionResourceChildView extends
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431());
 				
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -783,7 +783,7 @@ public class ShelfCollectionResourceChildView extends
 	 *            instance of {@link CollectionItemDo}
 	 */
 	public void setData(CollectionItemDo collectionItem) {
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		String tumbnailUrl;
 		//resourceTitleLbl.setText(StringUtil.truncateText(collectionItem.getResource().getTitle(), 70));
 		String resourceTitle = collectionItem.getResource().getTitle()==null?"":collectionItem.getResource().getTitle();
@@ -797,6 +797,8 @@ public class ShelfCollectionResourceChildView extends
 
 		mediaType = collectionItem.getResource().getMediaType();
 		setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? true : false : false;
+		//setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? false : true : true;
+		
 		imgNotFriendly.setVisible(setVisibility);
 		resourceTitle=resourceTitleLbl.getText();
 		if (resourceTitleLbl.getText().length()>=70){
@@ -868,6 +870,9 @@ public class ShelfCollectionResourceChildView extends
 		if (youtube) {
 			editStartPageLbl.setVisible(false);
 			editVideoTimeLbl.setVisible(true);
+			System.out.println("totalVideoLength");
+		
+			
 			videoTimeField.setText(VIDEO_TIME);
 			videoTimeField.getElement().setAttribute("alt", VIDEO_TIME);
 			videoTimeField.getElement().setAttribute("title", VIDEO_TIME);
@@ -882,7 +887,37 @@ public class ShelfCollectionResourceChildView extends
 
 			startTime = startTime.replaceAll("\\.", ":");
 			stopTime = stopTime.replaceAll("\\.", ":");
-			
+			String youTubeVideoId = ResourceImageUtil.getYoutubeVideoId(collectionItemDo
+					.getResource().getUrl());
+			AppClientFactory.getInjector().getResourceService().getYoutubeDuration(youTubeVideoId,new SimpleAsyncCallback<String>() {
+						@Override
+						public void onSuccess(String youtubeInfo) {
+							if (youtubeInfo != null) {
+								totalVideoLength = Integer.parseInt(youtubeInfo);
+								String tolTimeInmin = "";
+								String totalTimeSec = "";
+
+								int tolTimeInminutes = totalVideoLength / 60;
+								if (tolTimeInminutes < 10) {
+									tolTimeInmin = "0"
+											+ tolTimeInminutes;
+								} else {
+									tolTimeInmin = tolTimeInminutes
+											+ "";
+								}
+
+								int totalTimeInseconds = totalVideoLength % 60;
+								if (totalTimeInseconds < 10) {
+									totalTimeSec = "0"
+											+ totalTimeInseconds;
+								} else {
+									totalTimeSec = totalTimeInseconds
+											+ "";
+								}
+								startStopTimeDisplayText.setText(i18n.GL0957()+tolTimeInmin+":"+totalTimeSec);
+							}
+						}
+			});
 			if (!"00:00:00".equalsIgnoreCase(stopTime) ||!"00:00:00".equalsIgnoreCase(startTime)) {
 					String[] VideoStartTime=startTime.split(":");
 					String[] VideoEndTime=stopTime.split(":");
@@ -1083,7 +1118,7 @@ public class ShelfCollectionResourceChildView extends
 			String startPageNumber=collectionItemDo.getStart();
 			totalPages = collectionItemDo.getTotalPages();
 			String endPageNumber=collectionItemDo.getStop();
-			
+			editSartPageText.setText(i18n.GL2039() + totalPages);
 		//	String endPageNumber=collectionItemDo.getStop();
 			
 			//updatePDFLabelText.setText("0f "+endPageNumber+" pages");
@@ -1127,6 +1162,7 @@ public class ShelfCollectionResourceChildView extends
 				editVideoTimeLbl.setVisible(false);
 			}
 		}
+//		Window.enableScrolling(false);
 	}
 		
 	/**
@@ -1630,6 +1666,7 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("editVideoTimeLbl")
 	public void onclickEditVideoTimeLbl(ClickEvent event)
 	{
+		System.out.println("editVideoTimeLbl");
 			if(youtube){
 			MixpanelUtil.Organize_Click_Edit_Start_Time();
 			EditBtn.setVisible(false);
@@ -1791,7 +1828,11 @@ public class ShelfCollectionResourceChildView extends
 		collectionResourceTabView.removeCollectionItem(collectionItemDo, this);
 		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(
 				collectionItemDo, RefreshType.DELETE));
-		Window.enableScrolling(true);
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			Window.enableScrolling(false);
+		}else{
+			Window.enableScrolling(true);
+		}
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 
 
@@ -1804,7 +1845,11 @@ public class ShelfCollectionResourceChildView extends
 			AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(
 					collectionItem, RefreshType.INSERT));
 		}
-		Window.enableScrolling(true);
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			Window.enableScrolling(false);
+		}else{
+			Window.enableScrolling(true);
+		}
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	
 	}

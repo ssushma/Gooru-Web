@@ -535,7 +535,7 @@ public abstract class CopyConfirmPopupVc{
 	}
 	public void hide(){
 		popupPanel.hide();
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
 	public abstract void copyResourceToCollection(String collectionId);
