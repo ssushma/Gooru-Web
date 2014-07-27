@@ -907,7 +907,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		AppClientFactory.fireEvent(new GetEditPageHeightEvent(this, true));
 		hide();
 
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 
 	}
