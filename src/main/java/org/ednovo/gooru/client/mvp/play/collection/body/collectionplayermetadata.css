@@ -499,3 +499,9 @@
 	color:#fff;
 	font-size:20px;
 }
+.teacherTipOuterContainer{
+	width:200px;
+	word-wrap:break-word;
+	padding:5px;
+	overflow:hidden;
+}
