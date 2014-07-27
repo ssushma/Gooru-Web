@@ -9,6 +9,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			width: 160px;
 			margin-right: 10px;
 			overflow-x: hidden;
+			background-color: #FFFFFF;
 		}
 		
 		.active {

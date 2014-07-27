@@ -8,6 +8,7 @@
 					<uc:CollectionImageUc ui:field="collectionImageUc" />
 					<g:FlowPanel styleName="{res.css.collectionHeaderTextPanel}" ui:field="collectionTitlePanel">
 						<g:HTML styleName="{res.css.collectionTitle}" ui:field="collectionTitleLbl" />
+						<g:Image  styleName="{res.css.imgHeight}" ui:field="imgOER"></g:Image>
 						<g:HTMLPanel styleName="{res.css.authorContainer}">
 							<g:Label styleName="{res.css.author}" ui:field="creatorNameLbl" />
 							<g:Label styleName="{res.css.authorName}" ui:field="creatorNameLblValue" />

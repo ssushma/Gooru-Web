@@ -462,7 +462,6 @@ public class CollectionResourceTabView extends
 			dragAndDropLabel.setVisible(true);
 
 		} else {
-
 			collectionItemDo.setCollection(collectionDo);
 			Label sequenceLbl = new Label(collectionItemDo.getItemSequence()
 					+ "");
@@ -476,7 +475,7 @@ public class CollectionResourceTabView extends
 			shelfCollectionResourceVc = new ShelfCollectionResourceChildView(this, collectionItemDo);
 			if(isFlag){
 				isFlag=false;
-				Window.scrollTo(0, (0 + (sequencePostion-1)*113));
+//				Window.scrollTo(0, (0 + (sequencePostion-1)*113));
 				shelfCollectionResourceVc.addNewResource();
 			}
 			shelfCollectionResourceVc.getEditInfoLbl().addClickHandler(	new ClickHandler() {
@@ -487,41 +486,6 @@ public class CollectionResourceTabView extends
 							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 							if (collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")) {
 								getUiHandlers().showEditQuestionResourcePopup(collectionItemDo);
-//								editQuestionPopupWidget = new EditQuestionPopupWidget(collectionItemDo);
-//								editQuestionPopupWidget.getAddQuestion().getElement().getStyle().setDisplay(Display.NONE);
-//								editQuestionPopupWidget.getUpdateQuestionImageView().getUploadImage().addClickHandler(new ClickHandler() {
-//											@Override
-//											public void onClick(ClickEvent event) {
-//												getUiHandlers().updateQustionImage(
-//																collectionItemDo.getResource().getGooruOid());
-//											}
-//										});
-//								editQuestionPopupWidget.getUpdateQuestionImageView().getRemoveImage().addClickHandler(new ClickHandler() {
-//											@Override
-//											public void onClick(ClickEvent event){
-//												editQuestionPopupWidget.hide();
-//												deleteConfirmationPopupVc = new ConfirmationPopupVc(MESSAGE_HEADER,MESSAGE_CONTENT) {
-//													@Override
-//													public void onDelete(ClickEvent clickEvent) {
-//														getUiHandlers().removeQuestionImage(collectionItemDo.getResource().getGooruOid());
-//													}
-//													public void hide() {
-//														super.hide();
-//														Window.enableScrolling(true);
-//														AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-//														editQuestionPopupWidget.show();
-//													}
-//												};
-//											}
-//										});
-//
-//								editQuestionPopupWidget.getAddQuestion().addClickHandler(new ClickHandler() {
-//											@Override
-//											public void onClick(ClickEvent event) {
-//												getUiHandlers().updateQustionImage(collectionItemDo.getResource().getGooruOid());
-//											}
-//										});
-
 							} else if(collectionItemDo.getResource().getResourceType().getName().equals("resource/url") || collectionItemDo.getResource().getResourceType().getName().equals("video/youtube")){
 								editResoruce = new EditResourcePopupVc(collectionItemDo) {
 	
@@ -579,8 +543,8 @@ public class CollectionResourceTabView extends
 					collectionDo.getCollectionItems().size()));
 		}
 		hideNoResourceMsg();
-		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
+//		Window.enableScrolling(true);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 	}
 
 	/*public void insertCollectionItemForCopy(
