@@ -105,15 +105,6 @@
 	opacity:1;
 }
 
-/* #courseTabs .dropdown .courseOption {
-	padding:7px;
-	line-height:normal;
-}
-
-#courseTabs .dropdown .courseOption:hover {
-	background-color:#CFE3F1;
-} */
-
 #courseTabs .courseOption {
 	padding: 7px;
 	width: 100%;
@@ -387,26 +378,13 @@
 	line-height:1.2em;
 }
 
- .collectionDescription{
+.collectionDescription{
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: -webkit-box;
 	-webkit-line-clamp: 3;
 	-webkit-box-orient: vertical;
 }
-/*
-.collectionDescription:before{
-	content:'...';
-	text-align:right;
-    position: absolute;
-    display:block;
-    width:2em;
-    height:1em;
-    bottom:1em;
-    right:20px;
-    background-color : red;
-} */
-
 
 #contentScroll .topicBlock .collectionInfo button {
 	margin-right:5px;
@@ -527,75 +505,14 @@
 
 /*//////////////////////////////////////////////////////////// featured courses //////////////////////////////////////////////*/
 
-#landingBanner {
-	width:100%;
-	height:330px;
-	background: url("../images/library/banner.png");
-	position:relative;
-	margin-bottom:0px;
-	text-shadow: 2px 2px 5px rgba(0,0,0,.1);
-}
-
 #landingBannerInner {
 	background-size:contain;
 	height:100%;
 }
-
-#landingBanner .fourSteps {
-	color: white;
-	background-color:#4c98cc;
-	padding: 25px 0px;
-	position: absolute;
-	bottom: 0px;
-	width: 100%;
-	text-align: center;
-	text-shadow: none;	
-}
-
-#landingBanner .fourSteps .step {
-	vertical-align: top;
-	display: inline-block;
-	width: 243px;
-	height: 41px;
-	margin-right: 13px;
-	text-align: left;
-}
-
-#landingBanner .fourSteps .last.step {
-	margin-right:0px;
-	border-right: none;
-}
-
-#landingBanner .fourSteps .step i {
-	font-size:30px;
-	float:left;
-	margin-right:10px;
-}
-
-#landingBanner .fourSteps span {
-	font-size:14px;
-	font-weight:bold;
-}
-
 .headerPanel {
 	position: relative;
 	width: 1000px;
 	margin: 0 auto;
-}
-
-#landingBanner .header {
-	color:white;
-	font-size:38px;
-	font-weight:bold;
-	text-align:center;
-	padding-top:100px;
-}
-
-#landingBanner .subheader {
-	color:white;
-	font-size:16px;
-	text-align:center;
-	margin-top:10px;
 }
 
 #featuredCourseTabs {
@@ -680,12 +597,6 @@
 	color: #515151;
 }
 
-.
- {
-	background-color:#CFE3F1;
-	color: #515151;
-}
-
 .conceptTitleActive {
 	background-color:#CFE3F1;
 	color: #515151;
@@ -695,15 +606,6 @@
 	background-color:#CFE3F1;
 	color: #515151;
 }
-
-/* .courseOption {
-	padding:7px;
-	line-height:normal;
-}
-
-.courseOption:hover {
-	background-color:#CFE3F1;
-} */
 
 .aboutGooruAnrPadding {
 	padding: 0 36px !important;
@@ -822,74 +724,6 @@
 .bannerSpanBlock {
 	padding-left: 3px;
 	display: inline;
-}
-
-#landingRusdBanner {
-	width:100%;
-	height:330px;
-	background: url("../images/library/landing-image-rusd.png");
-	position:relative;
-	margin-bottom:30px;
-	text-shadow: 2px 2px 5px rgba(0,0,0,.1);
-}
-
-#landingRusdBanner .fourSteps {
-	color: white;
-	background-color:#000000;
-	padding: 25px 0px;
-	position: absolute;
-	bottom: 0px;
-	width: 100%;
-	text-align: center;
-	text-shadow: none;	
-}
-
-#landingRusdBanner .fourSteps .step {
-	vertical-align: top;
-	display: inline-block;
-	width: 243px;
-	height: 41px;
-	margin-right: 13px;
-	text-align: left;
-}
-
-#landingRusdBanner .fourSteps .last.step {
-	margin-right:0px;
-	border-right: none;
-}
-
-#landingRusdBanner .fourSteps .step i {
-	font-size:30px;
-	float:left;
-	margin-right:10px;
-}
-
-#landingRusdBanner .fourSteps span {
-	font-size:14px;
-	font-weight:bold;
-}
-
-#landingRusdBanner .header {
-	color:white;
-	font-size:38px;
-	font-weight:bold;
-	text-align:center;
-	padding-top:100px;
-}
-
-#landingRusdBanner .subheader {
-	color:white;
-	font-size:16px;
-	text-align:center;
-	margin-top:10px;
-}
-.rusdPartnerLogo {
-	background: url("../images/library/rusd-logo.png");
-	width: 122px;
-	height: 45px;
-	position: absolute;
-	top: 61px;
-	right: 188px;
 }
 .resourcesInsideSubStyle {
 	width: 263px !important;
@@ -1020,7 +854,7 @@ margin-bottom: 15px;
 	margin-bottom:30px;
 	text-shadow: 2px 2px 5px rgba(0,0,0,.1);
 }
-#landingSausdBanner .fourSteps {
+.fourSteps {
 	color: white;
 	background-color:#000000;
 	padding: 25px 0px;
@@ -1031,7 +865,7 @@ margin-bottom: 15px;
 	text-shadow: none;	
 }
 
-#landingSausdBanner .fourSteps .step {
+.fourSteps .step {
 	vertical-align: top;
 	display: inline-block;
 	width: 243px;
@@ -1040,35 +874,37 @@ margin-bottom: 15px;
 	text-align: left;
 }
 
-#landingSausdBanner .fourSteps .last.step {
+.fourSteps .last.step {
 	margin-right:0px;
 	border-right: none;
 }
 
-#landingSausdBanner .fourSteps .step i {
+.fourSteps .step i {
 	font-size:30px;
 	float:left;
 	margin-right:10px;
 }
 
-#landingSausdBanner .fourSteps span {
+.fourSteps span {
 	font-size:14px;
 	font-weight:bold;
 }
 
-#landingSausdBanner .header {
+.header {
 	color:white;
 	font-size:38px;
 	font-weight:bold;
 	text-align:center;
 	padding-top:100px;
+	height: 45px;
 }
 
-#landingSausdBanner .subheader {
+.subheader {
 	color:white;
 	font-size:16px;
 	text-align:center;
 	margin-top:10px;
+	height: 19px;
 }
 .sausdPartnerLogo {
 	background: url("../images/library/sausd-logo.png") no-repeat;
@@ -1114,29 +950,34 @@ margin-bottom: 15px;
 	padding: 0px 12px;
 	border-right: 1px solid #D81c13;
 }
+.boxLifeboard {
+	color: white !important;
+	border-right: 1px solid white !important;
+}
+
 .last {
 	border-right: none;
+}
+.lastLifeboard {
+	border-right: none !important;
+	color: white !important;
 }
 .banner-container {
 	background: white;
 }
 
+#landingLifeboardBanner {
+	width:100%;
+	height:315px;
+	background: #fff url(../images/library/partners/lifeboard.png) no-repeat center top;
+	position:relative;
+	margin-bottom:30px;
+	text-shadow: 2px 2px 5px rgba(0,0,0,.1);
+	margin: 0 auto;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.lifeboardBannerStyle {
+	background: #2f95d2 !important;
+}
 
 

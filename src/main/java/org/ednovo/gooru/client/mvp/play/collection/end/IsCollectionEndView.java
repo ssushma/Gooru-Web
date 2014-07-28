@@ -87,4 +87,6 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public void displayNextCollectionDetails(CollectionDo collectionDo,String subjectId,String courseId,String libraryType);
 	
 	public void hideNextCollectionContainer(boolean hide);
+	
+	public void showAvgReaction(String averageReaction);
 }

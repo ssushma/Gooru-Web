@@ -22,36 +22,20 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.collection.body;
-/**
- * @fileName : PreviewPlayerStyleBundle.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
+package org.ednovo.gooru.client.mvp.library.district.lifeboard;
 
-import com.google.gwt.resources.client.CssResource;
-public interface CollectionPlayerStyleBundle extends CssResource {
-	String successPostMsg();
-	String deleteMsg();
-	String conceptTitle();
-	String userImage();
-	String insightsFrameContent();
-	String clearBoth();
-	String timeTextBig();
-	String timeTextSmall();
-	String depthofKnow();
-	String reactionCanExplain();
-	String reactionCanUnderstand();
-	String reactionDonotUnderstand();
-	String reactionMeh();
-	String reactionNeedHelp();
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
+
+import com.google.gwt.event.shared.GwtEvent.Type;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
+
+/**
+ * @author Search Team
+ * 
+ */
+public interface LifeboardLibraryUiHandlers extends BaseUiHandlers {
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> TYPE_FOLDERS_SLOT = new Type<RevealContentHandler<?>>();
+
 }

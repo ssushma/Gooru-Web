@@ -22,36 +22,40 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.collection.body;
-/**
- * @fileName : PreviewPlayerStyleBundle.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
+package org.ednovo.gooru.client.mvp.library.district.lifeboard;
 
-import com.google.gwt.resources.client.CssResource;
-public interface CollectionPlayerStyleBundle extends CssResource {
-	String successPostMsg();
-	String deleteMsg();
-	String conceptTitle();
-	String userImage();
-	String insightsFrameContent();
-	String clearBoth();
-	String timeTextBig();
-	String timeTextSmall();
-	String depthofKnow();
-	String reactionCanExplain();
-	String reactionCanUnderstand();
-	String reactionDonotUnderstand();
-	String reactionMeh();
-	String reactionNeedHelp();
+import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
+
+/**
+ * @author Search Team
+` * 
+ */
+public class LifeboardLibraryView extends BaseViewWithHandlers<LifeboardLibraryUiHandlers> implements IsLifeboardLibraryView {
+
+	@UiField SimplePanel partnerPanel;
+	
+	private static LifeboardLibraryViewUiBinder uiBinder = GWT.create(LifeboardLibraryViewUiBinder.class);
+
+	interface LifeboardLibraryViewUiBinder extends UiBinder<Widget, LifeboardLibraryView> {
+	}
+
+	public LifeboardLibraryView() {
+		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
+	}
+	
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		if (content != null) {
+			if (slot == LifeboardLibraryUiHandlers.TYPE_FOLDERS_SLOT) {
+				partnerPanel.setWidget(content);
+			}
+		}
+	}
 }

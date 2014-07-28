@@ -585,6 +585,9 @@
     border-left:8px solid #1076BB;
     margin-bottom:8px;
 }
+.contentBlock.collection .info img:hover{
+	opacity: .6;
+}
 
 .contentBlock.folder .info .image {
     width:146px;
