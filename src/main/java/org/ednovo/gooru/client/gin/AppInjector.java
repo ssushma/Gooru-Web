@@ -42,14 +42,17 @@ import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
+import org.ednovo.gooru.client.mvp.landingpage.LandingPagePresenter;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fte.FteLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.natgeo.NatGeoLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.ngc.NgcLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
 import org.ednovo.gooru.client.mvp.library.sausd.SausdPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
@@ -171,6 +174,8 @@ public interface AppInjector extends ServiceInjector {
 	
 	AsyncProvider<RusdPresenter> getRusdPresenter();
 	
+	AsyncProvider<LandingPagePresenter> getLandingPagePresenter();
+	
 	AsyncProvider<PreviewPlayerPresenter> getPreviewPlayerPresenter();
 	
 	AsyncProvider<CollectionCollaboratorsTabPresenter> getCollectionCollaboratorsTabPresenter();
@@ -203,4 +208,7 @@ public interface AppInjector extends ServiceInjector {
 	
 	AsyncProvider<AddResourceContainerPresenter> getAddResourceContainerPresenter();
 
+	AsyncProvider<NatGeoLibraryPresenter> getNatGeoLibraryPresenter();
+
+	AsyncProvider<YouthVoicesLibraryPresenter> getYouthVoicesLibraryPresenter();
 }

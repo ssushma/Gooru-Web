@@ -53,6 +53,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -201,8 +202,20 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 
 	@Override
 	public void refreshDisclosurePanelinSearch(String collectionId) {
-		System.out.println("event fired in resource search presenter");
 		addResourceContainerPresenter.getfolderTreePanel().clear();
 		addResourceContainerPresenter.getWorkspaceData(0, 20, false, "resource");
+	}
+
+	@Override
+	public void showAndHideDisclosurePanelOnCLick(
+			final DisclosurePanel DisclosurePanelClose) {
+		// TODO Auto-generated method stub
+		addResourceContainerPresenter.getCancelButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				DisclosurePanelClose.setOpen(false);
+			}
+		});
 	}
 }

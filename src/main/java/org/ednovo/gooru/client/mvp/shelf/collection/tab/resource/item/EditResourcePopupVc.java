@@ -87,6 +87,7 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
@@ -107,10 +108,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	public Label generateImageLbl,resoureDropDownLbl;
 
 	@UiField
-	Label resourcemomentsOfLearningLabel,standardMaxMsg,mandatoryEducationalLbl,resourceEducationalLabel,mandatoryUrlLbl, mandatoryTitleLbl,agreeText,additionalText,educationalDropDownLbl;
+	Label resourcemomentsOfLearningLabel,standardMaxMsg,mandatoryEducationalLbl,resourceEducationalLabel,mandatoryUrlLbl, mandatoryTitleLbl,educationalDropDownLbl;
 
 	@UiField
-	Label mandatoryCategoryLbl, urlTextLbl,andText,refreshLbl;
+	Label mandatoryCategoryLbl, urlTextLbl,refreshLbl;
 
 	@UiField
 	Label leftArrowLbl, rightArrowLbl, uploadImageLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords,momentsOfLearningDropDownLbl;
@@ -142,9 +143,9 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 	 @UiField HTMLPanel categorypanel,video,interactive,website,resourceTypePanel,image,texts,audio,resourceFormat,resDescription,urlTextPanel,titleTextPanel,thumbnailLbl,orLbl,refreshLblPanel,errorContainer;//other,
 	 @UiField CheckBox rightsChkBox;
-	 @UiField Anchor copyRightAnr;
-	 @UiField Anchor termsAndPolicyAnr,privacyAnr;
-	@UiField Anchor commuGuideLinesAnr;
+	
+	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr;
+	
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox;
 	
@@ -388,7 +389,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		agreeText.getElement().setId("lblAgreeText");
 		agreeText.getElement().setAttribute("alt", i18n.GL0870());
 		agreeText.getElement().setAttribute("title", i18n.GL0870());
-		commuGuideLinesAnr.setText(i18n.GL0871());
+		commuGuideLinesAnr.setText(i18n.GL0871()+i18n.GL_GRR_COMMA());
 		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
 		commuGuideLinesAnr.getElement().setAttribute("alt", i18n.GL0871());
 		commuGuideLinesAnr.getElement().setAttribute("title", i18n.GL0871());

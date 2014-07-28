@@ -66,6 +66,7 @@ public class CollectionSearchView extends AbstractSearchView<CollectionSearchRes
 					LoginPopupUc loginPopupUc=new LoginPopupUc();
 				}else{
 				getUiHandlers().showAddCollectionToShelfView(collectionSearchResultVc.getAddResourceContainerPanel(),searchResultDo,"collection");
+				getUiHandlers().showAndHideDisclosurePanelOnCLick(collectionSearchResultVc.getDisclosurePanelClose());
 				}
 				}
 		});

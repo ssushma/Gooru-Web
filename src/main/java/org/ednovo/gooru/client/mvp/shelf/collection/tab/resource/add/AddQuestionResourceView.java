@@ -97,6 +97,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
@@ -118,7 +119,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField HTMLEventPanel addQuestionResourceButton,lblContentRights;
 	@UiField HTMLPanel questionAnswerChoiceContainer,questionTrueOrFalseAnswerChoiceContainer;
 	@UiField public static Label errorMessageForQuestion;
-	@UiField Label questionTypeHeader,questionTypeText,loadingTextLbl,rightsLbl,explanationLabel,andText,additionalText,agreeText,questionNameErrorLbl,explainationErrorLbl,depthOfKnowledgeTitle;
+	@UiField Label questionTypeHeader,questionTypeText,loadingTextLbl,rightsLbl,explanationLabel,questionNameErrorLbl,explainationErrorLbl,depthOfKnowledgeTitle;
 	@UiField Anchor addAnswerChoice,addHintsLabel;
 
 	@UiField Anchor addQuestionImg;
@@ -139,18 +140,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField Button cancelButton;
 	@UiField
 	CheckBox chkLevelRecall,chkLevelSkillConcept,chkLevelStrategicThinking,chkLevelExtendedThinking,rightsChkBox;
-	@UiField
-	Anchor copyRightAnr;
 	
-	@UiField
-	Anchor termsAndPolicyAnr,privacyAnr;
-	
-	@UiField
-	Anchor commuGuideLinesAnr;
 	@UiField AddQuestionAnswerChoice alphaLetterA,alphaLetterB;
 	private CopyRightPolicyVc copyRightPolicy;
 	
 	@UiField Image depthOfKnoweldgeToolTip;
+	
+	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr;
+	
 	ToolTip toolTip=null;
 	private TermsAndPolicyVc termsAndPolicyVc;
 	private TermsOfUse termsOfUse;
@@ -266,7 +263,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		agreeText.getElement().setId("lblAgreeText");
 		agreeText.getElement().setAttribute("alt", i18n.GL0870());
 		agreeText.getElement().setAttribute("title", i18n.GL0870());
-		commuGuideLinesAnr.setText(i18n.GL0871());
+		commuGuideLinesAnr.setText(i18n.GL0871()+i18n.GL_GRR_COMMA());
 		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
 		commuGuideLinesAnr.getElement().setAttribute("alt", i18n.GL0871());
 		commuGuideLinesAnr.getElement().setAttribute("title", i18n.GL0871());
@@ -278,11 +275,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		privacyAnr.getElement().setId("lnkPrivacyAnr");
 		privacyAnr.getElement().setAttribute("alt", i18n.GL0873());
 		privacyAnr.getElement().setAttribute("title", i18n.GL0873());
-		andText.setText(" "+i18n.GL_GRR_AND()+" ");
+		andText.setText(" "+i18n.GL_GRR_AND().trim()+" ");
 		andText.getElement().setId("lblAndText");
 		andText.getElement().setAttribute("alt", i18n.GL_GRR_AND());
 		andText.getElement().setAttribute("title", i18n.GL_GRR_AND());
-		copyRightAnr.setText(" "+i18n.GL0875());
+		copyRightAnr.setText(" "+i18n.GL0875().trim());
 		copyRightAnr.getElement().setId("lnkCopyRightAnr");
 		copyRightAnr.getElement().setAttribute("alt", i18n.GL0875());
 		copyRightAnr.getElement().setAttribute("title", i18n.GL0875());
@@ -465,7 +462,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		agreeText.getElement().setId("lblAgreeText");
 		agreeText.getElement().setAttribute("alt", i18n.GL0870());
 		agreeText.getElement().setAttribute("title", i18n.GL0870());
-		commuGuideLinesAnr.setText(i18n.GL0871());
+		commuGuideLinesAnr.setText(i18n.GL0871()+i18n.GL_GRR_COMMA());
 		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
 		commuGuideLinesAnr.getElement().setAttribute("alt", i18n.GL0871());
 		commuGuideLinesAnr.getElement().setAttribute("title", i18n.GL0871());
