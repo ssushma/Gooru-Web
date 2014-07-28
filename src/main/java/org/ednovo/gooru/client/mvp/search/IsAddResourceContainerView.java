@@ -38,17 +38,15 @@ package org.ednovo.gooru.client.mvp.search;
 * @Reviewer 
 *
 */
+import java.util.HashMap;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.user.client.ui.Anchor;
-
-import com.google.gwt.user.client.ui.Tree;
-
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Label;
-
+import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 
 public interface IsAddResourceContainerView extends IsViewWithHandlers<AddResourceContainerUiHandlers>{
@@ -64,6 +62,9 @@ public interface IsAddResourceContainerView extends IsViewWithHandlers<AddResour
 	public void getButtonVisiblity();
 	public void clearSelectedId();
 	void restrictionToAddResourcesData(String message);
+	public void enableSuccessView(String title,String gooruOid,HashMap<String,String> params);
+	public Button getCancelButton();
+	public void clearSelectedFolderId();
 
 
 }

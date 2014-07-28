@@ -65,6 +65,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
@@ -172,6 +173,10 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	}
 	public SimplePanel getAddResourceContainerPanel(){
 		return wrapperVcr.disclosureContentSimPanel;
+	}
+	
+	public DisclosurePanel getDisclosurePanelClose(){
+		return wrapperVcr.disclosureDisPanel;
 	}
 	/**
 	 * 

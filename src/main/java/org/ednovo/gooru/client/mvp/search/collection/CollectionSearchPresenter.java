@@ -49,6 +49,7 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -168,8 +169,9 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 		addResourceContainerPresenter.removePlayerStyle();
 		addResourceContainerPanel.clear();
 		addResourceContainerPresenter.getUserShelfCollectionsData(collectionsearchResultDo,searchType);
+		addResourceContainerPresenter.clearSelectedFolderId();
 		addResourceContainerPanel.setWidget(addResourceContainerPresenter.getWidget());
-		addResourceContainerPresenter.getAddButton().addClickHandler(new ClickHandler() {
+	/*	addResourceContainerPresenter.getAddButton().addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
@@ -196,7 +198,7 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 			
 				
 			}
-		});
+		});*/
 		
 	}
 
@@ -206,6 +208,22 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 		addResourceContainerPresenter.getfolderTreePanel().clear();
 		addResourceContainerPresenter.getWorkspaceData(0, 20, false, "collection");
 	}
+
+	@Override
+	public void showAndHideDisclosurePanelOnCLick(
+			final DisclosurePanel DisclosurePanelClose) {
+		System.out.println("inside collection search presenter");
+		// TODO Auto-generated method stub
+		addResourceContainerPresenter.getCancelButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				DisclosurePanelClose.setOpen(false);
+			}
+		});
+	}
+
+	
 
 	
 }

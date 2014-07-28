@@ -4,6 +4,7 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.search.AddResourceContainerCBundle"
 		field="res"></ui:with>
+		<ui:style field="FolderStyle" src="AddResourceContainerSuccess.css"/>
 		
 	 <g:FlowPanel ui:field="addContent">
 	 			<!-- <g:HTMLPanel ui:field="createCollectionbuttonsContainer" styleName="{res.css.addTextButtonsContainer}">
@@ -25,6 +26,27 @@
 					<g:Button styleName="primary {res.css.assignButton}"  ui:field="addResourceBtnLbl" />
 					<g:Label ui:field="addingText" styleName=""></g:Label>
 				</g:HTMLPanel>
+				
+				
+				<g:HTMLPanel ui:field="enableSuccessView">
+				     <div class="{FolderStyle.popupMain}">
+						<div class="{FolderStyle.popupInner}">
+						<!--  <g:Label styleName="{FolderStyle.popupHeader}" ui:field="titleLabel"/> -->
+							<g:HTMLPanel styleName="{FolderStyle.popupContent}" ui:field="contentPnl">
+			                    <div class="{FolderStyle.icon} {FolderStyle.complete}"></div>
+			                   		 <g:Label styleName="{FolderStyle.header}" ui:field="headerTitle"/>
+			                   		 <g:InlineLabel styleName="{FolderStyle.headerppp}" ui:field="headerTitleDes"></g:InlineLabel>
+			                   		 <g:InlineLabel styleName="{FolderStyle.headerppp}" ui:field="headerTitleDesUsername"></g:InlineLabel>
+			                 </g:HTMLPanel>
+							<g:HTMLPanel styleName="{FolderStyle.okCancel}" ui:field="buttonContainerEnableSuccessView">
+								 <g:Button styleName="secondary" ui:field="cancelButton"/>
+							     <g:Button styleName="primary" ui:field="okButton"/>
+							</g:HTMLPanel>
+						</div>
+					</div>
+				</g:HTMLPanel>
+				
+				
 	</g:FlowPanel>
 	
 </ui:UiBinder>

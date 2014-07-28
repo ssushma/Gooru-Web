@@ -26,12 +26,10 @@ package org.ednovo.gooru.client.mvp.search;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
@@ -58,6 +56,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Tree;
@@ -65,6 +64,7 @@ import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceContainerUiHandlers> implements IsAddResourceContainerView {
 	
@@ -79,15 +79,19 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	
-	@UiField HTMLPanel floderTreeContainer,buttonsContainer,createCollectionbuttonsContainer,loadingImage;
+	@UiField HTMLPanel floderTreeContainer,buttonsContainer,createCollectionbuttonsContainer,loadingImage,enableSuccessView;
 	
-	@UiField Button addResourceBtnLbl;
+	@UiField Button addResourceBtnLbl,okButton;
 	
-	@UiField Label addingText,displayCountLabel,addResourceText,displayErrorLabel;
+	@UiField public Button cancelButton;
+	
+	@UiField Label addingText,displayCountLabel,addResourceText,displayErrorLabel,headerTitle;
 	
 	@UiField Anchor addCollectiorOrReourceText;
 	
 	@UiField FlowPanel addContent;
+	
+	@UiField InlineLabel headerTitleDes;
 	
 	private boolean isLeftFolderClicked=false;
 	
@@ -132,6 +136,9 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 		setWidget(uiBinder.createAndBindUi(this));
 		AddResourceContainerCBundle.INSTANCE.css().ensureInjected();
 		loadingImage.setVisible(true);
+		enableSuccessView.setVisible(false);
+		buttonsContainer.setVisible(true);
+		dropdownListContainerScrollPanel.setVisible(true);
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		displayCountLabel.setVisible(false);
 		addingText.setVisible(false);
@@ -166,6 +173,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 				    	getFolderItems(item,folderTreeItemWidget.getGooruOid());
 				    }
 				    selectedFolderGooruOid = folderTreeItemWidget.getGooruOid();
+				    
 				    isSelectedFolder=true;
 				    isSelectedCollection=false;
 				    if(parent != null)
@@ -342,11 +350,11 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 		if(searchType.equalsIgnoreCase("collection")){
 			isCollectionSearch =true;
 			isResourceSearch=false;
-			addResourceText.setText("Add this Resource to one of your existing Folders -or-");
+			/*addResourceText.setText("Add this Resource to one of your existing Folders -or-");
 			addCollectiorOrReourceText.setText("Add to a new Folder");
 			addResourceText.getElement().setAttribute("style", "display: inline-block;");
 			addCollectiorOrReourceText.getElement().setAttribute("style", "display: inline-block;");
-			createCollectionbuttonsContainer.getElement().setAttribute("style", "margin-left: 44px;margin-top: 10px;");
+			createCollectionbuttonsContainer.getElement().setAttribute("style", "margin-left: 44px;margin-top: 10px;");*/
 		}else if(searchType.equalsIgnoreCase("resource")){
 			isResourceSearch=true;
 			isCollectionSearch =false;
@@ -504,18 +512,29 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 		}
 		if(isResourceSearch){
 			if(isSelectedCollection){
-				getUiHandlers().addResourceToCollection(selectedCollectionGooruOid,currentsearchType);
+				getUiHandlers().addResourceToCollection(selectedCollectionGooruOid,currentsearchType,cureentcollectionTreeItem.getCollectionName());
 			}else if(isSelectedFolder){
 				displayErrorLabel.setText("Add me into a Collection");
 				displayErrorLabel.getElement().setAttribute("style", "left:37%;");
 				getButtonVisiblity();
 			}else{
-				
+				System.out.println("values isSelectedCollection::::::"+isSelectedCollection);
+				System.out.println("values isSelectedFolder::::::"+isSelectedFolder);
+				if(!isSelectedCollection && !isSelectedFolder){
+					System.out.println("inside final validation");
+					restrictionToAddResourcesData("please select a collection");
+					getButtonVisiblity();
+				}
 			}
 		}else if(isCollectionSearch){
 			if(isSelectedFolder){
-				getUiHandlers().addResourceToCollection(selectedFolderGooruOid,currentsearchType);
+				getUiHandlers().addResourceToCollection(selectedFolderGooruOid,currentsearchType,currentFolderSelectedTreeItem.getTitle());
 			}else{
+				if(!isSelectedFolder){
+					System.out.println("inside final validation collection search");
+					restrictionToAddResourcesData("please select a folder");
+					getButtonVisiblity();
+				}
 			}
 		}
 	}
@@ -543,6 +562,12 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	}
 
 	@Override
+	public Button getCancelButton() {
+		return cancelButton;
+	}
+	
+	
+	@Override
 	public Tree getfolderTreePanel() {
 		return folderTreePanel;
 	}
@@ -569,11 +594,47 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 
 	@Override
 	public void clearSelectedId() {
-		// TODO Auto-generated method stub
+		System.out.println("clearSelectedId method");
 		selectedCollectionGooruOid= null;
+		createCollectionbuttonsContainer.setVisible(true);
+		dropdownListContainerScrollPanel.setVisible(true);
+		buttonsContainer.setVisible(true);
+		enableSuccessView.setVisible(false);
+		displayErrorLabel.setText("");
 	}
 
-	
+	@Override
+	public void enableSuccessView(String title, String gooruOid,
+			final HashMap<String, String> params) {
+		dropdownListContainerScrollPanel.setVisible(false);
+		createCollectionbuttonsContainer.setVisible(false);
+		enableSuccessView.getElement().setAttribute("style", "width: 559px;");
+		enableSuccessView.setVisible(true);
+		buttonsContainer.setVisible(false);
+		headerTitle.setText("This resource has been added to  "+title);
+		cancelButton.setText("Continue searching");
+		okButton.setText("View in My Collections");
+		enableSuccessView.setVisible(true);
+	//	params.put("id", gooruOid);
+		okButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
+			}
+		});
+		
+	}
+
+	@Override
+	public void clearSelectedFolderId() {
+		// TODO Auto-generated method stub
+		selectedFolderGooruOid = null;
+		createCollectionbuttonsContainer.setVisible(true);
+		dropdownListContainerScrollPanel.setVisible(true);
+		buttonsContainer.setVisible(true);
+		enableSuccessView.setVisible(false);
+		displayErrorLabel.setText("");
+	}
 
 	}
 

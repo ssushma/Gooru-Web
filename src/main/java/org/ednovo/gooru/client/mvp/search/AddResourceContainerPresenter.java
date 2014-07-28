@@ -35,6 +35,8 @@ import org.ednovo.gooru.client.mvp.search.collection.RefreshDisclosurePanelForFo
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CopyDraggedCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
@@ -45,6 +47,7 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
@@ -74,6 +77,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 
 	CollectionItemDo collectionItemDo;
 	boolean isPlayer=false;
+	HashMap<String,String> successparams = new HashMap<String, String>();
 
 	@Inject
 	public AddResourceContainerPresenter(EventBus eventBus, IsAddResourceContainerView view) {
@@ -137,12 +141,22 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 	}
 	
 	@Override
-	public void addResourceToCollection(final String selectedFolderOrCollectionid,String searchType) {
+	public void addResourceToCollection(final String selectedFolderOrCollectionid,String searchType,final String title) {
 			final CollectionDo collection = new CollectionDo();
 			if(searchType.equalsIgnoreCase("collection")){
 			collection.setGooruOid(searchResultDo.getGooruOid());
+			System.out.println("validation for collection search value:::::"+selectedFolderOrCollectionid);
+			if(selectedFolderOrCollectionid!=null){
 			AppClientFactory.fireEvent(new CopyDraggedCollectionEvent(collection,searchResultDo.getGooruOid(),selectedFolderOrCollectionid));
-			}else if(searchType.equalsIgnoreCase("resource")){
+			successparams.put("o1", selectedFolderOrCollectionid);
+			getView().enableSuccessView(title,selectedFolderOrCollectionid,successparams);
+			}else{
+				System.out.println("validation for collection search");
+				getView().restrictionToAddResourcesData("Please select a folder to add collection");
+				getView().getButtonVisiblity();
+			}
+		}else if(searchType.equalsIgnoreCase("resource")){
+			System.out.println("validation for resource search value:::::"+selectedFolderOrCollectionid);
 				if(selectedFolderOrCollectionid!=null){
 			AppClientFactory.getInjector().getfolderService().getCollectionResources(selectedFolderOrCollectionid,null, null, new SimpleAsyncCallback<FolderListDo>(){
 				@Override
@@ -164,6 +178,9 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 						}
 						else{
 							AppClientFactory.fireEvent(new CreateCollectionItemEvent(selectedFolderOrCollectionid,searchResultDo.getGooruOid()));
+							System.out.println("inside here::::"+title);
+							successparams.put("id", selectedFolderOrCollectionid);
+							getView().enableSuccessView(title,selectedFolderOrCollectionid,successparams);
 						}
 						}else{
 						getView().restrictionToAddResourcesData("You Can't add more than 25 resources to a collection");
@@ -173,6 +190,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
     		});
 			
 				}else{
+					System.out.println("validation for resource search");
 					getView().restrictionToAddResourcesData("Please select collection");
 					getView().getButtonVisiblity();
 				}
@@ -198,6 +216,8 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 						AppClientFactory.fireEvent(new RefreshFolderItemEvent(result, RefreshFolderType.INSERT, params));
 						fireEvent(new RefreshDisclosurePanelForFoldersEvent(result1.getGooruOid()));
 						getView().getButtonVisiblity();
+						successparams.put("o1", result.getGooruOid());
+						getView().enableSuccessView(result.getTitle(),result.getGooruOid(),successparams);
 					}
 				});
 				//AppClientFactory.fireEvent(new CopyDraggedCollectionEvent(collection,searchResultDo.getGooruOid(),result.getGooruOid())); 
@@ -241,6 +261,16 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 		// TODO Auto-generated method stub
 		getView().clearSelectedId();
 		getView().getButtonVisiblity();
+	}
+	public void clearSelectedFolderId(){
+		getView().clearSelectedFolderId();
+		getView().getButtonVisiblity();
+	}
+	
+	@Override
+	public Button getCancelButton() {
+		// TODO Auto-generated method stub
+		return getView().getCancelButton();
 	}
 
 	
