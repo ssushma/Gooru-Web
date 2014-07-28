@@ -79,7 +79,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	@UiField
 	SimplePanel contentSimPanel;
 
-	@UiField
+	@UiField public
 	DisclosurePanel disclosureDisPanel;
 
 	@UiField
