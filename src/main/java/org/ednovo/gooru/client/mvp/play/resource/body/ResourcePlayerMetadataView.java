@@ -211,10 +211,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		reactionToolTipFive.getElement().setAttribute("alt",i18n.GL0585());
 		reactionToolTipFive.getElement().setAttribute("title",i18n.GL0585());
 		
-		plusAddTagsButton.setText("+ "+i18n.GL1795());
+		plusAddTagsButton.setText("+ "+i18n.GL2081());
 		plusAddTagsButton.getElement().setId("plusAddTagsButton");
-		plusAddTagsButton.getElement().setAttribute("alt",i18n.GL1795());
-		plusAddTagsButton.getElement().setAttribute("title",i18n.GL1795());
+		plusAddTagsButton.getElement().setAttribute("alt",i18n.GL2081());
+		plusAddTagsButton.getElement().setAttribute("title",i18n.GL2081());
 		
 		/*rating1 = new SimpleRadioButton("rating");
 		rating2 = new SimpleRadioButton("rating");
