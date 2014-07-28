@@ -1,24 +1,18 @@
-package org.ednovo.gooru.client.mvp.library.sausd;
+package org.ednovo.gooru.client.mvp.library.district;
 
-import org.ednovo.gooru.client.AppPlaceKeeper;
-import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.service.LibraryServiceAsync;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.annotations.NameToken;
-import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
-import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+import com.gwtplatform.mvp.client.PresenterWidget;
 
-public class SausdPresenter extends BasePlacePresenter<IsSausdView, SausdPresenter.IsSausdProxy> implements SausdUiHandlers {
+public class DistrictPresenter extends PresenterWidget<IsDistrictView> implements DistrictUiHandlers {
 
 	@Inject
 	private LibraryServiceAsync libraryService;
@@ -30,16 +24,12 @@ public class SausdPresenter extends BasePlacePresenter<IsSausdView, SausdPresent
 	private static final String CALLBACK = "callback";
 	
 	SignUpPresenter signUpViewPresenter = null;
-	
-	@ProxyCodeSplit
-	@NameToken(PlaceTokens.SAUSD_LIBRARY)
-	@UseGatekeeper(AppPlaceKeeper.class)
-	public interface IsSausdProxy extends ProxyPlace<SausdPresenter> {
-	}
+
+	private String viewToken = null;
 	
 	@Inject
-	public SausdPresenter(IsSausdView view, IsSausdProxy proxy,SignUpPresenter signUpViewPresenter) {
-		super(view, proxy);
+	public DistrictPresenter(IsDistrictView view, EventBus eventBus, SignUpPresenter signUpViewPresenter) {
+		super(eventBus, view);
 		this.signUpViewPresenter = signUpViewPresenter; 
 		getView().setUiHandlers(this);
 	}
@@ -63,19 +53,14 @@ public class SausdPresenter extends BasePlacePresenter<IsSausdView, SausdPresent
 	@Override
 	public void onReset() {
 		super.onReset();
-	}
-	
-	@Override
-	public void prepareFromRequest(PlaceRequest request) {
-		super.prepareFromRequest(request);
 		Window.enableScrolling(true);
-		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
+		if (AppClientFactory.getPlaceManager().getRequestParameter(CALLBACK) != null && AppClientFactory.getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
 			//To show SignUp (Registration popup)
 			if (AppClientFactory.isAnonymous()){
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-				String type = getPlaceManager().getRequestParameter("type") ;
-				int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
+				String type = AppClientFactory.getPlaceManager().getRequestParameter("type") ;
+				int displayScreen =AppClientFactory.getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
 				signUpViewPresenter.displayPopup(displayScreen);
 				addToPopupSlot(signUpViewPresenter);
 			}
@@ -85,13 +70,18 @@ public class SausdPresenter extends BasePlacePresenter<IsSausdView, SausdPresent
 		}
 	}
 	
-	private void getIntoLibrarypage() {
-		if (getPlaceManager().getRequestParameter(LIBRARY_PAGE) != null && getPlaceManager().getRequestParameter(LIBRARY_PAGE).equalsIgnoreCase("course-page")) {
+/*	@Override
+	public void prepareFromRequest(PlaceRequest request) {
+		super.prepareFromRequest(request);
+	}
+	
+*/	private void getIntoLibrarypage() {
+		if (AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE) != null && AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE).equalsIgnoreCase("course-page")) {
 			//getView().loadFeaturedContributors("course-page",getViewToken());
-		} else if (getPlaceManager().getRequestParameter(LIBRARY_PAGE) != null && getPlaceManager().getRequestParameter(LIBRARY_PAGE).equalsIgnoreCase("featured-course")) {
-			getLibraryService().getLibraryWorkspace("sausd", 20, "", "", 0, getProfileLibraryListAsyncCallback());
-		} else if (getPlaceManager().getRequestParameter(LIBRARY_PAGE) == null) {
-			getLibraryService().getLibraryWorkspace("sausd", 20, "", "", 0, getProfileLibraryListAsyncCallback());
+		} else if (AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE) != null && AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE).equalsIgnoreCase("featured-course")) {
+			getLibraryService().getLibraryWorkspace(getViewToken(), 20, "", "", 0, getProfileLibraryListAsyncCallback());
+		} else if (AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE) == null) {
+			getLibraryService().getLibraryWorkspace(getViewToken(), 20, "", "", 0, getProfileLibraryListAsyncCallback());
 		}
 	}
 	
@@ -113,9 +103,12 @@ public class SausdPresenter extends BasePlacePresenter<IsSausdView, SausdPresent
 		this.profileLibraryListAsyncCallback = profileLibraryListAsyncCallback;
 	}
 
-	@Override
 	public String getViewToken() {
-		return PlaceTokens.SAUSD_LIBRARY;
+		return viewToken;
+	}
+
+	public void setPartnerWidget(String viewToken) {
+		this.viewToken = viewToken;
 	}
 
 }

@@ -65,5 +65,6 @@ public interface PlaceTokens {
 	String COMMUNITY = "community";
 	String YOUTHVOICES = "youthvoices";
 	String GEOEDUCATION = "GeoEducation";
+	String LIFEBOARD = "lifeboard";
 
 }
