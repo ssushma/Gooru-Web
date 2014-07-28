@@ -87,6 +87,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -180,6 +181,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	CheckBox chkOER = null;
 	@UiField
 	Style style;
+	
+	@UiField public Button browseStandards;
 	
 		ToolTip toolTip = null;
 	
@@ -1529,7 +1532,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 	}
 
-	private void addStandardFilter(String code) {		
+	public void addStandardFilter(String code) {		
 		standardContainerFloPanel.add(new DownToolTipWidgetUc(new FilterLabelVc(code), standardCodesMap.get(code)));
 	}
 

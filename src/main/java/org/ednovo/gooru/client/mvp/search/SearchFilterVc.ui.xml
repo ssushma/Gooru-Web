@@ -223,6 +223,9 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 				<g:HTMLPanel>
 					<uc:AppSuggestBox ui:field="standardSgstBox" width="130px" />
 				</g:HTMLPanel>
+						<g:HTMLPanel>
+			<g:Button styleName="primary" ui:field="browseStandards">Browse</g:Button>
+			</g:HTMLPanel>
 				<g:HTMLPanel>
 				 	<g:Label styleName="{style.helpIconBtn}" ui:field="standardHelpicon" visible="false"/>
 				</g:HTMLPanel>

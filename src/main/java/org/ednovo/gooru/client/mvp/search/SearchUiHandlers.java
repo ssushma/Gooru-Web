@@ -66,4 +66,10 @@ public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandle
 	public void showAddCollectionToShelfView(SimplePanel addResourceContainerPanel,CollectionSearchResultDo collectionsearchResultDo,String Type);
 	
 	public void showAndHideDisclosurePanelOnCLick(DisclosurePanel DisclosurePanelClose);
+	
+	void getAddStandards();
+
+	void setUpdatedStandards();
+
+	void closeStandardsPopup();
 }
