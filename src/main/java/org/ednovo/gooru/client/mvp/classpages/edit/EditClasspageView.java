@@ -1751,24 +1751,26 @@ public class EditClasspageView extends
 			dropdownPlaceHolder.setText(i18n.GL1948());
 			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1948());
 			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1948());
-			
-			if(classpageItemsList!=null&&classpageItemsList.size()>0){
-				assignmentsDirectionsLabel.setVisible(false);
-				getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
-				panelAssignmentPath.setVisible(true);
-				headerAssignments.setVisible(true);
-				panelProgressContainer.setVisible(true);
-				/*droplistContianer.setVisible(true);*/
-				dropDownListDiv.setVisible(true);
-			}
-			else{
-				assignmentsDirectionsLabel.setVisible(true);
-				getstarteddiv.addStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
-				panelAssignmentPath.setVisible(false);
-				headerAssignments.setVisible(false);
-				panelProgressContainer.setVisible(false);
-				/*droplistContianer.setVisible(false);*/
-				dropDownListDiv.setVisible(false);
+			String tab=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
+			if(tab!=null){
+				if(classpageItemsList!=null&&classpageItemsList.size()>0){
+					assignmentsDirectionsLabel.setVisible(false);
+					getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+					panelAssignmentPath.setVisible(true);
+					headerAssignments.setVisible(true);
+					panelProgressContainer.setVisible(true);
+					/*droplistContianer.setVisible(true);*/
+					dropDownListDiv.setVisible(true);
+				}
+				else{
+					assignmentsDirectionsLabel.setVisible(true);
+					getstarteddiv.addStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+					panelAssignmentPath.setVisible(false);
+					headerAssignments.setVisible(false);
+					panelProgressContainer.setVisible(false);
+					/*droplistContianer.setVisible(false);*/
+					dropDownListDiv.setVisible(false);
+				}
 			}
 			
 			
@@ -1787,7 +1789,6 @@ public class EditClasspageView extends
 			newAssignmentAndMsgPanel.setVisible(true);
 			assignmentsTabContainerPanel.setVisible(true);
 			getClassListContainer().setVisible(false);
-			String tab=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
 			if(tab!=null){
 				Map<String,String> params = new HashMap<String,String>();
 				String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
@@ -1804,7 +1805,6 @@ public class EditClasspageView extends
 				}else{
 					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				}
-				
 			}
 		}
 	}
