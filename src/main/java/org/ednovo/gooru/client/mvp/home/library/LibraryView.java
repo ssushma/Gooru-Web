@@ -72,6 +72,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -102,7 +103,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	HTMLPanel landingBanner;
 
 	@UiField
-	HTMLPanel container;
+	HTMLPanel container, panelLandingPage;
 
 	@UiField
 	HTMLPanel featuredCourseTabs;
@@ -287,13 +288,24 @@ public class LibraryView extends Composite implements  ClickHandler {
 				partnerLogo.setVisible(true);
 				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
 				landingBanner.setVisible(false);
+				container.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? false : true);
+				panelLandingPage.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? true : false);
 			} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
 				partnerLogo.setStyleName(libraryStyleUc.sausdPartnerLogo());
 				partnerLogo.setVisible(true);
 				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
 				landingBanner.setVisible(false);
-			} else {
+				container.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? false : true);
+				panelLandingPage.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? true : false);
+			} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.COMMUNITY)) {
+//				courseTabs.setVisible(false);
+//				partnerLogo.setVisible(false);
+				container.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? false : true);
+				panelLandingPage.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? true : false);
+			}else {
 				partnerLogo.setVisible(false);
+				container.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? false : true);
+				panelLandingPage.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? true : false);
 			}
 
 			contributorsContainer.setVisible(false);
@@ -319,18 +331,16 @@ public class LibraryView extends Composite implements  ClickHandler {
 		  
 		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
 		  
-		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
-		  {
-			  courseTabs.getElement().setAttribute("style", "position:relative;"); 
-		  }
-		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
-		  {
-			  courseTabs.getElement().setAttribute("style", "position:relative;");
-		  }
-		  else
-		  {
-			  courseTabs.getElement().setAttribute("style", "position:fixed;");
-		  }
+//		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click){
+//			  courseTabs.getElement().getStyle().setPosition(Position.RELATIVE); 
+//		  }else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click){
+//			  courseTabs.getElement().getStyle().setPosition(Position.RELATIVE);
+//		  }else{
+//			  courseTabs.getElement().getStyle().setPosition(Position.FIXED);			  
+//		  }
+		  
+		  courseTabs.getElement().getStyle().setPosition( (isIpad && !StringUtil.IPAD_MESSAGE_Close_Click) || (isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click) ? Position.RELATIVE : Position.FIXED);
+		  
 		
 		courseTabs.getElement().setId("courseTabs");
 		container.getElement().setId("container");
@@ -502,9 +512,9 @@ public class LibraryView extends Composite implements  ClickHandler {
 			}
 			featuredEducator.setVisible(true);
 			courseBanner.setVisible(true);
-			container.setVisible(true);
+			container.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? false : true);
+			panelLandingPage.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? true : false);
 			
-			Window.scrollTo(0, 0);
 			if(standardId == null) {
 				String subjectName = getSubjectNameBySubjectId(courseMap, subjectId);
 				CourseDo courseDo = null;
@@ -538,7 +548,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 			featuredEducator.setVisible(false);
 			courseBanner.setVisible(false);
 			landingBanner.setVisible(true);
-			container.setVisible(true);
+			container.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? false : true);
+			panelLandingPage.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? true : false);
 			featuredCourseTabs.setVisible(true);
 			featuredCousesLbl.setVisible(true);
 			if((callBack!=previousCallBack)||(courseId!=previousCourseId)) {
@@ -567,7 +578,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 			featuredCourseTabs.setVisible(false);
 			featuredCousesLbl.setVisible(false);
 			courseBanner.setVisible(true);
-			container.setVisible(true);
+			container.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? false : true);
+			panelLandingPage.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? true : false);
 		}
 		this.previousCallBack = callBack;
 		this.previousCourseId = courseId;
