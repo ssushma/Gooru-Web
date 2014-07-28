@@ -60,5 +60,7 @@ public interface IsAddStandardsView extends PopupView, IsViewWithHandlers<AddSta
 
 	void loadData();
 
+	void setDefaultCCSS();
+
 	
 }

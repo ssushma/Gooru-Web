@@ -114,6 +114,7 @@ public class AddStandardsPresenter extends PresenterWidget<IsAddStandardsView> i
 	public void callDefaultStandardsLoad()
 	{
 		getView().loadData();
+		getView().setDefaultCCSS();
 		getView().reset();
 		AppClientFactory.getInjector().getSearchService().getFirstLevelStandards("0", "CCSS", new SimpleAsyncCallback<ArrayList<StandardsLevel1DO>>() {
 			@Override

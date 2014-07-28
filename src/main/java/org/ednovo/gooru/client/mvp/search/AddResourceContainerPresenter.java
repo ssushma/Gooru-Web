@@ -148,6 +148,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			if(selectedFolderOrCollectionid!=null){
 			AppClientFactory.fireEvent(new CopyDraggedCollectionEvent(collection,searchResultDo.getGooruOid(),selectedFolderOrCollectionid));
 			successparams.put("o1", selectedFolderOrCollectionid);
+			System.out.println("title folder:::::::"+title);
 			getView().enableSuccessView(title,selectedFolderOrCollectionid,successparams);
 			}else{
 				getView().restrictionToAddResourcesData("Please select a folder to add collection");
@@ -165,6 +166,8 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 								@Override
 								public void onSuccess(CollectionItemDo result) {
 									// TODO Auto-generated method stub
+									successparams.put("id", selectedFolderOrCollectionid);
+									getView().enableSuccessView(title,selectedFolderOrCollectionid,successparams);
 								}
 								@Override
 								public void onFailure(Throwable caught) {
@@ -212,6 +215,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 						fireEvent(new RefreshDisclosurePanelForFoldersEvent(result1.getGooruOid()));
 						getView().getButtonVisiblity();
 						successparams.put("o1", result.getGooruOid());
+						System.out.println("result.getTitle():::::::"+result.getTitle());
 						getView().enableSuccessView(result.getTitle(),result.getGooruOid(),successparams);
 					}
 				});
