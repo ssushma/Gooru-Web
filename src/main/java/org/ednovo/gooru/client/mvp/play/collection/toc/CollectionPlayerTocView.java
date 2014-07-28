@@ -44,6 +44,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -137,11 +138,12 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				//resources width with padding and margin constitutes 100px for each and collection home and end with padding and margin width
 				//have 100px each. navgationTocContainer width is derived from this.
 				if(resourcesSize>7){
+					navgationTocContainer.getElement().removeAttribute("style");
 					new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize+2, 100);
 				}else{
-					nextButton.setVisible(false);
-					previousButton.setVisible(false);
-					navgationTocContainer.getElement().setAttribute("style", "width:"+(300)+"px !important;");
+					nextButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+					previousButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+					navgationTocContainer.getElement().setAttribute("style", "width:"+((resourcesSize+2)*100)+"px !important;");
 				}
 				String resourceString = resourceCount == 1? resourceCount + " " + i18n.GL1110().toLowerCase() : resourceCount + " " + i18n.GL0174().toLowerCase();
 				String questionString = questionCount == 1? questionCount + " " + i18n.GL0308().toLowerCase() : questionCount + " " + i18n.GL1042().toLowerCase();
