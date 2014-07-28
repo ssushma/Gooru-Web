@@ -588,6 +588,8 @@ public enum UrlToken {
 	
 	V2_GET_LIBRARY_LESSONS_OPTIMIZED("/v2/library/{0}/item/topic/{1}?sessionToken={2}&offset={3}&limit={4}"),
 	
+	V2_LevelWiseStandards("/v2/standard/{0}/{1}?sessionToken={2}"),
+	
 	REFRESH_TOKEN("/gooru-auth/google/new/token.g?refreshToken={0}");
 
 
