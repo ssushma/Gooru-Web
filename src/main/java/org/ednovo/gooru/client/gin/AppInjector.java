@@ -68,7 +68,6 @@ import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
-import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
@@ -212,6 +211,4 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<NatGeoLibraryPresenter> getNatGeoLibraryPresenter();
 
 	AsyncProvider<YouthVoicesLibraryPresenter> getYouthVoicesLibraryPresenter();
-	
-	AsyncProvider<AddStandardsPresenter> getAddStandardsPresenter();
 }

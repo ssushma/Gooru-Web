@@ -526,11 +526,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			
 			if(collectionItemDo.getResource().getCustomFieldValues()!=null ){
 				clearALlPanels();
-				/*if(collectionItemDo.getResource().getCustomFieldValues().getCfHost()!=null){
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfHost()!=null){
 				setHostDetails(collectionItemDo.getResource().getCustomFieldValues().getCfHost());
-				}*/
-				if(collectionItemDo.getResource().getHost()!=null){
-					setHostDetails(collectionItemDo.getResource().getHost());
 				}
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfOER()!=null){
 				setOerDetails(collectionItemDo.getResource().getCustomFieldValues().getCfOER());
@@ -639,7 +636,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		List<String> depthofknowledgedetails = new ArrayList<String>();
 		List<String> momentoflearningdetails = new ArrayList<String>();
 		
-		if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+		if(collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
 		 depthofknowledgedetails = new ArrayList<String>();
 			if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
 			if(collectionItemDo.getResource().getDepthOfKnowledges().size()>0){
@@ -860,7 +857,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					}
 				}
 			}
-			if (collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")) {
+			if (collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")) {
 				if (depthofknowledgedetails != null	&& depthofknowledgedetails.size() > 0) {
 					dKnowledgePanel.setVisible(true);
 					isEducationalInfo = true;
@@ -1607,7 +1604,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 	}
 
-	/*private void setHostDetails(String host) {
+	private void setHostDetails(String host) {
 		if(host!=null&&!host.equalsIgnoreCase("")&&!host.equalsIgnoreCase("null")){
 			hostPanel.setVisible(true);
 			hostLbl.setText(i18n.GL1700()+i18n.GL_SPL_SEMICOLON()+" ");
@@ -1618,27 +1615,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			hostType.getElement().setAttribute("title",host);
 		}else{
 			hostPanel.setVisible(false);
-		}
-	}*/
-	
-	private void setHostDetails(List<String> host) {
-		if(host == null || host.size() == 0 || host.contains(null) || host.contains("") ){
-		}else{
-			if(host.size()>0){
-				System.out.println("inin");
-				if(host.size()==1){
-					System.out.println("enter");
-					hostPanel.setVisible(true);
-					hostLbl.setText(i18n.GL1700()+i18n.GL_SPL_SEMICOLON()+" ");
-					hostLbl.getElement().setAttribute("alt",i18n.GL1700());
-					hostLbl.getElement().setAttribute("title",i18n.GL1700());
-					hostType.setText(" "+host.get(0).toString());
-					hostType.getElement().setAttribute("alt",host.get(0).toString());
-					hostType.getElement().setAttribute("title",host.get(0).toString());
-				} 
-			}else{
-				hostPanel.setVisible(false);
-			}
 		}
 	}
 

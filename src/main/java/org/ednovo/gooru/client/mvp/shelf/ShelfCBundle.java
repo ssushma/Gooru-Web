@@ -405,14 +405,6 @@ public interface ShelfCBundle extends ClientBundle{
 		String profileMetaDataTabTitle();
 		
 		String profileMetaDataTabTitleDisabled();
-		
-		String standardsBrowsePopup();
-		
-		String assignSprite();
-		
-		String assignCloseMark();
-		
-		String assignCloseMarker();
 	}
 	
 	@Source("Shelf.css")

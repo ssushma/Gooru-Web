@@ -111,8 +111,6 @@ public class ResourceDo extends ContentDo {
 	
 	private List<String> publisher;
 	
-	private List<String> host;
-	
 	private customFieldValuesDO customFieldValues;
 	
 	private UserDo user;
@@ -545,12 +543,5 @@ public class ResourceDo extends ContentDo {
 		this.ratings = ratings;
 
 	}
-	public List<String> getHost() {
-		return host;
-	}
-	public void setHost(List<String> host) {
-		this.host = host;
-	}
-	
 	
 }

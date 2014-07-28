@@ -59,7 +59,6 @@ import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionInfoEvent;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropEvent;
-import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
@@ -113,8 +112,6 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 
 	SignUpPresenter signUpViewPresenter = null;
 	
-	AddStandardsPresenter addStandardsPresenter = null;
-	
 	private boolean setFilter = true;
 	/**
 	 * Class constructor
@@ -124,10 +121,9 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 	 * @param proxy
 	 *            {@link Proxy}
 	 */
-	public AbstractSearchPresenter(V view, P proxy, SignUpPresenter signUpViewPresenter, AddStandardsPresenter addStandardsPresenterObj) {
+	public AbstractSearchPresenter(V view, P proxy, SignUpPresenter signUpViewPresenter) {
 		super(view, proxy);
 		this.signUpViewPresenter = signUpViewPresenter;
-		this.addStandardsPresenter = addStandardsPresenterObj;
 		addRegisteredHandler(SearchPaginationEvent.TYPE, this);
 		addRegisteredHandler(RefreshSearchEvent.TYPE, this);
 		addRegisteredHandler(SwitchSearchEvent.TYPE, this);
@@ -558,25 +554,6 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		if (isCurrentView()) {
 			getView().setShelfCollections(shelfCollections);
 		}
-	}
-	
-	@Override
-	public void getAddStandards() {
-
-	addToPopupSlot(addStandardsPresenter);
-	getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
-
-		
-	}
-	
-	@Override
-	public void setUpdatedStandards() {
-		getView().setUpdatedStandards(addStandardsPresenter.setStandardsVal());
-	}
-	
-	@Override
-	public void closeStandardsPopup() {
-		addStandardsPresenter.hidePopup();
 	}
 
 	/**

@@ -34,7 +34,6 @@ import org.ednovo.gooru.client.mvp.dnd.AppMirageDragContainer;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
-import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.search.event.RequestShelfCollectionEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchPaginationEvent;
@@ -50,11 +49,9 @@ import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -99,8 +96,6 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 
 	public boolean refreshedShelfCollections;
 	String rootWebUrl = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-	
-	private HandlerRegistration handlerRegistration=null;
 	/**
 	 * Assign new instance for {@link ResourceDragController}, {@link AppMirageDragContainer}, {@link SearchFilterVc}
 	 * 
@@ -116,17 +111,6 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		searchFilterVc.getElement().setId("searchFilterVcsearchFilterVc");
 		paginationFocPanel.getElement().setId("fnlPaginationFocPanel");
 		searchResultPanel.getElement().setId("appMirageDragContainer");
-		
-		getBrowseBtn().addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-			getUiHandlers().getAddStandards();
-				
-			}
-		});
-		
-
 	}
 
 	@Override
@@ -293,39 +277,6 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	public void resetFilters(){
 		searchFilterVc.clearAllFields();
 	}
-	
-	public Button getBrowseBtn()
-	{
-		return searchFilterVc.browseStandards;
-	}
-	
-	public void OnStandardsClickEvent(Button standardsButtonClicked)
-	{
-		if(handlerRegistration!=null){
-			handlerRegistration.removeHandler();
-		}
-		handlerRegistration=standardsButtonClicked.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				getUiHandlers().setUpdatedStandards();
-		
-				
-			}
-		});
-	}
-	
-	public void setUpdatedStandards(String standardsCode)
-	{
-		if(!standardsCode.isEmpty())
-		{
-		searchFilterVc.addStandardFilter(standardsCode);
-		AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
-		}
-		getUiHandlers().closeStandardsPopup();
-	}
-	
-
 	
 	public abstract void setAddResourceContainerPresenter(AddResourceContainerPresenter addResourceContainerPresenter);
 
