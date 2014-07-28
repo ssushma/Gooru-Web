@@ -87,7 +87,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	
 	@UiField HTML lblResourceTitle;
 	
-	@UiField Image imgNotFriendly;
+	@UiField Image imgNotFriendly, imgOER;
 	
 	@UiField
 	HTMLEventPanel resourceTitleContainer;
@@ -147,7 +147,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		initWidget(uiBinder.createAndBindUi(this));
 		imgNotFriendly.setTitle(i18n.GL0737());
 		imgNotFriendly.setAltText(i18n.GL0737());
-		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
+		imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
 		wrapperVcr.addStyleName("resourceSearchResultBox");
 		AppClientFactory.getEventBus().addHandler(UpdateSearchResultMetaDataEvent.TYPE,setUpdateMetaData);
 		AppClientFactory.getEventBus().addHandler(UpdateResourceRatingCountEvent.TYPE,setRatingCount);
@@ -161,6 +161,11 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
 		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
 		resourceDescriptionHtml.getElement().setId("htmlResourceDescriptionHtml");
+//		imgOER.setVisible(false);
+		imgOER.setUrl("images/oer_icon.png");
+		imgOER.getElement().setAttribute("id", i18n.GL1834());
+		imgOER.getElement().setAttribute("alt", i18n.GL1834());
+		imgOER.getElement().setAttribute("title", i18n.GL1834());
 	}
 	
 	public RatingWidgetView getRatingWidgetView(){
@@ -317,6 +322,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getNumOfPages() + PAGES);
 		}
 		title = title.replaceAll("<p>", "").replaceAll("</p>", "");
+		
 		lblResourceTitle.setHTML(title);
 		resourceTitle=resourceSearchResultDo.getResourceTitle();
 		lblResourceTitle.getElement().setId(resourceSearchResultDo.getGooruOid());
@@ -325,11 +331,17 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		}
 		String mediaType = resourceSearchResultDo.getMediaType();
 		
+		boolean oerVisibility = resourceSearchResultDo.getLicense() !=null &&  resourceSearchResultDo.getLicense().getCode() !=null ? resourceSearchResultDo.getLicense().getCode().contains("CC") ? true : false : false;
+
+		
+		imgOER.setVisible(oerVisibility);
+		
 		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? true : false : false;
+		//boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? false : true : true;
 		
 		imgNotFriendly.setVisible(setVisibility);
 		
-		if (imgNotFriendly.isVisible()){
+		if (setVisibility || oerVisibility){
 			lblResourceTitle.getElement().getStyle().setFloat(Float.LEFT);
 		}else{
 			lblResourceTitle.getElement().getStyle().clearFloat();
@@ -340,7 +352,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431());
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setZIndex(9999999);
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);

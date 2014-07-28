@@ -60,6 +60,7 @@
                     <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lblAuthor" />
                     <g:HTMLPanel styleName="{playerStyle.userImageContainer}">
                     	<g:Image styleName="{playerStyle.userImage}" ui:field="profileThumbnailImage"></g:Image>
+                    	<g:HTML styleName="{playerStyle.teacherTipOuterContainer}" ui:field="teacherTipLabel"></g:HTML>   
                     </g:HTMLPanel>
                     <g:Label styleName="{playerStyle.username}" ui:field="userNameLabel"></g:Label>
                     <g:FlowPanel ui:field="teamContainer" styleName="{playerStyle.username}"></g:FlowPanel>

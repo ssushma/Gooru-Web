@@ -670,7 +670,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px'/>"+" "+i18n.GL04431());
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 				toolTip.setPopupPosition(imgNotFriendly.getAbsoluteLeft()-(50+22), imgNotFriendly.getAbsoluteTop()+22);
@@ -1108,7 +1108,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			imgFriendly.getElement().getStyle().clearWidth();
 			imgFriendly.setAltText(i18n.GL0737());
 			imgFriendly.setTitle(i18n.GL0737());
-			imgFriendly.setUrl("images/mos/ipadFriendly.png");
+			imgFriendly.setUrl("images/mos/MobileFriendly.png");
 			lblFriendly.setText(StringUtil.generateMessage(i18n.GL0449(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
 		}else{
 			imgFriendly.getElement().getStyle().setWidth(25, Unit.PX);
