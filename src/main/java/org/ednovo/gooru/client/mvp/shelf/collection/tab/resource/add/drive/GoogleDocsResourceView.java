@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -44,7 +45,7 @@ public class GoogleDocsResourceView extends Composite {
 	String alternateLink;
 	
 	@UiField
-	public Label mandatoryEducationalLbl, cancelResourcePopupBtnLbl, generateImageLbl,agreeText,andText,additionalText,mandatorymomentsOfLearninglLbl;
+	public Label mandatoryEducationalLbl, cancelResourcePopupBtnLbl, generateImageLbl,mandatorymomentsOfLearninglLbl;
 	@UiField
 	public BlueButtonUc addResourceBtnLbl;
 
@@ -89,16 +90,9 @@ public class GoogleDocsResourceView extends Composite {
 	
 	@UiField   
 	CheckBox rightsChkBox;
-	@UiField
-	Anchor copyRightAnr;
 	
-	@UiField
-	Anchor termsAndPolicyAnr,privacyAnr;
 	
-	@UiField
-	Anchor commuGuideLinesAnr;
-	
-		
+	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr;
 	
 	
 	
