@@ -6,6 +6,20 @@
 	width: 1260px;
 	margin: 0 auto;
 }
+.assignCloseMarker {
+	float: right;
+	margin-top: -18px;
+}
+
+.assignCloseMark {
+	background-position: -52px -116px;
+	width: 18px;
+	height: 19px;
+	cursor: pointer;
+}
+.assignSprite {
+	background: url(images/Classpage/assign-sprite.png) no-repeat;
+}
 .userShelfViewMainCenterContainer {
 	min-height: 440px; 
 	/*height:100%;*/
@@ -1623,3 +1637,11 @@ padding-left: 11px;
 	color:green;
 	display: inline-block;
 }	
+.standardsBrowsePopup{
+	background: none repeat scroll 0 0 #FFFFFF;
+	clip: inherit !important;
+	overflow: visible !important;
+	position: absolute !important;
+	width: 1000px;
+	z-index: 998;
+}

@@ -22,36 +22,32 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.collection.body;
-/**
- * @fileName : PreviewPlayerStyleBundle.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
+package org.ednovo.gooru.client.mvp.search.standards;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-public interface CollectionPlayerStyleBundle extends CssResource {
-	String successPostMsg();
-	String deleteMsg();
-	String conceptTitle();
-	String userImage();
-	String insightsFrameContent();
-	String clearBoth();
-	String timeTextBig();
-	String timeTextSmall();
-	String depthofKnow();
-	String reactionCanExplain();
-	String reactionCanUnderstand();
-	String reactionDonotUnderstand();
-	String reactionMeh();
-	String reactionNeedHelp();
+import com.google.gwt.resources.client.CssResource.NotStrict;
+
+
+
+/**
+ * @author Search Team
+ *
+ */
+public interface AddStandardsBundle extends ClientBundle{
+	
+	static final AddStandardsBundle INSTANCE = GWT.create(AddStandardsBundle.class);
+	
+	public interface  addStandards extends CssResource{
+		
+		String dropMenu();
+		String gwtGlassPanel();
+		String dropMenuSelected();
+		String btnStandardsStyle();
+	}
+	@NotStrict
+	@Source("CreateCollectionPopUp.css")
+	addStandards css();
+
 }

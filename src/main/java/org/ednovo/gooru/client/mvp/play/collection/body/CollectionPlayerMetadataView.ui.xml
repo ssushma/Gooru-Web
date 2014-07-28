@@ -82,6 +82,23 @@
                        <g:Anchor ui:field = "seeMoreAnchor"/> 
                        <!--  <g:InlineLabel ui:field="lbllanguageObjectiveAll" /> -->
                  </g:HTMLPanel>
+                   	<g:HTMLPanel styleName="{playerStyle.infoSection}" ui:field="depthOfKnowledgeContainer">
+                       <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lbldepthOfKnowledgeText" />
+                       <g:HTMLPanel ui:field="depthOfKnowledgePanel"></g:HTMLPanel>
+                 </g:HTMLPanel> 
+                 
+                  <g:HTMLPanel styleName="{playerStyle.infoSection}" ui:field="learningAndInnovationSkillsContainer">
+                       <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lbllearningAndInnovationText" />
+                       <g:HTMLPanel ui:field="learningAndInnovationSkillPanel" />
+                 </g:HTMLPanel>
+                  <g:HTMLPanel styleName="{playerStyle.infoSection}" ui:field="audienceContainer">
+                       <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lblAudienceText" />
+                       <g:HTMLPanel ui:field="audiencePanel"/>
+                 </g:HTMLPanel>
+                  <g:HTMLPanel styleName="{playerStyle.infoSection}" ui:field="InstructionalmethodContainer">
+                       <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lblInstructionalmethodText" />
+                       <g:HTMLPanel ui:field="instructionalmethodPanel" />
+                 </g:HTMLPanel>
                 <g:HTMLPanel styleName="{playerStyle.infoSection}">
                    <g:Anchor ui:field="previewFlagButton"/>
                 </g:HTMLPanel>

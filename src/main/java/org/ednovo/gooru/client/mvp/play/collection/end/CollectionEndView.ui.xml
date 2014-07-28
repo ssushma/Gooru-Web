@@ -35,15 +35,15 @@
 										<g:FlowPanel styleName="{playerStyle.PlayBox}">
 											<g:Label styleName="{playerStyle.smallTxt}">Average Reaction</g:Label>
 												<g:FlowPanel styleName="{playerStyle.bigTxt}">
-													<g:Label styleName="{playerStyle.timeTextBig}">-</g:Label>
+													<g:Label styleName="{playerStyle.timeTextBig}" ui:field="avgReactionImage"></g:Label>
 												</g:FlowPanel>
 										</g:FlowPanel>
 										<g:FlowPanel styleName="{playerStyle.whatsnext}" ui:field="nextCollectionContainer">
 											<g:Label styleName="{playerStyle.smallTxt}">What's Next?</g:Label>
 											<g:Image ui:field="nextCollectionThumbnail"></g:Image>
-											<g:Label styleName="{playerStyle.bigTxt}" ui:field="whatNextCollectionTitle">Soil Types</g:Label>
+											<g:Label styleName="{playerStyle.bigTxt}" ui:field="whatNextCollectionTitle"></g:Label>
 											<g:Label styleName="{playerStyle.smallerTxt}" ui:field="resourceCount"></g:Label>
-											<g:Label styleName="{playerStyle.smallerTxt}" ui:field="questionCount">4 Questions</g:Label>
+											<g:Label styleName="{playerStyle.smallerTxt}" ui:field="questionCount"></g:Label>
 										</g:FlowPanel>
 									</g:FlowPanel>
 								<g:FlowPanel styleName="{playerStyle.playBlockbottom}">

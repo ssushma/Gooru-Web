@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelHandler;
@@ -75,6 +76,8 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	
 	CollectionFormInPlayPresenter collectionFormInPlayPresenter;
 	
+	AddStandardsPresenter addStandardsPresenter = null;
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.RESOURCE_SEARCH)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -89,9 +92,10 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	 */
 	@Inject
 	public ResourceSearchPresenter(IsResourceSearchView view, IsResourceSearchProxy proxy,SignUpPresenter signUpViewPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup,
-			AddResourceContainerPresenter addResourceContainerPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter) {
-		super(view, proxy, signUpViewPresenter);
+			AddResourceContainerPresenter addResourceContainerPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter, AddStandardsPresenter addStandardsPresenter) {
+		super(view, proxy, signUpViewPresenter,addStandardsPresenter);
 		this.ratingAndReviewPopup=ratingAndReviewPopup;
+		this.addStandardsPresenter = addStandardsPresenter;
 		this.addResourceContainerPresenter=addResourceContainerPresenter;
 		this.collectionFormInPlayPresenter= collectionFormInPlayPresenter;
 		getView().setUiHandlers(this);

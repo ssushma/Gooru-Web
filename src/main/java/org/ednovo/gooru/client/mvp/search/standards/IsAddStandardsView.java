@@ -22,36 +22,45 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.collection.body;
-/**
- * @fileName : PreviewPlayerStyleBundle.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
+package org.ednovo.gooru.client.mvp.search.standards;
 
-import com.google.gwt.resources.client.CssResource;
-public interface CollectionPlayerStyleBundle extends CssResource {
-	String successPostMsg();
-	String deleteMsg();
-	String conceptTitle();
-	String userImage();
-	String insightsFrameContent();
-	String clearBoth();
-	String timeTextBig();
-	String timeTextSmall();
-	String depthofKnow();
-	String reactionCanExplain();
-	String reactionCanUnderstand();
-	String reactionDonotUnderstand();
-	String reactionMeh();
-	String reactionNeedHelp();
+import java.util.ArrayList;
+import java.util.List;
+
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
+
+import com.google.gwt.user.client.ui.Button;
+import com.gwtplatform.mvp.client.PopupView;
+
+/**
+ * @author Search Team
+ *
+ */
+public interface IsAddStandardsView extends PopupView, IsViewWithHandlers<AddStandardsUiHandlers> {
+
+	String setStandardsVal();
+
+	Button getAddBtn();
+
+	void hidePopup();
+
+	void SetData(StandardsLevel1DO levelOneData, int valArr);
+
+	void loadSecondLevelContianerObjects(ArrayList<StandardsLevel2DO> result);
+
+	void loadThirdLevelContianerObjects(ArrayList<StandardsLevel3DO> result);
+
+	void loadFourthLevelContianerObjects(ArrayList<StandardsLevel4DO> result);
+
+	void loadData();
+
+	void setDefaultCCSS();
+
+	
 }

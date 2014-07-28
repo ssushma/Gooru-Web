@@ -22,36 +22,33 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.collection.body;
-/**
- * @fileName : PreviewPlayerStyleBundle.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
+package org.ednovo.gooru.client.mvp.search.standards;
 
-import com.google.gwt.resources.client.CssResource;
-public interface CollectionPlayerStyleBundle extends CssResource {
-	String successPostMsg();
-	String deleteMsg();
-	String conceptTitle();
-	String userImage();
-	String insightsFrameContent();
-	String clearBoth();
-	String timeTextBig();
-	String timeTextSmall();
-	String depthofKnow();
-	String reactionCanExplain();
-	String reactionCanUnderstand();
-	String reactionDonotUnderstand();
-	String reactionMeh();
-	String reactionNeedHelp();
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
+
+import com.google.gwt.user.client.ui.Button;
+
+/**
+ * @author Search Team
+ *
+ */
+public interface AddStandardsUiHandlers extends BaseUiHandlers {
+
+	void callDefaultStandardsLoad();
+
+	String setStandardsVal();
+
+	Button getAddBtn();
+
+	void hidePopup();
+
+	void getFirstLevelObjects(String levelOrder, String standardCodeSelected);
+
+	void getSecondLevelObjects(String levelOrder, String standardCodeSelected);
+
+	void getThirdLevelObjects(String levelOrder, String standardCodeSelected);
+
+	void loadStateStandards(String string);
+
+
 }
