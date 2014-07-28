@@ -291,9 +291,9 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 			featuredCousesLbl.getElement().setAttribute("title",i18n.GL1901());
 		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.LIFEBOARD)) {
 			landingBanner.getElement().setId("landingLifeboardBanner");
-			featuredCousesLbl.setText(i18n.GL2046());
-			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL2046());
-			featuredCousesLbl.getElement().setAttribute("title",i18n.GL2046());
+			featuredCousesLbl.setText(i18n.GL2052());
+			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL2052());
+			featuredCousesLbl.getElement().setAttribute("title",i18n.GL2052());
 		}
 
 
