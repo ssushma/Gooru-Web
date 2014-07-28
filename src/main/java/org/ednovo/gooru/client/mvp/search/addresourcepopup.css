@@ -418,14 +418,10 @@
 }
 
 .folderStucture {
-    /*  width:395px;  */
-     width:100%;
-     overflow: auto;
-	height: 275px;
+    /* width:395px; */
 }
 .folderStucture table {
-     /* width:395px;  */
-     width:100%;
+   /*  width:395px; */
 }
 .folderStucture > div > div > div > div {
     margin-left:0px !important;
@@ -693,7 +689,7 @@
 	height:10px;
 }
 .selectionErrorLabel{
-	/* width: 89%; */
+	width: 89%;
 	font-weight: bold;
 	height: 10px;
 	color: #fab03a;

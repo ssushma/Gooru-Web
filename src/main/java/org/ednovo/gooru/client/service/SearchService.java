@@ -27,11 +27,16 @@
  */
 package org.ednovo.gooru.client.service;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
@@ -211,5 +216,16 @@ public interface SearchService extends BaseService {
 	*/
 	
 	public String getGoogleDrive(String url, Map<String, String> parms) throws GwtException, ServerDownException;
+
+	ArrayList<StandardsLevel1DO> getFirstLevelStandards(String levelOrder, String standardLabel);
+
+	ArrayList<StandardsLevel2DO> getSecondLevelStandards(String levelOrder,
+			String standardLabel);
+
+	ArrayList<StandardsLevel3DO> getThirdLevelStandards(String levelOrder,
+			String standardLabel);
+
+	ArrayList<StandardsLevel4DO> getFourthLevelStandards(String levelOrder,
+			String standardLabel);
 
 }
