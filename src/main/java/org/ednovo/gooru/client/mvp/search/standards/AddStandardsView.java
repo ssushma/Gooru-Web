@@ -68,7 +68,10 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	@UiField HTMLPanel levelOneStandards,levelTwoStandards,levelThreeStandards,levelFourStandards;
 	
 	private boolean isCheckedValue;
+	
+	private boolean scienceCodeVal, instantVal = false;
 
+	private String scienceStrCode = "";
 	private CollectionDo collectionDo;
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
@@ -144,13 +147,26 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	}
 	
 	@Override
-	public void SetData(StandardsLevel1DO levelOneData, int valArr)
+	public void SetData(final StandardsLevel1DO levelOneData, int valArr)
 	{
-
+		instantVal = false;
 		HTMLEventPanel levelOneStandardsInner = new HTMLEventPanel("");
 		levelOneStandardsInner.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 		levelOneStandardsInner.getElement().setInnerHTML(levelOneData.getLabel());
 		levelOneStandardsInner.getElement().setAttribute("id", levelOneData.getCodeId().toString());
+		if(levelOneData.getCode()!= null)
+		{
+		if(levelOneData.getCode().equalsIgnoreCase("CA.SCI") && !scienceCodeVal)
+		{
+			scienceStrCode = levelOneData.getCodeId().toString();
+			instantVal = true;
+			scienceCodeVal = true;	
+		}
+		}
+		if(!scienceStrCode.isEmpty())
+		{			
+			levelOneStandardsInner.getElement().setAttribute("dupid", scienceStrCode);
+		}
 		if(valArr==0)
 		{
 			levelOneStandardsInner.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
@@ -161,7 +177,16 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			public void onClick(ClickEvent event) {
 				HTMLEventPanel clickedElement = (HTMLEventPanel)event.getSource();
 				String codeStandardsVal = clickedElement.getElement().getAttribute("id");
-				getFirstLevelObjects("1",codeStandardsVal);
+				if(levelOneData.getCode().equalsIgnoreCase("CA.SCI"))
+				{
+					codeStandardsVal = clickedElement.getElement().getAttribute("dupid")+","+clickedElement.getElement().getAttribute("id");
+					getFirstLevelObjects("1",codeStandardsVal);
+				}
+				else
+				{
+					getFirstLevelObjects("1",codeStandardsVal);
+				}
+				
 				for(int l=0;l<levelOneStandards.getWidgetCount();l++)
 				{
 					levelOneStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
@@ -169,7 +194,12 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 				clickedElement.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
 			}
 		});
+
+		if(!instantVal)
+		{
 		levelOneStandards.add(levelOneStandardsInner.asWidget());
+		}
+		
 		if(valArr == 0)
 		{
 		for(int i=0;i<levelOneData.getNode().size();i++)
@@ -510,6 +540,19 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		levelTwoStandards.clear();
 		levelThreeStandards.clear();
 		levelFourStandards.clear();
+		scienceCodeVal = false;
+	}
+	
+	@Override
+	public void setDefaultCCSS() {
+		texasKnowledge.removeStyleName("primary");
+		texasKnowledge.addStyleName("secondary");
+		ngss.removeStyleName("primary");
+		ngss.addStyleName("secondary");
+		californiaStandards.removeStyleName("primary");
+		californiaStandards.addStyleName("secondary");
+		commonStandards.removeStyleName("secondary");
+		commonStandards.addStyleName("primary");
 	}
 
 	@Override
@@ -549,6 +592,8 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	
 	@UiHandler("texasKnowledge")
 	public void ontexasKnowledgeClick(ClickEvent click){
+		scienceCodeVal = false;
+		instantVal = false;
 		commonStandards.removeStyleName("primary");
 		commonStandards.addStyleName("secondary");
 		ngss.removeStyleName("primary");
@@ -563,6 +608,8 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	
 	@UiHandler("commonStandards")
 	public void oncommonStandardsClick(ClickEvent click){
+		scienceCodeVal = false;
+		instantVal = false;
 		texasKnowledge.removeStyleName("primary");
 		texasKnowledge.addStyleName("secondary");
 		ngss.removeStyleName("primary");
@@ -577,6 +624,8 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	
 	@UiHandler("ngss")
 	public void onngssClick(ClickEvent click){
+		scienceCodeVal = false;
+		instantVal = false;
 		texasKnowledge.removeStyleName("primary");
 		texasKnowledge.addStyleName("secondary");
 		commonStandards.removeStyleName("primary");
@@ -591,6 +640,8 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	
 	@UiHandler("californiaStandards")
 	public void oncaliforniaStandardsClick(ClickEvent click){
+		scienceCodeVal = false;
+		instantVal = false;
 		texasKnowledge.removeStyleName("primary");
 		texasKnowledge.addStyleName("secondary");
 		commonStandards.removeStyleName("primary");
