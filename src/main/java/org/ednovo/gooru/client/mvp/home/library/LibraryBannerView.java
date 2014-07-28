@@ -27,12 +27,21 @@
 */
 package org.ednovo.gooru.client.mvp.home.library;
 
+import java.util.Map;
+
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -60,6 +69,8 @@ public class LibraryBannerView extends Composite{
 	@UiField Label headerTag;
 	@UiField Label subHeaderTag;
 	@UiField LibraryStyleBundle libraryStyle;
+	@UiField Button btnSignUp;
+	
 
 	
 	private static LibraryBannerViewUiBinder uiBinder = GWT
@@ -87,24 +98,43 @@ public class LibraryBannerView extends Composite{
 		shareLbl.getElement().setId("pnlShareLbl");
 		measureLbl.getElement().setId("pnlMeasureLbl");
 		contributeLbl.getElement().setId("pnlContributeLbl");
+		
+		btnSignUp.setText(i18n.GL0186());
+		StringUtil.setAttributes(btnSignUp.getElement(), "btnSignUp", i18n.GL0186(), i18n.GL0186());
+		
 	}
 	
 	private void getLandingBannerText(String placeToken) {
 		if(placeToken.contains(PlaceTokens.HOME)) {
 			setLandingBannerText(i18n.GL0522(),i18n.GL0523(),i18n.GL0524(),i18n.GL0525(),i18n.GL0526(),i18n.GL0527(),i18n.GL0528(),i18n.GL0529(),i18n.GL0530(),i18n.GL0531());
 			partnerLogo.setVisible(false);
+			fourSteps.getElement().getStyle().setBackgroundColor("#000000");
+			fourSteps.setVisible(false);
+			btnSignUp.setVisible(false);
+			headerTag.getElement().getStyle().clearPaddingTop();
 		} else if(placeToken.contains(PlaceTokens.RUSD_LIBRARY)) {
 			setLandingBannerText(i18n.GL0532(),i18n.GL0533(),i18n.GL0534(),i18n.GL0535(),i18n.GL0536(),i18n.GL0537(),i18n.GL0538(),i18n.GL0539(),i18n.GL0540(),i18n.GL0541());
 			fourSteps.getElement().getStyle().setBackgroundColor("#000000");
 			fourSteps.setVisible(false);
 			partnerLogo.setStyleName(libraryStyle.rusdPartnerLogo());
 			partnerLogo.setVisible(true);
+			btnSignUp.setVisible(false);
+			headerTag.getElement().getStyle().clearPaddingTop();
 		} else if(placeToken.contains(PlaceTokens.SAUSD_LIBRARY)) {
 			setLandingBannerText(i18n.GL1902(),i18n.GL1903(),i18n.GL1904(),i18n.GL1905(),i18n.GL1906(),i18n.GL1907(),i18n.GL1908(),i18n.GL1909(),i18n.GL1910(),i18n.GL1911());
 			fourSteps.getElement().getStyle().setBackgroundColor("#000000");
 			fourSteps.setVisible(false);
 			partnerLogo.setStyleName(libraryStyle.sausdPartnerLogo());
 			partnerLogo.setVisible(true);
+			btnSignUp.setVisible(false);
+			headerTag.getElement().getStyle().clearPaddingTop();
+		}else if (placeToken.contains(PlaceTokens.COMMUNITY)){
+			setLandingBannerText(i18n.GL2046(),i18n.GL2047(),i18n.GL0524(),i18n.GL0525(),i18n.GL0526(),i18n.GL0527(),i18n.GL0528(),i18n.GL0529(),i18n.GL0530(),i18n.GL0531());
+			fourSteps.getElement().getStyle().setBackgroundColor("#000000");
+			fourSteps.setVisible(false);
+			partnerLogo.setVisible(false);
+			btnSignUp.setVisible(true);
+			headerTag.getElement().getStyle().setPaddingTop(65, Unit.PX);
 		}
 	}
 	
@@ -144,5 +174,15 @@ public class LibraryBannerView extends Composite{
 			
 			contributeLbl.add(contributeInlineLbl);
 			contributeLbl.add(contributeLblMsg);
+	}
+	
+	@UiHandler("btnSignUp")
+	public void onClickSignUp(ClickEvent event){
+		Map<String, String> map = StringUtil.splitQuery(Window.Location
+				.getHref());
+		map.put("callback", "signup");
+		map.put("type", "1");
+		AppClientFactory.getPlaceManager().revealPlace(
+				AppClientFactory.getCurrentPlaceToken(), map);
 	}	
 }

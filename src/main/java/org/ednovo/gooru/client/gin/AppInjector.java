@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
+import org.ednovo.gooru.client.mvp.landingpage.LandingPagePresenter;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fte.FteLibraryPresenter;
@@ -172,6 +173,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<SignUpCompleteProfilePresenter> getSignUpCompleteProfilePresenter();
 	
 	AsyncProvider<RusdPresenter> getRusdPresenter();
+	
+	AsyncProvider<LandingPagePresenter> getLandingPagePresenter();
 	
 	AsyncProvider<PreviewPlayerPresenter> getPreviewPlayerPresenter();
 	

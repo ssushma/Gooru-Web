@@ -99,6 +99,10 @@ import org.ednovo.gooru.client.mvp.home.register.UserRegistrationView;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadView;
 import org.ednovo.gooru.client.mvp.image.upload.IsImageUploadView;
+import org.ednovo.gooru.client.mvp.landingpage.IsLandingPageView;
+import org.ednovo.gooru.client.mvp.landingpage.LandingPagePresenter;
+import org.ednovo.gooru.client.mvp.landingpage.LandingPagePresenter.IsLandingPageProxy;
+import org.ednovo.gooru.client.mvp.landingpage.LandingPageView;
 import org.ednovo.gooru.client.mvp.library.partner.IsPartnerLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.PartnerLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.PartnerLibraryView;
@@ -461,6 +465,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(SignUpAfterThirteenPresenter.class,IsAfterThirteen.class,SignUpTurnsAfterThirteenView.class);
 		
 		bindPresenter(RusdPresenter.class, IsRusdView.class, RusdView.class,IsRusdProxy.class);
+		bindPresenter(LandingPagePresenter.class, IsLandingPageView.class, LandingPageView.class,IsLandingPageProxy.class);
 		bindPresenter(PreviewPlayerPresenter.class,IsPreviewPlayerView.class,PreviewPlayerView.class,IsPreviewPlayerProxy.class);
 		bindPresenterWidget(PreviewPlayerMetadataPresenter.class,IsPreviewPlayerMetadataView.class,PreviewPlayerMetadataView.class);
 		bindPresenterWidget(PreviewHomePresenter.class,IsPreviewHomeView.class,PreviewHomeView.class);
