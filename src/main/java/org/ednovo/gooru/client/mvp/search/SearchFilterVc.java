@@ -1437,7 +1437,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 */
 	@UiHandler("clearAll")
 	public void onClearFilter(ClickEvent clickEvent) {
-//		clearFilter(categoryPanelUc);
+		clearFilter(categoryPanelUc);
 		clearFilter(gradePanelUc);
 		clearFilter(subjectPanelUc);
 		standardSgstBox.setText("");
@@ -1461,7 +1461,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	}
 	
 	public void clearAllFields(){
-//		clearFilter(categoryPanelUc);
+		clearFilter(categoryPanelUc);
 		clearFilter(gradePanelUc);
 		clearFilter(subjectPanelUc);
 		standardSgstBox.setText("");

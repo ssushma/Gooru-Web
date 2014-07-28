@@ -2416,6 +2416,7 @@ margin-top: 18px; */
 .anchorText {
 	text-decoration: none !important;
 	cursor: pointer;
+	color: #0066cc;
 }
 
 .processing {
@@ -2525,6 +2526,7 @@ margin-top: 18px; */
 .customAnchorText {
 	text-decoration: none !important;
 	cursor: pointer;
+	color: #0066cc;
 }
 
 .myFolderCollectionFormInputControlForErrors {
@@ -2681,12 +2683,12 @@ margin-top: 18px; */
 	filter: alpha(opacity = 30);
 }
 .andText{
-	float: right;
-	margin-right: 25px;
+	/* float: right;
+	margin-right: 25px; */
 }
 .additionalText{
-	float: right;
-	margin-right: 65px;
+	/* float: right;
+	margin-right: 65px; */
 }
 .updateTextStyle{
 	float: right;	

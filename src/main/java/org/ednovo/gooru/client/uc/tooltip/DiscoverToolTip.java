@@ -262,14 +262,6 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 		AppClientFactory.getInjector().getLibraryService().getPartners(new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
 			@Override
 			public void onSuccess(ArrayList<LibraryUserDo> partnersList) {
-				LibraryUserDo libraryUserDo1 = new LibraryUserDo();
-				libraryUserDo1.setDisplayName("Youth Voices");
-				libraryUserDo1.setUsername("youthvoices");
-				LibraryUserDo libraryUserDo2 = new LibraryUserDo();
-				libraryUserDo2.setDisplayName("National Geographic's Geo-Educator Community");
-				libraryUserDo2.setUsername("GeoEducation");
-				partnersList.add(libraryUserDo1);
-				partnersList.add(libraryUserDo2);
 				setPartners(partnersList);
 			}
 			

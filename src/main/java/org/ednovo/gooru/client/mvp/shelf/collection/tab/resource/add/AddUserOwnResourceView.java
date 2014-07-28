@@ -73,6 +73,7 @@ import com.google.gwt.user.client.ui.FormSubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormSubmitEvent;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -123,16 +124,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 	HTMLPanel resourceTypePanel, resourceDescriptionContainer,panelAction;
 
 	@UiField
-	Label resoureDropDownLbl, resourceCategoryLabel,rightsLbl,agreeText,andText,additionalText,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords;
-	
-	@UiField
-	Anchor copyRightAnr;
-	
-	@UiField
-	Anchor termsAndPolicyAnr,privacyAnr;
-	
-	@UiField
-	Anchor commuGuideLinesAnr;
+	Label resoureDropDownLbl, resourceCategoryLabel,rightsLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords;
 	
 	@UiField
 	FormPanel fileuploadForm;
@@ -145,7 +137,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 	CheckBox rightsChkBox;
 
 	@UiField Label lblAdding;
-	
+	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr;
 	@UiField org.ednovo.gooru.client.uc.HTMLEventPanel imageResourcePanel,textsResourcePanel;
 	
 	 
@@ -243,7 +235,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 		agreeText.getElement().setId("lblAgreeText");
 		agreeText.getElement().setAttribute("alt", i18n.GL0870());
 		agreeText.getElement().setAttribute("title", i18n.GL0870());
-		commuGuideLinesAnr.setText(i18n.GL0871());
+		commuGuideLinesAnr.setText(i18n.GL0871()+i18n.GL_GRR_COMMA());
 		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
 		commuGuideLinesAnr.getElement().setAttribute("alt", i18n.GL0871());
 		commuGuideLinesAnr.getElement().setAttribute("title", i18n.GL0871());
@@ -255,7 +247,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 		privacyAnr.getElement().setId("lnkPrivacyAnr");
 		privacyAnr.getElement().setAttribute("alt", i18n.GL0873());
 		privacyAnr.getElement().setAttribute("title", i18n.GL0873());
-		andText.setText(" "+i18n.GL_GRR_AND()+" ");
+		andText.setText(i18n.GL_GRR_AND());
 		andText.getElement().setId("lblAndText");
 		andText.getElement().setAttribute("alt", i18n.GL_GRR_AND());
 		andText.getElement().setAttribute("title", i18n.GL_GRR_AND());

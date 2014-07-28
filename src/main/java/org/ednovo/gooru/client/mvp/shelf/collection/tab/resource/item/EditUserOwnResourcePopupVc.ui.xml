@@ -284,12 +284,16 @@
      						<g:Anchor styleName="{res.css.customAnchorText}" text=" Privacy" ui:field="privacyAnr"/>
      		 				and <g:Anchor styleName="{res.css.anchorText}" text=" Copyright" ui:field="copyRightAnr"/> for additional information.
     	 				</g:HTMLPanel> -->
-    	 					<g:HTMLPanel ui:field="rightsContent">
-							<g:Label ui:field="agreeText"/>
-     						<g:Anchor styleName="{res.css.anchorText}" ui:field="commuGuideLinesAnr"/>,<g:Anchor styleName="{res.css.customAnchorText}" ui:field="termsAndPolicyAnr"/>
-     						<g:Anchor styleName="{res.css.customAnchorText}" ui:field="privacyAnr"/>
-     		 			<g:Label ui:field="andText" styleName="{res.css.andText}" ></g:Label> <g:Anchor styleName="{res.css.anchorText}" ui:field="copyRightAnr"/><g:Label ui:field="additionalText" styleName="{res.css.additionalText}"/>
-    	 				</g:HTMLPanel>
+    	 				<g:HTMLPanel ui:field="rightsContent">
+							<g:InlineLabel ui:field="agreeText"/>
+     						<g:InlineLabel styleName="{res.css.anchorText}" ui:field="commuGuideLinesAnr"/>
+     						<g:InlineLabel styleName="{res.css.customAnchorText}" ui:field="termsAndPolicyAnr"/>
+     						<g:InlineLabel styleName="{res.css.customAnchorText}" ui:field="privacyAnr"/>
+     		 				<g:InlineLabel ui:field="andText" styleName="{res.css.andText}" />
+     		 				<g:InlineLabel styleName="{res.css.anchorText}" ui:field="copyRightAnr"/>
+     		 				<g:InlineLabel ui:field="additionalText" styleName="{res.css.additionalText}"/>
+     		 				
+     		 		</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
         	</uc:HTMLEventPanel>
