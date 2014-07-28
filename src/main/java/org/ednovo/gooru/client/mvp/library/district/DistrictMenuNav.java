@@ -22,7 +22,7 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.library.sausd;
+package org.ednovo.gooru.client.mvp.library.district;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +54,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class SausdMenuNav extends Composite {
+public abstract class DistrictMenuNav extends Composite {
 
 	@UiField HTMLPanel tabsInner, scienceCourses, mathCourses, socialCourses, elaCourses,learnCourses;
 	
@@ -62,7 +62,7 @@ public abstract class SausdMenuNav extends Composite {
 	
 	@UiField Label scienceText,mathText,socialSciencesText,languageArtsText,learnText;
 	
-	@UiField SausdStyleBundle sausdStyleUc;
+	@UiField DistrictStyleBundle districtStyleUc;
 	
 	@UiField Anchor aboutGooruAnr;
 	
@@ -80,14 +80,14 @@ public abstract class SausdMenuNav extends Composite {
 	
 	private String placeToken = null;
 	
-    private static SausdMenuNavUiBinder uiBinder = GWT.create(SausdMenuNavUiBinder.class);
+    private static DistrictMenuNavUiBinder uiBinder = GWT.create(DistrictMenuNavUiBinder.class);
 
     private MessageProperties i18n = GWT.create(MessageProperties.class);
     
-	interface SausdMenuNavUiBinder extends UiBinder<Widget, SausdMenuNav> {
+	interface DistrictMenuNavUiBinder extends UiBinder<Widget, DistrictMenuNav> {
 	}
 
-	public SausdMenuNav(String placeToken) {
+	public DistrictMenuNav(String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setPlaceToken(placeToken);
 		setAssets();
@@ -131,17 +131,21 @@ public abstract class SausdMenuNav extends Composite {
 			}
 		});
 
-		learnPanel.addMouseOverHandler(new MouseOverHandler() {
-			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				if(subjectIdList.get(LEARNING)!=null) {
-					if(!isLearningHovered) {
-						isLearningHovered = true;
-						getTaxonomyData(subjectIdList.get(LEARNING),LEARNING);
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)) {
+			learnPanel.addStyleName(districtStyleUc.tabsLiInactive());
+		} else {
+			learnPanel.addMouseOverHandler(new MouseOverHandler() {
+				@Override
+				public void onMouseOver(MouseOverEvent event) {
+					if(subjectIdList.get(LEARNING)!=null) {
+						if(!isLearningHovered) {
+							isLearningHovered = true;
+							getTaxonomyData(subjectIdList.get(LEARNING),LEARNING);
+						}
 					}
 				}
-			}
-		});
+			});
+		}
 	}
 	
 	private void setAssets() {
@@ -175,9 +179,15 @@ public abstract class SausdMenuNav extends Composite {
 			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1899());
 			aboutGooruAnr.getElement().setAttribute("title",i18n.GL1899());
 			aboutGooruAnr.setHref(i18n.GL1900());
+		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)) {
+			aboutGooruAnr.setText(i18n.GL2063());
+			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL2063());
+			aboutGooruAnr.getElement().setAttribute("title",i18n.GL2063());
+			aboutGooruAnr.setHref(i18n.GL2064());
 		}
+
 		aboutGooruAnr.setTarget("_blank");
-		aboutGooruAnr.addStyleName(sausdStyleUc.aboutGooruAnrPadding());
+		aboutGooruAnr.addStyleName(districtStyleUc.aboutGooruAnrPadding());
 		aboutGooruAnr.addClickHandler(new MixPanelEventClick());
 		
 		scienceText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
@@ -240,7 +250,7 @@ public abstract class SausdMenuNav extends Composite {
 		if (profileLibraryListDo.getSearchResult() != null) {
 			for (final ProfileLibraryDo profileLibraryDo : profileLibraryListDo.getSearchResult()) {
 				Label courseTitle = new Label(profileLibraryDo.getTitle());
-				courseTitle.setStyleName(sausdStyleUc.courseOption());
+				courseTitle.setStyleName(districtStyleUc.courseOption());
 				final String courseId = profileLibraryDo.getGooruOid().toString();
 				courseTitle.addClickHandler(new ClickHandler() {
 					@Override
@@ -287,9 +297,9 @@ public abstract class SausdMenuNav extends Composite {
 	
 	private void setLearningTabStyle() {
 		if(subjectIdList.get(LEARNING) != null) {
-			learnPanel.removeStyleName(sausdStyleUc.tabsLiInactive());
+			learnPanel.removeStyleName(districtStyleUc.tabsLiInactive());
 		} else {
-			learnPanel.addStyleName(sausdStyleUc.tabsLiInactive());
+			learnPanel.addStyleName(districtStyleUc.tabsLiInactive());
 		}
 	}
 	
