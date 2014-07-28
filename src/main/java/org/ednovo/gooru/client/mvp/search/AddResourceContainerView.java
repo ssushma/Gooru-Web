@@ -238,7 +238,12 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	}
 	
 	public TreeItem loadingTreeItem(){
-		Label loadingText=new Label(i18n.GL1452());
+		Label loadingText = null;
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+		loadingText=new Label(i18n.GL1452());
+		}else{
+		loadingText=new Label(i18n.GL2051());
+		}
 		loadingText.setStyleName(AddResourceContainerCBundle.INSTANCE.css().loadingText());
 		return new TreeItem(loadingText);
 	}
