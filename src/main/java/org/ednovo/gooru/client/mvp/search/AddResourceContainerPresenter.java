@@ -145,18 +145,15 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			final CollectionDo collection = new CollectionDo();
 			if(searchType.equalsIgnoreCase("collection")){
 			collection.setGooruOid(searchResultDo.getGooruOid());
-			System.out.println("validation for collection search value:::::"+selectedFolderOrCollectionid);
 			if(selectedFolderOrCollectionid!=null){
 			AppClientFactory.fireEvent(new CopyDraggedCollectionEvent(collection,searchResultDo.getGooruOid(),selectedFolderOrCollectionid));
 			successparams.put("o1", selectedFolderOrCollectionid);
 			getView().enableSuccessView(title,selectedFolderOrCollectionid,successparams);
 			}else{
-				System.out.println("validation for collection search");
 				getView().restrictionToAddResourcesData("Please select a folder to add collection");
 				getView().getButtonVisiblity();
 			}
 		}else if(searchType.equalsIgnoreCase("resource")){
-			System.out.println("validation for resource search value:::::"+selectedFolderOrCollectionid);
 				if(selectedFolderOrCollectionid!=null){
 			AppClientFactory.getInjector().getfolderService().getCollectionResources(selectedFolderOrCollectionid,null, null, new SimpleAsyncCallback<FolderListDo>(){
 				@Override
@@ -178,7 +175,6 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 						}
 						else{
 							AppClientFactory.fireEvent(new CreateCollectionItemEvent(selectedFolderOrCollectionid,searchResultDo.getGooruOid()));
-							System.out.println("inside here::::"+title);
 							successparams.put("id", selectedFolderOrCollectionid);
 							getView().enableSuccessView(title,selectedFolderOrCollectionid,successparams);
 						}
@@ -190,7 +186,6 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
     		});
 			
 				}else{
-					System.out.println("validation for resource search");
 					getView().restrictionToAddResourcesData("Please select collection");
 					getView().getButtonVisiblity();
 				}

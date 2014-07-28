@@ -385,7 +385,6 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	 * open disclosure panel widget
 	 */
 	public void onDisclosureOpen() {
-		System.out.println("openedResult:::::"+openedResult);
 		if (openedResult != null && !openedResult.equals(this)) {
 			openedResult.getDisclosurePanel().setOpen(false);
 			openedResult.setAddedStatus(true);

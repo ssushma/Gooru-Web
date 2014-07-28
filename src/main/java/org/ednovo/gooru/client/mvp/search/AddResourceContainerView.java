@@ -362,7 +362,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 			addCollectiorOrReourceText.setText("Add to a new Collection");
 			addResourceText.getElement().setAttribute("style", "display: inline-block;");
 			addCollectiorOrReourceText.getElement().setAttribute("style", "display: inline-block;");
-			createCollectionbuttonsContainer.getElement().setAttribute("style", "margin-left: 44px;margin-top: 10px;");
+			createCollectionbuttonsContainer.getElement().setAttribute("style", "margin-left: 36px;margin-top: 10px;");
 		}
 		resetEmptyCollMsg();
 		if(!dropdownListContainerScrollPanel.isVisible()){
@@ -515,13 +515,9 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 				getUiHandlers().addResourceToCollection(selectedCollectionGooruOid,currentsearchType,cureentcollectionTreeItem.getCollectionName());
 			}else if(isSelectedFolder){
 				displayErrorLabel.setText("Add me into a Collection");
-				displayErrorLabel.getElement().setAttribute("style", "left:37%;");
 				getButtonVisiblity();
 			}else{
-				System.out.println("values isSelectedCollection::::::"+isSelectedCollection);
-				System.out.println("values isSelectedFolder::::::"+isSelectedFolder);
 				if(!isSelectedCollection && !isSelectedFolder){
-					System.out.println("inside final validation");
 					restrictionToAddResourcesData("please select a collection");
 					getButtonVisiblity();
 				}
@@ -531,7 +527,6 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 				getUiHandlers().addResourceToCollection(selectedFolderGooruOid,currentsearchType,currentFolderSelectedTreeItem.getTitle());
 			}else{
 				if(!isSelectedFolder){
-					System.out.println("inside final validation collection search");
 					restrictionToAddResourcesData("please select a folder");
 					getButtonVisiblity();
 				}
@@ -553,7 +548,6 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	public void restrictionToAddResourcesData(String message) {
 		// TODO Auto-generated method stub
 		displayErrorLabel.setText(message);
-		displayErrorLabel.getElement().setAttribute("style", "left:24%;");
 	}
 
 	@Override
@@ -594,7 +588,6 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 
 	@Override
 	public void clearSelectedId() {
-		System.out.println("clearSelectedId method");
 		selectedCollectionGooruOid= null;
 		createCollectionbuttonsContainer.setVisible(true);
 		dropdownListContainerScrollPanel.setVisible(true);

@@ -212,7 +212,6 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 	@Override
 	public void showAndHideDisclosurePanelOnCLick(
 			final DisclosurePanel DisclosurePanelClose) {
-		System.out.println("inside collection search presenter");
 		// TODO Auto-generated method stub
 		addResourceContainerPresenter.getCancelButton().addClickHandler(new ClickHandler() {
 			@Override
