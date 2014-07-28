@@ -57,8 +57,8 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		.helpIconBtnAggregator {
 			position: absolute;
 			right: 0;
-			margin-top: -14px;
-			margin-right: 58px;
+			margin-top: -20px;
+			margin-right: 65px;
 			color: #0f76bb;
 			cursor: pointer;
 			font-size: 11px;
@@ -69,7 +69,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		.helpIconBtnPublisher {
 			position: absolute;
 			right: 0;
-			margin-top: -14px;
+			margin-top: -20px;
 			margin-right: 65px;
 			color: #0f76bb;
 			cursor: pointer;
@@ -150,9 +150,9 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			<g:Anchor  styleName="{style.notifyLink}" ui:field="collectionLinkLbl" />
 		</g:FlowPanel>
 		
-		<g:HTMLPanel ui:field="panelNotMobileFriendly"></g:HTMLPanel>
-		
 		<g:HTMLPanel ui:field="oerPanel"/>
+		
+		<g:HTMLPanel ui:field="panelNotMobileFriendly"></g:HTMLPanel>
 		
 		<g:HTMLPanel>
 			<g:Label styleName="{style.headerLbl}" ui:field="resourceFormatLbl"></g:Label>
@@ -169,74 +169,86 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			<g:HTMLPanel  ui:field="gradePanelUc" />
 		</g:HTMLPanel>
 		
-		<uc:DisclosurePanelUc  ui:field="aggregatorPanelUc" visible="false">
-		 <uc:add>
-			 	<g:Label styleName="{style.helpIconBtnAggregator}" ui:field="aggregatorTooltip"/>
-			</uc:add>
-			<uc:add>
-				<uc:AppSuggestBox ui:field="aggregatorSgstBox" width="130px" />
-			</uc:add>
-			<!-- <uc:add>
-			 	<g:Label styleName="{style.helpIconBtn}" ui:field="aggregatorHelpicon" visible="false"/>
-			</uc:add> -->
-			<uc:add>
-			 	<panel:HTMLEventPanel ui:field="aggregatorToolTip" visible="false" styleName="{style.sourceToolTip}"/>
-			</uc:add>
-			<uc:add>
-				<g:Label styleName="{style.notFound}" ui:field="aggregatorNotFoundLbl"/>
-			</uc:add>
-			<uc:add>
-				<g:FlowPanel ui:field="aggregatorContainerFloPanel" />
-			</uc:add>
-		</uc:DisclosurePanelUc>
+		<g:HTMLPanel>
+		    <g:Label styleName="{style.headerLbl}" visible="false" ui:field="aggregatorLbl"></g:Label>
+			<g:HTMLPanel  ui:field="aggregatorPanelUc" visible="false">
+			 	<g:HTMLPanel>
+				 	<g:Label styleName="{style.helpIconBtnAggregator}" ui:field="aggregatorTooltip"/>
+				</g:HTMLPanel>
+				<g:HTMLPanel>
+					<uc:AppSuggestBox ui:field="aggregatorSgstBox" width="130px" />
+				</g:HTMLPanel>
+				<!-- <uc:add>
+				 	<g:Label styleName="{style.helpIconBtn}" ui:field="aggregatorHelpicon" visible="false"/>
+				</uc:add> -->
+				<g:HTMLPanel>
+				 	<panel:HTMLEventPanel ui:field="aggregatorToolTip" visible="false" styleName="{style.sourceToolTip}"/>
+				</g:HTMLPanel>
+				<g:HTMLPanel>
+					<g:Label styleName="{style.notFound}" ui:field="aggregatorNotFoundLbl"/>
+				</g:HTMLPanel>
+				<g:HTMLPanel>
+					<g:FlowPanel ui:field="aggregatorContainerFloPanel" />
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
 		
-			<uc:DisclosurePanelUc  ui:field="sourcePanelUc" visible="false">
-			  <uc:add>
-			 	<g:Label styleName="{style.helpIconBtnPublisher}" ui:field="publisherTooltip"/>
-			</uc:add> 
-			<uc:add>
-				<uc:AppSuggestBox ui:field="sourceSgstBox" width="130px" />
-			</uc:add>
-			<!-- <uc:add>
-			 	<g:Label styleName="{style.helpIconBtn}" ui:field="sourceHelpicon" visible="false"/>
-			</uc:add> -->
-			<uc:add>
-			 	<panel:HTMLEventPanel ui:field="sourceToolTip" visible="false" styleName="{style.sourceToolTip}"/>
-			</uc:add>
-			<uc:add>
-				<g:Label styleName="{style.notFound}" ui:field="sourcesNotFoundLbl"/>
-			</uc:add>
-			<uc:add>
-				<g:FlowPanel ui:field="sourceContainerFloPanel" />
-			</uc:add>
-		</uc:DisclosurePanelUc>
-		<uc:DisclosurePanelUc  ui:field="authorPanelUc" visible="false">
-			<uc:add>
-				<g:TextBox ui:field="authorTxtBox" width="130px" />
-			</uc:add>
-			<uc:add>
-				<g:FlowPanel ui:field="authorContainerFloPanel" />
-			</uc:add>
-		</uc:DisclosurePanelUc>
+		<g:HTMLPanel>
+		    <g:Label styleName="{style.headerLbl}" visible="false" ui:field="sourceLbl"></g:Label>
+			<g:HTMLPanel  ui:field="sourcePanelUc" visible="false">
+				<g:HTMLPanel>
+				 	<g:Label styleName="{style.helpIconBtnPublisher}" ui:field="publisherTooltip"/>
+				</g:HTMLPanel> 
+				<g:HTMLPanel>
+					<uc:AppSuggestBox ui:field="sourceSgstBox" width="130px" />
+				</g:HTMLPanel>
+				<!-- <uc:add>
+				 	<g:Label styleName="{style.helpIconBtn}" ui:field="sourceHelpicon" visible="false"/>
+				</uc:add> -->
+				<g:HTMLPanel>
+				 	<panel:HTMLEventPanel ui:field="sourceToolTip" visible="false" styleName="{style.sourceToolTip}"/>
+				</g:HTMLPanel>
+				<g:HTMLPanel>
+					<g:Label styleName="{style.notFound}" ui:field="sourcesNotFoundLbl"/>
+				</g:HTMLPanel>
+				<g:HTMLPanel>
+					<g:FlowPanel ui:field="sourceContainerFloPanel" />
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+			
+		<g:HTMLPanel>
+		    <g:Label styleName="{style.headerLbl}" ui:field="standardLbl"></g:Label>
+			<g:HTMLPanel  ui:field="standardPanelUc">
+				<g:HTMLPanel>
+					<uc:AppSuggestBox ui:field="standardSgstBox" width="130px" />
+				</g:HTMLPanel>
+				<g:HTMLPanel>
+				 	<g:Label styleName="{style.helpIconBtn}" ui:field="standardHelpicon" visible="false"/>
+				</g:HTMLPanel>
+				<g:HTMLPanel>
+				 	<panel:HTMLEventPanel ui:field="standardToolTip" visible="false" styleName="{style.sourceToolTip}"/>
+				</g:HTMLPanel>
+				<g:HTMLPanel>
+					<g:Label styleName="{style.notFound}" ui:field="standardsNotFoundLbl" />
+				</g:HTMLPanel>
+				<g:HTMLPanel>
+					<g:FlowPanel ui:field="standardContainerFloPanel" />
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
 		
-		
-		<uc:DisclosurePanelUc  ui:field="standardPanelUc">
-			<uc:add>
-				<uc:AppSuggestBox ui:field="standardSgstBox" width="130px" />
-			</uc:add>
-			<uc:add>
-			 	<g:Label styleName="{style.helpIconBtn}" ui:field="standardHelpicon" visible="false"/>
-			</uc:add>
-			<uc:add>
-			 	<panel:HTMLEventPanel ui:field="standardToolTip" visible="false" styleName="{style.sourceToolTip}"/>
-			</uc:add>
-			<uc:add>
-				<g:Label styleName="{style.notFound}" ui:field="standardsNotFoundLbl" />
-			</uc:add>
-			<uc:add>
-				<g:FlowPanel ui:field="standardContainerFloPanel" />
-			</uc:add>
-		</uc:DisclosurePanelUc>
+		<g:HTMLPanel>
+		    <g:Label styleName="{style.headerLbl}" visible="false" ui:field="authorLbl"></g:Label>
+			<g:HTMLPanel  ui:field="authorPanelUc" visible="false">
+				<g:HTMLPanel>
+					<g:TextBox ui:field="authorTxtBox" width="130px" />
+				</g:HTMLPanel>
+				<g:HTMLPanel>
+					<g:FlowPanel ui:field="authorContainerFloPanel" />
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
 		
 		
 		<g:FlowPanel>
