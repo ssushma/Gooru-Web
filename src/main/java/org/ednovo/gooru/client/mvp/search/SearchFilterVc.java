@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionInfoEvent;
@@ -86,7 +87,9 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -116,17 +119,17 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		String active();
 	}
 
-	/*@UiField
-	DisclosurePanelUc categoryPanelUc;*/
+	@UiField
+	DisclosurePanelUc categoryPanelUc;
 	
 	@UiField
 	Anchor resourceLinkLbl, collectionLinkLbl;
 
-	/*@UiField
-	DisclosurePanelUc subjectPanelUc;*/
+	@UiField
+	DisclosurePanelUc subjectPanelUc;
 
-	/*@UiField
-	DisclosurePanelUc gradePanelUc;*/
+	@UiField
+	DisclosurePanelUc gradePanelUc;
 
 	@UiField
 	DisclosurePanelUc sourcePanelUc,aggregatorPanelUc;
@@ -137,7 +140,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiField
 	DisclosurePanelUc authorPanelUc;
 	
-	@UiField HTMLPanel panelNotMobileFriendly,categoryPanelUc,subjectPanelUc,gradePanelUc;
+	@UiField HTMLPanel panelNotMobileFriendly;
 	
 	@UiField
 	HTMLPanel contentpanel,oerPanel;
@@ -170,7 +173,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	Label standardsNotFoundLbl;
 	
 	@UiField
-	Label publisherTooltip, standardHelpicon,clearAll,aggregatorTooltip,resourceFormatLbl,subjectLbl,gradeLbl;
+	Label publisherTooltip, standardHelpicon,clearAll,aggregatorTooltip;
 
 	@UiField
 	HTMLEventPanel sourceToolTip, standardToolTip,aggregatorToolTip;
@@ -180,6 +183,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	CheckBox chkOER = null;
 	@UiField
 	Style style;
+	
+	@UiField public Button browseStandards;
 	
 	
 	ToolTip toolTip = null;
@@ -222,7 +227,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	
 	List<String> standardPreflist = null;
 	List<String> standardPrefListElement = null;
-				
+	
+			
 	/**
 	 * Class constructor, creates new {@link AppSuggestBox} and events for StandardsSuggestionEvent
 	 * 
@@ -401,10 +407,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		collectionLinkLbl.getElement().setAttribute("alt",i18n.GL0175());
 		collectionLinkLbl.getElement().setAttribute("title",i18n.GL0175());
 		
-		resourceFormatLbl.setText(i18n.GL0721());
-		resourceFormatLbl.getElement().setId("lblCategory");
-		resourceFormatLbl.getElement().setAttribute("alt",i18n.GL0721());
-		resourceFormatLbl.getElement().setAttribute("title",i18n.GL0721());
+		categoryPanelUc.setHeaderTitle(i18n.GL0721());
+		categoryPanelUc.getElement().setId("discpnlCategoryPanelUc");
+		categoryPanelUc.getElement().setAttribute("alt",i18n.GL0721());
+		categoryPanelUc.getElement().setAttribute("title",i18n.GL0721());
 		
 		sourcePanelUc.setHeaderTitle(i18n.GL0566());
 		sourcePanelUc.getElement().setId("discpnlSourcePanelUc");
@@ -437,15 +443,15 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		standardsNotFoundLbl.getElement().setAttribute("alt",i18n.GL0723());
 		standardsNotFoundLbl.getElement().setAttribute("title",i18n.GL0723());
 		
-		subjectLbl.setText(i18n.GL0226());
-		subjectLbl.getElement().setId("lblSubject");
-		subjectLbl.getElement().setAttribute("alt",i18n.GL0226());
-		subjectLbl.getElement().setAttribute("title",i18n.GL0226());
+		subjectPanelUc.setHeaderTitle(i18n.GL0226());
+		subjectPanelUc.getElement().setId("discpnlSubjectPanelUc");
+		subjectPanelUc.getElement().setAttribute("alt",i18n.GL0226());
+		subjectPanelUc.getElement().setAttribute("title",i18n.GL0226());
 		
-		gradeLbl.setText(i18n.GL0165());
-		gradeLbl.getElement().setId("lblGrade");
-		gradeLbl.getElement().setAttribute("alt",i18n.GL0165());
-		gradeLbl.getElement().setAttribute("title",i18n.GL0165());
+		gradePanelUc.setHeaderTitle(i18n.GL0165());
+		gradePanelUc.getElement().setId("discpnlGradePanelUc");
+		gradePanelUc.getElement().setAttribute("alt",i18n.GL0165());
+		gradePanelUc.getElement().setAttribute("title",i18n.GL0165());
 		
 		clearAll.setText(i18n.GL0725());
 		clearAll.getElement().setId("lblClearAll");
@@ -538,10 +544,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		standardsNotFoundLbl.getElement().getStyle().setOpacity(0.0);
 		if(resourceSearch){
-			resourceFormatLbl.setText(i18n.GL0721());
+			categoryPanelUc.setHeaderTitle(i18n.GL0721());
 			categoryPanelUc.getElement().addClassName("categoryFilterContainer");
 		}else{
-			resourceFormatLbl.setText(i18n.GL1465());
+			categoryPanelUc.setHeaderTitle(i18n.GL1465());
 		}
 		
 		resourceLinkLbl.getElement().setId("lblResourceLink");
@@ -1078,36 +1084,22 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		return aggregations;
 	}
 	/**
-	 * @param categoryPanelUc2 instance of {@link DisclosurePanelUc}
+	 * @param filterDisclosurePanell instance of {@link DisclosurePanelUc}
 	 * @return selected filterDisclosurePanell name
 	 */
-	private String getSelectedFilter(HTMLPanel categoryPanelUc2) {
-		return getSelectedFilter(categoryPanelUc2, COMMA_SEPARATOR);
+	private String getSelectedFilter(DisclosurePanelUc filterDisclosurePanell) {
+		return getSelectedFilter(filterDisclosurePanell, COMMA_SEPARATOR);
 	}
 
 	/**
 	 * Get filters for search
-	 * @param categoryPanelUc2 instance of {@link DisclosurePanelUc} which has filters widget
+	 * @param filterDisclosurePanell instance of {@link DisclosurePanelUc} which has filters widget
 	 * @param separator concatenation of the filters with separator
 	 * @return concatenation of selected filters
 	 */
-	private String getSelectedFilter(HTMLPanel categoryPanelUc2, String separator) {
+	private String getSelectedFilter(DisclosurePanelUc filterDisclosurePanell, String separator) {
 		String selectedFilter = "";
-		for(int i =0;i<categoryPanelUc2.getWidgetCount();i++){
-			Widget filterWidget = categoryPanelUc2.getWidget(i);
-			if (filterWidget instanceof CheckBox) {
-				CheckBox filterCheckBox = (CheckBox) filterWidget;
-				if (filterCheckBox != null && filterCheckBox.getValue()) {
-					if (!selectedFilter.isEmpty()) {
-						selectedFilter += separator;
-					}
-					selectedFilter += filterCheckBox.getName();
-					MixpanelUtil.mixpanelEvent("search_"+selectedFilter+"_filter_selected");
-				}
-			}
-		}
-		
-			/*for (Widget filterWidget : categoryPanelUc2.getWidget(0)) {
+			for (Widget filterWidget : filterDisclosurePanell.getContent()) {
 				if (filterWidget instanceof CheckBox) {
 					CheckBox filterCheckBox = (CheckBox) filterWidget;
 					if (filterCheckBox != null && filterCheckBox.getValue()) {
@@ -1118,7 +1110,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 						MixpanelUtil.mixpanelEvent("search_"+selectedFilter+"_filter_selected");
 					}
 				}
-			}*/
+			}
 	
 		return selectedFilter;
 	}
@@ -1314,8 +1306,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 * @param filterFlowPanel instance of {@link DisclosurePanelUc}
 	 * @param checkedValues filters name 
 	 */
-	private void setSelectedFilter(HTMLPanel filterHtmlPanel, String checkedValues) {
-		setSelectedFilter(filterHtmlPanel, checkedValues, COMMA_SEPARATOR);
+	private void setSelectedFilter(DisclosurePanelUc filterFlowPanel, String checkedValues) {
+		setSelectedFilter(filterFlowPanel, checkedValues, COMMA_SEPARATOR);
 	}
 
 	/**
@@ -1324,7 +1316,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 * @param checkedValues selected filter value
 	 * @param separator concatenation of the filter value by separator 
 	 */
-	private void setSelectedFilter(HTMLPanel filterHtmlPanel, String checkedValues, String separator) {
+	private void setSelectedFilter(DisclosurePanelUc filterFlowPanel, String checkedValues, String separator) {
 		List<String> items = null;
 		if (checkedValues != null) {
 			items = Arrays.asList(checkedValues.split("\\s*" + separator + "\\s*"));
@@ -1332,22 +1324,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 		if (items != null) {
 			//if(resourceSearch){
-			for(int i=0;i<filterHtmlPanel.getWidgetCount();i++){
-				Widget filterWidget = filterHtmlPanel.getWidget(i);
-				if (filterWidget instanceof CheckBox) {
-					CheckBox filterCheckBox = (CheckBox) filterWidget;
-					filterCheckBox.setValue(false);
-					for (String item : items) {
-						if ((filterCheckBox.getName().equals(item))) {	
-							filterCheckBox.setValue(true);
-						}
-					}
-				}
-			}
-			/**
-			 * Removed this logic as per the new requrement in 6.5 sprint
-			 */
-				/*for (Widget filterWidget : filterFlowPanel.getContent()) {
+				for (Widget filterWidget : filterFlowPanel.getContent()) {
 					if (filterWidget instanceof CheckBox) {
 						CheckBox filterCheckBox = (CheckBox) filterWidget;
 						filterCheckBox.setValue(false);
@@ -1357,7 +1334,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 							}
 						}
 					}
-				}*/
+				}
 			//}
 /*			else{
 				boolean isRadioButtonSelected=false;
@@ -1390,25 +1367,16 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 
 	/**
 	 * Clear all selected filter values
-	 * @param gradePanelUc instance {@link DisclosurePanelUc} which has selected filter values
+	 * @param filterFlowPanel instance {@link DisclosurePanelUc} which has selected filter values
 	 */
-	public void clearFilter(HTMLPanel gradePanelUc) {
+	public void clearFilter(DisclosurePanelUc filterFlowPanel) {
 		
 	//	if(resourceSearch){
-		for(int i=0;i<gradePanelUc.getWidgetCount();i++){
-			Widget filterWidget = gradePanelUc.getWidget(i);
-			if (filterWidget instanceof CheckBox) {
-				((CheckBox) filterWidget).setValue(false);
-			}
-		}
-		/**
-		 * Removed this logic as per the new requrement in 6.5 sprint
-		 */
-			/*for (Widget filterWidget : gradePanelUc.getContent()) {
+			for (Widget filterWidget : filterFlowPanel.getContent()) {
 				if (filterWidget instanceof CheckBox) {
 					((CheckBox) filterWidget).setValue(false);
 				}
-			}*/
+			}
 /*		}else{
 			for (Widget filterWidget : filterFlowPanel.getContent()) {
 				if (filterWidget instanceof QuestionTypeFilter) {
@@ -1437,7 +1405,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 */
 	@UiHandler("clearAll")
 	public void onClearFilter(ClickEvent clickEvent) {
-//		clearFilter(categoryPanelUc);
+		clearFilter(categoryPanelUc);
 		clearFilter(gradePanelUc);
 		clearFilter(subjectPanelUc);
 		standardSgstBox.setText("");
@@ -1461,7 +1429,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	}
 	
 	public void clearAllFields(){
-//		clearFilter(categoryPanelUc);
+		clearFilter(categoryPanelUc);
 		clearFilter(gradePanelUc);
 		clearFilter(subjectPanelUc);
 		standardSgstBox.setText("");
@@ -1521,7 +1489,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 	}
 
-	private void addStandardFilter(String code) {		
+	public void addStandardFilter(String code) {		
 		standardContainerFloPanel.add(new DownToolTipWidgetUc(new FilterLabelVc(code), standardCodesMap.get(code)));
 	}
 
@@ -1624,4 +1592,5 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		standardPanelUc.setVisible(true);
 	}
 	
+
 }

@@ -46,15 +46,19 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 
+
+
 public interface AddResourceContainerUiHandlers extends BaseUiHandlers,EventHandler{
+	
 	public void getWorkspaceData(int offset,int limit,boolean clearShelfPanel,String searchType);
 	public void getFolderItems(TreeItem item,String parentId);
 	public void getUserShelfData(ResourceSearchResultDo searchResultDo,String searchType);
 	public void getUserShelfCollectionsData(CollectionSearchResultDo searchResultDo,String SearchType);
-	public void addResourceToCollection(String gooruOid,String searchType);
+	public void addResourceToCollection(String gooruOid,String searchType,String title);
 	public void createFolderInParent(String folderName, String parentId,
 			HashMap<String, String> params);
 	public Anchor getAddButton(); 
@@ -62,4 +66,6 @@ public interface AddResourceContainerUiHandlers extends BaseUiHandlers,EventHand
 	public void setCollectionItemData(String collectionId,CollectionItemDo collectionItemDo);
 	public void setplayerStyle();
 	public void removePlayerStyle();
+	public Button getCancelButton();
+	
 }

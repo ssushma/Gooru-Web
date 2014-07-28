@@ -6,13 +6,10 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			float: left;
 			clear: both;
 			min-height: 450px;
-			width: 180px;
-			padding-left: 10px;
+			width: 160px;
 			margin-right: 10px;
 			overflow-x: hidden;
 			background-color: #FFFFFF;
-			box-sizing: border-box;
-			-moz-box-sizing: border-box;
 		}
 		
 		.active {
@@ -130,13 +127,6 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			position: absolute;
 			cursor: pointer;
 		}
-
-		.headerLbl{
-			font-weight: bold;
-			margin: 10px 0px 5px 0px;
-			display: inline-block;
-		}
-
 	</ui:style>
 	<g:FlowPanel styleName="{style.searchFilterVcContainer}" ui:field="myCollectionSearch">
 		<g:FlowPanel>
@@ -154,20 +144,10 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		
 		<g:HTMLPanel ui:field="oerPanel"/>
 		
-		<g:HTMLPanel>
-			<g:Label styleName="{style.headerLbl}" ui:field="resourceFormatLbl"></g:Label>
-			<g:HTMLPanel  ui:field="categoryPanelUc" />
-		</g:HTMLPanel>
+		<uc:DisclosurePanelUc  ui:field="categoryPanelUc" />
 		
-		<g:HTMLPanel>
-			<g:Label styleName="{style.headerLbl}" ui:field="subjectLbl"></g:Label>
-			<g:HTMLPanel  ui:field="subjectPanelUc" />
-		</g:HTMLPanel>	
 		
-		<g:HTMLPanel>
-			<g:Label styleName="{style.headerLbl}" ui:field="gradeLbl"></g:Label>
-			<g:HTMLPanel  ui:field="gradePanelUc" />
-		</g:HTMLPanel>
+		
 		
 		<uc:DisclosurePanelUc  ui:field="aggregatorPanelUc" visible="false">
 		 <uc:add>
@@ -225,6 +205,9 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 				<uc:AppSuggestBox ui:field="standardSgstBox" width="130px" />
 			</uc:add>
 			<uc:add>
+			<g:Button styleName="primary" ui:field="browseStandards">Browse</g:Button>
+			</uc:add>
+			<uc:add>
 			 	<g:Label styleName="{style.helpIconBtn}" ui:field="standardHelpicon" visible="false"/>
 			</uc:add>
 			<uc:add>
@@ -238,6 +221,9 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			</uc:add>
 		</uc:DisclosurePanelUc>
 		
+		<uc:DisclosurePanelUc  ui:field="subjectPanelUc" />
+		
+		<uc:DisclosurePanelUc  ui:field="gradePanelUc" />
 		
 		<g:FlowPanel>
 			<g:Label  styleName="{style.clearAll}" ui:field="clearAll" />

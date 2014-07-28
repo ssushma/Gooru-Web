@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.sausd.SausdLibraryPresenter;
+import org.ednovo.gooru.client.mvp.landingpage.LandingPagePresenter;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fte.FteLibraryPresenter;
@@ -69,6 +70,7 @@ import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
@@ -175,6 +177,8 @@ public interface AppInjector extends ServiceInjector {
 	
 	AsyncProvider<RusdPresenter> getRusdPresenter();
 	
+	AsyncProvider<LandingPagePresenter> getLandingPagePresenter();
+	
 	AsyncProvider<PreviewPlayerPresenter> getPreviewPlayerPresenter();
 	
 	AsyncProvider<CollectionCollaboratorsTabPresenter> getCollectionCollaboratorsTabPresenter();
@@ -215,4 +219,5 @@ public interface AppInjector extends ServiceInjector {
 
 	AsyncProvider<LifeboardLibraryPresenter> getLifeboardPresenter();
 
+	AsyncProvider<AddStandardsPresenter> getAddStandardsPresenter();
 }

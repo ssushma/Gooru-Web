@@ -22,49 +22,43 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.search;
+package org.ednovo.gooru.client.mvp.search.standards;
 
-/**
-* @fileName : IsAddResourceView.java 
-*
-* @description :This file is responsible for UI Handlers.
-*
-* @version :5.1
-*
-* @date: Apr 6 2013
-   	
-* @Author  Gooru Team
-* 
-* @Reviewer 
-*
-*/
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Tree;
-import com.google.gwt.user.client.ui.TreeItem;
+import com.gwtplatform.mvp.client.PopupView;
 
-public interface IsAddResourceContainerView extends IsViewWithHandlers<AddResourceContainerUiHandlers>{
-	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel,String searchType);
-	public void clearShelfData();
-	public void setFolderItems(TreeItem item,FolderListDo folderListDo);
-	public void displayNoCollectionsMsg();
-	public void setSearchResultDo(ResourceSearchResultDo searchResultDo);
-	public Anchor getAddButton(); 
-	public Tree getfolderTreePanel(); 
-	public void setPlayerStyle(boolean isPlayer);
-	public void removePlayerStyle(boolean isPlayer);
-	public void getButtonVisiblity();
-	public void clearSelectedId();
-	void restrictionToAddResourcesData(String message);
-	public void enableSuccessView(String title,String gooruOid,HashMap<String,String> params);
-	public Button getCancelButton();
-	public void clearSelectedFolderId();
+/**
+ * @author Search Team
+ *
+ */
+public interface IsAddStandardsView extends PopupView, IsViewWithHandlers<AddStandardsUiHandlers> {
 
+	String setStandardsVal();
 
+	Button getAddBtn();
+
+	void hidePopup();
+
+	void SetData(StandardsLevel1DO levelOneData, int valArr);
+
+	void loadSecondLevelContianerObjects(ArrayList<StandardsLevel2DO> result);
+
+	void loadThirdLevelContianerObjects(ArrayList<StandardsLevel3DO> result);
+
+	void loadFourthLevelContianerObjects(ArrayList<StandardsLevel4DO> result);
+
+	void loadData();
+
+	
 }
