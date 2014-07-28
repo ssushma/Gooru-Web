@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RichTextArea;
@@ -240,7 +241,8 @@ public class StringUtil {
 		boolean isPartner = false;
 		if(userName.equalsIgnoreCase("Autodesk") || userName.equalsIgnoreCase("Lessonopoly") || userName.equalsIgnoreCase("CommonSenseMedia") 
 				|| userName.equalsIgnoreCase("FTE") || userName.equalsIgnoreCase("WSPWH") || userName.equalsIgnoreCase("lisaNGC") || userName.equalsIgnoreCase("NGC")
-				|| userName.equalsIgnoreCase("ONR") || userName.equalsIgnoreCase(PlaceTokens.FINCAPINC) || userName.equalsIgnoreCase(PlaceTokens.PSDPAL) ) {
+				|| userName.equalsIgnoreCase("ONR") || userName.equalsIgnoreCase(PlaceTokens.FINCAPINC) || userName.equalsIgnoreCase(PlaceTokens.PSDPAL) 
+				|| userName.equalsIgnoreCase(PlaceTokens.YOUTHVOICES) || userName.equalsIgnoreCase(PlaceTokens.GEOEDUCATION) ) {
 			isPartner = true;
 		}
 		return isPartner;
@@ -260,9 +262,13 @@ public class StringUtil {
 		} else if(partnerName.equalsIgnoreCase("ONR")) {
 			partnerName = "Office of Naval Research (ONR)";
 		} else if(partnerName.equalsIgnoreCase(PlaceTokens.FINCAPINC)) {
-			partnerName = "Center for Financial Capability, Inc.";
+			partnerName = "Next Gen Personal Finance";
 		} else if(partnerName.equalsIgnoreCase(PlaceTokens.PSDPAL)) {
 			partnerName = "Partners for Sustainable Development (PSD)";
+		} else if(partnerName.equalsIgnoreCase(PlaceTokens.YOUTHVOICES)) {
+			partnerName = "Youth Voices";
+		} else if(partnerName.equalsIgnoreCase(PlaceTokens.GEOEDUCATION)) {
+			partnerName = "National Geographic's Geo-Educator Community";
 		}
 		return partnerName;
 	}
@@ -375,5 +381,33 @@ public class StringUtil {
 	public static void setAttributes(AppSuggestBox editSearchTxtBox,
 			boolean isTrue) {
 		editSearchTxtBox.getElement().setAttribute("spellcheck", isTrue+"");
+	}
+	
+	/**
+	 * 
+	 * @function setAttributes 
+	 * 
+	 * @created_date : Jul 26, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param object
+	 * @param idValue
+	 * @param altValue
+	 * @param titleValue
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public static void setAttributes(Element object, String idValue, String altValue, String titleValue){
+		object.setAttribute("id",idValue);
+		object.setAttribute("alt",altValue);
+		object.setAttribute("title",titleValue);
 	}
 }

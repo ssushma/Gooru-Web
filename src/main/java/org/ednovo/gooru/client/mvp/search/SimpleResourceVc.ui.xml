@@ -12,25 +12,26 @@
 			clear: both;
 			height: 56px;
 			padding-top: 14px;
-			width: 345px;
+			width: 500px;
 		}
 		
 		.resourceTitlePanel {
 			float: left;
 			height: 60px;
+			width: 73%;
 		}
 		
 		.resourceTitle {
 			font-size: 12px;
 			font-weight: bold;
 			color: #515151;
-			height: 20px;
+			height: 18px;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			cursor: pointer;
-			float: left;
-			width: 100%;
+			/* float: left;
+			width: 100%; */ 
 		}
 		
 		.resourceThumbnail {
@@ -63,7 +64,6 @@
 		.imgHeight{
 			height: 16px;
 			margin-left: 5px;
-			float: left;
 			cursor: pointer;
 		}
 		.ratingsPanel{
@@ -79,9 +79,10 @@
 			   <g:HTMLPanel styleName="{style.resourceTitle} collectionSearchResource" ui:field="resourceTitleContainer">
 				<g:HTML styleName="{style.resourceTitle} collectionSearchResource" ui:field="resourceTitleLbl" />
 			</g:HTMLPanel>
-				<g:Image styleName="{style.imgHeight}" ui:field="imgNotFriendly"></g:Image>
-				<g:FlowPanel styleName="{style.metaDataPanel}" ui:field="metaDataFloPanel" />
-				<g:FlowPanel styleName="{style.ratingsPanel}" ui:field="ratingWidgetPanel"></g:FlowPanel>
+			<g:Image styleName="{style.imgHeight}" ui:field="imgOER"></g:Image>
+			<g:Image styleName="{style.imgHeight}" ui:field="imgNotFriendly"></g:Image>
+			<g:FlowPanel styleName="{style.metaDataPanel}" ui:field="metaDataFloPanel" />
+			<g:FlowPanel styleName="{style.ratingsPanel}" ui:field="ratingWidgetPanel"></g:FlowPanel>
 			</g:FlowPanel>
 		</g:FlowPanel>
 	</g:HTMLPanel>

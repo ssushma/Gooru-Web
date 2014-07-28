@@ -134,8 +134,14 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 					tocCollectionEndView.hideResourceThumbnailContainer(true);
 				}
 				navgationTocContainer.add(tocCollectionEndView);
-				if(resourcesSize>6){
-					new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize, 102);
+				//resources width with padding and margin constitutes 100px for each and collection home and end with padding and margin width
+				//have 100px each. navgationTocContainer width is derived from this.
+				if(resourcesSize>7){
+					new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize+2, 100);
+				}else{
+					nextButton.setVisible(false);
+					previousButton.setVisible(false);
+					navgationTocContainer.getElement().setAttribute("style", "width:"+(300)+"px !important;");
 				}
 				String resourceString = resourceCount == 1? resourceCount + " " + i18n.GL1110().toLowerCase() : resourceCount + " " + i18n.GL0174().toLowerCase();
 				String questionString = questionCount == 1? questionCount + " " + i18n.GL0308().toLowerCase() : questionCount + " " + i18n.GL1042().toLowerCase();
@@ -148,16 +154,7 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 					finalMessage = questionString + " " + i18n.GL0578() + i18n.GL_SPL_SEMICOLON()+" ";
 				}
 				resourceCountLabel.setText(finalMessage);
-				//resources width with padding and margin constitutes 102px for each and collection home and end with padding and margin width
-				//have 150px each. navgationTocContainer width is derived from this.
-				if(resourcesSize>0){
-					navgationTocContainer.getElement().setAttribute("style", "width:"+((resourcesSize*(102))+204)+"px !important;");
-				}
-				else{
-					nextButton.setVisible(false);
-					previousButton.setVisible(false);
-					navgationTocContainer.getElement().setAttribute("style", "width:"+(300)+"px !important;");
-				}
+				
 			}else{
 				setResourceThumbnailVisibility(isCollectionHome);
 			}
