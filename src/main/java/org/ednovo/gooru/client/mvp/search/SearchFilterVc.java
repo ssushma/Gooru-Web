@@ -128,16 +128,16 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	/*@UiField
 	DisclosurePanelUc gradePanelUc;*/
 
-	@UiField
-	DisclosurePanelUc sourcePanelUc,aggregatorPanelUc;
+	/*@UiField
+	DisclosurePanelUc sourcePanelUc,aggregatorPanelUc;*/
 
-	@UiField
-	DisclosurePanelUc standardPanelUc;
+	/*@UiField
+	DisclosurePanelUc standardPanelUc;*/
 
-	@UiField
-	DisclosurePanelUc authorPanelUc;
+	/*@UiField
+	DisclosurePanelUc authorPanelUc;*/
 	
-	@UiField HTMLPanel panelNotMobileFriendly,categoryPanelUc,subjectPanelUc,gradePanelUc;
+	@UiField HTMLPanel panelNotMobileFriendly,categoryPanelUc,subjectPanelUc,gradePanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc;
 	
 	@UiField
 	HTMLPanel contentpanel,oerPanel;
@@ -170,7 +170,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	Label standardsNotFoundLbl;
 	
 	@UiField
-	Label publisherTooltip, standardHelpicon,clearAll,aggregatorTooltip,resourceFormatLbl,subjectLbl,gradeLbl;
+	Label publisherTooltip, standardHelpicon,clearAll,aggregatorTooltip,resourceFormatLbl,subjectLbl,gradeLbl,aggregatorLbl,sourceLbl,authorLbl,standardLbl;
 
 	@UiField
 	HTMLEventPanel sourceToolTip, standardToolTip,aggregatorToolTip;
@@ -181,8 +181,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiField
 	Style style;
 	
-	
-	ToolTip toolTip = null;
+		ToolTip toolTip = null;
 	
 	private AppMultiWordSuggestOracle sourceSuggestOracle;
 
@@ -406,10 +405,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		resourceFormatLbl.getElement().setAttribute("alt",i18n.GL0721());
 		resourceFormatLbl.getElement().setAttribute("title",i18n.GL0721());
 		
-		sourcePanelUc.setHeaderTitle(i18n.GL0566());
-		sourcePanelUc.getElement().setId("discpnlSourcePanelUc");
-		sourcePanelUc.getElement().setAttribute("alt",i18n.GL0566());
-		sourcePanelUc.getElement().setAttribute("title",i18n.GL0566());
+		sourceLbl.setText(i18n.GL0566());
+		sourceLbl.getElement().setId("lblSource");
+		sourceLbl.getElement().setAttribute("alt",i18n.GL0566());
+		sourceLbl.getElement().setAttribute("title",i18n.GL0566());
 		
 		//sourceHelpicon.setText(i18n.GL_SPL_QUESTION);
 		sourcesNotFoundLbl.setText(i18n.GL0723());
@@ -417,15 +416,15 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		sourcesNotFoundLbl.getElement().setAttribute("alt",i18n.GL0723());
 		sourcesNotFoundLbl.getElement().setAttribute("title",i18n.GL0723());
 		
-		authorPanelUc.setHeaderTitle(i18n.GL0573());
-		authorPanelUc.getElement().setId("discpnlAuthorPanelUc");
-		authorPanelUc.getElement().setAttribute("alt",i18n.GL0573());
-		authorPanelUc.getElement().setAttribute("title",i18n.GL0573());
+		authorLbl.setText(i18n.GL0573());
+		authorLbl.getElement().setId("lblAuthor");
+		authorLbl.getElement().setAttribute("alt",i18n.GL0573());
+		authorLbl.getElement().setAttribute("title",i18n.GL0573());
 		
-		standardPanelUc.setHeaderTitle(i18n.GL0724());
-		standardPanelUc.getElement().setId("discpnlStandardPanelUc");
-		standardPanelUc.getElement().setAttribute("alt",i18n.GL0724());
-		standardPanelUc.getElement().setAttribute("title",i18n.GL0724());
+		standardLbl.setText(i18n.GL0724());
+		standardLbl.getElement().setId("lblStandard");
+		standardLbl.getElement().setAttribute("alt",i18n.GL0724());
+		standardLbl.getElement().setAttribute("title",i18n.GL0724());
 		
 		standardHelpicon.setText(i18n.GL_SPL_QUESTION());
 		standardHelpicon.getElement().setId("lblStandardHelpicon");
@@ -452,11 +451,18 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		clearAll.getElement().setAttribute("alt",i18n.GL0725());
 		clearAll.getElement().setAttribute("title",i18n.GL0725());
 		
-		aggregatorPanelUc.setHeaderTitle(i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
+		aggregatorLbl.setText(i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
+		aggregatorLbl.getElement().setId("lblAggregator");
+		aggregatorLbl.getElement().setAttribute("alt",i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
+		aggregatorLbl.getElement().setAttribute("title",i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
+		
+//		aggregatorPanelUc.setHeaderTitle(i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		if (resourceSearch) {
 			sourcePanelUc.setVisible(true);
 			aggregatorPanelUc.setVisible(true);
+			sourceLbl.setVisible(true);
+			aggregatorLbl.setVisible(true);
 			sourcesNotFoundLbl.getElement().getStyle().setOpacity(0.0);
 			sourceSgstBox.addSelectionHandler(this);
 			aggregatorSgstBox.addSelectionHandler(this);
@@ -516,6 +522,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			});
 			
 		} else {
+			authorLbl.setVisible(true);
 			authorPanelUc.setVisible(true);
 			authorTxtBox.getElement().setId("tbAuthor");
 			StringUtil.setAttributes(authorTxtBox, true);
@@ -680,6 +687,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(value.equalsIgnoreCase("OER")){
 			disclosurePanelVc.setStyleName("oerContainer");
 			chkOER.getElement().setId("chkOer");
+			chkOER.getElement().getStyle().setMarginTop(20, Unit.PX);
 		}
 			chkOER.setStyleName(CssTokens.FILTER_CHECKBOX);
 			chkOER.addStyleName(value.toLowerCase());
@@ -715,7 +723,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(value.equalsIgnoreCase("Mobile Friendly")){
 			disclosurePanelVc.setStyleName("mobilefriendlyContainer");
 			chkNotFriendly.getElement().setId("chkNotFriendly");
-			chkNotFriendly.getElement().getStyle().setMarginTop(20, Unit.PX);
+//			chkNotFriendly.getElement().getStyle().setMarginTop(20, Unit.PX);
 	
 		}
 		chkNotFriendly.setStyleName(CssTokens.FILTER_CHECKBOX);
