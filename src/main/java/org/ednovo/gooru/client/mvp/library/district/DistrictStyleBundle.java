@@ -22,7 +22,7 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.library.sausd;
+package org.ednovo.gooru.client.mvp.library.district;
 /**
  * @fileName : LibraryStyleBundle.java
  *
@@ -41,7 +41,7 @@ package org.ednovo.gooru.client.mvp.library.sausd;
 import com.google.gwt.resources.client.CssResource;
 
 
-public interface SausdStyleBundle extends CssResource {
+public interface DistrictStyleBundle extends CssResource {
 	String conceptTitle();
 	String lessonTitle();
 	String conceptTitleActive();
@@ -72,7 +72,10 @@ public interface SausdStyleBundle extends CssResource {
 	String collectionSmall();
 	String conceptTitleLeft();
 	
-	String rusdPartnerLogo();
 	String sausdPartnerLogo();
 	String gradeOption();
+	
+	String lifeboardBannerStyle();
+	String lastLifeboard();
+	String boxLifeboard();
 }

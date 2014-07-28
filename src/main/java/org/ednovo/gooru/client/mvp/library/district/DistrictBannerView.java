@@ -25,7 +25,7 @@
 /**
  * 
 */
-package org.ednovo.gooru.client.mvp.library.sausd;
+package org.ednovo.gooru.client.mvp.library.district;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -40,7 +40,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 
 /**
- * @fileName : SausdBannerView.java
+ * @fileName : DistrictBannerView.java
  *
  * @description : 
  *
@@ -53,22 +53,22 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer: 
  */
-public class SausdBannerView extends Composite {
+public class DistrictBannerView extends Composite {
 
-	@UiField HTMLPanel partnerLogo, landingBannerInner;
+	@UiField HTMLPanel partnerLogo, landingBannerInner, bannerContainer, bannerTabs, firstBox;
 	@UiField Label headerTag, subHeaderTag, info1, info2, info3, info4, title1, title2;
-	@UiField SausdStyleBundle sausdStyleUc;
+	@UiField DistrictStyleBundle districtStyleUc;
 	
-	private static SausdBannerViewUiBinder uiBinder = GWT
-			.create(SausdBannerViewUiBinder.class);
+	private static DistrictBannerViewUiBinder uiBinder = GWT
+			.create(DistrictBannerViewUiBinder.class);
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	interface SausdBannerViewUiBinder extends
-			UiBinder<Widget, SausdBannerView> {
+	interface DistrictBannerViewUiBinder extends
+			UiBinder<Widget, DistrictBannerView> {
 	}
 
-	public SausdBannerView(String placeToken) {
+	public DistrictBannerView(String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
 		getLandingBannerText(placeToken);
 	}
@@ -81,8 +81,18 @@ public class SausdBannerView extends Composite {
 	private void getLandingBannerText(String placeToken) {
 		if(placeToken.contains(PlaceTokens.SAUSD_LIBRARY)) {
 			setLandingBannerText(i18n.GL1902(),i18n.GL1903(),i18n.GL1977(),i18n.GL1978(),i18n.GL1979(),i18n.GL1980());
-			partnerLogo.setStyleName(sausdStyleUc.sausdPartnerLogo());
+			partnerLogo.setStyleName(districtStyleUc.sausdPartnerLogo());
 			partnerLogo.setVisible(true);
+		} else if(placeToken.contains(PlaceTokens.LIFEBOARD)) {
+			bannerContainer.addStyleName(districtStyleUc.lifeboardBannerStyle());
+			bannerTabs.addStyleName(districtStyleUc.lifeboardBannerStyle());
+			firstBox.addStyleName(districtStyleUc.boxLifeboard());
+			info1.addStyleName(districtStyleUc.boxLifeboard());
+			info2.addStyleName(districtStyleUc.boxLifeboard());
+			info3.addStyleName(districtStyleUc.boxLifeboard());
+			info4.addStyleName(districtStyleUc.lastLifeboard());
+			setLandingBannerText("","",i18n.GL1977(),i18n.GL1978(),i18n.GL1979(),i18n.GL1980());
+			partnerLogo.setVisible(false);
 		}
 	}
 	
