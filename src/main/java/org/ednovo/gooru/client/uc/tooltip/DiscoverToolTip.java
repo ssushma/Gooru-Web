@@ -291,25 +291,14 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 		}
 	}
 	
-	public class RedirectToPartnerPage implements ClickHandler {
-		private String folderId;
-		public RedirectToPartnerPage(String folderId) {
-			this.folderId = folderId;
-		}
-
-		@Override
-		public void onClick(ClickEvent event) {
-			hide();
-			Map<String,String> params = new HashMap<String, String>();
-			params.put("pid", folderId);
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.AUTODESK, params);
-		}
-	}
-	
 	private HashMap<String,String> getPublicLibraryPartners() {
 		HashMap<String,String> publicPartners = new LinkedHashMap<String,String>();
+		publicPartners.put(i18n.GL2053(),PlaceTokens.LPS);
+		publicPartners.put(i18n.GL2055(),PlaceTokens.MURRIETA);
 		publicPartners.put(i18n.GL0515_1(),PlaceTokens.RUSD_LIBRARY);
 		publicPartners.put(i18n.GL1898(),PlaceTokens.SAUSD_LIBRARY);
+		publicPartners.put(i18n.GL2057(),PlaceTokens.SUSD);
+		publicPartners.put(i18n.GL2060(),PlaceTokens.VALVERDE);
 		return publicPartners;
 	}
 }

@@ -180,10 +180,10 @@ public abstract class DistrictMenuNav extends Composite {
 			aboutGooruAnr.getElement().setAttribute("title",i18n.GL1899());
 			aboutGooruAnr.setHref(i18n.GL1900());
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)) {
-			aboutGooruAnr.setText(i18n.GL1899());
-			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1899());
-			aboutGooruAnr.getElement().setAttribute("title",i18n.GL1899());
-			aboutGooruAnr.setHref(i18n.GL1900());
+			aboutGooruAnr.setText(i18n.GL2063());
+			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL2063());
+			aboutGooruAnr.getElement().setAttribute("title",i18n.GL2063());
+			aboutGooruAnr.setHref(i18n.GL2064());
 		}
 
 		aboutGooruAnr.setTarget("_blank");
