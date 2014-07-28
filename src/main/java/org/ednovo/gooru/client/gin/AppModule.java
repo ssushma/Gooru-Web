@@ -122,6 +122,10 @@ import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.IsLessonopolyLibr
 import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryPresenter.IsLessonopolyLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.natgeo.IsNatGeoLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.natgeo.NatGeoLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.natgeo.NatGeoLibraryPresenter.IsNatGeoLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.natgeo.NatGeoLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.ngc.IsNgcLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.ngc.NgcLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.ngc.NgcLibraryPresenter.IsNgcLibraryProxy;
@@ -138,6 +142,10 @@ import org.ednovo.gooru.client.mvp.library.partner.wspwh.IsWspwhLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter.IsWspwhLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.youthvoices.IsYouthVoicesLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryPresenter.IsYouthVoicesLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryView;
 import org.ednovo.gooru.client.mvp.library.rusd.IsRusdView;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter.IsRusdProxy;
@@ -493,6 +501,8 @@ public class AppModule extends AppPresenterModule {
 		
 		bindPresenterWidget(CollectionHomeMetadataPresenter.class, IsCollectionHomeMetadataView.class, CollectionHomeMetadataView.class);
 
+		bindPresenter(YouthVoicesLibraryPresenter.class, IsYouthVoicesLibraryView.class, YouthVoicesLibraryView.class,IsYouthVoicesLibraryProxy.class);
+		bindPresenter(NatGeoLibraryPresenter.class, IsNatGeoLibraryView.class, NatGeoLibraryView.class,IsNatGeoLibraryProxy.class);
 
 	}
 }
