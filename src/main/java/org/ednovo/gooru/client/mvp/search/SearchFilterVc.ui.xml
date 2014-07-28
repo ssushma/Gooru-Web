@@ -133,12 +133,12 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			<g:Label styleName="{style.titleText}" ui:field="filtersText"/>
 		</g:FlowPanel>
 		
-		<g:FlowPanel styleName="{style.PageNotify}" ui:field="flowpanel">
+		<!-- <g:FlowPanel styleName="{style.PageNotify}" ui:field="flowpanel">
 			<g:HTMLPanel ui:field="contentpanel"></g:HTMLPanel>
 			<g:Anchor  styleName="{style.notifyLink}" ui:field="resourceLinkLbl" />
 			<g:Label  styleName="{style.notifyLinks}" ui:field="notifyText"/>
 			<g:Anchor  styleName="{style.notifyLink}" ui:field="collectionLinkLbl" />
-		</g:FlowPanel>
+		</g:FlowPanel> -->
 		
 		<g:HTMLPanel ui:field="panelNotMobileFriendly"></g:HTMLPanel>
 		
