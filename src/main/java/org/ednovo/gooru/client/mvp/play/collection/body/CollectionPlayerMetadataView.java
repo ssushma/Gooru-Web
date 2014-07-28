@@ -50,6 +50,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
+import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
@@ -107,9 +108,12 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiField TextArea commentField;
 	@UiField Button postCommentBtn,postCommentCancel;
 	@UiField Label userNameLabel,viewsCountLabel,lblClassInfo,classTitleValue,lblclassTitle,lblTeacher,lbldueDate,lblDirections,lblDirectionsDesc,commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit;
-	@UiField Label lblAuthor, lblCourse, lblStandards,teacherNameLabel,dueDate,/*insightsHeaderText,insightsContentText,*/lbllanguageObjectiveText,lbllanguageObjective,successPostMsg;//collectionSummaryLbl,emptyMsgDescOne,emptyMsgDescTwo
+	@UiField Label lblAuthor, lblCourse, lblStandards,teacherNameLabel,dueDate,/*insightsHeaderText,insightsContentText,*/lbllanguageObjectiveText,lbllanguageObjective,successPostMsg,
+				lbldepthOfKnowledgeText,lbllearningAndInnovationText,lblAudienceText,lblInstructionalmethodText;
 	@UiField Image profileThumbnailImage,userPhoto;
-	@UiField HTMLPanel teacherPanel,classInfoPanel,authorPanel,courseSection,standardSection,teacherContainer,viewSection,dueDateSection,directionSection,teacherProfileContainer,languageObjectiveContainer,addComment,loginMessaging;
+	@UiField HTMLPanel teacherPanel,classInfoPanel,authorPanel,courseSection,standardSection,teacherContainer,viewSection,dueDateSection,directionSection,teacherProfileContainer,languageObjectiveContainer,addComment,loginMessaging,
+						depthOfKnowledgePanel,audiencePanel,instructionalmethodPanel,learningAndInnovationSkillPanel,
+						InstructionalmethodContainer,audienceContainer,learningAndInnovationSkillsContainer,depthOfKnowledgeContainer;
 	@UiField Anchor previewFlagButton,seeMoreAnchor,loginUrl, signupUrl;
 	@UiField CollectionPlayerStyleBundle playerStyle;
 	@UiField HTML teacherTipLabel;
@@ -197,26 +201,25 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		commentField.addKeyUpHandler(new ValidateConfirmText());
 		commentField.addBlurHandler(new OnCommentsFieldBlur());
 		seeMoreButton.setVisible(false);
-		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
-		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
-		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
-		  
-		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
-		  
-		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
-		  {
-			  studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
-			 
-		  }
-		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
-		  {
-			  studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
-		  }
-		  else
-		  {
-			  //studyMainContianer.getElement().setAttribute("style", "margin-top:50px;");
-			  
-		  }
+		depthOfKnowledgeContainer.getElement().setId("pnlDepthOfKnowledgeContainer");
+		depthOfKnowledgePanel.getElement().setId("pnlDepthOfKnowledgePanel");
+		learningAndInnovationSkillsContainer.getElement().setId("pnlLearningAndInnovationSkillsContainer");
+		learningAndInnovationSkillPanel.getElement().setId("pnlLearningAndInnovationSkillPanel");
+		audienceContainer.getElement().setId("pnlAudienceContainer");
+		audiencePanel.getElement().setId("pnlAudiencePanel");
+		InstructionalmethodContainer.getElement().setId("pnlInstructionalmethodContainer");
+		instructionalmethodPanel.getElement().setId("pnlInstructionalmethodPanel");
+		Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
+		Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+		if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click) {
+		  studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
+		}else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click){
+		  studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
+		} else{
+		  //studyMainContianer.getElement().setAttribute("style", "margin-top:50px;");
+		}
 	}
 	
 	@Override
@@ -236,6 +239,10 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		renderCourseInfo(collectionDo.getMetaInfo().getCourse());
 		renderStandards(standardsContainer,getStandardsMap(this.collectionDo.getMetaInfo().getStandards()));
 		renderLanguageObjective(collectionDo.getLanguageObjective());
+		renderDepthOfKnowledge(collectionDo.getDepthOfKnowledges());
+		renderInstructionalMethod(collectionDo.getInstructionalMethod());
+		renderAudience(collectionDo.getAudience());
+		renderLearningAndInnovationSkill(collectionDo.getLearningSkills());
 		if(collectionDo.getKeyPoints() != null){
 			if(collectionDo.getKeyPoints().length()>410){
 				authorPanel.getElement().getStyle().setHeight(295, Unit.PX);
@@ -393,6 +400,28 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		userPhoto.getElement().setId("imgUserPhoto");
 		commentField.getElement().setId("tatCommentField");
 		StringUtil.setAttributes(commentField, true);
+		
+		lbldepthOfKnowledgeText.setText(i18n.GL1693());
+		lbldepthOfKnowledgeText.getElement().setId("lbldepthOfKnowledgeText");
+		lbldepthOfKnowledgeText.getElement().setAttribute("alt",i18n.GL1693());
+		lbldepthOfKnowledgeText.getElement().setAttribute("title",i18n.GL1693());
+		
+		lbllearningAndInnovationText.setText(i18n.GL1722());
+		lbllearningAndInnovationText.getElement().setId("lbllearningAndInnovationText");
+		lbllearningAndInnovationText.getElement().setAttribute("alt",i18n.GL1722());
+		lbllearningAndInnovationText.getElement().setAttribute("title",i18n.GL1722());
+		
+		lblAudienceText.setText(i18n.GL1723());
+		lblAudienceText.getElement().setId("lblAudienceText");
+		lblAudienceText.getElement().setAttribute("alt",i18n.GL1723());
+		lblAudienceText.getElement().setAttribute("title",i18n.GL1723());
+		
+		lblInstructionalmethodText.setText(i18n.GL1724());
+		lblInstructionalmethodText.getElement().setId("lblInstructionalmethodText");
+		lblInstructionalmethodText.getElement().setAttribute("alt",i18n.GL1724());
+		lblInstructionalmethodText.getElement().setAttribute("title",i18n.GL1724());
+		
+		
 //		dataInsightsPanel.getElement().setId("pnlDataInsightsPanel");
 //		frameContainer.getElement().setId("fpnlFrameContainer");
 //		messageContainer.getElement().setId("fpnlMessageContainer");
@@ -772,11 +801,9 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		//insightsFrame.setUrl("");
 	}
 	
-	public void renderLanguageObjective(String languageObjective)
-	{	
-	lbllanguageObjective.getElement().setAttribute("style", "word-wrap: break-word;");
-	if(languageObjective!=null)
-		{
+	public void renderLanguageObjective(String languageObjective){	
+		lbllanguageObjective.getElement().setAttribute("style", "word-wrap: break-word;");
+		if(languageObjective!=null){
 			languageObjectiveValue=languageObjective;
 			languageObjectiveContainer.setVisible(true);
 			//lbllanguageObjectiveAll.setVisible(false);
@@ -789,21 +816,107 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 				lbllanguageObjective.setText(languageObjective.substring(0,200));
 				lbllanguageObjective.getElement().setAttribute("alt",languageObjective.substring(0,200));
 				lbllanguageObjective.getElement().setAttribute("title",languageObjective.substring(0,200));
-				//lbllanguageObjectiveAll.setText(languageObjective.substring(80,languageObjective.length()));
-			}
-			else
-			{
+					//lbllanguageObjectiveAll.setText(languageObjective.substring(80,languageObjective.length()));
+			}else{
 				seeMoreAnchor.setVisible(false);
 				lbllanguageObjective.setText(languageObjective);
 				lbllanguageObjective.getElement().setAttribute("alt",languageObjective);
 				lbllanguageObjective.getElement().setAttribute("title",languageObjective);
 			}
-			
+		}else{
+				languageObjectiveContainer.setVisible(false);
 		}
-		else
-		{
-			languageObjectiveContainer.setVisible(false);
-			
+	}
+	public void renderDepthOfKnowledge(List<checkboxSelectedDo> depthofKnowledgeList ) {
+		depthOfKnowledgeContainer.setVisible(false);
+		if(depthofKnowledgeList!=null){
+			depthOfKnowledgePanel.clear();
+			boolean depthofKnowledgeValue = false;
+			for(checkboxSelectedDo checkboxSelectedDo : depthofKnowledgeList) {
+				if(checkboxSelectedDo.isSelected()){
+					depthofKnowledgeValue = true;
+					Label depthofKnowledge = new Label(checkboxSelectedDo.getValue());
+					depthofKnowledge.addStyleName(playerStyle.depthofKnow());
+					depthofKnowledge.getElement().setAttribute("style", "display:table");
+					depthOfKnowledgePanel.add(depthofKnowledge);
+				}
+			}
+			if(depthofKnowledgeValue){
+				depthOfKnowledgeContainer.setVisible(true);
+			}else{
+				depthOfKnowledgeContainer.setVisible(false);
+			}
+		}else{
+			depthOfKnowledgeContainer.setVisible(false);
+		}
+	}
+	public void renderInstructionalMethod(List<checkboxSelectedDo> instructionmethodList){
+		InstructionalmethodContainer.setVisible(false);
+		if(instructionmethodList!=null){
+			instructionalmethodPanel.clear();
+			boolean instructionMethod=false;
+			for (checkboxSelectedDo checkboxSelectedDo : instructionmethodList) {
+				if(checkboxSelectedDo.isSelected()){
+					instructionMethod = true;
+					Label lblInstructionMethod = new Label(checkboxSelectedDo.getValue());
+					instructionalmethodPanel.add(lblInstructionMethod);
+					InstructionalmethodContainer.setVisible(true);
+				}
+			}
+			if(instructionMethod){
+				InstructionalmethodContainer.setVisible(true);
+			}else{
+				InstructionalmethodContainer.setVisible(false);
+			}
+		}else{
+				InstructionalmethodContainer.setVisible(false);
+		}
+	}
+	public void renderAudience(List<checkboxSelectedDo> audienceList){
+		audienceContainer.setVisible(false);
+		if(audienceList!=null){
+			audiencePanel.clear();
+			boolean audience=false;
+			for (checkboxSelectedDo checkboxSelectedDo : audienceList) {
+				if(checkboxSelectedDo.isSelected()){
+					audience = true;
+					Label lblaudience = new Label(checkboxSelectedDo.getValue());
+					audiencePanel.add(lblaudience);
+				}
+			}
+			if(audience){
+				audienceContainer.setVisible(true);
+			}
+			else{
+				audienceContainer.setVisible(false);
+			}
+		}
+		else{
+			audienceContainer.setVisible(false);
+		}
+	}
+	public void renderLearningAndInnovationSkill(List<checkboxSelectedDo> learningSkillsList){
+		learningAndInnovationSkillsContainer.setVisible(false);
+		if(learningSkillsList!=null){
+			learningAndInnovationSkillPanel.clear();
+			boolean learningAndInnovationSkill = false;
+			Label lbllearningSkills = null;
+			for (checkboxSelectedDo checkboxSelectedDo : learningSkillsList) {
+				if(checkboxSelectedDo.isSelected()){
+					learningAndInnovationSkill = true;
+					lbllearningSkills = new Label(checkboxSelectedDo.getValue());
+					lbllearningSkills.addStyleName(playerStyle.depthofKnow());
+					lbllearningSkills.getElement().setAttribute("style", "display:table");
+					learningAndInnovationSkillPanel.add(lbllearningSkills);
+				}
+			}
+			if(learningAndInnovationSkill){
+				learningAndInnovationSkillsContainer.setVisible(true);
+			}else{
+				learningAndInnovationSkillsContainer.setVisible(false);
+			}
+		}else{
+			learningAndInnovationSkillsContainer.setVisible(false);
 		}
 	}
 	@UiHandler("seeMoreAnchor")

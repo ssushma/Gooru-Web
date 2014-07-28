@@ -174,6 +174,11 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 			previewPlayerPresenter.triggerReactiontDataLogEvent(resourceId, startTime, startTime, reactionType,eventName);
 		}
 	}
+	public void saveReactionToShowAvg(String reactionText){
+		if(isCollectionPlayer){
+			collectionPlayerPresenter.saveReactionToShowAvg(reactionText);
+		}
+	}
 	public void resetResourceMetaData(){
 		getView().getResourceWidgetContainer().clear();
 	}
@@ -181,10 +186,11 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		getView().removeRatingContainer(flag);
 	}
 	@Override
-	public void createReaction(String resourceId,String reactionText,String gooruReactionId,String collectionId, String createStudyPlayerReaction) {
+	public void createReaction(String resourceId,final String reactionText,String gooruReactionId,String collectionId, String createStudyPlayerReaction) {
 		AppClientFactory.getInjector().getPlayerAppService().createReaction(resourceId,reactionText,gooruReactionId,collectionId,createStudyPlayerReaction, new SimpleAsyncCallback<ReactionDo>() {
 			@Override
 			public void onSuccess(ReactionDo result) {
+				saveReactionToShowAvg(reactionText);
 				getView().setReaction(result,result.getDeleteReactionGooruOid()); 
 			}
 		});
