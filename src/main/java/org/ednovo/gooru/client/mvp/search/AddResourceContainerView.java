@@ -30,6 +30,7 @@ import java.util.List;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
@@ -197,7 +198,7 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 		floderTreeContainer.clear();
 		floderTreeContainer.add(folderTreePanel);
 		loadingImage.setVisible(false);
-		//folderTreePanel.addItem(loadingTreeItem());
+		folderTreePanel.addItem(loadingTreeItem());
 	}
 
 	private void setSelectedCollectionTitle() {
@@ -236,14 +237,16 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
     	}
 	}
 	
-/*	private String loadingTreeItem() {
-		// TODO Auto-generated method stub
-		Label loadingText=new Label(i18n.GL1452());
-		loadingText.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().loadingText());
+	public TreeItem loadingTreeItem(){
+		Label loadingText = null;
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+		loadingText=new Label(i18n.GL1452());
+		}else{
+		loadingText=new Label(i18n.GL2051());
+		}
+		loadingText.setStyleName(AddResourceContainerCBundle.INSTANCE.css().loadingText());
 		return new TreeItem(loadingText);
-	}*/
-
-
+	}
 
 	private class ScrollDropdownListContainer implements ScrollHandler{
 		@Override
@@ -405,7 +408,16 @@ public class AddResourceContainerView extends BaseViewWithHandlers<AddResourceCo
 	@Override
 	public void clearShelfData() {
 		// TODO Auto-generated method stub
-		
+		addingText.setVisible(false);
+		folderTreePanel.clear();
+		folderTreePanel.addItem(loadingTreeItem());
+		cureentcollectionTreeItem=null;
+		previousSelectedItem=null;
+		//dropdownListPlaceHolder.setText(GL1377);
+		offset=0;
+		limit=20;
+		totalHitCount=0;
+		pageNum=1;
 	}
 
 	@Override
