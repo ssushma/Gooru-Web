@@ -115,11 +115,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 	HandlerRegistration forwardButtonHandler=null, backwardButtonHandler=null;
 	
-	private static final String REACTION_CAN_UNDERSTAND = "i-can-understand";
-	private static final String REACTION_CAN_EXPLAIN = "i-can-explain";
-	private static final String REACTION_MEH = "meh";
-	private static final String REACTION_DONOT_UNDERSTAND = "i-donot-understand";
-	private static final String REACTION_NEED_HELP = "i-need-help";
+	public static final String REACTION_CAN_UNDERSTAND = "i-can-understand";
+	public static final String REACTION_CAN_EXPLAIN = "i-can-explain";
+	public static final String REACTION_MEH = "meh";
+	public static final String REACTION_DONOT_UNDERSTAND = "i-donot-understand";
+	public static final String REACTION_NEED_HELP = "i-need-help";
 	private static final String CREATE_PREVIEW_PLAYER_REACTION = "create-reaction-preview";
 	private static final String CREATE_STUDY_PLAYER_REACTION = "create-reaction";
 	private boolean isCanUnderstandSelected=false;
