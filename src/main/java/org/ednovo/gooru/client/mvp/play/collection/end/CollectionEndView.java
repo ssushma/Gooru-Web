@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresente
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.customize.RenameCustomizePopUp;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.share.SharePlayerVc;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.CommentWidgetChildView;
+import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -104,7 +105,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField
 	FlowPanel frameContainer,dataInsightsPanel;
 	@UiField VerticalPanel commentsContainer;
-	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,resourceCount,questionCount;
+	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,resourceCount,questionCount,avgReactionImage;
 	@UiField HTMLPanel addComment,loginMessaging;
 	@UiField TextArea commentField;
 	@UiField Button postCommentBtn,postCommentCancel;
@@ -316,6 +317,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 //			setUserName(collectionDo.getUser().getUsernameDisplay());
 //		}
 		setViewCount(collectionDo.getViews());
+		getAverageReaction();
 		//renderStandards(standardsContainer,getStandardsMap(this.collectionDo.getMetaInfo().getStandards()));
 		//renderLanguageObjective(collectionDo.getLanguageObjective());
 		
@@ -1479,5 +1481,29 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	
 	public void hideNextCollectionContainer(boolean hide){
 		nextCollectionContainer.setVisible(!hide);
+	}
+	
+	public void  getAverageReaction(){
+		getUiHandlers().getAvgReaction();
+	}
+	
+	public void showAvgReaction(String reactionType){
+		avgReactionImage.setText("");
+		if(reactionType!=null){
+			if(reactionType.equals(ResourcePlayerMetadataView.REACTION_CAN_EXPLAIN)){
+				avgReactionImage.setStyleName(playerStyle.reactionCanExplain());
+			}else if(reactionType.equals(ResourcePlayerMetadataView.REACTION_CAN_UNDERSTAND)){
+				avgReactionImage.setStyleName(playerStyle.reactionCanUnderstand());
+			}else if(reactionType.equals(ResourcePlayerMetadataView.REACTION_DONOT_UNDERSTAND)){
+				avgReactionImage.setStyleName(playerStyle.reactionDonotUnderstand());
+			}else if(reactionType.equals(ResourcePlayerMetadataView.REACTION_MEH)){
+				avgReactionImage.setStyleName(playerStyle.reactionMeh());
+			}else if(reactionType.equals(ResourcePlayerMetadataView.REACTION_NEED_HELP)){
+				avgReactionImage.setStyleName(playerStyle.reactionNeedHelp());
+			}
+		}else{
+			avgReactionImage.setText("-");
+			avgReactionImage.setStyleName(playerStyle.timeTextBig());
+		}
 	}
 }
