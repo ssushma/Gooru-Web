@@ -554,7 +554,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 				};
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("440px");
+				successPopupVc.setHeight("454px");
 				successPopupVc.show();
 				successPopupVc.center();
 				

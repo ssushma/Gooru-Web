@@ -147,7 +147,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 		editCollection.getElement().setAttribute("alt",i18n.GL0590());
 		editCollection.getElement().setAttribute("title",i18n.GL0590());
 		
-		panelAssign.getElement().getStyle().setMarginBottom(10, Unit.PX);
+		panelAssign.getElement().getStyle().setMarginBottom(3, Unit.PX);
 		loginCustom.getElement().getStyle().setMarginBottom(15, Unit.PX);
 		copycollectionTextbox.setMaxLength(50);
 		Window.enableScrolling(false);

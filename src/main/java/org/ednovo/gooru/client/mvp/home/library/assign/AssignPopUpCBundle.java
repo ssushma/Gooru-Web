@@ -266,6 +266,10 @@ public interface AssignPopUpCBundle extends ClientBundle{
 		String privacyCustomizeContainer();
 		
 		String errorLabel();
+		
+		String loginPopupStyle();
+		
+		String loginWithGooru();
 	}
 
 	@Source("AssignPopUp.css")
