@@ -119,8 +119,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	/*@UiField
 	DisclosurePanelUc categoryPanelUc;*/
 	
-	@UiField
-	Anchor resourceLinkLbl, collectionLinkLbl;
+	/*@UiField
+	Anchor resourceLinkLbl, collectionLinkLbl;*/
 
 	/*@UiField
 	DisclosurePanelUc subjectPanelUc;*/
@@ -140,7 +140,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiField HTMLPanel panelNotMobileFriendly,categoryPanelUc,subjectPanelUc,gradePanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc;
 	
 	@UiField
-	HTMLPanel contentpanel,oerPanel;
+	HTMLPanel /*contentpanel,*/oerPanel;
 
 	@UiField(provided = true)
 	AppSuggestBox sourceSgstBox;
@@ -155,7 +155,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	AppSuggestBox aggregatorSgstBox;
 	
 	@UiField
-	FlowPanel flowpanel,myCollectionSearch,authorContainerFloPanel;
+	FlowPanel /*flowpanel,*/myCollectionSearch,authorContainerFloPanel;
 
 	@UiField
 	FlowPanel sourceContainerFloPanel,aggregatorContainerFloPanel;
@@ -164,7 +164,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	FlowPanel standardContainerFloPanel;
 
 	@UiField
-	Label sourcesNotFoundLbl,filtersText,notifyText,aggregatorNotFoundLbl;
+	Label sourcesNotFoundLbl,filtersText,/*notifyText,*/aggregatorNotFoundLbl;
 
 	@UiField
 	Label standardsNotFoundLbl;
@@ -387,7 +387,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		filtersText.getElement().setAttribute("alt",i18n.GL0719());
 		filtersText.getElement().setAttribute("title",i18n.GL0719());
 		
-		resourceLinkLbl.setText(i18n.GL0174());
+		/*resourceLinkLbl.setText(i18n.GL0174());
 		resourceLinkLbl.getElement().setAttribute("alt",i18n.GL0174());
 		resourceLinkLbl.getElement().setAttribute("title",i18n.GL0174());
 		
@@ -398,7 +398,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 		collectionLinkLbl.setText(i18n.GL0175());
 		collectionLinkLbl.getElement().setAttribute("alt",i18n.GL0175());
-		collectionLinkLbl.getElement().setAttribute("title",i18n.GL0175());
+		collectionLinkLbl.getElement().setAttribute("title",i18n.GL0175());*/
 		
 		resourceFormatLbl.setText(i18n.GL0721());
 		resourceFormatLbl.getElement().setId("lblCategory");
@@ -551,7 +551,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			resourceFormatLbl.setText(i18n.GL1465());
 		}
 		
-		resourceLinkLbl.getElement().setId("lblResourceLink");
+		/*resourceLinkLbl.getElement().setId("lblResourceLink");
 		collectionLinkLbl.getElement().setId("lblCollectionLink");
 		
 		resourceLinkLbl.setText(i18n.GL0174());
@@ -560,11 +560,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 		collectionLinkLbl.setText(i18n.GL0175());
 		collectionLinkLbl.getElement().setAttribute("alt",i18n.GL0175());
-		collectionLinkLbl.getElement().setAttribute("title",i18n.GL0175());
+		collectionLinkLbl.getElement().setAttribute("title",i18n.GL0175());*/
 		
 		myCollectionSearch.getElement().setId("fpnlMyCollectionSearch");
-		flowpanel.getElement().setId("fpnlFlowpanel");
-		contentpanel.getElement().setId("pnlContentpanel");
+//		flowpanel.getElement().setId("fpnlFlowpanel");
+//		contentpanel.getElement().setId("pnlContentpanel");
 		panelNotMobileFriendly.getElement().setId("pnlPanelNotMobileFriendly");
 		oerPanel.getElement().setId("pnlOerPanel");
 		aggregatorPanelUc.getElement().setId("discpnlAggregatorPanelUc");
@@ -776,26 +776,26 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 * Set resource search page view
 	 * @param clickEvent instance of {@link ClickEvent}
 	 */
-	@UiHandler("resourceLinkLbl")
+	/*@UiHandler("resourceLinkLbl")
 	public void onResourceLinkLblClicked(ClickEvent clickEvent) {
 		
 		if(!AppClientFactory.getPlaceManager().getRequestParameter("query").equalsIgnoreCase("")){ 
 			MixpanelUtil.Show_Collection_Search_Results();
 			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.RESOURCE_SEARCH,AppClientFactory.getPlaceManager().getRequestParameter("query")));
 		}
-	}
+	}*/
 
 	/**
 	 * Set collection search page view 
 	 * @param clickEvent instance of {@link ClickEvent}
 	 */
-	@UiHandler("collectionLinkLbl")
+	/*@UiHandler("collectionLinkLbl")
 	public void onCollectionLinkLblClicked(ClickEvent clickEvent) {
 		if(!AppClientFactory.getPlaceManager().getRequestParameter("query").equalsIgnoreCase("")){ 
 			MixpanelUtil.Show_Collection_Search_Results();
 			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.COLLECTION_SEARCH,AppClientFactory.getPlaceManager().getRequestParameter("query")));
 		}
-	}
+	}*/
 	
 	
 	@UiHandler("standardHelpicon")
@@ -870,13 +870,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 			
-			resourceLinkLbl.addStyleName(style.active());
-			collectionLinkLbl.removeStyleName(style.active());
+			/*resourceLinkLbl.addStyleName(style.active());
+			collectionLinkLbl.removeStyleName(style.active());*/
 			renderOERCheckBox(oerPanel, "not_show_OER", "OER");
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
 			final Image imgNotFriendly = new Image("images/mos/questionmark.png");
 			imgNotFriendly.getElement().getStyle().setLeft(114, Unit.PX);
-			imgNotFriendly.getElement().getStyle().setTop(-21, Unit.PX);
+			imgNotFriendly.getElement().getStyle().setTop(-16, Unit.PX);
 			imgNotFriendly.getElement().getStyle().setMarginLeft(30, Unit.PX);
 			imgNotFriendly.getElement().getStyle().setPosition(Position.RELATIVE);
 	
@@ -917,8 +917,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			//added for OER search
 			
 			final Image oer = new Image("images/mos/questionmark.png");
-			oer.getElement().getStyle().setLeft(144, Unit.PX);
-			oer.getElement().getStyle().setTop(-23, Unit.PX);
+			oer.getElement().getStyle().setLeft(85, Unit.PX);
+			oer.getElement().getStyle().setTop(-20, Unit.PX);
 			oer.getElement().getStyle().setPosition(Position.RELATIVE);
 			oer.getElement().getStyle().setCursor(Cursor.POINTER);
 			oer.setAltText(i18n.GL0732());
@@ -951,10 +951,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			});
 			oerPanel.add(oer);
 			oerPanel.setVisible(true);
-		}else{
+		}/*else{
 			collectionLinkLbl.addStyleName(style.active());
 			resourceLinkLbl.removeStyleName(style.active());
-		}
+		}*/
 		this.setVisible(true);
 	}
 	
