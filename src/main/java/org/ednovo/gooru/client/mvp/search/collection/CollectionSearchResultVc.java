@@ -50,6 +50,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
+import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -63,6 +64,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -88,6 +90,8 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 
 	@UiField
 	HTML collectionDescriptionHtml,collectionTitleLbl;
+	
+	@UiField Image imgOER;
 	
 	@UiField
 	HTMLPanel containerPanel;
@@ -153,6 +157,12 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
 		collectionDescriptionHtml.getElement().setId("htmlCollectionDescriptionHtml");
 		
+		imgOER.setUrl("images/oer_icon.png");
+		imgOER.getElement().setAttribute("id", i18n.GL1834());
+		imgOER.getElement().setAttribute("alt", i18n.GL1834());
+		imgOER.getElement().setAttribute("title", i18n.GL1834());
+		
+		
 		AppClientFactory.getEventBus().addHandler(UpdateSearchResultMetaDataEvent.TYPE,setUpdateMetaData);
 	}
 	UpdateSearchResultMetaDataHandler setUpdateMetaData =new UpdateSearchResultMetaDataHandler(){
@@ -210,6 +220,17 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 		this.collectionResultDo = collectionResultDo;
 		wrapperVc.setData(collectionResultDo);
 		//collectionTitleLbl.setText(StringUtil.truncateText(collectionResultDo.getResourceTitle(), 40));
+				
+		boolean oerVisibility = collectionResultDo.getLicense() !=null &&  collectionResultDo.getLicense().getCode() !=null ? collectionResultDo.getLicense().getCode().contains("CC") ? true : false : false;
+
+		imgOER.setVisible(oerVisibility);
+		
+		if (oerVisibility){
+			collectionTitleLbl.getElement().getStyle().setFloat(Float.LEFT);
+		}else{
+			collectionTitleLbl.getElement().getStyle().clearFloat();
+		}
+		
 		collectionTitleLbl.setHTML(StringUtil.truncateText(collectionResultDo.getResourceTitle(), 40));
 		collectionTitleLbl.getElement().setAttribute("alt",StringUtil.truncateText(collectionResultDo.getResourceTitle(), 40));
 		collectionTitleLbl.getElement().setAttribute("title",StringUtil.truncateText(collectionResultDo.getResourceTitle(), 40));

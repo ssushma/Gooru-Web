@@ -57,6 +57,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -76,6 +77,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -110,6 +112,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiField HTMLPanel teacherPanel,classInfoPanel,authorPanel,courseSection,standardSection,teacherContainer,viewSection,dueDateSection,directionSection,teacherProfileContainer,languageObjectiveContainer,addComment,loginMessaging;
 	@UiField Anchor previewFlagButton,seeMoreAnchor,loginUrl, signupUrl;
 	@UiField CollectionPlayerStyleBundle playerStyle;
+	@UiField HTML teacherTipLabel;
 	//@UiField Frame insightsFrame;
 //	@UiField Button collectionSummaryPrintBtn;
 	private String languageObjectiveValue;
@@ -233,6 +236,23 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		renderCourseInfo(collectionDo.getMetaInfo().getCourse());
 		renderStandards(standardsContainer,getStandardsMap(this.collectionDo.getMetaInfo().getStandards()));
 		renderLanguageObjective(collectionDo.getLanguageObjective());
+		if(collectionDo.getKeyPoints() != null){
+			if(collectionDo.getKeyPoints().length()>410){
+				authorPanel.getElement().getStyle().setHeight(295, Unit.PX);
+			}
+			else if(collectionDo.getKeyPoints().length()>300){
+				authorPanel.getElement().getStyle().setHeight(253, Unit.PX);
+			}
+			else if(collectionDo.getKeyPoints().length()>100){
+				authorPanel.getElement().getStyle().setHeight(130, Unit.PX);
+			}
+			else{
+				authorPanel.getElement().getStyle().setHeight(100, Unit.PX);
+			}
+			teacherTipLabel.setHTML(""+collectionDo.getKeyPoints()+"");		
+			teacherTipLabel.getElement().setAttribute("alt",""+collectionDo.getKeyPoints()+"");
+			teacherTipLabel.getElement().setAttribute("title",""+collectionDo.getKeyPoints()+"");
+		}
 		
 	}
 	

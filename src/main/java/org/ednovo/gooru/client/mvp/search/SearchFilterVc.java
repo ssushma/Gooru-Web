@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionInfoEvent;
@@ -86,7 +87,9 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -181,6 +184,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiField
 	Style style;
 	
+	@UiField public Button browseStandards;
+	
 	
 	ToolTip toolTip = null;
 	
@@ -222,7 +227,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	
 	List<String> standardPreflist = null;
 	List<String> standardPrefListElement = null;
-				
+	
+			
 	/**
 	 * Class constructor, creates new {@link AppSuggestBox} and events for StandardsSuggestionEvent
 	 * 
@@ -883,7 +889,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
-					toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
+					toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431());
 					
 					toolTip.getElement().getStyle().setBackgroundColor("transparent");
 					toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -1483,7 +1489,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 	}
 
-	private void addStandardFilter(String code) {		
+	public void addStandardFilter(String code) {		
 		standardContainerFloPanel.add(new DownToolTipWidgetUc(new FilterLabelVc(code), standardCodesMap.get(code)));
 	}
 
@@ -1586,4 +1592,5 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		standardPanelUc.setVisible(true);
 	}
 	
+
 }

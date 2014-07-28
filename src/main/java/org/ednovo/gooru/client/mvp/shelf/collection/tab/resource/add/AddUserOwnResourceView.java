@@ -698,6 +698,8 @@ public abstract class AddUserOwnResourceView extends Composite {
 	private class TitleKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {
+			addResourceBtnLbl.setEnabled(true);
+			addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");
 			mandatoryTitleLbl.setVisible(false);
 			resourceTitleContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControl());
 			if (titleTextBox.getText().length() >= 50) {
@@ -712,6 +714,8 @@ public abstract class AddUserOwnResourceView extends Composite {
 	
 	private class DescriptionKeyUpHandler implements KeyUpHandler {
 		public void onKeyUp(KeyUpEvent event) {
+			addResourceBtnLbl.setEnabled(true);
+			addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");
 			descCharcterLimit.setVisible(false);
 			resourceDescriptionContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControl());
 			resourceDescriptionContainer.addStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormTextarea());
@@ -876,13 +880,13 @@ public abstract class AddUserOwnResourceView extends Composite {
 					}else{
 						isValidFilePath =true;
 					}
-					if(isValidText && isValidTextArea && isValidFilePath){
+					/*if(isValidText && isValidTextArea && isValidFilePath){
 						addResourceBtnLbl.setEnabled(true);
 						addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");
 					}else{
 						addResourceBtnLbl.setEnabled(false);
 						addResourceBtnLbl.getElement().setAttribute("style", "background: #999;border: none;");
-					}
+					}*/
 				}
 			});
 		}

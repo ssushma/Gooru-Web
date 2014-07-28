@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.play.collection.preview.home;
 import com.google.gwt.animation.client.Animation;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -71,16 +72,26 @@ public class ResourceCurosal {
 	}
 	public void activateNextButton(boolean isNextButtonActive){
 		this.isNextButtonActive=isNextButtonActive;
+		if(isNextButtonActive){
+			nextButton.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		}else{
+			nextButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		}
 	}
 	public void activatePreviousButton(boolean isPreviousButtonActive){
 		this.isPreviousButtonActive=isPreviousButtonActive;
+		if(isPreviousButtonActive){
+			previousButton.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		}else{
+			previousButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		}
 	}
+	
 	public class ShowNextWidgetEvent implements ClickHandler{
-
 		@Override
 		public void onClick(ClickEvent event) {
 			if(isNextButtonActive){
-				if((currentMarginLeft+WIDGET_WIDTH)==((widgetsCount-4)*WIDGET_WIDTH)){
+				if((currentMarginLeft+WIDGET_WIDTH)==((widgetsCount-9)*WIDGET_WIDTH)){
 					activateNextButton(false);
 				}
 				new WidgetSlideAnimation(widgetsPanel, "forward").run(ANIMATION_DURATION);
@@ -124,8 +135,14 @@ public class ResourceCurosal {
 		public void onMouseOut(MouseOutEvent event) {
 			if(isNextButton){
 				nextButton.getElement().removeAttribute("style");
+				if(!isNextButtonActive){
+				nextButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+				}
 			}else{
 				previousButton.getElement().removeAttribute("style");
+				if(!isPreviousButtonActive){
+					previousButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+				}
 			}
 		}
 	}

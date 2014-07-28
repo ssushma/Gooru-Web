@@ -374,9 +374,9 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
-		if (AppClientFactory.getPlaceManager().refreshPlace()) {
-			getView().resetEditClasspageView();
-		}
+//		if (AppClientFactory.getPlaceManager().refreshPlace()) {
+//			getView().resetEditClasspageView();
+//		}
 		this.classpageId=getPlaceManager().getRequestParameter("classpageid");
 		if(classpageDo==null||(!classpageDo.getClasspageId().equals(classpageId))){
 			getView().resetEditClasspageView();

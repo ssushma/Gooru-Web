@@ -9,6 +9,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			width: 160px;
 			margin-right: 10px;
 			overflow-x: hidden;
+			background-color: #FFFFFF;
 		}
 		
 		.active {
@@ -202,6 +203,9 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		<uc:DisclosurePanelUc  ui:field="standardPanelUc">
 			<uc:add>
 				<uc:AppSuggestBox ui:field="standardSgstBox" width="130px" />
+			</uc:add>
+			<uc:add>
+			<g:Button styleName="primary" ui:field="browseStandards">Browse</g:Button>
 			</uc:add>
 			<uc:add>
 			 	<g:Label styleName="{style.helpIconBtn}" ui:field="standardHelpicon" visible="false"/>
