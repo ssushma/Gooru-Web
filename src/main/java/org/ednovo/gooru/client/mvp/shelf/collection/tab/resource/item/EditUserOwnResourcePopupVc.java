@@ -72,6 +72,7 @@ import com.google.gwt.user.client.ui.FormSubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormSubmitEvent;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -116,12 +117,12 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 	Label descCharcterLimit;
 	@UiField
 	CheckBox rightsChkBox;
-	@UiField Label resourceCategoryLabel,andText,additionalText,agreeText;
+	@UiField Label resourceCategoryLabel;
 	@UiField HTMLPanel categorypanel,texts,image,resourceTypePanel,panelAction,fileTitleText,
 	descriptionText,categoryLabel,thumbnailImageText;
-	@UiField Anchor copyRightAnr,rollBackToPaperClip;
-	@UiField Anchor termsAndPolicyAnr,privacyAnr;
-	@UiField Anchor commuGuideLinesAnr;
+	@UiField Anchor rollBackToPaperClip;
+		
+	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr;
 	private CopyRightPolicyVc copyRightPolicy;
 	private TermsAndPolicyVc termsAndPolicyVc;
 	private TermsOfUse termsOfUse;
@@ -242,7 +243,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 		agreeText.getElement().setId("lblAgreeText");
 		agreeText.getElement().setAttribute("alt", i18n.GL0870());
 		agreeText.getElement().setAttribute("title", i18n.GL0870());
-		commuGuideLinesAnr.setText(i18n.GL0871());
+		commuGuideLinesAnr.setText(i18n.GL0871()+i18n.GL_GRR_COMMA());
 		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
 		commuGuideLinesAnr.getElement().setAttribute("alt", i18n.GL0871());
 		commuGuideLinesAnr.getElement().setAttribute("title", i18n.GL0871());
@@ -254,7 +255,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 		privacyAnr.getElement().setId("lnkPrivacyAnr");
 		privacyAnr.getElement().setAttribute("alt", i18n.GL0873());
 		privacyAnr.getElement().setAttribute("title", i18n.GL0873());
-		andText.setText(" "+i18n.GL_GRR_AND()+" ");
+		andText.setText(i18n.GL_GRR_AND());
 		andText.getElement().setId("lblAndText");
 		andText.getElement().setAttribute("alt", i18n.GL_GRR_AND());
 		andText.getElement().setAttribute("title", i18n.GL_GRR_AND());
