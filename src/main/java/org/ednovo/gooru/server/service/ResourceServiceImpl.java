@@ -115,6 +115,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	
 	private static final String RESOURCE = "resource";
 	
+	private static final String GOOGLE_DRIVE = "Google Drive";
+	
 	private static final String NEW_RESOURCE = "newResource";
 	
 	private static final String TAXONOMY_SET = "taxonomySet";
@@ -592,7 +594,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 	public CollectionItemDo addNewResource(String gooruOid, String idStr,
 			String urlStr, String titleStr, String descriptionStr,
-			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards) throws GwtException {
+			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,String hostName) throws GwtException {
 		NewResourceDo newResourceDo = new NewResourceDo();		
 		newResourceDo.setId(idStr);
 		newResourceDo.setUrl(urlStr);
@@ -633,7 +635,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		
 		newResourceDo.setResourceFormat(resourceFormat);
 		
-		
 		if (thumbnailImgSrcStr==null){
 			thumbnailImgSrcStr="";
 		}
@@ -643,11 +644,18 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}else{
 			newResourceDo.setThumbnail(thumbnailImgSrcStr);
 		}
+		if(hostName!=null){
+			ArrayList<String> hostArray= new ArrayList<String>();
+			hostArray.add(GOOGLE_DRIVE);
+			newResourceDo.setHost(hostArray);
+		}
 		
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ADD_NEW_RESOURCE, idStr,getLoggedInSessionToken(),  URLEncoder.encode(titleStr).toString(), urlStr, categoryStr, URLEncoder.encode(descriptionStr).toString(), thumbnailImgSrcStr, String.valueOf(endTime));
+		System.out.println("addNew resource:"+url);
 		String form = ResourceFormFactory.generateStringDataForm(newResourceDo, RESOURCE);
 		//ResourceFormFactory.updateCollectionInfo(collectionDo.getTitle(), teacherTips).getValuesArray("data")[0]
+		System.out.println("form::"+form.toString());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);

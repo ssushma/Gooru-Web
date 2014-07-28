@@ -1585,8 +1585,8 @@ color:#999;
 }
 
 .oerContainer .filterCheckBox label {
-	background: url(../images/OER_logo.png) 0px 0px no-repeat transparent;
- 	padding-left: 85px;
+	background: url(../images/oer_icon.png) 0px 0px no-repeat transparent;
+ 	padding-left: 29px;
 	height: 20px;
 	position: relative;
 	vertical-align: top;

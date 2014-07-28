@@ -63,5 +63,7 @@ public interface PlaceTokens {
 	String DRIVE="drive";
 	
 	String COMMUNITY = "community";
+	String YOUTHVOICES = "youthvoices";
+	String GEOEDUCATION = "GeoEducation";
 
 }

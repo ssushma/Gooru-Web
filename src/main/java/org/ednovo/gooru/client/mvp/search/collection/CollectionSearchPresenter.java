@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
@@ -49,6 +50,7 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -67,6 +69,8 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 
 	private AddResourceContainerPresenter addResourceContainerPresenter;
 	
+	AddStandardsPresenter addStandardsPresenter = null;
+	
 	private boolean isLeftFolderClicked=false;
 	
 	@ProxyCodeSplit
@@ -84,9 +88,10 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 	 *            {@link Proxy}
 	 */
 	@Inject
-	public CollectionSearchPresenter(IsCollectionSearchView view, IsCollectionSearchProxy proxy, SignUpPresenter signUpViewPresenter,AddResourceContainerPresenter addResourceContainerPresenter) {
-		super(view, proxy, signUpViewPresenter);
+	public CollectionSearchPresenter(IsCollectionSearchView view, IsCollectionSearchProxy proxy, SignUpPresenter signUpViewPresenter,AddResourceContainerPresenter addResourceContainerPresenter, AddStandardsPresenter addStandardsPresenter) {
+		super(view, proxy, signUpViewPresenter,addStandardsPresenter);
 		this.addResourceContainerPresenter = addResourceContainerPresenter;
+		this.addStandardsPresenter = addStandardsPresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(RefreshDisclosurePanelForFoldersEvent.TYPE, this);
 	}
@@ -168,8 +173,9 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 		addResourceContainerPresenter.removePlayerStyle();
 		addResourceContainerPanel.clear();
 		addResourceContainerPresenter.getUserShelfCollectionsData(collectionsearchResultDo,searchType);
+		addResourceContainerPresenter.clearSelectedFolderId();
 		addResourceContainerPanel.setWidget(addResourceContainerPresenter.getWidget());
-		addResourceContainerPresenter.getAddButton().addClickHandler(new ClickHandler() {
+	/*	addResourceContainerPresenter.getAddButton().addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
@@ -196,7 +202,7 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 			
 				
 			}
-		});
+		});*/
 		
 	}
 
@@ -206,6 +212,21 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 		addResourceContainerPresenter.getfolderTreePanel().clear();
 		addResourceContainerPresenter.getWorkspaceData(0, 20, false, "collection");
 	}
+
+	@Override
+	public void showAndHideDisclosurePanelOnCLick(
+			final DisclosurePanel DisclosurePanelClose) {
+		// TODO Auto-generated method stub
+		addResourceContainerPresenter.getCancelButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				DisclosurePanelClose.setOpen(false);
+			}
+		});
+	}
+
+	
 
 	
 }

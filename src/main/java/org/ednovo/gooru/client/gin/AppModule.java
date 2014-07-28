@@ -99,6 +99,10 @@ import org.ednovo.gooru.client.mvp.home.register.UserRegistrationView;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadView;
 import org.ednovo.gooru.client.mvp.image.upload.IsImageUploadView;
+import org.ednovo.gooru.client.mvp.landingpage.IsLandingPageView;
+import org.ednovo.gooru.client.mvp.landingpage.LandingPagePresenter;
+import org.ednovo.gooru.client.mvp.landingpage.LandingPagePresenter.IsLandingPageProxy;
+import org.ednovo.gooru.client.mvp.landingpage.LandingPageView;
 import org.ednovo.gooru.client.mvp.library.partner.IsPartnerLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.PartnerLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.PartnerLibraryView;
@@ -118,6 +122,10 @@ import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.IsLessonopolyLibr
 import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryPresenter.IsLessonopolyLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.natgeo.IsNatGeoLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.natgeo.NatGeoLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.natgeo.NatGeoLibraryPresenter.IsNatGeoLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.natgeo.NatGeoLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.ngc.IsNgcLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.ngc.NgcLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.ngc.NgcLibraryPresenter.IsNgcLibraryProxy;
@@ -134,6 +142,10 @@ import org.ednovo.gooru.client.mvp.library.partner.wspwh.IsWspwhLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter.IsWspwhLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.youthvoices.IsYouthVoicesLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryPresenter.IsYouthVoicesLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryView;
 import org.ednovo.gooru.client.mvp.library.rusd.IsRusdView;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter.IsRusdProxy;
@@ -249,6 +261,9 @@ import org.ednovo.gooru.client.mvp.search.resource.IsResourceSearchView;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter.IsResourceSearchProxy;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchView;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsView;
+import org.ednovo.gooru.client.mvp.search.standards.IsAddStandardsView;
 import org.ednovo.gooru.client.mvp.settings.IsUserSettingsView;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter.IsUserSettingProxy;
@@ -453,6 +468,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(SignUpAfterThirteenPresenter.class,IsAfterThirteen.class,SignUpTurnsAfterThirteenView.class);
 		
 		bindPresenter(RusdPresenter.class, IsRusdView.class, RusdView.class,IsRusdProxy.class);
+		bindPresenter(LandingPagePresenter.class, IsLandingPageView.class, LandingPageView.class,IsLandingPageProxy.class);
 		bindPresenter(PreviewPlayerPresenter.class,IsPreviewPlayerView.class,PreviewPlayerView.class,IsPreviewPlayerProxy.class);
 		bindPresenterWidget(PreviewPlayerMetadataPresenter.class,IsPreviewPlayerMetadataView.class,PreviewPlayerMetadataView.class);
 		bindPresenterWidget(PreviewHomePresenter.class,IsPreviewHomeView.class,PreviewHomeView.class);
@@ -487,6 +503,13 @@ public class AppModule extends AppPresenterModule {
 
 		
 		bindPresenterWidget(CollectionHomeMetadataPresenter.class, IsCollectionHomeMetadataView.class, CollectionHomeMetadataView.class);
+
+		bindPresenter(YouthVoicesLibraryPresenter.class, IsYouthVoicesLibraryView.class, YouthVoicesLibraryView.class,IsYouthVoicesLibraryProxy.class);
+		bindPresenter(NatGeoLibraryPresenter.class, IsNatGeoLibraryView.class, NatGeoLibraryView.class,IsNatGeoLibraryProxy.class);
+		
+		bindPresenterWidget(AddStandardsPresenter.class,
+				IsAddStandardsView.class,
+				AddStandardsView.class);
 
 
 	}

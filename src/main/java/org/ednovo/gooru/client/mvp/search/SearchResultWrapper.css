@@ -114,6 +114,7 @@
 .disclosurePanel {
 	float: left;
 	color: #999;
+	width:91%;
 }
 .disclosureHeader{
 	background:-moz-linear-gradient(center top , #FDFDFD, #EDEDED) repeat scroll 0 0 transparent;
