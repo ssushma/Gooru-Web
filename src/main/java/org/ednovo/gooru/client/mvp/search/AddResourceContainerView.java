@@ -282,7 +282,7 @@ public class AddResourceContainerView extends
 				PlaceTokens.RESOURCE_SEARCH)) {
 			loadingText = new Label(i18n.GL1452());
 		} else {
-			loadingText = new Label("Looking for your folders...");
+			loadingText = new Label(i18n.GL2051());
 		}
 		loadingText.setStyleName(AddResourceContainerCBundle.INSTANCE.css()
 				.loadingText());
@@ -701,7 +701,7 @@ public class AddResourceContainerView extends
 		addContent.setStyleName(AddResourceContainerCBundle.INSTANCE.css()
 				.addPlayerStyle());
 		dropdownListContainerScrollPanel.getElement().setAttribute("style",
-				"height: 135px !important;margin-left: 46px;");
+				"height: 135px !important;margin-left: 46px;overflow: auto;");
 		floderTreeContainer.getElement().setAttribute("style",
 				"height: 135px !important");
 		cancelButton.setVisible(false);
@@ -715,7 +715,7 @@ public class AddResourceContainerView extends
 		addContent.removeStyleName(AddResourceContainerCBundle.INSTANCE.css()
 				.addPlayerStyle());
 		dropdownListContainerScrollPanel.getElement().setAttribute("style",
-				"height: 275px !important;border: 1px solid #ddd;margin-left: 44px;");
+				"height: 275px !important;border: 1px solid #ddd;margin-left: 44px;overflow: auto;");
 		floderTreeContainer.getElement().setAttribute("style",
 				"height: 275px !important");
 		cancelButton.setVisible(true);
