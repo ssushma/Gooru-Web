@@ -61,14 +61,16 @@
 		.searchResultPanel {
 		    clear: both;
 		    height: 34px;
-		    margin: 20px auto 0;
+		   <!--  margin: 20px auto 0; -->
 		    width: 796px;
 		}
 		
 		.searchResult {
 			color: #515151;
-			float: left;
-			margin: 48px 0 0 187px;
+			<!-- float: left; -->
+			margin: 32px 0 0 204px;
+			display: inline-block;
+			
 		}
 		
 		.notifyColorLink {
