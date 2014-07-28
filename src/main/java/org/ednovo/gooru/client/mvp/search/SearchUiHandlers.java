@@ -43,6 +43,7 @@ import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropHandler;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
+import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
@@ -63,4 +64,6 @@ public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandle
 	public void showAddResourceToShelfView(SimplePanel addResourceContainerPanel,ResourceSearchResultDo searchResultDo,String Type);
 	
 	public void showAddCollectionToShelfView(SimplePanel addResourceContainerPanel,CollectionSearchResultDo collectionsearchResultDo,String Type);
+	
+	public void showAndHideDisclosurePanelOnCLick(DisclosurePanel DisclosurePanelClose);
 }
