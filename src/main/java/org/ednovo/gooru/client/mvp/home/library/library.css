@@ -1,7 +1,3 @@
-* {
-	-webkit-font-smoothing: antialiased !important;
-}
-
 .pageTitle {
 	font-size: 38px;
 	font-weight: bold;
@@ -526,7 +522,7 @@
 
 #landingBanner {
 	width:100%;
-	height:330px;
+	height:230px;
 	background: url("../images/library/banner.png");
 	position:relative;
 	margin-bottom:0px;
@@ -1101,4 +1097,9 @@ margin-bottom: 15px;
 	position: relative;
 	width: 1000px;
 	margin: 0 auto;
+	text-align: center;
+}
+.signUpButton{
+	width: 110px;
+	height: 35px;
 }
