@@ -354,7 +354,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	
 		@Override
 
-		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag,final String educationalUse,final String momentsOfLearning,final List<CodeDo> standards,final String hostname,final String accessHizard,final String mediaFeature,final String mobileFriendly) {
+		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag,final String educationalUse,final String momentsOfLearning,final List<CodeDo> standards,final String hostname,final String accessHizard,final String mediaFeature,final String mobileFriendly,final List<String> tagList) {
 
 					this.setVisible(false);
 			
@@ -395,7 +395,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 					@Override
 					public void addWebResource() {
 
-						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd,educationalUse,momentsOfLearning,standards,hostname,accessHizard,mediaFeature,mobileFriendly);
+						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd,educationalUse,momentsOfLearning,standards,hostname,accessHizard,mediaFeature,mobileFriendly,tagList);
 
 						
 						/*webResourcePreview.lblConfirmAdding.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -429,7 +429,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				
 			}else{
 
-				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime,educationalUse,momentsOfLearning,standards,hostname,accessHizard,mediaFeature,mobileFriendly);
+				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime,educationalUse,momentsOfLearning,standards,hostname,accessHizard,mediaFeature,mobileFriendly,tagList);
 
 				
 
@@ -1171,8 +1171,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	listobj=(List<GoogleDriveItemDo>) resultObj.get("items");
 
 
-	System.out.println("list obj"+listobj.get(0).getAlternateLink());
-		System.out.println("resultObj::::"+resultObj);
+	
 		return resultObj;
 		
 		

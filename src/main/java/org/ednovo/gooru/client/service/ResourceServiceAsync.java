@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -94,7 +95,7 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	
 //	void getMyUserCollections(AsyncCallback<List<CollectionItemsListDo>> callback) throws GwtException;
 
-	void addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime, String edcuationalUse, String momentsOfLearning, List<CodeDo> standards,String hostName, AsyncCallback<CollectionItemDo> callback);
+	void addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime, String edcuationalUse, String momentsOfLearning, List<CodeDo> standards,String hostName,String accessHizard,String mediaFeature,String mobileFriendly, List<String> tagList, AsyncCallback<CollectionItemDo> callback);
 	
 	void getResourceMetaInfo(String url, AsyncCallback<ResourceMetaInfoDo> callback);
 	
