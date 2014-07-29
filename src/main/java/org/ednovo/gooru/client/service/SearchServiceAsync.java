@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
@@ -98,4 +99,7 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 	void getThirdLevelStandards(String levelOrder, String standardLabel, AsyncCallback<ArrayList<StandardsLevel3DO>> callback);
 	
 	void getFourthLevelStandards(String levelOrder, String standardLabel, AsyncCallback<ArrayList<StandardsLevel4DO>> callback);
+
+	 public void getSuggestStandardByFilterCourseIdsource(SearchDo<CodeDo> searchDo,
+			 AsyncCallback<SearchDo<CodeDo>> callback);
 }

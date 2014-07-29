@@ -147,6 +147,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	private static final String FLT_CODE_ID = "id";
 	
+	private static final String FLT_SOURCE_CODE_ID = 	"flt.sourceCodeId";
+	
 	CourseListUc courseListUc;
 	
 	List<String> standardPreflist=null;
@@ -163,7 +165,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 
 	interface CollectionInfoTabViewUiBinder extends UiBinder<Widget, CollectionInfoTabView> {
 	}
-
+	
 	/**
 	 * Class constructor
 	 */
@@ -184,26 +186,41 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				if(!courseCode.isEmpty()) {
 					Map<String,String> filters = new HashMap<String, String>();
 					filters.put(FLT_CODE_ID,courseCode);
+					filters.put(FLT_SOURCE_CODE_ID,courseCode);
 					standardSearchDo.setFilters(filters);
 				}
 				standardSearchDo.setQuery(text);
 				if (text != null && text.trim().length() > 0) {
 					standardsPreferenceOrganizeToolTip.hide();
 					if(standardPreflist!=null){
+						System.out.println("text:::::"+text);
+						System.out.println("text standardPreflist:::::"+standardPreflist);
 						for(int count=0; count<standardPreflist.size();count++) {
+							if(text.contains("CCSS") || text.contains("TEKS") || text.contains("CA") ||text.contains("NGSS")) {
 							if(text.contains(standardPreflist.get(count))) {
 								standardsPrefDisplayPopup = true;
-								break;
+								System.out.println("1");
+								//break;
 							} else {
+								System.out.println("2");
 								standardsPrefDisplayPopup = false;
+							}
+							}else{
+								System.out.println("3");
+								standardsPrefDisplayPopup = true;
 							}
 						}
 						
-						
 					}
+					else{
+						System.out.println("4");
+						standardsPrefDisplayPopup = false;
+					}
+					
 					if(standardsPrefDisplayPopup){
 						standardsPreferenceOrganizeToolTip.hide();
-						getUiHandlers().requestStandardsSuggestion(standardSearchDo);
+						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
+						getUiHandlers().getAutoSuggestedStandardsList(standardSearchDo);
 						//standardSgstBox.showSuggestionList();
 					}
 					else{
@@ -211,13 +228,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 						standardSuggestOracle.clear();
 						standardsPreferenceOrganizeToolTip.show();
 						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-	
 						//standardSuggestOracle.add(i18n.GL1613);
-						
-					}
 					}
 					
-				
+					}
 			}
 
 			@Override
@@ -1108,7 +1122,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 *            courses
 	 * @param courseCode
 	 *            the course of the course code, an absolute course code will be
-	 *            used to create a new course
+	 *            used to create a new coursefinal StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+	
 	 * @return the label of all course created for the collection.
 	 */
 	protected CloseLabel createCourseLabel(final String courseLabel, final String courseCode) {
@@ -1132,7 +1147,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 *            specifies event type
 	 */
 	@UiHandler("addCourseBtn")
-	public void onAddCourseClick(ClickEvent clickEvent) {
+	public void onAddCourseClick(ClickEvent clickEvent) {final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+	
 		if(courseListUc!=null){
 			courseListUc.center();
 			courseListUc.show();
@@ -1217,9 +1233,14 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	}
 
 	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
+		
 		standardSuggestOracle.clear();
 		this.standardSearchDo = standardSearchDo;
 		if (this.standardSearchDo.getSearchResults() != null) {
+			
+			System.out.println("size:::::"+this.standardSearchDo.getSearchResults().size());
+			/*if(standardSearchDo.getSearchResults().size()>0){*/
+				System.out.println("inside if");
 			List<String> sources = getAddedStandards(standardsPanel);
 			for (CodeDo code : standardSearchDo.getSearchResults()) {
 				if (!sources.contains(code.getCode())) {
@@ -1227,8 +1248,16 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				}
 				standardCodesMap.put(code.getCodeId() + "", code.getLabel());
 			}
+			standardSgstBox.showSuggestionList();		
+			/*}else{
+				System.out.println("inside else part");
+				//StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+				standardSgstBox.hideSuggestionList();
+				standardSuggestOracle.clear();
+				standardsPreferenceOrganizeToolTip.show();
+				standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
+			}*/
 		}
-		standardSgstBox.showSuggestionList();
 	}
 
 	/**
@@ -1478,6 +1507,7 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 
 	@Override
 	public void getUserStandardPrefCodeId(List<String> list) {
+		System.out.println("getUserStandardPrefCodeId::::::"+list);
 		if(list!=null){
 		standardPreflist=new ArrayList<String>();
 		for (String code : list) {
@@ -1485,7 +1515,7 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 			standardPreflist.add(code.substring(0, 2));
 		 }
 		}
-		
+		System.out.println("standardPreflist::::::"+standardPreflist);
 	}
 
 	
