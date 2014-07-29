@@ -61,5 +61,15 @@ public interface PlaceTokens {
 	String FINCAPINC = "CFCI";
 	String SAUSD_LIBRARY = "sausd";	
 	String DRIVE="drive";
+	
+	String COMMUNITY = "community";
+	String YOUTHVOICES = "youthvoices";
+	String GEOEDUCATION = "GeoEducation";
+	String LIFEBOARD = "lifeboard";
+	String SUSD = "susd";
+	String LPS = "lpslibrary1";
+	String MURRIETA = "murrieta";
+	String VALVERDE = "valverde";
+	String LANDINGPAGE = "home";
 
 }

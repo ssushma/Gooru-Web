@@ -499,7 +499,7 @@
 	padding:15px 0;
 }
 .Playlast{
-	min-height:180px;
+	min-height:140px;
 }
 .colleDescriptionBig{
 	font-weight:bold;
@@ -635,4 +635,37 @@
 .timeTextSmall{
 	color:#fff;
 	font-size:20px;
+}
+.depthofKnow{
+	
+}
+.reactionCanExplain{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -7px -101px;
+	width: 35px;
+	height: 35px;
+}
+.reactionCanUnderstand{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -53px -101px;
+	width: 35px;
+	height: 35px;
+}
+.reactionDonotUnderstand{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -142px -101px;
+	width: 35px;
+	height: 35px;
+}
+.reactionMeh{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -96px -101px;
+	width: 35px;
+	height: 35px;
+}
+.reactionNeedHelp{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -187px -101px;
+	width: 35px;
+	height: 35px;
 }

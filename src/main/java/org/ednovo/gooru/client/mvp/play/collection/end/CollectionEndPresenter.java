@@ -356,7 +356,27 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	public void displayScoreCount(Integer collectionScore,Integer noOfQuestions){
 		getView().displayScoreCount(collectionScore,noOfQuestions);
 	}
-	
-	
+
+	@Override
+	public void getAvgReaction() {
+		if(collectionPlayerPresenter!=null){
+			Map<String, Integer> reactionTree=collectionPlayerPresenter.getReactionTreeMap();
+			Integer maxValue=0;
+			String reactiontype=null;
+			if(reactionTree.size()>0){
+				for(Map.Entry<String,Integer> entry : reactionTree.entrySet()){
+					Integer reactionValue=entry.getValue();
+					if(reactionValue>maxValue){
+						maxValue=reactionValue;
+						reactiontype=entry.getKey();
+					}
+				}
+			}
+			getView().showAvgReaction(reactiontype);
+		}else{
+			getView().showAvgReaction(null);
+		}
+		
+	}
 	
 }

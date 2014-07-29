@@ -40,9 +40,7 @@
 		       <g:HTMLPanel ui:field="loadingIconPanel" styleName="loadingImage {libraryStyle.loadingIconTopic}"></g:HTMLPanel>
 		       <g:HTMLPanel ui:field="contentScroll"/>
 		   </g:HTMLPanel>
-		
 		</g:HTMLPanel>
-		
 		<g:HTMLPanel ui:field="contributorsContainer"/>
 		<sg:FooterUc />
 	</g:HTMLPanel>

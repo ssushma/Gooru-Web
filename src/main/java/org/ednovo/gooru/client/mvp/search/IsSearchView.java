@@ -39,6 +39,8 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 
+import com.google.gwt.user.client.ui.Button;
+
 /**
  * @author Search Team
  * 
@@ -64,6 +66,8 @@ public interface IsSearchView<T extends ResourceSearchResultDo> extends IsViewWi
 	String OER_FLT = "flt.isOer";
 	
 	String AGGREGATOR_FLT = "flt.aggregator";
+	
+	String ACCESS_MODE_FLT = "flt.cfAccessMode";
 	
 	/**
 	 * Set post search view
@@ -136,5 +140,9 @@ public interface IsSearchView<T extends ResourceSearchResultDo> extends IsViewWi
 	void setAggregatorSuggestions(SearchDo<String> aggregatorSuggestions);
 	
 	public void setAddResourceContainerPresenter(AddResourceContainerPresenter addResourceContainerPresenter);
+
+	void setUpdatedStandards(String setStandardsVal);
+
+	void OnStandardsClickEvent(Button addBtn);
 
 }

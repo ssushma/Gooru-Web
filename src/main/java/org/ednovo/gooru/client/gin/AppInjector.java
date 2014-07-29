@@ -34,6 +34,8 @@ import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.home.ClassHomePresenter;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
+import org.ednovo.gooru.client.mvp.community.CommunityPresenter;
+import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter;
 import org.ednovo.gooru.client.mvp.folders.FoldersPresenter;
@@ -42,16 +44,24 @@ import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
+import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
+import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.sausd.SausdLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.susd.SusdLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.valverde.ValVerdeLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fte.FteLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.lps.LpsLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.natgeo.NatGeoLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.ngc.NgcLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
-import org.ednovo.gooru.client.mvp.library.sausd.SausdPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
@@ -65,6 +75,7 @@ import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
@@ -171,6 +182,8 @@ public interface AppInjector extends ServiceInjector {
 	
 	AsyncProvider<RusdPresenter> getRusdPresenter();
 	
+	AsyncProvider<CommunityPresenter> getLandingPagePresenter();
+	
 	AsyncProvider<PreviewPlayerPresenter> getPreviewPlayerPresenter();
 	
 	AsyncProvider<CollectionCollaboratorsTabPresenter> getCollectionCollaboratorsTabPresenter();
@@ -197,10 +210,29 @@ public interface AppInjector extends ServiceInjector {
 
 	AsyncProvider<CfciLibraryPresenter> getCfciLibraryPresenter();
 	
-	AsyncProvider<SausdPresenter> getSausdPresenter();
+	AsyncProvider<DistrictPresenter> getDistrictPresenter();
 
 	AsyncProvider<DrivePresenter> getDrivePresenter();
 	
 	AsyncProvider<AddResourceContainerPresenter> getAddResourceContainerPresenter();
 
+	AsyncProvider<NatGeoLibraryPresenter> getNatGeoLibraryPresenter();
+
+	AsyncProvider<YouthVoicesLibraryPresenter> getYouthVoicesLibraryPresenter();
+	
+	AsyncProvider<SausdLibraryPresenter> getSausdPresenter();
+
+	AsyncProvider<LifeboardLibraryPresenter> getLifeboardPresenter();
+
+	AsyncProvider<AddStandardsPresenter> getAddStandardsPresenter();
+
+	AsyncProvider<ContributorsPresenter> getContributorsPresenter();
+
+	AsyncProvider<SusdLibraryPresenter> getSusdLibraryPresenter();
+
+	AsyncProvider<ValVerdeLibraryPresenter> getValVerdeLibraryPresenter();
+
+	AsyncProvider<RusdLibraryPresenter> getRusdLibraryPresenter();
+
+	AsyncProvider<LpsLibraryPresenter> getLpsLibraryPresenter();
 }

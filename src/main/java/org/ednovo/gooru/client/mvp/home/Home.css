@@ -1979,3 +1979,38 @@ font-size:12px;
 }
 .removingText{
 }
+
+/* New landing page */
+.headerPanel {
+	position: relative;
+	width: 1000px;
+	margin: 0 auto;
+	text-align: center;
+	background: url('images/banner2.png') bottom no-repeat;
+	background-size: contain;
+	height: 100%;
+}
+.signUpButton{
+	width: 110px;
+	height: 35px;
+}
+
+.header {
+	color:white;
+	font-size:38px;
+	font-weight:bold;
+	text-align:center;
+	padding-top:39px;
+	font-family :"Arvo", serif !important;
+}
+
+.subheader {
+	color:white;
+	font-size:16px;
+	text-align:center;
+	font-family :"Arvo", serif !important;
+}
+.btnBlock{
+	width: 100%;
+	font-size: 14px;
+}

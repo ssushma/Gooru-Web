@@ -241,7 +241,8 @@ public class StringUtil {
 		boolean isPartner = false;
 		if(userName.equalsIgnoreCase("Autodesk") || userName.equalsIgnoreCase("Lessonopoly") || userName.equalsIgnoreCase("CommonSenseMedia") 
 				|| userName.equalsIgnoreCase("FTE") || userName.equalsIgnoreCase("WSPWH") || userName.equalsIgnoreCase("lisaNGC") || userName.equalsIgnoreCase("NGC")
-				|| userName.equalsIgnoreCase("ONR") || userName.equalsIgnoreCase(PlaceTokens.FINCAPINC) || userName.equalsIgnoreCase(PlaceTokens.PSDPAL) ) {
+				|| userName.equalsIgnoreCase("ONR") || userName.equalsIgnoreCase(PlaceTokens.FINCAPINC) || userName.equalsIgnoreCase(PlaceTokens.PSDPAL) 
+				|| userName.equalsIgnoreCase(PlaceTokens.YOUTHVOICES) || userName.equalsIgnoreCase(PlaceTokens.GEOEDUCATION) || userName.equalsIgnoreCase(PlaceTokens.LPS) ) {
 			isPartner = true;
 		}
 		return isPartner;
@@ -261,9 +262,13 @@ public class StringUtil {
 		} else if(partnerName.equalsIgnoreCase("ONR")) {
 			partnerName = "Office of Naval Research (ONR)";
 		} else if(partnerName.equalsIgnoreCase(PlaceTokens.FINCAPINC)) {
-			partnerName = "Center for Financial Capability, Inc.";
+			partnerName = "Next Gen Personal Finance";
 		} else if(partnerName.equalsIgnoreCase(PlaceTokens.PSDPAL)) {
 			partnerName = "Partners for Sustainable Development (PSD)";
+		} else if(partnerName.equalsIgnoreCase(PlaceTokens.YOUTHVOICES)) {
+			partnerName = "Youth Voices";
+		} else if(partnerName.equalsIgnoreCase(PlaceTokens.GEOEDUCATION)) {
+			partnerName = "National Geographic's Geo-Educator Community";
 		}
 		return partnerName;
 	}

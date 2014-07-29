@@ -59,6 +59,7 @@ import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionInfoEvent;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropEvent;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
@@ -112,6 +113,8 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 
 	SignUpPresenter signUpViewPresenter = null;
 	
+	AddStandardsPresenter addStandardsPresenter = null;
+	
 	private boolean setFilter = true;
 	/**
 	 * Class constructor
@@ -121,9 +124,10 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 	 * @param proxy
 	 *            {@link Proxy}
 	 */
-	public AbstractSearchPresenter(V view, P proxy, SignUpPresenter signUpViewPresenter) {
+	public AbstractSearchPresenter(V view, P proxy, SignUpPresenter signUpViewPresenter, AddStandardsPresenter addStandardsPresenterObj) {
 		super(view, proxy);
 		this.signUpViewPresenter = signUpViewPresenter;
+		this.addStandardsPresenter = addStandardsPresenterObj;
 		addRegisteredHandler(SearchPaginationEvent.TYPE, this);
 		addRegisteredHandler(RefreshSearchEvent.TYPE, this);
 		addRegisteredHandler(SwitchSearchEvent.TYPE, this);
@@ -330,9 +334,15 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 				filters.put(IsSearchView.MEDIATYPE_FLT, notFriendly);
 			}
 			String oer=getPlaceManager().getRequestParameter(IsSearchView.OER_FLT);
+			String accessMode=getPlaceManager().getRequestParameter(IsSearchView.ACCESS_MODE_FLT);
 			if(oer != null && oer.equalsIgnoreCase("1")){
 				filters.put(IsSearchView.OER_FLT, oer);
 			}
+			
+			if(accessMode != null){
+				filters.put(IsSearchView.ACCESS_MODE_FLT, accessMode);
+			}
+			
 			
 		}
 		return filters;
@@ -468,15 +478,21 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 				if (viewToken.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 					String notFriendly = getPlaceManager().getRequestParameter(IsSearchView.MEDIATYPE_FLT);
 					String oer = getPlaceManager().getRequestParameter(IsSearchView.OWNER_FLT);
+					String accessMode = getPlaceManager().getRequestParameter(IsSearchView.ACCESS_MODE_FLT);
 					if (notFriendly != null) {
 						params.put(IsSearchView.MEDIATYPE_FLT, notFriendly);
 					}
 					if (oer != null) {
 						params.put(IsSearchView.OER_FLT, oer);
 					}
+					
+					if (accessMode != null) {
+						params.put(IsSearchView.ACCESS_MODE_FLT, accessMode);
+					}
 				}else{
 					params.remove(IsSearchView.MEDIATYPE_FLT);
 					params.remove(IsSearchView.OER_FLT);
+					params.remove(IsSearchView.ACCESS_MODE_FLT);
 				}
 				
 				
@@ -554,6 +570,25 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		if (isCurrentView()) {
 			getView().setShelfCollections(shelfCollections);
 		}
+	}
+	
+	@Override
+	public void getAddStandards() {
+
+	addToPopupSlot(addStandardsPresenter);
+	getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
+
+		
+	}
+	
+	@Override
+	public void setUpdatedStandards() {
+		getView().setUpdatedStandards(addStandardsPresenter.setStandardsVal());
+	}
+	
+	@Override
+	public void closeStandardsPopup() {
+		addStandardsPresenter.hidePopup();
 	}
 
 	/**

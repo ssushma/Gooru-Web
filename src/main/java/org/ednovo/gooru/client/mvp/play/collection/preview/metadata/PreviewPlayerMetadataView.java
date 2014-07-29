@@ -1226,7 +1226,6 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 
 				}
 			}
-			
 			if(depthofKnowledgeValue){
 				depthOfKnowledgeContainer.setVisible(true);
 			}else{

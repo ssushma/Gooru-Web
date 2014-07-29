@@ -221,6 +221,27 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			libraryUserDo.setPartnerName(i18n.GL1763());
 			libraryUserDo.setPartnerUrl(i18n.GL1764());
 
+		}else if(partnerPlace.equals(PlaceTokens.YOUTHVOICES)) {
+			
+			courseDo.setLabel(i18n.GL2040());
+			thumbnailDo.setUrl("../images/library/partners/youthvoices.png");
+			libraryUserDo.setPartnerName(i18n.GL2042());
+			libraryUserDo.setPartnerUrl(i18n.GL2043());
+
+		}else if(partnerPlace.equals(PlaceTokens.GEOEDUCATION)) {
+			
+			courseDo.setLabel(i18n.GL2041());
+			thumbnailDo.setUrl("../images/library/partners/natgeo.png");
+			libraryUserDo.setPartnerName(i18n.GL2044());
+			libraryUserDo.setPartnerUrl(i18n.GL2045());
+
+		}else if(partnerPlace.equals(PlaceTokens.LPS)) {
+			
+			courseDo.setLabel(i18n.GL2053());
+			thumbnailDo.setUrl("../images/library/district/landing-image-lps.png");
+			libraryUserDo.setPartnerName(i18n.GL2065());
+			libraryUserDo.setPartnerUrl(i18n.GL2066());
+
 		}
 		
 		courseDo.setThumbnails(thumbnailDo);

@@ -72,6 +72,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -292,7 +293,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 				partnerLogo.setVisible(true);
 				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
 				landingBanner.setVisible(false);
-			} else {
+			}else {
 				partnerLogo.setVisible(false);
 			}
 
@@ -319,18 +320,16 @@ public class LibraryView extends Composite implements  ClickHandler {
 		  
 		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
 		  
-		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
-		  {
-			  courseTabs.getElement().setAttribute("style", "position:relative;"); 
-		  }
-		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
-		  {
-			  courseTabs.getElement().setAttribute("style", "position:relative;");
-		  }
-		  else
-		  {
-			  courseTabs.getElement().setAttribute("style", "position:fixed;");
-		  }
+//		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click){
+//			  courseTabs.getElement().getStyle().setPosition(Position.RELATIVE); 
+//		  }else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click){
+//			  courseTabs.getElement().getStyle().setPosition(Position.RELATIVE);
+//		  }else{
+//			  courseTabs.getElement().getStyle().setPosition(Position.FIXED);			  
+//		  }
+		  
+		  courseTabs.getElement().getStyle().setPosition( (isIpad && !StringUtil.IPAD_MESSAGE_Close_Click) || (isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click) ? Position.RELATIVE : Position.FIXED);
+		  
 		
 		courseTabs.getElement().setId("courseTabs");
 		container.getElement().setId("container");
@@ -453,6 +452,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 *
 	 */
 	public void loadContributorsPage(String callBack, String placeToken) {
+		System.out.println("place token : "+placeToken);
 		setPlaceToken(placeToken);
 		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(COURSE_ID);
 		String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UNIT_ID);
@@ -504,7 +504,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 			courseBanner.setVisible(true);
 			container.setVisible(true);
 			
-			Window.scrollTo(0, 0);
 			if(standardId == null) {
 				String subjectName = getSubjectNameBySubjectId(courseMap, subjectId);
 				CourseDo courseDo = null;

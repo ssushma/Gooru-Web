@@ -72,6 +72,7 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 			});
 		}
 		
+		
 		resourceSearchResultVc.getAddButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -79,11 +80,13 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 					LoginPopupUc loginPopupUc=new LoginPopupUc();
 				}else{
 				getUiHandlers().showAddResourceToShelfView(resourceSearchResultVc.getAddResourceContainerPanel(),searchResultDo,"resource");
+				getUiHandlers().showAndHideDisclosurePanelOnCLick(resourceSearchResultVc.getDisclosurePanelClose());
 				}
 				}
 		});
 		return resourceSearchResultVc;
 	}
+	
 	
 /*	private class ShowRatingPopupEvent implements ClickHandler{
 		@Override
