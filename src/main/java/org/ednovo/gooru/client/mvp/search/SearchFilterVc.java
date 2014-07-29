@@ -228,6 +228,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	
 	List<String> standardPreflist = null;
 	List<String> standardPrefListElement = null;
+	
+	private static final  String  AUDITORY ="auditory";
+	private static final  String  TACTILE ="tactile";
+	private static final  String  VISUAL ="visual";
+	private static final  String  COLOR_DEPENDENT ="color dependent";
+	private static final  String  TEXT_ON_IMAGE ="text on image";
+	private static final  String  TEXTUAL ="textual";
 				
 	/**
 	 * Class constructor, creates new {@link AppSuggestBox} and events for StandardsSuggestionEvent
@@ -729,10 +736,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 	}
 	
-	private void renderAccessModeCheckBox(HTMLPanel accessModePanel,String value) {
+	private void renderAccessModeCheckBox(HTMLPanel accessModePanel,String key,String value) {
 		chkAccessMode = new CheckBox();
 		chkAccessMode.setText(value);
-		chkAccessMode.setName(value);
+		chkAccessMode.setName(key);
 		chkAccessMode.setStyleName(CssTokens.FILTER_CHECKBOX);
 		chkAccessMode.addStyleName(value.toLowerCase());
 		accessModePanel.add(chkAccessMode);
@@ -911,12 +918,12 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			
 			/*resourceLinkLbl.addStyleName(style.active());
 			collectionLinkLbl.removeStyleName(style.active());*/
-			renderAccessModeCheckBox(accessModePanel,i18n.GL2094());
-			renderAccessModeCheckBox(accessModePanel,i18n.GL2095());
-			renderAccessModeCheckBox(accessModePanel,i18n.GL2096());
-			renderAccessModeCheckBox(accessModePanel,i18n.GL2097());
-			renderAccessModeCheckBox(accessModePanel,i18n.GL2098());
-			renderAccessModeCheckBox(accessModePanel,i18n.GL2099());
+			renderAccessModeCheckBox(accessModePanel,AUDITORY,i18n.GL2094());
+			renderAccessModeCheckBox(accessModePanel,TACTILE,i18n.GL2095());
+			renderAccessModeCheckBox(accessModePanel,VISUAL,i18n.GL2096());
+			renderAccessModeCheckBox(accessModePanel,COLOR_DEPENDENT,i18n.GL2097());
+			renderAccessModeCheckBox(accessModePanel,TEXT_ON_IMAGE,i18n.GL2098());
+			renderAccessModeCheckBox(accessModePanel,TEXTUAL,i18n.GL2099());
 			
 			renderOERCheckBox(oerPanel, "not_show_OER", "OER");
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
