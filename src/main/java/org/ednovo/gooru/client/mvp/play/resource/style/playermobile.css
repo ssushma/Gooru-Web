@@ -43,7 +43,33 @@ header{
     float: right;
     text-align: right;
 }
+.header-inner {
+	width:100%;
+}
 
+.nav-toc-wrapperContainerMain{
+	
+}
+.nav-toc-wrapper{
+	width:100%;
+}
+.headerbar{
+	min-width:100%;
+}
+.studyplayer-container{
+	width:760px;
+	position:relative !important;
+	overflow-x:hidden !important;
+	overflow-y:hidden !important;
+}
+.rightPanel{
+	
+}
+.leftPanel{
+}
+.playerBodyContainer{
+	
+}
 
 
 
