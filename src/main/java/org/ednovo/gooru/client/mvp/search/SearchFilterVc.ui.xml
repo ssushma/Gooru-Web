@@ -175,6 +175,9 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		<g:HTMLPanel>
 		    <g:Label styleName="{style.headerLbl}" ui:field="standardLbl"></g:Label>
 			<g:HTMLPanel  ui:field="standardPanelUc">
+			    <g:HTMLPanel>
+					<g:Button ui:field="browseStandards"/>
+				</g:HTMLPanel>
 				<g:HTMLPanel>
 					<uc:AppSuggestBox ui:field="standardSgstBox" width="130px" />
 				</g:HTMLPanel>
@@ -241,7 +244,6 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		
-			
 		<g:HTMLPanel>
 		    <g:Label styleName="{style.headerLbl}" visible="false" ui:field="authorLbl"></g:Label>
 			<g:HTMLPanel  ui:field="authorPanelUc" visible="false">
@@ -252,6 +254,11 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 					<g:FlowPanel ui:field="authorContainerFloPanel" />
 				</g:HTMLPanel>
 			</g:HTMLPanel>
+		</g:HTMLPanel>
+		
+		<g:HTMLPanel>
+			<g:Label styleName="{style.headerLbl}" ui:field="accessModeLbl"></g:Label>
+			<g:HTMLPanel  ui:field="accessModePanel" />
 		</g:HTMLPanel>
 		
 		<g:FlowPanel>
