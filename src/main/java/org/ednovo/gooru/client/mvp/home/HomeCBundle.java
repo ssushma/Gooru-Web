@@ -522,6 +522,8 @@ public interface HomeCBundle extends ClientBundle{
 
 		String subheader();
 		String btnBlock();
+		String secondary();
+		String learnMoreContainer();
 	}
      @Source("Home.css")
      HomeCss css();

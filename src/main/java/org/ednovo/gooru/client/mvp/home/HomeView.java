@@ -45,12 +45,14 @@ import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -68,6 +70,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	@UiField Label lblHeading, lblSubHeading; 
 	@UiField TextBoxWithPlaceholder txtSearch;
 	@UiField Button btnSearch;
+	@UiField Anchor achLearn;
 	LibraryView libraryView = null;
 	
 	Map<String, String> allSubject = new HashMap<String, String>();
@@ -357,6 +360,17 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		} else {
 			AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
 		}
+	}
+	@UiHandler("achLearn")
+	public void onClickLearn(ClickEvent event){
+		int scrollTop =0;
+		try{
+			scrollTop = Document.get().getElementById("getStarted").getAbsoluteTop();
+		}catch(Exception e){
+			
+		}
+		
+		Window.scrollTo(0, scrollTop-40);
 	}
 }
 
