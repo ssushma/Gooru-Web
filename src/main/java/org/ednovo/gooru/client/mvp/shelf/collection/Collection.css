@@ -953,9 +953,10 @@
 	font-size: 14px;
 	text-align: center;
 	width: 126px;
-	padding-bottom: 4px;
-	margin-left: 0px !important;
-	height: 20px;
+	padding: 4px;
+	/* margin-left: 0px !important;
+	height: 20px; */
+	margin: 5px;
 }
 
 .userNumber {
