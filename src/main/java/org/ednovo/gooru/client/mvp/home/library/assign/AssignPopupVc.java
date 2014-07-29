@@ -115,7 +115,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 	@UiField
 	Button gmailButton;
 	
-	@UiField Label lblOr;
+	@UiField Label lblOr,lblLoginwithGooru;
 
 	@UiField
 	Label cancelButton,lblPleaseWait, swithUrlLbl, swithToEmbedLbl,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAC;
@@ -399,6 +399,11 @@ public abstract class AssignPopupVc extends PopupPanel {
 		ancSignUp.getElement().setId("lnkAncSignUp");
 		ancSignUp.getElement().setAttribute("alt",i18n.GL0207()+i18n.GL_SPL_EXCLAMATION());
 		ancSignUp.getElement().setAttribute("title",i18n.GL0207()+i18n.GL_SPL_EXCLAMATION());
+		
+		lblLoginwithGooru.setText(i18n.GL0346());
+		lblLoginwithGooru.getElement().setId("lblLoginwithGooru");
+		lblLoginwithGooru.getElement().setAttribute("alt",i18n.GL0346());
+		lblLoginwithGooru.getElement().setAttribute("title",i18n.GL0346());
 		
 		signUpStyles.getElement().setAttribute("style", "display: inline-block;");
 		ancSignUp.getElement().setAttribute("style", "float: left;");

@@ -100,7 +100,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	Anchor forgotPwd, ancSignUp;
 
 	@UiField
-	Label lblPleaseWait, collectionDescription,donotHaveAcount,lblOr;
+	Label lblPleaseWait, collectionDescription,donotHaveAcount,lblOr,lblLoginwithGooru;
 	
 	@UiField HTMLPanel hangOnText,signUpPanel;
 	
@@ -243,6 +243,11 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		lblOr.getElement().setId("lblOr");
 		lblOr.getElement().setAttribute("alt",i18n.GL0209());
 		lblOr.getElement().setAttribute("title",i18n.GL0209());
+		
+		lblLoginwithGooru.setText(i18n.GL0346());
+		lblLoginwithGooru.getElement().setId("lblLoginwithGooru");
+		lblLoginwithGooru.getElement().setAttribute("alt",i18n.GL0346());
+		lblLoginwithGooru.getElement().setAttribute("title",i18n.GL0346());
 		
 		lblPleaseWait.setVisible(false);
 

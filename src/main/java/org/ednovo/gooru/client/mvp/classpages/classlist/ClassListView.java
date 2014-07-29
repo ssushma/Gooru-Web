@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeleteP
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.EmailShareUc;
 import org.ednovo.gooru.client.uc.suggestbox.widget.AutoSuggestForm;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
@@ -48,10 +49,17 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Style.Cursor;
+import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.EventHandler;
@@ -63,11 +71,12 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
-import com.google.gwt.user.client.ui.SimpleCheckBox;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimpleRadioButton;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
@@ -115,6 +124,8 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	@UiField Label visibilityTitle,openClassLabelTitle,openClassLabelDesc,openClosedLabelTitle,openClosedLabelDesc;
 	
 	@UiField SimpleRadioButton visibilityRadioOpen,visibilityRadioInviteOnly;
+	
+	@UiField HTMLPanel questionMarkPanel,questionMarkPanel1,questionMarkPanel2;
 
 	@UiFactory
 	public SimpleRadioButton createRadioButton() {
@@ -159,6 +170,10 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	
 	private static final String PUBLIC="public";
 	private static final String SHORTEN_URL = "shortenUrl";
+	
+	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
+	private PopupPanel toolTipPopupPanelNew1 = new PopupPanel();
+	private PopupPanel toolTipPopupPanelNew2 = new PopupPanel();
 	
 
 	
@@ -417,6 +432,40 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		publicAssignContainer.getElement().setId("pnlPublicAssignContainer");
 		panelPendingMembersContainer.getElement().setId("pnlPendingMembersContainer");
 		panelActiveMembersContainter.getElement().setId("pnlActiveMembersContainter");
+		
+		final Image imgNotFriendly = new Image("images/mos/questionmark.png");
+		imgNotFriendly.getElement().getStyle().setLeft(121, Unit.PX);
+		imgNotFriendly.getElement().getStyle().setMarginTop(-16, Unit.PX);
+		imgNotFriendly.getElement().getStyle().setPosition(Position.ABSOLUTE);
+		imgNotFriendly.getElement().getStyle().setCursor(Cursor.POINTER);
+		imgNotFriendly.addMouseOverHandler(new MouseOverShowClassCodeToolTip1());
+		imgNotFriendly.addMouseOutHandler(new MouseOutHideToolTip1());
+		
+		final Image imgNotFriendly1 = new Image("images/mos/questionmark.png");
+		imgNotFriendly1.getElement().getStyle().setLeft(135, Unit.PX);
+		imgNotFriendly1.getElement().getStyle().setMarginTop(-16, Unit.PX);
+		imgNotFriendly1.getElement().getStyle().setPosition(Position.ABSOLUTE);
+		imgNotFriendly1.getElement().getStyle().setCursor(Cursor.POINTER);
+		imgNotFriendly1.addMouseOverHandler(new MouseOverShowClassCodeToolTip2());
+		imgNotFriendly1.addMouseOutHandler(new MouseOutHideToolTip2());
+		
+		final Image imgNotFriendly2 = new Image("images/mos/questionmark.png");
+		imgNotFriendly2.getElement().getStyle().setLeft(145, Unit.PX);
+		imgNotFriendly2.getElement().getStyle().setMarginTop(-26, Unit.PX);
+		imgNotFriendly2.getElement().getStyle().setPosition(Position.ABSOLUTE);
+		imgNotFriendly2.getElement().getStyle().setCursor(Cursor.POINTER);
+		imgNotFriendly2.addMouseOverHandler(new MouseOverShowClassCodeToolTip3());
+		imgNotFriendly2.addMouseOutHandler(new MouseOutHideToolTip3());
+
+		questionMarkPanel.clear();
+		questionMarkPanel.add(imgNotFriendly);
+		
+		questionMarkPanel1.clear();
+		questionMarkPanel1.add(imgNotFriendly1);
+		
+		questionMarkPanel2.clear();
+		questionMarkPanel2.add(imgNotFriendly2);
+		
 		createAutoSuggestBox();
 	}
 
@@ -483,6 +532,72 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		panelSuggestBox.clear();
 		panelSuggestBox.add(autoSuggetTextBox);
 		autoSuggetTextBox.getTxtInput().getTxtInputBox().setFocus(true);
+	}
+	
+	public class MouseOverShowClassCodeToolTip1 implements MouseOverHandler{
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			toolTipPopupPanelNew.clear();
+			toolTipPopupPanelNew.setWidget(new GlobalToolTip(i18n.GL2090()));
+			toolTipPopupPanelNew.setStyleName("");
+			toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 14, event.getRelativeElement().getAbsoluteTop());
+			toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanelNew.show();
+		}
+
+	}
+
+	public class MouseOutHideToolTip1 implements MouseOutHandler{
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			toolTipPopupPanelNew.hide();
+		}
+	}
+	
+	public class MouseOverShowClassCodeToolTip2 implements MouseOverHandler{
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			toolTipPopupPanelNew1.clear();
+			toolTipPopupPanelNew1.setWidget(new GlobalToolTip(i18n.GL2091()));
+			toolTipPopupPanelNew1.setStyleName("");
+			toolTipPopupPanelNew1.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 14, event.getRelativeElement().getAbsoluteTop());
+			toolTipPopupPanelNew1.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanelNew1.show();
+		}
+
+	}
+
+	public class MouseOutHideToolTip2 implements MouseOutHandler{
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			toolTipPopupPanelNew1.hide();
+		}
+	}
+	
+	public class MouseOverShowClassCodeToolTip3 implements MouseOverHandler{
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			toolTipPopupPanelNew2.clear();
+			toolTipPopupPanelNew2.setWidget(new GlobalToolTip(i18n.GL2092()));
+			toolTipPopupPanelNew2.setStyleName("");
+			toolTipPopupPanelNew2.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 14, event.getRelativeElement().getAbsoluteTop());
+			toolTipPopupPanelNew2.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanelNew2.show();
+		}
+
+	}
+
+	public class MouseOutHideToolTip3 implements MouseOutHandler{
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			toolTipPopupPanelNew2.hide();
+		}
 	}
 	
 	

@@ -334,9 +334,15 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 				filters.put(IsSearchView.MEDIATYPE_FLT, notFriendly);
 			}
 			String oer=getPlaceManager().getRequestParameter(IsSearchView.OER_FLT);
+			String accessMode=getPlaceManager().getRequestParameter(IsSearchView.ACCESS_MODE_FLT);
 			if(oer != null && oer.equalsIgnoreCase("1")){
 				filters.put(IsSearchView.OER_FLT, oer);
 			}
+			
+			if(accessMode != null){
+				filters.put(IsSearchView.ACCESS_MODE_FLT, accessMode);
+			}
+			
 			
 		}
 		return filters;
@@ -472,15 +478,21 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 				if (viewToken.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 					String notFriendly = getPlaceManager().getRequestParameter(IsSearchView.MEDIATYPE_FLT);
 					String oer = getPlaceManager().getRequestParameter(IsSearchView.OWNER_FLT);
+					String accessMode = getPlaceManager().getRequestParameter(IsSearchView.ACCESS_MODE_FLT);
 					if (notFriendly != null) {
 						params.put(IsSearchView.MEDIATYPE_FLT, notFriendly);
 					}
 					if (oer != null) {
 						params.put(IsSearchView.OER_FLT, oer);
 					}
+					
+					if (accessMode != null) {
+						params.put(IsSearchView.ACCESS_MODE_FLT, accessMode);
+					}
 				}else{
 					params.remove(IsSearchView.MEDIATYPE_FLT);
 					params.remove(IsSearchView.OER_FLT);
+					params.remove(IsSearchView.ACCESS_MODE_FLT);
 				}
 				
 				

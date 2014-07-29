@@ -119,28 +119,28 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		String active();
 	}
 
-	@UiField
-	DisclosurePanelUc categoryPanelUc;
+	/*@UiField
+	DisclosurePanelUc categoryPanelUc;*/
 	
 	/*@UiField
 	Anchor resourceLinkLbl, collectionLinkLbl;*/
 
-	@UiField
-	DisclosurePanelUc subjectPanelUc;
+	/*@UiField
+	DisclosurePanelUc subjectPanelUc;*/
 
-	@UiField
-	DisclosurePanelUc gradePanelUc;
+	/*@UiField
+	DisclosurePanelUc gradePanelUc;*/
 
-	@UiField
-	DisclosurePanelUc sourcePanelUc,aggregatorPanelUc;
+	/*@UiField
+	DisclosurePanelUc sourcePanelUc,aggregatorPanelUc;*/
 
-	@UiField
-	DisclosurePanelUc standardPanelUc;
+	/*@UiField
+	DisclosurePanelUc standardPanelUc;*/
 
-	@UiField
-	DisclosurePanelUc authorPanelUc;
+	/*@UiField
+	DisclosurePanelUc authorPanelUc;*/
 	
-	@UiField HTMLPanel panelNotMobileFriendly;
+	@UiField HTMLPanel panelNotMobileFriendly,categoryPanelUc,subjectPanelUc,gradePanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc,accessModePanel;
 	
 	@UiField
 	HTMLPanel /*contentpanel,*/oerPanel;
@@ -173,7 +173,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	Label standardsNotFoundLbl;
 	
 	@UiField
-	Label publisherTooltip, standardHelpicon,clearAll,aggregatorTooltip;
+	Label publisherTooltip, standardHelpicon,clearAll,aggregatorTooltip,resourceFormatLbl,subjectLbl,gradeLbl,aggregatorLbl,sourceLbl,authorLbl,standardLbl,accessModeLbl;
 
 	@UiField
 	HTMLEventPanel sourceToolTip, standardToolTip,aggregatorToolTip;
@@ -181,13 +181,14 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	/*@UiField Image publisherTooltip;*/
 	CheckBox chkNotFriendly = null;
 	CheckBox chkOER = null;
+	CheckBox chkAccessMode = null;
+	
+	@UiField Button browseStandards;
+	
 	@UiField
 	Style style;
 	
-	@UiField public Button browseStandards;
-	
-	
-	ToolTip toolTip = null;
+		ToolTip toolTip = null;
 	
 	private AppMultiWordSuggestOracle sourceSuggestOracle;
 
@@ -227,8 +228,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	
 	List<String> standardPreflist = null;
 	List<String> standardPrefListElement = null;
-	
-			
+				
 	/**
 	 * Class constructor, creates new {@link AppSuggestBox} and events for StandardsSuggestionEvent
 	 * 
@@ -396,26 +396,26 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 		/*resourceLinkLbl.setText(i18n.GL0174());
 		resourceLinkLbl.getElement().setAttribute("alt",i18n.GL0174());
-		resourceLinkLbl.getElement().setAttribute("title",i18n.GL0174());
+		resourceLinkLbl.getElement().setAttribute("title",i18n.GL0174());*/
 		
-		notifyText.setText(i18n.GL0720());
+		/*notifyText.setText(i18n.GL0720());
 		notifyText.getElement().setId("lblNotifyText");
 		notifyText.getElement().setAttribute("alt",i18n.GL0720());
-		notifyText.getElement().setAttribute("title",i18n.GL0720());
+		notifyText.getElement().setAttribute("title",i18n.GL0720());*/
 		
-		collectionLinkLbl.setText(i18n.GL0175());
+		/*collectionLinkLbl.setText(i18n.GL0175());
 		collectionLinkLbl.getElement().setAttribute("alt",i18n.GL0175());
 		collectionLinkLbl.getElement().setAttribute("title",i18n.GL0175());*/
 		
-		categoryPanelUc.setHeaderTitle(i18n.GL0721());
-		categoryPanelUc.getElement().setId("discpnlCategoryPanelUc");
-		categoryPanelUc.getElement().setAttribute("alt",i18n.GL0721());
-		categoryPanelUc.getElement().setAttribute("title",i18n.GL0721());
+		resourceFormatLbl.setText(i18n.GL0721());
+		resourceFormatLbl.getElement().setId("lblCategory");
+		resourceFormatLbl.getElement().setAttribute("alt",i18n.GL0721());
+		resourceFormatLbl.getElement().setAttribute("title",i18n.GL0721());
 		
-		sourcePanelUc.setHeaderTitle(i18n.GL0566());
-		sourcePanelUc.getElement().setId("discpnlSourcePanelUc");
-		sourcePanelUc.getElement().setAttribute("alt",i18n.GL0566());
-		sourcePanelUc.getElement().setAttribute("title",i18n.GL0566());
+		sourceLbl.setText(i18n.GL0566());
+		sourceLbl.getElement().setId("lblSource");
+		sourceLbl.getElement().setAttribute("alt",i18n.GL0566());
+		sourceLbl.getElement().setAttribute("title",i18n.GL0566());
 		
 		//sourceHelpicon.setText(i18n.GL_SPL_QUESTION);
 		sourcesNotFoundLbl.setText(i18n.GL0723());
@@ -423,15 +423,15 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		sourcesNotFoundLbl.getElement().setAttribute("alt",i18n.GL0723());
 		sourcesNotFoundLbl.getElement().setAttribute("title",i18n.GL0723());
 		
-		authorPanelUc.setHeaderTitle(i18n.GL0573());
-		authorPanelUc.getElement().setId("discpnlAuthorPanelUc");
-		authorPanelUc.getElement().setAttribute("alt",i18n.GL0573());
-		authorPanelUc.getElement().setAttribute("title",i18n.GL0573());
+		authorLbl.setText(i18n.GL0573());
+		authorLbl.getElement().setId("lblAuthor");
+		authorLbl.getElement().setAttribute("alt",i18n.GL0573());
+		authorLbl.getElement().setAttribute("title",i18n.GL0573());
 		
-		standardPanelUc.setHeaderTitle(i18n.GL0724());
-		standardPanelUc.getElement().setId("discpnlStandardPanelUc");
-		standardPanelUc.getElement().setAttribute("alt",i18n.GL0724());
-		standardPanelUc.getElement().setAttribute("title",i18n.GL0724());
+		standardLbl.setText(i18n.GL0724());
+		standardLbl.getElement().setId("lblStandard");
+		standardLbl.getElement().setAttribute("alt",i18n.GL0724());
+		standardLbl.getElement().setAttribute("title",i18n.GL0724());
 		
 		standardHelpicon.setText(i18n.GL_SPL_QUESTION());
 		standardHelpicon.getElement().setId("lblStandardHelpicon");
@@ -443,26 +443,39 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		standardsNotFoundLbl.getElement().setAttribute("alt",i18n.GL0723());
 		standardsNotFoundLbl.getElement().setAttribute("title",i18n.GL0723());
 		
-		subjectPanelUc.setHeaderTitle(i18n.GL0226());
-		subjectPanelUc.getElement().setId("discpnlSubjectPanelUc");
-		subjectPanelUc.getElement().setAttribute("alt",i18n.GL0226());
-		subjectPanelUc.getElement().setAttribute("title",i18n.GL0226());
+		subjectLbl.setText(i18n.GL0226());
+		subjectLbl.getElement().setId("lblSubject");
+		subjectLbl.getElement().setAttribute("alt",i18n.GL0226());
+		subjectLbl.getElement().setAttribute("title",i18n.GL0226());
 		
-		gradePanelUc.setHeaderTitle(i18n.GL0165());
-		gradePanelUc.getElement().setId("discpnlGradePanelUc");
-		gradePanelUc.getElement().setAttribute("alt",i18n.GL0165());
-		gradePanelUc.getElement().setAttribute("title",i18n.GL0165());
+		gradeLbl.setText(i18n.GL0165());
+		gradeLbl.getElement().setId("lblGrade");
+		gradeLbl.getElement().setAttribute("alt",i18n.GL0165());
+		gradeLbl.getElement().setAttribute("title",i18n.GL0165());
+		
+		accessModeLbl.setText("Access Mode");
+		accessModeLbl.getElement().setId("lblAccessMode");
+		accessModeLbl.getElement().setAttribute("alt","Access Mode");
+		accessModeLbl.getElement().setAttribute("title","Access Mode");
 		
 		clearAll.setText(i18n.GL0725());
 		clearAll.getElement().setId("lblClearAll");
 		clearAll.getElement().setAttribute("alt",i18n.GL0725());
 		clearAll.getElement().setAttribute("title",i18n.GL0725());
 		
-		aggregatorPanelUc.setHeaderTitle(i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
+		aggregatorLbl.setText(i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
+		aggregatorLbl.getElement().setId("lblAggregator");
+		aggregatorLbl.getElement().setAttribute("alt",i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
+		aggregatorLbl.getElement().setAttribute("title",i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
+		
+//		aggregatorPanelUc.setHeaderTitle(i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		if (resourceSearch) {
 			sourcePanelUc.setVisible(true);
 			aggregatorPanelUc.setVisible(true);
+			sourceLbl.setVisible(true);
+			aggregatorLbl.setVisible(true);
+			accessModeLbl.setVisible(true);
 			sourcesNotFoundLbl.getElement().getStyle().setOpacity(0.0);
 			sourceSgstBox.addSelectionHandler(this);
 			aggregatorSgstBox.addSelectionHandler(this);
@@ -522,6 +535,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			});
 			
 		} else {
+			authorLbl.setVisible(true);
 			authorPanelUc.setVisible(true);
 			authorTxtBox.getElement().setId("tbAuthor");
 			StringUtil.setAttributes(authorTxtBox, true);
@@ -544,10 +558,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		standardsNotFoundLbl.getElement().getStyle().setOpacity(0.0);
 		if(resourceSearch){
-			categoryPanelUc.setHeaderTitle(i18n.GL0721());
+			resourceFormatLbl.setText(i18n.GL0721());
 			categoryPanelUc.getElement().addClassName("categoryFilterContainer");
 		}else{
-			categoryPanelUc.setHeaderTitle(i18n.GL1465());
+			resourceFormatLbl.setText(i18n.GL1465());
 		}
 		
 		/*resourceLinkLbl.getElement().setId("lblResourceLink");
@@ -565,6 +579,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 //		flowpanel.getElement().setId("fpnlFlowpanel");
 //		contentpanel.getElement().setId("pnlContentpanel");
 		panelNotMobileFriendly.getElement().setId("pnlPanelNotMobileFriendly");
+		accessModePanel.getElement().setId("pnlaccessMode");
 		oerPanel.getElement().setId("pnlOerPanel");
 		aggregatorPanelUc.getElement().setId("discpnlAggregatorPanelUc");
 		aggregatorTooltip.getElement().setId("lblAggregatorTooltip");
@@ -686,6 +701,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(value.equalsIgnoreCase("OER")){
 			disclosurePanelVc.setStyleName("oerContainer");
 			chkOER.getElement().setId("chkOer");
+			chkOER.getElement().getStyle().setMarginTop(20, Unit.PX);
 		}
 			chkOER.setStyleName(CssTokens.FILTER_CHECKBOX);
 			chkOER.addStyleName(value.toLowerCase());
@@ -707,6 +723,25 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		});
 		
 	}
+	
+	private void renderAccessModeCheckBox(HTMLPanel accessModePanel,String value) {
+		chkAccessMode = new CheckBox();
+		chkAccessMode.setText(value);
+		chkAccessMode.setName(value);
+		chkAccessMode.setStyleName(CssTokens.FILTER_CHECKBOX);
+		chkAccessMode.addStyleName(value.toLowerCase());
+		accessModePanel.add(chkAccessMode);
+		chkAccessMode.addValueChangeHandler(new ValueChangeHandler<Boolean>(){
+
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				AppClientFactory.fireEvent(new GetSearchKeyWordEvent());  
+			}
+			
+		});
+	}
+	
+	
 	/**
 	 * @param disclosurePanelVc instance of DisclosurePanelUc which gets added widget
 	 * @param key check box name
@@ -721,7 +756,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(value.equalsIgnoreCase("Mobile Friendly")){
 			disclosurePanelVc.setStyleName("mobilefriendlyContainer");
 			chkNotFriendly.getElement().setId("chkNotFriendly");
-			chkNotFriendly.getElement().getStyle().setMarginTop(20, Unit.PX);
+//			chkNotFriendly.getElement().getStyle().setMarginTop(20, Unit.PX);
 	
 		}
 		chkNotFriendly.setStyleName(CssTokens.FILTER_CHECKBOX);
@@ -844,6 +879,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		subjectPanelUc.clear();
 		gradePanelUc.clear();
 		panelNotMobileFriendly.clear();
+		accessModePanel.clear();
 		oerPanel.clear();
 		if (searchFilterDo != null) {
 			if (searchFilterDo.getCategories() != null) {
@@ -870,6 +906,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			
 			/*resourceLinkLbl.addStyleName(style.active());
 			collectionLinkLbl.removeStyleName(style.active());*/
+			renderAccessModeCheckBox(accessModePanel,"Auditory");
+			renderAccessModeCheckBox(accessModePanel,"Tactile");
+			renderAccessModeCheckBox(accessModePanel,"Visual");
+			renderAccessModeCheckBox(accessModePanel,"Color Dependent");
+			renderAccessModeCheckBox(accessModePanel,"Text on Image");
+			renderAccessModeCheckBox(accessModePanel,"Textual");
+			
 			renderOERCheckBox(oerPanel, "not_show_OER", "OER");
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
 			final Image imgNotFriendly = new Image("images/mos/questionmark.png");
@@ -956,12 +999,19 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		this.setVisible(true);
 	}
 	
+
 	/**
 	 * Get search filter such as grade, subject, category, etc..
 	 * @return search filter as Map value
 	 */
 	protected Map<String, String> getFilter() {
 		Map<String, String> filterMap = new HashMap<String, String>();
+		
+		String selectedAccessMode = getSelectedFilter(accessModePanel);
+		if (!selectedAccessMode.isEmpty()) {
+			filterMap.put(IsSearchView.ACCESS_MODE_FLT, selectedAccessMode);
+		}
+		
 		String selectedGrade = getSelectedFilter(gradePanelUc);
 		if (!selectedGrade.isEmpty()) {
 			filterMap.put(IsSearchView.GRADE_FLT, selectedGrade);
@@ -1010,9 +1060,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					filterMap.put(IsSearchView.MEDIATYPE_FLT, "not_ipad_friendly");
 //				}
 			}
-			if(chkOER!=null && chkOER.getValue()){
-				filterMap.put(IsSearchView.OER_FLT, "1");
-			}
+				if(chkOER!=null && chkOER.getValue()){
+					filterMap.put(IsSearchView.OER_FLT, "1");
+				}
+			
 			}else{
 			filterMap.remove(IsSearchView.MEDIATYPE_FLT);
 			filterMap.remove(IsSearchView.OER_FLT);
@@ -1084,22 +1135,36 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		return aggregations;
 	}
 	/**
-	 * @param filterDisclosurePanell instance of {@link DisclosurePanelUc}
+	 * @param categoryPanelUc2 instance of {@link DisclosurePanelUc}
 	 * @return selected filterDisclosurePanell name
 	 */
-	private String getSelectedFilter(DisclosurePanelUc filterDisclosurePanell) {
-		return getSelectedFilter(filterDisclosurePanell, COMMA_SEPARATOR);
+	private String getSelectedFilter(HTMLPanel categoryPanelUc2) {
+		return getSelectedFilter(categoryPanelUc2, COMMA_SEPARATOR);
 	}
 
 	/**
 	 * Get filters for search
-	 * @param filterDisclosurePanell instance of {@link DisclosurePanelUc} which has filters widget
+	 * @param categoryPanelUc2 instance of {@link DisclosurePanelUc} which has filters widget
 	 * @param separator concatenation of the filters with separator
 	 * @return concatenation of selected filters
 	 */
-	private String getSelectedFilter(DisclosurePanelUc filterDisclosurePanell, String separator) {
+	private String getSelectedFilter(HTMLPanel categoryPanelUc2, String separator) {
 		String selectedFilter = "";
-			for (Widget filterWidget : filterDisclosurePanell.getContent()) {
+		for(int i =0;i<categoryPanelUc2.getWidgetCount();i++){
+			Widget filterWidget = categoryPanelUc2.getWidget(i);
+			if (filterWidget instanceof CheckBox) {
+				CheckBox filterCheckBox = (CheckBox) filterWidget;
+				if (filterCheckBox != null && filterCheckBox.getValue()) {
+					if (!selectedFilter.isEmpty()) {
+						selectedFilter += separator;
+					}
+					selectedFilter += filterCheckBox.getName();
+					MixpanelUtil.mixpanelEvent("search_"+selectedFilter+"_filter_selected");
+				}
+			}
+		}
+		
+			/*for (Widget filterWidget : categoryPanelUc2.getWidget(0)) {
 				if (filterWidget instanceof CheckBox) {
 					CheckBox filterCheckBox = (CheckBox) filterWidget;
 					if (filterCheckBox != null && filterCheckBox.getValue()) {
@@ -1110,7 +1175,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 						MixpanelUtil.mixpanelEvent("search_"+selectedFilter+"_filter_selected");
 					}
 				}
-			}
+			}*/
 	
 		return selectedFilter;
 	}
@@ -1306,8 +1371,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 * @param filterFlowPanel instance of {@link DisclosurePanelUc}
 	 * @param checkedValues filters name 
 	 */
-	private void setSelectedFilter(DisclosurePanelUc filterFlowPanel, String checkedValues) {
-		setSelectedFilter(filterFlowPanel, checkedValues, COMMA_SEPARATOR);
+	private void setSelectedFilter(HTMLPanel filterHtmlPanel, String checkedValues) {
+		setSelectedFilter(filterHtmlPanel, checkedValues, COMMA_SEPARATOR);
 	}
 
 	/**
@@ -1316,7 +1381,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 * @param checkedValues selected filter value
 	 * @param separator concatenation of the filter value by separator 
 	 */
-	private void setSelectedFilter(DisclosurePanelUc filterFlowPanel, String checkedValues, String separator) {
+	private void setSelectedFilter(HTMLPanel filterHtmlPanel, String checkedValues, String separator) {
 		List<String> items = null;
 		if (checkedValues != null) {
 			items = Arrays.asList(checkedValues.split("\\s*" + separator + "\\s*"));
@@ -1324,7 +1389,22 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 		if (items != null) {
 			//if(resourceSearch){
-				for (Widget filterWidget : filterFlowPanel.getContent()) {
+			for(int i=0;i<filterHtmlPanel.getWidgetCount();i++){
+				Widget filterWidget = filterHtmlPanel.getWidget(i);
+				if (filterWidget instanceof CheckBox) {
+					CheckBox filterCheckBox = (CheckBox) filterWidget;
+					filterCheckBox.setValue(false);
+					for (String item : items) {
+						if ((filterCheckBox.getName().equals(item))) {	
+							filterCheckBox.setValue(true);
+						}
+					}
+				}
+			}
+			/**
+			 * Removed this logic as per the new requrement in 6.5 sprint
+			 */
+				/*for (Widget filterWidget : filterFlowPanel.getContent()) {
 					if (filterWidget instanceof CheckBox) {
 						CheckBox filterCheckBox = (CheckBox) filterWidget;
 						filterCheckBox.setValue(false);
@@ -1334,7 +1414,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 							}
 						}
 					}
-				}
+				}*/
 			//}
 /*			else{
 				boolean isRadioButtonSelected=false;
@@ -1367,16 +1447,25 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 
 	/**
 	 * Clear all selected filter values
-	 * @param filterFlowPanel instance {@link DisclosurePanelUc} which has selected filter values
+	 * @param gradePanelUc instance {@link DisclosurePanelUc} which has selected filter values
 	 */
-	public void clearFilter(DisclosurePanelUc filterFlowPanel) {
+	public void clearFilter(HTMLPanel gradePanelUc) {
 		
 	//	if(resourceSearch){
-			for (Widget filterWidget : filterFlowPanel.getContent()) {
+		for(int i=0;i<gradePanelUc.getWidgetCount();i++){
+			Widget filterWidget = gradePanelUc.getWidget(i);
+			if (filterWidget instanceof CheckBox) {
+				((CheckBox) filterWidget).setValue(false);
+			}
+		}
+		/**
+		 * Removed this logic as per the new requrement in 6.5 sprint
+		 */
+			/*for (Widget filterWidget : gradePanelUc.getContent()) {
 				if (filterWidget instanceof CheckBox) {
 					((CheckBox) filterWidget).setValue(false);
 				}
-			}
+			}*/
 /*		}else{
 			for (Widget filterWidget : filterFlowPanel.getContent()) {
 				if (filterWidget instanceof QuestionTypeFilter) {
@@ -1408,6 +1497,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		clearFilter(categoryPanelUc);
 		clearFilter(gradePanelUc);
 		clearFilter(subjectPanelUc);
+		clearFilter(accessModePanel);
 		standardSgstBox.setText("");
 		standardSgstBox.getElement().setAttribute("alt","");
 		standardSgstBox.getElement().setAttribute("title","");
@@ -1432,6 +1522,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		clearFilter(categoryPanelUc);
 		clearFilter(gradePanelUc);
 		clearFilter(subjectPanelUc);
+		clearFilter(accessModePanel);
 		standardSgstBox.setText("");
 		sourceSgstBox.setText("");
 		sourceSgstBox.getElement().setAttribute("alt","");
@@ -1592,5 +1683,4 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		standardPanelUc.setVisible(true);
 	}
 	
-
 }
