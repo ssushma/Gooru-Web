@@ -1,8 +1,10 @@
-package org.ednovo.gooru.client.mvp.landingpage;
+package org.ednovo.gooru.client.mvp.community;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.home.ResetPasswordVc;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
+import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -14,7 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
 ` * 
  */
-public class LandingPageView extends BaseViewWithHandlers<LandingPageUiHandlers> implements IsLandingPageView {
+public class CommunityView extends BaseViewWithHandlers<CommunityUiHandlers> implements IsCommunityView {
 
 	@UiField HTMLPanel landingpagePanel;
 	
@@ -23,16 +25,16 @@ public class LandingPageView extends BaseViewWithHandlers<LandingPageUiHandlers>
 	
 	private static LandingPageViewUiBinder uiBinder = GWT.create(LandingPageViewUiBinder.class);
 
-	interface LandingPageViewUiBinder extends UiBinder<Widget, LandingPageView> {
+	interface LandingPageViewUiBinder extends UiBinder<Widget, CommunityView> {
 	}
 
 	/**
 	 * Class constructor
 	 */
-	public LandingPageView() {		
+	public CommunityView() {		
 		setWidget(uiBinder.createAndBindUi(this));
-		libraryView = new LibraryView(PlaceTokens.COMMUNITY);
-		libraryView.getCourseTabs().setVisible(false);
+		libraryView = new LibraryView(PlaceTokens.HOME);
+//		libraryView.getCourseTabs().setVisible(false);
 		landingpagePanel.add(libraryView);
 		landingpagePanel.getElement().setId("pnlPartnerPanel");
 	}
@@ -40,5 +42,16 @@ public class LandingPageView extends BaseViewWithHandlers<LandingPageUiHandlers>
 	@Override
 	public void loadFeaturedContributors(String callBack, String placeToken) {
 		libraryView.loadContributorsPage(callBack,placeToken);
+	}
+	@Override
+	public void resetPassword(String resetToken) {
+		new ResetPasswordVc(resetToken);
+		
+	}
+	@Override
+	public void registerPopup() {
+		RegisterVc registerVc = new RegisterVc();
+		registerVc.show();
+		registerVc.center();
 	}
 }
