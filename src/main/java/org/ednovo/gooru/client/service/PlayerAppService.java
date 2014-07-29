@@ -182,4 +182,6 @@ public interface PlayerAppService extends BaseService {
 	
 	public int getGoogleDriveFileStatusCode(String fileUrl) throws GwtException, ServerDownException;
 	
+	public Map<String,String> getYoutubeFeedCallback(String utubeId) throws GwtException, ServerDownException;
+	
 }

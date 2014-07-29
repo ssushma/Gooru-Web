@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -173,6 +175,8 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	public void deleteRating(String deleteRatingGooruOid,AsyncCallback<Void> callback);
 	
 	public void getGoogleDriveFileStatusCode(String fileUrl,AsyncCallback<Integer> callback);
+	
+	public void getYoutubeFeedCallback(String utubeId, AsyncCallback<Map<String,String>> callback);
 	
 	
 }
