@@ -50,6 +50,7 @@ import org.ednovo.gooru.server.request.ShareUrlToken;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
@@ -107,6 +108,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	private static final String FLT_CODE_ID = "flt.codeId";
 	
 	private static final String COURSE_CODE_ID = "id";
+	
+	private static final String FLT_SOURCE_CODE_ID = 	"flt.sourceCodeId";
 	
 	private static final String COLLECTION_EDIT_EVENT ="collection-edit";
 	
@@ -321,7 +324,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(searchDo.getFilters()!=null && searchDo.getFilters().size()>0) {
 			url = url + "&"+COURSE_CODE_ID+"="+searchDo.getFilters().get(COURSE_CODE_ID);
 		}
-		
+		System.out.println("getSuggestStandardByFilterCourseId:::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		searchDo.setSearchResults(autoCompleteDeSerializer.deserializeStandards(jsonRep));
@@ -657,6 +660,23 @@ public ArrayList<StandardsLevel4DO> getFourthLevelStandards(String levelOrder, S
 		e.printStackTrace();
 	}
 	return standardLevelArry;
+}
+
+
+@Override
+public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(
+		SearchDo<CodeDo> searchDo) throws GwtException, ServerDownException {
+	// TODO Auto-generated method stub
+	JsonRepresentation jsonRep=null;
+	String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SUGGEST_STANDARD_BY_FILTER_Source_CodeId, getLoggedInSessionToken(), searchDo.getSearchQuery());
+	if(searchDo.getFilters()!=null && searchDo.getFilters().size()>0) {
+		url = url + "&"+FLT_SOURCE_CODE_ID+"="+searchDo.getFilters().get(FLT_SOURCE_CODE_ID);
+	}
+	System.out.println("getSuggestStandardByFiltersource course id 1 CourseId api new:::::::"+url);
+	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+	jsonRep=jsonResponseRep.getJsonRepresentation();
+	searchDo.setSearchResults(autoCompleteDeSerializer.deserializeStandards(jsonRep));
+	return searchDo;
 }
 
 /*@Override

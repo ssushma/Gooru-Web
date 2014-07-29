@@ -1024,16 +1024,19 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			if(flashingHazard.getElement().getClassName().contains("select"))
 			{
 				String hazardsStr = accessHazard.getText()+" : "+flashingHazard.getText();
+				//String hazardsStr = flashingHazard.getText();
 				accessHazardsSelected.add(hazardsStr);
 			}
 			if(motionSimulationHazard.getElement().getClassName().contains("select"))
 			{
 				String hazardsStr = accessHazard.getText()+" : "+motionSimulationHazard.getText();
+				//String hazardsStr = motionSimulationHazard.getText();
 				accessHazardsSelected.add(hazardsStr);
 			}
 			if(soundHazard.getElement().getClassName().contains("select"))
 			{
 				String hazardsStr = accessHazard.getText()+" : "+soundHazard.getText();
+				//String hazardsStr = soundHazard.getText();
 				accessHazardsSelected.add(hazardsStr);
 			}
 			
@@ -1041,6 +1044,41 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			return accessHazardsArr;
 		}
 		
+		@UiHandler("flashingHazard")
+		public void onflashingHazardClick(ClickEvent click){
+			if(flashingHazard.getStyleName().toString().contains("select"))
+			{
+				flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+			else
+			{
+				flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+		}
+
+		@UiHandler("motionSimulationHazard")
+		public void onmotionSimulationHazardClick(ClickEvent click){
+			if(motionSimulationHazard.getStyleName().toString().contains("select"))
+			{
+				motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+			else
+			{
+				motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+		}
+
+		@UiHandler("soundHazard")
+		public void onsoundHazardClick(ClickEvent click){
+			if(soundHazard.getStyleName().toString().contains("select"))
+			{
+				soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+			else
+			{
+				soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+		}	
 	public abstract void resourceImageUpload();
 
 	private class AddClickHandler implements ClickHandler {
@@ -1050,6 +1088,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			
 			final Map<String, String> parms = new HashMap<String, String>();
 			parms.put("text", titleTextBox.getValue());
+			final List<String> tagList = new ArrayList<String>();
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 				@Override
 				public void onSuccess(Boolean value) {
@@ -1204,26 +1243,33 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 											}
 											if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 											{
-												mobileFriendly="\"" +"Mobile Friendly"+" : "+mobileYes.getText() +"\"";
+												
+												tagList.add("Mobile Friendly:"+mobileYes.getText());
+												
 											}
 											else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 											{
-												mobileFriendly="\"" +"Mobile Friendly"+" : "+mobileNo.getText() +"\"";
+											
+												tagList.add("Mobile Friendly:"+mobileNo.getText());
+												
 											}
 											if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:"))
 											{
-												mediaFeature="\"" +mediaLabel.getText()+" : "+lblMediaPlaceHolder.getText() +"\"";
+												
+												tagList.add(mediaLabel.getText()+" : "+lblMediaPlaceHolder.getText());
+											
 											}
 											String hazardArr[] = setAccessHazards();
-											for(int i=0;i<hazardArr.length;i++){
-												
-												System.out.println(hazardArr[i]);
-											}
+											
 											if(hazardArr != null)
 											{
 												for(int i=0;i<hazardArr.length;i++)
 												{
+												
 													accessHizard = "\"" + hazardArr[i].toString() +"\"";
+													//tagList.add('"' + hazardArr[i].toString() +'"');
+													
+													tagList.add(hazardArr[i].toString());
 												}
 											}
 											//AreYouSurceToolTip AreYouSurceToolTip=new AreYouSurceToolTip();
@@ -1240,10 +1286,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //												final String urlStrFinal=urlStr;
 //												final String descriptionStrFinal=descriptionStr;
 
-												System.out.println("mobileFriendly..."+mobileFriendly);
-												System.out.println("mediaFeature..."+mediaFeature);
-												System.out.println("accessHizard.."+accessHizard);
-
+												
 												String hostName=null;
 												if(isGoogleDriveFile){
 													hostName=GOOGLE_DRIVE;
@@ -1260,7 +1303,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //														});
 //													}else{
 
-														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,hostName,accessHizard,mediaFeature,mobileFriendly);
+														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,hostName,accessHizard,mediaFeature,mobileFriendly,tagList);
 
 														
 														/*addResourceBtnLbl.setEnabled(true);
@@ -1279,7 +1322,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //														});
 //													}else{
 
-														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,hostName,accessHizard,mediaFeature,mobileFriendly);
+														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,hostName,accessHizard,mediaFeature,mobileFriendly,tagList);
 
 														/*addResourceBtnLbl.setEnabled(true);
 														addResourceBtnLbl.getElement().removeClassName("secondary");
@@ -1302,7 +1345,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 
-	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime, boolean conformationFlag,String educationalUse,String momentsOfLearning,List<CodeDo> standards,String hostName,String accessHizard,String mediaFeature,String mobileFriendly);
+	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime, boolean conformationFlag,String educationalUse,String momentsOfLearning,List<CodeDo> standards,String hostName,String accessHizard,String mediaFeature,String mobileFriendly,List<String> tagList);
 
 //	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime);
 
