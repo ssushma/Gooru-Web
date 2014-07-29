@@ -467,6 +467,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		aggregatorLbl.getElement().setAttribute("alt",i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
 		aggregatorLbl.getElement().setAttribute("title",i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
 		
+		standardSgstBox.getElement().getStyle().setMarginTop(2, Unit.PX);
+		standardSgstBox.getElement().getStyle().setMarginLeft(3, Unit.PX);
+		
+		browseStandards.getElement().getStyle().setPadding(4, Unit.PX);
+		
 //		aggregatorPanelUc.setHeaderTitle(i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		if (resourceSearch) {
