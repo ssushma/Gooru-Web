@@ -849,7 +849,7 @@ margin-bottom: 15px;
 #landingSausdBanner {
 	width:100%;
 	height:315px;
-	background: url("../images/library/landing-image-sausd.png");
+	background: url("../images/library/district/landing-image-sausd.png");
 	position:relative;
 	margin-bottom:30px;
 	text-shadow: 2px 2px 5px rgba(0,0,0,.1);
@@ -907,7 +907,7 @@ margin-bottom: 15px;
 	height: 19px;
 }
 .sausdPartnerLogo {
-	background: url("../images/library/sausd-logo.png") no-repeat;
+	background: url("../images/library/district/sausd-logo.png") no-repeat;
 	width: 77px;
 	height: 78px;
 	position: absolute;
@@ -979,5 +979,67 @@ margin-bottom: 15px;
 .lifeboardBannerStyle {
 	background: #2f95d2 !important;
 }
-
-
+#landingRusdBanner {
+	width:100%;
+	height:330px;
+	background: url("../images/library/district/landing-image-rusd.png");
+	position:relative;
+	margin-bottom:30px;
+	text-shadow: 2px 2px 5px rgba(0,0,0,.1);
+}
+.rusdPartnerLogo {
+	background: url("../images/library/district/rusd-logo.png");
+	width: 122px;
+	height: 45px;
+	position: absolute;
+	top: 61px;
+	right: 9px;
+}
+#landingSusdBanner {
+	width:100%;
+	height:330px;
+	background: url("../images/library/district/landing-image-susd.png");
+	position:relative;
+	margin-bottom:30px;
+	text-shadow: 2px 2px 5px rgba(0,0,0,.1);
+}
+.susdPartnerLogo {
+	background: url("../images/library/district/susd-logo.png");
+	width: 133px;
+	height: 133px;
+	position: absolute;
+	top: 69px;
+	right: -8px;
+}
+#landingLpsBanner {
+	width:100%;
+	height:330px;
+	background: url("../images/library/district/landing-image-lps.png");
+	position:relative;
+	margin-bottom:30px;
+	text-shadow: 2px 2px 5px rgba(0,0,0,.1);
+}
+.lpsPartnerLogo {
+	background: url("../images/library/district/lps-logo.png");
+	width: 122px;
+	height: 45px;
+	position: absolute;
+	top: 61px;
+	right: 9px;
+}
+#landingValverdeBanner {
+	width:100%;
+	height:330px;
+	background: url("../images/library/district/landing-image-valverde.png");
+	position:relative;
+	margin-bottom:30px;
+	text-shadow: 2px 2px 5px rgba(0,0,0,.1);
+}
+.valverdePartnerLogo {
+	background: url("../images/library/district/valverde-logo.png");
+	width: 147px;
+	height: 147px;
+	position: absolute;
+	top: 61px;
+	right: 9px;
+}

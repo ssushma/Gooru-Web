@@ -29,7 +29,7 @@ public class RusdPresenter extends BasePlacePresenter<IsRusdView, RusdPresenter.
 	SignUpPresenter signUpViewPresenter = null;
 	
 	@ProxyCodeSplit
-	@NameToken(PlaceTokens.RUSD_LIBRARY)
+	@NameToken("temporary-rusd")
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsRusdProxy extends ProxyPlace<RusdPresenter> {
 	}
