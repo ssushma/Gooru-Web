@@ -255,10 +255,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		};
 		standardSgstBox.addDomHandler(blurhander, BlurEvent.getType());
 		standardSgstBox.getElement().setId("tbautoStandardSgstBox");
-		gradeLbl.setText(i18n.GL1076().toUpperCase());
+		gradeLbl.setText(i18n.GL1076());
 		gradeLbl.getElement().setId("lblGradeLbl");
-		gradeLbl.getElement().setAttribute("alt",i18n.GL1076().toUpperCase());
-		gradeLbl.getElement().setAttribute("title",i18n.GL1076().toUpperCase());
+		gradeLbl.getElement().setAttribute("alt",i18n.GL1076());
+		gradeLbl.getElement().setAttribute("title",i18n.GL1076());
 		
 		selectGradeLbl.setText(i18n.GL0820());
 		selectGradeLbl.getElement().setId("lblSelectGradeLbl");
@@ -280,10 +280,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		removeCourseBtn.getElement().setAttribute("alt",i18n.GL0848());
 		removeCourseBtn.getElement().setAttribute("title",i18n.GL0848());
 		
-		standardLabel.setText(i18n.GL0575().toUpperCase());
+		standardLabel.setText(i18n.GL0575());
 		standardLabel.getElement().setId("lblStandardLabel");
-		standardLabel.getElement().setAttribute("alt",i18n.GL0575().toUpperCase());
-		standardLabel.getElement().setAttribute("title",i18n.GL0575().toUpperCase());
+		standardLabel.getElement().setAttribute("alt",i18n.GL0575());
+		standardLabel.getElement().setAttribute("title",i18n.GL0575());
 		
 		addStandardBtn.setText(i18n.GL0590());
 		addStandardBtn.getElement().setId("btnAddStandardBtn");
@@ -1282,13 +1282,13 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 */
 	private void resetStandardCount() {
 		if (standardsPanel.getWidgetCount() > 0) {
-			standardLabel.setText(i18n.GL0575().toUpperCase() + " (" + standardsPanel.getWidgetCount() + ")");
-			standardLabel.getElement().setAttribute("alt",i18n.GL0575().toUpperCase() + " (" + standardsPanel.getWidgetCount() + ")");
-			standardLabel.getElement().setAttribute("title",i18n.GL0575().toUpperCase() + " (" + standardsPanel.getWidgetCount() + ")");
+			standardLabel.setText(i18n.GL0575() + " (" + standardsPanel.getWidgetCount() + ")");
+			standardLabel.getElement().setAttribute("alt",i18n.GL0575() + " (" + standardsPanel.getWidgetCount() + ")");
+			standardLabel.getElement().setAttribute("title",i18n.GL0575() + " (" + standardsPanel.getWidgetCount() + ")");
 		} else {
-			standardLabel.setText(i18n.GL0575().toUpperCase());
-			standardLabel.getElement().setAttribute("alt",i18n.GL0575().toUpperCase());
-			standardLabel.getElement().setAttribute("title",i18n.GL0575().toUpperCase());
+			standardLabel.setText(i18n.GL0575());
+			standardLabel.getElement().setAttribute("alt",i18n.GL0575());
+			standardLabel.getElement().setAttribute("title",i18n.GL0575());
 		}
 	}
 
@@ -1296,9 +1296,9 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 * set the course text with count while adding and removing the course
 	 */
 	private void resetCourseCount() {		
-		courseLabel.setText(i18n.GL0574().toUpperCase());
-		courseLabel.getElement().setAttribute("alt",i18n.GL0574().toUpperCase());
-		courseLabel.getElement().setAttribute("title",i18n.GL0574().toUpperCase());
+		courseLabel.setText(i18n.GL0574());
+		courseLabel.getElement().setAttribute("alt",i18n.GL0574());
+		courseLabel.getElement().setAttribute("title",i18n.GL0574());
 		/*if (coursesPanel.getWidgetCount() > 0) {
 			courseLabel.setText("COURSE" + " (" + coursesPanel.getWidgetCount() + ")");
 		} else {

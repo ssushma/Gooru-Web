@@ -65,5 +65,11 @@ public interface PlaceTokens {
 	String COMMUNITY = "community";
 	String YOUTHVOICES = "youthvoices";
 	String GEOEDUCATION = "GeoEducation";
+	String LIFEBOARD = "lifeboard";
+	String SUSD = "susd";
+	String LPS = "lpslibrary1";
+	String MURRIETA = "murrieta";
+	String VALVERDE = "valverde";
+	String LANDINGPAGE = "home";
 
 }

@@ -267,7 +267,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
 		commuGuideLinesAnr.getElement().setAttribute("alt", i18n.GL0871());
 		commuGuideLinesAnr.getElement().setAttribute("title", i18n.GL0871());
-		termsAndPolicyAnr.setText(" "+i18n.GL0872()+i18n.GL_GRR_COMMA());
+		termsAndPolicyAnr.setText(i18n.GL0872()+i18n.GL_GRR_COMMA());
 		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicyAnr");
 		termsAndPolicyAnr.getElement().setAttribute("alt", i18n.GL0872());
 		termsAndPolicyAnr.getElement().setAttribute("title", i18n.GL0872());

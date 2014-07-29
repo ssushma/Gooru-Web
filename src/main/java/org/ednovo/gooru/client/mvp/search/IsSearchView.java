@@ -67,6 +67,8 @@ public interface IsSearchView<T extends ResourceSearchResultDo> extends IsViewWi
 	
 	String AGGREGATOR_FLT = "flt.aggregator";
 	
+	String ACCESS_MODE_FLT = "flt.cfAccessMode";
+	
 	/**
 	 * Set post search view
 	 * @param searchDo instance of {@link SearchDo}

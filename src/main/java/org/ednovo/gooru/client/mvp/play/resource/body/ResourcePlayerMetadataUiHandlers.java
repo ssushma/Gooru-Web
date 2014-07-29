@@ -61,4 +61,6 @@ public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUse
 	
 	public void getGoogleDriveFile(String fileUrl);
 	public void getResourceTagsToDisplay(String resourceId);
+
+	public void getYoutubeFeedCallback(String utubeId);
 }

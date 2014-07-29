@@ -149,7 +149,7 @@
 	box-shadow: 0 0 10px rgba(0, 0, 0, .3);
 	background: #4E9746;
 }
- .headerbar .loginStatus {
+.loginStatus {
     float:right;
     margin-top:8px;
     line-height:12px;
@@ -160,16 +160,16 @@
     border-radius:20px;
 }
     
- .headerbar .loginStatus span {  
+ .loginStatus span {  
     vertical-align:middle;
 }
 
- .headerbar .loginStatus.loggedOut span {  
+ .loginStatus.loggedOut span {  
     vertical-align:middle;
     opacity:.6;
 }
 
- .headerbar .loginStatus .username {
+ .loginStatus .username {
     max-width:140px;
     overflow:hidden;
     text-overflow:ellipsis;
@@ -177,7 +177,7 @@
     display:inline-block;
 }
 
- .headerbar .loginStatus .tooltipContainer {
+ .loginStatus .tooltipContainer {
 	width: 150px;
 	position: absolute;
 	left:-80px;
@@ -185,7 +185,7 @@
 	margin-top: 0px;
 }
 
- .headerbar .loginStatus .arrowBorder {
+ .loginStatus .arrowBorder {
  	width: 0px;
 	height: 0px;
 	border: 10px solid;
@@ -196,7 +196,7 @@
 	border-top: none;
 }
 
- .headerbar .loginStatus .arrow {
+ .loginStatus .arrow {
 	width: 0px;
 	height: 0px;
 	border: 10px solid;
@@ -218,7 +218,7 @@
 .loggedOut{
 	cursor:pointer;
 }
- .headerbar .loginStatus .loggedIn .tooltipContent {
+ .loginStatus .loggedIn .tooltipContent {
 	text-align:left;
 	color: #515151;
 	font-size: 12px;

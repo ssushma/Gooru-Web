@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -44,6 +45,7 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
@@ -146,6 +148,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	private static final String RATINGS_WIDGET="Contentratings";
 	private static final int CHILD_AGE=13;
 	private static final String DEFAULT_RATING_TEXT="Rate this resource";
+	private static final String EMBED="embed";
+	private static final String SYNDICATE="syndicate";
 	private StarRatingsDo starRatingsDo;
 	
 	private static final String FILLED_BLUE = "filled filledBlue";
@@ -211,10 +215,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		reactionToolTipFive.getElement().setAttribute("alt",i18n.GL0585());
 		reactionToolTipFive.getElement().setAttribute("title",i18n.GL0585());
 		
-		plusAddTagsButton.setText("+ "+i18n.GL1795());
+		plusAddTagsButton.setText("+ "+i18n.GL2081());
 		plusAddTagsButton.getElement().setId("plusAddTagsButton");
-		plusAddTagsButton.getElement().setAttribute("alt",i18n.GL1795());
-		plusAddTagsButton.getElement().setAttribute("title",i18n.GL1795());
+		plusAddTagsButton.getElement().setAttribute("alt",i18n.GL2081());
+		plusAddTagsButton.getElement().setAttribute("title",i18n.GL2081());
 		
 		/*rating1 = new SimpleRadioButton("rating");
 		rating2 = new SimpleRadioButton("rating");
@@ -418,14 +422,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 	}
 
-	public void previewResouceWidget(CollectionItemDo collectionItemDo){
+	public void previewResouceWidget(final CollectionItemDo collectionItemDo){
 		resourceWidgetContainer.clear();
 		setResourceWidgetContainerHeight();
 		String resourceTypeName=collectionItemDo.getResource().getResourceType().getName();
 		wrapperContainerField.getElement().getStyle().clearHeight();
 		if(resourceTypeName.equalsIgnoreCase("video/youtube")){
 			//wrapperContainerField.getElement().getStyle().setHeight(525	, Unit.PX);
-			resourceWidgetContainer.add(new FlashAndVideoPlayerWidget(ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl()), collectionItemDo.getStart(), collectionItemDo.getStop()));
+			String utubeId=ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl());
+			getUiHandlers().getYoutubeFeedCallback(utubeId);
 		}else if(resourceTypeName.equalsIgnoreCase("animation/kmz")){
 			resourceWidgetContainer.add(new GwtEarthWidget(collectionItemDo.getResource().getUrl()));
 		}else if(resourceTypeName.equalsIgnoreCase("animation/swf")){
@@ -1802,5 +1807,26 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			addTagesPopupView.show();
 			addTagesPopupView.setPopupPosition(addTagesPopupView.getAbsoluteLeft(),Window.getScrollTop()+10);
 		}
+	}
+
+	@Override
+	public void checkYoutubeAccessControls(Map<String, String> accessControls) {
+		// TODO Auto-generated method stub
+		String device = BrowserAgent.returnFormFactorView();
+		System.out.println("device::"+device);
+		if(accessControls!=null){
+			if(accessControls.get(EMBED).equals("allowed")){
+				if(accessControls.get(SYNDICATE).equals("allowed") || (device.equalsIgnoreCase("desktop"))){
+					resourceWidgetContainer.add(new FlashAndVideoPlayerWidget(ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl()), collectionItemDo.getStart(), collectionItemDo.getStop()));
+				}else {
+					resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
+				}
+				
+			}else{
+				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
+			}
+			
+		}
+		
 	}
 }
