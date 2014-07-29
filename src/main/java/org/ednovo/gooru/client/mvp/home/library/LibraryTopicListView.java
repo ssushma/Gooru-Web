@@ -1228,7 +1228,7 @@ public class LibraryTopicListView extends Composite{
 				};
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("635px");
+				successPopupVc.setHeight("638px");
 
 				successPopupVc.show();
 				successPopupVc.center();
@@ -1295,7 +1295,7 @@ public class LibraryTopicListView extends Composite{
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("440px");
+			successPopupVc.setHeight("454px");
 			successPopupVc.show();
 			successPopupVc.center();
 			
@@ -1338,7 +1338,7 @@ public class LibraryTopicListView extends Composite{
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("440px");
+			successPopupVc.setHeight("454px");
 			successPopupVc.show();
 			successPopupVc.center();
 		}
@@ -1354,7 +1354,7 @@ public class LibraryTopicListView extends Composite{
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("635px");
+			successPopupVc.setHeight("638px");
 
 			successPopupVc.show();
 			successPopupVc.center();

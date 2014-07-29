@@ -209,7 +209,7 @@ public class CollectionShareTabVc extends Composite {
 		finalTeacherTipLabelContainer
 		.addMouseOutHandler(new OnCollectionDescriptionOut());
 		
-		shareCollectiontext.setText(i18n.GL0545().toUpperCase());
+		shareCollectiontext.setText(i18n.GL0545());
 		shareCollectiontext.getElement().setId("lblShareCollectiontext");
 		shareCollectiontext.getElement().setAttribute("alt",i18n.GL0545());
 		shareCollectiontext.getElement().setAttribute("title",i18n.GL0545());
@@ -625,11 +625,12 @@ public class CollectionShareTabVc extends Composite {
 						 
 						 
 					}else{
+						
 						collectionShareAlertPopup = new CollectionShareAlertPopup() {
 							@Override
 							public void setPublicFromAlert() {
 								if(collection.getSharing().equalsIgnoreCase("public")){
-									collectionShareAlertPopup.setPrivateMsgData();
+//									collectionShareAlertPopup.setPrivateMsgData(); // Do not enable 
 									privateShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 									publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 									linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
@@ -642,19 +643,14 @@ public class CollectionShareTabVc extends Composite {
 						if(collection.getSharing().equalsIgnoreCase("public")){
 							 collectionShareAlertPopup.confirmPopup();
 						}else{
-							collectionShareAlertPopup.setPrivateMsgData();
+//							collectionShareAlertPopup.setPrivateMsgData(); // Do not enable 
 							privateShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 							publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 							linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 							updateShare("private");
 							selectPrivateResource("private");
 						}
-						
-					
 					}
-					
-				      
-					
 				}
 			});
 			
@@ -700,7 +696,8 @@ public class CollectionShareTabVc extends Composite {
 					@Override
 					public void setPublicFromAlert() {
 						if(collection.getSharing().equalsIgnoreCase("public")){
-							collectionShareAlertPopup.setShareableMsgData();
+							
+//							collectionShareAlertPopup.setShareableMsgData(); // Do not enable 
 							linkShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 							privateShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 							publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
@@ -712,7 +709,7 @@ public class CollectionShareTabVc extends Composite {
 				if(collection.getSharing().equalsIgnoreCase("public")){
 					 collectionShareAlertPopup.confirmPopup();
 				}else{
-					collectionShareAlertPopup.setShareableMsgData();
+//					collectionShareAlertPopup.setShareableMsgData(); // Do not enable 
 					linkShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 					privateShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 					publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());

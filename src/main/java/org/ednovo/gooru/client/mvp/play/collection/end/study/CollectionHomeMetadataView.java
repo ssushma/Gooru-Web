@@ -167,9 +167,9 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				MixpanelUtil.Preview_Player_Click_Preview();
 				List<CollectionItemDo> collectionItems=collectionDo.getCollectionItems();
 				if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
-					AppClientFactory.fireEvent(new UpdatePreviewViewCountEvent());
-				}else{
 					AppClientFactory.fireEvent(new UpdateCollectionViewCountEvent());
+				}else{
+					AppClientFactory.fireEvent(new UpdatePreviewViewCountEvent());
 				}
 				if(collectionItems.size()>0){
 					CollectionItemDo collectionItemDo=collectionItems.get(0);
@@ -334,7 +334,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				};
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("440px");
+				successPopupVc.setHeight("454px");
 				successPopupVc.show();
 				successPopupVc.center();
 				
@@ -426,7 +426,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("440px");
+			successPopupVc.setHeight("454px");
 			successPopupVc.show();
 			successPopupVc.center();
 		}

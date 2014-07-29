@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SeoTokens;
@@ -198,6 +199,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	private JSONObject explanationIdsObject=new JSONObject();
 	
 	private List<Integer> attemptTrySequenceArray=new ArrayList<Integer>();
+	
+	private Map<String, Integer> reactionTreeMap=new TreeMap<String, Integer>();
 	
 	private Integer resourceScore=0;
 	
@@ -632,6 +635,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		setUserAttemptedQuestionTypeAndStatus(false,0);
 		resetAnswerLists();
 		setCollectionScore(0);
+		reactionTreeMap.clear();
 		setInSlot(METADATA_PRESENTER_SLOT, metadataPresenter,false);
 	}
 	
@@ -1695,6 +1699,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			setResourceScore(0);
 			setAttemptCount(0);
 			setCollectionScore(0);
+			reactionTreeMap.clear();
 			sessionIdCreationCount=0;
 			isExplanationUsed=false;
 			getView().hideFlagButton(false);
@@ -2050,5 +2055,31 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			resoruceMetadataPresenter.getResourceTagsToDisplay(resourceId);
 		}
 	}
+	
+	public void saveReactionToShowAvg(String reactionType){
+		String action="add";
+		if(action.equals("add")){
+			Integer reactionCategeory=reactionTreeMap.get(reactionType);
+			if(reactionCategeory!=null){
+				reactionTreeMap.put(reactionType, reactionCategeory+1);
+			}else{
+				reactionTreeMap.put(reactionType, 1);
+			}
+		}else if(action.equals("delete")){
+			Integer reactionCategeory=reactionTreeMap.get(reactionType);
+			if(reactionCategeory!=null){
+				if(reactionCategeory==1){
+					reactionTreeMap.remove(reactionType);
+				}else{
+					reactionTreeMap.put(reactionType, reactionCategeory-1);
+				}
+			}
+		}
+	}
+	
+	public Map<String, Integer> getReactionTreeMap(){
+		return reactionTreeMap;
+	}
+	
 
 }

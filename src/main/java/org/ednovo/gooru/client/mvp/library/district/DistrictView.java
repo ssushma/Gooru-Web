@@ -1,4 +1,4 @@
-package org.ednovo.gooru.client.mvp.library.sausd;
+package org.ednovo.gooru.client.mvp.library.district;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,7 +8,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.library.LibraryUnitMenuView;
-import org.ednovo.gooru.client.mvp.library.sausd.metadata.LibraryMetaDataContentUc;
+import org.ednovo.gooru.client.mvp.library.district.metadata.LibraryMetaDataContentUc;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -34,10 +34,9 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
 ` * 
  */
-public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements IsSausdView {
+public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> implements IsDistrictView {
 
-	@UiField
-	static HTMLPanel courseTabs;
+	@UiField HTMLPanel courseTabs;
 
 	@UiField HTMLPanel landingBanner, container, featuredCourseTabs, leftNav, contentScroll, libraryMetaDataContainer, contributorsContainer, courseBanner, featuredEducator,
 	featuredCourses, scrollPanel, loadingIconPanel,partnerLogo;
@@ -46,13 +45,13 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 	
 	@UiField Anchor featuredContributorsLink;
 	
-	@UiField SausdStyleBundle sausdStyleUc;
+	@UiField DistrictStyleBundle districtStyleUc;
 	
 	@UiField Image courseImage, educatorPhoto;
 	
 	private String placeToken;
 	
-	SausdMenuNav sausdMenuNav = null;
+	DistrictMenuNav districtMenuNav = null;
 	
 	private static final String FEATURED_COURSE="featured-course",COURSE_PAGE = "course-page", COURSE_ID = "courseId", FEATURED_LABEL = "featured", 
 			CALLBACK = "callback", ACTIVE_STYLE = "active",LIBRARY_PAGE = "page";
@@ -61,54 +60,30 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 
 	private final static String COURSE_DEFAULT_IMG = "../images/library/course-1000x300.png";
 
-	private static SausdViewUiBinder uiBinder = GWT.create(SausdViewUiBinder.class);
+	private static DistrictViewUiBinder uiBinder = GWT.create(DistrictViewUiBinder.class);
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	interface SausdViewUiBinder extends UiBinder<Widget, SausdView> {
+	interface DistrictViewUiBinder extends UiBinder<Widget, DistrictView> {
 	}
 	
-	public SausdView() {		
+	public DistrictView() {		
 		setWidget(uiBinder.createAndBindUi(this));
-		setAssets();
+		setAssets(AppClientFactory.getCurrentPlaceToken());
 	}
 	
 	@Override
 	public void onLoad() {
-		courseTabs.getElement().setId("courseTabs");
-		container.getElement().setId("container");
-		featuredCourseTabs.getElement().setId("featuredCourseTabs");
-		leftNav.getElement().setId("leftNav");
-		contentScroll.getElement().setId("contentScroll");
-		courseBanner.getElement().setId("courseBanner");
-		featuredEducator.getElement().setId("featuredEducator");
-		featuredCousesLbl.getElement().setId("lblFeaturedCousesLbl");
-		featuredCourses.getElement().setId("pnlFeaturedCourses");
-		partnerLogo.getElement().setId("pnlPartnerLogo");
-		courseImage.getElement().setId("imgCourseImage");
-		courseTitle.getElement().setId("lblCourseTitle");
-		educatorPhoto.getElement().setId("imgEducatorPhoto");
-		featuredContributor.getElement().setId("lblFeaturedContributor");
-		featuredContributorsLink.getElement().setId("lnkFeaturedContributorsLink");
-		scrollPanel.getElement().setId("sbScrollPanel");
-		libraryMetaDataContainer.getElement().setId("pnlLibraryMetaDataContainer");
-		loadingIconPanel.getElement().setId("pnlLoadingIconPanel");
-		contributorsContainer.getElement().setId("pnlContributorsContainer");
-		
-		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
-			landingBanner.getElement().setId("landingSausdBanner");
-			featuredCousesLbl.setText(i18n.GL1901());
-			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL1901());
-			featuredCousesLbl.getElement().setAttribute("title",i18n.GL1901());
-		}
 	}
 	
 	@Override
 	public void loadFeaturedContributors(String callBack, String placeToken,ProfileLibraryListDo profileLibraryListDo) {
 		if(callBack.equalsIgnoreCase(FEATURED_COURSE)) {
-			sausdMenuNav.setSubjectPanelIds(profileLibraryListDo);
+			districtMenuNav.setSubjectPanelIds(profileLibraryListDo);
 			showCourseBanner(null, false);
-			setFeaturedCourseWidgets(profileLibraryListDo.getSearchResult(),false);
+			if(profileLibraryListDo.getSearchResult()!=null&&profileLibraryListDo.getSearchResult().size()>0) {
+				setFeaturedCourseWidgets(profileLibraryListDo.getSearchResult(),false);
+			}
 		}
 	}
 	
@@ -120,7 +95,7 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 		final ArrayList<ProfileLibraryDo> courseList = profileLibDoList.get(0).getCollectionItems();
 		
 		for(int i = 0; i<courseList.size(); i++) {
-			featuredCourses.add(new SausdFeaturedView(courseList.get(i)));
+			featuredCourses.add(new DistrictFeaturedView(courseList.get(i)));
 			if(!isFeaturedCourseSelected) {
 				if(i==0&&(courseId==null)) {
 					featuredCourses.getWidget(i).addStyleName(ACTIVE_STYLE);
@@ -141,13 +116,13 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 		while (widgets.hasNext()) {
 			final Widget widget = widgets.next();
 			final int widgetCountTemp = widgetCount;
-			SausdFeaturedView sausdFeaturedView = ((SausdFeaturedView) widget);
+			DistrictFeaturedView districtFeaturedView = ((DistrictFeaturedView) widget);
 			try {
-				if(courseId.equals(sausdFeaturedView.getCourseId())) {
+				if(courseId.equals(districtFeaturedView.getCourseId())) {
 					widget.addStyleName(ACTIVE_STYLE);
 				}
 			} catch (Exception e) {}
-			sausdFeaturedView.getfeaturedCoursePanel().addClickHandler(new ClickHandler() {
+			districtFeaturedView.getfeaturedCoursePanel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
 					leftNav.clear();
@@ -174,7 +149,7 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 			if(firstWidgetCount==0) {
 				firstWidgetCount++;
 				loadingPanel(true);
-				libraryUnitMenuView.addStyleName(sausdStyleUc.unitLiActive());
+				libraryUnitMenuView.addStyleName(districtStyleUc.unitLiActive());
 				unitListId = profileLibraryDoList.get(i).getGooruOid();
 				if(profileLibraryDoList.get(i).getType().equals("scollection")) {
 					setTopicListData(profileLibraryDoList.get(i), unitListId);
@@ -200,9 +175,9 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 					final Iterator<Widget> widgetsPanel = leftNav.iterator();
 					while (widgetsPanel.hasNext()) {
 						final Widget widgetTxt = widgetsPanel.next();
-						widgetTxt.removeStyleName(sausdStyleUc.unitLiActive());
+						widgetTxt.removeStyleName(districtStyleUc.unitLiActive());
 					}
-					widget.addStyleName(sausdStyleUc.unitLiActive());
+					widget.addStyleName(districtStyleUc.unitLiActive());
 					unitListId = libraryUnitMenuView.getUnitId();
 					if(libraryUnitMenuView.getType().equals("scollection")) {
 						setTopicListData(profileLibraryDoList.get(widgetCountTemp),  unitListId);
@@ -287,10 +262,43 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 		}
 	}
 	
-	public void setAssets() {
-		setPlaceToken(PlaceTokens.SAUSD_LIBRARY);
+	public void setAssets(String placeToken) {
+		courseTabs.getElement().setId("courseTabs");
+		container.getElement().setId("container");
+		featuredCourseTabs.getElement().setId("featuredCourseTabs");
+		leftNav.getElement().setId("leftNav");
+		contentScroll.getElement().setId("contentScroll");
+		courseBanner.getElement().setId("courseBanner");
+		featuredEducator.getElement().setId("featuredEducator");
+		featuredCousesLbl.getElement().setId("lblFeaturedCousesLbl");
+		featuredCourses.getElement().setId("pnlFeaturedCourses");
+		partnerLogo.getElement().setId("pnlPartnerLogo");
+		courseImage.getElement().setId("imgCourseImage");
+		courseTitle.getElement().setId("lblCourseTitle");
+		educatorPhoto.getElement().setId("imgEducatorPhoto");
+		featuredContributor.getElement().setId("lblFeaturedContributor");
+		featuredContributorsLink.getElement().setId("lnkFeaturedContributorsLink");
+		scrollPanel.getElement().setId("sbScrollPanel");
+		libraryMetaDataContainer.getElement().setId("pnlLibraryMetaDataContainer");
+		loadingIconPanel.getElement().setId("pnlLoadingIconPanel");
+		contributorsContainer.getElement().setId("pnlContributorsContainer");
+		
+		setPlaceToken(placeToken);
 		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
-			partnerLogo.setStyleName(sausdStyleUc.sausdPartnerLogo());
+			landingBanner.getElement().setId("landingSausdBanner");
+			featuredCousesLbl.setText(i18n.GL1901());
+			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL1901());
+			featuredCousesLbl.getElement().setAttribute("title",i18n.GL1901());
+		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.LIFEBOARD)) {
+			landingBanner.getElement().setId("landingLifeboardBanner");
+			featuredCousesLbl.setText(i18n.GL2052());
+			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL2052());
+			featuredCousesLbl.getElement().setAttribute("title",i18n.GL2052());
+		}
+
+
+		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
+			partnerLogo.setStyleName(districtStyleUc.sausdPartnerLogo());
 			partnerLogo.setVisible(true);
 			partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
 		} else {
@@ -300,15 +308,15 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 		contributorsContainer.setVisible(false);
 		courseBanner.setVisible(false);
 		featuredEducator.setVisible(false);
-		sausdMenuNav = new SausdMenuNav(getPlaceToken()) {
+		districtMenuNav = new DistrictMenuNav(getPlaceToken()) {
 			@Override
 			public void clickOnCourse(ArrayList<ProfileLibraryDo> unitList, String courseId, ProfileLibraryDo profileLibraryDo) {
 				showCourseBanner(profileLibraryDo, true);
 				setSubjectUnits(unitList);
 			}
 		};
-		courseTabs.add(sausdMenuNav);
-		landingBanner.add(new SausdBannerView(getPlaceToken()));
+		courseTabs.add(districtMenuNav);
+		landingBanner.add(new DistrictBannerView(getPlaceToken()));
 		featuredContributorsLink.setText(i18n.GL1005());
 		featuredContributorsLink.getElement().setAttribute("alt",i18n.GL1005());
 		featuredContributorsLink.setTitle(i18n.GL1005());

@@ -1,4 +1,4 @@
-package org.ednovo.gooru.client.mvp.library.sausd.metadata;
+package org.ednovo.gooru.client.mvp.library.district.metadata;
 
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
