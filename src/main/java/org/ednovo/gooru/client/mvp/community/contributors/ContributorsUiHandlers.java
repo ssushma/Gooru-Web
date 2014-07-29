@@ -22,66 +22,14 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
-package org.ednovo.gooru.client.mvp.home;
-
-import java.util.Map;
+package org.ednovo.gooru.client.mvp.community.contributors;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.model.user.UserDo;
-
-import com.google.gwt.event.shared.GwtEvent.Type;
-import com.gwtplatform.mvp.client.annotations.ContentSlot;
-import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 /**
  * @author Search Team
  * 
  */
-public interface HomeUiHandlers extends BaseUiHandlers {
-		
-	/**
-	 * Set home search view
-	 * @param params search results 
-	 */
-	void homeSearch(Map<String, String> params);
-	
-	/**
-	 * @param user instance of {@link UserDo} which has information  for registration
-	 */
-	void initilazeRegistrationView(UserDo user);
+public interface ContributorsUiHandlers extends BaseUiHandlers {
 
-	/**
-	 * Set text entered by user to the standards
-	 * @param standards instance of {@link SearchDo<CodeDo>} which has information standard codes and description
-	 */
-	void requestStandardsSuggestion(SearchDo<CodeDo> searchDo);
-	
-	void requestAutoSuggestKeyword(SearchDo<AutoSuggestKeywordSearchDo> searchDo);
-
-	/**
-	 * @function getContributorsSlot 
-	 * 
-	 * @created_date : Jul 28, 2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @return
-	 * 
-	 * @return : Object
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
-	
-	Object getContributorsSlot();
 }
