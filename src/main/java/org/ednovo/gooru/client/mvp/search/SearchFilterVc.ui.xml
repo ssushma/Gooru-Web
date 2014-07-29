@@ -70,8 +70,8 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		.helpIconBtnPublisher {
 			position: absolute;
 			right: 0;
-			margin-top: -14px;
-			margin-right: 65px;
+			margin-top: -20px;
+			margin-right: 85px;
 			color: #0f76bb;
 			cursor: pointer;
 			font-size: 11px;
@@ -257,7 +257,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		</g:HTMLPanel>
 		
 		<g:HTMLPanel>
-			<g:Label styleName="{style.headerLbl}" ui:field="accessModeLbl"></g:Label>
+			<g:Label styleName="{style.headerLbl}" visible="false"  ui:field="accessModeLbl"></g:Label>
 			<g:HTMLPanel  ui:field="accessModePanel" />
 		</g:HTMLPanel>
 		

@@ -181,6 +181,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	/*@UiField Image publisherTooltip;*/
 	CheckBox chkNotFriendly = null;
 	CheckBox chkOER = null;
+	CheckBox chkAccessMode = null;
 	
 	@UiField Button browseStandards;
 	
@@ -474,6 +475,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			aggregatorPanelUc.setVisible(true);
 			sourceLbl.setVisible(true);
 			aggregatorLbl.setVisible(true);
+			accessModeLbl.setVisible(true);
 			sourcesNotFoundLbl.getElement().getStyle().setOpacity(0.0);
 			sourceSgstBox.addSelectionHandler(this);
 			aggregatorSgstBox.addSelectionHandler(this);
@@ -721,6 +723,25 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		});
 		
 	}
+	
+	private void renderAccessModeCheckBox(HTMLPanel accessModePanel,String value) {
+		chkAccessMode = new CheckBox();
+		chkAccessMode.setText(value);
+		chkAccessMode.setName(value);
+		chkAccessMode.setStyleName(CssTokens.FILTER_CHECKBOX);
+		chkAccessMode.addStyleName(value.toLowerCase());
+		accessModePanel.add(chkAccessMode);
+		chkAccessMode.addValueChangeHandler(new ValueChangeHandler<Boolean>(){
+
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				AppClientFactory.fireEvent(new GetSearchKeyWordEvent());  
+			}
+			
+		});
+	}
+	
+	
 	/**
 	 * @param disclosurePanelVc instance of DisclosurePanelUc which gets added widget
 	 * @param key check box name
@@ -978,10 +999,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		this.setVisible(true);
 	}
 	
-	private void renderAccessModeCheckBox(HTMLPanel accessModePanel,String value) {
-		
-	}
-
 
 	/**
 	 * Get search filter such as grade, subject, category, etc..
@@ -989,6 +1006,12 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 */
 	protected Map<String, String> getFilter() {
 		Map<String, String> filterMap = new HashMap<String, String>();
+		
+		String selectedAccessMode = getSelectedFilter(accessModePanel);
+		if (!selectedAccessMode.isEmpty()) {
+			filterMap.put(IsSearchView.ACCESS_MODE_FLT, selectedAccessMode);
+		}
+		
 		String selectedGrade = getSelectedFilter(gradePanelUc);
 		if (!selectedGrade.isEmpty()) {
 			filterMap.put(IsSearchView.GRADE_FLT, selectedGrade);
@@ -1037,9 +1060,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					filterMap.put(IsSearchView.MEDIATYPE_FLT, "not_ipad_friendly");
 //				}
 			}
-			if(chkOER!=null && chkOER.getValue()){
-				filterMap.put(IsSearchView.OER_FLT, "1");
-			}
+				if(chkOER!=null && chkOER.getValue()){
+					filterMap.put(IsSearchView.OER_FLT, "1");
+				}
+			
 			}else{
 			filterMap.remove(IsSearchView.MEDIATYPE_FLT);
 			filterMap.remove(IsSearchView.OER_FLT);
@@ -1473,6 +1497,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		clearFilter(categoryPanelUc);
 		clearFilter(gradePanelUc);
 		clearFilter(subjectPanelUc);
+		clearFilter(accessModePanel);
 		standardSgstBox.setText("");
 		standardSgstBox.getElement().setAttribute("alt","");
 		standardSgstBox.getElement().setAttribute("title","");
@@ -1497,6 +1522,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		clearFilter(categoryPanelUc);
 		clearFilter(gradePanelUc);
 		clearFilter(subjectPanelUc);
+		clearFilter(accessModePanel);
 		standardSgstBox.setText("");
 		sourceSgstBox.setText("");
 		sourceSgstBox.getElement().setAttribute("alt","");
