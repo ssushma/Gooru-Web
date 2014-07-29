@@ -22,64 +22,41 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.library.district;
+package org.ednovo.gooru.client.mvp.library.district.susd;
+
+import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : LibraryStyleBundle.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
+ * @author Search Team
+` * 
  */
+public class SusdLibraryView extends BaseViewWithHandlers<SusdLibraryUiHandlers> implements IsSusdLibraryView {
 
-import com.google.gwt.resources.client.CssResource;
-
-
-public interface DistrictStyleBundle extends CssResource {
-	String conceptTitle();
-	String lessonTitle();
-	String conceptTitleActive();
-	String courseOption();
-	String aboutGooruAnrPadding();
-	String unitLiActive();
-	String header();
-	String course();
-	String resourceImage();
-	String blueLink();
-
-	String bannerSpanBlock();
-	String resourcesInsideSubStyle();
-	String collectionInfoSubStyle();
-	String collectionViewerSubStyle();
-	String tabsLi();
-	String tabsLiInactive();
-	String singleLink();
-	String active();
-	String paginationPanel();
-	String twoColumnContainer();
-	String subDropdown();
-	String unitOption();
-	String popularStarImage();
-	String math();
-	String partnerMenuPadding();
-	String lessonTitleProfile();
-	String collectionSmall();
-	String conceptTitleLeft();
+	@UiField SimplePanel partnerPanel;
 	
-	String sausdPartnerLogo();
-	String gradeOption();
+	private static SusdLibraryViewUiBinder uiBinder = GWT.create(SusdLibraryViewUiBinder.class);
+
+	interface SusdLibraryViewUiBinder extends UiBinder<Widget, SusdLibraryView> {
+	}
+
+	public SusdLibraryView() {
+		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
+	}
 	
-	String lifeboardBannerStyle();
-	String lastLifeboard();
-	String boxLifeboard();
-	String rusdPartnerLogo();
-	String susdPartnerLogo();
-	String lpsPartnerLogo();
-	String valverdePartnerLogo();
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		if (content != null) {
+			if (slot == SusdLibraryUiHandlers.TYPE_FOLDERS_SLOT) {
+				partnerPanel.setWidget(content);
+			}
+		}
+	}
+
 }
