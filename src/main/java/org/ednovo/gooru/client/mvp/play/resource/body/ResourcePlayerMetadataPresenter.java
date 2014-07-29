@@ -28,6 +28,7 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -35,6 +36,7 @@ import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
+import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
 import org.ednovo.gooru.client.mvp.play.resource.question.QuestionResourcePresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
@@ -48,6 +50,7 @@ import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -440,6 +443,20 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 				getView().displayResourceTags(resourceTagsList);
 			}
 		});
+	}
+
+	@Override
+	public void getYoutubeFeedCallback(String utubeId) {
+		// TODO Auto-generated method stub
+		AppClientFactory.getInjector().getPlayerAppService().getYoutubeFeedCallback(utubeId, new SimpleAsyncCallback<Map<String,String>>() {
+
+			@Override
+			public void onSuccess(Map<String, String> result) {
+				
+				getView().checkYoutubeAccessControls(result);
+			}
+		});
+		
 	}
 
 
