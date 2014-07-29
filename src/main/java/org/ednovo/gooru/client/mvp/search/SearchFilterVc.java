@@ -140,7 +140,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	/*@UiField
 	DisclosurePanelUc authorPanelUc;*/
 	
-	@UiField HTMLPanel panelNotMobileFriendly,categoryPanelUc,subjectPanelUc,gradePanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc;
+	@UiField HTMLPanel panelNotMobileFriendly,categoryPanelUc,subjectPanelUc,gradePanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc,accessModePanel;
 	
 	@UiField
 	HTMLPanel /*contentpanel,*/oerPanel;
@@ -173,7 +173,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	Label standardsNotFoundLbl;
 	
 	@UiField
-	Label publisherTooltip, standardHelpicon,clearAll,aggregatorTooltip,resourceFormatLbl,subjectLbl,gradeLbl,aggregatorLbl,sourceLbl,authorLbl,standardLbl;
+	Label publisherTooltip, standardHelpicon,clearAll,aggregatorTooltip,resourceFormatLbl,subjectLbl,gradeLbl,aggregatorLbl,sourceLbl,authorLbl,standardLbl,accessModeLbl;
 
 	@UiField
 	HTMLEventPanel sourceToolTip, standardToolTip,aggregatorToolTip;
@@ -181,6 +181,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	/*@UiField Image publisherTooltip;*/
 	CheckBox chkNotFriendly = null;
 	CheckBox chkOER = null;
+	
+	@UiField Button browseStandards;
+	
 	@UiField
 	Style style;
 	
@@ -449,6 +452,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		gradeLbl.getElement().setAttribute("alt",i18n.GL0165());
 		gradeLbl.getElement().setAttribute("title",i18n.GL0165());
 		
+		accessModeLbl.setText("Access Mode");
+		accessModeLbl.getElement().setId("lblAccessMode");
+		accessModeLbl.getElement().setAttribute("alt","Access Mode");
+		accessModeLbl.getElement().setAttribute("title","Access Mode");
+		
 		clearAll.setText(i18n.GL0725());
 		clearAll.getElement().setId("lblClearAll");
 		clearAll.getElement().setAttribute("alt",i18n.GL0725());
@@ -569,6 +577,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 //		flowpanel.getElement().setId("fpnlFlowpanel");
 //		contentpanel.getElement().setId("pnlContentpanel");
 		panelNotMobileFriendly.getElement().setId("pnlPanelNotMobileFriendly");
+		accessModePanel.getElement().setId("pnlaccessMode");
 		oerPanel.getElement().setId("pnlOerPanel");
 		aggregatorPanelUc.getElement().setId("discpnlAggregatorPanelUc");
 		aggregatorTooltip.getElement().setId("lblAggregatorTooltip");
@@ -849,6 +858,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		subjectPanelUc.clear();
 		gradePanelUc.clear();
 		panelNotMobileFriendly.clear();
+		accessModePanel.clear();
 		oerPanel.clear();
 		if (searchFilterDo != null) {
 			if (searchFilterDo.getCategories() != null) {
@@ -875,6 +885,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			
 			/*resourceLinkLbl.addStyleName(style.active());
 			collectionLinkLbl.removeStyleName(style.active());*/
+			renderAccessModeCheckBox(accessModePanel,"Auditory");
+			renderAccessModeCheckBox(accessModePanel,"Tactile");
+			renderAccessModeCheckBox(accessModePanel,"Visual");
+			renderAccessModeCheckBox(accessModePanel,"Color Dependent");
+			renderAccessModeCheckBox(accessModePanel,"Text on Image");
+			renderAccessModeCheckBox(accessModePanel,"Textual");
+			
 			renderOERCheckBox(oerPanel, "not_show_OER", "OER");
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
 			final Image imgNotFriendly = new Image("images/mos/questionmark.png");
@@ -953,14 +970,19 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				}
 			});
 			oerPanel.add(oer);
+			oerPanel.setVisible(true);
 		}/*else{
 			collectionLinkLbl.addStyleName(style.active());
 			resourceLinkLbl.removeStyleName(style.active());
 		}*/
-		oerPanel.setVisible(true);
 		this.setVisible(true);
 	}
 	
+	private void renderAccessModeCheckBox(HTMLPanel accessModePanel,String value) {
+		
+	}
+
+
 	/**
 	 * Get search filter such as grade, subject, category, etc..
 	 * @return search filter as Map value
@@ -1532,7 +1554,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 	}
 
-	private void addStandardFilter(String code) {		
+	public void addStandardFilter(String code) {		
 		standardContainerFloPanel.add(new DownToolTipWidgetUc(new FilterLabelVc(code), standardCodesMap.get(code)));
 	}
 
