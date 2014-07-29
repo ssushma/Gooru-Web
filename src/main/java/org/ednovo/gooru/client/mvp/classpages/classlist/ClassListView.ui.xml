@@ -39,6 +39,7 @@
 				<g:HTMLPanel ui:field="publicAssignContainer" styleName="{res.css.leftInviteContainer}">
 					<g:HTMLPanel styleName="{res.css.assignSec}">
 						<g:HTMLPanel styleName="{res.css.assignSecTitle}" ui:field="shareTxt"></g:HTMLPanel>
+						<g:HTMLPanel ui:field="questionMarkPanel"></g:HTMLPanel>
 			
 						<g:TextBox styleName="{res.css.input1} {res.css.shareTextboxLink}"
 							ui:field="txtClasspageCodeShare" />
@@ -46,6 +47,7 @@
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.assignSec}">
 						<g:HTMLPanel styleName="{res.css.assignSecTitle}" ui:field="shareTitle"></g:HTMLPanel>
+							<g:HTMLPanel ui:field="questionMarkPanel1"></g:HTMLPanel>
 	
 						<g:TextBox
 							styleName="{res.css.input1} {res.css.inputWidth} {res.css.shareTextboxLink}"
@@ -101,6 +103,7 @@
 			<g:HTMLPanel styleName="{res.css.membersList}" ui:field="panelMembersList">
 				<g:HTMLPanel styleName="{res.css.pendingContainer}" ui:field="panelPendingMembersContainer">
 					<g:Label styleName="{res.css.pendingMembers}" ui:field="lblPendingMembers"></g:Label>
+					<g:HTMLPanel ui:field="questionMarkPanel2"></g:HTMLPanel>
 					<g:VerticalPanel styleName="" ui:field="panelPendingMembersList">
 
 					</g:VerticalPanel>

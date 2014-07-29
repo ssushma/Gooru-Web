@@ -78,4 +78,8 @@ public interface DistrictStyleBundle extends CssResource {
 	String lifeboardBannerStyle();
 	String lastLifeboard();
 	String boxLifeboard();
+	String rusdPartnerLogo();
+	String susdPartnerLogo();
+	String lpsPartnerLogo();
+	String valverdePartnerLogo();
 }

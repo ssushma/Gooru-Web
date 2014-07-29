@@ -98,11 +98,11 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	 */
 	public SearchRootView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		/*resourceLinkLbl.getElement().setId("lblResourceLink");
-		collectionSearchBtn.getElement().setId("lblCollectionLink");
+		resourceSearchBtn.getElement().setId("btnResource");
+		collectionSearchBtn.getElement().setId("btnCollection");
 		
-		resourceLinkLbl.setText(MessageProperties.GL0174);
-		collectionSearchBtn.setText(MessageProperties.GL0175);*/
+		resourceSearchBtn.setText(i18n.GL0174());
+		collectionSearchBtn.setText(i18n.GL0175());
 		queriedTextHtml.getElement().setId("htmlQueriedTextHtml");
 		searchWrapperSimPanel.getElement().setId("spnlSearchWrapperSimPanel");
 		shelfTabSimPanel.getElement().setId("spnlShelfTabSimPanel");

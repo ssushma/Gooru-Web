@@ -99,6 +99,10 @@ import org.ednovo.gooru.client.mvp.home.register.UserRegistrationView;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadView;
 import org.ednovo.gooru.client.mvp.image.upload.IsImageUploadView;
+import org.ednovo.gooru.client.mvp.landingpage.IsLandingPageView;
+import org.ednovo.gooru.client.mvp.landingpage.LandingPagePresenter;
+import org.ednovo.gooru.client.mvp.landingpage.LandingPagePresenter.IsLandingPageProxy;
+import org.ednovo.gooru.client.mvp.landingpage.LandingPageView;
 import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
 import org.ednovo.gooru.client.mvp.library.district.DistrictView;
 import org.ednovo.gooru.client.mvp.library.district.IsDistrictView;
@@ -106,14 +110,22 @@ import org.ednovo.gooru.client.mvp.library.district.lifeboard.IsLifeboardLibrary
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter.IsLifeboardLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.rusd.IsRusdLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryPresenter.IsRusdLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryView;
 import org.ednovo.gooru.client.mvp.library.district.sausd.IsSausdLibraryView;
 import org.ednovo.gooru.client.mvp.library.district.sausd.SausdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.sausd.SausdLibraryPresenter.IsSausdLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.district.sausd.SausdLibraryView;
-import org.ednovo.gooru.client.mvp.landingpage.IsLandingPageView;
-import org.ednovo.gooru.client.mvp.landingpage.LandingPagePresenter;
-import org.ednovo.gooru.client.mvp.landingpage.LandingPagePresenter.IsLandingPageProxy;
-import org.ednovo.gooru.client.mvp.landingpage.LandingPageView;
+import org.ednovo.gooru.client.mvp.library.district.susd.IsSusdLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.susd.SusdLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.susd.SusdLibraryPresenter.IsSusdLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.district.susd.SusdLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.valverde.IsValVerdeLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.valverde.ValVerdeLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.valverde.ValVerdeLibraryPresenter.IsValVerdeLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.district.valverde.ValVerdeLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.IsPartnerLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.PartnerLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.PartnerLibraryView;
@@ -133,6 +145,10 @@ import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.IsLessonopolyLibr
 import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryPresenter.IsLessonopolyLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.lps.IsLpsLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.lps.LpsLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.lps.LpsLibraryPresenter.IsLpsLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.lps.LpsLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.natgeo.IsNatGeoLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.natgeo.NatGeoLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.natgeo.NatGeoLibraryPresenter.IsNatGeoLibraryProxy;
@@ -518,6 +534,10 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(DistrictPresenter.class, IsDistrictView.class, DistrictView.class);
 		bindPresenter(SausdLibraryPresenter.class, IsSausdLibraryView.class, SausdLibraryView.class,IsSausdLibraryProxy.class);
 		bindPresenter(LifeboardLibraryPresenter.class, IsLifeboardLibraryView.class, LifeboardLibraryView.class,IsLifeboardLibraryProxy.class);
+		bindPresenter(SusdLibraryPresenter.class, IsSusdLibraryView.class, SusdLibraryView.class,IsSusdLibraryProxy.class);
+		bindPresenter(ValVerdeLibraryPresenter.class, IsValVerdeLibraryView.class, ValVerdeLibraryView.class,IsValVerdeLibraryProxy.class);
+		bindPresenter(RusdLibraryPresenter.class, IsRusdLibraryView.class, RusdLibraryView.class,IsRusdLibraryProxy.class);
+		bindPresenter(LpsLibraryPresenter.class, IsLpsLibraryView.class, LpsLibraryView.class,IsLpsLibraryProxy.class);
 		
 	}
 }
