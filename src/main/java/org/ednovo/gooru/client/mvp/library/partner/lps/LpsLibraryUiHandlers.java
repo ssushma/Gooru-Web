@@ -22,64 +22,20 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.library.district;
+package org.ednovo.gooru.client.mvp.library.partner.lps;
+
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
+
+import com.google.gwt.event.shared.GwtEvent.Type;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
+
 /**
- * @fileName : LibraryStyleBundle.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
+ * @author Search Team
+ * 
  */
+public interface LpsLibraryUiHandlers extends BaseUiHandlers {
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> TYPE_FOLDERS_SLOT = new Type<RevealContentHandler<?>>();
 
-import com.google.gwt.resources.client.CssResource;
-
-
-public interface DistrictStyleBundle extends CssResource {
-	String conceptTitle();
-	String lessonTitle();
-	String conceptTitleActive();
-	String courseOption();
-	String aboutGooruAnrPadding();
-	String unitLiActive();
-	String header();
-	String course();
-	String resourceImage();
-	String blueLink();
-
-	String bannerSpanBlock();
-	String resourcesInsideSubStyle();
-	String collectionInfoSubStyle();
-	String collectionViewerSubStyle();
-	String tabsLi();
-	String tabsLiInactive();
-	String singleLink();
-	String active();
-	String paginationPanel();
-	String twoColumnContainer();
-	String subDropdown();
-	String unitOption();
-	String popularStarImage();
-	String math();
-	String partnerMenuPadding();
-	String lessonTitleProfile();
-	String collectionSmall();
-	String conceptTitleLeft();
-	
-	String sausdPartnerLogo();
-	String gradeOption();
-	
-	String lifeboardBannerStyle();
-	String lastLifeboard();
-	String boxLifeboard();
-	String rusdPartnerLogo();
-	String susdPartnerLogo();
-	String lpsPartnerLogo();
-	String valverdePartnerLogo();
 }

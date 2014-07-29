@@ -70,8 +70,8 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		.helpIconBtnPublisher {
 			position: absolute;
 			right: 0;
-			margin-top: -14px;
-			margin-right: 65px;
+			margin-top: -20px;
+			margin-right: 85px;
 			color: #0f76bb;
 			cursor: pointer;
 			font-size: 11px;
@@ -137,6 +137,16 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			margin: 10px 0px 5px 0px;
 			display: inline-block;
 		}
+		.browseContainer{
+			float: left;
+			margin-left: -7px;
+			margin-top: 2px;
+
+		}
+		.standardsBrowseBtn{
+	padding: 4px 4px;
+
+	}
 
 
 	</ui:style>
@@ -175,11 +185,11 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		<g:HTMLPanel>
 		    <g:Label styleName="{style.headerLbl}" ui:field="standardLbl"></g:Label>
 			<g:HTMLPanel  ui:field="standardPanelUc">
-			    <g:HTMLPanel>
-					<g:Button ui:field="browseStandards"/>
+			    <g:HTMLPanel styleName="{style.browseContainer}">
+					<g:Button ui:field="browseStandards" styleName="secondary">Browse</g:Button>
 				</g:HTMLPanel>
 				<g:HTMLPanel>
-					<uc:AppSuggestBox ui:field="standardSgstBox" width="130px" />
+					<uc:AppSuggestBox ui:field="standardSgstBox" width="105px" />
 				</g:HTMLPanel>
 				<g:HTMLPanel>
 				 	<g:Label styleName="{style.helpIconBtn}" ui:field="standardHelpicon" visible="false"/>
@@ -257,7 +267,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		</g:HTMLPanel>
 		
 		<g:HTMLPanel>
-			<g:Label styleName="{style.headerLbl}" ui:field="accessModeLbl"></g:Label>
+			<g:Label styleName="{style.headerLbl}" visible="false"  ui:field="accessModeLbl"></g:Label>
 			<g:HTMLPanel  ui:field="accessModePanel" />
 		</g:HTMLPanel>
 		
