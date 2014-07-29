@@ -30,6 +30,7 @@ package org.ednovo.gooru.client.mvp.play.resource.style;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.ClassName;
 import com.google.gwt.resources.client.CssResource.NotStrict;
 
 /**
@@ -60,5 +61,25 @@ public interface PlayerStyleBundle extends ClientBundle {
 		String rightWrapper();
 		String animationWrapper();
 		String tabButtonsContainer();
+		
+		@ClassName("header-inner")
+		String headerInner();
+		
+		@ClassName("nav-toc-wrapperContainerMain")
+		String navTocWrapperContainerMain();
+		
+		@ClassName("nav-toc-wrapper")
+		String navTocWrapper();
+		
+		String headerbar();
+		
+		@ClassName("studyplayer-container")
+		String studyplayerContainer();
+		
+		String rightPanel();
+		
+		String leftPanel();
+		
+		String playerBodyContainer();
 	}
 }

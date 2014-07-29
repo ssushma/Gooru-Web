@@ -70,5 +70,6 @@ public interface PlaceTokens {
 	String LPS = "lpslibrary1";
 	String MURRIETA = "murrieta";
 	String VALVERDE = "valverde";
+	String LANDINGPAGE = "home";
 
 }
