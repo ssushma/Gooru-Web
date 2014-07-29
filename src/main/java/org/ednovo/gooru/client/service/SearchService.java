@@ -227,5 +227,7 @@ public interface SearchService extends BaseService {
 
 	ArrayList<StandardsLevel4DO> getFourthLevelStandards(String levelOrder,
 			String standardLabel);
+	
+	public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(SearchDo<CodeDo> searchDo)  throws GwtException, ServerDownException; 
 
 }
