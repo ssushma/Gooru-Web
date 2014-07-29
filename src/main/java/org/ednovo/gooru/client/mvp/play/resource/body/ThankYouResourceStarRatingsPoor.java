@@ -442,7 +442,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel{
 			reviewTextAreaTitle.setText(i18n.GL2036());
 			reviewTextAreaTitle.getElement().setAttribute("alt",i18n.GL1855());
 			reviewTextAreaTitle.getElement().setAttribute("title",i18n.GL1855());
-			btnPost.setText("Submit");
+			btnPost.setText(i18n.GL0486());
 			btnPost.getElement().setAttribute("alt","Submit");
 			btnPost.getElement().setAttribute("title","Submit");
 		}
