@@ -47,7 +47,7 @@
 								<p class="">Remix collections and customize content to to meet
 									your students’ needs.</p>
 
-								<g:Button styleName="primary {res.css.btnBlock}">More on Collections</g:Button>
+								<g:Button styleName="primary {res.css.btnBlock}" ui:field="btnMoreOnCollections">More on Collections</g:Button>
 
 							</div>
 						</div>
@@ -61,7 +61,7 @@
 								<p class="">Share collections with students via My Classes. Login
 									is not required to access.
 								</p>
-								<g:Button styleName="primary {res.css.btnBlock}">More on Classes</g:Button>
+								<g:Button styleName="primary {res.css.btnBlock}" ui:field="btnMoreOnClasses">More on Classes</g:Button>
 
 							</div>
 						</div>
@@ -1047,24 +1047,24 @@
 					</div>
 				</div>
 			</section>
-			<section class="getStart">
+			<section class="getStart" id="getStarted">
 				<div class="containerMain">
 					<h2>Get Started</h2>
 					<div class="col-md-7">
 						<div class="getInner">
 							<img src="images/landing-page/get-banner.png" class="img-responsive" />
 							<div class="getContentContainer">
-								<h4>Quickstart guide</h4>
+								<h4><a href="http://support.goorulearning.org/hc/en-us/articles/200600838" target="_blank">Quickstart guide</a></h4>
 								<p>Use this guide for a quick overview of Gooru’s major
 									features.
 								</p>
 
-								<h4>Introducing Gooru to Your Students</h4>
+								<h4><a href="http://support.goorulearning.org/hc/en-us/articles/201853348" target="_blank">Introducing Gooru to Your Students</a></h4>
 								<p>Here are some key features of Gooru to point out to your
 									students as you introduce them to Gooru.
 								</p>
 
-								<h4>How to Gooru</h4>
+								<h4><a href="http://www.goorulearning.org/#students-view&amp;pageSize=5&amp;id=880199d9-cf3c-47ba-8418-838ccd32d3d2&amp;pageNum=0&amp;pos=1" target="_bank">How to Gooru</a></h4>
 								<p>If you’d like a step-by-step guided tutorial to using all the
 									parts of Gooru, take the Gooru Course.
 								</p>
@@ -1078,17 +1078,17 @@
 							<img src="images/landing-page/monitor-ico.png" />
 
 							<div class="clearfix"></div>
-							<h4>Gooru Office Hours</h4>
+							<h4><a href="http://www.eventbrite.com/e/gooru-office-hours-tickets-12378212567?aff=eorg" target="_blank">Gooru Office Hours</a></h4>
 							<p>Join us every Wednesday for a short webinar that starts off
 								with a live demo. Bring your questions!</p>
 
 							<p>
-								<a href="#">Check out our live and online events!</a>
+								<a href="http://about.goorulearning.org/community/events" target="_blank">Check out our live and online events!</a>
 							</p>
 						</div>
 						<div class="getInnerRight">
 							<h3>Stories from the Classroom</h3>
-							<h4>Teacher stories </h4>
+							<h4><a href="http://about.goorulearning.org/community/stories" target="_blank">Teacher stories</a></h4>
 							<p>Learn by example! The stories of teachers who say Gooru has
 								made a difference in their classroom.</p>
 						</div>
