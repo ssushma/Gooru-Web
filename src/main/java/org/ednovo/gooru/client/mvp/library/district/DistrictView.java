@@ -285,26 +285,18 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 		
 		setPlaceToken(placeToken);
 		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
-			landingBanner.getElement().setId("landingSausdBanner");
-			featuredCousesLbl.setText(i18n.GL1901());
-			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL1901());
-			featuredCousesLbl.getElement().setAttribute("title",i18n.GL1901());
+			setLandingBannerMetaData("landingSausdBanner", "", i18n.GL1901(), districtStyleUc.sausdPartnerLogo(), true);
 		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.LIFEBOARD)) {
-			landingBanner.getElement().setId("landingLifeboardBanner");
-			featuredCousesLbl.setText(i18n.GL2052());
-			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL2052());
-			featuredCousesLbl.getElement().setAttribute("title",i18n.GL2052());
-		}
-
-
-		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
-			partnerLogo.setStyleName(districtStyleUc.sausdPartnerLogo());
-			partnerLogo.setVisible(true);
-			partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
+			setLandingBannerMetaData("landingLifeboardBanner", "", i18n.GL2052(), districtStyleUc.sausdPartnerLogo(), false);
+		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)) {
+			setLandingBannerMetaData("landingRusdBanner", "250px", i18n.GL0588(), districtStyleUc.rusdPartnerLogo(), true);
+		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SUSD)) {
+			setLandingBannerMetaData("landingSusdBanner", "250px", i18n.GL2078() + " " + i18n.GL0587(), districtStyleUc.susdPartnerLogo(), true);
+		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.VALVERDE)) {
+			setLandingBannerMetaData("landingValverdeBanner", "250px", i18n.GL2075() + " " + i18n.GL0587(), districtStyleUc.valverdePartnerLogo(), true);
 		} else {
 			partnerLogo.setVisible(false);
 		}
-
 		contributorsContainer.setVisible(false);
 		courseBanner.setVisible(false);
 		featuredEducator.setVisible(false);
@@ -322,6 +314,19 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 		featuredContributorsLink.setTitle(i18n.GL1005());
 		courseImage.setWidth("1000px");
 		courseImage.setHeight("300px");
+	}
+	
+	private void setLandingBannerMetaData(String bannerId, String height, String featuredCourseLbl, String partnerLogoStyle, boolean isPartnerLogoVisible) {
+		landingBanner.getElement().setId(bannerId);
+		if(!height.isEmpty()) {
+			landingBanner.setHeight(height);
+		}
+		featuredCousesLbl.setText(featuredCourseLbl);
+		featuredCousesLbl.getElement().setAttribute("alt",featuredCourseLbl);
+		featuredCousesLbl.getElement().setAttribute("title",featuredCourseLbl);
+		partnerLogo.setStyleName(partnerLogoStyle);
+		partnerLogo.setVisible(isPartnerLogoVisible);
+		partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
 	}
 	
 	private void setSubjectUnits(ArrayList<ProfileLibraryDo> unitList) {

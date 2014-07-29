@@ -93,6 +93,21 @@ public class DistrictBannerView extends Composite {
 			info4.addStyleName(districtStyleUc.lastLifeboard());
 			setLandingBannerText("","",i18n.GL1977(),i18n.GL1978(),i18n.GL1979(),i18n.GL1980());
 			partnerLogo.setVisible(false);
+		} else if(placeToken.contains(PlaceTokens.RUSD_LIBRARY)) {
+			setLandingBannerText(i18n.GL0532(),i18n.GL0533(),"","","","");
+			partnerLogo.setStyleName(districtStyleUc.rusdPartnerLogo());
+			partnerLogo.setVisible(true);
+			bannerContainer.setVisible(false);
+		} else if(placeToken.contains(PlaceTokens.SUSD)) {
+			setLandingBannerText(i18n.GL2058(),i18n.GL2059(),"","","","");
+			partnerLogo.setStyleName(districtStyleUc.susdPartnerLogo());
+			partnerLogo.setVisible(true);
+			bannerContainer.setVisible(false);
+		} else if(placeToken.contains(PlaceTokens.VALVERDE)) {
+			setLandingBannerText(i18n.GL2061(),i18n.GL2062(),"","","","");
+			partnerLogo.setStyleName(districtStyleUc.valverdePartnerLogo());
+			partnerLogo.setVisible(true);
+			bannerContainer.setVisible(false);
 		}
 	}
 	

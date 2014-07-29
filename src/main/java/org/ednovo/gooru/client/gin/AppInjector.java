@@ -34,6 +34,8 @@ import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.home.ClassHomePresenter;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
+import org.ednovo.gooru.client.mvp.community.CommunityPresenter;
+import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter;
 import org.ednovo.gooru.client.mvp.folders.FoldersPresenter;
@@ -44,12 +46,15 @@ import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.sausd.SausdLibraryPresenter;
-import org.ednovo.gooru.client.mvp.landingpage.LandingPagePresenter;
+import org.ednovo.gooru.client.mvp.library.district.susd.SusdLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.valverde.ValVerdeLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fte.FteLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.lps.LpsLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.natgeo.NatGeoLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.ngc.NgcLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryPresenter;
@@ -177,7 +182,7 @@ public interface AppInjector extends ServiceInjector {
 	
 	AsyncProvider<RusdPresenter> getRusdPresenter();
 	
-	AsyncProvider<LandingPagePresenter> getLandingPagePresenter();
+	AsyncProvider<CommunityPresenter> getLandingPagePresenter();
 	
 	AsyncProvider<PreviewPlayerPresenter> getPreviewPlayerPresenter();
 	
@@ -220,4 +225,14 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<LifeboardLibraryPresenter> getLifeboardPresenter();
 
 	AsyncProvider<AddStandardsPresenter> getAddStandardsPresenter();
+
+	AsyncProvider<ContributorsPresenter> getContributorsPresenter();
+
+	AsyncProvider<SusdLibraryPresenter> getSusdLibraryPresenter();
+
+	AsyncProvider<ValVerdeLibraryPresenter> getValVerdeLibraryPresenter();
+
+	AsyncProvider<RusdLibraryPresenter> getRusdLibraryPresenter();
+
+	AsyncProvider<LpsLibraryPresenter> getLpsLibraryPresenter();
 }
