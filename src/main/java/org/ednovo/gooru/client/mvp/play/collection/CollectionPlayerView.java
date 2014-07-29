@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.mvp.play.collection.header.StudyPlayerHeaderView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
+import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
@@ -123,7 +124,8 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		this.eventBus = eventBus;
 		appPopUp=new PopupPanel();
 		appPopUp.setGlassEnabled(true);
-		appPopUp.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setStudyPlayerContainer());
+		//appPopUp.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setStudyPlayerContainer());
+		appPopUp.setStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().studyplayerContainer());
 		appPopUp.add(uiBinder.createAndBindUi(this));
 		//footerView.getNavigationButton().addClickHandler(new ShowTabWidgetView("navigation"));
 		footerView.getNarrationButton().addClickHandler(new ShowTabWidgetView("narration"));
@@ -138,8 +140,6 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		headerView.getAuthorContainer().addClickHandler(new ShowLoginPopupEvent());
 		setAutoHideOnNavigationEventEnabled(true);
 		hidePlayerButtons(true,null);
-		
-		
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
@@ -151,7 +151,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			  headerView.getElement().setAttribute("style", "position:relative;");
 			 ipadSectiondiv.setVisible(true);
 			 androidSectiondiv.setVisible(false);
-
+	
 		  }
 		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {

@@ -499,7 +499,7 @@
 	padding:15px 0;
 }
 .Playlast{
-	min-height:180px;
+	min-height:140px;
 }
 .colleDescriptionBig{
 	font-weight:bold;
@@ -641,31 +641,31 @@
 }
 .reactionCanExplain{
 	background: url(/images/emotics.png) no-repeat;
-	background-position: -7px -4px;
+	background-position: -7px -101px;
 	width: 35px;
 	height: 35px;
 }
 .reactionCanUnderstand{
 	background: url(/images/emotics.png) no-repeat;
-	background-position: -53px -4px;
+	background-position: -53px -101px;
 	width: 35px;
 	height: 35px;
 }
 .reactionDonotUnderstand{
 	background: url(/images/emotics.png) no-repeat;
-	background-position: -141px -4px;
+	background-position: -142px -101px;
 	width: 35px;
 	height: 35px;
 }
 .reactionMeh{
 	background: url(/images/emotics.png) no-repeat;
-	background-position: -95px -4px;
+	background-position: -96px -101px;
 	width: 35px;
 	height: 35px;
 }
 .reactionNeedHelp{
 	background: url(/images/emotics.png) no-repeat;
-	background-position: -184px -4px;
+	background-position: -187px -101px;
 	width: 35px;
 	height: 35px;
 }

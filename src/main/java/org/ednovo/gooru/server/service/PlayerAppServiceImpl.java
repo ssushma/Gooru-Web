@@ -39,6 +39,8 @@ import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
+import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -152,6 +154,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_COLLECTION,simpleCollectionId,getLoggedInSessionToken());
 		url+=getStandardId(rootNodeId);
+		System.out.println("getSimpleCollectionDetils:"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -1398,4 +1401,31 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		int responseStatusCode=new WebService(fileUrl,true).getStatusCode("GET");
 		return 	responseStatusCode;	
 	}
+
+	@Override
+	public Map<String, String> getYoutubeFeedCallback(String utubeId)
+			throws GwtException, ServerDownException {
+		// TODO Auto-generated method stub
+		Map<String, String> youtubeValues=new HashMap<String, String>();
+		try{
+			String url = "http://gdata.youtube.com/feeds/api/videos/"+utubeId+"?v=2&alt=jsonc&prettyprint=true";
+//			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_RATINGS,;
+			System.out.println("getyoutube::"+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
+			JsonRepresentation jsonRep = jsonResponseRep.getJsonRepresentation();
+			System.out.println("embed:"+jsonRep.getJsonObject().getJSONObject("data").getJSONObject("accessControl").get("embed").toString());
+			if(jsonRep.getJsonObject()!=null && jsonRep.getJsonObject().getJSONObject("data")!=null && jsonRep.getJsonObject().getJSONObject("data").getJSONObject("accessControl")!=null){
+				String embed=jsonRep.getJsonObject().getJSONObject("data").getJSONObject("accessControl").getString("embed");
+				String syndicate=jsonRep.getJsonObject().getJSONObject("data").getJSONObject("accessControl").getString("syndicate");
+				youtubeValues.put("embed", embed);
+				youtubeValues.put("syndicate", syndicate);
+			}
+			
+		}catch(Exception e){
+			
+		}
+		return youtubeValues;
+	}
+	
+	
 }

@@ -48,11 +48,11 @@ body {
 	padding-top: 20px;
 	padding-bottom: 20px;
 }
-.gwt-Label {
+/* .gwt-Label {
 	text-align: right;
 	width: 150px;
 	padding-right: 10px;
-}
+} */
 .contentDesc {
 	font-size: 12px;
 	line-height: 120%;

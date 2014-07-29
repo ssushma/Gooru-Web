@@ -43,6 +43,7 @@ import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpAfterThirt
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompleteProfilePresenter;
 import org.ednovo.gooru.client.mvp.authentication.uc.StudentSignUpUc;
 import org.ednovo.gooru.client.mvp.authentication.uc.ThanksEmailConfirmPopupUc;
+import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderEvent;
@@ -99,7 +100,19 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	@UiField
 	SearchHomeFilterVc searchHomeFilter;
 	
+	public static final  Object CONTRIBUTORS_SLOT = new Object();
+	
+	/** 
+	 * This method is to get the contributorsSlot
+	 */
+	@Override
+	public  Object getContributorsSlot() {
+		return CONTRIBUTORS_SLOT;
+	}
+
 	SignUpPresenter signUpViewPresenter = null;
+	
+	ContributorsPresenter contributorsPresenter = null;
 	
 	SignUpCompleteProfilePresenter signUpCompletePresenter = null;
 	
@@ -145,7 +158,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	private boolean isLandingPageLoaded = false;
 	
 	@ProxyStandard
-	@NameToken(PlaceTokens.HOME)
+	@NameToken(PlaceTokens.LANDINGPAGE)
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsHomeProxy extends ProxyPlace<HomePresenter> {
 	}
@@ -159,13 +172,14 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public HomePresenter(UserRegistrationPresenter userRegistrationPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter, IsHomeView view, IsHomeProxy proxy) {
+	public HomePresenter(UserRegistrationPresenter userRegistrationPresenter, ContributorsPresenter contributorsPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter, IsHomeView view, IsHomeProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.userRegistrationPresenter = userRegistrationPresenter;
 		this.signUpCompletePresenter = signUpCompletePresenter;
 		this.signUpAfterThirteenPresenter=signUpAfterThirteenPresenter;
+		this.contributorsPresenter = contributorsPresenter;
 		
 		addRegisteredHandler(SetTexasPlaceHolderEvent.TYPE, new SetTexasPlaceHolderHandler() {
 			
@@ -334,7 +348,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		}
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));	
 	}
-
+	
 	@Override
 	public void onReset() {
 		super.onReset();
@@ -359,6 +373,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		request.getParameter("", "register");
 		callBackMethods();
 		getIntoLibrarypage();
+		setInSlot(CONTRIBUTORS_SLOT, contributorsPresenter);
 	}
 
 	@Override
