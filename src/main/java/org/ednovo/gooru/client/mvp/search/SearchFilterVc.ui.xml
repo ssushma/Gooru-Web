@@ -7,8 +7,8 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			float: left;
 			clear: both;
 			min-height: 450px;
-			width: 180px;
-			padding-left: 10px;
+			width: 185px;
+			padding-left: 14px;
 			margin-right: 10px;
 			overflow-x: hidden;
 			background-color: #FFFFFF;
@@ -144,9 +144,9 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 
 		}
 		.standardsBrowseBtn{
-	padding: 4px 4px;
+			padding: 4px 4px;
 
-	}
+		}
 
 
 	</ui:style>
