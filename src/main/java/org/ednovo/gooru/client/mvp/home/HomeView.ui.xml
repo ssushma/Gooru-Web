@@ -84,6 +84,9 @@
 					</div>
 				</div>
 			</section>
+			<div class="{res.css.learnMoreContainer}">
+			    <g:Anchor styleName="{res.css.secondary}" ui:field="achLearn">Get started with Gooru </g:Anchor>
+			</div>
 			<div class="clearfix"></div>
 			<div class="containerMain communityblock">
 				<h2>Community Curated Collections</h2>
