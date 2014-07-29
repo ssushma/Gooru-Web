@@ -46,6 +46,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -63,7 +64,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements IsHomeView {
 
 	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer;
-	@UiField Button btnSignUp;
+	@UiField Button btnSignUp, btnMoreOnCollections;
 	@UiField Label lblHeading, lblSubHeading; 
 	@UiField TextBoxWithPlaceholder txtSearch;
 	@UiField Button btnSearch;
@@ -334,6 +335,27 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			return searchText;
 		} else {
 			return null;
+		}
+	}
+	
+	@UiHandler("btnMoreOnCollections")
+	public void onClickMoreOnCollections(ClickEvent event){
+		AppClientFactory.setPreviousPlaceRequest(AppClientFactory
+				.getPlaceManager().getCurrentPlaceRequest());
+		Storage stockStore = Storage.getLocalStorageIfSupported();
+
+		if (stockStore != null) {
+			stockStore.setItem("tabKey", "resourceTab");
+		}
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+	}
+	
+	@UiHandler("btnMoreOnClasses")
+	public void onClickMoreOnClasses(ClickEvent event){
+		if (!AppClientFactory.isAnonymous()){
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+		} else {
+			AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
 		}
 	}
 }
