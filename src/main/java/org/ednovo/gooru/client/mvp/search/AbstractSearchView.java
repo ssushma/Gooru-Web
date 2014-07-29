@@ -117,14 +117,14 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		paginationFocPanel.getElement().setId("fnlPaginationFocPanel");
 		searchResultPanel.getElement().setId("appMirageDragContainer");
 		
-		getBrowseBtn().addClickHandler(new ClickHandler() {
+		/*getBrowseBtn().addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
 			getUiHandlers().getAddStandards();
 				
 			}
-		});
+		});*/
 		
 
 	}
@@ -294,10 +294,10 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		searchFilterVc.clearAllFields();
 	}
 	
-	public Button getBrowseBtn()
+	/*public Button getBrowseBtn()
 	{
 		return searchFilterVc.browseStandards;
-	}
+	}*/
 	
 	public void OnStandardsClickEvent(Button standardsButtonClicked)
 	{
@@ -319,7 +319,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	{
 		if(!standardsCode.isEmpty())
 		{
-		searchFilterVc.addStandardFilter(standardsCode);
+//		searchFilterVc.addStandardFilter(standardsCode);
 		AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 		}
 		getUiHandlers().closeStandardsPopup();
