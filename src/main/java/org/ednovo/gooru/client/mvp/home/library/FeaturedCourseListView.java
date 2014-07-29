@@ -168,20 +168,22 @@ public class FeaturedCourseListView extends Composite{
 			}
 			contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getUser().get(j).getGooruUId()+PNG;
 		}else{
-			if(courseDo.getCreator().getGender().equalsIgnoreCase(MALE)) {
-				authorName = (i18n.GL_GRR_BYMR()+" ")+courseDo.getCreator().getLastName();
-			} else if(courseDo.getCreator().getGender().equalsIgnoreCase(FEMALE)) {
-				authorName = (i18n.GL_GRR_BYMS()+" ")+courseDo.getCreator().getLastName();
-			} else {
-				authorName = courseDo.getCreator().getLastName();
-				if(courseDo.getCreator().getLastName().contains("RUSD")) {
-					authorName = i18n.GL1747() +" "+authorName;
+			if (courseDo.getCreator() != null){
+				if(courseDo.getCreator().getGender() != null && courseDo.getCreator().getGender().equalsIgnoreCase(MALE)) {
+					authorName = (i18n.GL_GRR_BYMR()+" ")+courseDo.getCreator().getLastName();
+				} else if(courseDo.getCreator().getGender() != null && courseDo.getCreator().getGender().equalsIgnoreCase(FEMALE)) {
+					authorName = (i18n.GL_GRR_BYMS()+" ")+courseDo.getCreator().getLastName();
+				} else {
+					authorName = courseDo.getCreator().getLastName();
+					if(courseDo.getCreator().getLastName().contains("RUSD")) {
+						authorName = i18n.GL1747() +" "+authorName;
+					}
 				}
+				courseAuthor.setText(authorName);
+				courseAuthor.getElement().setAttribute("alt",authorName );
+				courseAuthor.getElement().setAttribute("title",authorName);
+				contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG;
 			}
-			courseAuthor.setText(authorName);
-			courseAuthor.getElement().setAttribute("alt",authorName );
-			courseAuthor.getElement().setAttribute("title",authorName);
-			contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG; 
 		}
 		contributorImage.setUrl(contributorProfileImage);
 		contributorImage.addErrorHandler(new ErrorHandler() {

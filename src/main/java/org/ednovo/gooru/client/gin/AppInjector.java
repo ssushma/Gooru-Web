@@ -34,6 +34,8 @@ import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.home.ClassHomePresenter;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
+import org.ednovo.gooru.client.mvp.community.CommunityPresenter;
+import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.error.ErrorPresenter;
 import org.ednovo.gooru.client.mvp.folders.FoldersPresenter;
@@ -42,7 +44,6 @@ import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
-import org.ednovo.gooru.client.mvp.landingpage.LandingPagePresenter;
 import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryPresenter;
@@ -181,7 +182,7 @@ public interface AppInjector extends ServiceInjector {
 	
 	AsyncProvider<RusdPresenter> getRusdPresenter();
 	
-	AsyncProvider<LandingPagePresenter> getLandingPagePresenter();
+	AsyncProvider<CommunityPresenter> getLandingPagePresenter();
 	
 	AsyncProvider<PreviewPlayerPresenter> getPreviewPlayerPresenter();
 	
@@ -225,6 +226,8 @@ public interface AppInjector extends ServiceInjector {
 
 	AsyncProvider<AddStandardsPresenter> getAddStandardsPresenter();
 
+	AsyncProvider<ContributorsPresenter> getContributorsPresenter();
+
 	AsyncProvider<SusdLibraryPresenter> getSusdLibraryPresenter();
 
 	AsyncProvider<ValVerdeLibraryPresenter> getValVerdeLibraryPresenter();
@@ -232,5 +235,4 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<RusdLibraryPresenter> getRusdLibraryPresenter();
 
 	AsyncProvider<LpsLibraryPresenter> getLpsLibraryPresenter();
-
 }

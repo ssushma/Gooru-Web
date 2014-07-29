@@ -177,10 +177,17 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			public void onClick(ClickEvent event) {
 				HTMLEventPanel clickedElement = (HTMLEventPanel)event.getSource();
 				String codeStandardsVal = clickedElement.getElement().getAttribute("id");
+				if(levelOneData.getCode() != null)
+				{
 				if(levelOneData.getCode().equalsIgnoreCase("CA.SCI"))
 				{
 					codeStandardsVal = clickedElement.getElement().getAttribute("dupid")+","+clickedElement.getElement().getAttribute("id");
 					getFirstLevelObjects("1",codeStandardsVal);
+				}
+				else
+				{
+					getFirstLevelObjects("1",codeStandardsVal);
+				}
 				}
 				else
 				{
