@@ -453,10 +453,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		gradeLbl.getElement().setAttribute("alt",i18n.GL0165());
 		gradeLbl.getElement().setAttribute("title",i18n.GL0165());
 		
-		accessModeLbl.setText("Access Mode");
+		accessModeLbl.setText(i18n.GL2093());
 		accessModeLbl.getElement().setId("lblAccessMode");
-		accessModeLbl.getElement().setAttribute("alt","Access Mode");
-		accessModeLbl.getElement().setAttribute("title","Access Mode");
+		accessModeLbl.getElement().setAttribute("alt",i18n.GL2093());
+		accessModeLbl.getElement().setAttribute("title",i18n.GL2093());
 		
 		clearAll.setText(i18n.GL0725());
 		clearAll.getElement().setId("lblClearAll");
@@ -911,12 +911,12 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			
 			/*resourceLinkLbl.addStyleName(style.active());
 			collectionLinkLbl.removeStyleName(style.active());*/
-			renderAccessModeCheckBox(accessModePanel,"Auditory");
-			renderAccessModeCheckBox(accessModePanel,"Tactile");
-			renderAccessModeCheckBox(accessModePanel,"Visual");
-			renderAccessModeCheckBox(accessModePanel,"Color Dependent");
-			renderAccessModeCheckBox(accessModePanel,"Text on Image");
-			renderAccessModeCheckBox(accessModePanel,"Textual");
+			renderAccessModeCheckBox(accessModePanel,i18n.GL2094());
+			renderAccessModeCheckBox(accessModePanel,i18n.GL2095());
+			renderAccessModeCheckBox(accessModePanel,i18n.GL2096());
+			renderAccessModeCheckBox(accessModePanel,i18n.GL2097());
+			renderAccessModeCheckBox(accessModePanel,i18n.GL2098());
+			renderAccessModeCheckBox(accessModePanel,i18n.GL2099());
 			
 			renderOERCheckBox(oerPanel, "not_show_OER", "OER");
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
