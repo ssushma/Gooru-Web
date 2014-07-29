@@ -22,7 +22,7 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.library.sausd;
+package org.ednovo.gooru.client.mvp.library.district;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
@@ -38,7 +38,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SausdFeaturedView extends Composite {
+public class DistrictFeaturedView extends Composite {
 	
 	@UiField HTMLEventPanel featuredCourse;
 	@UiField Label courseTitle;
@@ -71,10 +71,10 @@ public class SausdFeaturedView extends Composite {
 			.create(FeaturedCourseListViewUiBinder.class);
 
 	interface FeaturedCourseListViewUiBinder extends
-			UiBinder<Widget, SausdFeaturedView> {
+			UiBinder<Widget, DistrictFeaturedView> {
 	}
 
-	public SausdFeaturedView(ProfileLibraryDo profileLibraryDo) {
+	public DistrictFeaturedView(ProfileLibraryDo profileLibraryDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setData(profileLibraryDo);
 	}

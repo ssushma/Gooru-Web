@@ -99,6 +99,17 @@ import org.ednovo.gooru.client.mvp.home.register.UserRegistrationView;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadView;
 import org.ednovo.gooru.client.mvp.image.upload.IsImageUploadView;
+import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
+import org.ednovo.gooru.client.mvp.library.district.DistrictView;
+import org.ednovo.gooru.client.mvp.library.district.IsDistrictView;
+import org.ednovo.gooru.client.mvp.library.district.lifeboard.IsLifeboardLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter.IsLifeboardLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.sausd.IsSausdLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.sausd.SausdLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.sausd.SausdLibraryPresenter.IsSausdLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.district.sausd.SausdLibraryView;
 import org.ednovo.gooru.client.mvp.landingpage.IsLandingPageView;
 import org.ednovo.gooru.client.mvp.landingpage.LandingPagePresenter;
 import org.ednovo.gooru.client.mvp.landingpage.LandingPagePresenter.IsLandingPageProxy;
@@ -150,10 +161,6 @@ import org.ednovo.gooru.client.mvp.library.rusd.IsRusdView;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter.IsRusdProxy;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdView;
-import org.ednovo.gooru.client.mvp.library.sausd.IsSausdView;
-import org.ednovo.gooru.client.mvp.library.sausd.SausdPresenter;
-import org.ednovo.gooru.client.mvp.library.sausd.SausdPresenter.IsSausdProxy;
-import org.ednovo.gooru.client.mvp.library.sausd.SausdView;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter.IsCollectionPlayerProxy;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerView;
@@ -261,6 +268,9 @@ import org.ednovo.gooru.client.mvp.search.resource.IsResourceSearchView;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter.IsResourceSearchProxy;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchView;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsView;
+import org.ednovo.gooru.client.mvp.search.standards.IsAddStandardsView;
 import org.ednovo.gooru.client.mvp.settings.IsUserSettingsView;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter.IsUserSettingProxy;
@@ -493,7 +503,6 @@ public class AppModule extends AppPresenterModule {
 		
 		
 
-		bindPresenter(SausdPresenter.class, IsSausdView.class, SausdView.class,IsSausdProxy.class);
 		bindPresenter(DrivePresenter.class, IsDriveView.class, DriveView.class,IsDriveyProxy.class);
 
 		bindPresenterWidget(AddResourceContainerPresenter.class, IsAddResourceContainerView.class, AddResourceContainerView.class);
@@ -503,6 +512,12 @@ public class AppModule extends AppPresenterModule {
 
 		bindPresenter(YouthVoicesLibraryPresenter.class, IsYouthVoicesLibraryView.class, YouthVoicesLibraryView.class,IsYouthVoicesLibraryProxy.class);
 		bindPresenter(NatGeoLibraryPresenter.class, IsNatGeoLibraryView.class, NatGeoLibraryView.class,IsNatGeoLibraryProxy.class);
+		
+		bindPresenterWidget(AddStandardsPresenter.class, IsAddStandardsView.class, AddStandardsView.class);
 
+		bindPresenterWidget(DistrictPresenter.class, IsDistrictView.class, DistrictView.class);
+		bindPresenter(SausdLibraryPresenter.class, IsSausdLibraryView.class, SausdLibraryView.class,IsSausdLibraryProxy.class);
+		bindPresenter(LifeboardLibraryPresenter.class, IsLifeboardLibraryView.class, LifeboardLibraryView.class,IsLifeboardLibraryProxy.class);
+		
 	}
 }

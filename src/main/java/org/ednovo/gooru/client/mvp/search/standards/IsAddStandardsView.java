@@ -22,57 +22,45 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.library.sausd;
+package org.ednovo.gooru.client.mvp.search.standards;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
+
+import com.google.gwt.user.client.ui.Button;
+import com.gwtplatform.mvp.client.PopupView;
+
 /**
- * @fileName : LibraryStyleBundle.java
+ * @author Search Team
  *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
  */
+public interface IsAddStandardsView extends PopupView, IsViewWithHandlers<AddStandardsUiHandlers> {
 
-import com.google.gwt.resources.client.CssResource;
+	String setStandardsVal();
 
+	Button getAddBtn();
 
-public interface SausdStyleBundle extends CssResource {
-	String conceptTitle();
-	String lessonTitle();
-	String conceptTitleActive();
-	String courseOption();
-	String aboutGooruAnrPadding();
-	String unitLiActive();
-	String header();
-	String course();
-	String resourceImage();
-	String blueLink();
+	void hidePopup();
 
-	String bannerSpanBlock();
-	String resourcesInsideSubStyle();
-	String collectionInfoSubStyle();
-	String collectionViewerSubStyle();
-	String tabsLi();
-	String tabsLiInactive();
-	String singleLink();
-	String active();
-	String paginationPanel();
-	String twoColumnContainer();
-	String subDropdown();
-	String unitOption();
-	String popularStarImage();
-	String math();
-	String partnerMenuPadding();
-	String lessonTitleProfile();
-	String collectionSmall();
-	String conceptTitleLeft();
+	void SetData(StandardsLevel1DO levelOneData, int valArr);
+
+	void loadSecondLevelContianerObjects(ArrayList<StandardsLevel2DO> result);
+
+	void loadThirdLevelContianerObjects(ArrayList<StandardsLevel3DO> result);
+
+	void loadFourthLevelContianerObjects(ArrayList<StandardsLevel4DO> result);
+
+	void loadData();
+
+	void setDefaultCCSS();
+
 	
-	String rusdPartnerLogo();
-	String sausdPartnerLogo();
-	String gradeOption();
 }

@@ -127,7 +127,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		editCollection.getElement().setAttribute("alt",i18n.GL0636());
 		editCollection.getElement().setAttribute("title",i18n.GL0636());
 		
-		panelAssign.getElement().getStyle().setMarginBottom(10, Unit.PX);
+		panelAssign.getElement().getStyle().setMarginBottom(3, Unit.PX);
 		loginCustom.getElement().getStyle().setMarginBottom(15, Unit.PX);
 		isDraggedFromSearch=false;
 		Window.enableScrolling(false);

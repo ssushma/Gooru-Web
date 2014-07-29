@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
@@ -68,6 +69,8 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 
 	private AddResourceContainerPresenter addResourceContainerPresenter;
 	
+	AddStandardsPresenter addStandardsPresenter = null;
+	
 	private boolean isLeftFolderClicked=false;
 	
 	@ProxyCodeSplit
@@ -85,9 +88,10 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 	 *            {@link Proxy}
 	 */
 	@Inject
-	public CollectionSearchPresenter(IsCollectionSearchView view, IsCollectionSearchProxy proxy, SignUpPresenter signUpViewPresenter,AddResourceContainerPresenter addResourceContainerPresenter) {
-		super(view, proxy, signUpViewPresenter);
+	public CollectionSearchPresenter(IsCollectionSearchView view, IsCollectionSearchProxy proxy, SignUpPresenter signUpViewPresenter,AddResourceContainerPresenter addResourceContainerPresenter, AddStandardsPresenter addStandardsPresenter) {
+		super(view, proxy, signUpViewPresenter,addStandardsPresenter);
 		this.addResourceContainerPresenter = addResourceContainerPresenter;
+		this.addStandardsPresenter = addStandardsPresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(RefreshDisclosurePanelForFoldersEvent.TYPE, this);
 	}

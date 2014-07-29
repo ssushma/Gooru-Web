@@ -197,6 +197,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	boolean isValidate = true;
 	
+	private static final String GOOGLE_DRIVE = "Google Drive";
+	
 	private AppMultiWordSuggestOracle standardSuggestOracle;
 	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
 	private static final String FLT_CODE_ID = "id";
@@ -1237,9 +1239,16 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												urlStr = urlStr.replaceAll("feature=player_embedded&", "");
 //												final String urlStrFinal=urlStr;
 //												final String descriptionStrFinal=descriptionStr;
+
 												System.out.println("mobileFriendly..."+mobileFriendly);
 												System.out.println("mediaFeature..."+mediaFeature);
 												System.out.println("accessHizard.."+accessHizard);
+
+												String hostName=null;
+												if(isGoogleDriveFile){
+													hostName=GOOGLE_DRIVE;
+												}
+
 												if(collectionDo.getSharing().equalsIgnoreCase("public")){
 //													if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
 //														AppClientFactory.getInjector().getResourceService().updateFileShareToAnyoneWithLink(googleDriveItemDo.getId(), new SimpleAsyncCallback<GoogleDriveDo>() {
@@ -1250,7 +1259,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //															}
 //														});
 //													}else{
-														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,accessHizard,mediaFeature,mobileFriendly);
+
+														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,hostName,accessHizard,mediaFeature,mobileFriendly);
+
+														
 														/*addResourceBtnLbl.setEnabled(true);
 														addResourceBtnLbl.getElement().removeClassName("secondary");
 														addResourceBtnLbl.getElement().addClassName("primary");*/	
@@ -1266,7 +1278,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //															}
 //														});
 //													}else{
-														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,accessHizard,mediaFeature,mobileFriendly);
+
+														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,hostName,accessHizard,mediaFeature,mobileFriendly);
+
 														/*addResourceBtnLbl.setEnabled(true);
 														addResourceBtnLbl.getElement().removeClassName("secondary");
 														addResourceBtnLbl.getElement().addClassName("primary");*/	
@@ -1287,7 +1301,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		}
 	}
 
-	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime, boolean conformationFlag,String educationalUse,String momentsOfLearning,List<CodeDo> standards,String accessHizard,String mediaFeature,String mobileFriendly);
+
+	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime, boolean conformationFlag,String educationalUse,String momentsOfLearning,List<CodeDo> standards,String hostName,String accessHizard,String mediaFeature,String mobileFriendly);
 
 //	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime);
 

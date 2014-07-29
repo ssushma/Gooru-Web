@@ -42,6 +42,9 @@ import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
+import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
+import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.sausd.SausdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.landingpage.LandingPagePresenter;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter;
@@ -54,7 +57,6 @@ import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
-import org.ednovo.gooru.client.mvp.library.sausd.SausdPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
@@ -68,6 +70,7 @@ import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
@@ -202,7 +205,7 @@ public interface AppInjector extends ServiceInjector {
 
 	AsyncProvider<CfciLibraryPresenter> getCfciLibraryPresenter();
 	
-	AsyncProvider<SausdPresenter> getSausdPresenter();
+	AsyncProvider<DistrictPresenter> getDistrictPresenter();
 
 	AsyncProvider<DrivePresenter> getDrivePresenter();
 	
@@ -211,4 +214,10 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<NatGeoLibraryPresenter> getNatGeoLibraryPresenter();
 
 	AsyncProvider<YouthVoicesLibraryPresenter> getYouthVoicesLibraryPresenter();
+	
+	AsyncProvider<SausdLibraryPresenter> getSausdPresenter();
+
+	AsyncProvider<LifeboardLibraryPresenter> getLifeboardPresenter();
+
+	AsyncProvider<AddStandardsPresenter> getAddStandardsPresenter();
 }
