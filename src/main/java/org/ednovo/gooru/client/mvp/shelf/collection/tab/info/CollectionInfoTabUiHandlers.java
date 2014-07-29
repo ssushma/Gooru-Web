@@ -71,4 +71,8 @@ public interface CollectionInfoTabUiHandlers extends BaseUiHandlers {
 
 	void deleteCourseOrStandard(String collectionId, String courseCode);
 
+	void getAutoSuggestedStandardsList(SearchDo<CodeDo> standardSearchDo);
+	
+	
+
 }
