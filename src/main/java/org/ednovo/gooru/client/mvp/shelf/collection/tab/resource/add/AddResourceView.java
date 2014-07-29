@@ -353,7 +353,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		
 	
 		@Override
-		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag,final String educationalUse,final String momentsOfLearning,final List<CodeDo> standards) {
+		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag,final String educationalUse,final String momentsOfLearning,final List<CodeDo> standards,final String accessHizard,final String mediaFeature,final String mobileFriendly) {
 //			this.setVisible(false);
 			
 			 webResourceId = idStr;
@@ -392,7 +392,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 					
 					@Override
 					public void addWebResource() {
-						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd,educationalUse,momentsOfLearning,standards);
+						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd,educationalUse,momentsOfLearning,standards,accessHizard,mediaFeature,mobileFriendly);
 						/*webResourcePreview.lblConfirmAdding.getElement().getStyle().setDisplay(Display.BLOCK);
 						webResourcePreview.actionPanel.getElement().getStyle().setDisplay(Display.NONE);*/
 						webResourcePreview.hide();
@@ -423,7 +423,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				webResourcePreview.show();
 				
 			}else{
-				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime,educationalUse,momentsOfLearning,standards);
+				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime,educationalUse,momentsOfLearning,standards,accessHizard,mediaFeature,mobileFriendly);
 			}
 		}
 		

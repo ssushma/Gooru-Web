@@ -51,7 +51,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageHandler, EventHandler{
 	
-	void addResource(String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr,Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards);
+	void addResource(String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr,Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,String accessHizard,String mediaFeature,String mobileFriendly);
 
 	void getResourceMetaInfo(String url);
 	

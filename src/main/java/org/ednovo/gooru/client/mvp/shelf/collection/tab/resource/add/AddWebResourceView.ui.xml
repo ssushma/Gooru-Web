@@ -7,6 +7,9 @@
 		<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle"
 		field="res1" />
+		<ui:with
+		type="org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle"
+		field="res2" />
 	<g:HTMLPanel styleName="{res.css.myFolderCollectionFormContainer}" ui:field="contentPanel">
         <g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}" ui:field="urlContianer">
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="urlTitle"></g:HTMLPanel>
@@ -363,7 +366,7 @@
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="readingPanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="readingText"></g:HTMLPanel>
-					</g:HTMLPanel>pnlPreparingTheLearningText
+					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="textbookPanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
@@ -442,10 +445,43 @@
 					</g:FlowPanel>
 				</g:FlowPanel>
         <!-- Standards End -->
+        
+      	<!--accessHazard -->
+      	<g:Label styleName="{res.css.clearfix}"></g:Label>
+		      <g:Label styleName="{res.css.h5}" ui:field="accessHazard"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="flashingHazard"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="motionSimulationHazard"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="soundHazard"></g:Label>
+		      <g:Label styleName="{res.css.clearfix}"></g:Label>
+      	 <!-- accessHazard End -->
+      	 <!--mediaLabel -->
+      	 <br />
+			  <g:Label styleName="{res.css.h5}" ui:field="mediaLabel" />
+ 		      <g:HTMLPanel styleName="{res.css.dropdownContainerInstructional}" >
+ 		      <g:Label ui:field="lblMediaPlaceHolder" styleName="{res.css.placeHolderText}"></g:Label>
+							<g:Label ui:field="lblMediaFeatureArrow" styleName="{res.css.arrowInstructional}"></g:Label>
+		       <g:ScrollPanel ui:field="spanelMediaFeaturePanel"
+								styleName="{res.css.scrollPanelContainerInstructional}">
+								<g:HTMLPanel ui:field="htmlMediaFeatureListContainer"
+									styleName=""></g:HTMLPanel>
+							</g:ScrollPanel>
+		      </g:HTMLPanel>
+      	 <!-- mediaLabel End -->
+      	  <!--moblieFriendly -->
+      	 <g:HTMLPanel styleName="{res.css.h5} {res.css.selectsection} {res.css.fRight}"><g:InlineLabel ui:field="moblieFriendly"></g:InlineLabel><br />
+		    <g:Button styleName="{res.css.OnButtonDeActive}" ui:field="mobileYes"></g:Button>
+		    <g:Button styleName="{res.css.OnButtonDeActive}" ui:field="mobileNo"></g:Button>
+		 </g:HTMLPanel>
+      	 <!-- moblieFriendly End -->
+      	 
+      	 
         <g:Label styleName="" ui:field="driveFileInfoLbl"></g:Label>
+        
           <g:HTMLPanel styleName="{res.css.resourceRightsContainer}">
-        	<g:CheckBox ui:field="rightsChkBox" styleName="{res.css.resourceRightsCheckBox}" checked="true"></g:CheckBox>
-        	<g:Label ui:field="rightsLbl" styleName="{res.css.ownResourceFormDeclarationText}"></g:Label> 
+           
+        		<g:CheckBox ui:field="rightsChkBox" styleName="{res.css.resourceRightsCheckBox}" checked="true"></g:CheckBox>
+        		<g:Label ui:field="rightsLbl" styleName="{res.css.ownResourceFormDeclarationText}"></g:Label> 
+        	
      		<uc:HTMLEventPanel ui:field="lblContentRights" styleName="{res.css.ownResourceFormRightsContent}">
 	        	<g:HTMLPanel styleName="{res.css.resourceRightsPopupContainer}" ui:field="panelContentRights">
 					<g:HTMLPanel styleName="{res.css.arrowShadow}"></g:HTMLPanel>

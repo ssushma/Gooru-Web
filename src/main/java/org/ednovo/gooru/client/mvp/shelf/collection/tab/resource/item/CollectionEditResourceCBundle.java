@@ -473,6 +473,18 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
         String errorMsgLabel();
         String editpdfContainer();
         String stopPdfLbl();
+        String h5();
+        String li();
+        String clearfix();
+        String dropdownContainerInstructional();
+        String placeHolderText();
+        String arrowInstructional();
+        String scrollPanelContainerInstructional();
+        String selectsection();
+        String fRight();
+        String OnButtonDeActive();
+       
+           
 	}
 
 	@Source("CollectionEditResource.css")
