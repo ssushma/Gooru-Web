@@ -209,7 +209,7 @@ public class CollectionShareTabVc extends Composite {
 		finalTeacherTipLabelContainer
 		.addMouseOutHandler(new OnCollectionDescriptionOut());
 		
-		shareCollectiontext.setText(i18n.GL0545().toUpperCase());
+		shareCollectiontext.setText(i18n.GL0545());
 		shareCollectiontext.getElement().setId("lblShareCollectiontext");
 		shareCollectiontext.getElement().setAttribute("alt",i18n.GL0545());
 		shareCollectiontext.getElement().setAttribute("title",i18n.GL0545());
