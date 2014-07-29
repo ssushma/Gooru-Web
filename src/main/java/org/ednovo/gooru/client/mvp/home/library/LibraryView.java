@@ -103,7 +103,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	HTMLPanel landingBanner;
 
 	@UiField
-	HTMLPanel container, panelLandingPage;
+	HTMLPanel container;
 
 	@UiField
 	HTMLPanel featuredCourseTabs;
@@ -288,24 +288,13 @@ public class LibraryView extends Composite implements  ClickHandler {
 				partnerLogo.setVisible(true);
 				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
 				landingBanner.setVisible(false);
-				container.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? false : true);
-				panelLandingPage.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? true : false);
 			} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
 				partnerLogo.setStyleName(libraryStyleUc.sausdPartnerLogo());
 				partnerLogo.setVisible(true);
 				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
 				landingBanner.setVisible(false);
-				container.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? false : true);
-				panelLandingPage.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? true : false);
-			} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.COMMUNITY)) {
-//				courseTabs.setVisible(false);
-//				partnerLogo.setVisible(false);
-				container.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? false : true);
-				panelLandingPage.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? true : false);
 			}else {
 				partnerLogo.setVisible(false);
-				container.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? false : true);
-				panelLandingPage.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? true : false);
 			}
 
 			contributorsContainer.setVisible(false);
@@ -463,6 +452,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 *
 	 */
 	public void loadContributorsPage(String callBack, String placeToken) {
+		System.out.println("place token : "+placeToken);
 		setPlaceToken(placeToken);
 		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(COURSE_ID);
 		String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UNIT_ID);
@@ -512,8 +502,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			}
 			featuredEducator.setVisible(true);
 			courseBanner.setVisible(true);
-			container.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? false : true);
-			panelLandingPage.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? true : false);
+			container.setVisible(true);
 			
 			if(standardId == null) {
 				String subjectName = getSubjectNameBySubjectId(courseMap, subjectId);
@@ -548,8 +537,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			featuredEducator.setVisible(false);
 			courseBanner.setVisible(false);
 			landingBanner.setVisible(true);
-			container.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? false : true);
-			panelLandingPage.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? true : false);
+			container.setVisible(true);
 			featuredCourseTabs.setVisible(true);
 			featuredCousesLbl.setVisible(true);
 			if((callBack!=previousCallBack)||(courseId!=previousCourseId)) {
@@ -578,8 +566,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			featuredCourseTabs.setVisible(false);
 			featuredCousesLbl.setVisible(false);
 			courseBanner.setVisible(true);
-			container.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? false : true);
-			panelLandingPage.setVisible(placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ? true : false);
+			container.setVisible(true);
 		}
 		this.previousCallBack = callBack;
 		this.previousCourseId = courseId;

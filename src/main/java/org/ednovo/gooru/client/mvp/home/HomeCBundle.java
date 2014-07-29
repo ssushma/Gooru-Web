@@ -512,6 +512,16 @@ public interface HomeCBundle extends ClientBundle{
 		String setAsCenterPopup();
 		String okButtonmargin();
 		String removingText();
+		
+//		New Landing Page Css
+		String headerPanel();
+		
+		String signUpButton();
+
+		String header();
+
+		String subheader();
+		String btnBlock();
 	}
      @Source("Home.css")
      HomeCss css();
