@@ -719,7 +719,6 @@ public class AddResourceContainerView extends
 
 	@Override
 	public void clearSelectedId() {
-		System.out.println("inside clearSelectedId method");
 		selectedCollectionGooruOid = null;
 		createCollectionbuttonsContainer.setVisible(true);
 		dropdownListContainerScrollPanel.setVisible(true);
