@@ -483,6 +483,7 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
         String selectsection();
         String fRight();
         String OnButtonDeActive();
+        String accessHazard();
        
            
 	}
