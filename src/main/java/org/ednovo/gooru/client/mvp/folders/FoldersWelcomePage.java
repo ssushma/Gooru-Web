@@ -35,6 +35,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -70,6 +71,7 @@ public class FoldersWelcomePage extends Composite {
 
 	public FoldersWelcomePage() {
 		initWidget(uiBinder.createAndBindUi(this));
+		Window.enableScrolling(true);
 
 		SetButtonHandler setButtonVisibility = new SetButtonHandler() {
 

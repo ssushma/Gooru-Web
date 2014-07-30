@@ -109,7 +109,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	
 	private static final String COURSE_CODE_ID = "id";
 	
-	private static final String FLT_SOURCE_CODE_ID = 	"flt.sourceCodeId";
+	private static final String FLT_SOURCE_CODE_ID = "flt.sourceCodeId";
 	
 	private static final String COLLECTION_EDIT_EVENT ="collection-edit";
 	
@@ -669,6 +669,7 @@ public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(
 	// TODO Auto-generated method stub
 	JsonRepresentation jsonRep=null;
 	String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SUGGEST_STANDARD_BY_FILTER_Source_CodeId, getLoggedInSessionToken(), searchDo.getSearchQuery());
+	System.out.println("searchDo.getFilters():::::::"+searchDo.getFilters());
 	if(searchDo.getFilters()!=null && searchDo.getFilters().size()>0) {
 		url = url + "&"+FLT_SOURCE_CODE_ID+"="+searchDo.getFilters().get(FLT_SOURCE_CODE_ID);
 	}

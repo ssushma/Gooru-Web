@@ -2063,8 +2063,24 @@ fieldset {
 .errorContent{
 	text-align: center;
 }
+
 .reportPopup {
 	background: none repeat scroll 0 0 #FFFFFF;
 	height: 630px;
 	width: 800px;
 }
+
+
+.panelHeight{
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 63.75%;
+	padding: 0px 0px 0px 12%;
+}
+@media screen and (min-width: 0px) and (max-width: 1275px) {
+	.panelHeight{
+		width:100%;
+		min-width:100%
+	}
+}
+

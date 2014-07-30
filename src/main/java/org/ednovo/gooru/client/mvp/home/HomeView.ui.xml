@@ -14,7 +14,9 @@
 				<g:Label styleName="{res.css.subheader}" ui:field="lblSubHeading"
 					text="{i18n.GL2047}"></g:Label>
 				<g:Button styleName="primary {res.css.signUpButton}"
-					ui:field="btnSignUp" text="{i18n.GL0186}"></g:Button>
+					ui:field="btnSignUp" text="{i18n.GL2101}"></g:Button>
+				<g:Label styleName="{res.css.description}" ui:field="lblDescription"
+					text="{i18n.GL2102}"></g:Label>
 			</g:HTMLPanel>
 			<section class="searchContainer">
 				<div class="containerMain">
@@ -30,8 +32,7 @@
 									or search over 18M resources</p>
 
 								<tbp:TextBoxWithPlaceholder
-									styleName="form-control" placeholder="e.g. Shakespeare"
-									ui:field="txtSearch"></tbp:TextBoxWithPlaceholder>
+									styleName="form-control" placeholder="{i18n.GL2073}" ui:field="txtSearch"></tbp:TextBoxWithPlaceholder>
 								<g:Button styleName="primary" ui:field="btnSearch"
 									text="{i18n.GL0176}"></g:Button>
 
@@ -47,7 +48,8 @@
 								<p class="">Remix collections and customize content to to meet
 									your students’ needs.</p>
 
-								<g:Button styleName="primary {res.css.btnBlock}" ui:field="btnMoreOnCollections">More on Collections</g:Button>
+								<g:Button styleName="primary {res.css.btnBlock}"
+									ui:field="btnMoreOnCollections">More on Collections</g:Button>
 
 							</div>
 						</div>
@@ -61,7 +63,8 @@
 								<p class="">Share collections with students via My Classes. Login
 									is not required to access.
 								</p>
-								<g:Button styleName="primary {res.css.btnBlock}" ui:field="btnMoreOnClasses">More on Classes</g:Button>
+								<g:Button styleName="primary {res.css.btnBlock}"
+									ui:field="btnMoreOnClasses">More on Classes</g:Button>
 
 							</div>
 						</div>
@@ -85,7 +88,8 @@
 				</div>
 			</section>
 			<div class="{res.css.learnMoreContainer}">
-			    <g:Anchor styleName="{res.css.secondary}" ui:field="achLearn">Get started with Gooru </g:Anchor>
+				<g:Anchor styleName="{res.css.secondary}" ui:field="achLearn">Get
+					started with Gooru </g:Anchor>
 			</div>
 			<div class="clearfix"></div>
 			<div class="containerMain communityblock">
@@ -133,20 +137,12 @@
 								</div><!-- /.container-fluid -->
 							</nav>
 						</div>
-						<div class="blueBand blueBandElementary">Elementary School</div>
+						<div class="blueBand">Elementary School</div>
+
+
+
 						<div class="dataTableResult">
 							<div class="col-md-3">
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=44881">Kindergarten Science</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p>25 </p>
-									</div>
-								</div>
 								<div class="row">
 									<div class="col-md-8">
 										<p>
@@ -155,14 +151,14 @@
 										</p>
 									</div>
 									<div class="col-md-4">
-										<p> 39 </p>
+										<p>39 </p>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=77838">Science 2</a>
+												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=	77838">Science 2</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -177,7 +173,7 @@
 										</p>
 									</div>
 									<div class="col-md-4">
-										<p> 120 </p>
+										<p> 120</p>
 									</div>
 								</div>
 								<div class="row">
@@ -188,7 +184,7 @@
 										</p>
 									</div>
 									<div class="col-md-4">
-										<p> 135 </p>
+										<p>135</p>
 									</div>
 								</div>
 								<div class="row">
@@ -202,108 +198,11 @@
 										<p> 147 </p>
 									</div>
 								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=20186">Earth Science</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 236 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=20369">Life Science</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 214 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=20573">Physical Science</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 243 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=22437">Environmental Science</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 342 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=22702">Chemistry</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 376 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=22185">Biology</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 528 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=20865">Astronomy</a>
-										</p>
-									</div>
-									<div class="col-md-4">
 
-										<p> 445 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=22912">Physics</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 168 </p>
-									</div>
-								</div>
+
+
 							</div>
 							<div class="col-md-3">
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=47673">Kindergarten Math</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 36 </p>
-									</div>
-								</div>
 								<div class="row">
 									<div class="col-md-8">
 										<p>
@@ -334,7 +233,7 @@
 										</p>
 									</div>
 									<div class="col-md-4">
-										<p> 97 </p>
+										<p> 97</p>
 									</div>
 								</div>
 								<div class="row">
@@ -345,7 +244,7 @@
 										</p>
 									</div>
 									<div class="col-md-4">
-										<p> 195 </p>
+										<p> 195</p>
 									</div>
 								</div>
 								<div class="row">
@@ -359,131 +258,10 @@
 										<p> 188 </p>
 									</div>
 								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=20287">Math 6</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 158 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=20457">Pre-Algebra</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 238 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=20670">Algebra 1</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 225 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21165">Algebra 2</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 195 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=20774">Integrated Math 1</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 152 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21286">Integrated Math 2</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 159 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21714">Integrated Math 3</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 140 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21066">Geometry</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 175 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21801">Pre-Calculus</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 181 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21972">Calculus</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 395 </p>
-									</div>
-								</div>
+
+
 							</div>
 							<div class="col-md-3">
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=25681&amp;courseId=44918"
-												alt="Kindergarten Social Sciences" title="Kindergarten Social Sciences">Kindergarten Social
-												Sciences</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p>26</p>
-									</div>
-								</div>
 								<div class="row">
 									<div class="col-md-8">
 										<p>
@@ -492,7 +270,7 @@
 										</p>
 									</div>
 									<div class="col-md-4">
-										<p>33</p>
+										<p>33	</p>
 									</div>
 								</div>
 								<div class="row">
@@ -539,6 +317,159 @@
 										<p>288</p>
 									</div>
 								</div>
+
+
+
+
+							</div>
+							<div class="col-md-3">
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=47670">English Language Arts 1</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p>53 </p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=47671">English Language Arts 2</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p>44 </p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=47672">English Language Arts 3</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p>101 </p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=44864">English Language Arts 4</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 97</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=30187">English Language Arts 5</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 94 </p>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+
+
+
+
+						<div class="blueBand">Middle School</div>
+
+
+
+
+						<div class="dataTableResult">
+							<div class="col-md-3">
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=20186">Earth Science</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p>236 </p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=20369">Life Science</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 214</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=20573">Physical Science</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 243</p>
+									</div>
+								</div>
+
+
+
+
+							</div>
+							<div class="col-md-3">
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=20287">Math 6	</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 158 </p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=20457">Pre-Algebra	</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 238 </p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=20670">Algebra</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 225</p>
+									</div>
+								</div>
+
+
+
+							</div>
+							<div class="col-md-3">
 								<div class="row">
 									<div class="col-md-8">
 										<p>
@@ -572,6 +503,208 @@
 										<p>338</p>
 									</div>
 								</div>
+
+
+
+
+
+							</div>
+							<div class="col-md-3">
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=30248">English Language Arts 6	</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p>70</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=30287">English Language Arts 7</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p>109 </p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=30357">English Language Arts 8</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p>139</p>
+									</div>
+								</div>
+
+
+
+							</div>
+						</div>
+
+
+
+
+
+
+						<div class="blueBand">High School</div>
+
+
+
+
+
+						<div class="dataTableResult">
+							<div class="col-md-3">
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=77741">Science 1</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p>39 </p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=	77838">Science 2</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 55 </p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=44949">Science 3</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 120</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=44948">Science 4</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p>135</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=20003">Integrated Science</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 147 </p>
+									</div>
+								</div>
+
+
+
+							</div>
+							<div class="col-md-3">
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21165">Algebra 2</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 195 </p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=20774">Integrated Math 1</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 152</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21286">Integrated Math 2</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 159</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21714">Integrated Math 3</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 140</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21066">Geometry</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 175 </p>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21801">Pre-Calculus</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 181 </p>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-8">
+										<p>
+											<a
+												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21972">Calculus</a>
+										</p>
+									</div>
+									<div class="col-md-4">
+										<p> 395 </p>
+									</div>
+								</div>
+
+
+							</div>
+							<div class="col-md-3">
 								<div class="row">
 									<div class="col-md-8">
 										<p>
@@ -580,7 +713,7 @@
 										</p>
 									</div>
 									<div class="col-md-4">
-										<p>220</p>
+										<p>220	</p>
 									</div>
 								</div>
 								<div class="row">
@@ -594,107 +727,14 @@
 										<p>284</p>
 									</div>
 								</div>
+
+
+
+
+
+
 							</div>
 							<div class="col-md-3">
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=47669">Kindergarten English Language Arts</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 75 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=47670">English Language Arts 1</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 53 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=47671">English Language Arts 2</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 44 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=47672">English Language Arts 3</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 101 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=44864">English Language Arts 4</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 97 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=30187">English Language Arts 5</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 94 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=30248">English Language Arts 6</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 70 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=30287">English Language Arts 7</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 109 </p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-8">
-										<p>
-											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=30357">English Language Arts 8</a>
-										</p>
-									</div>
-									<div class="col-md-4">
-										<p> 131 </p>
-									</div>
-								</div>
 								<div class="row">
 									<div class="col-md-8">
 										<p>
@@ -703,7 +743,7 @@
 										</p>
 									</div>
 									<div class="col-md-4">
-										<p> 143 </p>
+										<p>143</p>
 									</div>
 								</div>
 								<div class="row">
@@ -714,7 +754,7 @@
 										</p>
 									</div>
 									<div class="col-md-4">
-										<p> 236 </p>
+										<p>236 </p>
 									</div>
 								</div>
 								<div class="row">
@@ -725,239 +765,12 @@
 										</p>
 									</div>
 									<div class="col-md-4">
-										<p> 173 </p>
+										<p>173</p>
 									</div>
 								</div>
-							</div>
-						</div>
-						<div class="blueBand">Middle School</div>
-						<div class="dataTableResult">
-							<div class="col-md-2">
-								<p>
-									<a href="#">Beginning Science </a>
-								</p>
-								<p>
-									<a href="#">Science 1 </a>
-								</p>
-								<p>
-									<a href="#">Science 2 </a>
-								</p>
-								<p>
-									<a href="#">Science 3 </a>
-								</p>
-								<p>
-									<a href="#">Science 4 </a>
-								</p>
-								<p>
-									<a href="#">Integrated Science </a>
-								</p>
-							</div>
-							<div class="col-md-1">
-								<p>25 </p>
-								<p>39</p>
-								<p>22</p>
-								<p>80</p>
-								<p>90</p>
-								<p>102</p>
-							</div>
-							<div class="col-md-2">
-								<p>
-									<a href="#">Beginning Science </a>
-								</p>
-								<p>
-									<a href="#">Science 1 </a>
-								</p>
-								<p>
-									<a href="#">Science 2 </a>
-								</p>
-								<p>
-									<a href="#">Science 3 </a>
-								</p>
-								<p>
-									<a href="#">Science 4 </a>
-								</p>
-								<p>
-									<a href="#">Integrated Science </a>
-								</p>
-							</div>
-							<div class="col-md-1">
-								<p>25 </p>
-								<p>39</p>
-								<p>22</p>
-								<p>80</p>
-								<p>90</p>
-								<p>102</p>
-							</div>
-							<div class="col-md-2">
-								<p>
-									<a href="#">Beginning Science </a>
-								</p>
-								<p>
-									<a href="#">Science 1 </a>
-								</p>
-								<p>
-									<a href="#">Science 2 </a>
-								</p>
-								<p>
-									<a href="#">Science 3 </a>
-								</p>
-								<p>
-									<a href="#">Science 4 </a>
-								</p>
-								<p>
-									<a href="#">Integrated Science </a>
-								</p>
-							</div>
-							<div class="col-md-1">
-								<p>25 </p>
-								<p>39</p>
-								<p>22</p>
-								<p>80</p>
-								<p>90</p>
-								<p>102</p>
-							</div>
-							<div class="col-md-2">
-								<p>
-									<a href="#">Beginning Science </a>
-								</p>
-								<p>
-									<a href="#">Science 1 </a>
-								</p>
-								<p>
-									<a href="#">Science 2 </a>
-								</p>
-								<p>
-									<a href="#">Science 3 </a>
-								</p>
-								<p>
-									<a href="#">Science 4 </a>
-								</p>
-								<p>
-									<a href="#">Integrated Science </a>
-								</p>
-							</div>
-							<div class="col-md-1">
-								<p>25 </p>
-								<p>39</p>
-								<p>22</p>
-								<p>80</p>
-								<p>90</p>
-								<p>102</p>
-							</div>
-						</div>
-						<div class="blueBand">High School</div>
-						<div class="dataTableResult">
-							<div class="col-md-2">
-								<p>
-									<a href="#">Beginning Science </a>
-								</p>
-								<p>
-									<a href="#">Science 1 </a>
-								</p>
-								<p>
-									<a href="#">Science 2 </a>
-								</p>
-								<p>
-									<a href="#">Science 3 </a>
-								</p>
-								<p>
-									<a href="#">Science 4 </a>
-								</p>
-								<p>
-									<a href="#">Integrated Science </a>
-								</p>
-							</div>
-							<div class="col-md-1">
-								<p>25 </p>
-								<p>39</p>
-								<p>22</p>
-								<p>80</p>
-								<p>90</p>
-								<p>102</p>
-							</div>
-							<div class="col-md-2">
-								<p>
-									<a href="#">Beginning Science </a>
-								</p>
-								<p>
-									<a href="#">Science 1 </a>
-								</p>
-								<p>
-									<a href="#">Science 2 </a>
-								</p>
-								<p>
-									<a href="#">Science 3 </a>
-								</p>
-								<p>
-									<a href="#">Science 4 </a>
-								</p>
-								<p>
-									<a href="#">Integrated Science </a>
-								</p>
-							</div>
-							<div class="col-md-1">
-								<p>25 </p>
-								<p>39</p>
-								<p>22</p>
-								<p>80</p>
-								<p>90</p>
-								<p>102</p>
-							</div>
-							<div class="col-md-2">
-								<p>
-									<a href="#">Beginning Science </a>
-								</p>
-								<p>
-									<a href="#">Science 1 </a>
-								</p>
-								<p>
-									<a href="#">Science 2 </a>
-								</p>
-								<p>
-									<a href="#">Science 3 </a>
-								</p>
-								<p>
-									<a href="#">Science 4 </a>
-								</p>
-								<p>
-									<a href="#">Integrated Science </a>
-								</p>
-							</div>
-							<div class="col-md-1">
-								<p>25 </p>
-								<p>39</p>
-								<p>22</p>
-								<p>80</p>
-								<p>90</p>
-								<p>102</p>
-							</div>
-							<div class="col-md-2">
-								<p>
-									<a href="#">Beginning Science </a>
-								</p>
-								<p>
-									<a href="#">Science 1 </a>
-								</p>
-								<p>
-									<a href="#">Science 2 </a>
-								</p>
-								<p>
-									<a href="#">Science 3 </a>
-								</p>
-								<p>
-									<a href="#">Science 4 </a>
-								</p>
-								<p>
-									<a href="#">Integrated Science </a>
-								</p>
-							</div>
-							<div class="col-md-1">
-								<p>25 </p>
-								<p>39</p>
-								<p>22</p>
-								<p>80</p>
-								<p>90</p>
-								<p>102</p>
+
+
+
 							</div>
 						</div>
 					</div>
@@ -1057,19 +870,31 @@
 						<div class="getInner">
 							<img src="images/landing-page/get-banner.png" class="img-responsive" />
 							<div class="getContentContainer">
-								<h4><a href="http://support.goorulearning.org/hc/en-us/articles/200600838" target="_blank">Quickstart guide</a></h4>
+								<h4>
+									<a
+										href="http://support.goorulearning.org/hc/en-us/articles/200600838"
+										target="_blank">Quickstart guide</a>
+								</h4>
 								<p>Use this guide for a quick overview of Gooru’s major
 									features.
 								</p>
 
-								<h4><a href="http://support.goorulearning.org/hc/en-us/articles/201853348" target="_blank">Introducing Gooru to Your Students</a></h4>
+								<h4>
+									<a
+										href="http://support.goorulearning.org/hc/en-us/articles/201853348"
+										target="_blank">Introducing Gooru to Your Students</a>
+								</h4>
 								<p>Here are some key features of Gooru to point out to your
 									students as you introduce them to Gooru.
 								</p>
 
-								<h4><a href="http://www.goorulearning.org/#students-view&amp;pageSize=5&amp;id=880199d9-cf3c-47ba-8418-838ccd32d3d2&amp;pageNum=0&amp;pos=1" target="_bank">How to Gooru</a></h4>
-								<p>If you’d like a step-by-step guided tutorial to using all the
-									parts of Gooru, take the Gooru Course.
+								<h4>
+									<a
+										href="http://www.goorulearning.org/#students-view&amp;pageSize=5&amp;id=880199d9-cf3c-47ba-8418-838ccd32d3d2&amp;pageNum=0&amp;pos=1"
+										target="_bank">Gooru Tutorials</a>
+								</h4>
+								<p>Check out these Gooru collections to get familiar with the
+									major features of Gooru.
 								</p>
 							</div>
 						</div>
@@ -1081,17 +906,25 @@
 							<img src="images/landing-page/monitor-ico.png" />
 
 							<div class="clearfix"></div>
-							<h4><a href="http://www.eventbrite.com/e/gooru-office-hours-tickets-12378212567?aff=eorg" target="_blank">Gooru Office Hours</a></h4>
+							<h4>
+								<a
+									href="http://www.eventbrite.com/e/gooru-office-hours-tickets-12378212567?aff=eorg"
+									target="_blank">Gooru Office Hours</a>
+							</h4>
 							<p>Join us every Wednesday for a short webinar that starts off
 								with a live demo. Bring your questions!</p>
 
 							<p>
-								<a href="http://about.goorulearning.org/community/events" target="_blank">Check out our live and online events!</a>
+								<a href="http://about.goorulearning.org/community/events"
+									target="_blank">Check out our live and online events!</a>
 							</p>
 						</div>
 						<div class="getInnerRight">
 							<h3>Stories from the Classroom</h3>
-							<h4><a href="http://about.goorulearning.org/community/stories" target="_blank">Teacher stories</a></h4>
+							<h4>
+								<a href="http://about.goorulearning.org/community/stories"
+									target="_blank">Teacher stories</a>
+							</h4>
 							<p>Learn by example! The stories of teachers who say Gooru has
 								made a difference in their classroom.</p>
 						</div>
@@ -1102,7 +935,7 @@
 				<div class="containerMain">
 					<h2>Get Involved</h2>
 					<div class="col-md-4">
-						<div class="margin noMargin">
+						<div class="margin">
 							<h2>Districts</h2>
 							<p class="partext">Collaborate with Gooru to unleash personalized
 								learning
@@ -1169,8 +1002,7 @@
 										<div class="badgepadd">
 											<p>Use the link below to embed this badge on your site</p>
 											<p>
-												<input type="text" placeholder="" class="form-control"
-													name="" />
+												<g:TextBox styleName="form-control" ui:field="txtEmbedLink" />
 											</p>
 										</div>
 									</div>
@@ -1279,21 +1111,24 @@
 							<h4>Legal</h4>
 							<ul class="list-unstyled">
 								<li>
-									<a href="#">Terms</a>
+									<g:Anchor ui:field="achTerms">Terms</g:Anchor>
 								</li>
 								<li>
-									<a href="#">Privacy</a>
+									<g:Anchor ui:field="achPrivacy">Privacy</g:Anchor>
 								</li>
 								<li>
-									<a href="#">Data Policy</a>
+									<g:Anchor ui:field="achDataPolicy">Data Policy</g:Anchor>
 								</li>
 								<li>
-									<a href="#">Copyright</a>
+									<g:Anchor ui:field="achCopyright">Copyright</g:Anchor>
 								</li>
 							</ul>
 						</div>
 						<div class="clearfix"></div>
 					</div>
+				</div>
+				<div>
+					<g:Label styleName="copyRight" text="{i18n.GL1246}"></g:Label>
 				</div>
 			</footer>
 			<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
