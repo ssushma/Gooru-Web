@@ -99,21 +99,19 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 				public void onSuccess(ProfileDo profileObj) {
 				if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
 						if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
-							//getView().getStandardContainer().setVisible(false);
-							
+							getView().getStandardContainer().setVisible(false);
 						}else
 						{
 							getView().getUserStandardPrefCodeId(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
 							getView().getStandardContainer().setVisible(true);
 						}
 					}else{
-						//getView().getStandardContainer().setVisible(false);
+						getView().getStandardContainer().setVisible(false);
 					}
 				}
 
 			});
 			String collectionUid = AppClientFactory.getPlaceManager().getRequestParameter("id");
-			System.out.println("collectionUid:::::::"+collectionUid);
 			AppClientFactory.getInjector().getResourceService().getCollection(collectionUid,true, new SimpleAsyncCallback<CollectionDo>() {
 
 				@Override
@@ -292,7 +290,6 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 
 	@Override
 	public void getAutoSuggestedStandardsList(SearchDo<CodeDo> searchDo) {
-		//getStandardSuggestionByFiltersourceCourseIdAsyncCallback().execute(searchDo);
 		AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseIdsource(searchDo, new AsyncCallback<SearchDo<CodeDo>>() {
 			
 			@Override
@@ -309,29 +306,5 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 		});
 	}
 
-	public SearchAsyncCallback<SearchDo<CodeDo>> getStandardSuggestionByFiltersourceCourseIdAsyncCallback() {
-		System.out.println("inside tab presenter2::::::::"+standardSuggestionByFilterAsyncCallback);
-		// TODO Auto-generated method stub
-		if (standardSuggestionByFilterAsyncCallback == null) {
-			System.out.println("inside tab presenter3::::::::");
-			standardSuggestionByFilterAsyncCallback = new SearchAsyncCallback<SearchDo<CodeDo>>() {
-
-				@Override
-				protected void run(SearchDo<CodeDo> searchDo) {
-					System.out.println("inside tab run::::::::"+searchDo);
-					getSearchService().getSuggestStandardByFilterCourseIdsource(searchDo, this);
-					
-				}
-
-				@Override
-				public void onCallSuccess(SearchDo<CodeDo> result) {
-					// TODO Auto-generated method stub
-					Window.alert("success");
-				}
-				
-				
-			};
-		}
-		return standardSuggestionAsyncCallback;
-	}
+	
 }
