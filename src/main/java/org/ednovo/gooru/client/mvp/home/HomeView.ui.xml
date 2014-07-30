@@ -1279,16 +1279,16 @@
 							<h4>Legal</h4>
 							<ul class="list-unstyled">
 								<li>
-									<a href="#">Terms</a>
+									<g:Anchor ui:field="achTerms">Terms</g:Anchor>
 								</li>
 								<li>
-									<a href="#">Privacy</a>
+								    <g:Anchor ui:field="achPrivacy">Privacy</g:Anchor>
 								</li>
 								<li>
-									<a href="#">Data Policy</a>
+								    <g:Anchor ui:field="achDataPolicy">Data Policy</g:Anchor>
 								</li>
 								<li>
-									<a href="#">Copyright</a>
+								    <g:Anchor ui:field="achCopyright">Copyright</g:Anchor>
 								</li>
 							</ul>
 						</div>
