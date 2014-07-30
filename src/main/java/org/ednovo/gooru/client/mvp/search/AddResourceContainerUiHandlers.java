@@ -67,5 +67,7 @@ public interface AddResourceContainerUiHandlers extends BaseUiHandlers,EventHand
 	public void setplayerStyle();
 	public void removePlayerStyle();
 	public Button getCancelButton();
+	public TreeItem loadingTreeItem();
+	public void clearData();
 	
 }
