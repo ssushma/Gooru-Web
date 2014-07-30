@@ -592,6 +592,8 @@ public enum UrlToken {
 	
 	REFRESH_TOKEN("/gooru-auth/google/new/token.g?refreshToken={0}"),
 	
+	ASSIGN_ITEM_TO_CLASS("/v2/class/{0}/assign/{1}?sessionToken={2}&direction={3}&planedEndDate={4}"),
+	
 	SUGGEST_STANDARD_BY_FILTER_Source_CodeId("/search/standard?sessionToken={0}&query={1}");
 
 	private String url;
