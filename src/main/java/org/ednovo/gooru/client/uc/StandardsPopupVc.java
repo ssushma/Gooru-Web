@@ -143,8 +143,9 @@ public class StandardsPopupVc extends PopupPanel  {
 		if (iterator != null) {
 			while (this.iterator.hasNext()) {
 				Map<String, String> standard = this.iterator.next();
-				String stdCode = standard.get(i18n.GL1049());
-				String stdDec = standard.get(i18n.GL0904().toLowerCase());
+				
+				String stdCode = standard.get("code");
+				String stdDec = standard.get("description");
 
 				final HTMLPanel standardsPanel = new HTMLPanel("");
 				standardsPanel.setStyleName(UcCBundle.INSTANCE.css().divContainer());
