@@ -389,7 +389,14 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		ratingWidgetView=new RatingWidgetView();
 		if(collectionItemDoGlobal.getResource().getRatings()!=null){
 			ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
-			ratingWidgetView.getRatingCountLabel().setText(" "+collectionItemDoGlobal.getResource().getRatings().getCount().toString()+" "+i18n.GL2024());
+			
+			Integer reviewCount=collectionItemDoGlobal.getResource().getRatings().getReviewCount();
+			
+			if(reviewCount==null){
+				reviewCount = 0;
+			}
+			
+			ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL2024());
 			if(collectionItemDoGlobal.getResource().getRatings().getCount()>0)
 			{
 				ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");

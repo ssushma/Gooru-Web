@@ -32,6 +32,7 @@ import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 /**
@@ -75,6 +76,10 @@ public interface IsCollectionInfoTabView extends IsViewWithHandlers<CollectionIn
 	FlowPanel getStandardContainer();
 	
 	void getUserStandardPrefCodeId(List<String> list);
+
+	void OnStandardsClickEvent(Button addBtn);
+
+	void setUpdatedStandards(String standardsCode, Integer codeId);
 
 	
 /*	void displayErrorMsgTeacherTip();

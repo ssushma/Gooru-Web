@@ -162,6 +162,13 @@ public class AddStandardsPresenter extends PresenterWidget<IsAddStandardsView> i
 	}
 	
 	@Override
+	public Integer setStandardsIdVal() {
+		return getView().setStandardsIdVal();
+	}
+	
+	
+	
+	@Override
 	public Button getAddBtn() {
 		return getView().getAddBtn();
 	}

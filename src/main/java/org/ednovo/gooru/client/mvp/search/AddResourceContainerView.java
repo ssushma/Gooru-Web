@@ -209,8 +209,6 @@ public class AddResourceContainerView extends
 									.css().selected());
 					previousFolderSelectedTreeItem = currentFolderSelectedTreeItem = null;
 					selectedCollectionGooruOid = cureentcollectionTreeItem.getGooruOid();
-					System.out.println("1::::"+cureentcollectionTreeItem.folderName);
-					System.out.println("2::::"+cureentcollectionTreeItem.getTitle());
 					isSelectedCollection = true;
 					isSelectedFolder = false;
 					// setSelectedCollectionTitle();
@@ -279,7 +277,8 @@ public class AddResourceContainerView extends
 	public TreeItem loadingTreeItem() {
 		Label loadingText = null;
 		if (AppClientFactory.getCurrentPlaceToken().equals(
-				PlaceTokens.RESOURCE_SEARCH)) {
+				PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(
+						PlaceTokens.COLLECTION_PLAY)) {
 			loadingText = new Label(i18n.GL1452());
 		} else {
 			loadingText = new Label(i18n.GL2051());
@@ -292,9 +291,6 @@ public class AddResourceContainerView extends
 	private class ScrollDropdownListContainer implements ScrollHandler {
 		@Override
 		public void onScroll(ScrollEvent event) {
-			System.out.println("pageNum::::::"+pageNum);
-			System.out.println("totalHitCount::::::"+totalHitCount);
-			System.out.println("limit::::::"+limit);
 			if ((dropdownListContainerScrollPanel.getVerticalScrollPosition() == dropdownListContainerScrollPanel
 					.getMaximumVerticalScrollPosition())
 					&& (totalHitCount > pageNum * limit)) {
@@ -423,20 +419,17 @@ public class AddResourceContainerView extends
 	public void displayWorkspaceData(FolderListDo folderListDo,
 			boolean clearShelfPanel, String searchType) {
 		currentsearchType = searchType;
+		resetEmptyCollMsg();
+		if (!dropdownListContainerScrollPanel.isVisible()) {
+			dropdownListContainerScrollPanel.setVisible(true);
+		}
+
+		if (clearShelfPanel) {
+			folderTreePanel.clear();
+		}
 		if (searchType.equalsIgnoreCase("collection")) {
 			isCollectionSearch = true;
 			isResourceSearch = false;
-			/*
-			 * addResourceText.setText(
-			 * "Add this Resource to one of your existing Folders -or-");
-			 * addCollectiorOrReourceText.setText("Add to a new Folder");
-			 * addResourceText.getElement().setAttribute("style",
-			 * "display: inline-block;");
-			 * addCollectiorOrReourceText.getElement().setAttribute("style",
-			 * "display: inline-block;");
-			 * createCollectionbuttonsContainer.getElement
-			 * ().setAttribute("style", "margin-left: 44px;margin-top: 10px;");
-			 */
 		} else if (searchType.equalsIgnoreCase("resource")) {
 			isResourceSearch = true;
 			isCollectionSearch = false;
@@ -449,14 +442,6 @@ public class AddResourceContainerView extends
 					"display: inline-block;");
 			createCollectionbuttonsContainer.getElement().setAttribute("style",
 					"margin-left: 36px;margin-top: 10px;");
-		}
-		resetEmptyCollMsg();
-		if (!dropdownListContainerScrollPanel.isVisible()) {
-			dropdownListContainerScrollPanel.setVisible(true);
-		}
-
-		if (clearShelfPanel) {
-			folderTreePanel.clear();
 		}
 		if (folderListDo != null) {
 			List<FolderDo> foldersArrayList = folderListDo.getSearchResult();
@@ -616,6 +601,11 @@ public class AddResourceContainerView extends
 	@Override
 	public void displayNoCollectionsMsg() {
 		dropdownListContainerScrollPanel.setVisible(false);
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+		displayCountLabel.setText("There are no collections to add this resource.");
+		}else{
+			displayCountLabel.setText("There are no folders to add this collection.");
+		}
 		// addResourceBtnLbl.setText(i18n.GL1964());
 	}
 

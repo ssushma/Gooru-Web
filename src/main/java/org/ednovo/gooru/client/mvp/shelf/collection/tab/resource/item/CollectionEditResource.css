@@ -2753,7 +2753,7 @@ margin-top: 18px; */
 }
 .h5 {
 	font-size: 12px !important;
-	font-weight: bold;
+	/* font-weight: bold; */
 	padding: 5px 0px;
 }
 
@@ -2832,7 +2832,7 @@ margin-top: 18px; */
 }
 .fRight {
 	float: left;
-	/* margin-top: -65px; */
+	 margin-top: 8px;
 }
 .OnButtonDeActive {
 	font-size: 12px;
@@ -2853,4 +2853,11 @@ margin-top: 18px; */
 .OnButtonDeActive:hover {
 	cursor: pointer;
 	background: #EEE;
+}
+.accessHazard {
+	font-size: 12px !important;
+	padding: 5px 0px;
+	border-bottom: 1px solid #CCC;
+	width: 74%;
+	margin-bottom: 8px;
 }

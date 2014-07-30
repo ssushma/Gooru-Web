@@ -229,7 +229,7 @@
 .fi-social-orkut:before,
 .fi-social-path:before,
 .fi-social-picasa:before,
-.fi-social-pinterest:before,
+/*.fi-social-pinterest:before,*/
 .fi-social-rdio:before,
 .fi-social-reddit:before,
 .fi-social-skillshare:before,
@@ -523,7 +523,7 @@
 .fi-social-orkut:before { content: "\f1d3"; }
 .fi-social-path:before { content: "\f1d4"; }
 .fi-social-picasa:before { content: "\f1d5"; }
-.fi-social-pinterest:before { content: "\f1d6"; }
+/*.fi-social-pinterest:before { content: "\f1d6"; }*/
 .fi-social-rdio:before { content: "\f1d7"; }
 .fi-social-reddit:before { content: "\f1d8"; }
 .fi-social-skillshare:before { content: "\f1d9"; }

@@ -29,6 +29,7 @@ import java.util.List;
 import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.shared.model.code.CodeDo;
@@ -60,6 +61,8 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	private SearchAsyncCallback<SearchDo<CodeDo>> standardSuggestionByFilterAsyncCallback;
 	
 	private static final String USER_META_ACTIVE_FLAG = "0";
+	
+	AddStandardsPresenter addStandardsPresenter = null;
 
 	/**
 	 * Class constructor
@@ -68,8 +71,9 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	 * @param view {@link View}
 	 */
 	@Inject
-	public CollectionInfoTabPresenter(EventBus eventBus, IsCollectionInfoTabView view) {
+	public CollectionInfoTabPresenter(EventBus eventBus, IsCollectionInfoTabView view,AddStandardsPresenter addStandardsPresenter) {
 		super(eventBus, view);
+		this.addStandardsPresenter = addStandardsPresenter;
 		getView().setUiHandlers(this);
 	}
 
@@ -333,5 +337,24 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 			};
 		}
 		return standardSuggestionAsyncCallback;
+	}
+	
+	@Override
+	public void getAddStandards() {
+
+	addToPopupSlot(addStandardsPresenter);
+	getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
+
+		
+	}
+	
+	@Override
+	public void setUpdatedStandards() {
+		getView().setUpdatedStandards(addStandardsPresenter.setStandardsVal(), addStandardsPresenter.setStandardsIdVal());
+	}
+	
+	@Override
+	public void closeStandardsPopup() {
+		addStandardsPresenter.hidePopup();
 	}
 }
