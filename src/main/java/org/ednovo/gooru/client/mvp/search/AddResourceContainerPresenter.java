@@ -148,7 +148,6 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			if(selectedFolderOrCollectionid!=null){
 			AppClientFactory.fireEvent(new CopyDraggedCollectionEvent(collection,searchResultDo.getGooruOid(),selectedFolderOrCollectionid));
 			successparams.put("o1", selectedFolderOrCollectionid);
-			System.out.println("title folder:::::::"+title);
 			getView().enableSuccessView(title,selectedFolderOrCollectionid,successparams);
 			}else{
 				getView().restrictionToAddResourcesData("Please select a folder to add collection");
@@ -215,7 +214,6 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 						fireEvent(new RefreshDisclosurePanelForFoldersEvent(result1.getGooruOid()));
 						getView().getButtonVisiblity();
 						successparams.put("o1", result.getGooruOid());
-						System.out.println("result.getTitle():::::::"+result.getTitle());
 						getView().enableSuccessView(result.getTitle(),result.getGooruOid(),successparams);
 					}
 				});
@@ -270,6 +268,18 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 	public Button getCancelButton() {
 		// TODO Auto-generated method stub
 		return getView().getCancelButton();
+	}
+
+	@Override
+	public TreeItem loadingTreeItem() {
+		// TODO Auto-generated method stub
+		return getView().loadingTreeItem();
+	}
+
+	@Override
+	public void clearData() {
+		// TODO Auto-generated method stub
+		getView().clearShelfData();
 	}
 
 	
