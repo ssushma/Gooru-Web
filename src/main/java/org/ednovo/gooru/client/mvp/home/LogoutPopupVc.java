@@ -193,7 +193,7 @@ public class LogoutPopupVc extends Composite{
 					map.remove("account");
 					AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), map);
 				}else{
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.LANDINGPAGE);
 				}
 				appPopUp.hide();
 			}
