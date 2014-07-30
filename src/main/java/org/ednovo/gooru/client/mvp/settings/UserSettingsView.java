@@ -282,6 +282,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		panelHeading.getElement().setId("lblPanelHeading");
 		panelHeading.getElement().setAttribute("alt", i18n.GL2007());
 		panelHeading.getElement().setAttribute("title", i18n.GL2007());
+		panelHeading.getElement().getStyle().setMarginTop(-4, Unit.PX);
 		panelStandards.getElement().setId("epnlPanelStandards");
 		collectionCourseLstPanel.getElement().setId("fpnlCollectionCourseLstPanel");
 		btnConnect.setText(i18n.GL2008());
