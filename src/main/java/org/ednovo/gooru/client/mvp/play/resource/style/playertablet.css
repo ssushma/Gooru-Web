@@ -64,10 +64,8 @@ html{
 	min-width:100%;
 }
 .studyplayer-container{
-	width:760px;
-	position:relative !important;
-	overflow-x:hidden !important;
-	overflow-y:hidden !important;
+	min-width:100%;
+	min-height:100%;
 }
 .rightPanel{
 	width:25%;
