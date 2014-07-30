@@ -301,8 +301,8 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             $wnd.location.reload();
     }-*/;
 	
-	public void addResource(String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards, String hostName,String accessHizard,String mediaFeature,String mobileFriendly) {
-		getResourceService().addNewResource("", collectionDo.getGooruOid(), urlStr, titleStr, descriptionStr, categoryStr, thumbnailImgSrcStr, endTime,edcuationalUse,momentsOfLearning,standards,hostName, getCollectionItemAsyncCallback());
+	public void addResource(String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards, String hostName,List<String> tagList) {
+		getResourceService().addNewResource("", collectionDo.getGooruOid(), urlStr, titleStr, descriptionStr, categoryStr, thumbnailImgSrcStr, endTime,edcuationalUse,momentsOfLearning,standards,hostName,tagList, getCollectionItemAsyncCallback());
 
 	}
 	

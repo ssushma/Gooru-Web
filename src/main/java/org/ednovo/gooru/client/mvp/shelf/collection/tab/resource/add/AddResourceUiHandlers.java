@@ -37,6 +37,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 * @Reviewer 
 *
 */
+import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
@@ -51,7 +52,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageHandler, EventHandler{
 
-	void addResource(String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr,Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,String hostName,String accessHizard,String mediaFeature,String mobileFriendly);
+	void addResource(String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr,Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,String hostName, List<String> tagList);
 	
 	void getResourceMetaInfo(String url);
 	

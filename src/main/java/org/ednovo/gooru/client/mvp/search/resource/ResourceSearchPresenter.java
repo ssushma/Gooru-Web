@@ -202,6 +202,7 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 
 	@Override
 	public void refreshDisclosurePanelinSearch(String collectionId) {
+		addResourceContainerPresenter.clearData();
 		addResourceContainerPresenter.getfolderTreePanel().clear();
 		addResourceContainerPresenter.getWorkspaceData(0, 20, false, "resource");
 	}

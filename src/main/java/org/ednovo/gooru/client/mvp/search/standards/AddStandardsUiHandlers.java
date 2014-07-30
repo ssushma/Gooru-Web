@@ -50,5 +50,7 @@ public interface AddStandardsUiHandlers extends BaseUiHandlers {
 
 	void loadStateStandards(String string);
 
+	Integer setStandardsIdVal();
+
 
 }

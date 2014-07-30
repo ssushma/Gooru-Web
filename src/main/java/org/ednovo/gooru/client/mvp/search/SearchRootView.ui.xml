@@ -97,6 +97,40 @@
          margin: 0 auto;
          margin-top: 110px;
 }
+
+
+		.secondaryIC{
+			color: #515151;
+			padding: 6px 9px;
+			border-radius: 4px;
+			background: #f7f7f7;
+			background: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f7f7f7));
+			background: -webkit-linear-gradient(top, #ffffff, #f7f7f7);
+			background: -moz-linear-gradient(top, #ffffff, #f7f7f7);
+			background: -ms-linear-gradient(top, #ffffff, #f7f7f7);
+			background: -o-linear-gradient(top, #ffffff, #f7f7f7);
+			border: 1px solid #ddd;
+			font-size:small;
+			font-family:Arial, Helvetica, sans-serif;
+			cursor:pointer;
+		}
+
+		.secondaryIC:hover{
+			color: #515151;
+			background: #f7f7f7;
+			background: -webkit-gradient(linear, 0 0, 0 100%, from(#f7f7f7), to(#ffffff));
+			background: -webkit-linear-gradient(top, #f7f7f7, #ffffff);
+			background: -moz-linear-gradient(top, #f7f7f7, #ffffff);
+			background: -ms-linear-gradient(top, #f7f7f7, #ffffff);
+			background: -o-linear-gradient(top, #f7f7f7, #ffffff);
+		}
+
+		.secondaryIC img{
+			vertical-align:middle;
+			width:22px;
+			margin-right:5px;
+		}
+
 	</ui:style>
 	<g:HTMLPanel styleName="{style.searchTotalContainer}">
 		<!-- <gc:SearchBarVc ui:field="searchBarVc" /> -->
@@ -105,9 +139,9 @@
 				<g:HTML styleName="{style.searchResult}" ui:field="queriedTextHtml" />
 				<g:FlowPanel styleName="{style.PageNotify}" ui:field="flowpanel">
 					<g:HTMLPanel ui:field="contentpanel"></g:HTMLPanel>
-					<g:Button styleName="secondary {style.notifyLink}" ui:field="resourceSearchBtn" />
+					<g:Button styleName="secondary {style.notifyLink}" ui:field="resourceSearchBtn"/>
 					<!-- <g:Label text="|" styleName="{style.notifyLinks}" /> -->
-					<g:Button styleName="secondary {style.notifyLink}" ui:field="collectionSearchBtn" />
+					<g:Button styleName="secondary {style.notifyLink}" ui:field="collectionSearchBtn"/>
 				</g:FlowPanel>
 			</g:FlowPanel>
 			<g:SimplePanel styleName="{style.searchWrapper}"  ui:field="searchWrapperSimPanel"/>

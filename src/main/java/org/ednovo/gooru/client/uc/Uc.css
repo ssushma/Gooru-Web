@@ -403,6 +403,7 @@
 .resourceThumbnail:hover {
 	/* display: block; */
 	opacity: 0.6;
+	background-color:rgba(255,0,0,0.5);
 	cursor: pointer;
 }
 
@@ -605,7 +606,7 @@
 	/* left: -8px; */
 	position: relative;
 	text-align: center;
-	top: -63px;
+	top: -61px;
 	width: 81px;
 }
 

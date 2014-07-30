@@ -121,6 +121,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	
 	private static final String TAXONOMY_SET = "taxonomySet";
 	
+	private static final String RESOURCE_TAGS = "resourceTags";
+	
 	private static final String CHOOSE = "Please choose one of the following...";
 	
 	@Autowired
@@ -594,7 +596,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 	public CollectionItemDo addNewResource(String gooruOid, String idStr,
 			String urlStr, String titleStr, String descriptionStr,
-			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,String hostName) throws GwtException {
+			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,String hostName, List<String> tagList) throws GwtException {
 		NewResourceDo newResourceDo = new NewResourceDo();		
 		newResourceDo.setId(idStr);
 		newResourceDo.setUrl(urlStr);
@@ -630,6 +632,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		if(!momentsOfLearning.equalsIgnoreCase(CHOOSE))
 		newResourceDo.setMomentsOfLearning(arrayOfMoments);
 		
+				
 		ResourceFormatDo resourceFormat = new ResourceFormatDo();
 		resourceFormat.setValue(categoryStr);
 		
@@ -649,13 +652,17 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			hostArray.add(GOOGLE_DRIVE);
 			newResourceDo.setHost(hostArray);
 		}
+		Map<String,Object> resourceMap=new HashMap<String,Object>();
+		resourceMap.put(RESOURCE, newResourceDo);
 		
+		if(tagList!=null && tagList.size()!=0 ){
+			resourceMap.put(RESOURCE_TAGS, tagList);
+		}
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ADD_NEW_RESOURCE, idStr,getLoggedInSessionToken(),  URLEncoder.encode(titleStr).toString(), urlStr, categoryStr, URLEncoder.encode(descriptionStr).toString(), thumbnailImgSrcStr, String.valueOf(endTime));
-		System.out.println("addNew resource:"+url);
-		String form = ResourceFormFactory.generateStringDataForm(newResourceDo, RESOURCE);
-		//ResourceFormFactory.updateCollectionInfo(collectionDo.getTitle(), teacherTips).getValuesArray("data")[0]
-		System.out.println("form::"+form.toString());
+		
+		String form = ResourceFormFactory.generateStringDataForm(resourceMap, null);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);

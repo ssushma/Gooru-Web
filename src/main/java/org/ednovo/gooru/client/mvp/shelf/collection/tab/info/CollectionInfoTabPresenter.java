@@ -29,6 +29,7 @@ import java.util.List;
 import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.shared.model.code.CodeDo;
@@ -38,6 +39,8 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -58,6 +61,8 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	private SearchAsyncCallback<SearchDo<CodeDo>> standardSuggestionByFilterAsyncCallback;
 	
 	private static final String USER_META_ACTIVE_FLAG = "0";
+	
+	AddStandardsPresenter addStandardsPresenter = null;
 
 	/**
 	 * Class constructor
@@ -66,8 +71,9 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	 * @param view {@link View}
 	 */
 	@Inject
-	public CollectionInfoTabPresenter(EventBus eventBus, IsCollectionInfoTabView view) {
+	public CollectionInfoTabPresenter(EventBus eventBus, IsCollectionInfoTabView view,AddStandardsPresenter addStandardsPresenter) {
 		super(eventBus, view);
+		this.addStandardsPresenter = addStandardsPresenter;
 		getView().setUiHandlers(this);
 	}
 
@@ -97,7 +103,7 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 				public void onSuccess(ProfileDo profileObj) {
 				if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
 						if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
-							getView().getStandardContainer().setVisible(false);
+							//getView().getStandardContainer().setVisible(false);
 							
 						}else
 						{
@@ -105,12 +111,13 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 							getView().getStandardContainer().setVisible(true);
 						}
 					}else{
-						getView().getStandardContainer().setVisible(false);
+						//getView().getStandardContainer().setVisible(false);
 					}
 				}
 
 			});
 			String collectionUid = AppClientFactory.getPlaceManager().getRequestParameter("id");
+			System.out.println("collectionUid:::::::"+collectionUid);
 			AppClientFactory.getInjector().getResourceService().getCollection(collectionUid,true, new SimpleAsyncCallback<CollectionDo>() {
 
 				@Override
@@ -285,5 +292,69 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 			public void onSuccess(Void result) {
 			}
 		});
+	}
+
+	@Override
+	public void getAutoSuggestedStandardsList(SearchDo<CodeDo> searchDo) {
+		//getStandardSuggestionByFiltersourceCourseIdAsyncCallback().execute(searchDo);
+		AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseIdsource(searchDo, new AsyncCallback<SearchDo<CodeDo>>() {
+			
+			@Override
+			public void onSuccess(SearchDo<CodeDo> result) {
+				// TODO Auto-generated method stub
+				getView().setStandardSuggestions(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+
+	public SearchAsyncCallback<SearchDo<CodeDo>> getStandardSuggestionByFiltersourceCourseIdAsyncCallback() {
+		System.out.println("inside tab presenter2::::::::"+standardSuggestionByFilterAsyncCallback);
+		// TODO Auto-generated method stub
+		if (standardSuggestionByFilterAsyncCallback == null) {
+			System.out.println("inside tab presenter3::::::::");
+			standardSuggestionByFilterAsyncCallback = new SearchAsyncCallback<SearchDo<CodeDo>>() {
+
+				@Override
+				protected void run(SearchDo<CodeDo> searchDo) {
+					System.out.println("inside tab run::::::::"+searchDo);
+					getSearchService().getSuggestStandardByFilterCourseIdsource(searchDo, this);
+					
+				}
+
+				@Override
+				public void onCallSuccess(SearchDo<CodeDo> result) {
+					// TODO Auto-generated method stub
+					Window.alert("success");
+				}
+				
+				
+			};
+		}
+		return standardSuggestionAsyncCallback;
+	}
+	
+	@Override
+	public void getAddStandards() {
+
+	addToPopupSlot(addStandardsPresenter);
+	getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
+
+		
+	}
+	
+	@Override
+	public void setUpdatedStandards() {
+		getView().setUpdatedStandards(addStandardsPresenter.setStandardsVal(), addStandardsPresenter.setStandardsIdVal());
+	}
+	
+	@Override
+	public void closeStandardsPopup() {
+		addStandardsPresenter.hidePopup();
 	}
 }
