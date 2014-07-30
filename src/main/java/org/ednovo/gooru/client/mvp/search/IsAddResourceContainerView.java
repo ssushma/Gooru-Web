@@ -65,6 +65,6 @@ public interface IsAddResourceContainerView extends IsViewWithHandlers<AddResour
 	public void enableSuccessView(String title,String gooruOid,HashMap<String,String> params);
 	public Button getCancelButton();
 	public void clearSelectedFolderId();
-
+	public TreeItem loadingTreeItem();
 
 }

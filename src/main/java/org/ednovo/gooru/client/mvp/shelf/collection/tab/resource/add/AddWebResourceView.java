@@ -214,9 +214,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
 	private static final String RESOURCE_UPLOAD_FILE_PATTERN = "([^\\s]+([^?#]*\\.(?:mp3))$)";
 	private static final String USER_META_ACTIVE_FLAG = "0";
-	String mobileFriendly = "";
-	String mediaFeature = "";
-	String accessHizard = "";
 	String mediaFeatureStr = i18n.GL1767();
 	
 	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
@@ -1120,9 +1117,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 											urlStr = URL.encode(urlStr);
 											//urlStr = urlStr.replaceAll("#", "%23");
 											String youTubeId = getYoutubeVideoId(urlStr);
-											mobileFriendly = "";
-											mediaFeature = "";
-											accessHizard = "";
+										
 											if (urlStr.endsWith("/")) {
 												urlStr = urlStr.substring(0, urlStr.length() - 1);
 											}
@@ -1266,11 +1261,16 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												for(int i=0;i<hazardArr.length;i++)
 												{
 												
-													accessHizard = "\"" + hazardArr[i].toString() +"\"";
+													
 													//tagList.add('"' + hazardArr[i].toString() +'"');
 													
 													tagList.add(hazardArr[i].toString());
 												}
+											}
+											if(resourceEducationalLabel.getText()!=null ||!resourceEducationalLabel.getText().trim().equalsIgnoreCase(""))
+											{
+												tagList.add("Educational Use : "+resourceEducationalLabel.getText());
+												
 											}
 											//AreYouSurceToolTip AreYouSurceToolTip=new AreYouSurceToolTip();
 											if (isValidate && !isShortenedUrl()) {
@@ -1303,7 +1303,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //														});
 //													}else{
 
-														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,hostName,accessHizard,mediaFeature,mobileFriendly,tagList);
+														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,hostName,tagList);
 
 														
 														/*addResourceBtnLbl.setEnabled(true);
@@ -1322,7 +1322,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //														});
 //													}else{
 
-														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,hostName,accessHizard,mediaFeature,mobileFriendly,tagList);
+														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,hostName,tagList);
 
 														/*addResourceBtnLbl.setEnabled(true);
 														addResourceBtnLbl.getElement().removeClassName("secondary");
@@ -1345,7 +1345,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 
 
-	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime, boolean conformationFlag,String educationalUse,String momentsOfLearning,List<CodeDo> standards,String hostName,String accessHizard,String mediaFeature,String mobileFriendly,List<String> tagList);
+	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime, boolean conformationFlag,String educationalUse,String momentsOfLearning,List<CodeDo> standards,String hostName,List<String> tagList);
 
 //	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime);
 

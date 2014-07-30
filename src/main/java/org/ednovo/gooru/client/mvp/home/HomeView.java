@@ -33,6 +33,9 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
+import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
+import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
@@ -45,14 +48,19 @@ import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 
@@ -63,11 +71,16 @@ import com.google.gwt.user.client.ui.Widget;
 public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements IsHomeView {
 
 	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer;
-	@UiField Button btnSignUp;
+	@UiField Button btnSignUp, btnMoreOnCollections;
 	@UiField Label lblHeading, lblSubHeading; 
 	@UiField TextBoxWithPlaceholder txtSearch;
 	@UiField Button btnSearch;
+	@UiField Anchor achLearn, achTerms, achPrivacy,achDataPolicy,achCopyright;
+	@UiField TextBox txtEmbedLink;
+	
 	LibraryView libraryView = null;
+	private TermsOfUse termsOfUse;
+	
 	
 	Map<String, String> allSubject = new HashMap<String, String>();
 	Map<String, String> allCourse  = new HashMap<String, String>();
@@ -190,6 +203,19 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				
 		StringUtil.setAttributes(lblHeading.getElement(), "lblHeading", i18n.GL2046(), i18n.GL2046());
 		StringUtil.setAttributes(lblSubHeading.getElement(), "lblSubHeading", i18n.GL2047(), i18n.GL2047());
+		
+		String url =  "<a href=\"http://www.goorulearning.org\" />";
+		txtEmbedLink.setText(url);
+		StringUtil.setAttributes(txtEmbedLink.getElement(), "txtEmbedLink", url, url);
+		txtEmbedLink.setReadOnly(true);
+		txtEmbedLink.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				txtEmbedLink.selectAll();
+			}
+		});
+		txtEmbedLink.selectAll();
 		
 		Window.enableScrolling(true);
 	}
@@ -335,6 +361,91 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		} else {
 			return null;
 		}
+	}
+	
+	@UiHandler("btnMoreOnCollections")
+	public void onClickMoreOnCollections(ClickEvent event){
+		AppClientFactory.setPreviousPlaceRequest(AppClientFactory
+				.getPlaceManager().getCurrentPlaceRequest());
+		Storage stockStore = Storage.getLocalStorageIfSupported();
+
+		if (stockStore != null) {
+			stockStore.setItem("tabKey", "resourceTab");
+		}
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+	}
+	
+	@UiHandler("btnMoreOnClasses")
+	public void onClickMoreOnClasses(ClickEvent event){
+		if (!AppClientFactory.isAnonymous()){
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+		} else {
+			AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+		}
+	}
+	@UiHandler("achLearn")
+	public void onClickLearn(ClickEvent event){
+		int scrollTop =0;
+		try{
+			scrollTop = Document.get().getElementById("getStarted").getAbsoluteTop();
+		}catch(Exception e){
+			
+		}
+		
+		Window.scrollTo(0, scrollTop-40);
+	}
+	@UiHandler("achTerms")
+	public void onClickTermsLink(ClickEvent envent){
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
+		
+		termsOfUse=new TermsOfUse(){
+
+			@Override
+			public void openParentPopup() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		};
+		termsOfUse.show();
+		termsOfUse.setSize("902px", "300px");
+		termsOfUse.center();
+	}
+	@UiHandler("achPrivacy")
+	public void onClickPrivacyLink(ClickEvent envent){
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
+		TermsAndPolicyVc termsAndPolicyVc = new TermsAndPolicyVc(false) {
+			
+			@Override
+			public void openParentPopup() {
+				
+			}
+		};
+		termsAndPolicyVc.show();
+		termsAndPolicyVc.setSize("902px", "300px");
+		termsAndPolicyVc.center();
+	}
+	@UiHandler("achDataPolicy")
+	public void onClickDataPolicyLink(ClickEvent envent){
+		
+	}
+	@UiHandler("achCopyright")
+	public void onClickCopyrightLink(ClickEvent envent){
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
+		
+		CopyRightPolicyVc copyRightPolicy = new CopyRightPolicyVc() {
+			
+			@Override
+			public void openParentPopup() {
+				//No need to set.
+			}
+		};
+		copyRightPolicy.setSize("902px", "300px");
+		copyRightPolicy.center();
+		copyRightPolicy.show();
 	}
 }
 

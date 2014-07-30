@@ -29,6 +29,7 @@ import java.util.List;
 import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.shared.model.code.CodeDo;
@@ -60,6 +61,8 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	private SearchAsyncCallback<SearchDo<CodeDo>> standardSuggestionByFilterAsyncCallback;
 	
 	private static final String USER_META_ACTIVE_FLAG = "0";
+	
+	AddStandardsPresenter addStandardsPresenter = null;
 
 	/**
 	 * Class constructor
@@ -68,8 +71,9 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	 * @param view {@link View}
 	 */
 	@Inject
-	public CollectionInfoTabPresenter(EventBus eventBus, IsCollectionInfoTabView view) {
+	public CollectionInfoTabPresenter(EventBus eventBus, IsCollectionInfoTabView view,AddStandardsPresenter addStandardsPresenter) {
 		super(eventBus, view);
+		this.addStandardsPresenter = addStandardsPresenter;
 		getView().setUiHandlers(this);
 	}
 
@@ -99,21 +103,19 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 				public void onSuccess(ProfileDo profileObj) {
 				if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
 						if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
-							//getView().getStandardContainer().setVisible(false);
-							
+							getView().getStandardContainer().setVisible(false);
 						}else
 						{
 							getView().getUserStandardPrefCodeId(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
 							getView().getStandardContainer().setVisible(true);
 						}
 					}else{
-						//getView().getStandardContainer().setVisible(false);
+						getView().getStandardContainer().setVisible(false);
 					}
 				}
 
 			});
 			String collectionUid = AppClientFactory.getPlaceManager().getRequestParameter("id");
-			System.out.println("collectionUid:::::::"+collectionUid);
 			AppClientFactory.getInjector().getResourceService().getCollection(collectionUid,true, new SimpleAsyncCallback<CollectionDo>() {
 
 				@Override
@@ -292,7 +294,6 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 
 	@Override
 	public void getAutoSuggestedStandardsList(SearchDo<CodeDo> searchDo) {
-		//getStandardSuggestionByFiltersourceCourseIdAsyncCallback().execute(searchDo);
 		AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseIdsource(searchDo, new AsyncCallback<SearchDo<CodeDo>>() {
 			
 			@Override
@@ -309,29 +310,23 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 		});
 	}
 
-	public SearchAsyncCallback<SearchDo<CodeDo>> getStandardSuggestionByFiltersourceCourseIdAsyncCallback() {
-		System.out.println("inside tab presenter2::::::::"+standardSuggestionByFilterAsyncCallback);
-		// TODO Auto-generated method stub
-		if (standardSuggestionByFilterAsyncCallback == null) {
-			System.out.println("inside tab presenter3::::::::");
-			standardSuggestionByFilterAsyncCallback = new SearchAsyncCallback<SearchDo<CodeDo>>() {
+	@Override
+	public void getAddStandards() {
 
-				@Override
-				protected void run(SearchDo<CodeDo> searchDo) {
-					System.out.println("inside tab run::::::::"+searchDo);
-					getSearchService().getSuggestStandardByFilterCourseIdsource(searchDo, this);
-					
-				}
+	addToPopupSlot(addStandardsPresenter);
+	getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
 
-				@Override
-				public void onCallSuccess(SearchDo<CodeDo> result) {
-					// TODO Auto-generated method stub
-					Window.alert("success");
-				}
-				
-				
-			};
-		}
-		return standardSuggestionAsyncCallback;
+		
 	}
+	
+	@Override
+	public void setUpdatedStandards() {
+		getView().setUpdatedStandards(addStandardsPresenter.setStandardsVal(), addStandardsPresenter.setStandardsIdVal());
+	}
+	
+	@Override
+	public void closeStandardsPopup() {
+		addStandardsPresenter.hidePopup();
+	}
+
 }

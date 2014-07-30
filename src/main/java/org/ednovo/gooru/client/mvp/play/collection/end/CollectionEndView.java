@@ -59,6 +59,8 @@ import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
+import br.com.freller.tool.client.Print;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -1221,7 +1223,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 						}else{
 							commentField.getElement().getStyle().clearBackgroundColor();
 							commentField.getElement().getStyle().setBorderColor("#ccc");
-							characterLimit.setVisible(false);						
+							characterLimit.setVisible(false);	
+							Print.it();
 						}
 					}
 				});

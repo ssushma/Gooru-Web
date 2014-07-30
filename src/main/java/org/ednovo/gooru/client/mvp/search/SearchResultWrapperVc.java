@@ -29,10 +29,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
-import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerView;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -165,8 +162,13 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		shareLbl.setText(i18n.GL0526());
 		shareLbl.getElement().setAttribute("alt",i18n.GL0526());
 		shareLbl.getElement().setAttribute("title",i18n.GL0526());
-		
+		if (AppClientFactory.getCurrentPlaceToken().equals(
+				PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(
+						PlaceTokens.COLLECTION_PLAY)) {
 		addLbl.setText(i18n.GL0590());
+		}else{
+			addLbl.setText(i18n.GL2037());
+		}
 		
 		moreInfoLbl.getElement().setId("lblMoreInfo");
 		collcResLbl.getElement().setId("lblResColle");

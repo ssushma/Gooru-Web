@@ -84,6 +84,8 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	
 	String selectedCodeVal = "";
 	
+	Integer selectedCodeId = 0;
+	
 	private static AddStandardsViewUiBinder uiBinder = GWT.create(AddStandardsViewUiBinder.class);
 	
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -140,6 +142,9 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	public void loadData()
 	{
 		addBtn.setText("Add");
+		addBtn.setEnabled(false);
+		addBtn.removeStyleName("primary");
+		addBtn.addStyleName("secondary");
 		commonStandards.setText("Common Core State Standards");
 		texasKnowledge.setText("Texas Essential Knowledge and Skills");
 		ngss.setText("Next Generation Science Standards");
@@ -274,6 +279,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					levelOneStandardsInner4Code.getElement().setInnerHTML(levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCode());
 					levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getLabel());
 					final String codeVal = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCode();
+					final Integer codeIdVal = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCodeId();
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCodeId().toString());
@@ -284,6 +290,10 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 							// TODO Auto-generated method stub
 							HTMLEventPanel clickedObject = (HTMLEventPanel)event.getSource();
 							selectedCodeVal = codeVal;
+							selectedCodeId=codeIdVal;
+							addBtn.setEnabled(true);
+							addBtn.removeStyleName("secondary");
+							addBtn.addStyleName("primary");
 							for(int l=0;l<levelFourStandards.getWidgetCount();l++)
 							{
 								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
@@ -302,14 +312,29 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	
 	public void getFirstLevelObjects(String levelOrder, String standardCodeSelected)
 	{
+		selectedCodeVal = "";
+		selectedCodeId = 0;
+		addBtn.setEnabled(false);
+		addBtn.removeStyleName("primary");
+		addBtn.addStyleName("secondary");
 		getUiHandlers().getFirstLevelObjects(levelOrder,standardCodeSelected);
 	}
 	public void getSecondLevelObjects(String levelOrder, String standardCodeSelected)
 	{
+		selectedCodeVal = "";
+		selectedCodeId = 0;
+		addBtn.setEnabled(false);
+		addBtn.removeStyleName("primary");
+		addBtn.addStyleName("secondary");
 		getUiHandlers().getSecondLevelObjects(levelOrder,standardCodeSelected);
 	}
 	public void getThirdLevelObjects(String levelOrder, String standardCodeSelected)
 	{
+		selectedCodeVal = "";
+		selectedCodeId = 0;
+		addBtn.setEnabled(false);
+		addBtn.removeStyleName("primary");
+		addBtn.addStyleName("secondary");
 		getUiHandlers().getThirdLevelObjects(levelOrder,standardCodeSelected);
 	}
 	
@@ -386,6 +411,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					levelOneStandardsInner4Code.getElement().setInnerHTML(levelOneData.get(i).getNode().get(j).getNode().get(k).getCode());
 					levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.get(i).getNode().get(j).getNode().get(k).getLabel());
 					final String codeVal = levelOneData.get(i).getNode().get(j).getNode().get(k).getCode();
+					final Integer codeIdVal = levelOneData.get(i).getNode().get(j).getNode().get(k).getCodeId();
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(i).getNode().get(j).getNode().get(k).getCodeId().toString());
@@ -396,6 +422,10 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 							// TODO Auto-generated method stub
 							HTMLEventPanel clickedObject = (HTMLEventPanel)event.getSource();
 							selectedCodeVal = codeVal;
+							selectedCodeId=codeIdVal;
+							addBtn.setEnabled(true);
+							addBtn.removeStyleName("secondary");
+							addBtn.addStyleName("primary");
 							for(int l=0;l<levelFourStandards.getWidgetCount();l++)
 							{
 								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
@@ -459,6 +489,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					levelOneStandardsInner4Code.getElement().setInnerHTML(levelOneData.get(j).getNode().get(k).getCode());
 					levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.get(j).getNode().get(k).getLabel());
 					final String codeVal = levelOneData.get(j).getNode().get(k).getCode();
+					final Integer codeIdVal = levelOneData.get(j).getNode().get(k).getCodeId();
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(j).getNode().get(k).getCodeId().toString());
@@ -468,6 +499,10 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 						public void onClick(ClickEvent event) {
 							HTMLEventPanel clickedObject = (HTMLEventPanel)event.getSource();
 							selectedCodeVal = codeVal;
+							selectedCodeId=codeIdVal;
+							addBtn.setEnabled(true);
+							addBtn.removeStyleName("secondary");
+							addBtn.addStyleName("primary");
 							for(int l=0;l<levelFourStandards.getWidgetCount();l++)
 							{
 								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
@@ -502,6 +537,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					levelOneStandardsInner4Code.getElement().setInnerHTML(levelOneData.get(k).getCode());
 					levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.get(k).getLabel());
 					final String codeVal = levelOneData.get(k).getCode();
+					final Integer codeIdVal = levelOneData.get(k).getCodeId();
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(k).getCodeId().toString());
@@ -512,6 +548,10 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 							// TODO Auto-generated method stub
 							HTMLEventPanel clickedObject = (HTMLEventPanel)event.getSource();
 							selectedCodeVal = codeVal;
+							selectedCodeId=codeIdVal;
+							addBtn.setEnabled(true);
+							addBtn.removeStyleName("secondary");
+							addBtn.addStyleName("primary");
 							for(int l=0;l<levelFourStandards.getWidgetCount();l++)
 							{
 								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
@@ -592,6 +632,12 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		return standardVal;
 	}
 	@Override
+	public Integer setStandardsIdVal()
+	{
+		Integer standardVal = selectedCodeId;
+		return standardVal;
+	}
+	@Override
 	public void hidePopup()
 	{
 		appPopUp.hide();
@@ -599,6 +645,11 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	
 	@UiHandler("texasKnowledge")
 	public void ontexasKnowledgeClick(ClickEvent click){
+		selectedCodeVal = "";
+		selectedCodeId = 0;
+		addBtn.setEnabled(false);
+		addBtn.removeStyleName("primary");
+		addBtn.addStyleName("secondary");
 		scienceCodeVal = false;
 		instantVal = false;
 		commonStandards.removeStyleName("primary");
@@ -615,6 +666,11 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	
 	@UiHandler("commonStandards")
 	public void oncommonStandardsClick(ClickEvent click){
+		selectedCodeVal = "";
+		selectedCodeId = 0;
+		addBtn.setEnabled(false);
+		addBtn.removeStyleName("primary");
+		addBtn.addStyleName("secondary");
 		scienceCodeVal = false;
 		instantVal = false;
 		texasKnowledge.removeStyleName("primary");
@@ -631,6 +687,11 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	
 	@UiHandler("ngss")
 	public void onngssClick(ClickEvent click){
+		selectedCodeVal = "";
+		selectedCodeId = 0;
+		addBtn.setEnabled(false);
+		addBtn.removeStyleName("primary");
+		addBtn.addStyleName("secondary");
 		scienceCodeVal = false;
 		instantVal = false;
 		texasKnowledge.removeStyleName("primary");
@@ -647,6 +708,11 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	
 	@UiHandler("californiaStandards")
 	public void oncaliforniaStandardsClick(ClickEvent click){
+		selectedCodeVal = "";
+		selectedCodeId = 0;
+		addBtn.setEnabled(false);
+		addBtn.removeStyleName("primary");
+		addBtn.addStyleName("secondary");
 		scienceCodeVal = false;
 		instantVal = false;
 		texasKnowledge.removeStyleName("primary");
