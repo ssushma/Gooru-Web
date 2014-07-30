@@ -29,10 +29,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
-import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerView;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
