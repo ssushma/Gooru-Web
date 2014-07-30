@@ -109,7 +109,7 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		lodingImage.getElement().setId("lblLodingImage");
 
 		int windowHeight=Window.getClientHeight();
-		panelSearchPage.setStyleName(style.panelHeight());
+		panelSearchPage.setStyleName("panelHeight");
 		panelSearchPage.getElement().getStyle().setHeight(windowHeight - 50, Unit.PX);
 	}
 
