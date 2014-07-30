@@ -250,13 +250,13 @@ text-align:center;
 	width: 22px;
 }
 
-.pinterestImage {
+/*.pinterestImage {
 	background: url("images/pinterest.png");
 	width: 20px;
 	height: 21px;
-}
+}*/
 
-.facebookImage:hover, .twitterImage:hover, .youtubeImage:hover, .googleplusImage:hover, .pinterestImage:hover {
+.facebookImage:hover, .twitterImage:hover, .youtubeImage:hover, .googleplusImage:hover {
 	opacity:0.6;
 }
 
