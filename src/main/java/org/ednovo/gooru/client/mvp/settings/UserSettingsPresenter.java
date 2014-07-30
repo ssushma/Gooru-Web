@@ -390,16 +390,24 @@ public class UserSettingsPresenter
 							user.getUser().getUsername());
 					getView().hideuserDetailsContainerOnClickOfTab();
 					if (user.getUser().getLoginType()
-							.equalsIgnoreCase("credential")) {
+							.equalsIgnoreCase("credential")) {					
+						if(user.getUserType() != null && user.getUserType().length() > 1)
+						{
+						user.setUserType(user.getUserType().substring(0,1).toUpperCase()+user.getUserType().substring(1, user.getUserType().length()));
+						}
 						if (dob != null) {
 							getView().getLbUName().getElement()
 									.setAttribute("dob", "" + dob);
 							int age = getAge(dob);
 							getView().getLbUName().getElement()
 									.setAttribute("date", "" + age);
-							if (age < 13) {
+					
+							if (age < 13) 
+							{
 								getView().getLbRole().setText(i18n.GL0417());
-							} else {
+							} 
+							else 
+							{
 								getView().getLbRole().setText(
 										user.getUserType());
 							}

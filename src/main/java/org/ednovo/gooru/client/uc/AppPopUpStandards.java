@@ -60,9 +60,10 @@ public class AppPopUpStandards extends PopupPanel {
 		headerPanel.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUpOuterDiv());
 		labletitle = new Label();
 		labletitle.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemHeaderText());
-		closeBtn.setStyleName(ShelfCBundle.INSTANCE.css().assignSprite());
-		closeBtn.addStyleName(ShelfCBundle.INSTANCE.css().assignCloseMark());
 		closeBtn.addStyleName(ShelfCBundle.INSTANCE.css().assignCloseMarker());
+		closeBtn.addStyleName(ShelfCBundle.INSTANCE.css().assignSprite());
+		closeBtn.addStyleName(ShelfCBundle.INSTANCE.css().assignCloseMark());
+
 		headerPanel.add(labletitle);
 		headerPanel.add(closeBtn);
 		content.add(headerPanel);
