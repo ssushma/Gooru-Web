@@ -53,38 +53,46 @@ import com.googlecode.gwt.serialization.JsonWriter;
  * @author Search Team
  * 
  */
-public class ContributorsView extends BaseViewWithHandlers<ContributorsUiHandlers> implements IsContributorsView{
+public class ContributorsView extends
+		BaseViewWithHandlers<ContributorsUiHandlers> implements
+		IsContributorsView {
 
-	private static ContributorsViewUiBinder uiBinder = GWT.create(ContributorsViewUiBinder.class);
+	private static ContributorsViewUiBinder uiBinder = GWT
+			.create(ContributorsViewUiBinder.class);
 
 	private static String CONTRIBUTORS_DATA = "contributorsData";
 	ArrayList<LibraryUserDo> contributorsList = new ArrayList<LibraryUserDo>();
-	StorageJsonSerializationFactory factory = GWT.create(StorageJsonSerializationFactory.class);
-	
-	interface ContributorsViewUiBinder extends UiBinder<Widget, ContributorsView> {
+	StorageJsonSerializationFactory factory = GWT
+			.create(StorageJsonSerializationFactory.class);
+
+	interface ContributorsViewUiBinder extends
+			UiBinder<Widget, ContributorsView> {
 	}
-	
-	@UiField ContributorsCBundle fc;
+
+	@UiField
+	ContributorsCBundle fc;
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	@UiField HTMLPanel panelFeaturedContributors, panelContributorsList;
-	@UiField Anchor ancView;
-	
+	@UiField
+	HTMLPanel panelFeaturedContributors, panelContributorsList;
+	@UiField
+	Anchor ancView;
+
 	private Storage stockStore = Storage.getLocalStorageIfSupported();
-	
+
 	/**
 	 * Class constructor
 	 */
 	public ContributorsView() {
-		setWidget(uiBinder.createAndBindUi(this));	
-		
+		setWidget(uiBinder.createAndBindUi(this));
+
 		setIds();
 		getContributorsList();
 	}
 
 	/**
-	 * @function setIds 
+	 * @function setIds
 	 * 
 	 * @created_date : Jul 28, 2014
 	 * 
@@ -93,32 +101,33 @@ public class ContributorsView extends BaseViewWithHandlers<ContributorsUiHandler
 	 * 
 	 * 
 	 * @return : void
-	 *
+	 * 
 	 * @throws : <Mentioned if any exceptions>
-	 *
 	 * 
-	 *
 	 * 
-	*/
+	 * 
+	 * 
+	 */
 	private void setIds() {
 		Map<String, String> urlPara = new HashMap<String, String>();
 		urlPara.put("page", "featured-contributors");
-		
+
 		ancView.setText(i18n.GL2050());
 		String url = StringUtil.generateMessage(PlaceTokens.HOME, urlPara);
-		url = url.replaceAll("%26", "&"); 
-		ancView.setHref("#"+url);
-		StringUtil.setAttributes(ancView.getElement(), "ancView", i18n.GL2050(), i18n.GL2050());
+		url = url.replaceAll("%26", "&");
+		ancView.setHref("#" + url);
+		StringUtil.setAttributes(ancView.getElement(), "ancView",
+				i18n.GL2050(), i18n.GL2050());
 	}
-	
-	
+
 	@Override
 	public void onLoad() {
 		onLoad();
 	}
+
 	/**
 	 * 
-	 * @function getContributorsList 
+	 * @function getContributorsList
 	 * 
 	 * @created_date : Jul 28, 2014
 	 * 
@@ -127,39 +136,50 @@ public class ContributorsView extends BaseViewWithHandlers<ContributorsUiHandler
 	 * 
 	 * 
 	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
 	 * 
-	 *
-	 *
+	 * @throws : <Mentioned if any exceptions>
+	 * 
+	 * 
+	 * 
+	 * 
 	 */
-	public void getContributorsList(){
-		final JsonWriter<ArrayList<LibraryUserDo>> courseMapWriter = factory.getWriter();
-		final JsonReader<ArrayList<LibraryUserDo>> courseMapReader = factory.getReader();
-		
+	public void getContributorsList() {
+		final JsonWriter<ArrayList<LibraryUserDo>> courseMapWriter = factory
+				.getWriter();
+		final JsonReader<ArrayList<LibraryUserDo>> courseMapReader = factory
+				.getReader();
+
 		String map = null;
-		
-		if(stockStore!=null&&stockStore.getItem(CONTRIBUTORS_DATA)!=null){
+
+		if (stockStore != null && stockStore.getItem(CONTRIBUTORS_DATA) != null) {
 			map = stockStore.getItem(CONTRIBUTORS_DATA);
 			contributorsList = courseMapReader.read(map);
 			displayContributors(contributorsList);
-		}else{
-			AppClientFactory.getInjector().getLibraryService().getLibraryFeaturedUsers("community", new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
-				@Override
-				public void onSuccess(ArrayList<LibraryUserDo> result) {
-					displayContributors(result);
-					String courseMapWriterString = courseMapWriter.write(result);
-					if(stockStore!=null) {
-						stockStore.setItem(CONTRIBUTORS_DATA, courseMapWriterString);
-					}
-				}
-			});
+		} else {
+			AppClientFactory
+					.getInjector()
+					.getLibraryService()
+					.getLibraryFeaturedUsers(
+							"community",
+							new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
+								@Override
+								public void onSuccess(
+										ArrayList<LibraryUserDo> result) {
+									displayContributors(result);
+									String courseMapWriterString = courseMapWriter
+											.write(result);
+									if (stockStore != null) {
+										stockStore.setItem(CONTRIBUTORS_DATA,
+												courseMapWriterString);
+									}
+								}
+							});
 		}
 	}
+
 	/**
 	 * 
-	 * @function displayContributors 
+	 * @function displayContributors
 	 * 
 	 * @created_date : Jul 28, 2014
 	 * 
@@ -169,30 +189,41 @@ public class ContributorsView extends BaseViewWithHandlers<ContributorsUiHandler
 	 * @param result
 	 * 
 	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
 	 * 
-	 *
-	 *
+	 * @throws : <Mentioned if any exceptions>
+	 * 
+	 * 
+	 * 
+	 * 
 	 */
-	public void displayContributors(ArrayList<LibraryUserDo> result){
-		for (int i=0; i<8;i++){
-			if (result.get(i).getGooruUId() != null && !result.get(i).getGooruUId().equalsIgnoreCase("")){
+	public void displayContributors(ArrayList<LibraryUserDo> result) {
+		int count=0;
+		for (int i = 0; count < 8; i++) {
+			if (result.get(i).getGooruUId() != null
+					&& !result.get(i).getGooruUId().equalsIgnoreCase("")
+					&& !result.get(i).getUsername()
+							.equalsIgnoreCase("elaine.tu")
+					&& !result.get(i).getUsername().equalsIgnoreCase("bennya")) {
 				final Image img = new Image();
-				img.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + result.get(i).getGooruUId()+".png");
+				System.out.println("result.get(i).getUsername() :"
+						+ result.get(i).getUsername());
+				img.setUrl(AppClientFactory.getLoggedInUser().getSettings()
+						.getProfileImageUrl()
+						+ result.get(i).getGooruUId() + ".png");
 				img.addErrorHandler(new ErrorHandler() {
-					
+
 					@Override
 					public void onError(ErrorEvent event) {
 						img.setUrl("images/settings/setting-user-image.png");
 					}
 				});
-				
+
 				img.getElement().addClassName(fc.profileImage());
 				panelContributorsList.add(img);
+				
+				count++;
 			}
 		}
 	}
-	
+
 }
