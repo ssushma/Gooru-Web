@@ -77,7 +77,7 @@
 								<p class="">Measure your students' engagement and progress to
 									intervene in real-time.</p>
 
-								<g:Button styleName="primary {res.css.btnBlock}">View Sample Reports</g:Button>
+								<g:Button styleName="primary {res.css.btnBlock}" ui:field="viewSampleResportsBtn">View Sample Reports</g:Button>
 
 							</div>
 						</div>

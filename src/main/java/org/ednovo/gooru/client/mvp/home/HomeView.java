@@ -66,7 +66,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements IsHomeView {
 
 	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer;
-	@UiField Button btnSignUp, btnMoreOnCollections;
+	@UiField Button btnSignUp, btnMoreOnCollections,viewSampleResportsBtn;
 	@UiField Label lblHeading, lblSubHeading; 
 	@UiField TextBoxWithPlaceholder txtSearch;
 	@UiField Button btnSearch;
@@ -371,6 +371,10 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		}
 		
 		Window.scrollTo(0, scrollTop-40);
+	}
+	@UiHandler("viewSampleResportsBtn")
+	public void onClickViewSampleReportBtn(ClickEvent event){
+		SampleReportView sampleReportView= new SampleReportView();
 	}
 }
 

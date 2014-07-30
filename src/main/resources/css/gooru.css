@@ -2063,3 +2063,8 @@ fieldset {
 .errorContent{
 	text-align: center;
 }
+.reportPopup {
+	background: none repeat scroll 0 0 #FFFFFF;
+	height: 630px;
+	width: 800px;
+}
