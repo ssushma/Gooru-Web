@@ -98,9 +98,9 @@
 							target="_blank">
 							<span class="{res.css.googleplusImage}"></span>
 						</a>
-						<a href="http://pinterest.com/goorulearning/" target="_blank">
+						<!--  <a href="http://pinterest.com/goorulearning/" target="_blank">
 							<span class="{res.css.pinterestImage}"></span>
-						</a>
+						</a>-->
 					</g:HTML>
 				</g:FlowPanel>
 				<g:HTMLPanel styleName="{res.css.homePageFooterMenu}">

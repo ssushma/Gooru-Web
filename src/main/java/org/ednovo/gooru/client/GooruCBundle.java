@@ -72,7 +72,7 @@ public interface GooruCBundle extends ClientBundle {
 		
 		String googleplusImage();
 		
-		String pinterestImage();
+		//String pinterestImage();
 		
 		String homePageFooterMenu();
 		
