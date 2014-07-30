@@ -1067,6 +1067,7 @@ footer .col-md-4 {
 
 .getStart .getContentContainer {
 	padding: 10px 10px;
+	min-height: 212px;
 }
 
 .getStart .getContentContainer h4 {
