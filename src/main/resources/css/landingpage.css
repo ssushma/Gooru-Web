@@ -1067,6 +1067,7 @@ footer .col-md-4 {
 
 .getStart .getContentContainer {
 	padding: 10px 10px;
+	min-height: 212px;
 }
 
 .getStart .getContentContainer h4 {
@@ -1178,4 +1179,10 @@ footer .col-md-2:last-child{
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+
+.copyRight{
+	color: white;
+	text-align: center;
+	width: 100%;
 }
