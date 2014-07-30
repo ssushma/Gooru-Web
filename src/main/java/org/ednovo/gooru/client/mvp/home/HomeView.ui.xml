@@ -14,7 +14,9 @@
 				<g:Label styleName="{res.css.subheader}" ui:field="lblSubHeading"
 					text="{i18n.GL2047}"></g:Label>
 				<g:Button styleName="primary {res.css.signUpButton}"
-					ui:field="btnSignUp" text="{i18n.GL0186}"></g:Button>
+					ui:field="btnSignUp" text="{i18n.GL2101}"></g:Button>
+				<g:Label styleName="{res.css.description}" ui:field="lblDescription"
+					text="{i18n.GL2102}"></g:Label>
 			</g:HTMLPanel>
 			<section class="searchContainer">
 				<div class="containerMain">
@@ -30,7 +32,7 @@
 									or search over 18M resources</p>
 
 								<tbp:TextBoxWithPlaceholder
-									styleName="form-control" placeholder="e.g. Shakespeare"
+									styleName="form-control" placeholder="{i18n.GL2073}"
 									ui:field="txtSearch"></tbp:TextBoxWithPlaceholder>
 								<g:Button styleName="primary" ui:field="btnSearch"
 									text="{i18n.GL0176}"></g:Button>
@@ -1067,9 +1069,8 @@
 									students as you introduce them to Gooru.
 								</p>
 
-								<h4><a href="http://www.goorulearning.org/#students-view&amp;pageSize=5&amp;id=880199d9-cf3c-47ba-8418-838ccd32d3d2&amp;pageNum=0&amp;pos=1" target="_bank">How to Gooru</a></h4>
-								<p>If you’d like a step-by-step guided tutorial to using all the
-									parts of Gooru, take the Gooru Course.
+								<h4><a href="http://www.goorulearning.org/#students-view&amp;pageSize=5&amp;id=880199d9-cf3c-47ba-8418-838ccd32d3d2&amp;pageNum=0&amp;pos=1" target="_bank">Gooru Tutorials</a></h4>
+								<p>Check out these Gooru collections to get familiar with the major features of Gooru.
 								</p>
 							</div>
 						</div>
@@ -1169,8 +1170,7 @@
 										<div class="badgepadd">
 											<p>Use the link below to embed this badge on your site</p>
 											<p>
-												<input type="text" placeholder="" class="form-control"
-													name="" />
+												<g:TextBox styleName="form-control" ui:field="txtEmbedLink"/>
 											</p>
 										</div>
 									</div>
@@ -1294,6 +1294,9 @@
 						</div>
 						<div class="clearfix"></div>
 					</div>
+				</div>
+				<div>
+				    <g:Label styleName="copyRight" text="{i18n.GL1246}"></g:Label>
 				</div>
 			</footer>
 			<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

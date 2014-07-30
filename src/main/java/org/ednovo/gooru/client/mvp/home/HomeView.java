@@ -47,6 +47,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -56,6 +57,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 
@@ -71,6 +73,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	@UiField TextBoxWithPlaceholder txtSearch;
 	@UiField Button btnSearch;
 	@UiField Anchor achLearn;
+	@UiField TextBox txtEmbedLink;
 	LibraryView libraryView = null;
 	
 	Map<String, String> allSubject = new HashMap<String, String>();
@@ -194,6 +197,19 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				
 		StringUtil.setAttributes(lblHeading.getElement(), "lblHeading", i18n.GL2046(), i18n.GL2046());
 		StringUtil.setAttributes(lblSubHeading.getElement(), "lblSubHeading", i18n.GL2047(), i18n.GL2047());
+		
+		String url =  "<a href=\"http://www.goorulearning.org\" />";
+		txtEmbedLink.setText(url);
+		StringUtil.setAttributes(txtEmbedLink.getElement(), "txtEmbedLink", url, url);
+		txtEmbedLink.setReadOnly(true);
+		txtEmbedLink.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				txtEmbedLink.selectAll();
+			}
+		});
+		txtEmbedLink.selectAll();
 		
 		Window.enableScrolling(true);
 	}
