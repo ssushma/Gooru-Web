@@ -12,7 +12,7 @@
 }
 
 .assignCloseMark {
-	background-position: -52px -116px;
+	background-position: -52px -116px !important;
 	width: 18px;
 	height: 19px;
 	cursor: pointer;
