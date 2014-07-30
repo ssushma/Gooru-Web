@@ -276,9 +276,9 @@ public class AddResourceContainerView extends
 
 	public TreeItem loadingTreeItem() {
 		Label loadingText = null;
-		System.out.println("here loading item");
 		if (AppClientFactory.getCurrentPlaceToken().equals(
-				PlaceTokens.RESOURCE_SEARCH)) {
+				PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(
+						PlaceTokens.COLLECTION_PLAY)) {
 			loadingText = new Label(i18n.GL1452());
 		} else {
 			loadingText = new Label(i18n.GL2051());
