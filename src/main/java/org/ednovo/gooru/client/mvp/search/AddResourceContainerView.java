@@ -440,9 +440,8 @@ public class AddResourceContainerView extends
 		} else if (searchType.equalsIgnoreCase("resource")) {
 			isResourceSearch = true;
 			isCollectionSearch = false;
-			addResourceText
-					.setText("Add this Resource to one of your existing Collections -or-");
-			addCollectiorOrReourceText.setText("Add to a new Collection");
+			addResourceText.setText(i18n.GL2088());
+			addCollectiorOrReourceText.setText(i18n.GL2089());
 			addResourceText.getElement().setAttribute("style",
 					"display: inline-block;");
 			addCollectiorOrReourceText.getElement().setAttribute("style",
