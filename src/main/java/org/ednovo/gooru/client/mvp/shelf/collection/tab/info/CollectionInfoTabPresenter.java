@@ -350,7 +350,7 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	
 	@Override
 	public void setUpdatedStandards() {
-		getView().setUpdatedStandards(addStandardsPresenter.setStandardsVal());
+		getView().setUpdatedStandards(addStandardsPresenter.setStandardsVal(), addStandardsPresenter.setStandardsIdVal());
 	}
 	
 	@Override
