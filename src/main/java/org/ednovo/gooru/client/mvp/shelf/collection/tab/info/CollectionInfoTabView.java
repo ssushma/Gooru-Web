@@ -153,6 +153,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	private static final String FLT_SOURCE_CODE_ID = 	"flt.sourceCodeId";
 	
+	private static final String NO_MATCH_FOUND = i18n.GL0723();
+	
 	CourseListUc courseListUc;
 	
 	List<String> standardPreflist=null;
@@ -196,31 +198,23 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				standardSearchDo.setQuery(text);
 				if (text != null && text.trim().length() > 0) {
 					standardsPreferenceOrganizeToolTip.hide();
+					standardSuggestOracle.clear();
 					if(standardPreflist!=null){
-						System.out.println("text:::::"+text);
-						System.out.println("text standardPreflist:::::"+standardPreflist);
 						for(int count=0; count<standardPreflist.size();count++) {
 							if(text.contains("CCSS") || text.contains("TEKS") || text.contains("CA") ||text.contains("NGSS")) {
 							if(text.contains(standardPreflist.get(count))) {
 								standardsPrefDisplayPopup = true;
-								System.out.println("1");
-								//break;
+								break;
 							} else {
-								System.out.println("2");
 								standardsPrefDisplayPopup = false;
 							}
 							}else{
-								System.out.println("3");
 								standardsPrefDisplayPopup = true;
 							}
 						}
 						
 					}
-					else{
-						System.out.println("4");
-						standardsPrefDisplayPopup = false;
-					}
-					
+						
 					if(standardsPrefDisplayPopup){
 						standardsPreferenceOrganizeToolTip.hide();
 						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
@@ -1054,8 +1048,9 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				lblAudiencePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
 				}
 			}
-		
+		System.out.println("collectionDoVal.getTaxonomySet() size::::::::"+collectionDoVal.getTaxonomySet());
 			if(collectionDoVal.getTaxonomySet().size()==0){
+				System.out.println("inside this loop");
 				courseData.getElement().getStyle().setDisplay(Display.NONE);
 				addCourseBtn.setText(ADD_COURSE);
 				addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
@@ -1067,7 +1062,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				courseCode="";
 			}else{
 				for (CodeDo code : collectionDoVal.getTaxonomySet()) {
-				
 					if (code.getDepth() == 2) {
 						courseDo.add(code.getLabel());
 						courseData.add(createCourseLabel(code.getLabel(), code.getCodeId() + "", code.getLabel()));
@@ -1251,8 +1245,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		standardSuggestOracle.clear();
 		this.standardSearchDo = standardSearchDo;
 		if (this.standardSearchDo.getSearchResults() != null) {
-			
-			System.out.println("size:::::"+this.standardSearchDo.getSearchResults().size());
 			/*if(standardSearchDo.getSearchResults().size()>0){*/
 				System.out.println("inside if");
 			List<String> sources = getAddedStandards(standardsPanel);
@@ -1262,16 +1254,11 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				}
 				standardCodesMap.put(code.getCodeId() + "", code.getLabel());
 			}
-			standardSgstBox.showSuggestionList();		
-			/*}else{
-				System.out.println("inside else part");
-				//StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
-				standardSgstBox.hideSuggestionList();
-				standardSuggestOracle.clear();
-				standardsPreferenceOrganizeToolTip.show();
-				standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-			}*/
 		}
+		if (standardSuggestOracle.isEmpty()) {
+			standardSuggestOracle.add(NO_MATCH_FOUND);
+		}
+		standardSgstBox.showSuggestionList();		
 	}
 
 	/**
@@ -1529,7 +1516,6 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 			standardPreflist.add(code.substring(0, 2));
 		 }
 		}
-		System.out.println("standardPreflist::::::"+standardPreflist);
 	}
 
 	public void OnStandardsClickEvent(Button standardsButtonClicked)
