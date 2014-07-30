@@ -125,7 +125,11 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	ToolTip toolTip=null;
 	
+	@UiField Button browseBtn;
+	
 	String courseCode="";
+	
+	private HandlerRegistration handlerRegistration=null;
 	
 	private CollectionDo collectionDo = null;
 
@@ -245,6 +249,16 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		res = CollectionCBundle.INSTANCE;
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
+		
+		browseBtn.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().getAddStandards();
+				
+			}
+		});
+
 		BlurHandler blurhander=new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -1518,6 +1532,28 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 		System.out.println("standardPreflist::::::"+standardPreflist);
 	}
 
+	public void OnStandardsClickEvent(Button standardsButtonClicked)
+	{
+		if(handlerRegistration!=null){
+			handlerRegistration.removeHandler();
+		}
+		handlerRegistration=standardsButtonClicked.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().setUpdatedStandards();
+		
+				
+			}
+		});
+	}
+	
+	public void setUpdatedStandards(String standardsCode)
+	{
+		//standardPreflist.add(standardsCode);
+		standardsPanel.add(createStandardLabel(standardsCode, "" + "", ""));
+		getUiHandlers().closeStandardsPopup();
+	}
 	
 
 }
