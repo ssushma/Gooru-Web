@@ -205,8 +205,6 @@ public class ContributorsView extends
 							.equalsIgnoreCase("elaine.tu")
 					&& !result.get(i).getUsername().equalsIgnoreCase("bennya")) {
 				final Image img = new Image();
-				System.out.println("result.get(i).getUsername() :"
-						+ result.get(i).getUsername());
 				img.setUrl(AppClientFactory.getLoggedInUser().getSettings()
 						.getProfileImageUrl()
 						+ result.get(i).getGooruUId() + ".png");
