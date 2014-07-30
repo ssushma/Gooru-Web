@@ -170,7 +170,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 						PlaceTokens.COLLECTION_PLAY)) {
 		addLbl.setText(i18n.GL0590());
 		}else{
-			addLbl.setText(i18n.GL2101());
+			addLbl.setText(i18n.GL2037());
 		}
 		
 		moreInfoLbl.getElement().setId("lblMoreInfo");
