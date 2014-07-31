@@ -367,7 +367,7 @@ public class AppModule extends AppPresenterModule {
 		bind(RootPresenter.class).to(AppRootPresenter.class).asEagerSingleton();
 
 		bindConstant().annotatedWith(AppDefaultPlace.class)
-				.to(PlaceTokens.LANDINGPAGE);
+				.to(PlaceTokens.HOME);
 		bindPresenter(PrimePresenter.class, IsPrimeView.class, PrimeView.class,
 				IsPrimeProxy.class);
 		bindPresenter(HomePresenter.class, IsHomeView.class, HomeView.class,

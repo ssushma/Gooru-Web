@@ -952,7 +952,19 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ArrayList<ClasspageItemDo> assignItemToClass(String classpageId,String collectionOrFolderId,String dueDate,String direction){
 		ArrayList<ClasspageItemDo> classpageItemDoList=new ArrayList<ClasspageItemDo>();
 		try {
+			if(direction != null)
+			{
 			direction = URLEncoder.encode(direction, "UTF-8");
+			}
+			else
+			{
+				direction = "";
+			}
+			
+			if(dueDate == null)
+			{
+				dueDate = "";
+			}
 			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();

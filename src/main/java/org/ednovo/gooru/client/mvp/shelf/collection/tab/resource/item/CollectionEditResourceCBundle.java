@@ -484,6 +484,7 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
         String fRight();
         String OnButtonDeActive();
         String accessHazard();
+        String charLimit();
        
            
 	}

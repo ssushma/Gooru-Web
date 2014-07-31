@@ -653,6 +653,10 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		}
 		this.profileDo = profileDo;
 		userCoursePopup.setVisible(false);	
+		if(profileDo.getUserType() != null && profileDo.getUserType().length() > 1)
+		{
+			profileDo.setUserType(profileDo.getUserType().substring(0,1).toUpperCase()+profileDo.getUserType().substring(1, profileDo.getUserType().length()));
+		}
 		roleTxt.setText(profileDo.getUserType());
 		roleTxt.getElement().setAttribute("alt",profileDo.getUserType());
 		roleTxt.getElement().setAttribute("title",profileDo.getUserType());

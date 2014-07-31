@@ -144,7 +144,7 @@ public class ShelfCollectionResourceChildView extends
 	Label pencilEditNarationLbl,updateResourceBtn,addTages,endPageLbl;
 
 	@UiField
-	Label narrationAlertMessageLbl,videoTimeField,fromLblDisplayText,ToLbl,UpdateTextMessage,editStartPageLbl,editVideoTimeLbl,errorMsgLabel;
+	Label narrationAlertMessageLbl,videoTimeField,fromLblDisplayText,ToLbl,UpdateTextMessage,editStartPageLbl,editVideoTimeLbl,errorMsgLabel, lblCharLimit;
 
 	@UiField Image imgNotFriendly;
 	
@@ -630,6 +630,12 @@ public class ShelfCollectionResourceChildView extends
 				  }
 			}
 		});
+		resourceNarrationHtml.getElement().getStyle().clearWidth();
+		String value = StringUtil.generateMessage(i18n.GL2103(), "415");
+		
+		StringUtil.setAttributes(lblCharLimit.getElement(), "lblCharLimit", value, value);
+		lblCharLimit.setText(value);
+		lblCharLimit.setVisible(false);
 	}
 
 	public void setUpdatedData(CollectionItemDo collectionItemDo) {
@@ -1219,7 +1225,8 @@ public class ShelfCollectionResourceChildView extends
 		actionVerPanel.setVisible(true);
 			editAndUpdateResource();
 		
-		
+		lblCharLimit.setVisible(true);
+		resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);
 	}
 	@UiHandler("addTages")
 	public void onAddTagesClick(ClickEvent clickEvent) {
@@ -1285,7 +1292,8 @@ public class ShelfCollectionResourceChildView extends
 		narrationConatainer.setVisible(false);
 		setEditMode(true);
 		
-		
+		lblCharLimit.setVisible(true);
+		resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);
 	}
 	/*
 	 * This clickEvent is used to update pdf start page
@@ -1311,7 +1319,9 @@ public class ShelfCollectionResourceChildView extends
 		editFloPanel.setVisible(false);
 		isEdited=false;
 		disableAllEditMode();
-		}
+		lblCharLimit.setVisible(false);
+		resourceNarrationHtml.getElement().getStyle().clearWidth();
+	}
 	
 	/**
 	 * Add or update narration for the collection resource
@@ -1425,41 +1435,37 @@ public class ShelfCollectionResourceChildView extends
 	 * This clickEvent is used to update pdf
 	 */
 	public void updatePdfStartPage()
-	{
-		String start=startpdfPageNumber.getText();
+ {
+		String start = startpdfPageNumber.getText();
 		String enteredStopPage = stoppdfPageNumber.getText();
-		boolean isValid = this.validatePDF(start,enteredStopPage,totalPages);
-		if(isValid){
-		MixpanelUtil.Organize_Click_Edit_Start_Page_Update();
-		errorMsgLabel.setText("");
-		errorMsgLabelForPDF.setText("");
-		actionVerPanelForUpdatePDF.setVisible(false);
-		editFloPanel.setVisible(false);
-		editPdfFlowPanel.setVisible(false);
-		actionVerPanelForUpdateTime.setVisible(false);
-		fromLblDisplayText.setVisible(true);
-		videoDisplay.setVisible(true);
-		narrationConatainer.setVisible(true);
-		UpdateTextMessage.setVisible(true);
-		actionVerPanel.setVisible(false);
-		
-		//collectionItemDo.setStart(start);
-		
-		
-		
-		
-		getPresenter().updateCollectionItem(
-				collectionItemDo.getCollectionItemId(),narrationData,
-				start, enteredStopPage);
-		isEdited = false;
+		boolean isValid = this.validatePDF(start, enteredStopPage, totalPages);
+		if (isValid) {
+			MixpanelUtil.Organize_Click_Edit_Start_Page_Update();
+			errorMsgLabel.setText("");
+			errorMsgLabelForPDF.setText("");
+			actionVerPanelForUpdatePDF.setVisible(false);
+			editFloPanel.setVisible(false);
+			editPdfFlowPanel.setVisible(false);
+			actionVerPanelForUpdateTime.setVisible(false);
+			fromLblDisplayText.setVisible(true);
+			videoDisplay.setVisible(true);
+			narrationConatainer.setVisible(true);
+			UpdateTextMessage.setVisible(true);
+			actionVerPanel.setVisible(false);
+
+			// collectionItemDo.setStart(start);
+			getPresenter().updateCollectionItem(
+					collectionItemDo.getCollectionItemId(), narrationData,
+					start, enteredStopPage);
+			isEdited = false;
 		}
 	}
 	/*
 	 * This clickEvent is used to update video
 	 */
 	public void editAndUpdateVideoTime()
-	{
-		
+ {
+
 		MixpanelUtil.Organize_Click_Edit_Start_Time_Update();
 		errorMsgLabel.setText("");
 		actionVerPanelForUpdateTime.setVisible(false);
@@ -1467,11 +1473,10 @@ public class ShelfCollectionResourceChildView extends
 		actionVerPanel.setVisible(false);
 		editFloPanel.setVisible(false);
 		UpdateTextMessage.setVisible(true);
-		//videoDisplay.setVisible(true);
+		// videoDisplay.setVisible(true);
 		narrationConatainer.setVisible(true);
 		editFieldsFloPanel.setVisible(false);
-		
-		
+
 		String narration = null;
 		String from = null;
 		String to = null;
@@ -1480,10 +1485,11 @@ public class ShelfCollectionResourceChildView extends
 			from = FROM_START_TIME;
 			to = FROM_STOP_TIME;
 		}
-		/*if (resourceNarrationHtml.getHTML().length() > 0) {
-			narration = narrationTxtArea.getHTML();
-			collectionItemDo.setNarration(narration);
-		}*/
+		/*
+		 * if (resourceNarrationHtml.getHTML().length() > 0) { narration =
+		 * narrationTxtArea.getHTML(); collectionItemDo.setNarration(narration);
+		 * }
+		 */
 		if (fromTxt.getText().length() > 0 && toTxt.getText().length() > 0) {
 			from = fromTxt.getText();
 			fromTxt.setText(from);
@@ -1495,28 +1501,23 @@ public class ShelfCollectionResourceChildView extends
 			toTxt.getElement().setAttribute("title", from);
 			String startTimeTxtMin = null;
 			String startTimeTxtSec = null;
-			if(fromTxt.getText().length()<2)
-			{
-				startTimeTxtMin="0"+fromTxt.getText();
-				
+			if (fromTxt.getText().length() < 2) {
+				startTimeTxtMin = "0" + fromTxt.getText();
+
+			} else {
+				startTimeTxtMin = fromTxt.getText();
 			}
-			else
-			{
-				startTimeTxtMin=fromTxt.getText();
+			if (toTxt.getText().length() < 2) {
+				startTimeTxtSec = "0" + toTxt.getText();
+			} else {
+				startTimeTxtSec = toTxt.getText();
 			}
-			if(toTxt.getText().length()<2)
-			{
-				startTimeTxtSec="0"+toTxt.getText();
-			}
-			else
-			{
-				startTimeTxtSec=toTxt.getText();
-			}
-			from="00:"+startTimeTxtMin+":"+startTimeTxtSec;
-			//collectionItemDo.setStart(from);
-		
+			from = "00:" + startTimeTxtMin + ":" + startTimeTxtSec;
+			// collectionItemDo.setStart(from);
+
 		}
-		if (EndTimeTxt1.getText().length() > 0 && EndTimeTxt2.getText().length() > 0 ) {
+		if (EndTimeTxt1.getText().length() > 0
+				&& EndTimeTxt2.getText().length() > 0) {
 			to = EndTimeTxt1.getText();
 			EndTimeTxt1.setText(to);
 			EndTimeTxt1.getElement().setAttribute("alt", to);
@@ -1527,44 +1528,36 @@ public class ShelfCollectionResourceChildView extends
 			EndTimeTxt2.getElement().setAttribute("title", to);
 			String EndTimeTxtMin = null;
 			String EndTimeTxtSec = null;
-			if(EndTimeTxt1.getText().length()<2)
-			{
-				EndTimeTxtMin="0"+EndTimeTxt1.getText();
-				
+			if (EndTimeTxt1.getText().length() < 2) {
+				EndTimeTxtMin = "0" + EndTimeTxt1.getText();
+
+			} else {
+				EndTimeTxtMin = EndTimeTxt1.getText();
 			}
-			else
-			{
-				EndTimeTxtMin=EndTimeTxt1.getText();
+			if (EndTimeTxt2.getText().length() < 2) {
+				EndTimeTxtSec = "0" + EndTimeTxt2.getText();
+			} else {
+				EndTimeTxtSec = EndTimeTxt2.getText();
 			}
-			if(EndTimeTxt2.getText().length()<2)
-			{
-				EndTimeTxtSec="0"+EndTimeTxt2.getText();
-			}
-			else
-			{
-				EndTimeTxtSec=EndTimeTxt2.getText();
-			}
-			to="00:"+ EndTimeTxtMin+":"+EndTimeTxtSec;
-			//collectionItemDo.setStop(to);
+			to = "00:" + EndTimeTxtMin + ":" + EndTimeTxtSec;
+			// collectionItemDo.setStop(to);
 		}
-		
+
 		if ((collectionItemDo.getResource().getResourceType().getName()
 				.equalsIgnoreCase("video/youtube"))
-				&& (!from.equals(FROM_START_TIME) || !to
-						.equals(FROM_STOP_TIME))) {
+				&& (!from.equals(FROM_START_TIME) || !to.equals(FROM_STOP_TIME))) {
 			this.youtubeValidation(narration, from, to);
-		} 
-		
-		
-		else {
-					
-					getPresenter().updateCollectionItem(
-					collectionItemDo.getCollectionItemId(),narrationData,
+		}else {
+
+			getPresenter().updateCollectionItem(
+					collectionItemDo.getCollectionItemId(), narrationData,
 					from, to);
-					//setEditMode(false);	
+			// setEditMode(false);
+			lblCharLimit.setVisible(false);
+			resourceNarrationHtml.getElement().getStyle().clearWidth();
 		}
 		isEdited = false;
-		
+
 	}
 	/**
 	 * Update the collection item meta data
@@ -1635,6 +1628,8 @@ public class ShelfCollectionResourceChildView extends
 							e.printStackTrace();
 						}
 						isEdited = false;
+						lblCharLimit.setVisible(false);
+						resourceNarrationHtml.getElement().getStyle().clearWidth();
 //					}
 					
 				}
@@ -1659,6 +1654,8 @@ public class ShelfCollectionResourceChildView extends
 		setEditMode(false);
 		isEdited = false;
 		disableAllEditMode();
+		lblCharLimit.setVisible(false);
+		resourceNarrationHtml.getElement().getStyle().clearWidth();
 	}
 	/*
 	 * This clickEvent is used to edit video time
@@ -1667,17 +1664,20 @@ public class ShelfCollectionResourceChildView extends
 	public void onclickEditVideoTimeLbl(ClickEvent event)
 	{
 		System.out.println("editVideoTimeLbl");
-			if(youtube){
+		if (youtube) {
+			lblCharLimit.setVisible(true);
+			resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);
 			MixpanelUtil.Organize_Click_Edit_Start_Time();
 			EditBtn.setVisible(false);
 			actionVerPanelForUpdateTime.setVisible(true);
 			videoDisplay.setVisible(false);
 			narrationConatainer.setVisible(false);
 			editFieldsFloPanel.setVisible(true);
-			ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			ResourceEditButtonContainer.getElement().getStyle()
+					.setVisibility(Visibility.HIDDEN);
 			fromTxt.setFocus(true);
 			setEditMode(true);
-			
+
 		}
 		
 	}
@@ -1687,6 +1687,7 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("updateVideoTimeBtn")
 	public void updateVideoTimeBtnClickEvent(ClickEvent event)
 	{
+		
 		editAndUpdateVideoTime();
 	}
 	/*
@@ -1703,7 +1704,8 @@ public class ShelfCollectionResourceChildView extends
 		editFloPanel.setVisible(false);
 		isEdited = false;
 		disableAllEditMode();
-		
+		lblCharLimit.setVisible(false);
+		resourceNarrationHtml.getElement().getStyle().clearWidth();
 	}
 
 	/**
@@ -1783,7 +1785,8 @@ public class ShelfCollectionResourceChildView extends
 		this.collectionItemDo.setStop(collectionItemDo.getStop());
 		//this.collectionItemDo.setStop(collectionItemDo.getAverageTime());
 		setEditMode(false);
-		
+		lblCharLimit.setVisible(false);
+		resourceNarrationHtml.getElement().getStyle().clearWidth();
 	}
 
 	/**
