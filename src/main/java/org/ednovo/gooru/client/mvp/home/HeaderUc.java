@@ -811,7 +811,11 @@ public class HeaderUc extends Composite implements
 				stockStore.setItem("tabKey", "resourceTab");
 			}
 			name = "organize";
-			Window.enableScrolling(true);
+			if (AppClientFactory.isAnonymous()){
+				Window.enableScrolling(true);
+			}else{
+				Window.enableScrolling(false);
+			}
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 			manageDotsMenuSelection(organizeLink);
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
