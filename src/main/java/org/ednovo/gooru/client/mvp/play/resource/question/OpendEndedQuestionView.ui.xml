@@ -8,7 +8,7 @@
           	  <g:HTMLPanel styleName="{oeStyle.openEndedQuestionAnswerTitle}" ui:field="answertext"></g:HTMLPanel>
           	  <g:HTMLPanel>
           	  	<g:Label styleName="{oeStyle.systemMessageStyle}" ui:field="messageBodyText"></g:Label>
-          	  	<g:Label styleName="{oeStyle.charLimit}" ui:field="lblCharLimit">Character Limit: 415</g:Label>
+          	  	<g:Label styleName="{oeStyle.charLimit}" ui:field="lblCharLimit"/>
           	  </g:HTMLPanel>
               <g:TextArea styleName="{oeStyle.openEndedQuestionAnswer}" ui:field="openEndedAnswerTextArea"></g:TextArea>
               <g:Label ui:field="errorMessageText" styleName="{oeStyle.errorMessageStyle}"></g:Label>
