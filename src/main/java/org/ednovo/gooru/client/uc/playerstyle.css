@@ -201,7 +201,7 @@
 	/* left: -8px; */
 	position: relative;
 	text-align: center;
-	top: -50px;
+	top: -40px;
 	width: 81px;
 }
 
@@ -269,6 +269,64 @@
 .resource-type-info-video,.resource-type-info-slide,
 .resource-type-info-interactive,.resource-type-info-question,.resource-type-info-website,.resource-type-info-textbook,
 .resource-type-info-handout,.resource-type-info-lesson,.resource-type-info-exam,.resource-type-info-audio,.resource-type-info-imageIcon,.resource-type-info-other,.resource-type-info-text{
+	background:url("images/resource-type-icons.png") no-repeat;
+	width: 28px;
+	height: 20px;
+	margin-left: 4px;
+	margin-top: -4px;
+	float:left;
+}
+
+.resource-type-info-video{
+	background-position: 0px 1px !important;
+}
+
+.resource-type-info-slide{
+	background-position: -0px -168px !important;
+}
+
+.resource-type-info-interactive{
+	background-position: 0px -27px !important;
+}
+
+.resource-type-info-question{
+	background-position: 0px -139px !important;
+}
+.resource-type-info-website{
+	background-position: 0px -223px !important;
+}
+
+.resource-type-info-textbook{
+	background-position: 0px -195px !important;
+}
+
+.resource-type-info-handout{
+	background-position: -0px -55px !important;
+}
+.resource-type-info-lesson{
+	background-position: -0px -112px !important;
+}
+.resource-type-info-exam{
+	background-position: -0px -83px !important;
+}
+.resource-type-info-audio{
+	background-position: 0px -279px;
+}
+.resource-type-info-imageIcon{
+	background-position: 0px -251px;
+}
+.resource-type-info-other{
+	background-position: 0px -307px;
+}
+.resource-type-info-text{
+	background-position: -0px -55px !important;
+}
+
+
+
+.resource-type-info-video-new,.resource-type-info-slide-new,
+.resource-type-info-interactive-new,.resource-type-info-question-new,.resource-type-info-website-new,.resource-type-info-textbook-new,
+.resource-type-info-handout-new,.resource-type-info-lesson-new,.resource-type-info-exam-new,.resource-type-info-audio-new,.resource-type-info-imageIcon-new,.resource-type-info-other-new,.resource-type-info-text-new{
 	/*background:url("images/resource-type-icons.png") no-repeat;*/
 	color: #FFFFFF;
 	font-size: 12px;
@@ -276,64 +334,64 @@
 	left: 3px;
 	position: relative;
 	text-align: center;
-	top: -41px;
+	top: -40px;
 	width: 81px;
 }
 
-.resource-type-info-video{
+.resource-type-info-video-new{
 	background:url("../images/Video_1.png") no-repeat
 		transparent;
 }
 
-.resource-type-info-slide{
-	background:url("../images/Video_1.png") no-repeat
-		transparent;
-}
-
-.resource-type-info-interactive{
-	background:url("../images/Interactive_1.png") no-repeat
-		transparent;
-}
-
-.resource-type-info-question{
-	background:url("../images/Question_1.png") no-repeat
-		transparent;
-}
-.resource-type-info-website{
-	background:url("../images/Website_1.png") no-repeat
-		transparent;
-}
-
-.resource-type-info-textbook{
+.resource-type-info-slide-new{
 	background:url("../images/Text_1.png") no-repeat
 		transparent;
 }
 
-.resource-type-info-handout{
-	background:url("../images/Video_1.png") no-repeat
+.resource-type-info-interactive-new{
+	background:url("../images/Interactive_1.png") no-repeat
 		transparent;
 }
-.resource-type-info-lesson{
-	background:url("../images/Video_1.png") no-repeat
+
+.resource-type-info-question-new{
+	background:url("../images/Question_1.png") no-repeat
 		transparent;
 }
-.resource-type-info-exam{
-	background:url("../images/Video_1.png") no-repeat
+.resource-type-info-website-new{
+	background:url("../images/Website_1.png") no-repeat
 		transparent;
 }
-.resource-type-info-audio{
+
+.resource-type-info-textbook-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+
+.resource-type-info-handout-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-lesson-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-exam-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-audio-new{
 	background:url("../images/Audio_1.png") no-repeat
 		transparent;
 }
-.resource-type-info-imageIcon{
+.resource-type-info-imageIcon-new{
 	background:url("../images/Image_1.png") no-repeat
 		transparent;
 }
-.resource-type-info-other{
-	background:url("../images/Video_1.png") no-repeat
+.resource-type-info-other-new{
+	background:url("../images/Text_1.png") no-repeat
 		transparent;
 }
-.resource-type-info-text{
+.resource-type-info-text-new{
 	background:url("../images/Text_1.png") no-repeat
 		transparent;
 }
