@@ -31,8 +31,9 @@
 								<p class="">Browse thousands of K-12 collections made by teachers
 									or search over 18M resources</p>
 
-								<tbp:TextBoxWithPlaceholder
-									styleName="form-control" placeholder="{i18n.GL2073}" ui:field="txtSearch"></tbp:TextBoxWithPlaceholder>
+								<!-- <tbp:TextBoxWithPlaceholder
+									styleName="form-control" placeholder="{i18n.GL2073}" ui:field="txtSearch"></tbp:TextBoxWithPlaceholder> -->
+								<tbp:AppSuggestBox ui:field="txtSearch" styleName="form-control" />
 								<g:Button styleName="primary" ui:field="btnSearch"
 									text="{i18n.GL0176}"></g:Button>
 
@@ -80,7 +81,7 @@
 								<p class="">Measure your students' engagement and progress to
 									intervene in real-time.</p>
 
-								<g:Button styleName="primary {res.css.btnBlock}">View Sample Reports</g:Button>
+								<g:Button styleName="primary {res.css.btnBlock}" ui:field="viewSampleResportsBtn">View Sample Reports</g:Button>
 
 							</div>
 						</div>
@@ -121,16 +122,16 @@
 									<div id="bs-example-navbar-collapse-3" class="collapse navbar-collapse">
 										<ul class="nav navbar-nav">
 											<li>
-												<a href="">Science</a>
+												<label >Science</label>
 											</li>
 											<li>
-												<a href="">Math</a>
+												<label>Math</label>
 											</li>
 											<li>
-												<a href="">Social Sciences</a>
+												<label>Social Sciences</label>
 											</li>
 											<li>
-												<a href="">Language Arts</a>
+												<label>Language Arts</label>
 											</li>
 										</ul>
 									</div><!-- /.navbar-collapse -->
@@ -1116,9 +1117,9 @@
 								<li>
 									<g:Anchor ui:field="achPrivacy">Privacy</g:Anchor>
 								</li>
-								<li>
+								<!-- <li>
 									<g:Anchor ui:field="achDataPolicy">Data Policy</g:Anchor>
-								</li>
+								</li> -->
 								<li>
 									<g:Anchor ui:field="achCopyright">Copyright</g:Anchor>
 								</li>

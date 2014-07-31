@@ -2064,6 +2064,13 @@ fieldset {
 	text-align: center;
 }
 
+.reportPopup {
+	background: none repeat scroll 0 0 #FFFFFF;
+	height: 630px;
+	width: 800px;
+}
+
+
 .panelHeight{
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -2076,3 +2083,4 @@ fieldset {
 		min-width:100%
 	}
 }
+

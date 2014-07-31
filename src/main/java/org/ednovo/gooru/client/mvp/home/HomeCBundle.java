@@ -524,7 +524,20 @@ public interface HomeCBundle extends ClientBundle{
 		String btnBlock();
 		String secondary();
 		String learnMoreContainer();
+
+		String imageFieldContainer();
+		String lblCollectionProgressDetails();
+		String lblCollectionProgress();
+		String summaryPopupContainer();
+		String summaryText();
+		String popupInner();
+		String reportPopupHeader();
+		String closeButton();
+		String rightImageContainer();
+		String leftImageContainer();
+
 		String description();
+
 	}
      @Source("Home.css")
      HomeCss css();

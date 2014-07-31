@@ -192,7 +192,7 @@
 
 .collectionMetaDataTabTitle {
 	float: left;
-	padding: 9px 4.2%;
+	padding: 9px 3.2%;
 	text-align: center;
 	cursor: pointer !important;
 }
@@ -1584,7 +1584,7 @@ padding-left: 11px;
 }
 .shelfPublishTab{
 	float: left;
-	margin-left: 45px;
+	margin-left: 40px;
 }
 .userprofilecount {
 	font-weight: bold;

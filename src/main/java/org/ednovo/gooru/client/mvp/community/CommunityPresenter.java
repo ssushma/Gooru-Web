@@ -121,7 +121,7 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@ProxyCodeSplit
-	@NameToken(PlaceTokens.HOME)
+	@NameToken(PlaceTokens.DISCOVER)
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsCommunityProxy extends ProxyPlace<CommunityPresenter> {
 	}
