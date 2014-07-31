@@ -142,7 +142,7 @@ public class LibraryMenuNav extends Composite{
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
 			setPlaceToken(placeToken);
 		} else {
-			setPlaceToken(PlaceTokens.HOME);
+			setPlaceToken(PlaceTokens.DISCOVER);
 		}
 		partnerPanel.setVisible(false);
 		featuredCourses.setText(i18n.GL1009());

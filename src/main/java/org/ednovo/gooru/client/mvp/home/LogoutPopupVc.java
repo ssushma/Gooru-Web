@@ -156,7 +156,7 @@ public class LogoutPopupVc extends Composite{
 				}
 				AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(null));
 
-				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.HOME) 
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.DISCOVER) 
 						|| AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH) 
 						|| AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
 					Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());

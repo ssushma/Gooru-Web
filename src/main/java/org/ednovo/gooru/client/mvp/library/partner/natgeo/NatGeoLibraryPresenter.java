@@ -108,7 +108,7 @@ public class NatGeoLibraryPresenter extends BasePlacePresenter<IsNatGeoLibraryVi
 	
 	@Override
 	public String getViewToken() {
-		return PlaceTokens.HOME;
+		return PlaceTokens.DISCOVER;
 	}
 
 }

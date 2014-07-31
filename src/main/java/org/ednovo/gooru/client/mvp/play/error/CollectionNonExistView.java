@@ -112,7 +112,7 @@ public class CollectionNonExistView extends Composite{
 	 */
 	@UiHandler("btnLibrary")
 	public void onClickOnLibrary(ClickEvent clickEvent){
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DISCOVER);
 		
 	}
 	
