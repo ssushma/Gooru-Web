@@ -31,6 +31,8 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.library.contributors.LibraryContributorsView;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 
+import com.google.gwt.user.client.ui.Button;
+
 /**
  * @author Search Team
  * 
@@ -54,5 +56,26 @@ public interface IsHomeView extends IsViewWithHandlers<HomeUiHandlers> {
 	 * @param placeToken 
 	 */
 	void loadFeaturedContributors(String callBack, String placeToken);
+
+	/**
+	 * @function getBtnSignUp 
+	 * 
+	 * @created_date : Jul 31, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @return
+	 * 
+	 * @return : Button
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	Button getBtnSignUp();
 	
 }
