@@ -6,7 +6,10 @@
 	<ui:style field= "oeStyle" src="questionresource.css" type="org.ednovo.gooru.client.mvp.play.resource.question.QuestionStyleResource"/>
 		<g:FlowPanel styleName="{oeStyle.openEndedQuestionAnswerContainer}">
           	  <g:HTMLPanel styleName="{oeStyle.openEndedQuestionAnswerTitle}" ui:field="answertext"></g:HTMLPanel>
-          	  <g:Label styleName="{oeStyle.systemMessageStyle}" ui:field="messageBodyText"></g:Label>
+          	  <g:HTMLPanel>
+          	  	<g:Label styleName="{oeStyle.systemMessageStyle}" ui:field="messageBodyText"></g:Label>
+          	  	<g:Label styleName="{oeStyle.charLimit}" ui:field="lblCharLimit">Character Limit: 415</g:Label>
+          	  </g:HTMLPanel>
               <g:TextArea styleName="{oeStyle.openEndedQuestionAnswer}" ui:field="openEndedAnswerTextArea"></g:TextArea>
               <g:Label ui:field="errorMessageText" styleName="{oeStyle.errorMessageStyle}"></g:Label>
               <g:Button styleName="{oeStyle.hintsInActiveButton} {oeStyle.addjustSubmitButton}" ui:field="submitButton"></g:Button>

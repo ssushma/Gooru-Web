@@ -257,10 +257,10 @@
 }
 
 .charLimit{
-	margin-bottom: 20px;
 	font-size: 12px;
 	color: #999;
-	float: right
+	float: right;
+	margin-right:5px;
 }
 .addjustSubmitButton{
 	margin-top:15%;
