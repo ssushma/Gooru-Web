@@ -72,12 +72,10 @@ import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
-import com.gargoylesoftware.htmlunit.html.applets.AppletClassLoader;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -132,7 +130,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	@UiField
 	Label copyCollectionLbl, deleteUserCollectionLbl,lblDeleting, collectionEditImageLbl,
-			simplePencilPanel,collectionDescriptionTitle, lblLastEditedBy,moveCollectionLbl;
+			simplePencilPanel,collectionDescriptionTitle, lblLastEditedBy,moveCollectionLbl, lblCharLimit;
 
 	@UiField
 	SimplePanel shelfTabSimPanel;
@@ -431,6 +429,13 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		collectionDescriptionTitle.getElement().setId("lblCollectionDescriptionTitle");
 		collectionDescriptionTitle.getElement().setAttribute("alt",i18n.GL0618());
 		collectionDescriptionTitle.getElement().setAttribute("title",i18n.GL0618());
+		
+		String value = StringUtil.generateMessage(i18n.GL2103(), "415");
+		
+		StringUtil.setAttributes(lblCharLimit.getElement(), "lblCharLimit", value, value);
+		lblCharLimit.setText(value);
+		lblCharLimit.setVisible(false);
+		
 		
 		editSelfCollectionDescSaveButtonCancel.setText(i18n.GL0142());
 		editSelfCollectionDescSaveButtonCancel.getElement().setId("btnEditDescCancel");
@@ -731,6 +736,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		public void onClick(ClickEvent event) {
 			/*collectionDescriptionUc.switchToEdit();
 			collectionDescriptionUc.setText(collectionDo.getGoals());*/
+			lblCharLimit.setVisible(true);
 			editSelfCollectionDescSaveButton.getElement().getStyle()
 					.setDisplay(Display.BLOCK);
 			editSelfCollectionDescSaveButtonCancel.getElement().getStyle()
@@ -1671,6 +1677,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 					collectionTitleUc.getElement().getStyle().clearBackgroundColor();
 					collectionTitleUc.getElement().getStyle().setBorderColor("#ccc");
 //					mandatoryErrorLbl.setVisible(false);
+					lblCharLimit.setVisible(false);
 				}
 			}
 		});
@@ -1689,6 +1696,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				categoryImage.getUrl()));
 		MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
 		 isShowDescPencil=true;
+		 lblCharLimit.setVisible(false);
 	}
 	/**
 	 * This method is used to cancel collection title update
@@ -1706,6 +1714,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		collectionTitleUc.switchToCancelLabel();
 		collectionTitleUc.setText(collectionTitleUc.getText());
 		isShowTitlePencil=true;
+		lblCharLimit.setVisible(false);
 
 	}
 	/**
@@ -1723,7 +1732,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				.setDisplay(Display.NONE);
         isShowDescPencil=true;
 		collectionDescriptionUc.switchToDesCancelLabel();
-
+		lblCharLimit.setVisible(false);
 	}
 
 	public void analyticsClickEvent(){
