@@ -99,7 +99,7 @@ public class PsdpalLibraryPresenter extends BasePlacePresenter<IsPsdpalView, Psd
 	
 	@Override
 	public String getViewToken() {
-		return PlaceTokens.HOME;
+		return PlaceTokens.DISCOVER;
 	}
 
 }

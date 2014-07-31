@@ -420,7 +420,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	public void showClasspage(String classpageId,String page){
 		//TODO reveal to classpage..
 		String viewToken=AppClientFactory.getPlaceManager().getPreviousPlayerRequestUrl().getNameToken();
-		if(viewToken.equals(PlaceTokens.HOME)){
+		if(viewToken.equals(PlaceTokens.DISCOVER)){
 			Map<String,String> paramsMap=new LinkedHashMap<String,String>();
 			if(page.equals("teach")){
 				paramsMap.put("classpageid", classpageId);

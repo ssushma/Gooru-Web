@@ -108,7 +108,7 @@ public class LessonopolyLibraryPresenter extends BasePlacePresenter<IsLessonopol
 	
 	@Override
 	public String getViewToken() {
-		return PlaceTokens.HOME;
+		return PlaceTokens.DISCOVER;
 	}
 
 }

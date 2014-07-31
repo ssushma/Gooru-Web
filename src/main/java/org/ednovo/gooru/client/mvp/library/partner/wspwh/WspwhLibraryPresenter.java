@@ -108,7 +108,7 @@ public class WspwhLibraryPresenter extends BasePlacePresenter<IsWspwhLibraryView
 	
 	@Override
 	public String getViewToken() {
-		return PlaceTokens.HOME;
+		return PlaceTokens.DISCOVER;
 	}
 
 }
