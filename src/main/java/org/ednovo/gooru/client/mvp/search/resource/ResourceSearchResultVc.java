@@ -336,8 +336,8 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		lblResourceTitle.setHTML(title);
 		resourceTitle=resourceSearchResultDo.getResourceTitle();
 		lblResourceTitle.getElement().setId(resourceSearchResultDo.getGooruOid());
-		if (lblResourceTitle.getText().length()>38){
-			lblResourceTitle.getElement().getStyle().setWidth(275, Unit.PX);
+		if (lblResourceTitle.getText().length()>30){
+			lblResourceTitle.getElement().getStyle().setWidth(240, Unit.PX);
 		}
 		String mediaType = resourceSearchResultDo.getMediaType();
 		
