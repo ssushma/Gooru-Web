@@ -12,13 +12,13 @@
   			</g:FlowPanel> -->
   		</g:FlowPanel>
         <g:HTMLPanel styleName="{playerStyle.clearfix} {playerStyle.collectionbuttons}">
-            <g:HTMLPanel  styleName="{playerStyle.endTitle}" ui:field="learningobjectiveText"></g:HTMLPanel>
-            <hr/>
-            <g:HTML ui:field="collectionGoal" styleName="{playerStyle.goal}"></g:HTML>
-     		<!-- <g:Button styleName="secondary" ui:field="assignCollectionBtn"></g:Button> -->
+            <!-- <g:HTMLPanel  styleName="{playerStyle.endTitle}" ui:field="learningobjectiveText"></g:HTMLPanel> -->
             <g:Button styleName="secondary" ui:field="shareCollectionBtn"></g:Button>
             <g:Button styleName="secondary" ui:field="customizeCollectionBtn"></g:Button>
             <g:Button ui:field="studyButton" styleName="{playerStyle.preview}"></g:Button>
+            <hr/>
+            <g:HTML ui:field="collectionGoal" styleName="{playerStyle.goal}"></g:HTML>
+     		<!-- <g:Button styleName="secondary" ui:field="assignCollectionBtn"></g:Button> -->
         </g:HTMLPanel>
 	</g:FlowPanel>
 </ui:UiBinder>
