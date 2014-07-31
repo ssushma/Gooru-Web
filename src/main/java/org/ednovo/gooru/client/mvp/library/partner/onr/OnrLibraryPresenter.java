@@ -108,7 +108,7 @@ public class OnrLibraryPresenter extends BasePlacePresenter<IsOnrLibraryView, On
 	
 	@Override
 	public String getViewToken() {
-		return PlaceTokens.HOME;
+		return PlaceTokens.DISCOVER;
 	}
 
 }

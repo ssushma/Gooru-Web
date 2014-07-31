@@ -246,7 +246,7 @@ public class PreviewPlayerMetadataPresenter extends PresenterWidget<IsPreviewPla
 	public void setRelatedConcepts(CollectionDo collectionDo) {
 		final String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject");
 		final String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", "123");
-		final String libraryType = AppClientFactory.getPlaceManager().getRequestParameter("library", PlaceTokens.HOME);
+		final String libraryType = AppClientFactory.getPlaceManager().getRequestParameter("library", PlaceTokens.DISCOVER);
 		
 		if(subject!=null) {
 			this.libraryService.getLibraryCollections(subject, lessonId, libraryType, new SimpleAsyncCallback<ArrayList<ConceptDo>>() {

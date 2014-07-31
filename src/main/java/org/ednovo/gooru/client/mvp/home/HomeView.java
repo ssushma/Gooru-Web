@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
@@ -41,50 +42,70 @@ import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
+import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
+import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
+import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 
 
 /**
  * @author Search Team
 ` * 
  */
-public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements IsHomeView {
+public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements IsHomeView, SelectionHandler<SuggestOracle.Suggestion> {
 
 	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer;
 	@UiField Button btnSignUp, btnMoreOnCollections,viewSampleResportsBtn;
 	@UiField Label lblHeading, lblSubHeading; 
-	@UiField TextBoxWithPlaceholder txtSearch;
+//	@UiField TextBoxWithPlaceholder txtSearch;
 	@UiField Button btnSearch;
-	@UiField Anchor achLearn, achTerms, achPrivacy,achDataPolicy,achCopyright;
+	@UiField Anchor achLearn, achTerms, achPrivacy,achCopyright;//achDataPolicy
 	@UiField TextBox txtEmbedLink;
 	
 	LibraryView libraryView = null;
 	private TermsOfUse termsOfUse;
 	
+	private SearchDo<AutoSuggestKeywordSearchDo> autoSuggestKeywordDo = new SearchDo<AutoSuggestKeywordSearchDo>();
+	private SearchAsyncCallback<SearchDo<AutoSuggestKeywordSearchDo>> autoKeyWordSuggestionAsyncCallback;
+
+	private AppMultiWordSuggestOracle autokeySuggestOracle;
+	String searchData = "";
+	private String GOORU_SEARCH = " -<n> Gooru Search</n>";
+	
+	@UiField(provided = true)
+	public AppSuggestBox txtSearch;
+	
 	
 	Map<String, String> allSubject = new HashMap<String, String>();
 	Map<String, String> allCourse  = new HashMap<String, String>();
-	
+	private boolean hasAutoSelected = false;
 	
 	private static HomeViewUiBinder uiBinder = GWT.create(HomeViewUiBinder.class);
 
@@ -97,6 +118,43 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	 * Class constructor
 	 */
 	public HomeView() {		
+		
+		autokeySuggestOracle = new AppMultiWordSuggestOracle(true);
+		setEditSearchTxtBox(new AppSuggestBox(autokeySuggestOracle) {
+
+			@Override
+			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				return null;
+			}
+
+			@Override
+			public void keyAction(String text) {
+				MixpanelUtil.Search_autocomplete_select();
+				autokeySuggestOracle.clear();
+				
+				
+				
+				autoSuggestKeywordDo.setQuery(text);
+				searchData = getEditSearchTxtBox().getText();
+				autoSuggestKeywordDo.setType("resource");
+				if (text != null && text.trim().length() > 0) {
+					requestAutoSuggestKeyword(autoSuggestKeywordDo);
+				} else {
+					getEditSearchTxtBox().hideSuggestionList();
+				}
+
+			}
+
+		});
+		getEditSearchTxtBox().addSelectionHandler(this);
+		getEditSearchTxtBox().setPopupStyleName("shelfEditSearchTextBox");
+		Window.addWindowScrollHandler(new Window.ScrollHandler() {
+		    @Override
+		    public void onWindowScroll(ScrollEvent event) {
+		    	getEditSearchTxtBox().hideSuggestionList();   	
+			}
+		});
+		
 		setWidget(uiBinder.createAndBindUi(this));
 		gooruPanel.getElement().setId("gooruPanel");
 
@@ -107,6 +165,8 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		
 		generateSubjectsData();
 		generateCourseData();
+
+		
 		
 //		InternalServerErrorPopupViewVc error = new InternalServerErrorPopupViewVc() {
 //		};
@@ -215,7 +275,8 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				txtEmbedLink.selectAll();
 			}
 		});
-		txtEmbedLink.selectAll();
+		getEditSearchTxtBox().getElement().setAttribute("placeholder", i18n.GL2073());
+		getEditSearchTxtBox().getElement().setId("txtEditSearch");		
 		
 		Window.enableScrolling(true);
 	}
@@ -283,52 +344,10 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 						PlaceTokens.RESOURCE_SEARCH, map);
 			}
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
-//			getEditSearchTxtBox().hideSuggestionList();
-		}
-		
-		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.HOME)){
-			MixpanelUtil.mixpanelEvent("Perform_Search_FromLandingPage");
-			if(AppClientFactory.isAnonymous()){
-				MixpanelUtil.mixpanelEvent("Perform_Search_FromLandingPage_Loggedout");
-			}else{	
-				MixpanelUtil.mixpanelEvent("Perform_Search_FromLandingPage_Loggedin");
-			}
-			if(AppClientFactory.getPlaceManager().getRequestParameter("courseId")!=null){
-				MixpanelUtil.mixpanelEvent("Perform_Search_FromCoursePage");
-			}
-			if(AppClientFactory.getPlaceManager().getRequestParameter("page")!=null && AppClientFactory.getPlaceManager().getRequestParameter("page").equalsIgnoreCase("featured-contributors")){
-				MixpanelUtil.mixpanelEvent("Perform_Search_FromContributorsPage");
-			}
-		}
-//		if(hasAutoSelected){
-//			MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
-//		}
-		
-	
+			getEditSearchTxtBox().hideSuggestionList();
+		}	
 	}
-	/**
-	 * @function getEditSearchTxtBox 
-	 * 
-	 * @created_date : Jul 29, 2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @return
-	 * 
-	 * @return : TextBoxWithPlaceholder
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
 	
-	private TextBoxWithPlaceholder getEditSearchTxtBox() {
-		return txtSearch;
-	}
-
 	public void savePlaceRequest(){
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if(currentPlaceToken.equals(PlaceTokens.COLLECTION_SEARCH)||currentPlaceToken.equals(PlaceTokens.RESOURCE_SEARCH)){
@@ -432,10 +451,10 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		termsAndPolicyVc.setSize("902px", "300px");
 		termsAndPolicyVc.center();
 	}
-	@UiHandler("achDataPolicy")
-	public void onClickDataPolicyLink(ClickEvent envent){
-		
-	}
+//	@UiHandler("achDataPolicy")
+//	public void onClickDataPolicyLink(ClickEvent envent){
+//		
+//	}
 	@UiHandler("achCopyright")
 	public void onClickCopyrightLink(ClickEvent envent){
 		Window.enableScrolling(false);
@@ -453,6 +472,111 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		copyRightPolicy.show();
 
 	}
+	
+	public AppSuggestBox getEditSearchTxtBox() {
+		return txtSearch;
+	}
+
+	public void setEditSearchTxtBox(AppSuggestBox editSearchTxtBox) {
+		this.txtSearch = editSearchTxtBox;
+	}
+	public void requestAutoSuggestKeyword(
+			SearchDo<AutoSuggestKeywordSearchDo> searchDo) {
+		getAutoSuggestionKeyWordAsyncCallback().execute(searchDo);
+	}
+
+	public void setAutoKeyWordSuggestions(
+			SearchDo<AutoSuggestKeywordSearchDo> autoSuggestKeywordDo) {
+		autokeySuggestOracle.clear();
+		this.autoSuggestKeywordDo = autoSuggestKeywordDo;
+		searchData = searchData + GOORU_SEARCH;
+		autokeySuggestOracle.add(searchData);
+		if (this.autoSuggestKeywordDo.getSearchResults() != null) {
+			for (AutoSuggestKeywordSearchDo autoSuggestKeywordSearchDo : autoSuggestKeywordDo
+					.getSearchResults()) {
+				autokeySuggestOracle.add(autoSuggestKeywordSearchDo
+						.getKeyword());
+			}
+		}
+		getEditSearchTxtBox().showSuggestionList();
+
+	}
+
+	/**
+	 * @return suggestion standards for the collection as map string
+	 */
+	public SearchAsyncCallback<SearchDo<AutoSuggestKeywordSearchDo>> getAutoSuggestionKeyWordAsyncCallback() {
+		if (autoKeyWordSuggestionAsyncCallback == null) {
+			autoKeyWordSuggestionAsyncCallback = new SearchAsyncCallback<SearchDo<AutoSuggestKeywordSearchDo>>() {
+
+				@Override
+				protected void run(SearchDo<AutoSuggestKeywordSearchDo> searchDo) {
+					AppClientFactory.getInjector().getSearchService()
+							.getSuggestedAutokeyword(searchDo, this);
+
+				}
+
+				@Override
+				public void onCallSuccess(
+						SearchDo<AutoSuggestKeywordSearchDo> result) {
+					setAutoKeyWordSuggestions(result);
+
+				}
+
+			};
+		}
+		return autoKeyWordSuggestionAsyncCallback;
+	}
+
+	@Override
+	public void onSelection(SelectionEvent<Suggestion> event) {
+		String searchText = txtSearch.getText();
+		searchText= searchText.replaceAll("-<n> Gooru Search</n>", "");
+		txtSearch.setText(searchText.trim());
+		Window.enableScrolling(true);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		if (txtSearch.getText() != null && txtSearch.getText().length() > 0) {
+			MixpanelUtil.Perform_Search(txtSearch.getText().trim().toLowerCase(),"HeaderUc");
+			Map<String, String> params = new HashMap<String, String>();
+			params = updateParams(params);
+			savePlaceRequest();
+			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+					PlaceTokens.COLLECTION_SEARCH)) {
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.COLLECTION_SEARCH, params);
+			} else {
+				String queryVal = params.get("query");
+				//queryVal = queryVal.replaceAll("%5C1", "&");
+				Map<String, String> map = params;
+				map.put("query", queryVal);
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.RESOURCE_SEARCH, map);
+			}
+			txtSearch.setText("");
+			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
+			txtSearch.hideSuggestionList();
+		}
+		
+		hasAutoSelected=true;
+		MixpanelUtil.mixpanelEvent("Select_Autocomplete_Search");
+		getEditSearchTxtBox().setText(searchText.trim());
+
+	}
+	/** 
+	 * This method is to get the btnSignUp
+	 */
+	@Override
+	public Button getBtnSignUp() {
+		return btnSignUp;
+	}
+	/** 
+	 * This method is to set the btnSignUp
+	 */
+	public void setBtnSignUp(Button btnSignUp) {
+		this.btnSignUp = btnSignUp;
+	}
+	
+	
 }
 
 

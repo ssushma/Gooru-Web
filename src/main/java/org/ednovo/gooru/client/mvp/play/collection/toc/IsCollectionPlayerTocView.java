@@ -37,4 +37,6 @@ public interface IsCollectionPlayerTocView extends IsViewWithHandlers<Collection
 	
 	public void hideResourceCountLabel(boolean hide);
 	
+	public void clearMarginLeft();
+	
 }

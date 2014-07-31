@@ -411,6 +411,7 @@ public interface ShelfCBundle extends ClientBundle{
 		String assignSprite();
 		String assignCloseMark();
 		String assignCloseMarker();
+		String charLimit();
 	}
 	
 	@Source("Shelf.css")

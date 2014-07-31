@@ -108,7 +108,7 @@ public class YouthVoicesLibraryPresenter extends BasePlacePresenter<IsYouthVoice
 	
 	@Override
 	public String getViewToken() {
-		return PlaceTokens.HOME;
+		return PlaceTokens.DISCOVER;
 	}
 
 }

@@ -3383,7 +3383,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   position: relative;
   display: block;
 }
-.nav > li > a {
+.nav > li > a, .nav > li > label {
   position: relative;
   display: block;
   padding: 10px 15px;
@@ -3716,7 +3716,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 
 
 
-.navbar-nav > li > a {
+.navbar-nav > li > a, .navbar-nav > li > label {
   padding-top: 10px;
   padding-bottom: 10px;
   line-height: 20px;
@@ -3745,10 +3745,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .MenuBlock .nav{
 	margin:0 auto;
 }
-.MenuBlock .navbar-default .navbar-nav > li > a{ text-align:left; padding-left:15px;
-	padding-right:15px;}
-	.MenuBlock .navbar-default .navbar-nav > li > a .caret{
-		display:none;
+.MenuBlock .navbar-default .navbar-nav > li > a{ 
+	text-align:left; padding-left:15px;
+	padding-right:15px;
+}
+.MenuBlock .navbar-default .navbar-nav > li > a .caret{
+	display:none;
 	}
 	
 	
@@ -3824,7 +3826,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     float: left;
   }
   
-  .navbar-nav > li > a {
+  .navbar-nav > li > a, .navbar-nav > li > label {
     padding-top: 15px;
     padding-bottom: 15px;
   }
@@ -3960,7 +3962,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-text {
   color: #777;
 }
-.navbar-default .navbar-nav > li > a {
+.navbar-default .navbar-nav > li > a, .navbar-default .navbar-nav > li > label {
   color: #777;
 }
 .navbar-default .navbar-nav > li > a:hover,

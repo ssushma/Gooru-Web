@@ -121,7 +121,7 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@ProxyCodeSplit
-	@NameToken(PlaceTokens.HOME)
+	@NameToken(PlaceTokens.DISCOVER)
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsCommunityProxy extends ProxyPlace<CommunityPresenter> {
 	}
@@ -334,14 +334,14 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 
 			@Override
 			public void onClick(ClickEvent event) {
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DISCOVER);
 			}
 		});
 	}
 	
 	@Override
 	public String getViewToken() {
-		return PlaceTokens.HOME;
+		return PlaceTokens.DISCOVER;
 	}
 
 	public void setRegisterdUserAsyncCallback(SimpleAsyncCallback<UserDo> registerdUserAsyncCallback) {
