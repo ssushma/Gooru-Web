@@ -664,11 +664,11 @@ public class HeaderUc extends Composite implements
 				try {
 					Document.get()
 							.getElementById("LinkheaderElement" + i)
-							.removeClassName(GooruCBundle.INSTANCE.css().menu());
+							.removeClassName(GooruCBundle.INSTANCE.css().menuActive());
 					Document.get()
-							.getElementById("LinkheaderElement" + i)
-							.removeClassName(
-									GooruCBundle.INSTANCE.css().menu());
+					.getElementById("LinkheaderElement" + i)
+					.removeClassName(GooruCBundle.INSTANCE.css().menu());
+					
 					Document.get().getElementById("LinkheaderElement" + i)
 							.addClassName(GooruCBundle.INSTANCE.css().menu());
 				} catch (Exception e) {
@@ -682,8 +682,9 @@ public class HeaderUc extends Composite implements
 
 		}
 		if (dotsLink.equals(noneMenu)) {
-
+			System.out.println("no menu");
 		} else {
+			System.out.println("no menu else....");
 			dotsLink.getParent().setStyleName(
 					GooruCBundle.INSTANCE.css().menuActive());
 		}
