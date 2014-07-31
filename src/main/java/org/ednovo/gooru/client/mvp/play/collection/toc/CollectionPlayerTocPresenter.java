@@ -101,5 +101,8 @@ public class CollectionPlayerTocPresenter extends PresenterWidget<IsCollectionPl
 	public void hideResourceCountLabel(boolean hide){
 		getView().hideResourceCountLabel(hide);
 	}
+	public void clearMarginLeft(){
+		getView().clearMarginLeft();
+	}
 
 }
