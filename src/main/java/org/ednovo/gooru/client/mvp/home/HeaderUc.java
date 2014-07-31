@@ -790,10 +790,10 @@ public class HeaderUc extends Composite implements
 				Map<String, String> params = StringUtil
 						.splitQuery(discoverLinkUrl);
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.HOME, params);
+						PlaceTokens.DISCOVER, params);
 			} else {
 				AppClientFactory.getPlaceManager()
-						.revealPlace(PlaceTokens.HOME);
+						.revealPlace(PlaceTokens.DISCOVER);
 			}
 		}
 
