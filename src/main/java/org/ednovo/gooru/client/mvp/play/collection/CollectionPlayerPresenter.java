@@ -625,6 +625,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			metadataPresenter.getFlagedReport(collectionDo.getGooruOid());
 		}
 		getView().getResourceAnimationContainer().setVisible(true);
+		collectionPlayerTocPresenter.clearNavigationPanel();
 		setNavigationResourcesView(collectionDo.getGooruOid(), null, true);
 		metadataPresenter.setCollectionHomeMetadata();
 		metadataPresenter.getBackToClassButton().setVisible(false);
@@ -2080,6 +2081,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	public Map<String, Integer> getReactionTreeMap(){
 		return reactionTreeMap;
 	}
+	
 	
 
 }
