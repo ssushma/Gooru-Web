@@ -616,6 +616,7 @@ public class HeaderUc extends Composite implements
 		 */
 		discoverLinkUrl = null;
 		gooruLearning.setId("lnkeleGooruLearning");
+		manageDotsMenuSelection(noneMenu);
 	}
 
 	public void clearClasspageList() {
@@ -659,8 +660,6 @@ public class HeaderUc extends Composite implements
 
 			if (userDo != null
 					&& !userDo.getUserUid().equals(
-							AppClientFactory.GOORU_ANONYMOUS)
-					|| userDo.getUserUid().equals(
 							AppClientFactory.GOORU_ANONYMOUS)) {
 				try {
 					Document.get()
@@ -669,7 +668,7 @@ public class HeaderUc extends Composite implements
 					Document.get()
 							.getElementById("LinkheaderElement" + i)
 							.removeClassName(
-									GooruCBundle.INSTANCE.css().menuActive());
+									GooruCBundle.INSTANCE.css().menu());
 					Document.get().getElementById("LinkheaderElement" + i)
 							.addClassName(GooruCBundle.INSTANCE.css().menu());
 				} catch (Exception e) {
@@ -698,7 +697,7 @@ public class HeaderUc extends Composite implements
 		loggedInfoLbl.getParent().setStyleName(
 				GooruCBundle.INSTANCE.css().menu());
 		discoverLink.getParent().setStyleName(
-				GooruCBundle.INSTANCE.css().menuActive());
+				GooruCBundle.INSTANCE.css().menu());
 		if (classpageListVc != null) {
 			if (classpageListVc.isShowing()) {
 				classpageListVc.hide();
@@ -723,7 +722,7 @@ public class HeaderUc extends Composite implements
 
 	public void activateAllMenu() {
 		discoverLink.getParent().setStyleName(
-				GooruCBundle.INSTANCE.css().menuActive());
+				GooruCBundle.INSTANCE.css().menu());
 		organizeLink.getParent().setStyleName(
 				GooruCBundle.INSTANCE.css().menu());
 		teachLink.getParent().setStyleName(GooruCBundle.INSTANCE.css().menu());
@@ -790,10 +789,10 @@ public class HeaderUc extends Composite implements
 				Map<String, String> params = StringUtil
 						.splitQuery(discoverLinkUrl);
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.HOME, params);
+						PlaceTokens.DISCOVER, params);
 			} else {
 				AppClientFactory.getPlaceManager()
-						.revealPlace(PlaceTokens.HOME);
+						.revealPlace(PlaceTokens.DISCOVER);
 			}
 		}
 
@@ -811,7 +810,11 @@ public class HeaderUc extends Composite implements
 				stockStore.setItem("tabKey", "resourceTab");
 			}
 			name = "organize";
-			Window.enableScrolling(true);
+			if (AppClientFactory.isAnonymous()){
+				Window.enableScrolling(true);
+			}else{
+				Window.enableScrolling(false);
+			}
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 			manageDotsMenuSelection(organizeLink);
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
@@ -1095,7 +1098,9 @@ public class HeaderUc extends Composite implements
 			manageDotsMenuSelection(studyLink);
 		} else if (tabType == HeaderTabType.USERNAME) {
 			manageDotsMenuSelection(loggedInfoLbl);
-		} else {
+		}else if (tabType == HeaderTabType.HOME){
+			
+		}else {
 			manageDotsMenuSelection(noneMenu);
 		}
 
