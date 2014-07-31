@@ -130,8 +130,8 @@ public class LogoutPopupVc extends Composite{
 	 */
 	@UiHandler("okBtnUc")
 	public void userLogout(ClickEvent clickEvent) {
-		StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
-		StringUtil.clearCookies("google-refresh-token", "/", ".www.goorulearning.org");
+//		StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
+//		StringUtil.clearCookies("google-refresh-token", "/", ".www.goorulearning.org");
 		AppClientFactory.getInjector().getAppService().v2Signout(new SimpleAsyncCallback<UserDo>() {
 
 			@Override
@@ -156,7 +156,7 @@ public class LogoutPopupVc extends Composite{
 				}
 				AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(null));
 
-				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.HOME) 
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.DISCOVER) 
 						|| AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH) 
 						|| AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
 					Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());

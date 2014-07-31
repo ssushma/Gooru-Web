@@ -610,7 +610,7 @@ public class CollectionFormView extends
 			appPopUp.setViewTitle(i18n.GL1421());
 			setPopUpStyle();
 		}else{
-			if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.HOME)){
+			if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.DISCOVER)){
 				collPopUpMainheading.setText(i18n.GL0993());
 				collPopUpMainheading.getElement().setAttribute("alt",i18n.GL0993());
 				collPopUpMainheading.getElement().setAttribute("title",i18n.GL0993());
@@ -802,7 +802,7 @@ public class CollectionFormView extends
 
 	@Override
 	public void onUnload() {
-		if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.HOME)){
+		if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.DISCOVER)){
 			AppClientFactory.getPlaceManager().revealPlayerPreviousPlace(false, getDefaultView());
 		}
 	}

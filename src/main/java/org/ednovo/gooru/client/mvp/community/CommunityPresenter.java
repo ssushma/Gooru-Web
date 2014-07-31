@@ -334,14 +334,14 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 
 			@Override
 			public void onClick(ClickEvent event) {
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DISCOVER);
 			}
 		});
 	}
 	
 	@Override
 	public String getViewToken() {
-		return PlaceTokens.HOME;
+		return PlaceTokens.DISCOVER;
 	}
 
 	public void setRegisterdUserAsyncCallback(SimpleAsyncCallback<UserDo> registerdUserAsyncCallback) {

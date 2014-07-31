@@ -215,8 +215,10 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	public class CloseResourcePlayerEvent implements ClickHandler{
 		public void onClick(ClickEvent event) {
 		
-			if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equalsIgnoreCase("resource-search")||(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equalsIgnoreCase("collection-search"))){
-				Window.enableScrolling(false);
+			if (AppClientFactory.getPlaceManager().getPreviousRequest()!=null){
+				if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equalsIgnoreCase("resource-search") || AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equalsIgnoreCase("collection-search")){
+					Window.enableScrolling(false);
+				}
 			}
 		
 			if(!getUiHandlers().isOpenEndedAnswerSubmited()){

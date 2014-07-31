@@ -170,7 +170,7 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
         lblGooruLibrary.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DISCOVER);
 			}
 		});
         

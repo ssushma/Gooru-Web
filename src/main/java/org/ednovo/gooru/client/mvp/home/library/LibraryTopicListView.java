@@ -1241,7 +1241,7 @@ public class LibraryTopicListView extends Composite{
 				}
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("Assign", "yes");
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.HOME, params);
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.DISCOVER, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				
 			}
@@ -1301,7 +1301,7 @@ public class LibraryTopicListView extends Composite{
 			
 			Map<String,String> params = new HashMap<String,String>();
 			params.put("customize", "yes");
-			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.HOME, params);
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.DISCOVER, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 			
 		}
@@ -1508,7 +1508,7 @@ public class LibraryTopicListView extends Composite{
 	};
 	
 	private void addCollectionQuizTitleData(String pageType) {
-		if(pageType.equals("lesson")&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)&&AppClientFactory.getPlaceManager().getRequestParameter("standardId")==null) {
+		if(pageType.equals("lesson")&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.DISCOVER)&&AppClientFactory.getPlaceManager().getRequestParameter("standardId")==null) {
 			setCollectionQuizVisibility(true);
 			collectionTitle.addStyleName(libraryStyle.collectionQuizTabActive());
 		} else {
