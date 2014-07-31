@@ -616,6 +616,7 @@ public class HeaderUc extends Composite implements
 		 */
 		discoverLinkUrl = null;
 		gooruLearning.setId("lnkeleGooruLearning");
+		manageDotsMenuSelection(noneMenu);
 	}
 
 	public void clearClasspageList() {
@@ -659,8 +660,6 @@ public class HeaderUc extends Composite implements
 
 			if (userDo != null
 					&& !userDo.getUserUid().equals(
-							AppClientFactory.GOORU_ANONYMOUS)
-					|| userDo.getUserUid().equals(
 							AppClientFactory.GOORU_ANONYMOUS)) {
 				try {
 					Document.get()
@@ -669,7 +668,7 @@ public class HeaderUc extends Composite implements
 					Document.get()
 							.getElementById("LinkheaderElement" + i)
 							.removeClassName(
-									GooruCBundle.INSTANCE.css().menuActive());
+									GooruCBundle.INSTANCE.css().menu());
 					Document.get().getElementById("LinkheaderElement" + i)
 							.addClassName(GooruCBundle.INSTANCE.css().menu());
 				} catch (Exception e) {
@@ -698,7 +697,7 @@ public class HeaderUc extends Composite implements
 		loggedInfoLbl.getParent().setStyleName(
 				GooruCBundle.INSTANCE.css().menu());
 		discoverLink.getParent().setStyleName(
-				GooruCBundle.INSTANCE.css().menuActive());
+				GooruCBundle.INSTANCE.css().menu());
 		if (classpageListVc != null) {
 			if (classpageListVc.isShowing()) {
 				classpageListVc.hide();
@@ -723,7 +722,7 @@ public class HeaderUc extends Composite implements
 
 	public void activateAllMenu() {
 		discoverLink.getParent().setStyleName(
-				GooruCBundle.INSTANCE.css().menuActive());
+				GooruCBundle.INSTANCE.css().menu());
 		organizeLink.getParent().setStyleName(
 				GooruCBundle.INSTANCE.css().menu());
 		teachLink.getParent().setStyleName(GooruCBundle.INSTANCE.css().menu());
@@ -1099,7 +1098,9 @@ public class HeaderUc extends Composite implements
 			manageDotsMenuSelection(studyLink);
 		} else if (tabType == HeaderTabType.USERNAME) {
 			manageDotsMenuSelection(loggedInfoLbl);
-		} else {
+		}else if (tabType == HeaderTabType.HOME){
+			
+		}else {
 			manageDotsMenuSelection(noneMenu);
 		}
 
