@@ -50,7 +50,7 @@
 									your students’ needs.</p>
 
 								<g:Button styleName="primary {res.css.btnBlock}"
-									ui:field="btnMoreOnCollections">More on Collections</g:Button>
+									ui:field="btnMoreOnCollections">Start creating collections</g:Button>
 
 							</div>
 						</div>
@@ -65,7 +65,7 @@
 									is not required to access.
 								</p>
 								<g:Button styleName="primary {res.css.btnBlock}"
-									ui:field="btnMoreOnClasses">More on Classes</g:Button>
+									ui:field="btnMoreOnClasses">Start creating classes</g:Button>
 
 							</div>
 						</div>
@@ -81,7 +81,7 @@
 								<p class="">Measure your students' engagement and progress to
 									intervene in real-time.</p>
 
-								<g:Button styleName="primary {res.css.btnBlock}" ui:field="viewSampleResportsBtn">View Sample Reports</g:Button>
+								<g:Button styleName="primary {res.css.btnBlock}" ui:field="viewSampleResportsBtn">View sample reports</g:Button>
 
 							</div>
 						</div>
