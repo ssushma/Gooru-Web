@@ -285,7 +285,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 			panelDriveBreadCrums.add(breadCrumbLabel);
 		}else{
 			BreadCrumbLabel  breadCrumbLabel=new BreadCrumbLabel(folderId);
-			breadCrumbLabel.setText("Drive");
+			breadCrumbLabel.setText(i18n.GL2104());
 			panelDriveBreadCrums.clear();
 			panelDriveBreadCrums.add(breadCrumbLabel);
 		}
