@@ -31,8 +31,9 @@
 								<p class="">Browse thousands of K-12 collections made by teachers
 									or search over 18M resources</p>
 
-								<tbp:TextBoxWithPlaceholder
-									styleName="form-control" placeholder="{i18n.GL2073}" ui:field="txtSearch"></tbp:TextBoxWithPlaceholder>
+								<!-- <tbp:TextBoxWithPlaceholder
+									styleName="form-control" placeholder="{i18n.GL2073}" ui:field="txtSearch"></tbp:TextBoxWithPlaceholder> -->
+								<tbp:AppSuggestBox ui:field="txtSearch" styleName="form-control" />
 								<g:Button styleName="primary" ui:field="btnSearch"
 									text="{i18n.GL0176}"></g:Button>
 
@@ -1116,9 +1117,9 @@
 								<li>
 									<g:Anchor ui:field="achPrivacy">Privacy</g:Anchor>
 								</li>
-								<li>
+								<!-- <li>
 									<g:Anchor ui:field="achDataPolicy">Data Policy</g:Anchor>
-								</li>
+								</li> -->
 								<li>
 									<g:Anchor ui:field="achCopyright">Copyright</g:Anchor>
 								</li>

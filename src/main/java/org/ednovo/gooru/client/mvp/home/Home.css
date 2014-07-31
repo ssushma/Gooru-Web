@@ -1989,6 +1989,7 @@ font-size:12px;
 	background: url('images/banner2.png') bottom no-repeat;
 	background-size: contain;
 	height: 100%;
+	min-height: 167px;
 }
 .signUpButton{
 	width: 160px;
