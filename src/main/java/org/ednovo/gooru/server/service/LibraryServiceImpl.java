@@ -509,10 +509,10 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 							{
 								lessonDoList.add(JsonDeserializer.deserialize(topicArray.getJSONObject(i).getJSONArray(LESSON).getJSONObject(j).toString(), LessonDo.class));
 								
-								for(int k=0;k<topicArray.getJSONObject(i).getJSONArray(LESSON).getJSONObject(j).getJSONArray(CONCEPT).length();k++) 
-								{
-								lessonDoList.add(JsonDeserializer.deserialize(topicArray.getJSONObject(i).getJSONArray(LESSON).getJSONObject(j).getJSONArray(CONCEPT).getJSONObject(k).toString(), LessonDo.class));									
-								}	
+//								for(int k=0;k<topicArray.getJSONObject(i).getJSONArray(LESSON).getJSONObject(j).getJSONArray(CONCEPT).length();k++) 
+//								{
+//								lessonDoList.add(JsonDeserializer.deserialize(topicArray.getJSONObject(i).getJSONArray(LESSON).getJSONObject(j).getJSONArray(CONCEPT).getJSONObject(k).toString(), LessonDo.class));									
+//								}	
 							}	
 							topicDoList.add(JsonDeserializer.deserialize(topicArray.getJSONObject(i).toString(), TopicDo.class));
 							topicDoList.get(i).setLesson(lessonDoList);
