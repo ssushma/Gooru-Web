@@ -264,7 +264,9 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	 */
 	public void setData(ResourceSearchResultDo resourceSearchResultDo) {
 		this.resourceSearchResultDo = resourceSearchResultDo;
+		System.out.println("resourceSearchResultDo.getRatings().getAverage() : "+resourceSearchResultDo.getRatings().getAverage());
 		ratingWidgetView.getAverageRatingLabel().setText(Double.toString(resourceSearchResultDo.getRatings().getAverage())+" ");
+		ratingWidgetView.getAverageRatingLabel().setVisible(false);
 		ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
 		Integer reviewCount;
 		reviewCount= resourceSearchResultDo.getRatings().getReviewCount();
@@ -399,7 +401,8 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			if(resourceSearchResultDo.getGooruOid().equals(resourceId)){
 				ratingWidgetView.getAverageRatingLabel().setText(Double.toString(avg)+" ");
 				ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
-				ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024()); 
+				ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024());
+				ratingWidgetView.getAverageRatingLabel().setVisible(false);
 				ratingWidgetView.setAvgStarRating(avg);
 				if(count==1 && isRatingUpdated){
 					isRatingUpdated=false;
