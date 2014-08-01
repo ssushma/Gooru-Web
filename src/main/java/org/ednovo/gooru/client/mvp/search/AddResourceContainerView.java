@@ -646,16 +646,15 @@ public class AddResourceContainerView extends
 
 	@Override
 	public void displayNoCollectionsMsg() {
+
 		dropdownListContainerScrollPanel.setVisible(false);
 		buttonsContainer.setVisible(false);
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
-		displayCountLabel.setText("There are no collections to add this resource.");
-		displayCountLabel.setVisible(true);
+			displayCountLabel.setText("There are no collections to add this resource.");
+			displayCountLabel.setVisible(true);
 		}else{
 			displayCountLabel.setText("There are no folders to add this collection.");
-			displayCountLabel.setVisible(true);
 		}
-		// addResourceBtnLbl.setText(i18n.GL1964());
 	}
 
 	public void resetEmptyCollMsg() {

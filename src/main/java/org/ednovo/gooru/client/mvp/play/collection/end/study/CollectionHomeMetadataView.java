@@ -76,7 +76,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	@UiField Image collectionThumbnail;
 	@UiField HTML collectionGoal;
 	@UiField Button customizeCollectionBtn,shareCollectionBtn,studyButton;
-	@UiField HTMLPanel learningobjectiveText;
+	/*@UiField HTMLPanel learningobjectiveText;*/
 	/*@UiField FlowPanel thumbnailContainer;*/
 	
 	
@@ -117,11 +117,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		shareCollectionBtn.getElement().setAttribute("alt",i18n.GL0536());
 		shareCollectionBtn.getElement().setAttribute("title",i18n.GL0536());
 		
-		learningobjectiveText.getElement().setInnerHTML(i18n.GL0618());
-		learningobjectiveText.getElement().setId("lblLearningobjectiveText");
-		learningobjectiveText.getElement().setAttribute("alt",i18n.GL0618());
-		learningobjectiveText.getElement().setAttribute("title",i18n.GL0618());
-		
+				
 		collectionThumbnail.getElement().setId("imgCollectionThumbnail");
 		//thumbnailContainer.getElement().setId("fpnlThumbnailContainer");
 		collectionGoal.getElement().setId("htmlCollectionGoal");
@@ -334,7 +330,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				};
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("454px");
+				successPopupVc.setHeight("471px");
 				successPopupVc.show();
 				successPopupVc.center();
 				
@@ -426,7 +422,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("454px");
+			successPopupVc.setHeight("471px");
 			successPopupVc.show();
 			successPopupVc.center();
 		}

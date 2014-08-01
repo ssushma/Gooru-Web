@@ -270,7 +270,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	public void setRelatedConcepts(final CollectionDo collectionDo) {
 		final String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject");
 		final String lessonId = AppClientFactory.getPlaceManager().getRequestParameter("lessonId", "123");
-		final String libraryType = AppClientFactory.getPlaceManager().getRequestParameter("library", PlaceTokens.HOME);
+		final String libraryType = AppClientFactory.getPlaceManager().getRequestParameter("library", PlaceTokens.DISCOVER);
 		getView().hideNextCollectionContainer(true);
 		if(subject!=null) {
 			this.libraryService.getLibraryCollections(subject, lessonId, libraryType, new SimpleAsyncCallback<ArrayList<ConceptDo>>() {

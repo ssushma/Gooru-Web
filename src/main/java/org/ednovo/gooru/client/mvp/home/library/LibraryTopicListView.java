@@ -82,8 +82,11 @@ import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.FontWeight;
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -1217,6 +1220,7 @@ public class LibraryTopicListView extends Composite{
 
 				if(!isAssignPopup){
 					isAssignPopup=true;
+				//	Window.enableScrolling(false);
 				AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals()) {
 					
 					@Override
@@ -1232,16 +1236,18 @@ public class LibraryTopicListView extends Composite{
 
 				successPopupVc.show();
 				successPopupVc.center();
+				Window.enableScrolling(false);
+				   
 				if (AppClientFactory.isAnonymous()){
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
 				}
 				else
 				{
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
 				}
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("Assign", "yes");
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.HOME, params);
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.DISCOVER, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				
 			}
@@ -1295,13 +1301,13 @@ public class LibraryTopicListView extends Composite{
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("454px");
+			successPopupVc.setHeight("471px");
 			successPopupVc.show();
 			successPopupVc.center();
 			
 			Map<String,String> params = new HashMap<String,String>();
 			params.put("customize", "yes");
-			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.HOME, params);
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.DISCOVER, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 			
 		}
@@ -1338,7 +1344,7 @@ public class LibraryTopicListView extends Composite{
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("454px");
+			successPopupVc.setHeight("471px");
 			successPopupVc.show();
 			successPopupVc.center();
 		}
@@ -1359,11 +1365,11 @@ public class LibraryTopicListView extends Composite{
 			successPopupVc.show();
 			successPopupVc.center();
 			if (AppClientFactory.isAnonymous()){
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
 			}
 			else
 			{
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
 			}
 		}
 
@@ -1508,7 +1514,7 @@ public class LibraryTopicListView extends Composite{
 	};
 	
 	private void addCollectionQuizTitleData(String pageType) {
-		if(pageType.equals("lesson")&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)&&AppClientFactory.getPlaceManager().getRequestParameter("standardId")==null) {
+		if(pageType.equals("lesson")&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.DISCOVER)&&AppClientFactory.getPlaceManager().getRequestParameter("standardId")==null) {
 			setCollectionQuizVisibility(true);
 			collectionTitle.addStyleName(libraryStyle.collectionQuizTabActive());
 		} else {

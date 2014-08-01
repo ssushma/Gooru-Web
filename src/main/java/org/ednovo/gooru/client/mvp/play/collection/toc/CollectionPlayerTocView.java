@@ -94,6 +94,10 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 	public void hideResourceCountLabel(boolean hide){
 		resourceCountLabel.setVisible(!hide);
 	}
+	
+	public void clearMarginLeft(){
+		navgationTocContainer.getElement().getStyle().clearMarginLeft();
+	}
 	@Override
 	public void setNavigationResources(CollectionDo collectionDo,boolean isCollectionHome){
 		if(collectionDo!=null){

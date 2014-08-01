@@ -246,9 +246,10 @@ public abstract class AssignPopupVc extends PopupPanel {
 				embedBitlyLink=result.get("decodeRawUrl");
 			}
 		});
-		Window.enableScrolling(false);
+		
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 		this.center();	
+		//Window.enableScrolling(false);
 	}
 
 	public void hideContainers() {
@@ -827,12 +828,12 @@ public abstract class AssignPopupVc extends PopupPanel {
 	public void onGmailButtonClicked(ClickEvent clickEvent){
 		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",System.currentTimeMillis(),System.currentTimeMillis(), "", AppClientFactory.getLoggedInUser().getToken());
 		String callBack = Window.Location.getHref();
-	
 		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
 		
 			@Override
 			public void onSuccess(String result) {
 //				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
+				MixpanelUtil.mixpanelEvent("Assign_library_signin_google");
 				Window.Location.replace(result);
 			
 			}

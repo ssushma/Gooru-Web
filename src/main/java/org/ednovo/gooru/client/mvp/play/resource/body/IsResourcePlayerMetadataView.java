@@ -34,6 +34,7 @@ import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<ResourcePlayerMetadataUiHandlers>{
@@ -41,7 +42,7 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public void showResourceWidget(CollectionItemDo collectionItemDo);
 	public void showResourceWidget(PlaceRequest previousResourceRequest);
 	public FlowPanel getResourceWidgetContainer();
-	
+	public HTMLPanel getCollectionContainer();
 	public void setReaction(ReactionDo reactionDo, String gooruReactionId); 
 	
 	public void setDefaultReaction();

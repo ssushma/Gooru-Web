@@ -108,7 +108,7 @@ public class FteLibraryPresenter extends BasePlacePresenter<IsFteLibraryView, Ft
 	
 	@Override
 	public String getViewToken() {
-		return PlaceTokens.HOME;
+		return PlaceTokens.DISCOVER;
 	}
 
 }

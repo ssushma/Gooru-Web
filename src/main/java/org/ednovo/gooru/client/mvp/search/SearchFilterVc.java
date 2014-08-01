@@ -278,7 +278,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 						standardSuggestOracle.clear();
 							if(standardPreflist!=null){
 								for(int count=0; count<standardPreflist.size();count++) {
-									if(text.contains("CCSS") || text.contains("TEKS") || text.contains("CA") ||text.contains("NGSS")) {
+									if(text.contains("CCSS") || text.contains("TEKS") || text.contains("CA") ||text.contains("NGSS")||text.contains("CAS612")||text.contains("CAELD")||text.contains("CSC")) {
 										if(text.contains(standardPreflist.get(count))) {
 											standardsPrefDisplayPopup = true;
 											break;
@@ -1673,9 +1673,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 							public void onSuccess(ProfileDo profileObj) {
 								if(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()!=null){
 									if(profileObj.getUser().getMeta().getTaxonomyPreference().getCode().size()==0){
-									standardPanelUc.setVisible(false);
+										standardLbl.setVisible(false);
+										standardPanelUc.setVisible(false);
 									}else
 									{
+										standardLbl.setVisible(true);
 										standardPanelUc.setVisible(true);
 										standardPreflist=new ArrayList<String>();
 										for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
@@ -1684,6 +1686,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 										 }
 									}
 								}else{
+									standardLbl.setVisible(false);
 									standardPanelUc.setVisible(false);
 								}
 							}
@@ -1692,6 +1695,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	}
 	public void getStandardVisiblity()
 	{
+		standardLbl.setVisible(true);
 		standardPanelUc.setVisible(true);
 	}
 	

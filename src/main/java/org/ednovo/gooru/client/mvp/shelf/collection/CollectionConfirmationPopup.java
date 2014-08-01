@@ -63,6 +63,9 @@ public  class CollectionConfirmationPopup extends PopupPanel {
 	public CollectionConfirmationPopup() {
 		setWidget(uiBinder.createAndBindUi(this));
 		
+		this.setWidth("436px");
+		this.setHeight("247px");
+		
 		shareMsgTitle.setText(i18n.GL0836());
 		shareMsgTitle.getElement().setId("lblShareMsgTitle");
 		shareMsgTitle.getElement().setAttribute("alt",i18n.GL0836());

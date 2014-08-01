@@ -111,7 +111,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 		btnCancel.getElement().setAttribute("alt",i18n.GL0142());
 		btnCancel.getElement().setAttribute("title",i18n.GL0142());
 		
-		titlePanel.getElement().setInnerText(i18n.GL0318() + i18n.GL_SPL_STAR());
+		titlePanel.getElement().setInnerText(i18n.GL0318());
 		titlePanel.getElement().setId("pnlTitle");
 		titlePanel.getElement().setAttribute("alt",i18n.GL0318());
 		titlePanel.getElement().setAttribute("title",i18n.GL0318());

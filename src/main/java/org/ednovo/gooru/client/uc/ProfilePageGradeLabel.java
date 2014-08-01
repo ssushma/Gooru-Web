@@ -95,13 +95,14 @@ public class ProfilePageGradeLabel extends Label implements ClickHandler {
 			
 			String grade[] = genGrade.split(",");
 			for (int i = 0; i < grade.length; i++) {
-				if (label.equals(grade[i])) {
+				if (label.trim().equals(grade[i].trim())) {
 					this.getElement().getStyle().setProperty("background", "#0F76BB");
 					this.getElement().getStyle().setColor("#fff");
 					this.getElement().setAttribute("selected", "selected");
 					if(!gradeList.contains(grade[i].toString())){
 						gradeList.add(grade[i].toString());
 					}
+					break;
 				}
 			}
 		}

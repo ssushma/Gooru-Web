@@ -662,7 +662,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			String courseId = AppClientFactory.getPlaceManager().getRequestParameter(COURSE_ID);
 			String subjectName = getSubjectNameBySubjectId(courseMap, subjectId);
 			libraryMenuNavigation.getTaxonomyData(subjectName,subjectId,courseId);
-		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.DISCOVER)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 			setFeaturedCourseWidgets(courseMap.get(featuredLabel).getData(), false);
 		}
 	}

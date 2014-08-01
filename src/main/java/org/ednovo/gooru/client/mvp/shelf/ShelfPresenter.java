@@ -226,7 +226,6 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		callBackMethods();
-		Window.enableScrolling(false);
 	}
 
 	private void callBackMethods(){
@@ -303,6 +302,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
 			
 		}else if(AppClientFactory.isAnonymous()){
+			Window.enableScrolling(true);
 			getView().setOnlyNoDataCollection();
 		} else {
 			getView().setBackToSearch();
@@ -313,7 +313,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			if(id.equalsIgnoreCase("INVALID") && !AppClientFactory.isAnonymous())
 			{
 				getView().setNoDataCollection();
-//				Window.enableScrolling(true);
+				Window.enableScrolling(true);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 			}
 			getView().setBalloonPopup();
@@ -372,12 +372,11 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 		}else{
 //			getView().setOnlyNoDataCollection();
+			Window.enableScrolling(true);
 		}
 		String idParm = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
-		System.out.println("idParm : "+idParm);
 //		if (idParm == null){
 			int windowHeight=Window.getClientHeight();
-			System.out.println("windowHeight :"+windowHeight);
 			getView().getEditPanel().getElement().getStyle().setHeight(windowHeight, Unit.PX);
 			getView().getEditPanel().getElement().getStyle().setOverflowY(Overflow.AUTO);
 //		}else{

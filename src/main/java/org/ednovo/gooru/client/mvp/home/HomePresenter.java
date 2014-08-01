@@ -214,7 +214,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			AppClientFactory.setBrowserWindowTitle(SeoTokens.HOME_TITLE_LOGGEDIN);
 		}
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
-		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
+		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.HOME));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 /*		isLandingPageLoaded = false;
 		if(!isLandingPageLoaded) {

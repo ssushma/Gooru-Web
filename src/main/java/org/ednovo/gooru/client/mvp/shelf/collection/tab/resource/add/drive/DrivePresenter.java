@@ -35,8 +35,11 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResource
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
+import org.ednovo.gooru.shared.model.user.GoogleToken;
+import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -51,6 +54,10 @@ public class DrivePresenter extends
 
 	
 	private AddResourcePresenter addResourcePresenter;
+	
+	private static final String GOOGLE_REFRESH_TOKEN = "google-refresh-token";
+	private static final String GOOGLE_ACCESS_TOKEN = "google-access-token";
+
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.DRIVE)
@@ -95,32 +102,61 @@ public class DrivePresenter extends
 		getView().getPanelFileList().clear();
 		getView().showDriveNotConnectedErrorMessage();
 	}
-	public void getGoogleDriveFiles(String folderId,String nextPageToken,final boolean isPanelClear) {
+	public void getGoogleDriveFiles(final String folderId,final String nextPageToken,final boolean isPanelClear) {
 		if(isPanelClear){
 			getView().getPanelFileList().clear();
 			getView().getPanelFileList().add(setLoadingPanel());
 		}
 		//Cookies.setCookie("google-access-token","ya29.PQDLmyffPAv5OBsAAAA3btJFHswFsQaaH5X3yDRTwUw18oRTkFawy7HCq8_mtg");
 		//Cookies.removeCookie("google-access-token");
-		AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(folderId,nextPageToken,new SimpleAsyncCallback<GoogleDriveDo>() {
-			@Override
-			public void onSuccess(GoogleDriveDo googleDriveDo) {
-				if(isPanelClear){
-					getView().getPanelFileList().clear();
-				}
-				if(googleDriveDo!=null){
-					if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
-						getView().showNoDriveAccess(401);
-					}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
-						getView().showNoDriveAccess(403);
+		
+		final String refresh_token = Cookies.getCookie(GOOGLE_REFRESH_TOKEN) !=null && !Cookies.getCookie(GOOGLE_REFRESH_TOKEN).equalsIgnoreCase("") ? Cookies.getCookie(GOOGLE_REFRESH_TOKEN) : null;
+//		StringUtil.consoleLog("refresh token : "+refresh_token);
+		if (refresh_token != null){
+			
+			AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(refresh_token, new SimpleAsyncCallback<GoogleToken>() {
+
+				@Override
+				public void onSuccess(GoogleToken result) {
+//					StringUtil.consoleLog("refreshGoogleAccessToken : Success");
+					final String access_token = result.getAccess_token() !=null && !result.getAccess_token().equalsIgnoreCase("") ? result.getAccess_token() : null;
+//					StringUtil.consoleLog("access_token : Success : "+access_token);
+					if (access_token !=null ){
+						
+						UserDo user = AppClientFactory.getLoggedInUser();
+						user.setAccessToken(access_token);
+						AppClientFactory.setLoggedInUser(user);
+						
+						
+						AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(folderId,nextPageToken,new SimpleAsyncCallback<GoogleDriveDo>() {
+							@Override
+							public void onSuccess(GoogleDriveDo googleDriveDo) {
+								if(isPanelClear){
+									getView().getPanelFileList().clear();
+								}
+								if(googleDriveDo!=null){
+									if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+										getView().showNoDriveAccess(401);
+									}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+										getView().showNoDriveAccess(403);
+									}else{
+										getView().driveContentList(googleDriveDo);
+									}
+								}else{
+									getView().showNoDriveAccess(401);
+								}
+							}
+						});
 					}else{
-						getView().driveContentList(googleDriveDo);
+						getView().showNoDriveAccess(401);
 					}
-				}else{
-					getView().showNoDriveAccess(401);
 				}
-			}
-		});
+			});
+		}else{
+			getView().showNoDriveAccess(401);
+		}
+		
+		
 	}
 	
 	public Label setLoadingPanel(){
