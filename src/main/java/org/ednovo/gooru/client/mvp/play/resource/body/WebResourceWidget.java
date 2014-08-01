@@ -38,6 +38,7 @@ import com.google.gwt.event.logical.shared.HasInitializeHandlers;
 import com.google.gwt.event.logical.shared.InitializeEvent;
 import com.google.gwt.event.logical.shared.InitializeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Frame;
 
@@ -54,6 +55,8 @@ public class WebResourceWidget extends Composite implements HasInitializeHandler
 		resourcePreviewFrame.removeStyleName("gwt-Frame");
 		resourcePreviewFrame.getElement().getStyle().setBackgroundColor("white");
 		resourcePreviewFrame.getElement().setAttribute("id", "resourcePlayerContainer");
+		int windowHeight=Window.getClientHeight();
+		resourcePreviewFrame.setHeight((windowHeight-202)+"px");
 	}
 	
 	public Frame getResourcePreviewFrame() {
