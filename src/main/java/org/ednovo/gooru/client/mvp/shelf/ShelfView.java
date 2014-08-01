@@ -723,8 +723,12 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 //		}else{
 //			shelfViewMainContainer.getElement().getStyle().setMarginTop(-28, Unit.PX);
 //		}
-//		
-		Window.enableScrolling(false);
+//	
+		if (AppClientFactory.isAnonymous()){
+			Window.enableScrolling(true);
+		}else{
+			Window.enableScrolling(false);
+		}
 	}
 	
 	
@@ -1769,7 +1773,11 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		//temporary fix
 //		noCollectionResetPanel.getElement().getStyle().setDisplay(Display.NONE);
 		////
-//		Window.enableScrolling(true);
+		if (AppClientFactory.isAnonymous()){
+			Window.enableScrolling(true);
+		}else{
+			Window.enableScrolling(false);
+		}
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		
 		noCollectionResetPanel.clear();

@@ -519,7 +519,7 @@ public class CollectionResourceTabView extends
 										description = desc;
 										category = categoryStr;
 										thumbnailUrl = thumbnailUrlStr;
-										if(category.contains("Images")||category.contains("Texts"))
+										if(category.contains("Image")||category.contains("Text"))
 										{
 											category=category.substring(0, category.length()-1);
 											/* if(category.contains("Image")||category.contains("Images")){

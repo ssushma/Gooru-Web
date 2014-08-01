@@ -66,5 +66,8 @@ public interface IsAddResourceContainerView extends IsViewWithHandlers<AddResour
 	public Button getCancelButton();
 	public void clearSelectedFolderId();
 	public TreeItem loadingTreeItem();
+	public void setCollectionSearchResultDo(
+			ResourceSearchResultDo searchResultDo);
+	public void showAndHideMyCollections();
 
 }
