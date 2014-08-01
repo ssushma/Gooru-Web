@@ -1142,6 +1142,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 											}
 											if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
 													mandatoryUrlLbl.setText(i18n.GL2009());
+													mandatoryUrlLbl.setText(i18n.GL2009_1());
 													mandatoryUrlLbl.setVisible(true);
 													isValidate = false;
 											}

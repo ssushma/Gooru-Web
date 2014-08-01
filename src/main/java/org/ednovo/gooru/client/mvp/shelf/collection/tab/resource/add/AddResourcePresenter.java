@@ -209,8 +209,8 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				getView().hide();
-				tagResourceAsOER(result); 
-//				isCollResourceTabView.insertData(result);
+				/*tagResourceAsOER(result);*/ // Don't enable
+				isCollResourceTabView.insertData(result);
 			}
 
 			@Override
@@ -226,11 +226,11 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			public void onSuccess(CollectionItemDo result) {
 				
 				getView().hide();
-//				isCollResourceTabView.insertData(result);
+				isCollResourceTabView.insertData(result);
 				/**
-				 * enabled for 6.5 release
+				 * Dis-abled for 6.5 release
 				 */
-				tagResourceAsOER(result);
+				/*tagResourceAsOER(result);*/
 				MixpanelUtil.AddResourceByUrl();
 				
 //				updateShare("private");
@@ -259,10 +259,10 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
             		/**
-    				 * Tagging Quest resource for 6.5 release
+    				 *  dis-abled tagging Quest resource for 6.5 release
     				 */
-            		tagResourceAsOER(result); 
-//                    isCollResourceTabView.insertData(result);
+            		/*tagResourceAsOER(result); */
+                    isCollResourceTabView.insertData(result);
                     MixpanelUtil.AddQuestion();
             }
 		});
@@ -283,7 +283,12 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		});
 		
 	}
-	protected void tagResourceAsOER(final CollectionItemDo collectionItemDo) {
+	
+	/**
+	 * Dis-abled this method for 6.5 release.
+	 * @param url
+	 */
+	/*protected void tagResourceAsOER(final CollectionItemDo collectionItemDo) {
 		List<String> tagList = new ArrayList<String>();
 		tagList.add("\"" +KEY_OER+"  :"+VAL_OER+"\"");
 		AppClientFactory.getInjector().getResourceService().addTagsToResource(collectionItemDo.getGooruOid(), tagList.toString(), new SimpleAsyncCallback<List<ResourceTagsDo>>() {
@@ -294,7 +299,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			}
 			
 		});
-	}
+	}*/
 
 	native void redirect(String url)
     /*-{
