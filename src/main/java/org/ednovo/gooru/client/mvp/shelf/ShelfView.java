@@ -723,8 +723,12 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 //		}else{
 //			shelfViewMainContainer.getElement().getStyle().setMarginTop(-28, Unit.PX);
 //		}
-//		
-		Window.enableScrolling(false);
+//	
+		if (AppClientFactory.isAnonymous()){
+			Window.enableScrolling(true);
+		}else{
+			Window.enableScrolling(false);
+		}
 	}
 	
 	
