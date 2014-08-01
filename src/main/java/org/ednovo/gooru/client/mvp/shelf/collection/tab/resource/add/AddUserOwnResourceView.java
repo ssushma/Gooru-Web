@@ -626,7 +626,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 				String originalFileName=jsonOriginalFileValue.isString().toString().replaceAll("^\"|\"$", "");
 				if(resourceCategory.equalsIgnoreCase("Image")||resourceCategory.equalsIgnoreCase("Text"))
 				{
-					resourceCategory=resourceCategory.substring(0, resourceCategory.length()-1);
+					//resourceCategory=resourceCategory.substring(0, resourceCategory.length()-1);
 					 if(resourceCategory.equalsIgnoreCase("Image")){
 						 resourceCategory="Slide";
 					 }
