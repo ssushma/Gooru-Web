@@ -1673,9 +1673,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 							public void onSuccess(ProfileDo profileObj) {
 								if(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()!=null){
 									if(profileObj.getUser().getMeta().getTaxonomyPreference().getCode().size()==0){
-									standardPanelUc.setVisible(false);
+										standardLbl.setVisible(false);
+										standardPanelUc.setVisible(false);
 									}else
 									{
+										standardLbl.setVisible(true);
 										standardPanelUc.setVisible(true);
 										standardPreflist=new ArrayList<String>();
 										for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
@@ -1684,6 +1686,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 										 }
 									}
 								}else{
+									standardLbl.setVisible(false);
 									standardPanelUc.setVisible(false);
 								}
 							}
@@ -1692,6 +1695,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	}
 	public void getStandardVisiblity()
 	{
+		standardLbl.setVisible(true);
 		standardPanelUc.setVisible(true);
 	}
 	
