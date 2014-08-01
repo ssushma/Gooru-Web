@@ -685,6 +685,7 @@ public class AddResourceContainerView extends
 				displayErrorLabel.setText("Add me into a Collection");
 				getButtonVisiblity();
 			} else {
+				System.out.println("here else part");
 				if (!isSelectedCollection && !isSelectedFolder) {
 					restrictionToAddResourcesData("please select a collection");
 					getButtonVisiblity();
@@ -829,10 +830,10 @@ public class AddResourceContainerView extends
 			//topMostTreeItem.getElement().getStyle().setDisplay(Display.NONE);
 			isTopMostSelected =false;
 		}else{
-			//topMostTreeItem.getElement().getStyle().setDisplay(Display.BLOCK);
+			topMostTreeItem.getElement().getStyle().setDisplay(Display.BLOCK);
 			isTopMostSelected =true;
 			if(isTopMostSelected){
-				//topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");
+				topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");
 				isSelectedFolder=false;
 			}else{
 			//	topMostTreeItem.getElement().setAttribute("style", "background-color: none;");
