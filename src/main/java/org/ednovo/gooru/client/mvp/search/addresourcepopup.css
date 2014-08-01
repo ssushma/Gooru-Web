@@ -715,4 +715,11 @@
 	/* height: 258px; */
 	background-color: #fff;
 }
- 
+ .addMyCollectionsStyle{
+	font-size: 16px;
+	/* background-color: #cfe3f1; */
+	height: 30px;
+	text-align: left;
+	padding-top: 7px;
+	padding-left: 11px;
+ }
