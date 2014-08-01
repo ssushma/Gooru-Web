@@ -148,6 +148,10 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 
 		}
 
+		.flowPanelContainer{
+			display: inline-block;
+		}
+
 
 	</ui:style>
 	<g:FlowPanel styleName="{style.searchFilterVcContainer}" ui:field="myCollectionSearch">
@@ -201,14 +205,14 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 					<g:Label styleName="{style.notFound}" ui:field="standardsNotFoundLbl" />
 				</g:HTMLPanel>
 				<g:HTMLPanel>
-					<g:FlowPanel ui:field="standardContainerFloPanel" />
+					<g:FlowPanel styleName="{style.flowPanelContainer}" ui:field="standardContainerFloPanel" />
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		
 		<g:HTMLPanel>
-		    <g:Label styleName="{style.headerLbl}" visible="false" ui:field="aggregatorLbl"></g:Label>
 			<g:HTMLPanel  ui:field="aggregatorPanelUc" visible="false">
+			     <g:Label styleName="{style.headerLbl}" visible="false" ui:field="aggregatorLbl"></g:Label>
 			 	<g:HTMLPanel>
 				 	<g:Label styleName="{style.helpIconBtnAggregator}" ui:field="aggregatorTooltip"/>
 				</g:HTMLPanel>
@@ -225,7 +229,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 					<g:Label styleName="{style.notFound}" ui:field="aggregatorNotFoundLbl"/>
 				</g:HTMLPanel>
 				<g:HTMLPanel>
-					<g:FlowPanel ui:field="aggregatorContainerFloPanel" />
+					<g:FlowPanel styleName="{style.flowPanelContainer}"  ui:field="aggregatorContainerFloPanel" />
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
@@ -249,7 +253,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 					<g:Label styleName="{style.notFound}" ui:field="sourcesNotFoundLbl"/>
 				</g:HTMLPanel>
 				<g:HTMLPanel>
-					<g:FlowPanel ui:field="sourceContainerFloPanel" />
+					<g:FlowPanel styleName="{style.flowPanelContainer}" ui:field="sourceContainerFloPanel" />
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
@@ -261,7 +265,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 					<g:TextBox ui:field="authorTxtBox" width="130px" />
 				</g:HTMLPanel>
 				<g:HTMLPanel>
-					<g:FlowPanel ui:field="authorContainerFloPanel" />
+					<g:FlowPanel styleName="{style.flowPanelContainer}" ui:field="authorContainerFloPanel" />
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
