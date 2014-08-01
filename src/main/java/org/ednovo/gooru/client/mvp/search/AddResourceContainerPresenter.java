@@ -32,11 +32,14 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.search.collection.RefreshDisclosurePanelForFoldersEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.CopyCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CopyDraggedCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
+import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
@@ -45,6 +48,7 @@ import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -71,18 +75,19 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class AddResourceContainerPresenter extends PresenterWidget<IsAddResourceContainerView> implements AddResourceContainerUiHandlers{
 	
 	ResourceSearchResultDo searchResultDo =null;
-
+	
 	
 	String type =null;
 
 	CollectionItemDo collectionItemDo;
 	boolean isPlayer=false;
 	HashMap<String,String> successparams = new HashMap<String, String>();
-
+	CollectionFormPresenter collectionFormPresenter;
 	@Inject
-	public AddResourceContainerPresenter(EventBus eventBus, IsAddResourceContainerView view) {
+	public AddResourceContainerPresenter(EventBus eventBus, IsAddResourceContainerView view,CollectionFormPresenter collectionFormPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
+		this.collectionFormPresenter = collectionFormPresenter;
 	}
 
 	@Override
@@ -97,10 +102,9 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 		}else{
 			type=null;
 		}
-		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,"public,anyonewithlink", type, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,"anyonewithlink", type, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
-				
 				if(folderListDo!=null && folderListDo.getCount()!=null){
 				if(folderListDo.getCount()==0){
 					getView().displayNoCollectionsMsg();
@@ -116,7 +120,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 
 	@Override
 	public void getFolderItems(final TreeItem item,String parentId) {
-		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,"public,anyonewithlink", null, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,"anyonewithlink", null, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				getView().setFolderItems(item,folderListDo);
@@ -133,11 +137,12 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 		getView().setSearchResultDo(this.searchResultDo);
 	}
 	@Override
-	public void getUserShelfCollectionsData(CollectionSearchResultDo searchResultDo,String searchType) {
+	public void getUserShelfCollectionsData(CollectionSearchResultDo collectionsearchResultDo,String searchType) {
 		// TODO Auto-generated method stub
-		this.searchResultDo =searchResultDo;
+		this.searchResultDo =collectionsearchResultDo;
 		getView().clearShelfData();
 		getWorkspaceData(0,20,true,searchType);
+		//getView().setCollectionSearchResultDo(this.collectionsearchResultDo);
 	}
 	
 	@Override
@@ -207,6 +212,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 				params.put("from", "AddResourcePresenter");
 				final CollectionDo collection = new CollectionDo();
 				collection.setGooruOid(searchResultDo.getGooruOid());
+				
 				AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collection,searchResultDo.getGooruOid(),result.getGooruOid(),false,new SimpleAsyncCallback<CollectionDo>() { 
 					@Override
 					public void onSuccess(CollectionDo result1) {
@@ -282,6 +288,19 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 		getView().clearShelfData();
 	}
 
-	
+	@Override
+	public void addCollectionToMyCollections(String object,
+			String currentsearchType) {
+		final CollectionDo collection = new CollectionDo();
+		if(currentsearchType.equalsIgnoreCase("collection")){
+			collection.setGooruOid(searchResultDo.getGooruOid());
+			collectionFormPresenter.copyCollection(this.searchResultDo.getResourceTitle(), searchResultDo.getGooruOid());
+			getView().getButtonVisiblity();
+	}
+}
 
+	public void SetDefaultMyCollections() {
+		// TODO Auto-generated method stub
+		getView().showAndHideMyCollections();
+	}
 }

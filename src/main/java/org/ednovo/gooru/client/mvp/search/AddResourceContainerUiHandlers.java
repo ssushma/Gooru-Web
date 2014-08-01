@@ -69,5 +69,7 @@ public interface AddResourceContainerUiHandlers extends BaseUiHandlers,EventHand
 	public Button getCancelButton();
 	public TreeItem loadingTreeItem();
 	public void clearData();
+	public void addCollectionToMyCollections(String object,
+			String currentsearchType);
 	
 }

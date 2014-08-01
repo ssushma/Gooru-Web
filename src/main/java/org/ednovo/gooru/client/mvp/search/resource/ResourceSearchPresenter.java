@@ -180,6 +180,7 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 		addResourceContainerPresenter.removePlayerStyle();
 		addResourceContainerPresenter.getUserShelfData(searchResultDo,Type);
 		addResourceContainerPresenter.cleartheSelecteGooruOid();
+		addResourceContainerPresenter.SetDefaultMyCollections();
 		addResourceContainerPanel.setWidget(addResourceContainerPresenter.getWidget());
 		addResourceContainerPresenter.getAddButton().addClickHandler(new ShowNewCollectionWidget(searchResultDo.getGooruOid()));
 		
