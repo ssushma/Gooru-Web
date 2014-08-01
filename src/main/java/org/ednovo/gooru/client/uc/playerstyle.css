@@ -201,7 +201,7 @@
 	/* left: -8px; */
 	position: relative;
 	text-align: center;
-	/* top: -63px; */
+	top: 0px;
 	width: 81px;
 }
 
@@ -320,6 +320,80 @@
 }
 .resource-type-info-text{
 	background-position: -0px -55px !important;
+}
+
+
+
+.resource-type-info-video-new,.resource-type-info-slide-new,
+.resource-type-info-interactive-new,.resource-type-info-question-new,.resource-type-info-website-new,.resource-type-info-textbook-new,
+.resource-type-info-handout-new,.resource-type-info-lesson-new,.resource-type-info-exam-new,.resource-type-info-audio-new,.resource-type-info-imageIcon-new,.resource-type-info-other-new,.resource-type-info-text-new{
+	/*background:url("images/resource-type-icons.png") no-repeat;*/
+	color: #FFFFFF;
+	font-size: 12px;
+	height: 60px;
+	left: 3px;
+	position: relative;
+	text-align: center;
+	top: -40px;
+	width: 81px;
+}
+
+.resource-type-info-video-new{
+	background:url("../images/Video_1.png") no-repeat
+		transparent;
+}
+
+.resource-type-info-slide-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+
+.resource-type-info-interactive-new{
+	background:url("../images/Interactive_1.png") no-repeat
+		transparent;
+}
+
+.resource-type-info-question-new{
+	background:url("../images/Question_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-website-new{
+	background:url("../images/Website_1.png") no-repeat
+		transparent;
+}
+
+.resource-type-info-textbook-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+
+.resource-type-info-handout-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-lesson-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-exam-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-audio-new{
+	background:url("../images/Audio_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-imageIcon-new{
+	background:url("../images/Image_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-other-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-text-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 }
 
 .resource-default-video,.resource-default-slide,
