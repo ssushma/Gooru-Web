@@ -147,6 +147,7 @@ public interface AddResourceContainerCBundle extends ClientBundle {
 		String assignmentButtonsContainerCopy();
 		String addTextButtonsContainer();
 		String addPlayerStyle();
+		String addMyCollectionsStyle();
 	}
 	@Source("addresourcepopup.css")
 	NewAddresourcePopupCss css();

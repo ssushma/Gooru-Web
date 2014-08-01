@@ -30,15 +30,16 @@ import java.util.List;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -65,7 +66,6 @@ import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class AddResourceContainerView extends
 		BaseViewWithHandlers<AddResourceContainerUiHandlers> implements
@@ -86,6 +86,8 @@ public class AddResourceContainerView extends
 	@UiField
 	HTMLPanel floderTreeContainer, buttonsContainer,
 			createCollectionbuttonsContainer, loadingImage, enableSuccessView;
+	
+	
 
 	@UiField
 	Button addResourceBtnLbl, okButton;
@@ -120,14 +122,15 @@ public class AddResourceContainerView extends
 	boolean isCollectionSearch = false;
 	private String currentsearchType;
 	ResourceSearchResultDo searchResultDo;
-
+	CollectionSearchResultDo collectionsearchResultDo;
 	private static final String O1_LEVEL = "o1";
 
 	private static final String O2_LEVEL = "o2";
 
 	private static final String O3_LEVEL = "o3";
 	boolean isPlayer = false;
-
+	boolean isTopMostSelected =true;
+	HTMLPanel topMostTreeItem=new HTMLPanel("");
 	private Tree folderTreePanel = new Tree(new TreeMenuImages()) {
 		@Override
 		public void onBrowserEvent(Event event) {
@@ -155,69 +158,114 @@ public class AddResourceContainerView extends
 				.addScrollHandler(new ScrollDropdownListContainer());
 		displayCountLabel.setVisible(false);
 		addingText.setVisible(false);
+		topMostTreeItem.addStyleName(AddResourceContainerCBundle.INSTANCE
+				.css().addMyCollectionsStyle());
 		// selectedCollectionGooruOid =null;
+		topMostTreeItem.getElement().setInnerHTML("My Collections");
+		topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");
 		addingText.setText(i18n.GL0591());
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			@Override
 			public void onSelection(SelectionEvent<TreeItem> event) {
-				displayErrorLabel.setText("");
-				getButtonVisiblity();
-				final TreeItem item = (TreeItem) event.getSelectedItem();
-				Widget folderWidget = item.getWidget();
-				FolderTreeItem folderTreeItemWidget = null;
-				if (folderWidget instanceof FolderTreeItem) {
-					folderTreeItemWidget = (FolderTreeItem) folderWidget;
-					if (folderTreeItemWidget.isOpen()) {
-						folderTreeItemWidget
-								.removeStyleName(AddResourceContainerCBundle.INSTANCE
-										.css().open());
-						folderTreeItemWidget.setOpen(false);
-					} else {
-						folderTreeItemWidget
+					displayErrorLabel.setText("");
+					isTopMostSelected =false;
+					if(isTopMostSelected){
+						topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");
+						isSelectedFolder=false;
+					}else{
+						topMostTreeItem.getElement().setAttribute("style", "background-color: none;");
+					}
+					ClickHandler handler = new ClickHandler() {
+						
+						@Override
+						public void onClick(ClickEvent event) {
+							// TODO Auto-generated method stub
+							isTopMostSelected =true;
+							isSelectedFolder=false;
+							removePreviousSelectedItem();
+							topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");
+						}
+					};
+					topMostTreeItem.addDomHandler(handler, ClickEvent.getType());
+					getButtonVisiblity();
+					final TreeItem item = (TreeItem) event.getSelectedItem();
+					Widget folderWidget = item.getWidget();
+					FolderTreeItem folderTreeItemWidget = null;
+					if (folderWidget instanceof FolderTreeItem) {
+						folderTreeItemWidget = (FolderTreeItem) folderWidget;
+						if (folderTreeItemWidget.isOpen()) {
+							folderTreeItemWidget
+									.removeStyleName(AddResourceContainerCBundle.INSTANCE
+											.css().open());
+							folderTreeItemWidget.setOpen(false);
+						} else {
+							folderTreeItemWidget
+									.addStyleName(AddResourceContainerCBundle.INSTANCE
+											.css().open());
+							folderTreeItemWidget.setOpen(true);
+						}
+						removePreviousSelectedItem();
+						currentFolderSelectedTreeItem = folderTreeItemWidget;
+						previousFolderSelectedTreeItem = currentFolderSelectedTreeItem;
+						currentFolderSelectedTreeItem
 								.addStyleName(AddResourceContainerCBundle.INSTANCE
-										.css().open());
-						folderTreeItemWidget.setOpen(true);
+										.css().selected());
+						previousSelectedItem = cureentcollectionTreeItem = null;
+						TreeItem parent = item.getParentItem();
+						item.getTree().setSelectedItem(parent, false); // TODO FIX
+																		// ME
+						if (!folderTreeItemWidget.isApiCalled()) {
+							folderTreeItemWidget.setApiCalled(true);
+							getFolderItems(item, folderTreeItemWidget.getGooruOid());
+						}
+						selectedFolderGooruOid = folderTreeItemWidget.getGooruOid();
+	
+						isSelectedFolder = true;
+						isSelectedCollection = false;
+						
+						if (parent != null)
+							parent.setSelected(false); // TODO FIX ME
+						item.setState(!item.getState(), false);
+						// setSelectedCollectionsCount(item.getChildCount());
+					} else if (folderWidget instanceof CollectionTreeItem) {
+						removePreviousSelectedItem();
+						cureentcollectionTreeItem = (CollectionTreeItem) folderWidget;
+						previousSelectedItem = cureentcollectionTreeItem;
+						cureentcollectionTreeItem
+								.addStyleName(AddResourceContainerCBundle.INSTANCE
+										.css().selected());
+						previousFolderSelectedTreeItem = currentFolderSelectedTreeItem = null;
+						selectedCollectionGooruOid = cureentcollectionTreeItem.getGooruOid();
+						isSelectedCollection = true;
+						isSelectedFolder = false;
+						// setSelectedCollectionTitle();
+						// closeDropDown();
 					}
-					removePreviousSelectedItem();
-					currentFolderSelectedTreeItem = folderTreeItemWidget;
-					previousFolderSelectedTreeItem = currentFolderSelectedTreeItem;
-					currentFolderSelectedTreeItem
-							.addStyleName(AddResourceContainerCBundle.INSTANCE
-									.css().selected());
-					previousSelectedItem = cureentcollectionTreeItem = null;
-					TreeItem parent = item.getParentItem();
-					item.getTree().setSelectedItem(parent, false); // TODO FIX
-																	// ME
-					if (!folderTreeItemWidget.isApiCalled()) {
-						folderTreeItemWidget.setApiCalled(true);
-						getFolderItems(item, folderTreeItemWidget.getGooruOid());
+					if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+							PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+									PlaceTokens.COLLECTION_PLAY)) {
+						topMostTreeItem.getElement().getStyle().setDisplay(Display.NONE);
+					}else{
+						topMostTreeItem.getElement().getStyle().setDisplay(Display.BLOCK);
 					}
-					selectedFolderGooruOid = folderTreeItemWidget.getGooruOid();
-
-					isSelectedFolder = true;
-					isSelectedCollection = false;
-					if (parent != null)
-						parent.setSelected(false); // TODO FIX ME
-					item.setState(!item.getState(), false);
-					// setSelectedCollectionsCount(item.getChildCount());
-				} else if (folderWidget instanceof CollectionTreeItem) {
-					removePreviousSelectedItem();
-					cureentcollectionTreeItem = (CollectionTreeItem) folderWidget;
-					previousSelectedItem = cureentcollectionTreeItem;
-					cureentcollectionTreeItem
-							.addStyleName(AddResourceContainerCBundle.INSTANCE
-									.css().selected());
-					previousFolderSelectedTreeItem = currentFolderSelectedTreeItem = null;
-					selectedCollectionGooruOid = cureentcollectionTreeItem.getGooruOid();
-					isSelectedCollection = true;
-					isSelectedFolder = false;
-					// setSelectedCollectionTitle();
-					// closeDropDown();
 				}
-			}
+			
 		});
 		floderTreeContainer.clear();
+		floderTreeContainer.add(topMostTreeItem);
 		floderTreeContainer.add(folderTreePanel);
+		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+				PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
+						PlaceTokens.COLLECTION_PLAY)) {
+			topMostTreeItem.getElement().getStyle().setDisplay(Display.NONE);
+		}else{
+			topMostTreeItem.getElement().getStyle().setDisplay(Display.BLOCK);
+		}
+		/*if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			topMostTreeItem.getElement().setAttribute("style", "display:none");
+		}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+			topMostTreeItem.getElement().setAttribute("style", "display:block");
+		}*/
 		loadingImage.setVisible(false);
 		folderTreePanel.addItem(loadingTreeItem());
 	}
@@ -294,7 +342,6 @@ public class AddResourceContainerView extends
 			if ((dropdownListContainerScrollPanel.getVerticalScrollPosition() == dropdownListContainerScrollPanel
 					.getMaximumVerticalScrollPosition())
 					&& (totalHitCount > pageNum * limit)) {
-				System.out.println("pagination ");
 				getUiHandlers().getWorkspaceData(pageNum * limit, limit, false,
 						currentsearchType);
 				pageNum++;
@@ -600,10 +647,13 @@ public class AddResourceContainerView extends
 	@Override
 	public void displayNoCollectionsMsg() {
 		dropdownListContainerScrollPanel.setVisible(false);
+		buttonsContainer.setVisible(false);
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
 		displayCountLabel.setText("There are no collections to add this resource.");
+		displayCountLabel.setVisible(true);
 		}else{
 			displayCountLabel.setText("There are no folders to add this collection.");
+			displayCountLabel.setVisible(true);
 		}
 		// addResourceBtnLbl.setText(i18n.GL1964());
 	}
@@ -614,7 +664,8 @@ public class AddResourceContainerView extends
 		buttonsContainer.setStyleName(AddResourceContainerCBundle.INSTANCE
 				.css().assignmentButtonsContainer());
 	}
-
+	
+	
 	@UiHandler("addResourceBtnLbl")
 	public void addResourceBtnLblClick(ClickEvent event) {
 		addingText.setVisible(true);
@@ -645,11 +696,9 @@ public class AddResourceContainerView extends
 				getUiHandlers().addResourceToCollection(selectedFolderGooruOid,
 						currentsearchType,
 						currentFolderSelectedTreeItem.floderName.getText());
-			} else {
-				if (!isSelectedFolder) {
-					restrictionToAddResourcesData("please select a folder");
-					getButtonVisiblity();
-				}
+			} 
+			if(isTopMostSelected) {
+				getUiHandlers().addCollectionToMyCollections("",currentsearchType);
 			}
 		}
 	}
@@ -764,5 +813,37 @@ public class AddResourceContainerView extends
 		enableSuccessView.setVisible(false);
 		displayErrorLabel.setText("");
 	}
+
+	@Override
+	public void setCollectionSearchResultDo(
+			ResourceSearchResultDo searchResultDo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showAndHideMyCollections() {
+		// TODO Auto-generated method stub
+		if (AppClientFactory.getCurrentPlaceToken().equals(
+				PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(
+						PlaceTokens.COLLECTION_PLAY)) {
+			//topMostTreeItem.getElement().getStyle().setDisplay(Display.NONE);
+			isTopMostSelected =false;
+		}else{
+			//topMostTreeItem.getElement().getStyle().setDisplay(Display.BLOCK);
+			isTopMostSelected =true;
+			if(isTopMostSelected){
+				//topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");
+				isSelectedFolder=false;
+			}else{
+			//	topMostTreeItem.getElement().setAttribute("style", "background-color: none;");
+			}
+		}
+	}
+
+	
+
+
+	
 
 }

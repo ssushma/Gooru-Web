@@ -174,6 +174,7 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 		addResourceContainerPanel.clear();
 		addResourceContainerPresenter.getUserShelfCollectionsData(collectionsearchResultDo,searchType);
 		addResourceContainerPresenter.clearSelectedFolderId();
+		addResourceContainerPresenter.SetDefaultMyCollections();
 		addResourceContainerPanel.setWidget(addResourceContainerPresenter.getWidget());
 	/*	addResourceContainerPresenter.getAddButton().addClickHandler(new ClickHandler() {
 			
