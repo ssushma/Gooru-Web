@@ -399,11 +399,11 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			return mode;
 		}
 		public String getPlayerModeInTeach(){
-			String mode=PlayerDataLogEvents.STUDY;
+			String mode=PlayerDataLogEvents.PREVIEW;
 			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
 			String pageLocation=placeRequest.getNameToken();
-			if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
-				 mode=PlayerDataLogEvents.PREVIEW;
+			if(pageLocation.equals(PlaceTokens.COLLECTION_SEARCH)||pageLocation.equals(PlaceTokens.RESOURCE_SEARCH)){
+				 mode=PlayerDataLogEvents.STUDY;
 			}
 			return mode;
 		}

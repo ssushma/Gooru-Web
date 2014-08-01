@@ -123,6 +123,8 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		questionResourcePresenter.setPreviewPlayerPresenter(previewPlayerPresenter);
 		questionResourcePresenter.showQuestionPreview(collectionItemDo);
 		//removeUserAttemptResult();
+		int windowHeight=Window.getClientHeight();
+		questionResourcePresenter.getWidget().setHeight((windowHeight-202)+"px");
 		getView().getResourceWidgetContainer().add(questionResourcePresenter.getWidget());
 	}
 	
