@@ -37,6 +37,8 @@ public class FlagThankYouPopUpView extends PopupPanel
 		this.getElement().getStyle().setZIndex(999999);
 		this.setGlassStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().glassStyle());
 		setGlassEnabled(true);
+		this.setWidth("418px");
+		this.setHeight("162px");
 		flagHeaderText.setText(i18n.GL0600());
 		flagHeaderText.getElement().setId("lblFlagHeaderText");
 		flagHeaderText.getElement().setAttribute("alt",i18n.GL0600());
