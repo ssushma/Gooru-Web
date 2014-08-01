@@ -1524,51 +1524,51 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	 * separate the view according to grade level of the user
 	 */
 	public void setGradeList(String grades, ProfileDo profileDo) {
-		
-		if(grades!=null){
-		DefaultGardeContainer.clear();
-		//For short
-		List<Integer> listI = new ArrayList<Integer>();
-		List<String> listS = new ArrayList<String>();
+		if (grades != null) {
+			DefaultGardeContainer.clear();
+			// For short
+			List<Integer> listI = new ArrayList<Integer>();
+			List<String> listS = new ArrayList<String>();
 
-		List<Object> listO = new ArrayList<Object>();
-		String[] newst = grades.split(",");
+			List<Object> listO = new ArrayList<Object>();
+			String[] newst = grades.split(",");
 
-		for (int i = 0; i < newst.length; i++) {
-			try {
-				int k = Integer.parseInt(newst[i]);
-				listI.add(k);
-			} catch (Exception e) {
-				listS.add(newst[i]);
+			for (int i = 0; i < newst.length; i++) {
+				try {
+					int k = Integer.parseInt(newst[i]);
+					listI.add(k);
+				} catch (Exception e) {
+					listS.add(newst[i]);
+				}
 			}
-		}
-		Collections.sort(listS, Collections.reverseOrder());
+			Collections.sort(listS, Collections.reverseOrder());
 
-		Collections.sort(listI);
-		if (listS.contains("Kindergarten")
-				&& listS.contains("Higher Education")) {
-			listO.add("Kindergarten");
-			listO.addAll(listI);
-			listO.add("Higher Education");
-		} else if (listS.contains("Kindergarten")) {
-			listO.add("Kindergarten");
-			listO.addAll(listI);
-		} else if (listS.contains("Higher Education")) {
-			listO.addAll(listI);
-			listO.add("Higher Education");
-		} else {
-			listO.addAll(listI);
-		}
+			Collections.sort(listI);
+			if (listS.contains("Kindergarten")
+					&& listS.contains("Higher Education")) {
+				listO.add("Kindergarten");
+				listO.addAll(listI);
+				listO.add("Higher Education");
+			} else if (listS.contains("Kindergarten")) {
+				listO.add("Kindergarten");
+				listO.addAll(listI);
+			} else if (listS.contains("Higher Education")) {
+				listO.addAll(listI);
+				listO.add("Higher Education");
+			} else {
+				listO.addAll(listI);
+			}
 
-		StringBuilder sortedGrade = new StringBuilder();
-		for (Object obj : listO) {
+			StringBuilder sortedGrade = new StringBuilder();
+			for (Object obj : listO) {
 
-			sortedGrade.append(obj.toString());
-			Label gradeLabel=new Label(obj.toString());
-			gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().settingPageDefaultGrade());
-			gradeLabel.getElement().setAttribute("selected", "selected");
-			DefaultGardeContainer.add(gradeLabel);
-		}
+				sortedGrade.append(obj.toString());
+				Label gradeLabel = new Label(obj.toString());
+				gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css()
+						.settingPageDefaultGrade());
+				gradeLabel.getElement().setAttribute("selected", "selected");
+				DefaultGardeContainer.add(gradeLabel);
+			}
 		}
 		else
 		{

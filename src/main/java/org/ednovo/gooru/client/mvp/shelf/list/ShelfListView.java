@@ -344,7 +344,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	}
 	
 	public void setShelfPosition(boolean toRemove) {
-		if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+		if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.DISCOVER)) {
 			if (toRemove) {
 				addCollectionItem.removeFromParent();
 			}

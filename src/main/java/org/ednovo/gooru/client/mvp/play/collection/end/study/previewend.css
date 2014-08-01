@@ -86,7 +86,7 @@ background-color: #DDD;
     border-radius: 4px;
     /* padding:10px 48px 10px 0px; */
     padding: 13px 70px 14px 15px;
-    margin-top: 0 !important;
+    margin-top: -10px !important;
     /* Old browsers */
 	background: #1076BB ;
 	background: url("images/preview-arrow.png") 125px center no-repeat, #1076BB;

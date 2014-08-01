@@ -329,7 +329,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 		if(collectionItemDo.getResource().getResourceFormat()!=null){
 			if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
-				resourcePublisher.setText(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+				if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
+					resourcePublisher.setVisible(true);
+					resourcePublisher.setText(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+				}else{
+//					resourcePublisher.setVisible(false);
+				}
 			}
 		}
 		if(forwardButton!=null){

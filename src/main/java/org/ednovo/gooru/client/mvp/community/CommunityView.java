@@ -33,7 +33,7 @@ public class CommunityView extends BaseViewWithHandlers<CommunityUiHandlers> imp
 	 */
 	public CommunityView() {		
 		setWidget(uiBinder.createAndBindUi(this));
-		libraryView = new LibraryView(PlaceTokens.HOME);
+		libraryView = new LibraryView(PlaceTokens.DISCOVER);
 //		libraryView.getCourseTabs().setVisible(false);
 		landingpagePanel.add(libraryView);
 		landingpagePanel.getElement().setId("pnlPartnerPanel");

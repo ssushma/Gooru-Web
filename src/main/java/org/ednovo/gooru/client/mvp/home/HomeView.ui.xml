@@ -31,8 +31,9 @@
 								<p class="">Browse thousands of K-12 collections made by teachers
 									or search over 18M resources</p>
 
-								<tbp:TextBoxWithPlaceholder
-									styleName="form-control" placeholder="{i18n.GL2073}" ui:field="txtSearch"></tbp:TextBoxWithPlaceholder>
+								<!-- <tbp:TextBoxWithPlaceholder
+									styleName="form-control" placeholder="{i18n.GL2073}" ui:field="txtSearch"></tbp:TextBoxWithPlaceholder> -->
+								<tbp:AppSuggestBox ui:field="txtSearch" styleName="form-control" />
 								<g:Button styleName="primary" ui:field="btnSearch"
 									text="{i18n.GL0176}"></g:Button>
 
@@ -49,7 +50,7 @@
 									your students’ needs.</p>
 
 								<g:Button styleName="primary {res.css.btnBlock}"
-									ui:field="btnMoreOnCollections">More on Collections</g:Button>
+									ui:field="btnMoreOnCollections">Start creating collections</g:Button>
 
 							</div>
 						</div>
@@ -64,7 +65,7 @@
 									is not required to access.
 								</p>
 								<g:Button styleName="primary {res.css.btnBlock}"
-									ui:field="btnMoreOnClasses">More on Classes</g:Button>
+									ui:field="btnMoreOnClasses">Start creating classes</g:Button>
 
 							</div>
 						</div>
@@ -80,7 +81,7 @@
 								<p class="">Measure your students' engagement and progress to
 									intervene in real-time.</p>
 
-								<g:Button styleName="primary {res.css.btnBlock}" ui:field="viewSampleResportsBtn">View Sample Reports</g:Button>
+								<g:Button styleName="primary {res.css.btnBlock}" ui:field="viewSampleResportsBtn">View sample reports</g:Button>
 
 							</div>
 						</div>
@@ -121,16 +122,16 @@
 									<div id="bs-example-navbar-collapse-3" class="collapse navbar-collapse">
 										<ul class="nav navbar-nav">
 											<li>
-												<a href="">Science</a>
+												<label >Science</label>
 											</li>
 											<li>
-												<a href="">Math</a>
+												<label>Math</label>
 											</li>
 											<li>
-												<a href="">Social Sciences</a>
+												<label>Social Sciences</label>
 											</li>
 											<li>
-												<a href="">Language Arts</a>
+												<label>Language Arts</label>
 											</li>
 										</ul>
 									</div><!-- /.navbar-collapse -->
@@ -147,7 +148,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=77741">Science 1</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=77741">Science 1</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -158,7 +159,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=	77838">Science 2</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=	77838">Science 2</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -169,7 +170,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=44949">Science 3</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=44949">Science 3</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -180,7 +181,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=44948">Science 4</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=44948">Science 4</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -191,7 +192,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=20003">Integrated Science</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=20003">Integrated Science</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -207,7 +208,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=47674">Math 1</a>
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=47674">Math 1</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -218,7 +219,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=47675">Math 2</a>
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=47675">Math 2</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -229,7 +230,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=47676">Math 3</a>
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=47676">Math 3</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -240,7 +241,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=44874">Math 4</a>
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=44874">Math 4</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -251,7 +252,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=20072">Math 5</a>
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=20072">Math 5</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -266,7 +267,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=25681&amp;courseId=44920">Social Sciences 1</a>
+												href="#community&amp;page=course-page&amp;subject=25681&amp;courseId=44920">Social Sciences 1</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -277,7 +278,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=25681&amp;courseId=44921">Social Sciences 2</a>
+												href="#community&amp;page=course-page&amp;subject=25681&amp;courseId=44921">Social Sciences 2</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -288,7 +289,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=25681&amp;courseId=44922">Social Sciences 3</a>
+												href="#community&amp;page=course-page&amp;subject=25681&amp;courseId=44922">Social Sciences 3</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -299,7 +300,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=25681&amp;courseId=47668">US Geography</a>
+												href="#community&amp;page=course-page&amp;subject=25681&amp;courseId=47668">US Geography</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -310,7 +311,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=25681&amp;courseId=44924">World Geography</a>
+												href="#community&amp;page=course-page&amp;subject=25681&amp;courseId=44924">World Geography</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -327,7 +328,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=47670">English Language Arts 1</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=47670">English Language Arts 1</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -338,7 +339,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=47671">English Language Arts 2</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=47671">English Language Arts 2</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -349,7 +350,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=47672">English Language Arts 3</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=47672">English Language Arts 3</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -360,7 +361,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=44864">English Language Arts 4</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=44864">English Language Arts 4</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -371,7 +372,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=30187">English Language Arts 5</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=30187">English Language Arts 5</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -397,7 +398,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=20186">Earth Science</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=20186">Earth Science</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -408,7 +409,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=20369">Life Science</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=20369">Life Science</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -419,7 +420,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=20573">Physical Science</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=20573">Physical Science</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -436,7 +437,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=20287">Math 6	</a>
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=20287">Math 6	</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -447,7 +448,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=20457">Pre-Algebra	</a>
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=20457">Pre-Algebra	</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -458,7 +459,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=20670">Algebra</a>
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=20670">Algebra</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -474,7 +475,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=25681&amp;courseId=25682">Ancient Civilizations</a>
+												href="#community&amp;page=course-page&amp;subject=25681&amp;courseId=25682">Ancient Civilizations</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -485,7 +486,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=25681&amp;courseId=25733">World History</a>
+												href="#community&amp;page=course-page&amp;subject=25681&amp;courseId=25733">World History</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -496,7 +497,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=25681&amp;courseId=25864">US History</a>
+												href="#community&amp;page=course-page&amp;subject=25681&amp;courseId=25864">US History</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -514,7 +515,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=30248">English Language Arts 6	</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=30248">English Language Arts 6	</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -525,7 +526,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=30287">English Language Arts 7</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=30287">English Language Arts 7</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -536,7 +537,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=30357">English Language Arts 8</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=30357">English Language Arts 8</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -566,7 +567,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=77741">Science 1</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=77741">Science 1</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -577,7 +578,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=	77838">Science 2</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=	77838">Science 2</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -588,7 +589,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=44949">Science 3</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=44949">Science 3</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -599,7 +600,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=44948">Science 4</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=44948">Science 4</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -610,7 +611,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20001&amp;courseId=20003">Integrated Science</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=20003">Integrated Science</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -626,7 +627,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21165">Algebra 2</a>
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=21165">Algebra 2</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -637,7 +638,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=20774">Integrated Math 1</a>
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=20774">Integrated Math 1</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -648,7 +649,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21286">Integrated Math 2</a>
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=21286">Integrated Math 2</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -659,7 +660,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21714">Integrated Math 3</a>
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=21714">Integrated Math 3</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -670,7 +671,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21066">Geometry</a>
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=21066">Geometry</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -682,7 +683,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21801">Pre-Calculus</a>
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=21801">Pre-Calculus</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -694,7 +695,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=20002&amp;courseId=21972">Calculus</a>
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=21972">Calculus</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -709,7 +710,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=25681&amp;courseId=43493">Ancient Art History</a>
+												href="#community&amp;page=course-page&amp;subject=25681&amp;courseId=43493">Ancient Art History</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -720,7 +721,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=25681&amp;courseId=26107">American Government</a>
+												href="#community&amp;page=course-page&amp;subject=25681&amp;courseId=26107">American Government</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -739,7 +740,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=44865">Language and Composition</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=44865">Language and Composition</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -750,7 +751,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=44866">Literature and Composition</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=44866">Literature and Composition</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -761,7 +762,7 @@
 									<div class="col-md-8">
 										<p>
 											<a
-												href="#discover&amp;page=course-page&amp;subject=30186&amp;courseId=26882">British Literature</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=26882">British Literature</a>
 										</p>
 									</div>
 									<div class="col-md-4">
@@ -784,12 +785,12 @@
 
 								<p>
 									<a
-										href="#discover&amp;page=course-page&amp;subject=standard&amp;courseId=41895&amp;standardId=24146">Common Core State Standards - Math</a>
+										href="#community&amp;page=course-page&amp;subject=standard&amp;courseId=41895&amp;standardId=24146">Common Core State Standards - Math</a>
 								</p>
 
 								<p>
 									<a
-										href="#discover&amp;page=course-page&amp;subject=standard&amp;courseId=72329&amp;standardId=72168&amp;libtype=TEKS">Texas Essential Knowledge and Skills</a>
+										href="#community&amp;page=course-page&amp;subject=standard&amp;courseId=72329&amp;standardId=72168&amp;libtype=TEKS">Texas Essential Knowledge and Skills</a>
 								</p>
 							</div>
 						</div>
@@ -799,7 +800,7 @@
 							</div>
 							<div class="blockContent">
 								<p>
-									<a href="#lps">Leadership Public Schools</a>
+									<a href="#lpslibrary1">Leadership Public Schools</a>
 								</p>
 
 								<p>
@@ -1116,9 +1117,9 @@
 								<li>
 									<g:Anchor ui:field="achPrivacy">Privacy</g:Anchor>
 								</li>
-								<li>
+								<!-- <li>
 									<g:Anchor ui:field="achDataPolicy">Data Policy</g:Anchor>
-								</li>
+								</li> -->
 								<li>
 									<g:Anchor ui:field="achCopyright">Copyright</g:Anchor>
 								</li>

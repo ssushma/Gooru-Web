@@ -25,7 +25,7 @@
 package org.ednovo.gooru.client;
 
 public interface PlaceTokens {
-	String HOME = "discover";
+	String HOME = "home";
 	String RESOURCE_SEARCH = "resource-search";
 	String COLLECTION_SEARCH = "collection-search";
 	String ERROR = "error";
@@ -70,6 +70,6 @@ public interface PlaceTokens {
 	String LPS = "lpslibrary1";
 	String MURRIETA = "murrieta";
 	String VALVERDE = "valverde";
-	String LANDINGPAGE = "home";
+	String DISCOVER = "community";
 
 }

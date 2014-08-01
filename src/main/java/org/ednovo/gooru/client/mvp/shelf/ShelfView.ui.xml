@@ -3,6 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:col="urn:import:org.ednovo.gooru.client.mvp.shelf.collection"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle"
 		field="res" />
 	<ui:style field="folderStyle" src="folderList.css"
@@ -58,6 +59,8 @@
 							styleName="{res.css.collectionDescriptionTitleContainer}">
 							<g:Label styleName="{res.css.collectionDescriptionTitle}"
 								ui:field="collectionDescriptionTitle" />
+							<g:Label styleName="{res.css.charLimit}"
+								ui:field="lblCharLimit" text=""/>
 						</panel:HTMLEventPanel>
 
 						<panel:HTMLEventPanel ui:field="editCollectionDescTitle"

@@ -173,13 +173,13 @@ public class ProfileTopicListView extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicNumber;
 		setPlaceToken(placeToken);
-		assignCollectionBtn.setText(i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
+		assignCollectionBtn.setText(i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
 		
-		customizeCollectionBtn.setText(i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
+		customizeCollectionBtn.setText(i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
 		
 		noCollectionLbl.setText(i18n.GL1170());
 		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());

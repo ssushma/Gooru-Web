@@ -255,6 +255,13 @@
 	font-style: italic;
 	color: #999;
 }
+
+.charLimit{
+	font-size: 12px;
+	color: #999;
+	float: right;
+	margin-right:5px;
+}
 .addjustSubmitButton{
 	margin-top:15%;
 	margin-left:43%;

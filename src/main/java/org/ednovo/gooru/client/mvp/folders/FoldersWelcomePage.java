@@ -86,7 +86,7 @@ public class FoldersWelcomePage extends Composite {
 		
 		setText();
 		
-		imgSampleCollection.setHref("#preview-play&id=2548d591-9131-4577-b873-83b8f172eda5");
+		imgSampleCollection.setHref("#collection-play&id=2548d591-9131-4577-b873-83b8f172eda5");
 		imgSampleCollection.setTarget("_blank");
 		
 		Image imgComponent = new Image();

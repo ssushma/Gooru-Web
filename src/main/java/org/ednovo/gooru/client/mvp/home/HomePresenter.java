@@ -158,7 +158,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	private boolean isLandingPageLoaded = false;
 	
 	@ProxyStandard
-	@NameToken(PlaceTokens.LANDINGPAGE)
+	@NameToken(PlaceTokens.HOME)
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsHomeProxy extends ProxyPlace<HomePresenter> {
 	}
@@ -214,7 +214,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			AppClientFactory.setBrowserWindowTitle(SeoTokens.HOME_TITLE_LOGGEDIN);
 		}
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
-		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
+		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.HOME));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 /*		isLandingPageLoaded = false;
 		if(!isLandingPageLoaded) {
@@ -326,22 +326,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
 		
 		if(!AppClientFactory.isAnonymous() && loginType.equalsIgnoreCase("apps")) {
-			
-//			AppClientFactory.getInjector().getUserService().getUserProfileDetails(userDo.getGooruUId(), new SimpleAsyncCallback<SettingDo>(){
-//
-//				@Override
-//				public void onSuccess(SettingDo result) {
-////					MixpanelUtil.Arrive_AlmostDone_Popup();
-////					String email = result.getExternalId();
-////					AppClientFactory.getLoggedInUser().setEmailId(result.getExternalId());
-////					SignUpRoleView signUpRoleView = new SignUpRoleView(email, userDo);
-////					AlmostDoneUc popup = new AlmostDoneUc(email,userDo);  
-////					popup.setGlassEnabled(true);
-////					popup.show();
-////					popup.center();
-//				}				
-//			});
-			
+						
 		}
 		else if(flag<=10 && !AppClientFactory.isAnonymous()){
 			showMarketingPopup(userDo);
@@ -352,7 +337,11 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	@Override
 	public void onReset() {
 		super.onReset();
-		
+		if (AppClientFactory.isAnonymous()){
+			getView().getBtnSignUp().setVisible(true);
+		}else{
+			getView().getBtnSignUp().setVisible(false);
+		}
 	}
 	
 	private void getIntoLibrarypage() {

@@ -98,7 +98,7 @@ public class LibraryBannerView extends Composite{
 	}
 	
 	private void getLandingBannerText(String placeToken) {
-		if(placeToken.contains(PlaceTokens.HOME)) {
+		if(placeToken.contains(PlaceTokens.DISCOVER)) {
 			setLandingBannerText(i18n.GL0522(),i18n.GL0523(),i18n.GL0524(),i18n.GL0525(),i18n.GL0526(),i18n.GL0527(),i18n.GL0528(),i18n.GL0529(),i18n.GL0530(),i18n.GL0531());
 			partnerLogo.setVisible(false);
 			fourSteps.getElement().getStyle().setBackgroundColor("#000000");

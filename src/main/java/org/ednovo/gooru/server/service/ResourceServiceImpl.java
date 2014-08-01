@@ -597,6 +597,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionItemDo addNewResource(String gooruOid, String idStr,
 			String urlStr, String titleStr, String descriptionStr,
 			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards,String hostName, List<String> tagList) throws GwtException {
+		categoryStr = categoryStr.trim();
 		NewResourceDo newResourceDo = new NewResourceDo();		
 		newResourceDo.setId(idStr);
 		newResourceDo.setUrl(urlStr);

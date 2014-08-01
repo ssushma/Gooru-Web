@@ -2861,3 +2861,10 @@ margin-top: 18px; */
 	width: 74%;
 	margin-bottom: 8px;
 }
+
+.charLimit{
+	float : right;
+	color: #999;
+	margin-right: 122px;
+	font-size: 12px;
+}

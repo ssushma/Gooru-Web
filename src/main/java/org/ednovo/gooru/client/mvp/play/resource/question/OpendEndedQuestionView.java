@@ -59,7 +59,7 @@ public abstract class OpendEndedQuestionView extends Composite{
 	@UiField Button submitButton;
 	@UiField TextArea openEndedAnswerTextArea;
 	@UiField QuestionStyleResource oeStyle;
-	@UiField Label submittedText,errorMessageText,messageBodyText;
+	@UiField Label submittedText,errorMessageText,messageBodyText, lblCharLimit;
 //	private static final String ERROR_MESSAGE=i18n.GL1458+i18n.GL_SPL_FULLSTOP;
 //	private static final String EMPTY_ERROR_MESSAGE=i18n.GL1459+i18n.GL_SPL_FULLSTOP;
 //	private static final String OPEN_ENDED_BODY_TEXT=i18n.GL1460;
@@ -87,6 +87,11 @@ public abstract class OpendEndedQuestionView extends Composite{
 		submitButton.getElement().setAttribute("alt",i18n.GL0666());
 		submitButton.getElement().setAttribute("title",i18n.GL0666());
 		showPreviousAttemptResult(attemptedAnswerDo);
+		
+		String value = StringUtil.generateMessage(i18n.GL2103(), "1000");
+		
+		StringUtil.setAttributes(lblCharLimit.getElement(), "lblCharLimit", value, value);
+		lblCharLimit.setText(value);
 	}
 	
 	public void setQuestionTypeCaption(){

@@ -99,7 +99,7 @@ public class AutodeskLibraryPresenter extends BasePlacePresenter<IsAutodeskLibra
 	
 	@Override
 	public String getViewToken() {
-		return PlaceTokens.HOME;
+		return PlaceTokens.DISCOVER;
 	}
 
 }
