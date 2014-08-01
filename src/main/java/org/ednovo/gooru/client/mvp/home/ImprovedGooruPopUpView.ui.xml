@@ -277,51 +277,8 @@
 					<g:Label styleName="{style.improveGooruSubHeading}"
 						ui:field="headersubtext"></g:Label>
 				</g:HTMLPanel>
-				<!-- <g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
-					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
-						<g:Label styleName="{style.improveGooruBlueText}"
-							ui:field="contenttext"></g:Label>
-						<g:InlineLabel styleName="{style.improveGooruBlueTextDesc}"
-							ui:field="contenttextlbl">
-						</g:InlineLabel>
-						<g:Anchor styleName="{style.improveGooruHyperlinkText}"
-							ui:field="mobileLearnMore" target="_blank"></g:Anchor>
-					</g:HTMLPanel>
-				</g:HTMLPanel> -->
-				<!-- <g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
-					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
-						<g:Label styleName="{style.improveGooruBlueText}"
-							ui:field="termsofuselbl"></g:Label>
-						<g:InlineLabel styleName="{style.improveGooruBlueTextDesc}"
-							ui:field="termsofusetxt"></g:InlineLabel>
-						<g:Anchor styleName="{style.improveGooruHyperlinkText}"
-							ui:field="termsofuselearnmore" target="_blank"></g:Anchor>
-
-
-					</g:HTMLPanel>
-				</g:HTMLPanel> -->
-				<!-- <g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
-					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
-						<g:Label styleName="{style.improveGooruBlueText}"
-							ui:field="lblTitleThree"></g:Label>
-						<g:InlineLabel styleName="{style.improveGooruBlueTextDesc}"
-							ui:field="aboutThree"></g:InlineLabel>
-						<g:Anchor styleName="{style.improveGooruHyperlinkText}"
-							ui:field="descLinkThree" target="_blank"></g:Anchor>
-					</g:HTMLPanel>
-				</g:HTMLPanel> -->
-				<!-- <g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
-					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
-						<g:Label styleName="{style.improveGooruBlueText}"
-							ui:field="lblTitleFour"></g:Label>
-						<g:InlineLabel styleName="{style.improveGooruBlueTextDesc}"
-							ui:field="aboutFour"></g:InlineLabel>
-						<g:Anchor styleName="{style.improveGooruHyperlinkText}"
-							ui:field="descLinkfour" target="_blank"
-							href="http://support.goorulearning.org/hc/en-us/articles/201181847"></g:Anchor>
-					</g:HTMLPanel>
-				</g:HTMLPanel> -->
 				
+				<!-- First -->
 				<g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
 					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
 						<g:Label styleName="{style.improveGooruBlueText}"
@@ -332,7 +289,7 @@
 							ui:field="descLinkFive" target="_blank"></g:Anchor>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-				
+				<!-- Second -->
 				<g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
 					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
 						<g:Label styleName="{style.improveGooruBlueText}"
@@ -345,7 +302,7 @@
 							</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-				
+				<!-- Third -->
 				<g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
 					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
 						<g:Label styleName="{style.improveGooruBlueText}"
@@ -356,7 +313,7 @@
 							ui:field="descLinkSix" target="_blank"></g:Anchor>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-				
+				<!-- Fourth -->
 				<g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
 					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
 						<g:Label styleName="{style.improveGooruBlueText}"
@@ -368,7 +325,7 @@
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 				
-				<g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
+				<!-- <g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
 					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
 						<g:Label styleName="{style.improveGooruBlueText}"
 							ui:field="lblTitleEight"></g:Label>
@@ -377,7 +334,7 @@
 						<g:Anchor styleName="{style.improveGooruHyperlinkText}"
 							ui:field="descLinkEight" target="_blank"></g:Anchor>
 					</g:HTMLPanel>
-				</g:HTMLPanel>
+				</g:HTMLPanel> -->
 
 				<g:HTMLPanel styleName="{style.improveGooruLinkOuter}"
 					ui:field="GooruLinkOutercontainer">
