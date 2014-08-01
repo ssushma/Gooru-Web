@@ -278,6 +278,14 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		getEditSearchTxtBox().getElement().setAttribute("placeholder", i18n.GL2073());
 		getEditSearchTxtBox().getElement().setId("txtEditSearch");		
 		
+		
+		if (AppClientFactory.isAnonymous()){
+			btnSignUp.setVisible(true);
+		}else{
+			btnSignUp.setVisible(false);
+		}
+		
+		
 		Window.enableScrolling(true);
 	}
 
