@@ -163,6 +163,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	int currentRating=0;
 	
+	public HTMLPanel getCollectionContainer(){
+		return collectionContainer;
+	}
+	
+	
+	
 	private static ResourcePlayerMetadataViewUiBinder uiBinder = GWT.create(ResourcePlayerMetadataViewUiBinder.class);
 
 	interface ResourcePlayerMetadataViewUiBinder extends UiBinder<Widget, ResourcePlayerMetadataView> {

@@ -83,6 +83,8 @@ import org.ednovo.gooru.shared.util.PlayerConstants;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -638,6 +640,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		setCollectionScore(0);
 		reactionTreeMap.clear();
 		setInSlot(METADATA_PRESENTER_SLOT, metadataPresenter,false);
+		adjustCollectionMetadaBody(true);
+		addFixedPostionForNavigation();
 	}
 	
 	public void showResourceView(String collectionItemId,String tabView) {
@@ -702,7 +706,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			
 			setOpenEndedAnswerSubmited(true);
 			setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
-
+			adjustCollectionMetadaBody(false);
+			addFixedPostionForNavigation();
 		}
 		else{
 			enablePlayerButton(false, false, false, false, false, false);
@@ -2082,6 +2087,20 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		return reactionTreeMap;
 	}
 	
-	
-
+	public void addFixedPostionForNavigation(){
+		collectionPlayerTocPresenter.getWidget().getElement().getStyle().setPosition(Position.FIXED);
+	}
+	public void adjustCollectionMetadaBody(boolean isHome){
+		if(isHome){
+			metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(122+50, Unit.PX);
+		}else{
+			addFixedPositionNavArrows();
+		}
+	}
+	public void addFixedPositionNavArrows(){
+		resoruceMetadataPresenter.getWidget().getElement().getStyle().setPaddingTop(38+50, Unit.PX);
+		resoruceMetadataPresenter.getCollectionContainer().getElement().getStyle().setPosition(Position.FIXED);
+		int height=resoruceMetadataPresenter.getCollectionContainer().getElement().getOffsetHeight();
+		resoruceMetadataPresenter.getResourceWidgetContainer().getElement().getStyle().setPaddingTop(height, Unit.PX);
+	}
 }
