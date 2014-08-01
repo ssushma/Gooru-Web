@@ -278,7 +278,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 						standardSuggestOracle.clear();
 							if(standardPreflist!=null){
 								for(int count=0; count<standardPreflist.size();count++) {
-									if(text.contains("CCSS") || text.contains("TEKS") || text.contains("CA") ||text.contains("NGSS")) {
+									if(text.contains("CCSS") || text.contains("TEKS") || text.contains("CA") ||text.contains("NGSS")||text.contains("CAS612")||text.contains("CAELD")||text.contains("CSC")) {
 										if(text.contains(standardPreflist.get(count))) {
 											standardsPrefDisplayPopup = true;
 											break;
