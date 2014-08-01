@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.home.library.customize;
 
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -402,6 +403,11 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	public void onGmailButtonClicked(ClickEvent clickEvent){
 		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",System.currentTimeMillis(),System.currentTimeMillis(), "", AppClientFactory.getLoggedInUser().getToken());
 		String callBack = Window.Location.getHref();
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			MixpanelUtil.mixpanelEvent("Customize_player_signin_google");
+		}else{
+			MixpanelUtil.mixpanelEvent("Customize_library_signin_google");
+		}
 		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
 		
 			@Override

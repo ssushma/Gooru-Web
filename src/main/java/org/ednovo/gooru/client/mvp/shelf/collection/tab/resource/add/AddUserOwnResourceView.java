@@ -624,7 +624,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 				String mediaFileName=jsonMediaFileValue.isString().toString().replaceAll("^\"|\"$", "");
 				JSONValue jsonOriginalFileValue=jsonObject.get("originalFilename");
 				String originalFileName=jsonOriginalFileValue.isString().toString().replaceAll("^\"|\"$", "");
-				if(resourceCategory.equalsIgnoreCase("Images")||resourceCategory.equalsIgnoreCase("Texts"))
+				if(resourceCategory.equalsIgnoreCase("Image")||resourceCategory.equalsIgnoreCase("Text"))
 				{
 					resourceCategory=resourceCategory.substring(0, resourceCategory.length()-1);
 					 if(resourceCategory.equalsIgnoreCase("Image")){
