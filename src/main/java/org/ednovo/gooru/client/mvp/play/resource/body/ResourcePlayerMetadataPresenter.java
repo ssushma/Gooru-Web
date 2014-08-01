@@ -57,6 +57,8 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -457,6 +459,13 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 			}
 		});
 		
+	}
+	public HTMLPanel getCollectionContainer(){
+		return getView().getCollectionContainer();
+	}
+	
+	public FlowPanel getResourceWidgetContainer(){
+		return getView().getResourceWidgetContainer();
 	}
 
 
