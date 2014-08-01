@@ -330,7 +330,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				};
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("454px");
+				successPopupVc.setHeight("471px");
 				successPopupVc.show();
 				successPopupVc.center();
 				
@@ -422,7 +422,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("454px");
+			successPopupVc.setHeight("471px");
 			successPopupVc.show();
 			successPopupVc.center();
 		}

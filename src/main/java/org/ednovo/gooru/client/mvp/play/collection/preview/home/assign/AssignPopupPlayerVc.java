@@ -847,6 +847,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 			@Override
 			public void onSuccess(String result) {
 //				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
+				MixpanelUtil.mixpanelEvent("Assign_player_signin_google");
 				Window.Location.replace(result);
 			
 			}

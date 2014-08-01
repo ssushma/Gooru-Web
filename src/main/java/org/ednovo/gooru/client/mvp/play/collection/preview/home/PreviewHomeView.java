@@ -109,15 +109,15 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 		previewButton.getElement().setAttribute("alt",i18n.GL0633());
 		previewButton.getElement().setAttribute("title",i18n.GL0633());
 		
-		assignCollectionBtn.setText(i18n.GL0104());
+		assignCollectionBtn.setText(i18n.GL0526());
 		assignCollectionBtn.getElement().setId("btnAsignCollectionBtn");
-		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
 		
-		customizeCollectionBtn.setText(i18n.GL0631());
+		customizeCollectionBtn.setText(i18n.GL2037());
 		customizeCollectionBtn.getElement().setId("btnCustomizeCollectionBtn");
-		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
 		
 		shareCollectionBtn.setText(i18n.GL0526());
 		shareCollectionBtn.getElement().setId("btnShareCollectionBtn");

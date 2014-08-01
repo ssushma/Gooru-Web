@@ -9,7 +9,7 @@
 .footerContainer .infoButtonNormal{
 	display:inline-block;
 	background:url(images/player/player_sprite_new.png) no-repeat -3px -4px;
-	transition:all 0.5s ease-in-out 0s;
+	/* transition:all 0.5s ease-in-out 0s; */
 	width:31px;
 	height:30px;
 }
@@ -32,7 +32,7 @@ display:inline-block;
 .infoButtonDisabled{
 	display:inline-block;
 	background:url(images/player/player_sprite_new.png) no-repeat -3px -4px;
-	transition:all 0.5s ease-in-out 0s;
+	/* transition:all 0.5s ease-in-out 0s; */
 	width:31px;
 	height:30px;
 }
@@ -40,7 +40,7 @@ display:inline-block;
 .footerContainer .narrationButtonNormal{
 	display:inline-block;
 	background:url(images/player/player_sprite_new.png) no-repeat -74px -4px;
-	transition:all 0.5s ease-in-out 0s;
+	/* transition:all 0.5s ease-in-out 0s; */
 	width:31px;
 	height:30px;
 }
@@ -72,7 +72,7 @@ background:url(images/player/player_sprite_new.png) no-repeat -74px -44px;
 .footerContainer .addButtonNormal{
 	display:inline-block;
 	background:url(images/player/player_sprite_new.png) no-repeat -138px -4px;
-	transition:all 0.5s ease-in-out 0s;
+	/* transition:all 0.5s ease-in-out 0s; */
 	width:31px;
 	height:30px;
 	
@@ -102,7 +102,7 @@ background:url(images/player/player_sprite_new.png) no-repeat -74px -44px;
 .footerContainer .shareButtonNormal{
 	display:inline-block;
 	background:url(images/player/player_sprite_new.png) no-repeat -188px -4px;
-	transition:all 0.5s ease-in-out 0s;
+	/* transition:all 0.5s ease-in-out 0s; */
 	width:31px;
 	height:30px;
 }
@@ -132,7 +132,7 @@ background:url(images/player/player_sprite_new.png) no-repeat -74px -44px;
 .footerContainer .flagButtonNormal{
 	display:inline-block;
 	background:url(images/player/player_sprite_new.png) no-repeat -240px -4px;
-	transition:all 0.5s ease-in-out 0s;
+	/* transition:all 0.5s ease-in-out 0s; */
 	width:31px;
 	height:30px;
 }

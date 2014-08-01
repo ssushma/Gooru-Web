@@ -225,7 +225,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 		ratingWidgetView=new RatingWidgetView();
 		if(resourceSearchResultDo.getRatings()!=null){
 			ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
-			ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getReviewCount()!=null?resourceSearchResultDo.getRatings().getCount().toString():"0");
+			ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount()!=null?resourceSearchResultDo.getRatings().getCount().toString():"0");
 			ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 			ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage());
 		}

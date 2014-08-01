@@ -343,6 +343,7 @@ public class EditClasspageView extends
 		panelProgressContainer.setVisible(true);
 		noAssignmentsMessagePanel.setVisible(false);
 		assignmentsTabContainerPanel.setVisible(true);
+		assignmentsTab.setEnabled(false);
 		btnCollectionEditImage.setVisible(false);
 		
 		/*lblInstructionalPlaceHolder.setText(GL1946);*/
@@ -423,6 +424,7 @@ public class EditClasspageView extends
 			
 			newAssignmentAndMsgPanel.setVisible(true);
 			assignmentsTabContainerPanel.setVisible(true);
+			assignmentsTab.setEnabled(false);
 			getClassListContainer().setVisible(false);
 
 		
@@ -681,6 +683,7 @@ public class EditClasspageView extends
 		shareTabContainerPanel.getElement().setId("pnlShareTabContainer");
 		frameDiv.getElement().setId("pnlFrameDiv");
 		frameUrl.getElement().setId("ifFrameUrl");
+		newAssignmentAndMsgPanel.getElement().getStyle().setMarginTop(22, Unit.PX);
 	}
 	
 	private void addSortEventToText(){
@@ -1049,6 +1052,7 @@ public class EditClasspageView extends
 			monitorProgress.setVisible(false);
 			newAssignmentAndMsgPanel.setVisible(false);
 			assignmentsTabContainerPanel.setVisible(false);
+			assignmentsTab.setEnabled(true);
 			getClassListContainer().setVisible(true);
 			frameDiv.setVisible(false);
 			
@@ -1061,6 +1065,7 @@ public class EditClasspageView extends
 			classListTab.getElement().setClassName("");
 			newAssignmentAndMsgPanel.setVisible(false);
 			assignmentsTabContainerPanel.setVisible(false);
+			assignmentsTab.setEnabled(true);
 			getClassListContainer().setVisible(false);
 			assignmentsDirectionsLabel.setVisible(false);
 			getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
@@ -1609,6 +1614,7 @@ public class EditClasspageView extends
 		
 		newAssignmentAndMsgPanel.setVisible(true);
 		assignmentsTabContainerPanel.setVisible(true);
+		assignmentsTab.setEnabled(false);
 		getClassListContainer().setVisible(false);
 	}
 /**
@@ -1788,6 +1794,7 @@ public class EditClasspageView extends
 			
 			newAssignmentAndMsgPanel.setVisible(true);
 			assignmentsTabContainerPanel.setVisible(true);
+			assignmentsTab.setEnabled(false);
 			getClassListContainer().setVisible(false);
 			if(tab!=null){
 				Map<String,String> params = new HashMap<String,String>();
@@ -1821,6 +1828,7 @@ public class EditClasspageView extends
 			dropDownListDiv.setVisible(false);
 			newAssignmentAndMsgPanel.setVisible(false);
 			assignmentsTabContainerPanel.setVisible(false);
+			assignmentsTab.setEnabled(true);
 			panelAssignmentPath.setVisible(false);
 			headerAssignments.setVisible(false);
 			panelProgressContainer.setVisible(false);
@@ -1863,6 +1871,7 @@ public class EditClasspageView extends
 			backArrowButton.setVisible(false);
 			monitorProgress.setVisible(false);
 			assignmentsTabContainerPanel.setVisible(false);
+			assignmentsTab.setEnabled(true);
 			getClassListContainer().setVisible(false);
 			panelAssignmentPath.setVisible(false);
 			headerAssignments.setVisible(false);

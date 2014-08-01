@@ -256,11 +256,11 @@
 }
 
 .bodyContent .blocksmall{
-
-	 float: left;
-    padding: 10px 10px;
-    width: 100%;
-	}
+	 	float: left;
+	    padding: 10px 10px;
+	    width: 100%;
+	    background: #fff;
+}
 
 .ojectimg{
 	display:inline-block;
