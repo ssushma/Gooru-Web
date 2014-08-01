@@ -23,6 +23,7 @@
 	white-space: nowrap;
 	/* width: 364px; */
 	cursor: pointer;
+	height: 19px;
 	/* float: left; */
 }
 .resourceTitle:HOVER {
