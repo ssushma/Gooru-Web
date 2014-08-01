@@ -378,6 +378,46 @@ public interface PlayerBundle extends ClientBundle {
 		
 		@ClassName("resource-type-info-text")
 		public String textResourceTypeInfo();
+		
+		
+		@ClassName("resource-type-info-video-new")
+		public String videoResourceTypeInfoNew();
+		
+		@ClassName("resource-type-info-interactive-new")
+		public String interactiveResourceTypeInfoNew();
+		
+		@ClassName("resource-type-info-slide-new")
+		public String slideResourceTypeInfoNew();
+		
+		@ClassName("resource-type-info-question-new")
+		public String questionResourceTypeInfoNew();
+		
+		@ClassName("resource-type-info-website-new")
+		public String websiteResourceTypeInfoNew();
+		
+		@ClassName("resource-type-info-textbook-new")
+		public String textbookResourceTypeInfoNew();
+		
+		@ClassName("resource-type-info-handout-new")
+		public String handoutResourceTypeInfoNew();
+		
+		@ClassName("resource-type-info-lesson-new")
+		public String lessonResourceTypeInfoNew();
+		
+		@ClassName("resource-type-info-exam-new")
+		public String examResourceTypeInfoNew();
+		
+		@ClassName("resource-type-info-audio-new")
+		public String audioResourceTypeInfoNew();
+		
+		@ClassName("resource-type-info-imageIcon-new")
+		public String imageResourceTypeInfoNew();
+		
+		@ClassName("resource-type-info-other-new")
+		public String otherResourceTypeInfoNew();
+		
+		@ClassName("resource-type-info-text-new")
+		public String textResourceTypeInfoNew();
 	
 		public String setPopupStandardArrow();
 		

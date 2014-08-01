@@ -128,8 +128,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	
 	@UiField Image studentViewImage,imgProfileImage;
 
-	@UiField
-	static Image userImage;
+//	@UiField
+//	static Image userImage;
 	
 	@UiField
 	static Label lblWebHelp,dropdownPlaceHolder, lblNext, lblPrevious;
@@ -357,8 +357,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		lblWebHelp.getElement().setId("lblWebHelp");
 		btnWithDraw.setVisible(false);
 		LblMember.setVisible(false);
-		userImage.setVisible(false);
-		userImage.getElement().setId("imgUserImage");
+//		userImage.setVisible(false);
+//		userImage.getElement().setId("imgUserImage");
 		mainContainer.getElement().setId("pnlMainContainer");
 		studentViewImage.getElement().setId("imgStudentView");
 		mainTitleLbl.getElement().setId("lblMainTitle");
@@ -414,22 +414,22 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			if(classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
 			{
 				btnJoinClass.setVisible(false);
-				userImage.setVisible(true);
+//				userImage.setVisible(true);
 				lblWebHelp.setVisible(false);
 				btnWithDraw.setVisible(false);
 				LblMember.setVisible(true);
-				userImage.setVisible(true);
+//				userImage.setVisible(true);
 				LblMember.setText(i18n.GL1551());
 				mainContainer.setVisible(true);
 			}
 			else if(classpageDo.getStatus().equalsIgnoreCase("active"))
 			{
 				btnJoinClass.setVisible(false);
-				userImage.setVisible(true);
+//				userImage.setVisible(true);
 				lblWebHelp.setVisible(false);
 				btnWithDraw.setVisible(true);
 				LblMember.setVisible(true);
-				userImage.setVisible(true);
+//				userImage.setVisible(true);
 				LblMember.setText(i18n.GL1549());
 				mainContainer.setVisible(true);
 			}
@@ -438,11 +438,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 				
 				btnJoinClass.setVisible(true);
-				userImage.setVisible(false);
+//				userImage.setVisible(false);
 				lblWebHelp.setVisible(true);
 				btnWithDraw.setVisible(false);
 				LblMember.setVisible(false);
-				userImage.setVisible(false);
+//				userImage.setVisible(false);
 				mainContainer.setVisible(true);
 				
 				System.out.println("iam here always::"+isJoinPopupPublic);
@@ -474,7 +474,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												Window.enableScrolling(true);
 											}
 											btnJoinClass.setVisible(false);
-											userImage.setVisible(true);
+//											userImage.setVisible(true);
 											lblWebHelp.setVisible(false);
 											btnWithDraw.setVisible(true);
 											LblMember.setVisible(true);
@@ -530,31 +530,31 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			if(classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
 			{
 				btnJoinClass.setVisible(false);
-				userImage.setVisible(true);
+//				userImage.setVisible(true);
 				lblWebHelp.setVisible(false);
 				btnWithDraw.setVisible(false);
 				LblMember.setVisible(true);
 				LblMember.setText(i18n.GL1551());
-				userImage.setVisible(true);
+//				userImage.setVisible(true);
 				mainContainer.setVisible(true);
 			}
 			else if(classpageDo.getStatus().equalsIgnoreCase("active")){
 					btnJoinClass.setVisible(false);
-					userImage.setVisible(true);
+//					userImage.setVisible(true);
 					lblWebHelp.setVisible(false);
 					btnWithDraw.setVisible(false);
 					LblMember.setVisible(true);
-					userImage.setVisible(true);
+//					userImage.setVisible(true);
 					mainContainer.setVisible(true);
 				}
 			else if(classpageDo.getStatus().equalsIgnoreCase("pending")) 
 			{
 					btnJoinClass.setVisible(true);
-					userImage.setVisible(false);
+//					userImage.setVisible(false);
 					lblWebHelp.setVisible(true);
 					btnWithDraw.setVisible(false);
 					LblMember.setVisible(false);
-					userImage.setVisible(false);
+//					userImage.setVisible(false);
 					mainContainer.setVisible(false);
 
 
@@ -582,7 +582,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 														Window.enableScrolling(true);
 													}
 													btnJoinClass.setVisible(false);
-													userImage.setVisible(true);
+//													userImage.setVisible(true);
 													lblWebHelp.setVisible(false);
 													btnWithDraw.setVisible(false);
 													LblMember.setVisible(true);
@@ -910,7 +910,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 											Window.enableScrolling(true);
 										}
 										btnJoinClass.setVisible(false);
-										userImage.setVisible(true);
+//										userImage.setVisible(true);
 										lblWebHelp.setVisible(false);
 										btnWithDraw.setVisible(true);
 										LblMember.setVisible(true);
@@ -1009,7 +1009,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	public static void setPrivatePage()
 	{
 		btnJoinClass.setVisible(false);
-		userImage.setVisible(true);
+//		userImage.setVisible(true);
 		lblWebHelp.setVisible(false);
 		btnWithDraw.setVisible(false);
 		LblMember.setVisible(true);
@@ -1019,7 +1019,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	public static void setPrivatePageActive()
 	{	
 	btnJoinClass.setVisible(false);
-	userImage.setVisible(true);
+//	userImage.setVisible(true);
 	lblWebHelp.setVisible(false);
 	btnWithDraw.setVisible(false);
 	LblMember.setVisible(true);
@@ -1030,7 +1030,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	public static void setPrivatePagePending()
 	{
 	btnJoinClass.setVisible(true);
-	userImage.setVisible(false);
+//	userImage.setVisible(false);
 	lblWebHelp.setVisible(true);
 	btnWithDraw.setVisible(false);
 	LblMember.setVisible(false);
@@ -1068,7 +1068,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 										Window.enableScrolling(true);
 									}
 									btnJoinClass.setVisible(false);
-									userImage.setVisible(true);
+//									userImage.setVisible(true);
 									lblWebHelp.setVisible(false);
 									btnWithDraw.setVisible(false);
 									LblMember.setVisible(true);
@@ -1113,7 +1113,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	public static void setPublicPage()
 	{
 		btnJoinClass.setVisible(false);
-		userImage.setVisible(true);
+//		userImage.setVisible(true);
 		lblWebHelp.setVisible(false);
 		btnWithDraw.setVisible(true);
 		LblMember.setVisible(true);
@@ -1123,7 +1123,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	public static void setPublicPageActive()
 	{	
 		btnJoinClass.setVisible(false);
-		userImage.setVisible(true);
+//		userImage.setVisible(true);
 		lblWebHelp.setVisible(false);
 		btnWithDraw.setVisible(true);
 		LblMember.setVisible(true);
@@ -1134,7 +1134,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	public static void setPublicPagePending()
 	{
 		btnJoinClass.setVisible(true);
-		userImage.setVisible(false);
+//		userImage.setVisible(false);
 		lblWebHelp.setVisible(true);
 		btnWithDraw.setVisible(false);
 		LblMember.setVisible(false);
@@ -1167,7 +1167,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 											Window.enableScrolling(true);
 										}
 										btnJoinClass.setVisible(false);
-										userImage.setVisible(true);
+//										userImage.setVisible(true);
 										lblWebHelp.setVisible(false);
 										btnWithDraw.setVisible(true);
 										LblMember.setVisible(true);
@@ -1250,22 +1250,22 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 					if(classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
 					{
 						btnJoinClass.setVisible(false);
-						userImage.setVisible(true);
+//						userImage.setVisible(true);
 						lblWebHelp.setVisible(false);
 						btnWithDraw.setVisible(false);
 						LblMember.setVisible(true);
-						userImage.setVisible(true);
+//						userImage.setVisible(true);
 						LblMember.setText(i18n.GL1551());
 						mainContainer.setVisible(true);
 					}
 					else if(classpageDo.getStatus().equalsIgnoreCase("active"))
 					{
 						btnJoinClass.setVisible(false);
-						userImage.setVisible(true);
+//						userImage.setVisible(true);
 						lblWebHelp.setVisible(false);
 						btnWithDraw.setVisible(true);
 						LblMember.setVisible(true);
-						userImage.setVisible(true);
+//						userImage.setVisible(true);
 						LblMember.setText(i18n.GL1549());
 						mainContainer.setVisible(true);
 					}
@@ -1274,11 +1274,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 						
 						btnJoinClass.setVisible(true);
-						userImage.setVisible(false);
+//						userImage.setVisible(false);
 						lblWebHelp.setVisible(true);
 						btnWithDraw.setVisible(false);
 						LblMember.setVisible(false);
-						userImage.setVisible(false);
+//						userImage.setVisible(false);
 						mainContainer.setVisible(true);
 						
 			
@@ -1310,7 +1310,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 														Window.enableScrolling(true);
 													}
 													btnJoinClass.setVisible(false);
-													userImage.setVisible(true);
+//													userImage.setVisible(true);
 													lblWebHelp.setVisible(false);
 													btnWithDraw.setVisible(true);
 													LblMember.setVisible(true);
@@ -1367,31 +1367,31 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 					if(classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
 					{
 						btnJoinClass.setVisible(false);
-						userImage.setVisible(true);
+//						userImage.setVisible(true);
 						lblWebHelp.setVisible(false);
 						btnWithDraw.setVisible(false);
 						LblMember.setVisible(true);
 						LblMember.setText(i18n.GL1551());
-						userImage.setVisible(true);
+//						userImage.setVisible(true);
 						mainContainer.setVisible(true);
 					}
 					else if(classpageDo.getStatus().equalsIgnoreCase("active")){
 							btnJoinClass.setVisible(false);
-							userImage.setVisible(true);
+//							userImage.setVisible(true);
 							lblWebHelp.setVisible(false);
 							btnWithDraw.setVisible(false);
 							LblMember.setVisible(true);
-							userImage.setVisible(true);
+//							userImage.setVisible(true);
 							mainContainer.setVisible(true);
 						}
 					else if(classpageDo.getStatus().equalsIgnoreCase("pending")) 
 					{
 							btnJoinClass.setVisible(true);
-							userImage.setVisible(false);
+//							userImage.setVisible(false);
 							lblWebHelp.setVisible(true);
 							btnWithDraw.setVisible(false);
 							LblMember.setVisible(false);
-							userImage.setVisible(false);
+//							userImage.setVisible(false);
 							mainContainer.setVisible(false);
 							System.out.println("in pending::"+isJoinPopupPrivateStatic);
 
@@ -1419,7 +1419,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 																Window.enableScrolling(true);
 															}
 															btnJoinClass.setVisible(false);
-															userImage.setVisible(true);
+//															userImage.setVisible(true);
 															lblWebHelp.setVisible(false);
 															btnWithDraw.setVisible(false);
 															LblMember.setVisible(true);
