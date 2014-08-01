@@ -246,9 +246,10 @@ public abstract class AssignPopupVc extends PopupPanel {
 				embedBitlyLink=result.get("decodeRawUrl");
 			}
 		});
-		Window.enableScrolling(false);
+		
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 		this.center();	
+		//Window.enableScrolling(false);
 	}
 
 	public void hideContainers() {
