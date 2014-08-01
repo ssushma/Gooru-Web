@@ -35,7 +35,7 @@
 				<g:Button styleName="secondary {StudentStyle.studentWithdrawStyle}" ui:field="btnWithDraw"></g:Button>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{StudentStyle.classpageCodeShareInputForImage}">
-			    <g:Image ui:field="userImage" styleName="{StudentStyle.userimageStyle}" url="images/Classpage/student/user.png"></g:Image>
+			    <!--  <g:Image ui:field="userImage" styleName="{StudentStyle.userimageStyle}" url="images/Classpage/student/user.png"></g:Image>-->
 			    <g:Label styleName="{StudentStyle.classMemberStyle}" ui:field="LblMember"></g:Label>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
