@@ -854,9 +854,10 @@ fieldset {
 .blocksmall{
 	float: left;
     padding: 10px 10px;
-    width: 100%;
+    width: 1000px;
     box-sizing: border-box;
     background: #ffffff;
+    border-bottom: 1px solid #ddd;
 }
 
 .blocksmall:before, .blocksmall:after {

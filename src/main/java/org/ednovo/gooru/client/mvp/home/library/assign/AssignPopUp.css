@@ -895,6 +895,7 @@ button.LoginText {
 	border:1px solid #1076BB;
 	/* margin-bottom: 15px; */
 	cursor: pointer;
+	margin-top:28px;
 }
 
 .gConnectButton:hover {
