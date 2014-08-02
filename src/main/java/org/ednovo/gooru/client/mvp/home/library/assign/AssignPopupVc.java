@@ -321,7 +321,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		ancprivacy.getElement().setId("lnkAncprivacy");
 		ancprivacy.getElement().setAttribute("alt",i18n.GL1893());
 		ancprivacy.getElement().setAttribute("title",i18n.GL1893());
-		ancprivacy.getElement().getStyle().setMarginLeft(5, Unit.PX);
+		//ancprivacy.getElement().getStyle().setMarginLeft(5, Unit.PX);
 		
 		toUsText.setText(i18n.GL1894());
 		toUsText.getElement().setId("spnToUsText");
