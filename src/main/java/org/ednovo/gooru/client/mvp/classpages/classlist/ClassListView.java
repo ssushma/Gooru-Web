@@ -49,6 +49,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
@@ -1099,6 +1100,9 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 
 					@Override
 					public void onClickPositiveButton(ClickEvent event) {
+						
+				
+						
 						int childWidgetCount = 0;
 						try{
 							childWidgetCount = ele.getElementById("ActiveMembersList").getFirstChildElement().getChildCount()-1;
@@ -1106,11 +1110,24 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		
 							ele.getElementById(emailIdVal).getParentElement().getParentElement().removeFromParent();
 							overAllStudentsCount--;
+	
+							
 						}catch(Exception e){
 							
 						}
 						enableInvite();
 						activeMemberCounter = childWidgetCount;
+						try
+						{
+						Element element = Document.get().getElementById("btnClassListTab");
+						element.setInnerHTML(i18n.GL1624()+"("+activeMemberCounter+")");
+						}
+						catch(Exception ex)
+						{
+							Element element = Document.get().getElementById("btnClassListTab");
+							element.setInnerHTML(i18n.GL1624()+"("+classpageDo.getMemberCount()+")");
+						}
+						
 						AppClientFactory.fireEvent(new GetStudentJoinListEvent(activeMemberCounter));
 						if(childWidgetCount == 0){
 							lblActiveMembers.setVisible(true);

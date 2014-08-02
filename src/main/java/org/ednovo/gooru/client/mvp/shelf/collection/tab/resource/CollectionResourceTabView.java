@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -490,8 +491,8 @@ public class CollectionResourceTabView extends
 								editResoruce = new EditResourcePopupVc(collectionItemDo) {
 	
 								@Override
-								public void updateResource(CollectionItemDo collectionItemDo) {
-									getUiHandlers().updateResourceInfo(collectionItemDo);
+								public void updateResource(CollectionItemDo collectionItemDo,List<String> tagList) {
+									getUiHandlers().updateResourceInfo(collectionItemDo,tagList);
 								}
 	
 								@Override
@@ -655,8 +656,8 @@ public class CollectionResourceTabView extends
 							editResoruce = new EditResourcePopupVc(collectionItemDo) {
 
 							@Override
-							public void updateResource(CollectionItemDo collectionItemDo) {
-								getUiHandlers().updateResourceInfo(collectionItemDo);
+							public void updateResource(CollectionItemDo collectionItemDo,List<String> tagList) {
+								getUiHandlers().updateResourceInfo(collectionItemDo,tagList);
 							}
 
 							@Override

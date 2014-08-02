@@ -303,7 +303,7 @@ public interface ResourceService extends BaseService {
 	 * @return ResourceDo
 	 * @throws GwtException
 	 */
-	public CollectionItemDo updateResourceInfo(CollectionItemDo collectionItemDo) throws GwtException, ServerDownException;
+	public CollectionItemDo updateResourceInfo(CollectionItemDo collectionItemDo,List<String> tagList) throws GwtException, ServerDownException;
 	
 	public void removeQuestionImage(String collectionQuestionId) throws GwtException, ServerDownException;
 	

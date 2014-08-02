@@ -279,6 +279,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		CollectionDo collectionDoObj=new CollectionDo();
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid, getLoggedInSessionToken(), skipCollectionItem + "");
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -356,6 +357,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionItemDo deserializeCollectionItem(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
+				
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionItemDo.class);
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -752,7 +754,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	}
 
 	@Override
-	public CollectionItemDo updateResourceInfo(CollectionItemDo collectionItemDo)
+	public CollectionItemDo updateResourceInfo(CollectionItemDo collectionItemDo,List<String> tagList)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url =null;
@@ -763,7 +765,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	*/		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_RESOURCE_INFO, collectionItemDo.getResource().getGooruOid(), getLoggedInSessionToken());
 		//}
 		
-		
+	
 		NewResourceDo newResourceDo = new NewResourceDo();
 			
 		String urlStr=collectionItemDo.getResource().getUrl();
@@ -792,7 +794,14 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		newResourceDo.setTaxonomySet(collectionItemDo.getResource().getTaxonomySet());
 		newResourceDo.setMomentsOfLearning(collectionItemDo.getResource().getMomentsOfLearning());
 		
-		String form = ResourceFormFactory.generateStringDataForm(newResourceDo, RESOURCE);
+		Map<String,Object> resourceMap=new HashMap<String,Object>();
+		resourceMap.put(RESOURCE, newResourceDo);
+		
+		if(tagList!=null && tagList.size()!=0 ){
+			resourceMap.put(RESOURCE_TAGS, tagList);
+		}
+		
+		String form = ResourceFormFactory.generateStringDataForm(resourceMap, null);
 		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),form);
 		//JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
@@ -890,6 +899,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj=new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid, getGuestSessionToken(""), "true");
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -955,8 +965,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionItemDo addNewUserResource(	String jsonString,String gooruOid)throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ADD_NEW_USER_RESOURCE, gooruOid, getLoggedInSessionToken());
-		System.out.println("createResourceAPI:(POST)::"+url);
-		System.out.println("createResourceAPIData:::"+jsonString);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), jsonString);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
@@ -967,8 +976,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		MediaUploadDo mediaUploadDo = null;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_USER_RESOURCE_MEDIA_FILE_SAVE, getLoggedInSessionToken());
-		System.out.println("saveUserOwnResource:(POST)::"+url);
-		System.out.println("saveUserOwnResourceData:::"+fileName);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),	getRestPassword(),fileName);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		mediaUploadDo = JsonDeserializer.deserialize(jsonRep.toString(), MediaUploadDo.class);
@@ -1102,7 +1109,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		String url = null;
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_WORKSPACE_FOLDER_LIST, getLoggedInSessionToken(), offsetSize, limitSize);
-		System.out.println("folders url::::::"+url);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeWorkspaceFolderList(jsonRep);
@@ -1444,7 +1451,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.GET_TAGS, resourceId, getLoggedInSessionToken());
-
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeResourceTags(jsonRep);
