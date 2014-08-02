@@ -81,12 +81,15 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.gargoylesoftware.htmlunit.OnbeforeunloadHandler;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.FontWeight;
 import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -269,6 +272,8 @@ public class LibraryTopicListView extends Composite{
 		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
+		assignCollectionBtn.addBlurHandler(new assignTooltipBlur());
+		customizeCollectionBtn.addBlurHandler(new assignTooltipBlur());
 		
 		if(!AppClientFactory.isAnonymous()){
 			try {
@@ -362,12 +367,12 @@ public class LibraryTopicListView extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
 		setPlaceToken(placeToken);
-		assignCollectionBtn.setText(i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
-		customizeCollectionBtn.setText(i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
+		assignCollectionBtn.setText(i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
+		customizeCollectionBtn.setText(i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
 		topicTitleLbl.setText(conceptDo.getTitle());
 		topicTitleLbl.getElement().setAttribute("alt",conceptDo.getTitle());
 		topicTitleLbl.getElement().setAttribute("title",conceptDo.getTitle());
@@ -389,7 +394,8 @@ public class LibraryTopicListView extends Composite{
 		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
-		
+		assignCollectionBtn.addBlurHandler(new assignTooltipBlur());
+		customizeCollectionBtn.addBlurHandler(new assignTooltipBlur());
 		setIds();
 		setAssets();
 		addCollectionQuizTitleData("concept");
@@ -418,12 +424,12 @@ public class LibraryTopicListView extends Composite{
 		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
 		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
 		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
-		assignCollectionBtn.setText(i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
-		customizeCollectionBtn.setText(i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
+		assignCollectionBtn.setText(i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
+		customizeCollectionBtn.setText(i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
 		noCollectionLbl.setText(i18n.GL1170());
 		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());
 		noCollectionLbl.getElement().setAttribute("title",i18n.GL1170());
@@ -457,6 +463,9 @@ public class LibraryTopicListView extends Composite{
 		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
+		assignCollectionBtn.addBlurHandler(new assignTooltipBlur());
+		customizeCollectionBtn.addBlurHandler(new assignTooltipBlur());
+		
 		if(!AppClientFactory.isAnonymous()){
 			try {
 				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
@@ -1212,6 +1221,7 @@ public class LibraryTopicListView extends Composite{
 	 */
 	@UiHandler("assignCollectionBtn")
 	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
+		System.out.println("click");
 		String collectionId = getConceptDo().getGooruOid();
 		if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
 			MixpanelUtil.mixpanelEvent("standardlibrary_assign_collection");	
@@ -1232,7 +1242,7 @@ public class LibraryTopicListView extends Composite{
 				};
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("638px");
+				successPopupVc.setHeight("658px");
 
 				successPopupVc.show();
 				successPopupVc.center();
@@ -1553,5 +1563,14 @@ public class LibraryTopicListView extends Composite{
 	}
 	public void setConceptDoList(ArrayList<ConceptDo> conceptDoList) {
 		this.conceptDoList = conceptDoList;
+	}
+	public class assignTooltipBlur implements BlurHandler{
+
+		@Override
+		public void onBlur(BlurEvent event) {
+			toolTipPopupPanelNew.hide();
+			
+		}
+		
 	}
 }

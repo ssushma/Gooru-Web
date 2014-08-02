@@ -806,7 +806,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //		urlTextBox.setVisible(false);
 //		urlContianer.setVisible(false);
 		if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
-			mandatoryUrlLbl.setText(i18n.GL2009());
+			mandatoryUrlLbl.setText(i18n.GL2009_1());
 			mandatoryUrlLbl.setVisible(true);
 		}
 		titleTextBox.setValue(googleDriveItemDo.getTitle());
@@ -1141,8 +1141,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												}
 											}
 											if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
-													mandatoryUrlLbl.setText(i18n.GL2009());
+													//mandatoryUrlLbl.setText(i18n.GL2009());
 													mandatoryUrlLbl.setText(i18n.GL2009_1());
+													mandatoryUrlLbl.getElement().setAttribute("alt", i18n.GL2009_1());
+													mandatoryUrlLbl.getElement().setAttribute("title", i18n.GL2009_1());
 													mandatoryUrlLbl.setVisible(true);
 													isValidate = false;
 											}
