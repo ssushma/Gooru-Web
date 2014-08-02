@@ -413,7 +413,7 @@ padding-bottom: 18%;
 	-webkit-border-radius: 1px;
 	border-radius: 1px;
 	border-style: solid;
-	height:636px;
+	height:656px;
 }
 .assignContentLoginCustomize {
 	background-color: transparent;
@@ -945,8 +945,16 @@ button.LoginText {
 	padding: 0px;
 	line-height: 100%;
 }
-
-
+.privacyCustomizeContainernew{
+	margin: 0px;
+	text-align: center;
+	margin-bottom: 10px;
+	padding: 0px;
+	line-height: 100%;
+}
+.privacyAlignStyleNew{
+	margin-left: 0px;
+}
 .errorLabel{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;

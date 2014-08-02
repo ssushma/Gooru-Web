@@ -69,5 +69,6 @@ public interface IsAddResourceContainerView extends IsViewWithHandlers<AddResour
 	public void setCollectionSearchResultDo(
 			ResourceSearchResultDo searchResultDo);
 	public void showAndHideMyCollections();
+	public void hideNoCollectionsMsg();
 
 }

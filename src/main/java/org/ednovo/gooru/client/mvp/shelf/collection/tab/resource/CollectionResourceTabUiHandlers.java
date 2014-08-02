@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource;
 
+import java.util.List;
+
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageHandler;
@@ -46,7 +48,7 @@ public interface CollectionResourceTabUiHandlers extends BaseUiHandlers,UpdateQu
 	
 	void updateQustionImage(String collectionItemId);
 	
-	void updateResourceInfo(CollectionItemDo collectionItemDo);
+	void updateResourceInfo(CollectionItemDo collectionItemDo,List<String> tagList);
 	
 	void removeQuestionImage(String collectionQuestionId);
 	

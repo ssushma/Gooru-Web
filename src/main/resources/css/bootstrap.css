@@ -644,6 +644,9 @@ pre code {
   min-width:1000px;
   width: 1000px;
 }
+.containerMain {
+  width: 1000px !important;
+}
 /* @media (min-width: 768px) {
   .containerMain {
     width: 750px;
@@ -680,6 +683,9 @@ pre code {
 }
 .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
   float: left;
+   -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .col-xs-12 {
   width: 100%;

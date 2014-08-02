@@ -1994,17 +1994,17 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 	
 	public String getPlayerMode(){
-		String playerMode="";
-		String page=getPlaceManager().getRequestParameter("page",null);
-		if(page!=null){
-			if(page.equals("teach")){
-				playerMode="preview";
-			}else{
-				playerMode="study";
-			}
-		}else{
-			playerMode=AppClientFactory.getPlaceManager().getPlayerModeInTeach();
-		}
+		String playerMode="study";
+//		String page=getPlaceManager().getRequestParameter("page",null);
+//		if(page!=null){
+//			if(page.equals("teach")){
+//				playerMode="preview";
+//			}else{
+//				playerMode="study";
+//			}
+//		}else{
+//			playerMode=AppClientFactory.getPlaceManager().getPlayerModeInTeach();
+//		}
 		return playerMode;
 	}
 	
