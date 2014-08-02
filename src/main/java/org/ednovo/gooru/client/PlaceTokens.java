@@ -71,5 +71,6 @@ public interface PlaceTokens {
 	String MURRIETA = "murrieta";
 	String VALVERDE = "valverde";
 	String DISCOVER = "community";
+	String CORE_LIBRARY = "CoreLibrary";
 
 }
