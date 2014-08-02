@@ -973,7 +973,7 @@ public class ProfileTopicListView extends Composite{
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("635px");
+			successPopupVc.setHeight("638px");
 			successPopupVc.show();
 			successPopupVc.center();
 			if (AppClientFactory.isAnonymous()){
