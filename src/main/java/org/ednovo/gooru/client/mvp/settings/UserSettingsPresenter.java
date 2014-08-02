@@ -74,7 +74,6 @@ import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -168,6 +167,11 @@ public class UserSettingsPresenter
 				.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		getView().clearPanels();
 		getView().getAboutUsContainer().setVisible(false);
+		
+		if (AppClientFactory.isAnonymous()){
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+		}
+		
 		boolean isConfirmStatus = true;
 		String newMailId = AppClientFactory.getPlaceManager()
 				.getRequestParameter("newMailId");

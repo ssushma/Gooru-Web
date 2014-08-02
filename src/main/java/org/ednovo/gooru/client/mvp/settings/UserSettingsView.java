@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -887,6 +888,10 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			}
 		});
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
+		
+		if (AppClientFactory.isAnonymous()){
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+		}
 	}
 	StandardPreferenceSettingHandler standardPreferenceSettingHandler= new StandardPreferenceSettingHandler(){
 		@Override
