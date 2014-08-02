@@ -1994,7 +1994,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	@Override
 	public void loadResourceCollection(ResoruceCollectionDo resoruceCollectionDo) {
 		List<ResourceSearchResultDo> resourceSearchResultList=resoruceCollectionDo.getSearchResults();
-		collectionsCount.setText("("+resoruceCollectionDo.getTotalHitCount()+")");
+		if(resoruceCollectionDo.getTotalHitCount()==null){
+			collectionsCount.setText("("+ 0 +")");
+		}else{
+			collectionsCount.setText("("+resoruceCollectionDo.getTotalHitCount()+")");
+		}
+		
 		collectionsCount.getElement().setAttribute("alt","("+resoruceCollectionDo.getTotalHitCount()+")");
 		collectionsCount.getElement().setAttribute("title","("+resoruceCollectionDo.getTotalHitCount()+")");
 		totalItemSize = resoruceCollectionDo.getTotalHitCount();
