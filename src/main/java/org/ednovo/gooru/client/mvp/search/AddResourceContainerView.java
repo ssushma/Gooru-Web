@@ -854,6 +854,9 @@ public class AddResourceContainerView extends
 		// TODO Auto-generated method stub
 		displayCountLabel.setText("");
 		buttonsContainer.setVisible(true);
+
+		isSelectedFolder=false;
+		isSelectedCollection =false;
 	}
 
 	
