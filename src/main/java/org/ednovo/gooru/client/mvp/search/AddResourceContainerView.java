@@ -649,9 +649,15 @@ public class AddResourceContainerView extends
 
 		dropdownListContainerScrollPanel.setVisible(false);
 		buttonsContainer.setVisible(false);
-		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+		displayCountLabel.setVisible(true);
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
 			displayCountLabel.setText("There are no collections to add this resource.");
-			displayCountLabel.setVisible(true);
+			addResourceText.setText(i18n.GL2088());
+			addCollectiorOrReourceText.setText(i18n.GL2089());
+			addResourceText.getElement().setAttribute("style",
+					"display: inline-block;");
+			addCollectiorOrReourceText.getElement().setAttribute("style",
+					"display: inline-block;");
 		}else{
 			displayCountLabel.setText("There are no folders to add this collection.");
 		}
@@ -677,8 +683,7 @@ public class AddResourceContainerView extends
 			isCollectionSearch = false;
 		}
 		if (isResourceSearch) {
-			System.out.println("isSelectedCollection::::::"+isSelectedCollection);
-			System.out.println("isSelectedFolder::::::"+isSelectedFolder);
+			
 			if (isSelectedCollection) {
 				getUiHandlers().addResourceToCollection(
 						selectedCollectionGooruOid, currentsearchType,
@@ -687,7 +692,7 @@ public class AddResourceContainerView extends
 				displayErrorLabel.setText("Add me into a Collection");
 				getButtonVisiblity();
 			} else {
-				System.out.println("here else part");
+			
 				if (!isSelectedCollection && !isSelectedFolder) {
 					restrictionToAddResourcesData("please select a collection");
 					getButtonVisiblity();
@@ -842,6 +847,16 @@ public class AddResourceContainerView extends
 			//	topMostTreeItem.getElement().setAttribute("style", "background-color: none;");
 			}
 		}
+	}
+
+	@Override
+	public void hideNoCollectionsMsg() {
+		// TODO Auto-generated method stub
+		displayCountLabel.setText("");
+		buttonsContainer.setVisible(true);
+
+		isSelectedFolder=false;
+		isSelectedCollection =false;
 	}
 
 	

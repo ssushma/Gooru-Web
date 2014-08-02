@@ -987,7 +987,7 @@ user agent stylesheetdiv {
 }
 
 .standardsInEditResource{
-	position: relative;
+	/* position: relative; */
 	padding: 20px 0px 0px 0px;
 	margin-top: 43px;
 }
