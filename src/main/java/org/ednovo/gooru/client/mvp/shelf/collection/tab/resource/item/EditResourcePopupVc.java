@@ -84,6 +84,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -198,6 +199,9 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 	StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 	final List<String> tagList = new ArrayList<String>();
+	
+	List<String> tagListGlobal = new ArrayList<String>();
+	
 	private static EditResourcePopupVcUiBinder uiBinder = GWT
 			.create(EditResourcePopupVcUiBinder.class);
 
@@ -921,9 +925,9 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		
 		String url = collectionItemDo.getResource().getUrl();
 		if(collectionItemDo.getResource().getResourceTags()!=null){
+			
 			for(int i=0;i<collectionItemDo.getResource().getResourceTags().size();i++){
-				System.out.println("label.."+collectionItemDo.getResource().getResourceTags().get(i).getLabel());
-				
+				tagListGlobal.add("\""+collectionItemDo.getResource().getResourceTags().get(i).getLabel()+"\"");
 				if(collectionItemDo.getResource().getResourceTags().get(i).getLabel().contains("Media Feature"))
 				{
 					setMediaFeatureObjectVal(collectionItemDo.getResource().getResourceTags().get(i).getLabel());
@@ -1317,7 +1321,26 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 													collectionItemDo.getResource().setMomentsOfLearning(arrayOfMoments);
 												}
 												collectionItemDo.getResource().setTaxonomySet(standardsDo);
+												if(tagListGlobal!=null&&tagListGlobal.size()!=0){
+												AppClientFactory.getInjector().getResourceService().deleteTagsServiceRequest(collectionItemDo.getResource().getGooruOid(), tagListGlobal.toString(), new AsyncCallback<Void>() {
+													
+													@Override
+													public void onSuccess(Void result) {
+														// TODO Auto-generated method stub
+														updateResource(collectionItemDo,tagList);	
+													}
+													
+													@Override
+													public void onFailure(Throwable caught) {
+														// TODO Auto-generated method stub
+														
+													}
+												});
+												
+											}
+											else{
 												updateResource(collectionItemDo,tagList);
+											}
 											}
 										}
 									}
