@@ -649,9 +649,15 @@ public class AddResourceContainerView extends
 
 		dropdownListContainerScrollPanel.setVisible(false);
 		buttonsContainer.setVisible(false);
+		displayCountLabel.setVisible(true);
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
 			displayCountLabel.setText("There are no collections to add this resource.");
-			displayCountLabel.setVisible(true);
+			addResourceText.setText(i18n.GL2088());
+			addCollectiorOrReourceText.setText(i18n.GL2089());
+			addResourceText.getElement().setAttribute("style",
+					"display: inline-block;");
+			addCollectiorOrReourceText.getElement().setAttribute("style",
+					"display: inline-block;");
 		}else{
 			displayCountLabel.setText("There are no folders to add this collection.");
 		}
@@ -842,6 +848,12 @@ public class AddResourceContainerView extends
 			//	topMostTreeItem.getElement().setAttribute("style", "background-color: none;");
 			}
 		}
+	}
+
+	@Override
+	public void hideNoCollectionsMsg() {
+		// TODO Auto-generated method stub
+		displayCountLabel.setText("");
 	}
 
 	
