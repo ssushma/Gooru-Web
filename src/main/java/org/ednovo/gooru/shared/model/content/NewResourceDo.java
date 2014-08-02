@@ -51,7 +51,7 @@ public class NewResourceDo extends ResourceDo {
 	private ArrayList<checkboxSelectedDo> momentsOfLearning;
 	private ArrayList<String> host;
 	private String thumbnail;
-	private ArrayList<String> resourceTags;
+	
 	/** 
 	 * This method is to get the resourceFormat
 	 */
@@ -150,12 +150,6 @@ public class NewResourceDo extends ResourceDo {
 		this.host = host;
 	}
 
-	public ArrayList<String> getResourceTags() {
-		return resourceTags;
-	}
-
-	public void setResourceTags(ArrayList<String> resourceTags) {
-		this.resourceTags = resourceTags;
-	}
+	
 
 }
