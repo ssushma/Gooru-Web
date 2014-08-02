@@ -120,9 +120,9 @@ public class ResourceCurosal {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			if(isNextButton&&isNextButtonActive){
-				nextButton.getElement().setAttribute("style", "border-left: 15px solid #999; cursor: pointer;");
+				//nextButton.getElement().setAttribute("style", "border-left: 15px solid #999; cursor: pointer;");
 			}else if(!isNextButton&&isPreviousButtonActive){
-				previousButton.getElement().setAttribute("style", "border-right: 15px solid #999; cursor: pointer;");
+				//previousButton.getElement().setAttribute("style", "border-right: 15px solid #999; cursor: pointer;");
 			}
 		}
 	}
@@ -136,7 +136,7 @@ public class ResourceCurosal {
 			if(isNextButton){
 				nextButton.getElement().removeAttribute("style");
 				if(!isNextButtonActive){
-				nextButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+					nextButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 				}
 			}else{
 				previousButton.getElement().removeAttribute("style");
