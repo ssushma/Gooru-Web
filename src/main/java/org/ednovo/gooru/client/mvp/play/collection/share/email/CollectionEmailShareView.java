@@ -263,7 +263,7 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 		if(AppClientFactory.isAnonymous()){
 			if(fromTxt.isVisible()) {
 				if (fromTxt.getText().equals("")) {
-					fromValidation.setText(i18n.GL2108());
+					fromValidation.setText(i18n.GL2112());
 					fromValidation.setVisible(true);
 					isvalid = false;
 				}

@@ -843,7 +843,11 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		ProfileLibraryListDo profileLibraryListDo = new ProfileLibraryListDo();
 		JsonRepresentation jsonRep = null;
 		String url = null;
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_SAUSD_LIBRARY, gooruUid, getLoggedInSessionToken(), limit+"",offset+"","20");
+		String sessionToken = getLoggedInSessionToken();
+		if(sharingType!=null){
+			sessionToken=sessionToken+"&sharing="+sharingType;
+		}
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_SAUSD_LIBRARY, gooruUid, sessionToken, limit+"",offset+"","14");
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
@@ -874,7 +878,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			String sessionToken = getLoggedInSessionToken();
 			
 			if(sharingType!=null){
-				sessionToken=sessionToken+"&sharing="+sharingType;
+				//sessionToken=sessionToken+"&sharing="+sharingType;
 			}
 			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId, sessionToken, offset, "20");
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
