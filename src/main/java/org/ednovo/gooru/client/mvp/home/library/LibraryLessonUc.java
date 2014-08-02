@@ -76,7 +76,10 @@ public class LibraryLessonUc extends Composite{
 		AppClientFactory.getEventBus().addHandler(SetConceptTitleStyleEvent.TYPE, setConceptTitleStyleHandler);
 		this.topicId = topicId;
 		if(lessonDo.getConcept()!=null&&lessonDo.getConcept().size()>0) {
+			String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
+			if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
 			setLessonData(lessonDo,null,lessonDo.getCollection(),null,isLessonHighlighted,lessonNumber);
+			}
 			setLessonData(lessonDo,null,null,lessonDo.getConcept(),isLessonHighlighted,lessonNumber);
 		} else {
 			setLessonData(lessonDo,null,lessonDo.getCollection(),null,isLessonHighlighted,lessonNumber);
