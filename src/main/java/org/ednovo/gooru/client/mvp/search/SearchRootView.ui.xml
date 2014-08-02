@@ -46,11 +46,52 @@
 		    font-weight: bold;
 		    margin: -3px 5px 0 6px;
 		}
-		.active {
-			margin-left: 5px;
-			padding: 7px 31px;
-			background: url(../images/resource-type-icons.png) no-repeat #efefef;
-			background-position: 2px -24px !important;
+
+		.resourceBtnActive {
+			color: #515151;
+    		padding: 7px 9px 9px 30px;
+    		border-radius: 4px;
+    		box-shadow:0 3px 3px #d0d0d5 inset;
+			background: #efefef;
+			background-image: url(images/resourcesIco.png); /* fallback */
+			background-image: url(images/resourcesIco.png), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#efefef)); /* Saf4+, Chrome */
+			background-image: url(images/resourcesIco.png), -webkit-linear-gradient(top, #ffffff, #efefef); /* Chrome 10+, Saf5.1+ */
+			background-image: url(images/resourcesIco.png), -moz-linear-gradient(top, #ffffff, #efefef); /* FF3.6+ */
+			background-image: url(images/resourcesIco.png), -ms-linear-gradient(top, #ffffff, #efefef); /* IE10 */
+			background-image: url(images/resourcesIco.png), -o-linear-gradient(top, #ffffff, #efefef); /* Opera 11.10+ */
+			background-image: url(images/resourcesIco.png), linear-gradient(to bottom, #ffffff, #efefef); /* W3C */
+			border: 1px solid #ddd;
+			font-size:small;
+			background-repeat:no-repeat;
+			background-position:0 0;
+			font-family:Arial, Helvetica, sans-serif;
+			cursor:pointer;
+
+		}
+
+		.collectionBtnActive {
+			color: #515151;
+    		padding: 7px 9px 9px 30px;
+			margin-left: 10px;
+    		border-radius: 4px;
+    		box-shadow:0 3px 3px #d0d0d5 inset;
+			background: #efefef;
+			background-image: url(images/collectionIco.png); /* fallback */
+			background-image: url(images/collectionIco.png), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#efefef)); /* Saf4+, Chrome */
+			background-image: url(images/collectionIco.png), -webkit-linear-gradient(top, #ffffff, #efefef); /* Chrome 10+, Saf5.1+ */
+			background-image: url(images/collectionIco.png), -moz-linear-gradient(top, #ffffff, #efefef); /* FF3.6+ */
+			background-image: url(images/collectionIco.png), -ms-linear-gradient(top, #ffffff, #efefef); /* IE10 */
+			background-image: url(images/collectionIco.png), -o-linear-gradient(top, #ffffff, #efefef); /* Opera 11.10+ */
+			background-image: url(images/collectionIco.png), linear-gradient(to bottom, #ffffff, #efefef); /* W3C */
+			border: 1px solid #ddd;
+			font-size:small;
+			background-repeat:no-repeat;
+			background-position:0 0;
+			font-family:Arial, Helvetica, sans-serif;
+			cursor:pointer;
+		}
+
+
 		}
 
 		.resourceSearchButtonImage{
@@ -99,30 +140,73 @@
 		}
 		
 
-		.secondaryIC{
+		.secondaryResourceSearchBtn{
 			color: #515151;
-			padding: 6px 9px;
+			padding: 7px 9px 9px 30px;
 			border-radius: 4px;
-			background: #f7f7f7;
-			background: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f7f7f7));
-			background: -webkit-linear-gradient(top, #ffffff, #f7f7f7);
-			background: -moz-linear-gradient(top, #ffffff, #f7f7f7);
-			background: -ms-linear-gradient(top, #ffffff, #f7f7f7);
-			background: -o-linear-gradient(top, #ffffff, #f7f7f7);
+			background: #efefef;
+			background-image: url(images/resourcesIco.png); /* fallback */
+			background-image: url(images/resourcesIco.png), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#efefef)); /* Saf4+, Chrome */
+			background-image: url(images/resourcesIco.png), -webkit-linear-gradient(top, #ffffff, #efefef); /* Chrome 10+, Saf5.1+ */
+			background-image: url(images/resourcesIco.png), -moz-linear-gradient(top, #ffffff, #efefef); /* FF3.6+ */
+			background-image: url(images/resourcesIco.png), -ms-linear-gradient(top, #ffffff, #efefef); /* IE10 */
+			background-image: url(images/resourcesIco.png), -o-linear-gradient(top, #ffffff, #efefef); /* Opera 11.10+ */
+			background-image: url(images/resourcesIco.png), linear-gradient(to bottom, #ffffff, #efefef); /* W3C */
 			border: 1px solid #ddd;
 			font-size:small;
+			background-repeat:no-repeat;
+			background-position:0 0;
 			font-family:Arial, Helvetica, sans-serif;
 			cursor:pointer;
 		}
 
-		.secondaryIC:hover{
+		.secondaryResourceSearchBtn:hover{
 			color: #515151;
-			background: #f7f7f7;
-			background: -webkit-gradient(linear, 0 0, 0 100%, from(#f7f7f7), to(#ffffff));
-			background: -webkit-linear-gradient(top, #f7f7f7, #ffffff);
-			background: -moz-linear-gradient(top, #f7f7f7, #ffffff);
-			background: -ms-linear-gradient(top, #f7f7f7, #ffffff);
-			background: -o-linear-gradient(top, #f7f7f7, #ffffff);
+			background: #efefef;
+			background-image: url(images/resourcesIco.png); /* fallback */
+			background-image: url(images/resourcesIco.png), -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#ffffff)); /* Saf4+, Chrome */
+			background-image: url(images/resourcesIco.png), -webkit-linear-gradient(top, #efefef, #ffffff); /* Chrome 10+, Saf5.1+ */
+			background-image: url(images/resourcesIco.png), -moz-linear-gradient(top, #efefef, #ffffff); /* FF3.6+ */
+			background-image: url(images/resourcesIco.png), -ms-linear-gradient(top, #efefef, #ffffff); /* IE10 */
+			background-image: url(images/resourcesIco.png), -o-linear-gradient(top, #efefef, #ffffff); /* Opera 11.10+ */
+			background-image: url(images/resourcesIco.png), linear-gradient(to bottom, #efefef, #ffffff); /* W3C */
+			background-repeat:no-repeat;
+		}
+
+
+		.secondaryCollectionSearchBtn{
+			color: #515151;
+			padding: 7px 9px 9px 30px;
+			border-radius: 4px;
+			margin-left: 10px;
+			background: #efefef;
+			background-image: url(images/collectionIco.png); /* fallback */
+			background-image: url(images/collectionIco.png), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f7f7f7)); /* Saf4+, Chrome */
+			background-image: url(images/collectionIco.png), -webkit-linear-gradient(top, #ffffff, #efefef); /* Chrome 10+, Saf5.1+ */
+			background-image: url(images/collectionIco.png), -moz-linear-gradient(top, #ffffff, #efefef); /* FF3.6+ */
+			background-image: url(images/collectionIco.png), -ms-linear-gradient(top, #ffffff, #efefef); /* IE10 */
+			background-image: url(images/collectionIco.png), -o-linear-gradient(top, #ffffff, #efefef); /* Opera 11.10+ */
+			background-image: url(images/collectionIco.png),  linear-gradient(to bottom, #ffffff, #efefef); /* W3C */
+			border: 1px solid #ddd;
+			font-size:small;
+			background-repeat:no-repeat;
+			background-position:0 0;
+			font-family:Arial, Helvetica, sans-serif;
+			cursor:pointer;
+		}
+
+
+		.secondaryCollectionSearchBtn:hover{
+			color: #515151;
+			background: #efefef;
+			background-image: url(images/collectionIco.png); /* fallback */
+			background-image: url(images/collectionIco.png), -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#ffffff)); /* Saf4+, Chrome */
+			background-image: url(images/collectionIco.png), -webkit-linear-gradient(top, #efefef, #ffffff); /* Chrome 10+, Saf5.1+ */
+			background-image: url(images/collectionIco.png), -moz-linear-gradient(top, #efefef, #ffffff); /* FF3.6+ */
+			background-image: url(images/collectionIco.png), -ms-linear-gradient(top, #efefef, #ffffff); /* IE10 */
+			background-image: url(images/collectionIco.png), -o-linear-gradient(top, #efefef, #ffffff); /* Opera 11.10+ */
+			background-image: url(images/collectionIco.png), linear-gradient(to bottom, #efefef, #ffffff); /* W3C */
+			background-repeat:no-repeat;
 		}
 
 		.secondaryIC img{
@@ -139,9 +223,9 @@
 				<g:HTML styleName="{style.searchResult}" ui:field="queriedTextHtml" />
 				<g:FlowPanel styleName="{style.PageNotify}" ui:field="flowpanel">
 					<g:HTMLPanel ui:field="contentpanel"></g:HTMLPanel>
-					<g:Button styleName="secondary {style.notifyLink}" ui:field="resourceSearchBtn"/>
+					<g:Button styleName="{style.secondaryResourceSearchBtn}" ui:field="resourceSearchBtn"/>
 					<!-- <g:Label text="|" styleName="{style.notifyLinks}" /> -->
-					<g:Button styleName="secondary {style.notifyLink}" ui:field="collectionSearchBtn"/>
+					<g:Button styleName="{style.secondaryCollectionSearchBtn}" ui:field="collectionSearchBtn"/>
 				</g:FlowPanel>
 			</g:FlowPanel>
 			<g:SimplePanel styleName="{style.searchWrapper}"  ui:field="searchWrapperSimPanel"/>
