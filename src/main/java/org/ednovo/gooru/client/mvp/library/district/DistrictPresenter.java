@@ -1,5 +1,6 @@
 package org.ednovo.gooru.client.mvp.library.district;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
@@ -76,12 +77,17 @@ public class DistrictPresenter extends PresenterWidget<IsDistrictView> implement
 	}
 	
 */	private void getIntoLibrarypage() {
+		String sharing = "public";
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.LIFEBOARD)) {
+			sharing = null;
+		}
+
 		if (AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE) != null && AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE).equalsIgnoreCase("course-page")) {
 			//getView().loadFeaturedContributors("course-page",getViewToken());
 		} else if (AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE) != null && AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE).equalsIgnoreCase("featured-course")) {
-			getLibraryService().getLibraryWorkspace(getViewToken(), 20, "", "", 0, getProfileLibraryListAsyncCallback());
+			getLibraryService().getLibraryWorkspace(getViewToken(), 20, sharing, "", 0, getProfileLibraryListAsyncCallback());
 		} else if (AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE) == null) {
-			getLibraryService().getLibraryWorkspace(getViewToken(), 20, "", "", 0, getProfileLibraryListAsyncCallback());
+			getLibraryService().getLibraryWorkspace(getViewToken(), 20, sharing, "", 0, getProfileLibraryListAsyncCallback());
 		}
 	}
 	

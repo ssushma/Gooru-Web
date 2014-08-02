@@ -195,7 +195,13 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	}
 	
 	private void getUnitTopics(final String unitListId, final ProfileLibraryDo profileLibraryDo) {
-		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(unitListId, "public", 14, new SimpleAsyncCallback<ProfileLibraryListDo>() {
+		
+		String sharing = "public";
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.LIFEBOARD)) {
+			sharing = null;
+		}
+		
+		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(unitListId, sharing, 14, new SimpleAsyncCallback<ProfileLibraryListDo>() {
 
 			@Override
 			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {

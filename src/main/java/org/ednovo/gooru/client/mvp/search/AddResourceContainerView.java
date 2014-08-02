@@ -650,7 +650,7 @@ public class AddResourceContainerView extends
 		dropdownListContainerScrollPanel.setVisible(false);
 		buttonsContainer.setVisible(false);
 		displayCountLabel.setVisible(true);
-		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
 			displayCountLabel.setText("There are no collections to add this resource.");
 			addResourceText.setText(i18n.GL2088());
 			addCollectiorOrReourceText.setText(i18n.GL2089());
@@ -683,8 +683,7 @@ public class AddResourceContainerView extends
 			isCollectionSearch = false;
 		}
 		if (isResourceSearch) {
-			System.out.println("isSelectedCollection::::::"+isSelectedCollection);
-			System.out.println("isSelectedFolder::::::"+isSelectedFolder);
+			
 			if (isSelectedCollection) {
 				getUiHandlers().addResourceToCollection(
 						selectedCollectionGooruOid, currentsearchType,
@@ -693,7 +692,7 @@ public class AddResourceContainerView extends
 				displayErrorLabel.setText("Add me into a Collection");
 				getButtonVisiblity();
 			} else {
-				System.out.println("here else part");
+			
 				if (!isSelectedCollection && !isSelectedFolder) {
 					restrictionToAddResourcesData("please select a collection");
 					getButtonVisiblity();
@@ -854,6 +853,7 @@ public class AddResourceContainerView extends
 	public void hideNoCollectionsMsg() {
 		// TODO Auto-generated method stub
 		displayCountLabel.setText("");
+		buttonsContainer.setVisible(true);
 	}
 
 	
