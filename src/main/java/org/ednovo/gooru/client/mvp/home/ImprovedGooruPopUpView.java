@@ -77,16 +77,16 @@ public class ImprovedGooruPopUpView extends PopupPanel{
 	HTMLEventPanel closeButton;
 
 	@UiField
-	Anchor lblSupportLink,  descLinkFive,descLinkSix,descLinkSeven,descLinkEight,descLinkNavigation;
+	Anchor lblSupportLink,  descLinkFive,descLinkSix,descLinkSeven,descLinkNavigation;//descLinkEight
 
 	@UiField
-	InlineLabel    aboutFive,aboutSix,aboutSeven,aboutEight,aboutNavigation;
+	InlineLabel    aboutFive,aboutSix,aboutSeven,aboutNavigation;//aboutEight
 
 	@UiField
 	HTMLPanel GooruLinkOutercontainer;
 	@UiField
 	Label headertext, subtext, goorutext, headersubtext,
-			   lblTitleFive,lblTitleSix,lblTitleSeven,lblTitleEight,lblnavigation;
+			   lblTitleFive,lblTitleSix,lblTitleSeven,lblnavigation;//lblTitleEight
 
 	@UiField
 	HTML questiontxt;
@@ -126,92 +126,71 @@ public class ImprovedGooruPopUpView extends PopupPanel{
 		headersubtext.getElement().setId("lblHeadersSubText");
 		headersubtext.getElement().setAttribute("alt",i18n.GL0288());
 		headersubtext.getElement().setAttribute("title",i18n.GL0288());
-
-		/*contenttext.setText(i18n.GL0292);
-		contenttextlbl.setText(i18n.GL0293);
-		
-		mobileLearnMore.setText(i18n.GL1239);
-		mobileLearnMore.getElement().setId("lnkContent");
-		mobileLearnMore.setHref("http://support.goorulearning.org/hc/en-us/articles/201896353");
 		
 		
+		///First
+		lblTitleFive.setText(i18n.GL_WHATS_NEW_TITLE_1());
+		lblTitleFive.getElement().setId("lblTitleFive");
+		lblTitleFive.getElement().setAttribute("alt",i18n.GL_WHATS_NEW_TITLE_1());
+		lblTitleFive.getElement().setAttribute("title",i18n.GL_WHATS_NEW_TITLE_1());
+		aboutFive.setText(i18n.GL_WHATS_NEW_DESC_1());
+		descLinkFive.setText(i18n.GL1239());
+		descLinkFive.setVisible(false);
+//		descLinkFive.setHref("http://support.goorulearning.org/hc/en-us/articles/200688096");
 		
-		termsofuselbl.setText(i18n.GL0295);
-		termsofusetxt.setText(i18n.GL0296);
-		termsofuselearnmore.setText(i18n.GL1239);
-		termsofuselearnmore.getElement().setId("lnkLearnMore");
-		termsofuselearnmore.setHref("http://support.goorulearning.org/hc/en-us/articles/201480617");
-		
-		
-		
-		lblTitleThree.setText(i18n.GL0629);
-		aboutThree.setText(i18n.GL0625);
-		descLinkThree.setText(i18n.GL1239);
-		descLinkThree.setHref("http://support.goorulearning.org/hc/en-us/articles/201897547");
-		
-		
-		lblTitleFour.setText(i18n.GL0630);
-		aboutFour.setText(i18n.GL0627);*/
-		
-		lblTitleSix.setText(i18n.GL1880());
-		lblTitleSix.getElement().setId("lblTitleSix");
-		lblTitleSix.getElement().setAttribute("alt",i18n.GL1880());
-		lblTitleSix.getElement().setAttribute("title",i18n.GL1880());
-		
-		lblnavigation.setText(i18n.GL1890());
+		//Second
+		lblnavigation.setText(i18n.GL_WHATS_NEW_TITLE_2());
 		lblnavigation.getElement().setId("lblnavigation");
-		lblnavigation.getElement().setAttribute("alt",i18n.GL1890());
-		lblnavigation.getElement().setAttribute("title",i18n.GL1890());
-		
-		aboutSix.setText(i18n.GL1881());
-		aboutSix.getElement().setId("spnAboutSix");
-		aboutSix.getElement().setAttribute("alt",i18n.GL1881());
-		aboutSix.getElement().setAttribute("title",i18n.GL1881());
-		
-		aboutNavigation.setText(i18n.GL1891());
+		lblnavigation.getElement().setAttribute("alt",i18n.GL_WHATS_NEW_TITLE_2());
+		lblnavigation.getElement().setAttribute("title",i18n.GL_WHATS_NEW_TITLE_2());
+		aboutNavigation.setText(i18n.GL_WHATS_NEW_DESC_2());
 		aboutNavigation.getElement().setId("spnAboutNavigation");
-		aboutNavigation.getElement().setAttribute("alt",i18n.GL1891());
-		aboutNavigation.getElement().setAttribute("title",i18n.GL1891());
+		aboutNavigation.getElement().setAttribute("alt",i18n.GL_WHATS_NEW_DESC_2());
+		aboutNavigation.getElement().setAttribute("title",i18n.GL_WHATS_NEW_DESC_2());
 		
 		descLinkNavigation.setText(i18n.GL1239());
 		descLinkNavigation.getElement().setId("lnkDescLinkNavigation");
 		descLinkNavigation.getElement().setAttribute("alt",i18n.GL1239());
 		descLinkNavigation.getElement().setAttribute("title",i18n.GL1239());
-		descLinkNavigation.setHref("http://support.goorulearning.org/hc/en-us/articles/202952598");
+		descLinkNavigation.setHref(i18n.GL_WHATS_NEW_LINK_2());
+		
+		
+		
+		//third..
+		lblTitleSix.setText(i18n.GL_WHATS_NEW_TITLE_3());
+		lblTitleSix.getElement().setId("lblTitleSix");
+		lblTitleSix.getElement().setAttribute("alt",i18n.GL_WHATS_NEW_TITLE_3());
+		lblTitleSix.getElement().setAttribute("title",i18n.GL_WHATS_NEW_TITLE_3());
+		
+		aboutSix.setText(i18n.GL_WHATS_NEW_DESC_3());
+		aboutSix.getElement().setId("spnAboutSix");
+		aboutSix.getElement().setAttribute("alt",i18n.GL_WHATS_NEW_DESC_3());
+		aboutSix.getElement().setAttribute("title",i18n.GL_WHATS_NEW_DESC_3());		
 	
-		descLinkSix.setText(i18n.GL1239());
-		descLinkSix.getElement().setId("lnkDescLinkSix");
-		descLinkSix.getElement().setAttribute("alt",i18n.GL1239());
-		descLinkSix.getElement().setAttribute("title",i18n.GL1239());
-		descLinkSix.setHref("http://support.goorulearning.org/hc/en-us/articles/202952638");
+//		descLinkSix.setText(i18n.GL1239());
+//		descLinkSix.getElement().setId("lnkDescLinkSix");
+//		descLinkSix.getElement().setAttribute("alt",i18n.GL1239());
+//		descLinkSix.getElement().setAttribute("title",i18n.GL1239());
+		descLinkSix.setVisible(false);
+//		descLinkSix.setHref(i18n.GL_WHATS_NEW_LINK_2());	
 		
-		lblTitleSeven.setText(i18n.GL1882());
+		lblTitleSeven.setText(i18n.GL_WHATS_NEW_TITLE_4());
 		lblTitleSeven.getElement().setId("lblTitleSeven");
-		lblTitleSeven.getElement().setAttribute("alt",i18n.GL1882());
-		lblTitleSeven.getElement().setAttribute("title",i18n.GL1882());
+		lblTitleSeven.getElement().setAttribute("alt",i18n.GL_WHATS_NEW_TITLE_4());
+		lblTitleSeven.getElement().setAttribute("title",i18n.GL_WHATS_NEW_TITLE_4());
 		
-		aboutSeven.setText(i18n.GL1883());
+		aboutSeven.setText(i18n.GL_WHATS_NEW_DESC_4());
 		aboutSeven.getElement().setId("spnAboutSeven");
-		aboutSeven.getElement().setAttribute("alt",i18n.GL1883());
-		aboutSeven.getElement().setAttribute("title",i18n.GL1883());
+		aboutSeven.getElement().setAttribute("alt",i18n.GL_WHATS_NEW_DESC_4());
+		aboutSeven.getElement().setAttribute("title",i18n.GL_WHATS_NEW_DESC_4());
 		
-		lblTitleEight.setText(i18n.GL1884());
-		lblTitleEight.getElement().setId("lblTitleEight");
-		lblTitleEight.getElement().setAttribute("alt",i18n.GL1884());
-		lblTitleEight.getElement().setAttribute("title",i18n.GL1884());
+		descLinkSeven.setText(i18n.GL1239());
+		descLinkSeven.getElement().setId("descLinkSeven");
+		descLinkSeven.getElement().setAttribute("alt",i18n.GL1239());
+		descLinkSeven.getElement().setAttribute("title",i18n.GL1239());
+		descLinkSeven.setHref(i18n.GL_WHATS_NEW_LINK_4());
+		descLinkSeven.setVisible(true);
 		
-		aboutEight.setText(i18n.GL1885());
-		aboutEight.getElement().setId("spnAboutEight");
-		aboutEight.getElement().setAttribute("alt",i18n.GL1885());
-		aboutEight.getElement().setAttribute("title",i18n.GL1885());
-		
-//		lblTitleFive.setText(i18n.GL0630_1);
-//		lblTitleFive.getElement().setId("lblTitleFive");
-//		lblTitleFive.getElement().setAttribute("alt",i18n.GL0630_1);
-//		lblTitleFive.getElement().setAttribute("title",i18n.GL0630_1);
-//		aboutFive.setText(i18n.GL0627_1);
-//		descLinkFive.setText(i18n.GL1239);
-//		descLinkFive.setHref("http://support.goorulearning.org/hc/en-us/articles/200688096");
 		
 		questiontxt.setHTML(i18n.GL0298());
 		questiontxt.getElement().setId("htmlQuestionTxt");
@@ -232,7 +211,7 @@ public class ImprovedGooruPopUpView extends PopupPanel{
 	@UiHandler("closeButton")
 	public void oncloseButton(ClickEvent clickEvent) {
 		MixpanelUtil.New_in_Gooru_x();
-		AppClientFactory.getInjector().getUserService().updateUserViewFlag(AppClientFactory.getLoggedInUser().getGooruUId(), 11, new SimpleAsyncCallback<UserDo>() {
+		AppClientFactory.getInjector().getUserService().updateUserViewFlag(AppClientFactory.getLoggedInUser().getGooruUId(), 12, new SimpleAsyncCallback<UserDo>() {
 			@Override
 			public void onSuccess(UserDo newUser) {
 				UserDo user = AppClientFactory.getLoggedInUser();

@@ -677,6 +677,8 @@ public class AddResourceContainerView extends
 			isCollectionSearch = false;
 		}
 		if (isResourceSearch) {
+			System.out.println("isSelectedCollection::::::"+isSelectedCollection);
+			System.out.println("isSelectedFolder::::::"+isSelectedFolder);
 			if (isSelectedCollection) {
 				getUiHandlers().addResourceToCollection(
 						selectedCollectionGooruOid, currentsearchType,
@@ -796,6 +798,7 @@ public class AddResourceContainerView extends
 		okButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				isSelectedCollection=false;
 				AppClientFactory.getPlaceManager().revealPlace(
 						PlaceTokens.SHELF, params);
 			}
