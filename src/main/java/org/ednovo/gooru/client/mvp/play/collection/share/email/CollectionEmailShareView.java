@@ -260,34 +260,36 @@ public abstract class CollectionEmailShareView extends PopupPanel{
 	@UiHandler("btnSend")
 	public void onSendBtnClickEvent(ClickEvent event) {
 		isvalid = true;
-/*		if(fromTxt.isVisible()) {
-			if (fromTxt.getText().equals("")) {
-				fromValidation.setText(i18n.GL0215);
-				fromValidation.setVisible(true);
-				isvalid = false;
-			}
-			if(fromTxt.getText() != null ||!fromTxt.getText().equals("")){
-				String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-				String strEmails = fromTxt.getText().trim();
-				String emailIds[] = strEmails.split("\\s*,\\s*");
-				if (strEmails.contains(",")){
-					emailIds = strEmails.split("\\s*,\\s*");
-				}else if (strEmails.contains(";")){
-					emailIds = strEmails.split("\\s*;\\s*");
-				}
-				if(emailIds.length > 1 ){
-					fromValidation.setText(i18n.GL1027_1);
+		if(AppClientFactory.isAnonymous()){
+			if(fromTxt.isVisible()) {
+				if (fromTxt.getText().equals("")) {
+					fromValidation.setText(i18n.GL2112());
 					fromValidation.setVisible(true);
 					isvalid = false;
 				}
+				/*if(fromTxt.getText() != null ||!fromTxt.getText().equals("")){
+					String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+					String strEmails = fromTxt.getText().trim();
+					String emailIds[] = strEmails.split("\\s*,\\s*");
+					if (strEmails.contains(",")){
+						emailIds = strEmails.split("\\s*,\\s*");
+					}else if (strEmails.contains(";")){
+						emailIds = strEmails.split("\\s*;\\s*");
+					}
+					if(emailIds.length > 1 ){
+						fromValidation.setText(i18n.GL1027_1());
+						fromValidation.setVisible(true);
+						isvalid = false;
+					}
+				}
+				if ((fromTxt.getText() != null && !fromTxt.getText().isEmpty())
+						&& !fromTxt.getText().contains(AT_SYMBOL)) {
+					fromValidation.setText(i18n.GL1027());
+					fromValidation.setVisible(true);
+					isvalid = false;
+				}*/
 			}
-			if ((fromTxt.getText() != null && !fromTxt.getText().isEmpty())
-					&& !fromTxt.getText().contains(AT_SYMBOL)) {
-				fromValidation.setText(i18n.GL1027);
-				fromValidation.setVisible(true);
-				isvalid = false;
-			}
-		}*/
+		}
 		
 		if(!toTxt.getText().trim().equals("")){
 			String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
