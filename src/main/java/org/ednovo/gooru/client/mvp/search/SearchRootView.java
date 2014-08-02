@@ -65,7 +65,10 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	public interface Style extends CssResource {
 		String bodyHeight();
 		String panelHeight();
-		String active();
+		String resourceBtnActive();
+		String collectionBtnActive();
+		String secondaryResourceSearchBtn();
+		String secondaryCollectionSearchBtn();
 	}
 
 	/*@UiField
@@ -181,15 +184,15 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		
 		
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
-			resourceSearchBtn.getElement().setAttribute("style","background: #efefef;");
-			/*resourceSearchBtn.addStyleName(style.active());
-			collectionSearchBtn.removeStyleName(style.active());*/
-			collectionSearchBtn.getElement().removeAttribute("style");
+			resourceSearchBtn.addStyleName(style.resourceBtnActive());
+			collectionSearchBtn.removeStyleName(style.collectionBtnActive());
+			resourceSearchBtn.removeStyleName(style.secondaryResourceSearchBtn()); 
+			collectionSearchBtn.addStyleName(style.secondaryCollectionSearchBtn());
 		} else {
-			collectionSearchBtn.getElement().setAttribute("style","background: #efefef;");
-			resourceSearchBtn.getElement().removeAttribute("style"); 
-			/*collectionSearchBtn.addStyleName(style.active());
-			resourceSearchBtn.removeStyleName(style.active());*/
+			collectionSearchBtn.addStyleName(style.collectionBtnActive());
+			resourceSearchBtn.removeStyleName(style.resourceBtnActive());
+			collectionSearchBtn.removeStyleName(style.secondaryCollectionSearchBtn());
+			resourceSearchBtn.addStyleName(style.secondaryResourceSearchBtn()); 
 		}
 	}
 
