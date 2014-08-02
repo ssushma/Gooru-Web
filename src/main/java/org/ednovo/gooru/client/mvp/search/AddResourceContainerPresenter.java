@@ -103,7 +103,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			accessType = "public,anyonewithlink";
 		}else{
 			type=null;
-			accessType = "anyonewithlink";
+			accessType = "public,anyonewithlink";
 		}
 		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,accessType, type, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
