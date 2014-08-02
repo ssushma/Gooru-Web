@@ -1017,6 +1017,10 @@ public class LibraryView extends Composite implements  ClickHandler {
 				featuredContributorsLink.setTitle(courseDo.getCreator().getPartnerName());
 				featuredContributorsLink.setHref(courseDo.getCreator().getPartnerUrl());
 				featuredContributorsLink.setTarget("_blank");
+				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)) {
+					courseImage.getElement().getStyle().setMarginTop(-16, Unit.PX);
+					courseTitle.getElement().getStyle().setBottom(16, Unit.PX);
+				}
 			} else {
 				educatorPhoto.setVisible(true);
 				featuredContributor.setVisible(true);

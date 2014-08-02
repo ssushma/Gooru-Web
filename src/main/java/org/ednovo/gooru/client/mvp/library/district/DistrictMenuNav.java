@@ -243,7 +243,11 @@ public abstract class DistrictMenuNav extends Composite {
 	}
 
 	public void getCourse(final String subjectCode, final String subjectName, final ProfileLibraryDo profileLibraryDo) {
-		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(subjectCode, "public", 15, new SimpleAsyncCallback<ProfileLibraryListDo>() {
+		String sharing = "public";
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.LIFEBOARD)) {
+			sharing = null;
+		}
+		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(subjectCode, sharing, 15, new SimpleAsyncCallback<ProfileLibraryListDo>() {
 			@Override
 			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
 				clickOnCourse(profileLibraryListDo.getSearchResult(), subjectCode, profileLibraryDo);
