@@ -78,6 +78,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 	
 	
 	String type =null;
+	String accessType =null;
 
 	CollectionItemDo collectionItemDo;
 	boolean isPlayer=false;
@@ -99,10 +100,12 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel,final String searchType){
 		if(searchType.equalsIgnoreCase("collection")){
 			type= "folder";
+			accessType = "public,anyonewithlink";
 		}else{
 			type=null;
+			accessType = "anyonewithlink";
 		}
-		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,"anyonewithlink", type, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,accessType, type, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				if(folderListDo!=null && folderListDo.getCount()!=null){
@@ -120,7 +123,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 
 	@Override
 	public void getFolderItems(final TreeItem item,String parentId) {
-		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,"anyonewithlink", null, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,"public,anyonewithlink", null, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				getView().setFolderItems(item,folderListDo);
