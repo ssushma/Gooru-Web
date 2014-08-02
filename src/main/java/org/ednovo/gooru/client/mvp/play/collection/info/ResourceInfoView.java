@@ -47,6 +47,7 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.uc.LiecenceTooltip;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.ToolTipPopUp;
@@ -128,6 +129,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	CollectionItemDo collectionItemDoGlobal = new CollectionItemDo();
 	
 	ToolTipPopUp toolTip ; 
+	LiecenceTooltip liecenceTooltip;
 	
 	private static final String SEPARATOR="|";
 	
@@ -1632,9 +1634,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(host == null || host.size() == 0 || host.contains(null) || host.contains("") ){
 		}else{
 			if(host.size()>0){
-				System.out.println("inin");
+				
 				if(host.size()==1){
-					System.out.println("enter");
+					
 					hostPanel.setVisible(true);
 					hostLbl.setText(i18n.GL1700()+i18n.GL_SPL_SEMICOLON()+" ");
 					hostLbl.getElement().setAttribute("alt",i18n.GL1700());
@@ -1841,12 +1843,16 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			if(licenseDo.getIcon()!=null&&!licenseDo.getIcon().trim().equals("")){
 				Image image=new Image();
 				image.setUrl(assetUrl+licenseDo.getIcon());
-				image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getCode()));
-				//image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getCode()+"         "+licenseDo.getName()));
+				//image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getCode()));
+				
+					
+				image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getCode(),licenseDo.getName()));
 				image.addMouseOutHandler(new MouseOutHideToolTip());
 				licenceContainer.setVisible(true);
 				rightsLogoContainer.clear();
 				rightsLogoContainer.add(image);
+				
+				
 			}
 			else{
 				licenceContainer.setVisible(false);
@@ -1988,7 +1994,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	@Override
 	public void loadResourceCollection(ResoruceCollectionDo resoruceCollectionDo) {
 		List<ResourceSearchResultDo> resourceSearchResultList=resoruceCollectionDo.getSearchResults();
-		collectionsCount.setText("("+resoruceCollectionDo.getTotalHitCount()+")");
+		if(resoruceCollectionDo.getTotalHitCount()==null){
+			collectionsCount.setText("("+ 0 +")");
+		}else{
+			collectionsCount.setText("("+resoruceCollectionDo.getTotalHitCount()+")");
+		}
+		
 		collectionsCount.getElement().setAttribute("alt","("+resoruceCollectionDo.getTotalHitCount()+")");
 		collectionsCount.getElement().setAttribute("title","("+resoruceCollectionDo.getTotalHitCount()+")");
 		totalItemSize = resoruceCollectionDo.getTotalHitCount();
@@ -2011,17 +2022,20 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public class MouseOverShowStandardToolTip implements MouseOverHandler
 	{
 		String desc=null;
+		String desc2=null;
 		
-		public MouseOverShowStandardToolTip(String description) {
+		public MouseOverShowStandardToolTip(String description,String desc2) {
 			this.desc = description;
+			this.desc2=desc2;
 		}
 		
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			toolTip = new ToolTipPopUp(desc, (event.getRelativeElement().getAbsoluteLeft()-83),(event.getRelativeElement().getAbsoluteTop()+22));
-			toolTip.setStyleName("");
-			toolTip.show();
-			toolTip.getElement().getStyle().setZIndex(99999);
+			
+			liecenceTooltip = new LiecenceTooltip(desc,desc2, (event.getRelativeElement().getAbsoluteLeft()-83),(event.getRelativeElement().getAbsoluteTop()+22));
+			liecenceTooltip.setStyleName("");
+			liecenceTooltip.show();
+			liecenceTooltip.getElement().getStyle().setZIndex(99999);
 		}
 	}
 	
@@ -2047,7 +2061,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	{
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			toolTip.hide();
+			liecenceTooltip.hide();
 		}
 		
 	}
