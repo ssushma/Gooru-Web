@@ -173,6 +173,10 @@ public class LibraryTopicListView extends Composite{
 	
 	private static final String PNG_CROP = "-80x60.";
 	
+	private static final String CUSTOMIZE = "customize";
+	
+	private static final String ASSIGN = "assign";
+	
 	private static LibraryTopicViewUiBinder uiBinder = GWT.create(LibraryTopicViewUiBinder.class);
 	
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
@@ -1221,7 +1225,7 @@ public class LibraryTopicListView extends Composite{
 	 */
 	@UiHandler("assignCollectionBtn")
 	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
-		System.out.println("click");
+		System.out.println("click"+AppClientFactory.getCurrentPlaceToken());
 		String collectionId = getConceptDo().getGooruOid();
 		if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
 			MixpanelUtil.mixpanelEvent("standardlibrary_assign_collection");	
@@ -1231,6 +1235,7 @@ public class LibraryTopicListView extends Composite{
 				if(!isAssignPopup){
 					isAssignPopup=true;
 				//	Window.enableScrolling(false);
+				final Map<String,String> params = new HashMap<String,String>();
 				AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals()) {
 					
 					@Override
@@ -1238,6 +1243,9 @@ public class LibraryTopicListView extends Composite{
 						Window.enableScrolling(true);
 				        this.hide();
 				    	isAssignPopup=false;
+				    	params.remove(ASSIGN);
+				    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 					}
 				};
 				Window.scrollTo(0, 0);
@@ -1255,9 +1263,9 @@ public class LibraryTopicListView extends Composite{
 				{
 				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
 				}
-				Map<String,String> params = new HashMap<String,String>();
-				params.put("Assign", "yes");
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.DISCOVER, params);
+				
+				params.put(ASSIGN, "yes");
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				
 			}
@@ -1300,6 +1308,7 @@ public class LibraryTopicListView extends Composite{
 			{
 				loginFlag = false;
 			}
+			final Map<String,String> params = new HashMap<String,String>();
 			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getConceptDo().getTitle()) {
 
 				@Override
@@ -1307,6 +1316,9 @@ public class LibraryTopicListView extends Composite{
 					Window.enableScrolling(true);
 					this.hide();	
 					isCustomizePopup = false;
+					params.remove(CUSTOMIZE);
+					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				}
 			};
 			Window.scrollTo(0, 0);
@@ -1315,9 +1327,9 @@ public class LibraryTopicListView extends Composite{
 			successPopupVc.show();
 			successPopupVc.center();
 			
-			Map<String,String> params = new HashMap<String,String>();
-			params.put("customize", "yes");
-			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.DISCOVER, params);
+			
+			params.put(CUSTOMIZE, "yes");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 			
 		}
@@ -1331,9 +1343,10 @@ public class LibraryTopicListView extends Composite{
 	
 	private void showPopupAfterGmailSignin() {
 		// TODO Auto-generated method stub
+		System.out.println("showPopupAfterGmailsignin");
 		String collectionId = getConceptDo().getGooruOid();
-		String customize = AppClientFactory.getPlaceManager().getRequestParameter("customize")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("customize") : null;
-		String assign = AppClientFactory.getPlaceManager().getRequestParameter("Assign")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("Assign") : null;
+		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
+		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
 		if(customize!=null && customize.equals("yes")){
 			Boolean loginFlag = false;
 			if (AppClientFactory.isAnonymous()){
@@ -1343,6 +1356,7 @@ public class LibraryTopicListView extends Composite{
 			{
 				loginFlag = false;
 			}
+			final Map<String,String> params = new HashMap<String,String>();
 			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getConceptDo().getTitle()) {
 
 				@Override
@@ -1350,6 +1364,9 @@ public class LibraryTopicListView extends Composite{
 					Window.enableScrolling(true);
 					this.hide();	
 					isCustomizePopup = false;
+					params.remove(CUSTOMIZE);
+					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				}
 			};
 			Window.scrollTo(0, 0);
@@ -1359,6 +1376,7 @@ public class LibraryTopicListView extends Composite{
 			successPopupVc.center();
 		}
 		if(assign!=null && assign.equals("yes")){
+			final Map<String,String> params = new HashMap<String,String>();
 			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals()) {
 
 				@Override
@@ -1366,6 +1384,9 @@ public class LibraryTopicListView extends Composite{
 					Window.enableScrolling(true);
 					this.hide();
 					isAssignPopup=false;
+					params.remove(ASSIGN);
+			    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				}
 			};
 			Window.scrollTo(0, 0);
