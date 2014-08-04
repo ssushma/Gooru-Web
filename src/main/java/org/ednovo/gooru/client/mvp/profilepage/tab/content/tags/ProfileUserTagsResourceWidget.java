@@ -185,7 +185,7 @@ public class ProfileUserTagsResourceWidget extends Composite {
 	}
 	@UiHandler("resourceImage")
 	public void onErrorResourceImage(ErrorEvent errorEvent){
-		resourceImage.setUrl("images/resource_trans.png");
+		//resourceImage.setUrl("images/resource_trans.png");
 		resourceTypeImage=resourceTypeImage.toLowerCase();
 		resourceImage.setStyleName(getResourceDefaultImage(resourceTypeImage));
 	}
