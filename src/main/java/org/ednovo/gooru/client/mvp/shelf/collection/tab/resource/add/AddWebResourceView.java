@@ -214,6 +214,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
 	private static final String RESOURCE_UPLOAD_FILE_PATTERN = "([^\\s]+([^?#]*\\.(?:mp3))$)";
 	private static final String USER_META_ACTIVE_FLAG = "0";
+	private static final String DEFAULT_COMBO_BOX_TEXT ="Please choose one of the following...";
 	String mediaFeatureStr = i18n.GL1767();
 	
 	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
@@ -1126,6 +1127,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 											final String titleStr = titleTextBox.getText().trim();
 											final String categoryStr = resourceCategoryLabel.getText();// resourceTypeListBox.getItemText(resourceTypeListBox.getSelectedIndex());
 											final String idStr = "";
+											
 
 											if (urlStr.contains("goorulearning.org")) {
 												if (urlStr.contains("support.goorulearning.org")
@@ -1257,6 +1259,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												tagList.add(mediaLabel.getText()+" : "+lblMediaPlaceHolder.getText());
 											
 											}
+											
 											String hazardArr[] = setAccessHazards();
 											
 											if(hazardArr != null)
@@ -1272,7 +1275,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 											}
 											if(resourceEducationalLabel.getText()!=null ||!resourceEducationalLabel.getText().trim().equalsIgnoreCase(""))
 											{
-												tagList.add("Educational Use : "+resourceEducationalLabel.getText());
+												if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(DEFAULT_COMBO_BOX_TEXT)){
+													tagList.add("Educational Use : "+resourceEducationalLabel.getText());
+												}
 												
 											}
 											//AreYouSurceToolTip AreYouSurceToolTip=new AreYouSurceToolTip();
@@ -1324,7 +1329,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //															}
 //														});
 //													}else{
-
 														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,hostName,tagList);
 
 														/*addResourceBtnLbl.setEnabled(true);

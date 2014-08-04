@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
+
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
@@ -44,7 +45,6 @@ import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
-import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
@@ -56,6 +56,9 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -67,12 +70,13 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestOracle;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 
 
 /**
@@ -88,6 +92,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	@UiField Button btnSearch;
 	@UiField Anchor achLearn, achTerms, achPrivacy,achCopyright;//achDataPolicy
 	@UiField TextBox txtEmbedLink;
+	@UiField HTML htmlDescription;
 	
 	LibraryView libraryView = null;
 	private TermsOfUse termsOfUse;
@@ -148,6 +153,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		});
 		getEditSearchTxtBox().addSelectionHandler(this);
 		getEditSearchTxtBox().setPopupStyleName("shelfEditSearchTextBox");
+		
 		Window.addWindowScrollHandler(new Window.ScrollHandler() {
 		    @Override
 		    public void onWindowScroll(ScrollEvent event) {
@@ -157,7 +163,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		
 		setWidget(uiBinder.createAndBindUi(this));
 		gooruPanel.getElement().setId("gooruPanel");
-
+		getEditSearchTxtBox().addKeyDownHandler(new SearchKeyDownHandler());
 		panelLandingPage.setVisible(true);
 		gooruPanel.setVisible(false);
 		setIds();
@@ -190,7 +196,39 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	 *
 	 * 
 	*/
-	
+	private class SearchKeyDownHandler implements KeyDownHandler{
+
+		@Override
+		public void onKeyDown(KeyDownEvent event) {
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+			if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+				if (getEditSearchTxtBox().getText() != null
+						&& getEditSearchTxtBox().getText().length() > 0) {
+					savePlaceRequest();
+					MixpanelUtil.Perform_Search(getEditSearchTxtBox().getText().trim()
+							.toLowerCase(), "LandingPage");
+					Map<String, String> params = new HashMap<String, String>();
+					params = updateParams(params);
+					if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
+						AppClientFactory.getPlaceManager().revealPlace(
+								PlaceTokens.COLLECTION_SEARCH, params);
+					}else{
+						String queryVal = params.get("query");
+						//queryVal = queryVal.replaceAll("%5C1", "&");
+						Map<String, String> map = params;
+						map.put("query", queryVal);	
+						AppClientFactory.getPlaceManager().revealPlace(
+								PlaceTokens.RESOURCE_SEARCH, map);
+					}
+					AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
+					getEditSearchTxtBox().hideSuggestionList();
+					
+					
+			
+				}
+			}
+		}
+	}
 	private void generateCourseData() {
 		
 	}
@@ -258,13 +296,15 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	*/
 	
 	private void setIds() {
-		StringUtil.setAttributes(btnSignUp.getElement(), "btnSignUp", i18n.GL0186(), i18n.GL0186());
+		StringUtil.setAttributes(btnSignUp.getElement(), "btnHomeSignUp", i18n.GL0186(), i18n.GL0186());
 		StringUtil.setAttributes(btnSearch.getElement(), "btnSearch", i18n.GL0176(), i18n.GL0176());
 				
 		StringUtil.setAttributes(lblHeading.getElement(), "lblHeading", i18n.GL2046(), i18n.GL2046());
 		StringUtil.setAttributes(lblSubHeading.getElement(), "lblSubHeading", i18n.GL2047(), i18n.GL2047());
+		String currentUrl = Window.Location.getHref();
+		String protocol = currentUrl.startsWith("https") ? "https" : "http";
 		
-		String url =  "<a href=\"http://www.goorulearning.org\" />";
+		String url =  "<a href=\""+protocol+"://www.goorulearning.org\" />";
 		txtEmbedLink.setText(url);
 		StringUtil.setAttributes(txtEmbedLink.getElement(), "txtEmbedLink", url, url);
 		txtEmbedLink.setReadOnly(true);
@@ -278,6 +318,8 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		getEditSearchTxtBox().getElement().setAttribute("placeholder", i18n.GL2073());
 		getEditSearchTxtBox().getElement().setId("txtEditSearch");		
 		
+		htmlDescription.setHTML(i18n.GL2102());
+		StringUtil.setAttributes(htmlDescription.getElement(), "htmlDescription", i18n.GL2102_1(), i18n.GL2102_1());
 		
 		if (AppClientFactory.isAnonymous()){
 			btnSignUp.setVisible(true);
