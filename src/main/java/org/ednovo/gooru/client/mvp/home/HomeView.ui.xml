@@ -960,7 +960,10 @@
 					<h2>Get Started</h2>
 					<div class="col-xs-7">
 						<div class="getInner">
-							<img src="images/landing-page/get-banner.png" class="img-responsive" />
+						    <div class="getStartedIMG">
+						      	<img src="images/landing-page/get-banner.png" class="img-responsive" />
+								<div class="getCaption">Learn how to use Gooru</div>
+						    </div>
 							<div class="getContentContainer">
 								<h4>
 									<a
