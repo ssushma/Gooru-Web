@@ -1534,9 +1534,9 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 		});
 	}
 	
-	public void setUpdatedStandards(String standardsCode, Integer codeId)
+	public void setUpdatedStandards(String standardsCode, Integer codeId,String descroption)
 	{
-		standardsPanel.add(createStandardLabel(standardsCode, codeId + "", ""));
+		standardsPanel.add(createStandardLabel(standardsCode, codeId + "", descroption));
 		this.resetStandardCount();
 		getUiHandlers().updateStandard(collectionDo.getGooruOid(), codeId.toString(), "add");
 		getUiHandlers().closeStandardsPopup();

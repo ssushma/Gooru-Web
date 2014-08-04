@@ -124,6 +124,10 @@ public class ProfileTopicListView extends Composite{
 	
 	private static final String SMALL = "Small";
 	
+	private static final String CUSTOMIZE = "customize";
+	
+	private static final String ASSIGN = "assign";
+	
 	private static final String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
 	
 	private static Integer LESSON_PAGE_INITIAL_LIMIT = 10;
@@ -968,17 +972,21 @@ public class ProfileTopicListView extends Composite{
 		String collectionId = getProfileLibraryDo().getGooruOid();
 		if(!isAssignPopup){
 			isAssignPopup=true;
+			final Map<String,String> params = new HashMap<String,String>();
 			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals()) {
 				@Override
 				public void closePoup() {
 					Window.enableScrolling(true);
 			        this.hide();
 			    	isAssignPopup=false;
+			    	params.remove(ASSIGN);
+			    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				}
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("638px");
+			successPopupVc.setHeight("657px");
 			successPopupVc.show();
 			successPopupVc.center();
 			if (AppClientFactory.isAnonymous()){
@@ -987,6 +995,10 @@ public class ProfileTopicListView extends Composite{
 			else {				
 				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
 			}
+			
+			params.put(ASSIGN, "yes");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 		}
 	}
 	
@@ -1001,20 +1013,98 @@ public class ProfileTopicListView extends Composite{
 		} else {
 			loginFlag = false;
 		}
+		final Map<String,String> params = new HashMap<String,String>();
 		RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
 			@Override
 			public void closePoup() {
 				Window.enableScrolling(true);
 				this.hide();	
 				isCustomizePopup = false;
+				params.remove(CUSTOMIZE);
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+				
 			}
 		};
 		Window.scrollTo(0, 0);
 		successPopupVc.setWidth("500px");
-		successPopupVc.setHeight("440px");
+		successPopupVc.setHeight("475px");
 			successPopupVc.show();
 			successPopupVc.center();
+			
+			params.put(CUSTOMIZE, "yes");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 		}
+	}
+	
+	/**
+	 * 
+	 * Showing Customize or Assign popup after login with gmail account.
+	 * 
+	 */
+	
+	private void showPopupAfterGmailSignin() {
+		// TODO Auto-generated method stub
+		System.out.println("profilepage");
+		String collectionId = getProfileLibraryDo().getGooruOid();
+		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
+		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
+		if(customize!=null && customize.equals("yes")){
+			Boolean loginFlag = false;
+			if (AppClientFactory.isAnonymous()){
+				loginFlag = true;
+			}
+			else
+			{
+				loginFlag = false;
+			}
+			final Map<String,String> params = new HashMap<String,String>();
+			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
+				@Override
+				public void closePoup() {
+					Window.enableScrolling(true);
+					this.hide();	
+					isCustomizePopup = false;
+					params.remove(CUSTOMIZE);
+					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+					
+				}
+			};
+			Window.scrollTo(0, 0);
+			successPopupVc.setWidth("500px");
+			successPopupVc.setHeight("440px");
+				successPopupVc.show();
+				successPopupVc.center();
+		}
+		if(assign!=null && assign.equals("yes")){
+			final Map<String,String> params = new HashMap<String,String>();
+			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals()) {
+				@Override
+				public void closePoup() {
+					Window.enableScrolling(true);
+			        this.hide();
+			    	isAssignPopup=false;
+			    	params.remove(ASSIGN);
+			    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+				}
+			};
+			Window.scrollTo(0, 0);
+			successPopupVc.setWidth("500px");
+			successPopupVc.setHeight("638px");
+			successPopupVc.show();
+			successPopupVc.center();
+			if (AppClientFactory.isAnonymous()){
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+			}
+			else {				
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+			}
+		}
+
+
 	}
 	
 	private void setTopicLabel(String title) {
