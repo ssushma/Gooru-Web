@@ -37,6 +37,7 @@
 			<g:HTMLPanel styleName="{StudentStyle.classpageCodeShareInputForImage}">
 			    <!--  <g:Image ui:field="userImage" styleName="{StudentStyle.userimageStyle}" url="images/Classpage/student/user.png"></g:Image>-->
 			    <g:Label styleName="{StudentStyle.classMemberStyle}" ui:field="LblMember"></g:Label>
+			    <g:HTMLPanel styleName="{StudentStyle.lineSeaparation}"></g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{style.css.containerProgress} {style.css.containerProgressWidth}" ui:field="panelProgressContainer">

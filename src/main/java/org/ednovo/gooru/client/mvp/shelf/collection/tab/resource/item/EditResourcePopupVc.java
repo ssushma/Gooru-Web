@@ -196,7 +196,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
 	Set<CodeDo> standardsDo=new HashSet<CodeDo>();
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
-	
+	private static final String DEFAULT_COMBO_BOX_TEXT ="Please choose one of the following...";
 	StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 	final List<String> tagList = new ArrayList<String>();
 	
@@ -1250,7 +1250,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 											}
 											if(resourceEducationalLabel.getText()!=null ||!resourceEducationalLabel.getText().trim().equalsIgnoreCase(""))
 											{
-												tagList.add("Educational Use : "+resourceEducationalLabel.getText());
+												if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(DEFAULT_COMBO_BOX_TEXT)){
+													tagList.add("Educational Use : "+resourceEducationalLabel.getText());
+												}
+												
 												
 											}
 											if (isValidate) {
