@@ -57,6 +57,9 @@ public class ResourceDo extends ContentDo {
     
     private ResourceFormatDo resourceFormat;
     
+   
+    private ArrayList<ResourceTagsDo> resourceTags;
+    
     public ResourceDo(){}
     
     private TreeSet<QuestionAnswerDo> answers;
@@ -550,6 +553,12 @@ public class ResourceDo extends ContentDo {
 	}
 	public void setHost(List<String> host) {
 		this.host = host;
+	}
+	public ArrayList<ResourceTagsDo> getResourceTags() {
+		return resourceTags;
+	}
+	public void setResourceTags(ArrayList<ResourceTagsDo> resourceTags) {
+		this.resourceTags = resourceTags;
 	}
 	
 	

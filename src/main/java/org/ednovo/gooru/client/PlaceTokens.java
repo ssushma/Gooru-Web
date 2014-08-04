@@ -58,7 +58,7 @@ public interface PlaceTokens {
 	String NGC = "NGC";
 	String WSPWH = "WSPWH";
 	String PSDPAL = "PSD";
-	String FINCAPINC = "CFCI";
+	String FINCAPINC = "NextGenFinance";
 	String SAUSD_LIBRARY = "sausd";	
 	String DRIVE="drive";
 	
@@ -71,5 +71,6 @@ public interface PlaceTokens {
 	String MURRIETA = "murrieta";
 	String VALVERDE = "valverde";
 	String DISCOVER = "community";
+	String CORE_LIBRARY = "CoreLibrary";
 
 }

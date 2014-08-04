@@ -48,6 +48,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -243,7 +244,11 @@ public abstract class DistrictMenuNav extends Composite {
 	}
 
 	public void getCourse(final String subjectCode, final String subjectName, final ProfileLibraryDo profileLibraryDo) {
-		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(subjectCode, "public", 15, new SimpleAsyncCallback<ProfileLibraryListDo>() {
+		String sharing = "public";
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.LIFEBOARD)) {
+			sharing = null;
+		}
+		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(subjectCode, sharing, 15, new SimpleAsyncCallback<ProfileLibraryListDo>() {
 			@Override
 			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
 				clickOnCourse(profileLibraryListDo.getSearchResult(), subjectCode, profileLibraryDo);
@@ -276,6 +281,7 @@ public abstract class DistrictMenuNav extends Composite {
 				courseTitle.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
+						Window.scrollTo(0, 0);
 						setTabSelection(subjectname);
 						getCourse(courseId, subjectname, profileLibraryDo);
 					}

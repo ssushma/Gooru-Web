@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource;
 
+import java.util.List;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
@@ -198,8 +200,8 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 	}
 
 	@Override
-	public void updateResourceInfo(CollectionItemDo collectionItemDo) {
-		getResourceService().updateResourceInfo(collectionItemDo, getUpdateResourceItemAsyncCallback());
+	public void updateResourceInfo(CollectionItemDo collectionItemDo,List<String> tagList) {
+		getResourceService().updateResourceInfo(collectionItemDo, tagList,getUpdateResourceItemAsyncCallback());
 	}
 	
 	@Override

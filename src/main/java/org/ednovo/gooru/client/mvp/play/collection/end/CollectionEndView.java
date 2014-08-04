@@ -196,8 +196,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		
 		customizeCollectionBtn.setText(i18n.GL2037());
 		customizeCollectionBtn.getElement().setId("btnCustomizeCollectionEndBtn");
-		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
 		
 		shareCollectionBtn.setText(i18n.GL0536());
 		shareCollectionBtn.getElement().setId("btnShareCollectionEndBtn");

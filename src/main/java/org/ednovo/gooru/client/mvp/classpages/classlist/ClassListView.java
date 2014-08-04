@@ -49,6 +49,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
@@ -394,6 +395,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		
 		panelMembersList.setVisible(false);
 		lblPendingMembers.setVisible(false);
+		questionMarkPanel2.setVisible(false);
 		lblActiveMembers.setVisible(false);
 		
 		lblPendingPleaseWait.setText(i18n.GL0339().toLowerCase());
@@ -864,6 +866,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			panelNoMembers.setVisible(true);
 			panelMembersList.setVisible(false);
 			lblPendingMembers.setVisible(false);
+			questionMarkPanel2.setVisible(false);
 			lblActiveMembers.setVisible(false);
 			lblActiveMembersDesc.setVisible(false);
 			ancPendingListSeeMore.setVisible(false);
@@ -887,6 +890,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		for (int k=0; k<lstPendingMembers.size();k++){
 
 			lblPendingMembers.setVisible(true);
+			questionMarkPanel2.setVisible(true);
 			panelNoMembers.setVisible(false);
 			panelMembersList.setVisible(true);
 			panelPendingMembersContainer.setVisible(true);
@@ -951,6 +955,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 							pendingMemberCounter = childWidgetCount;
 							if(childWidgetCount == 0){
 								lblPendingMembers.setVisible(false);
+								questionMarkPanel2.setVisible(false);
 								ancPendingListSeeMore.setVisible(false);
 							}
 
@@ -1099,6 +1104,9 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 
 					@Override
 					public void onClickPositiveButton(ClickEvent event) {
+						
+				
+						
 						int childWidgetCount = 0;
 						try{
 							childWidgetCount = ele.getElementById("ActiveMembersList").getFirstChildElement().getChildCount()-1;
@@ -1106,11 +1114,24 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		
 							ele.getElementById(emailIdVal).getParentElement().getParentElement().removeFromParent();
 							overAllStudentsCount--;
+	
+							
 						}catch(Exception e){
 							
 						}
 						enableInvite();
 						activeMemberCounter = childWidgetCount;
+						try
+						{
+						Element element = Document.get().getElementById("btnClassListTab");
+						element.setInnerHTML(i18n.GL1624()+"("+activeMemberCounter+")");
+						}
+						catch(Exception ex)
+						{
+							Element element = Document.get().getElementById("btnClassListTab");
+							element.setInnerHTML(i18n.GL1624()+"("+classpageDo.getMemberCount()+")");
+						}
+						
 						AppClientFactory.fireEvent(new GetStudentJoinListEvent(activeMemberCounter));
 						if(childWidgetCount == 0){
 							lblActiveMembers.setVisible(true);

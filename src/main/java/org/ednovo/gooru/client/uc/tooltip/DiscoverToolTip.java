@@ -262,10 +262,6 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 		AppClientFactory.getInjector().getLibraryService().getPartners(new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
 			@Override
 			public void onSuccess(ArrayList<LibraryUserDo> partnersList) {
-				LibraryUserDo lifeboardLibraryDo = new LibraryUserDo();
-				lifeboardLibraryDo.setDisplayName("LifeBoard");
-				lifeboardLibraryDo.setUsername("lifeboard");
-				partnersList.add(lifeboardLibraryDo);
 				setPartners(partnersList);
 			}
 			
@@ -293,6 +289,7 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 	
 	private HashMap<String,String> getPublicLibraryPartners() {
 		HashMap<String,String> publicPartners = new LinkedHashMap<String,String>();
+		publicPartners.put(i18n.GL2108(),PlaceTokens.CORE_LIBRARY);
 		publicPartners.put(i18n.GL2053(),PlaceTokens.LPS);
 		//publicPartners.put(i18n.GL2055(),PlaceTokens.MURRIETA); //Phased out of this release
 		publicPartners.put(i18n.GL0515_1(),PlaceTokens.RUSD_LIBRARY);
