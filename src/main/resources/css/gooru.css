@@ -891,75 +891,75 @@ body {
 }
 
 /*********/
-.videoSmall {
+.videoSmall:hover {
 	background:url("../images/Video_1.png") no-repeat
 		transparent;
 }
 
-.interactiveSmall {
+.interactiveSmall:hover {
 	background:url("../images/Interactive_1.png") no-repeat
 		transparent;
 }
 
-.websiteSmall {
+.websiteSmall:hover {
 	background:url("../images/Website_1.png") no-repeat
 		transparent;
 }
-.webpageSmall {
+.webpageSmall:hover {
 	background:url("../images/Website_1.png") no-repeat
 		transparent;
 }
-.examSmall {
+.examSmall:hover {
 	/* background-position: 0px -84px !important; */
 	background:url("../images/Text_1.png") no-repeat
 		transparent;
 }
 
-.textbookSmall {
+.textbookSmall:hover {
 	/* background-position: 0px -196px !important; */
 	background:url("../images/Text_1.png") no-repeat
 		transparent;
 }
 
-.handoutSmall {
+.handoutSmall:hover {
 	/* background-position: 0px -56px !important; */
 	background:url("../images/Text_1.png") no-repeat
 		transparent;
 }
 
-.lessonSmall {
+.lessonSmall:hover {
 	/* background-position: 0px -112px !important; */
 	background:url("../images/Text_1.png") no-repeat
 		transparent;
 }
 
-.slideSmall {
+.slideSmall:hover {
 	background:url("../images/Image_1.png") no-repeat
 		transparent;
 	/* background-position: 0px -168px !important; */
 }
 
-.questionSmall {
+.questionSmall:hover {
 	background:url("../images/Question_1.png") no-repeat
 		transparent;
 }
-.challengeSmall {
+.challengeSmall:hover {
 	background:url("../images/Text_1.png") no-repeat
 		transparent;	
 }
-.textSmall {
+.textSmall:hover {
 	background:url("../images/Text_1.png") no-repeat
 		transparent;
 }
-.imageSmall {
+.imageSmall:hover {
 	background:url("../images/Image_1.png") no-repeat
 		transparent;
 }
-.audioSmall{
+.audioSmall:hover{
 	background:url("../images/Audio_1.png") no-repeat
 		transparent;
 }
-.otherSmall{
+.otherSmall:hover{
 	background:url("../images/Text_1.png") no-repeat
 		transparent;
 }
