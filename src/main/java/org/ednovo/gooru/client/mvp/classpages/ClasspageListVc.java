@@ -57,12 +57,16 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasMouseOutHandlers;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -92,7 +96,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public class ClasspageListVc extends PopupPanel {
+public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 
 	@UiField
 	Label lblLoading, lblNoClasspageYet,lblTitle;
@@ -144,6 +148,8 @@ public class ClasspageListVc extends PopupPanel {
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private NewClasspagePopupView newPopup = null;
+	
+	
 
 	/**
 	 * Class constructor
@@ -1118,6 +1124,12 @@ public class ClasspageListVc extends PopupPanel {
 			enterLbl.getElement().addClassName("disabled");
 			enterLbl.setEnabled(false);
 		}
+	}
+
+	@Override
+	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
+		// TODO Auto-generated method stub
+		return addDomHandler(handler, MouseOutEvent.getType());
 	}
 
 }
