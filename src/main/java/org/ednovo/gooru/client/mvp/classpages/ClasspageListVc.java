@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleHandler;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
+import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
@@ -57,12 +58,16 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasMouseOutHandlers;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -92,7 +97,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public class ClasspageListVc extends PopupPanel {
+public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 
 	@UiField
 	Label lblLoading, lblNoClasspageYet,lblTitle;
@@ -144,6 +149,8 @@ public class ClasspageListVc extends PopupPanel {
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	private NewClasspagePopupView newPopup = null;
+	
+	
 
 	/**
 	 * Class constructor
@@ -502,7 +509,7 @@ public class ClasspageListVc extends PopupPanel {
 														PlaceTokens.STUDENT,
 														params);
 										classCodeTxtBox.setText("");
-										hide();
+										//hide();
 										if (alertMessageUc != null)
 											alertMessageUc.hide();
 									} else if (result.getSharing()
@@ -533,7 +540,7 @@ public class ClasspageListVc extends PopupPanel {
 															PlaceTokens.STUDENT,
 															params);
 											classCodeTxtBox.setText("");
-											hide();
+											//hide();
 											if (alertMessageUc != null)
 												alertMessageUc.hide();
 
@@ -561,7 +568,7 @@ public class ClasspageListVc extends PopupPanel {
 															PlaceTokens.STUDENT,
 															params);
 											classCodeTxtBox.setText("");
-											hide();
+											//hide();
 											if (alertMessageUc != null)
 												alertMessageUc.hide();
 
@@ -589,7 +596,7 @@ public class ClasspageListVc extends PopupPanel {
 															PlaceTokens.STUDENT,
 															params);
 											classCodeTxtBox.setText("");
-											hide();
+											//hide();
 											if (alertMessageUc != null)
 												alertMessageUc.hide();
 
@@ -627,7 +634,7 @@ public class ClasspageListVc extends PopupPanel {
 														PlaceTokens.STUDENT,
 														params);
 										classCodeTxtBox.setText("");
-										hide();
+										//hide();
 										if (alertMessageUc != null)
 											alertMessageUc.hide();
 
@@ -844,7 +851,7 @@ public class ClasspageListVc extends PopupPanel {
 				@Override
 				public void onClick(ClickEvent event) {
 					OpenClasspageEdit(classpageId);
-					hide();
+					//hide();
 				}
 			});
 		}
@@ -879,7 +886,8 @@ public class ClasspageListVc extends PopupPanel {
 	@UiHandler("ancNewClasspage")
 	public void onClickNewClasspage(ClickEvent event) {
 		MixpanelUtil.ClickOnNewClassPage();
-		hide();
+		HeaderUc.closeClassContainer();
+		//hide();
 		newPopup = new NewClasspagePopupView() {
 
 			@Override
@@ -1118,6 +1126,12 @@ public class ClasspageListVc extends PopupPanel {
 			enterLbl.getElement().addClassName("disabled");
 			enterLbl.setEnabled(false);
 		}
+	}
+
+	@Override
+	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
+		// TODO Auto-generated method stub
+		return addDomHandler(handler, MouseOutEvent.getType());
 	}
 
 }

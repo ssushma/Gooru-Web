@@ -159,13 +159,13 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 		
 		getPartners();
 				
-		this.addMouseOutHandler(new MouseOutHandler() {
+/*		this.addMouseOutHandler(new MouseOutHandler() {
 			
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
-			    hide();
+			    //hide();
 			}
-		});
+		});*/
         
         lblGooruLibrary.addClickHandler(new ClickHandler() {
 			@Override
