@@ -48,6 +48,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -280,6 +281,7 @@ public abstract class DistrictMenuNav extends Composite {
 				courseTitle.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
+						Window.scrollTo(0, 0);
 						setTabSelection(subjectname);
 						getCourse(courseId, subjectname, profileLibraryDo);
 					}

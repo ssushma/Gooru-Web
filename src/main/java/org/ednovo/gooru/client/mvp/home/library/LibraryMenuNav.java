@@ -65,6 +65,7 @@ import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -622,6 +623,7 @@ public class LibraryMenuNav extends Composite{
 						courseTitle.addClickHandler(new ClickHandler() {
 							@Override
 							public void onClick(ClickEvent event) {
+								Window.scrollTo(0, 0);
 								setHeaderBrowserTitle(courseDo.getLabel());
 								MixpanelUtil.mixpanelEvent("Library_"+SCIENCE+"_"+courseDo.getLabel());
 								Map<String,String> params = new HashMap<String, String>();
@@ -638,6 +640,7 @@ public class LibraryMenuNav extends Composite{
 						courseTitle.addClickHandler(new ClickHandler() {
 							@Override
 							public void onClick(ClickEvent event) {
+								Window.scrollTo(0, 0);
 								setHeaderBrowserTitle(courseDo.getLabel());
 								MixpanelUtil.mixpanelEvent("Library_"+MATH+"_"+courseDo.getLabel());
 								Map<String,String> params = new HashMap<String, String>();
@@ -656,6 +659,7 @@ public class LibraryMenuNav extends Composite{
 						courseTitle.addClickHandler(new ClickHandler() {
 							@Override
 							public void onClick(ClickEvent event) {
+								Window.scrollTo(0, 0);
 								setHeaderBrowserTitle(courseDo.getLabel());
 								MixpanelUtil.mixpanelEvent("Library_"+SOCIAL+"_"+courseDo.getLabel());
 								Map<String,String> params = new HashMap<String, String>();
@@ -672,6 +676,7 @@ public class LibraryMenuNav extends Composite{
 						courseTitle.addClickHandler(new ClickHandler() {
 							@Override
 							public void onClick(ClickEvent event) {
+								Window.scrollTo(0, 0);
 								setHeaderBrowserTitle(courseDo.getLabel());
 								MixpanelUtil.mixpanelEvent("Library_"+LANGUAGE+"_"+courseDo.getLabel());
 								Map<String,String> params = new HashMap<String, String>();
@@ -774,7 +779,7 @@ public class LibraryMenuNav extends Composite{
 								
 								@Override
 								public void onClick(ClickEvent event) {
-									
+									Window.scrollTo(0, 0);
 									setHeaderBrowserTitle(standardsCourseDo.getLabel());
 									//MixpanelUtil.mixpanelEvent("Library_"+STANDARDS+"_"+standardsCourseDo.getLabel());
 									MixpanelUtil.mixpanelEvent("standardlibrary_select_course");
