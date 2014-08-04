@@ -889,7 +889,7 @@
 							<div class="blockHeader">
 								District Libraries
 							</div>
-							<div class="blockContent">
+							<div class="blockContent districtLibraryContainer">
 								<p>
 									<a href="#lpslibrary1">Leadership Public Schools</a>
 								</p>
