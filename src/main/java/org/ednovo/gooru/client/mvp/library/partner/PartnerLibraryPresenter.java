@@ -81,13 +81,15 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	}
 	
 	public void setPartnerWidget() {
-		if(AppClientFactory.getLoggedInUser()!=null) {
-			getView().clearPanels();
-			getView().loadingPanel(true);
-			getIntoPartnerLibrarypage();
-			getPartnerWorkspaceFolders();
-		} else {
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.ERROR);
+		if (AppClientFactory.getPlaceManager().refreshPlace()) {
+			if(AppClientFactory.getLoggedInUser()!=null) {
+				getView().clearPanels();
+				getView().loadingPanel(true);
+				getIntoPartnerLibrarypage();
+				getPartnerWorkspaceFolders();
+			} else {
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.ERROR);
+			}
 		}
 	}
 	

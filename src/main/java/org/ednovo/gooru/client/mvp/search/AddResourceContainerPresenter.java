@@ -105,7 +105,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			type=null;
 			accessType = "public,anyonewithlink";
 		}
-		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,accessType, type, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,null, type, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				if(folderListDo!=null && folderListDo.getCount()!=null){
@@ -127,7 +127,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 
 	@Override
 	public void getFolderItems(final TreeItem item,String parentId) {
-		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,"public,anyonewithlink", null, new SimpleAsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, null, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
 				getView().setFolderItems(item,folderListDo);
@@ -157,6 +157,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			final CollectionDo collection = new CollectionDo();
 			if(searchType.equalsIgnoreCase("collection")){
 			collection.setGooruOid(searchResultDo.getGooruOid());
+			collection.setSharing("anyonewithlink");
 			if(selectedFolderOrCollectionid!=null){
 			AppClientFactory.fireEvent(new CopyDraggedCollectionEvent(collection,searchResultDo.getGooruOid(),selectedFolderOrCollectionid));
 			successparams.put("o1", selectedFolderOrCollectionid);

@@ -391,10 +391,10 @@
 	width: 200px;
 }
 .classpageCodeShareInputForImage{
-	float: left;
+	float: right;
     position: relative;
-	width: 218px;
-	top: 29%;
+	width: 176px;
+	top: 32%;
 }
 .studentWithdrawBtn {
 	float: right;
@@ -406,7 +406,7 @@
 .classpageClasscode {
 	width: 910px;
 	margin: 0 auto;
-	background-color: rgba(221,221,221,0.5);
+	background-color: #ffffff;
 	padding-left: 30px;
 	height: 55px;
 	border: 1px solid rgba(153,153,153,0.5);
@@ -490,4 +490,15 @@ margin-left:-33px;
 	text-align: center;
 	font-size: 14px;
 	font-weight: bold;
+}
+
+.lineSeaparation{
+	float: left;
+	height: 29px;
+	margin-left: 8px;
+	font-size: 16px;
+	font-weight: normal;
+	margin-top: -5px;
+	border-right: 2px solid #efefef;
+	margin-bottom: 5px;
 }

@@ -320,8 +320,10 @@
 							ui:field="lblTitleSeven"></g:Label>
 						<g:InlineLabel styleName="{style.improveGooruBlueTextDesc}"
 							ui:field="aboutSeven"></g:InlineLabel>
+							<g:HTMLPanel>
 						<g:Anchor styleName="{style.improveGooruHyperlinkText}"
 							ui:field="descLinkSeven" target="_blank"></g:Anchor>
+							</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 				
