@@ -1950,7 +1950,7 @@ font-size:12px;
 .setAsCenterPopup {
 	left: 0 !important;
 	right: 0 !important;
-	top: 56px !important;
+	top: 160px !important;
 	margin: auto;
 	z-index: 999;
 }
