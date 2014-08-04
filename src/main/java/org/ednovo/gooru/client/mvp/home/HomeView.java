@@ -45,7 +45,6 @@ import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
-import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
@@ -71,12 +70,13 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestOracle;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 
 
 /**
@@ -92,6 +92,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	@UiField Button btnSearch;
 	@UiField Anchor achLearn, achTerms, achPrivacy,achCopyright;//achDataPolicy
 	@UiField TextBox txtEmbedLink;
+	@UiField HTML htmlDescription;
 	
 	LibraryView libraryView = null;
 	private TermsOfUse termsOfUse;
@@ -295,13 +296,15 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	*/
 	
 	private void setIds() {
-		StringUtil.setAttributes(btnSignUp.getElement(), "btnSignUp", i18n.GL0186(), i18n.GL0186());
+		StringUtil.setAttributes(btnSignUp.getElement(), "btnHomeSignUp", i18n.GL0186(), i18n.GL0186());
 		StringUtil.setAttributes(btnSearch.getElement(), "btnSearch", i18n.GL0176(), i18n.GL0176());
 				
 		StringUtil.setAttributes(lblHeading.getElement(), "lblHeading", i18n.GL2046(), i18n.GL2046());
 		StringUtil.setAttributes(lblSubHeading.getElement(), "lblSubHeading", i18n.GL2047(), i18n.GL2047());
+		String currentUrl = Window.Location.getHref();
+		String protocol = currentUrl.startsWith("https") ? "https" : "http";
 		
-		String url =  "<a href=\"http://www.goorulearning.org\" />";
+		String url =  "<a href=\""+protocol+"://www.goorulearning.org\" />";
 		txtEmbedLink.setText(url);
 		StringUtil.setAttributes(txtEmbedLink.getElement(), "txtEmbedLink", url, url);
 		txtEmbedLink.setReadOnly(true);
@@ -315,6 +318,8 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		getEditSearchTxtBox().getElement().setAttribute("placeholder", i18n.GL2073());
 		getEditSearchTxtBox().getElement().setId("txtEditSearch");		
 		
+		htmlDescription.setHTML(i18n.GL2102());
+		StringUtil.setAttributes(htmlDescription.getElement(), "htmlDescription", i18n.GL2102_1(), i18n.GL2102_1());
 		
 		if (AppClientFactory.isAnonymous()){
 			btnSignUp.setVisible(true);
