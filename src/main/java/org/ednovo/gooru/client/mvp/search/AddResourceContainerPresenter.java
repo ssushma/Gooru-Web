@@ -103,7 +103,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			accessType = "public,anyonewithlink";
 		}else{
 			type=null;
-			accessType = "anyonewithlink";
+			accessType = "public,anyonewithlink";
 		}
 		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,accessType, type, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
@@ -157,6 +157,7 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 			final CollectionDo collection = new CollectionDo();
 			if(searchType.equalsIgnoreCase("collection")){
 			collection.setGooruOid(searchResultDo.getGooruOid());
+			collection.setSharing("anyonewithlink");
 			if(selectedFolderOrCollectionid!=null){
 			AppClientFactory.fireEvent(new CopyDraggedCollectionEvent(collection,searchResultDo.getGooruOid(),selectedFolderOrCollectionid));
 			successparams.put("o1", selectedFolderOrCollectionid);

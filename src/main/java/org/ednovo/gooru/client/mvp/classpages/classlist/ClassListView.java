@@ -395,6 +395,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		
 		panelMembersList.setVisible(false);
 		lblPendingMembers.setVisible(false);
+		questionMarkPanel2.setVisible(false);
 		lblActiveMembers.setVisible(false);
 		
 		lblPendingPleaseWait.setText(i18n.GL0339().toLowerCase());
@@ -865,6 +866,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			panelNoMembers.setVisible(true);
 			panelMembersList.setVisible(false);
 			lblPendingMembers.setVisible(false);
+			questionMarkPanel2.setVisible(false);
 			lblActiveMembers.setVisible(false);
 			lblActiveMembersDesc.setVisible(false);
 			ancPendingListSeeMore.setVisible(false);
@@ -888,6 +890,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		for (int k=0; k<lstPendingMembers.size();k++){
 
 			lblPendingMembers.setVisible(true);
+			questionMarkPanel2.setVisible(true);
 			panelNoMembers.setVisible(false);
 			panelMembersList.setVisible(true);
 			panelPendingMembersContainer.setVisible(true);
@@ -952,6 +955,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 							pendingMemberCounter = childWidgetCount;
 							if(childWidgetCount == 0){
 								lblPendingMembers.setVisible(false);
+								questionMarkPanel2.setVisible(false);
 								ancPendingListSeeMore.setVisible(false);
 							}
 

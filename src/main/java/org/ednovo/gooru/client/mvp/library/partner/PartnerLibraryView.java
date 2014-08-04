@@ -242,6 +242,13 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			libraryUserDo.setPartnerName(i18n.GL2065());
 			libraryUserDo.setPartnerUrl(i18n.GL2066());
 
+		}else if(partnerPlace.equals(PlaceTokens.CORE_LIBRARY)) {
+			
+			courseDo.setLabel(i18n.GL2108());
+			thumbnailDo.setUrl("../images/library/district/landing-image-core-library.png");
+			libraryUserDo.setPartnerName(i18n.GL2110());
+			libraryUserDo.setPartnerUrl(i18n.GL2111());
+
 		}
 		
 		courseDo.setThumbnails(thumbnailDo);

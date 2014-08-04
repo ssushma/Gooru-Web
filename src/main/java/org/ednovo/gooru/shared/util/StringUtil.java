@@ -242,7 +242,8 @@ public class StringUtil {
 		if(userName.equalsIgnoreCase("Autodesk") || userName.equalsIgnoreCase("Lessonopoly") || userName.equalsIgnoreCase("CommonSenseMedia") 
 				|| userName.equalsIgnoreCase("FTE") || userName.equalsIgnoreCase("WSPWH") || userName.equalsIgnoreCase("lisaNGC") || userName.equalsIgnoreCase("NGC")
 				|| userName.equalsIgnoreCase("ONR") || userName.equalsIgnoreCase(PlaceTokens.FINCAPINC) || userName.equalsIgnoreCase(PlaceTokens.PSDPAL) 
-				|| userName.equalsIgnoreCase(PlaceTokens.YOUTHVOICES) || userName.equalsIgnoreCase(PlaceTokens.GEOEDUCATION) || userName.equalsIgnoreCase(PlaceTokens.LPS) ) {
+				|| userName.equalsIgnoreCase(PlaceTokens.YOUTHVOICES) || userName.equalsIgnoreCase(PlaceTokens.GEOEDUCATION) || userName.equalsIgnoreCase(PlaceTokens.LPS) 
+				|| userName.equalsIgnoreCase(PlaceTokens.CORE_LIBRARY) ) {
 			isPartner = true;
 		}
 		return isPartner;

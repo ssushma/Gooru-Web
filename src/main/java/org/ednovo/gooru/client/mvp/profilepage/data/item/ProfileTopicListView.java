@@ -201,8 +201,13 @@ public class ProfileTopicListView extends Composite{
 		} else {
 			setPartnerLibraryLessonData(profileFolderDo.getCollectionItems(), profileFolderDo.getGooruOid());
 			try {
-				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY) || 
+						AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE) || 
+						AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD) || 
+						AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
 					setConceptData(profileFolderDo.getCollectionItems().get(0).getCollectionItems().get(0).getCollectionItems().get(0),topicId, null, null,null);
+				} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)){
+					setConceptData(profileFolderDo.getCollectionItems().get(0).getCollectionItems().get(0),topicId, null, null,null);
 				}
 			} catch(Exception e) {
 				setDefaultCollectionLbl();
@@ -981,7 +986,7 @@ public class ProfileTopicListView extends Composite{
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("638px");
+			successPopupVc.setHeight("657px");
 			successPopupVc.show();
 			successPopupVc.center();
 			if (AppClientFactory.isAnonymous()){
@@ -1023,7 +1028,7 @@ public class ProfileTopicListView extends Composite{
 		};
 		Window.scrollTo(0, 0);
 		successPopupVc.setWidth("500px");
-		successPopupVc.setHeight("440px");
+		successPopupVc.setHeight("475px");
 			successPopupVc.show();
 			successPopupVc.center();
 			

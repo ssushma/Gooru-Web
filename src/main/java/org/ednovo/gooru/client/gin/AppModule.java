@@ -136,6 +136,10 @@ import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPrese
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter.IsAutodeskLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.IsAutodeskLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryPresenter.IsCoreLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.corelibrary.IsCoreLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter.IsCfciLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryView;
@@ -542,6 +546,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(ValVerdeLibraryPresenter.class, IsValVerdeLibraryView.class, ValVerdeLibraryView.class,IsValVerdeLibraryProxy.class);
 		bindPresenter(RusdLibraryPresenter.class, IsRusdLibraryView.class, RusdLibraryView.class,IsRusdLibraryProxy.class);
 		bindPresenter(LpsLibraryPresenter.class, IsLpsLibraryView.class, LpsLibraryView.class,IsLpsLibraryProxy.class);
+		bindPresenter(CoreLibraryPresenter.class, IsCoreLibraryView.class, CoreLibraryView.class,IsCoreLibraryProxy.class);
 		
 	}
 }
