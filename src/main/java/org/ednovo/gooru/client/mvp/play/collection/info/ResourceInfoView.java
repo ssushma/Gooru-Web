@@ -2032,7 +2032,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			
-			liecenceTooltip = new LiecenceTooltip(desc,desc2, (event.getRelativeElement().getAbsoluteLeft()-83),(event.getRelativeElement().getAbsoluteTop()+22));
+			liecenceTooltip = new LiecenceTooltip(desc,desc2, (event.getRelativeElement().getAbsoluteLeft()-109),(event.getRelativeElement().getAbsoluteTop()+22));
 			liecenceTooltip.setStyleName("");
 			liecenceTooltip.show();
 			liecenceTooltip.getElement().getStyle().setZIndex(99999);
