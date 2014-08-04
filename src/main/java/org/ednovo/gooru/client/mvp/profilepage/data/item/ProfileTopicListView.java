@@ -978,7 +978,7 @@ public class ProfileTopicListView extends Composite{
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("638px");
+			successPopupVc.setHeight("657px");
 			successPopupVc.show();
 			successPopupVc.center();
 			if (AppClientFactory.isAnonymous()){
@@ -1011,7 +1011,7 @@ public class ProfileTopicListView extends Composite{
 		};
 		Window.scrollTo(0, 0);
 		successPopupVc.setWidth("500px");
-		successPopupVc.setHeight("440px");
+		successPopupVc.setHeight("475px");
 			successPopupVc.show();
 			successPopupVc.center();
 		}
