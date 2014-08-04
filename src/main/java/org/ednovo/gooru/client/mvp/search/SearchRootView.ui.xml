@@ -49,7 +49,7 @@
 
 		.resourceBtnActive {
 			color: #515151;
-    		padding: 7px 9px 9px 30px;
+    		padding: 7px 9px 9px 34px;
     		border-radius: 4px;
     		box-shadow:0 3px 3px #d0d0d5 inset;
 			background: #efefef;
@@ -71,7 +71,7 @@
 
 		.collectionBtnActive {
 			color: #515151;
-    		padding: 7px 9px 9px 30px;
+    		padding: 7px 9px 9px 34px;
 			margin-left: 10px;
     		border-radius: 4px;
     		box-shadow:0 3px 3px #d0d0d5 inset;
@@ -142,7 +142,7 @@
 
 		.secondaryResourceSearchBtn{
 			color: #515151;
-			padding: 7px 9px 9px 30px;
+			padding: 7px 9px 9px 34px;
 			border-radius: 4px;
 			background: #efefef;
 			background-image: url(images/resourcesIco.png); /* fallback */
@@ -176,7 +176,7 @@
 
 		.secondaryCollectionSearchBtn{
 			color: #515151;
-			padding: 7px 9px 9px 30px;
+			padding: 7px 9px 9px 34px;
 			border-radius: 4px;
 			margin-left: 10px;
 			background: #efefef;
