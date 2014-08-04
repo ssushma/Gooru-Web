@@ -114,6 +114,7 @@
 		{
 			float:right;
 			margin-right:-12px;
+			width: 445px;
 		}
 		.teachUserNameTextContainerAddAssignmentRight
 		{
@@ -456,21 +457,31 @@
                <g:HTMLPanel styleName="{style.teachUserNameContainerHoverAddAssignment}" ui:field="mainDotsPanel">
               <g:HTMLPanel styleName="{style.teachUserNameTextContainerAddAssignmentRight}"  ui:field="mainInnerDotsPanel">
                    <g:HTMLPanel ui:field="dotsPanel" styleName="{style.teachUserNameTextContainerAddAssignment}">
+                     <uc:HTMLEventPanel ui:field="discoverLinkMain">
                       <uc:HTMLEventPanel styleName="{style.menu} {style.borderRightMenu}" ui:field="discoverLinkContainer">
                         	<g:Label ui:field="discoverLink" styleName="{res.css.discoverTextStyle}"/>
                         	<g:HTMLPanel styleName="{res.css.discoverDropDown}" ui:field="dropDownImg"/>
-                        	<div style="border-right: 1px solid #616161; height: 34px;  /* margin-left: 69px; */ position: absolute; margin-left: 80px; margin-top: -9px;"></div>
+                        	<div style="border-right: 1px solid #616161; height: 34px;  /* margin-left: 69px; */ position: absolute; margin-left: 75px; margin-top: -9px;"></div>
+                        	
                       </uc:HTMLEventPanel>
-                      <uc:HTMLEventPanel styleName="{style.menu}" ui:field="organizeLinkContainer">
-                        	<g:Label ui:field="organizeLink" />
+                      <g:HTMLPanel ui:field="discovertooltippop"></g:HTMLPanel>
                       </uc:HTMLEventPanel>
-                       
+                       <uc:HTMLEventPanel ui:field="organizeLinkMain">
+                      <uc:HTMLEventPanel ui:field="organizeLinkContainer">
+                        	<g:Label ui:field="organizeLink" />                        	  
+                      </uc:HTMLEventPanel>
+                       		<g:HTMLPanel ui:field="myCollectionsPop"></g:HTMLPanel>
+                      </uc:HTMLEventPanel>
+                           <uc:HTMLEventPanel ui:field="teachLinkMain">
                       <uc:HTMLEventPanel styleName="{style.teachUserNameTextBlack}" ui:field="teachLinkContainer">
-                        	<g:Label ui:field="teachLink" />
+                        	<g:Label ui:field="teachLink" />                  
+                      </uc:HTMLEventPanel>
+                         	<g:HTMLPanel ui:field="myClassesPop"></g:HTMLPanel>
                       </uc:HTMLEventPanel>
                       <!-- This is hidden -->
                       <uc:HTMLEventPanel styleName="{style.teachUserNameTextBlack}" ui:field="studyLinkContainer">
                         	<g:Label ui:field="studyLink" />
+                        	
                       </uc:HTMLEventPanel>
 
                       <uc:HTMLEventPanel styleName="{style.menu} {style.borderRightMenu}" ui:field="LoginLinkContainer">
