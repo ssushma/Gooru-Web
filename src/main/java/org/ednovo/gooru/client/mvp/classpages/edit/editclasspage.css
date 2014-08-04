@@ -1235,3 +1235,17 @@ margin-top:20px !important;
 	font-size: 14px;
 	margin-top: 10px;
 }
+
+.studentStyle{
+	float: right;
+    position: relative;
+	width: 176px;
+	top: 32%;
+}
+
+.techerStyle{
+	float: left;
+    position: relative;
+	width: 218px;
+	top: 29%;
+}

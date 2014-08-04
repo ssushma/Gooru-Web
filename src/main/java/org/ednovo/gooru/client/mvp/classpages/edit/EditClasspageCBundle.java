@@ -221,6 +221,8 @@ public interface EditClasspageCBundle extends ClientBundle{
         String section3Div();
         String assignementOrderHeader();
         String errorMessage();
+        String studentStyle();
+        String techerStyle();
 
 	}
 	@NotStrict
