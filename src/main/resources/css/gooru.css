@@ -891,79 +891,138 @@ body {
 }
 
 /*********/
-.videoSmall:hover {
+.videoSmall {
 	background:url("../images/Video_1.png") no-repeat
 		transparent;
 }
 
-.interactiveSmall:hover {
+.interactiveSmall{
 	background:url("../images/Interactive_1.png") no-repeat
 		transparent;
 }
 
-.websiteSmall:hover {
+.websiteSmall {
 	background:url("../images/Website_1.png") no-repeat
 		transparent;
 }
-.webpageSmall:hover {
+.webpageSmall {
 	background:url("../images/Website_1.png") no-repeat
 		transparent;
 }
-.examSmall:hover {
+.examSmall {
 	/* background-position: 0px -84px !important; */
 	background:url("../images/Text_1.png") no-repeat
 		transparent;
 }
 
-.textbookSmall:hover {
+.textbookSmall {
 	/* background-position: 0px -196px !important; */
 	background:url("../images/Text_1.png") no-repeat
 		transparent;
 }
 
-.handoutSmall:hover {
+.handoutSmall {
 	/* background-position: 0px -56px !important; */
 	background:url("../images/Text_1.png") no-repeat
 		transparent;
 }
 
-.lessonSmall:hover {
+.lessonSmall {
 	/* background-position: 0px -112px !important; */
 	background:url("../images/Text_1.png") no-repeat
 		transparent;
 }
 
-.slideSmall:hover {
+.slideSmall {
 	background:url("../images/Image_1.png") no-repeat
 		transparent;
 	/* background-position: 0px -168px !important; */
 }
 
-.questionSmall:hover {
+.questionSmall {
 	background:url("../images/Question_1.png") no-repeat
 		transparent;
 }
-.challengeSmall:hover {
+.challengeSmall {
 	background:url("../images/Text_1.png") no-repeat
 		transparent;	
 }
-.textSmall:hover {
+.textSmall {
 	background:url("../images/Text_1.png") no-repeat
 		transparent;
 }
-.imageSmall:hover {
+.imageSmall {
 	background:url("../images/Image_1.png") no-repeat
 		transparent;
 }
-.audioSmall:hover{
+.audioSmall{
 	background:url("../images/Audio_1.png") no-repeat
 		transparent;
 }
-.otherSmall:hover{
+.otherSmall{
 	background:url("../images/Text_1.png") no-repeat
 		transparent;
 }
 /*******/
+
+.videoSmall:hover {
+	background:none !important;
+}
+
+.interactiveSmall:hover {
+	background:none !important;
+}
+
+.websiteSmall:hover {
+	background:none !important;
+}
+.webpageSmall:hover {
+	background:none !important;
+}
+.examSmall:hover {
+	/* background-position: 0px -84px !important; */
+	background:none !important;
+}
+
+.textbookSmall:hover {
+	/* background-position: 0px -196px !important; */
+	background:none !important;
+}
+
+.handoutSmall:hover {
+	/* background-position: 0px -56px !important; */
+	background:none !important;
+}
+
+.lessonSmall:hover {
+	/* background-position: 0px -112px !important; */
+	background:none !important;
+}
+
+.slideSmall:hover {
+	background:none !important;
+	/* background-position: 0px -168px !important; */
+}
+
+.questionSmall:hover {
+	background:none !important;
+}
+.challengeSmall:hover {
+	background:none !important;	
+}
+.textSmall:hover {
+	background:none !important;
+}
+.imageSmall:hover {
+	background:none !important;
+}
+.audioSmall:hover{
+	background:none !important;
+}
+.otherSmall:hover{
+	background:none !important;
+}
+/*****/
 .videoSmallNew {
 	background-position: 0px 0px !important;
 }
