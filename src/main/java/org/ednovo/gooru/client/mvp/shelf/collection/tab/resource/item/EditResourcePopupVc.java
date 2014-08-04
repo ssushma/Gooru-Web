@@ -927,6 +927,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		if(collectionItemDo.getResource().getResourceTags()!=null){
 			
 			for(int i=0;i<collectionItemDo.getResource().getResourceTags().size();i++){
+				
 				tagListGlobal.add("\""+collectionItemDo.getResource().getResourceTags().get(i).getLabel()+"\"");
 				if(collectionItemDo.getResource().getResourceTags().get(i).getLabel().contains("Media Feature"))
 				{
@@ -1219,13 +1220,13 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 											if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 											{
 												
-												tagList.add("Mobile Friendly:"+mobileYes.getText());
+												tagList.add("Mobile Friendly:"+i18n.GL_GRR_YES());
 												
 											}
 											else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 											{
 											
-												tagList.add("Mobile Friendly:"+mobileNo.getText());
+												tagList.add("Mobile Friendly:"+i18n.GL1735());
 												
 											}
 											if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:"))
@@ -1897,12 +1898,13 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}
 	public void setMobileFriendlyObjectVal(String mobileFriendlyVal)
 	{
-		if(mobileFriendlyVal.contains(mobileYes.getText()))
+		
+		if(mobileFriendlyVal.contains(i18n.GL_GRR_YES()))
 		{
 			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
 			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
 		}
-		else if(mobileFriendlyVal.contains(mobileNo.getText()))
+		else if(mobileFriendlyVal.contains(i18n.GL1735()))
 		{
 			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
 			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
