@@ -85,7 +85,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	String selectedCodeVal = "";
 	
 	Integer selectedCodeId = 0;
-	
+	String selectedCodeDesc = "";
 	private static AddStandardsViewUiBinder uiBinder = GWT.create(AddStandardsViewUiBinder.class);
 	
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -280,6 +280,8 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getLabel());
 					final String codeVal = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCode();
 					final Integer codeIdVal = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCodeId();
+					final String codeDesc = levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getLabel();
+				
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.getNode().get(i).getNode().get(j).getNode().get(k).getCodeId().toString());
@@ -291,6 +293,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 							HTMLEventPanel clickedObject = (HTMLEventPanel)event.getSource();
 							selectedCodeVal = codeVal;
 							selectedCodeId=codeIdVal;
+							selectedCodeDesc = codeDesc;
 							addBtn.setEnabled(true);
 							addBtn.removeStyleName("secondary");
 							addBtn.addStyleName("primary");
@@ -412,6 +415,8 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.get(i).getNode().get(j).getNode().get(k).getLabel());
 					final String codeVal = levelOneData.get(i).getNode().get(j).getNode().get(k).getCode();
 					final Integer codeIdVal = levelOneData.get(i).getNode().get(j).getNode().get(k).getCodeId();
+					final String codeDesc = levelOneData.get(i).getNode().get(j).getNode().get(k).getLabel();
+					
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(i).getNode().get(j).getNode().get(k).getCodeId().toString());
@@ -423,6 +428,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 							HTMLEventPanel clickedObject = (HTMLEventPanel)event.getSource();
 							selectedCodeVal = codeVal;
 							selectedCodeId=codeIdVal;
+							selectedCodeDesc = codeDesc;
 							addBtn.setEnabled(true);
 							addBtn.removeStyleName("secondary");
 							addBtn.addStyleName("primary");
@@ -490,6 +496,8 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.get(j).getNode().get(k).getLabel());
 					final String codeVal = levelOneData.get(j).getNode().get(k).getCode();
 					final Integer codeIdVal = levelOneData.get(j).getNode().get(k).getCodeId();
+					final String codeDesc = levelOneData.get(j).getNode().get(k).getLabel();
+					
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(j).getNode().get(k).getCodeId().toString());
@@ -500,6 +508,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 							HTMLEventPanel clickedObject = (HTMLEventPanel)event.getSource();
 							selectedCodeVal = codeVal;
 							selectedCodeId=codeIdVal;
+							selectedCodeDesc = codeDesc;
 							addBtn.setEnabled(true);
 							addBtn.removeStyleName("secondary");
 							addBtn.addStyleName("primary");
@@ -538,6 +547,8 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					levelOneStandardsInner4.getElement().setInnerHTML(levelOneData.get(k).getLabel());
 					final String codeVal = levelOneData.get(k).getCode();
 					final Integer codeIdVal = levelOneData.get(k).getCodeId();
+					final String codeDesc = levelOneData.get(k).getLabel();
+					
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4Code);
 					levelOneStandardsInner4Outer.add(levelOneStandardsInner4);	
 					levelOneStandardsInner4Outer.getElement().setAttribute("id", levelOneData.get(k).getCodeId().toString());
@@ -549,6 +560,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 							HTMLEventPanel clickedObject = (HTMLEventPanel)event.getSource();
 							selectedCodeVal = codeVal;
 							selectedCodeId=codeIdVal;
+							selectedCodeDesc = codeDesc;
 							addBtn.setEnabled(true);
 							addBtn.removeStyleName("secondary");
 							addBtn.addStyleName("primary");
@@ -725,6 +737,11 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		californiaStandards.addStyleName("primary");
 
 	getUiHandlers().loadStateStandards("CA");
+	}
+
+	@Override
+	public String setStandardsDesc() {
+			return selectedCodeDesc;
 	}
 	
 }
