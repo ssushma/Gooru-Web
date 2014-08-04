@@ -251,7 +251,9 @@ public class HeaderUc extends Composite implements
 	
 	boolean hasClasses = false;
 	
-	@UiField HTMLPanel discovertooltippop,myCollectionsPop,myClassesPop;
+	@UiField HTMLPanel discovertooltippop,myCollectionsPop;
+	
+	@UiField static HTMLPanel myClassesPop;
 	
 	String classpageId = "";
 	/*
@@ -1840,6 +1842,14 @@ public class HeaderUc extends Composite implements
 		} else {
 			params.put("id", gooruOId);
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT, params);
+		}
+	}
+	
+	public static void closeClassContainer()
+	{
+		if(myClassesPop != null)
+		{
+		myClassesPop.setVisible(false);
 		}
 	}
 	

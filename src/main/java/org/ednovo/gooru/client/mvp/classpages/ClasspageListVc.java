@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleHandler;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
+import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
@@ -508,7 +509,7 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 														PlaceTokens.STUDENT,
 														params);
 										classCodeTxtBox.setText("");
-										hide();
+										//hide();
 										if (alertMessageUc != null)
 											alertMessageUc.hide();
 									} else if (result.getSharing()
@@ -539,7 +540,7 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 															PlaceTokens.STUDENT,
 															params);
 											classCodeTxtBox.setText("");
-											hide();
+											//hide();
 											if (alertMessageUc != null)
 												alertMessageUc.hide();
 
@@ -567,7 +568,7 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 															PlaceTokens.STUDENT,
 															params);
 											classCodeTxtBox.setText("");
-											hide();
+											//hide();
 											if (alertMessageUc != null)
 												alertMessageUc.hide();
 
@@ -595,7 +596,7 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 															PlaceTokens.STUDENT,
 															params);
 											classCodeTxtBox.setText("");
-											hide();
+											//hide();
 											if (alertMessageUc != null)
 												alertMessageUc.hide();
 
@@ -633,7 +634,7 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 														PlaceTokens.STUDENT,
 														params);
 										classCodeTxtBox.setText("");
-										hide();
+										//hide();
 										if (alertMessageUc != null)
 											alertMessageUc.hide();
 
@@ -850,7 +851,7 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 				@Override
 				public void onClick(ClickEvent event) {
 					OpenClasspageEdit(classpageId);
-					hide();
+					//hide();
 				}
 			});
 		}
@@ -885,7 +886,8 @@ public class ClasspageListVc extends PopupPanel implements HasMouseOutHandlers{
 	@UiHandler("ancNewClasspage")
 	public void onClickNewClasspage(ClickEvent event) {
 		MixpanelUtil.ClickOnNewClassPage();
-		hide();
+		HeaderUc.closeClassContainer();
+		//hide();
 		newPopup = new NewClasspagePopupView() {
 
 			@Override
