@@ -6,7 +6,7 @@
       	<g:HTMLPanel ui:field="popupArrow" styleName="{style.PopupArrow}"></g:HTMLPanel>
       	<g:HTMLPanel styleName="{style.content}">
        	<g:Label ui:field="codeLabel"/>
-       	<br></br>
+      
         <g:Label ui:field="descLabel"/>
         </g:HTMLPanel>
        	<g:HTMLPanel ui:field="downPopupArrow" ></g:HTMLPanel>
