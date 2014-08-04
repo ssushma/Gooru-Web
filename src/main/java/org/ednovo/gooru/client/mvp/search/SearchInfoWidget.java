@@ -557,7 +557,7 @@ public class SearchInfoWidget extends Composite {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			
-			liecenceTooltip = new LiecenceTooltip(code,desc, (event.getRelativeElement().getAbsoluteLeft()-83),(event.getRelativeElement().getAbsoluteTop()+22));
+			liecenceTooltip = new LiecenceTooltip(code,desc, (event.getRelativeElement().getAbsoluteLeft()-109),(event.getRelativeElement().getAbsoluteTop()+22));
 			liecenceTooltip.setStyleName("");
 			liecenceTooltip.show();
 			liecenceTooltip.getElement().getStyle().setZIndex(99999);
