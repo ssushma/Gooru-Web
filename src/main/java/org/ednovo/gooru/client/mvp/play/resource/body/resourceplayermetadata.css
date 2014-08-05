@@ -215,6 +215,9 @@
 	height: 43px;
 	cursor: pointer;
 }
+.next:hover, .prev:hover{
+	opacity:.6;
+}
 .emoticonPopup {
 	display: none;
 	position: absolute;

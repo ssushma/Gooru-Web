@@ -33,6 +33,7 @@ import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -60,4 +61,5 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public void setGoogleDriveFileStatusCode(Integer statusCode);
 	public void displayResourceTags(List<ResourceTagsDo> resourceTagsList);
 	public void checkYoutubeAccessControls(Map<String, String> result);
+	public Button getNarrationButton();
 }

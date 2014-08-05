@@ -416,6 +416,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		this.addResourceContainerPresenter=addResourceContainerPresenter;
 		resoruceMetadataPresenter.setCollectionPlayerPresnter(this,true);
 		/*resoruceMetadataPresenter.removeRatingContainer(false);*/
+		getView().setNarrationButton(resoruceMetadataPresenter.getNarrationButton());
 		resourceFlagPresenter.setCollectionPlayerPresenter(this);
 		collectionFlagPresenter.setCollectionPlayerPresenter(this);
 		metadataPresenter.setCollectionPlayerPresenter(this);
@@ -698,12 +699,16 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			setUserAttemptedQuestionTypeAndStatus(false,0);
 			resoruceMetadataPresenter.showResourceWidget(collectionItemDo,nextResoruceRequest,previousResoruceRequest);
 			if(!AppClientFactory.isAnonymous()){
-				resoruceMetadataPresenter.setReaction(collectionItemDo); 
-				resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
+				if(AppClientFactory.getPlaceManager().getRequestParameter("cid")!=null){
+					resoruceMetadataPresenter.setReaction(collectionItemDo); 
+				}else{
+					resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
+				}
 			}else{
-				resoruceMetadataPresenter.clearStarRatings();
+				if(AppClientFactory.getPlaceManager().getRequestParameter("cid")==null){
+					resoruceMetadataPresenter.clearStarRatings();
+				}
 			}
-			
 			setOpenEndedAnswerSubmited(true);
 			setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
 			adjustCollectionMetadaBody(false);
