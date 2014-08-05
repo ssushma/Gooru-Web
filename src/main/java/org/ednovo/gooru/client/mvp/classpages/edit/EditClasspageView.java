@@ -152,9 +152,9 @@ public class EditClasspageView extends
 	@UiField
 	static Frame frameUrl;
 	
-	@UiField Label titleAlertMessageLbl, lblNext, lblPrevious, dropdownPlaceHolder;
+	@UiField Label titleAlertMessageLbl, lblNext, lblPrevious, dropdownPlaceHolder,lblAssignHeader,lblAssignText,lblAssignDes,lblStartAssign,lblAssignDetails,lblSequenceText,lblReadytoStart;
 
-	@UiField Button btnStudentView;
+	@UiField Button btnStudentView,btnReadytoStart;
 
 	@UiField
 	static Button monitorProgress;
@@ -173,7 +173,7 @@ public class EditClasspageView extends
 	Button btnNewAssignment;
 
 	@UiField
-	Button assignmentsTab;
+	Button assignmentsTab,btnAssignCollection;
 
 	@UiField
 	Button classListTab,reportsTab;
@@ -503,6 +503,16 @@ public class EditClasspageView extends
 		btnNewAssignment.getElement().setAttribute("alt",i18n.GL0144());
 		btnNewAssignment.getElement().setAttribute("title",i18n.GL0144());
 		
+		btnAssignCollection.setText(i18n.GL2115());
+		btnAssignCollection.getElement().setId("btnAssignCollection");
+		btnAssignCollection.getElement().setAttribute("alt",i18n.GL2115());
+		btnAssignCollection.getElement().setAttribute("title",i18n.GL2115());
+		
+		lblStartAssign.setText(i18n.GL2116());
+		lblStartAssign.getElement().setId("lblStartAssign");
+		lblStartAssign.getElement().setAttribute("alt",i18n.GL2116());
+		lblStartAssign.getElement().setAttribute("title",i18n.GL2116());
+		
 		btnDeleteClasspage.setText(i18n.GL0145());
 		btnDeleteClasspage.getElement().setAttribute("alt",i18n.GL0145());
 		btnDeleteClasspage.getElement().setAttribute("title",i18n.GL0145());
@@ -512,13 +522,40 @@ public class EditClasspageView extends
 		backArrowButton.getElement().setAttribute("alt",i18n.GL1617());
 		backArrowButton.getElement().setAttribute("title",i18n.GL1617());
 		
+		lblAssignHeader.setText(i18n.GL2113());
+		lblAssignHeader.getElement().setId("lblAssignHeader");
+		lblAssignHeader.getElement().setAttribute("alt",i18n.GL2113());
+		lblAssignHeader.getElement().setAttribute("title",i18n.GL2113());
+		
+		lblAssignText.setText(i18n.GL1973());
+		lblAssignText.getElement().setId("lblAssignText");
+		lblAssignText.getElement().setAttribute("alt",i18n.GL1973());
+		lblAssignText.getElement().setAttribute("title",i18n.GL1973());
+		
+		lblAssignDes.setText(i18n.GL2114());
+		lblAssignDes.getElement().setId("lblAssignDes");
+		lblAssignDes.getElement().setAttribute("alt",i18n.GL2114());
+		lblAssignDes.getElement().setAttribute("title",i18n.GL2114());
 		
 		monitorProgress.setText(i18n.GL1586());
 		monitorProgress.getElement().setId("btnMonitorProgress");
 		monitorProgress.getElement().setAttribute("alt",i18n.GL1586());
 		monitorProgress.getElement().setAttribute("title",i18n.GL1586());
 		
-
+		lblSequenceText.setText(i18n.GL2117());
+		lblSequenceText.getElement().setId("lblSequenceText");
+		lblSequenceText.getElement().setAttribute("alt",i18n.GL2117());
+		lblSequenceText.getElement().setAttribute("title",i18n.GL2117());
+		
+		lblAssignDetails.setText(i18n.GL2118());
+		lblAssignDetails.getElement().setId("lblAssignDetails");
+		lblAssignDetails.getElement().setAttribute("alt",i18n.GL2118());
+		lblAssignDetails.getElement().setAttribute("title",i18n.GL2118());
+		
+		btnReadytoStart.setText(i18n.GL2115());
+		btnReadytoStart.getElement().setId("btnReadytoStart");
+		btnReadytoStart.getElement().setAttribute("alt",i18n.GL2115());
+		btnReadytoStart.getElement().setAttribute("title",i18n.GL2115());
 		
 		reportsTab.setText(i18n.GL1737());
 		reportsTab.getElement().setId("btnReportsTab");
@@ -529,6 +566,11 @@ public class EditClasspageView extends
 		assignmentsDirectionsLabel.getElement().setId("lblAssignmentsDirections");
 		assignmentsDirectionsLabel.getElement().setAttribute("alt",i18n.GL1945());
 		assignmentsDirectionsLabel.getElement().setAttribute("title",i18n.GL1945());
+		
+		lblReadytoStart.setText(i18n.GL1945());
+		lblReadytoStart.getElement().setId("lblReadytoStart");
+		lblReadytoStart.getElement().setAttribute("alt",i18n.GL1945());
+		lblReadytoStart.getElement().setAttribute("title",i18n.GL1945());
 		
 		getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
 		getstarteddiv.setVisible(true);
@@ -567,6 +609,10 @@ public class EditClasspageView extends
 		btnClasspageCancel.getElement().setId("btnClasspageCancel");
 		btnNewAssignment.getElement().setId("btnNewAssignment");
 		btnDeleteClasspage.getElement().setId("btnDeleteClasspage");
+		
+		btnNewAssignment.addClickHandler(new addAssignmentHandler());
+		btnAssignCollection.addClickHandler(new addAssignmentHandler());
+		btnReadytoStart.addClickHandler(new addAssignmentHandler());
 		
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
@@ -969,13 +1015,13 @@ public class EditClasspageView extends
 		
 	}
 
-	@UiHandler("btnNewAssignment")
+	/*@UiHandler("btnNewAssignment")
 	public void OnClickNewAssignment(ClickEvent event){
 		MixpanelUtil.Click_Add_NewAssignment();
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 		getUiHandlers().addAssignmentsContainerPopup(getClasspageId());
-	}
+	}*/
 	
 	public void setClasspageData(ClasspageDo classpageDo){
 		this.classpageDo=classpageDo;
@@ -2046,5 +2092,18 @@ public class EditClasspageView extends
 	public void hideNoAssignmentsMessagePanel(){
 		noAssignmentsMessagePanel.setVisible(false);
 	}
+	
+	public class addAssignmentHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			MixpanelUtil.Click_Add_NewAssignment();
+			Window.enableScrolling(false);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
+			getUiHandlers().addAssignmentsContainerPopup(getClasspageId());
+			
+		}
+	}
+
+		
 }
 
