@@ -86,7 +86,7 @@
 				<g:HTMLPanel ui:field="noAssignmentsMessagePanel">
 					<!-- <g:Label ui:field="noAssignmentsMessageLblTwo" styleName="{res.css.noAssignmentMsg}" 
 						/> -->
-						<g:Label  styleName="{res.css.noAssignmentMsg}">Set up your class by assigning collections to your students</g:Label>
+						<g:Label  styleName="{res.css.noAssignmentMsg}" ui:field="lblAssignHeader"></g:Label>
 					<g:HTMLPanel styleName="{res.css.classpageHover}">
 						<!-- <g:Label styleName="{res.css.classpageHoverTitle}"
 							ui:field="noAssignmentsMessageLblTwo"> 
@@ -100,13 +100,13 @@
 							        </g:HTMLPanel>
 							      </g:HTMLPanel> -->
 							      <g:HTMLPanel styleName="{res.css.desHtml}">
-							          <g:Label styleName="{res.css.desHeader}">Assign Collections</g:Label>
-							          <g:Label styleName="{res.css.desc}"> Make sure that you've created collections before you add assignments.</g:Label>
+							          <g:Label styleName="{res.css.desHeader}" ui:field="lblAssignText"/>
+							          <g:Label styleName="{res.css.desc}" ui:field="lblAssignDes"/>
 							      </g:HTMLPanel>
 							      
 							      <g:HTMLPanel styleName="{res.css.imgStyle}">
-							          <g:Button styleName="plusButton {res.css.addAssignmentStyle}">Assign a collection</g:Button>
-							          <g:Label styleName="{res.css.assignText}">Click the button above to start assigning.</g:Label>
+							          <g:Button styleName="plusButton {res.css.addAssignmentStyle}" ui:field="btnAssignCollection"></g:Button>
+							          <g:Label styleName="{res.css.assignText}" ui:field="lblStartAssign"/>
 							      </g:HTMLPanel>
 							    </g:HTMLPanel>
 							   
@@ -118,7 +118,7 @@
 							      </g:HTMLPanel> -->
 							      
 							      <g:HTMLPanel styleName="{res.css.desHtml}">
-							          <g:Label styleName="{res.css.desHeader}">Sequence Assignments</g:Label>
+							          <g:Label styleName="{res.css.desHeader}" ui:field="lblSequenceText"/>
 							          <g:Label styleName="{res.css.desc}" ui:field="lblDefine"></g:Label>
 							      </g:HTMLPanel>
 							      <g:HTMLPanel styleName="{res.css.imgStyle}"><g:Image styleName="{res.css.imgStyleDiv}" url="images/collection-list.png" width="692" height="141"></g:Image></g:HTMLPanel>
@@ -131,7 +131,7 @@
 							        </g:HTMLPanel>
 							      </g:HTMLPanel> -->
 							      <g:HTMLPanel styleName="{res.css.desHtml}">
-							          <g:Label styleName="{res.css.desHeader}">Add Details</g:Label>
+							          <g:Label styleName="{res.css.desHeader}" ui:field="lblAssignDetails"></g:Label>
 							          <g:Label styleName="{res.css.desc}" ui:field="lblIncoporate"></g:Label>
 							      </g:HTMLPanel>
 							      
@@ -150,8 +150,8 @@
 					</g:HTMLPanel>
 					
 					<g:HTMLPanel styleName="{res.css.btnContainerStyle}">
-			        	<g:Label  styleName="{res.css.labelCenterAlign}">Ready to get started?</g:Label>
-					    <g:Button styleName="plusButton {res.css.addAssignmentStyle}">Assign a collection</g:Button>
+			        	<g:Label  styleName="{res.css.labelCenterAlign}" ui:field="lblReadytoStart"></g:Label>
+					    <g:Button styleName="plusButton {res.css.addAssignmentStyle}" ui:field="btnReadytoStart"/>
 				    </g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>

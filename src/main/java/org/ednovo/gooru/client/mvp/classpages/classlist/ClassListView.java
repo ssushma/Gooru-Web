@@ -122,7 +122,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	
 	@UiField TextBox txtClasspageLinkShare,txtClasspageCodeShare;
 	
-	@UiField Label visibilityTitle,openClassLabelTitle,openClassLabelDesc,openClosedLabelTitle,openClosedLabelDesc;
+	@UiField Label visibilityTitle,openClassLabelTitle,openClassLabelDesc,openClosedLabelTitle,openClosedLabelDesc,lblMonitorDes;
 	
 	@UiField SimpleRadioButton visibilityRadioOpen,visibilityRadioInviteOnly;
 	
@@ -253,6 +253,15 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		openClosedLabelTitle.setText(i18n.GL2022());
 		openClosedLabelDesc.setText(i18n.GL2023());
 		
+		lblMonitorDes.setText(i18n.GL2119());
+		lblMonitorDes.getElement().setId("lblMonitorDes");
+		lblMonitorDes.getElement().setAttribute("alt",i18n.GL2119());
+		lblMonitorDes.getElement().setAttribute("title",i18n.GL2119());
+		
+		manageTxt.setText(i18n.GL2120());
+		manageTxt.getElement().setId("lblmanageTxt");
+		manageTxt.getElement().setAttribute("alt",i18n.GL2120());
+		manageTxt.getElement().setAttribute("title",i18n.GL2120());
 	
 		privateMsgPanel.getElement().setId("pnlPrivateMsg");
 		
