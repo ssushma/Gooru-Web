@@ -121,7 +121,7 @@
 							          <g:Label styleName="{res.css.desHeader}" ui:field="lblSequenceText"/>
 							          <g:Label styleName="{res.css.desc}" ui:field="lblDefine"></g:Label>
 							      </g:HTMLPanel>
-							      <g:HTMLPanel styleName="{res.css.imgStyle}"><g:Image styleName="{res.css.imgStyleDiv}" url="images/collection-list.png" width="692" height="141"></g:Image></g:HTMLPanel>
+							      <g:HTMLPanel styleName="{res.css.imgStyle}"><g:Image styleName="{res.css.imgStyleDiv}" url="images/Classpage/assignments/sequence.png" width="692" height="141"></g:Image></g:HTMLPanel>
 							    </g:HTMLPanel>
 							    
 							     <g:HTMLPanel styleName="{res.css.collectionView} {res.css.section3Div}">
@@ -135,7 +135,7 @@
 							          <g:Label styleName="{res.css.desc}" ui:field="lblIncoporate"></g:Label>
 							      </g:HTMLPanel>
 							      
-							      <g:HTMLPanel styleName="{res.css.imgStyle}"><g:Image styleName="{res.css.imgStyleDiv}" url="images/collection-widget.png" width="626" height="212"></g:Image></g:HTMLPanel>
+							      <g:HTMLPanel styleName="{res.css.imgStyle}"><g:Image styleName="{res.css.imgStyleDiv}" url="images/Classpage/assignments/date_directions.png" width="626" height="212"></g:Image></g:HTMLPanel>
 							    </g:HTMLPanel>
 <!-- 							    <g:HTMLPanel styleName="{res.css.collectionView}">
 							      <g:HTMLPanel styleName="{res.css.circleBlock}">
