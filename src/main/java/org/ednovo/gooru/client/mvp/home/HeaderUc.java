@@ -192,8 +192,8 @@ public class HeaderUc extends Composite implements
 
 			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
 					PlaceTokens.HOME)) {
-				acctActivationPl.getElement().getStyle()
-						.setMarginTop(51, Unit.PX);
+				/*acctActivationPl.getElement().getStyle()
+						.setMarginTop(51, Unit.PX);*/
 			} else {
 				acctActivationPl.getElement().getStyle().clearMarginTop();
 			}
