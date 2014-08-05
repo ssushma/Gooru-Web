@@ -430,7 +430,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		callback = callback.replaceAll("!", "%21");
 		callback = callback.replaceAll("&", "%26");
 		
-		String gSigninUrl = getGoogleSignin() + "&domain=gmail.com&callBackUrl=" + callback;
+		String gSigninUrl = getGoogleSignin() + "&domain=gmail.com&	=" + callback;
 		return gSigninUrl;
 	}
 	
