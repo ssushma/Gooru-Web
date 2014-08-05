@@ -531,6 +531,7 @@ public class EditClasspageView extends
 		assignmentsDirectionsLabel.getElement().setAttribute("title",i18n.GL1945());
 		
 		getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+		getstarteddiv.setVisible(true);
 
 		lblDefine.setText(i18n.GL1960());
 		lblDefine.getElement().setId("lblDefine");
@@ -1048,6 +1049,7 @@ public class EditClasspageView extends
 			assignmentsTab.getElement().setClassName("");
 			assignmentsDirectionsLabel.setVisible(false);
 			getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+			getstarteddiv.setVisible(true);
 			backArrowButton.setVisible(false);
 			monitorProgress.setVisible(false);
 			newAssignmentAndMsgPanel.setVisible(false);
@@ -1069,6 +1071,7 @@ public class EditClasspageView extends
 			getClassListContainer().setVisible(false);
 			assignmentsDirectionsLabel.setVisible(false);
 			getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+			getstarteddiv.setVisible(true);
 			backArrowButton.setVisible(false);
 			monitorProgress.setVisible(false);
 			panelAssignmentPath.setVisible(false);
@@ -1134,6 +1137,7 @@ public class EditClasspageView extends
 			monitorProgress.setVisible(false);
 			assignmentsDirectionsLabel.setVisible(false);
 			getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+			getstarteddiv.setVisible(true);
 			String order=AppClientFactory.getPlaceManager().getRequestParameter("order",null);
 			if(classpageItemsList!=null&&classpageItemsList.size()>0){
 				dropDownListDiv.setVisible(true);
@@ -1160,6 +1164,7 @@ public class EditClasspageView extends
 				panelProgressContainer.setVisible(false);
 				assignmentsDirectionsLabel.setVisible(true);
 				getstarteddiv.addStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+				getstarteddiv.setVisible(false);
 				noAssignmentsMessagePanel.setVisible(true);
 				assignmentsTab.setText(i18n.GL1623()+"("+0+")");
 				dropDownListDiv.setVisible(false);
@@ -1222,6 +1227,7 @@ public class EditClasspageView extends
 				panelProgressContainer.setVisible(false);
 				assignmentsDirectionsLabel.setVisible(true);
 				getstarteddiv.addStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+				getstarteddiv.setVisible(false);
 				noAssignmentsMessagePanel.setVisible(true);
 				assignmentsTab.setText(i18n.GL1623()+"("+0+")");
 				/*droplistContianer.setVisible(false);*/
@@ -1239,6 +1245,7 @@ public class EditClasspageView extends
 		panelProgressContainer.setVisible(true);
 		assignmentsDirectionsLabel.setVisible(false);
 		getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+		getstarteddiv.setVisible(true);
 		noAssignmentsMessagePanel.setVisible(false);
 	/*	droplistContianer.setVisible(true);*/
 		dropDownListDiv.setVisible(true);
@@ -1343,6 +1350,7 @@ public class EditClasspageView extends
 				panelProgressContainer.setVisible(true);
 				assignmentsDirectionsLabel.setVisible(false);
 				getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+				getstarteddiv.setVisible(true);
 				noAssignmentsMessagePanel.setVisible(false);
 				/*droplistContianer.setVisible(true);*/
 				dropDownListDiv.setVisible(true);
@@ -1409,6 +1417,7 @@ public class EditClasspageView extends
 		panelProgressContainer.setVisible(true);
 		assignmentsDirectionsLabel.setVisible(false);
 		getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+		getstarteddiv.setVisible(true);
 		/*droplistContianer.setVisible(true);*/
 		dropDownListDiv.setVisible(true);
 		noAssignmentsMessagePanel.setVisible(false);
@@ -1580,6 +1589,7 @@ public class EditClasspageView extends
 			panelProgressContainer.setVisible(false);
 			assignmentsDirectionsLabel.setVisible(true);
 			getstarteddiv.addStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+			getstarteddiv.setVisible(false);
 			noAssignmentsMessagePanel.setVisible(true);
 			assignmentsTab.setText(i18n.GL1623()+"("+0+")");
 			/*droplistContianer.setVisible(false);*/
@@ -1592,6 +1602,7 @@ public class EditClasspageView extends
 			panelProgressContainer.setVisible(true);
 			assignmentsDirectionsLabel.setVisible(false);
 			getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+			getstarteddiv.setVisible(true);
 			noAssignmentsMessagePanel.setVisible(false);
 			/*droplistContianer.setVisible(true);*/
 			dropDownListDiv.setVisible(true);
@@ -1762,6 +1773,7 @@ public class EditClasspageView extends
 				if(classpageItemsList!=null&&classpageItemsList.size()>0){
 					assignmentsDirectionsLabel.setVisible(false);
 					getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+					getstarteddiv.setVisible(true);
 					panelAssignmentPath.setVisible(true);
 					headerAssignments.setVisible(true);
 					panelProgressContainer.setVisible(true);
@@ -1771,6 +1783,7 @@ public class EditClasspageView extends
 				else{
 					assignmentsDirectionsLabel.setVisible(true);
 					getstarteddiv.addStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+					getstarteddiv.setVisible(false);
 					panelAssignmentPath.setVisible(false);
 					headerAssignments.setVisible(false);
 					panelProgressContainer.setVisible(false);
@@ -1820,6 +1833,7 @@ public class EditClasspageView extends
 		public void onClick(ClickEvent event) {
 			assignmentsDirectionsLabel.setVisible(false);
 			getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+			getstarteddiv.setVisible(true);
 			classListTab.addStyleName(res.css().selected());
 			reportsTab.getElement().setClassName("");
 			assignmentsTab.getElement().setClassName("");
@@ -1861,6 +1875,7 @@ public class EditClasspageView extends
 		public void onClick(ClickEvent event) {
 			assignmentsDirectionsLabel.setVisible(false);
 			getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
+			getstarteddiv.setVisible(true);
 			reportsTab.addStyleName(res.css().selected());
 			classListTab.getElement().setClassName("");
 			assignmentsTab.getElement().setClassName("");
