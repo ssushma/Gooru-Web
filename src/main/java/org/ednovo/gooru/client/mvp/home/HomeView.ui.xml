@@ -572,55 +572,55 @@
 									<div class="col-xs-8">
 										<p>
 											<a
-												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=77741">Science 1</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=22437">Environmental Science</a>
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p>39 </p>
+										<p>342</p>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-8">
 										<p>
 											<a
-												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=	77838">Science 2</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=20865">Astronomy</a>
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p> 55 </p>
+										<p>445</p>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-8">
 										<p>
 											<a
-												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=44949">Science 3</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=22702">Chemistry</a>
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p> 120</p>
+										<p>376</p>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-8">
 										<p>
 											<a
-												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=44948">Science 4</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=22185">Biology</a>
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p>135</p>
+										<p>528</p>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-8">
 										<p>
 											<a
-												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=20003">Integrated Science</a>
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=22912">Physics</a>
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p> 147 </p>
+										<p>168</p>
 									</div>
 								</div>
 								<div class="row">
@@ -923,6 +923,9 @@
 								District Libraries
 							</div>
 							<div class="blockContent districtLibraryContainer">
+							    <p>
+									<a href="#CoreLibrary">Core Library</a>
+								</p>
 								<p>
 									<a href="#lpslibrary1">Leadership Public Schools</a>
 								</p>
@@ -942,7 +945,6 @@
 								<p>
 									<a href="#valverde">Val Verde USD</a>
 								</p>
-
 							</div>
 						</div>
 						<div class="rightBlock1">
@@ -1072,7 +1074,7 @@
 								teachers and students.
 							</p>
 							<p>
-								<a class="btn btn-primary" href="#">Gooru School Partners</a>
+								<a class="btn btn-primary" href="http://partners.goorulearning.org/school/partner-with-us">Gooru School Partners</a>
 							</p>
 							<div class="clearfix"></div>
 						</div>
@@ -1089,7 +1091,7 @@
 								all.
 							</p>
 							<p>
-								<a class="btn btn-primary" href="#">Gooru Partners</a>
+								<a class="btn btn-primary" href="http://partners.goorulearning.org/">Gooru Partners</a>
 							</p>
 						</div>
 					</div>
@@ -1103,7 +1105,7 @@
 								our mission and build with Gooru.
 							</p>
 							<p>
-								<a class="btn btn-primary" href="#">Gooru Developers</a>
+								<a class="btn btn-primary" href="http://developers.goorulearning.org/">Gooru Developers</a>
 							</p>
 						</div>
 					</div>
@@ -1213,9 +1215,12 @@
 								</li>
 
 							</ul>
-							<p>
+							<!-- <p>
 								<img src="images/landing-page/footer-icon.png" />
-							</p>
+							</p> -->
+							<div>
+								<g:Label styleName="copyRight" text="{i18n.GL1246}"></g:Label>
+							</div>
 						</div>
 						<div class="col-xs-2">
 							<h4>Community</h4>
@@ -1235,7 +1240,7 @@
 
 							</ul>
 						</div>
-						<div class="col-xs-2">
+						<div class="col-xs-2 footerLastItem">
 							<h4>Legal</h4>
 							<ul class="list-unstyled">
 								<li>
@@ -1254,9 +1259,6 @@
 						</div>
 						<div class="clearfix"></div>
 					</div>
-				</div>
-				<div>
-					<g:Label styleName="copyRight" text="{i18n.GL1246}"></g:Label>
 				</div>
 			</footer>
 			<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

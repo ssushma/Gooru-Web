@@ -114,14 +114,14 @@
 						<g:Label ui:field="copyRightYearText"/>
 					</g:SimplePanel>
 				</g:HTMLPanel>
-				<div style="width: 114px;height: 36px;overflow: hidden;display: inline-block;margin-top: 10px;">
+				<!-- <div style="width: 114px;height: 36px;overflow: hidden;display: inline-block;margin-top: 10px;">
 				    <g:Anchor ui:field="mixpanelLink">
-					<!-- <a href="https://mixpanel.com/f/partner" ui:filed="mixpanelLink"> -->
+					<a href="https://mixpanel.com/f/partner" ui:filed="mixpanelLink">
 						<img src="//cdn.mxpnl.com/site_media/images/partner/badge_light.png"
 							alt="Mobile Analytics"/>
-					<!-- </a> -->
+					</a>
 					</g:Anchor>
-				</div>
+				</div> -->
 			</g:HTMLPanel>
 		</g:FlowPanel>
 	</g:FlowPanel>

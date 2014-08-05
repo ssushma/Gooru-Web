@@ -8,11 +8,8 @@
 	<g:FlowPanel styleName="{footerstyle.footerContainer}" ui:field="footerContainer">
 		<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.container} {palyerStyleResource.getPlayerStyleResource.animationWrapper}" ui:field="resourceAnimationContainer"></g:FlowPanel>
 		<g:HTMLPanel styleName="{palyerStyleResource.getPlayerStyleResource.container} {palyerStyleResource.getPlayerStyleResource.tabButtonsContainer}">
-			<div class="{palyerStyleResource.getPlayerStyleResource.navigationWrapper}">
-				<g:Button styleName="{footerstyle.infoButtonNormal}" ui:field="infoButton"></g:Button>  
-				<g:Button styleName="{footerstyle.narrationButtonNormal}" ui:field="narrationButton"></g:Button>
-			</div>
 			<div class="{palyerStyleResource.getPlayerStyleResource.navigationWrapper} {footerstyle.text-right}">
+				<g:Button styleName="{footerstyle.infoButtonNormal}" ui:field="infoButton"></g:Button>  
 				<g:Button styleName="{footerstyle.addButtonNormal}" ui:field="addButton"></g:Button>  
 				<g:Button styleName="{footerstyle.shareButtonNormal}" ui:field="shareButton"></g:Button> 
 				<g:Button styleName="{footerstyle.flagButtonNormal}" ui:field="flagButton"></g:Button>

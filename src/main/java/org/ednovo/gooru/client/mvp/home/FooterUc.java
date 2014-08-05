@@ -100,7 +100,7 @@ public class FooterUc extends Composite {
 	Anchor copyRightAnr;
 
 	@UiField
-	Anchor careersAnr,mixpanelLink;
+	Anchor careersAnr;//mixpanelLink;
 
 	@UiField
 	Anchor contactUsAnr;
@@ -230,8 +230,8 @@ public class FooterUc extends Composite {
 		copyRightYearText.getElement().setAttribute("alt",i18n.GL1246());
 		copyRightYearText.getElement().setAttribute("title",i18n.GL1246());
 		
-		mixpanelLink.setTarget("_blank");
-		mixpanelLink.setHref("https://mixpanel.com/f/partner");
+//		mixpanelLink.setTarget("_blank");
+//		mixpanelLink.setHref("https://mixpanel.com/f/partner");
 	
 		aboutGooruAnr.setHref("http://about.goorulearning.org/");
 		aboutGooruAnr.setTarget("_blank");
@@ -246,7 +246,7 @@ public class FooterUc extends Composite {
 		contactUsAnr.setHref("http://about.goorulearning.org/contact/");
 		contactUsAnr.setTarget("_blank");
 		
-		mixpanelLink.getElement().setId("lnkMixpanelLink");
+//		mixpanelLink.getElement().setId("lnkMixpanelLink");
 		aboutGooruAnr.getElement().setId("lnkAboutGooru");
 		communityAnr.getElement().setId("lnkCommunity");
 		supportAnr.getElement().setId("lnkSupport");
