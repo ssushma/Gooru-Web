@@ -182,6 +182,7 @@ public class LibraryTopicListView extends Composite{
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
 	
 	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
+	private PopupPanel toolTipPopupPanelCustomize = new PopupPanel();
 
 	private String placeToken = null;
 	
@@ -286,8 +287,11 @@ public class LibraryTopicListView extends Composite{
 		}else{
 			standardsFloPanel.setVisible(true);
 		}
-		
-		showPopupAfterGmailSignin();
+		Map<String, String> maps = StringUtil.splitQuery(Window.Location
+				.getHref());
+		if(maps.containsKey("emailId")){
+			showPopupAfterGmailSignin();
+		}
 		
 		AppClientFactory.getEventBus().addHandler(OpenLessonConceptEvent.TYPE, openLessonConceptHandler);
 		AppClientFactory.getEventBus().addHandler(SetLoadingIconEvent.TYPE, setLoadingIconHandler);
@@ -1225,7 +1229,12 @@ public class LibraryTopicListView extends Composite{
 	 */
 	@UiHandler("assignCollectionBtn")
 	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
-		System.out.println("click"+AppClientFactory.getCurrentPlaceToken());
+		toolTipPopupPanelNew.clear();
+		toolTipPopupPanelNew.hide();
+		final Map<String, String> params = StringUtil.splitQuery(Window.Location
+				.getHref());
+		
+		
 		String collectionId = getConceptDo().getGooruOid();
 		if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
 			MixpanelUtil.mixpanelEvent("standardlibrary_assign_collection");	
@@ -1235,7 +1244,7 @@ public class LibraryTopicListView extends Composite{
 				if(!isAssignPopup){
 					isAssignPopup=true;
 				//	Window.enableScrolling(false);
-				final Map<String,String> params = new HashMap<String,String>();
+				//final Map<String,String> params = new HashMap<String,String>();
 				AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals()) {
 					
 					@Override
@@ -1251,9 +1260,10 @@ public class LibraryTopicListView extends Composite{
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
 				successPopupVc.setHeight("658px");
-
-				successPopupVc.show();
-				successPopupVc.center();
+				if(!successPopupVc.isVisible()){
+					successPopupVc.show();
+					successPopupVc.center();
+				}
 				Window.enableScrolling(false);
 				   
 				if (AppClientFactory.isAnonymous()){
@@ -1293,9 +1303,13 @@ public class LibraryTopicListView extends Composite{
 	 */
 	@UiHandler("customizeCollectionBtn")
 	public void oncustomizeCollectionBtnClicked(ClickEvent clickEvent) {
+		toolTipPopupPanelCustomize.clear();
+		toolTipPopupPanelCustomize.hide();
 		if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
 			MixpanelUtil.mixpanelEvent("standardlibrary_customize_collection");	
 		}
+		final Map<String, String> params = StringUtil.splitQuery(Window.Location
+				.getHref());
 		String collectionId = getConceptDo().getGooruOid();
 		MixpanelUtil.mixpanelEvent("LandingPage_customize_collection");
 		if(!isCustomizePopup){
@@ -1308,7 +1322,7 @@ public class LibraryTopicListView extends Composite{
 			{
 				loginFlag = false;
 			}
-			final Map<String,String> params = new HashMap<String,String>();
+		//	final Map<String,String> params = new HashMap<String,String>();
 			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getConceptDo().getTitle()) {
 
 				@Override
@@ -1343,7 +1357,10 @@ public class LibraryTopicListView extends Composite{
 	
 	private void showPopupAfterGmailSignin() {
 		// TODO Auto-generated method stub
-		String collectionId = getConceptDo().getGooruOid()!=null ? getConceptDo().getGooruOid(): null;
+
+		
+		String collectionId = getConceptDo().getGooruOid()!=null ? getConceptDo().getGooruOid():null;
+
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
 		if(customize!=null && customize.equals("yes")){
@@ -1390,10 +1407,11 @@ public class LibraryTopicListView extends Composite{
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("638px");
-
-			successPopupVc.show();
-			successPopupVc.center();
+			successPopupVc.setHeight("658px");
+			if(!successPopupVc.isVisible()){
+				successPopupVc.show();
+				successPopupVc.center();
+			}
 			if (AppClientFactory.isAnonymous()){
 				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
 			}
@@ -1485,12 +1503,12 @@ public class LibraryTopicListView extends Composite{
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			toolTipPopupPanelNew.clear();
-			toolTipPopupPanelNew.setWidget(new GlobalToolTip(i18n.GL0677()));
-			toolTipPopupPanelNew.setStyleName("");
-			toolTipPopupPanelNew.setPopupPosition(customizeCollectionBtn.getElement().getAbsoluteLeft()+18, customizeCollectionBtn.getElement().getAbsoluteTop()+10);
-			toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
-			toolTipPopupPanelNew.show();
+			toolTipPopupPanelCustomize.clear();
+			toolTipPopupPanelCustomize.setWidget(new GlobalToolTip(i18n.GL0677()));
+			toolTipPopupPanelCustomize.setStyleName("");
+			toolTipPopupPanelCustomize.setPopupPosition(customizeCollectionBtn.getElement().getAbsoluteLeft()+18, customizeCollectionBtn.getElement().getAbsoluteTop()+10);
+			toolTipPopupPanelCustomize.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanelCustomize.show();
 		}
 		
 	}
@@ -1499,7 +1517,7 @@ public class LibraryTopicListView extends Composite{
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			toolTipPopupPanelNew.hide();
+			toolTipPopupPanelCustomize.hide();
 		}
 	}
 	public String getDetaultResourceImage(String category){
@@ -1588,6 +1606,7 @@ public class LibraryTopicListView extends Composite{
 
 		@Override
 		public void onBlur(BlurEvent event) {
+			toolTipPopupPanelCustomize.hide();
 			toolTipPopupPanelNew.hide();
 			
 		}
