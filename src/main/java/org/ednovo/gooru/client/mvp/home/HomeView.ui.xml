@@ -116,6 +116,18 @@
 						<div class="blueBand">Elementary School</div>
 						<div class="dataTableResult">
 							<div class="col-xs-3">
+							    
+							    <div class="row">
+									<div class="col-xs-8">
+										<p>
+											<a
+												href="#community&amp;page=course-page&amp;subject=20001&amp;courseId=44881">Kindergarten Science</a>
+										</p>
+									</div>
+									<div class="col-xs-4">
+										<p>25</p>
+									</div>
+								</div>
 								<div class="row">
 									<div class="col-xs-8">
 										<p>
@@ -124,7 +136,7 @@
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p>39 </p>
+										<p>39</p>
 									</div>
 								</div>
 								<div class="row">
@@ -135,7 +147,7 @@
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p> 55 </p>
+										<p>55</p>
 									</div>
 								</div>
 								<div class="row">
@@ -146,7 +158,7 @@
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p> 120</p>
+										<p>120</p>
 									</div>
 								</div>
 								<div class="row">
@@ -168,7 +180,7 @@
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p> 147 </p>
+										<p>147</p>
 									</div>
 								</div>
 
@@ -176,6 +188,17 @@
 
 							</div>
 							<div class="col-xs-3">
+							    <div class="row">
+									<div class="col-xs-8">
+										<p>
+											<a
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=47673">Kindergarten Math</a>
+										</p>
+									</div>
+									<div class="col-xs-4">
+										<p>37</p>
+									</div>
+								</div>
 								<div class="row">
 									<div class="col-xs-8">
 										<p>
@@ -184,7 +207,7 @@
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p> 37 </p>
+										<p>37</p>
 									</div>
 								</div>
 								<div class="row">
@@ -195,7 +218,7 @@
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p> 58 </p>
+										<p>58</p>
 									</div>
 								</div>
 								<div class="row">
@@ -206,7 +229,7 @@
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p> 97</p>
+										<p>97</p>
 									</div>
 								</div>
 								<div class="row">
@@ -217,7 +240,7 @@
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p> 195</p>
+										<p>195</p>
 									</div>
 								</div>
 								<div class="row">
@@ -228,13 +251,25 @@
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p> 188 </p>
+										<p>188</p>
 									</div>
 								</div>
 
 
 							</div>
 							<div class="col-xs-3">
+							    
+								<div class="row">
+									<div class="col-xs-8">
+										<p>
+											<a
+												href="#community&amp;page=course-page&amp;subject=25681&amp;courseId=44918">Kindergarten Social Sciences</a>
+										</p>
+									</div>
+									<div class="col-xs-4">
+										<p>26</p>
+									</div>
+								</div>
 								<div class="row">
 									<div class="col-xs-8">
 										<p>
@@ -243,7 +278,7 @@
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p>33	</p>
+										<p>33</p>
 									</div>
 								</div>
 								<div class="row">
@@ -290,28 +325,35 @@
 										<p>288</p>
 									</div>
 								</div>
-
-
-
-
 							</div>
 							<div class="col-xs-3">
-								<div class="row">
+							    <div class="row">
 									<div class="col-xs-8">
 										<p>
 											<a
-												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=47670">English Language Arts 1</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=47669">Kindergarten ELA</a>
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p>53 </p>
+										<p>36</p>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-8">
 										<p>
 											<a
-												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=47671">English Language Arts 2</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=47670">ELA 1</a>
+										</p>
+									</div>
+									<div class="col-xs-4">
+										<p>53</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-8">
+										<p>
+											<a
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=47671">ELA 2</a>
 										</p>
 									</div>
 									<div class="col-xs-4">
@@ -322,7 +364,7 @@
 									<div class="col-xs-8">
 										<p>
 											<a
-												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=47672">English Language Arts 3</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=47672">ELA 3</a>
 										</p>
 									</div>
 									<div class="col-xs-4">
@@ -333,7 +375,7 @@
 									<div class="col-xs-8">
 										<p>
 											<a
-												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=44864">English Language Arts 4</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=44864">ELA 4</a>
 										</p>
 									</div>
 									<div class="col-xs-4">
@@ -344,7 +386,7 @@
 									<div class="col-xs-8">
 										<p>
 											<a
-												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=30187">English Language Arts 5</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=30187">ELA 5</a>
 										</p>
 									</div>
 									<div class="col-xs-4">
@@ -354,16 +396,7 @@
 
 							</div>
 						</div>
-
-
-
-
-
 						<div class="blueBand">Middle School</div>
-
-
-
-
 						<div class="dataTableResult">
 							<div class="col-xs-3">
 								<div class="row">
@@ -487,7 +520,7 @@
 									<div class="col-xs-8">
 										<p>
 											<a
-												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=30248">English Language Arts 6	</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=30248">ELA 6	</a>
 										</p>
 									</div>
 									<div class="col-xs-4">
@@ -498,7 +531,7 @@
 									<div class="col-xs-8">
 										<p>
 											<a
-												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=30287">English Language Arts 7</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=30287">ELA 7</a>
 										</p>
 									</div>
 									<div class="col-xs-4">
@@ -509,7 +542,7 @@
 									<div class="col-xs-8">
 										<p>
 											<a
-												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=30357">English Language Arts 8</a>
+												href="#community&amp;page=course-page&amp;subject=30186&amp;courseId=30357">ELA 8</a>
 										</p>
 									</div>
 									<div class="col-xs-4">
@@ -708,7 +741,7 @@
 										</p>
 									</div>
 									<div class="col-xs-4">
-										<p>220	</p>
+										<p>220</p>
 									</div>
 								</div>
 								<div class="row">
@@ -889,7 +922,7 @@
 							<div class="blockHeader">
 								District Libraries
 							</div>
-							<div class="blockContent">
+							<div class="blockContent districtLibraryContainer">
 								<p>
 									<a href="#lpslibrary1">Leadership Public Schools</a>
 								</p>
