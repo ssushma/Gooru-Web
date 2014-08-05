@@ -923,6 +923,9 @@
 								District Libraries
 							</div>
 							<div class="blockContent districtLibraryContainer">
+							    <p>
+									<a href="#CoreLibrary">Core Library</a>
+								</p>
 								<p>
 									<a href="#lpslibrary1">Leadership Public Schools</a>
 								</p>
@@ -942,11 +945,6 @@
 								<p>
 									<a href="#valverde">Val Verde USD</a>
 								</p>
-								
-								<p>
-									<a href="#CoreLibrary">Core Library</a>
-								</p>
-
 							</div>
 						</div>
 						<div class="rightBlock1">
@@ -1076,7 +1074,7 @@
 								teachers and students.
 							</p>
 							<p>
-								<a class="btn btn-primary" href="#">Gooru School Partners</a>
+								<a class="btn btn-primary" href="http://partners.goorulearning.org/school/partner-with-us">Gooru School Partners</a>
 							</p>
 							<div class="clearfix"></div>
 						</div>
@@ -1093,7 +1091,7 @@
 								all.
 							</p>
 							<p>
-								<a class="btn btn-primary" href="#">Gooru Partners</a>
+								<a class="btn btn-primary" href="http://partners.goorulearning.org/">Gooru Partners</a>
 							</p>
 						</div>
 					</div>
@@ -1107,7 +1105,7 @@
 								our mission and build with Gooru.
 							</p>
 							<p>
-								<a class="btn btn-primary" href="#">Gooru Developers</a>
+								<a class="btn btn-primary" href="http://developers.goorulearning.org/">Gooru Developers</a>
 							</p>
 						</div>
 					</div>
