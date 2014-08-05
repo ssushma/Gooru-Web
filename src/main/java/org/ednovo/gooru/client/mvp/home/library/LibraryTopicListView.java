@@ -1372,7 +1372,9 @@ public class LibraryTopicListView extends Composite{
 			{
 				loginFlag = false;
 			}
-			final Map<String,String> params = new HashMap<String,String>();
+			final Map<String, String> params = StringUtil.splitQuery(Window.Location
+					.getHref());
+			//final Map<String,String> params = new HashMap<String,String>();
 			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getConceptDo().getTitle()) {
 
 				@Override
@@ -1392,7 +1394,9 @@ public class LibraryTopicListView extends Composite{
 			successPopupVc.center();
 		}
 		if(assign!=null && assign.equals("yes")){
-			final Map<String,String> params = new HashMap<String,String>();
+		//	final Map<String,String> params = new HashMap<String,String>();
+			final Map<String, String> params = StringUtil.splitQuery(Window.Location
+					.getHref());
 			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals()) {
 
 				@Override
