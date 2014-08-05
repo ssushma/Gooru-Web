@@ -200,6 +200,8 @@ public interface EditClasspageCBundle extends ClientBundle{
         String arrowInstructional();
         String scrollPanelContainerInstructional();
         String btnContainer();
+        String btnContainerStyle();
+        String addAssignmentStyle();
         
         String subtitle();
         String contentBox();
@@ -221,6 +223,13 @@ public interface EditClasspageCBundle extends ClientBundle{
         String section3Div();
         String assignementOrderHeader();
         String errorMessage();
+        
+        String desHtml();
+        String desHeader();
+        String imgStyle();
+        String imgStyleDiv();
+        String assignText();
+        
         String studentStyle();
         String techerStyle();
 

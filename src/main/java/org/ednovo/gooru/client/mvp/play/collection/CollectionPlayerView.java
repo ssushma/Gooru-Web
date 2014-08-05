@@ -58,6 +58,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -128,7 +129,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		appPopUp.setStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().studyplayerContainer());
 		appPopUp.add(uiBinder.createAndBindUi(this));
 		//footerView.getNavigationButton().addClickHandler(new ShowTabWidgetView("navigation"));
-		footerView.getNarrationButton().addClickHandler(new ShowTabWidgetView("narration"));
+		//footerView.getNarrationButton().addClickHandler(new ShowTabWidgetView("narration"));
 		footerView.getShareButton().addClickHandler(new ShowTabWidgetView("share"));
 		footerView.getInfoButton().addClickHandler(new ShowTabWidgetView("info"));
 		footerView.getAddButton().addClickHandler(new ShowTabWidgetView("add"));
@@ -230,6 +231,11 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	@Override
 	public void setResourceTitle(String resourceTitle) {
 		headerView.setResourceTitle(resourceTitle);
+	}
+	
+	public void setNarrationButton(Button narrationButton){
+		footerView.setNarrationButton(narrationButton);
+		footerView.getNarrationButton().addClickHandler(new ShowTabWidgetView("narration"));
 	}
 
 	@Override
@@ -610,11 +616,16 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			//headerView.getFlagButton().setVisible(isHidePlayerButtons);
 			footerView.setVisible(!isHidePlayerButtons);
 		}else{
-			headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
-			headerView.displayAuthorName();
+			String view=AppClientFactory.getPlaceManager().getRequestParameter("view",null);
+			if(view!=null&&view.equalsIgnoreCase("end")){
+				headerView.getAuthorContainer().setVisible(false);
+			}else{
+				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
+				headerView.displayAuthorName();
+				showLogoutMessage(!isHidePlayerButtons);
+			}
 			//headerView.getFlagButton().setVisible(!isHidePlayerButtons);
 			footerView.setVisible(!isHidePlayerButtons);
-			showLogoutMessage(!isHidePlayerButtons);
 		}
 		//headerView.getNavigationButton().setVisible(!isHidePlayerButtons);
 //		headerView.getNarrationButton().setVisible(!isHidePlayerButtons);
