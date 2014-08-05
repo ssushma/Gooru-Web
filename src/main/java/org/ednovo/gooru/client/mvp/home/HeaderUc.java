@@ -192,8 +192,8 @@ public class HeaderUc extends Composite implements
 
 			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
 					PlaceTokens.HOME)) {
-				acctActivationPl.getElement().getStyle()
-						.setMarginTop(51, Unit.PX);
+				/*acctActivationPl.getElement().getStyle()
+						.setMarginTop(51, Unit.PX);*/
 			} else {
 				acctActivationPl.getElement().getStyle().clearMarginTop();
 			}
@@ -251,6 +251,10 @@ public class HeaderUc extends Composite implements
 	
 	boolean hasClasses = false;
 	
+	@UiField HTMLPanel discovertooltippop,myCollectionsPop;
+	
+	@UiField static HTMLPanel myClassesPop;
+	
 	String classpageId = "";
 	/*
 	 * @UiField Anchor registerLinkAnr;
@@ -284,13 +288,13 @@ public class HeaderUc extends Composite implements
 	Label lblBeta; // gooruClassicViewLbl
 
 	@UiField
-	HTMLPanel dotsPanel, mainDotsPanel, mainInnerDotsPanel,dropDownImg;
+	public static HTMLPanel dotsPanel, mainDotsPanel, mainInnerDotsPanel,dropDownImg;
 
 	@UiField
 	Label discoverLink, organizeLink, teachLink, studyLink, loggedInfoLbl,thanksLbl;
 
 	@UiField
-	HTMLEventPanel discoverLinkContainer, organizeLinkContainer,
+	HTMLEventPanel discoverLinkContainer, organizeLinkContainer,organizeLinkMain,teachLinkMain,discoverLinkMain,
 			teachLinkContainer, studyLinkContainer, LoginLinkContainer;
 
 	Label noneMenu = null;
@@ -440,14 +444,44 @@ public class HeaderUc extends Composite implements
 		organizeLinkContainer
 				.addClickHandler(new OnClickOrganizeEventHandler());
 		
-		organizeLinkContainer.addMouseOverHandler(new OrganizeMouseOver());
-		organizeLinkContainer.addMouseOutHandler(new OrganizeMouseOut());
+
+			organizeToolTip=new OrganizeToolTip();
+			organizeToolTip.getElement().getStyle().setBackgroundColor("transparent");
+			organizeToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+			organizeToolTip.getElement().getStyle().setZIndex(99);
+			myCollectionsPop.add(organizeToolTip);
+			myCollectionsPop.getElement().getStyle().setPosition(Position.ABSOLUTE);
+			myCollectionsPop.getElement().getStyle().setZIndex(99);
+			myCollectionsPop.setVisible(false);
+		
+		
+		
+	
+			organizeLinkMain.addMouseOverHandler(new OrganizeMouseOver());
+			organizeLinkMain.addMouseOutHandler(new OrganizeMouseOut());
+	
 		
 		
 
 		teachLinkContainer.addClickHandler(new OnClickTeachEventHandler());
-		teachLinkContainer.addMouseOverHandler(new TeachMouseOver());
-		teachLinkContainer.addMouseOutHandler(new TeachMouseOut());
+		
+		
+
+		classpageListVc = new ClasspageListVc(false,null);
+		
+		classpageListVc.setWidth("202px !important");
+		classpageListVc.setHeight("246px !important");
+		classpageListVc.setStyleName(HomeCBundle.INSTANCE.css()
+				.classpageListContainer());
+		myClassesPop.add(classpageListVc);
+		myClassesPop.getElement().getStyle().setPosition(Position.ABSOLUTE);
+		myClassesPop.getElement().getStyle().setMarginTop(50, Unit.PX);
+		myClassesPop.getElement().getStyle().setZIndex(99);
+		myClassesPop.setVisible(false);
+		//classpageListVc.setPopupPosition(left, top);
+		
+		teachLinkMain.addMouseOverHandler(new TeachMouseOver());
+		teachLinkMain.addMouseOutHandler(new TeachMouseOut());
 		
 
 		studyLinkContainer.addClickHandler(new studyClickHandler());
@@ -529,15 +563,34 @@ public class HeaderUc extends Composite implements
 		mainDotsPanel.getElement().setId("pnlMainDotsPanel");
 		mainInnerDotsPanel.getElement().setId("pnlMainInnerDotsPanel");
 		dotsPanel.getElement().setId("pnlDotsPanel");
+		
+
 		dropDownImg.getElement().setId("pnlDropDownImg");
 		signUpInfo.getElement().setId("fpnlSignUpInfo");
 		logoutDownArrowLbl.getElement().setId("lblLogoutDownArrow");
 		logInfoFloPanel.getElement().setId("fpnlLogInfoFloPanel");
 		acctActivationPl.getElement().setId("epnlAcctActivationPl");
 		
+
 		
-		discoverLinkContainer.addMouseOverHandler(new DiscoverMouseOver());
-		discoverLinkContainer.addMouseOutHandler(new DiscoverMouseOut());
+		
+		discoverToolTip=new DiscoverToolTip();
+		discoverToolTip.getElement().getStyle().setBackgroundColor("transparent");
+		discoverToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+		discoverToolTip.getElement().getStyle().setZIndex(99);
+
+		
+		discovertooltippop.add(discoverToolTip);
+		
+		discovertooltippop.getElement().getStyle().setPosition(Position.ABSOLUTE);
+		discovertooltippop.getElement().getStyle().setMarginLeft(-4, Unit.PX);
+		discovertooltippop.getElement().getStyle().setZIndex(99);
+		
+		discovertooltippop.setVisible(false);
+		
+		
+		discoverLinkMain.addMouseOverHandler(new DiscoverMouseOver());
+		discoverLinkMain.addMouseOutHandler(new DiscoverMouseOut());
 		
 		studyLinkContainer.setVisible(false);
 		ClickHandler eve1 = new ClickHandler() {
@@ -620,7 +673,7 @@ public class HeaderUc extends Composite implements
 	}
 
 	public void clearClasspageList() {
-		classpageListVc = null;
+	//	classpageListVc = null;
 		studyNowToolTip = null;
 	}
 
@@ -699,11 +752,11 @@ public class HeaderUc extends Composite implements
 				GooruCBundle.INSTANCE.css().menu());
 		discoverLink.getParent().setStyleName(
 				GooruCBundle.INSTANCE.css().menu());
-		if (classpageListVc != null) {
+/*		if (classpageListVc != null) {
 			if (classpageListVc.isShowing()) {
 				classpageListVc.hide();
 			}
-		}
+		}*/
 
 		if (logoutPanelVc != null) {
 			if (logoutPanelVc.isShowing()) {
@@ -861,9 +914,9 @@ public class HeaderUc extends Composite implements
 	}
 
 	public void OpenClasspageList() {
-		int left = teachLinkContainer.getAbsoluteLeft();
+	/*	int left = teachLinkContainer.getAbsoluteLeft();
 		int top = teachLinkContainer.getAbsoluteTop() + 50;
-		showTeachPanelAsPopup(left, top);
+		showTeachPanelAsPopup(left, top);*/
 	}
 
 	//This method is not used now. Even the mixpanel event is moved to StudyNowToolTip.java
@@ -889,23 +942,8 @@ public class HeaderUc extends Composite implements
 	public class DiscoverMouseOver implements MouseOverHandler {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			discoverToolTip=new DiscoverToolTip();
-			discoverToolTip.getElement().getStyle().setBackgroundColor("transparent");
-			discoverToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-			discoverToolTip.getElement().getStyle().setZIndex(99);
-			discoverToolTip.setPopupPosition(event.getRelativeElement().getAbsoluteLeft(), event.getRelativeElement().getAbsoluteTop() + 50);
-
-			
-			if(organizeToolTip != null)
-			{
-				organizeToolTip.hide();
-			}
-			if(classpageListVc != null)
-			{
-				classpageListVc.hide();
-			}
-
-			discoverToolTip.show();
+		//	discovertooltippop.setPopupPosition(event.getRelativeElement().getAbsoluteLeft(), event.getRelativeElement().getAbsoluteTop() + 50);
+			discovertooltippop.setVisible(true);
 		}
 	}
 
@@ -913,17 +951,7 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-/*			if(tooltipTimer != null)
-			{
-			tooltipTimer.cancel();
-			}*/
-			//toolTipPopupPanel.hide();			
-			EventTarget target = event.getRelatedTarget();
-			  if (Element.is(target)) {
-				  if (!discoverToolTip.getElement().isOrHasChild(Element.as(target))){
-					  discoverToolTip.hide();
-				  }
-			  }
+			discovertooltippop.setVisible(false);
 		}
 	}
 
@@ -932,27 +960,7 @@ public class HeaderUc extends Composite implements
 		@Override
 		public void onMouseOver(final MouseOverEvent event) {
 			if (!AppClientFactory.isAnonymous()){
-				organizeToolTip=new OrganizeToolTip();
-				organizeToolTip.getElement().getStyle().setBackgroundColor("transparent");
-				organizeToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-				organizeToolTip.getElement().getStyle().setZIndex(99);
-				organizeToolTip.setPopupPosition(event.getRelativeElement().getAbsoluteLeft(), event.getRelativeElement().getAbsoluteTop() + 50);
-//				tooltipTimer = new Timer() {
-//					public void run() {
-				
-				if(discoverToolTip != null)
-				{
-					discoverToolTip.hide();
-				}
-				if(classpageListVc != null)
-				{
-					classpageListVc.hide();
-				}
-
-						organizeToolTip.show();
-//					}
-//				};
-//				tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
+			myCollectionsPop.setVisible(true);
 			}
 		}
 	}
@@ -962,17 +970,7 @@ public class HeaderUc extends Composite implements
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			if (!AppClientFactory.isAnonymous()){
-/*				if(tooltipTimer != null)
-				{
-				tooltipTimer.cancel();
-				}
-				toolTipPopupPanel.hide();*/
-				EventTarget target = event.getRelatedTarget();
-				if (Element.is(target)) {
-					if (!organizeToolTip.getElement().isOrHasChild(Element.as(target))){
-						organizeToolTip.hide();
-					}
-				}
+			myCollectionsPop.setVisible(false);
 			}
 		}
 	}
@@ -982,29 +980,7 @@ public class HeaderUc extends Composite implements
 		@Override
 		public void onMouseOver(final MouseOverEvent event) {
 			if (!AppClientFactory.isAnonymous()){
-				if (!AppClientFactory.isAnonymous()) {
-					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
-//					tooltipTimer = new Timer() {
-//						public void run() {
-					
-					if(discoverToolTip != null)
-					{
-						discoverToolTip.hide();
-					}
-					if(organizeToolTip != null)
-					{
-						organizeToolTip.hide();
-					}
-					OpenClasspageList();
-//						}
-//					};
-//					tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
-				} else {
-					name = "teach";
-//					onLinkPopupClicked(null);
-//					TODO need to show new logout page....
-					AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
-				}
+				myClassesPop.setVisible(true);
 				
 			}
 		}
@@ -1016,19 +992,7 @@ public class HeaderUc extends Composite implements
 		public void onMouseOut(MouseOutEvent event) {
 			if (!AppClientFactory.isAnonymous()){
 				
-				EventTarget target = event.getRelatedTarget();
-				if (Element.is(target)) {
-					if (!classpageListVc.getElement().isOrHasChild(Element.as(target))){
-						classpageListVc.hide();
-					}
-				}
-				
-		/*		EventTarget target = event.getRelatedTarget();
-				if (Element.is(target)) {
-					if (classpageListVc!=null && !classpageListVc.getElement().isOrHasChild(Element.as(target))){
-						classpageListVc.hide();
-					}
-				}*/
+				myClassesPop.setVisible(false);
 			}
 		}
 
@@ -1676,36 +1640,29 @@ public class HeaderUc extends Composite implements
 	}
 
 	public void showTeachPanelAsPopup(final int left, int top) {
-		if (classpageListVc == null) {
-			classpageListVc = new ClasspageListVc(false,null);
-		}
-		classpageListVc.setWidth("202px !important");
-		classpageListVc.setHeight("246px !important");
-		classpageListVc.setStyleName(HomeCBundle.INSTANCE.css()
-				.classpageListContainer());
-		classpageListVc.setPopupPosition(left, top);
-		classpageListVc.getElement().getStyle().setZIndex(98);
-		classpageListVc.show();
+
+		/*classpageListVc.getElement().getStyle().setZIndex(98);
+		classpageListVc.show();*/
 		// classpageListVc.getAllClasspages();
-		Window.addWindowScrollHandler(new Window.ScrollHandler() {
+/*		Window.addWindowScrollHandler(new Window.ScrollHandler() {
 			public void onWindowScroll(Window.ScrollEvent scrollEvent) {
 				if (classpageListVc!=null){
 					classpageListVc.getElement().getStyle().setPosition(Position.FIXED);	
 					classpageListVc.setPopupPosition(left,51);
 				}
 			}
-		});
+		});*/
 	}
 	DeleteClasspageListHandler deleteHandler = new DeleteClasspageListHandler() {
 		
 		@Override
 		public void deleteClasspage(String classpageId) {
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.EDIT_CLASSPAGE)){
-				if(classpageListVc!=null){
+	/*			if(classpageListVc!=null){
 					classpageListVc.removeClasspageItem(classpageId);
 				}else{
 					classpageListVc = new ClasspageListVc(true,classpageId);
-				}
+				}*/
 			}else{
 				if(studyNowToolTip!=null){
 					studyNowToolTip.removeClasspageItem(classpageId);
@@ -1885,6 +1842,14 @@ public class HeaderUc extends Composite implements
 		} else {
 			params.put("id", gooruOId);
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT, params);
+		}
+	}
+	
+	public static void closeClassContainer()
+	{
+		if(myClassesPop != null)
+		{
+		myClassesPop.setVisible(false);
 		}
 	}
 	

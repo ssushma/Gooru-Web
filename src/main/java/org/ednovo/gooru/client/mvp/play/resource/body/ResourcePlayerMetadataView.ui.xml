@@ -23,7 +23,10 @@
 	<!-- <div class="container whitebg"> -->
 		<g:HTMLPanel styleName="{playerStyle.blocksmall}" ui:field="collectionContainer">
 			<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.navigationWrapper}">
-				<g:FlowPanel styleName="leftBigarrow"><g:Button styleName="{playerStyle.spriteType} {playerStyle.next}" ui:field="backwardButton"></g:Button></g:FlowPanel>
+				<g:FlowPanel styleName="leftBigarrow">
+					<g:Button styleName="{playerStyle.spriteType} {playerStyle.next}" ui:field="backwardButton"></g:Button>
+					<g:Button styleName="" ui:field="narrationButton"></g:Button>
+				</g:FlowPanel>
 				<g:FlowPanel styleName="{playerStyle.mainDisc}">
 					<g:FlowPanel>
 						<g:HTML ui:field="resourceTitleLbl" styleName="{playerStyle.resourceTitleStyle}"></g:HTML>

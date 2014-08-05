@@ -229,6 +229,9 @@ public interface EditClasspageCBundle extends ClientBundle{
         String imgStyle();
         String imgStyleDiv();
         String assignText();
+        
+        String studentStyle();
+        String techerStyle();
 
 	}
 	@NotStrict

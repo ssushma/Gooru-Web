@@ -266,6 +266,58 @@
 	background:url("../images/Text_1.png") no-repeat
 		transparent;
 }
+/*******/
+
+.resource-type-video:hover{
+	background:none !important;
+}
+
+.resource-type-slide:hover{
+	background:none !important;
+	/* background-position: -0px -168px !important; */
+}
+
+.resource-type-interactive:hover{
+	background:none !important;
+}
+
+.resource-type-question:hover{
+	background:none !important;
+}
+.resource-type-website:hover{
+	background:none !important;
+}
+
+.resource-type-textbook:hover{
+	background:none !important;
+	/* background-position: 0px -195px !important; */
+}
+
+.resource-type-handout:hover{
+	background:none !important;
+}
+.resource-type-text:hover{
+	background:none !important;
+}
+.resource-type-lesson:hover{
+	background:none !important;
+	/* background-position: -0px -112px !important; */
+}
+.resource-type-exam:hover{
+	background:none !important;
+	/* background-position: -0px -83px !important; */
+}
+.resource-type-audio:hover{
+	background:none !important;
+}
+.resource-type-imageIcon:hover{
+	background:none !important;
+}
+.resource-type-other:hover{
+	background:none !important;
+}
+
+/***********/
 .resource-type-info-video,.resource-type-info-slide,
 .resource-type-info-interactive,.resource-type-info-question,.resource-type-info-website,.resource-type-info-textbook,
 .resource-type-info-handout,.resource-type-info-lesson,.resource-type-info-exam,.resource-type-info-audio,.resource-type-info-imageIcon,.resource-type-info-other,.resource-type-info-text{
@@ -334,7 +386,7 @@
 	left: 3px;
 	position: relative;
 	text-align: center;
-	top: -40px;
+	top: -41px;
 	width: 81px;
 }
 
@@ -396,6 +448,54 @@
 		transparent;
 }
 
+/*******/
+
+.resource-type-info-video-new:hover{
+	background:none !important;
+}
+
+.resource-type-info-slide-new:hover{
+	background:none !important;
+}
+
+.resource-type-info-interactive-new:hover{
+	background:none !important;
+}
+
+.resource-type-info-question-new:hover{
+	background:none !important;
+}
+.resource-type-info-website-new:hover{
+	background:none !important;
+}
+
+.resource-type-info-textbook-new:hover{
+	background:none !important;
+}
+
+.resource-type-info-handout-new:hover{
+	background:none !important;
+}
+.resource-type-info-lesson-new:hover{
+	background:none !important;
+}
+.resource-type-info-exam-new:hover{
+	background:none !important;
+}
+.resource-type-info-audio-new:hover{
+	background:none !important;
+}
+.resource-type-info-imageIcon-new:hover{
+	background:none !important;
+}
+.resource-type-info-other-new:hover{
+	background:none !important;
+}
+.resource-type-info-text-new:hover{
+	background:none !important;
+}
+/*****/
+
 .resource-default-video,.resource-default-slide,
 .resource-default-interactive,.resource-default-question,.resource-default-website,.resource-default-textbook,
 .resource-default-handout,.resource-default-lesson,.resource-default-exam,.resource-default-text,.resource-default-image,.resource-default-audio,.resource-default-other{
@@ -441,7 +541,7 @@
 	background-position: 0px -182px;	
 }
 .resource-default-image{
-	background-position: 0px -594px;	
+	background-position: 0px -600px;	
 }
 .resource-default-audio{
 	background-position: 0px -536px;	

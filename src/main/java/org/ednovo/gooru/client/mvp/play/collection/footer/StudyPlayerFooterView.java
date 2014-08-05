@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.play.collection.footer;
 
 
-import org.ednovo.gooru.client.uc.PlayerBundle;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -39,7 +38,9 @@ public class StudyPlayerFooterView extends Composite{
 	
 	@UiField FlowPanel resourceAnimationContainer;
 	
-	@UiField Button infoButton,shareButton,narrationButton,addButton,flagButton;
+	@UiField Button infoButton,shareButton,addButton,flagButton;
+	
+	private Button narrationButton=null;
 	
 	@UiField FooterStyleResource footerstyle;
 	
@@ -61,7 +62,6 @@ public class StudyPlayerFooterView extends Composite{
 		flagButton.getElement().setId("btnFlagButton");
 		infoButton.getElement().setId("btnInfoButton");
 		shareButton.getElement().setId("btnShareButton");
-		narrationButton.getElement().setId("btnNarrationButton");
 	}
 	/**
 	 * @return the resourceAnimationContainer
@@ -83,6 +83,12 @@ public class StudyPlayerFooterView extends Composite{
 
 	public Button getShareButton() {
 		return shareButton;
+	}
+	
+	public void setNarrationButton(Button narrationButton){
+		this.narrationButton=narrationButton;
+		narrationButton.getElement().setId("btnNarrationButton");
+		getNarrationButton().setStyleName(footerstyle.narrationButtonNormal());
 	}
 
 	public Button getNarrationButton() {

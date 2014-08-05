@@ -16,6 +16,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
+import org.ednovo.gooru.client.uc.LiecenceTooltip;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.ToolTipPopUp;
@@ -112,7 +113,7 @@ public class SearchInfoWidget extends Composite {
 	boolean isResourceInfo=false;
 	boolean isAccessibilityInfo=false;
 	boolean isGrades =false;
-	
+	LiecenceTooltip liecenceTooltip;
 	/**
 	 * Because this class has a default constructor, it can
 	 * be used as a binder template. In other words, it can be used in other
@@ -525,8 +526,8 @@ public class SearchInfoWidget extends Composite {
 			if(licenseDo.getIcon()!=null&&!licenseDo.getIcon().trim().equals("")){
 				Image image=new Image();
 				image.setUrl(assetUrl+licenseDo.getIcon());
-				image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getCode()+"<br><br>"+licenseDo.getName()));
-				image.addMouseOutHandler(new MouseOutHideToolTip());
+				image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getCode(),licenseDo.getName()));
+				image.addMouseOutHandler(new MouseOutHideToolTipOER());
 				licenceContainer.setVisible(true);
 				rightsLogoContainer.clear();
 				rightsLogoContainer.add(image);
@@ -546,20 +547,30 @@ public class SearchInfoWidget extends Composite {
 	public class MouseOverShowStandardToolTip implements MouseOverHandler
 	{
 		String desc=null;
+		String code=null;
 
-		public MouseOverShowStandardToolTip(String description) {
+		public MouseOverShowStandardToolTip(String code,String description) {
+			this.code = code;
 			this.desc = description;
 		}
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			toolTip = new ToolTipPopUp(desc, (event.getRelativeElement().getAbsoluteLeft()-83),(event.getRelativeElement().getAbsoluteTop()+22));
-			toolTip.setStyleName("");
-			toolTip.show();
-			toolTip.getElement().getStyle().setZIndex(99999);
+			
+			liecenceTooltip = new LiecenceTooltip(code,desc, (event.getRelativeElement().getAbsoluteLeft()-109),(event.getRelativeElement().getAbsoluteTop()+22));
+			liecenceTooltip.setStyleName("");
+			liecenceTooltip.show();
+			liecenceTooltip.getElement().getStyle().setZIndex(99999);
 		}
 	}
+	public class MouseOutHideToolTipOER implements MouseOutHandler
+	{
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			liecenceTooltip.hide();
+		}
 
+	}
 	public class MouseOutHideToolTip implements MouseOutHandler
 	{
 		@Override
@@ -569,6 +580,7 @@ public class SearchInfoWidget extends Composite {
 
 	}
 		
+	
 	/**
 	 * To show Standards Information
 	 * @param standardsContainer
