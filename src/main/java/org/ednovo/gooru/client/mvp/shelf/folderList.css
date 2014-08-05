@@ -655,6 +655,12 @@
     line-height:20px;
 }
 
+.folder{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 .contentBlock .contents .collection {
     background: url(../images/folders/panel/collection-icon-small.png) no-repeat left center;
 }
