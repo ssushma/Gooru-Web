@@ -202,6 +202,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_UNIT_OFFSET, subjectId, unitId, getLoggedInSessionToken(), offset+"", TOTAL_LIMIT);
 		url+=getLibraryName(libraryName);
 		url+=getStandardId(standardsId);
+		System.out.println("getTopicsOnPagination::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
@@ -494,13 +495,18 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		ArrayList<TopicDo> topicDoList = new ArrayList<TopicDo>();
 		TopicDo topicDo = new TopicDo();
 
-		ArrayList<ConceptDo> conceptDoList = new ArrayList<ConceptDo>();
+		//ArrayList<ConceptDo> conceptDoList = new ArrayList<ConceptDo>();
+		
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
+				
 				JSONArray topicArray = jsonRep.getJsonArray();
+				
+			//	topicDoList = JsonDeserializer.deserialize(topicArray, ArrayList<TopicDo>.class);
 				for(int i=0;i<topicArray.length();i++) {
-					ArrayList<LessonDo> lessonDoList = new ArrayList<LessonDo>();
-					try {
+					topicDoList.add(JsonDeserializer.deserialize(topicArray.getJSONObject(i).toString(), TopicDo.class));	
+				//	ArrayList<LessonDo> lessonDoList = new ArrayList<LessonDo>();
+					/*try {
 						if(!topicArray.getJSONObject(i).isNull(COLLECTION)){
 							lessonDoList.add(JsonDeserializer.deserialize(topicArray.getJSONObject(i).toString(), LessonDo.class));
 						}
@@ -509,10 +515,10 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 							{
 								lessonDoList.add(JsonDeserializer.deserialize(topicArray.getJSONObject(i).getJSONArray(LESSON).getJSONObject(j).toString(), LessonDo.class));
 								
-//								for(int k=0;k<topicArray.getJSONObject(i).getJSONArray(LESSON).getJSONObject(j).getJSONArray(CONCEPT).length();k++) 
-//								{
-//								lessonDoList.add(JsonDeserializer.deserialize(topicArray.getJSONObject(i).getJSONArray(LESSON).getJSONObject(j).getJSONArray(CONCEPT).getJSONObject(k).toString(), LessonDo.class));									
-//								}	
+								for(int k=0;k<topicArray.getJSONObject(i).getJSONArray(LESSON).getJSONObject(j).getJSONArray(CONCEPT).length();k++) 
+								{
+								lessonDoList.add(JsonDeserializer.deserialize(topicArray.getJSONObject(i).getJSONArray(LESSON).getJSONObject(j).getJSONArray(CONCEPT).getJSONObject(k).toString(), LessonDo.class));									
+								}	
 							}	
 							topicDoList.add(JsonDeserializer.deserialize(topicArray.getJSONObject(i).toString(), TopicDo.class));
 							topicDoList.get(i).setLesson(lessonDoList);
@@ -524,20 +530,21 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 					} catch (JSONException e) {
 						try {
 							if(topicArray.getJSONObject(i).getJSONArray(COLLECTION)!=null) {
-								topicDoList.add(JsonDeserializer.deserialize(topicArray.getJSONObject(i).toString(), TopicDo.class));	
+								
 							} else {
 								conceptDoList.add(JsonDeserializer.deserialize(topicArray.getJSONObject(i).toString(), ConceptDo.class));
 							}
 						} catch(Exception ex) {
 							conceptDoList.add(JsonDeserializer.deserialize(topicArray.getJSONObject(i).toString(), ConceptDo.class));
 						}
-					}					
+					}*/					
 				}
-				if(conceptDoList.size()>0) {
+/*				if(conceptDoList.size()>0) {
 					topicDo.setCollection(conceptDoList);
 					topicDoList.add(topicDo);
-				}
-			} catch (JSONException e) {
+				}*/
+			} 
+			catch (JSONException e) {
 				e.printStackTrace();
 			} 
 		}
