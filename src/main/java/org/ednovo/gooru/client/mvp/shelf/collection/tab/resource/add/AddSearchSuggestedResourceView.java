@@ -361,7 +361,8 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		}
 		String mediaType = resourceSearchResultDo.getMediaType();
 		
-		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? true : false : false;
+		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
+		//boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? false : true : true;
 		
 		imgNotFriendly.setVisible(setVisibility);
 		
