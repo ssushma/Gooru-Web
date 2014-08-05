@@ -196,7 +196,7 @@
 	left: -15px;
 	width: 40px;
 	height: 40px;
-	cursor: pointer;
+	/*cursor: pointer;*/
 	background: #fbb03b;
 	border-radius: 20px;
 	-moz-border-radius: 20px;
