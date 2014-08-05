@@ -347,9 +347,8 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		
 		imgOER.setVisible(oerVisibility);
 		
-		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? true : false : false;
-		//boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? false : true : true;
-		
+		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
+	
 		imgNotFriendly.setVisible(setVisibility);
 		
 		if (setVisibility || oerVisibility){
