@@ -1249,100 +1249,182 @@ td.datePickerMonth{
 
 /* Resource type Icon to set Dynamically*/
 
+/********/
 .resourceExistsResourceTypeSpriteVideo {
-	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	background:url("../images/Video_1.png") no-repeat
+		transparent;
 	
-	background-position: 0px 1px;
-	width: 28px;
-	height: 22px;
+	width:80px;
+	height:60px;
+	position: relative;
+	text-align: center;
+	top: -38px;
 }
 .resourceExistsResourceTypeSpriteInteractive {
-	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	background:url("../images/Interactive_1.png") no-repeat
+		transparent;
 	
-	background-position: 0px -27px;
-	width: 28px;
-	height: 22px;
+	width:80px;
+	height:60px;
+	position: relative;
+	text-align: center;
+	top: -38px;
 }
 .resourceExistsResourceTypeSpriteWebsite {
-	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
-	
-	background-position: 0px -223px;
-	width: 28px;
-	height: 22px;
+	background:url("../images/Website_1.png") no-repeat
+		transparent;
+		
+	width:80px;
+	height:60px;
+	position: relative;
+	text-align: center;
+	top: -38px;
 }
 .resourceExistsResourceTypeSpriteSlide {
-	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
-	
-	background-position: -30px 0px;
-	width: 28px;
-	height: 22px;
+	background:url("../images/Video_1.png") no-repeat
+		transparent;
+		
+	width:80px;
+	height:60px;
+	position: relative;
+	text-align: center;
+	top: -38px;
 }
 .resourceExistsResourceTypeSpriteHandout {
-	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
-	
-	background-position: -60px -20px;
-	width: 28px;
-	height: 22px;
+	background:url("../images/Video_1.png") no-repeat
+		transparent;
+		
+	width:80px;
+	height:60px;
+	position: relative;
+	text-align: center;
+	top: -38px;
 }
 .resourceExistsResourceTypeSpriteTextbook {
-	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 	
-	background-position: 0px -44px;
-	width: 28px;
-	height: 22px;
+	width:80px;
+	height:60px;
+	position: relative;
+	text-align: center;
+	top: -38px;
 }
 .resourceExistsResourceTypeSpriteLesson {
-	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
-	
-	background-position: -30px -43px;
-	width: 28px;
-	height: 22px;
+	background:url("../images/Video_1.png") no-repeat
+		transparent;
+		
+	width:80px;
+	height:60px;
+	position: relative;
+	text-align: center;
+	top: -38px;
 }
 .resourceExistsResourceTypeSpriteQuestion {
-	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
-	
-	background-position: -30px -20px;
-	width: 28px;
-	height: 22px;
+	background:url("../images/Question_1.png") no-repeat
+		transparent;
+		
+	width:80px;
+	height:60px;
+	position: relative;
+	text-align: center;
+	top: -38px;
 }
 .resourceExistsResourceTypeSpriteExam {
-	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
-	
-	background-position: -60px -43px;
-	width: 28px;
-	height: 22px;
+	background:url("../images/Video_1.png") no-repeat
+		transparent;
+		
+	width:80px;
+	height:60px;
+	position: relative;
+	text-align: center;
+	top: -38px;
 }
 .resourceExistsResourceTypeSpriteAudio {
-	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
-	
-	background-position: 0px -297px;
-	width: 28px;
-	height: 22px;
+	background:url("../images/Audio_1.png") no-repeat
+		transparent;
+		
+	width:80px;
+	height:60px;
+	position: relative;
+	text-align: center;
+	top: -38px;
 }
 .resourceExistsResourceTypeSpriteImage {
-	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
-	
-	background-position: 0px -251px;
-	width: 28px;
-	height: 22px;
+	background:url("../images/Image_1.png") no-repeat
+		transparent;
+		
+	width:80px;
+	height:60px;
+	position: relative;
+	text-align: center;
+	top: -38px;
 }
 .resourceExistsResourceTypeSpriteOther {
-	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
-	
-	background-position: -0px -307px;
-	width: 28px;
-	height: 22px;
+	background:url("../images/Video_1.png") no-repeat
+		transparent;
+		
+	width:80px;
+	height:60px;
+	position: relative;
+	text-align: center;
+	top: -38px;
 }
 .resourceExistsResourceTypeSpriteText {
-	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+		
+	width:80px;
+	height:60px;
+	position: relative;
+	text-align: center;
+	top: -38px;
 	
-	background-position: -0px -55px;
-	width: 28px;
-	height: 22px;
 }
 .thumbnailImageDec{
 	width: 80px;
-	height: 60px;
+	height:60px;
+}
+/****/
+.resourceExistsResourceTypeSpriteVideo:hover {
+	background:none !important;
+}
+.resourceExistsResourceTypeSpriteInteractive:hover {
+	background:none !important;
+}
+.resourceExistsResourceTypeSpriteWebsite:hover {
+	background:none !important;
+}
+.resourceExistsResourceTypeSpriteSlide:hover {
+	background:none !important;
+}
+.resourceExistsResourceTypeSpriteHandout:hover {
+	background:none !important;
+}
+.resourceExistsResourceTypeSpriteTextbook:hover {
+	background:none !important;
+}
+.resourceExistsResourceTypeSpriteLesson:hover {
+	background:none !important;
+}
+.resourceExistsResourceTypeSpriteQuestion:hover {
+	background:none !important;
+}
+.resourceExistsResourceTypeSpriteExam:hover {
+	background:none !important;
+}
+.resourceExistsResourceTypeSpriteAudio:hover {
+	background:none !important;
+}
+.resourceExistsResourceTypeSpriteImage :hover {
+	background:none !important;
+}
+.resourceExistsResourceTypeSpriteOther:hover {
+	background:none !important;
+}
+.resourceExistsResourceTypeSpriteText:hover {
+	background:none !important; 
+	
 }
 
 .active {
