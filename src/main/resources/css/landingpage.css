@@ -1249,5 +1249,5 @@ footer .col-xs-2:last-child{
 }
 
 .footerLastItem{
-	border-right: none;
+	border-right: none !important;
 }
