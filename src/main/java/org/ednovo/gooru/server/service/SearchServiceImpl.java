@@ -416,7 +416,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		parms = parms.replaceAll("!", "%21");
 		parms = parms.replaceAll("&", "%26");
 				
-		String gSigninUrl = getGoogleSignin() + "&domain=gmail.com&callback=" + parms;
+		String gSigninUrl = getGoogleSignin() + "&domain=gmail.com&callBackUrl=" + parms;
 		return gSigninUrl;
 	}
 	
@@ -430,7 +430,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		callback = callback.replaceAll("!", "%21");
 		callback = callback.replaceAll("&", "%26");
 		
-		String gSigninUrl = getGoogleSignin() + "&domain=gmail.com&callback=" + callback;
+		String gSigninUrl = getGoogleSignin() + "&domain=gmail.com&callBackUrl=" + callback;
 		return gSigninUrl;
 	}
 	
@@ -646,6 +646,7 @@ public ArrayList<StandardsLevel4DO> getFourthLevelStandards(String levelOrder, S
 	if(getSearchEndPoint().contains(HTTPS)){
 		url = appendHttpsURL(url);
 	}
+	System.out.println("getFourthLevelStandards:::"+url);
 	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 	jsonRep=jsonResponseRep.getJsonRepresentation();
 	try {
