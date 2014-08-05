@@ -236,6 +236,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 		initWidget(uiBinder.createAndBindUi(this));
 		setPlaceToken(placeToken);
 		setDebugId();
+		Window.scrollTo(0, 0);
 		AppClientFactory.getEventBus().addHandler(OpenSubjectCourseEvent.TYPE, openSubjectCourseHandler);
 		AppClientFactory.getEventBus().addHandler(SetSubjectDoEvent.TYPE, setSubjectDoHandler);
 		AppClientFactory.getEventBus().addHandler(SetStandardDoEvent.TYPE, setStandardDoHandler);

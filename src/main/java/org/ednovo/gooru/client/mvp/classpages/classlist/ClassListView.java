@@ -118,7 +118,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	
 	@UiField Anchor ancPendingListSeeMore, ancActiveListSeeMore;
 	
-	@UiField HTMLPanel panelLoading,titleTxt,emailTxt,shareTxt,shareTitle,joinTxt,manageTxt,trackTxt,inviteTxt;
+	@UiField HTMLPanel panelLoading,titleTxt,emailTxt,shareTxt,shareTitle,joinTxt,inviteTxt;
 	
 	@UiField TextBox txtClasspageLinkShare,txtClasspageCodeShare;
 	
@@ -127,6 +127,8 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	@UiField SimpleRadioButton visibilityRadioOpen,visibilityRadioInviteOnly;
 	
 	@UiField HTMLPanel questionMarkPanel,questionMarkPanel1,questionMarkPanel2;
+	
+	@UiField Label manageHeader,manageTxt,trackTxt;
 
 	@UiFactory
 	public SimpleRadioButton createRadioButton() {
@@ -310,12 +312,17 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		joinTxt.getElement().setAttribute("alt",i18n.GL1596());
 		joinTxt.getElement().setAttribute("title",i18n.GL1596());
 		
-		manageTxt.getElement().setInnerHTML(i18n.GL1597());
+		/*manageTxt.getElement().setInnerHTML(i18n.GL1597());
 		manageTxt.getElement().setId("pnlManageText");
 		manageTxt.getElement().setAttribute("alt",i18n.GL1597());
-		manageTxt.getElement().setAttribute("title",i18n.GL1597());
+		manageTxt.getElement().setAttribute("title",i18n.GL1597());*/
 		
-		trackTxt.getElement().setInnerHTML(i18n.GL1598());
+		manageHeader.setText(i18n.GL1597());
+		manageHeader.getElement().setId("pnlManageText");
+		manageHeader.getElement().setAttribute("alt",i18n.GL1597());
+		manageHeader.getElement().setAttribute("title",i18n.GL1597());
+		
+		trackTxt.setText(i18n.GL1598());
 		trackTxt.getElement().setId("pnlTrackText");
 		trackTxt.getElement().setAttribute("alt",i18n.GL1598());
 		trackTxt.getElement().setAttribute("title",i18n.GL1598());
