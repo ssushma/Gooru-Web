@@ -46,4 +46,6 @@ public interface ContributorsCBundle extends CssResource {
 	String contriburotsListContainer();
 
 	String profileImage();
+	
+	String viewMore();
 }
