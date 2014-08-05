@@ -1343,8 +1343,7 @@ public class LibraryTopicListView extends Composite{
 	
 	private void showPopupAfterGmailSignin() {
 		// TODO Auto-generated method stub
-		System.out.println("showPopupAfterGmailsignin");
-		String collectionId = getConceptDo().getGooruOid();
+		String collectionId = getConceptDo().getGooruOid()!=null ? getConceptDo().getGooruOid(): null;
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
 		if(customize!=null && customize.equals("yes")){
