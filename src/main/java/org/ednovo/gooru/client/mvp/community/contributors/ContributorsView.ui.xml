@@ -6,6 +6,6 @@
 	    <g:HTMLPanel ui:field="panelContributorsList" styleName="{fc.contriburotsListContainer}">
 	        
 	    </g:HTMLPanel>
-	    <g:Anchor ui:field="ancView"></g:Anchor>
+	    <g:Anchor ui:field="ancView" styleName="{fc.viewMore}"></g:Anchor>
 	</g:HTMLPanel>
 </ui:UiBinder>
