@@ -420,8 +420,15 @@ public class ProfileTopicListView extends Composite{
 					setMetaDataInfo(conceptDo); 
 					resourcesInside.clear();
 					ArrayList<ProfileLibraryDo> libraryResources =  profileLibraryDo.getCollectionItems();
+					int resourceCount = 0;
 					if(libraryResources!=null) {
-						int resourceCount = libraryResources.size();
+						if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)){
+							if(conceptDo.getItemCount()!=null){
+								resourceCount = conceptDo.getItemCount();
+							}
+						}else{
+							resourceCount = libraryResources.size();
+						}
 						int resources=resourceCount<=4?resourceCount:4;
 						final Label resourceCountLbl = new Label(resources+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+resourceCount+" "+i18n.GL1094().toLowerCase());
 						resourcesInside.add(resourceCountLbl);
@@ -972,7 +979,8 @@ public class ProfileTopicListView extends Composite{
 		String collectionId = getProfileLibraryDo().getGooruOid();
 		if(!isAssignPopup){
 			isAssignPopup=true;
-			final Map<String,String> params = new HashMap<String,String>();
+			final Map<String, String> params = StringUtil.splitQuery(Window.Location
+					.getHref());
 			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals()) {
 				@Override
 				public void closePoup() {
@@ -1013,7 +1021,8 @@ public class ProfileTopicListView extends Composite{
 		} else {
 			loginFlag = false;
 		}
-		final Map<String,String> params = new HashMap<String,String>();
+		final Map<String, String> params = StringUtil.splitQuery(Window.Location
+				.getHref());
 		RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
 			@Override
 			public void closePoup() {
@@ -1059,7 +1068,8 @@ public class ProfileTopicListView extends Composite{
 			{
 				loginFlag = false;
 			}
-			final Map<String,String> params = new HashMap<String,String>();
+			final Map<String, String> params = StringUtil.splitQuery(Window.Location
+					.getHref());
 			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
 				@Override
 				public void closePoup() {
@@ -1079,7 +1089,8 @@ public class ProfileTopicListView extends Composite{
 				successPopupVc.center();
 		}
 		if(assign!=null && assign.equals("yes")){
-			final Map<String,String> params = new HashMap<String,String>();
+			final Map<String, String> params = StringUtil.splitQuery(Window.Location
+					.getHref());
 			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals()) {
 				@Override
 				public void closePoup() {
@@ -1108,6 +1119,12 @@ public class ProfileTopicListView extends Composite{
 	}
 	
 	private void setTopicLabel(String title) {
+		
+		Map<String, String> maps = StringUtil.splitQuery(Window.Location
+				.getHref());
+		if(maps.containsKey("emailId")){
+			showPopupAfterGmailSignin();
+		}
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
 			topicTitleLbl.setVisible(true);
 			libraryTopicLbl.setVisible(false);
