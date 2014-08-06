@@ -514,10 +514,7 @@ public class ShelfCollectionResourceChildView extends
 	
 		String resourceCategory = collectionItemDo.getResource().getCategory();
 		
-		if(resourceShare.equalsIgnoreCase("public"))
-		{
-			editInfoLbl.setVisible(false);
-		}
+	
 		if (resourceShare.equalsIgnoreCase("public")
 				&& !resourceCategory.equalsIgnoreCase("question")) {
 			editInfoLbl.setVisible(false);
