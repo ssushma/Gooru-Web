@@ -188,6 +188,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	public ConceptDo getConceptForStandards(String gooruOid, String roteNodeId, boolean skipCollectionItems) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTIONForStandards, gooruOid, getLoggedInSessionToken(),roteNodeId, skipCollectionItems + "");
+		System.out.println("-- lib url ---"+url); 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeConcept(jsonRepresentation);
@@ -638,6 +639,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_WORKSPACE, gooruUid, sessionToken, limit+"","0","20");
+		System.out.println("url --- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(placeToken.equals(PlaceTokens.PROFILE_PAGE)) {
@@ -741,7 +743,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 											} else {
 												conceptDo.setGoals("");
 											}
-											
 											conceptDo.setTitle(fourthLevelJsonObject.getString(TITLE));
 											conceptDo.setGooruOid(fourthLevelJsonObject.getString(GOORUOID));
 											conceptDo.setThumbnails(JsonDeserializer.deserialize(fourthLevelJsonObject.getJSONObject(THUMBNAILS).toString(), ThumbnailDo.class));
@@ -792,6 +793,12 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			}
 			
 			conceptDo.setTitle(thirdLevelJsonObject.getString(TITLE));
+			if(thirdLevelJsonObject.isNull("itemCount")) {
+				
+			}else{
+				conceptDo.setItemCount(thirdLevelJsonObject.getInt("itemCount"));
+			}
+			
 			conceptDo.setGooruOid(thirdLevelJsonObject.getString(GOORUOID));
 			conceptDo.setThumbnails(JsonDeserializer.deserialize(thirdLevelJsonObject.getJSONObject(THUMBNAILS).toString(), ThumbnailDo.class));
 			if(k==0) {
@@ -855,6 +862,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_SAUSD_LIBRARY, gooruUid, sessionToken, limit+"",offset+"","14");
+		System.out.println("----- district lib url --- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
