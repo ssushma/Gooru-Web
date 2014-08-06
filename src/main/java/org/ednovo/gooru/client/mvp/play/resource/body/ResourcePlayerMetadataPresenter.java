@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
@@ -125,7 +126,11 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		questionResourcePresenter.showQuestionPreview(collectionItemDo);
 		//removeUserAttemptResult();
 		int windowHeight=Window.getClientHeight();
-		questionResourcePresenter.getWidget().setHeight((windowHeight-202)+"px");
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			questionResourcePresenter.getWidget().setHeight((windowHeight-116)+"px");
+		}else{
+			questionResourcePresenter.getWidget().setHeight((windowHeight-202)+"px");
+		}
 		getView().getResourceWidgetContainer().add(questionResourcePresenter.getWidget());
 	}
 	

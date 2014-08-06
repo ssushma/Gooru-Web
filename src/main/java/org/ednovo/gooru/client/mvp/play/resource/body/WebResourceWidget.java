@@ -24,6 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.BodyElement;
@@ -56,7 +59,11 @@ public class WebResourceWidget extends Composite implements HasInitializeHandler
 		resourcePreviewFrame.getElement().getStyle().setBackgroundColor("white");
 		resourcePreviewFrame.getElement().setAttribute("id", "resourcePlayerContainer");
 		int windowHeight=Window.getClientHeight();
-		resourcePreviewFrame.setHeight((windowHeight-202)+"px");
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			resourcePreviewFrame.setHeight((windowHeight-116)+"px");
+		}else{
+			resourcePreviewFrame.setHeight((windowHeight-202)+"px");
+		}
 	}
 	
 	public Frame getResourcePreviewFrame() {
