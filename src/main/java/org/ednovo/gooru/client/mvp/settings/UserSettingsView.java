@@ -188,11 +188,10 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	boolean enableEditFirstName = false;
 	
 	CheckBox commonCoreChk = new CheckBox();
-	CheckBox californiaStandChk = new CheckBox();
 	CheckBox texasChk = new CheckBox();
 	CheckBox ngssChk = new CheckBox();
-	//Label CSSLabel =new Label();
 	
+	CheckBox californiaStandChk = new CheckBox();
 	CheckBox CSSChk = new CheckBox();
 	CheckBox CaliforniaSocialSciencesStandardsChk = new CheckBox();
 	CheckBox CaliforniaELDSChk = new CheckBox();
@@ -788,7 +787,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 							CSSChk.setChecked(true);
 							
 						}else{
-							//CSSChk.setChecked(false);
+							CSSChk.setChecked(false);
 							
 						}			
 						if(commonCoreChk.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
@@ -856,7 +855,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					CSSChk.setChecked(true);
 					
 				}else{
-					//CSSChk.setChecked(false);
+					CSSChk.setChecked(false);
 					
 				}	
 				if(commonCoreChk.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
@@ -876,7 +875,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					CSSChk.setChecked(true);
 					
 				}else{
-				//	CSSChk.setChecked(false);
+					CSSChk.setChecked(false);
 					
 				}	
 				if(commonCoreChk.isChecked()||CSSChk.isChecked()||texasChk.isChecked()||ngssChk.isChecked()||CaliforniaSocialSciencesStandardsChk.isChecked()||CaliforniaELDSChk.isChecked()||californiaStandChk.isChecked())
@@ -2137,7 +2136,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		userStandardDefaultView.setVisible(true);
 		if(list!=null){
 			if(list.size()!=0){
-			System.out.println("list..."+list);
+			
 			lblUserMessage.setVisible(false);
 			standardsSaveButton.setEnabled(true);
 			standardsSaveButton.getElement().removeClassName("disabled");
