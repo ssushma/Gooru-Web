@@ -215,7 +215,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	
 	private String standardLibraryName = "";
 	
-	private static final String TEXAS = "texas";
+	private static final String TEXAS = "TEKS";
 	
 	private static final String CCSS = "ccss";
 	

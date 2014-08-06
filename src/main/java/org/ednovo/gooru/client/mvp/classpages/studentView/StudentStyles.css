@@ -336,6 +336,7 @@
 	padding: 10px 0px 10px 20px;
 }
 .classpageHoverButton{
+	z-index: 98;
     color: white;
 	font-weight: bold;
 	display: inline-block;
