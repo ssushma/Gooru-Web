@@ -979,7 +979,8 @@ public class ProfileTopicListView extends Composite{
 		String collectionId = getProfileLibraryDo().getGooruOid();
 		if(!isAssignPopup){
 			isAssignPopup=true;
-			final Map<String,String> params = new HashMap<String,String>();
+			final Map<String, String> params = StringUtil.splitQuery(Window.Location
+					.getHref());
 			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals()) {
 				@Override
 				public void closePoup() {
@@ -1020,7 +1021,8 @@ public class ProfileTopicListView extends Composite{
 		} else {
 			loginFlag = false;
 		}
-		final Map<String,String> params = new HashMap<String,String>();
+		final Map<String, String> params = StringUtil.splitQuery(Window.Location
+				.getHref());
 		RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
 			@Override
 			public void closePoup() {
@@ -1066,7 +1068,8 @@ public class ProfileTopicListView extends Composite{
 			{
 				loginFlag = false;
 			}
-			final Map<String,String> params = new HashMap<String,String>();
+			final Map<String, String> params = StringUtil.splitQuery(Window.Location
+					.getHref());
 			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
 				@Override
 				public void closePoup() {
@@ -1086,7 +1089,8 @@ public class ProfileTopicListView extends Composite{
 				successPopupVc.center();
 		}
 		if(assign!=null && assign.equals("yes")){
-			final Map<String,String> params = new HashMap<String,String>();
+			final Map<String, String> params = StringUtil.splitQuery(Window.Location
+					.getHref());
 			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals()) {
 				@Override
 				public void closePoup() {
@@ -1115,6 +1119,12 @@ public class ProfileTopicListView extends Composite{
 	}
 	
 	private void setTopicLabel(String title) {
+		
+		Map<String, String> maps = StringUtil.splitQuery(Window.Location
+				.getHref());
+		if(maps.containsKey("emailId")){
+			showPopupAfterGmailSignin();
+		}
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
 			topicTitleLbl.setVisible(true);
 			libraryTopicLbl.setVisible(false);
