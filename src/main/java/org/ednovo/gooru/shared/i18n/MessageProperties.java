@@ -2611,15 +2611,13 @@ public interface MessageProperties extends Constants {
 	String GL_WHATS_NEW_TITLE_4();
 	String GL_WHATS_NEW_DESC_4();
 	String GL_WHATS_NEW_LINK_4();
-	
-	
+
 	String GL2108();
 	String GL2109();
 	String GL2110();
 	String GL2111();
 	String GL2112();
 	String GL2102_1();
-	
 	String GL2113();
 	String GL2114();
 	String GL2115();
@@ -2628,5 +2626,6 @@ public interface MessageProperties extends Constants {
 	String GL2118();
 	String GL2119();
 	String GL2120();
+	String GL2121();
 	
 }

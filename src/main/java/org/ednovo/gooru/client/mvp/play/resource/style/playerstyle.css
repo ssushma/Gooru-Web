@@ -232,7 +232,6 @@
 .rightPanel {
     box-sizing: border-box;
     float: right;
-    height: 650px;
     padding: 30px 20px 20px;
     width: 25%;
 	position:relative;
@@ -977,6 +976,7 @@ font-size: 31px;
 .rightPanel{
 	width: 240px;
 	min-height: 650px;
+	height:auto;
 	float: right;
 	padding: 30px 20px 20px 20px;
 	box-sizing: border-box;

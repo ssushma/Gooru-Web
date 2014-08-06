@@ -58,6 +58,8 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -95,7 +97,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiField
 	FlowPanel metadataContainer;
 	@UiField
-	FlowPanel standardsContainer;
+	FlowPanel standardsContainer,leftPanelContainer,rightPanelContainer;
 	@UiField
 	FlowPanel teamContainer;
 	/*@UiField
@@ -260,9 +262,19 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			teacherTipLabel.getElement().setAttribute("alt",""+collectionDo.getKeyPoints()+"");
 			teacherTipLabel.getElement().setAttribute("title",""+collectionDo.getKeyPoints()+"");
 		}
-		
+		setLeftPanelHeight();
 	}
-	
+	private void setLeftPanelHeight(){
+		 Scheduler.get().scheduleDeferred(new ScheduledCommand(){
+			@Override
+			public void execute() {
+				int height=rightPanelContainer.getElement().getOffsetHeight();
+				if(height>650){
+					leftPanelContainer.getElement().setAttribute("style", "min-height:"+height+"px;");
+				} 
+			}
+	      });
+	}
 
 	public List<Map<String,String>> getStandardsMap(List<StandardFo> standareds){
 		List<Map<String,String>> standardsList=new ArrayList<Map<String,String>>();
