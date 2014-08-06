@@ -113,7 +113,7 @@ public class ContributorsView extends
 		urlPara.put("page", "featured-contributors");
 
 		ancView.setText(i18n.GL2050());
-		String url = StringUtil.generateMessage(PlaceTokens.HOME, urlPara);
+		String url = StringUtil.generateMessage(PlaceTokens.COMMUNITY, urlPara);
 		url = url.replaceAll("%26", "&");
 		ancView.setHref("#" + url);
 		StringUtil.setAttributes(ancView.getElement(), "ancView",

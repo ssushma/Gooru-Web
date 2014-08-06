@@ -107,13 +107,13 @@
 					<div class="col-xs-9">
 						<div class="InnerMenuBlock">
 							<div class="dataTableResultHeading">
-								<div class="col-xs-3 menuHeader">Science </div>
-								<div class="col-xs-3 menuHeader">Math </div>
-								<div class="col-xs-3 menuHeader">Social Sciences </div>
-								<div class="col-xs-3 menuHeader">English Language Arts </div>
+								<g:Label styleName="col-xs-3 menuHeader" text="{i18n.GL1000}"></g:Label>
+								<g:Label styleName="col-xs-3 menuHeader" text="{i18n.GL1001}"></g:Label>
+								<g:Label styleName="col-xs-3 menuHeader" text="{i18n.GL1002}"></g:Label>
+								<g:Label styleName="col-xs-3 menuHeader" text="{i18n.GL1003}"></g:Label>
 					        </div>
 						</div>
-						<div class="blueBand">Elementary School</div>
+						<g:Label styleName="blueBand" text="{i18n.GL0166}"></g:Label>
 						<div class="dataTableResult">
 							<div class="col-xs-3">
 							    
@@ -902,28 +902,24 @@
 					<div class="col-xs-3">
 
 						<div class="rightBlock1">
-							<div class="blockHeader">
-								Standards Libraries
-							</div>
-							<div class="blockContent">
-
-								<p>
+							<g:Label styleName="blockHeader" text="{i18n.GL2121}"></g:Label>
+							<g:HTMLPanel styleName="blockContent" ui:field="panelStandardLibraries"><!-- List standard libraries... -->
+								<!-- <p>
 									<a
 										href="#community&amp;page=course-page&amp;subject=standard&amp;courseId=41895&amp;standardId=24146">Common Core State Standards - Math</a>
 								</p>
-
 								<p>
 									<a
 										href="#community&amp;page=course-page&amp;subject=standard&amp;courseId=72329&amp;standardId=72168&amp;libtype=TEKS">Texas Essential Knowledge and Skills</a>
-								</p>
-							</div>
+								</p> -->
+							</g:HTMLPanel>
 						</div>
 						<div class="rightBlock1">
 							<div class="blockHeader">
 								District Libraries
 							</div>
-							<div class="blockContent districtLibraryContainer">
-							    <p>
+							<g:HTMLPanel styleName="blockContent districtLibraryContainer" ui:field="panelDistrictLibraries">
+							    <!-- <p>
 									<a href="#CoreLibrary">Core Library</a>
 								</p>
 								<p>
@@ -944,8 +940,8 @@
 
 								<p>
 									<a href="#valverde">Val Verde USD</a>
-								</p>
-							</div>
+								</p> -->
+							</g:HTMLPanel>
 						</div>
 						<div class="rightBlock1">
 							<div class="blockHeader">
@@ -1074,7 +1070,7 @@
 								teachers and students.
 							</p>
 							<p>
-								<a class="btn btn-primary" href="http://partners.goorulearning.org/school/partner-with-us">Gooru School Partners</a>
+								<a class="btn btn-primary" href="http://partners.goorulearning.org/school/partner-with-us" target="_blank">Gooru School Partners</a>
 							</p>
 							<div class="clearfix"></div>
 						</div>
@@ -1091,7 +1087,7 @@
 								all.
 							</p>
 							<p>
-								<a class="btn btn-primary" href="http://partners.goorulearning.org/">Gooru Partners</a>
+								<a class="btn btn-primary" href="http://partners.goorulearning.org/"  target="_blank">Gooru Partners</a>
 							</p>
 						</div>
 					</div>
@@ -1105,7 +1101,7 @@
 								our mission and build with Gooru.
 							</p>
 							<p>
-								<a class="btn btn-primary" href="http://developers.goorulearning.org/">Gooru Developers</a>
+								<a class="btn btn-primary" href="http://developers.goorulearning.org/" target="_blank">Gooru Developers</a>
 							</p>
 						</div>
 					</div>
@@ -1226,16 +1222,16 @@
 							<h4>Community</h4>
 							<ul class="list-unstyled">
 								<li>
-									<a href="#">Districts</a>
+									<a href="http://partners.goorulearning.org/school/partner-with-us" target="_blank">Districts</a>
 								</li>
 								<li>
-									<a href="#">Partners</a>
+									<a href="http://partners.goorulearning.org/" target="_blank">Partners</a>
 								</li>
 								<li>
-									<a href="#">Developers</a>
+									<a href="http://developers.goorulearning.org/" target="_blank">Developers</a>
 								</li>
 								<li>
-									<a href="#">Events</a>
+									<a href="http://about.goorulearning.org/community/events" target="_blank">Events</a>
 								</li>
 
 							</ul>
