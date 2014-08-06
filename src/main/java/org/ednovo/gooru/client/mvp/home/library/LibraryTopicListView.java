@@ -232,6 +232,11 @@ public class LibraryTopicListView extends Composite{
 		searchTitle=topicDo.getLabel();
 		setIds();
 		setAssets();
+		
+		toolTipPopupPanelCustomize.clear();
+		toolTipPopupPanelNew.clear();
+		toolTipPopupPanelCustomize.hide();
+		toolTipPopupPanelNew.hide();
 		if(topicDo.getLesson()!=null) {
 			setLessonData(topicDo.getLesson());
 		} else {
@@ -439,6 +444,10 @@ public class LibraryTopicListView extends Composite{
 		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
 		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
 		noCollectionLbl.setText(i18n.GL1170());
+		toolTipPopupPanelCustomize.clear();
+		toolTipPopupPanelNew.clear();
+		toolTipPopupPanelCustomize.hide();
+		toolTipPopupPanelNew.hide();
 		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());
 		noCollectionLbl.getElement().setAttribute("title",i18n.GL1170());
 		topicTitleLbl.setText(partnerFolderDo.getTitle());
@@ -860,8 +869,15 @@ public class LibraryTopicListView extends Composite{
 				setMetaDataInfo(conceptDo); 
 				resourcesInside.clear();
 				ArrayList<LibraryCollectionItemDo> libraryResources =  conceptDo.getCollectionItems();
+				int resourceCount = 0;
 				if(libraryResources!=null) {
-					int resourceCount = libraryResources.size();
+					if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)){
+						if(conceptDo.getItemCount()!=null){
+							resourceCount = conceptDo.getItemCount();
+						}
+					}else{
+						resourceCount = libraryResources.size();
+					}
 					int resources=resourceCount<=4?resourceCount:4;
 					final Label resourceCountLbl = new Label(resources+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+resourceCount+" "+i18n.GL1094().toLowerCase());
 					resourcesInside.add(resourceCountLbl);
@@ -1569,6 +1585,7 @@ public class LibraryTopicListView extends Composite{
 		if(pageType.equals("lesson")&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.DISCOVER)&&AppClientFactory.getPlaceManager().getRequestParameter("standardId")==null) {
 			setCollectionQuizVisibility(true);
 			collectionTitle.addStyleName(libraryStyle.collectionQuizTabActive());
+			quizTitle.removeStyleName(libraryStyle.collectionQuizTabActive());
 		} else {
 			setCollectionQuizVisibility(false);
 		}
@@ -1610,6 +1627,8 @@ public class LibraryTopicListView extends Composite{
 
 		@Override
 		public void onBlur(BlurEvent event) {
+			toolTipPopupPanelCustomize.clear();
+			toolTipPopupPanelNew.clear();
 			toolTipPopupPanelCustomize.hide();
 			toolTipPopupPanelNew.hide();
 			

@@ -62,13 +62,7 @@
 								<g:Button ui:field="loginButton" styleName="primary {res.css.LoginText}"></g:Button>
 								<g:Label ui:field="lblPleaseWait" styleName="{res.css.processing}"></g:Label>
 							</g:HTMLPanel>
-						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{res.css.signUp}" ui:field="signUpStyles">
-							<g:Label ui:field="donothaveAC"></g:Label>
-							<g:Anchor ui:field="ancSignUp"></g:Anchor>
-						</g:HTMLPanel>
-						
-									<g:HTMLPanel styleName="{res.css.privacyContainer}">
+							<g:HTMLPanel styleName="{res.css.privacyContainer}">
 									<g:InlineLabel styleName="{res.css.popupDesc}"
 										ui:field="lblPii"></g:InlineLabel>
 									<g:Anchor ui:field="ancprivacy"
@@ -76,6 +70,12 @@
 									<g:InlineLabel styleName="{res.css.popupDesc}"
 										ui:field="toUsText"></g:InlineLabel>
 								</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.signUp}" ui:field="signUpStyles">
+							<g:Label ui:field="donothaveAC"></g:Label>
+							<g:Anchor ui:field="ancSignUp"></g:Anchor>
+						</g:HTMLPanel>
+						
 								
 					</uc:HTMLEventPanel>
 

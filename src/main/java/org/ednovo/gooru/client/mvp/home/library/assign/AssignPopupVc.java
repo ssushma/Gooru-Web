@@ -249,7 +249,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 		this.center();	
-		//Window.enableScrolling(false);
+		Window.enableScrolling(false);
 	}
 
 	public void hideContainers() {
@@ -867,7 +867,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 
 			@Override
 			public void openParentPopup() {
-				Window.enableScrolling(false);
+				Window.enableScrolling(true);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 			}
 			
