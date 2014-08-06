@@ -6,7 +6,7 @@
 	<ui:style field= "playerStyle" src="collectionplayermetadata.css" type="org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerStyleBundle" />
 	<ui:with type="org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle" field="playerResponseStyle"/>
 	      <g:FlowPanel ui:field="studyMainContianer" styleName="{playerResponseStyle.getPlayerStyleResource.playerBodyContainer} {playerStyle.clearfix}">
-            <g:FlowPanel styleName="{playerResponseStyle.getPlayerStyleResource.leftPanel}">
+            <g:FlowPanel styleName="{playerResponseStyle.getPlayerStyleResource.leftPanel}" ui:field="leftPanelContainer">
             	<g:FlowPanel ui:field="metadataContainer"></g:FlowPanel>
 <!--             	    <g:FlowPanel styleName="{playerStyle.insightsFrame}" ui:field="dataInsightsPanel">
 		             	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer"/>
@@ -32,7 +32,7 @@
 					    </g:HTMLPanel>
 					</g:HTMLPanel>
 			</g:FlowPanel>
-            <g:FlowPanel styleName="{playerResponseStyle.getPlayerStyleResource.rightPanel}">
+            <g:FlowPanel styleName="{playerResponseStyle.getPlayerStyleResource.rightPanel}" ui:field="rightPanelContainer">
                 <g:HTMLPanel styleName="{playerStyle.classInfo}" ui:field="teacherContainer"> 
                     <g:HTMLPanel ui:field="classInfoPanel" styleName="{playerStyle.classInfoRibbon}">
                      	 <g:Label styleName="{playerStyle.h2}" ui:field="lblClassInfo"></g:Label>
