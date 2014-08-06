@@ -232,6 +232,11 @@ public class LibraryTopicListView extends Composite{
 		searchTitle=topicDo.getLabel();
 		setIds();
 		setAssets();
+		
+		toolTipPopupPanelCustomize.clear();
+		toolTipPopupPanelNew.clear();
+		toolTipPopupPanelCustomize.hide();
+		toolTipPopupPanelNew.hide();
 		if(topicDo.getLesson()!=null) {
 			setLessonData(topicDo.getLesson());
 		} else {
@@ -1610,6 +1615,8 @@ public class LibraryTopicListView extends Composite{
 
 		@Override
 		public void onBlur(BlurEvent event) {
+			toolTipPopupPanelCustomize.clear();
+			toolTipPopupPanelNew.clear();
 			toolTipPopupPanelCustomize.hide();
 			toolTipPopupPanelNew.hide();
 			
