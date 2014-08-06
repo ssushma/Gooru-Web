@@ -860,8 +860,15 @@ public class LibraryTopicListView extends Composite{
 				setMetaDataInfo(conceptDo); 
 				resourcesInside.clear();
 				ArrayList<LibraryCollectionItemDo> libraryResources =  conceptDo.getCollectionItems();
+				int resourceCount = 0;
 				if(libraryResources!=null) {
-					int resourceCount = libraryResources.size();
+					if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)){
+						if(conceptDo.getItemCount()!=null){
+							resourceCount = conceptDo.getItemCount();
+						}
+					}else{
+						resourceCount = libraryResources.size();
+					}
 					int resources=resourceCount<=4?resourceCount:4;
 					final Label resourceCountLbl = new Label(resources+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+resourceCount+" "+i18n.GL1094().toLowerCase());
 					resourcesInside.add(resourceCountLbl);
