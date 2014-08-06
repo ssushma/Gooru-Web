@@ -107,13 +107,13 @@
 					<div class="col-xs-9">
 						<div class="InnerMenuBlock">
 							<div class="dataTableResultHeading">
-								<div class="col-xs-3 menuHeader">Science </div>
-								<div class="col-xs-3 menuHeader">Math </div>
-								<div class="col-xs-3 menuHeader">Social Sciences </div>
-								<div class="col-xs-3 menuHeader">English Language Arts </div>
+								<g:Label styleName="col-xs-3 menuHeader" text="{i18n.GL1000}"></g:Label>
+								<g:Label styleName="col-xs-3 menuHeader" text="{i18n.GL1001}"></g:Label>
+								<g:Label styleName="col-xs-3 menuHeader" text="{i18n.GL1002}"></g:Label>
+								<g:Label styleName="col-xs-3 menuHeader" text="{i18n.GL1003}"></g:Label>
 					        </div>
 						</div>
-						<div class="blueBand">Elementary School</div>
+						<g:Label styleName="blueBand" text="{i18n.GL0166}"></g:Label>
 						<div class="dataTableResult">
 							<div class="col-xs-3">
 							    

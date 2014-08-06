@@ -1574,6 +1574,7 @@ public class LibraryTopicListView extends Composite{
 		if(pageType.equals("lesson")&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.DISCOVER)&&AppClientFactory.getPlaceManager().getRequestParameter("standardId")==null) {
 			setCollectionQuizVisibility(true);
 			collectionTitle.addStyleName(libraryStyle.collectionQuizTabActive());
+			quizTitle.removeStyleName(libraryStyle.collectionQuizTabActive());
 		} else {
 			setCollectionQuizVisibility(false);
 		}
