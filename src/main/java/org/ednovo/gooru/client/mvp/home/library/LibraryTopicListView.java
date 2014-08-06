@@ -232,6 +232,11 @@ public class LibraryTopicListView extends Composite{
 		searchTitle=topicDo.getLabel();
 		setIds();
 		setAssets();
+		
+		toolTipPopupPanelCustomize.clear();
+		toolTipPopupPanelNew.clear();
+		toolTipPopupPanelCustomize.hide();
+		toolTipPopupPanelNew.hide();
 		if(topicDo.getLesson()!=null) {
 			setLessonData(topicDo.getLesson());
 		} else {
@@ -439,6 +444,10 @@ public class LibraryTopicListView extends Composite{
 		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
 		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
 		noCollectionLbl.setText(i18n.GL1170());
+		toolTipPopupPanelCustomize.clear();
+		toolTipPopupPanelNew.clear();
+		toolTipPopupPanelCustomize.hide();
+		toolTipPopupPanelNew.hide();
 		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());
 		noCollectionLbl.getElement().setAttribute("title",i18n.GL1170());
 		topicTitleLbl.setText(partnerFolderDo.getTitle());
@@ -1618,6 +1627,8 @@ public class LibraryTopicListView extends Composite{
 
 		@Override
 		public void onBlur(BlurEvent event) {
+			toolTipPopupPanelCustomize.clear();
+			toolTipPopupPanelNew.clear();
 			toolTipPopupPanelCustomize.hide();
 			toolTipPopupPanelNew.hide();
 			

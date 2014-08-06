@@ -932,8 +932,8 @@ button.LoginText {
 
 .privacyContainer{
 	margin: 0px;
-	text-align: left;
-	margin-bottom: 10px;
+	text-align: center;
+	/* margin-bottom: 10px; */
 	padding: 0px;
 	line-height: 70%;
 }
