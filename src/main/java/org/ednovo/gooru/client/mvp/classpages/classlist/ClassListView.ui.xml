@@ -93,9 +93,19 @@
 					ui:field="panelNoMembers">
 					<g:HTMLPanel styleName="{res.css.title}" ui:field="joinTxt"></g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.twoActions}">
-						<g:HTMLPanel styleName="{res.css.manage}" ui:field="manageTxt">  </g:HTMLPanel>
-						<g:HTMLPanel styleName="{res.css.progress}" ui:field="trackTxt">
-					
+						<g:HTMLPanel styleName="{res.css.manageStudents}"> 
+						    <g:HTMLPanel styleName="{res.css.manage}"></g:HTMLPanel>
+						    <g:HTMLPanel styleName="{res.css.progressStudents}">
+						    <g:Label styleName="{res.css.manageText}" ui:field="manageHeader"></g:Label>
+						    <g:Label styleName="{res.css.manageDes}" ui:field="manageTxt"></g:Label>
+						    </g:HTMLPanel>
+					    </g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.manageProgressStudents}">
+					       <g:HTMLPanel styleName="{res.css.progress}"></g:HTMLPanel>
+						    <g:HTMLPanel styleName="{res.css.progressStudents}">
+						   		 <g:Label styleName="{res.css.manageText}" ui:field="trackTxt"></g:Label>
+						   		 <g:Label styleName="{res.css.manageDes}" ui:field="lblMonitorDes"/>
+						    </g:HTMLPanel>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>

@@ -192,8 +192,8 @@ public class HeaderUc extends Composite implements
 
 			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(
 					PlaceTokens.HOME)) {
-				acctActivationPl.getElement().getStyle()
-						.setMarginTop(51, Unit.PX);
+				/*acctActivationPl.getElement().getStyle()
+						.setMarginTop(51, Unit.PX);*/
 			} else {
 				acctActivationPl.getElement().getStyle().clearMarginTop();
 			}
@@ -251,7 +251,9 @@ public class HeaderUc extends Composite implements
 	
 	boolean hasClasses = false;
 	
-	@UiField HTMLPanel discovertooltippop,myCollectionsPop,myClassesPop;
+	@UiField HTMLPanel discovertooltippop,myCollectionsPop;
+	
+	@UiField static HTMLPanel myClassesPop;
 	
 	String classpageId = "";
 	/*
@@ -286,7 +288,7 @@ public class HeaderUc extends Composite implements
 	Label lblBeta; // gooruClassicViewLbl
 
 	@UiField
-	HTMLPanel dotsPanel, mainDotsPanel, mainInnerDotsPanel,dropDownImg;
+	public static HTMLPanel dotsPanel, mainDotsPanel, mainInnerDotsPanel,dropDownImg;
 
 	@UiField
 	Label discoverLink, organizeLink, teachLink, studyLink, loggedInfoLbl,thanksLbl;
@@ -449,7 +451,6 @@ public class HeaderUc extends Composite implements
 			organizeToolTip.getElement().getStyle().setZIndex(99);
 			myCollectionsPop.add(organizeToolTip);
 			myCollectionsPop.getElement().getStyle().setPosition(Position.ABSOLUTE);
-			myCollectionsPop.getElement().getStyle().setMarginLeft(90, Unit.PX);
 			myCollectionsPop.getElement().getStyle().setZIndex(99);
 			myCollectionsPop.setVisible(false);
 		
@@ -475,7 +476,6 @@ public class HeaderUc extends Composite implements
 		myClassesPop.add(classpageListVc);
 		myClassesPop.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		myClassesPop.getElement().getStyle().setMarginTop(50, Unit.PX);
-		myClassesPop.getElement().getStyle().setMarginLeft(203, Unit.PX);
 		myClassesPop.getElement().getStyle().setZIndex(99);
 		myClassesPop.setVisible(false);
 		//classpageListVc.setPopupPosition(left, top);
@@ -563,6 +563,8 @@ public class HeaderUc extends Composite implements
 		mainDotsPanel.getElement().setId("pnlMainDotsPanel");
 		mainInnerDotsPanel.getElement().setId("pnlMainInnerDotsPanel");
 		dotsPanel.getElement().setId("pnlDotsPanel");
+		
+
 		dropDownImg.getElement().setId("pnlDropDownImg");
 		signUpInfo.getElement().setId("fpnlSignUpInfo");
 		logoutDownArrowLbl.getElement().setId("lblLogoutDownArrow");
@@ -1840,6 +1842,14 @@ public class HeaderUc extends Composite implements
 		} else {
 			params.put("id", gooruOId);
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT, params);
+		}
+	}
+	
+	public static void closeClassContainer()
+	{
+		if(myClassesPop != null)
+		{
+		myClassesPop.setVisible(false);
 		}
 	}
 	

@@ -2006,16 +2006,19 @@ font-size:12px;
 	text-align:center;
 	padding-top:23px;
 	font-family :"Arvo", serif !important;
+	text-shadow: 0px 2px 4px #666;
 }
 
 .subheader {
 	color:white;
 	font-size:16px;
 	text-align:center;
+	text-shadow: 0px 2px 4px #666;
 }
 .description {
 	color:white;
 	text-align:center;
+	text-shadow: 0px 1px 4px #999;
 }
 
 .btnBlock{
@@ -2033,7 +2036,7 @@ a.secondary {
 	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
 	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
 	background: -o-linear-gradient(top, #fdfdfd, #ddd);
-	border: 1px solid #ddd;
+	border: 1px solid #cacaca;
 	font-size: 14px;
 }
 
@@ -2045,7 +2048,7 @@ a.secondary:hover {
 .learnMoreContainer{
 	margin: 32px auto;
 	text-align: center;
-	border-bottom: 1px solid #999;
+	border-bottom: 1px solid #cacaca;
 	height: 10px;
 	margin-bottom: 25px;
 	width: 1000px;

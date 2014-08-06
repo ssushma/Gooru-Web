@@ -107,7 +107,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField
 	FlowPanel frameContainer,dataInsightsPanel;
 	@UiField VerticalPanel commentsContainer;
-	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,resourceCount,questionCount,avgReactionImage;
+	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,
+					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText;
 	@UiField HTMLPanel addComment,loginMessaging;
 	@UiField TextArea commentField;
 	@UiField Button postCommentBtn,postCommentCancel;
@@ -373,15 +374,15 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 //		collectionSummaryLbl.setText(i18n.GL1544);
 //		emptyMsgDescOne.setText(i18n.GL1545);
 //		emptyMsgDescTwo.setText(i18n.GL1546);
-//		insightsHeaderText.setText(i18n.GL1626());
-//		insightsHeaderText.getElement().setId("lblInsightsHeaderText");
-//		insightsHeaderText.getElement().setAttribute("alt",i18n.GL1626());
-//		insightsHeaderText.getElement().setAttribute("title",i18n.GL1626());
-//		
-//		insightsContentText.setText(i18n.GL1627());
-//		insightsContentText.getElement().setId("lblInsightsContentText");
-//		insightsContentText.getElement().setAttribute("alt",i18n.GL1627());
-//		insightsContentText.getElement().setAttribute("title",i18n.GL1627());
+		insightsHeaderText.setText(i18n.GL1626());
+		insightsHeaderText.getElement().setId("lblInsightsHeaderText");
+		insightsHeaderText.getElement().setAttribute("alt",i18n.GL1626());
+		insightsHeaderText.getElement().setAttribute("title",i18n.GL1626());
+		
+		insightsContentText.setText(i18n.GL1627());
+		insightsContentText.getElement().setId("lblInsightsContentText");
+		insightsContentText.getElement().setAttribute("alt",i18n.GL1627());
+		insightsContentText.getElement().setAttribute("title",i18n.GL1627());
 		
 		/*previewFlagButton.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
 		previewFlagButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
@@ -710,10 +711,10 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			frameContainer.clear();
 			frameContainer.setVisible(false);
 			messageContainer.setVisible(true);
-		}else if(page!=null&&page.equals("teach")){
-			frameContainer.clear();
-			frameContainer.setVisible(false);
-			messageContainer.setVisible(false);
+//		}else if(page!=null&&page.equals("teach")){
+//			frameContainer.clear();
+//			frameContainer.setVisible(false);
+//			messageContainer.setVisible(false);
 		}else{
 			frameContainer.clear();
 			frameContainer.setVisible(true);
@@ -732,10 +733,10 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			frameContainer.clear();
 			frameContainer.setVisible(false);
 			messageContainer.setVisible(true);
-		}else if(page!=null&&page.equals("teach")){
-			frameContainer.clear();
-			frameContainer.setVisible(false);
-			messageContainer.setVisible(false);
+//		}else if(page!=null&&page.equals("teach")){
+//			frameContainer.clear();
+//			frameContainer.setVisible(false);
+//			messageContainer.setVisible(false);
 		}else{
 			frameContainer.clear();
 			frameContainer.setVisible(true);
@@ -751,10 +752,10 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			frameContainer.clear();
 			frameContainer.setVisible(false);
 			messageContainer.setVisible(true);
-		}else if(page!=null&&page.equals("teach")){
-			frameContainer.clear();
-			frameContainer.setVisible(false);
-			messageContainer.setVisible(false);
+//		}else if(page!=null&&page.equals("teach")){
+//			frameContainer.clear();
+//			frameContainer.setVisible(false);
+//			messageContainer.setVisible(false);
 		}else{
 			frameContainer.clear();
 			frameContainer.setVisible(true);
@@ -1389,6 +1390,10 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@Override
 	public void displaySpendTime(Long hours, Long mins, Long secs) {
 		spendTimeContainer.clear();
+		if(AppClientFactory.isAnonymous()){
+			dispalyTime();
+			return;
+		}
 		String minsString = (mins == 0)? "00": ((mins < 10)? "0"+mins : ""+mins );
 	    String secsString = (secs == 0)? "00": ((secs < 10)? "0" + secs : "" + secs);
 	        if (hours > 0){
@@ -1412,6 +1417,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		spendTimeContainer.add(inlineTimeLabel);
 		spendTimeContainer.add(inlineTimeString);
 	}
+	public void dispalyTime(){
+		spendTimeContainer.clear();
+		InlineLabel inlineTimeLabel=new InlineLabel("-");
+		inlineTimeLabel.setStyleName(playerStyle.timeTextBig());
+		spendTimeContainer.add(inlineTimeLabel);
+	}
 	public void displayScore(String collectionScore, String noOfQuestions){
 		InlineLabel inlineTimeLabel=new InlineLabel(collectionScore);
 		inlineTimeLabel.setStyleName(playerStyle.timeTextBig());
@@ -1424,6 +1435,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 
 	@Override
 	public void displayScoreCount(Integer collectionScore, Integer noOfQuestions) {
+		if(AppClientFactory.isAnonymous()){
+			noOfQuestions=0;
+		}
 		scoreContainer.clear();
 		if(noOfQuestions==0){
 			InlineLabel inlineTimeLabel=new InlineLabel("-");
@@ -1491,6 +1505,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	}
 	
 	public void showAvgReaction(String reactionType){
+		if(AppClientFactory.isAnonymous()){
+			reactionType=null;
+		}
 		avgReactionImage.setText("");
 		if(reactionType!=null){
 			if(reactionType.equals(ResourcePlayerMetadataView.REACTION_CAN_EXPLAIN)){

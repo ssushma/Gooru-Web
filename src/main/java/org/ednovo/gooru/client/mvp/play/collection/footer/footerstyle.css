@@ -37,35 +37,33 @@ display:inline-block;
 	height:30px;
 }
 
-.footerContainer .narrationButtonNormal{
+ .narrationButtonNormal{
 	display:inline-block;
-	background:url(images/player/player_sprite_new.png) no-repeat -74px -4px;
+	background:url(images/player/narration.png) no-repeat;
 	/* transition:all 0.5s ease-in-out 0s; */
-	width:31px;
-	height:30px;
+	width:45px;
+	height:43px;
 }
 
-.footerContainer .narrationButtonNormal:hover{
-
-	background:url(images/player/player_sprite_new.png) no-repeat -74px -44px;
-	opacity:1;
+ .narrationButtonNormal:hover{
+	background:url(images/player/narration.png) no-repeat;
+	opacity:.6;
 	cursor: pointer;
-
 }
-
-.footerContainer .narrationButtonActive{
+.narrationButtonActive{
 	display:inline-block;
-background:url(images/player/player_sprite_new.png) no-repeat -74px -44px;
+	background:url(images/player/narration.png) no-repeat;
 	opacity:1;
-	width:31px;
-	height:30px;
+	width:45px;
+	height:43px;
 	cursor: pointer;
 }
 .narrationButtonDisabled{
 	display:inline-block;
-	background:url(images/player/player_sprite_new.png) no-repeat -74px -4px;
-	width:31px;
-	height:30px;
+	background:url(images/player/narration.png) no-repeat;
+	opacity:.6;
+	width:45px;
+	height:43px;
 }
 
 
@@ -174,7 +172,7 @@ background:url(images/player/player_sprite_new.png) no-repeat -74px -44px;
 }
 .text-right{
 	text-align:right;
-	width: 25%;
+	width: 100%;
 	position: relative;
 	float: left;
 }

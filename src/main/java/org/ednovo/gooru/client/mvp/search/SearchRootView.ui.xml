@@ -49,46 +49,46 @@
 
 		.resourceBtnActive {
 			color: #515151;
-    		padding: 7px 9px 9px 34px;
-    		border-radius: 4px;
-    		box-shadow:0 3px 3px #d0d0d5 inset;
+			padding: 7px 9px 9px 34px;
+			border-radius: 4px;
 			background: #efefef;
 			background-image: url(images/resourcesIco.png); /* fallback */
-			background-image: url(images/resourcesIco.png), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#efefef)); /* Saf4+, Chrome */
-			background-image: url(images/resourcesIco.png), -webkit-linear-gradient(top, #ffffff, #efefef); /* Chrome 10+, Saf5.1+ */
-			background-image: url(images/resourcesIco.png), -moz-linear-gradient(top, #ffffff, #efefef); /* FF3.6+ */
-			background-image: url(images/resourcesIco.png), -ms-linear-gradient(top, #ffffff, #efefef); /* IE10 */
-			background-image: url(images/resourcesIco.png), -o-linear-gradient(top, #ffffff, #efefef); /* Opera 11.10+ */
-			background-image: url(images/resourcesIco.png), linear-gradient(to bottom, #ffffff, #efefef); /* W3C */
-			border: 1px solid #ddd;
-			font-size:small;
+			background-image: url(images/resourcesIco.png), -webkit-gradient(linear, left top, left bottom, from(#EFEFEF), to(#FAFAFA)); /* Saf4+, Chrome */
+			background-image: url(images/resourcesIco.png), -webkit-linear-gradient(top, #EFEFEF, #FAFAFA); /* Chrome 10+, Saf5.1+ */
+			background-image: url(images/resourcesIco.png), -moz-linear-gradient(top, #EFEFEF, #FAFAFA); /* FF3.6+ */
+			background-image: url(images/resourcesIco.png), -ms-linear-gradient(top, #EFEFEF, #FAFAFA); /* IE10 */
+			background-image: url(images/resourcesIco.png), -o-linear-gradient(top, #EFEFEF, #FAFAFA); /* Opera 11.10+ */
+			background-image: url(images/resourcesIco.png), linear-gradient(to bottom, #EFEFEF, #FAFAFA); /* W3C */
 			background-repeat:no-repeat;
+			border: 1px solid #b0b0ba;
+			font-size:12px;
+			font-weight: bold;
 			background-position:0 0;
-			font-family:Arial, Helvetica, sans-serif;
 			cursor:pointer;
+			box-shadow:0 1px 3px #d0d0d5 inset;
 
 		}
 
 		.collectionBtnActive {
 			color: #515151;
-    		padding: 7px 9px 9px 34px;
+			padding: 7px 9px 9px 34px;
 			margin-left: 10px;
-    		border-radius: 4px;
-    		box-shadow:0 3px 3px #d0d0d5 inset;
+			border-radius: 4px;
 			background: #efefef;
 			background-image: url(images/collectionIco.png); /* fallback */
-			background-image: url(images/collectionIco.png), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#efefef)); /* Saf4+, Chrome */
-			background-image: url(images/collectionIco.png), -webkit-linear-gradient(top, #ffffff, #efefef); /* Chrome 10+, Saf5.1+ */
-			background-image: url(images/collectionIco.png), -moz-linear-gradient(top, #ffffff, #efefef); /* FF3.6+ */
-			background-image: url(images/collectionIco.png), -ms-linear-gradient(top, #ffffff, #efefef); /* IE10 */
-			background-image: url(images/collectionIco.png), -o-linear-gradient(top, #ffffff, #efefef); /* Opera 11.10+ */
-			background-image: url(images/collectionIco.png), linear-gradient(to bottom, #ffffff, #efefef); /* W3C */
-			border: 1px solid #ddd;
-			font-size:small;
+			background-image: url(images/collectionIco.png), -webkit-gradient(linear, left top, left bottom, from(#EFEFEF), to(#FAFAFA)); /* Saf4+, Chrome */
+			background-image: url(images/collectionIco.png), -webkit-linear-gradient(top, #EFEFEF, #FAFAFA); /* Chrome 10+, Saf5.1+ */
+			background-image: url(images/collectionIco.png), -moz-linear-gradient(top, #EFEFEF, #FAFAFA); /* FF3.6+ */
+			background-image: url(images/collectionIco.png), -ms-linear-gradient(top, #EFEFEF, #FAFAFA); /* IE10 */
+			background-image: url(images/collectionIco.png), -o-linear-gradient(top, #EFEFEF, #FAFAFA); /* Opera 11.10+ */
+			background-image: url(images/collectionIco.png), linear-gradient(to bottom, #EFEFEF, #FAFAFA); /* W3C */
 			background-repeat:no-repeat;
+			border: 1px solid #b0b0ba;
+			font-size:12px;
+			font-weight: bold;
 			background-position:0 0;
-			font-family:Arial, Helvetica, sans-serif;
 			cursor:pointer;
+			box-shadow:0 1px 3px #d0d0d5 inset;
 		}
 
 
@@ -146,14 +146,15 @@
 			border-radius: 4px;
 			background: #efefef;
 			background-image: url(images/resourcesIco.png); /* fallback */
-			background-image: url(images/resourcesIco.png), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#efefef)); /* Saf4+, Chrome */
-			background-image: url(images/resourcesIco.png), -webkit-linear-gradient(top, #ffffff, #efefef); /* Chrome 10+, Saf5.1+ */
-			background-image: url(images/resourcesIco.png), -moz-linear-gradient(top, #ffffff, #efefef); /* FF3.6+ */
-			background-image: url(images/resourcesIco.png), -ms-linear-gradient(top, #ffffff, #efefef); /* IE10 */
-			background-image: url(images/resourcesIco.png), -o-linear-gradient(top, #ffffff, #efefef); /* Opera 11.10+ */
-			background-image: url(images/resourcesIco.png), linear-gradient(to bottom, #ffffff, #efefef); /* W3C */
+			background-image: url(images/resourcesIco.png), -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#f0f0f0)); /* Saf4+, Chrome */
+			background-image: url(images/resourcesIco.png), -webkit-linear-gradient(top, #ffffff, #f0f0f0); /* Chrome 10+, Saf5.1+ */
+			background-image: url(images/resourcesIco.png), -moz-linear-gradient(top, #ffffff, #f0f0f0); /* FF3.6+ */
+			background-image: url(images/resourcesIco.png), -ms-linear-gradient(top, #ffffff, #f0f0f0); /* IE10 */
+			background-image: url(images/resourcesIco.png), -o-linear-gradient(top, #ffffff, #f0f0f0); /* Opera 11.10+ */
+			background-image: url(images/resourcesIco.png), linear-gradient(to bottom, #ffffff, #f0f0f0); /* W3C */
 			border: 1px solid #ddd;
-			font-size:small;
+			font-size:12px;
+			font-weight: bold;
 			background-repeat:no-repeat;
 			background-position:0 0;
 			font-family:Arial, Helvetica, sans-serif;
@@ -164,12 +165,12 @@
 			color: #515151;
 			background: #efefef;
 			background-image: url(images/resourcesIco.png); /* fallback */
-			background-image: url(images/resourcesIco.png), -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#ffffff)); /* Saf4+, Chrome */
-			background-image: url(images/resourcesIco.png), -webkit-linear-gradient(top, #efefef, #ffffff); /* Chrome 10+, Saf5.1+ */
-			background-image: url(images/resourcesIco.png), -moz-linear-gradient(top, #efefef, #ffffff); /* FF3.6+ */
-			background-image: url(images/resourcesIco.png), -ms-linear-gradient(top, #efefef, #ffffff); /* IE10 */
-			background-image: url(images/resourcesIco.png), -o-linear-gradient(top, #efefef, #ffffff); /* Opera 11.10+ */
-			background-image: url(images/resourcesIco.png), linear-gradient(to bottom, #efefef, #ffffff); /* W3C */
+			background-image: url(images/resourcesIco.png), -webkit-gradient(linear, left top, left bottom, from(#f0f0f0), to(#efefef)); /* Saf4+, Chrome */
+			background-image: url(images/resourcesIco.png), -webkit-linear-gradient(top, #f0f0f0, #ffffff); /* Chrome 10+, Saf5.1+ */
+			background-image: url(images/resourcesIco.png), -moz-linear-gradient(top, #f0f0f0, #ffffff); /* FF3.6+ */
+			background-image: url(images/resourcesIco.png), -ms-linear-gradient(top, #f0f0f0, #ffffff); /* IE10 */
+			background-image: url(images/resourcesIco.png), -o-linear-gradient(top, #f0f0f0, #ffffff); /* Opera 11.10+ */
+			background-image: url(images/resourcesIco.png), linear-gradient(to bottom, #f0f0f0, #ffffff); /* W3C */
 			background-repeat:no-repeat;
 		}
 
@@ -181,14 +182,15 @@
 			margin-left: 10px;
 			background: #efefef;
 			background-image: url(images/collectionIco.png); /* fallback */
-			background-image: url(images/collectionIco.png), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f7f7f7)); /* Saf4+, Chrome */
-			background-image: url(images/collectionIco.png), -webkit-linear-gradient(top, #ffffff, #efefef); /* Chrome 10+, Saf5.1+ */
-			background-image: url(images/collectionIco.png), -moz-linear-gradient(top, #ffffff, #efefef); /* FF3.6+ */
-			background-image: url(images/collectionIco.png), -ms-linear-gradient(top, #ffffff, #efefef); /* IE10 */
-			background-image: url(images/collectionIco.png), -o-linear-gradient(top, #ffffff, #efefef); /* Opera 11.10+ */
-			background-image: url(images/collectionIco.png),  linear-gradient(to bottom, #ffffff, #efefef); /* W3C */
+			background-image: url(images/collectionIco.png), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f0f0f0)); /* Saf4+, Chrome */
+			background-image: url(images/collectionIco.png), -webkit-linear-gradient(top, #ffffff, #f0f0f0); /* Chrome 10+, Saf5.1+ */
+			background-image: url(images/collectionIco.png), -moz-linear-gradient(top, #ffffff, #f0f0f0); /* FF3.6+ */
+			background-image: url(images/collectionIco.png), -ms-linear-gradient(top, #ffffff, #f0f0f0); /* IE10 */
+			background-image: url(images/collectionIco.png), -o-linear-gradient(top, #ffffff, #f0f0f0); /* Opera 11.10+ */
+			background-image: url(images/collectionIco.png), linear-gradient(to bottom, #ffffff, #f0f0f0); /* W3C */
 			border: 1px solid #ddd;
-			font-size:small;
+			font-size:12px;
+			font-weight: bold;
 			background-repeat:no-repeat;
 			background-position:0 0;
 			font-family:Arial, Helvetica, sans-serif;
@@ -200,12 +202,12 @@
 			color: #515151;
 			background: #efefef;
 			background-image: url(images/collectionIco.png); /* fallback */
-			background-image: url(images/collectionIco.png), -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#ffffff)); /* Saf4+, Chrome */
-			background-image: url(images/collectionIco.png), -webkit-linear-gradient(top, #efefef, #ffffff); /* Chrome 10+, Saf5.1+ */
-			background-image: url(images/collectionIco.png), -moz-linear-gradient(top, #efefef, #ffffff); /* FF3.6+ */
-			background-image: url(images/collectionIco.png), -ms-linear-gradient(top, #efefef, #ffffff); /* IE10 */
-			background-image: url(images/collectionIco.png), -o-linear-gradient(top, #efefef, #ffffff); /* Opera 11.10+ */
-			background-image: url(images/collectionIco.png), linear-gradient(to bottom, #efefef, #ffffff); /* W3C */
+			background-image: url(images/collectionIco.png), -webkit-gradient(linear, left top, left bottom, from(#f0f0f0), to(#ffffff)); /* Saf4+, Chrome */
+			background-image: url(images/collectionIco.png), -webkit-linear-gradient(top, #f0f0f0, #ffffff); /* Chrome 10+, Saf5.1+ */
+			background-image: url(images/collectionIco.png), -moz-linear-gradient(top, #f0f0f0, #ffffff); /* FF3.6+ */
+			background-image: url(images/collectionIco.png), -ms-linear-gradient(top, #f0f0f0, #ffffff); /* IE10 */
+			background-image: url(images/collectionIco.png), -o-linear-gradient(top, #f0f0f0, #ffffff); /* Opera 11.10+ */
+			background-image: url(images/collectionIco.png), linear-gradient(to bottom, #f0f0f0, #ffffff); /* W3C */
 			background-repeat:no-repeat;
 		}
 

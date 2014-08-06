@@ -225,7 +225,7 @@ public class StudentSignUpUc extends PopupPanel{
 		lblCancel.getElement().setId("lblCancel");
 		panelSignUp.getElement().setId("pnlSignUp");
 		
-		lblTxtParent.setText(i18n.GL0468());
+		lblTxtParent.setText(i18n.GL0468()+ " ");
 		lblTxtParent.getElement().setId("lblTxtParent");
 		lblTxtParent.getElement().setAttribute("alt",i18n.GL0468());
 		lblTxtParent.getElement().setAttribute("title",i18n.GL0468());

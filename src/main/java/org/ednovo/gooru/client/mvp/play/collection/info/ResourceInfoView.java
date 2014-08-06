@@ -514,7 +514,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			if(collectionItemDo.getResource().getResourceFormat()!=null){
 				if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
 					List<String> publisherQuestionUserName = new ArrayList<String>();
-					publisherQuestionUserName.add(collectionItemDo.getResource().getUser().getUsername());
+					publisherQuestionUserName.add(collectionItemDo.getResource().getCreator().getUsername());
 					setPublisherDetails(publisherQuestionUserName);
 				}
 			}
@@ -2220,7 +2220,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	};
 	
 	DeletePlayerStarReviewHandler deleteStarRating = new DeletePlayerStarReviewHandler(){
-
 		@Override
 		public void deleteStarRatings() {
 			String zeroCount = "0";

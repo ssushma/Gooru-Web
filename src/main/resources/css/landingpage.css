@@ -1034,7 +1034,8 @@ footer .col-xs-4 {
 	padding: 10px 10px;
 	font-size: 12px;
 	border: 1px solid #dddddd;
-	height: 128px;
+	height: 118px;
+	overflow-y:auto;
 }
 
 .getStart {
@@ -1068,7 +1069,7 @@ footer .col-xs-4 {
 
 .getStart .getContentContainer {
 	padding: 10px 10px;
-	min-height: 212px;
+	min-height: 204px;
 }
 
 .getStart .getContentContainer h4 {
@@ -1187,6 +1188,7 @@ footer .col-xs-2:last-child{
 	color: white;
 	text-align: center;
 	width: 100%;
+	margin-top: 70px;
 }
 
 .dataTableResult .col-xs-3{
@@ -1198,22 +1200,6 @@ footer .col-xs-2:last-child{
 	border-right: none;
 }
 
-
-
-
-.science{
-	width: 25%;
-}
-.math{
-	width: 25%;
-}
-
-.socialscience{
-	width: 25%;
-}
-.ela{
-	width: 25%;
-}
 
 .dataTableResultHeading{
 
@@ -1257,4 +1243,12 @@ footer .col-xs-2:last-child{
 	font-size: 30px;
 	left: 15px;
 	position: absolute;
+}
+
+.districtLibraryContainer{
+	overflow: auto;
+}
+
+.footerLastItem{
+	border-right: none !important;
 }

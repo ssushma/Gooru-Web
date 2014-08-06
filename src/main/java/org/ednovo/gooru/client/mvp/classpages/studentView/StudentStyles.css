@@ -391,11 +391,14 @@
 	width: 200px;
 }
 .classpageCodeShareInputForImage{
-	float: right;
+	float: left;
     position: relative;
-	width: 176px;
-	top: 32%;
+	width: 218px;
+	top: 29%;
 }
+
+
+
 .studentWithdrawBtn {
 	float: right;
 	right: 30px;

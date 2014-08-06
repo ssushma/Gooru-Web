@@ -800,10 +800,10 @@ public class ShelfCollectionResourceChildView extends
 		setResourcePlayLink();
 		String resourceType = collectionItemDo.getResource().getResourceType().getName();
 		youtube = resourceType.equalsIgnoreCase(ImageUtil.YOUTUBE);
-
+	
 		mediaType = collectionItem.getResource().getMediaType();
-		setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? true : false : false;
-		//setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? false : true : true;
+		
+		setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
 		
 		imgNotFriendly.setVisible(setVisibility);
 		resourceTitle=resourceTitleLbl.getText();

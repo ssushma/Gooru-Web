@@ -94,7 +94,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@UiField FlowPanel resourceWidgetContainer,tagsButtonContainer;
 	@UiField
 	static FlowPanel wrapperContainerField,tagsContainer;
-	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,needHelpButton,plusAddTagsButton;
+	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,
+					needHelpButton,plusAddTagsButton,narrationButton;
 	@UiField HTMLEventPanel emoticsContainer;
 	@UiField HTMLPanel singleEmoticsContainer,collectionContainer,ratingsContainer;
 	@UiField Label resourcePublisher,reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
@@ -167,7 +168,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		return collectionContainer;
 	}
 	
-	
+	public Button getNarrationButton(){
+		return narrationButton;
+	}
 	
 	private static ResourcePlayerMetadataViewUiBinder uiBinder = GWT.create(ResourcePlayerMetadataViewUiBinder.class);
 
@@ -1127,6 +1130,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(flag){
 	//		ratingsContainer.removeFromParent();
 			ratingsContainer.setVisible(false);
+			emoticsContainer.setVisible(true);
 		}else{
 			if(isChildAccount()){
 	//			ratingsContainer.removeFromParent();
@@ -1134,7 +1138,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				ratingsContainer.setVisible(true);
 			}
-			System.out.println("else statement");
 			emoticsContainer.setVisible(false);
 			//emoticsContainer.removeFromParent();
 		}
