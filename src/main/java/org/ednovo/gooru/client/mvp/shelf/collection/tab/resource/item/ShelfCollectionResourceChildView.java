@@ -36,11 +36,14 @@ import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragUc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.PublishButtonHideEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.PublishButtonHideEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionItemInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AlertContentUc;
@@ -168,6 +171,8 @@ public class ShelfCollectionResourceChildView extends
 	private Integer pageNumber=1;
 	
 	private Integer pageSize=20;
+	
+	
 	
 	//private static final String REG_EXP = "^(?:[01]\\d|2[0-3]):(?:[0-9]\\d):(?:[0-5]\\d)$";
 	
@@ -506,22 +511,30 @@ public class ShelfCollectionResourceChildView extends
 		endPageLbl.getElement().setId("endPageLbl");
 		// To check whether resource is public and is created by logged in user
 		String resourceShare = collectionItemDo.getResource().getSharing();
+	
 		String resourceCategory = collectionItemDo.getResource().getCategory();
-
+		
+		if(resourceShare.equalsIgnoreCase("public"))
+		{
+			editInfoLbl.setVisible(false);
+		}
 		if (resourceShare.equalsIgnoreCase("public")
 				&& !resourceCategory.equalsIgnoreCase("question")) {
 			editInfoLbl.setVisible(false);
 		} else if (resourceShare.equalsIgnoreCase("public")
 				&& resourceCategory.equalsIgnoreCase("question")
 				&& checkLoggedInUser()) {
+			
 			editInfoLbl.setVisible(true);
 		} else if (resourceShare.equalsIgnoreCase("private")
 				&& !resourceCategory.equalsIgnoreCase("question")
 				&& checkLoggedInUser()) {
+			
 			editInfoLbl.setVisible(true);
 		} else if (!checkLoggedInUser()) {
 			editInfoLbl.setVisible(false);
 		}
+		
 		/*narrationTxtArea.addInitializeHandler(new InitializeHandler() {
 			@Override
 			public void onInitialize(InitializeEvent event) {
@@ -636,8 +649,19 @@ public class ShelfCollectionResourceChildView extends
 		StringUtil.setAttributes(lblCharLimit.getElement(), "lblCharLimit", value, value);
 		lblCharLimit.setText(value);
 		lblCharLimit.setVisible(false);
+		
+		AppClientFactory.getEventBus().addHandler(PublishButtonHideEvent.TYPE, publishButtonHideEventHandler); 
 	}
+		PublishButtonHideEventHandler publishButtonHideEventHandler = new PublishButtonHideEventHandler(){
 
+		@Override
+		public void hideEditButton() {
+					
+			collectionItemDo.getResource().setSharing("public");
+			editInfoLbl.setVisible(false);
+		}
+		
+	};
 	public void setUpdatedData(CollectionItemDo collectionItemDo) {
 		
 	}
@@ -876,7 +900,7 @@ public class ShelfCollectionResourceChildView extends
 		if (youtube) {
 			editStartPageLbl.setVisible(false);
 			editVideoTimeLbl.setVisible(true);
-			System.out.println("totalVideoLength");
+		
 		
 			
 			videoTimeField.setText(VIDEO_TIME);
@@ -1663,7 +1687,7 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("editVideoTimeLbl")
 	public void onclickEditVideoTimeLbl(ClickEvent event)
 	{
-		System.out.println("editVideoTimeLbl");
+		
 		if (youtube) {
 			lblCharLimit.setVisible(true);
 			resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);

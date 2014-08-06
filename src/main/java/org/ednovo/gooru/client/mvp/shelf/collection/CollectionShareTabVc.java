@@ -31,12 +31,14 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionEditShareEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionEditShareHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.EmbedEnableEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.PublishButtonHideEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareLinksView;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
@@ -1070,6 +1072,7 @@ public class CollectionShareTabVc extends Composite {
 	}
 	
 	public void clickOnPublic(){
+		
 		if(publicShareFloPanel.getStyleName().contains(ShelfCBundle.INSTANCE.css().inActiveClass())) {
 			if(!lblPublishPending.isVisible()){
 				collectionShareAlertPopup = new CollectionShareAlertPopup() {
@@ -1082,6 +1085,11 @@ public class CollectionShareTabVc extends Composite {
 						
 							@Override
 							public void onClickPositiveButton(ClickEvent event) {
+								
+								if(AppClientFactory.isContentAdmin()){
+									AppClientFactory.fireEvent(new PublishButtonHideEvent());
+								}
+								
 								this.hide();
 								updateShare("public");
 								selectPrivateResource("public");
