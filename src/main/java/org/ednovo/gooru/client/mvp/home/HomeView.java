@@ -45,8 +45,10 @@ import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
+import org.ednovo.gooru.client.ui.PeListPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.library.JSONStandardsDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
@@ -62,6 +64,16 @@ import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.http.client.Response;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONNumber;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -85,7 +97,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements IsHomeView, SelectionHandler<SuggestOracle.Suggestion> {
 
-	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer;
+	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries;
 	@UiField Button btnSignUp, btnMoreOnCollections,viewSampleResportsBtn;
 	@UiField Label lblHeading, lblSubHeading; 
 //	@UiField TextBoxWithPlaceholder txtSearch;
@@ -107,6 +119,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	@UiField(provided = true)
 	public AppSuggestBox txtSearch;
 	
+	String jsonDataString = null;
 	
 	Map<String, String> allSubject = new HashMap<String, String>();
 	Map<String, String> allCourse  = new HashMap<String, String>();
@@ -171,6 +184,9 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		
 		generateSubjectsData();
 		generateCourseData();
+		
+		generateStandardLibraries();
+		generateDistrictLibraries();
 
 		
 		
@@ -179,6 +195,176 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 //		error.show();
 
 	}
+	private void generateDistrictLibraries() {
+		
+		
+		try {
+			new RequestBuilder(RequestBuilder.GET, "./images/json/district-libraries.json").sendRequest("", new RequestCallback() {
+				  @Override
+				  public void onResponseReceived(Request req, Response resp) {
+					  List<JSONStandardsDo> stdList = getList(resp.getText());
+					    for (int k=0; k<stdList.size(); k++){
+					    
+						    PeListPanel pTag = new PeListPanel();
+							Anchor anchor = new Anchor();
+							anchor.setText(stdList.get(k).getLabel());
+							String url = StringUtil.generateMessage(stdList.get(k).getLink(), stdList.get(k).getCourseId()+"", stdList.get(k).getSubjectId()+"");
+							if (stdList.get(k).getExtraParms()!=null){
+								url = url + "&" + stdList.get(k).getExtraParms(); 
+							}
+							anchor.setHref(url);
+							pTag.add(anchor);
+							panelDistrictLibraries.add(pTag);
+					    }
+				  }
+
+				  @Override
+				  public void onError(Request res, Throwable throwable) {
+				  }
+				});
+		} catch (RequestException e) {
+			jsonDataString = null;
+		}
+		
+			
+	}
+	
+	/**
+	 * @function generateStandardLibraries 
+	 * 
+	 * @created_date : Aug 5, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	private void generateStandardLibraries() {
+		
+		
+		try {
+			new RequestBuilder(RequestBuilder.GET, "./images/json/standards.json").sendRequest("", new RequestCallback() {
+				  @Override
+				  public void onResponseReceived(Request req, Response resp) {
+					  List<JSONStandardsDo> stdList = getList(resp.getText());
+					    for (int k=0; k<stdList.size(); k++){
+					    
+						    PeListPanel pTag = new PeListPanel();
+							Anchor anchor = new Anchor();
+							anchor.setText(stdList.get(k).getLabel());
+							String url = StringUtil.generateMessage(stdList.get(k).getLink(), stdList.get(k).getCourseId()+"", stdList.get(k).getSubjectId()+"");
+							if (stdList.get(k).getExtraParms()!=null){
+								url = url + "&" + stdList.get(k).getExtraParms(); 
+							}
+							anchor.setHref(url);
+							pTag.add(anchor);
+							panelStandardLibraries.add(pTag);
+					    }
+				  }
+
+				  @Override
+				  public void onError(Request res, Throwable throwable) {
+				  }
+				});
+		} catch (RequestException e) {
+			jsonDataString = null;
+		}
+		
+			
+	}
+	/**
+	 * @function getJSONDataFromFile 
+	 * 
+	 * @created_date : Aug 5, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	private String getJSONDataFromFile() {
+		
+		try {
+			new RequestBuilder(RequestBuilder.GET, "./images/json/standards.json").sendRequest("", new RequestCallback() {
+				  @Override
+				  public void onResponseReceived(Request req, Response resp) {
+					  jsonDataString = resp.getText();
+				  }
+
+				  @Override
+				  public void onError(Request res, Throwable throwable) {
+				  }
+				});
+		} catch (RequestException e) {
+			jsonDataString = null;
+		}
+		return jsonDataString;
+	}
+
+
+	/**
+	 * 
+	 * @function getList 
+	 * 
+	 * @created_date : Aug 5, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param jsonResponse
+	 * @return
+	 * 
+	 * @return : List<JSONStandardsDo>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	@SuppressWarnings("deprecation")
+	public List<JSONStandardsDo> getList(String jsonResponse){
+		List<JSONStandardsDo> stdList = new ArrayList<JSONStandardsDo>();
+		JSONValue jsonValue = JSONParser.parse(jsonResponse);
+        JSONArray jsonArray = jsonValue.isArray();
+        for (int i=0; i<jsonArray.size(); i++){
+        	JSONObject obj = jsonArray.get(i).isObject(); 
+        	if (obj != null){
+        		JSONStandardsDo stdObj = new JSONStandardsDo();
+        		JSONValue label = obj.get("label").isString();
+        		JSONNumber courseId = obj.get("courseId").isNumber();
+        		JSONNumber subjectId = obj.get("subjectId").isNumber();
+        		JSONValue link = obj.get("link").isString();
+        		JSONValue extraParms = obj.get("extraParms").isString();        		
+        		
+        		stdObj.setLabel(label.isString().stringValue());
+        		stdObj.setCourseId((int) courseId.isNumber().getValue());
+        		stdObj.setSubjectId((int) subjectId.isNumber().getValue());
+        		stdObj.setLink(link.isString().stringValue());
+        		stdObj.setExtraParms(extraParms!= null ? extraParms.isString().stringValue() : null);
+        		
+        		stdList.add(stdObj);
+        	}
+        }
+        
+        return stdList;
+	}
+	
 	/**
 	 * @function generateCourseData 
 	 * 
