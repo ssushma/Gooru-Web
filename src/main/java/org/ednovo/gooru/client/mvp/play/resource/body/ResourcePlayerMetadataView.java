@@ -528,7 +528,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	}
 	public void setResourceWidgetContainerHeight(){
 		int windowHeight=Window.getClientHeight();
-		resourceWidgetContainer.setHeight((windowHeight-202)+"px");
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			resourceWidgetContainer.setHeight((windowHeight-116)+"px");
+		}else{
+			resourceWidgetContainer.setHeight((windowHeight-202)+"px");
+		}
 	}
 	public void setGoogleDriveFileStatusCode(Integer statusCode){
 		if(statusCode==302){
