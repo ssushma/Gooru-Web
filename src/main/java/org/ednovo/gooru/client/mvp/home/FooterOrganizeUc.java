@@ -74,7 +74,7 @@ public class FooterOrganizeUc extends Composite {
 	Anchor copyRightAnr;
 
 	@UiField
-	Anchor careersAnr,mixpanelLink;
+	Anchor careersAnr;
 
 	@UiField
 	Anchor contactUsAnr;
@@ -204,9 +204,9 @@ public class FooterOrganizeUc extends Composite {
 		copyRightYearText.getElement().setAttribute("title",i18n.GL1246());
 		
 		
-		mixpanelLink.setTarget("_blank");
+		/*mixpanelLink.setTarget("_blank");
 		mixpanelLink.setHref("https://mixpanel.com/f/partner");
-		mixpanelLink.getElement().setId("lnkMixPanel");
+		mixpanelLink.getElement().setId("lnkMixPanel");*/
 		aboutGooruAnr.setHref("http://about.goorulearning.org/");
 		aboutGooruAnr.setTarget("_blank");
 		//featuresAnr.setHref("http://about.goorulearning.org/product/overview/");
