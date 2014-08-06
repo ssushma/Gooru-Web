@@ -491,8 +491,9 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		String protocol = currentUrl.startsWith("https") ? "https" : "http";
 		
 		String url =  "<a href=\""+protocol+"://www.goorulearning.org\" />";
+		
 		txtEmbedLink.setText(url);
-		StringUtil.setAttributes(txtEmbedLink.getElement(), "txtEmbedLink", url, url);
+		StringUtil.setAttributes(txtEmbedLink.getElement(), "txtEmbedLink", "", "");
 		txtEmbedLink.setReadOnly(true);
 		txtEmbedLink.addClickHandler(new ClickHandler() {
 			
