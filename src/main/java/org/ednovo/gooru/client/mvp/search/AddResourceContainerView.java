@@ -109,7 +109,7 @@ public class AddResourceContainerView extends
 	InlineLabel headerTitleDes;
 
 	private boolean isLeftFolderClicked = false;
-
+	HashMap<String,String> urlparams ;
 	private int offset = 0;
 	private int limit = 20;
 	private int totalHitCount = 0;
@@ -164,6 +164,7 @@ public class AddResourceContainerView extends
 		topMostTreeItem.getElement().setInnerHTML("My Collections");
 		topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");
 		addingText.setText(i18n.GL0591());
+		urlparams= new HashMap<String, String>();
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			@Override
 			public void onSelection(SelectionEvent<TreeItem> event) {
@@ -219,7 +220,20 @@ public class AddResourceContainerView extends
 							getFolderItems(item, folderTreeItemWidget.getGooruOid());
 						}
 						selectedFolderGooruOid = folderTreeItemWidget.getGooruOid();
-	
+						if(currentFolderSelectedTreeItem.getFolerLevel()==1) {
+							urlparams.put(O1_LEVEL, selectedFolderGooruOid);
+						}
+						if(currentFolderSelectedTreeItem.getFolerLevel()==2) {
+							urlparams.put(O1_LEVEL, urlparams.get(O1_LEVEL));
+							urlparams.put(O2_LEVEL, selectedFolderGooruOid);
+						}
+						if(currentFolderSelectedTreeItem.getFolerLevel()==3) {
+							urlparams.put(O1_LEVEL, urlparams.get(O1_LEVEL));
+							urlparams.put(O2_LEVEL, urlparams.get(O2_LEVEL));
+							urlparams.put(O3_LEVEL, selectedFolderGooruOid);
+						}
+						if(currentFolderSelectedTreeItem.getFolerLevel()==4) {
+						}
 						isSelectedFolder = true;
 						isSelectedCollection = false;
 						
@@ -700,9 +714,8 @@ public class AddResourceContainerView extends
 			}
 		} else if (isCollectionSearch) {
 			if (isSelectedFolder) {
-				getUiHandlers().addResourceToCollection(selectedFolderGooruOid,
-						currentsearchType,
-						currentFolderSelectedTreeItem.floderName.getText());
+				getUiHandlers().addCollectionToFolder(selectedFolderGooruOid,currentsearchType,currentFolderSelectedTreeItem.floderName.getText(),currentFolderSelectedTreeItem.getFolerLevel(),this.urlparams);
+				urlparams.clear();
 			} 
 			if(isTopMostSelected) {
 				getUiHandlers().addCollectionToMyCollections("",currentsearchType);

@@ -146,9 +146,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		this.res = ResourceSearchResultCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
-		imgNotFriendly.setTitle(i18n.GL0737());
-		imgNotFriendly.setAltText(i18n.GL0737());
-		imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
+		
 		wrapperVcr.addStyleName("resourceSearchResultBox");
 		AppClientFactory.getEventBus().addHandler(UpdateSearchResultMetaDataEvent.TYPE,setUpdateMetaData);
 		AppClientFactory.getEventBus().addHandler(UpdateResourceRatingCountEvent.TYPE,setRatingCount);
@@ -158,7 +156,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		
 		resourceTitlePanel.getElement().setId("fpnlResourceTitlePanel");
 		resourceTitleContainer.getElement().setId("epnlResourceTitleContainer");
-		imgNotFriendly.getElement().setId("imgNotFriendly");
+		
 		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
 		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
 		resourceDescriptionHtml.getElement().setId("htmlResourceDescriptionHtml");
@@ -334,8 +332,8 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		}
 		title = title.replaceAll("<p>", "").replaceAll("</p>", "");
 		
-		lblResourceTitle.setHTML(title);
-		resourceTitle=resourceSearchResultDo.getResourceTitle();
+		lblResourceTitle.setHTML(title.trim());
+		resourceTitle=resourceSearchResultDo.getResourceTitle().trim();
 		lblResourceTitle.getElement().setId(resourceSearchResultDo.getGooruOid());
 		if (lblResourceTitle.getText().length()>30){
 			lblResourceTitle.getElement().getStyle().setWidth(240, Unit.PX);
@@ -349,20 +347,29 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		
 		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
 	
-		imgNotFriendly.setVisible(setVisibility);
-		
-		if (setVisibility || oerVisibility){
-			lblResourceTitle.getElement().getStyle().setFloat(Float.LEFT);
-		}else{
-			lblResourceTitle.getElement().getStyle().clearFloat();
+		//imgNotFriendly.setVisible(setVisibility);
+		if(setVisibility)
+		{
+			imgNotFriendly.getElement().setId("imgImgFriendly");
+			imgNotFriendly.setTitle(i18n.GL0737_1());
+			imgNotFriendly.setAltText(i18n.GL0737_1());
+			imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
+		}else
+		{
+			imgNotFriendly.getElement().setId("imgImgNotFriendly");
+			imgNotFriendly.setTitle(i18n.GL0737());
+			imgNotFriendly.setAltText(i18n.GL0737());
+			imgNotFriendly.setUrl("images/mos/mobileunfriendly.png");
 		}
-		
+		lblResourceTitle.getElement().getStyle().setFloat(Float.LEFT);
+			
 		
 		imgNotFriendly.addMouseOverHandler(new MouseOverHandler() {
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431());
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431()+" "+"<img src='/images/mos/mobileunfriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL_SPL_EXCLAMATION());
+				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setZIndex(9999999);
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
