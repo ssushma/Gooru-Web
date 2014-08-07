@@ -37,7 +37,7 @@
 	overflow: hidden;
 	padding-top: 16px;
 	transition: all 0.5s ease-in 0s;
-	cursor: pointer;
+	/*cursor: pointer;*/
 }
 
 .animation:hover {
@@ -86,7 +86,7 @@
 	overflow: hidden;
 	padding-top: 16px;
 	transition: all 0.5s ease-in 0s;
-	cursor: pointer;
+	/*cursor: pointer;*/
 }
 
 .fanimation:hover {
@@ -1035,6 +1035,7 @@ footer .col-xs-4 {
 	font-size: 12px;
 	border: 1px solid #dddddd;
 	height: 118px;
+	overflow-y:auto;
 }
 
 .getStart {
