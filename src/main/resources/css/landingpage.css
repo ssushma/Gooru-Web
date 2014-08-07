@@ -37,7 +37,7 @@
 	overflow: hidden;
 	padding-top: 16px;
 	transition: all 0.5s ease-in 0s;
-	cursor: pointer;
+	/*cursor: pointer;*/
 }
 
 .animation:hover {
@@ -86,7 +86,7 @@
 	overflow: hidden;
 	padding-top: 16px;
 	transition: all 0.5s ease-in 0s;
-	cursor: pointer;
+	/*cursor: pointer;*/
 }
 
 .fanimation:hover {
