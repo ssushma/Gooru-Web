@@ -460,7 +460,7 @@ public class SearchInfoWidget extends Composite {
 			if(CollectiongenealInfo.getResource().getResourceFormat()!=null){
 				if(CollectiongenealInfo.getResource().getResourceFormat()!=null && CollectiongenealInfo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
 					List<String> publisherQuestionUserName = new ArrayList<String>();
-					publisherQuestionUserName.add(CollectiongenealInfo.getResource().getUser().getUsername());
+					publisherQuestionUserName.add(CollectiongenealInfo.getResource().getCreator().getUsername());
 					InfoUtil.setDepthofknowledgeDetails(publisherQuestionUserName, publisherType, publisherText, publisherPanel);
 				}
 			}
