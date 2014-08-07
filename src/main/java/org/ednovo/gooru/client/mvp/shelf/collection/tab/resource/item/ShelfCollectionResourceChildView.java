@@ -346,9 +346,8 @@ public class ShelfCollectionResourceChildView extends
 		
 		editFloPanel.setVisible(false);
 		editFloPanel.getElement().setId("fpnlEditFloPanel");
-		imgNotFriendly.getElement().setId("imgImgNotFriendly");
-		imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
 		
+			
 		startStopTimeDisplayText.getElement().setId("lblStartStopTimeDisplayText");
 		startStopTimeDisplayText.getElement().setAttribute("alt", i18n.GL0957());
 		startStopTimeDisplayText.getElement().setAttribute("title", i18n.GL0957());
@@ -619,7 +618,8 @@ public class ShelfCollectionResourceChildView extends
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431());
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431()+" "+"<img src='/images/mos/mobileunfriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL_SPL_EXCLAMATION());
+				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
 				
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -825,8 +825,21 @@ public class ShelfCollectionResourceChildView extends
 		mediaType = collectionItem.getResource().getMediaType();
 		
 		setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
+		//imgNotFriendly.setVisible(setVisibility);
+		if(setVisibility)
+		{
+			imgNotFriendly.getElement().setId("imgImgFriendly");
+			imgNotFriendly.setTitle(i18n.GL0737_1());
+			imgNotFriendly.setAltText(i18n.GL0737_1());
+			imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
+		}else
+		{
+			imgNotFriendly.getElement().setId("imgImgNotFriendly");
+			imgNotFriendly.setTitle(i18n.GL0737());
+			imgNotFriendly.setAltText(i18n.GL0737());
+			imgNotFriendly.setUrl("images/mos/mobileunfriendly.png");
+		}
 		
-		imgNotFriendly.setVisible(setVisibility);
 		resourceTitle=resourceTitleLbl.getText();
 		if (resourceTitleLbl.getText().length()>=70){
 			resourceTitleLbl.getElement().getStyle().setWidth(80, Unit.PCT);
