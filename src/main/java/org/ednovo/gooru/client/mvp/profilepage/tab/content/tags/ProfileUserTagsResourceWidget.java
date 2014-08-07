@@ -35,6 +35,7 @@ import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ErrorEvent;
+import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -183,15 +184,9 @@ public class ProfileUserTagsResourceWidget extends Composite {
 		resourceSource.getElement().setAttribute("title",publisherValue);
 	}
 	}
-	@UiHandler("resourceImage")
-	public void onErrorResourceImage(ErrorEvent errorEvent){
-		//resourceImage.setUrl("images/resource_trans.png");
-		resourceTypeImage=resourceTypeImage.toLowerCase();
-		resourceImage.setStyleName(getResourceDefaultImage(resourceTypeImage));
-	}
+	
 	@Override
 	public void onLoad(){
-		
 		resourceImage.setUrl(userTagsResourceDO.getThumbnails());
 		if(userTagsResourceDO.getThumbnails()==null||userTagsResourceDO.getThumbnails().equalsIgnoreCase(""))
 		{
@@ -200,6 +195,16 @@ public class ProfileUserTagsResourceWidget extends Composite {
 			resourceTypeImage=resourceTypeImage.toLowerCase();
 			resourceImage.setStyleName(getResourceDefaultImage(resourceTypeImage));
 		}
+		resourceImage.addErrorHandler(new ErrorHandler() {
+			
+			@Override
+			public void onError(ErrorEvent event) {
+				resourceImage.setUrl("images/resource_trans.png");
+				resourceTypeImage=resourceTypeImage.toLowerCase();
+				resourceImage.setStyleName(getResourceDefaultImage(resourceTypeImage));
+				
+			}
+		});
 	}
 	public String getResourceDefaultImage(String resourceType){
 		
