@@ -361,12 +361,8 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			imgNotFriendly.setAltText(i18n.GL0737());
 			imgNotFriendly.setUrl("images/mos/mobileunfriendly.png");
 		}
-		if (setVisibility || oerVisibility){
-			lblResourceTitle.getElement().getStyle().setFloat(Float.LEFT);
-		}else{
-			lblResourceTitle.getElement().getStyle().clearFloat();
-		}
-		
+		lblResourceTitle.getElement().getStyle().setFloat(Float.LEFT);
+			
 		
 		imgNotFriendly.addMouseOverHandler(new MouseOverHandler() {
 			

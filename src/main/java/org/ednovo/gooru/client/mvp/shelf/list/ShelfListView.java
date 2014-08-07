@@ -2072,5 +2072,104 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		}
 	
 	}
+	
+	@Override
+	public void refreshFolderItemDataInSearchAddResource(FolderDo folderDo,
+			RefreshFolderType refreshFolderType, HashMap<String, String> params) {
+		System.out.println("params::::::"+params);
+		System.out.println("refreshFolderType here::::::"+refreshFolderType);
+		if(refreshFolderType.equals(RefreshFolderType.INSERT)) {
+		if(params!=null) {
+			if(params.get(O3_LEVEL)!=null) {
+				TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+				if(level1Item!=null) {
+					TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
+					if(level2Item!=null) {
+						TreeItem level3Item = getSecondLevelTreeWidget(level2Item, params.get(O3_LEVEL));
+						if(level3Item!=null) {
+							ShelfCollection selectedThirdWidget = (ShelfCollection) level3Item.getWidget();
+							if(selectedThirdWidget.getFolderOpenedStatus()==true) {
+								ShelfCollection shelfCollection = new ShelfCollection(folderDo, 4);
+								TreeItem treeItem = new TreeItem(shelfCollection);
+								shelfCollection.setWidgetPositions(4, 0, selectedThirdWidget.getUrlParams());
+								level3Item.insertItem(0, treeItem);
+								correctStyle(treeItem);
+							}
+						}
+					}
+				}	
+			} else if(params.get(O2_LEVEL)!=null) {
+				TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+				if(level1Item!=null ) {
+					TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
+					if(level2Item!=null && !isLeftFolderClicked) {
+						ShelfCollection selectedSecondWidget = (ShelfCollection) level2Item.getWidget();
+						if(selectedSecondWidget.getFolderOpenedStatus()==true) {
+							ShelfCollection shelfCollection = new ShelfCollection(folderDo, 3);
+							TreeItem treeItem = new TreeItem(shelfCollection);
+							shelfCollection.setWidgetPositions(3, 0, selectedSecondWidget.getUrlParams());
+							level2Item.insertItem(0, treeItem);
+							correctStyle(treeItem);
+						}
+					}else{
+						isLeftFolderClicked=false;
+						if(level2Item!=null) {
+							ShelfCollection selectedSecondWidget = (ShelfCollection) level2Item.getWidget();
+							if(selectedSecondWidget.getFolderOpenedStatus()==true) {
+								ShelfCollection shelfCollection = new ShelfCollection(folderDo, 3);
+								TreeItem treeItem = new TreeItem(shelfCollection);
+								shelfCollection.setWidgetPositions(3, 0, selectedSecondWidget.getUrlParams());
+								level2Item.insertItem(0, treeItem);
+								correctStyle(treeItem);
+							}
+						}
+						isDragged=true;
+						onDragOverOpenFolder(params.get(O1_LEVEL),false);
+						isDragged=true;
+						onDragOverOpenFolder(params.get(O2_LEVEL),false);
+						setCreatedFolderActiveStatus("",folderDo,params,2);
+						AppClientFactory.fireEvent(new SetFolderParentNameEvent(folderDo.getTitle()));
+						AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaData(folderDo)));
+						setFolderStyle(folderDo.getGooruOid());
+					}
+				}
+			} else if(params.get(O1_LEVEL)!=null) {
+				TreeItem item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+				if(item!=null && !isLeftFolderClicked) {
+					ShelfCollection selectedWidget = (ShelfCollection) item.getWidget();
+					if(selectedWidget.getFolderOpenedStatus()==true) {
+						ShelfCollection shelfCollection = new ShelfCollection(folderDo, 2);
+						TreeItem treeItem = new TreeItem(shelfCollection);
+						shelfCollection.setWidgetPositions(2, 0, selectedWidget.getUrlParams());
+						item.insertItem(0, treeItem);	
+						correctStyle(treeItem);
+					}
+				}else{
+					isLeftFolderClicked=false;
+					if(item!=null) {
+						ShelfCollection selectedWidget = (ShelfCollection) item.getWidget();
+						if(selectedWidget.getFolderOpenedStatus()==true) {
+							ShelfCollection shelfCollection = new ShelfCollection(folderDo, 2);
+							TreeItem treeItem = new TreeItem(shelfCollection);
+							shelfCollection.setWidgetPositions(2, 0, selectedWidget.getUrlParams());
+							item.insertItem(0, treeItem);
+							correctStyle(treeItem);
+						}
+					}
+					isDragged=true;
+					onDragOverOpenFolder(params.get(O1_LEVEL),false);
+					setCreatedFolderActiveStatus("",folderDo,params,1); 
+					AppClientFactory.fireEvent(new SetFolderParentNameEvent(folderDo.getTitle()));
+					AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaData(folderDo)));
+					setFolderStyle(folderDo.getGooruOid());
+				}
+				  
+			}
+			
+		}
+		params.clear();
+		
+}
+	}
 
 }

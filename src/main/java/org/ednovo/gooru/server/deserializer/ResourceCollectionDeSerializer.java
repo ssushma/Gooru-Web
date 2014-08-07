@@ -346,8 +346,11 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		}
 
 		try {
-			resourceDo.setHost(JsonDeserializer.deserialize(recordJsonObject.getJSONArray(HOST).toString(), new TypeReference<List<String>>() {
-			}));
+			if(!recordJsonObject.isNull(HOST)){
+				resourceDo.setHost(JsonDeserializer.deserialize(recordJsonObject.getJSONArray(HOST).toString(), new TypeReference<List<String>>() {
+				}));
+			}
+			
 		} catch (JSONException e2) {
 			e2.printStackTrace();
 		}
