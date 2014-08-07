@@ -47,7 +47,7 @@ public class ToolTip extends PopupPanel implements HasMouseOutHandlers{
 	HTMLPanel panelCode;
 	
 	@UiField
-	HTMLPanel lblTitle;
+	HTMLPanel lblTitle,tootltipContent;
 	
 	@UiField Anchor lblLink;
 	
@@ -130,5 +130,8 @@ public class ToolTip extends PopupPanel implements HasMouseOutHandlers{
 	public Anchor getLblLink(){
 		return lblLink;
 	}
-	
+	public HTMLPanel getTootltipContent()
+	{
+		return tootltipContent;
+	}
 }

@@ -531,7 +531,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		editCollectionDescTitle.getElement().setId("epnlEditCollectionDescTitle");
 		simplePencilPanel.getElement().setId("lblSimplePencilPanel");
 		panelFriendly.getElement().setId("pnlPanelFriendly");
-		imgFriendly.getElement().setId("imgImgFriendly");
+		//imgFriendly.getElement().setId("imgImgFriendly");
 		lblFriendly.getElement().setId("lblFriendly");
 		collPopup.getElement().setId("pnlCollPopup");
 		statPopup.getElement().setId("pnlStatPopup");
@@ -675,7 +675,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px'/>"+" "+i18n.GL04431());
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431()+" "+"<img src='/images/mos/mobileunfriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL_SPL_EXCLAMATION());
+				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 				toolTip.setPopupPosition(imgNotFriendly.getAbsoluteLeft()-(50+22), imgNotFriendly.getAbsoluteTop()+22);
@@ -1112,19 +1113,19 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				notFriendlyCount++;
 			}
 		}
-		imgFriendly.setVisible(true);
+		//imgFriendly.setVisible(true);
 		lblFriendly.setVisible(true);
 		if (notFriendlyCount>0){
-			imgFriendly.getElement().getStyle().clearWidth();
-			imgFriendly.setAltText(i18n.GL0737());
-			imgFriendly.setTitle(i18n.GL0737());
-			imgFriendly.setUrl("images/mos/MobileFriendly.png");
+			//imgFriendly.getElement().getStyle().clearWidth();
+			//imgFriendly.setAltText(i18n.GL0737());
+			//imgFriendly.setTitle(i18n.GL0737());
+			//imgFriendly.setUrl("images/mos/MobileFriendly.png");
 			lblFriendly.setText(StringUtil.generateMessage(i18n.GL0449(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
 		}else{
-			imgFriendly.getElement().getStyle().setWidth(25, Unit.PX);
-			imgFriendly.setUrl("images/mos/friendlyResource.png");
-			imgFriendly.setAltText(i18n.GL0865());
-			imgFriendly.setTitle(i18n.GL0865());
+			//imgFriendly.getElement().getStyle().setWidth(25, Unit.PX);
+			//imgFriendly.setUrl("images/mos/friendlyResource.png");
+			//imgFriendly.setAltText(i18n.GL0865());
+			//imgFriendly.setTitle(i18n.GL0865());
 			lblFriendly.setText(i18n.GL0453());
 		}
 	}

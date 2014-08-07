@@ -112,11 +112,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 		positionLbl.getElement().setAttribute("alt",position + "");
 		positionLbl.getElement().setAttribute("title",position + "");
 		
-		imgNotFriendly.setTitle(i18n.GL0737());
-		imgNotFriendly.getElement().setId("imgNotFriendly");
-		imgNotFriendly.setAltText(i18n.GL0737());
-		imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
-		
+			
 		
 		imgOER.setUrl("images/oer_icon.png");
 		imgOER.getElement().setAttribute("id", i18n.GL1834());
@@ -184,8 +180,8 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				
-				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px'/>"+" "+i18n.GL04431());
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431()+" "+"<img src='/images/mos/mobileunfriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL_SPL_EXCLAMATION());
+				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 				toolTip.setPopupPosition(imgNotFriendly.getAbsoluteLeft()-(50+22), imgNotFriendly.getAbsoluteTop()+22);
@@ -205,8 +201,20 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 				  }
 			}
 		});
-		imgNotFriendly.setVisible(setVisibility);
-		
+		//imgNotFriendly.setVisible(setVisibility);
+		if(setVisibility)
+		{
+			imgNotFriendly.getElement().setId("imgImgFriendly");
+			imgNotFriendly.setTitle(i18n.GL0737_1());
+			imgNotFriendly.setAltText(i18n.GL0737_1());
+			imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
+		}else
+		{
+			imgNotFriendly.getElement().setId("imgImgNotFriendly");
+			imgNotFriendly.setTitle(i18n.GL0737());
+			imgNotFriendly.setAltText(i18n.GL0737());
+			imgNotFriendly.setUrl("images/mos/mobileunfriendly.png");
+		}
 		
 		boolean oerVisibility = resourceSearchResultDo.getLicense() !=null &&  resourceSearchResultDo.getLicense().getCode() !=null ? resourceSearchResultDo.getLicense().getCode().contains("CC") ? true : false : false;
 
