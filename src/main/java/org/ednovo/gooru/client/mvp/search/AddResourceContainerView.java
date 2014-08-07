@@ -221,6 +221,7 @@ public class AddResourceContainerView extends
 						}
 						selectedFolderGooruOid = folderTreeItemWidget.getGooruOid();
 						if(currentFolderSelectedTreeItem.getFolerLevel()==1) {
+							urlparams.clear();
 							urlparams.put(O1_LEVEL, selectedFolderGooruOid);
 						}
 						if(currentFolderSelectedTreeItem.getFolerLevel()==2) {

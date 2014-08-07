@@ -2076,7 +2076,9 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	@Override
 	public void refreshFolderItemDataInSearchAddResource(FolderDo folderDo,
 			RefreshFolderType refreshFolderType, HashMap<String, String> params) {
-		//System.out.println("params::::::"+params);
+		System.out.println("params::::::"+params);
+		System.out.println("refreshFolderType here::::::"+refreshFolderType);
+		if(refreshFolderType.equals(RefreshFolderType.INSERT)) {
 		if(params!=null) {
 			if(params.get(O3_LEVEL)!=null) {
 				TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
@@ -2165,7 +2167,9 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			}
 			
 		}
+		params.clear();
 		
+}
 	}
 
 }
