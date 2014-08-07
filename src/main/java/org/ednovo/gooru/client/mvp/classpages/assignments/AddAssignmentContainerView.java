@@ -646,8 +646,8 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		
 		subHeadingMsgLbl.setVisible(false);
 		emptyMsgLbl.setVisible(true);
-		buttonsContainer.getElement().getStyle().setMarginTop(66, Unit.PX); 
-		buttonsContainer.getElement().getStyle().setMarginLeft(110, Unit.PX); 
+//		buttonsContainer.getElement().getStyle().setMarginTop(66, Unit.PX); 
+//		buttonsContainer.getElement().getStyle().setMarginLeft(110, Unit.PX); 
 		appPopUp.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().popupContainer());
 		appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgOuterContainer());
 		popupContent.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgContainer());

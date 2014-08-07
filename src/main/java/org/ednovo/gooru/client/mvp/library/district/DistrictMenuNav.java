@@ -107,15 +107,19 @@ public abstract class DistrictMenuNav extends Composite {
 			});
 		}
 		
-		mathPanel.addMouseOverHandler(new MouseOverHandler() {
-			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				if(!isMathHovered) {
-					isMathHovered = true;
-					getTaxonomyData(subjectIdList.get(MATH),MATH);
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)) {
+			mathPanel.addStyleName(districtStyleUc.tabsLiInactive());
+		} else {
+			mathPanel.addMouseOverHandler(new MouseOverHandler() {
+				@Override
+				public void onMouseOver(MouseOverEvent event) {
+					if(!isMathHovered) {
+						isMathHovered = true;
+						getTaxonomyData(subjectIdList.get(MATH),MATH);
+					}
 				}
-			}
-		});
+			});
+		}
 
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)
 				||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)) {

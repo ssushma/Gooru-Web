@@ -36,11 +36,14 @@ import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragUc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.PublishButtonHideEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.PublishButtonHideEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionItemInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AlertContentUc;
@@ -168,6 +171,8 @@ public class ShelfCollectionResourceChildView extends
 	private Integer pageNumber=1;
 	
 	private Integer pageSize=20;
+	
+	
 	
 	//private static final String REG_EXP = "^(?:[01]\\d|2[0-3]):(?:[0-9]\\d):(?:[0-5]\\d)$";
 	
@@ -341,9 +346,8 @@ public class ShelfCollectionResourceChildView extends
 		
 		editFloPanel.setVisible(false);
 		editFloPanel.getElement().setId("fpnlEditFloPanel");
-		imgNotFriendly.getElement().setId("imgImgNotFriendly");
-		imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
 		
+			
 		startStopTimeDisplayText.getElement().setId("lblStartStopTimeDisplayText");
 		startStopTimeDisplayText.getElement().setAttribute("alt", i18n.GL0957());
 		startStopTimeDisplayText.getElement().setAttribute("title", i18n.GL0957());
@@ -506,22 +510,27 @@ public class ShelfCollectionResourceChildView extends
 		endPageLbl.getElement().setId("endPageLbl");
 		// To check whether resource is public and is created by logged in user
 		String resourceShare = collectionItemDo.getResource().getSharing();
+	
 		String resourceCategory = collectionItemDo.getResource().getCategory();
-
+		
+	
 		if (resourceShare.equalsIgnoreCase("public")
 				&& !resourceCategory.equalsIgnoreCase("question")) {
 			editInfoLbl.setVisible(false);
 		} else if (resourceShare.equalsIgnoreCase("public")
 				&& resourceCategory.equalsIgnoreCase("question")
 				&& checkLoggedInUser()) {
+			
 			editInfoLbl.setVisible(true);
 		} else if (resourceShare.equalsIgnoreCase("private")
 				&& !resourceCategory.equalsIgnoreCase("question")
 				&& checkLoggedInUser()) {
+			
 			editInfoLbl.setVisible(true);
 		} else if (!checkLoggedInUser()) {
 			editInfoLbl.setVisible(false);
 		}
+		
 		/*narrationTxtArea.addInitializeHandler(new InitializeHandler() {
 			@Override
 			public void onInitialize(InitializeEvent event) {
@@ -609,7 +618,8 @@ public class ShelfCollectionResourceChildView extends
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431());
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431()+" "+"<img src='/images/mos/mobileunfriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL_SPL_EXCLAMATION());
+				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
 				
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -636,8 +646,19 @@ public class ShelfCollectionResourceChildView extends
 		StringUtil.setAttributes(lblCharLimit.getElement(), "lblCharLimit", value, value);
 		lblCharLimit.setText(value);
 		lblCharLimit.setVisible(false);
+		
+		AppClientFactory.getEventBus().addHandler(PublishButtonHideEvent.TYPE, publishButtonHideEventHandler); 
 	}
+		PublishButtonHideEventHandler publishButtonHideEventHandler = new PublishButtonHideEventHandler(){
 
+		@Override
+		public void hideEditButton() {
+					
+			collectionItemDo.getResource().setSharing("public");
+			editInfoLbl.setVisible(false);
+		}
+		
+	};
 	public void setUpdatedData(CollectionItemDo collectionItemDo) {
 		
 	}
@@ -804,8 +825,21 @@ public class ShelfCollectionResourceChildView extends
 		mediaType = collectionItem.getResource().getMediaType();
 		
 		setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
+		//imgNotFriendly.setVisible(setVisibility);
+		if(setVisibility)
+		{
+			imgNotFriendly.getElement().setId("imgImgFriendly");
+			imgNotFriendly.setTitle(i18n.GL0737_1());
+			imgNotFriendly.setAltText(i18n.GL0737_1());
+			imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
+		}else
+		{
+			imgNotFriendly.getElement().setId("imgImgNotFriendly");
+			imgNotFriendly.setTitle(i18n.GL0737());
+			imgNotFriendly.setAltText(i18n.GL0737());
+			imgNotFriendly.setUrl("images/mos/mobileunfriendly.png");
+		}
 		
-		imgNotFriendly.setVisible(setVisibility);
 		resourceTitle=resourceTitleLbl.getText();
 		if (resourceTitleLbl.getText().length()>=70){
 			resourceTitleLbl.getElement().getStyle().setWidth(80, Unit.PCT);
@@ -876,7 +910,7 @@ public class ShelfCollectionResourceChildView extends
 		if (youtube) {
 			editStartPageLbl.setVisible(false);
 			editVideoTimeLbl.setVisible(true);
-			System.out.println("totalVideoLength");
+		
 		
 			
 			videoTimeField.setText(VIDEO_TIME);
@@ -1663,7 +1697,7 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("editVideoTimeLbl")
 	public void onclickEditVideoTimeLbl(ClickEvent event)
 	{
-		System.out.println("editVideoTimeLbl");
+		
 		if (youtube) {
 			lblCharLimit.setVisible(true);
 			resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);

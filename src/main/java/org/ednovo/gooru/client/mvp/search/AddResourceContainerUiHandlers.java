@@ -71,5 +71,7 @@ public interface AddResourceContainerUiHandlers extends BaseUiHandlers,EventHand
 	public void clearData();
 	public void addCollectionToMyCollections(String object,
 			String currentsearchType);
+	public void addCollectionToFolder(String selectedFolderGooruOid,
+			String currentsearchType, String text, int folerLevel,HashMap<String, String> urlparams);
 	
 }
