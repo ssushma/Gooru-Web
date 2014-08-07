@@ -365,6 +365,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 				JSONObject createrObject = new JSONObject(getJsonString(recordJsonObject, CREATOR));
 				ownerDo.setUsername(getJsonString(createrObject,USERNAME));
 				resourceDo.setCreator(ownerDo);
+				resourceDo.setUser(ownerDo);
 			} catch (JSONException e1) {
 					e1.printStackTrace();
 			}
