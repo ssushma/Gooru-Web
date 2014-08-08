@@ -26,12 +26,20 @@ package org.ednovo.gooru.client.mvp.play.collection.footer;
 
 
 
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class StudyPlayerFooterView extends Composite{
@@ -50,7 +58,8 @@ public class StudyPlayerFooterView extends Composite{
 	private static boolean isNavigationButtonEnabledClass=false;
 	private boolean isAddButtonEnabled=false;
 	private boolean isFlagButtonEnabled=false;
-
+	private PopupPanel toolTipPopupPanel=new PopupPanel();
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	private static CollectionPlayerHeaderViewUiBinder uiBinder = GWT.create(CollectionPlayerHeaderViewUiBinder.class);
 
 	interface CollectionPlayerHeaderViewUiBinder extends UiBinder<Widget, StudyPlayerFooterView> {
@@ -62,6 +71,8 @@ public class StudyPlayerFooterView extends Composite{
 		flagButton.getElement().setId("btnFlagButton");
 		infoButton.getElement().setId("btnInfoButton");
 		shareButton.getElement().setId("btnShareButton");
+		shareButton.addMouseOverHandler(new ShareButtonMouseOver());
+		shareButton.addMouseOutHandler(new ShareButtonMouseOut());
 	}
 	/**
 	 * @return the resourceAnimationContainer
@@ -400,5 +411,33 @@ public class StudyPlayerFooterView extends Composite{
 	{
 		setNavigationButtonEnabled(false); 
 	}
+	
+	public class ShareButtonMouseOver implements MouseOverHandler{
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			if(!isShareButtonEnabled){
+				toolTipPopupPanel.clear();
+				GlobalToolTip globalToolTip=new GlobalToolTip(i18n.GL0679());
+				globalToolTip.getPanelArrow().getElement().setAttribute("style", "position: absolute;top:45px;transform: rotate(180deg);-ms-transform: rotate(180deg);-webkit-transform: rotate(180deg)");
+				toolTipPopupPanel.setWidget(globalToolTip);
+				toolTipPopupPanel.setStyleName("");
+				toolTipPopupPanel.setPopupPosition(shareButton.getElement().getAbsoluteLeft()-13, shareButton.getElement().getAbsoluteTop()-84);
+				toolTipPopupPanel.getElement().getStyle().clearMarginLeft();
+				toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
+				toolTipPopupPanel.show();
+			}
+		}
+		
+	}
+	
+	public class ShareButtonMouseOut implements MouseOutHandler{
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			toolTipPopupPanel.hide();
+		}
+	}
+
 	
 }
