@@ -553,7 +553,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 
 					@Override
 					public void closePoup() {
-						Window.enableScrolling(true);
+//						Window.enableScrolling(true);
 						this.hide();	
 						isCustomizePopup = false;
 					}

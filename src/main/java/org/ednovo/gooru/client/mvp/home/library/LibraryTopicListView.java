@@ -870,31 +870,19 @@ public class LibraryTopicListView extends Composite{
 				resourcesInside.clear();
 				ArrayList<LibraryCollectionItemDo> libraryResources =  conceptDo.getCollectionItems();
 				int resourceCount = 0;
+				//System.out.println("AppClientFactory.getCurrentPlaceToken()87878::"+AppClientFactory.getCurrentPlaceToken());
 				if(libraryResources!=null) {
-					if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PSDPAL)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.AUTODESK)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.FTE)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.GEOEDUCATION)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.NGC)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.FINCAPINC)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ONR)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LESSONOPOLY)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.WSPWH)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.YOUTHVOICES)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)&&
-							!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)){
+					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)){
+						resourceCount = libraryResources.size();
+					}else{
 						if(conceptDo.getItemCount()!=null){
 							resourceCount = conceptDo.getItemCount();
 						}
-					}else{
-						resourceCount = libraryResources.size();
+						else
+						{
+							resourceCount = libraryResources.size();
+						}
+						
 					}
 					int resources=resourceCount<=4?resourceCount:4;
 					final Label resourceCountLbl = new Label(resources+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+resourceCount+" "+i18n.GL1094().toLowerCase());
@@ -1286,9 +1274,10 @@ public class LibraryTopicListView extends Composite{
 						Window.enableScrolling(true);
 				        this.hide();
 				    	isAssignPopup=false;
-				    	params.remove(ASSIGN);
-				    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+/*				    	Map<String, String> paramsAssignPopup = StringUtil.splitQuery(Window.Location.getHref());
+				    	paramsAssignPopup.remove(ASSIGN);
+				    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), paramsAssignPopup);
+						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);*/
 					}
 				};
 				Window.scrollTo(0, 0);
@@ -1364,9 +1353,10 @@ public class LibraryTopicListView extends Composite{
 					Window.enableScrolling(true);
 					this.hide();	
 					isCustomizePopup = false;
-					params.remove(CUSTOMIZE);
-					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+/*			    	Map<String, String> paramsAssignPopup = StringUtil.splitQuery(Window.Location.getHref());
+			    	paramsAssignPopup.remove(CUSTOMIZE);
+			    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), paramsAssignPopup);
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);*/
 				}
 			};
 			Window.scrollTo(0, 0);
@@ -1397,7 +1387,8 @@ public class LibraryTopicListView extends Composite{
 
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
-		if(customize!=null && customize.equals("yes")){
+		String emailId = AppClientFactory.getPlaceManager().getRequestParameter("emailId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("emailId") : null;
+		if(customize!=null && customize.equals("yes") && emailId!=null){
 			Boolean loginFlag = false;
 			if (AppClientFactory.isAnonymous()){
 				loginFlag = true;
@@ -1416,9 +1407,6 @@ public class LibraryTopicListView extends Composite{
 					Window.enableScrolling(true);
 					this.hide();	
 					isCustomizePopup = false;
-					params.remove(CUSTOMIZE);
-					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				}
 			};
 			Window.scrollTo(0, 0);
@@ -1427,7 +1415,7 @@ public class LibraryTopicListView extends Composite{
 			successPopupVc.show();
 			successPopupVc.center();
 		}
-		if(assign!=null && assign.equals("yes")){
+		if(assign!=null && assign.equals("yes") && emailId!=null){
 		//	final Map<String,String> params = new HashMap<String,String>();
 			final Map<String, String> params = StringUtil.splitQuery(Window.Location
 					.getHref());
@@ -1438,9 +1426,6 @@ public class LibraryTopicListView extends Composite{
 					Window.enableScrolling(true);
 					this.hide();
 					isAssignPopup=false;
-					params.remove(ASSIGN);
-			    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				}
 			};
 			Window.scrollTo(0, 0);
