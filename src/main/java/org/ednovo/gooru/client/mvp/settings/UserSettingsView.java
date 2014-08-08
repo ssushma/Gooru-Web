@@ -733,7 +733,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		userStandardTextPanel.add(CaliforniaELDSChk);
 		CaliforniaSocialSciencesStandardsChk.setName("30424");
 		CaliforniaELDSChk.setName("78320");
-		CSSChk.setName("42236,42237");
+		//CSSChk.setName("42236,42237");
 		
 		
 	//added in 6.4
@@ -2077,16 +2077,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				codeId=codeId+CaliforniaELDSChk.getName();	
 			}
 		}
-		if(CSSChk.isChecked())
-		{
-			if(codeId!=""){
-				codeId=codeId+","+CSSChk.getName();	
-			}
-			else
-			{
-				codeId=codeId+CSSChk.getName();	
-			}
-		}
+		
 		return codeId;
 	}
 	@UiHandler("standardsSaveButton")
@@ -2153,10 +2144,12 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				lblCSS.setVisible(true);
 				californiaStandChk.setChecked(true);
 				lblCaliforniaScience.setVisible(true);
+				CSSChk.setChecked(true);
 			}else{
 				lblCSS.setVisible(false);
 				californiaStandChk.setChecked(false);
 				lblCaliforniaScience.setVisible(false);
+				CSSChk.setChecked(false);
 			}
 			if(list.contains("TEXAS")||list.contains("TEKS")){
 				texasChk.setChecked(true);
@@ -2178,30 +2171,36 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				lblCaliforniaELDS.setVisible(true);
 				CaliforniaELDSChk.setChecked(true);
 				lblCSS.setVisible(true);
+				CSSChk.setChecked(true);
+				
 			}else{
 				lblCaliforniaELDS.setVisible(false);
 				CaliforniaELDSChk.setChecked(false);
 				lblCSS.setVisible(false);
+				CSSChk.setChecked(false);
 			}
 			if(list.contains("CA")){
 				lblCaliforniaSocialSciencesStandards.setVisible(true);
 				CaliforniaSocialSciencesStandardsChk.setChecked(true);
 				lblCSS.setVisible(true);
+				CSSChk.setChecked(true);
 			}else{
 				lblCaliforniaSocialSciencesStandards.setVisible(false);
 				CaliforniaSocialSciencesStandardsChk.setChecked(false);
 				lblCSS.setVisible(false);
+				CSSChk.setChecked(false);
 			}
-			if(list.contains("CAS612")){
+			if(list.contains("CA")||list.contains("CAELD")||list.contains("CSC"))
+			{
 				CSSChk.setChecked(true);
 				lblCSS.setVisible(true);
-				
-			}else
-			{
-				lblCSS.setVisible(false);
-				CSSChk.setChecked(false);	
 			}
-		
+			else
+			{
+				CSSChk.setChecked(false);
+				lblCSS.setVisible(false);
+			}
+			
 		}else{
 			lblCommonCore.setVisible(false);	
 			lblCaliforniaScience.setVisible(false);

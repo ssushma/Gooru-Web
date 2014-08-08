@@ -269,7 +269,8 @@ public abstract class AssignPopupVc extends PopupPanel {
 
 			@Override
 			public void closePoupfromChild() {
-				closePoup();
+				hide();
+				//closePoup();
 
 			}
 		};
