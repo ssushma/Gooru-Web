@@ -163,10 +163,12 @@
 
 .conceptActive {
 	background-color:#CFE3F1 !important;
+	font-weight: normal;
 }
 
 .conceptActive:hover {
 	background-color:#CFE3F1 !important;
+	font-weight: normal;
 }
 
 .conceptTitle:hover {
@@ -331,7 +333,7 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-
+	font-weight: bold;
 	/* Old browsers */
 	background: rgb(239,239,239);
 }
@@ -352,6 +354,7 @@
 	-moz-box-shadow: 0 0 11px rgba(221, 221, 221, 0.15);
 	-webkit-box-shadow: 0 0 11px rgba(221, 221, 221, 0.15);
 	box-shadow: 0 0 11px rgba(221, 221, 221, 0.15);
+	font-weight:normal;
 }
 .libraryConceptTitle {
 	padding:0px 25px;
