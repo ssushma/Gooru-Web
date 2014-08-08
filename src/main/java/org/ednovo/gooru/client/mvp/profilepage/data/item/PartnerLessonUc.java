@@ -196,7 +196,7 @@ public class PartnerLessonUc extends Composite{
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
 				lessonTitle.addStyleName(style.conceptActive());
 			} else {
-				lessonTitle.addStyleName(style.libraryConceptActive());
+			lessonTitle.addStyleName(style.libraryConceptActive());
 				lessonTitle.addStyleName(style.marginTop5());
 			}
 			openCollection();
@@ -211,7 +211,7 @@ public class PartnerLessonUc extends Composite{
 				      com.google.gwt.user.client.Element link =
 				        (com.google.gwt.user.client.Element) links.getItem(i);
 				      link.getFirstChildElement().removeClassName(style.conceptActive());
-
+				      link.getFirstChildElement().removeClassName(style.libraryConceptActive());
 				    }
 				lessonTitle.addStyleName(style.conceptActive());
 			}
