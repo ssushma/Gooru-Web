@@ -138,7 +138,8 @@ cursor: pointer;
 	width: 30px;
 	height: 30px;
 	margin-left: 19%;
-	margin-top: 1px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 	float: left;
 }
 .profileImageText
