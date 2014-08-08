@@ -21,12 +21,12 @@
 				<g:HTMLPanel styleName="{res.css.subBody}">
 				<g:Label styleName="{res.css.subTitle}" ui:field="visibilityTitle"></g:Label>
 				<g:HTMLPanel>
-				<g:SimpleRadioButton name="visibility" ui:field="visibilityRadioOpen" styleName="{res.css.radioBtnVisiblity}"></g:SimpleRadioButton>
+				<g:RadioButton name="visibility" ui:field="visibilityRadioOpen" styleName="{res.css.regularRadioButton}"></g:RadioButton>
 				<g:Label ui:field="openClassLabelTitle" styleName="{res.css.assignSecTitleheader}"></g:Label>
 				<g:Label ui:field="openClassLabelDesc"></g:Label>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{res.css.radioBtnVisiblitySecondContainer}">
-				<g:SimpleRadioButton name="visibility" ui:field="visibilityRadioInviteOnly" styleName="{res.css.radioBtnVisiblity}"></g:SimpleRadioButton>
+				<g:RadioButton name="visibility" ui:field="visibilityRadioInviteOnly" styleName="{res.css.regularRadioButton}"></g:RadioButton>
 				<g:Label ui:field="openClosedLabelTitle" styleName="{res.css.assignSecTitleheader}"></g:Label>
 				<g:Label ui:field="openClosedLabelDesc"></g:Label>
 				</g:HTMLPanel>
