@@ -1,16 +1,9 @@
 [
 	{
-		"label": "Core Library",
-		"courseId":0,
-		"subjectId":0,
-		"link": "#CoreLibrary",
-		"extraParms": null
-	},
-	{
 		"label": "Leadership Public Schools",
 		"courseId":0,
 		"subjectId":0,
-		"link": "#lpslibrary1",
+		"link": "#lpslibrary",
 		"extraParms": null
 	},
 	{

@@ -422,7 +422,26 @@ public class ProfileTopicListView extends Composite{
 					ArrayList<ProfileLibraryDo> libraryResources =  profileLibraryDo.getCollectionItems();
 					int resourceCount = 0;
 					if(libraryResources!=null) {
-						if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)&&!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)&&!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)){
+						System.out.println("AppClientFactory.getCurrentPlaceToken()::"+AppClientFactory.getCurrentPlaceToken());
+						if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PSDPAL)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.AUTODESK)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.FTE)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.GEOEDUCATION)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.NGC)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.FINCAPINC)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.ONR)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LESSONOPOLY)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.WSPWH)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.YOUTHVOICES)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)&&
+								!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)){
 							if(conceptDo.getItemCount()!=null){
 								resourceCount = conceptDo.getItemCount();
 							}

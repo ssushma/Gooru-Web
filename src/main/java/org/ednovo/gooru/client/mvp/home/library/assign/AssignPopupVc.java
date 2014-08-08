@@ -90,7 +90,7 @@ import com.google.gwt.user.client.ui.Widget;
 public abstract class AssignPopupVc extends PopupPanel {
 
 	@UiField
-	HTMLPanel loadingImageLabel,popupContentAssign,signUpStyles;
+	HTMLPanel loadingImageLabel,popupContentAssign,signUpStyles,assignContainer;
 
 	@UiField
 	HTMLEventPanel htmlEvenPanelContainer;
@@ -158,6 +158,10 @@ public abstract class AssignPopupVc extends PopupPanel {
 	private TermsOfUse termsOfUse;
 	private static final int UNAUTHORISED_STATUS_CODE = 401;
 	
+	public HTMLPanel getAssignContainer(){
+		return assignContainer;
+	}
+	
 	private static AssignPopupVcUiBinder uiBinder = GWT
 			.create(AssignPopupVcUiBinder.class);
 
@@ -183,12 +187,12 @@ public abstract class AssignPopupVc extends PopupPanel {
 	 */
 	public AssignPopupVc(String collectionIdVal, String collectionTitle, String collectionDescription) {
 		super(false);
-		
-	
 		res = AssignPopUpCBundle.INSTANCE;
 		AssignPopUpCBundle.INSTANCE.css().ensureInjected();
 		add(uiBinder.createAndBindUi(this));
 		this.setGlassEnabled(true);
+		this.getGlassElement().getStyle().setZIndex(99999);
+		this.getElement().getStyle().setZIndex(99999);
 		swithUrlLbl.setText(i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("alt",i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());

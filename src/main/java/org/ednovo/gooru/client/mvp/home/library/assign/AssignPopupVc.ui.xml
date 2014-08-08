@@ -6,7 +6,7 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.home.library.assign.AssignPopUpCBundle"
 		field="res" />
-	<g:HTMLPanel styleName="{res.css.assign}">
+	<g:HTMLPanel styleName="{res.css.assign}" ui:field="assignContainer">
 		<g:HTMLPanel styleName="{res.css.assignContent}">
 			<g:HTMLPanel styleName="{res.css.assignHeader}">
 				<g:Label ui:field="lblAssignTitle" styleName="{res.css.assignTitle}" />
