@@ -37,6 +37,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author BLR Team
@@ -109,8 +110,8 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 						
 						@Override
 						public void closePoupfromChild() {
-							
-							closePoup();
+
+							hide();
 						}
 
 						@Override
