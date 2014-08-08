@@ -371,8 +371,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 	public void onshareCollectionBtnClicked(ClickEvent clickEvent) {
 		final Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
 		String collectionId = collectionDo.getGooruOid();
-				if(!isAssignPopup){
-					isAssignPopup=true;
 				//	Window.enableScrolling(false);
 				//final Map<String,String> params = new HashMap<String,String>();
 			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, collectionDo.getTitle(), collectionDo.getGoals()) {
@@ -380,7 +378,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 					public void closePoup() {
 						Window.enableScrolling(true);
 				        this.hide();
-				    	isAssignPopup=false;
 				    	params.remove("assign");
 				    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
@@ -418,7 +415,6 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				params.put("assign", "yes");
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-			}
 
 		
 //		final String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
