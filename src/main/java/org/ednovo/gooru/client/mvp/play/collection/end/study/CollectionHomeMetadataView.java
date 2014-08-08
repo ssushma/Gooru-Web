@@ -328,7 +328,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 
 					@Override
 					public void closePoup() {
-						Window.enableScrolling(true);
+//						Window.enableScrolling(true);
 						this.hide();	
 						isCustomizePopup = false;
 					}
@@ -458,7 +458,8 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 		String collectionId = AppClientFactory.getPlaceManager().getRequestParameter("id")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter("customize")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("customize") : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter("assign")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("assign") : null;
-		if(customize!=null && customize.equals("yes")){
+		String emailId = AppClientFactory.getPlaceManager().getRequestParameter("emailId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("emailId") : null;
+		if(customize!=null && customize.equals("yes") && emailId!=null){
 			Boolean loginFlag = false;
 			if (AppClientFactory.isAnonymous()){
 				loginFlag = true;
@@ -482,7 +483,7 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 			successPopupVc.show();
 			successPopupVc.center();
 		}
-		if(assign!=null && assign.equals("yes")){
+		if(assign!=null && assign.equals("yes") && emailId!=null){
 			AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {
 				
 				@Override
