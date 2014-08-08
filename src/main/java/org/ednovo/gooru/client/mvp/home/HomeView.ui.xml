@@ -29,7 +29,7 @@
 								<h2 class="text-center">Find</h2>
 								<div class="clearfix"></div>
 								<p class="">Browse thousands of K-12 collections made by teachers
-									or search over 18M resources</p>
+									or search over 16M resources</p>
 
 								<!-- <tbp:TextBoxWithPlaceholder
 									styleName="form-control" placeholder="{i18n.GL2073}" ui:field="txtSearch"></tbp:TextBoxWithPlaceholder> -->
@@ -46,7 +46,7 @@
 								</div>
 								<h2 class="text-center">Remix</h2>
 								<div class="clearfix"></div>
-								<p class="">Remix collections and customize content to to meet
+								<p class="">Remix collections and customize content to meet
 									your students’ needs.</p>
 
 								<g:Button styleName="primary {res.css.btnBlock}"
