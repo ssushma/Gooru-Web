@@ -541,11 +541,12 @@ public class LibraryView extends Composite implements  ClickHandler {
 			container.setVisible(true);
 			featuredCourseTabs.setVisible(true);
 			featuredCousesLbl.setVisible(true);
+			
 			if((callBack!=previousCallBack)||(courseId!=previousCourseId)) {
 				if(courseMap!=null&&courseMap.get("featured")!=null) {
-					if(!(featuredCourses.getWidgetCount()>0)) {
+					//if(!(featuredCourses.getWidgetCount()>0)) {
 						setFeaturedCourseWidgets(courseMap.get("featured").getData(), true);
-					}
+				//	}
 				} else {
 					getFeaturedCourses(FEATURED_LABEL, false);
 				}
@@ -592,6 +593,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 * @throws : <Mentioned if any exceptions>
 	 */
 	public void getFeaturedCourses(final String featuredLabel, final boolean isNotHomePage) {
+		System.out.println("getfeaturedcourses:::");
 		String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
 		if (featuredLabel!=null){
 			if(standardId != null)
