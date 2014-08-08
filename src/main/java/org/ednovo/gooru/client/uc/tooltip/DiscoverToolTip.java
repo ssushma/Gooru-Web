@@ -273,7 +273,8 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 	public void setPartners(ArrayList<LibraryUserDo> partnersList) {
 		for(int i=0;i<partnersList.size();i++) {
 			final LibraryUserDo libraryUserDo = partnersList.get(i);
-			
+			System.out.println("libraryUserDo.getDisplayName() :"+libraryUserDo.getDisplayName());
+			System.out.println("libraryUserDo.getUsername() : "+libraryUserDo.getUsername());
 			final Label partnerTitle = new Label(libraryUserDo.getDisplayName());
 			partnerTitle.addStyleName("courseOption");
 			partnerTitle.addClickHandler(new ClickHandler() {
@@ -289,7 +290,7 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 	
 	private HashMap<String,String> getPublicLibraryPartners() {
 		HashMap<String,String> publicPartners = new LinkedHashMap<String,String>();
-		publicPartners.put(i18n.GL2108(),PlaceTokens.CORE_LIBRARY);
+//		publicPartners.put(i18n.GL2108(),PlaceTokens.CORE_LIBRARY);//Phased out of this release
 		publicPartners.put(i18n.GL2053(),PlaceTokens.LPS);
 		//publicPartners.put(i18n.GL2055(),PlaceTokens.MURRIETA); //Phased out of this release
 		publicPartners.put(i18n.GL0515_1(),PlaceTokens.RUSD_LIBRARY);

@@ -27,8 +27,10 @@ package org.ednovo.gooru.client;
 
 
 public interface SeoTokens{
-	String HOME_TITLE_ANONYMOUS = "Featured Courses | Sign up, Sign in ";
-	String HOME_TITLE_LOGGEDIN = "Featured Courses";
+	String HOME_TITLE_ANONYMOUS = "Gooru | Sign up, Sign in ";
+	String HOME_TITLE_LOGGEDIN = "Gooru";
+	String DISCOVER_TITLE_ANONYMOUS = "Featured Courses | Sign up, Sign in ";
+	String DISCOVER_TITLE_LOGGEDIN = "Featured Courses";
 	String RESOURCE_PLAYER_TITLE = "";
 	String COLLECTION_PLAYER_TITLE = "";
 	String RESOURCE_SEARCH_TITLE = "Discover Resources | ";
