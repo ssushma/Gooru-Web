@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
+import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
@@ -602,29 +603,77 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiHandler("shareCollectionBtn")
 	public void onshareCollectionBtnClicked(ClickEvent clickEvent) {
 		
-		final String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-
-				if(!isSharePopup){
-					isSharePopup=true;
-
-				SharePlayerVc successPopupVc = new SharePlayerVc(collectionId) {
-
+//		final String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
+//
+//				if(!isSharePopup){
+//					isSharePopup=true;
+//
+//				SharePlayerVc successPopupVc = new SharePlayerVc(collectionId) {
+//
+//					@Override
+//					public void closePoup() {
+//						Window.enableScrolling(true);
+//						this.hide();	
+//						isSharePopup = false;
+//					}
+//					public void triggerShareEvent(String shareType,boolean confirmStatus){
+//						getUiHandlers().triggerCollectionShareDataEvent(collectionId,PlayerDataLogEvents.COLLECTION,shareType,confirmStatus);
+//					}
+//				};
+//				Window.scrollTo(0, 0);
+//				successPopupVc.setWidth("500px");
+//				successPopupVc.setHeight("350px");
+//				successPopupVc.show();
+//				successPopupVc.center();
+//			}
+		
+		final Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
+		String collectionId = collectionDo.getGooruOid();
+				//	Window.enableScrolling(false);
+				//final Map<String,String> params = new HashMap<String,String>();
+			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, collectionDo.getTitle(), collectionDo.getGoals()) {
 					@Override
 					public void closePoup() {
 						Window.enableScrolling(true);
-						this.hide();	
-						isSharePopup = false;
-					}
-					public void triggerShareEvent(String shareType,boolean confirmStatus){
-						getUiHandlers().triggerCollectionShareDataEvent(collectionId,PlayerDataLogEvents.COLLECTION,shareType,confirmStatus);
+				        this.hide();
+				    	params.remove("assign");
+				    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 					}
 				};
-				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("350px");
+				//Window.scrollTo(0, 0);
+				int clientHeight=Window.getClientHeight();
+				//successPopupVc.setWidth("500px");
+				//successPopupVc.setHeight("658px");
+				if(clientHeight>625){
+					clientHeight=625;
+					successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
+				}else{
+					successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
+				}
 				successPopupVc.show();
-				successPopupVc.center();
-			}
+				int left = (Window.getClientWidth() - 500) >> 1;
+			    int top = (Window.getClientHeight() - clientHeight) >> 1;
+			    successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop() + top, 0));
+
+				//successPopupVc.center();
+				//successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+				
+//				if(!successPopupVc.isVisible()){
+//					successPopupVc.show();
+//					successPopupVc.center();
+//				}
+//				Window.enableScrolling(false);
+//				if (AppClientFactory.isAnonymous()){
+//					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+//				}
+//				else{
+					//successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+//				}
+				params.put("assign", "yes");
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+
 		
 	}
 	
