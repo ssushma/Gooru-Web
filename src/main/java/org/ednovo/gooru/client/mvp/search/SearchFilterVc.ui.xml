@@ -211,6 +211,30 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		</g:HTMLPanel>
 		
 		<g:HTMLPanel>
+		    <g:Label styleName="{style.headerLbl}" visible="false" ui:field="sourceLbl"></g:Label>
+			<g:HTMLPanel  ui:field="sourcePanelUc" visible="false">
+				<g:HTMLPanel>
+				 	<g:Label styleName="{style.helpIconBtnPublisher}" ui:field="publisherTooltip"/>
+				</g:HTMLPanel> 
+				<g:HTMLPanel>
+					<uc:AppSuggestBox ui:field="sourceSgstBox" width="130px" />
+				</g:HTMLPanel>
+				<!-- <uc:add>
+				 	<g:Label styleName="{style.helpIconBtn}" ui:field="sourceHelpicon" visible="false"/>
+				</uc:add> -->
+				<g:HTMLPanel>
+				 	<panel:HTMLEventPanel ui:field="sourceToolTip" visible="false" styleName="{style.sourceToolTip}"/>
+				</g:HTMLPanel>
+				<g:HTMLPanel>
+					<g:Label styleName="{style.notFound}" ui:field="sourcesNotFoundLbl"/>
+				</g:HTMLPanel>
+				<g:HTMLPanel>
+					<g:FlowPanel styleName="{style.flowPanelContainer}" ui:field="sourceContainerFloPanel" />
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+		
+		<g:HTMLPanel>
 			<g:HTMLPanel  ui:field="aggregatorPanelUc" visible="false">
 			     <g:Label styleName="{style.headerLbl}" visible="false" ui:field="aggregatorLbl"></g:Label>
 			 	<g:HTMLPanel>
@@ -234,29 +258,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		
-		<g:HTMLPanel>
-		    <g:Label styleName="{style.headerLbl}" visible="false" ui:field="sourceLbl"></g:Label>
-			<g:HTMLPanel  ui:field="sourcePanelUc" visible="false">
-				<g:HTMLPanel>
-				 	<g:Label styleName="{style.helpIconBtnPublisher}" ui:field="publisherTooltip"/>
-				</g:HTMLPanel> 
-				<g:HTMLPanel>
-					<uc:AppSuggestBox ui:field="sourceSgstBox" width="130px" />
-				</g:HTMLPanel>
-				<!-- <uc:add>
-				 	<g:Label styleName="{style.helpIconBtn}" ui:field="sourceHelpicon" visible="false"/>
-				</uc:add> -->
-				<g:HTMLPanel>
-				 	<panel:HTMLEventPanel ui:field="sourceToolTip" visible="false" styleName="{style.sourceToolTip}"/>
-				</g:HTMLPanel>
-				<g:HTMLPanel>
-					<g:Label styleName="{style.notFound}" ui:field="sourcesNotFoundLbl"/>
-				</g:HTMLPanel>
-				<g:HTMLPanel>
-					<g:FlowPanel styleName="{style.flowPanelContainer}" ui:field="sourceContainerFloPanel" />
-				</g:HTMLPanel>
-			</g:HTMLPanel>
-		</g:HTMLPanel>
+		
 		
 		<g:HTMLPanel>
 		    <g:Label styleName="{style.headerLbl}" visible="false" ui:field="authorLbl"></g:Label>

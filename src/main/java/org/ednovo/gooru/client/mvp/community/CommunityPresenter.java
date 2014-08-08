@@ -166,9 +166,9 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 	public void onReveal() {
 		super.onReveal();
 		if(AppClientFactory.isAnonymous()) {
-			AppClientFactory.setBrowserWindowTitle(SeoTokens.HOME_TITLE_ANONYMOUS);
+			AppClientFactory.setBrowserWindowTitle(SeoTokens.DISCOVER_TITLE_ANONYMOUS);
 		} else {
-			AppClientFactory.setBrowserWindowTitle(SeoTokens.HOME_TITLE_LOGGEDIN);
+			AppClientFactory.setBrowserWindowTitle(SeoTokens.DISCOVER_TITLE_LOGGEDIN);
 		}
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.DISCOVER));
