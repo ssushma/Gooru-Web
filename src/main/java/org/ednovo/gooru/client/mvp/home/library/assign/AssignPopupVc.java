@@ -82,6 +82,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author BLR Team
@@ -798,7 +799,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		forgotPasswordVc.setGlassEnabled(true);
 		forgotPasswordVc.show();
 		forgotPasswordVc.center();
-		closePoup();
+		hide();
 	}
 
 	@UiHandler("ancSignUp")
@@ -817,9 +818,18 @@ public abstract class AssignPopupVc extends PopupPanel {
 		}
 		params.put("callback", "signup");
 		params.put("type", "1");
-		AppClientFactory.getPlaceManager().revealPlace(
-				AppClientFactory.getCurrentPlaceToken(), params);
-		closePoup();
+		System.out.println("checkassignvalue::"+params.containsKey("assign"));
+		if(params.containsKey("assign"))
+		{
+			params.remove("assign");
+		}
+/*		AppClientFactory.getPlaceManager().revealPlace(
+				AppClientFactory.getCurrentPlaceToken(), params);*/
+		
+
+    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
+		hide();
 	}
 	
 	/**

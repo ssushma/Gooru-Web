@@ -1274,9 +1274,10 @@ public class LibraryTopicListView extends Composite{
 						Window.enableScrolling(true);
 				        this.hide();
 				    	isAssignPopup=false;
-				    	/*params.remove(ASSIGN);
-				    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);*/
+/*				    	Map<String, String> paramsAssignPopup = StringUtil.splitQuery(Window.Location.getHref());
+				    	paramsAssignPopup.remove(ASSIGN);
+				    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), paramsAssignPopup);
+						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);*/
 					}
 				};
 				Window.scrollTo(0, 0);
@@ -1352,6 +1353,10 @@ public class LibraryTopicListView extends Composite{
 					Window.enableScrolling(true);
 					this.hide();	
 					isCustomizePopup = false;
+/*			    	Map<String, String> paramsAssignPopup = StringUtil.splitQuery(Window.Location.getHref());
+			    	paramsAssignPopup.remove(CUSTOMIZE);
+			    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), paramsAssignPopup);
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);*/
 				}
 			};
 			Window.scrollTo(0, 0);
