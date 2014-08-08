@@ -264,8 +264,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 							SetStyleForProfanity.SetStyleForProfanityForTextBox(copycollectionTextbox, errorLabel, value);
 						}else{	
 								String collectionTitle = copycollectionTextbox.getText();
-								
-								if(!collectionTitle.isEmpty() || !collectionTitle.trim().isEmpty())
+								if(!collectionTitle.isEmpty() && !collectionTitle.trim().isEmpty())
 								{
 								
 									hide();
