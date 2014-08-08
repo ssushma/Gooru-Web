@@ -195,13 +195,13 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 			partnerLibContainer.getElement().removeAttribute("style");
 		}
 		
-		Window.addWindowScrollHandler(new ScrollHandler() {
+/*		Window.addWindowScrollHandler(new ScrollHandler() {
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
 				partnerLibContainer.getElement().getStyle().setMarginTop(event.getScrollTop()+100, Unit.PX);
 				//districtLibContainer.getElement().getStyle().setMarginTop(event.getScrollTop()+23, Unit.PX);
 			}
-		});
+		});*/
         
 	}
 	
