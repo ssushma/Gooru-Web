@@ -64,10 +64,10 @@ public interface PlaceTokens {
 	
 	String COMMUNITY = "community";
 	String YOUTHVOICES = "youthvoices";
-	String GEOEDUCATION = "GeoEducation";
+	String GEOEDUCATION = "GeoEducators";
 	String LIFEBOARD = "lifeboard";
 	String SUSD = "susd";
-	String LPS = "lpslibrary1";
+	String LPS = "lpslibrary";
 	String MURRIETA = "murrieta";
 	String VALVERDE = "valverde";
 	String DISCOVER = "community";

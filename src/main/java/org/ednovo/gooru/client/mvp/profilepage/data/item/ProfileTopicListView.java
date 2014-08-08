@@ -422,11 +422,16 @@ public class ProfileTopicListView extends Composite{
 					ArrayList<ProfileLibraryDo> libraryResources =  profileLibraryDo.getCollectionItems();
 					int resourceCount = 0;
 					if(libraryResources!=null) {
-						if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)&&!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)&&!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)){
-							if(conceptDo.getItemCount()!=null){
+						if (!AppClientFactory.getCurrentPlaceToken().equals(
+								PlaceTokens.COMMUNITY)
+								&& !AppClientFactory.getCurrentPlaceToken().equals(
+										PlaceTokens.PROFILE_PAGE)
+								&& !AppClientFactory.getCurrentPlaceToken().equals(
+										PlaceTokens.SUSD)) {
+							if (conceptDo.getItemCount() != null) {
 								resourceCount = conceptDo.getItemCount();
 							}
-						}else{
+						} else {
 							resourceCount = libraryResources.size();
 						}
 						int resources=resourceCount<=4?resourceCount:4;
