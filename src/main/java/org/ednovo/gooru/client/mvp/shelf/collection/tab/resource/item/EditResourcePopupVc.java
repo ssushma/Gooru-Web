@@ -756,7 +756,14 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		mediaLabel.getElement().setId("lblMediaFeature");
 		mediaLabel.getElement().setAttribute("alt","Media Feature");
 		mediaLabel.getElement().setAttribute("title","Media Feature");
-		if(mobileFeature.equalsIgnoreCase("")||mobileFeature==null){
+		if(mobileFeature!=null){
+			if(mobileFeature.equalsIgnoreCase(""))
+			{
+				lblMediaPlaceHolder.setText("Choose a Media Feature Option:");	
+			}
+		}
+		else
+		{
 			lblMediaPlaceHolder.setText("Choose a Media Feature Option:");
 		}
 		lblMediaPlaceHolder.getElement().setId("phMediaFeature");
