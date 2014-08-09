@@ -1274,7 +1274,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 							commentField.getElement().getStyle().clearBackgroundColor();
 							commentField.getElement().getStyle().setBorderColor("#ccc");
 							characterLimit.setVisible(false);	
-							Print.it();
 						}
 					}
 				});
