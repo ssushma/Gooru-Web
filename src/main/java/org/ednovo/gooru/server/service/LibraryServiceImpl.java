@@ -153,6 +153,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COURSES, subjectId, getLoggedInSessionToken());
 		url+=getLibraryName(libraryName);
+		System.out.println("getSubjectsurl:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeSubjects(jsonRepresentation,subjectId,libraryName);
@@ -895,7 +896,8 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			if(sharingType!=null){
 				//sessionToken=sessionToken+"&sharing="+sharingType;
 			}
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId, sessionToken, offset, "20");
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST_PUBLIC, parentId, sessionToken, offset, "20");
+			System.out.println("getLibraryCoursesList::"+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
@@ -946,6 +948,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	public HashMap<String, SubjectDo> getLibrarySubjects(String subjectName, String courseId, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_SUBJECTS_OPTIMIZED, getLoggedInSessionToken(), libraryName);
+		System.out.println("getLibrarySubjects::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		HashMap<String,SubjectDo> subjectList = new HashMap<String,SubjectDo>();
