@@ -78,6 +78,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.SimpleRadioButton;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
@@ -124,7 +125,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	
 	@UiField Label visibilityTitle,openClassLabelTitle,openClassLabelDesc,openClosedLabelTitle,openClosedLabelDesc,lblMonitorDes;
 	
-	@UiField SimpleRadioButton visibilityRadioOpen,visibilityRadioInviteOnly;
+	@UiField RadioButton visibilityRadioOpen,visibilityRadioInviteOnly;
 	
 	@UiField HTMLPanel questionMarkPanel,questionMarkPanel1,questionMarkPanel2;
 	
