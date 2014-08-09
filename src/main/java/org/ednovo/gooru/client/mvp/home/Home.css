@@ -2130,4 +2130,15 @@ a.secondary:hover {
 	width: 190px;
 	font-size: 12px;
 }
-
+.setMarketingPopUpCenter{
+	position: absolute;
+	overflow: visible;
+	left: 0 !important;
+	right: 193px !important;
+	top: 0 !important;
+	bottom: 297px !important;
+	margin: auto;
+	width: 550px;
+	height: 148px;
+	z-index: 1002;
+}

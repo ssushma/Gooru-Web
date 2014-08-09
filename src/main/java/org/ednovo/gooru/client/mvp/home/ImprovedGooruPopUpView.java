@@ -101,7 +101,7 @@ public class ImprovedGooruPopUpView extends PopupPanel{
 		super(false);
 		setWidget(uiBinder.createAndBindUi(this));
 		// this.setSize("704px", " ");
-		this.setStyleName(HomeCBundle.INSTANCE.css().setAsCenterPopup());
+		this.setStyleName(HomeCBundle.INSTANCE.css().setMarketingPopUpCenter());
 		this.setGlassEnabled(true);
 		this.show();
 		this.center();
