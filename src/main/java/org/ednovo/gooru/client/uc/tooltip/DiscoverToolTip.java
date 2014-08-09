@@ -273,8 +273,6 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 	public void setPartners(ArrayList<LibraryUserDo> partnersList) {
 		for(int i=0;i<partnersList.size();i++) {
 			final LibraryUserDo libraryUserDo = partnersList.get(i);
-			System.out.println("libraryUserDo.getDisplayName() :"+libraryUserDo.getDisplayName());
-			System.out.println("libraryUserDo.getUsername() : "+libraryUserDo.getUsername());
 			final Label partnerTitle = new Label(libraryUserDo.getDisplayName());
 			partnerTitle.addStyleName("courseOption");
 			partnerTitle.addClickHandler(new ClickHandler() {
