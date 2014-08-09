@@ -349,6 +349,8 @@ public class LibraryMenuNav extends Composite{
 	};
 		
 	public void getStandardPrefCode(List<String> code){
+		try
+		{
 		if(!AppClientFactory.isAnonymous()) {
 			String taxonomyCode = "";
 			if(code!=null){
@@ -363,6 +365,7 @@ public class LibraryMenuNav extends Composite{
 					standardPanel.addStyleName(libraryStyleUc.tabsLi());
 					standardPanel.removeStyleName(libraryStyleUc.tabsLiInactive());
 					if(standardData.getWidgetCount()>0) {
+						System.out.println("taxonomycode::"+taxonomyCode);
 		 				if(taxonomyCode.contains("CCSS")&&(taxonomyCode.contains("TEXAS")||taxonomyCode.contains("TEKS"))) {
 		 					/** 1st parameter refers to "CCSS" and 2nd parameter refers to TEKS**/
 		 					setStandardDataWidgetVisibility(true,true);
@@ -419,6 +422,11 @@ public class LibraryMenuNav extends Composite{
 				setStandardDataWidgetVisibility(true,false);
 			}
 		}
+		}
+		catch(Exception ex)
+		{
+			
+		}
 	}
 		
 	private void setStandardDataWidgetVisibility(boolean isCCSSVisible, boolean isTEXASVisible) {
@@ -456,6 +464,8 @@ public class LibraryMenuNav extends Composite{
 	
 			if (subjectCode!=null){
 				if(subjectCode.equalsIgnoreCase(STANDARDS)){
+					
+					System.out.println("iam here alwyas");
 
 					AppClientFactory.getInjector().getLibraryService().getStandardLibraryMenuList(subjectCode, getPlaceToken(), new SimpleAsyncCallback<ArrayList<StandardCourseDo>>(){
 						@Override
@@ -486,6 +496,7 @@ public class LibraryMenuNav extends Composite{
 				}
 				else
 				{
+					System.out.println("iam in else");
 /*					final JsonWriter<HashMap<String, SubjectDo>> courseMapWriter = factory.getWriter();
 					final JsonReader<HashMap<String, SubjectDo>> courseMapReader = factory.getReader();
 					String map = null;
@@ -759,6 +770,7 @@ public class LibraryMenuNav extends Composite{
 						final Label courseTitle = new Label(standardsCourseDo.getLabel());		
 						courseTitle.setStyleName(libraryStyleUc.courseOption());
 						courseTitle.getElement().setAttribute("style", "width: 50%;");
+					
 						final String standardsId = standardsCourseDo.getCodeId().toString();
 
 						dynamicContainer.add(courseTitle);
@@ -811,13 +823,20 @@ public class LibraryMenuNav extends Composite{
 												params.put("libtype", "TEKS");
 											}
 											
+							
+											
 											AppClientFactory.getPlaceManager().revealPlace(getPlaceToken(),params);
+											
+											
 											
 											setSubjectPanelIdsForStandards(result);
 											AppClientFactory.fireEvent(new SetStandardDoEvent(STANDARDS,result.get(STANDARDS)));
 											if(!getSubjectSelected(STANDARDS)) {
-												setTaxonomyDataforStandards(STANDARDS, subjectCode, courseId, result.get(STANDARDS).getData());
+												AppClientFactory.fireEvent(new OpenSubjectCourseEvent(subjectname, courseDoMap.get(courseIdRefresh)));
+												//setTaxonomyDataforStandards(STANDARDS, subjectCode, courseId, result.get(STANDARDS).getData());
 											}
+											
+						
 											
 										}
 									});
@@ -878,7 +897,10 @@ public class LibraryMenuNav extends Composite{
 			}
 			
 			setTabSelection(subjectname);
+			if(!subjectname.equalsIgnoreCase(STANDARDS))
+			{
 			AppClientFactory.fireEvent(new OpenSubjectCourseEvent(subjectname, courseDoMap.get(courseIdRefresh)));
+			}
 		}
 	}
 	

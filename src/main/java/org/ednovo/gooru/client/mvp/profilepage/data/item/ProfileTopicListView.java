@@ -471,10 +471,26 @@ public class ProfileTopicListView extends Composite{
 								final String categoryImage=categoryString;
 								
 								String sourceAttribution = "";
-								if(profileLibraryItem.getResourceSource()!=null&&profileLibraryItem.getResourceSource().getAttribution()!=null) {
+								/*if(profileLibraryItem.getResourceSource()!=null&&profileLibraryItem.getResourceSource().getAttribution()!=null) {
 									sourceAttribution = profileLibraryItem.getResourceSource().getAttribution();
+								}*/
+								
+								if(profileLibraryItem.getResourceSource()!=null){
+									if(profileLibraryItem.getResourceSource().getDomainName()!=null){
+									if(!profileLibraryItem.getResourceSource().getDomainName().equalsIgnoreCase("docs.google.com"))
+									{
+										sourceAttribution = profileLibraryItem.getResourceSource().getAttribution();
+									}
+									
+									}
+									else
+									{
+										sourceAttribution="";
+									}
+									
 								}
 								final String attribution = sourceAttribution;
+								
 								
 								final HTMLEventPanel resourceCategoryIcon = new HTMLEventPanel("");
 								

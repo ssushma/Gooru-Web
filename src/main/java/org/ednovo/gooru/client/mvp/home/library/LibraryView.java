@@ -241,7 +241,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 		AppClientFactory.getEventBus().addHandler(SetSubjectDoEvent.TYPE, setSubjectDoHandler);
 		AppClientFactory.getEventBus().addHandler(SetStandardDoEvent.TYPE, setStandardDoHandler);
 		loadingIconPanel.setVisible(false);
-		courseImage.setWidth("1000px");
+//		courseImage.setWidth("1000px");
+		courseImage.getElement().getStyle().setWidth(100, Unit.PCT);
 		courseImage.setHeight("300px");
 		featuredCousesLbl.getElement().setId("lblFeaturedCousesLbl");
 		featuredCourses.getElement().setId("pnlFeaturedCourses");
@@ -334,6 +335,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 		
 		courseTabs.getElement().setId("courseTabs");
 		container.getElement().setId("container");
+		
 		featuredCourseTabs.getElement().setId("featuredCourseTabs");
 		leftNav.getElement().setId("leftNav");
 		contentScroll.getElement().setId("contentScroll");
@@ -454,6 +456,23 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 */
 	public void loadContributorsPage(String callBack, String placeToken) {
 		System.out.println("place token : "+placeToken);
+		System.out.println("placeToken : "+placeToken);
+		if (placeToken.equalsIgnoreCase(PlaceTokens.LIFEBOARD) ||
+				placeToken.equalsIgnoreCase(PlaceTokens.AUTODESK) ||
+				placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY)||
+				placeToken.equalsIgnoreCase(PlaceTokens.FTE)||
+				placeToken.equalsIgnoreCase(PlaceTokens.GEOEDUCATION)||
+				placeToken.equalsIgnoreCase(PlaceTokens.NGC)||
+				placeToken.equalsIgnoreCase(PlaceTokens.FINCAPINC)||
+				placeToken.equalsIgnoreCase(PlaceTokens.ONR)||
+				placeToken.equalsIgnoreCase(PlaceTokens.PSDPAL)||
+				placeToken.equalsIgnoreCase(PlaceTokens.LESSONOPOLY)||
+				placeToken.equalsIgnoreCase(PlaceTokens.WSPWH)||
+				placeToken.equalsIgnoreCase(PlaceTokens.YOUTHVOICES)){
+			container.getElement().getStyle().setWidth(1000, Unit.PX);
+		}else{
+			container.getElement().getStyle().clearWidth();
+		}
 		setPlaceToken(placeToken);
 		String courseId = AppClientFactory.getPlaceManager().getRequestParameter(COURSE_ID);
 		String unitId = AppClientFactory.getPlaceManager().getRequestParameter(UNIT_ID);
@@ -1009,6 +1028,9 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 */
 	public void setCourseData(final CourseDo courseDo) {
 			
+		System.out.println("getPlaceToken : "+getPlaceToken());
+		
+		
 			if(StringUtil.isPartnerUser(AppClientFactory.getCurrentPlaceToken())){
 				educatorPhoto.setVisible(false);
 				featuredContributor.setVisible(false);
@@ -1137,17 +1159,26 @@ public class LibraryView extends Composite implements  ClickHandler {
 	
 	private void setDefaultCourseImage(String standardId, String courseLabel) {
 		if(standardId != null)
-		{
-			if(standardLibraryName.equals(TEXAS)) {
+			{
+				String libType = AppClientFactory.getPlaceManager().getRequestParameter("libtype");
+				if(standardLibraryName.equals(TEXAS)) {
 				if(courseLabel.equalsIgnoreCase("Integrated Physics and Chemistry")) {
-					courseImage.setUrl(TEKS_SCIENCE);
+				courseImage.setUrl(TEKS_SCIENCE);
 				} else {
-					courseImage.setUrl(TEKS_MATHS);
+				courseImage.setUrl(TEKS_MATHS);
 				}
-			} else {
+				} else {
+				if(libType!=null && libType.equals(TEXAS)){
+				if(courseLabel.equalsIgnoreCase("Integrated Physics and Chemistry")) {
+				courseImage.setUrl(TEKS_SCIENCE);
+				} else {
+				courseImage.setUrl(TEKS_MATHS);
+				}
+				}else{
 				courseImage.setUrl(STANDARD_DEFAULT_IMG);	
+				}
+				}
 			}
-		}
 		else
 		{
 		courseImage.setUrl(COURSE_DEFAULT_IMG);
