@@ -537,6 +537,7 @@ public interface HomeCBundle extends ClientBundle{
 		String leftImageContainer();
 
 		String description();
+		String setMarketingPopUpCenter();
 
 	}
      @Source("Home.css")
