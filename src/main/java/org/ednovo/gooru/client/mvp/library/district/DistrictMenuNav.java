@@ -328,10 +328,13 @@ public abstract class DistrictMenuNav extends Composite {
 	}
 	
 	private void setLearningTabStyle() {
+		if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)){
+		
 		if(subjectIdList.get(LEARNING) != null) {
 			learnPanel.removeStyleName(districtStyleUc.tabsLiInactive());
 		} else {
-			//learnPanel.addStyleName(districtStyleUc.tabsLiInactive());
+			learnPanel.addStyleName(districtStyleUc.tabsLiInactive());
+		}
 		}
 	}
 	
