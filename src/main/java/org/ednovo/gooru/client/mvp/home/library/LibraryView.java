@@ -1159,17 +1159,26 @@ public class LibraryView extends Composite implements  ClickHandler {
 	
 	private void setDefaultCourseImage(String standardId, String courseLabel) {
 		if(standardId != null)
-		{
-			if(standardLibraryName.equals(TEXAS)) {
+			{
+				String libType = AppClientFactory.getPlaceManager().getRequestParameter("libtype");
+				if(standardLibraryName.equals(TEXAS)) {
 				if(courseLabel.equalsIgnoreCase("Integrated Physics and Chemistry")) {
-					courseImage.setUrl(TEKS_SCIENCE);
+				courseImage.setUrl(TEKS_SCIENCE);
 				} else {
-					courseImage.setUrl(TEKS_MATHS);
+				courseImage.setUrl(TEKS_MATHS);
 				}
-			} else {
+				} else {
+				if(libType!=null && libType.equals(TEXAS)){
+				if(courseLabel.equalsIgnoreCase("Integrated Physics and Chemistry")) {
+				courseImage.setUrl(TEKS_SCIENCE);
+				} else {
+				courseImage.setUrl(TEKS_MATHS);
+				}
+				}else{
 				courseImage.setUrl(STANDARD_DEFAULT_IMG);	
+				}
+				}
 			}
-		}
 		else
 		{
 		courseImage.setUrl(COURSE_DEFAULT_IMG);

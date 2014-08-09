@@ -149,6 +149,7 @@ public abstract class DistrictMenuNav extends Composite {
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)
 					||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)
 					||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)) {
+			
 			learnPanel.addStyleName(districtStyleUc.tabsLiInactive());
 		} else {
 			learnPanel.addMouseOverHandler(new MouseOverHandler() {
@@ -330,7 +331,7 @@ public abstract class DistrictMenuNav extends Composite {
 		if(subjectIdList.get(LEARNING) != null) {
 			learnPanel.removeStyleName(districtStyleUc.tabsLiInactive());
 		} else {
-			learnPanel.addStyleName(districtStyleUc.tabsLiInactive());
+			//learnPanel.addStyleName(districtStyleUc.tabsLiInactive());
 		}
 	}
 	
