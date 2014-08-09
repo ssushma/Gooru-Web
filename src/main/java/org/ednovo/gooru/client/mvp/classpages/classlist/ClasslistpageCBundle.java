@@ -149,6 +149,7 @@ public interface ClasslistpageCBundle extends ClientBundle{
 		String assignSecTitleheader();
 		
 		String manageText();
+		String regularRadioButton();
 	}
 	@NotStrict
 	@Source("classlistPage.css")
