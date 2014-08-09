@@ -24,21 +24,22 @@
 		       <g:Image ui:field="courseImage"/>
 		       <g:HTML styleName="{libraryStyle.courseTitle}" ui:field="courseTitle"/>
 		   </g:HTMLPanel>
-		   
-		   <g:HTMLPanel ui:field="featuredEducator">
-		    	<g:Image styleName="{libraryStyle.educatorPhoto} {libraryStyle.courseContributorAlign}" ui:field="educatorPhoto"></g:Image>
-				<g:Label ui:field="featuredContributor" styleName="{libraryStyle.courseContributorAlign}"></g:Label>
-				<g:Anchor ui:field="featuredContributorsLink" styleName="{libraryStyle.courseContributorAlign}"></g:Anchor>
-	
-		<!--  <g:Button styleName="secondary" ui:field="viewStandardButton"></g:Button> -->
-		   </g:HTMLPanel>
-		   
-		   <g:HTMLPanel ui:field="leftNav"/>
-		   
-		   <g:HTMLPanel ui:field="scrollPanel" styleName="{libraryStyle.scrollPanel}">
-		       <g:HTMLPanel ui:field="libraryMetaDataContainer"/>
-		       <g:HTMLPanel ui:field="loadingIconPanel" styleName="loadingImage {libraryStyle.loadingIconTopic}"></g:HTMLPanel>
-		       <g:HTMLPanel ui:field="contentScroll"/>
+		   <g:HTMLPanel ui:field="panelBodyContainer" styleName="{libraryStyle.bodyContainer}">
+			   <g:HTMLPanel ui:field="featuredEducator">
+			    	<g:Image styleName="{libraryStyle.educatorPhoto} {libraryStyle.courseContributorAlign}" ui:field="educatorPhoto"></g:Image>
+					<g:Label ui:field="featuredContributor" styleName="{libraryStyle.courseContributorAlign}"></g:Label>
+					<g:Anchor ui:field="featuredContributorsLink" styleName="{libraryStyle.courseContributorAlign}"></g:Anchor>
+		
+			<!--  <g:Button styleName="secondary" ui:field="viewStandardButton"></g:Button> -->
+			   </g:HTMLPanel>
+			   
+			   <g:HTMLPanel ui:field="leftNav"/>
+			   
+			   <g:HTMLPanel ui:field="scrollPanel" styleName="{libraryStyle.scrollPanel}">
+			       <g:HTMLPanel ui:field="libraryMetaDataContainer"/>
+			       <g:HTMLPanel ui:field="loadingIconPanel" styleName="loadingImage {libraryStyle.loadingIconTopic}"></g:HTMLPanel>
+			       <g:HTMLPanel ui:field="contentScroll"/>
+			   </g:HTMLPanel>
 		   </g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel ui:field="contributorsContainer"/>
