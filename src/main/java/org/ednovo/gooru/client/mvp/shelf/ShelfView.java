@@ -489,10 +489,10 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		shareTabVc.getElement().setAttribute("alt",i18n.GL0526());
 		shareTabVc.getElement().setAttribute("title",i18n.GL0526());
 		
-		assignTabVc.setLabel(i18n.GL0519());
+		assignTabVc.setLabel(i18n.GL0519_1());
 		assignTabVc.getElement().setId("lblAssignTab");
-		assignTabVc.getElement().setAttribute("alt",i18n.GL0519());
-		assignTabVc.getElement().setAttribute("title",i18n.GL0519());
+		assignTabVc.getElement().setAttribute("alt",i18n.GL0519_1());
+		assignTabVc.getElement().setAttribute("title",i18n.GL0519_1());
 		
 		collaboratorTabVc.setLabel(i18n.GL0830());
 		collaboratorTabVc.getElement().setId("lblCollaboratorTab");
