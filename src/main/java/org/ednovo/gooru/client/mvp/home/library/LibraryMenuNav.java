@@ -103,6 +103,8 @@ public class LibraryMenuNav extends Composite{
 	
 	private boolean isScienceHovered = false, isMathHovered = false, isSocialHovered = false, isLanguageHovered = false, isStandatdHover = false, isPartnerHovered = false;
 	
+	public boolean checkRefreshVal = false;
+	
     StorageExt localStorage = StorageExt.getLocalStorage();
 
     StorageKey<HashMap<String, ArrayList<CourseDo>>> libraryStorageObject = StorageKeyFactory.objectKey("libraryStorageObject");
@@ -464,8 +466,6 @@ public class LibraryMenuNav extends Composite{
 	
 			if (subjectCode!=null){
 				if(subjectCode.equalsIgnoreCase(STANDARDS)){
-					
-					System.out.println("iam here alwyas");
 
 					AppClientFactory.getInjector().getLibraryService().getStandardLibraryMenuList(subjectCode, getPlaceToken(), new SimpleAsyncCallback<ArrayList<StandardCourseDo>>(){
 						@Override
@@ -897,9 +897,16 @@ public class LibraryMenuNav extends Composite{
 			}
 			
 			setTabSelection(subjectname);
+
+			String subjectNameonRefresh = AppClientFactory.getPlaceManager().getRequestParameter("subject");
 			if(!subjectname.equalsIgnoreCase(STANDARDS))
 			{
-			AppClientFactory.fireEvent(new OpenSubjectCourseEvent(subjectname, courseDoMap.get(courseIdRefresh)));
+				AppClientFactory.fireEvent(new OpenSubjectCourseEvent(subjectname, courseDoMap.get(courseIdRefresh)));
+			}
+			if(subjectNameonRefresh.equalsIgnoreCase(STANDARDS) && !checkRefreshVal)
+			{
+				checkRefreshVal = true;
+				AppClientFactory.fireEvent(new OpenSubjectCourseEvent(subjectname, courseDoMap.get(courseIdRefresh)));
 			}
 		}
 	}
