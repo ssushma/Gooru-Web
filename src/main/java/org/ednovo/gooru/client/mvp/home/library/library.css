@@ -1109,3 +1109,20 @@ margin-bottom: 15px;
 	width: 1000px;
 	margin: 0px auto;
 }
+
+.lpsPartnerLogo {
+	background: url("../images/library/district/lps-logo.png");
+	width: 133px;
+	height: 133px;
+	position: absolute;
+	top: 61px;
+	right: 575px;
+}
+
+.lpsHeader {
+	color: white;
+	font-size: 16px;
+	text-align: center;
+	height: 19px;
+	margin-top: -83px;
+}

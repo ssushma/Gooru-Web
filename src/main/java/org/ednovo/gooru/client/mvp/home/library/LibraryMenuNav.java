@@ -465,7 +465,6 @@ public class LibraryMenuNav extends Composite{
 			if (subjectCode!=null){
 				if(subjectCode.equalsIgnoreCase(STANDARDS)){
 					
-					System.out.println("iam here alwyas");
 
 					AppClientFactory.getInjector().getLibraryService().getStandardLibraryMenuList(subjectCode, getPlaceToken(), new SimpleAsyncCallback<ArrayList<StandardCourseDo>>(){
 						@Override
@@ -496,7 +495,6 @@ public class LibraryMenuNav extends Composite{
 				}
 				else
 				{
-					System.out.println("iam in else");
 /*					final JsonWriter<HashMap<String, SubjectDo>> courseMapWriter = factory.getWriter();
 					final JsonReader<HashMap<String, SubjectDo>> courseMapReader = factory.getReader();
 					String map = null;
