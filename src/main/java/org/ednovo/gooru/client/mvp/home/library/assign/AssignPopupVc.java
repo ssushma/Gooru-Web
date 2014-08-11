@@ -82,6 +82,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author BLR Team
@@ -90,7 +91,7 @@ import com.google.gwt.user.client.ui.Widget;
 public abstract class AssignPopupVc extends PopupPanel {
 
 	@UiField
-	HTMLPanel loadingImageLabel,popupContentAssign,signUpStyles;
+	HTMLPanel loadingImageLabel,popupContentAssign,signUpStyles,assignContainer;
 
 	@UiField
 	HTMLEventPanel htmlEvenPanelContainer;
@@ -158,6 +159,10 @@ public abstract class AssignPopupVc extends PopupPanel {
 	private TermsOfUse termsOfUse;
 	private static final int UNAUTHORISED_STATUS_CODE = 401;
 	
+	public HTMLPanel getAssignContainer(){
+		return assignContainer;
+	}
+	
 	private static AssignPopupVcUiBinder uiBinder = GWT
 			.create(AssignPopupVcUiBinder.class);
 
@@ -183,12 +188,12 @@ public abstract class AssignPopupVc extends PopupPanel {
 	 */
 	public AssignPopupVc(String collectionIdVal, String collectionTitle, String collectionDescription) {
 		super(false);
-		
-	
 		res = AssignPopUpCBundle.INSTANCE;
 		AssignPopUpCBundle.INSTANCE.css().ensureInjected();
 		add(uiBinder.createAndBindUi(this));
 		this.setGlassEnabled(true);
+		this.getGlassElement().getStyle().setZIndex(99999);
+		this.getElement().getStyle().setZIndex(99999);
 		swithUrlLbl.setText(i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("alt",i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());
@@ -265,7 +270,8 @@ public abstract class AssignPopupVc extends PopupPanel {
 
 			@Override
 			public void closePoupfromChild() {
-				closePoup();
+				hide();
+				//closePoup();
 
 			}
 		};
@@ -793,7 +799,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		forgotPasswordVc.setGlassEnabled(true);
 		forgotPasswordVc.show();
 		forgotPasswordVc.center();
-		closePoup();
+		hide();
 	}
 
 	@UiHandler("ancSignUp")
@@ -812,9 +818,18 @@ public abstract class AssignPopupVc extends PopupPanel {
 		}
 		params.put("callback", "signup");
 		params.put("type", "1");
-		AppClientFactory.getPlaceManager().revealPlace(
-				AppClientFactory.getCurrentPlaceToken(), params);
-		closePoup();
+		System.out.println("checkassignvalue::"+params.containsKey("assign"));
+		if(params.containsKey("assign"))
+		{
+			params.remove("assign");
+		}
+/*		AppClientFactory.getPlaceManager().revealPlace(
+				AppClientFactory.getCurrentPlaceToken(), params);*/
+		
+
+    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
+		hide();
 	}
 	
 	/**

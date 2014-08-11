@@ -422,12 +422,17 @@ public class ProfileTopicListView extends Composite{
 					ArrayList<ProfileLibraryDo> libraryResources =  profileLibraryDo.getCollectionItems();
 					int resourceCount = 0;
 					if(libraryResources!=null) {
-						if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)){
+						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)){
+							resourceCount = libraryResources.size();
+						}else{
 							if(conceptDo.getItemCount()!=null){
 								resourceCount = conceptDo.getItemCount();
 							}
-						}else{
-							resourceCount = libraryResources.size();
+							else
+							{
+								resourceCount = libraryResources.size();
+							}
+							
 						}
 						int resources=resourceCount<=4?resourceCount:4;
 						final Label resourceCountLbl = new Label(resources+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+resourceCount+" "+i18n.GL1094().toLowerCase());
@@ -466,10 +471,26 @@ public class ProfileTopicListView extends Composite{
 								final String categoryImage=categoryString;
 								
 								String sourceAttribution = "";
-								if(profileLibraryItem.getResourceSource()!=null&&profileLibraryItem.getResourceSource().getAttribution()!=null) {
+								/*if(profileLibraryItem.getResourceSource()!=null&&profileLibraryItem.getResourceSource().getAttribution()!=null) {
 									sourceAttribution = profileLibraryItem.getResourceSource().getAttribution();
+								}*/
+								
+								if(profileLibraryItem.getResourceSource()!=null){
+									if(profileLibraryItem.getResourceSource().getDomainName()!=null){
+									if(!profileLibraryItem.getResourceSource().getDomainName().equalsIgnoreCase("docs.google.com"))
+									{
+										sourceAttribution = profileLibraryItem.getResourceSource().getAttribution();
+									}
+									
+									}
+									else
+									{
+										sourceAttribution="";
+									}
+									
 								}
 								final String attribution = sourceAttribution;
+								
 								
 								final HTMLEventPanel resourceCategoryIcon = new HTMLEventPanel("");
 								

@@ -67,6 +67,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * 
@@ -376,7 +377,14 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		}
 		params.put("callback", "signup");
 		params.put("type", "1");
-		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
+		if(params.containsKey("customize"))
+		{
+			params.remove("customize");
+		}
+		
+		//PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
 		closePoupfromChild();
 	}
 

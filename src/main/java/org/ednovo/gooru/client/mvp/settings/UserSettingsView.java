@@ -714,8 +714,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		
 		CSSChk.setText(i18n.GL2105());
 		
-		//californiaStandChk.setName("30424,42236,42237");
-		californiaStandChk.setName("24553");
+		californiaStandChk.setName("42236,42237");
+		//californiaStandChk.setName("24553");
 		CaliforniaSocialSciencesStandardsChk.setText(i18n.GL2106());
 		CaliforniaELDSChk.setText(i18n.GL2107());
 		
@@ -733,7 +733,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		userStandardTextPanel.add(CaliforniaELDSChk);
 		CaliforniaSocialSciencesStandardsChk.setName("30424");
 		CaliforniaELDSChk.setName("78320");
-		CSSChk.setName("42236,42237");
+		//CSSChk.setName("42236,42237");
 		
 		
 	//added in 6.4
@@ -2077,16 +2077,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				codeId=codeId+CaliforniaELDSChk.getName();	
 			}
 		}
-		if(CSSChk.isChecked())
-		{
-			if(codeId!=""){
-				codeId=codeId+","+CSSChk.getName();	
-			}
-			else
-			{
-				codeId=codeId+CSSChk.getName();	
-			}
-		}
+		
 		return codeId;
 	}
 	@UiHandler("standardsSaveButton")
@@ -2136,7 +2127,6 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		userStandardDefaultView.setVisible(true);
 		if(list!=null){
 			if(list.size()!=0){
-			
 			lblUserMessage.setVisible(false);
 			standardsSaveButton.setEnabled(true);
 			standardsSaveButton.getElement().removeClassName("disabled");
@@ -2149,14 +2139,27 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				lblCommonCore.setVisible(false);
 				commonCoreChk.setChecked(false);
 			}
-			if(list.contains("CSC")){
+			if(list.contains("CASK5")){
 				lblCSS.setVisible(true);
 				californiaStandChk.setChecked(true);
 				lblCaliforniaScience.setVisible(true);
+				CSSChk.setChecked(true);
 			}else{
 				lblCSS.setVisible(false);
 				californiaStandChk.setChecked(false);
 				lblCaliforniaScience.setVisible(false);
+				CSSChk.setChecked(false);
+			}
+			if(list.contains("CAS612")){
+				lblCSS.setVisible(true);
+				californiaStandChk.setChecked(true);
+				lblCaliforniaScience.setVisible(true);
+				CSSChk.setChecked(true);
+			}else{
+				lblCSS.setVisible(false);
+				californiaStandChk.setChecked(false);
+				lblCaliforniaScience.setVisible(false);
+				CSSChk.setChecked(false);
 			}
 			if(list.contains("TEXAS")||list.contains("TEKS")){
 				texasChk.setChecked(true);
@@ -2178,30 +2181,36 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				lblCaliforniaELDS.setVisible(true);
 				CaliforniaELDSChk.setChecked(true);
 				lblCSS.setVisible(true);
+				CSSChk.setChecked(true);
+				
 			}else{
 				lblCaliforniaELDS.setVisible(false);
 				CaliforniaELDSChk.setChecked(false);
 				lblCSS.setVisible(false);
+				CSSChk.setChecked(false);
 			}
 			if(list.contains("CA")){
 				lblCaliforniaSocialSciencesStandards.setVisible(true);
 				CaliforniaSocialSciencesStandardsChk.setChecked(true);
 				lblCSS.setVisible(true);
+				CSSChk.setChecked(true);
 			}else{
 				lblCaliforniaSocialSciencesStandards.setVisible(false);
 				CaliforniaSocialSciencesStandardsChk.setChecked(false);
 				lblCSS.setVisible(false);
+				CSSChk.setChecked(false);
 			}
-			if(list.contains("CAS612")){
+			if(list.contains("CA")||list.contains("CAELD")||list.contains("CASK5")||list.contains("CAS612"))
+			{
 				CSSChk.setChecked(true);
 				lblCSS.setVisible(true);
-				
-			}else
-			{
-				lblCSS.setVisible(false);
-				CSSChk.setChecked(false);	
 			}
-		
+			else
+			{
+				CSSChk.setChecked(false);
+				lblCSS.setVisible(false);
+			}
+			
 		}else{
 			lblCommonCore.setVisible(false);	
 			lblCaliforniaScience.setVisible(false);

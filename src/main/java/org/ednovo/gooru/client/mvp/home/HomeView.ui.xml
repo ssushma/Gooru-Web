@@ -29,7 +29,7 @@
 								<h2 class="text-center">Find</h2>
 								<div class="clearfix"></div>
 								<p class="">Browse thousands of K-12 collections made by teachers
-									or search over 18M resources</p>
+									or search over 16M resources</p>
 
 								<!-- <tbp:TextBoxWithPlaceholder
 									styleName="form-control" placeholder="{i18n.GL2073}" ui:field="txtSearch"></tbp:TextBoxWithPlaceholder> -->
@@ -46,7 +46,7 @@
 								</div>
 								<h2 class="text-center">Remix</h2>
 								<div class="clearfix"></div>
-								<p class="">Remix collections and customize content to to meet
+								<p class="">Remix collections and customize content to meet
 									your students’ needs.</p>
 
 								<g:Button styleName="primary {res.css.btnBlock}"
@@ -464,7 +464,7 @@
 									<div class="col-xs-8">
 										<p>
 											<a
-												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=20670">Algebra</a>
+												href="#community&amp;page=course-page&amp;subject=20002&amp;courseId=20670">Algebra 1</a>
 										</p>
 									</div>
 									<div class="col-xs-4">
@@ -923,7 +923,7 @@
 									<a href="#CoreLibrary">Core Library</a>
 								</p>
 								<p>
-									<a href="#lpslibrary1">Leadership Public Schools</a>
+									<a href="#lpslibrary">Leadership Public Schools</a>
 								</p>
 
 								<p>
@@ -954,11 +954,11 @@
 								<p>
 									<a href="#FTE">Foundation for Teaching Economics (FTE)</a>
 								</p>
-								<p>
+								<!-- <p>
 									<a href="#lifeboard">Lifeboard</a>
-								</p>
+								</p> -->
 								<p>
-									<a href="#GeoEduction">National Geographic's Geo-Educator Community</a>
+									<a href="#GeoEducators">National Geographic's Geo-Educator Community</a>
 								</p>
 								<p>
 									<a href="#NGC">New Global Citizens (NGC)</a>
@@ -1016,7 +1016,7 @@
 
 								<h4>
 									<a
-										href="http://www.goorulearning.org/#students-view&amp;pageSize=5&amp;id=880199d9-cf3c-47ba-8418-838ccd32d3d2&amp;pageNum=0&amp;pos=1"
+										href="http://www.goorulearning.org/#profilepage&amp;pageSize=5&amp;id=9aeb031a-4c43-4d4b-9b30-84261e39fdb2&amp;user=GooruTutorials&amp;pageNum=0&amp;pos=1"
 										target="_bank">Gooru Tutorials</a>
 								</h4>
 								<p>Check out these Gooru collections to get familiar with the
@@ -1172,7 +1172,7 @@
 							<h4>Products</h4>
 							<ul class="list-unstyled">
 								<li>
-									<a href="#">Our Solution</a>
+									<a href="http://about.goorulearning.org/product/oursolution" target="_blank">Our Solution</a>
 								</li>
 								<li>
 									<a href="http://about.goorulearning.org/product/mobile"

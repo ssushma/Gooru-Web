@@ -1039,7 +1039,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			isRated=true; 
 			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 				if(result.getRatings()!=null){
-					AppClientFactory.fireEvent(new UpdateResourceRatingCountEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
+					AppClientFactory.fireEvent(new UpdateResourceRatingCountEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getReviewCount()));
 					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
 				}
 				
@@ -1835,7 +1835,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	public void checkYoutubeAccessControls(Map<String, String> accessControls) {
 		// TODO Auto-generated method stub
 		String device = BrowserAgent.returnFormFactorView();
-		System.out.println("device::"+device);
 		if(accessControls!=null){
 			if(accessControls.get(EMBED).equals("allowed")){
 				if(accessControls.get(SYNDICATE).equals("allowed") || (device.equalsIgnoreCase("desktop"))){

@@ -37,6 +37,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author BLR Team
@@ -109,7 +110,8 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 						
 						@Override
 						public void closePoupfromChild() {
-							closePoup();
+
+							hide();
 						}
 
 						@Override
@@ -218,6 +220,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 	}
 
 	public void showSuccessMsg(String collectionId,String collectionTitle) {
+		
 		loginCustom.setVisible(false);
 		copyCollectionSuccess.setVisible(true);
 		editCollection.getElement().setAttribute("collectionId", collectionId);
@@ -262,10 +265,11 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 							SetStyleForProfanity.SetStyleForProfanityForTextBox(copycollectionTextbox, errorLabel, value);
 						}else{	
 								String collectionTitle = copycollectionTextbox.getText();
-								
-								if(!collectionTitle.isEmpty())
+								if(!collectionTitle.isEmpty() && !collectionTitle.trim().isEmpty())
 								{
-									closePoup();
+								
+									hide();
+								//	closePoup();
 								if(!isCustomizePopup){
 									isCustomizePopup=true;
 								Boolean loginFlag = false;
@@ -307,13 +311,15 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 
 				@Override
 				public void onSuccess(CollectionDo result) {
+					
 						AppClientFactory.getPlaceManager().revealPlace(
 							PlaceTokens.SHELF,
 							new String[] {
 									"id",
 									result.getGooruOid()});
 						AppClientFactory.fireEvent(new RefreshUserShelfCollectionsEvent());
-					closePoup();
+						hide();
+					//closePoup();
 				}
 			};
 		}

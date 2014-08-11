@@ -730,6 +730,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		setOpenEndedAnswerSubmited(true);
 		getView().setResourceTitle(collectionDo.getTitle());
 		collectionEndPresenter.setCollectionDoOnRefresh(collectionDo);
+		collectionEndPresenter.setCollectionMetadata(collectionDo);
 		 showSignupPopup(); 
 		if(this.collectionSummaryId!=null){
 			if(this.collectionSummaryId.equalsIgnoreCase(collectionDo.getGooruOid())){
@@ -738,7 +739,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			}
 		}
 		this.collectionSummaryId=collectionDo.getGooruOid();
-		collectionEndPresenter.setCollectionMetadata(collectionDo);
 		clearDashBoardIframe();
 		clearIframeContent();
 		getProfilUserVisibility(collectionDo.getUser().getGooruUId());

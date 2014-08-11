@@ -49,7 +49,7 @@ public class SampleReportView extends PopupPanel {
 	}
 
 	private void setUiField() {
-		lblsummaryText.setText("These are some of the reports you will able to see for students in your class.");
+		lblsummaryText.setText("These are some of the reports you will be able to see for students in your class.");
 		lblCollectionProgress.setText(i18n.GL1586());
 		lblCollectionProgressDetails.setText("See your students' real-time progress through the collections you've assigned.");
 		bgImage.setUrl("images/landing-page/sampleReports1.png");

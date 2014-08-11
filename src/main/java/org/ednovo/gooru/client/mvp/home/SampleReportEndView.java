@@ -48,10 +48,10 @@ public class SampleReportEndView extends PopupPanel {
 
 	private void setUiField() {
 		lblsummaryText
-				.setText("These are some of the reports you will able to see for students in your class.");
-		lblCollectionProgress.setText(i18n.GL1586());
+				.setText("These are some of the reports you will be able to see for students in your class.");
+		lblCollectionProgress.setText(i18n.GL1587());
 		lblCollectionProgressDetails
-				.setText("See your students' real-time progress through the collections you've assigned.");
+				.setText("See how students react and how much time they are spending on each resource in your collection.");
 	//	rightImage.setUrl("images/landing-page/nextArrow.png");
 		leftImage.setUrl("images/landing-page/previousArrow.png");
 		lblHeading.setText("Sample Reports");

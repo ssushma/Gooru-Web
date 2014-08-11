@@ -124,4 +124,8 @@ public class GlobalToolTip extends Composite {
      	confirmationPanel.getElement().setAttribute("style", "width: 149px;");
      	panelArrow.getElement().setAttribute("style", "left: -158px;top: 22px;-webkit-transform: rotate(265deg);position:absolute;");
     }
+    
+    public HTMLPanel getPanelArrow(){
+    	return panelArrow;
+    }
 }

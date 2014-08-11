@@ -511,7 +511,7 @@ public class ShelfCollectionResourceChildView extends
 		// To check whether resource is public and is created by logged in user
 		String resourceShare = collectionItemDo.getResource().getSharing();
 	
-		String resourceCategory = collectionItemDo.getResource().getCategory();
+		String resourceCategory = collectionItemDo.getResource().getResourceFormat() !=null ? collectionItemDo.getResource().getResourceFormat().getDisplayName() : "text";
 		
 	
 		if (resourceShare.equalsIgnoreCase("public")
@@ -846,7 +846,6 @@ public class ShelfCollectionResourceChildView extends
 		}else{
 			resourceTitleLbl.getElement().getStyle().clearWidth();	
 		}
-		
 		if (collectionItem.getResource().getAssets() != null
 				&& collectionItem.getResource().getAssets().size() > 0) {
 			for (AssetsDo asstesDo : collectionItem.getResource().getAssets()) {
@@ -854,8 +853,10 @@ public class ShelfCollectionResourceChildView extends
 				tumbnailUrl = collectionItem.getCollection().getAssetURI()
 						+ collectionItem.getResource().getFolder()
 						+ asstesDo.getAsset().getName();
+				
 //				resourceImageUc.renderSearch(collectionItem.getResource().getCategory(), tumbnailUrl, collectionItem.getResource().getUrl(), collectionItem.getCollectionItemId(),PLAYER_NAME,resourceTitle, youtube,"");
-				resourceImageUc.renderSearch(collectionItem.getResource().getCategory(), tumbnailUrl, collectionItem.getResource().getUrl(), collectionItem.getCollectionItemId(),resourceTitle, youtube,collectionItem.getNarration());
+				String resourceFormat = collectionItem.getResource().getResourceFormat() !=null ? collectionItem.getResource().getResourceFormat().getDisplayName() : "text";
+				resourceImageUc.renderSearch(resourceFormat, tumbnailUrl, collectionItem.getResource().getUrl(), collectionItem.getCollectionItemId(),resourceTitle, youtube,collectionItem.getNarration());
 			}
 		} else {
 				try {
@@ -875,7 +876,8 @@ public class ShelfCollectionResourceChildView extends
 					.getThumbnails().getUrl(), collectionItem.getResource()
 					.getUrl(), collectionItem.getCollectionItemId(),
 					PLAYER_NAME,resourceTitle, youtube,"");*/
-				resourceImageUc.renderSearch(collectionItem.getResource().getCategory(), collectionItem.getResource().getThumbnails().getUrl(), collectionItem.getResource().getUrl(), collectionItem.getCollectionItemId(),resourceTitle, youtube,collectionItem.getNarration());
+				String resourceFormat =  collectionItem.getResource().getResourceFormat() != null ? collectionItem.getResource().getResourceFormat().getDisplayName() : "text";
+				resourceImageUc.renderSearch(resourceFormat, collectionItem.getResource().getThumbnails().getUrl(), collectionItem.getResource().getUrl(), collectionItem.getCollectionItemId(),resourceTitle, youtube,collectionItem.getNarration());
 		}
 
 		if (collectionItem.getNarration() != null && !collectionItem.getNarration().trim().isEmpty()){
@@ -901,7 +903,8 @@ public class ShelfCollectionResourceChildView extends
 			resourceNarrationHtml.getElement().setAttribute("alt", NO_NARRATION_ADDED);
 			resourceNarrationHtml.getElement().setAttribute("title", NO_NARRATION_ADDED);
 		}
-		String category = collectionItemDo.getResource().getCategory();
+		String category = collectionItemDo.getResource().getResourceFormat() != null ? collectionItemDo.getResource().getResourceFormat().getDisplayName() : "text";
+		
 		if(!youtube){
 			videoImage.removeStyleName(CollectionEditResourceCBundle.INSTANCE.css().videoImageContainer());
 			editVideoTimeLbl.setVisible(false);
@@ -1769,8 +1772,8 @@ public class ShelfCollectionResourceChildView extends
 
 	@Override
 	public IsDraggableMirage initDraggableMirage() {
-		return new ResourceDragUc(collectionItemDo.getResource().getCategory(),
-				collectionItemDo.getResource().getTitle());
+		String resourceFormat = collectionItemDo.getResource().getResourceFormat() !=null ? collectionItemDo.getResource().getResourceFormat().getDisplayName() : "text";
+		return new ResourceDragUc(resourceFormat,collectionItemDo.getResource().getTitle());
 	}
 
 	@Override
