@@ -496,7 +496,6 @@ public class LibraryMenuNav extends Composite{
 				}
 				else
 				{
-					System.out.println("iam in else");
 /*					final JsonWriter<HashMap<String, SubjectDo>> courseMapWriter = factory.getWriter();
 					final JsonReader<HashMap<String, SubjectDo>> courseMapReader = factory.getReader();
 					String map = null;
