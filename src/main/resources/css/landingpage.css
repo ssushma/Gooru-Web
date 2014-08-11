@@ -170,7 +170,7 @@ footer {
 	background: #72accd;
 }
 
-footer h4 {
+footer h4, footer .h4 {
 	font-family: "Arvo", serif !important;
 	color: #ffffff;
 	font-size: 15px;
@@ -210,7 +210,7 @@ footer .col-xs-4 {
 	margin-bottom: 50px;
 }
 
-.usegooru h1 {
+.usegooru h1, .usegooru .h1 {
 	font-family: "Arvo", serif !important;
 	margin-bottom: 35px;
 	font-weight: bold;
@@ -690,11 +690,11 @@ footer .col-xs-4 {
 	width: 100%;
 	float: left;
 }
-.yourSupport  p, .getContentContainer p, .getInnerRight p, .searchContainer p, .communityResult p{
+.yourSupport  p, .getContentContainer p,.yourSupport .p, .getContentContainer .p, .getInnerRight p, .getInnerRight .p, .searchContainer p, .searchContainer .p, .searchContainer .p, .communityResult p, .communityResult .p{
 	margin-bottom: 15px;
 	font-size: 14px;
 }
-.yourSupport  h1 {
+.yourSupport  h1, .yourSupport  .h1 {
 	font-family: "Arvo", serif !important;
 	font-weight: bold;
 	margin-bottom: 35px;
@@ -711,14 +711,14 @@ footer .col-xs-4 {
 	box-sizing: border-box;
 }
 
-.yourSupport  h2 {
+.yourSupport h2, .yourSupport .h2 {
 	font-family: "Arvo", serif !important;
 	font-size: 30px;
 	font-weight: bold;
 	margin-top: 0;
 }
 
-.yourSupport  h3 {
+.yourSupport h3, .yourSupport .h3 {
 	font-family: 'rock';
 	font-size: 20px;
 	font-weight: bold;
@@ -728,7 +728,7 @@ footer .col-xs-4 {
 	display: inline;
 }
 
-.goorubadge h4 {
+.goorubadge h4, .goorubadge .h4 {
 	font-size: 16px;
 	font-weight: normal;
 }
@@ -894,7 +894,7 @@ footer .col-xs-4 {
 	box-sizing: border-box;
 }
 
-.searchContainer .col-xs-3 h2 {
+.searchContainer .col-xs-3 h2, .searchContainer .col-xs-3 .h2 {
 	display: inline-block;
 	font-family: "Arvo", serif !important;
 	font-size: 24px;
@@ -936,14 +936,14 @@ footer .col-xs-4 {
 	float: left;
 }
 
-.communityblock h2 {
+.communityblock h2, .communityblock .h2 {
 	font-family: "Arvo", serif !important;
 	margin: 20px 0 20px 0;
 	font-size: 30px;
 	font-weight: bold;
 }
 
-.communityblock h4{
+.communityblock h4, .communityblock .h4{
 	font-size: 18px;
 	font-weight: normal;
 	margin-bottom : 20px;
@@ -1077,7 +1077,7 @@ footer .col-xs-4 {
 	font-size: 16px;
 }
 
-.getStart .getInnerRight h3 {
+.getStart .getInnerRight h3, .getStart .getInnerRight .h3 {
 	font-family: "Arvo", serif !important;
 	margin: 7px 0 15px 0;
 	font-size: 25px;
@@ -1095,11 +1095,11 @@ footer .col-xs-4 {
 	float: right;
 	margin: 15px 0;
 }
-.getStart .getInnerRight p{
+.getStart .getInnerRight p, .getStart .getInnerRight .p{
 	margin-bottom: 15px;
 }
 
-.getStart .getInnerRight h4 {
+.getStart .getInnerRight h4, .getStart .getInnerRight .h4 {
 	color: #1076B9;
 	font-size: 16px;
 }
@@ -1110,7 +1110,7 @@ footer .col-xs-4 {
 	width: 100%;
 }
 
-.mission h2 {
+.mission h2, .mission .h2 {
 	font-family: "Arvo", serif !important;
 	margin: 10px 0 10px;
 	font-weight: 600;
@@ -1132,7 +1132,7 @@ footer .col-xs-4 {
 	vertical-align: middle;
 }
 
-.searchContainer p{
+.searchContainer p, .searchContainer .p{
 	min-height: 39px;
 	margin-bottom: 15px;
 }
