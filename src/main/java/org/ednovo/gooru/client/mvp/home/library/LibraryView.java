@@ -455,6 +455,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 *
 	 */
 	public void loadContributorsPage(String callBack, String placeToken) {
+		System.out.println("place token : "+placeToken);
+		System.out.println("placeToken : "+placeToken);
 		if (placeToken.equalsIgnoreCase(PlaceTokens.LIFEBOARD) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.AUTODESK) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY)||
@@ -610,6 +612,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 * @throws : <Mentioned if any exceptions>
 	 */
 	public void getFeaturedCourses(final String featuredLabel, final boolean isNotHomePage) {
+		System.out.println("getfeaturedcourses:::");
 		String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
 		if (featuredLabel!=null){
 			if(standardId != null)
@@ -1024,21 +1027,16 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 *
 	 */
 	public void setCourseData(final CourseDo courseDo) {
+			
+		System.out.println("getPlaceToken : "+getPlaceToken());
+		
+		
 			if(StringUtil.isPartnerUser(AppClientFactory.getCurrentPlaceToken())){
-				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS)){
-					courseTitle.setHTML(i18n.GL2054());
-					courseTitle.setStyleName(libraryStyleUc.lpsHeader());
-					partnerLogo.setStyleName(libraryStyleUc.lpsPartnerLogo());
-					partnerLogo.setVisible(true);
-				}else{
-					partnerLogo.setVisible(false);
-					courseTitle.removeStyleName(libraryStyleUc.lpsHeader());
-					courseTitle.setHTML(courseDo.getLabel());
-					courseTitle.getElement().setAttribute("alt",courseDo.getLabel());
-					courseTitle.getElement().setAttribute("title",courseDo.getLabel());
-				}
 				educatorPhoto.setVisible(false);
 				featuredContributor.setVisible(false);
+				courseTitle.setHTML(courseDo.getLabel());
+				courseTitle.getElement().setAttribute("alt",courseDo.getLabel());
+				courseTitle.getElement().setAttribute("title",courseDo.getLabel());
 				courseImage.setUrl(courseDo.getThumbnails().getUrl());
 				featuredContributorsLink.setText(courseDo.getCreator().getPartnerName());
 				featuredContributorsLink.setTitle(courseDo.getCreator().getPartnerName());
