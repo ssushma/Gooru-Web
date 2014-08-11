@@ -711,8 +711,15 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		getUiHandlers().setShareView();
 		getUiHandlers().getTaxonomyData();
 		gooruSocialButtonsContainer.setVisible(true);
-		setUserGradeList(profileDo.getGrade());
-		setUserCourseList(profileDo.getCourses());
+		String userId=AppClientFactory.getPlaceManager().getRequestParameter("id");
+		boolean enable;
+		if(userId.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId())) {
+			enable=true;
+		}else{
+			enable=false;
+		}
+		setUserGradeList(profileDo.getGrade(), enable);
+		setUserCourseList(profileDo.getCourses(), enable);
 		setMetaDataContainerWidth("grade");
 		setMetaDataContainerWidth("course");
 		setAddGradeCourseBtnVisibility();
@@ -742,7 +749,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 	}
 
-	private void setUserCourseList(Set<ProfileCodeDo> codeList) {
+	private void setUserCourseList(Set<ProfileCodeDo> codeList, boolean enable) {
 		profileDo.setCourses(codeList);
 		userCourseList.clear();
 		int count = 0;
@@ -750,8 +757,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		for (ProfileCodeDo profileCodeDo : codeList) {
 			if(count<2) {
 				Label courseLabel = new Label(profileCodeDo.getCode().getLabel());
-				courseLabel.addClickHandler(new OnGradeEditImageClick());
 				courseLabel.setStyleName(CollectionCBundle.INSTANCE.css().userCourseName());
+				if(enable){
+					courseLabel.addClickHandler(new OnGradeEditImageClick());
+				}else{
+					courseLabel.getElement().getStyle().setCursor(Cursor.DEFAULT);
+				}
 				userCourseList.add(courseLabel);
 				count++;
 			} else {
@@ -768,7 +779,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		}
 	}
 
-	private void setUserGradeList(String grade) {
+	private void setUserGradeList(String grade, boolean enable) {
 		profileDo.setGrade(grade);
 		userGradeList.clear();
 		if(grade!=null) {
@@ -820,7 +831,11 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 					label = concatenateGradeTxt(label);
 					Label gradeLabel = new Label(label);
 					gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().userNumber());
-					gradeLabel.addClickHandler(new OnGradeEditImageClick());
+					if(enable){
+						gradeLabel.addClickHandler(new OnGradeEditImageClick());
+					}else{
+						gradeLabel.getElement().getStyle().setCursor(Cursor.DEFAULT);
+					}
 					userGradeList.add(gradeLabel);
 				}
 				if(isHigherEducation == true) {
@@ -1185,8 +1200,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(profileDo.getUser().getGooruUId(), USER_META_ACTIVE_FLAG, new SimpleAsyncCallback<ProfileDo>(){
 				@Override
 				public void onSuccess(ProfileDo result) {
-					setUserGradeList(result.getGrade());
-					setUserCourseList(result.getCourses());
+					setUserGradeList(result.getGrade(),true);
+					setUserCourseList(result.getCourses(),true);
 					setMetaDataContainerWidth("grade");
 					setMetaDataContainerWidth("course");
 					setAddGradeCourseBtnVisibility();
