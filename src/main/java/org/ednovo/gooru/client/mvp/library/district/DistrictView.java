@@ -271,6 +271,17 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	public void setAssets(String placeToken) {
 		courseTabs.getElement().setId("courseTabs");
 		container.getElement().setId("container");
+		if (placeToken.equalsIgnoreCase(PlaceTokens.LIFEBOARD) ||
+				placeToken.equalsIgnoreCase(PlaceTokens.AUTODESK) ||
+				placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY) ||
+				placeToken.equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY) ||
+				placeToken.equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY) ||
+				placeToken.equalsIgnoreCase(PlaceTokens.SUSD) ||
+				placeToken.equalsIgnoreCase(PlaceTokens.VALVERDE)){
+			container.getElement().getStyle().setWidth(1000, Unit.PX);
+		}else{
+			container.getElement().getStyle().clearWidth();
+		}
 		featuredCourseTabs.getElement().setId("featuredCourseTabs");
 		leftNav.getElement().setId("leftNav");
 		contentScroll.getElement().setId("contentScroll");

@@ -88,7 +88,7 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 				getIntoPartnerLibrarypage();
 				getPartnerWorkspaceFolders();
 			} else {
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.ERROR);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 			}
 		}
 	}
@@ -106,7 +106,8 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	}
 	
 	public String getViewToken() {
-		return PlaceTokens.DISCOVER;
+		
+		return AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 	}
 
 }
