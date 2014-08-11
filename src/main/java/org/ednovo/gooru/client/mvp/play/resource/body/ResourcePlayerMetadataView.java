@@ -1848,6 +1848,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 			
 		}
-		
+	}
+	
+	public void clearMarginTop(){
+		collectionContainer.getElement().getStyle().setMarginTop(0, Unit.PX);
+	}
+	public void setMarginTop(){
+		collectionContainer.getElement().getStyle().setMarginTop(51, Unit.PX);
 	}
 }
