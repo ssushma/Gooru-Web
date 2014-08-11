@@ -691,7 +691,7 @@ public class RatingUserWidgetView extends Composite {
 			public void onSuccess(Void result) {
 				reviewContainer.clear();
 				reviewContainer.addStyleName(style.deletePanel());
-				AppClientFactory.fireEvent(new DeletePlayerStarReviewEvent());
+//				AppClientFactory.fireEvent(new DeletePlayerStarReviewEvent());
 				final HTMLPanel deletePanel = new HTMLPanel("");
 				Label deleteMsg = new Label();
 				deleteMsg.setText(i18n.GL1853());
