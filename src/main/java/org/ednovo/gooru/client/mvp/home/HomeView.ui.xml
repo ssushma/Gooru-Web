@@ -26,10 +26,9 @@
 								<div class="animation text-center">
 									<img src="images/landing-page/find.png" />
 								</div>
-								<h2 class="text-center">Find</h2>
-								<div class="clearfix"></div>
-								<p class="">Browse thousands of K-12 collections made by teachers
-									or search over 16M resources</p>
+								<g:Label styleName="h2 text-center" text="{i18n.GL0524}"/>
+								<div class="clearfix"/>
+								<g:Label styleName="p" text="{i18n.GL2122}"/>
 
 								<!-- <tbp:TextBoxWithPlaceholder
 									styleName="form-control" placeholder="{i18n.GL2073}" ui:field="txtSearch"></tbp:TextBoxWithPlaceholder> -->
@@ -44,13 +43,11 @@
 								<div class="animation text-center">
 									<img src="images/landing-page/remix.png" />
 								</div>
-								<h2 class="text-center">Remix</h2>
+								<g:Label styleName="h2 text-center" text="{i18n.GL2037}"></g:Label>
 								<div class="clearfix"></div>
-								<p class="">Remix collections and customize content to meet
-									your students’ needs.</p>
-
+								<g:Label styleName="p" text="{i18n.GL2123}"/>
 								<g:Button styleName="primary {res.css.btnBlock}"
-									ui:field="btnMoreOnCollections">Start creating collections</g:Button>
+									ui:field="btnMoreOnCollections" text="{i18n.GL1813}"></g:Button>
 
 							</div>
 						</div>
@@ -59,13 +56,11 @@
 								<div class="animation text-center">
 									<img src="images/landing-page/share.png" />
 								</div>
-								<h2 class="text-center">Share</h2>
+								<g:Label styleName="h2 text-center" text="{i18n.GL0526}"></g:Label>
 								<div class="clearfix"></div>
-								<p class="">Share collections with students via My Classes. Login
-									is not required to access.
-								</p>
+								<g:Label styleName="p" text="{i18n.GL2124}"/>
 								<g:Button styleName="primary {res.css.btnBlock}"
-									ui:field="btnMoreOnClasses">Start creating classes</g:Button>
+									ui:field="btnMoreOnClasses" text="{i18n.GL2125}"></g:Button>
 
 							</div>
 						</div>
@@ -74,14 +69,11 @@
 								<div class="animation text-center">
 									<img src="images/landing-page/monitor.png" />
 								</div>
-								<h2 class="text-center">Monitor</h2>
-
+								<g:Label styleName="h2 text-center" text="{i18n.GL2126}"/>
 								<div class="clearfix"></div>
+								<g:Label styleName="p" text="{i18n.GL2127}"/>
 
-								<p class="">Measure your students' engagement and progress to
-									intervene in real-time.</p>
-
-								<g:Button styleName="primary {res.css.btnBlock}" ui:field="viewSampleResportsBtn">View sample reports</g:Button>
+								<g:Button styleName="primary {res.css.btnBlock}" ui:field="viewSampleResportsBtn" text="{i18n.GL2128}"></g:Button>
 
 							</div>
 						</div>
@@ -89,14 +81,12 @@
 				</div>
 			</section>
 			<div class="{res.css.learnMoreContainer}">
-				<g:Anchor styleName="{res.css.secondary}" ui:field="achLearn">Get
-					started with Gooru </g:Anchor>
+				<g:Anchor styleName="{res.css.secondary}" ui:field="achLearn" text="{i18n.GL2129}"></g:Anchor>
 			</div>
 			<div class="clearfix"></div>
 			<div class="containerMain communityblock">
-				<h2>Community Curated Collections</h2>
-				<h4>Browse 70,000+ collections of free web resources, created by our
-					community of teachers, districts, and partners.</h4>
+			    <g:Label styleName="h2" text="{i18n.GL2130}"/>
+			    <g:Label styleName="h4" text="{i18n.GL2131}"/>
 				<p>
 					<g:HTMLPanel ui:field="contributorsContainer" />
 				</p>
@@ -183,9 +173,6 @@
 										<p>147</p>
 									</div>
 								</div>
-
-
-
 							</div>
 							<div class="col-xs-3">
 							    <div class="row">
@@ -393,10 +380,9 @@
 										<p> 94 </p>
 									</div>
 								</div>
-
 							</div>
 						</div>
-						<div class="blueBand">Middle School</div>
+						<g:Label styleName="blueBand" text="{i18n.GL0167}" />
 						<div class="dataTableResult">
 							<div class="col-xs-3">
 								<div class="row">
@@ -432,10 +418,6 @@
 										<p> 243</p>
 									</div>
 								</div>
-
-
-
-
 							</div>
 							<div class="col-xs-3">
 								<div class="row">
@@ -471,9 +453,6 @@
 										<p> 225</p>
 									</div>
 								</div>
-
-
-
 							</div>
 							<div class="col-xs-3">
 								<div class="row">
@@ -509,11 +488,6 @@
 										<p>338</p>
 									</div>
 								</div>
-
-
-
-
-
 							</div>
 							<div class="col-xs-3">
 								<div class="row">
@@ -549,23 +523,9 @@
 										<p>139</p>
 									</div>
 								</div>
-
-
-
 							</div>
 						</div>
-
-
-
-
-
-
-						<div class="blueBand">High School</div>
-
-
-
-
-
+						<g:Label styleName="blueBand" text="{i18n.GL0168}" />
 						<div class="dataTableResult">
 							<div class="col-xs-3">
 								<div class="row">
@@ -645,9 +605,6 @@
 										<p></p>
 									</div>
 								</div>
-
-
-
 							</div>
 							<div class="col-xs-3">
 								<div class="row">
@@ -810,10 +767,6 @@
 										<p></p>
 									</div>
 								</div>
-
-
-
-
 							</div>
 							<div class="col-xs-3">
 								<div class="row">
@@ -893,9 +846,6 @@
 										<p></p>
 									</div>
 								</div>
-
-
-
 							</div>
 						</div>
 					</div>
@@ -915,38 +865,11 @@
 							</g:HTMLPanel>
 						</div>
 						<div class="rightBlock1">
-							<div class="blockHeader">
-								District Libraries
-							</div>
-							<g:HTMLPanel styleName="blockContent districtLibraryContainer" ui:field="panelDistrictLibraries">
-							    <!-- <p>
-									<a href="#CoreLibrary">Core Library</a>
-								</p>
-								<p>
-									<a href="#lpslibrary">Leadership Public Schools</a>
-								</p>
-
-								<p>
-									<a href="#rusd">Riverside USD</a>
-								</p>
-
-								<p>
-									<a href="#sausd">Santa Ana USD</a>
-								</p>
-
-								<p>
-									<a href="#susd">Stockton USD</a>
-								</p>
-
-								<p>
-									<a href="#valverde">Val Verde USD</a>
-								</p> -->
-							</g:HTMLPanel>
+							<g:Label styleName="blockHeader" text="{i18n.GL0515}"/>
+							<g:HTMLPanel styleName="blockContent districtLibraryContainer" ui:field="panelDistrictLibraries"/>
 						</div>
 						<div class="rightBlock1">
-							<div class="blockHeader">
-								Partner Libraries
-							</div>
+						    <g:Label styleName="blockHeader" text="{i18n.GL1550}"/>
 							<div class="blockContent last">
 								<p>
 									<a href="#Autodesk">Autodesk</a>
@@ -988,120 +911,83 @@
 			</section>
 			<section class="getStart" id="getStarted">
 				<div class="containerMain">
-					<h2>Get Started</h2>
+					<g:Label styleName="h2" text="{i18n.GL2132}"></g:Label>
 					<div class="col-xs-7">
 						<div class="getInner">
 						    <div class="getStartedIMG">
 						      	<img src="images/landing-page/get-banner.png" class="img-responsive" />
-								<div class="getCaption">Learn how to use Gooru</div>
+								<g:Label styleName="getCaption" text="{i18n.GL2133}"></g:Label>
 						    </div>
 							<div class="getContentContainer">
 								<h4>
-									<a
-										href="http://support.goorulearning.org/hc/en-us/articles/200600838"
-										target="_blank">Quickstart guide</a>
+								    <g:Anchor href="http://support.goorulearning.org/hc/en-us/articles/200600838" target="_blank" text="{i18n.GL2134}"></g:Anchor>
 								</h4>
-								<p>Use this guide for a quick overview of Gooru’s major
-									features.
-								</p>
-
+								<g:Label styleName="p" text="{i18n.GL2136}"/>
 								<h4>
-									<a
-										href="http://support.goorulearning.org/hc/en-us/articles/201853348"
-										target="_blank">Introducing Gooru to Your Students</a>
+								    <g:Anchor href="http://support.goorulearning.org/hc/en-us/articles/201853348" target="_blank" text="{i18n.GL2135}"></g:Anchor>
 								</h4>
-								<p>Here are some key features of Gooru to point out to your
-									students as you introduce them to Gooru.
-								</p>
-
+								<g:Label styleName="p" text="{i18n.GL2137}"/>
 								<h4>
-									<a
-										href="http://www.goorulearning.org/#profilepage&amp;pageSize=5&amp;id=9aeb031a-4c43-4d4b-9b30-84261e39fdb2&amp;user=GooruTutorials&amp;pageNum=0&amp;pos=1"
-										target="_bank">Gooru Tutorials</a>
+								    <g:Anchor href="http://www.goorulearning.org/#profilepage&amp;pageSize=5&amp;id=9aeb031a-4c43-4d4b-9b30-84261e39fdb2&amp;user=GooruTutorials&amp;pageNum=0&amp;pos=1" target="_blank" text="{i18n.GL2138}"></g:Anchor>
 								</h4>
-								<p>Check out these Gooru collections to get familiar with the
-									major features of Gooru.
-								</p>
+								<g:Label styleName="p" text="{i18n.GL2139}"/>
 							</div>
 						</div>
 					</div>
 					<div class="col-xs-5">
 						<div class="getInnerRight">
-							<h3 class="first">Live Support
-								and Events</h3>
+							<g:Label styleName="h3 first" text="{i18n.GL2140}"/>
 							<img src="images/landing-page/monitor-ico.png" />
 
 							<div class="clearfix"></div>
 							<h4>
-								<a
-									href="http://www.eventbrite.com/e/gooru-office-hours-tickets-12378212567?aff=eorg"
-									target="_blank">Gooru Office Hours</a>
+							     <g:Anchor href="http://www.eventbrite.com/e/gooru-office-hours-tickets-12378212567?aff=eorg" target="_blank" text="{i18n.GL2141}"></g:Anchor>
 							</h4>
-							<p>Join us every Wednesday for a short webinar that starts off
-								with a live demo. Bring your questions!</p>
-
+							<g:Label styleName="p" text="{i18n.GL2142}"/>
 							<p>
-								<a href="http://about.goorulearning.org/community/events"
-									target="_blank">Check out our live and online events!</a>
+								<g:Anchor href="http://about.goorulearning.org/community/events"
+									text="{i18n.GL2143}" target="_blank"></g:Anchor>
 							</p>
 						</div>
 						<div class="getInnerRight">
-							<h3>Stories from the Classroom</h3>
+						    <g:Label styleName="h3" text="{i18n.GL2144}"/>
 							<h4>
-								<a href="http://about.goorulearning.org/community/stories"
-									target="_blank">Teacher stories</a>
+								<g:Anchor href="http://about.goorulearning.org/community/stories"
+									target="_blank" text="{i18n.GL2145}"/>
 							</h4>
-							<p>Learn by example! The stories of teachers who say Gooru has
-								made a difference in their classroom.</p>
+							<g:Label styleName="p" text="{i18n.GL2146}"/>
 						</div>
 					</div>
 				</div>
 			</section>
 			<section class="mission">
 				<div class="containerMain">
-					<h2>Get Involved</h2>
+				    <g:Label styleName="h2" text="{i18n.GL2147}"/>
 					<div class="col-xs-4">
 						<div class="margin">
-							<h2>Districts</h2>
-							<p class="partext">Collaborate with Gooru to unleash personalized
-								learning
-								at your district. Create a digital library to share
-								district-vetted curriculum and make the web work for your
-								teachers and students.
-							</p>
+						    <g:Label styleName="h2" text="{i18n.GL2148}"/>
+						    <g:Label styleName="p partext" text="{i18n.GL2149}"/>
 							<p>
-								<a class="btn btn-primary" href="http://partners.goorulearning.org/school/partner-with-us" target="_blank">Gooru School Partners</a>
+								<g:Anchor styleName="btn btn-primary" href="http://partners.goorulearning.org/school/partner-with-us" target="_blank" text="{i18n.GL2150}"/>
 							</p>
 							<div class="clearfix"></div>
 						</div>
 					</div>
 					<div class="col-xs-4">
 						<div class="margin">
-							<h2>Partners</h2>
-							<p class="partext">We’re joined by our like-minded community of
-								educators,
-								developers, and partners who create and contribute
-								their own
-								solutions. Partner with us to improve free and open
-								education for
-								all.
-							</p>
+						    <g:Label styleName="h2" text="{i18n.Gl2151}"/>
+							<g:Label styleName="p partext" text="{i18n.GL2152}"/>
 							<p>
-								<a class="btn btn-primary" href="http://partners.goorulearning.org/"  target="_blank">Gooru Partners</a>
+								<g:Anchor styleName="btn btn-primary" href="http://partners.goorulearning.org/"  target="_blank" text="{i18n.GL2153}" />
 							</p>
 						</div>
 					</div>
 					<div class="col-xs-4">
 						<div class="margin">
-							<h2>Developers</h2>
-							<p class="partext">Gooru makes it easy for developers to provide teachers
-								and students with millions of topic-relevant and
-								standards-aligned resources, collections, and quizzes. Join us
-								in
-								our mission and build with Gooru.
-							</p>
+							<g:Label styleName="h2" text="{i18n.GL2154}"/>
+							<g:Label styleName="p partext" text="{i18n.GL2155}"/>
 							<p>
-								<a class="btn btn-primary" href="http://developers.goorulearning.org/" target="_blank">Gooru Developers</a>
+								<g:Anchor styleName="btn btn-primary" href="http://developers.goorulearning.org/" target="_blank" text="{i18n.GL2156}" />
 							</p>
 						</div>
 					</div>
@@ -1114,19 +1000,14 @@
 						<div class="col-xs-12">
 							<section>
 								<div class="col-xs-6">
-									<h2>Support our Mission</h2>
-									<p>Gooru’s mission is to honor the human right to education. We
-										are dedicated to engaging a community of teachers, developers,
-										and supporters to unleash personalized learning with
-										technology
-										to educate all the students of the world.</p>
-									<p>Show your support to honor the human right to education by
-										adding a Gooru badge to your site!</p>
+									<g:Label text="{i18n.GL2157}" styleName="h2"/>
+									<g:Label text="{i18n.GL2158}" styleName="p"/>
+									<g:Label text="{i18n.GL2159}" styleName="p"/>
 								</div>
 								<div class="col-xs-6 goorubadge">
 									<div class="col-xs-6">
 										<div class="badgepadd">
-											<p>Use the link below to embed this badge on your site</p>
+										    <g:Label text="{i18n.GL2160}" styleName="p"/>
 											<p>
 												<g:TextBox styleName="form-control" ui:field="txtEmbedLink" />
 											</p>
@@ -1149,38 +1030,34 @@
 				<div class="containerMain">
 					<div class="row">
 						<div class="col-xs-2">
-							<h4>Company</h4>
+							<g:Label text="{i18n.GL2161}" styleName="h4"/>
 							<ul class="list-unstyled">
 								<li>
-									<a href="http://about.goorulearning.org" target="_blank">About Gooru</a>
+									<g:Anchor href="http://about.goorulearning.org" target="_blank" text="{i18n.GL1024}"/>
 								</li>
 								<li>
-									<a href="http://about.goorulearning.org/about/careers/"
-										target="_blank">Careers</a>
+									<g:Anchor href="http://about.goorulearning.org/about/careers/" target="_blank" text="{i18n.GL1244}"/>
 								</li>
 								<li>
-									<a href="http://support.goorulearning.org/hc/en-us" target="_blank">Support
-										Center</a>
+									<g:Anchor href="http://support.goorulearning.org/hc/en-us" target="_blank" text="{i18n.GL1307}"/>
 								</li>
 								<li>
-									<a href="http://about.goorulearning.org/contact/" target="_blank">Contact
-										Us</a>
+									<g:Anchor href="http://about.goorulearning.org/contact/" target="_blank" text="{i18n.GL1245}"/>
 								</li>
 							</ul>
 						</div>
 						<div class="col-xs-2">
-							<h4>Products</h4>
+							<g:Label text="{i18n.GL2162}" styleName="h4"/>
 							<ul class="list-unstyled">
 								<li>
-									<a href="http://about.goorulearning.org/product/oursolution" target="_blank">Our Solution</a>
+									<g:Anchor href="http://about.goorulearning.org/product/oursolution" target="_blank" text="{i18n.GL2163}"/>
 								</li>
 								<li>
-									<a href="http://about.goorulearning.org/product/mobile"
-										target="_blank">Mobile App</a>
+									<g:Anchor href="http://about.goorulearning.org/product/mobile"
+										target="_blank" text="{i18n.GL2164}"/>
 								</li>
 								<li>
-									<a href="http://about.goorulearning.org/product/core" target="_blank">Core
-										Platform</a>
+									<g:Anchor href="http://about.goorulearning.org/product/core" target="_blank" text="{i18n.GL2165}"/>
 								</li>
 
 							</ul>
@@ -1219,37 +1096,37 @@
 							</div>
 						</div>
 						<div class="col-xs-2">
-							<h4>Community</h4>
+							<g:Label styleName="h4" text="{i18n.GL1243}" />
 							<ul class="list-unstyled">
 								<li>
-									<a href="http://partners.goorulearning.org/school/partner-with-us" target="_blank">Districts</a>
+									<g:Anchor href="http://partners.goorulearning.org/school/partner-with-us" target="_blank" text="{i18n.GL2148}"/>
 								</li>
 								<li>
-									<a href="http://partners.goorulearning.org/" target="_blank">Partners</a>
+									<g:Anchor href="http://partners.goorulearning.org/" target="_blank" text="{i18n.Gl2151}"/>
 								</li>
 								<li>
-									<a href="http://developers.goorulearning.org/" target="_blank">Developers</a>
+									<g:Anchor href="http://developers.goorulearning.org/" target="_blank" text="{i18n.GL2154}"/>
 								</li>
 								<li>
-									<a href="http://about.goorulearning.org/community/events" target="_blank">Events</a>
+									<g:Anchor href="http://about.goorulearning.org/community/events" target="_blank" text="{i18n.GL2166}"/>
 								</li>
 
 							</ul>
 						</div>
 						<div class="col-xs-2 footerLastItem">
-							<h4>Legal</h4>
+							<g:Label styleName="h4" text="{i18n.GL2168}" />
 							<ul class="list-unstyled">
 								<li>
-									<g:Anchor ui:field="achTerms">Terms</g:Anchor>
+									<g:Anchor ui:field="achTerms" text="{i18n.GL0872}"/>
 								</li>
 								<li>
-									<g:Anchor ui:field="achPrivacy">Privacy</g:Anchor>
+									<g:Anchor ui:field="achPrivacy" text="{i18n.GL0873}"/>
 								</li>
 								<!-- <li>
-									<g:Anchor ui:field="achDataPolicy">Data Policy</g:Anchor>
+									<g:Anchor ui:field="achDataPolicy" text="{i18n.GL2167}"/>
 								</li> -->
 								<li>
-									<g:Anchor ui:field="achCopyright">Copyright</g:Anchor>
+									<g:Anchor ui:field="achCopyright" text="{i18n.GL0875}"/>
 								</li>
 							</ul>
 						</div>
@@ -1263,7 +1140,6 @@
 			<!-- Include all compiled plugins (below), or include individual files 
 				as needed -->
 			<script src="js/bootstrap.min.js"></script>
-
 		</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>
