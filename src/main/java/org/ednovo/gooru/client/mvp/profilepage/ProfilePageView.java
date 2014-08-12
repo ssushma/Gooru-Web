@@ -753,6 +753,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		profileDo.setCourses(codeList);
 		userCourseList.clear();
 		int count = 0;
+		
 		List<String> moreCourseLbls = new ArrayList<String>();
 		for (ProfileCodeDo profileCodeDo : codeList) {
 			if(count<2) {
@@ -782,6 +783,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	private void setUserGradeList(String grade, boolean enable) {
 		profileDo.setGrade(grade);
 		userGradeList.clear();
+		setGradeList(grade);
 		if(grade!=null) {
 			userGradeList.setVisible(true);
 			moreGradeCourseLbl.setVisible(true);

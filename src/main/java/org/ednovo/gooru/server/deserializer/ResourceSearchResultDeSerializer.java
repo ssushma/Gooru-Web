@@ -168,9 +168,11 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 				for (int i = 0; i < standardCodes.length(); i++) {
 					Map<String, String> standard = new HashMap<String, String>();
 					standard.put(STANDARD_CODE, (String) standardCodes.get(i));
+					try{
 					if (standardDescriptions.get(i) != null) {
 						standard.put(STANDARD_DESCRIPTION, (String) standardDescriptions.get(i));
 					}
+					}catch(Exception ex){}
 					standards.add(standard);
 				}
 				resourceSearchResultDo.setStandards(standards);
