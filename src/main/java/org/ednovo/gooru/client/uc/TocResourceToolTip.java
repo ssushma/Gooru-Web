@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -260,7 +261,8 @@ public class ResourceRequest implements ClickHandler{
 		//resourceTitle.add(getHTML(itemIndex+""));
 		//resourceTitle.getElement().setAttribute("alt", itemIndex+". "+title);
 		//resourceTitle.getElement().setAttribute("title", itemIndex+". "+title);
-		resourceHoverTitle.setHTML(title.toString());
+		String titleLbl	=InfoUtil.removeQuestionTagsOnBoldClick(title.toString());
+		resourceHoverTitle.setHTML(titleLbl);
 		resourceHoverTitle.getElement().setAttribute("alt", title.toString());
 		resourceHoverTitle.getElement().setAttribute("title", title.toString());
 	}
