@@ -397,7 +397,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			if(reviewCount==null){
 				reviewCount = 0;
 			}
-			
 			ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL2024());
 			if(reviewCount>0)
 			{
@@ -2223,14 +2222,14 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		@Override
 		public void deleteStarRatings() {
 			String zeroCount = "0";
-			if(ratingWidgetView!=null){
+			/*if(ratingWidgetView!=null){
 				if(Integer.parseInt(ratingWidgetView.getRatingCountLabel().getText())==1){
 					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
 					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: none;text-decoration: none !important;color: grey");
 					ratingWidgetView.setAvgStarRating(0);
 					ratingWidgetView.getRatingCountLabel().setText(zeroCount); 
 				}
-			}
+			}*/
 			
 		}
 		

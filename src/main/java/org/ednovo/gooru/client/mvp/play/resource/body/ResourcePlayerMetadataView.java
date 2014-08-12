@@ -56,6 +56,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
@@ -391,7 +392,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			this.collectionItemDo = collectionItemDo;
 			if(collectionItemDo.getResource().getTitle()!=null){
 				int sequenceNumber=collectionItemDo.getItemSequence();
-				resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
+				String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(collectionItemDo.getResource().getTitle());
+			//	resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
+				resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(titlelbl1));
 				resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 				resourceTitleLbl.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			}else{
@@ -1621,8 +1624,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
 			thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
 			thankYouResourceStarRatings.getElement().getStyle().setPadding(0, Unit.PX);
-			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-				thankYouResourceStarRatings.setPopupPosition(451,Window.getScrollTop()+120);
+			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){  
+				thankYouResourceStarRatings.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-150),three_star.getElement().getAbsoluteTop()+40);
 			}else{
 				thankYouResourceStarRatings.setPopupPosition(800,Window.getScrollTop()+153);
 			}
@@ -1636,7 +1639,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			thankYouResourceStarRatingsPoor.getElement().getStyle().setZIndex(999999);
 			thankYouResourceStarRatingsPoor.getElement().getStyle().setPadding(0, Unit.PX);
 			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-				thankYouResourceStarRatingsPoor.setPopupPosition(451,Window.getScrollTop()+120);
+				thankYouResourceStarRatingsPoor.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-150),three_star.getElement().getAbsoluteTop()+40);
 			}else{
 				thankYouResourceStarRatingsPoor.setPopupPosition(800,Window.getScrollTop()+153);
 			}

@@ -278,7 +278,14 @@ public class InfoUtil {
 
 	}
 	
-	
+	public static String removeQuestionTagsOnBoldClick(String resourceTitle){
+		String titlelbl1 ="";
+		String titlelbl=resourceTitle.replaceAll("<strong>\\?([^<]*)</strong>","<strong>"+"$1"+"</strong>");
+		String str1=titlelbl.replaceAll("<span id=\"_mce_caret\" data-mce-bogus=\"1\" style=\"\">?","<span>").replaceAll("<span id=\"_mce_caret\" data-mce-bogus=\"true\" style=\"\">?","<span>");
+		String str=str1.replaceAll("<span id=\"_mce_caret\" data-mce-bogus=\"1\">?","<span>").replaceAll("<span id=\"_mce_caret\" data-mce-bogus=\"true\">?","<span>");
+		titlelbl1=str.replaceAll("<span>\\?","<span>").replaceAll("<strong>\\?","<strong>");
+		return titlelbl1;
+	}
 
 
 }

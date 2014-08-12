@@ -34,6 +34,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
+import org.ednovo.gooru.shared.util.InfoUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -108,7 +109,9 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	
 	private void renderQuestionView(){
 		hintsLength=0;
-		openEndedQuestionText.setHTML(removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+		String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(collectionItemDo.getResource().getQuestionText());
+		//openEndedQuestionText.setHTML(removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+		openEndedQuestionText.setHTML(removeHtmlTags(titlelbl1));
 		openEndedQuestionText.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
 		openEndedQuestionText.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
 		if(collectionItemDo.getResource().getHints().size()>0){
