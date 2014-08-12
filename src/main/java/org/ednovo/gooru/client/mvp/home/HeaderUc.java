@@ -108,6 +108,7 @@ import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Search Team
@@ -735,9 +736,9 @@ public class HeaderUc extends Composite implements
 
 		}
 		if (dotsLink.equals(noneMenu)) {
-			System.out.println("no menu");
+			
 		} else {
-			System.out.println("no menu else....");
+			
 			dotsLink.getParent().setStyleName(
 					GooruCBundle.INSTANCE.css().menuActive());
 		}
@@ -794,7 +795,7 @@ public class HeaderUc extends Composite implements
 	@UiHandler("registerLinkLbl")
 	public void onRegisterPopupClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Arrive_Register_popup();
-
+		
 		DataLogEvents.signUp(GwtUUIDGenerator.uuid(), "home",
 				System.currentTimeMillis(), System.currentTimeMillis(), "");
 
@@ -818,8 +819,9 @@ public class HeaderUc extends Composite implements
 		}
 		map.put("callback", "signup");
 		map.put("type", "1");
-		AppClientFactory.getPlaceManager().revealPlace(
-				AppClientFactory.getCurrentPlaceToken(), map);
+		//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), map);
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), map);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
 
 	}
 

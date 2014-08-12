@@ -303,7 +303,10 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 				}
 				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 			}else{
-				AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), map);
+				//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), map);
+				
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), map);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
 				Window.enableScrolling(true);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 			}

@@ -185,10 +185,12 @@ public class ProfileTopicListView extends Composite{
 		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
 		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
 		
+		noCollectionLbl.setVisible(false);
+		
 		noCollectionLbl.setText(i18n.GL1170());
 		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());
 		noCollectionLbl.getElement().setAttribute("title",i18n.GL1170());
-		
+	
 		setTopicLabel(profileFolderDo.getTitle());
 		collectionInfo.setVisible(false);
 		if(profileFolderDo.getCollections()!=null) {
@@ -273,6 +275,7 @@ public class ProfileTopicListView extends Composite{
 			collectionInfo.setVisible(false);
 			resourcesInside.setVisible(false);
 			noCollectionLbl.setVisible(true);
+			
 		}
 		
 		//searchLink.getElement().getStyle().setDisplay(Display.NONE);
@@ -632,6 +635,7 @@ public class ProfileTopicListView extends Composite{
 				} else {
 					collectionInfo.setVisible(false);
 					resourcesInside.setVisible(false);
+					
 					noCollectionLbl.setVisible(true);
 				}
 			}
@@ -651,6 +655,7 @@ public class ProfileTopicListView extends Composite{
 	private void setDefaultCollectionLbl() {
 		collectionInfo.setVisible(false);
 		resourcesInside.setVisible(false);
+		
 		noCollectionLbl.setVisible(true);
 	}
 
@@ -1076,7 +1081,7 @@ public class ProfileTopicListView extends Composite{
 	
 	private void showPopupAfterGmailSignin() {
 		// TODO Auto-generated method stub
-		System.out.println("profilepage");
+		
 		String collectionId = getProfileLibraryDo().getGooruOid();
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
