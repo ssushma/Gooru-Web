@@ -354,7 +354,6 @@
 	-moz-box-shadow: 0 0 11px rgba(221, 221, 221, 0.15);
 	-webkit-box-shadow: 0 0 11px rgba(221, 221, 221, 0.15);
 	box-shadow: 0 0 11px rgba(221, 221, 221, 0.15);
-	font-weight:normal;
 }
 .libraryConceptTitle {
 	padding:0px 25px;
