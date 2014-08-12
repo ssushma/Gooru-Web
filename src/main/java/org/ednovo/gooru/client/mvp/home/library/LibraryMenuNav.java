@@ -242,7 +242,7 @@ public class LibraryMenuNav extends Composite{
 		sciencePanel.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				if(!isScienceHovered) {
+				if(!isScienceHovered) { 
 					isScienceHovered = true;
 					String codeId = getSubjectIdBySubjectName(subjectIdList, SCIENCE);
 					getTaxonomyData(SCIENCE,codeId,null);
@@ -367,7 +367,6 @@ public class LibraryMenuNav extends Composite{
 					standardPanel.addStyleName(libraryStyleUc.tabsLi());
 					standardPanel.removeStyleName(libraryStyleUc.tabsLiInactive());
 					if(standardData.getWidgetCount()>0) {
-						System.out.println("taxonomycode::"+taxonomyCode);
 		 				if(taxonomyCode.contains("CCSS")&&(taxonomyCode.contains("TEXAS")||taxonomyCode.contains("TEKS"))) {
 		 					/** 1st parameter refers to "CCSS" and 2nd parameter refers to TEKS**/
 		 					setStandardDataWidgetVisibility(true,true);
@@ -463,7 +462,6 @@ public class LibraryMenuNav extends Composite{
 	 */
 	public void getTaxonomyData(final String subjectName, final String subjectCode, final String courseId) {
 		
-	
 			if (subjectCode!=null){
 				if(subjectCode.equalsIgnoreCase(STANDARDS)){
 
