@@ -98,6 +98,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
+import org.ednovo.gooru.shared.util.InfoUtil;
 
 
 /**
@@ -814,7 +815,10 @@ public class ShelfCollectionResourceChildView extends
 		String tumbnailUrl;
 		//resourceTitleLbl.setText(StringUtil.truncateText(collectionItem.getResource().getTitle(), 70));
 		String resourceTitle = collectionItem.getResource().getTitle()==null?"":collectionItem.getResource().getTitle();
-		resourceTitleLbl.setHTML(resourceTitle.replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", ""));
+		String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(resourceTitle);
+		resourceTitleLbl.setHTML(removeHtmlTags(titlelbl1));
+		//resourceTitleLbl.setHTML(resourceTitle.replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", ""));
+		
 		resourceTitleLbl.getElement().setAttribute("alt", resourceTitle.replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", ""));
 		resourceTitleLbl.getElement().setAttribute("title", resourceTitle.replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", ""));
 		resourceTitleLbl.getElement().getStyle().setWidth(63, Unit.PCT);
@@ -2186,6 +2190,10 @@ public class ShelfCollectionResourceChildView extends
 	public void setFolderItems(TreeItem item, FolderListDo folderListDo) {
 		copyConfirmPopupVc.setFolderItems(item,folderListDo);
 	}
-	
+	private String removeHtmlTags(String html){
+		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
+        html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("<p class=\"p1\">", "");
+        return html;
+	}
 	
 }

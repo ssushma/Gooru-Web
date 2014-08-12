@@ -56,6 +56,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
@@ -391,7 +392,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			this.collectionItemDo = collectionItemDo;
 			if(collectionItemDo.getResource().getTitle()!=null){
 				int sequenceNumber=collectionItemDo.getItemSequence();
-				resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
+				String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(collectionItemDo.getResource().getTitle());
+			//	resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
+				resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(titlelbl1));
 				resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 				resourceTitleLbl.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			}else{
