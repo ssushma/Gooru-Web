@@ -398,7 +398,10 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		if (childUserName!=null){
 			params.put("userName", childUserName);
 		}
-		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
+		//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
+	
 	}
 
 	private void openCreateUser(){
