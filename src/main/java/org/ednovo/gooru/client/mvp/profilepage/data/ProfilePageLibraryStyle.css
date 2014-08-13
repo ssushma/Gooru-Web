@@ -263,6 +263,9 @@
 
 .open {
     background-image: url('../images/folders/panel/folder-icon-open.png') !important;
+    background-repeat: no-repeat;
+    background-position: 14px 10px;
+    
 }
 
 .collection {

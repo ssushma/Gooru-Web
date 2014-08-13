@@ -120,8 +120,13 @@ public abstract class OpendEndedQuestionView extends Composite{
 		setOeQuestionAnswerText(answerText);
 		//saveOeAnswerData();
 		 if(answerText!=null){
-			 enableSubmitButton();
+			 if(answerText.trim().length()==0){
+				 disableSubmitButton();
+			 }else{
+				 enableSubmitButton();
+			 }
 			 if(answerText.trim().length()>=1000){
+				 enableSubmitButton();
 				 errorMessageText.setText(i18n.GL1458()+i18n.GL_SPL_FULLSTOP());
 				 errorMessageText.getElement().setAttribute("alt",i18n.GL1458()+i18n.GL_SPL_FULLSTOP());
 				 errorMessageText.getElement().setAttribute("title",i18n.GL1458()+i18n.GL_SPL_FULLSTOP());
@@ -214,6 +219,11 @@ public abstract class OpendEndedQuestionView extends Composite{
 		isCheckButtonEnabled=true;
 		submitButton.removeStyleName(oeStyle.hintsInActiveButton());
 		submitButton.addStyleName(oeStyle.openEndedQuestionSubmitButton());
+	}
+	private void disableSubmitButton(){
+		isCheckButtonEnabled=false;
+		submitButton.removeStyleName(oeStyle.openEndedQuestionSubmitButton());
+		submitButton.addStyleName(oeStyle.hintsInActiveButton());
 	}
 	public abstract void createSesstionItemAttemptOe(String answerId,String answerText);
 	public abstract void setAttemptStatus(String collecionItemId, AttemptedAnswersDo attempteAnswersDo);

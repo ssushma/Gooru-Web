@@ -62,4 +62,6 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public void displayResourceTags(List<ResourceTagsDo> resourceTagsList);
 	public void checkYoutubeAccessControls(Map<String, String> result);
 	public Button getNarrationButton();
+	public void clearMarginTop();
+	public void setMarginTop();
 }
