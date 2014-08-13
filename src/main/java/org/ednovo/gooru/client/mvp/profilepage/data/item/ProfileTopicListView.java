@@ -198,6 +198,7 @@ public class ProfileTopicListView extends Composite{
 		searchLink.setVisible(false);
 		searchLink.addClickHandler(new OnSearchLinkClick());
 		setTopicLabel(profileFolderDo.getTitle());
+		searchTitle=profileFolderDo.getTitle();
 		collectionInfo.setVisible(false);
 		if(profileFolderDo.getCollections()!=null) {
 			setOnlyConceptData(profileFolderDo.getCollectionItems(), false, profileFolderDo.getGooruOid(), profileFolderDo.getItemCount());
@@ -287,8 +288,9 @@ public class ProfileTopicListView extends Composite{
 		searchLink.addClickHandler(new OnSearchLinkClick());
 	
 		setTopicLabel(profileFolderDo.getTitle());
-		topicTitleLbl.addStyleName(style.collection());
 		searchTitle=profileFolderDo.getTitle();
+		topicTitleLbl.addStyleName(style.collection());
+		
 		
 		try {
 			setConceptData(profileFolderDo,conceptNumber,null, null,null);
@@ -394,12 +396,13 @@ public class ProfileTopicListView extends Composite{
 	
 	public void setConceptData(final ProfileLibraryDo conceptDo, Integer topicId, final String lessonId, String lessonLabel,String lessonCode) {
 			setConceptDo(conceptDo);
+			
 			this.lessonCode=lessonCode;
 			if(this.topicId==topicId) {
 				String id = null;
 				if(conceptDo.getGooruOid()!=null){
 					id=conceptDo.getGooruOid();
-					searchTitle=conceptDo.getTitle();
+					
 					
 				}
 				if(id!=null) {
