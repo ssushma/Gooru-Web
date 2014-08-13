@@ -1252,3 +1252,8 @@ footer .col-xs-2:last-child{
 .footerLastItem{
 	border-right: none !important;
 }
+
+.dataTableResult .col-xs-3 p{
+	width: 100%; 
+	display: inline-block;
+}
