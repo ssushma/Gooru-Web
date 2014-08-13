@@ -625,9 +625,9 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	public void hideAddCollectionPopup(String collectionTitle) {
 		hide();
 		clearShelfData();
-		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		new SuccessMessagePopupView(collectionTitle);
+		Window.enableScrolling(false);
 	}
 	
 	public TreeItem loadingTreeItem(){
