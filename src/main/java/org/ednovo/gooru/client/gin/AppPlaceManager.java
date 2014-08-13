@@ -271,6 +271,12 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 	    		getCurrentPlaceHierarchy().set(getCurrentPlaceHierarchy().size() - 1, placeRequest);
 	    		return placeRequest;
 	    	}
+	    	if(placeRequest.getNameToken().contains(PlaceTokens.PREVIEW_PLAY)){
+	    		placeRequest=getReplacedPlaceRequest(placeRequest);
+	    		getCurrentPlaceHierarchy().set(getCurrentPlaceHierarchy().size() - 1, placeRequest);
+	    		setPreviousRequestUrl(placeRequest);
+	    		return placeRequest;
+	    	}
 	    	setPreviousRequestUrl(placeRequest);
 	        return placeRequest;
 	    } else {
@@ -278,16 +284,26 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 	    }
 	  }
 	
+	public PlaceRequest getReplacedPlaceRequest(PlaceRequest placeRequest){
+		PlaceRequest newPlaceRequest=new PlaceRequest(replaceNameToken(placeRequest.getNameToken()));
+		Set<String> parameters=placeRequest.getParameterNames();
+		Iterator<String> parmsItr= parameters.iterator();
+		while (parmsItr.hasNext()) {
+			String paramName=parmsItr.next();
+			newPlaceRequest=newPlaceRequest.with(paramName, placeRequest.getParameter(paramName, ""));
+		}
+		return newPlaceRequest;
+	}
+	
 	public PlaceRequest getModifiedPlaceRequest(PlaceRequest placeRequest){
 		PlaceRequest newPlaceRequest=new PlaceRequest(modifyNameToken(placeRequest.getNameToken()));
 		Set<String> parameters=placeRequest.getParameterNames();
 		Iterator<String> parmsItr= parameters.iterator();
 		while (parmsItr.hasNext()) {
 			String paramName=parmsItr.next();
-			newPlaceRequest.with(paramName, placeRequest.getParameter(paramName, ""));
+			newPlaceRequest=newPlaceRequest.with(paramName, placeRequest.getParameter(paramName, ""));
 		}
 		return newPlaceRequest;
-		
 	}
 	public String modifyNameToken(String historyToken){
 		  String unescapedHistoryToken = URL.decodeQueryString(historyToken);
@@ -295,7 +311,12 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			  unescapedHistoryToken=unescapedHistoryToken.substring(1);
 		  }	  
 		  return unescapedHistoryToken;
-	  }
+	}
+	public String replaceNameToken(String historyToken){
+		  String unescapedHistoryToken = URL.decodeQueryString(historyToken);
+		  unescapedHistoryToken=unescapedHistoryToken.replaceAll(PlaceTokens.PREVIEW_PLAY, PlaceTokens.COLLECTION_PLAY);
+		  return unescapedHistoryToken;
+	}
 
 	/**
 	 * @return the previousRequestUrl
