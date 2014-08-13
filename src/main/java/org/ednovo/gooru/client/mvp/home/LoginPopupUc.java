@@ -625,7 +625,10 @@ public class LoginPopupUc extends PopupPanel{
 		}
 		this.hide();
 		
-		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
+		//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
+	
 		
 		/*RegisterVc registerVc = new RegisterVc();
 		registerVc.center();

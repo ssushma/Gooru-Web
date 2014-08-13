@@ -32,6 +32,8 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SearchAsyncCallback;
+import org.ednovo.gooru.client.SeoTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
@@ -49,6 +51,7 @@ import org.ednovo.gooru.client.ui.PeListPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.library.JSONStandardsDo;
+import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
@@ -97,7 +100,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements IsHomeView, SelectionHandler<SuggestOracle.Suggestion> {
 
-	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries;
+	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries, panelPartnerLibraries;
 	@UiField Button btnSignUp, btnMoreOnCollections,viewSampleResportsBtn;
 	@UiField Label lblHeading, lblSubHeading; 
 //	@UiField TextBoxWithPlaceholder txtSearch;
@@ -187,6 +190,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		
 		generateStandardLibraries();
 		generateDistrictLibraries();
+		generatePartnerLibraries();
 
 		
 		
@@ -194,6 +198,43 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 //		};
 //		error.show();
 
+	}
+	/**
+	 * @function generatePartnerLibraries 
+	 * 
+	 * @created_date : Aug 12, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	private void generatePartnerLibraries() {
+		AppClientFactory.getInjector().getLibraryService().getPartners(new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
+			@Override
+			public void onSuccess(ArrayList<LibraryUserDo> partnersList) {
+				if (partnersList != null){
+					for(int i=0;i<partnersList.size();i++) {
+						final LibraryUserDo libraryUserDo = partnersList.get(i);
+						PeListPanel pTag = new PeListPanel();
+						Anchor anchor = new Anchor();
+						anchor.setText(libraryUserDo.getDisplayName());
+						String url = "#"+libraryUserDo.getUsername();
+						anchor.setHref(url);
+						pTag.add(anchor);
+						panelPartnerLibraries.add(pTag);
+					}
+				}
+			}
+		});
 	}
 	private void generateDistrictLibraries() {
 		
