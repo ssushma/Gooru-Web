@@ -697,7 +697,16 @@
 .assignmentButtonsContainerCopy {
 	float: left;
 	margin: 18px 0 15px 150px;
-	position:absolute;
-	margin-top:88px;
+	/* position:absolute;
+	margin-top:88px; */
+}
+.copyResourcePopupContainerShelf{
+	width:450px;
+	padding:3px;
+	background: white;
+	z-index: 999;
+}
+.copyResourcePopupContainerShelf .popupContent{
+	border:1px solid #DDD;
 }
  

@@ -48,6 +48,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class LeaveRegistrationPopUpUc extends PopupPanel{
 
@@ -166,7 +167,10 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 			}
 			mapParms.remove("callback");
 			mapParms.remove("type");
-			AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), mapParms );
+			//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), mapParms );
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), mapParms);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
+		
 		}
 		this.hide();
 	}
@@ -194,7 +198,10 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 			}
 			mapParms.remove("callback");
 			mapParms.remove("type");
-			AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), mapParms );
+			//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), mapParms );
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), mapParms);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
+	
 		}
 	}
 
@@ -242,8 +249,10 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 			if(parentEmailId!=null){
 				params.put("emailId",parentEmailId);
 			}
-			AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
-			
+			//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
+	
 		}
 		this.hide();
 	}

@@ -853,16 +853,8 @@
 
 						<div class="rightBlock1">
 							<g:Label styleName="blockHeader" text="{i18n.GL2121}"></g:Label>
-							<g:HTMLPanel styleName="blockContent" ui:field="panelStandardLibraries"><!-- List standard libraries... -->
-								<!-- <p>
-									<a
-										href="#community&amp;page=course-page&amp;subject=standard&amp;courseId=41895&amp;standardId=24146">Common Core State Standards - Math</a>
-								</p>
-								<p>
-									<a
-										href="#community&amp;page=course-page&amp;subject=standard&amp;courseId=72329&amp;standardId=72168&amp;libtype=TEKS">Texas Essential Knowledge and Skills</a>
-								</p> -->
-							</g:HTMLPanel>
+							<!-- List standard libraries... -->
+							<g:HTMLPanel styleName="blockContent" ui:field="panelStandardLibraries" />
 						</div>
 						<div class="rightBlock1">
 							<g:Label styleName="blockHeader" text="{i18n.GL0515}"/>
@@ -870,41 +862,7 @@
 						</div>
 						<div class="rightBlock1">
 						    <g:Label styleName="blockHeader" text="{i18n.GL1550}"/>
-							<div class="blockContent last">
-								<p>
-									<a href="#Autodesk">Autodesk</a>
-								</p>
-								<p>
-									<a href="#FTE">Foundation for Teaching Economics (FTE)</a>
-								</p>
-								<!-- <p>
-									<a href="#lifeboard">Lifeboard</a>
-								</p> -->
-								<p>
-									<a href="#GeoEducators">National Geographic's Geo-Educator Community</a>
-								</p>
-								<p>
-									<a href="#NGC">New Global Citizens (NGC)</a>
-								</p>
-								<p>
-									<a href="#NextGenFinance">Next Gen Personal Finance</a>
-								</p>
-								<p>
-									<a href="#ONR">Office of Naval Research (ONR)</a>
-								</p>
-								<p>
-									<a href="#PSD">Partners for Sustainable Development (PSD)</a>
-								</p>
-								<p>
-									<a href="#Lessonopoly">Silicon Valley Education Foundation (SVEF)</a>
-								</p>
-								<p>
-									<a href="#WSPWH">What So Proudly We Hail</a>
-								</p>
-								<p>
-									<a href="#youthvoices">Youth Voices</a>
-								</p>
-							</div>
+							<g:HTMLPanel styleName="blockContent last" ui:field="panelPartnerLibraries" />
 						</div>
 					</div>
 				</div>
