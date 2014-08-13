@@ -93,7 +93,7 @@ public class SusdLibraryPresenter extends BasePlacePresenter<IsSusdLibraryView, 
 		clearSlot(TYPE_FOLDERS_SLOT);
 		setInSlot(TYPE_FOLDERS_SLOT, districtPresenter);
 		
-		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
+		if (getPlaceManager().getRequestParameter(CALLBACK) != null && !getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
 		    //To show SignUp (Registration popup)
 		    if (AppClientFactory.isAnonymous()){
 		        Window.enableScrolling(false);

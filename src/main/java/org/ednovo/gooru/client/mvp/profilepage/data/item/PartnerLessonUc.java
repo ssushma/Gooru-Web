@@ -189,14 +189,15 @@ public class PartnerLessonUc extends Composite{
 				lessonTitle.addStyleName(style.lessonTitle());
 				lessonTitle.addStyleName(style.collection());
 			} else {
-				lessonTitle.addStyleName(style.libraryTitle());
+				//lessonTitle.addStyleName(style.libraryTitle());
+				lessonTitle.addStyleName(style.libraryConceptTitle());
 			}
 		}
 		if(lessonNumber==1&&isLessonHighlighted) {
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
 				lessonTitle.addStyleName(style.conceptActive());
 			} else {
-			lessonTitle.addStyleName(style.libraryConceptActive());
+				lessonTitle.addStyleName(style.libraryConceptActive());
 				lessonTitle.addStyleName(style.marginTop5());
 			}
 			openCollection();
