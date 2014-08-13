@@ -520,13 +520,13 @@ public class CollectionResourceTabView extends
 										description = desc;
 										category = categoryStr;
 										thumbnailUrl = thumbnailUrlStr;
-										if(category.contains("Image")||category.contains("Text"))
-										{
-											category=category.substring(0, category.length()-1);
-											/* if(category.contains("Image")||category.contains("Images")){
-												 category="Slide";
-											 }*/
-										}
+//										if(category.contains("Image")||category.contains("Text"))
+//										{
+//											category=category.substring(0, category.length()-1);
+//											/* if(category.contains("Image")||category.contains("Images")){
+//												 category="Slide";
+//											 }*/
+//										}
 										
 										JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr);
 									
@@ -1191,7 +1191,7 @@ public class CollectionResourceTabView extends
 		
 	}
 
-	private JSONObject setEditUserResourceJsonObject(String originalFilename,String mediaFileName, String Editedtitle, String Editeddescription, String Editedcategory,String EditedthumbnailUrl) {
+	private JSONObject setEditUserResourceJsonObject(String originalFilename,String mediaFileName, String editedTitle, String editedDescription, String editedCategory,String editedThumbnailUrl) {
 		JSONObject file = new JSONObject();
 		 if(originalFilename!=null && mediaFileName!=null){
 			 file.put("filename", new JSONString(originalFilename));
@@ -1200,11 +1200,13 @@ public class CollectionResourceTabView extends
 		
 		     
 		 JSONObject attach = new JSONObject();
-        attach.put("title", new JSONString(Editedtitle));
-        attach.put("description", new JSONString(Editeddescription));
-        attach.put("category", new JSONString(Editedcategory));
-        if(EditedthumbnailUrl!=null){
-        	 attach.put("thumbnail", new JSONString(EditedthumbnailUrl));
+        attach.put("title", new JSONString(editedTitle));
+        attach.put("description", new JSONString(editedDescription));
+        JSONObject resourceFormat = new JSONObject();
+        resourceFormat.put("value", new JSONString(editedCategory));
+        attach.put("resourceFormat", resourceFormat);
+        if(editedThumbnailUrl!=null){
+        	 attach.put("thumbnail", new JSONString(editedThumbnailUrl));
         }
         if(originalFilename!=null && mediaFileName!=null){
         	 attach.put("attach", file);

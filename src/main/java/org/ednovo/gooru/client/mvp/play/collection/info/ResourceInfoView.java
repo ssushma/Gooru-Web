@@ -95,7 +95,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	readingLevelPanel,languagePanel,countryCodePanel,copyRightPanel,hostPanel,
 	accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel,thumbnailPanel,dateCreatedPanel,
 	authorPanel,eduUseType,keyWordsPanel,keywordsInfo,readingLevelType,accessModeType,mediaFeatureType,dKnowledgeType,
-	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,oerPanel,schoolLevelPanel,addsPanel,addsInfo,aggregatorPanel,aggregatorVal,lblPublisher,gradesText;
+	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,oerPanel,schoolLevelPanel,addsPanel,addsInfo,aggregatorPanel,aggregatorVal,lblPublisher,gradesText,resouceInfoContainer;
 	
 	@UiField static  HTMLPanel standardsContentContainer;
 	
@@ -112,7 +112,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					acessHazardlLbl,acessHazardType,mediaFeatureLbl,accessModelLbl,accesibilityLbl,generalLbl,
 					thumbnailText,educationallLbl,resourceInfoLbl,dateCreatedLbl,
 					createdDateInfo,authorLbl,authorName,keywordsTitle,timeRequiredvalue,
-					momentsoflearningLbl,oerLbl,oerAvailability,schoolLevelLbl,addsTitle,schoolLevelType,aggregatorText;
+					momentsoflearningLbl,oerLbl,oerAvailability,schoolLevelLbl,addsTitle,schoolLevelType,aggregatorText,hideImageLabel;
 	
 	@UiField static Label standaInfo;
 	
@@ -2234,4 +2234,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 		
 	};
+	
+	public void insertHideButtonAtLast(){
+		resouceInfoContainer.add(hideButton);
+		hideImageLabel.getElement().setAttribute("style", "transform: rotate(0deg);-ms-transform: rotate(0deg);-webkit-transform: rotate(0deg);padding-top:10px;");
+	}
 }
