@@ -1011,7 +1011,7 @@
 									<g:Anchor href="http://about.goorulearning.org/product/oursolution" target="_blank" text="{i18n.GL2163}"/>
 								</li>
 								<li>
-									<g:Anchor href="http://about.goorulearning.org/product/mobile"
+									<g:Anchor href="http://about.goorulearning.org/product/webandmobile"
 										target="_blank" text="{i18n.GL2164}"/>
 								</li>
 								<li>
