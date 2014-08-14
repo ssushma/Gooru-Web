@@ -900,9 +900,8 @@ public class LibraryMenuNav extends Composite{
 			{
 				AppClientFactory.fireEvent(new OpenSubjectCourseEvent(subjectname, courseDoMap.get(courseIdRefresh)));
 			}
-			if(subjectNameonRefresh.equalsIgnoreCase(STANDARDS) && !checkRefreshVal)
+			if(subjectNameonRefresh.equalsIgnoreCase(STANDARDS))
 			{
-				checkRefreshVal = true;
 				AppClientFactory.fireEvent(new OpenSubjectCourseEvent(subjectname, courseDoMap.get(courseIdRefresh)));
 			}
 		}
