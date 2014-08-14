@@ -39,6 +39,7 @@ import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -961,7 +962,19 @@ public class EditClasspageView extends
 				        Window.enableScrolling(true);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 						hide(); 
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+						//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+						AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",new SimpleAsyncCallback<ClasspageListDo>() {
+							@Override
+							public void onSuccess(ClasspageListDo result) {
+							
+								if (result.getSearchResults().size()>0){
+									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+									}else{
+									AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+									
+								}
+							}
+					});
 					}
 				});
 				
