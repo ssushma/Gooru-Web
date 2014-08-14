@@ -159,7 +159,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 				    if(parent != null)
 				    	parent.setSelected(false);   // TODO FIX ME
 				    item.setState(!item.getState(), false);
-				    setSelectedCollectionsCount(item.getChildCount());
+				    setSelectedCollectionsCount(getCollectionCountFromFolder(item));
 			    }else if(folderWidget instanceof CollectionTreeItem){
 			    	removePreviousSelectedItem();
 			    	cureentcollectionTreeItem=(CollectionTreeItem)folderWidget;
@@ -175,6 +175,19 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		floderTreeContainer.add(folderTreePanel);
 		folderTreePanel.addItem(loadingTreeItem());
 		
+	}
+	
+	public int getCollectionCountFromFolder(TreeItem item){
+	    int childCount = item.getChildCount();
+	    int collectionCount=0;
+	    for(int i=0;i<childCount;i++){
+	    	TreeItem childTree=item.getChild(i);
+	    	Widget childWidget=childTree.getWidget();
+	    	 if(childWidget instanceof CollectionTreeItem){
+	    		 collectionCount++;
+	    	 }
+	    }
+	    return collectionCount;
 	}
 	
 	public void setStaticTexts(){
@@ -487,7 +500,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	public void displayWorkspaceData(TreeItem item, FolderListDo folderListDo) {
 		if(folderListDo!=null){
 			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
-			 setSelectedCollectionsCount(folderListDo.getCount());
+			 int collectionCount=0;
 			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
 				 FolderTreeItem folderTreeItemWidget=(FolderTreeItem)item.getWidget();
 				 int folderLevel=folderTreeItemWidget.getFolerLevel();
@@ -501,6 +514,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 						 item.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
 					 }else if(floderDo.getType().equals("scollection")){
+						 collectionCount++;
 						 TreeItem folderItem=new TreeItem(new CollectionTreeItem(getTreeItemStyleName(folderLevel),floderDo.getTitle(),floderDo.getGooruOid()));
 						 item.addItem(folderItem);
 						 adjustTreeItemStyle(folderItem);
@@ -508,6 +522,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 				 }
 					item.setState(folderTreeItemWidget.isOpen());
 			 }
+			 setSelectedCollectionsCount(collectionCount);
 		}
 	}
 	private String  getTreeItemStyleName(int folderLevel){
