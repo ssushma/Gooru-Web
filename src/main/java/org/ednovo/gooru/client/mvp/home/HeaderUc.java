@@ -57,6 +57,7 @@ import org.ednovo.gooru.client.uc.tooltip.StudyNowToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -888,25 +889,28 @@ public class HeaderUc extends Composite implements
 							AppClientFactory.GOORU_ANONYMOUS)) {
 				
 //				OpenClasspageList();
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 				
-//				AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",
-//					new SimpleAsyncCallback<ClasspageListDo>() {
-//						@Override
-//						public void onSuccess(ClasspageListDo result) {
-//							hasClasses = result.getSearchResults().size() > 0 ? true : false; 
-//							if (result.getSearchResults().size()>0){
-//								/*classpageId = result.getSearchResults().get(0).getGooruOid();
-//								String userId = result.getSearchResults().get(0).getUser().getGooruUId();
-//								OpenClasspageEdit(classpageId, userId);*/
-//								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,null,true);
-//							}else{
-//								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
-//							}
-//						}
-//				});
+			
+				AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",new SimpleAsyncCallback<ClasspageListDo>() {
+						@Override
+						public void onSuccess(ClasspageListDo result) {
+					//	hasClasses = result.getSearchResults().size() > 0 ? true : false; 
+							
+							if (result.getSearchResults().size()>0){
+								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+								////classpageId = result.getSearchResults().get(0).getGooruOid();
+								//String userId = result.getSearchResults().get(0).getUser().getGooruUId();
+							//OpenClasspageEdit(classpageId, userId);
+								//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,null,true);
+							}else{
+								AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+								//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
+							}
+						}
+				});
 			} else {
 				name = "teach";
+				
 //				onLinkPopupClicked(null);
 //				TODO need to show new logout page....
 				AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
