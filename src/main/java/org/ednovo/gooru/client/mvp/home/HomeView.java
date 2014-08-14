@@ -32,14 +32,12 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SearchAsyncCallback;
-import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
-
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
