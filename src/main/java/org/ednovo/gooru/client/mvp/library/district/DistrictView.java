@@ -201,7 +201,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 			sharing = null;
 		}
 		
-		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(unitListId, sharing, 14, new SimpleAsyncCallback<ProfileLibraryListDo>() {
+		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(unitListId, sharing, 20, new SimpleAsyncCallback<ProfileLibraryListDo>() {
 
 			@Override
 			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {

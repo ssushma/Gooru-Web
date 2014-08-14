@@ -68,6 +68,8 @@ import org.ednovo.gooru.shared.util.PlayerConstants;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -317,6 +319,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		resourceSharePresenter.setResourcePlayerPresenter(this);
 		addResourceCollectionPresnter.getAddCollectionViewButton().setVisible(false);
 		resoruceMetadataPresenter.setResourcePlayerPresenter(this, false);
+		this.resourceInfoPresenter.insertHideButtonAtLast();
 	}
 
 	@ProxyCodeSplit
@@ -489,15 +492,21 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	public void showTabWidget(String tabView,String resourceId){
 		if(tabView==null||tabView.equals("")){
 			getView().clearActiveButton(true,true,true,true);
+			addResourceCollectionPresnter.getWidget().getElement().getStyle().setPosition(Position.RELATIVE);
 			new CustomAnimation(getView().getNavigationContainer()).run(400);
+			addResourceCollectionPresnter.getWidget().getElement().getStyle().clearPosition();
+			resoruceMetadataPresenter.setMarginTop();
 		}
 		else if(tabView.equals("add")){
 			MixpanelUtil.mixpanelEvent("Player_Click_Add");
+			resoruceMetadataPresenter.clearMarginTop();
 			setAddResourceCollectionView(resourceId);
 		 }
 		else if(tabView.equals("share")){
+			resoruceMetadataPresenter.clearMarginTop();
 			 setResourceShareView(resourceId);
 		 }else if(tabView.equals("info")){
+			 resoruceMetadataPresenter.clearMarginTop();
 			 setResourceInfoView(resourceId);
 		 }
 		 else if(tabView.equals("flag")){
@@ -520,12 +529,16 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			//addResourceContainerPresenter.setplayerStyle();
 			//addResourceContainerPresenter.setCollectionItemData("", collectionItemDo);
 			addResourceCollectionPresnter.setCollectionItemData(null, collectionItemDo);
+			addResourceCollectionPresnter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
+			addResourceCollectionPresnter.getWidget().getElement().getStyle().setPosition(Position.RELATIVE);
 			setInSlot(TAB_PRESENTER_SLOT, addResourceCollectionPresnter,false);
 			new CustomAnimation(getView().getNavigationContainer()).run(400);
+			addResourceCollectionPresnter.getWidget().getElement().getStyle().clearPosition();
 		}
 	}
 	public void setResourceInfoView(String resourceId){
 		resourceInfoPresenter.setResoruceDetails(collectionItemDo);
+		resourceInfoPresenter.getWidget().getElement().getStyle().setMarginTop(50, Unit.PX);
 		setInSlot(TAB_PRESENTER_SLOT, resourceInfoPresenter,false);
 		new CustomAnimation(getView().getNavigationContainer()).run(400);
 	}

@@ -303,7 +303,10 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 				}
 				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 			}else{
-				AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), map);
+				//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), map);
+				
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), map);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
 				Window.enableScrolling(true);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 			}
@@ -348,7 +351,9 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		}
 		map.remove("callback");
 		map.remove("type");
-		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), map);
+		//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), map);
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), map);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
 		appPopUp.hide();
 		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		String tabView=AppClientFactory.getPlaceManager().getRequestParameter("tab",null);
@@ -393,7 +398,10 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		if (childUserName!=null){
 			params.put("userName", childUserName);
 		}
-		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
+		//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
+	
 	}
 
 	private void openCreateUser(){

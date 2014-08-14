@@ -114,5 +114,8 @@ public class ResourceInfoPresenter extends PresenterWidget<IsResourceInfoView> i
 	public void setCollectionPlayerPresenter(CollectionPlayerPresenter collectionPlayerPresenter) {
 		this.collectionPlayerPresenter = collectionPlayerPresenter;
 	}
+	public void insertHideButtonAtLast(){
+		getView().insertHideButtonAtLast();
+	}
 
 }

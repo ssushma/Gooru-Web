@@ -57,6 +57,7 @@ import org.ednovo.gooru.client.uc.tooltip.StudyNowToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -108,6 +109,7 @@ import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Search Team
@@ -735,9 +737,9 @@ public class HeaderUc extends Composite implements
 
 		}
 		if (dotsLink.equals(noneMenu)) {
-			System.out.println("no menu");
+			
 		} else {
-			System.out.println("no menu else....");
+			
 			dotsLink.getParent().setStyleName(
 					GooruCBundle.INSTANCE.css().menuActive());
 		}
@@ -794,7 +796,7 @@ public class HeaderUc extends Composite implements
 	@UiHandler("registerLinkLbl")
 	public void onRegisterPopupClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Arrive_Register_popup();
-
+		
 		DataLogEvents.signUp(GwtUUIDGenerator.uuid(), "home",
 				System.currentTimeMillis(), System.currentTimeMillis(), "");
 
@@ -818,8 +820,9 @@ public class HeaderUc extends Composite implements
 		}
 		map.put("callback", "signup");
 		map.put("type", "1");
-		AppClientFactory.getPlaceManager().revealPlace(
-				AppClientFactory.getCurrentPlaceToken(), map);
+		//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), map);
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), map);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
 
 	}
 
@@ -886,25 +889,28 @@ public class HeaderUc extends Composite implements
 							AppClientFactory.GOORU_ANONYMOUS)) {
 				
 //				OpenClasspageList();
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 				
-//				AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",
-//					new SimpleAsyncCallback<ClasspageListDo>() {
-//						@Override
-//						public void onSuccess(ClasspageListDo result) {
-//							hasClasses = result.getSearchResults().size() > 0 ? true : false; 
-//							if (result.getSearchResults().size()>0){
-//								/*classpageId = result.getSearchResults().get(0).getGooruOid();
-//								String userId = result.getSearchResults().get(0).getUser().getGooruUId();
-//								OpenClasspageEdit(classpageId, userId);*/
-//								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,null,true);
-//							}else{
-//								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
-//							}
-//						}
-//				});
+			
+				AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",new SimpleAsyncCallback<ClasspageListDo>() {
+						@Override
+						public void onSuccess(ClasspageListDo result) {
+					//	hasClasses = result.getSearchResults().size() > 0 ? true : false; 
+							
+							if (result.getSearchResults().size()>0){
+								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+								////classpageId = result.getSearchResults().get(0).getGooruOid();
+								//String userId = result.getSearchResults().get(0).getUser().getGooruUId();
+							//OpenClasspageEdit(classpageId, userId);
+								//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,null,true);
+							}else{
+								AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+								//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
+							}
+						}
+				});
 			} else {
 				name = "teach";
+				
 //				onLinkPopupClicked(null);
 //				TODO need to show new logout page....
 				AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);

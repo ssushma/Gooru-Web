@@ -412,7 +412,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	}
 
 	@ProxyCodeSplit
-	@NameToken(PlaceTokens.PREVIEW_PLAY)
+	@NameToken("sjkldfkal")
 	public interface IsPreviewPlayerProxy extends ProxyPlace<PreviewPlayerPresenter> {
 	}
 
