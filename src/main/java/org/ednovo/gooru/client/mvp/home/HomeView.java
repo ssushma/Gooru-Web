@@ -528,8 +528,8 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		StringUtil.setAttributes(lblSubHeading.getElement(), "lblSubHeading", i18n.GL2047(), i18n.GL2047());
 		String currentUrl = Window.Location.getHref();
 		String protocol = currentUrl.startsWith("https") ? "https" : "http";
-		
-		String url =  "<a href=\""+protocol+"://www.goorulearning.org\" />";
+				
+		String url = "<a href=\""+protocol+"://www.goorulearning.org/\"><img src=\"http://partners.goorulearning.org/_images/badges/01_goorubutton-honor.png\" width=\"250\" height=\"250\"/></a>";
 		
 		txtEmbedLink.setText(url);
 		StringUtil.setAttributes(txtEmbedLink.getElement(), "txtEmbedLink", "", "");
