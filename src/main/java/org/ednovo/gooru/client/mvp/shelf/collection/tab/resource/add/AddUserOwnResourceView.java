@@ -628,7 +628,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 				{
 					//resourceCategory=resourceCategory.substring(0, resourceCategory.length()-1);
 					 if(resourceCategory.equalsIgnoreCase("Image")){
-						 resourceCategory="Slide";
+						 resourceCategory="Image";
 					 }
 				}
 				if(showPreview){
