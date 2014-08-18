@@ -193,7 +193,12 @@ public abstract class AssignPopupVc extends PopupPanel {
 		add(uiBinder.createAndBindUi(this));
 		this.setGlassEnabled(true);
 		this.getGlassElement().getStyle().setZIndex(99999);
-		this.getElement().getStyle().setZIndex(99999);
+/*		this.getElement().getStyle().setZIndex(99999);
+		this.getElement().getStyle().setWidth(658, Unit.PX);
+		this.getElement().getStyle().setLeft(0, Unit.PX);
+		this.getElement().getStyle().setRight(0, Unit.PX);
+		this.getElement().getStyle().setTop(0, Unit.PX);*/
+		this.getElement().setAttribute("style", "z-index: 99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;top: 0 !important;margin: auto;width: 500px;height: 656px;");
 		swithUrlLbl.setText(i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("alt",i18n.GL0639());
 		swithUrlLbl.getElement().setAttribute("title",i18n.GL0639());
