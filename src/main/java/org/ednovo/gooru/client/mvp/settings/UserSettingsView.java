@@ -1142,12 +1142,15 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		if (!isDriveConnected){
 			Map<String, String> parms = new HashMap<String, String>();
 			parms = StringUtil.splitQuery(Window.Location.getHref());
+			parms.put("callback", "refershToken");
 			AppClientFactory.getInjector().getSearchService().getGoogleDrive(Window.Location.getHref(), parms, new SimpleAsyncCallback<String>() {
 	
 				@Override
 				public void onSuccess(String redirectUrl) {
+					
 					MixpanelUtil.mixpanelEvent("Access_Google_Drive");
 					Window.Location.replace(redirectUrl);
+
 				}
 			});
 		}else{
