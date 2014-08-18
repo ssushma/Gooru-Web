@@ -147,12 +147,12 @@ public class ResourceFrameBreakerView extends Composite{
 		btnResourceLink.removeFromParent();
 		lblGooruFieldTrip.getElement().getStyle().setPaddingLeft(50, Unit.PX);
 		lblGooruFieldTrip.getElement().getStyle().setPaddingRight(50, Unit.PX);
-		lblGooruFieldTrip.setText(i18n.GL2007());
+		lblGooruFieldTrip.setText(i18n.GL2169());
 	}
 	public void setFilePermissionMessage(){
 		lblGooruFieldTrip.getElement().getStyle().setPaddingLeft(50, Unit.PX);
 		lblGooruFieldTrip.getElement().getStyle().setPaddingRight(50, Unit.PX);
-		lblGooruFieldTrip.setText(i18n.GL2007());
+		lblGooruFieldTrip.setText(i18n.GL2169());
 	}
 	/**
 	 * 

@@ -1632,6 +1632,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			
 			thankYouResourceStarRatings.show();
 			thankYouResourceStarRatings.setAutoHideEnabled(true);
+			thankYouResourceStarRatings.getElement().getPreviousSiblingElement().getStyle().setZIndex(999999);
+			thankYouResourceStarRatings.getElement().getPreviousSiblingElement().getStyle().setOpacity(0);
 		}
 		else
 		{
@@ -1644,7 +1646,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				thankYouResourceStarRatingsPoor.setPopupPosition(800,Window.getScrollTop()+153);
 			}
 			thankYouResourceStarRatingsPoor.show();
-			thankYouResourceStarRatingsPoor.setAutoHideEnabled(true);	
+			thankYouResourceStarRatingsPoor.setAutoHideEnabled(true);
+			thankYouResourceStarRatingsPoor.getElement().getPreviousSiblingElement().getStyle().setZIndex(999999);
+			thankYouResourceStarRatingsPoor.getElement().getPreviousSiblingElement().getStyle().setOpacity(0);
 		}
 	}
 	
