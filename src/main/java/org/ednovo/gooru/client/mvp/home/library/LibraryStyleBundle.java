@@ -81,5 +81,8 @@ public interface LibraryStyleBundle extends CssResource {
 	
 	String lpsPartnerLogo();
 	String lpsHeader();
+	
+	String coreDistrictLogo();
+	String coreDistrictHeader();
 
 																																								}
