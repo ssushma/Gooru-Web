@@ -190,9 +190,10 @@ public class LoginPopupUc extends PopupPanel{
 		add(binder.createAndBindUi(this));
 		this.setGlassEnabled(true);
 		this.setGlassStyleName(LoginPopUpCBundle.INSTANCE.css().loginPopupGlassStyle());
-		this.getElement().getStyle().setZIndex(99999);
+		//this.getElement().getStyle().setZIndex(99999);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
+        this.getElement().setAttribute("style", "width: 515px;height: 547px;z-index: 99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;");
 //        lblKeepMeLogedIn.getElement().setId("chkLogin");
 		setTextAndIds();
 		lblPleaseWait.setVisible(false);
