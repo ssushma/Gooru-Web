@@ -69,7 +69,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -86,6 +85,14 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.http.client.Response;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -515,10 +522,13 @@ public class HeaderUc extends Composite implements
 		
 		getEditSearchTxtBox().getElement().setAttribute("placeholder",
 				i18n.GL0177());
+		
 		lblBeta.setText(i18n.GL0178());
 		lblBeta.getElement().setId("lblBeta");
 		lblBeta.getElement().setAttribute("alt",i18n.GL0178());
 		lblBeta.getElement().setAttribute("title",i18n.GL0178());
+		
+		getBetaStatus();
 		
 		discoverLink.setText(i18n.GL1748_1());
 		discoverLink.getElement().setId("lblDiscoverLink");
@@ -672,6 +682,72 @@ public class HeaderUc extends Composite implements
 		discoverLinkUrl = null;
 		gooruLearning.setId("lnkeleGooruLearning");
 		manageDotsMenuSelection(noneMenu);
+	}
+
+	/**
+	 * @function getBetaStatus 
+	 * 
+	 * @created_date : Aug 14, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	private void getBetaStatus() {
+		try {
+			new RequestBuilder(RequestBuilder.GET, "./images/json/product-beta-status.json").sendRequest("", new RequestCallback() {
+				  @Override
+				  public void onResponseReceived(Request req, Response resp) {
+					  lblBeta.setVisible(getStatus(resp.getText()));
+				  }
+
+				  @Override
+				  public void onError(Request res, Throwable throwable) {
+					  
+				  }
+				});
+		} catch (RequestException e) {
+			
+		}
+	}
+	/**
+	 * 
+	 * @function getStatus 
+	 * 
+	 * @created_date : Aug 14, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param text
+	 * @return
+	 * 
+	 * @return : boolean
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	private boolean getStatus(String text) {
+		boolean status = false;
+
+		JSONValue jsonValue = JSONParser.parse(text);
+        JSONObject jsonObject = jsonValue.isObject();
+        
+        status = jsonObject.get("betaStatus").isBoolean() !=null ? jsonObject.get("betaStatus").isBoolean().booleanValue() : false;
+        
+		return status;
 	}
 
 	public void clearClasspageList() {
