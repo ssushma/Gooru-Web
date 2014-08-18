@@ -161,6 +161,7 @@ public class SignUpRoleView extends PopupPanel{
 		
 
 		this.setGlassEnabled(true);
+		//this.getElement().setAttribute("style", "visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;");
 		this.show();
 		this.center();
 		
