@@ -113,7 +113,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		this.resourceId=resourceId;
 		this.setGlassEnabled(true);
 		//Window.enableScrolling(false);
-		this.getElement().setAttribute("style", "z-index:99999;");
+		this.getElement().setAttribute("style", "z-index:99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;");
 		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
 		this.setWidth("596px");
 		this.setHeight("586px");
