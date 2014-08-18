@@ -1128,3 +1128,21 @@ margin-bottom: 15px;
 	height: 19px;
 	margin-top: -83px;
 }
+
+
+.coreDistrictLogo {
+	background: url("../images/library/district/core-logo.png");
+	width: 250px;
+	height: 60px;
+	position: absolute;
+	top: 106px;
+	right: 565px;
+}
+
+.coreDistrictHeader {
+	color: white;
+	font-size: 16px;
+	text-align: center;
+	height: 19px;
+	margin-top: -83px;
+}
