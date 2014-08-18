@@ -165,7 +165,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		CourseDo courseDo = new CourseDo();
 		ThumbnailDo thumbnailDo = new ThumbnailDo();
 		LibraryUserDo libraryUserDo = new LibraryUserDo();
-		
 		if(partnerPlace.equals(PlaceTokens.AUTODESK)) {
 			
 			courseDo.setLabel(i18n.GL2027());
@@ -245,7 +244,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}else if(partnerPlace.equals(PlaceTokens.CORE_LIBRARY)) {
 			
 			courseDo.setLabel(i18n.GL2108());
-			thumbnailDo.setUrl("../images/library/district/landing-image-core-library.png");
+//			thumbnailDo.setUrl("../images/library/district/landing-image-core-library.png");
+			thumbnailDo.setUrl("../images/library/district/landing-image-lps.png");
 			libraryUserDo.setPartnerName(i18n.GL2110());
 			libraryUserDo.setPartnerUrl(i18n.GL2111());
 

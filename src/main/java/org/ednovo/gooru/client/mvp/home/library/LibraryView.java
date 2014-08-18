@@ -1038,7 +1038,13 @@ public class LibraryView extends Composite implements  ClickHandler {
 				courseTitle.setStyleName(libraryStyleUc.lpsHeader());
 				partnerLogo.setStyleName(libraryStyleUc.lpsPartnerLogo());
 				partnerLogo.setVisible(true);
-				}else{
+				}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)){
+					courseTitle.setHTML("This library showcases collections created by a team from the California Office to Reform Education.");
+					courseTitle.setStyleName(libraryStyleUc.lpsHeader());
+					partnerLogo.setStyleName(libraryStyleUc.coreDistrictLogo());
+					partnerLogo.setVisible(true);
+				}
+				else{
 				partnerLogo.setVisible(false);
 				courseTitle.removeStyleName(libraryStyleUc.lpsHeader());
 				courseTitle.setHTML(courseDo.getLabel());
