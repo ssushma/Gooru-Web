@@ -75,11 +75,13 @@ import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 
+import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -178,59 +180,71 @@ public class UserSettingsPresenter
 //		Cookies.setCookie("GOOGLE_ACCESS_TOKEN", "ya29.PADXXYiamS8JHxsAAADsdCb743SQMuoXVuZlTw5kC3kLVP_-UThz6jTa0kv7NA");
 		//Make an API call to get the accesstoken using refresh token.
 		
-		final String refresh_token = Cookies.getCookie(GOOGLE_REFRESH_TOKEN) !=null && !Cookies.getCookie(GOOGLE_REFRESH_TOKEN).equalsIgnoreCase("") ? Cookies.getCookie(GOOGLE_REFRESH_TOKEN) : null;
-//		StringUtil.consoleLog("refresh token : "+refresh_token);
-		if (refresh_token != null){
-			
-			AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(refresh_token, new SimpleAsyncCallback<GoogleToken>() {
-
-				@Override
-				public void onSuccess(GoogleToken result) {
-//					StringUtil.consoleLog("refreshGoogleAccessToken : Success");
-					final String access_token = result.getAccess_token() !=null && !result.getAccess_token().equalsIgnoreCase("") ? result.getAccess_token() : null;
-//					StringUtil.consoleLog("access_token : Success : "+access_token);
-					if (access_token !=null ){
-						
-						UserDo user = AppClientFactory.getLoggedInUser();
-						user.setAccessToken(access_token);
-						AppClientFactory.setLoggedInUser(user);
-						
-						AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
-							@Override
-							public void onSuccess(GoogleDriveDo googleDriveDo) {
-								if(googleDriveDo!=null){
-									if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
-//										StringUtil.consoleLog("access_token : 401");
-										getView().googleDirveStatus(false);
-									}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
-//										StringUtil.consoleLog("access_token : 403");
-										getView().googleDirveStatus(false);
-									}else{
-//										StringUtil.consoleLog("access_token : no error");
-										UserDo user = AppClientFactory.getLoggedInUser();
-										user.setAccessToken(access_token);
-										AppClientFactory.setLoggedInUser(user);
-										
-										getView().googleDirveStatus(true);
-									}
-								}else{
-//									StringUtil.consoleLog("google drive file list empty");
-									getView().googleDirveStatus(false);
-								}
-							}
-						});
-					}else{
-//						StringUtil.consoleLog("access token null");
-						getView().googleDirveStatus(false);
-					}
-				}
-			});
+		//final String refresh_token = Cookies.getCookie(GOOGLE_REFRESH_TOKEN) !=null && !Cookies.getCookie(GOOGLE_REFRESH_TOKEN).equalsIgnoreCase("") ? Cookies.getCookie(GOOGLE_REFRESH_TOKEN) : null;
+		
+		String refershToken = AppClientFactory.getPlaceManager()
+				.getRequestParameter("callback");
+		if(refershToken!=null && refershToken.equalsIgnoreCase("refershToken")){
+			StringUtil.consoleLog("if ");
+			updateRefershToken();
 		}else{
-//			StringUtil.consoleLog("refresh token null");
-			getView().googleDirveStatus(false);
+			StringUtil.consoleLog("else ");
+			final String refresh_token1 = AppClientFactory.getLoggedInUser().getRefreshToken();
+			
+			StringUtil.consoleLog("refresh token : "+refresh_token1);
+			if (refresh_token1 != null){
+				
+				AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(refresh_token1, new SimpleAsyncCallback<GoogleToken>() {
+	
+					@Override
+					public void onSuccess(GoogleToken result) {
+						StringUtil.consoleLog("refreshGoogleAccessToken : Success");
+						final String access_token = result.getAccess_token() !=null && !result.getAccess_token().equalsIgnoreCase("") ? result.getAccess_token() : null;
+						StringUtil.consoleLog("access_token : Success : "+access_token);
+						if (access_token !=null ){
+							
+							UserDo user = AppClientFactory.getLoggedInUser();
+							user.setAccessToken(access_token);
+							AppClientFactory.setLoggedInUser(user);
+							
+							AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
+								@Override
+								public void onSuccess(GoogleDriveDo googleDriveDo) {
+									if(googleDriveDo!=null){
+										if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+											StringUtil.consoleLog("access_token : 401");
+											getView().googleDirveStatus(false);
+										}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+											StringUtil.consoleLog("access_token : 403");
+											getView().googleDirveStatus(false);
+										}else{
+										StringUtil.consoleLog("access_token : no error");
+											UserDo user = AppClientFactory.getLoggedInUser();
+											user.setAccessToken(access_token);
+											AppClientFactory.setLoggedInUser(user);
+											
+											getView().googleDirveStatus(true);
+										}
+									}else{
+										StringUtil.consoleLog("google drive file list empty");
+										getView().googleDirveStatus(false);
+									}
+								}
+							});
+						}else{
+							StringUtil.consoleLog("access token null");
+							getView().googleDirveStatus(false);
+						}
+					}
+				});
+			}else{
+				StringUtil.consoleLog("refresh token null");
+				
+				getView().googleDirveStatus(false);
+				
+			}
+		
 		}
-		
-		
 		String userId = AppClientFactory.getPlaceManager().getRequestParameter(
 				"userId");
 		String confirmStatus = AppClientFactory.getPlaceManager()
@@ -1155,4 +1169,83 @@ public class UserSettingsPresenter
 		});
 		
 	}
+
+	
+	public void updateRefershToken() {
+		
+		final String refresh_token = AppClientFactory.getLoggedInUser().getRefreshToken();
+		StringUtil.consoleLog("refresh_token in updateRefershToken: "+refresh_token);
+		if(refresh_token==null){
+				AppClientFactory.getInjector().getUserService().getRefershToken(new AsyncCallback<String>() {
+				
+				@Override
+				public void onSuccess(String result) {
+					StringUtil.consoleLog("getRefershToken on method call updateRefershToken: "+result);
+					
+						UserDo user = AppClientFactory.getLoggedInUser();
+						user.setRefreshToken(result);
+						AppClientFactory.setLoggedInUser(user);
+						
+						
+						//For Access  Token
+
+						
+						AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(result, new SimpleAsyncCallback<GoogleToken>() {
+
+							@Override
+							public void onSuccess(GoogleToken result) {
+								StringUtil.consoleLog("refreshGoogleAccessToken : Success on updateRefershToken");
+								final String access_token = result.getAccess_token() !=null && !result.getAccess_token().equalsIgnoreCase("") ? result.getAccess_token() : null;
+								StringUtil.consoleLog("access_token : Success : on updateRefershToken "+access_token);
+								if (access_token !=null ){
+									
+									UserDo user = AppClientFactory.getLoggedInUser();
+									user.setAccessToken(access_token);
+									AppClientFactory.setLoggedInUser(user);
+									
+									AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
+										@Override
+										public void onSuccess(GoogleDriveDo googleDriveDo) {
+											if(googleDriveDo!=null){
+												if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+													StringUtil.consoleLog("access_token : 401");
+													getView().googleDirveStatus(false);
+												}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+//													StringUtil.consoleLog("access_token : 403");
+													getView().googleDirveStatus(false);
+												}else{
+//													StringUtil.consoleLog("access_token : no error");
+													UserDo user = AppClientFactory.getLoggedInUser();
+													user.setAccessToken(access_token);
+													AppClientFactory.setLoggedInUser(user);
+													
+													getView().googleDirveStatus(true);
+												}
+											}else{
+											StringUtil.consoleLog("google drive file list empty");
+												getView().googleDirveStatus(false);
+											}
+										}
+									});
+								}else{
+									StringUtil.consoleLog("access token null");
+									getView().googleDirveStatus(false);
+								}
+							}
+						});
+					
+						
+					}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					StringUtil.consoleLog("onFailure");
+					
+				}
+				});
+				}
+		
+	
+	}
+	
 }

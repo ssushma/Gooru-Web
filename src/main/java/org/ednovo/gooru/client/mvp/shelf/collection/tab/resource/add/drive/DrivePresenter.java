@@ -110,8 +110,10 @@ public class DrivePresenter extends
 		//Cookies.setCookie("google-access-token","ya29.PQDLmyffPAv5OBsAAAA3btJFHswFsQaaH5X3yDRTwUw18oRTkFawy7HCq8_mtg");
 		//Cookies.removeCookie("google-access-token");
 		
-		final String refresh_token = Cookies.getCookie(GOOGLE_REFRESH_TOKEN) !=null && !Cookies.getCookie(GOOGLE_REFRESH_TOKEN).equalsIgnoreCase("") ? Cookies.getCookie(GOOGLE_REFRESH_TOKEN) : null;
+		//final String refresh_token = Cookies.getCookie(GOOGLE_REFRESH_TOKEN) !=null && !Cookies.getCookie(GOOGLE_REFRESH_TOKEN).equalsIgnoreCase("") ? Cookies.getCookie(GOOGLE_REFRESH_TOKEN) : null;
 //		StringUtil.consoleLog("refresh token : "+refresh_token);
+		final String refresh_token = AppClientFactory.getLoggedInUser().getRefreshToken();
+		
 		if (refresh_token != null){
 			
 			AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(refresh_token, new SimpleAsyncCallback<GoogleToken>() {

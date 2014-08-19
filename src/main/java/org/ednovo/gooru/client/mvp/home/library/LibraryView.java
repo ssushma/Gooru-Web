@@ -126,7 +126,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	@UiField
 	HTMLPanel featuredCourses;
 
-	@UiField Label featuredCousesLbl,featuredContributor;
+	@UiField Label featuredCousesLbl,featuredContributor,comingSoonLbl;
 	
 	@UiField HTML courseTitle;
 	
@@ -1034,11 +1034,17 @@ public class LibraryView extends Composite implements  ClickHandler {
 			
 			if(StringUtil.isPartnerUser(AppClientFactory.getCurrentPlaceToken())){
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS)){
-				courseTitle.setHTML(i18n.GL2054());
+//				courseTitle.setHTML(i18n.GL2054());
 				courseTitle.setStyleName(libraryStyleUc.lpsHeader());
-				partnerLogo.setStyleName(libraryStyleUc.lpsPartnerLogo());
-				partnerLogo.setVisible(true);
-				}else{
+//				partnerLogo.setStyleName(libraryStyleUc.lpsPartnerLogo());
+//				partnerLogo.setVisible(true);
+				}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)){
+//					courseTitle.setHTML("This library showcases collections created by a team from the California Office to Reform Education.");
+					courseTitle.setStyleName(libraryStyleUc.lpsHeader());
+//					partnerLogo.setStyleName(libraryStyleUc.coreDistrictLogo());
+//					partnerLogo.setVisible(true);
+				}
+				else{
 				partnerLogo.setVisible(false);
 				courseTitle.removeStyleName(libraryStyleUc.lpsHeader());
 				courseTitle.setHTML(courseDo.getLabel());
@@ -1053,7 +1059,8 @@ public class LibraryView extends Composite implements  ClickHandler {
 				featuredContributorsLink.setHref(courseDo.getCreator().getPartnerUrl());
 				featuredContributorsLink.setTarget("_blank");
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)) {
-					courseImage.getElement().getStyle().setMarginTop(-16, Unit.PX);
+					courseImage.setHeight("190px");
+					courseImage.getElement().getStyle().setMarginTop(50, Unit.PX);
 					courseTitle.getElement().getStyle().setBottom(16, Unit.PX);
 				}
 			} else {
@@ -1348,6 +1355,10 @@ public class LibraryView extends Composite implements  ClickHandler {
 	
 	public HTMLPanel getLoadingIconPanel() {
 		return loadingIconPanel;
+	}
+	
+	public Label getComingSoonLabel(){
+		return comingSoonLbl;
 	}
 	
 	public HTMLPanel getContentScroll() {

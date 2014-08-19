@@ -108,7 +108,7 @@ public class CoreLibraryPresenter extends BasePlacePresenter<IsCoreLibraryView, 
 	
 	@Override
 	public String getViewToken() {
-		return PlaceTokens.LPS;
+		return PlaceTokens.CORE_LIBRARY;
 	}
 
 }
