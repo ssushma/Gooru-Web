@@ -1211,10 +1211,10 @@ public class UserSettingsPresenter
 													StringUtil.consoleLog("access_token : 401");
 													getView().googleDirveStatus(false);
 												}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
-//													StringUtil.consoleLog("access_token : 403");
+													StringUtil.consoleLog("access_token : 403");
 													getView().googleDirveStatus(false);
 												}else{
-//													StringUtil.consoleLog("access_token : no error");
+													StringUtil.consoleLog("access_token : no error");
 													UserDo user = AppClientFactory.getLoggedInUser();
 													user.setAccessToken(access_token);
 													AppClientFactory.setLoggedInUser(user);

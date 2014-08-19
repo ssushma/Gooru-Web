@@ -736,7 +736,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public String getRefershToken() throws GwtException ,ServerDownException{
 		JsonRepresentation jsonRep = null;
-		String url =UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.REFRESH_TOKEN_GDC,getLoggedInEmailId());
+		System.out.println("getLoggedInEmailId.."+getLoggedInUser().getEmailId());
+		String url =UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.REFRESH_TOKEN_GDC,getLoggedInUser().getEmailId());
 		System.out.println("getRefershToken..."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
