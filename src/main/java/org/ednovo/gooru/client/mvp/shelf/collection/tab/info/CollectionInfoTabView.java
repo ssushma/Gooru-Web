@@ -880,7 +880,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	public void setData(CollectionDo collectionDoVal) {
 		reset();
 		this.collectionDo = collectionDoVal;
-		
 			if(collectionDoVal.getLanguageObjective() != null)
 			{
 
@@ -896,117 +895,127 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			}
 			
 
-			
-			for(int i=0; i<collectionDoVal.getDepthOfKnowledges().size(); i++)
-			{
-			
-		
-				String compareValueLevel = collectionDoVal.getDepthOfKnowledges().get(i).getValue().replaceAll("\\s+","");
-				String compareValueLevelFetched = chkLevelRecall.getText().replaceAll("\\s+","");
-				String compareValueLevelCheckbox1 = chkLevelSkillConcept.getText().replaceAll("\\s+","");
-				String compareValueLevelCheckbox2 = chkLevelExtendedThinking.getText().replaceAll("\\s+","");
-				String compareValueLevelCheckbox3 = chkLevelStrategicThinking.getText().replaceAll("\\s+","");
-				
-				if(compareValueLevel.equalsIgnoreCase(compareValueLevelFetched))
+			if(collectionDoVal.getDepthOfKnowledges()!=null){
+				for(int i=0; i<collectionDoVal.getDepthOfKnowledges().size(); i++)
 				{
-					if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
+					String compareValueLevel = collectionDoVal.getDepthOfKnowledges().get(i).getValue().replaceAll("\\s+","");
+					String compareValueLevelFetched = chkLevelRecall.getText().replaceAll("\\s+","");
+					String compareValueLevelCheckbox1 = chkLevelSkillConcept.getText().replaceAll("\\s+","");
+					String compareValueLevelCheckbox2 = chkLevelExtendedThinking.getText().replaceAll("\\s+","");
+					String compareValueLevelCheckbox3 = chkLevelStrategicThinking.getText().replaceAll("\\s+","");
+					
+					if(compareValueLevel.equalsIgnoreCase(compareValueLevelFetched))
 					{
-					chkLevelRecall.setValue(true);
+						if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
+						{
+						chkLevelRecall.setValue(true);
+						}
+						else
+						{
+						chkLevelRecall.setValue(false);
+						}
 					}
-					else
+					else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox1))
 					{
-					chkLevelRecall.setValue(false);
+						if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
+						{
+							chkLevelSkillConcept.setValue(true);
+						}
+						else
+						{
+							chkLevelSkillConcept.setValue(false);
+						}
 					}
-				}
-				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox1))
-				{
-					if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
+					else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox2))
 					{
-						chkLevelSkillConcept.setValue(true);
+						if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
+						{
+							chkLevelExtendedThinking.setValue(true);
+						}
+						else
+						{
+							chkLevelExtendedThinking.setValue(false);
+						}
 					}
-					else
+					else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox3))
 					{
-						chkLevelSkillConcept.setValue(false);
-					}
-				}
-				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox2))
-				{
-					if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
-					{
-						chkLevelExtendedThinking.setValue(true);
-					}
-					else
-					{
-						chkLevelExtendedThinking.setValue(false);
-					}
-				}
-				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox3))
-				{
-					if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
-					{
-						chkLevelStrategicThinking.setValue(true);
-					}
-					else
-					{
-						chkLevelStrategicThinking.setValue(false);
+						if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
+						{
+							chkLevelStrategicThinking.setValue(true);
+						}
+						else
+						{
+							chkLevelStrategicThinking.setValue(false);
+						}
 					}
 				}
 			}
 			
-			for(int j=0; j<collectionDoVal.getLearningSkills().size(); j++)
-			{
-				String compareValueLevel = collectionDoVal.getLearningSkills().get(j).getValue().replaceAll("\\s+","");
-				String compareValueLevelFetched = learninglevel1.getText().replaceAll("\\s+","");
-				String compareValueLevelCheckbox1 = learninglevel2.getText().replaceAll("\\s+","");
-				String compareValueLevelCheckbox2 = learninglevel3.getText().replaceAll("\\s+","");
+			if(collectionDoVal.getLearningSkills()!=null){
+				for(int j=0; j<collectionDoVal.getLearningSkills().size(); j++)
+				{
+					String compareValueLevel = collectionDoVal.getLearningSkills().get(j).getValue().replaceAll("\\s+","");
+					String compareValueLevelFetched = learninglevel1.getText().replaceAll("\\s+","");
+					String compareValueLevelCheckbox1 = learninglevel2.getText().replaceAll("\\s+","");
+					String compareValueLevelCheckbox2 = learninglevel3.getText().replaceAll("\\s+","");
 
-				
-				if(compareValueLevel.equalsIgnoreCase(compareValueLevelFetched))
-				{
-					if(collectionDoVal.getLearningSkills().get(j).isSelected()==true)
+					
+					if(compareValueLevel.equalsIgnoreCase(compareValueLevelFetched))
 					{
-						learninglevel1.setValue(true);
+						if(collectionDoVal.getLearningSkills().get(j).isSelected()==true)
+						{
+							learninglevel1.setValue(true);
+						}
+						else
+						{
+							learninglevel1.setValue(false);
+						}
 					}
-					else
+					else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox1))
 					{
-						learninglevel1.setValue(false);
+						if(collectionDoVal.getLearningSkills().get(j).isSelected()==true)
+						{
+							learninglevel2.setValue(true);
+						}
+						else
+						{
+							learninglevel2.setValue(false);
+						}
 					}
-				}
-				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox1))
-				{
-					if(collectionDoVal.getLearningSkills().get(j).isSelected()==true)
+					else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox2))
 					{
-						learninglevel2.setValue(true);
+						if(collectionDoVal.getLearningSkills().get(j).isSelected()==true)
+						{
+							learninglevel3.setValue(true);
+						}
+						else
+						{
+							learninglevel3.setValue(false);
+						}
 					}
-					else
-					{
-						learninglevel2.setValue(false);
-					}
-				}
-				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox2))
-				{
-					if(collectionDoVal.getLearningSkills().get(j).isSelected()==true)
-					{
-						learninglevel3.setValue(true);
-					}
-					else
-					{
-						learninglevel3.setValue(false);
-					}
-				}
 
+				}
 			}
-
-			for(int m=0; m<collectionDoVal.getInstructionalMethod().size(); m++)
-			{
-				if(collectionDoVal.getInstructionalMethod().get(m).getValue() != null || !collectionDoVal.getInstructionalMethod().get(m).getValue().isEmpty())
+			
+			
+			if(collectionDoVal.getInstructionalMethod()!=null){
+				for(int m=0; m<collectionDoVal.getInstructionalMethod().size(); m++)
 				{
-					if(collectionDoVal.getInstructionalMethod().get(m).isSelected()==true)
+					if(collectionDoVal.getInstructionalMethod().get(m).getValue() != null || !collectionDoVal.getInstructionalMethod().get(m).getValue().isEmpty())
 					{
-						lblInstructionalPlaceHolder.setText(collectionDoVal.getInstructionalMethod().get(m).getValue());
-						lblInstructionalPlaceHolder.getElement().setAttribute("alt",collectionDoVal.getInstructionalMethod().get(m).getValue());
-						lblInstructionalPlaceHolder.getElement().setAttribute("title",collectionDoVal.getInstructionalMethod().get(m).getValue());
-						break;
+						if(collectionDoVal.getInstructionalMethod().get(m).isSelected()==true)
+						{
+							lblInstructionalPlaceHolder.setText(collectionDoVal.getInstructionalMethod().get(m).getValue());
+							lblInstructionalPlaceHolder.getElement().setAttribute("alt",collectionDoVal.getInstructionalMethod().get(m).getValue());
+							lblInstructionalPlaceHolder.getElement().setAttribute("title",collectionDoVal.getInstructionalMethod().get(m).getValue());
+							break;
+						}
+						else
+						{
+						lblInstructionalPlaceHolder.setText(i18n.GL0105());
+						lblInstructionalPlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
+						lblInstructionalPlaceHolder.getElement().setAttribute("title",i18n.GL0105());
+						}
 					}
 					else
 					{
@@ -1015,69 +1024,67 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					lblInstructionalPlaceHolder.getElement().setAttribute("title",i18n.GL0105());
 					}
 				}
-				else
-				{
-				lblInstructionalPlaceHolder.setText(i18n.GL0105());
-				lblInstructionalPlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
-				lblInstructionalPlaceHolder.getElement().setAttribute("title",i18n.GL0105());
-				}
 			}
 			
-			for(int n=0; n<collectionDoVal.getAudience().size(); n++)
-			{
-				if(collectionDoVal.getAudience().get(n).getValue() != null || !collectionDoVal.getAudience().get(n).getValue().isEmpty())
+			if(collectionDoVal.getAudience()!=null){
+				for(int n=0; n<collectionDoVal.getAudience().size(); n++)
 				{
-					if(collectionDoVal.getAudience().get(n).isSelected()==true)
+					if(collectionDoVal.getAudience().get(n).getValue() != null || !collectionDoVal.getAudience().get(n).getValue().isEmpty())
 					{
-						lblAudiencePlaceHolder.setText(collectionDoVal.getAudience().get(n).getValue());
-						lblAudiencePlaceHolder.getElement().setAttribute("alt",collectionDoVal.getAudience().get(n).getValue());
-						lblAudiencePlaceHolder.getElement().setAttribute("title",collectionDoVal.getAudience().get(n).getValue());
-						break;
+						if(collectionDoVal.getAudience().get(n).isSelected()==true)
+						{
+							lblAudiencePlaceHolder.setText(collectionDoVal.getAudience().get(n).getValue());
+							lblAudiencePlaceHolder.getElement().setAttribute("alt",collectionDoVal.getAudience().get(n).getValue());
+							lblAudiencePlaceHolder.getElement().setAttribute("title",collectionDoVal.getAudience().get(n).getValue());
+							break;
+						}
+						else
+						{
+							lblAudiencePlaceHolder.setText(i18n.GL0105());
+							lblAudiencePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
+							lblAudiencePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
+						}
 					}
 					else
 					{
-						lblAudiencePlaceHolder.setText(i18n.GL0105());
-						lblAudiencePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
-						lblAudiencePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
+					lblAudiencePlaceHolder.setText(i18n.GL0105());
+					lblAudiencePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
+					lblAudiencePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
 					}
 				}
-				else
-				{
-				lblAudiencePlaceHolder.setText(i18n.GL0105());
-				lblAudiencePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
-				lblAudiencePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
-				}
 			}
-		System.out.println("collectionDoVal.getTaxonomySet() size::::::::"+collectionDoVal.getTaxonomySet());
-			if(collectionDoVal.getTaxonomySet().size()==0){
-				System.out.println("inside this loop");
-				courseData.getElement().getStyle().setDisplay(Display.NONE);
-				addCourseBtn.setText(ADD_COURSE);
-				addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
-				addCourseBtn.getElement().setAttribute("title",ADD_COURSE);
-				removeCourseBtn.setVisible(false);
-				if(courseCode!=null&&!courseCode.equals("")){
-					getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
-				}
-				courseCode="";
-			}else{
-				for (CodeDo code : collectionDoVal.getTaxonomySet()) {
-					if (code.getDepth() == 2) {
-						courseDo.add(code.getLabel());
-						courseData.add(createCourseLabel(code.getLabel(), code.getCodeId() + "", code.getLabel()));
-						//courseLbl.setText(code.getLabel());
-					/*	courseLbl.getElement().setAttribute("alt",code.getLabel());
-						courseLbl.getElement().setAttribute("title",code.getLabel());*/
-						courseData.getElement().getStyle().setDisplay(Display.BLOCK);
-						courseCode=Integer.toString(code.getCodeId());
-						addCourseBtn.setText(ADD_COURSE);
-						addCourseBtn.getElement().setAttribute("alt",CHANGE_COURSE);
-						addCourseBtn.getElement().setAttribute("title",CHANGE_COURSE);
-						removeCourseBtn.setVisible(false);
+			if(collectionDoVal.getTaxonomySet()!=null){
+				if(collectionDoVal.getTaxonomySet().size()==0){
+					System.out.println("inside this loop");
+					courseData.getElement().getStyle().setDisplay(Display.NONE);
+					addCourseBtn.setText(ADD_COURSE);
+					addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
+					addCourseBtn.getElement().setAttribute("title",ADD_COURSE);
+					removeCourseBtn.setVisible(false);
+					if(courseCode!=null&&!courseCode.equals("")){
+						getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
 					}
-					
+					courseCode="";
+				}else{
+					for (CodeDo code : collectionDoVal.getTaxonomySet()) {
+						if (code.getDepth() == 2) {
+							courseDo.add(code.getLabel());
+							courseData.add(createCourseLabel(code.getLabel(), code.getCodeId() + "", code.getLabel()));
+							//courseLbl.setText(code.getLabel());
+						/*	courseLbl.getElement().setAttribute("alt",code.getLabel());
+							courseLbl.getElement().setAttribute("title",code.getLabel());*/
+							courseData.getElement().getStyle().setDisplay(Display.BLOCK);
+							courseCode=Integer.toString(code.getCodeId());
+							addCourseBtn.setText(ADD_COURSE);
+							addCourseBtn.getElement().setAttribute("alt",CHANGE_COURSE);
+							addCourseBtn.getElement().setAttribute("title",CHANGE_COURSE);
+							removeCourseBtn.setVisible(false);
+						}
+						
+					}
 				}
 			}
+			
 			if (collectionDoVal.getMetaInfo() != null && collectionDoVal.getMetaInfo().getStandards() != null) {
 				for (StandardFo standard : collectionDoVal.getMetaInfo().getStandards()) {
 					standardsPanel.add(createStandardLabel(standard.getCode(), standard.getCodeId() + "", standard.getDescription()));
