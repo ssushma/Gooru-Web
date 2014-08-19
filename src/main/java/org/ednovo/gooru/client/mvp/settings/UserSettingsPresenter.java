@@ -1189,7 +1189,7 @@ public class UserSettingsPresenter
 						//For Access  Token
 
 						
-						AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(refresh_token, new SimpleAsyncCallback<GoogleToken>() {
+						AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(result, new SimpleAsyncCallback<GoogleToken>() {
 
 							@Override
 							public void onSuccess(GoogleToken result) {
