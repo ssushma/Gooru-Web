@@ -122,6 +122,7 @@ IsAfterThirteen {
 		appPopUp.getElement().getStyle().setZIndex(99);
 	*/	Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+		appPopUp.getElement().setAttribute("style", "width: 547px;height: 580px;z-index: 98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important; bottom:0 !important;");
 		//appPopUp.getElement().getStyle().setBackgroundColor("transparent");
 		setUiAndIds();
 		appPopUp.center();

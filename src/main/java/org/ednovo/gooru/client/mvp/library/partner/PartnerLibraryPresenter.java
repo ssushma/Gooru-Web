@@ -84,6 +84,7 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			if(AppClientFactory.getLoggedInUser()!=null) {
 				getView().clearPanels();
+				getView().getComingSoonText(false);
 				getView().loadingPanel(true);
 				getIntoPartnerLibrarypage();
 				getPartnerWorkspaceFolders();

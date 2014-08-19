@@ -91,6 +91,12 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 
 	@Override
 	public void setUnitList(final ArrayList<PartnerFolderDo> folderList) {
+		if(folderList.size()==0 && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)){
+			loadingPanel(false);
+			getComingSoonText(true);
+		}else{
+			getComingSoonText(false);
+		}
 		setCourseImageData();
 		libraryView.getLeftNav().clear();
 		libraryView.getContentScroll().clear();
@@ -165,7 +171,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		CourseDo courseDo = new CourseDo();
 		ThumbnailDo thumbnailDo = new ThumbnailDo();
 		LibraryUserDo libraryUserDo = new LibraryUserDo();
-		
 		if(partnerPlace.equals(PlaceTokens.AUTODESK)) {
 			
 			courseDo.setLabel(i18n.GL2027());
@@ -261,6 +266,11 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		libraryView.getContainer().getElement().getStyle().setMarginTop(-50, Unit.PX);
 		libraryView.getCourseTabs().setVisible(false);
 		libraryView.getLoadingIconPanel().setVisible(isVisible);
+	}
+	
+	@Override
+	public void getComingSoonText(boolean isVisible) {
+		libraryView.getComingSoonLabel().setVisible(isVisible);
 	}
 
 	@Override
