@@ -338,6 +338,7 @@ public class LoginPopupUc extends PopupPanel{
 					
 					@Override
 					public void onSuccess(String result) {
+						StringUtil.consoleLog("refresh_token on gmail connect "+result);
 							UserDo user = AppClientFactory.getLoggedInUser();
 							user.setRefreshToken(result);
 						
