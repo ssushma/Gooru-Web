@@ -249,6 +249,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				}
 			copyCollectionJsonObject.put("collection", itemTypeJsonObject);
 			copyCollectionJsonObject.put("addToShelf", "true");
+			System.out.println("-- remix api -- "+url);
+			System.out.println("-- remix pay load -- "+copyCollectionJsonObject.toString());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), copyCollectionJsonObject.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -279,7 +281,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		CollectionDo collectionDoObj=new CollectionDo();
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid, getLoggedInSessionToken(), skipCollectionItem + "");
-		
+		System.out.println("----get coll url --->>> "+url); 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){

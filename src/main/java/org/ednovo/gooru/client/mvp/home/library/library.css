@@ -1146,3 +1146,10 @@ margin-bottom: 15px;
 	height: 19px;
 	margin-top: -83px;
 }
+
+.comingSoonText {
+	margin-top: 150px;
+	text-align: center;
+	font-size: 30px;
+	color: #1076BB;
+}
