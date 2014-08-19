@@ -129,7 +129,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		appPopUp.setContent(TITLE_THIS_COLLECTION, uiBinder.createAndBindUi(this));
 		appPopUp.setGlassStyleName(AddStandardsBundle.INSTANCE.css().gwtGlassPanel());
 		appPopUp.getElement().getStyle().setZIndex(99999);
-		appPopUp.getElement().setAttribute("style", "width:1000px;height:599px;z-index:99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important;bottom:0 !important;");
+		
 		AddStandardsBundle.INSTANCE.css().ensureInjected();
 
 		appPopUp.setViewTitle(i18n.GL0575());
@@ -312,6 +312,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			}
 		}
 	}
+		appPopUp.getElement().setAttribute("style", "width:1000px;height:599px;z-index:99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important;bottom:0 !important;");
 	}
 	
 	public void getFirstLevelObjects(String levelOrder, String standardCodeSelected)

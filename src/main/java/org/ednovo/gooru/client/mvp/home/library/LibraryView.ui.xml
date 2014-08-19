@@ -38,6 +38,7 @@
 			   <g:HTMLPanel ui:field="scrollPanel" styleName="{libraryStyle.scrollPanel}">
 			       <g:HTMLPanel ui:field="libraryMetaDataContainer"/>
 			       <g:HTMLPanel ui:field="loadingIconPanel" styleName="loadingImage {libraryStyle.loadingIconTopic}"></g:HTMLPanel>
+			       <g:Label ui:field="comingSoonLbl" styleName="{libraryStyle.comingSoonText}" visible="false">Coming Soon</g:Label>
 			       <g:HTMLPanel ui:field="contentScroll"/>
 			   </g:HTMLPanel>
 		   </g:HTMLPanel>
