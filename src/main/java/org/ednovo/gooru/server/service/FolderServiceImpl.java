@@ -435,6 +435,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION_RESOURCE_LIST, parentId, sessionToken);
+		System.out.println("--- get coll res -- "+url);  
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFolderList(jsonRep);

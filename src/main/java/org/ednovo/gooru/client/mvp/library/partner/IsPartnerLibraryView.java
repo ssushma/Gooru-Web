@@ -52,4 +52,6 @@ public interface IsPartnerLibraryView extends IsViewWithHandlers<PartnerLibraryU
 	public void loadingPanel(boolean isVisible);
 	
 	public void clearPanels();
+ 
+	void getComingSoonText(boolean isVisible);
 }
