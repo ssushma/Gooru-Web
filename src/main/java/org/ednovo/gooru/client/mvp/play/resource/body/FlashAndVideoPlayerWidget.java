@@ -51,17 +51,22 @@ public class FlashAndVideoPlayerWidget extends Composite {
 			endTimeInSeconds = getStartOrEndTime(videoEndTime);
 			startTimeEndTime=startTimeEndTime+"&end="+endTimeInSeconds+";";
 		}
+		int windowHeight=Window.getClientHeight();
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			windowHeight=windowHeight-116;
+		}else{
+			windowHeight=windowHeight-202;
+		}
 		String tabView=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
 		int autoPlay=tabView!=null&&tabView.equalsIgnoreCase("narration")?0:1;
 		String embeddableHtmlString = "<embed id=\"playerid\" type=\"application/x-shockwave-flash\" src=\""+getProtocal()+"//www.youtube.com/v/"
 				+ resourceUrl+"?" +startTimeEndTime +"rel=0&amp;enablejsapi=1&amp;version=3&amp;autoplay=0&amp;start=1\""
-				+ " width=\"100%\" height=\"100%\" quality=\"high\" allowfullscreen=\"true\" allowscriptaccess=\"always\" autoplay=\"0\" wmode=\"transparent\">";
+				+ " width=\"100%\" height=\""+windowHeight+"px\" quality=\"high\" allowfullscreen=\"true\" allowscriptaccess=\"always\" autoplay=\"0\" wmode=\"transparent\">";
 
 		HTMLPanel resourcePreviewPanel = new HTMLPanel(embeddableHtmlString);
 		resourcePreviewPanel.setStyleName("resourcePreviewWebResourceContainer");
-		//resourcePreviewPanel.setSize("100%", "100%");
+		resourcePreviewPanel.setSize("100%", windowHeight+"px");
 		initWidget(resourcePreviewPanel);
-		setResourceWidgetContainerHeight(resourcePreviewPanel);
 
 	}
 
