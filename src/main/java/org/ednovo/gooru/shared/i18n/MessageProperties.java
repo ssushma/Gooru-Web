@@ -2677,4 +2677,6 @@ public interface MessageProperties extends Constants {
 	String GL2167();
 	String GL2168();
 	String GL2169();
+	String GL2170();
+	String GL2171();
 }

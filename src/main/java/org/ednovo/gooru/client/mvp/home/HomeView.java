@@ -53,6 +53,7 @@ import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -81,6 +82,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ScrollEvent;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
@@ -189,7 +191,30 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		generateStandardLibraries();
 		generateDistrictLibraries();
 		generatePartnerLibraries();
-
+		String emailId= AppClientFactory.getPlaceManager()
+				.getRequestParameter("emailId");
+		StringUtil.consoleLog("emailId..in home."+emailId);
+		if(emailId!=null)
+		{
+			
+			AppClientFactory.getInjector().getUserService().getRefershToken(emailId,new AsyncCallback<String>() {
+				
+				@Override
+				public void onSuccess(String result) {
+					StringUtil.consoleLog("Header UC RefershToken..."+result);
+						UserDo user = AppClientFactory.getLoggedInUser();
+						user.setRefreshToken(result);
+						AppClientFactory.setLoggedInUser(user);
+									
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					StringUtil.consoleLog("Header UC onFailure...");				
+				}
+			});
+		}
+	
 		
 		
 //		InternalServerErrorPopupViewVc error = new InternalServerErrorPopupViewVc() {
