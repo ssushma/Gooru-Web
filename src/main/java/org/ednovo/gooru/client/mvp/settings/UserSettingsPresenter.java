@@ -134,7 +134,7 @@ public class UserSettingsPresenter
 	String aboutUs;
 	String userName;
 	String gender;
-
+	private String Refersh_emailId;
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	
 	String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
@@ -451,7 +451,8 @@ public class UserSettingsPresenter
 						if(isValidEmail){
 							getView().getLbEmail().setText(user.getExternalId());
 							StringUtil.consoleLog("setEmailId 1"+user.getExternalId());
-							AppClientFactory.getLoggedInUser().setEmailId(user.getExternalId());
+							Refersh_emailId=user.getExternalId();
+							
 						}else{
 							getView().hideEmailContainer();
 						}
@@ -462,7 +463,7 @@ public class UserSettingsPresenter
 								boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
 								if(isValidEmail){
 									StringUtil.consoleLog("setEmailId 2"+user.getUser().getEmailId());
-									AppClientFactory.getLoggedInUser().setEmailId(user.getUser().getEmailId());
+									Refersh_emailId=user.getUser().getEmailId();
 									
 									getView().getLbEmail().setText(
 											user.getUser().getEmailId());
@@ -745,14 +746,16 @@ public class UserSettingsPresenter
 					if (user.getExternalId() != null) {
 						getView().getLbEmail().setText(user.getExternalId());
 						StringUtil.consoleLog("setEmailId 3"+user.getExternalId());
-						AppClientFactory.getLoggedInUser().setEmailId(user.getExternalId());
+						Refersh_emailId = user.getExternalId();
+						
 						
 					} else {
 						if(user.getUser().getAccountTypeId() != 2){
 						getView().getLbEmail().setText(
 								user.getUser().getEmailId());
 						StringUtil.consoleLog("setEmailId 4"+user.getUser().getEmailId());
-						AppClientFactory.getLoggedInUser().setEmailId(user.getUser().getEmailId());
+						Refersh_emailId = user.getUser().getEmailId();
+						
 						}
 					}
 					// getView().getLbEmail().setText(user.getExternalId());
@@ -1187,7 +1190,7 @@ public class UserSettingsPresenter
 		final String refresh_token = AppClientFactory.getLoggedInUser().getRefreshToken();
 		StringUtil.consoleLog("refresh_token in updateRefershToken: "+refresh_token);
 		if(refresh_token==null){
-				AppClientFactory.getInjector().getUserService().getRefershToken(new AsyncCallback<String>() {
+				AppClientFactory.getInjector().getUserService().getRefershToken(Refersh_emailId,new AsyncCallback<String>() {
 				
 				@Override
 				public void onSuccess(String result) {
