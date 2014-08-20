@@ -193,7 +193,7 @@ public interface LibraryService extends BaseService {
 	 * @parm(s) : @param sharingType
 	 * @throws GwtException
 	 */
-	public ProfileLibraryListDo getLibraryPaginationWorkspace(String parentId, String sharingType, int limit) throws GwtException, ServerDownException;
+	public ProfileLibraryListDo getLibraryPaginationWorkspace(String parentId, String sharingType, int limit,int offset) throws GwtException, ServerDownException;
 	
 	/**
 	 * @function getConcept 
