@@ -193,7 +193,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		generatePartnerLibraries();
 		String emailId= AppClientFactory.getPlaceManager()
 				.getRequestParameter("emailId");
-		StringUtil.consoleLog("emailId..in home."+emailId);
+	//	StringUtil.consoleLog("emailId..in home."+emailId);
 		if(emailId!=null)
 		{
 			
@@ -201,7 +201,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				
 				@Override
 				public void onSuccess(String result) {
-					StringUtil.consoleLog("Header UC RefershToken..."+result);
+					//StringUtil.consoleLog("Header UC RefershToken..."+result);
 						UserDo user = AppClientFactory.getLoggedInUser();
 						user.setRefreshToken(result);
 						AppClientFactory.setLoggedInUser(user);
@@ -210,7 +210,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				
 				@Override
 				public void onFailure(Throwable caught) {
-					StringUtil.consoleLog("Header UC onFailure...");				
+				//	StringUtil.consoleLog("Header UC onFailure...");				
 				}
 			});
 		}
