@@ -186,7 +186,7 @@ public class UserSettingsPresenter
 				.getRequestParameter("callback");
 	*/	/*if(refershToken!=null && refershToken.equalsIgnoreCase("refershToken")){
 			StringUtil.consoleLog("if ");
-	*/		updateRefershToken();
+	*/		//updateRefershToken();
 		/*}else{*//*
 			StringUtil.consoleLog("else ");
 			final String refresh_token1 = AppClientFactory.getLoggedInUser().getRefreshToken();
@@ -450,7 +450,7 @@ public class UserSettingsPresenter
 						boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
 						if(isValidEmail){
 							getView().getLbEmail().setText(user.getExternalId());
-							
+							StringUtil.consoleLog("setEmailId 1"+user.getExternalId());
 							AppClientFactory.getLoggedInUser().setEmailId(user.getExternalId());
 						}else{
 							getView().hideEmailContainer();
@@ -461,8 +461,9 @@ public class UserSettingsPresenter
 							if(user.getUser().getEmailId()!=null){
 								boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
 								if(isValidEmail){
-									
+									StringUtil.consoleLog("setEmailId 2"+user.getUser().getEmailId());
 									AppClientFactory.getLoggedInUser().setEmailId(user.getUser().getEmailId());
+									
 									getView().getLbEmail().setText(
 											user.getUser().getEmailId());
 									}
@@ -743,12 +744,15 @@ public class UserSettingsPresenter
 
 					if (user.getExternalId() != null) {
 						getView().getLbEmail().setText(user.getExternalId());
+						StringUtil.consoleLog("setEmailId 3"+user.getExternalId());
+						AppClientFactory.getLoggedInUser().setEmailId(user.getExternalId());
 						
 					} else {
 						if(user.getUser().getAccountTypeId() != 2){
 						getView().getLbEmail().setText(
 								user.getUser().getEmailId());
-						
+						StringUtil.consoleLog("setEmailId 4"+user.getUser().getEmailId());
+						AppClientFactory.getLoggedInUser().setEmailId(user.getUser().getEmailId());
 						}
 					}
 					// getView().getLbEmail().setText(user.getExternalId());
@@ -1250,6 +1254,51 @@ public class UserSettingsPresenter
 					
 				}
 				});
+				}else
+				{
+					AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(refresh_token, new SimpleAsyncCallback<GoogleToken>() {
+
+						@Override
+						public void onSuccess(GoogleToken result) {
+							StringUtil.consoleLog("refreshGoogleAccessToken : Success on updateRefershToken");
+							final String access_token = result.getAccess_token() !=null && !result.getAccess_token().equalsIgnoreCase("") ? result.getAccess_token() : null;
+							StringUtil.consoleLog("access_token : Success : on updateRefershToken "+access_token);
+							if (access_token !=null ){
+								
+								UserDo user = AppClientFactory.getLoggedInUser();
+								user.setAccessToken(access_token);
+								AppClientFactory.setLoggedInUser(user);
+								
+								AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
+									@Override
+									public void onSuccess(GoogleDriveDo googleDriveDo) {
+										if(googleDriveDo!=null){
+											if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+												StringUtil.consoleLog("access_token : 401");
+												getView().googleDirveStatus(false);
+											}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+												StringUtil.consoleLog("access_token : 403");
+												getView().googleDirveStatus(false);
+											}else{
+												StringUtil.consoleLog("access_token : no error");
+												UserDo user = AppClientFactory.getLoggedInUser();
+												user.setAccessToken(access_token);
+												AppClientFactory.setLoggedInUser(user);
+												
+												getView().googleDirveStatus(true);
+											}
+										}else{
+										StringUtil.consoleLog("google drive file list empty");
+											getView().googleDirveStatus(false);
+										}
+									}
+								});
+							}else{
+								StringUtil.consoleLog("access token null");
+								getView().googleDirveStatus(false);
+							}
+						}
+					});
 				}
 		
 	
