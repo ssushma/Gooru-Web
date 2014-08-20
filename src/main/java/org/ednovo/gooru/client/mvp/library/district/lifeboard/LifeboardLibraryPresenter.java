@@ -32,7 +32,9 @@ import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -50,6 +52,8 @@ public class LifeboardLibraryPresenter extends BasePlacePresenter<IsLifeboardLib
 	private static final String CALLBACK = "callback";
 	
 	SignUpPresenter signUpViewPresenter = null;
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.LIFEBOARD)
@@ -69,6 +73,10 @@ public class LifeboardLibraryPresenter extends BasePlacePresenter<IsLifeboardLib
 		getView().setUiHandlers(this);
 		this.districtPresenter = districtPresenter;
 		this.signUpViewPresenter = signUpViewPresenter;
+		
+		Window.setTitle(i18n.GL2170());
+		AppClientFactory.setMetaDataDescription(i18n.GL2171());
+		
 	}
 	
 	@Override
