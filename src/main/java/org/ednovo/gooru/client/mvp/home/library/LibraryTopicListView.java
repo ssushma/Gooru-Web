@@ -1267,8 +1267,9 @@ public class LibraryTopicListView extends Composite{
 		toolTipPopupPanelNew.hide();
 		final Map<String, String> params = StringUtil.splitQuery(Window.Location
 				.getHref());
-		
-		
+		if(params.containsKey(CUSTOMIZE)){
+			params.remove(CUSTOMIZE);
+		}
 		String collectionId = getConceptDo().getGooruOid();
 		System.out.println("collectionId:::"+collectionId);
 		if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
@@ -1347,6 +1348,9 @@ public class LibraryTopicListView extends Composite{
 		}
 		final Map<String, String> params = StringUtil.splitQuery(Window.Location
 				.getHref());
+		if(params.containsKey(ASSIGN)){
+			params.remove(ASSIGN);
+		}
 		String collectionId = getConceptDo().getGooruOid();
 		MixpanelUtil.mixpanelEvent("LandingPage_customize_collection");
 		if(!isCustomizePopup){
