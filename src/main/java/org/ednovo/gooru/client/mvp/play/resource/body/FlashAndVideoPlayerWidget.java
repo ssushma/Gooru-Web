@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 
 import com.google.gwt.user.client.Window;
@@ -58,9 +59,9 @@ public class FlashAndVideoPlayerWidget extends Composite {
 
 		HTMLPanel resourcePreviewPanel = new HTMLPanel(embeddableHtmlString);
 		resourcePreviewPanel.setStyleName("resourcePreviewWebResourceContainer");
-		resourcePreviewPanel.setSize("100%", "100%");
-
+		//resourcePreviewPanel.setSize("100%", "100%");
 		initWidget(resourcePreviewPanel);
+		setResourceWidgetContainerHeight(resourcePreviewPanel);
 
 	}
 
@@ -87,5 +88,15 @@ public class FlashAndVideoPlayerWidget extends Composite {
 	}
 	public static String getProtocal(){
 		return Window.Location.getProtocol().equalsIgnoreCase("http:")?"http:":"https:";
+	}
+	
+	public void setResourceWidgetContainerHeight(HTMLPanel resourcePreviewPanel){
+		int windowHeight=Window.getClientHeight();
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			resourcePreviewPanel.setHeight((windowHeight-116)+"px");
+		}else{
+			resourcePreviewPanel.setHeight((windowHeight-202)+"px");
+		}
+		resourcePreviewPanel.setWidth("100%");
 	}
 }
