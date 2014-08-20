@@ -127,6 +127,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_TOPIC_OFFSET, subjectName, topicId, getLoggedInSessionToken(), ""+offset, ""+limit);
 		url+=getLibraryName(libraryName);
+		System.out.println("getLessonsOnPagination.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeLessons(jsonRepresentation);
@@ -872,7 +873,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	}
 
 	@Override
-	public ProfileLibraryListDo getLibraryPaginationWorkspace(String parentId, String sharingType, int limit) throws GwtException {
+	public ProfileLibraryListDo getLibraryPaginationWorkspace(String parentId, String sharingType, int limit,int offset) throws GwtException {
 		ProfileLibraryListDo profileLibraryListDo = new ProfileLibraryListDo();
 		JsonRepresentation jsonRep = null;
 		String url = null;
@@ -880,7 +881,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		if(sharingType!=null){
 			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken, limit+"");
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken, limit+"",offset+"");
 		System.out.println("---- >>> sausd units api -- "+url); 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
