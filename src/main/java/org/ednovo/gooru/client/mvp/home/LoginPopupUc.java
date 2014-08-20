@@ -503,7 +503,7 @@ public class LoginPopupUc extends PopupPanel{
 							lblPleaseWait.setVisible(false);
 							new AlertContentUc(i18n.GL1966(), i18n.GL1938());
 						}
-						AppClientFactory.getInjector().getUserService().getRefershToken(new AsyncCallback<String>() {
+						AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getEmailId(),new AsyncCallback<String>() {
 							
 							@Override
 							public void onSuccess(String result) {

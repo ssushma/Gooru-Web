@@ -685,12 +685,11 @@ public class HeaderUc extends Composite implements
 		manageDotsMenuSelection(noneMenu);
 		String emailId= AppClientFactory.getPlaceManager()
 				.getRequestParameter("emailId");
-		StringUtil.consoleLog("emailId..."+emailId);
-		
+		StringUtil.consoleLog("emailId..in header."+emailId);
 		if(emailId!=null)
 		{
-			AppClientFactory.getLoggedInUser().setEmailId(emailId);
-			AppClientFactory.getInjector().getUserService().getRefershToken(new AsyncCallback<String>() {
+			
+			AppClientFactory.getInjector().getUserService().getRefershToken(emailId,new AsyncCallback<String>() {
 				
 				@Override
 				public void onSuccess(String result) {
