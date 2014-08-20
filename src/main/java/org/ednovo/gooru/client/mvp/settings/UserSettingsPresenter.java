@@ -182,12 +182,12 @@ public class UserSettingsPresenter
 		
 		//final String refresh_token = Cookies.getCookie(GOOGLE_REFRESH_TOKEN) !=null && !Cookies.getCookie(GOOGLE_REFRESH_TOKEN).equalsIgnoreCase("") ? Cookies.getCookie(GOOGLE_REFRESH_TOKEN) : null;
 		
-		String refershToken = AppClientFactory.getPlaceManager()
+		/*String refershToken = AppClientFactory.getPlaceManager()
 				.getRequestParameter("callback");
-		if(refershToken!=null && refershToken.equalsIgnoreCase("refershToken")){
+	*/	/*if(refershToken!=null && refershToken.equalsIgnoreCase("refershToken")){
 			StringUtil.consoleLog("if ");
-			updateRefershToken();
-		}else{
+	*/		updateRefershToken();
+		/*}else{*//*
 			StringUtil.consoleLog("else ");
 			final String refresh_token1 = AppClientFactory.getLoggedInUser().getRefreshToken();
 			
@@ -244,7 +244,7 @@ public class UserSettingsPresenter
 				
 			}
 		
-		}
+		}*/
 		String userId = AppClientFactory.getPlaceManager().getRequestParameter(
 				"userId");
 		String confirmStatus = AppClientFactory.getPlaceManager()
@@ -316,7 +316,7 @@ public class UserSettingsPresenter
 
 			@Override
 			public void onSuccess(V2UserDo user) {
-
+				
 				// For child account set the edit button visibility false.
 				// for some old account, AccountTypeId is null.
 				getView().getAccountSavingText().setVisible(false);
@@ -450,6 +450,8 @@ public class UserSettingsPresenter
 						boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
 						if(isValidEmail){
 							getView().getLbEmail().setText(user.getExternalId());
+							
+							AppClientFactory.getLoggedInUser().setEmailId(user.getExternalId());
 						}else{
 							getView().hideEmailContainer();
 						}
@@ -459,6 +461,8 @@ public class UserSettingsPresenter
 							if(user.getUser().getEmailId()!=null){
 								boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
 								if(isValidEmail){
+									
+									AppClientFactory.getLoggedInUser().setEmailId(user.getUser().getEmailId());
 									getView().getLbEmail().setText(
 											user.getUser().getEmailId());
 									}
@@ -541,6 +545,7 @@ public class UserSettingsPresenter
 				} else {
 					
 				}
+				updateRefershToken();
 				/**
 				 * This RPC is to get the User profile Details(grade value)
 				 */
@@ -738,10 +743,12 @@ public class UserSettingsPresenter
 
 					if (user.getExternalId() != null) {
 						getView().getLbEmail().setText(user.getExternalId());
+						
 					} else {
 						if(user.getUser().getAccountTypeId() != 2){
 						getView().getLbEmail().setText(
 								user.getUser().getEmailId());
+						
 						}
 					}
 					// getView().getLbEmail().setText(user.getExternalId());
