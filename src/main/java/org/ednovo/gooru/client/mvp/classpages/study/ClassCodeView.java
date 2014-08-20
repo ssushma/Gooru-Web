@@ -300,7 +300,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 	
 	private void OpenClasspageEdit(String gooruOId, String token) {
 		Map<String, String> params = new HashMap<String, String>();
-		//params.put("id", gooruOId);
+		params.put("id", gooruOId);
 		params.put("classpageid", gooruOId);
 		params.put("pageNum", "0");
 		params.put("pageSize", "10");

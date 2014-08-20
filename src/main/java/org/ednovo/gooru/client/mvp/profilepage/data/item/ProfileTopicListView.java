@@ -408,7 +408,7 @@ public class ProfileTopicListView extends Composite{
 	}
 	
 	public void setConceptData(final ProfileLibraryDo conceptDo, Integer topicId, final String lessonId, String lessonLabel,String lessonCode) {
-			setConceptDo(conceptDo);
+		setConceptDo(conceptDo);
 			
 			this.lessonCode=lessonCode;
 			if(this.topicId==topicId) {
@@ -751,7 +751,6 @@ public class ProfileTopicListView extends Composite{
 	 * This method is to set the conceptDo
 	 */
 	public void setConceptDo(ProfileLibraryDo profileLibraryDo) {
-		System.out.println("setConceptDo");
 		this.profileLibraryDo = profileLibraryDo;
 	}
 	
@@ -1047,6 +1046,9 @@ public class ProfileTopicListView extends Composite{
 			isAssignPopup=true;
 			final Map<String, String> params = StringUtil.splitQuery(Window.Location
 					.getHref());
+			if(params.containsKey(CUSTOMIZE)){
+				params.remove(CUSTOMIZE);
+			}
 			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals()) {
 				@Override
 				public void closePoup() {
@@ -1087,6 +1089,9 @@ public class ProfileTopicListView extends Composite{
 		}
 		final Map<String, String> params = StringUtil.splitQuery(Window.Location
 				.getHref());
+		if(params.containsKey(ASSIGN)){
+			params.remove(ASSIGN);
+		}
 		RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
 			@Override
 			public void closePoup() {
@@ -1116,7 +1121,6 @@ public class ProfileTopicListView extends Composite{
 	
 	private void showPopupAfterGmailSignin() {
 		// TODO Auto-generated method stub
-		System.out.println("profile");
 		String collectionId = getProfileLibraryDo().getGooruOid()!= null ? getProfileLibraryDo().getGooruOid() : null;
 		String colleId = AppClientFactory.getPlaceManager().getRequestParameter("collectionId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("collectionId") : null;
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
@@ -1124,7 +1128,6 @@ public class ProfileTopicListView extends Composite{
 	
 		System.out.println("collectionId:"+collectionId);
 		System.out.println("colleId:"+colleId);
-		
 		if(customize!=null && customize.equals("yes")){
 			if(colleId.equals(collectionId)){
 				Boolean loginFlag = false;
