@@ -462,6 +462,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			setPopupZindex(100000);
 			setGlassZindex(100000);
 			setDeleteData(i18n.GL0560(), i18n.GL0558());
+			setScrollDisable();
 		}
 		@Override
 		public void onDelete(ClickEvent clickEvent) {

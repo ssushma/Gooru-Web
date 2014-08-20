@@ -91,7 +91,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class ProfileTopicListView extends Composite{
 
 	@UiField ScrollPanel lessonScrollPanel;
-	@UiField HTMLPanel topicBlock, conceptList,collectionInfo,resourcesInside;
+	@UiField HTMLPanel topicBlock, conceptList,collectionInfo,resourcesInside,moreOnTopicText;
 	@UiField Label topicTitleLbl, noCollectionLbl, libraryTopicLbl;
 	@UiField Image collectionImage;
 	@UiField HTML collectionTitleLbl, collectionDescriptionLbl;
@@ -99,6 +99,7 @@ public class ProfileTopicListView extends Composite{
 	@UiField HTMLPanel loadingImage, collectionViewer;
 	@UiField FlowPanel standardsFloPanel;
 	@UiField ProfilePageLibraryStyleBundle style;
+	@UiField HTMLEventPanel searchLink;
 	
 	private Integer topicId;
 
@@ -130,7 +131,7 @@ public class ProfileTopicListView extends Composite{
 	
 	private static final String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
 	
-	private static Integer LESSON_PAGE_INITIAL_LIMIT = 10;
+	private static Integer LESSON_PAGE_INITIAL_LIMIT = 20;
 	
 	private static String PAGE = "page";
 	
@@ -185,11 +186,19 @@ public class ProfileTopicListView extends Composite{
 		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
 		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
 		
+		noCollectionLbl.setVisible(false);
+		
 		noCollectionLbl.setText(i18n.GL1170());
 		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());
 		noCollectionLbl.getElement().setAttribute("title",i18n.GL1170());
 		
+		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
+		searchLink.setVisible(false);
+		searchLink.addClickHandler(new OnSearchLinkClick());
 		setTopicLabel(profileFolderDo.getTitle());
+		searchTitle=profileFolderDo.getTitle();
 		collectionInfo.setVisible(false);
 		if(profileFolderDo.getCollections()!=null) {
 			setOnlyConceptData(profileFolderDo.getCollectionItems(), false, profileFolderDo.getGooruOid(), profileFolderDo.getItemCount());
@@ -206,8 +215,15 @@ public class ProfileTopicListView extends Composite{
 						AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD) || 
 						AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
 					setConceptData(profileFolderDo.getCollectionItems().get(0).getCollectionItems().get(0).getCollectionItems().get(0),topicId, null, null,null);
+					searchLink.setVisible(false);
 				} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)){
 					setConceptData(profileFolderDo.getCollectionItems().get(0).getCollectionItems().get(0),topicId, null, null,null);
+					searchLink.setVisible(true);
+					
+				}
+				else
+				{
+					searchLink.setVisible(false);
 				}
 			} catch(Exception e) {
 				setDefaultCollectionLbl();
@@ -249,12 +265,14 @@ public class ProfileTopicListView extends Composite{
 		collectionDescriptionLbl.getElement().setId("htmlCollectionDescriptionLbl");
 		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
 		resourcesInside.getElement().setId("htmlResourcesInside");
+		moreOnTopicText.getElement().setId("pnlMoreOnTopicText");
 	}
 
 	public ProfileTopicListView(ProfileLibraryDo profileFolderDo, Integer conceptNumber, String placeToken, String collectionType) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
 		setPlaceToken(placeToken);
+		
 		assignCollectionBtn.setText(i18n.GL0526());
 		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
 		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
@@ -263,9 +281,16 @@ public class ProfileTopicListView extends Composite{
 		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
 		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
 		
+		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
+		searchLink.setVisible(false);
+		searchLink.addClickHandler(new OnSearchLinkClick());
+	
 		setTopicLabel(profileFolderDo.getTitle());
-		topicTitleLbl.addStyleName(style.collection());
 		searchTitle=profileFolderDo.getTitle();
+		topicTitleLbl.addStyleName(style.collection());
+		
 		
 		try {
 			setConceptData(profileFolderDo,conceptNumber,null, null,null);
@@ -273,6 +298,7 @@ public class ProfileTopicListView extends Composite{
 			collectionInfo.setVisible(false);
 			resourcesInside.setVisible(false);
 			noCollectionLbl.setVisible(true);
+			
 		}
 		
 		//searchLink.getElement().getStyle().setDisplay(Display.NONE);
@@ -370,11 +396,14 @@ public class ProfileTopicListView extends Composite{
 	
 	public void setConceptData(final ProfileLibraryDo conceptDo, Integer topicId, final String lessonId, String lessonLabel,String lessonCode) {
 			setConceptDo(conceptDo);
+			
 			this.lessonCode=lessonCode;
 			if(this.topicId==topicId) {
 				String id = null;
 				if(conceptDo.getGooruOid()!=null){
 					id=conceptDo.getGooruOid();
+					
+					
 				}
 				if(id!=null) {
 					collectionViewer.setVisible(true);
@@ -632,6 +661,7 @@ public class ProfileTopicListView extends Composite{
 				} else {
 					collectionInfo.setVisible(false);
 					resourcesInside.setVisible(false);
+					
 					noCollectionLbl.setVisible(true);
 				}
 			}
@@ -651,6 +681,7 @@ public class ProfileTopicListView extends Composite{
 	private void setDefaultCollectionLbl() {
 		collectionInfo.setVisible(false);
 		resourcesInside.setVisible(false);
+		
 		noCollectionLbl.setVisible(true);
 	}
 
@@ -1076,7 +1107,7 @@ public class ProfileTopicListView extends Composite{
 	
 	private void showPopupAfterGmailSignin() {
 		// TODO Auto-generated method stub
-		System.out.println("profilepage");
+		
 		String collectionId = getProfileLibraryDo().getGooruOid();
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
@@ -1158,6 +1189,23 @@ public class ProfileTopicListView extends Composite{
 			libraryTopicLbl.setText(title);
 			libraryTopicLbl.getElement().setAttribute("alt",title);
 			libraryTopicLbl.getElement().setAttribute("title",title);
+		}
+	}
+	public Map<String, String> updateParams(String searchQuery) {
+		Map<String, String> params = new HashMap<String,String>();
+		params.put("category", "All");
+		params.put("query", searchQuery);
+		params.put("pageSize", "8");
+		params.put("pageNum", "1");
+		return params;
+	}
+	private class OnSearchLinkClick implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+		
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_SEARCH, updateParams(searchTitle));
+			
+
 		}
 	}
 }

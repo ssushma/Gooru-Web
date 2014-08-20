@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.UserService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.deserializer.ResourceDeserializer;
@@ -41,6 +42,7 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
@@ -309,7 +311,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		ProfilePageDo profilePageDo = null;
 		String userUid = getLoggedInUserUid();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_PAGE, userUid, getLoggedInSessionToken());
-		
+		System.out.println("url..."+url);
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -325,7 +327,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public ProfilePageDo getUserPublicProfilePage(String gooruUid) throws GwtException {
 		ProfilePageDo profilePageDo = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_PAGE, gooruUid, getLoggedInSessionToken());
-		
+		System.out.println("getUserPublicProfilePage...."+url);
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -367,7 +369,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		if(userMetaActiveFlag.equalsIgnoreCase("1")) {
 			url+=USER_META_ACTIVE_FLAG;
 		}
-		
+		System.out.println("getUserProfileV2Details..."+url);
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -730,5 +732,28 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public String getRefershToken() throws GwtException ,ServerDownException{
+		JsonRepresentation jsonRep = null;
+		System.out.println("getLoggedInEmailId.."+AppClientFactory.getLoggedInUser().getEmailId());
+		String url =UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.REFRESH_TOKEN_GDC,AppClientFactory.getLoggedInUser().getEmailId());
+		System.out.println("getRefershToken..."+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();	
+		return deserializeRefreshToken(jsonRep);
+	}
+	
+	public String deserializeRefreshToken(JsonRepresentation jsonRep) {
+		String refreshToken = null;
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try{
+			JSONObject jsonObject=jsonRep.getJsonObject();
+			refreshToken = jsonObject.getString("refreshToken");
+			}catch(JSONException e){}
+				
+		}
+		return refreshToken;
 	}
 }

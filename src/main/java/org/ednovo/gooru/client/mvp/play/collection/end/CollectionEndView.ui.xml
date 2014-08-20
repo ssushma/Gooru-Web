@@ -14,7 +14,7 @@
 					</g:FlowPanel>
 				</g:FlowPanel>
 				<g:FlowPanel styleName="bodyContent">
-					<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.container} {playerStyle.whitebg}">
+					<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.summaryContainer} {playerStyle.whitebg}">
 						<g:FlowPanel styleName="{playerStyle.block}">
 							<g:FlowPanel styleName="{playerStyle.timespend}">
 								<g:FlowPanel styleName="{playerStyle.collectionImageContainer}" >

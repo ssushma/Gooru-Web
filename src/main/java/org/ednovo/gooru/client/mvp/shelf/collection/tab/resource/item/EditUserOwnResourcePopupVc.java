@@ -50,6 +50,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -524,8 +525,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 		}
 
 		setThumbnailImage.setVisible(true);
-		String category = collectionItemDo.getResource().getCategory();
-		
+		String category = collectionItemDo.getResource().getResourceFormat()!=null?collectionItemDo.getResource().getResourceFormat().getValue():"";
+		category=category!=null?category:"";
 		/* if (category.equalsIgnoreCase(i18n.GL0918)) {
 			resourceCategoryLabel.setText(i18n.GL0918 );
 			categorypanel.setStyleName(video.getStyleName());
@@ -577,14 +578,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 	}
 
 	public void setImage(String url, String category){
-		if(category.contains("lesson")||category.contains("textbook")||category.contains("handout"))
-		{
-			category=category.replaceAll("lesson", "text").replaceAll("textbook", "text").replaceAll("handout", "text");
-		}
-		if(category.contains("slide")||category.contains("Slide"))
-		{
-			category=category.replaceAll("slide","image");
-		}
+//		if(category.contains("lesson")||category.contains("textbook")||category.contains("handout"))
+//		{
+//			category=category.replaceAll("lesson", "text").replaceAll("textbook", "text").replaceAll("handout", "text");
+//		}
+//		if(category.contains("slide")||category.contains("Slide"))
+//		{
+//			category=category.replaceAll("slide","image");
+//		}
 		if (thumbnailUrlStr.endsWith("null")) {
 			if (url.indexOf("youtube") >0){
 				String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(url);
@@ -598,6 +599,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 	public void updateUi() {
 		setThumbnailImage.setVisible(true);
 
+	}
+	
+	@UiHandler("setThumbnailImage")
+	public void onImageError(ErrorEvent errorEvent){
+		String category = collectionItemDo.getResource().getResourceFormat()!=null?collectionItemDo.getResource().getResourceFormat().getValue():"";
+		if(category!=null&&!category.equals("")){
+			thumbnailUrlStr = DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG;
+		}
 	}
 	
 	private class ChangeFileBtnClick implements ClickHandler{

@@ -78,5 +78,11 @@ public interface LibraryStyleBundle extends CssResource {
 	
 	String collectionQuizTab();
 	String collectionQuizTabActive();
+	
+	String lpsPartnerLogo();
+	String lpsHeader();
+	
+	String coreDistrictLogo();
+	String coreDistrictHeader();
 
 																																								}

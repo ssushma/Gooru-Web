@@ -126,7 +126,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	@UiField
 	HTMLPanel featuredCourses;
 
-	@UiField Label featuredCousesLbl,featuredContributor;
+	@UiField Label featuredCousesLbl,featuredContributor,comingSoonLbl;
 	
 	@UiField HTML courseTitle;
 	
@@ -455,8 +455,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 *
 	 */
 	public void loadContributorsPage(String callBack, String placeToken) {
-		System.out.println("place token : "+placeToken);
-		System.out.println("placeToken : "+placeToken);
 		if (placeToken.equalsIgnoreCase(PlaceTokens.LIFEBOARD) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.AUTODESK) ||
 				placeToken.equalsIgnoreCase(PlaceTokens.COMMUNITY)||
@@ -496,7 +494,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 			Window.enableScrolling(true);
 		}
 		
-		
 		if(callBack.equalsIgnoreCase(FEATURED_CONTRIBUTORS)){
 			discoverUrl.replaceAll("&page="+FEATURED_CONTRIBUTORS, "");
 			AppClientFactory.fireEvent(new SetDiscoverLinkEvent(discoverUrl));
@@ -505,6 +502,13 @@ public class LibraryView extends Composite implements  ClickHandler {
 			landingBanner.setVisible(false);
 			container.setVisible(false);
 			contributorsContainer.setVisible(true);
+			if((callBack!=previousCallBack)||(courseId!=previousCourseId)) {
+				if(courseMap!=null&&courseMap.get("featured")!=null) {
+						setFeaturedCourseWidgets(courseMap.get("featured").getData(), true);
+				} else {
+					getFeaturedCourses(FEATURED_LABEL, false);
+				}
+			}
 			if(contributorsContainer.getWidgetCount()<=0) {
 				contributorsContainer.add(new LibraryContributorsView(getPlaceToken()));
 			}
@@ -525,6 +529,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			container.setVisible(true);
 			
 			if(standardId == null) {
+		
 				String subjectName = getSubjectNameBySubjectId(courseMap, subjectId);
 				CourseDo courseDo = null;
 				if(subjectName!=null&&courseMap.get(subjectName)!=null&&courseId!=null) {
@@ -573,7 +578,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 		} else if (callBack.equalsIgnoreCase(PARTNER_PAGE)) {
 			if(courseMap!=null&&courseMap.get(FEATURED_LABEL)!=null) {
 			} else {
-				getFeaturedCourses(FEATURED_LABEL, false);
+				getFeaturedCourses(FEATURED_LABEL, false); 
 			}
 			landingBanner.setVisible(false);
 			contributorsContainer.setVisible(false);
@@ -612,7 +617,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 * @throws : <Mentioned if any exceptions>
 	 */
 	public void getFeaturedCourses(final String featuredLabel, final boolean isNotHomePage) {
-		System.out.println("getfeaturedcourses:::");
 		String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
 		if (featuredLabel!=null){
 			if(standardId != null)
@@ -1028,22 +1032,35 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 */
 	public void setCourseData(final CourseDo courseDo) {
 			
-		System.out.println("getPlaceToken : "+getPlaceToken());
-		
-		
 			if(StringUtil.isPartnerUser(AppClientFactory.getCurrentPlaceToken())){
-				educatorPhoto.setVisible(false);
-				featuredContributor.setVisible(false);
+				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS)){
+//				courseTitle.setHTML(i18n.GL2054());
+				courseTitle.setStyleName(libraryStyleUc.lpsHeader());
+//				partnerLogo.setStyleName(libraryStyleUc.lpsPartnerLogo());
+//				partnerLogo.setVisible(true);
+				}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)){
+//					courseTitle.setHTML("This library showcases collections created by a team from the California Office to Reform Education.");
+					courseTitle.setStyleName(libraryStyleUc.lpsHeader());
+//					partnerLogo.setStyleName(libraryStyleUc.coreDistrictLogo());
+//					partnerLogo.setVisible(true);
+				}
+				else{
+				partnerLogo.setVisible(false);
+				courseTitle.removeStyleName(libraryStyleUc.lpsHeader());
 				courseTitle.setHTML(courseDo.getLabel());
 				courseTitle.getElement().setAttribute("alt",courseDo.getLabel());
 				courseTitle.getElement().setAttribute("title",courseDo.getLabel());
+				}
+				educatorPhoto.setVisible(false);
+				featuredContributor.setVisible(false);
 				courseImage.setUrl(courseDo.getThumbnails().getUrl());
 				featuredContributorsLink.setText(courseDo.getCreator().getPartnerName());
 				featuredContributorsLink.setTitle(courseDo.getCreator().getPartnerName());
 				featuredContributorsLink.setHref(courseDo.getCreator().getPartnerUrl());
 				featuredContributorsLink.setTarget("_blank");
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)) {
-					courseImage.getElement().getStyle().setMarginTop(-16, Unit.PX);
+					courseImage.setHeight("190px");
+					courseImage.getElement().getStyle().setMarginTop(50, Unit.PX);
 					courseTitle.getElement().getStyle().setBottom(16, Unit.PX);
 				}
 			} else {
@@ -1338,6 +1355,10 @@ public class LibraryView extends Composite implements  ClickHandler {
 	
 	public HTMLPanel getLoadingIconPanel() {
 		return loadingIconPanel;
+	}
+	
+	public Label getComingSoonLabel(){
+		return comingSoonLbl;
 	}
 	
 	public HTMLPanel getContentScroll() {

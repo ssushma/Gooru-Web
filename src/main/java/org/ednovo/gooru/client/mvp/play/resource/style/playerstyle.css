@@ -25,7 +25,11 @@
 .container{
 	width:1000px;
 	margin:0 auto;
-	background: #f2f2f2;
+	overflow: hidden;
+}
+.summaryContainer{
+	width:1000px;
+	margin:0 auto;
 }
 
 

@@ -57,6 +57,7 @@ import org.ednovo.gooru.client.uc.tooltip.StudyNowToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -68,7 +69,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -85,6 +85,14 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.http.client.Response;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -108,6 +116,7 @@ import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Search Team
@@ -513,10 +522,13 @@ public class HeaderUc extends Composite implements
 		
 		getEditSearchTxtBox().getElement().setAttribute("placeholder",
 				i18n.GL0177());
+		
 		lblBeta.setText(i18n.GL0178());
 		lblBeta.getElement().setId("lblBeta");
 		lblBeta.getElement().setAttribute("alt",i18n.GL0178());
 		lblBeta.getElement().setAttribute("title",i18n.GL0178());
+		
+		getBetaStatus();
 		
 		discoverLink.setText(i18n.GL1748_1());
 		discoverLink.getElement().setId("lblDiscoverLink");
@@ -672,6 +684,72 @@ public class HeaderUc extends Composite implements
 		manageDotsMenuSelection(noneMenu);
 	}
 
+	/**
+	 * @function getBetaStatus 
+	 * 
+	 * @created_date : Aug 14, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	private void getBetaStatus() {
+		try {
+			new RequestBuilder(RequestBuilder.GET, "./images/json/product-beta-status.json").sendRequest("", new RequestCallback() {
+				  @Override
+				  public void onResponseReceived(Request req, Response resp) {
+					  lblBeta.setVisible(getStatus(resp.getText()));
+				  }
+
+				  @Override
+				  public void onError(Request res, Throwable throwable) {
+					  
+				  }
+				});
+		} catch (RequestException e) {
+			
+		}
+	}
+	/**
+	 * 
+	 * @function getStatus 
+	 * 
+	 * @created_date : Aug 14, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param text
+	 * @return
+	 * 
+	 * @return : boolean
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	private boolean getStatus(String text) {
+		boolean status = false;
+
+		JSONValue jsonValue = JSONParser.parse(text);
+        JSONObject jsonObject = jsonValue.isObject();
+        
+        status = jsonObject.get("betaStatus").isBoolean() !=null ? jsonObject.get("betaStatus").isBoolean().booleanValue() : false;
+        
+		return status;
+	}
+
 	public void clearClasspageList() {
 	//	classpageListVc = null;
 		studyNowToolTip = null;
@@ -735,9 +813,9 @@ public class HeaderUc extends Composite implements
 
 		}
 		if (dotsLink.equals(noneMenu)) {
-			System.out.println("no menu");
+			
 		} else {
-			System.out.println("no menu else....");
+			
 			dotsLink.getParent().setStyleName(
 					GooruCBundle.INSTANCE.css().menuActive());
 		}
@@ -794,7 +872,7 @@ public class HeaderUc extends Composite implements
 	@UiHandler("registerLinkLbl")
 	public void onRegisterPopupClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Arrive_Register_popup();
-
+		
 		DataLogEvents.signUp(GwtUUIDGenerator.uuid(), "home",
 				System.currentTimeMillis(), System.currentTimeMillis(), "");
 
@@ -818,8 +896,9 @@ public class HeaderUc extends Composite implements
 		}
 		map.put("callback", "signup");
 		map.put("type", "1");
-		AppClientFactory.getPlaceManager().revealPlace(
-				AppClientFactory.getCurrentPlaceToken(), map);
+		//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), map);
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), map);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
 
 	}
 
@@ -886,25 +965,28 @@ public class HeaderUc extends Composite implements
 							AppClientFactory.GOORU_ANONYMOUS)) {
 				
 //				OpenClasspageList();
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 				
-//				AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",
-//					new SimpleAsyncCallback<ClasspageListDo>() {
-//						@Override
-//						public void onSuccess(ClasspageListDo result) {
-//							hasClasses = result.getSearchResults().size() > 0 ? true : false; 
-//							if (result.getSearchResults().size()>0){
-//								/*classpageId = result.getSearchResults().get(0).getGooruOid();
-//								String userId = result.getSearchResults().get(0).getUser().getGooruUId();
-//								OpenClasspageEdit(classpageId, userId);*/
-//								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,null,true);
-//							}else{
-//								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
-//							}
-//						}
-//				});
+			
+				AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",new SimpleAsyncCallback<ClasspageListDo>() {
+						@Override
+						public void onSuccess(ClasspageListDo result) {
+					//	hasClasses = result.getSearchResults().size() > 0 ? true : false; 
+							
+							if (result.getSearchResults().size()>0){
+								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+								////classpageId = result.getSearchResults().get(0).getGooruOid();
+								//String userId = result.getSearchResults().get(0).getUser().getGooruUId();
+							//OpenClasspageEdit(classpageId, userId);
+								//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,null,true);
+							}else{
+								AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+								//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
+							}
+						}
+				});
 			} else {
 				name = "teach";
+				
 //				onLinkPopupClicked(null);
 //				TODO need to show new logout page....
 				AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);

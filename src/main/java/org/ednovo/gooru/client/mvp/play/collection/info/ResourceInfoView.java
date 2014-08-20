@@ -95,7 +95,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	readingLevelPanel,languagePanel,countryCodePanel,copyRightPanel,hostPanel,
 	accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel,thumbnailPanel,dateCreatedPanel,
 	authorPanel,eduUseType,keyWordsPanel,keywordsInfo,readingLevelType,accessModeType,mediaFeatureType,dKnowledgeType,
-	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,oerPanel,schoolLevelPanel,addsPanel,addsInfo,aggregatorPanel,aggregatorVal,lblPublisher,gradesText;
+	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,oerPanel,schoolLevelPanel,addsPanel,addsInfo,aggregatorPanel,aggregatorVal,lblPublisher,gradesText,resouceInfoContainer;
 	
 	@UiField static  HTMLPanel standardsContentContainer;
 	
@@ -112,7 +112,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					acessHazardlLbl,acessHazardType,mediaFeatureLbl,accessModelLbl,accesibilityLbl,generalLbl,
 					thumbnailText,educationallLbl,resourceInfoLbl,dateCreatedLbl,
 					createdDateInfo,authorLbl,authorName,keywordsTitle,timeRequiredvalue,
-					momentsoflearningLbl,oerLbl,oerAvailability,schoolLevelLbl,addsTitle,schoolLevelType,aggregatorText;
+					momentsoflearningLbl,oerLbl,oerAvailability,schoolLevelLbl,addsTitle,schoolLevelType,aggregatorText,hideImageLabel;
 	
 	@UiField static Label standaInfo;
 	
@@ -397,7 +397,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			if(reviewCount==null){
 				reviewCount = 0;
 			}
-			
 			ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL2024());
 			if(reviewCount>0)
 			{
@@ -2223,16 +2222,21 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		@Override
 		public void deleteStarRatings() {
 			String zeroCount = "0";
-			if(ratingWidgetView!=null){
+			/*if(ratingWidgetView!=null){
 				if(Integer.parseInt(ratingWidgetView.getRatingCountLabel().getText())==1){
 					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
 					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: none;text-decoration: none !important;color: grey");
 					ratingWidgetView.setAvgStarRating(0);
 					ratingWidgetView.getRatingCountLabel().setText(zeroCount); 
 				}
-			}
+			}*/
 			
 		}
 		
 	};
+	
+	public void insertHideButtonAtLast(){
+		resouceInfoContainer.add(hideButton);
+		hideImageLabel.getElement().setAttribute("style", "transform: rotate(0deg);-ms-transform: rotate(0deg);-webkit-transform: rotate(0deg);padding-top:10px;");
+	}
 }

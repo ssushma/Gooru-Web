@@ -1,10 +1,14 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style field="style" src="../ProfilePageLibraryStyle.css" type="org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryStyleBundle" />
 	      <g:HTMLPanel styleName="{style.topicBlock}" ui:field="topicBlock">
 	         <g:Label styleName="{style.topicTitle} {style.folderLevel} {style.open}" ui:field="topicTitleLbl"/>
 	         <g:Label styleName="{style.libraryTopicTitle}" ui:field="libraryTopicLbl"/>
+	           <panel:HTMLEventPanel styleName="{style.searchLink}" ui:field="searchLink">
+	               <g:HTMLPanel styleName="{style.hoverText}" ui:field="moreOnTopicText"></g:HTMLPanel>
+	               <g:HTMLPanel styleName="{style.searchMagnify}"/>
+	            </panel:HTMLEventPanel>
 	         <g:ScrollPanel styleName="{style.conceptList}" ui:field="lessonScrollPanel">
 	             <g:HTMLPanel ui:field="conceptList"/>
 	         </g:ScrollPanel>
