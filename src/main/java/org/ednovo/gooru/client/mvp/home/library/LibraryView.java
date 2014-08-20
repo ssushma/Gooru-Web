@@ -648,7 +648,14 @@ public class LibraryView extends Composite implements  ClickHandler {
 					courseMap = courseMapReader.read(map);
 					setLibraryInitialData(featuredLabel,isNotHomePage);
 				} else {
-					AppClientFactory.getInjector().getLibraryService().getLibrarySubjects(featuredLabel, null, libraryToken, new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
+					String onRefCourseId=null;
+					if((AppClientFactory.getPlaceManager().getRequestParameter("page")!=null?AppClientFactory.getPlaceManager().getRequestParameter("page"):"").equals("featured-course")){
+						onRefCourseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId")!=null?AppClientFactory.getPlaceManager().getRequestParameter("courseId"):null;
+					}else{
+						onRefCourseId=null;
+					}
+					
+					AppClientFactory.getInjector().getLibraryService().getLibrarySubjects(featuredLabel, onRefCourseId, libraryToken, new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
 						@Override
 						public void onFailure(Throwable caught) {
 							
@@ -1009,7 +1016,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 			}
 			@Override
 			public void onFailure(Throwable caught) {
-				
 			}
 		});
 	}
