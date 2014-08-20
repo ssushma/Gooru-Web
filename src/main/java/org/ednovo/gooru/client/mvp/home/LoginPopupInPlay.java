@@ -101,7 +101,7 @@ public class LoginPopupInPlay extends PopupPanel {
         this.res = HomeCBundle.INSTANCE;
         res.css().ensureInjected();
        // this.getElement().getStyle().setZIndex(999999);
-        this.getElement().setAttribute("style", "width: 515px;height: 547px;z-index: 999999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;");
+        //this.getElement().setAttribute("style", "width: 515px;height: 547px;z-index: 999999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;");
         this.setGlassStyleName(HomeCBundle.INSTANCE.css().loginPopupGlassStyle());
         add(binder.createAndBindUi(this));
         loginLbl.setText(i18n.GL0187()+i18n.GL_SPL_EXCLAMATION());
