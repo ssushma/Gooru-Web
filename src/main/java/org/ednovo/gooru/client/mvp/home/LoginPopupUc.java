@@ -334,7 +334,7 @@ public class LoginPopupUc extends PopupPanel{
 				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
 				Window.Location.replace(result);
 				
-			
+				
 			}
 		});
 	}
