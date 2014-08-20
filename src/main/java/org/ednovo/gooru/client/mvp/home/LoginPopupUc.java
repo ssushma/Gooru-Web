@@ -334,25 +334,7 @@ public class LoginPopupUc extends PopupPanel{
 				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
 				Window.Location.replace(result);
 				
-				AppClientFactory.getInjector().getUserService().getRefershToken(new AsyncCallback<String>() {
-					
-					@Override
-					public void onSuccess(String result) {
-						StringUtil.consoleLog("refresh_token on gmail connect "+result);
-							UserDo user = AppClientFactory.getLoggedInUser();
-							user.setRefreshToken(result);
-						
-							AppClientFactory.setLoggedInUser(user);
-					
-						
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						
-					}
-				});
+				
 			}
 		});
 	}

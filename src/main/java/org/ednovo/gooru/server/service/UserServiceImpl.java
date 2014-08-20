@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.UserService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.deserializer.ResourceDeserializer;
@@ -736,8 +737,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public String getRefershToken() throws GwtException ,ServerDownException{
 		JsonRepresentation jsonRep = null;
-		System.out.println("getLoggedInEmailId.."+getLoggedInEmailId());
-		String url =UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.REFRESH_TOKEN_GDC,getLoggedInEmailId());
+		System.out.println("getLoggedInEmailId.."+AppClientFactory.getLoggedInUser().getEmailId());
+		String url =UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.REFRESH_TOKEN_GDC,AppClientFactory.getLoggedInUser().getEmailId());
 		System.out.println("getRefershToken..."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();	

@@ -52,6 +52,8 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	private String placeToken;
 	
 	DistrictMenuNav districtMenuNav = null;
+	ProfileLibraryDo ProfileLibraryDoObj;
+	boolean scrollFlag=false;
 	
 	private static final String FEATURED_COURSE="featured-course",COURSE_PAGE = "course-page", COURSE_ID = "courseId", FEATURED_LABEL = "featured", 
 			CALLBACK = "callback", ACTIVE_STYLE = "active",LIBRARY_PAGE = "page";
@@ -63,13 +65,15 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	private static DistrictViewUiBinder uiBinder = GWT.create(DistrictViewUiBinder.class);
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-
+	private int collectionCount =0;
+	private int totalCollectionCount =0 ;
 	interface DistrictViewUiBinder extends UiBinder<Widget, DistrictView> {
 	}
 	
 	public DistrictView() {		
 		setWidget(uiBinder.createAndBindUi(this));
 		setAssets(AppClientFactory.getCurrentPlaceToken());
+		
 	}
 	
 	@Override
@@ -140,6 +144,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	}
 	
 	public void setUnitList(final ArrayList<ProfileLibraryDo> profileLibraryDoList) {
+		Window.addWindowScrollHandler(new LeftPanelScroll());
 		int firstWidgetCount = leftNav.getWidgetCount();
 		for(int i = 0; i<profileLibraryDoList.size(); i++) {
 			LibraryUnitMenuView libraryUnitMenuView = new LibraryUnitMenuView(profileLibraryDoList.get(i));
@@ -183,9 +188,11 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 						setTopicListData(profileLibraryDoList.get(widgetCountTemp),  unitListId);
 					} else {
 						if(widgetCountTemp==0) {
+							
 							setTopicListData(profileLibraryDoList.get(widgetCountTemp).getCollectionItems(), unitListId, profileLibraryDoList.get(widgetCountTemp));
 						} else {
 							getUnitTopics(unitListId, profileLibraryDoList.get(widgetCountTemp));
+							ProfileLibraryDoObj= profileLibraryDoList.get(widgetCountTemp);
 						}
 					}
 				}
@@ -201,10 +208,11 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 			sharing = null;
 		}
 		
-		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(unitListId, sharing, 20, new SimpleAsyncCallback<ProfileLibraryListDo>() {
+		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(unitListId, sharing, 20,0, new SimpleAsyncCallback<ProfileLibraryListDo>() {
 
 			@Override
 			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
+				totalCollectionCount = profileLibraryListDo.getCount();
 				setTopicListData(profileLibraryListDo.getSearchResult(), unitListId, profileLibraryDo);
 			}
 		});
@@ -226,6 +234,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 		contentScroll.clear();
 		try {
 			int count = 0;
+			collectionCount= folderListDo.size();
 			setMetaDataContent(profileLibraryDo);
 			if(folderListDo.size()>0) {
 				for(int i = 0; i <folderListDo.size(); i++) {
@@ -367,6 +376,56 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 			courseTitle.setText(profileLibraryDo.getTitle());
 			courseTitle.getElement().setAttribute("alt",profileLibraryDo.getTitle());
 			courseTitle.getElement().setAttribute("title",profileLibraryDo.getTitle());
+		}
+	}
+	 class LeftPanelScroll implements  com.google.gwt.user.client.Window.ScrollHandler{
+		
+
+
+		@Override
+		public void onWindowScroll(
+				com.google.gwt.user.client.Window.ScrollEvent event) {
+			
+			String sharing = "public";
+			if(!scrollFlag){
+			if(totalCollectionCount>collectionCount){
+				scrollFlag=true;
+			AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(unitListId, sharing, 20,collectionCount, new SimpleAsyncCallback<ProfileLibraryListDo>() {
+
+				@Override
+				public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
+					//setTopicListData(profileLibraryListDo.getSearchResult(), unitListId, ProfileLibraryDoObj);
+					
+					try {
+						int count = 0;
+						totalCollectionCount= profileLibraryListDo.getCount();
+						collectionCount= collectionCount+profileLibraryListDo.getSearchResult().size();
+						if(totalCollectionCount>collectionCount){
+							scrollFlag=false;	
+						}
+						setMetaDataContent(ProfileLibraryDoObj);
+						if(profileLibraryListDo.getSearchResult().size()>0) {
+							for(int i = 0; i <profileLibraryListDo.getSearchResult().size(); i++) {
+								count++;
+								if(profileLibraryListDo.getSearchResult().get(i).getType().equals("scollection")) {
+									contentScroll.add(new ProfileTopicListView(profileLibraryListDo.getSearchResult().get(i), count, AppClientFactory.getCurrentPlaceToken(), "scollection"));
+								} else {
+									contentScroll.add(new ProfileTopicListView(profileLibraryListDo.getSearchResult().get(i), count, AppClientFactory.getCurrentPlaceToken()));
+								}
+							}
+						} else {
+							HTMLPanel emptyContainer = new HTMLPanel("");
+							contentScroll.add(emptyContainer);
+						}
+						loadingPanel(false);
+					} catch (Exception e) {
+						e.printStackTrace();
+						loadingPanel(false);
+					}
+				}
+			});
+			}
+		}
 		}
 	}
 }

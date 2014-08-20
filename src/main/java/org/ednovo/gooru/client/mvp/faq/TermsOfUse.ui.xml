@@ -168,12 +168,12 @@
 					</div>
 					<div class="{style.termsBodyContainerDiv}">
 						<div class="{style.termsContentDiv}">
-							<!-- <div class="policySubTitleTerms" id="termsOfUse" style="text-align:center;">
-								<b>GOORU WEBSITE TERMS OF USE</b>
-							</div> -->
+							<div class="{style.policyTextLine}" id="termsOfUse" style="text-align:center;">
+								<b>Gooru Terms of Use</b>
+							</div>
 							<div class="lastUpdated">Last Updated Date: August 8, 2014</div>
 							<br/>
-							<a href="http://support.goorulearning.org/hc/en-us/articles/200688506"><i class="privacyLinkText">Community Guidelines</i></a>
+							<a href="http://support.goorulearning.org/hc/en-us/articles/200688506" class="privacyLinkText" target="_blank">Community Guidelines</a>
 							<div class="{style.termsOfUseContert},{style.textContentDiv}">
 
 								<span class="{style.policyTextLine}" style="margin-top:20px;">
@@ -185,7 +185,7 @@
 									education material which can be accessed and used by students and teachers alike privately or in the classroom (the "
 									<b>Services</b>
 									"). The Services are accessible through our website, accessible at
-									 <a href="http://www.goorulearning.org">
+									 <a href="http://www.goorulearning.org" target="_blank">
 										<i class="privacyLinkText">www.goorulearning.org</i>
 									</a> 
 									(the "
@@ -194,7 +194,7 @@
 									<b>Application</b>
 									"). Please read carefully the following terms and conditions ("
 									<b>Terms of Use")</b> and  Community Guidelines.
-									These Terms of Use and <a href="http://support.goorulearning.org/hc/en-us/articles/200688506"><i class="privacyLinkText">Community Guidelines </i></a>govern your access to and use of the Site, Services, Application and certain Content (defined below), and constitute a
+									These Terms of Use and <a href="http://support.goorulearning.org/hc/en-us/articles/200688506" class="privacyLinkText" target="_blank">Community Guidelines </a>govern your access to and use of the Site, Services, Application and certain Content (defined below), and constitute a
 									binding legal agreement between you and Ednovo.
 								</span>
 
@@ -305,7 +305,7 @@
 								<div class="policySubTitle" id="privacyPolicyDiv"><b>Privacy</b></div>
 								<span class="{style.policyTextLine}">
 									See Ednovo’s Privacy Policy at
-									<a class="privacyLinkText" href="http://www.goorulearning.org">http://www.goorulearning.org</a>
+									<a class="privacyLinkText" href="http://www.goorulearning.org" target="_blank">http://www.goorulearning.org</a>
 									for information and notices concerning Ednovo’s collection and use of your personal information.
 
 								</span>
@@ -391,7 +391,7 @@
 								<span class="{style.policyTextLine}">
 									If you download the Application through or from any app store or distribution platform (ike the Apple App Store or Google Play)  where the Application is made available (each, an("
 									<b>App Provider</b>
-									")), then you acknowledge and agree that:
+									"), then you acknowledge and agree that:
 
 								</span>
 								<ul>
@@ -550,7 +550,7 @@
 
 								<span class="{style.policyTextLine}">
 									Ednovo respects copyright law and expects its users to do the same.  It is Ednovo’s policy to terminate in appropriate circumstances Members or other account holders who repeatedly infringe the rights of copyright holders.  Please see Ednovo’s Copyright and IP Policy at 
-									<a href="http://www.goorulearning.org " class="privacyLinkText">http://www.goorulearning.org </a>
+									<a href="http://www.goorulearning.org " class="privacyLinkText" target="_blank">http://www.goorulearning.org </a>
 									located on the “Copyright Policy” link at the bottom of each landing page, for further information.
 
 								</span>
@@ -567,7 +567,7 @@
 
 								<span class="{style.policyTextLine}">
 									If you breach any of these Terms of Use, Ednovo will have the right to suspend or disable your Account or terminate these Terms of Use, at its sole discretion and without prior notice to you.  Ednovo reserves the right to revoke your access to and use of the Site, Services, Application and Collective Content at any time, with or without cause.  In the event Ednovo terminates these Terms of Use for your breach, you will remain liable for all amounts due hereunder.  You may cancel your Account at any time by sending an email to 
-									<a href="mailto:support@goorulearning.org" target="_blank" class="privacyLinkText">support@goorulearning.org</a>
+									<a href="mailto:support@goorulearning.org" target="_blank"><i class="privacyLinkText"> support@goorulearning.org</i></a>
 									<i>.</i>
 								</span>
 
@@ -616,7 +616,7 @@
 									As between Ednovo and you, these Terms of Use (and the Creative Commons “Attribution- ShareAlike 3.0 Unported license located at 
 									<a href="http://creativecommons.org/licenses/by-sa/3.0/legalcode" target="_blank" class="privacyLinkText">http://creativecommons.org/licenses/by-sa/3.0/legalcode</a>
 									for your use of Gooru Content and the Creative Commons Attribution- ShareAlike 3.0 Unported license located at 
-									<a href="http://creativecommons.org/licenses/by-sa/3.0/legalcode" class="privacyLinkText">http://creativecommons.org/licenses/by-sa/3.0/legalcode</a>
+									<a href="http://creativecommons.org/licenses/by-sa/3.0/legalcode" class="privacyLinkText" target="_blank">http://creativecommons.org/licenses/by-sa/3.0/legalcode</a>
 									for Ednovo’s use of Member Content) constitute the entire and exclusive understanding and agreement between Ednovo and you regarding the Site, Services, Application and Collective Content, and these Terms of Use supersede and replace any and all prior oral or written understandings or agreements between Ednovo and you regarding the Site, Services, Application and Collective Content.
 								</span>
 
@@ -657,7 +657,7 @@
 									in accordance with the Commercial Arbitration Rules and the Supplementary Procedures for Consumer Related Disputes  (the "
 									<b>AAA Rules</b>
 									") then in effect, except as modified by this “Dispute Resolution” section.  (The AAA Rules are available at 
-									<a class="privacyLinkText" href="http://www.adr.org/arb_med">www.adr.org/arb_med</a>
+									<a class="privacyLinkText" href="http://www.adr.org/arb_med" target="_blank">www.adr.org/arb_med</a>
 									or by calling the AAA at 1-800-778-7879.)  The Federal Arbitration Act will govern the interpretation and enforcement of this Section.
 
 								</span>
@@ -665,7 +665,7 @@
 								<span class="{style.policyTextLine}">
 									<u>Arbitration Process</u>
 									.  A party who desires to initiate arbitration must provide the other party with a written Demand for Arbitration as specified in the AAA Rules.  (The AAA provides a form Demand for Arbitration at
-									<a class="privacyLinkText" href="http://www.adr.org/aaa/ShowPDF?doc=ADRSTG_004175">http://www.adr.org/aaa/ShowPDF?doc=ADRSTG_004175</a>
+									<a class="privacyLinkText" href="http://www.adr.org/aaa/ShowPDF?doc=ADRSTG_004175" target="_blank">http://www.adr.org/aaa/ShowPDF?doc=ADRSTG_004175</a>
 									and a separate form for California residents at 
 									<a class="privacyLinkText" href="http://www.adr.org/aaa/ShowPDF?doc=ADRSTG_015822" target="_blank">http://www.adr.org/aaa/ShowPDF?doc=ADRSTG_015822</a>
 									.) The arbitrator will be either a retired judge or an attorney licensed to practice law in the state of California and will be selected by the parties from the AAA’s roster of consumer dispute arbitrators.  If the parties are unable to agree upon an arbitrator within seven (7) days of delivery of the Demand for Arbitration, then the AAA will appoint the arbitrator in accordance with the AAA Rules.
@@ -693,7 +693,7 @@
 								<span class="{style.policyTextLine}">
 									<u>Changes.</u>
 								Notwithstanding the provisions of the “Modification” section above, if Ednovo changes this “Dispute Resolution” section after the date you first accepted these Terms of Use (or accepted any subsequent changes to these Terms of Use), you may reject any such change by sending us written notice (including by email to
-									<a href="mailto:info@goorulearning.org" class="privacyLinkText">info@goorulearning.org</a>
+									info@goorulearning.org
 									) within 30 days of the date such change became effective, as indicated in the “Last Updated Date” above or in the date of Ednovo’s email to you notifying you of such change.  By rejecting any change, you are agreeing that you will arbitrate any Dispute between you and Ednovo in accordance with the provisions of this “Dispute Resolution” section as of the date you first accepted these Terms of Use (or accepted any subsequent changes to these Terms of Use).
 
 
@@ -713,14 +713,14 @@
 								<span class="{style.policyTextLine}">If you have any questions about these Terms of Use or any Application, please contact Ednovo at: </span>
 
 								<span class="{style.policyTextLine}">
-									<a class="privacyLinkText" href="mailto:info@goorulearning.org">info@goorulearning.org</a>
+									<a class="privacyLinkText" href="mailto:info@goorulearning.org" target="_blank">info@goorulearning.org</a>
 								</span>
 
-								<span class="{style.policyTextLine}">1032 Elwell Court, Suite 210, </span>
+								<span class="{style.policyTextLine}">1032 Elwell Court, Suite 210 </span>
 
 								<span class="{style.policyTextLine}">Palo Alto, CA, 94304 </span>
 
-								<span class="{style.policyTextLine}">(650) 331-0219.</span>
+								<span class="{style.policyTextLine}">(650) 331-0219</span>
 								<br />
 
 							</div>
