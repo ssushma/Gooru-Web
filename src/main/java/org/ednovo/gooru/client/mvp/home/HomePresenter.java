@@ -362,6 +362,11 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		request.getParameter("", "register");
 		callBackMethods();
 		getIntoLibrarypage();
+		if (AppClientFactory.isAnonymous()){
+			getView().getBtnSignUp().setVisible(true);
+		}else{
+			getView().getBtnSignUp().setVisible(false);
+		}
 		setInSlot(CONTRIBUTORS_SLOT, contributorsPresenter);
 	}
 
