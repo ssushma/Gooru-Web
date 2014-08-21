@@ -897,10 +897,19 @@ public class LibraryMenuNav extends Composite{
 			}
 			
 			setTabSelection(subjectname);
+			String subjectNameonRefresh = AppClientFactory.getPlaceManager().getRequestParameter("subject");
 			if(!subjectname.equalsIgnoreCase(STANDARDS))
 			{
 			AppClientFactory.fireEvent(new OpenSubjectCourseEvent(subjectname, courseDoMap.get(courseIdRefresh)));
 			}
+			if(subjectNameonRefresh != null)
+			{
+			if(subjectNameonRefresh.equalsIgnoreCase(STANDARDS))
+			{
+				AppClientFactory.fireEvent(new OpenSubjectCourseEvent(subjectname, courseDoMap.get(courseIdRefresh)));
+			}
+			}
+			
 		}
 	}
 	

@@ -67,7 +67,7 @@ public abstract class DistrictMenuNav extends Composite {
 	
 	@UiField Anchor aboutGooruAnr;
 	
-	private static final String SCIENCE = "science", MATH = "math", SOCIAL="social-sciences", LANGUAGE="language-arts", LEARNING = "learning";
+	private static final String SCIENCE = "science", MATH = "math", SOCIAL="social-sciences", LANGUAGE="language-arts", LEARNING = "learning",ELEMENTARY="elementary";
 	
 	private static final String LIBRARY_PAGE = "page";
 	
@@ -75,7 +75,7 @@ public abstract class DistrictMenuNav extends Composite {
 	
 	private static final String ACTIVE = "active";
 	
-	private boolean isScienceHovered = false, isMathHovered = false, isSocialHovered = false, isLanguageHovered = false, isLearningHovered = false;
+	private boolean isScienceHovered = false, isMathHovered = false, isSocialHovered = false, isLanguageHovered = false, isLearningHovered = false,iselementaryHoverd =false;
 	
 	private Map<String, String> subjectIdList = new HashMap<String, String>();
 	
@@ -149,7 +149,7 @@ public abstract class DistrictMenuNav extends Composite {
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)
 					||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)
 					||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)
-					||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
+					) {
 			
 			learnPanel.addStyleName(districtStyleUc.tabsLiInactive());
 		} else {
@@ -162,6 +162,15 @@ public abstract class DistrictMenuNav extends Composite {
 							getTaxonomyData(subjectIdList.get(LEARNING),LEARNING);
 						}
 					}
+					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY))
+											{
+												if(subjectIdList.get("elementary")!=null) {
+													if(!iselementaryHoverd) {
+														iselementaryHoverd = true;
+														getTaxonomyData(subjectIdList.get("elementary"),"elementary");
+													}
+												}
+											}
 				}
 			});
 		}
@@ -254,7 +263,7 @@ public abstract class DistrictMenuNav extends Composite {
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.LIFEBOARD)) {
 			sharing = null;
 		}
-		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(subjectCode, sharing, 15, new SimpleAsyncCallback<ProfileLibraryListDo>() {
+		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(subjectCode, sharing, 20, new SimpleAsyncCallback<ProfileLibraryListDo>() {
 			@Override
 			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
 				clickOnCourse(profileLibraryListDo.getSearchResult(), subjectCode, profileLibraryDo);
@@ -323,6 +332,8 @@ public abstract class DistrictMenuNav extends Composite {
 				subjectIdList.put(LANGUAGE, profileListDo.getGooruOid());
 			} else if(profileListDo.getTitle().toLowerCase().contains("learning")) {
 				subjectIdList.put(LEARNING, profileListDo.getGooruOid());
+			}else if(profileListDo.getTitle().toLowerCase().contains("elementary")) {
+				subjectIdList.put(LEARNING, profileListDo.getGooruOid());
 			}
 			setLearningTabStyle();
  		}
@@ -336,6 +347,7 @@ public abstract class DistrictMenuNav extends Composite {
 		} else {
 			learnPanel.addStyleName(districtStyleUc.tabsLiInactive());
 		}
+
 		}
 	}
 	
