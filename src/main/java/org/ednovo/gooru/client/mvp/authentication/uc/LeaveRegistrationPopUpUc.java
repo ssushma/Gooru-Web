@@ -89,7 +89,7 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 		this.setSize("502px", "352px");
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		this.getElement().setAttribute("style", "width:502px;height:352px;z-index:98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important;bottom:0 !important;");
+		//this.getElement().setAttribute("style", "width:502px;height:352px;z-index:98;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important;bottom:0 !important;");
 		this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
 	    this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
 		

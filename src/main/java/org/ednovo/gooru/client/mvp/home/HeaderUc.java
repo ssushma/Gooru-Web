@@ -685,16 +685,15 @@ public class HeaderUc extends Composite implements
 		manageDotsMenuSelection(noneMenu);
 		String emailId= AppClientFactory.getPlaceManager()
 				.getRequestParameter("emailId");
-		StringUtil.consoleLog("emailId..."+emailId);
-		
+	//	StringUtil.consoleLog("emailId..in header."+emailId);
 		if(emailId!=null)
 		{
-			AppClientFactory.getLoggedInUser().setEmailId(emailId);
-			AppClientFactory.getInjector().getUserService().getRefershToken(new AsyncCallback<String>() {
+			
+			AppClientFactory.getInjector().getUserService().getRefershToken(emailId,new AsyncCallback<String>() {
 				
 				@Override
 				public void onSuccess(String result) {
-					StringUtil.consoleLog("Header UC RefershToken..."+result);
+				//	StringUtil.consoleLog("Header UC RefershToken..."+result);
 						UserDo user = AppClientFactory.getLoggedInUser();
 						user.setRefreshToken(result);
 						AppClientFactory.setLoggedInUser(user);
@@ -703,7 +702,7 @@ public class HeaderUc extends Composite implements
 				
 				@Override
 				public void onFailure(Throwable caught) {
-					StringUtil.consoleLog("Header UC onFailure...");				
+				//	StringUtil.consoleLog("Header UC onFailure...");				
 				}
 			});
 		}
