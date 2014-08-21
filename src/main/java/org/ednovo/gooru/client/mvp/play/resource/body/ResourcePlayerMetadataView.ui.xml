@@ -21,7 +21,7 @@
 			</g:HTMLPanel>
 		</g:HTMLPanel> -->
 	<!-- <div class="container whitebg"> -->
-		<g:HTMLPanel styleName="{playerStyle.blocksmall}" ui:field="collectionContainer">
+		<g:HTMLPanel styleName="{palyerStyleResource.getPlayerStyleResource.blocksmall}" ui:field="collectionContainer">
 			<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.navigationWrapper}">
 				<g:FlowPanel styleName="leftBigarrow">
 					<g:Button styleName="{playerStyle.spriteType} {playerStyle.next}" ui:field="backwardButton"></g:Button>
@@ -104,6 +104,6 @@
 		<!-- <img src="images/video.png" class="img-responsive"/>
 	</div> -->
 
-		<g:FlowPanel styleName="{playerStyle.collectionPlayerContainer}" ui:field="resourceWidgetContainer"></g:FlowPanel>
+		<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.collectionPlayerContainer}" ui:field="resourceWidgetContainer"></g:FlowPanel>
 	</g:FlowPanel>
 </ui:UiBinder>

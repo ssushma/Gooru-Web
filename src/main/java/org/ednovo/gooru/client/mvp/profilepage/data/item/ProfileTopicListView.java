@@ -158,6 +158,8 @@ public class ProfileTopicListView extends Composite{
 	String lessonCode="";
 	
 	List<String> standPrefCode = new ArrayList<String>();
+	
+	private static boolean isVisible=true;
 
 	private static final String STANDARD_ID = "standardId";
 
@@ -248,11 +250,6 @@ public class ProfileTopicListView extends Composite{
 		AppClientFactory.getEventBus().addHandler(SetLoadingIconEvent.TYPE, setLoadingIconHandler);
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
 		setId();
-		Map<String, String> maps = StringUtil.splitQuery(Window.Location
-				.getHref());
-		if(maps.containsKey("emailId")){
-			showPopupAfterGmailSignin();
-		}
 
 	}
 	public void setId(){
@@ -408,6 +405,7 @@ public class ProfileTopicListView extends Composite{
 	}
 	
 	public void setConceptData(final ProfileLibraryDo conceptDo, Integer topicId, final String lessonId, String lessonLabel,String lessonCode) {
+	    System.out.println("setConceptData");
 		setConceptDo(conceptDo);
 			
 			this.lessonCode=lessonCode;
@@ -775,14 +773,22 @@ public class ProfileTopicListView extends Composite{
 			if(profileLibraryDo!=null){
 				setMetaDataInfo(profileLibraryDo);
 			}
-			
 		}
 	}
 
 	OpenProfileCollectionHandler openProfileCollectionHandler = new OpenProfileCollectionHandler() {
 		@Override
 		public void openProfileCollection(ProfileLibraryDo profileLibraryDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode) {
+			System.out.println("openProfileCollection");
 			setConceptData(profileLibraryDo, topicId, lessonId, lessonLabel,lessonCode);
+			Map<String, String> maps = StringUtil.splitQuery(Window.Location
+					.getHref());
+			String colId= profileLibraryDo.getGooruOid();
+			if(maps.containsKey("emailId")){
+				if(AppClientFactory.getPlaceManager().getRequestParameter("collectionId").equals(colId)){
+					showPopupAfterGmailSignin();
+				}
+			}
 		}
 	};
 	
@@ -1121,15 +1127,16 @@ public class ProfileTopicListView extends Composite{
 	
 	private void showPopupAfterGmailSignin() {
 		// TODO Auto-generated method stub
+		System.out.println("showPopupAfterGmailSignin");
 		String collectionId = getProfileLibraryDo().getGooruOid()!= null ? getProfileLibraryDo().getGooruOid() : null;
 		String colleId = AppClientFactory.getPlaceManager().getRequestParameter("collectionId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("collectionId") : null;
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
-	
-		System.out.println("collectionId:"+collectionId);
-		System.out.println("colleId:"+colleId);
+ 
+		System.out.println("isVisible:::"+isVisible);
 		if(customize!=null && customize.equals("yes")){
-			if(colleId.equals(collectionId)){
+			if(colleId.equals(collectionId) && isVisible ){
+				isVisible=false;
 				Boolean loginFlag = false;
 				if (AppClientFactory.isAnonymous()){
 					loginFlag = true;
@@ -1140,51 +1147,56 @@ public class ProfileTopicListView extends Composite{
 				}
 				final Map<String, String> params = StringUtil.splitQuery(Window.Location
 						.getHref());
-				RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
+				RenameAndCustomizeLibraryPopUp customizePopup = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
 					@Override
 					public void closePoup() {
 						Window.enableScrolling(true);
 						this.hide();	
 						isCustomizePopup = false;
-						
+
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("440px");
-					successPopupVc.show();
-					successPopupVc.center();
+				customizePopup.setWidth("500px");
+				customizePopup.setHeight("440px");
+				customizePopup.show();
+				customizePopup.center();
+
+
 			}
-			
+
 		}
 		if(assign!=null && assign.equals("yes")){
 			final Map<String, String> params = StringUtil.splitQuery(Window.Location
 					.getHref());
-			if(colleId.equals(collectionId)){
-				AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals()) {
+			if(colleId.equals(collectionId) && isVisible){
+				System.out.println("isVisible:"+isVisible);
+				isVisible=false;
+				AssignPopupVc assignPopup = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals()) {
 					@Override
 					public void closePoup() {
 						Window.enableScrolling(true);
-				        this.hide();
-				    	isAssignPopup=false;
-				    	params.remove(ASSIGN);
-				    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+						this.hide();
+						isAssignPopup=false;
+						params.remove(ASSIGN);
+						PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("638px");
-				successPopupVc.show();
-				successPopupVc.center();
+				assignPopup.setWidth("500px");
+				assignPopup.setHeight("657px");
+				assignPopup.show();
+				assignPopup.center();
 				if (AppClientFactory.isAnonymous()){
-					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+					assignPopup.setPopupPosition(assignPopup.getAbsoluteLeft(), 10);
 				}
 				else {				
-					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+					assignPopup.setPopupPosition(assignPopup.getAbsoluteLeft(), 10);
 				}
+
 			}
-			
+
 		}
 
 

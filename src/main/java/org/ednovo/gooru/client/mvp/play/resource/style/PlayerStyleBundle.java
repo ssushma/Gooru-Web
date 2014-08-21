@@ -83,5 +83,9 @@ public interface PlayerStyleBundle extends ClientBundle {
 		String playerBodyContainer();
 		
 		String summaryContainer();
+		
+		String collectionPlayerContainer();
+		
+		String blocksmall();
 	}
 }

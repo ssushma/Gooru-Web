@@ -175,6 +175,9 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 	@Override
 	public void setPlayerLoginStatusHandler(boolean isLoggedIn) {
 		getView().setPlayerLoginStatus(isLoggedIn);
+		if(collectionPlayerPresenter!=null){
+			collectionPlayerPresenter.updateHeaderView();
+		}
 	}
 	
 	private void getCollectionCommentsList(String gooruOid, final String offset, String limit) {
