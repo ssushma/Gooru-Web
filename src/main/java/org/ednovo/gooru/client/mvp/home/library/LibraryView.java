@@ -103,7 +103,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 	HTMLPanel landingBanner;
 
 	@UiField
-	HTMLPanel container;
+	HTMLPanel container,districtSpecificPartnersMain,districtSpecificPartnersInnerMain,districtSpecificPartnerLogo,districtLibraryHeaderText,districtLibrarySubHeaderText;
 
 	@UiField
 	HTMLPanel featuredCourseTabs;
@@ -1064,10 +1064,41 @@ public class LibraryView extends Composite implements  ClickHandler {
 				featuredContributorsLink.setTitle(courseDo.getCreator().getPartnerName());
 				featuredContributorsLink.setHref(courseDo.getCreator().getPartnerUrl());
 				featuredContributorsLink.setTarget("_blank");
-				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)) {
+				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)) {
 					courseImage.setHeight("190px");
 					courseImage.getElement().getStyle().setMarginTop(50, Unit.PX);
 					courseTitle.getElement().getStyle().setBottom(16, Unit.PX);
+					courseImage.setVisible(false);
+					districtSpecificPartnersMain.setVisible(true);
+					districtLibraryHeaderText.getElement().setInnerText(i18n.GL2108());
+					districtLibrarySubHeaderText.getElement().setInnerText(i18n.GL2172());
+					
+					districtSpecificPartnersMain.setStyleName(libraryStyleUc.districtSpecificPartnersMainCore());
+					districtSpecificPartnersInnerMain.setStyleName(libraryStyleUc.districtSpecificPartnersInnerMainCore());
+					districtSpecificPartnerLogo.setStyleName(libraryStyleUc.districtSpecificPartnerLogoCore());
+					districtLibraryHeaderText.setStyleName(libraryStyleUc.districtLibraryHeaderTextCore());
+					districtLibrarySubHeaderText.setStyleName(libraryStyleUc.districtLibrarySubHeaderTextCore());
+				}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS)) {
+					courseImage.setHeight("190px");
+					courseImage.getElement().getStyle().setMarginTop(50, Unit.PX);
+					courseTitle.getElement().getStyle().setBottom(16, Unit.PX);
+					courseImage.setVisible(false);
+					districtSpecificPartnersMain.setVisible(true);
+					districtLibraryHeaderText.getElement().setInnerText(i18n.GL2053());
+					districtLibrarySubHeaderText.getElement().setInnerText(i18n.GL2054());
+					
+					districtSpecificPartnersMain.setStyleName(libraryStyleUc.districtSpecificPartnersMainlps());
+					districtSpecificPartnersInnerMain.setStyleName(libraryStyleUc.districtSpecificPartnersInnerMainlps());
+					districtSpecificPartnerLogo.setStyleName(libraryStyleUc.districtSpecificPartnerLogolps());
+					districtLibraryHeaderText.setStyleName(libraryStyleUc.districtLibraryHeaderTextlps());
+					districtLibrarySubHeaderText.setStyleName(libraryStyleUc.districtLibrarySubHeaderTextlps());
+				}
+				else
+				{
+					courseImage.setVisible(true);
+					districtSpecificPartnersMain.setVisible(false);
+
+					//here
 				}
 			} else {
 				educatorPhoto.setVisible(true);

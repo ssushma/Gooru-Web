@@ -22,6 +22,14 @@
 		   <g:HTMLPanel ui:field="courseBanner">
 		       <g:HTMLPanel ui:field="partnerLogo"/>
 		       <g:Image ui:field="courseImage"/>
+		       
+		       <g:HTMLPanel ui:field="districtSpecificPartnersMain">
+  <g:HTMLPanel ui:field="districtSpecificPartnersInnerMain">
+  <g:HTMLPanel ui:field="districtSpecificPartnerLogo"></g:HTMLPanel>
+  <g:HTMLPanel ui:field="districtLibraryHeaderText"></g:HTMLPanel>
+<g:HTMLPanel ui:field="districtLibrarySubHeaderText"></g:HTMLPanel></g:HTMLPanel>
+</g:HTMLPanel>
+
 		       <g:HTML styleName="{libraryStyle.courseTitle}" ui:field="courseTitle"/>
 		   </g:HTMLPanel>
 		   <g:HTMLPanel ui:field="panelBodyContainer" styleName="{libraryStyle.bodyContainer}">
