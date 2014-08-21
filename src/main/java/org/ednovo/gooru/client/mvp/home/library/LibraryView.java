@@ -505,10 +505,18 @@ public class LibraryView extends Composite implements  ClickHandler {
 			landingBanner.setVisible(false);
 			container.setVisible(false);
 			contributorsContainer.setVisible(true);
+			if((callBack!=previousCallBack)||(courseId!=previousCourseId)) {
+				 if(courseMap!=null&&courseMap.get("featured")!=null) {
+				 setFeaturedCourseWidgets(courseMap.get("featured").getData(), true);
+					} else {
+				 getFeaturedCourses(FEATURED_LABEL, false);
+					}
+			}
 			if(contributorsContainer.getWidgetCount()<=0) {
 				contributorsContainer.add(new LibraryContributorsView(getPlaceToken()));
 			}
 			libraryMenuNavigation.setTabSelection(FEATURED_CONTRIBUTORS);
+			
 		} else if(callBack.equalsIgnoreCase(COURSE_PAGE)){
 			AppClientFactory.fireEvent(new SetDiscoverLinkEvent(discoverUrl));
 			landingBanner.setVisible(false);
@@ -644,7 +652,14 @@ public class LibraryView extends Composite implements  ClickHandler {
 					courseMap = courseMapReader.read(map);
 					setLibraryInitialData(featuredLabel,isNotHomePage);
 				} else {
-					AppClientFactory.getInjector().getLibraryService().getLibrarySubjects(featuredLabel, null, libraryToken, new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
+					String onRefCourseId=null;
+					 if((AppClientFactory.getPlaceManager().getRequestParameter("page")!=null?AppClientFactory.getPlaceManager().getRequestParameter("page"):"").equals("featured-course")){
+						onRefCourseId = AppClientFactory.getPlaceManager().getRequestParameter("courseId")!=null?AppClientFactory.getPlaceManager().getRequestParameter("courseId"):null;
+						System.out.println("onRefCourseId:::"+onRefCourseId);
+						}else{
+						onRefCourseId=null;
+						}
+					AppClientFactory.getInjector().getLibraryService().getLibrarySubjects(featuredLabel, onRefCourseId, libraryToken, new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
 						@Override
 						public void onFailure(Throwable caught) {
 							
@@ -673,6 +688,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 						});
 */						
 					}
+				
 				}
 		}
 	}
@@ -1026,134 +1042,146 @@ public class LibraryView extends Composite implements  ClickHandler {
 	 * @throws : <Mentioned if any exceptions>
 	 *
 	 */
-	public void setCourseData(final CourseDo courseDo) {
-			
-		System.out.println("getPlaceToken : "+getPlaceToken());
-		
-		
-			if(StringUtil.isPartnerUser(AppClientFactory.getCurrentPlaceToken())){
-				educatorPhoto.setVisible(false);
-				featuredContributor.setVisible(false);
+	public void setCourseData(final CourseDo courseDo) {		
+		if(StringUtil.isPartnerUser(AppClientFactory.getCurrentPlaceToken())){
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS)){
+//			courseTitle.setHTML(i18n.GL2054());
+			courseTitle.setStyleName(libraryStyleUc.lpsHeader());
+//			partnerLogo.setStyleName(libraryStyleUc.lpsPartnerLogo());
+//			partnerLogo.setVisible(true);
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)){
+//				courseTitle.setHTML("This library showcases collections created by a team from the California Office to Reform Education.");
+				courseTitle.setStyleName(libraryStyleUc.lpsHeader());
+//				partnerLogo.setStyleName(libraryStyleUc.coreDistrictLogo());
+//				partnerLogo.setVisible(true);
+			}
+			else{
+			partnerLogo.setVisible(false);
+			courseTitle.removeStyleName(libraryStyleUc.lpsHeader());
+			courseTitle.setHTML(courseDo.getLabel());
+			courseTitle.getElement().setAttribute("alt",courseDo.getLabel());
+			courseTitle.getElement().setAttribute("title",courseDo.getLabel());
+			}
+			educatorPhoto.setVisible(false);
+			featuredContributor.setVisible(false);
+			courseImage.setUrl(courseDo.getThumbnails().getUrl());
+			featuredContributorsLink.setText(courseDo.getCreator().getPartnerName());
+			featuredContributorsLink.setTitle(courseDo.getCreator().getPartnerName());
+			featuredContributorsLink.setHref(courseDo.getCreator().getPartnerUrl());
+			featuredContributorsLink.setTarget("_blank");
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)) {
+				courseImage.setHeight("190px");
+				courseImage.getElement().getStyle().setMarginTop(50, Unit.PX);
+				courseTitle.getElement().getStyle().setBottom(16, Unit.PX);
+			}
+		} else {
+			educatorPhoto.setVisible(true);
+			featuredContributor.setVisible(true);
+			final String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
+			if(courseDo!=null) {
+				if(courseDo.getThumbnails()!=null&&courseDo.getThumbnails().getUrl().isEmpty()) {
+					setDefaultCourseImage(standardId, courseDo.getLabel());
+				} else {
+					courseImage.setUrl(courseDo.getThumbnails().getUrl());
+				}
+				
+				courseImage.addErrorHandler(new ErrorHandler() {
+					@Override
+					public void onError(ErrorEvent event) {
+						setDefaultCourseImage(standardId, courseDo.getLabel());
+					}
+				});
+				
 				courseTitle.setHTML(courseDo.getLabel());
 				courseTitle.getElement().setAttribute("alt",courseDo.getLabel());
 				courseTitle.getElement().setAttribute("title",courseDo.getLabel());
-				courseImage.setUrl(courseDo.getThumbnails().getUrl());
-				featuredContributorsLink.setText(courseDo.getCreator().getPartnerName());
-				featuredContributorsLink.setTitle(courseDo.getCreator().getPartnerName());
-				featuredContributorsLink.setHref(courseDo.getCreator().getPartnerUrl());
-				featuredContributorsLink.setTarget("_blank");
-				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LPS) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)) {
-					courseImage.getElement().getStyle().setMarginTop(-16, Unit.PX);
-					courseTitle.getElement().getStyle().setBottom(16, Unit.PX);
-				}
-			} else {
-				educatorPhoto.setVisible(true);
-				featuredContributor.setVisible(true);
-				final String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
-				if(courseDo!=null) {
-					if(courseDo.getThumbnails()!=null&&courseDo.getThumbnails().getUrl().isEmpty()) {
-						setDefaultCourseImage(standardId, courseDo.getLabel());
-					} else {
-						courseImage.setUrl(courseDo.getThumbnails().getUrl());
-					}
+				try {
+					educatorPhoto.setHeight("46px");
+					educatorPhoto.setWidth("46px");
 					
-					courseImage.addErrorHandler(new ErrorHandler() {
-						@Override
-						public void onError(ErrorEvent event) {
-							setDefaultCourseImage(standardId, courseDo.getLabel());
+					String authorName = "";
+					String authorProfileImage = "";
+					/// In User Object is null
+					if (courseDo.getUser()!=null && courseDo.getUser().size()>0){
+						int j=0;
+						for (int i=0;i<courseDo.getUser().size();i++){
+							j = i;
+							if (courseDo.getUser().get(i).getIsOwner() !=null &&  courseDo.getUser().get(i).getIsOwner().equalsIgnoreCase("1")){
+								break;
+							}
 						}
-					});
 					
-					courseTitle.setHTML(courseDo.getLabel());
-					courseTitle.getElement().setAttribute("alt",courseDo.getLabel());
-					courseTitle.getElement().setAttribute("title",courseDo.getLabel());
-					try {
-						educatorPhoto.setHeight("46px");
-						educatorPhoto.setWidth("46px");
+						if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(MALE)) {
+							authorName = (i18n.GL1422()+i18n.GL_SPL_FULLSTOP()+" ")+courseDo.getUser().get(j).getLastName();
+						} else if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(FEMALE)) {
+							authorName = (i18n.GL1423()+i18n.GL_SPL_FULLSTOP()+" ")+courseDo.getUser().get(j).getLastName();
+						} else {
+							authorName = courseDo.getUser().get(j).getLastName();
+						}
 						
-						String authorName = "";
-						String authorProfileImage = "";
-						/// In User Object is null
-						if (courseDo.getUser()!=null && courseDo.getUser().size()>0){
-							int j=0;
-							for (int i=0;i<courseDo.getUser().size();i++){
-								j = i;
-								if (courseDo.getUser().get(i).getIsOwner() !=null &&  courseDo.getUser().get(i).getIsOwner().equalsIgnoreCase("1")){
-									break;
-								}
-							}
 						
-							if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(MALE)) {
-								authorName = (i18n.GL1422()+i18n.GL_SPL_FULLSTOP()+" ")+courseDo.getUser().get(j).getLastName();
-							} else if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(FEMALE)) {
-								authorName = (i18n.GL1423()+i18n.GL_SPL_FULLSTOP()+" ")+courseDo.getUser().get(j).getLastName();
-							} else {
-								authorName = courseDo.getUser().get(j).getLastName();
-							}
-							
-							
-							if (courseDo.getUser().size()>1){
-								featuredContributor.setText(authorName+" "+i18n.GL_GRR_AND()+" "+i18n.GL1117()+" "+i18n.GL1006()+" "+courseDo.getLabel()+". ");
-								featuredContributor.getElement().setAttribute("alt",authorName+" "+i18n.GL_GRR_AND()+" "+i18n.GL1117()+" "+i18n.GL1006()+" "+courseDo.getLabel()+". ");
-								featuredContributor.getElement().setAttribute("title",authorName+" "+i18n.GL_GRR_AND()+" "+i18n.GL1117()+" "+i18n.GL1006()+" "+courseDo.getLabel()+". ");
-							}else{
-								featuredContributor.setText(authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
-								featuredContributor.getElement().setAttribute("alt",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
-								featuredContributor.getElement().setAttribute("title",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
-							}
-							
-							authorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getUser().get(j).getGooruUId()+PNG;
-							
+						if (courseDo.getUser().size()>1){
+							featuredContributor.setText(authorName+" "+i18n.GL_GRR_AND()+" "+i18n.GL1117()+" "+i18n.GL1006()+" "+courseDo.getLabel()+". ");
+							featuredContributor.getElement().setAttribute("alt",authorName+" "+i18n.GL_GRR_AND()+" "+i18n.GL1117()+" "+i18n.GL1006()+" "+courseDo.getLabel()+". ");
+							featuredContributor.getElement().setAttribute("title",authorName+" "+i18n.GL_GRR_AND()+" "+i18n.GL1117()+" "+i18n.GL1006()+" "+courseDo.getLabel()+". ");
 						}else{
-							if(courseDo.getCreator().getGender().equalsIgnoreCase(MALE)) {
-								authorName = (i18n.GL1422()+i18n.GL_SPL_FULLSTOP()+" ")+courseDo.getCreator().getLastName();
-							} else if(courseDo.getCreator().getGender().equalsIgnoreCase(FEMALE)) {
-								authorName = i18n.GL1423()+i18n.GL_SPL_FULLSTOP()+" "+courseDo.getCreator().getLastName();
-							} else {
-								authorName = courseDo.getCreator().getLastName();
-							}
-							
 							featuredContributor.setText(authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
 							featuredContributor.getElement().setAttribute("alt",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
 							featuredContributor.getElement().setAttribute("title",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
-							authorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG; 
-							
 						}
+						
+						authorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getUser().get(j).getGooruUId()+PNG;
+						
+					}else{
+						if(courseDo.getCreator().getGender().equalsIgnoreCase(MALE)) {
+							authorName = (i18n.GL1422()+i18n.GL_SPL_FULLSTOP()+" ")+courseDo.getCreator().getLastName();
+						} else if(courseDo.getCreator().getGender().equalsIgnoreCase(FEMALE)) {
+							authorName = i18n.GL1423()+i18n.GL_SPL_FULLSTOP()+" "+courseDo.getCreator().getLastName();
+						} else {
+							authorName = courseDo.getCreator().getLastName();
+						}
+						
+						featuredContributor.setText(authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
+						featuredContributor.getElement().setAttribute("alt",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
+						featuredContributor.getElement().setAttribute("title",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
+						authorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG; 
+						
+					}
 
-						educatorPhoto.setUrl(authorProfileImage);
+					educatorPhoto.setUrl(authorProfileImage);
 
-						educatorPhoto.addErrorHandler(new ErrorHandler() {
-							@Override
-							public void onError(ErrorEvent event) {
-								educatorPhoto.setUrl(EDUCATOR_DEFAULT_IMG);
-							}
-						});
-					} catch (Exception e) {
-						educatorPhoto.setVisible(false);
-						featuredContributor.setVisible(false);
-					}
-				}
-				
-				String libraryPage = AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE,"emptyPage");
-				if(!isUnitLoaded&&libraryPage.equals(COURSE_PAGE)) {
-					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
-						setUnitListData(courseDo.getUnit());
-					}
-					else{
-						getPopularList(courseDo.getUnit(), courseDo.getCodeId(), false);	
-					}
-					
-					isUnitLoaded=true;
-				}
-				if(courseDo.getUnit()!=null) {
-					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
-						setUnitListData(courseDo.getUnit());
-					}
-					else{
-						getPopularList(courseDo.getUnit(), courseDo.getCodeId(), true);
-					}
+					educatorPhoto.addErrorHandler(new ErrorHandler() {
+						@Override
+						public void onError(ErrorEvent event) {
+							educatorPhoto.setUrl(EDUCATOR_DEFAULT_IMG);
+						}
+					});
+				} catch (Exception e) {
+					educatorPhoto.setVisible(false);
+					featuredContributor.setVisible(false);
 				}
 			}
+			
+			String libraryPage = AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE,"emptyPage");
+			if(!isUnitLoaded&&libraryPage.equals(COURSE_PAGE)) {
+				if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
+					setUnitListData(courseDo.getUnit());
+				}
+				else{
+					getPopularList(courseDo.getUnit(), courseDo.getCodeId(), false);	
+				}
+				
+				isUnitLoaded=true;
+			}
+			if(courseDo.getUnit()!=null) {
+				if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
+					setUnitListData(courseDo.getUnit());
+				}
+				else{
+					getPopularList(courseDo.getUnit(), courseDo.getCodeId(), true);
+				}
+			}
+		}
 			
 	}
 	
