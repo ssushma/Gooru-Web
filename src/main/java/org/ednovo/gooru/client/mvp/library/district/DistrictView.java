@@ -145,9 +145,15 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	
 	public void setUnitList(final ArrayList<ProfileLibraryDo> profileLibraryDoList) {
 		Window.addWindowScrollHandler(new LeftPanelScroll());
+		if(profileLibraryDoList.get(0).getItemCount()>20){
+			totalCollectionCount = profileLibraryDoList.get(0).getItemCount();
+			
+		}
 		int firstWidgetCount = leftNav.getWidgetCount();
 		for(int i = 0; i<profileLibraryDoList.size(); i++) {
 			LibraryUnitMenuView libraryUnitMenuView = new LibraryUnitMenuView(profileLibraryDoList.get(i));
+			
+			
 			leftNav.add(libraryUnitMenuView);
 			libraryUnitMenuView.setWidgetCount(leftNav.getWidgetCount()+1);
 			libraryUnitMenuView.setType(profileLibraryDoList.get(i).getType());
@@ -188,7 +194,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 						setTopicListData(profileLibraryDoList.get(widgetCountTemp),  unitListId);
 					} else {
 						if(widgetCountTemp==0) {
-							
+							totalCollectionCount=profileLibraryDoList.get(widgetCountTemp).getItemCount();
 							setTopicListData(profileLibraryDoList.get(widgetCountTemp).getCollectionItems(), unitListId, profileLibraryDoList.get(widgetCountTemp));
 						} else {
 							getUnitTopics(unitListId, profileLibraryDoList.get(widgetCountTemp));
@@ -385,7 +391,6 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 		@Override
 		public void onWindowScroll(
 				com.google.gwt.user.client.Window.ScrollEvent event) {
-			
 			String sharing = "public";
 			if(!scrollFlag){
 			if(totalCollectionCount>collectionCount){
