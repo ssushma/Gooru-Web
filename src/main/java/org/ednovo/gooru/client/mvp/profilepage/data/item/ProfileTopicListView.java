@@ -180,7 +180,6 @@ public class ProfileTopicListView extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicNumber;
 		setPlaceToken(placeToken);
-		
 		assignCollectionBtn.setText(i18n.GL0526());
 		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
 		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
@@ -276,7 +275,6 @@ public class ProfileTopicListView extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
 		setPlaceToken(placeToken);
-		
 		assignCollectionBtn.setText(i18n.GL0526());
 		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
 		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
@@ -405,7 +403,6 @@ public class ProfileTopicListView extends Composite{
 	}
 	
 	public void setConceptData(final ProfileLibraryDo conceptDo, Integer topicId, final String lessonId, String lessonLabel,String lessonCode) {
-	    
 		setConceptDo(conceptDo);
 			
 			this.lessonCode=lessonCode;
@@ -779,7 +776,6 @@ public class ProfileTopicListView extends Composite{
 	OpenProfileCollectionHandler openProfileCollectionHandler = new OpenProfileCollectionHandler() {
 		@Override
 		public void openProfileCollection(ProfileLibraryDo profileLibraryDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode) {
-			
 			setConceptData(profileLibraryDo, topicId, lessonId, lessonLabel,lessonCode);
 			Map<String, String> maps = StringUtil.splitQuery(Window.Location
 					.getHref());
@@ -1126,14 +1122,12 @@ public class ProfileTopicListView extends Composite{
 	 */
 	
 	private void showPopupAfterGmailSignin() {
-		// TODO Auto-generated method stub
-		
+
 		String collectionId = getProfileLibraryDo().getGooruOid()!= null ? getProfileLibraryDo().getGooruOid() : null;
 		String colleId = AppClientFactory.getPlaceManager().getRequestParameter("collectionId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("collectionId") : null;
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
- 
-		
+
 		if(customize!=null && customize.equals("yes")){
 			if(colleId.equals(collectionId) && isVisible ){
 				isVisible=false;
@@ -1170,7 +1164,6 @@ public class ProfileTopicListView extends Composite{
 			final Map<String, String> params = StringUtil.splitQuery(Window.Location
 					.getHref());
 			if(colleId.equals(collectionId) && isVisible){
-				
 				isVisible=false;
 				AssignPopupVc assignPopup = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals()) {
 					@Override

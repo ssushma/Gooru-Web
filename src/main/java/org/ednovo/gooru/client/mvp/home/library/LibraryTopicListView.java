@@ -1271,7 +1271,6 @@ public class LibraryTopicListView extends Composite{
 			params.remove(CUSTOMIZE);
 		}
 		String collectionId = getConceptDo().getGooruOid();
-		System.out.println("collectionId:::"+collectionId);
 		if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
 			MixpanelUtil.mixpanelEvent("standardlibrary_assign_collection");	
 		}
@@ -1408,7 +1407,6 @@ public class LibraryTopicListView extends Composite{
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
 		String emailId = AppClientFactory.getPlaceManager().getRequestParameter("emailId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("emailId") : null;
-		System.out.println("colleId:"+colleId);
 		if(customize!=null && customize.equals("yes") && emailId!=null){
 			if(colleId.equals(collectionId)){
 				Boolean loginFlag = false;
