@@ -1593,9 +1593,11 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			eduRoleType.getElement().setAttribute("alt",educationalRole);
 			eduRoleType.getElement().setAttribute("title",educationalRole);
 			interactiveLbl.setText(i18n.GL1689()+i18n.GL_SPL_SEMICOLON()+" ");
+			eduRoleLbl.setText(i18n.GL1691()+i18n.GL_SPL_SEMICOLON()+" ");
 			eduRoleLbl.getElement().setAttribute("alt",i18n.GL1691());
 			eduRoleLbl.getElement().setAttribute("title",i18n.GL1691());
 		}else{
+			eduRoleLbl.setText("");
 			eduRolePanel.setVisible(false);
 		}
 	}
