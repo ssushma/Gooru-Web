@@ -99,6 +99,8 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 	private CollectionItemSearchResultDo collectionItemSearchResultDo;
 	
 	private static final String VIEWS_PREFIX_NAME = "Views";  
+	
+	private Label viewCountLabel=null;
 
 	/**
 	 * Class constructor, calls resource search result setData method
@@ -159,7 +161,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 		});
 		
 		SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), 30);
-		SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + "", " " + VIEWS_PREFIX_NAME);  
+		viewCountLabel=SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + "", " " + VIEWS_PREFIX_NAME);  
 //		resourceImageUc.renderSearch(resourceSearchResultDo.getCategory(), resourceSearchResultDo.getUrl(), null, resourceSearchResultDo.getCollectionItemId(), PLAYER_NAME,resourceSearchResultDo.getResourceTitle(), false,collectionId);
 		
 		resourceImageUc.renderSearch(resourceSearchResultDo.getCategory(), resourceSearchResultDo.getUrl(), null, resourceSearchResultDo.getCollectionItemId(), resourceSearchResultDo.getResourceTitle(), false, resourceSearchResultDo.getNarration(),collectionItemSearchResultDo.getCollectionId());
@@ -255,6 +257,13 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 			ratingWidgetView.setAvgStarRating(collectionItemSearchResultDo.getRatings().getAverage());*/
 		}
 	};
+	
+	public void updateResourceViewCount(String viewCount){
+		if(viewCountLabel!=null){
+			System.out.println("viewCountLabel====>"+viewCountLabel.getText());
+			viewCountLabel.setText(viewCount+ " " + VIEWS_PREFIX_NAME);  
+		}
+	}
 
 	/**
 	 * 
