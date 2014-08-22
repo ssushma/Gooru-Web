@@ -26,7 +26,9 @@ package org.ednovo.gooru.client.uc;
 
 
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -36,12 +38,14 @@ import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
+import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -71,9 +75,9 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class TocResourceToolTip extends PopupPanel{
 
-	@UiField Label resourceIndex,resourceCategory,resourceSourceName;
+	@UiField Label resourceIndex,resourceCategory;
 	@UiField HTML resourceHoverTitle;
-	@UiField FlowPanel tocResourceContainer,ratingWidgetPanel;
+	@UiField FlowPanel tocResourceContainer,ratingWidgetPanel,resourceSourceName;
 	private CollectionItemDo collectionItemDo=null;
 	
 	private String collectionItemId=null;
@@ -124,7 +128,7 @@ public class TocResourceToolTip extends PopupPanel{
 		}
 		setResourceSequence(itemIndex);
 		setResourceCategory();
-		setReourceSourceName();
+		displayPublisher();
 		if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 			setAvgRatingWidget();
 		}
@@ -161,15 +165,20 @@ public class TocResourceToolTip extends PopupPanel{
 		}
 	}
 
-	public void setReourceSourceName(){
-		if(collectionItemDo.getResource().getResourceSource()!=null){
-			if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
-			resourceSourceName.setText(collectionItemDo.getResource().getResourceSource().getAttribution()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():"");
-			}
+	private void displayPublisher(){
+		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getResourceFormat()!=null){
+			if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+				if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
+					resourceSourceName.getElement().setInnerHTML(collectionItemDo.getResource().getCreator().getUsername());
+				}
 			}else{
-			resourceSourceName.setText("");
+				List<String> publishersList=collectionItemDo.getResource().getPublisher()!=null?collectionItemDo.getResource().getPublisher():null;
+				publishersList=new ArrayList<String>();
+				if(publishersList!=null&&publishersList.size()>0){
+					SearchUiUtil.renderMetaData(resourceSourceName, publishersList, 0);
+				}
+			}
 		}
-		
 	}
 	public void setResourceCategory(){
 		if(collectionItemDo.getResource().getResourceFormat()!=null){

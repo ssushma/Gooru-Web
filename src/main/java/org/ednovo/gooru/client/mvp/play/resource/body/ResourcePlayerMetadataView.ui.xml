@@ -30,7 +30,7 @@
 				<g:FlowPanel styleName="{playerStyle.mainDisc}">
 					<g:FlowPanel>
 						<g:HTML ui:field="resourceTitleLbl" styleName="{playerStyle.resourceTitleStyle}"></g:HTML>
-						<g:Label styleName="{playerStyle.collectionNormalTxt}" ui:field="resourcePublisher"></g:Label>
+						<g:FlowPanel styleName="{playerStyle.collectionNormalTxt}" ui:field="resourcePublisher"></g:FlowPanel>
 					</g:FlowPanel>
 					<g:FlowPanel ui:field="tagsButtonContainer" styleName="{playerStyle.tagsWrapperStyle}">
 						<g:FlowPanel ui:field="tagsContainer"></g:FlowPanel>
