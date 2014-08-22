@@ -117,6 +117,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
 		appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().popupContainer());
 		setStaticTexts();
+		enableAssignButton(false);
 		//assignmentDirectionsTxtArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
 		//assignmentDirectionsTxtArea.getElement().setAttribute("maxlength", "400");
 //		dropdownListContainerScrollPanel.setVisible(false);
@@ -234,6 +235,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	
 	public void setSelectedCollectionTitle(){
 		if(cureentcollectionTreeItem!=null){
+			enableAssignButton(true);
 			displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
 			displayCountLabel.getElement().setAttribute("alt","\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
 			displayCountLabel.getElement().setAttribute("title","\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
@@ -241,15 +243,28 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 	public void setSelectedCollectionsCount(int count){
 		if(count>0){
+			enableAssignButton(true);
 			String label=count==1?count+" collection":count+" collections";
 			displayCountLabel.setText(label+" "+i18n.GL1975());
 			displayCountLabel.getElement().setAttribute("alt",label+" "+i18n.GL1975());
 			displayCountLabel.getElement().setAttribute("title",label+" "+i18n.GL1975());
 		
 		}else{
+			enableAssignButton(false);
 			displayCountLabel.setText("");
 			displayCountLabel.getElement().setAttribute("alt","");
 			displayCountLabel.getElement().setAttribute("title","");
+		}
+	}
+	public void enableAssignButton(boolean enable){
+		if(enable){
+			addResourceBtnLbl.setEnabled(enable);
+			addResourceBtnLbl.removeStyleName("secondary");
+			addResourceBtnLbl.addStyleName("primary");
+		}else{
+			addResourceBtnLbl.setEnabled(enable);
+			addResourceBtnLbl.removeStyleName("primary");
+			addResourceBtnLbl.addStyleName("secondary");
 		}
 	}
 	protected void removePreviousSelectedItem(){
@@ -331,6 +346,9 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 //	}
 	
 	public void addCollectionToAssign(){
+		
+		System.out.println("cureentcollectionTreeItem::"+cureentcollectionTreeItem);
+		System.out.println("currentFolderSelectedTreeItem::"+currentFolderSelectedTreeItem);
 		
 		if(cureentcollectionTreeItem!=null){
 			addResourceBtnLbl.setVisible(false);
@@ -620,6 +638,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 //		assignmentDirectionsTxtArea.setText(GL1389);
 //		assignmentDirectionsTxtArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
 		dateBoxUc.getDateBox().setValue("");
+		enableAssignButton(false);
 		Window.enableScrolling(true);
 		super.hide();
 	}
