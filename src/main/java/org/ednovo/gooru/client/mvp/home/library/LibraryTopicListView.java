@@ -147,6 +147,8 @@ public class LibraryTopicListView extends Composite{
 	
 	private boolean isCustomizePopup = false;
 	
+	private static boolean isVisible=true;
+	
 	private ConceptDo conceptDo;
 	
 	private ArrayList<ConceptDo> conceptDoList;
@@ -1407,8 +1409,10 @@ public class LibraryTopicListView extends Composite{
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
 		String emailId = AppClientFactory.getPlaceManager().getRequestParameter("emailId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("emailId") : null;
+		
 		if(customize!=null && customize.equals("yes") && emailId!=null){
-			if(colleId.equals(collectionId)){
+			if(colleId.equals(collectionId) && isVisible){
+				isVisible=false;
 				Boolean loginFlag = false;
 				if (AppClientFactory.isAnonymous()){
 					loginFlag = true;
@@ -1441,7 +1445,8 @@ public class LibraryTopicListView extends Composite{
 		//	final Map<String,String> params = new HashMap<String,String>();
 			final Map<String, String> params = StringUtil.splitQuery(Window.Location
 					.getHref());
-			if(colleId.equals(collectionId)){
+			if(colleId.equals(collectionId) && isVisible ){
+				isVisible=false;
 				AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals()) {
 
 					@Override
