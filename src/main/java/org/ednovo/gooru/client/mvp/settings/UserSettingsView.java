@@ -741,7 +741,6 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		btnViewAdmin.getElement().setId("btnBtnViewAdmin");
 		btnViewAdmin.getElement().setAttribute("alt", i18n.GL1993() );
 		btnViewAdmin.getElement().setAttribute("title", i18n.GL1993() );
-		
 		if(AppClientFactory.getLoggedInUser().getUserRoleSetString().contains("Content_Admin")){
 			btnViewAdmin.setVisible(true);
 		}else{
@@ -2261,9 +2260,10 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	
 	@UiHandler("btnViewAdmin")
 	public void clickOnAdmin(ClickEvent clickEvent){
-		String adminUrl=Window.Location.getProtocol()+"//"+Window.Location.getHost()+"/admin";
-//		Window.open("http://www.goorulearning.org/admin", "_blank", "");
-		Window.open(adminUrl, "_blank", "");
+		//String adminUrl=Window.Location.getProtocol()+"//"+Window.Location.getHost()+"/admin";
+		String adminUrlnew = Window.Location.getProtocol()+"//"+Window.Location.getHost()+"/admin/signin?sessionToken="+AppClientFactory.getLoginSessionToken();
+		Window.open(adminUrlnew, "_blank", "");
+			
 	}
 	
 	@Override
