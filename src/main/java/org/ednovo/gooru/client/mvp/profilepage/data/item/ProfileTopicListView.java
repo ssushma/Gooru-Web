@@ -1122,12 +1122,12 @@ public class ProfileTopicListView extends Composite{
 	 */
 	
 	private void showPopupAfterGmailSignin() {
-		// TODO Auto-generated method stub
+
 		String collectionId = getProfileLibraryDo().getGooruOid()!= null ? getProfileLibraryDo().getGooruOid() : null;
 		String colleId = AppClientFactory.getPlaceManager().getRequestParameter("collectionId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("collectionId") : null;
 		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
 		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
- 
+
 		if(customize!=null && customize.equals("yes")){
 			if(colleId.equals(collectionId) && isVisible ){
 				isVisible=false;

@@ -227,6 +227,9 @@ public abstract class DistrictMenuNav extends Composite {
 		languageArtsText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		learnText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		aboutGooruAnr.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)){
+			aboutGooruAnr.getElement().getStyle().setWidth(10, Unit.PCT);
+		}
 		
 		sciencePanel.getElement().setId("epnlSciencePanel");
 		scienceCourses.getElement().setId("pnlScienceCourses");
