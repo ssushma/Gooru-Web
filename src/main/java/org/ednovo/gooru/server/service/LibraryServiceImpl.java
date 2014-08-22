@@ -680,7 +680,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		if(sharingType!=null){
 			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken, limit+"");
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken, limit+"","0");
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializePaginatedWorkspaceFolders(jsonRep);
