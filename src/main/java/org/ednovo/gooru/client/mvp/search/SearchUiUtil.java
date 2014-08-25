@@ -133,8 +133,9 @@ public class SearchUiUtil{
 		renderMetaData(flowPanel, data, null, wrapLength);
 	}*/
 
-	public static void renderMetaData(FlowPanel flowPanel, String data, String suffix) {
-		renderMetaData(flowPanel, data, suffix, -1);
+	public static Label renderMetaData(FlowPanel flowPanel, String data, String suffix) {
+		Label label=renderMetaData(flowPanel, data, suffix, -1);
+		return label;
 	}
 
 	/*public static void renderMetaData(FlowPanel flowPanel, List<String> datas) {
@@ -166,7 +167,7 @@ public class SearchUiUtil{
 		}
 	}
 
-	public static void renderMetaData(FlowPanel flowPanel, String data, String suffix, int wrapLength) {
+	public static Label renderMetaData(FlowPanel flowPanel, String data, String suffix, int wrapLength) {
 		if (suffix != null || StringUtil.hasValidString(data)) {
 			if (wrapLength > 0) {
 				data = StringUtil.truncateText(data, wrapLength);
@@ -177,7 +178,9 @@ public class SearchUiUtil{
 			Label label = new Label(data);
 			label.setStyleName(CssTokens.FLOAT_LEFT);
 			renderMetaData(flowPanel, label);
+			return label;
 		}
+		return null;
 	}
 	
 	public static void renderSourceMetadata(FlowPanel flowPanel,String data,String suffix, int wrapLength){

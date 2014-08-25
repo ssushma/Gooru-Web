@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -44,6 +45,7 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
+import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
@@ -94,12 +96,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 	@UiField FlowPanel resourceWidgetContainer,tagsButtonContainer;
 	@UiField
-	static FlowPanel wrapperContainerField,tagsContainer;
+	static FlowPanel wrapperContainerField,tagsContainer,resourcePublisher;
 	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,
 					needHelpButton,plusAddTagsButton,narrationButton;
 	@UiField HTMLEventPanel emoticsContainer;
 	@UiField HTMLPanel singleEmoticsContainer,collectionContainer,ratingsContainer;
-	@UiField Label resourcePublisher,reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
+	@UiField Label reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
 	@UiField
 	static ResourcePlayerMetadataBundle playerStyle;
 	@UiField HTML resourceTitleLbl;
@@ -315,42 +317,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			resourceTitleLbl.getElement().setAttribute("alt","");
 			resourceTitleLbl.getElement().setAttribute("title","");
 		}
+		displayPublisher();
 		getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
-		if(collectionItemDo.getResource().getResourceSource()!=null){
-			String attributionName=collectionItemDo.getResource().getResourceSource().getAttribution();
-			attributionName = attributionName.trim();
-			if(attributionName != null && !attributionName.equals("") && !attributionName.equals("null")){
-				String resourceSource=collectionItemDo.getResource().getResourceSource().getAttribution();
-				if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
-					if(resourceSource.length() > 100){
-					resourcePublisher.setText(i18n.GL0566()+resourceSource.substring(0, 100)+"...");
-					}else{
-						resourcePublisher.setText(i18n.GL0566()+resourceSource);
-					}
-				}else
-				{
-				resourcePublisher.setText("");	
-				}
-			}else{
-				resourcePublisher.setText("");
-			}
-		}else{
-			resourcePublisher.setText("");
-		}
-		if(collectionItemDo.getResource().getResourceFormat()!=null){
-			if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
-				if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
-					if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-						resourcePublisher.setVisible(true);
-						resourcePublisher.setText(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
-					}else{
-						resourcePublisher.setVisible(false);
-					}
-				}else{
-//					resourcePublisher.setVisible(false);
-				}
-			}
-		}
 		if(forwardButton!=null){
 			forwardButton.removeFromParent();
 		}
@@ -402,34 +370,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				resourceTitleLbl.getElement().setAttribute("alt","");
 				resourceTitleLbl.getElement().setAttribute("title","");
 			}
+			displayPublisher();
 			getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
-			if(collectionItemDo.getResource().getResourceSource()!=null){
-				if(collectionItemDo.getResource().getResourceSource().getAttribution()!=null){
-					String resourceSource=collectionItemDo.getResource().getResourceSource().getAttribution();
-					resourceSource = resourceSource.trim();
-					if(resourceSource != null && !resourceSource.equals("") && !resourceSource.equals("null")){
-						if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
-							if(resourceSource.length() > 100){
-							resourcePublisher.setText(i18n.GL0566()+resourceSource.substring(0, 100)+"...");
-							}else{
-								resourcePublisher.setText(i18n.GL0566()+resourceSource);
-							}
-						}else{resourcePublisher.setText("");
-						}
-					}else{
-						resourcePublisher.setText("");
-					}
-				}else{
-					resourcePublisher.setText("");
-				}
-			}else{
-				resourcePublisher.setText("");
-			}
-			if(collectionItemDo.getResource().getResourceFormat()!=null){
-				if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
-					resourcePublisher.setText(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
-				}
-			}
 			if(forwardButtonHandler!=null||backwardButtonHandler!=null){
 				forwardButtonHandler.removeHandler();
 				backwardButtonHandler.removeHandler();
@@ -441,6 +383,31 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			backwardButtonHandler=backwardButton.addClickHandler(new ShowResourceView(previousResourceRequest));
 		}
 
+	}
+	
+	private void displayPublisher(){
+		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getResourceFormat()!=null){
+			if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+				if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
+					if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+						resourcePublisher.setVisible(true);
+						resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+						resourcePublisher.getElement().getStyle().clearPaddingTop();
+					}else{
+						resourcePublisher.setVisible(false);
+					}
+				}
+			}else{
+				List<String> publishersList=collectionItemDo.getResource().getPublisher()!=null?collectionItemDo.getResource().getPublisher():null;
+				if(publishersList!=null&&publishersList.size()>0){
+					publishersList.set(0,i18n.GL0566()+publishersList.get(0));
+					SearchUiUtil.renderMetaData(resourcePublisher, publishersList, 0);
+				}else{
+					resourcePublisher.getElement().setInnerHTML("");
+					resourcePublisher.getElement().getStyle().setPaddingTop(0, Unit.PX);
+				}
+			}
+		}
 	}
 
 	public void previewResouceWidget(final CollectionItemDo collectionItemDo){

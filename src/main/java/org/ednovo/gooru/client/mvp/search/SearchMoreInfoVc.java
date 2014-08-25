@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.search;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -33,12 +34,14 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.AppMirageDragContainer;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
+import org.ednovo.gooru.client.mvp.search.event.UpdateViewCountInSearchHandler;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.ErrorMessagePanel;
 import org.ednovo.gooru.client.uc.LicencegItemVc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.TagDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
@@ -133,6 +136,8 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	
 	ToolTip toolTip = null;
 	
+	private HashMap<String, SimpleResourceVc> simpleResourceMap=new HashMap<String, SimpleResourceVc>();
+	
 	public SearchMoreInfoVc(){
 		
 		usedInResourcesPanel = new AppMirageDragContainer(null);
@@ -146,6 +151,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	 * @param searchDragController
 	 *            instance of {@link ResourceDragController}
 	 */
+	
 	
 	public SearchMoreInfoVc(final ResourceDragController searchDragController,	boolean isResourceSearch) {
 		this.res = SearchMoreInfoVcCBundle.INSTANCE;
@@ -184,6 +190,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 //				usedInResourcesPanel.clear();
 				usedInResourcesPanel.setClonnable(true);
 				usedInSearchDo = result;
+				simpleResourceMap.clear();
 				setUsedInResources(result.getSearchResults());
 			}
 		});
@@ -616,6 +623,8 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 
 		return list;
 	}
+	
+	
 
 	/**
 	 * Set resource that used in any collection
@@ -710,6 +719,14 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 		lblNotFriendly.getElement().setAttribute("alt",text);
 		lblNotFriendly.getElement().setAttribute("title",text);
 	}
+	public HashMap<String, SimpleResourceVc> getSimpleResourceMap() {
+		return simpleResourceMap;
+	}
+
+	public void setSimpleResourceMap(HashMap<String, SimpleResourceVc> simpleResourceMap) {
+		this.simpleResourceMap = simpleResourceMap;
+	}
+
 	public void showNotFriendly(boolean visibility){
 		lblNotFriendly.setVisible(visibility);
 		imgQuestionImage.setVisible(visibility);

@@ -81,7 +81,7 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	}
 	
 	public void setPartnerWidget() {
-		if (AppClientFactory.getPlaceManager().refreshPlace()) {
+//		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			if(AppClientFactory.getLoggedInUser()!=null) {
 				getView().clearPanels();
 				getView().getComingSoonText(false);
@@ -91,7 +91,7 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 			} else {
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 			}
-		}
+//		}
 	}
 	
 	/**
