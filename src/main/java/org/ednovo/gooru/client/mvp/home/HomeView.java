@@ -48,6 +48,7 @@ import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.ui.PeListPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.library.JSONStandardsDo;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
@@ -698,7 +699,19 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	@UiHandler("btnMoreOnClasses")
 	public void onClickMoreOnClasses(ClickEvent event){
 		if (!AppClientFactory.isAnonymous()){
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+			
+			AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",new SimpleAsyncCallback<ClasspageListDo>() {
+				@Override
+				public void onSuccess(ClasspageListDo result) {
+				if (result.getSearchResults().size()>0){
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+					}else{
+						AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+					}
+				}
+		});
+			
+			//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 		} else {
 			AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
 		}
