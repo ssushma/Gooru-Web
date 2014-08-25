@@ -527,7 +527,11 @@ public class ProfileTopicListView extends Composite{
 									
 								}
 								final String attribution = sourceAttribution;
-								
+								String domainName = "";
+								if(profileLibraryItem.getResourceSource()!=null&&profileLibraryItem.getResourceSource().getDomainName()!=null) {
+									domainName = profileLibraryItem.getResourceSource().getDomainName();
+								}
+								final String domain = domainName;
 								
 								final HTMLEventPanel resourceCategoryIcon = new HTMLEventPanel("");
 								
@@ -536,7 +540,7 @@ public class ProfileTopicListView extends Composite{
 									@Override
 									public void onMouseOver(MouseOverEvent event) {
 										toolTipPopupPanel.clear();
-										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(profileLibraryItem.getTitle(),categoryImage,attribution,profileLibraryItem.getRatings().getCount(),profileLibraryItem.getRatings().getAverage()));
+										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(profileLibraryItem.getTitle(),categoryImage,attribution,profileLibraryItem.getRatings().getCount(),profileLibraryItem.getRatings().getAverage(),domain));
 										toolTipPopupPanel.setStyleName("");
 										toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
 										toolTipPopupPanel.show();
@@ -548,7 +552,7 @@ public class ProfileTopicListView extends Composite{
 									@Override
 									public void onMouseOver(MouseOverEvent event) {
 										toolTipPopupPanel.clear();
-										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(profileLibraryItem.getTitle(),categoryImage,attribution,profileLibraryItem.getRatings().getCount(),profileLibraryItem.getRatings().getAverage()));
+										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(profileLibraryItem.getTitle(),categoryImage,attribution,profileLibraryItem.getRatings().getCount(),profileLibraryItem.getRatings().getAverage(),domain));
 										toolTipPopupPanel.setStyleName("");
 										toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
 										toolTipPopupPanel.show();
