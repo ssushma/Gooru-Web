@@ -51,6 +51,7 @@ import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -88,6 +89,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -164,6 +166,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	String assocGooruOId;
 	Integer score,count;
 	double average;
+	
+	private PopupPanel toolTipPopupPanel=new PopupPanel();
 	
 	int currentRating=0;
 	
@@ -295,6 +299,18 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			four_star.addMouseOutHandler(new OnStarMouseOut(FOUR_STAR));
 			five_star.addMouseOutHandler(new OnStarMouseOut(FIVE_STAR));
 			setId();
+			
+			doNotUnderstandEmoticButton.addMouseOverHandler(new ReactionsMouseOverHandler(doNotUnderstandEmoticButton,i18n.GL0584()));
+			needHelpButton.addMouseOverHandler(new ReactionsMouseOverHandler(needHelpButton, i18n.GL0585()));
+			mehEmoticButton.addMouseOverHandler(new ReactionsMouseOverHandler(mehEmoticButton, i18n.GL0583()));
+			understandEmoticButton.addMouseOverHandler(new ReactionsMouseOverHandler(understandEmoticButton, i18n.GL0582()));
+			canExplainEmoticButton.addMouseOverHandler(new ReactionsMouseOverHandler(canExplainEmoticButton, i18n.GL0581()));
+			
+			doNotUnderstandEmoticButton.addMouseOutHandler(new ReactionsMouseOutHandler());
+			needHelpButton.addMouseOutHandler(new ReactionsMouseOutHandler());
+			mehEmoticButton.addMouseOutHandler(new ReactionsMouseOutHandler());
+			understandEmoticButton.addMouseOutHandler(new ReactionsMouseOutHandler());
+			canExplainEmoticButton.addMouseOutHandler(new ReactionsMouseOutHandler());
 	}
 
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
@@ -1830,4 +1846,35 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	public void setMarginTop(){
 		collectionContainer.getElement().getStyle().setMarginTop(51, Unit.PX);
 	}
+	
+	public class ReactionsMouseOverHandler implements MouseOverHandler{
+		Button widget;
+		String text;
+		ReactionsMouseOverHandler(Button widget,String text){
+			this.widget=widget;
+			this.text=text;
+			}
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			
+			toolTipPopupPanel.clear();
+			toolTipPopupPanel.setWidget(new GlobalToolTip(text));
+			toolTipPopupPanel.setStyleName("");
+			toolTipPopupPanel.setPopupPosition(widget.getElement().getAbsoluteLeft()+18, widget.getElement().getAbsoluteTop()+10);
+			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanel.show();
+			
+		}
+	}
+	
+	public class ReactionsMouseOutHandler implements MouseOutHandler {
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+     		toolTipPopupPanel.hide();
+		}
+		
+	}
+	
 }
