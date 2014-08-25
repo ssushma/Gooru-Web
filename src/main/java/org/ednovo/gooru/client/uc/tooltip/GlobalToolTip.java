@@ -73,7 +73,6 @@ public class GlobalToolTip extends Composite {
 	
 	
     public GlobalToolTip(String description){
-    	System.out.println("globaltooltip");
 		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
 		desLbl.setText(description);
 		confirmationPanel.getElement().setId("epnlConfirmationPanel");
