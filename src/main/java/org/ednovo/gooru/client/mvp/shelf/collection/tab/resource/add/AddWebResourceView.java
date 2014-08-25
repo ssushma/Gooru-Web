@@ -1244,13 +1244,13 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 											if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 											{
 												
-												tagList.add("Mobile Friendly:"+mobileYes.getText());
+												tagList.add("Mobile Friendly : "+mobileYes.getText());
 												
 											}
 											else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 											{
 											
-												tagList.add("Mobile Friendly:"+mobileNo.getText());
+												tagList.add("Mobile Friendly : "+mobileNo.getText());
 												
 											}
 											if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:"))
