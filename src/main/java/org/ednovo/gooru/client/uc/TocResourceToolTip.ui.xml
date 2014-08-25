@@ -10,7 +10,7 @@
             <g:FlowPanel styleName="{playerStyle.resourceInfo}">
                 <g:HTML styleName="{playerStyle.title} navigationText" ui:field="resourceHoverTitle"></g:HTML>
                 <g:Label styleName="{playerStyle.type}" ui:field="resourceCategory"></g:Label>
-                <g:Label styleName="{playerStyle.source}" ui:field="resourceSourceName"></g:Label>
+                <g:FlowPanel styleName="{playerStyle.source}" ui:field="resourceSourceName"></g:FlowPanel>
             </g:FlowPanel>
              <g:FlowPanel styleName="{playerStyle.ratingsDiv}"  ui:field="ratingWidgetPanel"></g:FlowPanel>
         </g:FlowPanel>

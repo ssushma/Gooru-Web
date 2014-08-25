@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -47,6 +48,7 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.GradeLabel;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
+import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
@@ -101,7 +103,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	FlowPanel gradeTopList, gradeMiddleList, gradeBottomList, courseData, standardsPanel, KinderGarten, higherEducation,standardContainer;
 
 	@UiField
-	Label  languageObjectiveTitle,standardMaxMsg, courseLabel, standardLabel, standardsDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl,toggleArrowButtonPrimary,toggleArrowButtonSecondary,instructionalMethod,audienceLabel,audienceTitle,instructionalTitle,languageObjectiveHeader,depthOfKnowledgeHeader,depthOfKnowledgeTitle,learningInnovationHeader,learningInnovationTitle;
+	Label  GradeUpdate, languageObjectiveTitle,standardMaxMsg, courseLabel, standardLabel, standardsDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl,toggleArrowButtonPrimary,toggleArrowButtonSecondary,instructionalMethod,audienceLabel,audienceTitle,instructionalTitle,languageObjectiveHeader,depthOfKnowledgeHeader,depthOfKnowledgeTitle,learningInnovationHeader,learningInnovationTitle;
 	
 	@UiField Label lblAudiencePlaceHolder,lblAudienceArrow,lblInstructionalPlaceHolder,lblInstructionalArrow,languageObjectiveerrLabel;
 	
@@ -128,6 +130,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	@UiField Button browseBtn;
 	
 	String courseCode="";
+	
+	private static final List<String> gradeList = new ArrayList<String>();
 	
 	private HandlerRegistration handlerRegistration=null;
 	
@@ -244,6 +248,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		
+		GradeUpdate.setText("Grades are updating..");
+		GradeUpdate.setVisible(false);
 		browseBtn.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -1055,7 +1061,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			}
 			if(collectionDoVal.getTaxonomySet()!=null){
 				if(collectionDoVal.getTaxonomySet().size()==0){
-					System.out.println("inside this loop");
 					courseData.getElement().getStyle().setDisplay(Display.NONE);
 					addCourseBtn.setText(ADD_COURSE);
 					addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
@@ -1218,22 +1223,82 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		standardMaxMsg.removeStyleName(CollectionCBundle.INSTANCE.css().standardMax());
 		standardsPanel.removeStyleName(CollectionCBundle.INSTANCE.css().floatLeftNeeded());
 	}*/
+	
+	public GradeLabel frameLabel(String label, CollectionDo collectionDoInternal)
+	{
+		GradeLabel gradeLblKindergarten = new GradeLabel(label, collectionDoInternal) {			
+			@Override
+			public void onClick(ClickEvent event) {
+				GradeUpdate.setVisible(true);
+			
+				gradeTopList.setVisible(false);
+				gradeMiddleList.setVisible(false);
+				gradeBottomList.setVisible(false);
+				KinderGarten.setVisible(false);
+				higherEducation.setVisible(false);
+				if(this.getElement().getAttribute("selected") != null)
+				{
+				if(this.getElement().getAttribute("selected").contains("selected")){
+					this.getElement().getStyle().setProperty("background", "");
+					this.getElement().getStyle().setColor("#999");
+					this.getElement().removeAttribute("selected");
+					try
+					{
+					gradeList.remove(this.getText());	
+					}
+					catch(Exception ex)
+					{
+						
+					}
+				
+				} else {
+					this.getElement().getStyle().setProperty("background", "#0F76BB");
+					this.getElement().getStyle().setColor("#fff");
+					this.getElement().setAttribute("selected", "selected");
+					if(!gradeList.contains(this.getText())){
+						gradeList.add(this.getText());
+						if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
+							MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+						}
+					}
+				}
+				} else {
+					this.getElement().getStyle().setProperty("background", "#0F76BB");
+					this.getElement().getStyle().setColor("#fff");
+					this.getElement().setAttribute("selected", "selected");
+					if(!gradeList.contains(this.getText())){
+						gradeList.add(this.getText());
+						//updateGrade(gradeList);
+						if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
+							MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+						}
+					}
+				}
+				updateGrade(gradeList);
+				
+			}
+			
+		
+		};
+		return gradeLblKindergarten;
+	}
 
 	/**
 	 * separate the view according to grade level of the collection
 	 */
 	public void setGradeList() {
-		KinderGarten.add(new GradeLabel("Kindergarten", collectionDo));
-		higherEducation.add(new GradeLabel("Higher Education", collectionDo));
+		gradeList.clear();
+		KinderGarten.add(frameLabel("Kindergarten", collectionDo));
+		higherEducation.add(frameLabel("Higher Education", collectionDo));
 		for (int i = 1; i <= 12; i++) {
 			if (i <= 4) {
-				gradeTopList.add(new GradeLabel(i + "", collectionDo));
+				gradeTopList.add(frameLabel(i + "", collectionDo));
 			}
 			if (i <= 8 && i >= 5) {
-				gradeMiddleList.add(new GradeLabel(i + "", collectionDo));
+				gradeMiddleList.add(frameLabel(i + "", collectionDo));
 			}
 			if (i <= 12 && i >= 9) {
-				gradeBottomList.add(new GradeLabel(i + "", collectionDo));
+				gradeBottomList.add(frameLabel(i + "", collectionDo));
 			}
 		}
 	}
@@ -1253,7 +1318,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		this.standardSearchDo = standardSearchDo;
 		if (this.standardSearchDo.getSearchResults() != null) {
 			/*if(standardSearchDo.getSearchResults().size()>0){*/
-				System.out.println("inside if");
 			List<String> sources = getAddedStandards(standardsPanel);
 			for (CodeDo code : standardSearchDo.getSearchResults()) {
 				if (!sources.contains(code.getCode())) {
@@ -1317,6 +1381,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	AddCourseHandler addCourseHandler=new AddCourseHandler() {
 		@Override
 		public void onAddCourse(String courseName, String courseId) {
+			courseDo.add(courseName);
 			courseData.add(createCourseLabel(courseName, courseId + "", courseName));
 		//.	courseLbl.setText(courseName);
 			courseLabel.getElement().setAttribute("alt",courseName);
@@ -1515,7 +1580,6 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 
 	@Override
 	public void getUserStandardPrefCodeId(List<String> list) {
-		System.out.println("getUserStandardPrefCodeId::::::"+list);
 		if(list!=null){
 		standardPreflist=new ArrayList<String>();
 		for (String code : list) {
@@ -1547,6 +1611,39 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 		this.resetStandardCount();
 		getUiHandlers().updateStandard(collectionDo.getGooruOid(), codeId.toString(), "add");
 		getUiHandlers().closeStandardsPopup();
+	}
+	
+	private void updateGrade(List<String> gradeListInternal){
+	AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionDo.getGooruOid(), null, null, join(gradeListInternal, ","), null, null, null,null,null,null, new SimpleAsyncCallback<CollectionDo>(){
+			
+			@Override
+			public void onSuccess(CollectionDo result) {
+				GradeUpdate.setVisible(false);
+				gradeTopList.setVisible(true);
+				gradeMiddleList.setVisible(true);
+				gradeBottomList.setVisible(true);
+				KinderGarten.setVisible(true);
+				higherEducation.setVisible(true);
+				gradeList.clear();
+				List<String> items = Arrays.asList(result.getGrade().split("\\s*,\\s*"));
+				gradeList.addAll(items);
+				collectionDo.setGrade(result.getGrade());
+			}
+		});
+	}
+	
+	private String join(List<?> list,String separator){
+		StringBuilder builder =null;
+		if(list != null){
+			builder = new StringBuilder();
+			for(Object value:list){
+				if(builder.length() > 0){
+					builder.append(separator);
+				}
+				builder.append(value);
+			}
+		}
+		return builder.toString();
 	}
 	
 

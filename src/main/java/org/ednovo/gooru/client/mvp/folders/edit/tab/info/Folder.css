@@ -566,3 +566,8 @@
 	color:#999999;
 	font-style:italic;	
 }
+.gradeInfoLabel{
+	font-size: 14px;
+margin-top: 92px;
+position: relative;
+}

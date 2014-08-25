@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -44,11 +45,13 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
+import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -86,6 +89,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -94,12 +98,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 	@UiField FlowPanel resourceWidgetContainer,tagsButtonContainer;
 	@UiField
-	static FlowPanel wrapperContainerField,tagsContainer;
+	static FlowPanel wrapperContainerField,tagsContainer,resourcePublisher;
 	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,
 					needHelpButton,plusAddTagsButton,narrationButton;
 	@UiField HTMLEventPanel emoticsContainer;
 	@UiField HTMLPanel singleEmoticsContainer,collectionContainer,ratingsContainer;
-	@UiField Label resourcePublisher,reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
+	@UiField Label reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
 	@UiField
 	static ResourcePlayerMetadataBundle playerStyle;
 	@UiField HTML resourceTitleLbl;
@@ -162,6 +166,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	String assocGooruOId;
 	Integer score,count;
 	double average;
+	
+	private PopupPanel toolTipPopupPanel=new PopupPanel();
 	
 	int currentRating=0;
 	
@@ -293,6 +299,18 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			four_star.addMouseOutHandler(new OnStarMouseOut(FOUR_STAR));
 			five_star.addMouseOutHandler(new OnStarMouseOut(FIVE_STAR));
 			setId();
+			
+			doNotUnderstandEmoticButton.addMouseOverHandler(new ReactionsMouseOverHandler(doNotUnderstandEmoticButton,i18n.GL0584()));
+			needHelpButton.addMouseOverHandler(new ReactionsMouseOverHandler(needHelpButton, i18n.GL0585()));
+			mehEmoticButton.addMouseOverHandler(new ReactionsMouseOverHandler(mehEmoticButton, i18n.GL0583()));
+			understandEmoticButton.addMouseOverHandler(new ReactionsMouseOverHandler(understandEmoticButton, i18n.GL0582()));
+			canExplainEmoticButton.addMouseOverHandler(new ReactionsMouseOverHandler(canExplainEmoticButton, i18n.GL0581()));
+			
+			doNotUnderstandEmoticButton.addMouseOutHandler(new ReactionsMouseOutHandler());
+			needHelpButton.addMouseOutHandler(new ReactionsMouseOutHandler());
+			mehEmoticButton.addMouseOutHandler(new ReactionsMouseOutHandler());
+			understandEmoticButton.addMouseOutHandler(new ReactionsMouseOutHandler());
+			canExplainEmoticButton.addMouseOutHandler(new ReactionsMouseOutHandler());
 	}
 
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
@@ -315,42 +333,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			resourceTitleLbl.getElement().setAttribute("alt","");
 			resourceTitleLbl.getElement().setAttribute("title","");
 		}
+		displayPublisher();
 		getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
-		if(collectionItemDo.getResource().getResourceSource()!=null){
-			String attributionName=collectionItemDo.getResource().getResourceSource().getAttribution();
-			attributionName = attributionName.trim();
-			if(attributionName != null && !attributionName.equals("") && !attributionName.equals("null")){
-				String resourceSource=collectionItemDo.getResource().getResourceSource().getAttribution();
-				if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
-					if(resourceSource.length() > 100){
-					resourcePublisher.setText(i18n.GL0566()+resourceSource.substring(0, 100)+"...");
-					}else{
-						resourcePublisher.setText(i18n.GL0566()+resourceSource);
-					}
-				}else
-				{
-				resourcePublisher.setText("");	
-				}
-			}else{
-				resourcePublisher.setText("");
-			}
-		}else{
-			resourcePublisher.setText("");
-		}
-		if(collectionItemDo.getResource().getResourceFormat()!=null){
-			if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
-				if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
-					if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-						resourcePublisher.setVisible(true);
-						resourcePublisher.setText(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
-					}else{
-						resourcePublisher.setVisible(false);
-					}
-				}else{
-//					resourcePublisher.setVisible(false);
-				}
-			}
-		}
 		if(forwardButton!=null){
 			forwardButton.removeFromParent();
 		}
@@ -402,34 +386,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				resourceTitleLbl.getElement().setAttribute("alt","");
 				resourceTitleLbl.getElement().setAttribute("title","");
 			}
+			displayPublisher();
 			getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
-			if(collectionItemDo.getResource().getResourceSource()!=null){
-				if(collectionItemDo.getResource().getResourceSource().getAttribution()!=null){
-					String resourceSource=collectionItemDo.getResource().getResourceSource().getAttribution();
-					resourceSource = resourceSource.trim();
-					if(resourceSource != null && !resourceSource.equals("") && !resourceSource.equals("null")){
-						if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
-							if(resourceSource.length() > 100){
-							resourcePublisher.setText(i18n.GL0566()+resourceSource.substring(0, 100)+"...");
-							}else{
-								resourcePublisher.setText(i18n.GL0566()+resourceSource);
-							}
-						}else{resourcePublisher.setText("");
-						}
-					}else{
-						resourcePublisher.setText("");
-					}
-				}else{
-					resourcePublisher.setText("");
-				}
-			}else{
-				resourcePublisher.setText("");
-			}
-			if(collectionItemDo.getResource().getResourceFormat()!=null){
-				if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
-					resourcePublisher.setText(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
-				}
-			}
 			if(forwardButtonHandler!=null||backwardButtonHandler!=null){
 				forwardButtonHandler.removeHandler();
 				backwardButtonHandler.removeHandler();
@@ -441,6 +399,31 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			backwardButtonHandler=backwardButton.addClickHandler(new ShowResourceView(previousResourceRequest));
 		}
 
+	}
+	
+	private void displayPublisher(){
+		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getResourceFormat()!=null){
+			if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+				if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
+					if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+						resourcePublisher.setVisible(true);
+						resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+						resourcePublisher.getElement().getStyle().clearPaddingTop();
+					}else{
+						resourcePublisher.setVisible(false);
+					}
+				}
+			}else{
+				List<String> publishersList=collectionItemDo.getResource().getPublisher()!=null?collectionItemDo.getResource().getPublisher():null;
+				if(publishersList!=null&&publishersList.size()>0){
+					publishersList.set(0,i18n.GL0566()+publishersList.get(0));
+					SearchUiUtil.renderMetaData(resourcePublisher, publishersList, 0);
+				}else{
+					resourcePublisher.getElement().setInnerHTML("");
+					resourcePublisher.getElement().getStyle().setPaddingTop(0, Unit.PX);
+				}
+			}
+		}
 	}
 
 	public void previewResouceWidget(final CollectionItemDo collectionItemDo){
@@ -1863,4 +1846,35 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	public void setMarginTop(){
 		collectionContainer.getElement().getStyle().setMarginTop(51, Unit.PX);
 	}
+	
+	public class ReactionsMouseOverHandler implements MouseOverHandler{
+		Button widget;
+		String text;
+		ReactionsMouseOverHandler(Button widget,String text){
+			this.widget=widget;
+			this.text=text;
+			}
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			
+			toolTipPopupPanel.clear();
+			toolTipPopupPanel.setWidget(new GlobalToolTip(text));
+			toolTipPopupPanel.setStyleName("");
+			toolTipPopupPanel.setPopupPosition(widget.getElement().getAbsoluteLeft()+18, widget.getElement().getAbsoluteTop()+10);
+			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanel.show();
+			
+		}
+	}
+	
+	public class ReactionsMouseOutHandler implements MouseOutHandler {
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+     		toolTipPopupPanel.hide();
+		}
+		
+	}
+	
 }

@@ -1227,13 +1227,13 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 											if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 											{
 												
-												tagList.add("Mobile Friendly:"+i18n.GL_GRR_YES());
+												tagList.add("Mobile Friendly : "+i18n.GL_GRR_YES());
 												
 											}
 											else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 											{
 											
-												tagList.add("Mobile Friendly:"+i18n.GL1735());
+												tagList.add("Mobile Friendly : "+i18n.GL1735());
 												
 											}
 											if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:"))
