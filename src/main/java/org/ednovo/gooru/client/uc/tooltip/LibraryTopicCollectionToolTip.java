@@ -55,7 +55,7 @@ public class LibraryTopicCollectionToolTip extends Composite {
 		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 	}
 	
-	public LibraryTopicCollectionToolTip(String title, String category, String source,int ratingCount,double average){
+	public LibraryTopicCollectionToolTip(String title, String category, String source,int ratingCount,double average,String domainName){
 		initWidget(discoverToolTipUiBinder.createAndBindUi(this));
 		arowPanel.getElement().setId("pnlArowPanel");
 		organizePopupTextContainer.getElement().setId("fpnlOrganizePopupTextContainer");
@@ -85,7 +85,13 @@ public class LibraryTopicCollectionToolTip extends Composite {
 		categoryLbl.getElement().setId("htmlCategoryLbl");
 		categoryLbl.getElement().setAttribute("alt", category);
 		categoryLbl.getElement().setAttribute("title", category);
-		sourceLbl.setText(source);
+		if("docs.google.com".equalsIgnoreCase(domainName))
+		{
+			sourceLbl.setText("");	
+		}
+		else{
+			sourceLbl.setText(source);
+		}
 		sourceLbl.getElement().setId("lblSourceLbl");
 		sourceLbl.getElement().setAttribute("alt", source);
 		sourceLbl.getElement().setAttribute("title", source);

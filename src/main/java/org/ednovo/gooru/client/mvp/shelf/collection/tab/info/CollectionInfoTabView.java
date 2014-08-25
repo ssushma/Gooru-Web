@@ -1055,7 +1055,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			}
 			if(collectionDoVal.getTaxonomySet()!=null){
 				if(collectionDoVal.getTaxonomySet().size()==0){
-					System.out.println("inside this loop");
 					courseData.getElement().getStyle().setDisplay(Display.NONE);
 					addCourseBtn.setText(ADD_COURSE);
 					addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
@@ -1253,7 +1252,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		this.standardSearchDo = standardSearchDo;
 		if (this.standardSearchDo.getSearchResults() != null) {
 			/*if(standardSearchDo.getSearchResults().size()>0){*/
-				System.out.println("inside if");
 			List<String> sources = getAddedStandards(standardsPanel);
 			for (CodeDo code : standardSearchDo.getSearchResults()) {
 				if (!sources.contains(code.getCode())) {
@@ -1317,6 +1315,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	AddCourseHandler addCourseHandler=new AddCourseHandler() {
 		@Override
 		public void onAddCourse(String courseName, String courseId) {
+			courseDo.add(courseName);
 			courseData.add(createCourseLabel(courseName, courseId + "", courseName));
 		//.	courseLbl.setText(courseName);
 			courseLabel.getElement().setAttribute("alt",courseName);
@@ -1515,7 +1514,6 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 
 	@Override
 	public void getUserStandardPrefCodeId(List<String> list) {
-		System.out.println("getUserStandardPrefCodeId::::::"+list);
 		if(list!=null){
 		standardPreflist=new ArrayList<String>();
 		for (String code : list) {

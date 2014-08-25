@@ -46,12 +46,12 @@ public class GradeLabel extends Label implements ClickHandler {
 	
 	private static final List<String> gradeList = new ArrayList<String>();
 	
+	
 	private CollectionDo collection = null;
 	
 	private static final String KIDER_GARTEN = "Kindergarten";
 	
 	private static final String HIGHER_EDUCATION = "Higher Education";
-	
 	/**
 	 * Class constructor
 	 * @param label name of the {@link Label}
@@ -74,7 +74,6 @@ public class GradeLabel extends Label implements ClickHandler {
 			if (genGrade.indexOf("-")>0){
 				genGrade = generateGrade(genGrade);
 			}
-			
 			String grade[] = genGrade.split(",");
 			for (int i = 0; i < grade.length; i++) {
 				if (label.equals(grade[i])) {
@@ -95,13 +94,12 @@ public class GradeLabel extends Label implements ClickHandler {
 			this.getElement().getStyle().setProperty("background", "");
 			this.getElement().getStyle().setColor("#999");
 			this.getElement().removeAttribute("selected");
-			for(String grade : gradeList){
+			for(String grade : new ArrayList<String>(gradeList)){
 				if(grade.equals(this.getText())){
 					gradeList.remove(grade);
 					updateGrade(gradeList);
 				}
 			}
-			
 		} else {
 			this.getElement().getStyle().setProperty("background", "#0F76BB");
 			this.getElement().getStyle().setColor("#fff");
