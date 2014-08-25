@@ -1118,7 +1118,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		}
 		
 		for(final String codeObj:standardsDo){
-			tagList.add("\"" +standardsDefaultText.getText()+"  :"+codeObj+"\"");
+			tagList.add("\"" +standardsDefaultText.getText()+" : "+codeObj+"\"");
 		}
 		
 		if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:"))
