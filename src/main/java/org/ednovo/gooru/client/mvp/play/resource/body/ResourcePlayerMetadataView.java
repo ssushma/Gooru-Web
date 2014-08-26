@@ -323,7 +323,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				collectionContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 			}
-		}
+		}else{
+			displayPublisher();
+			}
 		if(collectionItemDo.getResource().getTitle()!=null){
 			resourceTitleLbl.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
@@ -333,7 +335,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			resourceTitleLbl.getElement().setAttribute("alt","");
 			resourceTitleLbl.getElement().setAttribute("title","");
 		}
-		displayPublisher();
+		
 		getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
 		if(forwardButton!=null){
 			forwardButton.removeFromParent();
