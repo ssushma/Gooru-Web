@@ -2071,7 +2071,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	{
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
+			if(liecenceTooltip != null)
+			{
 			liecenceTooltip.hide();
+			}
 		}
 		
 	}

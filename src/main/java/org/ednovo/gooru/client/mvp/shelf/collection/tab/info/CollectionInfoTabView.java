@@ -1287,7 +1287,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 * separate the view according to grade level of the collection
 	 */
 	public void setGradeList() {
-		gradeList.clear();
+		//gradeList.clear();
 		KinderGarten.add(frameLabel("Kindergarten", collectionDo));
 		higherEducation.add(frameLabel("Higher Education", collectionDo));
 		for (int i = 1; i <= 12; i++) {
@@ -1614,6 +1614,7 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 	}
 	
 	private void updateGrade(List<String> gradeListInternal){
+		System.out.println("gradeListInternal::"+gradeListInternal);
 	AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionDo.getGooruOid(), null, null, join(gradeListInternal, ","), null, null, null,null,null,null, new SimpleAsyncCallback<CollectionDo>(){
 			
 			@Override
@@ -1624,9 +1625,6 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 				gradeBottomList.setVisible(true);
 				KinderGarten.setVisible(true);
 				higherEducation.setVisible(true);
-				gradeList.clear();
-				List<String> items = Arrays.asList(result.getGrade().split("\\s*,\\s*"));
-				gradeList.addAll(items);
 				collectionDo.setGrade(result.getGrade());
 			}
 		});
