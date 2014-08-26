@@ -4,6 +4,7 @@
 package org.ednovo.gooru.client.mvp.search;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -412,28 +413,42 @@ public class SearchInfoWidget extends Composite {
 								.replaceAll("ST", "").replaceAll("nd", "")
 								.replaceAll("ND", "").replaceAll("rd", "")
 								.replaceAll("RD", "");
-						eachGrade1 = eachGrade1.toLowerCase()
-								.replaceAll("Grade", "").replaceAll("grade", "");
-						eachGrade1 = eachGrade1.toLowerCase().replaceAll("K-", "")
+						eachGrade1 = eachGrade1.replaceAll("Grade", "").replaceAll("grade", "");
+						eachGrade1 = eachGrade1.replaceAll("K-", "")
 								.replaceAll("k-", "");
-						eachGrade1 = eachGrade1.toLowerCase().replaceAll("K", "")
-								.replaceAll("k", "");
-						try {
+				/*		eachGrade1 = eachGrade1.toLowerCase().replaceAll("K", "")
+								.replaceAll("k", "");*/
+						
+						gradesdetails.add(eachGrade1);
+						
+/*						try {
 							String grad[] = generateGradeIfHypen(eachGrade1).trim().split(",");
 							for (int i = 0; i < grad.length; i++) {
+								try
+								{
 								gradeListInt.add(Integer.parseInt(grad[i]));
+								}
+								catch(Exception ex)
+								{
+									gradeListInt.add(1000);
+								}
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
-						}
+						}*/
 					}else{
 						gradesdetails.add(eachGrade1);
 					}
 				}
-				gradeListInt = sortList(gradeListInt);
-				for(int glevel=0;glevel<gradeListInt.size();glevel++){
+			//	gradeListInt = sortList(gradeListInt);
+/*				for(int glevel=0;glevel<gradeListInt.size();glevel++){
+					System.out.println("gradeListInt::"+gradeListInt.get(glevel));
+
 					gradesdetails.add(Integer.toString(gradeListInt.get(glevel)));
-				}
+					
+					
+				}*/
+				//List<String> stringList = new ArrayList<String>(Arrays.asList(gradeslist));
 				setGrades(gradesdetails);
 				}
 	        
@@ -1277,7 +1292,14 @@ public class SearchInfoWidget extends Composite {
 				}
 			}
 		} else {
+			try
+			{
 			gradeStr.append(Math.round(Double.parseDouble(gradeList[0].trim())));
+			}
+			catch(Exception ex)
+			{
+				gradeStr.append(gradeList[0].trim());
+			}
 		}
 		return gradeStr.toString();
 	}	
