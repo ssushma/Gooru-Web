@@ -112,7 +112,7 @@ public interface IsClassListView extends IsViewWithHandlers<ClassListUiHandlers>
 	 * 
 	*/
 	
-	void displayPendingMembersList(List<CollaboratorsDo> lstPendingMembers,boolean isNew, int totalCount);
+	void displayPendingMembersList(List<CollaboratorsDo> lstPendingMembers,boolean isNew, int totalCount,boolean increasePageNum,boolean insertAtTop);
 	
 	/**
 	 * @function enableInvite 
@@ -155,16 +155,14 @@ public interface IsClassListView extends IsViewWithHandlers<ClassListUiHandlers>
 	 * 
 	*/
 	
-	void displayActiveMembersList(List<CollaboratorsDo> lstActiveMembers,
-			boolean isNew, int totalCount);
-	void insertPendingUserAfterDeletion(
-			CollaboratorsDo lstPendingMembers, boolean isNew,
-			int totalCount,int intPos);
-	Anchor getSeeMorePendingLabel();
-	void insertActiveUserAfterDeletion(CollaboratorsDo lstPendingMembers,
-			boolean isNew, int totalCount, int intPos);
+	public void displayActiveMembersList(List<CollaboratorsDo> lstActiveMembers,boolean isNew, int totalCount,boolean increasePageNum);
+	public void insertPendingUserAfterDeletion(CollaboratorsDo lstPendingMembers, boolean isNew,int totalCount,int intPos,boolean insertAtTop);
+	public Anchor getSeeMorePendingLabel();
+	public void insertActiveUserAfterDeletion(CollaboratorsDo lstPendingMembers,boolean isNew, int totalCount, int intPos);
 	public Button getInviteButton();
 	public Label getLblPleaseWait();
 	public void createAutoSuggestBox() ;
 	public void clearDataAndErrorMessages();
+	public void removePendiUserWidget(MembersViewVc membersViewVc,boolean pendingFlag);
+	public void getPendingMembersList();
 }
