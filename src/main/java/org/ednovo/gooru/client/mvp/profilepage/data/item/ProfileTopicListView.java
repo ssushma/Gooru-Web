@@ -512,21 +512,21 @@ public class ProfileTopicListView extends Composite{
 									sourceAttribution = profileLibraryItem.getResourceSource().getAttribution();
 								}*/
 								
-								if(profileLibraryItem.getResourceSource()!=null){
-									if(profileLibraryItem.getResourceSource().getDomainName()!=null){
-									if(!profileLibraryItem.getResourceSource().getDomainName().equalsIgnoreCase("docs.google.com"))
-									{
-										sourceAttribution = profileLibraryItem.getResourceSource().getAttribution();
-									}
-									
-									}
-									else
-									{
-										sourceAttribution="";
-									}
-									
-								}
-								final String attribution = sourceAttribution;
+//								if(profileLibraryItem.getResourceSource()!=null){
+//									if(profileLibraryItem.getResourceSource().getDomainName()!=null){
+//									if(!profileLibraryItem.getResourceSource().getDomainName().equalsIgnoreCase("docs.google.com"))
+//									{
+//										sourceAttribution = profileLibraryItem.getResourceSource().getAttribution();
+//									}
+//									
+//									}
+//									else
+//									{
+//										sourceAttribution="";
+//									}
+//									
+//								}
+								final List<String> attribution = profileLibraryItem.getPublisher();
 								String domainName = "";
 								if(profileLibraryItem.getResourceSource()!=null&&profileLibraryItem.getResourceSource().getDomainName()!=null) {
 									domainName = profileLibraryItem.getResourceSource().getDomainName();
