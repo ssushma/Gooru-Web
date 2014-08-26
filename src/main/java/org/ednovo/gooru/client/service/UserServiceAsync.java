@@ -110,4 +110,6 @@ public interface UserServiceAsync extends BaseServiceAsync {
    void getResourcesByTag(String tagGooruOid,String offset,String limit,String userIdVal,AsyncCallback<List<UserTagsResourceDO>> callback);
    
    void getRefershToken(String emailId,AsyncCallback<String> callback);
+   
+   void revokeToken(String emailId,AsyncCallback<String> callback);
 }

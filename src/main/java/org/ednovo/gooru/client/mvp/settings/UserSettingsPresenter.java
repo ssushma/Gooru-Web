@@ -182,69 +182,7 @@ public class UserSettingsPresenter
 		
 		//final String refresh_token = Cookies.getCookie(GOOGLE_REFRESH_TOKEN) !=null && !Cookies.getCookie(GOOGLE_REFRESH_TOKEN).equalsIgnoreCase("") ? Cookies.getCookie(GOOGLE_REFRESH_TOKEN) : null;
 		
-		/*String refershToken = AppClientFactory.getPlaceManager()
-				.getRequestParameter("callback");
-	*/	/*if(refershToken!=null && refershToken.equalsIgnoreCase("refershToken")){
-			StringUtil.consoleLog("if ");
-	*/		//updateRefershToken();
-		/*}else{*//*
-			StringUtil.consoleLog("else ");
-			final String refresh_token1 = AppClientFactory.getLoggedInUser().getRefreshToken();
-			
-			StringUtil.consoleLog("refresh token : "+refresh_token1);
-			if (refresh_token1 != null){
-				
-				AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(refresh_token1, new SimpleAsyncCallback<GoogleToken>() {
-	
-					@Override
-					public void onSuccess(GoogleToken result) {
-						StringUtil.consoleLog("refreshGoogleAccessToken : Success");
-						final String access_token = result.getAccess_token() !=null && !result.getAccess_token().equalsIgnoreCase("") ? result.getAccess_token() : null;
-						StringUtil.consoleLog("access_token : Success : "+access_token);
-						if (access_token !=null ){
-							
-							UserDo user = AppClientFactory.getLoggedInUser();
-							user.setAccessToken(access_token);
-							AppClientFactory.setLoggedInUser(user);
-							
-							AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
-								@Override
-								public void onSuccess(GoogleDriveDo googleDriveDo) {
-									if(googleDriveDo!=null){
-										if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
-											StringUtil.consoleLog("access_token : 401");
-											getView().googleDirveStatus(false);
-										}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
-											StringUtil.consoleLog("access_token : 403");
-											getView().googleDirveStatus(false);
-										}else{
-										StringUtil.consoleLog("access_token : no error");
-											UserDo user = AppClientFactory.getLoggedInUser();
-											user.setAccessToken(access_token);
-											AppClientFactory.setLoggedInUser(user);
-											
-											getView().googleDirveStatus(true);
-										}
-									}else{
-										StringUtil.consoleLog("google drive file list empty");
-										getView().googleDirveStatus(false);
-									}
-								}
-							});
-						}else{
-							StringUtil.consoleLog("access token null");
-							getView().googleDirveStatus(false);
-						}
-					}
-				});
-			}else{
-				StringUtil.consoleLog("refresh token null");
-				
-				getView().googleDirveStatus(false);
-				
-			}
 		
-		}*/
 		String userId = AppClientFactory.getPlaceManager().getRequestParameter(
 				"userId");
 		String confirmStatus = AppClientFactory.getPlaceManager()
@@ -1305,6 +1243,30 @@ public class UserSettingsPresenter
 				}
 		
 	
+	}
+
+	@Override
+	public void revokeToken() {
+		AppClientFactory.getInjector().getUserService().revokeToken(Refersh_emailId,new AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				getView().googleDirveStatus(true);
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				StringUtil.consoleLog("revokeToken suceess updateRefershToken: "+result);
+				//UserDo user = AppClientFactory.getLoggedInUser();
+				//user.setAccessToken(null);
+				//AppClientFactory.setLoggedInUser(user);
+				
+				getView().googleDirveStatus(false);
+			}
+		});
+		
 	}
 	
 }
