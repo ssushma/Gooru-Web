@@ -1,9 +1,12 @@
 package org.ednovo.gooru.client.uc.tooltip;
 
+import java.util.List;
+
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
+import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
@@ -32,9 +35,9 @@ public class LibraryTopicCollectionToolTip extends Composite {
 	
 	@UiField HTML descPanel;
 	
-	@UiField FlowPanel textFlowPanel,organizePopupTextContainer,ratingWidgetPanel;
+	@UiField FlowPanel textFlowPanel,organizePopupTextContainer,ratingWidgetPanel,sourceLbl;
 	
-	@UiField Label sourceLbl;
+	//@UiField Label sourceLbl;
 	
 	@UiField HTML categoryLbl;
 	private RatingWidgetView ratingWidgetView=null;
@@ -55,7 +58,7 @@ public class LibraryTopicCollectionToolTip extends Composite {
 		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 	}
 	
-	public LibraryTopicCollectionToolTip(String title, String category, String source,int ratingCount,double average,String domainName){
+	public LibraryTopicCollectionToolTip(String title, String category, List<String> publishersList,int ratingCount,double average,String domainName){
 		initWidget(discoverToolTipUiBinder.createAndBindUi(this));
 		arowPanel.getElement().setId("pnlArowPanel");
 		organizePopupTextContainer.getElement().setId("fpnlOrganizePopupTextContainer");
@@ -85,16 +88,20 @@ public class LibraryTopicCollectionToolTip extends Composite {
 		categoryLbl.getElement().setId("htmlCategoryLbl");
 		categoryLbl.getElement().setAttribute("alt", category);
 		categoryLbl.getElement().setAttribute("title", category);
-		if("docs.google.com".equalsIgnoreCase(domainName))
-		{
-			sourceLbl.setText("");	
+		if("docs.google.com".equalsIgnoreCase(domainName)){
+			sourceLbl.getElement().setInnerHTML("");	
 		}
 		else{
-			sourceLbl.setText(source);
+			if(publishersList!=null&&publishersList.size()>0){
+				SearchUiUtil.renderMetaData(sourceLbl, publishersList, 0);
+			}else{
+				sourceLbl.getElement().setInnerHTML("");
+			}
 		}
+		System.out.println("inside tooltip");
 		sourceLbl.getElement().setId("lblSourceLbl");
-		sourceLbl.getElement().setAttribute("alt", source);
-		sourceLbl.getElement().setAttribute("title", source);
+//		sourceLbl.getElement().setAttribute("alt", source);
+//		sourceLbl.getElement().setAttribute("title", source);
 		setAvgRatingWidget(ratingCount,average);
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 	}

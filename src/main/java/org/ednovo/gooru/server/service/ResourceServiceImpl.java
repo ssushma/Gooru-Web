@@ -604,7 +604,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		categoryStr = categoryStr.trim();
 		NewResourceDo newResourceDo = new NewResourceDo();		
 		newResourceDo.setId(idStr);
-		newResourceDo.setUrl(urlStr);
+		newResourceDo.setUrl(URLDecoder.decode(urlStr));
+	
 		newResourceDo.setTitle(titleStr);
 		
 		Set<CodeDo> standardsDo=new HashSet<CodeDo>();
@@ -667,7 +668,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ADD_NEW_RESOURCE, idStr,getLoggedInSessionToken(),  URLEncoder.encode(titleStr).toString(), urlStr, categoryStr, URLEncoder.encode(descriptionStr).toString(), thumbnailImgSrcStr, String.valueOf(endTime));
 		
 		String form = ResourceFormFactory.generateStringDataForm(resourceMap, null);
-		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
@@ -692,7 +692,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	
 		JsonRepresentation jsonRep = null;
 		String urlStr = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CHECK_RESOURCE_EXISTS, url, getLoggedInSessionToken());
-	
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlStr);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeResourceItem(jsonRep);
@@ -702,7 +701,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONObject("resource").toString(), ExistsResourceDo.class);
-			} catch (JSONException e) {
+				} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}

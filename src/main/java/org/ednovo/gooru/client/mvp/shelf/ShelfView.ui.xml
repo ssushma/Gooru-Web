@@ -118,7 +118,7 @@
 			           <g:Button styleName="{res.css.publishButton} primary" ui:field="rbPublic"></g:Button>
 			           <g:Label styleName="{res.css.publishPending}" ui:field="lblPublishPending"></g:Label>
 			        </g:HTMLPanel>
-			        <g:HTMLPanel styleName="{res.css.shelfPublishTab}" ui:field="publishedPanel">
+			        <g:HTMLPanel styleName="{res.css.shelfPublishTabText}" ui:field="publishedPanel">
 			    		<g:Label styleName="{res.css.published}" ui:field="lblPublish"></g:Label>
 			    		<g:Image url="images/right-mark.png"></g:Image>
 					</g:HTMLPanel>
