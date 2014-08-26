@@ -598,7 +598,9 @@ public enum UrlToken {
 	
 	SUGGEST_STANDARD_BY_FILTER_Source_CodeId("/search/standard?sessionToken={0}&query={1}"),
 	
-	REFRESH_TOKEN_GDC("/gooru-auth/google/refresh-token.g?emailId={0}");
+	REFRESH_TOKEN_GDC("/gooru-auth/google/refresh-token.g?emailId={0}"),
+	
+	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?emailId={0}");
 
 	private String url;
 

@@ -1153,7 +1153,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				}
 			});
 		}else{
-			StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
+			getUiHandlers().revokeToken();
+			//StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
 			googleDirveStatus(false);
 		}
 	}
@@ -2309,7 +2310,9 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			btnConnect.setText(i18n.GL2008());
 			btnConnect.getElement().setAttribute("alt", i18n.GL2008());
 			btnConnect.getElement().setAttribute("title", i18n.GL2008());
-			StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
+			getUiHandlers().revokeToken();
+			//StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
+			
 		}
 	}
 }
