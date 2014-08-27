@@ -530,11 +530,11 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 				if(ratingWidgetView!=null){
 					String[] revCount = ratingWidgetView.getRatingCountLabel().getText().split(" "); 
 					if(Integer.parseInt(revCount[1].trim())==1){
-						ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
 						ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
 						ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: none;text-decoration: none !important;color: grey");
 						ratingWidgetView.setAvgStarRating(0);
 						ratingWidgetView.getRatingCountLabel().setText(" "+ (Integer.parseInt(revCount[1])-1)+" Reviews"); 
+						ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
 					}else{
 						ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
 						ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" Reviews"); 
@@ -556,6 +556,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 					isRatingUpdated=false;
 					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
 					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
+					ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
 					ratingWidgetView.getRatingCountLabel().addClickHandler(new ClickHandler(){
 
 						@Override
