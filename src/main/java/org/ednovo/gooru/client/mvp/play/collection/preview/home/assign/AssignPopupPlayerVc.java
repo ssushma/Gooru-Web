@@ -873,8 +873,8 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 
 			@Override
 			public void openParentPopup() {
-				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+				Window.enableScrolling(false);
 			}
 			
 		};
