@@ -556,6 +556,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 					isRatingUpdated=false;
 					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
 					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
+					ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
 					ratingWidgetView.getRatingCountLabel().addClickHandler(new ClickHandler(){
 
 						@Override
