@@ -931,11 +931,11 @@ public class LibraryTopicListView extends Composite{
 							
 							final String categoryImage=categoryString;
 							
-							String sourceAttribution = "";
-							if(libraryResourceDo.getResourceSource()!=null&&libraryResourceDo.getResourceSource().getAttribution()!=null) {
-								sourceAttribution = libraryResourceDo.getResourceSource().getAttribution();
-							}
-							final String attribution = sourceAttribution;
+							final List<String> sourceAttribution = libraryResourceDo.getPublisher();
+//							if(libraryResourceDo.getResourceSource()!=null&&libraryResourceDo.getResourceSource().getAttribution()!=null) {
+//								sourceAttribution = libraryResourceDo.getResourceSource().getAttribution();
+//							}
+//							final String attribution = sourceAttribution;
 							
 							String domainName = "";
 							if(libraryResourceDo.getResourceSource()!=null&&libraryResourceDo.getResourceSource().getDomainName()!=null) {
@@ -950,7 +950,7 @@ public class LibraryTopicListView extends Composite{
 									try
 									{
 										toolTipPopupPanel.clear();
-										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(libraryResourceDo.getTitle(),categoryImage,attribution,libraryResourceDo.getRatings().getCount(),libraryResourceDo.getRatings().getAverage(),domain));
+										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(libraryResourceDo.getTitle(),categoryImage,sourceAttribution,libraryResourceDo.getRatings().getCount(),libraryResourceDo.getRatings().getAverage(),domain));
 										toolTipPopupPanel.setStyleName("");
 										toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
 										toolTipPopupPanel.show();
@@ -1008,7 +1008,7 @@ public class LibraryTopicListView extends Composite{
 									try
 									{
 										toolTipPopupPanel.clear();
-										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(libraryResourceDo.getTitle(),categoryImage,attribution,libraryResourceDo.getRatings().getCount(),libraryResourceDo.getRatings().getAverage(),domain));
+										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(libraryResourceDo.getTitle(),categoryImage,sourceAttribution,libraryResourceDo.getRatings().getCount(),libraryResourceDo.getRatings().getAverage(),domain));
 										toolTipPopupPanel.setStyleName("");
 										toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
 										toolTipPopupPanel.show();

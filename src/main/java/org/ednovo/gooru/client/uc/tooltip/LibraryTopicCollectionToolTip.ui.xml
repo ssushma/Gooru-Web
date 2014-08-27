@@ -49,7 +49,7 @@
 					<br />
 				</g:HTML>
 				<g:HTML ui:field="categoryLbl" styleName="{style.categoryLbl}"></g:HTML>
-				<g:Label ui:field="sourceLbl" styleName="{style.sourceLbl}"></g:Label>
+				<g:FlowPanel ui:field="sourceLbl" styleName="{style.sourceLbl}"></g:FlowPanel>
 			</g:FlowPanel>
 			 <g:FlowPanel styleName="{style.ratingsDiv}"  ui:field="ratingWidgetPanel"></g:FlowPanel>
 		</g:FlowPanel>

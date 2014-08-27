@@ -57,7 +57,7 @@ public interface ClassListUiHandlers extends BaseUiHandlers {
 	void updateClassPageInfo(String classPageId, String collectionType,
 			String title, String shareType);
 
-	void removeUserFromClass(ClasspageDo classpageDo, String emailId, int pendingOffSet, boolean pendingFlag);
+	void removeUserFromClass(ClasspageDo classpageDo, String emailId, int pendingOffSet, boolean pendingFlag,MembersViewVc membersViewVc);
 
 	/**
 	 * @function getMembersListByCollectionId 
@@ -81,8 +81,7 @@ public interface ClassListUiHandlers extends BaseUiHandlers {
 	 * 
 	*/
 	
-	void getMembersListByCollectionId(String classCode, int offSet,
-			int pageSize, String statusType);
+	void getMembersListByCollectionId(String classCode, int offSet,int pageSize, String statusType,boolean increasePageNum);
 	
 	/**
 	 * @function getActiveMembersListByCollectionId 
@@ -106,6 +105,5 @@ public interface ClassListUiHandlers extends BaseUiHandlers {
 	 * 
 	*/
 	
-	void getActiveMembersListByCollectionId(String classCode, int offSet,
-			int pageSize, String statusType);
+	void getActiveMembersListByCollectionId(String classCode, int offSet,int pageSize, String statusType,boolean increasePageNum,boolean getPendingMembers);
 }
