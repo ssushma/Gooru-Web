@@ -1257,13 +1257,11 @@ public class UserSettingsPresenter
 
 			@Override
 			public void onSuccess(String result) {
-				// TODO Auto-generated method stub
-			//	StringUtil.consoleLog("revokeToken suceess updateRefershToken: "+result);
-				//UserDo user = AppClientFactory.getLoggedInUser();
-				//user.setAccessToken(null);
-				//AppClientFactory.setLoggedInUser(user);
-				
+				UserDo user = AppClientFactory.getLoggedInUser();
+				user.setRefreshToken(null);
+				AppClientFactory.setLoggedInUser(user);			
 				getView().googleDirveStatus(false);
+				
 			}
 		});
 		
