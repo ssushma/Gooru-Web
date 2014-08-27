@@ -320,9 +320,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				collectionContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 			}
-		}else{
+		}
+		
 			displayPublisher();
-			}
+						
 		if(collectionItemDo.getResource().getTitle()!=null){
 			resourceTitleLbl.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
@@ -415,8 +416,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				List<String> publishersList=collectionItemDo.getResource().getPublisher()!=null?collectionItemDo.getResource().getPublisher():null;
 				if(publishersList!=null&&publishersList.size()>0){
-					publishersList.set(0,i18n.GL0566()+publishersList.get(0));
-					SearchUiUtil.renderMetaData(resourcePublisher, publishersList, 0);
+					//publishersList.set(0,i18n.GL0566()+publishersList.get(0));
+					SearchUiUtil.renderMetaData(resourcePublisher, publishersList);
 				}else{
 					resourcePublisher.getElement().setInnerHTML("");
 					resourcePublisher.getElement().getStyle().setPaddingTop(0, Unit.PX);
