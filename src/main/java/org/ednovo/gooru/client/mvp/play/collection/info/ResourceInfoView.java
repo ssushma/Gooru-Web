@@ -2261,6 +2261,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	UpdateResourceReviewCountEventHandler setReviewCount =new UpdateResourceReviewCountEventHandler(){
 		@Override
 		public void setReviewCount(String resourceId,Integer count) {
+			if(collectionItemDoGlobal.getResource() != null)
+			{
 			if(collectionItemDoGlobal.getResource().getGooruOid().equals(resourceId)){
 				ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
 				ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024());
@@ -2271,6 +2273,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
 					ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 				}
+			}
 			}
 		}
 		
