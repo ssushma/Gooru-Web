@@ -31,8 +31,10 @@ public class DeletePlayerStarReviewEvent extends GwtEvent<DeletePlayerStarReview
 	
 	public static final Type<DeletePlayerStarReviewHandler> TYPE = new Type<DeletePlayerStarReviewHandler>();
 	
-	public DeletePlayerStarReviewEvent(){
-		
+	String resourceGooruOid;
+	
+	public DeletePlayerStarReviewEvent(String resourceGooruOid){
+		this.resourceGooruOid =resourceGooruOid; 
 	}
 	
 	
@@ -44,7 +46,7 @@ public class DeletePlayerStarReviewEvent extends GwtEvent<DeletePlayerStarReview
 
 	@Override
 	protected void dispatch(DeletePlayerStarReviewHandler handler) {
-		handler.deleteStarRatings();
+		handler.deleteStarRatings(resourceGooruOid);
 	} 
 
 }

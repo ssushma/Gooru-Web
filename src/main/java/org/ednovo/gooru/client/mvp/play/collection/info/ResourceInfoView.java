@@ -44,6 +44,9 @@ import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewHandler;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInSearchEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
@@ -381,6 +384,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		resourceDescription.getElement().setAttribute("style", "margin-top:5px;");
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 		AppClientFactory.getEventBus().addHandler(DeletePlayerStarReviewEvent.TYPE,deleteStarRating);
+		AppClientFactory.getEventBus().addHandler(UpdateResourceReviewCountEvent.TYPE,setReviewCount);
 	}
 	
 	/**
@@ -2218,15 +2222,16 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		public void updateRatingInRealTime(String gooruOid, double average,Integer count) {
 			if(collectionItemDoGlobal.getResource()!=null){
 				if(collectionItemDoGlobal.getResource().getGooruOid().equals(gooruOid)){
-					ratingWidgetView.getRatingCountLabel().setText(" "+count.toString()+" "+i18n.GL2024()); 
-					ratingWidgetView.getAverageRatingLabel().setText(Double.toString(average)+" ");
+//					ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
+//					ratingWidgetView.getRatingCountLabel().setText(" "+count.toString()+" "+i18n.GL2024()); 
+//					ratingWidgetView.getAverageRatingLabel().setText(Double.toString(average)+" ");
 					ratingWidgetView.setAvgStarRating(average);
-					if(count==1&&isRatingUpdated){
+					/*if(count==1&&isRatingUpdated){
 						isRatingUpdated=false;
 						ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
 						ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
 						ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
-					}
+					}*/
 				}
 			}
 		}
@@ -2234,17 +2239,39 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	
 	DeletePlayerStarReviewHandler deleteStarRating = new DeletePlayerStarReviewHandler(){
 		@Override
-		public void deleteStarRatings() {
-			String zeroCount = "0";
-			/*if(ratingWidgetView!=null){
-				if(Integer.parseInt(ratingWidgetView.getRatingCountLabel().getText())==1){
+		public void deleteStarRatings(String resourceGooruOid) {
+			if(ratingWidgetView!=null){
+				String[] revCount = ratingWidgetView.getRatingCountLabel().getText().split(" "); 
+				if(Integer.parseInt(revCount[1].trim())==0){
+					ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
 					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
 					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: none;text-decoration: none !important;color: grey");
 					ratingWidgetView.setAvgStarRating(0);
-					ratingWidgetView.getRatingCountLabel().setText(zeroCount); 
+					ratingWidgetView.getRatingCountLabel().setText(revCount+" Reviews"); 
+				}else{
+					ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
+					ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" Reviews"); 
 				}
-			}*/
+			}
 			
+		}
+		
+	};
+	
+	UpdateResourceReviewCountEventHandler setReviewCount =new UpdateResourceReviewCountEventHandler(){
+		@Override
+		public void setReviewCount(String resourceId,Integer count) {
+			if(collectionItemDoGlobal.getResource().getGooruOid().equals(resourceId)){
+				ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
+				ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024());
+				ratingWidgetView.getAverageRatingLabel().setVisible(false);
+				if(count==1 && isRatingUpdated){
+					isRatingUpdated=false;
+					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
+					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
+					ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+				}
+			}
 		}
 		
 	};

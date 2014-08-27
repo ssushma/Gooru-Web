@@ -29,6 +29,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface DeletePlayerStarReviewHandler extends EventHandler {
 
-	void deleteStarRatings(); 
+	void deleteStarRatings(String resourceGooruOid);  
 
 }

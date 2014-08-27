@@ -433,7 +433,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	}
 
 	@Override
-	public void deleteStarRatings() {
+	public void deleteStarRatings(String gooruId) {
 		getView().deleteRatingsValue();
 	}
 

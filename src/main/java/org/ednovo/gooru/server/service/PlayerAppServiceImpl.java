@@ -1034,6 +1034,8 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			 }
 			 createStarRatingsJsonObj.put("target",new JSONObject().put("value","content"));
 			 createStarRatingsJsonObj.put("type",new JSONObject().put("value","star"));
+			 System.out.println("--- create star -- "+url);
+			 System.out.println("--- create str payload -- "+createStarRatingsJsonObj.toString()); 
 			 JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url,getRestUsername(), getRestPassword(), createStarRatingsJsonObj.toString());
 			 jsonRep= jsonResponseRep.getJsonRepresentation();
 			 jsonObject= jsonRep.getJsonObject();
