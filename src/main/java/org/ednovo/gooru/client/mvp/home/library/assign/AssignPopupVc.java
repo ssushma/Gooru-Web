@@ -60,7 +60,6 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -403,7 +402,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		lblLoginPopupTitle.getElement().setAttribute("alt",i18n.GL0520());
 		lblLoginPopupTitle.getElement().setAttribute("title",i18n.GL0520());
 		
-		donothaveAC.setText(i18n.GL0634()+" ");
+		donothaveAC.getElement().setInnerHTML(i18n.GL0634()+"&nbsp;");
 		donothaveAC.getElement().setId("lblDonothaveAC");
 		donothaveAC.getElement().setAttribute("alt",i18n.GL0634()+" ");
 		donothaveAC.getElement().setAttribute("title",i18n.GL0634()+" ");

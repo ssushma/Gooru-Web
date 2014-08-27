@@ -112,8 +112,10 @@ public class GlobalToolTip extends Composite {
     		confirmationPanel.getElement().getStyle().setLeft(-136, Unit.PX);
 			panelArrow.getElement().getStyle().setLeft(141, Unit.PX);
 		}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
-			confirmationPanel.getElement().getStyle().setWidth(131, Unit.PX);
-			desLbl.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+			if(AppClientFactory.getPlaceManager().getRequestParameter("page")!=null && AppClientFactory.getPlaceManager().getRequestParameter("page").equals("teach")){
+				confirmationPanel.getElement().getStyle().setWidth(131, Unit.PX);
+				desLbl.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+			}
 		}else{
 			confirmationPanel.getElement().getStyle().clearLeft();
 			panelArrow.getElement().getStyle().clearLeft();
