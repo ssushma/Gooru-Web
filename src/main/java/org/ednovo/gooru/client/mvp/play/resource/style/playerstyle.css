@@ -967,6 +967,7 @@ font-size: 31px;
 	width: 100%;
 	min-width: 1020px;
 	top: 0 !important;
+	left: 0 !important;
 	right: 0 !important;
 	bottom: 0 !important;
 	position: fixed !important;
