@@ -1257,8 +1257,11 @@ public class UserSettingsPresenter
 
 			@Override
 			public void onSuccess(String result) {
-								
+				UserDo user = AppClientFactory.getLoggedInUser();
+				user.setRefreshToken(null);
+				AppClientFactory.setLoggedInUser(user);			
 				getView().googleDirveStatus(false);
+				
 			}
 		});
 		
