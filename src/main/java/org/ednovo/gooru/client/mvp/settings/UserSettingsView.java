@@ -2301,21 +2301,16 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	public void googleDirveStatus(boolean isConnected){
 		this.isDriveConnected = isConnected;
 		lblDisconnect.setVisible(isConnected);
-		
 		if (isConnected){
 			btnConnect.getElement().addClassName("green");
 			btnConnect.setText(i18n.GL2012());
 			btnConnect.getElement().setAttribute("alt", i18n.GL2012());
 			btnConnect.getElement().setAttribute("title", i18n.GL2012());
-			
 		}else{
 			btnConnect.getElement().removeClassName("green");
 			btnConnect.setText(i18n.GL2008());
 			btnConnect.getElement().setAttribute("alt", i18n.GL2008());
 			btnConnect.getElement().setAttribute("title", i18n.GL2008());
-			
-			//StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
-			
 		}
 	}
 }
