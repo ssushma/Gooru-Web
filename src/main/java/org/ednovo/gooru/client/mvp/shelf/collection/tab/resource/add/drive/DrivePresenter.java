@@ -113,9 +113,7 @@ public class DrivePresenter extends
 		//final String refresh_token = Cookies.getCookie(GOOGLE_REFRESH_TOKEN) !=null && !Cookies.getCookie(GOOGLE_REFRESH_TOKEN).equalsIgnoreCase("") ? Cookies.getCookie(GOOGLE_REFRESH_TOKEN) : null;
 //		StringUtil.consoleLog("refresh token : "+refresh_token);
 		final String refresh_token = AppClientFactory.getLoggedInUser().getRefreshToken();
-		
-		if (refresh_token != null){
-			
+		if (refresh_token != null&&!refresh_token.equals("")&&!refresh_token.equals("null")){
 			AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(refresh_token, new SimpleAsyncCallback<GoogleToken>() {
 
 				@Override

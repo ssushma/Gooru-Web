@@ -1156,7 +1156,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		}else{
 			getUiHandlers().revokeToken();
 			//StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
-			googleDirveStatus(false);
+			//googleDirveStatus(false);
 		}
 	}
 	
@@ -1443,7 +1443,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			}
 		}
 		else{
-			if(v2userDo.getUser().getAccountTypeId() == 2){
+			if(v2userDo.getUser().getAccountTypeId()!=null&&v2userDo.getUser().getAccountTypeId() == 2){
 				gradeLbl.setText(i18n.GL1479());
 				gradeLbl.getElement().setAttribute("alt",i18n.GL1479());
 				gradeLbl.getElement().setAttribute("title", i18n.GL1479());
