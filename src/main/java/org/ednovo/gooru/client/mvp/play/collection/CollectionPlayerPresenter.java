@@ -2111,4 +2111,28 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		int height=resoruceMetadataPresenter.getCollectionContainer().getElement().getOffsetHeight();
 		resoruceMetadataPresenter.getResourceWidgetContainer().getElement().getStyle().setPaddingTop(height, Unit.PX);
 	}
+
+	public void updateReviewAndRatings(String gooruOid,Integer reviewCount) {
+		if(gooruOid!=null&&!gooruOid.equalsIgnoreCase("")&&collectionDo!=null&&collectionDo.getGooruOid()!=null){
+			for(int i=0;i<collectionDo.getCollectionItems().size();i++){
+				CollectionItemDo collectionItemDo=collectionDo.getCollectionItems().get(i);
+				if(gooruOid.equalsIgnoreCase(collectionItemDo.getResource().getGooruOid())){
+					collectionItemDo.getResource().getRatings().setReviewCount(reviewCount);  
+					return;
+				}
+			}
+		}
+	}
+
+	public void updateRatings(String gooruOid, double average) {  
+		if(gooruOid!=null&&!gooruOid.equalsIgnoreCase("")&&collectionDo!=null&&collectionDo.getGooruOid()!=null){
+			for(int i=0;i<collectionDo.getCollectionItems().size();i++){	
+				CollectionItemDo collectionItemDo=collectionDo.getCollectionItems().get(i);
+				if(gooruOid.equalsIgnoreCase(collectionItemDo.getResource().getGooruOid())){
+					collectionItemDo.getResource().getRatings().setAverage(average);   
+					return;
+				}
+			}
+		}
+	}
 }
