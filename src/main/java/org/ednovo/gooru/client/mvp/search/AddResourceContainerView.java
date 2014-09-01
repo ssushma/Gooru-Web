@@ -107,7 +107,9 @@ public class AddResourceContainerView extends
 
 	@UiField
 	InlineLabel headerTitleDes;
-
+	
+	Label loadingText = null;
+	
 	private boolean isLeftFolderClicked = false;
 	HashMap<String,String> urlparams ;
 	private int offset = 0;
@@ -338,7 +340,7 @@ public class AddResourceContainerView extends
 	}
 
 	public TreeItem loadingTreeItem() {
-		Label loadingText = null;
+		
 		if (AppClientFactory.getCurrentPlaceToken().equals(
 				PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(
 						PlaceTokens.COLLECTION_PLAY)) {
@@ -348,6 +350,10 @@ public class AddResourceContainerView extends
 		}
 		loadingText.setStyleName(AddResourceContainerCBundle.INSTANCE.css()
 				.loadingText());
+		return new TreeItem(loadingText);
+	}
+	public TreeItem loadingTreeItemForNoFolder() {
+		loadingText = new Label("");
 		return new TreeItem(loadingText);
 	}
 
@@ -544,6 +550,7 @@ public class AddResourceContainerView extends
 
 	@Override
 	public void clearShelfData() {
+		
 		// TODO Auto-generated method stub
 		addingText.setVisible(false);
 		folderTreePanel.clear();
@@ -674,7 +681,14 @@ public class AddResourceContainerView extends
 			addCollectiorOrReourceText.getElement().setAttribute("style",
 					"display: inline-block;");
 		}else{
-			displayCountLabel.setText("There are no folders to add this collection.");
+			currentsearchType="collection";
+			isTopMostSelected =true;
+			buttonsContainer.setVisible(true);
+			dropdownListContainerScrollPanel.setVisible(true);
+			addResourceBtnLbl.setText(i18n.GL0590());
+			folderTreePanel.clear();
+			folderTreePanel.addItem(loadingTreeItemForNoFolder());
+			//displayCountLabel.setText("There are no folders to add this collection.");
 		}
 	}
 
@@ -688,6 +702,7 @@ public class AddResourceContainerView extends
 	
 	@UiHandler("addResourceBtnLbl")
 	public void addResourceBtnLblClick(ClickEvent event) {
+		
 		addingText.setVisible(true);
 		addResourceBtnLbl.setVisible(false);
 		if (currentsearchType.equalsIgnoreCase("collection")) {

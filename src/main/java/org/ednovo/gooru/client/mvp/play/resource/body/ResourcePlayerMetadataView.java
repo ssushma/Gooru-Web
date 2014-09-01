@@ -1026,9 +1026,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 				if(result.getRatings()!=null){
 					if(isFromThanksPopup){
+						getUiHandlers().updateResourceReview(collectionItemDo.getResource().getGooruOid(),result.getRatings().getReviewCount());
 						AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getReviewCount()));
 						AppClientFactory.fireEvent(new UpdateResourceReviewCountEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getReviewCount()));
 					}
+					getUiHandlers().updateResourceRatings(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage());
 					AppClientFactory.fireEvent(new UpdateResourceRatingCountEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getReviewCount()));
 				}
 				
@@ -1039,8 +1041,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 				if(result.getRatings()!=null){
 					if(isFromThanksPopup){
+						getUiHandlers().updateResourceReview(collectionItemDo.getResource().getGooruOid(),result.getRatings().getReviewCount());
 						AppClientFactory.fireEvent(new UpdateResourceReviewCountEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getReviewCount()));
 					}
+					getUiHandlers().updateResourceRatings(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage());
 					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getReviewCount()));
 					
 				}
@@ -1659,7 +1663,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		ratingsConfirmationPopup.show();
 		ratingsConfirmationPopup.getElement().getStyle().setZIndex(99999);
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-			ratingsConfirmationPopup.setPopupPosition(451,Window.getScrollTop()+120);
+			ratingsConfirmationPopup.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-150),three_star.getElement().getAbsoluteTop()+40);
 		}else{
 			ratingsConfirmationPopup.setPopupPosition(800,Window.getScrollTop()+153);
 		}
