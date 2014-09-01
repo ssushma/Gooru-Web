@@ -66,4 +66,6 @@ public interface UserSettingsUiHandlers extends BaseUiHandlers,SetUserProfileIma
 	
 	void revokeToken();
 	
+	void getGoogleDrive();
+	
 }

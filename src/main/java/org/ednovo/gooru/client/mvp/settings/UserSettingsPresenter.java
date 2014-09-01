@@ -1126,7 +1126,7 @@ public class UserSettingsPresenter
 	public void updateRefershToken() {
 		final String refreshToken = AppClientFactory.getLoggedInUser().getRefreshToken();
 		if(refreshToken==null){
-			AppClientFactory.getInjector().getUserService().getRefershToken(Refersh_emailId,new SimpleAsyncCallback<String>() {
+			AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new SimpleAsyncCallback<String>() {
 				@Override
 				public void onSuccess(String result) {
 					UserDo user = AppClientFactory.getLoggedInUser();
@@ -1178,7 +1178,7 @@ public class UserSettingsPresenter
 	}
 	@Override
 	public void revokeToken() {
-		AppClientFactory.getInjector().getUserService().revokeToken(Refersh_emailId,new AsyncCallback<String>() {
+		AppClientFactory.getInjector().getUserService().revokeToken(AppClientFactory.getLoggedInUser().getGooruUId(),new AsyncCallback<String>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -1190,6 +1190,24 @@ public class UserSettingsPresenter
 				user.setRefreshToken(null);
 				AppClientFactory.setLoggedInUser(user);			
 				getView().googleDirveStatus(false);
+			}
+		});
+		
+	}
+
+	@Override
+	public void getGoogleDrive() {
+		Map<String, String> parms = new HashMap<String, String>();
+		parms = StringUtil.splitQuery(Window.Location.getHref());
+		parms.put("emailId", Refersh_emailId);
+		AppClientFactory.getInjector().getSearchService().getGoogleDrive(Window.Location.getHref(), parms, new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String redirectUrl) {
+				
+				MixpanelUtil.mixpanelEvent("Access_Google_Drive");
+				Window.Location.replace(redirectUrl);
+
 			}
 		});
 		
