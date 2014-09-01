@@ -2265,6 +2265,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	UpdateResourceReviewCountEventHandler setReviewCount =new UpdateResourceReviewCountEventHandler(){
 		@Override
 		public void setReviewCount(String resourceId,Integer count) {
+
 			if(collectionItemDoGlobal.getResource() != null)
 			{
 				if(collectionItemDoGlobal.getResource().getGooruOid().equals(resourceId)){
