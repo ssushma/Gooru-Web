@@ -1133,7 +1133,7 @@ public class UserSettingsPresenter
 					user.setRefreshToken(result);
 					AppClientFactory.setLoggedInUser(user);
 					if(result!=null&&!result.equals("")&&!result.equals("null")){
-						getGoogleAccessToken(refreshToken);
+						getGoogleAccessToken(result);
 					}
 				}
 			});
