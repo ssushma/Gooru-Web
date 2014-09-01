@@ -198,7 +198,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		if(emailId!=null)
 		{
 			
-			AppClientFactory.getInjector().getUserService().getRefershToken(emailId,new AsyncCallback<String>() {
+			AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new AsyncCallback<String>() {
 				
 				@Override
 				public void onSuccess(String result) {
@@ -703,11 +703,16 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",new SimpleAsyncCallback<ClasspageListDo>() {
 				@Override
 				public void onSuccess(ClasspageListDo result) {
-				if (result.getSearchResults().size()>0){
+					if(result.getSearchResults()!=null){
+						if (result.getSearchResults().size()>0){
 						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 					}else{
 						AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
 					}
+				}else
+				{
+					AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+				}
 				}
 		});
 			

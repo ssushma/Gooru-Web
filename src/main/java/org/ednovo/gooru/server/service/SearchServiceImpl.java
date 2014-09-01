@@ -201,7 +201,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(getSearchEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
 		}
-		System.out.println("url:::"+url);
+		System.out.println("getResourceSearchResults:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{
@@ -247,6 +247,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(getSearchEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
 		}
+		System.out.println("getCollectionSearchResults.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		collectionSearchResultDeSerializer.deserialize(jsonRep, searchDo);
@@ -443,7 +444,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		callback = callback.replaceAll("!", "%21");
 		callback = callback.replaceAll("&", "%26");
 		
-		String gDriveUrl = getDriveGoogle() + "?callBackUrl=" + callback;
+		String gDriveUrl = getDriveGoogle() + "?emailId="+parms.get("emailId")+"&callBackUrl=" + callback;
 		return gDriveUrl;
 	}
 	

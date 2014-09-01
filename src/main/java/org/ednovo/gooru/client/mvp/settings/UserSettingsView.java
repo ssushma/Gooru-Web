@@ -1141,18 +1141,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		
 		
 		if (!isDriveConnected){
-			Map<String, String> parms = new HashMap<String, String>();
-			parms = StringUtil.splitQuery(Window.Location.getHref());
-			AppClientFactory.getInjector().getSearchService().getGoogleDrive(Window.Location.getHref(), parms, new SimpleAsyncCallback<String>() {
-	
-				@Override
-				public void onSuccess(String redirectUrl) {
-					
-					MixpanelUtil.mixpanelEvent("Access_Google_Drive");
-					Window.Location.replace(redirectUrl);
-
-				}
-			});
+			getUiHandlers().getGoogleDrive();
+			
 		}else{
 			getUiHandlers().revokeToken();
 			//StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
