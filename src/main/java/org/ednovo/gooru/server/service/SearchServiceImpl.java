@@ -371,7 +371,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	}
 	
 	@Override
-	public Map<String, String> getShortenShareUrlforAssign(String contentGooruOid, Map<String, String> params) {
+	public Map<String, String> getShortenShareUrlforAssign(String contentGooruOid, Map<String, String> params,String classpageItemId) {
 		JsonRepresentation jsonRep=null;
 		Map<String, String> shortenUrl = new HashMap<String, String>();
 			if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)) {	
@@ -382,6 +382,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				}
 			}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) 
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.CLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
+			else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)) 
+				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_CLASSPAGE_URL.getUrl()+"%26page=study%26share=true", contentGooruOid,classpageItemId));
 			else {
 				if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
 					//params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid));
@@ -389,7 +391,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				
 				}else{
 					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_URLAssign.getUrl()+"%26share=true", contentGooruOid));
-					}
+				}
 			}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL, params, contentGooruOid, getLoggedInSessionToken());
 		
