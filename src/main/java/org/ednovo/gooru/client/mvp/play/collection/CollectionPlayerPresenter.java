@@ -2042,8 +2042,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			int questionCount=0;
 			for(int i=0;i<collectionDo.getCollectionItems().size();i++){
 				if(collectionDo.getCollectionItems().get(i).getResource().getResourceType()!=null){
-					String resourceTypeName=collectionItemDo.getResource().getResourceType().getName();
-					if(resourceTypeName.equalsIgnoreCase("assessment-question")){
+					String resourceTypeName=collectionDo.getCollectionItems().get(i).getResource().getResourceType().getName();
+					if(resourceTypeName!=null&&resourceTypeName.equalsIgnoreCase("assessment-question")){
 						questionCount++;
 					}
 				}
