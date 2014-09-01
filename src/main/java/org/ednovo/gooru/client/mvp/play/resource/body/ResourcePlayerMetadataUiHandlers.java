@@ -63,4 +63,8 @@ public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUse
 	public void getResourceTagsToDisplay(String resourceId);
 
 	public void getYoutubeFeedCallback(String utubeId);
+
+	public void updateResourceReview(String gooruOid,Integer reviewCount);
+
+	public void updateResourceRatings(String gooruOid,double average); 
 }

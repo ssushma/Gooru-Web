@@ -2041,8 +2041,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		if(collectionDo!=null&&collectionDo.getCollectionItems()!=null){
 			int questionCount=0;
 			for(int i=0;i<collectionDo.getCollectionItems().size();i++){
-				if(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat()!=null){
-					if(collectionDo.getCollectionItems().get(i).getResource().getResourceFormat().getDisplayName().equalsIgnoreCase("Question")){
+				if(collectionDo.getCollectionItems().get(i).getResource().getResourceType()!=null){
+					String resourceTypeName=collectionItemDo.getResource().getResourceType().getName();
+					if(resourceTypeName.equalsIgnoreCase("assessment-question")){
 						questionCount++;
 					}
 				}
@@ -2110,5 +2111,29 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		resoruceMetadataPresenter.getCollectionContainer().getElement().getStyle().setPosition(Position.FIXED);
 		int height=resoruceMetadataPresenter.getCollectionContainer().getElement().getOffsetHeight();
 		resoruceMetadataPresenter.getResourceWidgetContainer().getElement().getStyle().setPaddingTop(height, Unit.PX);
+	}
+
+	public void updateReviewAndRatings(String gooruOid,Integer reviewCount) {
+		if(gooruOid!=null&&!gooruOid.equalsIgnoreCase("")&&collectionDo!=null&&collectionDo.getGooruOid()!=null){
+			for(int i=0;i<collectionDo.getCollectionItems().size();i++){
+				CollectionItemDo collectionItemDo=collectionDo.getCollectionItems().get(i);
+				if(gooruOid.equalsIgnoreCase(collectionItemDo.getResource().getGooruOid())){
+					collectionItemDo.getResource().getRatings().setReviewCount(reviewCount);  
+					return;
+				}
+			}
+		}
+	}
+
+	public void updateRatings(String gooruOid, double average) {  
+		if(gooruOid!=null&&!gooruOid.equalsIgnoreCase("")&&collectionDo!=null&&collectionDo.getGooruOid()!=null){
+			for(int i=0;i<collectionDo.getCollectionItems().size();i++){	
+				CollectionItemDo collectionItemDo=collectionDo.getCollectionItems().get(i);
+				if(gooruOid.equalsIgnoreCase(collectionItemDo.getResource().getGooruOid())){
+					collectionItemDo.getResource().getRatings().setAverage(average);   
+					return;
+				}
+			}
+		}
 	}
 }
