@@ -451,7 +451,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //				userImage.setVisible(false);
 				mainContainer.setVisible(true);
 				
-				System.out.println("iam here always::"+isJoinPopupPublic);
+				
 				
 				if(!AppClientFactory.isAnonymous())
 				{
@@ -973,11 +973,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				final ArrayList<String> arrayEmailId = new ArrayList<String>();
 				arrayEmailId.add('"'+AppClientFactory.getLoggedInUser().getEmailId()+'"');
 				getUiHandlers().removeUserFromClass(classpageDo, arrayEmailId.toString());
-				Window.enableScrolling(true);
-				AppClientFactory.fireEvent(new DeleteClasspageListEvent(classpageDo.getClasspageId()));
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				hide();
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+				
 			}
 
 			@Override
@@ -1392,7 +1389,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				}
 				else
 				{
-					System.out.println("iam here always::"+classpageDo.getStatus());
+					
 					if(AppClientFactory.isAnonymous()){
 
 
@@ -1431,7 +1428,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 							LblMember.setVisible(false);
 //							userImage.setVisible(false);
 							mainContainer.setVisible(false);
-							System.out.println("in pending::"+isJoinPopupPrivateStatic);
+							
 
 								if(!isJoinPopupPrivateStatic){
 									isJoinPopupPrivateStatic=true;
