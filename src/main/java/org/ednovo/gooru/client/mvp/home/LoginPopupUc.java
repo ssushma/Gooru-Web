@@ -465,7 +465,7 @@ public class LoginPopupUc extends PopupPanel{
 						    if(nameToken.equals(PlaceTokens.TEACH)) {
 //						    	AppClientFactory.fireEvent(new OpenClasspageListEvent());
 						    }  else if(nameToken.equals(PlaceTokens.SHELF)){
-								getCollectionFirstItem();
+								//getCollectionFirstItem();
 						    }
 						    if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
 						    	AppClientFactory.fireEvent(new OpenJoinClassPopupEvent());
