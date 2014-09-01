@@ -169,6 +169,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
     
     boolean isGrades =false;
     
+    private int updateReviewCount=0;
+    
     public Button plusAddTagsButton=new Button();
    
 	/**
@@ -394,20 +396,19 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		ratingWidgetPanel.clear();
 		ratingWidgetView=new RatingWidgetView();
 		if(collectionItemDoGlobal.getResource().getRatings()!=null){
-			ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
-			
+//			ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
 			Integer reviewCount=collectionItemDoGlobal.getResource().getRatings().getReviewCount();
-			
 			if(reviewCount==null){
 				reviewCount = 0;
 			}
 			ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL2024());
-			if(reviewCount>0)
-			{
-				ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
-				ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
+			setUpdateReviewCount(reviewCount);
+//			if(reviewCount>0)
+//			{
+//				ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
+//				ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
 				ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
-			}
+//			}
 			ratingWidgetView.getRatingCountLabel().getElement().getStyle().setPadding(4,Unit.PX);
 //			ratingWidgetView.getAverageRatingLabel().setText(Double.toString(collectionItemDoGlobal.getResource().getRatings().getAverage())+" ");
 			ratingWidgetView.setAvgStarRating(collectionItemDoGlobal.getResource().getRatings().getAverage());
@@ -429,8 +430,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			/**
 			 * OnClick of count label event to invoke Review pop-pup
 			 */
-
-			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(collectionItemDoGlobal.getResource().getGooruOid(),"",collectionItemDoGlobal.getResource().getUser().getUsername())); 
+			if(getUpdateReviewCount()>0){
+				AppClientFactory.fireEvent(new OpenReviewPopUpEvent(collectionItemDoGlobal.getResource().getGooruOid(),"",collectionItemDoGlobal.getResource().getUser().getUsername()));
+			}
 		}
 	}
 
@@ -2242,15 +2244,17 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		public void deleteStarRatings(String resourceGooruOid) {
 			if(ratingWidgetView!=null){
 				String[] revCount = ratingWidgetView.getRatingCountLabel().getText().split(" "); 
-				if(Integer.parseInt(revCount[1].trim())==0){
-					ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
-					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
-					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: none;text-decoration: none !important;color: grey");
+				if(Integer.parseInt(revCount[1].trim())==1){
+//					ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
+//					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
+//					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: none;text-decoration: none !important;color: grey");
 					ratingWidgetView.setAvgStarRating(0);
-					ratingWidgetView.getRatingCountLabel().setText(revCount+" Reviews"); 
+					setUpdateReviewCount(Integer.parseInt(revCount[1])-1);
+					ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024()); 
 				}else{
-					ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
-					ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" Reviews"); 
+//					ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
+					setUpdateReviewCount(Integer.parseInt(revCount[1])-1);
+					ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024()); 
 				}
 			}
 			
@@ -2263,21 +2267,37 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		public void setReviewCount(String resourceId,Integer count) {
 			if(collectionItemDoGlobal.getResource() != null)
 			{
-			if(collectionItemDoGlobal.getResource().getGooruOid().equals(resourceId)){
-				ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
-				ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024());
-				ratingWidgetView.getAverageRatingLabel().setVisible(false);
-				if(count==1 && isRatingUpdated){
+				if(collectionItemDoGlobal.getResource().getGooruOid().equals(resourceId)){
+					setUpdateReviewCount(count);
+					//ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
+					ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024());
+					ratingWidgetView.getAverageRatingLabel().setVisible(false);
+					/*if(count==1 && isRatingUpdated){
 					isRatingUpdated=false;
 					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
 					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
 					ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+				}*/
 				}
-			}
 			}
 		}
 		
 	};
+	
+	
+	public int getUpdateReviewCount(){
+		return updateReviewCount;
+	}
+	public void setUpdateReviewCount(int updateReviewCount){
+		this.updateReviewCount= updateReviewCount;
+		ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
+		if(updateReviewCount>0){
+			ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
+			ratingWidgetView.getRatingCountLabel().getElement().getStyle().setPadding(4,Unit.PX);
+		}else{
+			ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: none;text-decoration: none !important;color: #4e9746;");
+		}
+	}
 	
 	public void insertHideButtonAtLast(){
 		resouceInfoContainer.add(hideButton);

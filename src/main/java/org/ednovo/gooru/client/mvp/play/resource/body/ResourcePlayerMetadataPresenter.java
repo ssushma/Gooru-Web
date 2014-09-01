@@ -487,6 +487,24 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		getView().setMarginTop();
 	}
 
+	@Override
+	public void updateResourceReview(String gooruOid,Integer reviewCount) {
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			collectionPlayerPresenter.updateReviewAndRatings(gooruOid,reviewCount); 
+		}else{
+			resourcePlayerPresenter.updateReviewAndRatings(gooruOid,reviewCount);
+		}
+	}
+	
+	@Override
+	public void updateResourceRatings(String gooruOid,double average) {
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			collectionPlayerPresenter.updateRatings(gooruOid,average);  
+		}else{
+			resourcePlayerPresenter.updateRatings(gooruOid,average);   
+		}
+	}
+
 	
 	/*@Override
 	public void updateStarRatingAndreviews(String assocGooruOId,

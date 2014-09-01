@@ -60,17 +60,20 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 	@Override
 	public IsDraggable renderSearchResult(final ResourceSearchResultDo searchResultDo) {
 		final ResourceSearchResultVc resourceSearchResultVc=new ResourceSearchResultVc(searchResultDo, dragController);
-		if(searchResultDo.getRatings().getReviewCount()>0){
-			resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().getElement().removeAttribute("class");
+//		if(searchResultDo.getRatings().getReviewCount()>0){
+			resourceSearchResultVc.setUpdateReviewCount(searchResultDo.getRatings().getReviewCount());
+			/*resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().getElement().removeAttribute("class");
 			resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
-			resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().getElement().getStyle().setPadding(4,Unit.PX);
+			resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().getElement().getStyle().setPadding(4,Unit.PX)*/;
 			resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					getUiHandlers().showRatingAndReviewPopup(searchResultDo);
+					if(resourceSearchResultVc.getUpdateReviewCount()>0){
+						getUiHandlers().showRatingAndReviewPopup(searchResultDo);
+					}
 				}
 			});
-		}
+//		}
 		
 		
 		resourceSearchResultVc.getAddButton().addClickHandler(new ClickHandler() {
