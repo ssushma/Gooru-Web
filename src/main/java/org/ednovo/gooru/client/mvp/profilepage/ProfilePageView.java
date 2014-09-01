@@ -414,7 +414,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		enableAddBioBtn("userBio");
 		addBioBtn.getElement().setId("btnBioEdit");
 		//added in 6.4
-		collectionsTabVc.setLabel(i18n.GL1754());
+		collectionsTabVc.setLabel(i18n.GL1888());
 		followingTabVc.setLabel(i18n.GL1895());
 		followersTabVc.setLabel(i18n.GL1896());
 		tagTabVc.setLabel(i18n.GL1897());
@@ -725,10 +725,10 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		setAddGradeCourseBtnVisibility();
 		getEnableWidget(enableEdit,profileDo.getAboutMe(),profileDo.getCourses());
 		if(profileDo.getUser().getMeta().getSummary().getCollection()==1||profileDo.getUser().getMeta().getSummary().getCollection()==0){
-			collectionsTabVc.setLabel(i18n.GL0645());
+			collectionsTabVc.setLabel(i18n.GL2173());
 		}
 		else{
-			collectionsTabVc.setLabel(i18n.GL1754());
+			collectionsTabVc.setLabel(i18n.GL1888());
 		}
 		collectionsTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getCollection()+"");
 		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+"");
