@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
+import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter.IsStudentAssignmentProxy;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
@@ -304,11 +305,15 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		PlayerDataLogEvents.collectionStartStopEvent(classpageDataLog);
 	}
 	@Override
-	public void removeUserFromClass(ClasspageDo classpageDo, String emailId){
+	public void removeUserFromClass(final ClasspageDo classpageDo, String emailId){
 		AppClientFactory.getInjector().getClasspageService().removeStudentFromClass(classpageDo.getClasspageCode(), classpageDo.getSharing(), emailId, new SimpleAsyncCallback<Void>() {
 
 			@Override
 			public void onSuccess(Void result) {
+				AppClientFactory.fireEvent(new DeleteClasspageListEvent(classpageDo.getClasspageId()));
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+				Window.enableScrolling(true);
 				
 			}
 		});

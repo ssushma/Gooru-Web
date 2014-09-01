@@ -689,7 +689,7 @@ public class HeaderUc extends Composite implements
 		if(emailId!=null)
 		{
 			
-			AppClientFactory.getInjector().getUserService().getRefershToken(emailId,new AsyncCallback<String>() {
+			AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new AsyncCallback<String>() {
 				
 				@Override
 				public void onSuccess(String result) {
@@ -995,7 +995,7 @@ public class HeaderUc extends Composite implements
 						@Override
 						public void onSuccess(ClasspageListDo result) {
 					//	hasClasses = result.getSearchResults().size() > 0 ? true : false; 
-							
+							if(result.getSearchResults()!=null){
 							if (result.getSearchResults().size()>0){
 								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 								////classpageId = result.getSearchResults().get(0).getGooruOid();
@@ -1006,6 +1006,10 @@ public class HeaderUc extends Composite implements
 								AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
 								//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
 							}
+						}else
+						{
+							AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+						}
 						}
 				});
 			} else {
@@ -1763,6 +1767,7 @@ public class HeaderUc extends Composite implements
 		
 		@Override
 		public void deleteClasspage(String classpageId) {
+			
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.EDIT_CLASSPAGE)){
 	/*			if(classpageListVc!=null){
 					classpageListVc.removeClasspageItem(classpageId);
