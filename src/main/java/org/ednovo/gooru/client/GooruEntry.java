@@ -25,6 +25,8 @@
 
 package org.ednovo.gooru.client;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +34,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.AppInjector;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
+import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionEvent;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -40,6 +43,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
@@ -102,8 +106,12 @@ public class GooruEntry implements EntryPoint {
 	
 	private void registerWindowEvents(){
 		nativePreviewHandlerRegistration = Event.addNativePreviewHandler(new NativePreviewHandler() {
+			
 			public void onPreviewNativeEvent(NativePreviewEvent event) {
 				if(event.getTypeInt()==Event.ONMOUSEOVER){
+					if(AppClientFactory.getUserStatus()!=null){
+						Cookies.setCookie("gooru-active-user", AppClientFactory.getUserStatus(),getCurrentDateAndTime()); 
+					}
 					if((AppClientFactory.getUserStatus()==null || AppClientFactory.getUserStatus().trim().equals(GOORU_USER_INACTIVE)) &&  AppClientFactory.isUserflag() && (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY))){
 					}
 					else if((AppClientFactory.getUserStatus()==null || AppClientFactory.getUserStatus().trim().equals(GOORU_USER_INACTIVE)) &&  AppClientFactory.isUserflag() && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_PLAY)){
@@ -131,6 +139,12 @@ public class GooruEntry implements EntryPoint {
 	 * 
 	 * */
 	
+	protected Date getCurrentDateAndTime() {
+		Date date = new Date();
+		Date updatedDate = new Date((date.getTime() + (120060)));//120060, (1000 * 60 * 60 * 24)
+		return updatedDate;
+	}
+
 	private void userLoggedOutheader(){
 		appInjector.getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
 			@Override
@@ -164,8 +178,10 @@ public class GooruEntry implements EntryPoint {
 				UcCBundle.INSTANCE.css().ensureInjected();
 				HomeCBundle.INSTANCE.css().ensureInjected();
 				AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
-				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT)){
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT)){
 					
+				}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
+					AppClientFactory.fireEvent(new DisplayNoCollectionEvent());
 				}else{
 					Map<String, String> params = new HashMap<String,String>();
 					params.put("loginEvent", "true");
