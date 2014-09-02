@@ -551,7 +551,7 @@ public class LoginPopupUc extends PopupPanel{
 		}
 	}
 
-	private void getCollectionFirstItem() {
+	/*private void getCollectionFirstItem() {
 		AppClientFactory.getInjector().getResourceService().getUserCollection(new SimpleAsyncCallback<List<CollectionDo>>() {
             public void onSuccess(List<CollectionDo> result) {				                	
             	for (CollectionDo collection : result) {
@@ -562,7 +562,7 @@ public class LoginPopupUc extends PopupPanel{
         		}
             }
         });
-	}
+	}*/
 	/**
 	 * Added click handler to hide the login popup.
 	 * 
