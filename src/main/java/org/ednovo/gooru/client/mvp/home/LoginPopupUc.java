@@ -465,7 +465,7 @@ public class LoginPopupUc extends PopupPanel{
 						    if(nameToken.equals(PlaceTokens.TEACH)) {
 //						    	AppClientFactory.fireEvent(new OpenClasspageListEvent());
 						    }  else if(nameToken.equals(PlaceTokens.SHELF)){
-								getCollectionFirstItem();
+								//getCollectionFirstItem();
 						    }
 						    if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
 						    	AppClientFactory.fireEvent(new OpenJoinClassPopupEvent());
@@ -503,7 +503,7 @@ public class LoginPopupUc extends PopupPanel{
 							lblPleaseWait.setVisible(false);
 							new AlertContentUc(i18n.GL1966(), i18n.GL1938());
 						}
-						AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getEmailId(),new AsyncCallback<String>() {
+						AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new AsyncCallback<String>() {
 							
 							@Override
 							public void onSuccess(String result) {
