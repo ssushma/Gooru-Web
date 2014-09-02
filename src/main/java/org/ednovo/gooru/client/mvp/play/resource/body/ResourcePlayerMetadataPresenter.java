@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
 import org.ednovo.gooru.client.mvp.play.resource.question.QuestionResourcePresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
+import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarRatingsEvent;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
@@ -98,6 +99,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		addRegisteredHandler(OpenReviewPopUpEvent.TYPE, this);
 		addRegisteredHandler(UpdateUserStarReviewEvent.TYPE,this);
 		addRegisteredHandler(DeletePlayerStarReviewEvent.TYPE,this);
+		addRegisteredHandler(DeletePlayerStarRatingsEvent.TYPE,this);
 	}
 	
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
@@ -503,6 +505,11 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		}else{
 			resourcePlayerPresenter.updateRatings(gooruOid,average);   
 		}
+	}
+
+	@Override
+	public void deleteRatingsInPlayer() {
+		getView().deleteRatingsValue();
 	}
 
 	
