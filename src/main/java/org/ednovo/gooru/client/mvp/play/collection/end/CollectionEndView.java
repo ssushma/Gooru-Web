@@ -602,100 +602,33 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	 */
 	@UiHandler("shareCollectionBtn")
 	public void onshareCollectionBtnClicked(ClickEvent clickEvent) {
-		
-//		final String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
-//
-//				if(!isSharePopup){
-//					isSharePopup=true;
-//
-//				SharePlayerVc successPopupVc = new SharePlayerVc(collectionId) {
-//
-//					@Override
-//					public void closePoup() {
-//						Window.enableScrolling(true);
-//						this.hide();	
-//						isSharePopup = false;
-//					}
-//					public void triggerShareEvent(String shareType,boolean confirmStatus){
-//						getUiHandlers().triggerCollectionShareDataEvent(collectionId,PlayerDataLogEvents.COLLECTION,shareType,confirmStatus);
-//					}
-//				};
-//				Window.scrollTo(0, 0);
-//				successPopupVc.setWidth("500px");
-//				successPopupVc.setHeight("350px");
-//				successPopupVc.show();
-//				successPopupVc.center();
-//			}
-		
 		final Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
 		String collectionId = collectionDo.getGooruOid();
-				//	Window.enableScrolling(false);
-				//final Map<String,String> params = new HashMap<String,String>();
-			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, collectionDo.getTitle(), collectionDo.getGoals()) {
-					@Override
-					public void closePoup() {
-						Window.enableScrolling(true);
-				        this.hide();
-				    	params.remove("assign");
-				    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-					}
-				};
-				//Window.scrollTo(0, 0);
-				int clientHeight=Window.getClientHeight();
-				//successPopupVc.setWidth("500px");
-				//successPopupVc.setHeight("658px");
-				if(clientHeight>625){
-					clientHeight=625;
-					successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
-				}else{
-					successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
+		AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, collectionDo.getTitle(), collectionDo.getGoals()) {
+				@Override
+				public void closePoup() {
+					Window.enableScrolling(true);
+			        this.hide();
+			    	params.remove("assign");
+			    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				}
-				successPopupVc.show();
-				int left = (Window.getClientWidth() - 500) >> 1;
-			    int top = (Window.getClientHeight() - clientHeight) >> 1;
-			    successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop() + top, 0));
-
-				//successPopupVc.center();
-				//successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
-				
-//				if(!successPopupVc.isVisible()){
-//					successPopupVc.show();
-//					successPopupVc.center();
-//				}
-//				Window.enableScrolling(false);
-//				if (AppClientFactory.isAnonymous()){
-//					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
-//				}
-//				else{
-					//successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
-//				}
-				params.put("assign", "yes");
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-
-		
-	}
-	
-	/*public void setUserName(String userName){
-		userNameLabel.setText(userName);
-		usernameAnchor = new Anchor();
-		//userNameLabel.setText(userName);
-		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
-			usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+			};
+		int clientHeight=Window.getClientHeight();
+		if(clientHeight>625){
+			clientHeight=625;
+			successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
+		}else{
+			successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
 		}
-	else{
-		String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+collectionDo.getUser().getGooruUId()+"&user="+collectionDo.getUser().getUsername();
-		usernameAnchor.setHref(token);
+		successPopupVc.show();
+		int left = (Window.getClientWidth() - 500) >> 1;
+	    int top = (Window.getClientHeight() - clientHeight) >> 1;
+	    successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop() + top, 0));
+		params.put("assign", "yes");
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	}
-		usernameAnchor.setText(userName);
-		usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
-		usernameAnchor.setTarget("_blank");
-		userNameLabel.setText("");
-		userNameLabel.getElement().appendChild(usernameAnchor.getElement());
-	}*/
-
-
 	
 	public void resetMetadataFields(){
 		commentField.setText("");
@@ -709,29 +642,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		getFlagButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
 		this.collectionDo=null;
 	}
-//	
-//	@UiHandler("previewFlagButton")
-//	public void clickOnpreviewFlagButton(ClickEvent event) {
-//		String view=AppClientFactory.getPlaceManager().getRequestParameter("view", null);
-//		Map<String,String> params = new LinkedHashMap<String,String>();
-//		params.put("id", collectionDo.getGooruOid());
-//		params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
-//		if(view!=null&&view.equalsIgnoreCase("end")){
-//			params.put("view", "end");
-//			params.put("tab", "flag");
-//			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-//			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-//		}else{
-//			params.put("tab", "flag");
-//			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
-//			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-//		}
-//		
-//	}
-
-//	public Anchor getFlagButton() {
-//		//return previewFlagButton;
-//	}
 
 	@Override
 	public void setRelatedConceptsContent(ArrayList<ConceptDo> conceptDoList,
@@ -745,15 +655,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		
 	}
 
-	
-	
-	
-	
-//	@UiHandler("insightsFrame")
-//	public void ifrmaeContentLoaded(LoadEvent laodEvent){
-//		//loginPopupTimer.schedule(500);
-//	}
-	
+
 	public void setDataInsightsUrl(){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		if(AppClientFactory.isAnonymous()){

@@ -737,9 +737,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public String getRefershToken(String emailId) throws GwtException ,ServerDownException{
+	public String getRefershToken(String gooruUid) throws GwtException ,ServerDownException{
 		JsonRepresentation jsonRep = null;
-		String url =UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.REFRESH_TOKEN_GDC,emailId);
+		String url =UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.REFRESH_TOKEN_GDC,gooruUid);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
 		return deserializeRefreshToken(jsonRep);
@@ -758,10 +759,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public String revokeToken(String emailId) throws GwtException,ServerDownException {
+	public String revokeToken(String gooruUid) throws GwtException,ServerDownException {
 		JsonRepresentation jsonRep = null;
-		String url =UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.REVOKE_TOKEN_GD,emailId);
-		System.out.println("revokeToken..."+url);
+		String url =UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.REVOKE_TOKEN_GD,gooruUid);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeRevokeToken(jsonRep);

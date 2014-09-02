@@ -633,7 +633,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 		AppClientFactory
 		.getInjector()
 		.getSearchService()
-		.getShortenShareUrlforAssign(classpageId, params,
+		.getShortenShareUrlforAssign(classpageId, params,null,
 				new SimpleAsyncCallback<Map<String, String>>() {
 
 			@Override
