@@ -141,7 +141,7 @@ public class GooruEntry implements EntryPoint {
 	
 	protected Date getCurrentDateAndTime() {
 		Date date = new Date();
-		Date updatedDate = new Date((date.getTime() + (120060)));//120060, (1000 * 60 * 60 * 24)
+		Date updatedDate = new Date((date.getTime() + (1000 * 60 * 60 * 24)));//(1000 * 60 * 60 * 24)=24 hrs. **** 120060 = 2 mins
 		return updatedDate;
 	}
 
