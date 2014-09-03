@@ -576,10 +576,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 				}
 			}
 		} else if (callBack.equalsIgnoreCase(PARTNER_PAGE)) {
-			if(courseMap!=null&&courseMap.get(FEATURED_LABEL)!=null) {
-			} else {
-				getFeaturedCourses(FEATURED_LABEL, false); 
-			}
 			landingBanner.setVisible(false);
 			contributorsContainer.setVisible(false);
 			
