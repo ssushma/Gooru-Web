@@ -39,6 +39,8 @@ public enum ShareUrlToken {
 	
 	COLLECTION_PLAY_URLAssign("%23collection-play%26id={0}"),
 	
+	COLLECTION_PLAY_CLASSPAGE_URL("%23collection-play%26id={0}%26cid={1}"),
+	
 	COLLECTION_PLAY_EMBEDED_URL("embed/collection.htm?id={0}"),
 	
 	CLASSPAGE("%23students-view%26id={0}%26pageSize=10%26pageNum=0%26pos=0"),
