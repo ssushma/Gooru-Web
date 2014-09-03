@@ -277,7 +277,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	}
 
 	private void setMetaDataContent(ProfileLibraryDo profileLibraryDo) {
-		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)) {
 			libraryMetaDataContainer.clear();
 			libraryMetaDataContainer.add(new LibraryMetaDataContentUc(profileLibraryDo));
 		}
