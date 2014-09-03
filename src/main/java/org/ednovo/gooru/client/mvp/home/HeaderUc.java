@@ -101,6 +101,7 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ScrollEvent;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -682,6 +683,29 @@ public class HeaderUc extends Composite implements
 		discoverLinkUrl = null;
 		gooruLearning.setId("lnkeleGooruLearning");
 		manageDotsMenuSelection(noneMenu);
+		String emailId= AppClientFactory.getPlaceManager()
+				.getRequestParameter("emailId");
+	//	StringUtil.consoleLog("emailId..in header."+emailId);
+		if(emailId!=null)
+		{
+			
+			AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new AsyncCallback<String>() {
+				
+				@Override
+				public void onSuccess(String result) {
+				//	StringUtil.consoleLog("Header UC RefershToken..."+result);
+						UserDo user = AppClientFactory.getLoggedInUser();
+						user.setRefreshToken(result);
+						AppClientFactory.setLoggedInUser(user);
+									
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+				//	StringUtil.consoleLog("Header UC onFailure...");				
+				}
+			});
+		}
 	}
 
 	/**
@@ -971,7 +995,7 @@ public class HeaderUc extends Composite implements
 						@Override
 						public void onSuccess(ClasspageListDo result) {
 					//	hasClasses = result.getSearchResults().size() > 0 ? true : false; 
-							
+							if(result.getSearchResults()!=null){
 							if (result.getSearchResults().size()>0){
 								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 								////classpageId = result.getSearchResults().get(0).getGooruOid();
@@ -982,6 +1006,10 @@ public class HeaderUc extends Composite implements
 								AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
 								//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
 							}
+						}else
+						{
+							AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+						}
 						}
 				});
 			} else {
@@ -1739,6 +1767,7 @@ public class HeaderUc extends Composite implements
 		
 		@Override
 		public void deleteClasspage(String classpageId) {
+			
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.EDIT_CLASSPAGE)){
 	/*			if(classpageListVc!=null){
 					classpageListVc.removeClasspageItem(classpageId);

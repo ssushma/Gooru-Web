@@ -103,8 +103,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> implements IsClassListView, SelectionHandler<SuggestOracle.Suggestion> {
 
-	private static ClassListViewUiBinder uiBinder = GWT
-			.create(ClassListViewUiBinder.class);
+	private static ClassListViewUiBinder uiBinder = GWT.create(ClassListViewUiBinder.class);
 	
 
     
@@ -162,7 +161,17 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	
 	int pendingMemberCounter = 0;
 	
-	int pageSize = 10;
+	private int pageSize = 20;
+	
+	private int activeListTotalCount=0;
+	
+	private int  activeListPageNum=0;
+	
+	private int pendingListTotalCount=0;
+	
+	private int pendingListPageNum=0;
+	
+	private int pendingOffsetValue=0;
 
 	String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 	
@@ -478,13 +487,10 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 
 		questionMarkPanel.clear();
 		questionMarkPanel.add(imgNotFriendly);
-		
 		questionMarkPanel1.clear();
 		questionMarkPanel1.add(imgNotFriendly1);
-		
 		questionMarkPanel2.clear();
 		questionMarkPanel2.add(imgNotFriendly2);
-		
 		createAutoSuggestBox();
 	}
 
@@ -671,7 +677,12 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		setLoadingPanelVisibility(true);
 		txtClasspageCodeShare.setText(classpageDo.getClasspageCode().toUpperCase());
 		// call an API to get the list of students in this class.
-		getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  activeOffset, pageSize, "active");	//this will callback displayActiveMembersList method ....
+		activeListPageNum=0;
+		activeListTotalCount=0;
+		pendingListPageNum=0;
+		pendingListTotalCount=0;
+		pendingOffsetValue=0;
+		getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  pageSize*activeListPageNum, pageSize, "active",true,true);	//this will callback displayActiveMembersList method ....
 				
 		if(classpageDo.getSharing().equalsIgnoreCase(PUBLIC)){
 			visibilityRadioOpen.setChecked(true);
@@ -702,27 +713,18 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		addShareClass();
 	}
 	
-	
 	@UiHandler("ancPendingListSeeMore")
 	public void onClickPendingListSeeMore(ClickEvent event){
 		lblPendingPleaseWait.setVisible(true);
 		ancPendingListSeeMore.setVisible(false);
-		pendingOffset = pendingOffset + (pageSize == 1 ? pageSize : pageSize - 1);
-		
-		Document mainDoc = Document.get();		
-		pendingOffset = mainDoc.getElementById("PendingMembersList").getFirstChildElement().getChildCount();	
-		getUiHandlers().getMembersListByCollectionId(classpageDo.getClasspageCode(),  pendingOffset, pageSize, "pending");	//this will callback displayPendingMembersList method ....
-	
+		getUiHandlers().getMembersListByCollectionId(classpageDo.getClasspageCode(),  pendingOffsetValue, pageSize, "pending",true);	//this will callback displayPendingMembersList method ....
 	}
 	@UiHandler("ancActiveListSeeMore")
 	public void onClickActiveListSeeMore(ClickEvent event){
 		lblActivePleaseWait.setVisible(true);
 		ancActiveListSeeMore.setVisible(false);
-		activeOffset = activeOffset + (pageSize == 1 ? pageSize : pageSize - 1);
-		
-		Document mainDoc = Document.get();
-		activeOffset = mainDoc.getElementById("ActiveMembersList").getFirstChildElement().getChildCount();
-		getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  activeOffset, pageSize, "active");	//this will callback displayActiveMembersList method ....
+		int offset=(pageSize*activeListPageNum);
+		getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  offset, pageSize, "active",true,false);	//this will callback displayActiveMembersList method ....
 	}
 	
 	@UiHandler("visibilityRadioOpen")
@@ -730,7 +732,6 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		visibilityRadioOpen.setChecked(true);
 		visibilityRadioInviteOnly.setChecked(false);
 		getUiHandlers().updateClassPageInfo(classpageDo.getClasspageId(), null, null, "public");
-
 	}
 	
 	@UiHandler("visibilityRadioInviteOnly")
@@ -782,7 +783,6 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	@UiHandler("btnInvite")
 	public void OnClickInvite(ClickEvent event){
 		//Check for null - Check for Empty
-		
 		lblPleaseWait.setVisible(true);
 		lblActiveMembers.setVisible(true);
 		lblActiveMembersDesc.setVisible(true);
@@ -790,8 +790,6 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		String studentsEmailIds = autoSuggetTextBox.getSelectedItemsAsString();
 		String emailIds[] = studentsEmailIds.trim().split("\\s*,\\s*");
 		List<String> lstEmailID = new ArrayList<String>();
-
-		
 		for (int i=0; i<emailIds.length; i++){
 			lstEmailID.add("\""+emailIds[i].toLowerCase().trim()+"\"");	
 		}
@@ -868,18 +866,17 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	 * 
 	*/
 	@Override
-	public void displayPendingMembersList(List<CollaboratorsDo> lstPendingMembers, boolean isNew, int totalCount) {
-		
+	public void displayPendingMembersList(List<CollaboratorsDo> lstPendingMembers, boolean isNew, int totalCount,boolean increasePageNum,boolean insertTop) {
 		setLoadingPanelVisibility(false);
 		lblPleaseWait.setVisible(false);
 		lblErrorMessage.setVisible(false);
-		
-		pendingMemberCounter = lstPendingMembers.size();
-		
-		Document mainDoc = Document.get();
-		
-		if(pendingMemberCounter ==0 && activeMemberCounter==0 && !mainDoc.getElementById("PendingMembersList").getFirstChildElement().hasChildNodes())
-		{
+		if(!insertTop){
+			this.pendingListTotalCount=totalCount;
+		}
+		if(increasePageNum){
+			pendingOffsetValue=pendingOffsetValue+pageSize;
+		}
+		if(pendingListTotalCount==0&&activeListTotalCount==0){
 			panelNoMembers.setVisible(true);
 			panelMembersList.setVisible(false);
 			lblPendingMembers.setVisible(false);
@@ -887,101 +884,51 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			lblActiveMembers.setVisible(false);
 			lblActiveMembersDesc.setVisible(false);
 			ancPendingListSeeMore.setVisible(false);
-			
-		}
-		
-		if((totalCount-pendingOffset)>10)
-		{
-			lblPendingPleaseWait.setVisible(false);
-			ancPendingListSeeMore.setVisible(true);
-		}
-		else
-		{
-			lblPendingPleaseWait.setVisible(false);
+		}else if(pendingListTotalCount==0){
+			lblPendingMembers.setVisible(false);
 			ancPendingListSeeMore.setVisible(false);
-		}
-
-
-
-		
-		for (int k=0; k<lstPendingMembers.size();k++){
-
-			lblPendingMembers.setVisible(true);
-			questionMarkPanel2.setVisible(true);
-			panelNoMembers.setVisible(false);
-			panelMembersList.setVisible(true);
-			panelPendingMembersContainer.setVisible(true);
-			
-			
-			if((totalCount-activeOffset)>10)
-			{
-				lblPendingPleaseWait.setVisible(false);
-				ancPendingListSeeMore.setVisible(true);
-			}
-			else
-			{
-				lblPendingPleaseWait.setVisible(false);
-				ancPendingListSeeMore.setVisible(false);
-			}
-			
-			Document ele = Document.get();
-			if (ele.getElementById(lstPendingMembers.get(k).getEmailId()) == null){
-				insertPendingUserAfterDeletion(lstPendingMembers.get(k),isNew,totalCount,k);
-				
-			}
-			if (!isNew){
-				if (totalCount <= panelPendingMembersList.getWidgetCount() && lstPendingMembers.get(0).getStatus().equalsIgnoreCase("pending")){
+			questionMarkPanel2.setVisible(false);
+		}else{
+			lblPendingPleaseWait.setVisible(false);
+			for (int k=0; k<lstPendingMembers.size();k++){
+				lblPendingMembers.setVisible(true);
+				questionMarkPanel2.setVisible(true);
+				panelNoMembers.setVisible(false);
+				panelMembersList.setVisible(true);
+				panelPendingMembersContainer.setVisible(true);
+				if(insertTop){
+					pendingOffsetValue++;
+					pendingListTotalCount++;
+				}
+				if((pendingOffsetValue)< pendingListTotalCount){
+					ancPendingListSeeMore.setVisible(true);
+				}
+				else{
 					ancPendingListSeeMore.setVisible(false);
 				}
+				insertPendingUserAfterDeletion(lstPendingMembers.get(k),isNew,totalCount,k,insertTop);
+				enableInvite();
 			}
-			overAllStudentsCount = overAllStudentsCount + lstPendingMembers.size();
-			
-			//clear, enable and validate the number of student in classlist and enable Invite Button.
-			enableInvite();
 		}
-		
 	}
 	@Override
-	 public void insertPendingUserAfterDeletion(CollaboratorsDo lstPendingMembers, boolean isNew, int totalCount, int intPos){
-
-				MembersViewVc membersViewVc = new MembersViewVc(AppClientFactory.getCurrentPlaceToken(), isNew, lstPendingMembers, classpageDo,intPos) {
-				@Override
-				public void setCollabCount(int count, String type) {
-					
+	 public void insertPendingUserAfterDeletion(final CollaboratorsDo lstPendingMembers, boolean isNew, int totalCount, int intPos,boolean insertAtTop){
+				final MembersViewVc membersViewVc = new MembersViewVc(AppClientFactory.getCurrentPlaceToken(), isNew, lstPendingMembers, classpageDo,intPos) {
+				public void removeUserWidget(){
+					ArrayList<String> arrayEmailId = new ArrayList<String>();
+					arrayEmailId.add('"'+lstPendingMembers.getEmailId()+'"');
+					getUiHandlers().removeUserFromClass(classpageDo, arrayEmailId.toString(),0, true,this);
 				}
-
+				@Override
+				public void setCollabCount(int count, String type) {}
 				@Override
 				public void setStudentsListContainer(ClickEvent event) {
-					final String emailIdVal = event.getRelativeElement().getPreviousSiblingElement().getInnerText();
-					final Document ele = Document.get();
-					final ArrayList<String> arrayEmailId = new ArrayList<String>();
-					arrayEmailId.add('"'+emailIdVal+'"');
 					Window.enableScrolling(false);
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 					DeletePopupViewVc delete = new DeletePopupViewVc() {
-
 						@Override
 						public void onClickPositiveButton(ClickEvent event) {
-							int childWidgetCount = 0;
-							childWidgetCount = ele.getElementById("PendingMembersList").getFirstChildElement().getChildCount()-1;
-							getUiHandlers().removeUserFromClass(classpageDo, arrayEmailId.toString(),childWidgetCount, true);
-							try{
-								ele.getElementById(emailIdVal).getParentElement().getParentElement().removeFromParent();
-							}catch(Exception e){
-							}
-							pendingMemberCounter = childWidgetCount;
-							if(childWidgetCount == 0){
-								lblPendingMembers.setVisible(false);
-								questionMarkPanel2.setVisible(false);
-								ancPendingListSeeMore.setVisible(false);
-							}
-
-							if(pendingMemberCounter ==0 && activeMemberCounter==0)
-							{
-								panelNoMembers.setVisible(true);
-								panelMembersList.setVisible(false);
-							
-							}
+							removeUserWidget();
 							Window.enableScrolling(true);
 							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 							hide();
@@ -992,7 +939,6 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 							Window.enableScrolling(true);
 							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 							hide();
-							
 						}
 					};
 					delete.setPopupTitle(i18n.GL1548());
@@ -1006,22 +952,22 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 					delete.center();
 				}
 			};
-			
-			if (isNew){
-				panelPendingMembersList.insert(membersViewVc, intPos);
+			if(insertAtTop){
+				panelPendingMembersList.insert(membersViewVc,0);
 			}else{
-				panelPendingMembersList.insert(membersViewVc, panelPendingMembersList.getWidgetCount());
+				panelPendingMembersList.add(membersViewVc);
 			}
-			
-			pendingMemberCounter = panelPendingMembersList.getWidgetCount();
-			
-			if(totalCount<=10)
-			{
-				ancPendingListSeeMore.setVisible(false);
-			}
-
-	
 	 }
+	
+	public void removePendiUserWidget(MembersViewVc membersViewVc,boolean isPendingList){
+		membersViewVc.removeFromParent();
+		if(isPendingList){
+			getUiHandlers().getMembersListByCollectionId(classpageDo.getClasspageCode(), pendingOffsetValue-1, 1, "pending",false);
+		}else{
+			getUiHandlers().getActiveMembersListByCollectionId(classpageDo.getClasspageCode(),  (activeListPageNum*pageSize)-1, 1, "active",false,false);
+		}
+	}
+	
 	
 	@Override
 	public Anchor getSeeMorePendingLabel() {
@@ -1047,125 +993,63 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	 * 
 	*/
 	@Override
-	public void displayActiveMembersList(List<CollaboratorsDo> lstActiveMembers, boolean isNew, int totalCount) {
+	public void displayActiveMembersList(List<CollaboratorsDo> lstActiveMembers, boolean isNew, int totalCount,boolean increasePageNum) {
 		setLoadingPanelVisibility(false);
 		lblPleaseWait.setVisible(false);
 		lblErrorMessage.setVisible(false);
-	
-		activeMemberCounter = lstActiveMembers.size();
-		
-		Document mainDoc = Document.get();
 		AppClientFactory.fireEvent(new GetStudentJoinListEvent(activeMemberCounter));
-		if(activeMemberCounter==0 && !mainDoc.getElementById("ActiveMembersList").getFirstChildElement().hasChildNodes())
-		{
-		//ancActiveListSeeMore.setVisible(false);
-		lblActiveMembers.setVisible(true);
-		lblActiveMembersDesc.setVisible(true);
-		ancActiveListSeeMore.setVisible(false);
-		Label noActiveStudents = new Label(i18n.GL1527());
-		panelActiveMembersContainter.setVisible(true);
-		noActiveStudents.getElement().addClassName(res.css().noActiveStudents());
-		panelActiveMembersList.add(noActiveStudents);
-		
+		if(increasePageNum){
+			activeListPageNum++;
 		}
-		
-		for (int k=0; k<lstActiveMembers.size();k++){
+		this.activeListTotalCount=totalCount;
+		if(activeListTotalCount==0){
 			lblActiveMembers.setVisible(true);
 			lblActiveMembersDesc.setVisible(true);
-			panelNoMembers.setVisible(false);
-			panelMembersList.setVisible(true);
+			ancActiveListSeeMore.setVisible(false);
+			Label noActiveStudents = new Label(i18n.GL1527());
 			panelActiveMembersContainter.setVisible(true);
-
-			Document ele = Document.get();
-			if (ele.getElementById(lstActiveMembers.get(k).getEmailId()) == null){
+			noActiveStudents.getElement().addClassName(res.css().noActiveStudents());
+			panelActiveMembersList.add(noActiveStudents);
+		}else{
+			for (int k=0; k<lstActiveMembers.size();k++){
+				lblActiveMembers.setVisible(true);
+				lblActiveMembersDesc.setVisible(true);
+				panelNoMembers.setVisible(false);
+				panelMembersList.setVisible(true);
+				panelActiveMembersContainter.setVisible(true);
 				insertActiveUserAfterDeletion(lstActiveMembers.get(k),isNew,totalCount,k);
-
-				}
-			if (!isNew){
-				if (totalCount <= panelActiveMembersList.getWidgetCount()  && lstActiveMembers.get(0).getStatus().equalsIgnoreCase("active")){
+				if((pageSize*activeListPageNum)<activeListTotalCount){
+					ancActiveListSeeMore.setVisible(true);
+				}else{
 					ancActiveListSeeMore.setVisible(false);
 				}
+				enableInvite();
 			}
-			overAllStudentsCount = overAllStudentsCount + lstActiveMembers.size();
-			
-			//clear, enable and validate the number of student in classlist and enable Invite Button.
-			enableInvite();
 		}
-		getUiHandlers().getMembersListByCollectionId(classpageDo.getClasspageCode(),  pendingOffset, pageSize, "pending");	//this will callback displayPendingMembersList method ....
+	}
+	
+	public void getPendingMembersList(){
+		getUiHandlers().getMembersListByCollectionId(classpageDo.getClasspageCode(), 0, pageSize, "pending",true);	//this will callback displayPendingMembersList method ....
 	}
 	
 	@Override
-	 public void insertActiveUserAfterDeletion(CollaboratorsDo lstActiveMembers, boolean isNew, int totalCount, int intPos){
-		
-		if(totalCount>10)
-		{
-			lblActiveMembersDesc.setVisible(true);
-		}
-
+	 public void insertActiveUserAfterDeletion(final CollaboratorsDo lstActiveMembers, boolean isNew, int totalCount, int intPos){
 		MembersViewVc membersViewVc = new MembersViewVc(AppClientFactory.getCurrentPlaceToken(), isNew, lstActiveMembers, classpageDo,intPos) {
-			
-			@Override
-			public void setCollabCount(int count, String type) {
-				
+			public void removeActiveUserObject(){
+				ArrayList<String> arrayEmailId = new ArrayList<String>();
+				arrayEmailId.add('"'+lstActiveMembers.getEmailId()+'"');
+				getUiHandlers().removeUserFromClass(classpageDo,arrayEmailId.toString(),0,false,this);
 			}
-
+			@Override
+			public void setCollabCount(int count, String type) {}
 			@Override
 			public void setStudentsListContainer(ClickEvent event) {
-				final String emailIdVal = event.getRelativeElement().getPreviousSiblingElement().getInnerText();
-				final Document ele = Document.get();
-				final ArrayList<String> arrayEmailId = new ArrayList<String>();
-				arrayEmailId.add('"'+emailIdVal+'"');
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 				DeletePopupViewVc delete = new DeletePopupViewVc() {
-
 					@Override
 					public void onClickPositiveButton(ClickEvent event) {
-						
-				
-						
-						int childWidgetCount = 0;
-						try{
-							childWidgetCount = ele.getElementById("ActiveMembersList").getFirstChildElement().getChildCount()-1;
-						getUiHandlers().removeUserFromClass(classpageDo, arrayEmailId.toString(),childWidgetCount,false);
-		
-							ele.getElementById(emailIdVal).getParentElement().getParentElement().removeFromParent();
-							overAllStudentsCount--;
-	
-							
-						}catch(Exception e){
-							
-						}
-						enableInvite();
-						activeMemberCounter = childWidgetCount;
-						try
-						{
-						Element element = Document.get().getElementById("btnClassListTab");
-						element.setInnerHTML(i18n.GL1624()+"("+activeMemberCounter+")");
-						}
-						catch(Exception ex)
-						{
-							Element element = Document.get().getElementById("btnClassListTab");
-							element.setInnerHTML(i18n.GL1624()+"("+classpageDo.getMemberCount()+")");
-						}
-						
-						AppClientFactory.fireEvent(new GetStudentJoinListEvent(activeMemberCounter));
-						if(childWidgetCount == 0){
-							lblActiveMembers.setVisible(true);
-							lblActiveMembersDesc.setVisible(true);
-							ancActiveListSeeMore.setVisible(false);
-     						Label noActiveStudents = new Label(i18n.GL1527());
-							panelActiveMembersContainter.setVisible(true);
-							noActiveStudents.getElement().addClassName(res.css().noActiveStudents());
-							panelActiveMembersList.add(noActiveStudents);
-							//ancActiveListSeeMore.setVisible(false);
-						}
-						if(pendingMemberCounter ==0 && activeMemberCounter==0)
-						{
-							panelNoMembers.setVisible(true);
-							panelMembersList.setVisible(false);
-							
-						}
+						removeActiveUserObject();
 						Window.enableScrolling(true);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 						hide();
@@ -1192,20 +1076,12 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		};
 		//this validation added for checking duplicate emailIds in pending list
 		lblActivePleaseWait.setVisible(false);
-		
-		if (isNew){
-			panelActiveMembersList.insert(membersViewVc, intPos);
-		}else{
-			panelActiveMembersList.insert(membersViewVc, panelActiveMembersList.getWidgetCount());
-		}
-		activeMemberCounter = panelActiveMembersList.getWidgetCount();
-			
-			if(totalCount<=10)
-			{
-				ancActiveListSeeMore.setVisible(false);
-			}
-
-	
+		panelActiveMembersList.add(membersViewVc);
+//		if (isNew){
+//			panelActiveMembersList.insert(membersViewVc, intPos);
+//		}else{
+//			panelActiveMembersList.insert(membersViewVc, panelActiveMembersList.getWidgetCount());
+//		}
 	 }
 
 	/**

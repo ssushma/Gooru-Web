@@ -231,5 +231,7 @@ public interface UserService extends BaseService {
 	
 	List<UserTagsResourceDO> getResourcesByTag(String tagGooruOid,String offset,String limit,String userIdVal)throws GwtException, ServerDownException;
 	
-	String getRefershToken()throws GwtException,ServerDownException;
+	String getRefershToken(String gooruUid)throws GwtException,ServerDownException;
+	
+	String revokeToken(String gooruUid)throws GwtException,ServerDownException;
 }

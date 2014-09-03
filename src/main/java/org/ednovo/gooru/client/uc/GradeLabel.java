@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.uc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -42,16 +43,16 @@ import com.google.gwt.user.client.ui.Label;
  * @author Search Team
  *
  */
-public class GradeLabel extends Label implements ClickHandler {
+public abstract class GradeLabel extends Label implements ClickHandler {
 	
 	private static final List<String> gradeList = new ArrayList<String>();
+	
 	
 	private CollectionDo collection = null;
 	
 	private static final String KIDER_GARTEN = "Kindergarten";
 	
 	private static final String HIGHER_EDUCATION = "Higher Education";
-	
 	/**
 	 * Class constructor
 	 * @param label name of the {@link Label}
@@ -74,7 +75,6 @@ public class GradeLabel extends Label implements ClickHandler {
 			if (genGrade.indexOf("-")>0){
 				genGrade = generateGrade(genGrade);
 			}
-			
 			String grade[] = genGrade.split(",");
 			for (int i = 0; i < grade.length; i++) {
 				if (label.equals(grade[i])) {
@@ -88,58 +88,8 @@ public class GradeLabel extends Label implements ClickHandler {
 			}
 		}
 	}
-
-	@Override
-	public void onClick(ClickEvent event) {
-		if(this.getElement().getAttribute("selected").contains("selected")){
-			this.getElement().getStyle().setProperty("background", "");
-			this.getElement().getStyle().setColor("#999");
-			this.getElement().removeAttribute("selected");
-			for(String grade : gradeList){
-				if(grade.equals(this.getText())){
-					gradeList.remove(grade);
-					updateGrade(gradeList);
-				}
-			}
-			
-		} else {
-			this.getElement().getStyle().setProperty("background", "#0F76BB");
-			this.getElement().getStyle().setColor("#fff");
-			this.getElement().setAttribute("selected", "selected");
-			if(!gradeList.contains(this.getText())){
-				gradeList.add(this.getText());
-				updateGrade(gradeList);
-				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
-					MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
-				}
-			}
-		}
-		
-	}
-	private void updateGrade(List<String> gradeList){
-		AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collection.getGooruOid(), null, null, join(gradeList, ","), null, null, null,null,null,null, new SimpleAsyncCallback<CollectionDo>(){
-			
-			@Override
-			public void onSuccess(CollectionDo result) {
-				collection.setGrade(result.getGrade());
-			}
-		});
-	}
 	
-	private String join(List<?> list,String separator){
-		StringBuilder builder =null;
-		if(list != null){
-			builder = new StringBuilder();
-			for(Object value:list){
-				if(builder.length() > 0){
-					builder.append(separator);
-				}
-				builder.append(value);
-			}
-		}
-		return builder.toString();
-	}
-	
+	public abstract void onClick(ClickEvent event);
 	
 	private String generateGrade(String gradeTxt){
 		String tmpGradeTxt = "";

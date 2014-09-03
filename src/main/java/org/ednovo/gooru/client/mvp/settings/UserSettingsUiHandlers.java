@@ -64,4 +64,8 @@ public interface UserSettingsUiHandlers extends BaseUiHandlers,SetUserProfileIma
 	
 	void updatePartyCustomField(String optionKey,String optionValue);
 	
+	void revokeToken();
+	
+	void getGoogleDrive();
+	
 }

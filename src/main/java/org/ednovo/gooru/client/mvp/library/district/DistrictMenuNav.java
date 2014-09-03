@@ -227,6 +227,9 @@ public abstract class DistrictMenuNav extends Composite {
 		languageArtsText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		learnText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		aboutGooruAnr.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)){
+			aboutGooruAnr.getElement().getStyle().setWidth(10, Unit.PCT);
+		}
 		
 		sciencePanel.getElement().setId("epnlSciencePanel");
 		scienceCourses.getElement().setId("pnlScienceCourses");
@@ -264,7 +267,7 @@ public abstract class DistrictMenuNav extends Composite {
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.LIFEBOARD)) {
 			sharing = null;
 		}
-		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(subjectCode, sharing, 20, new SimpleAsyncCallback<ProfileLibraryListDo>() {
+		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(subjectCode, sharing, 20,0, new SimpleAsyncCallback<ProfileLibraryListDo>() {
 			@Override
 			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
 				clickOnCourse(profileLibraryListDo.getSearchResult(), subjectCode, profileLibraryDo);

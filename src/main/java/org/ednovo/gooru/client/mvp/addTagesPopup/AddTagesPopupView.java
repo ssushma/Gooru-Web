@@ -112,12 +112,17 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		add(uiBinder.createAndBindUi(this));
 		this.resourceId=resourceId;
 		this.setGlassEnabled(true);
-		//Window.enableScrolling(false);
-		this.getElement().setAttribute("style", "z-index:99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;width:602px;height:596px;");
-		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
+		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("resource-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("collection-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("mycollections")){
+				this.getGlassElement().addClassName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
+			}else{
+			
+				this.removeStyleName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
+				this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
+				this.getElement().setAttribute("style", "z-index:999999;");
+		}
 		this.setWidth("596px");
 		this.setHeight("586px");
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
+		//AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
 		this.center();
 		
 		
@@ -1113,7 +1118,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		}
 		
 		for(final String codeObj:standardsDo){
-			tagList.add("\"" +standardsDefaultText.getText()+"  :"+codeObj+"\"");
+			tagList.add("\"" +standardsDefaultText.getText()+" : "+codeObj+"\"");
 		}
 		
 		if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:"))

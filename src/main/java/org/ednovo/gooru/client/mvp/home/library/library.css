@@ -1153,3 +1153,76 @@ margin-bottom: 15px;
 	font-size: 30px;
 	color: #1076BB;
 }
+
+.districtSpecificPartnersMainCore{
+	width: 100%;
+	height: 250px;
+	margin-top: 86px;
+	background-image: url(../images/library/district/landing-image-rusd_orange.png);
+}
+.districtSpecificPartnersInnerMainCore{
+	width: 1000px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.districtSpecificPartnerLogoCore{
+	background: url(../images/library/district/core-logo.png);
+width: 250px;
+height: 55px;
+float: right;
+margin-left: auto;
+margin-right: auto;
+margin-top: 7px;
+}
+.districtLibraryHeaderTextCore{
+	color: white;
+font-size: 38px;
+font-weight: bold;
+text-align: center;
+padding-top: 100px;
+height: 45px;
+}
+.districtLibrarySubHeaderTextCore{
+	color: white;
+font-size: 16px;
+text-align: center;
+margin-top: 10px;
+height: 19px;
+}
+.districtSpecificPartnersMainlps{
+	width: 100%;
+	height: 250px;
+	margin-top: 86px;
+	background-image: url(../images/library/district/landing-image-rusd_purple.png);
+}
+.districtSpecificPartnersInnerMainlps{
+	width: 1000px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.districtSpecificPartnerLogolps{
+background: url(../images/library/district/lps-logo.png);
+width: 133px;
+height: 133px;
+float: right;
+margin-left: auto;
+margin-right: 5px;
+margin-top: 60px;
+}
+.districtLibraryHeaderTextlps{
+color: white;
+font-size: 38px;
+font-weight: bold;
+text-align: center;
+padding-top: 100px;
+height: 45px;
+margin-left: 96px;
+}
+.districtLibrarySubHeaderTextlps{
+color: white;
+font-size: 16px;
+text-align: center;
+margin-top: 10px;
+height: 19px;
+margin-left: 82px;
+}

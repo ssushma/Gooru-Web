@@ -19,6 +19,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -76,23 +77,23 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 	@Override
 	protected void onBind() {
 		
-		setMembersActiveAsyncCallback(new SimpleAsyncCallback<StudentsAssociatedListDo>() {
-
-			@Override
-			public void onSuccess(StudentsAssociatedListDo result) {
-				//Display all members in active list.
-				getView().displayActiveMembersList(result.getSearchResults(), false, result.getTotalHitCount());
-			}
-		});
+//		setMembersActiveAsyncCallback(new SimpleAsyncCallback<StudentsAssociatedListDo>() {
+//
+//			@Override
+//			public void onSuccess(StudentsAssociatedListDo result) {
+//				//Display all members in active list.
+//				getView().displayActiveMembersList(result.getSearchResults(), false, result.getTotalHitCount());
+//			}
+//		});
 		
-		setCollabAsyncCallback(new SimpleAsyncCallback<StudentsAssociatedListDo>() {
-
-			@Override
-			public void onSuccess(StudentsAssociatedListDo result) {
-				//Display all members in pending list.
-				getView().displayPendingMembersList(result.getSearchResults(), false, result.getTotalHitCount());
-			}
-		});
+//		setCollabAsyncCallback(new SimpleAsyncCallback<StudentsAssociatedListDo>() {
+//
+//			@Override
+//			public void onSuccess(StudentsAssociatedListDo result) {
+//				//Display all members in pending list.
+//				getView().displayPendingMembersList(result.getSearchResults(), false, result.getTotalHitCount());
+//			}
+//		});
 		
 		setAddMembersAsyncCallback(new SimpleAsyncCallback<ArrayList<CollaboratorsDo>>() {
 
@@ -108,7 +109,7 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 					getView().getInviteButton().setVisible(true);
 				}else{
 					//Display pending members list.
-					getView().displayPendingMembersList(result, true, result.size());
+					getView().displayPendingMembersList(result, true, result.size(),false,true);
 				}
 			}
 		});
@@ -126,18 +127,13 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 	}
 	
 	@Override
-	public void removeUserFromClass(final ClasspageDo classpageDo, String emailId, final int pendingOffSet, final boolean pendingFlag){
+	public void removeUserFromClass(final ClasspageDo classpageDo, String emailId, final int pendingOffSet, final boolean pendingFlag,final MembersViewVc membersViewVc){
 		AppClientFactory.getInjector().getClasspageService().removeStudentFromClass(classpageDo.getClasspageCode(), classpageDo.getSharing(), emailId,  new SimpleAsyncCallback<Void>() {
-
 			@Override
 			public void onSuccess(Void result) {
-
-				if(pendingOffSet>=9)
-                    insertUserAfterDeletionForPending(classpageDo.getClasspageCode(),pendingOffSet,1,"pending",pendingFlag);
-
+				getView().removePendiUserWidget(membersViewVc,pendingFlag);
 			}
 		});
-		
 	}
 	
 	public void insertUserAfterDeletionForPending(final String gooruOid,final int offSet, int pageSize,String statusType, final boolean pendingFlag){
@@ -147,7 +143,7 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
                 	if(result.getSearchResults().size()>0){  
                 		if(pendingFlag)
                 		{
-                		getView().insertPendingUserAfterDeletion(result.getSearchResults().get(0), false, result.getTotalHitCount(),0);
+                		getView().insertPendingUserAfterDeletion(result.getSearchResults().get(0), false, result.getTotalHitCount(),0,false);
                 		}
                 		else
                 		{
@@ -189,8 +185,16 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 	 * 
 	 */
 	@Override
-	public void getMembersListByCollectionId(String classCode, int offSet, int pageSize, String statusType) {
-		getClasspageServiceAsync().getAssociatedStudentListByCode(classCode, offSet,  pageSize,  statusType, getCollabAsyncCallback());
+	public void getMembersListByCollectionId(String classCode, int offSet, int pageSize, String statusType,final boolean increasePageNum) {
+		getClasspageServiceAsync().getAssociatedStudentListByCode(classCode, offSet,  pageSize,  statusType, new SimpleAsyncCallback<StudentsAssociatedListDo>() {
+
+			@Override
+			public void onSuccess(StudentsAssociatedListDo result) {
+				//Display all members in pending list.
+				getView().displayPendingMembersList(result.getSearchResults(), false, result.getTotalHitCount(),increasePageNum,false);
+				
+			}
+		});
 	}
 
 	@Override
@@ -213,8 +217,17 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 	 * @see org.ednovo.gooru.client.mvp.classpages.classlist.ClassListUiHandlers#getActiveMembersListByCollectionId(java.lang.String, int, int, java.lang.String)
 	 */
 	@Override
-	public void getActiveMembersListByCollectionId(String classCode, int offSet, int pageSize, String statusType) {
-		getClasspageServiceAsync().getActiveAssociatedStudentListByCode(classCode, offSet,  pageSize,  statusType, getMembersActiveAsyncCallback());
+	public void getActiveMembersListByCollectionId(String classCode, int offSet, int pageSize, String statusType,final boolean increasePageNum,final boolean getPendingMembers) {
+		getClasspageServiceAsync().getActiveAssociatedStudentListByCode(classCode, offSet,  pageSize,  statusType, new SimpleAsyncCallback<StudentsAssociatedListDo>() {
+			@Override
+			public void onSuccess(StudentsAssociatedListDo result) {
+				//Display all members in active list.
+				getView().displayActiveMembersList(result.getSearchResults(), false, result.getTotalHitCount(),increasePageNum);
+				if(getPendingMembers){
+					getView().getPendingMembersList();
+				}
+			}
+		});
 	}
 	/** 
 	 * This method is to get the membersActiveAsyncCallback

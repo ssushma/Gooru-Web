@@ -412,6 +412,8 @@ public interface ShelfCBundle extends ClientBundle{
 		String assignCloseMark();
 		String assignCloseMarker();
 		String charLimit();
+		
+		String shelfPublishTabText();
 	}
 	
 	@Source("Shelf.css")

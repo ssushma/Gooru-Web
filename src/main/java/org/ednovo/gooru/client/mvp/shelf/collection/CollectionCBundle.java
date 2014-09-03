@@ -343,6 +343,7 @@ public interface CollectionCBundle extends ClientBundle{
 		String depthOfKnowledgeSubContainer();
 		String addQuestionStandard();
 		String btnOuterContainer();
+		String gradeInfoLabel();
 	}
 	@Source("Collection.css")
 	CollectionCss css();

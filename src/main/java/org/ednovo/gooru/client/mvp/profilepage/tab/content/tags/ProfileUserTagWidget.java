@@ -71,9 +71,9 @@ public class ProfileUserTagWidget extends Composite {
 		titleLabelName=userTagDo.getLabel();
 		mainContainer.setTitle(titleLabel);
 		mainContainer.getElement().setAttribute("alt", titleLabel);
-		if(titleLabel.length()>=12){
+		/*if(titleLabel.length()>=12){
 			titleLabel = titleLabel.substring(0, 12) + "...";
-		}
+		}*/
 		tagTitle.setText(titleLabel);
 		tagTitle.getElement().setId("lblTagTitle");
 		tagTitle.getElement().setAttribute("alt",titleLabel);

@@ -31,6 +31,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -110,6 +111,11 @@ public class GlobalToolTip extends Composite {
     	if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
     		confirmationPanel.getElement().getStyle().setLeft(-136, Unit.PX);
 			panelArrow.getElement().getStyle().setLeft(141, Unit.PX);
+		}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+			if(AppClientFactory.getPlaceManager().getRequestParameter("page")!=null && AppClientFactory.getPlaceManager().getRequestParameter("page").equals("teach")){
+				confirmationPanel.getElement().getStyle().setWidth(131, Unit.PX);
+				desLbl.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+			}
 		}else{
 			confirmationPanel.getElement().getStyle().clearLeft();
 			panelArrow.getElement().getStyle().clearLeft();

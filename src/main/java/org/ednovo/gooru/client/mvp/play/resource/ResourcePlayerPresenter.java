@@ -397,7 +397,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	*/
 	
 	protected void setPageTitle(CollectionItemDo collectionItemDo) {
-		AppClientFactory.setBrowserWindowTitle(SeoTokens.RESOURCE_PLAYER_TITLE+collectionItemDo.getResource().getTitle());
+		AppClientFactory.setBrowserWindowTitle(SeoTokens.RESOURCE_PLAYER_TITLE+removeHtmlTags(collectionItemDo.getResource().getTitle()));
 	}
 	
 	public void showResoruceView(CollectionItemDo collectionItemDo,String resourceId, String tabView){
@@ -1099,6 +1099,24 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		});
 		
 	}
+	private String removeHtmlTags(String html){
+        html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("<p class=\"p1\">", "");
+        return html;
+	}
+
+	public void updateReviewAndRatings(String gooruOid,Integer reviewCount) {
+		if(collectionItemDo!=null){
+			if(gooruOid.equalsIgnoreCase(collectionItemDo.getResource().getGooruOid())){
+				collectionItemDo.getResource().getRatings().setReviewCount(reviewCount);  
+			}
+		}
+	}
 	
-	
+	public void updateRatings(String gooruOid, double average) { 
+		if(collectionItemDo!=null){
+			if(gooruOid.equalsIgnoreCase(collectionItemDo.getResource().getGooruOid())){
+				collectionItemDo.getResource().getRatings().setAverage(average); 
+			}
+		}
+	}
 }

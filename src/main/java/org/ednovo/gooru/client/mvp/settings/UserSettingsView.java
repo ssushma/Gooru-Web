@@ -741,7 +741,6 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		btnViewAdmin.getElement().setId("btnBtnViewAdmin");
 		btnViewAdmin.getElement().setAttribute("alt", i18n.GL1993() );
 		btnViewAdmin.getElement().setAttribute("title", i18n.GL1993() );
-		
 		if(AppClientFactory.getLoggedInUser().getUserRoleSetString().contains("Content_Admin")){
 			btnViewAdmin.setVisible(true);
 		}else{
@@ -1139,23 +1138,15 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	}
 	@UiHandler("btnConnect")
 	public void onClickConnect(ClickEvent event){
+		
+		
 		if (!isDriveConnected){
-			Map<String, String> parms = new HashMap<String, String>();
-			parms = StringUtil.splitQuery(Window.Location.getHref());
-			parms.put("callback", "refershToken");
-			AppClientFactory.getInjector().getSearchService().getGoogleDrive(Window.Location.getHref(), parms, new SimpleAsyncCallback<String>() {
-	
-				@Override
-				public void onSuccess(String redirectUrl) {
-					
-					MixpanelUtil.mixpanelEvent("Access_Google_Drive");
-					Window.Location.replace(redirectUrl);
-
-				}
-			});
+			getUiHandlers().getGoogleDrive();
+			
 		}else{
-			StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
-			googleDirveStatus(false);
+			getUiHandlers().revokeToken();
+			//StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
+			//googleDirveStatus(false);
 		}
 	}
 	
@@ -1442,7 +1433,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			}
 		}
 		else{
-			if(v2userDo.getUser().getAccountTypeId() == 2){
+			if(v2userDo.getUser().getAccountTypeId()!=null&&v2userDo.getUser().getAccountTypeId() == 2){
 				gradeLbl.setText(i18n.GL1479());
 				gradeLbl.getElement().setAttribute("alt",i18n.GL1479());
 				gradeLbl.getElement().setAttribute("title", i18n.GL1479());
@@ -2261,9 +2252,10 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	
 	@UiHandler("btnViewAdmin")
 	public void clickOnAdmin(ClickEvent clickEvent){
-		String adminUrl=Window.Location.getProtocol()+"//"+Window.Location.getHost()+"/admin";
-//		Window.open("http://www.goorulearning.org/admin", "_blank", "");
-		Window.open(adminUrl, "_blank", "");
+		//String adminUrl=Window.Location.getProtocol()+"//"+Window.Location.getHost()+"/admin";
+		String adminUrlnew = Window.Location.getProtocol()+"//"+Window.Location.getHost()+"/admin/signin?sessionToken="+AppClientFactory.getLoginSessionToken();
+		Window.open(adminUrlnew, "_blank", "");
+			
 	}
 	
 	@Override
@@ -2309,7 +2301,6 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			btnConnect.setText(i18n.GL2008());
 			btnConnect.getElement().setAttribute("alt", i18n.GL2008());
 			btnConnect.getElement().setAttribute("title", i18n.GL2008());
-			StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
 		}
 	}
 }

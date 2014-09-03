@@ -516,7 +516,7 @@ public enum UrlToken {
 	
 	V2_UPDATE_PARTY_CUSTOM_FIELD("/v2/party/{0}/custom-field?sessionToken={1}"),
 	
-	V2_PARTNER_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}&fetchChilds=true&&itemLimit={2}"),
+	V2_PARTNER_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}&fetchChilds=true&&itemLimit={2}&offset={3}"),
 	
 	V2_GET_PARTNERS("/v2/partner?sessionToken={0}"),
 	
@@ -598,7 +598,9 @@ public enum UrlToken {
 	
 	SUGGEST_STANDARD_BY_FILTER_Source_CodeId("/search/standard?sessionToken={0}&query={1}"),
 	
-	REFRESH_TOKEN_GDC("/gooru-auth/google/refresh-token.g?emailId={0}");
+	REFRESH_TOKEN_GDC("/gooru-auth/google/refresh-token.g?partyUid={0}"),
+	
+	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?partyUid={0}");
 
 	private String url;
 

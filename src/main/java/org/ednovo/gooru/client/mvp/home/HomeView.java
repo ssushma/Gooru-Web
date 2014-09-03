@@ -48,11 +48,13 @@ import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.ui.PeListPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.library.JSONStandardsDo;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -81,6 +83,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ScrollEvent;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
@@ -189,7 +192,30 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		generateStandardLibraries();
 		generateDistrictLibraries();
 		generatePartnerLibraries();
-
+		String emailId= AppClientFactory.getPlaceManager()
+				.getRequestParameter("emailId");
+	//	StringUtil.consoleLog("emailId..in home."+emailId);
+		if(emailId!=null)
+		{
+			
+			AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new AsyncCallback<String>() {
+				
+				@Override
+				public void onSuccess(String result) {
+					//StringUtil.consoleLog("Header UC RefershToken..."+result);
+						UserDo user = AppClientFactory.getLoggedInUser();
+						user.setRefreshToken(result);
+						AppClientFactory.setLoggedInUser(user);
+									
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+				//	StringUtil.consoleLog("Header UC onFailure...");				
+				}
+			});
+		}
+	
 		
 		
 //		InternalServerErrorPopupViewVc error = new InternalServerErrorPopupViewVc() {
@@ -673,7 +699,24 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	@UiHandler("btnMoreOnClasses")
 	public void onClickMoreOnClasses(ClickEvent event){
 		if (!AppClientFactory.isAnonymous()){
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+			
+			AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",new SimpleAsyncCallback<ClasspageListDo>() {
+				@Override
+				public void onSuccess(ClasspageListDo result) {
+					if(result.getSearchResults()!=null){
+						if (result.getSearchResults().size()>0){
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+					}else{
+						AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+					}
+				}else
+				{
+					AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+				}
+				}
+		});
+			
+			//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 		} else {
 			AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
 		}

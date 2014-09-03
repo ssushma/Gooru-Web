@@ -1585,6 +1585,12 @@ padding-left: 11px;
 .shelfPublishTab{
 	float: left;
 	margin-left: 40px;
+	/* margin-top:5px; DO-5452 */
+}
+.shelfPublishTabText{
+	float: left;
+	margin-left: 40px;
+	margin-top:5px; 
 }
 .userprofilecount {
 	font-weight: bold;

@@ -23,9 +23,11 @@
 					<g:FlowPanel styleName="{res.css.gradeInfoTitleContainer}">
 						<g:Label styleName="{res.css.shelfGradeInfoTitle}"
 							ui:field="gradeLbl" />
-					</g:FlowPanel>
-					<g:Label styleName="{res.css.shelfGradeInfoBottom}"
+					</g:FlowPanel>		
+						<g:Label styleName="{res.css.shelfGradeInfoBottom}"
 						ui:field="selectGradeLbl" />
+									<g:Label styleName="{res.css.shelfGradeInfoBottom} {res.css.gradeInfoLabel}"
+						ui:field="GradeUpdate"  />
 					<g:FlowPanel styleName="{res.css.shelfGradeInfogardenContainer}"
 						ui:field="KinderGarten" />
 					<g:FlowPanel styleName="{res.css.gradeListCont}">

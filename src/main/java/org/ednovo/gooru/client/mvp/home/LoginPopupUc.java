@@ -190,10 +190,10 @@ public class LoginPopupUc extends PopupPanel{
 		add(binder.createAndBindUi(this));
 		this.setGlassEnabled(true);
 		this.setGlassStyleName(LoginPopUpCBundle.INSTANCE.css().loginPopupGlassStyle());
-		//this.getElement().getStyle().setZIndex(99999);
+		this.getElement().getStyle().setZIndex(99999);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-        this.getElement().setAttribute("style", "width: 515px;height: 547px;z-index: 99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;");
+       // this.getElement().setAttribute("style", "width: 515px;height: 547px;z-index: 99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;");
 //        lblKeepMeLogedIn.getElement().setId("chkLogin");
 		setTextAndIds();
 		lblPleaseWait.setVisible(false);
@@ -465,7 +465,7 @@ public class LoginPopupUc extends PopupPanel{
 						    if(nameToken.equals(PlaceTokens.TEACH)) {
 //						    	AppClientFactory.fireEvent(new OpenClasspageListEvent());
 						    }  else if(nameToken.equals(PlaceTokens.SHELF)){
-								getCollectionFirstItem();
+								//getCollectionFirstItem();
 						    }
 						    if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
 						    	AppClientFactory.fireEvent(new OpenJoinClassPopupEvent());
@@ -503,7 +503,7 @@ public class LoginPopupUc extends PopupPanel{
 							lblPleaseWait.setVisible(false);
 							new AlertContentUc(i18n.GL1966(), i18n.GL1938());
 						}
-						AppClientFactory.getInjector().getUserService().getRefershToken(new AsyncCallback<String>() {
+						AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new AsyncCallback<String>() {
 							
 							@Override
 							public void onSuccess(String result) {
@@ -551,7 +551,7 @@ public class LoginPopupUc extends PopupPanel{
 		}
 	}
 
-	private void getCollectionFirstItem() {
+	/*private void getCollectionFirstItem() {
 		AppClientFactory.getInjector().getResourceService().getUserCollection(new SimpleAsyncCallback<List<CollectionDo>>() {
             public void onSuccess(List<CollectionDo> result) {				                	
             	for (CollectionDo collection : result) {
@@ -562,7 +562,7 @@ public class LoginPopupUc extends PopupPanel{
         		}
             }
         });
-	}
+	}*/
 	/**
 	 * Added click handler to hide the login popup.
 	 * 

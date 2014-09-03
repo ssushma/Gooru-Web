@@ -69,7 +69,7 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 	
 	void getShortenShareUrl(String contentGooruOid, Map<String, String> params,  AsyncCallback<Map<String, String>> callback);
 	
-	void getShortenShareUrlforAssign(String contentGooruOid, Map<String, String> params,  AsyncCallback<Map<String, String>> callback);
+	void getShortenShareUrlforAssign(String contentGooruOid, Map<String, String> params,String classpageItemId,  AsyncCallback<Map<String, String>> callback);
 	
 	void getGoogleSignin(String parms, AsyncCallback<String> callback);
 	

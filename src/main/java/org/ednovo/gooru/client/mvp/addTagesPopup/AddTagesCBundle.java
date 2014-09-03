@@ -50,6 +50,8 @@ public interface AddTagesCBundle extends ClientBundle{
 		String standardsCont();
 		String standardMaxHide();
 		String collectionStandardsMargin();
+		String tagsStyleSearch();
+		String tagsStylePlayer();
 		
 		
 	}
