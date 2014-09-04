@@ -66,6 +66,8 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	private boolean isClassPageImage=false;
 	private String classpageId=null;
 	
+	private String mediaUrl;
+	
 	
 
 	@Inject
@@ -124,6 +126,15 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 				getView().glasspanelLoadingImage(false);
 				getView().setImageUpload(mediaUploadDo);
 				isImageUploadedFromUrl=true;
+				System.out.println("::::"+mediaUploadDo.getName());
+				System.out.println("::::"+mediaUploadDo.getUrl());
+				mediaUrl=mediaUploadDo.getUrl();
+				if(isUpdateQuestionImage){
+//					saveQuestionImage(mediaUploadDo.getUrl());
+					AppClientFactory.fireEvent(new AddResouceImageEvent(mediaUploadDo.getUrl(),mediaUploadDo.getName(),isUpdateQuestionImage,isuserOwnResourceImage));
+				}
+				
+				
 			}
 			@Override
 			public void onFailure(Throwable caught) {
@@ -134,7 +145,8 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		setCropImageAsyncCallback(new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String filename) {
-				
+				System.out.println("fileNameWithoutRepository:"+fileNameWithoutRepository);
+				System.out.println("filename:"+filename);
 				if(isCollectionImage){
 					saveImage(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_OID), filename);
 				}else if(isClassPageImage){
@@ -146,8 +158,10 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 					getView().resetImageUploadWidget();
 					
 				}else if(isUpdateQuestionImage){
-
-					saveQuestionImage(filename);
+//     				AppClientFactory.fireEvent(new AddResouceImageEvent(filename,fileNameWithoutRepository,isUpdateQuestionImage,isuserOwnResourceImage));
+					getView().closeImageUploadWidget();
+					getView().resetImageUploadWidget();
+//					saveQuestionImage(mediaUrl);
 				}else if (isEditResourceImage){
 //					saveImage(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_OID), filename);
 					AppClientFactory.fireEvent(new UpdateEditResourceImageEvent(filename,fileNameWithoutRepository,isEditUserOwnResourceImage));
