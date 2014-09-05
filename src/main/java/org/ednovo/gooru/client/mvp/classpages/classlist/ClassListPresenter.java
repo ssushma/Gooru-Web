@@ -109,7 +109,8 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 					getView().getInviteButton().setVisible(true);
 				}else{
 					//Display pending members list.
-					getView().displayPendingMembersList(result, true, result.size(),false,true);
+				//	getView().displayPendingMembersList(result, true, result.size(),false,true);
+					getView().displayPendingMembersList(result, true, result.size(),false,false);
 				}
 			}
 		});
