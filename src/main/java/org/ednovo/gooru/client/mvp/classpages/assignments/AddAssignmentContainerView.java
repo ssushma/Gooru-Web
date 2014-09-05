@@ -286,7 +286,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 	@UiHandler("addResourceBtnLbl")
 	public void addButtonEvent(ClickEvent event){
-		if(addResourceBtnLbl.getText().trim().equals("Create a Collection")){
+		if(addResourceBtnLbl.getText().trim().equalsIgnoreCase("Create a Collection")){
 			hide();
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION);
 		}else{
@@ -673,11 +673,11 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	@Override
 	public void displayNoCollectionsMsg() {
 		dropdownListContainerScrollPanel.setVisible(false);
+		enableAssignButton(true);
 		addResourceBtnLbl.setText(i18n.GL1964());
 		emptyMsgLbl.setText(i18n.GL1963()); 
 		emptyMsgLbl.getElement().setAttribute("alt",i18n.GL1963());
 		emptyMsgLbl.getElement().setAttribute("title",i18n.GL1963());
-		
 		subHeadingMsgLbl.setVisible(false);
 		emptyMsgLbl.setVisible(true);
 //		buttonsContainer.getElement().getStyle().setMarginTop(66, Unit.PX); 
