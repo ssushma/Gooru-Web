@@ -468,9 +468,9 @@ public class CollectionShareTabVc extends Composite {
 		loadingImageLabel.setVisible(true);
 		mainShareContainer.setVisible(false);
 		socialShareLinksViewContainer.add(socialShareLinksView);
-		getUserType();
-		
-		
+		if(!(AppClientFactory.isAnonymous())){
+			getUserType();
+		}
 		loadingImageLabel.getElement().setId("pnlLoadingImageLabel");
 		mainShareContainer.getElement().setId("fpnlMainShareContainer");
 		publicShareFloPanel.getElement().setId("epnlPublicShareFloPanel");
