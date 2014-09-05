@@ -71,9 +71,10 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	}
 	
 	public DistrictView() {		
+		
 		setWidget(uiBinder.createAndBindUi(this));
 		setAssets(AppClientFactory.getCurrentPlaceToken());
-		
+		scrollFlag=false;
 	}
 	
 	@Override
