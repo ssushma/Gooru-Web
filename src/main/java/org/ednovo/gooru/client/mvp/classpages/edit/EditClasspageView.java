@@ -336,6 +336,15 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		
 	
 		
+		assignmentsTab.setText(i18n.GL1623());
+		assignmentsTab.getElement().setId("btnAssignmentsTab");
+		assignmentsTab.getElement().setAttribute("alt",i18n.GL1623());
+		assignmentsTab.getElement().setAttribute("title",i18n.GL1623());
+		classListTab.setText(i18n.GL1624());
+		classListTab.getElement().setId("btnClassListTab");
+		classListTab.getElement().setAttribute("alt",i18n.GL1624());
+		classListTab.getElement().setAttribute("title",i18n.GL1624());
+		
 		reportsTab.setText(i18n.GL1737());
 		reportsTab.getElement().setId("btnReportsTab");
 		reportsTab.getElement().setAttribute("alt",i18n.GL1737());
@@ -519,14 +528,7 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	public void setClasspageData(ClasspageDo classpageDo){
 		this.classpageDo=classpageDo;
 		
-		assignmentsTab.setText(i18n.GL1623()+"("+classpageDo.getItemCount()+")");
-		assignmentsTab.getElement().setId("btnAssignmentsTab");
-		assignmentsTab.getElement().setAttribute("alt",i18n.GL1623());
-		assignmentsTab.getElement().setAttribute("title",i18n.GL1623());
-		classListTab.setText(i18n.GL1624()+"("+(classpageDo.getMemberCount()!=null? classpageDo.getMemberCount() : "0") +")");
-		classListTab.getElement().setId("btnClassListTab");
-		classListTab.getElement().setAttribute("alt",i18n.GL1624());
-		classListTab.getElement().setAttribute("title",i18n.GL1624());
+
 		
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
@@ -648,7 +650,6 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 			setPagination();
 			if(totalHitCount==0){
 				assignmentsTab.setText(i18n.GL1623()+"("+0+")");
-				/*droplistContianer.setVisible(false);*/
 			}
 		}
 	}
@@ -1148,7 +1149,7 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	public AssignmentEditLabelUc getCollectionTitleUc() {
 		return collectionTitleUc;
 	}
-	
+
 	
 	public class MouseOverShowClassCodeToolTip implements MouseOverHandler{
 
