@@ -558,6 +558,15 @@ public class EditClasspageView extends
 		btnReadytoStart.getElement().setAttribute("alt",i18n.GL2115());
 		btnReadytoStart.getElement().setAttribute("title",i18n.GL2115());
 		
+		assignmentsTab.setText(i18n.GL1623());
+		assignmentsTab.getElement().setId("btnAssignmentsTab");
+		assignmentsTab.getElement().setAttribute("alt",i18n.GL1623());
+		assignmentsTab.getElement().setAttribute("title",i18n.GL1623());
+		classListTab.setText(i18n.GL1624());
+		classListTab.getElement().setId("btnClassListTab");
+		classListTab.getElement().setAttribute("alt",i18n.GL1624());
+		classListTab.getElement().setAttribute("title",i18n.GL1624());
+		
 		reportsTab.setText(i18n.GL1737());
 		reportsTab.getElement().setId("btnReportsTab");
 		reportsTab.getElement().setAttribute("alt",i18n.GL1737());
@@ -1039,14 +1048,7 @@ public class EditClasspageView extends
 	public void setClasspageData(ClasspageDo classpageDo){
 		this.classpageDo=classpageDo;
 		
-		assignmentsTab.setText(i18n.GL1623()+"("+classpageDo.getItemCount()+")");
-		assignmentsTab.getElement().setId("btnAssignmentsTab");
-		assignmentsTab.getElement().setAttribute("alt",i18n.GL1623());
-		assignmentsTab.getElement().setAttribute("title",i18n.GL1623());
-		classListTab.setText(i18n.GL1624()+"("+(classpageDo.getMemberCount()!=null? classpageDo.getMemberCount() : "0") +")");
-		classListTab.getElement().setId("btnClassListTab");
-		classListTab.getElement().setAttribute("alt",i18n.GL1624());
-		classListTab.getElement().setAttribute("title",i18n.GL1624());
+
 		
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
@@ -1224,7 +1226,7 @@ public class EditClasspageView extends
 				getstarteddiv.addStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
 				getstarteddiv.setVisible(false);
 				noAssignmentsMessagePanel.setVisible(true);
-				assignmentsTab.setText(i18n.GL1623()+"("+0+")");
+				assignmentsTab.setText(i18n.GL1623());
 				dropDownListDiv.setVisible(false);
 				/*droplistContianer.setVisible(false);*/
 				
@@ -1287,7 +1289,7 @@ public class EditClasspageView extends
 				getstarteddiv.addStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
 				getstarteddiv.setVisible(false);
 				noAssignmentsMessagePanel.setVisible(true);
-				assignmentsTab.setText(i18n.GL1623()+"("+0+")");
+				assignmentsTab.setText(i18n.GL1623());
 				/*droplistContianer.setVisible(false);*/
 				dropDownListDiv.setVisible(false);
 			}
@@ -1649,7 +1651,7 @@ public class EditClasspageView extends
 			getstarteddiv.addStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
 			getstarteddiv.setVisible(false);
 			noAssignmentsMessagePanel.setVisible(true);
-			assignmentsTab.setText(i18n.GL1623()+"("+0+")");
+			assignmentsTab.setText(i18n.GL1623());
 			/*droplistContianer.setVisible(false);*/
 			dropDownListDiv.setVisible(false);
 		}
@@ -2026,7 +2028,7 @@ public class EditClasspageView extends
 		}
 		if (classpageProcess.size() > 0){
 					
-			assignmentsTab.setText(i18n.GL1623()+"("+classpageProcess.get(0).getTotalHitCount()+")");
+			assignmentsTab.setText(i18n.GL1623());
 			
 			panelAssignmentProgress.clear();
 			//hide/show the next and previous buttons
