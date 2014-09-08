@@ -325,7 +325,9 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 	protected void onReveal() {
 		super.onReveal();
 		this.getTaxonomyService().getCourse(getCourseAsyncCallback());
-		getView().getAccountTypeId();
+		if(!(AppClientFactory.isAnonymous())){
+			getView().getAccountTypeId();
+		}
 	}
 
 	@Override

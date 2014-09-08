@@ -136,7 +136,7 @@ public interface SearchService extends BaseService {
 	 * @return shrotenUrl, rawUrl
 	 * @throws GwtException
 	 */
-	Map<String, String> getShortenShareUrlforAssign(String contentGooruOid, Map<String, String> params) throws GwtException, ServerDownException;
+	Map<String, String> getShortenShareUrlforAssign(String contentGooruOid, Map<String, String> params,String classpageItemId) throws GwtException, ServerDownException;
 	
 	
 	/*

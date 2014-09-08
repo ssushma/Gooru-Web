@@ -2224,16 +2224,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		public void updateRatingInRealTime(String gooruOid, double average,Integer count) {
 			if(collectionItemDoGlobal.getResource()!=null){
 				if(collectionItemDoGlobal.getResource().getGooruOid().equals(gooruOid)){
-//					ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
-//					ratingWidgetView.getRatingCountLabel().setText(" "+count.toString()+" "+i18n.GL2024()); 
-//					ratingWidgetView.getAverageRatingLabel().setText(Double.toString(average)+" ");
 					ratingWidgetView.setAvgStarRating(average);
-					/*if(count==1&&isRatingUpdated){
-						isRatingUpdated=false;
-						ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
-						ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
-						ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
-					}*/
 				}
 			}
 		}
@@ -2245,14 +2236,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			if(ratingWidgetView!=null){
 				String[] revCount = ratingWidgetView.getRatingCountLabel().getText().split(" "); 
 				if(Integer.parseInt(revCount[1].trim())==1){
-//					ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
-//					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
-//					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: none;text-decoration: none !important;color: grey");
 					ratingWidgetView.setAvgStarRating(0);
 					setUpdateReviewCount(Integer.parseInt(revCount[1])-1);
 					ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024()); 
 				}else{
-//					ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
 					setUpdateReviewCount(Integer.parseInt(revCount[1])-1);
 					ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024()); 
 				}
@@ -2270,15 +2257,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			{
 				if(collectionItemDoGlobal.getResource().getGooruOid().equals(resourceId)){
 					setUpdateReviewCount(count);
-					//ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
 					ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024());
 					ratingWidgetView.getAverageRatingLabel().setVisible(false);
-					/*if(count==1 && isRatingUpdated){
-					isRatingUpdated=false;
-					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
-					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
-					ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
-				}*/
 				}
 			}
 		}

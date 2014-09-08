@@ -385,11 +385,12 @@ public class UserSettingsPresenter
 					}
 
 					if (user.getExternalId() != null) {
+						Refersh_emailId=user.getExternalId();
 						boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
 						if(isValidEmail){
 							getView().getLbEmail().setText(user.getExternalId());
 							//StringUtil.consoleLog("setEmailId 1"+user.getExternalId());
-							Refersh_emailId=user.getExternalId();
+							
 							
 						}else{
 							getView().hideEmailContainer();
@@ -398,10 +399,11 @@ public class UserSettingsPresenter
 					} else {
 						if(user.getUser().getAccountTypeId() != 2){
 							if(user.getUser().getEmailId()!=null){
+								Refersh_emailId=user.getUser().getEmailId();
 								boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
 								if(isValidEmail){
 									//StringUtil.consoleLog("setEmailId 2"+user.getUser().getEmailId());
-									Refersh_emailId=user.getUser().getEmailId();
+									
 									
 									getView().getLbEmail().setText(
 											user.getUser().getEmailId());
@@ -1126,7 +1128,7 @@ public class UserSettingsPresenter
 	public void updateRefershToken() {
 		final String refreshToken = AppClientFactory.getLoggedInUser().getRefreshToken();
 		if(refreshToken==null){
-			AppClientFactory.getInjector().getUserService().getRefershToken(Refersh_emailId,new SimpleAsyncCallback<String>() {
+			AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new SimpleAsyncCallback<String>() {
 				@Override
 				public void onSuccess(String result) {
 					UserDo user = AppClientFactory.getLoggedInUser();
@@ -1178,7 +1180,7 @@ public class UserSettingsPresenter
 	}
 	@Override
 	public void revokeToken() {
-		AppClientFactory.getInjector().getUserService().revokeToken(Refersh_emailId,new AsyncCallback<String>() {
+		AppClientFactory.getInjector().getUserService().revokeToken(AppClientFactory.getLoggedInUser().getGooruUId(),new AsyncCallback<String>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -1190,6 +1192,24 @@ public class UserSettingsPresenter
 				user.setRefreshToken(null);
 				AppClientFactory.setLoggedInUser(user);			
 				getView().googleDirveStatus(false);
+			}
+		});
+		
+	}
+
+	@Override
+	public void getGoogleDrive() {
+		Map<String, String> parms = new HashMap<String, String>();
+		parms = StringUtil.splitQuery(Window.Location.getHref());
+		parms.put("emailId", Refersh_emailId);
+		AppClientFactory.getInjector().getSearchService().getGoogleDrive(Window.Location.getHref(), parms, new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String redirectUrl) {
+				
+				MixpanelUtil.mixpanelEvent("Access_Google_Drive");
+				Window.Location.replace(redirectUrl);
+
 			}
 		});
 		
