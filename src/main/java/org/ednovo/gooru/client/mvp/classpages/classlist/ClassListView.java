@@ -672,11 +672,9 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	@Override
 	public void setClassPageDo(ClasspageDo classpageDo) {
 		this.classpageDo = classpageDo;
-		
 		clearMembersListPanel();
 		setLoadingPanelVisibility(true);
 		txtClasspageCodeShare.setText(classpageDo.getClasspageCode().toUpperCase());
-		// call an API to get the list of students in this class.
 		activeListPageNum=0;
 		activeListTotalCount=0;
 		pendingListPageNum=0;
