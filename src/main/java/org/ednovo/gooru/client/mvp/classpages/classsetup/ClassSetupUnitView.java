@@ -62,6 +62,8 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 		initWidget(uiBinder.createAndBindUi(this));
 		inputContainer.setVisible(false);
 		divContainer.setVisible(true);
+		unitName.setText("Unit Name "+sequenceNum);
+		divContainer.setText(unitName.getText());
 		setPresenter(new ClassSetupUnitPresenter(this));
 		unitSequence.getElement().setInnerHTML((sequenceNum+1)+".");
 		
