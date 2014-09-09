@@ -14,7 +14,6 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
-import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageResourceItemListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleEvent;
@@ -23,13 +22,10 @@ import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.Co
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.DeleteConfirmPopupVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AssignmentEditLabelUc;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
@@ -39,15 +35,11 @@ import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.EventTarget;
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
@@ -65,19 +57,15 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
-import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
-import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -127,13 +115,16 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	
 	@UiField FlowPanel mainFlowPanel;
 
-	@UiField HTMLPanel panelUpdateActionContols;
+	@UiField Label lblSelected, lblArrow;
 	
-	@UiField HTMLPanel mainContainer;
+	@UiField ScrollPanel spanelSutdentsList;
 	
-	@UiField Label titleAlertMessageLbl;
+	@UiField
+	static HTMLPanel mainContainer, panelSutdentsList;
 
-	@UiField Button btnStudentView;
+	@UiField HTMLPanel panelUpdateActionContols;
+
+	@UiField Label titleAlertMessageLbl;
 
 	@UiField Button btnCollectionEditImage;
 
@@ -312,10 +303,6 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		btnEditImage.getElement().setAttribute("alt",i18n.GL0138());
 		btnEditImage.getElement().setAttribute("title",i18n.GL0138());
 		
-		btnStudentView.setText(i18n.GL0139());
-		btnStudentView.getElement().setAttribute("alt",i18n.GL0139());
-		btnStudentView.getElement().setAttribute("title",i18n.GL0139());
-		
 		btnCollectionEditImage.setText(i18n.GL0140());
 		btnCollectionEditImage.getElement().setAttribute("alt",i18n.GL0140());
 		btnCollectionEditImage.getElement().setAttribute("title",i18n.GL0140());
@@ -351,10 +338,36 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		
 		
 		btnEditImage.getElement().setId("btnEditImage");
-		btnStudentView.getElement().setId("btnStudentView");
 		btnCollectionEditImage.getElement().setId("btnCollectionEditImage");
 		btnClasspageSave.getElement().setId("btnClasspageSave");
 		btnClasspageCancel.getElement().setId("btnClasspageCancel");
+		
+		lblSelected.setText(i18n.GL2174());
+		StringUtil.setAttributes(lblSelected.getElement(), "lblSelected", i18n.GL2174(), i18n.GL2174());
+		StringUtil.setAttributes(spanelSutdentsList.getElement(), "spanelSutdentsList", null, null);
+		spanelSutdentsList.getElement().getStyle().setBackgroundColor("white");
+		spanelSutdentsList.getElement().getStyle().setZIndex(9);
+		spanelSutdentsList.setVisible(false);
+		StringUtil.setAttributes(panelSutdentsList.getElement(), "panelSutdentsList", null, null);
+		StringUtil.setAttributes(lblArrow.getElement(), "lblArrow", null, null);
+		
+		
+		lblArrow.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				spanelSutdentsList.setVisible(spanelSutdentsList.isVisible() ? false : true);
+			}
+		});
+		
+		lblSelected.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				spanelSutdentsList.setVisible(spanelSutdentsList.isVisible() ? false : true);
+			}
+		});
+		
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		reportHandler=reportsTab.addClickHandler(new reportsTabClicked());		
@@ -488,41 +501,6 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	public FlowPanel getClassContainer(){
 		return classSetupContainer;
 	}
-
-	@UiHandler("btnStudentView")
-	public void OnClickStudentView(ClickEvent event){
-		MixpanelUtil.Click_StudentView_Classpage();
-
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("id", classpageDo.getClasspageId());
-		params.put("b", "true");
-
-		params.put("pageSize", "5");
-		params.put("pageNum", "0");
-		params.put("pos", "1");
-
-		params.put("source", "E");
-		Cookies.setCookie("pageSize", AppClientFactory.getPlaceManager()
-				.getRequestParameter("pageSize"));
-		Cookies.setCookie("classpageid", AppClientFactory.getPlaceManager()
-				.getRequestParameter("classpageid"));
-		Cookies.setCookie("pageNum", AppClientFactory.getPlaceManager()
-				.getRequestParameter("pageNum"));
-		Cookies.setCookie("pos", AppClientFactory.getPlaceManager()
-				.getRequestParameter("pos"));
-
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,
-				params);
-		
-	}
-
-	/*@UiHandler("btnNewAssignment")
-	public void OnClickNewAssignment(ClickEvent event){
-		MixpanelUtil.Click_Add_NewAssignment();
-		Window.enableScrolling(false);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-		getUiHandlers().addAssignmentsContainerPopup(getClasspageId());
-	}*/
 	
 	public void setClasspageData(ClasspageDo classpageDo){
 		this.classpageDo=classpageDo;
@@ -551,6 +529,7 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		imgNotFriendly.addMouseOutHandler(new MouseOutHideToolTip());
 
 		questionMarkPanel.clear();
+		questionMarkPanel.setVisible(false);
 		questionMarkPanel.add(imgNotFriendly);
 		
 		imgClasspageImage.setAltText(classpageDo.getTitle());

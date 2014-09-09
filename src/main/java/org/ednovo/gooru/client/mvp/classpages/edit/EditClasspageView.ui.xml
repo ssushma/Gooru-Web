@@ -5,6 +5,7 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle"
 		field="res" />
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
 	<g:FlowPanel ui:field="mainFlowPanel">
 		<g:HTMLPanel styleName="{res.css.newMockLeftAlignController}">
 			<g:FocusPanel styleName="{res.css.myCollectionShareStudentContainer}"
@@ -12,7 +13,19 @@
 				<g:HTMLPanel styleName="{res.css.headerContainer}">
 					<g:Image ui:field="imgClasspageImage" styleName="{res.css.classpageImage}"
 						width="1000" height="180" />
-					<g:Button styleName="secondary {res.css.classpageEditButton}" ui:field="btnEditImage"></g:Button><g:Button styleName="primary {res.css.classpageHoverButton}" ui:field="btnStudentView"></g:Button>
+					<g:Button styleName="secondary {res.css.classpageEditButton}" ui:field="btnEditImage"></g:Button>
+					<!-- <g:Button styleName="primary {res.css.classpageHoverButton}" ui:field="btnStudentView"></g:Button> -->
+					<g:HTMLPanel styleName="{res.css.studentListContainer1}">
+						<g:HTMLPanel styleName="{res.css.studentListContainer}" ui:field="panelSutdentsListContainer">
+					    	<g:Label styleName="{res.css.selectedStudent}" ui:field="lblSelected"></g:Label>
+					    	<g:Label styleName="{res.css.arrowDropdown}" ui:field="lblArrow"></g:Label>
+						</g:HTMLPanel>
+						<g:ScrollPanel ui:field="spanelSutdentsList" styleName="{res.css.scrollPanel}">
+						    <g:HTMLPanel styleName="{res.css.studentList}" ui:field="panelSutdentsList">
+								<g:Label styleName="{res.css.student}">Student Name...</g:Label>
+							</g:HTMLPanel>
+						</g:ScrollPanel>
+					</g:HTMLPanel>
 					<g:FlowPanel styleName="{res.css.userCollectionInfo}">
 						<g:FocusPanel ui:field="simplePencilFocPanel"
 							styleName="{res.css.simplePencil}">
@@ -34,9 +47,12 @@
 							<g:Button ui:field="btnClasspageCancel"
 								styleName="secondary {res.css.classpageTitleCancel}" />
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{res.css.classcodeContainer}">
-							<g:TextBox styleName="{res.css.classcodeStyles}" ui:field="classCodeTextBox"/>
-							<g:HTMLPanel ui:field="questionMarkPanel"></g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.ccContainer}">
+							<g:HTMLPanel styleName="{res.css.classcodeContainer}" >
+							    <g:Label styleName="{res.css.classcodeLabel}" text="{i18n.GL0184}"></g:Label>
+								<g:TextBox styleName="{res.css.classcodeStyles}" ui:field="classCodeTextBox"/>
+								<g:HTMLPanel ui:field="questionMarkPanel"></g:HTMLPanel>
+							</g:HTMLPanel>
 						</g:HTMLPanel>
 						<g:FlowPanel styleName="{res.css.titleAlertContainer}">
 							<g:Label styleName="{res.css.titleAlertMessage}"
