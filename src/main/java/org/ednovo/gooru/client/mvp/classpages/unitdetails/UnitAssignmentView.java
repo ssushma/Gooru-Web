@@ -26,9 +26,19 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
+<<<<<<< HEAD
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
+=======
+import com.google.gwt.uibinder.client.UiConstructor;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+>>>>>>> 05477dc4a3a2e59b6cf015d888c3bafb20d5b024
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHandlers> implements IsUnitAssignmentView{
@@ -44,10 +54,17 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
+	@UiField HTMLPanel circleContainerPanel;
+	@UiField Label generalLabel;
+	Image leftArrow = new Image();
+	Image rightArrow = new Image();
+	
+	
 	@Inject
 	public UnitAssignmentView(){
 		setWidget(uiBinder.createAndBindUi(this));		
 		showUnitNames();
+		setData();
 	}
 	
 	public void showUnitNames(){
@@ -56,6 +73,27 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			String number=Integer.toString(i);
 			unitPanel.add(new UnitWidget(number, s));
 		}
+		
 	}
-	
+	public void setData()
+	{
+		generalLabel.setText("General");
+		leftArrow.setUrl("images/leftSmallarrow.png");
+		circleContainerPanel.add(leftArrow);
+		for(int i=1;i<5;i++){
+			final UnitCricleView unitCricleViewObj =new UnitCricleView(true,i);
+			circleContainerPanel.add(unitCricleViewObj);
+			unitCricleViewObj.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					System.out.println("click");
+					unitCricleViewObj.selectcircle();
+					
+				}
+			});
+		}
+		rightArrow.setUrl("images/rightSmallarrow.png");
+		circleContainerPanel.add(rightArrow);
+	}
 }

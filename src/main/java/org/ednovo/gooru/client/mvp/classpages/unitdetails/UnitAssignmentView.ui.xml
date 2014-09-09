@@ -45,9 +45,20 @@
 						<div class="clearfix"></div>
 					</div>
 				</div>
-				<div class="row {unitStyle.generalSet}">
+			<!-- 	This widget Is used to display Circle -->
+				<g:HTMLPanel styleName="row {unitStyle.generalSet}">
+				   <g:HTMLPanel>
+				       
+				       <g:HTMLPanel styleName="{unitStyle.rowInner}" ui:field="circleContainerPanel" >
+				           <g:Label styleName="{unitStyle.genHead}" ui:field="generalLabel"></g:Label>
+				           </g:HTMLPanel>
+				      </g:HTMLPanel>
+				</g:HTMLPanel>
+				<!-- end circle Widget -->
+				
+				<!-- <div class="row {unitStyle.generalSet}">
 					<div class="col-xs-12">
-						<div class="{unitStyle.rowInner}">
+						<div class="{unitStyle.rowInner}" circleContainerPanel>
 							<div class="{unitStyle.genHead}">General</div>
 							<div class="{unitStyle.leftArrow}"><a href="#"><img src="images/leftSmallarrow.png"></img></a></div>
 							<div class="{unitStyle.bubbleMain}"><a class="{unitStyle.bubbleOuter}  {unitStyle.active}" href="#"><span class="{unitStyle.bubbleBig}">1</span></a></div>
@@ -63,7 +74,7 @@
 							<div class="rightArrow"><a href="#"><img src="images/rightSmallarrow.png"/></a></div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				<div class="row {unitStyle.personalBtn}">
 					<div class="col-xs-12">
 						<div class="{unitStyle.rowInner}">
