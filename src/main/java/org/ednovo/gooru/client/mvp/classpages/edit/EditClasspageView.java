@@ -267,7 +267,6 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		mainContainer.setVisible(true);
 		assignmentsTab.addClickHandler(new AssignmentsTabClicked());
 		classListTab.addClickHandler(new ClassListTabClicked());
-		assignmentsTab.setEnabled(false);
 		btnCollectionEditImage.setVisible(false);
 		panelUpdateActionContols.getElement().getStyle().setDisplay(Display.NONE);
 		simplePencilFocPanel.addMouseOverHandler(new hideEditPencil());
@@ -476,9 +475,9 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
+			System.out.println("clear..");
 			 if(slot==EditClasspagePresenter.CLASSLIST_SLOT){
 				getClassContainer().clear();
-				getClassContainer().setVisible(true);
 				getClassContainer().add(content);
 			}else{
 				getClassContainer().setVisible(false);
@@ -578,13 +577,11 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		if(tab!=null && tab.equalsIgnoreCase("classList")){
 			classListTab.addStyleName(res.css().selected());
 			assignmentsTab.getElement().setClassName("");
-			assignmentsTab.setEnabled(true);
 		}
 		else if(tab!=null && tab.equalsIgnoreCase("reports")){
 			reportsTab.addStyleName(res.css().selected());
 			assignmentsTab.getElement().setClassName("");
 			classListTab.getElement().setClassName("");
-			assignmentsTab.setEnabled(true);
 		}
 		else if(analyticsId!=null)
 		{
@@ -949,8 +946,6 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		
 //		newAssignmentAndMsgPanel.setVisible(true);
 //		assignmentsTabContainerPanel.setVisible(true);
-		assignmentsTab.setEnabled(false);
-		getClassContainer().clear();
 	}
 /**
  * This method is used to update the title
@@ -1098,11 +1093,7 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 			params.put("pageNum", pageNum);
 			params.put("pos", pos);
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
-			if(refresh){
-				AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
-			}else{
-				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-			}
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 		}
 	}
 	public class ClassListTabClicked implements ClickHandler{

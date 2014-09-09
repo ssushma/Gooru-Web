@@ -5,7 +5,162 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="playerStyle" src="unitsetup.css" />
-	<g:FlowPanel>
-		<g:Label>unit setup page...</g:Label>
-	</g:FlowPanel>
+	<div class="unitDetails">
+		<div class="containerTeacher">
+			<div class="col-xs-2 leftPanel">
+				<p class="uniSetup">
+					<a href="#"><img src="images/blueArrow.png"/> Unit Setup</a>
+				</p>
+				<hr/>
+				<ul class="list-unstyled unitMenu">
+					<li><a href="#"><span class="number">1</span><span class="name">Unit  <br/>Name</span></a></li>
+					<hr/>
+					<li class="active"><a href="#"><span class="number">2</span><span class="name">Unit <br/>Name</span></a></li>
+					<hr/>
+					<li><a href="#"><span class="number">3</span><span class="name">Unit <br/>Name</span></a></li>
+				</ul>
+			</div>
+			<div class="col-xs-10 rightPanel">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="col-xs-2 unitHeading">Unit 2 Details</div>
+						<div class="col-xs-2 uniRequired">
+						<div class="bubble"></div> 
+						<div>Required</div>
+					</div>
+					<div class="col-xs-2 uniRequired">
+						<div class="bubbleStyle"></div> 
+						<div>Optional</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<div class="row generalSet">
+				<div class="col-xs-12">
+					<div class="rowInner">
+						<div class="genHead">General</div>
+						<div class="leftArrow"><a href="#"><img src="images/leftSmallarrow.png"/></a></div>
+						<div class="bubbleMain"><a class="bubbleOuter  active" href="#"><span class="bubbleBig">1</span></a></div>
+						<div class="bubbleMain"><a class="bubbleOuter" href="#"><span class="bubbleBig">2</span></a></div>
+						<div class="bubbleMain"><a class="bubbleOuter" href="#"><span class="bubbleBig">3</span></a></div>
+						<div class="bubbleMain"><a class="bubbleOuter" href="#"><span class="bubbleBig">4</span></a></div>
+						<div class="bubbleMain"><a class="bubbleOuter" href="#"><span class="bubbleBig">5</span></a></div>
+						<div class="bubbleMain"><a class="bubbleOuter" href="#"><span class="bubbleBig">6</span></a></div>
+						<div class="bubbleMain"><a class="bubbleOuter" href="#"><span class="bubbleBig">7</span></a></div>
+						<div class="bubbleMain"><a class="bubbleOuter" href="#"><span class="bubbleBig">8</span></a></div>
+						<div class="bubbleMain"><a class="bubbleOuter" href="#"><span class="bubbleBig">9</span></a></div>
+						<div class="bubbleMain"><a class="bubbleOuter" href="#"><span class="bubbleBig">210</span></a></div>
+						<div class="rightArrow"><a href="#"><img src="images/rightSmallarrow.png"/></a></div>
+					</div>
+				</div>
+			</div>
+			<div class="row personalBtn">
+				<div class="col-xs-12">
+					<div class="rowInner">
+						<p class="text-center"><button type="button" class="primary">Personalize Unit 2 for Students</button></p>
+					</div>
+				</div>
+			</div>
+			<div class="row assign">
+				<div class="col-md-12">
+					<div class="rowInner">
+						<div class="assignHeaderMain">
+							<div class="assignHeader">Assignment 1 </div>
+								<div class="onoffbtns">Required
+ 									<label class="switch switch-green">
+     								 	<input type="checkbox" checked="" class="switch-input"/>
+      								 	<span class="switch-label"></span>
+     									<span class="switch-handle"></span>
+    								</label> 
+    								<span class="text-muted">Optional</span>
+    							 </div>
+							<div class="dueDate">Set Due Date <img src="images/date-ico.png"/></div>
+						<div class="clearfix"></div>
+					</div>
+				<div class="assignMain">
+					<div class="row assaindetailsMain">
+						<div class="col-xs-6 assignDetailsHeader">Assignment Details: </div>
+						<div class="col-xs-6 assignButtons text-right"><button type="button" class="secondary" id="btnBacktoLibrary" alt="Cancel" title="Cancel">Cancel</button> <button type="button" class="primary" id="btnEditCollection" alt="Save" title="Save">Save</button> </div>
+						<div class="clearfix"></div>
+
+					</div>
+					<div class="borderBox">
+						<p class="direction">Direction:
+						<input type="text" class="form-control" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor turpis id nisl iaculis, sit amet convallis nibh dapibus."/></p>
+						<div class="score">
+							<div class="col-xs-6 leftScore">
+								<p class="direction">Minimum Score: <input name="" type="text" class="form-control" placeholder="85% "/></p>
+							</div>
+							<div class="col-xs-6 rightScore">
+								<p class="direction">Suggested Time: <input name="" type="text" class="form-control" placeholder="1 "/> <span>hour</span> <input name="" type="text" class="form-control" placeholder="30"/><span> min </span></p>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+					<div class="row assaindetailsMain">
+						<div class="col-xs-6 assignDetailsHeader">Collection Assigned: </div>
+						<div class="col-xs-6 assignButtons text-right"><button type="button" class="secondary" id="btnBacktoLibrary" alt="Edit" title="Edit">Edit</button> </div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="borderBox collections">
+						<div class="col-xs-2"><img src="images/collectionImg.png"/></div>
+						<div class="col-xs-9">
+							<div class="row">
+							<div class="col-xs-4 header">
+							<h3>Types of Habitats</h3>
+						</div>
+						<div class="col-xs-8  collectionsNum">
+							<div class="number">CCSS.Math.Content.8.F.A.3</div> <div class="number">CA.SCI.7.LS.1b</div> 
+							<div class="plusNum">+2</div>
+						</div>
+					</div>
+					<p><strong>Learning Objective:</strong><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In a egestas ipsum.  Aenean ornare libero eros, ac cursus diam pretium sed. Proin eget tempus magna. Nullam lobortis eleifend lorem, sit amet ultricies tortor porta vel. Praesent sed augue facilisis, euismod urna vel, mollis mauris. Aenean sed.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In a egestas ipsum. Aenean ornare libero eros, ac cursus d</p>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="row assaindetailsMain">
+				<div class="col-xs-12 assignDetailsHeader">Question Details  <span>If there is any in the collection.</span> </div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="borderBox">
+				<div class="score">
+					<div class="col-xs-6 leftScore">
+						<p class="direction">Show Answers:<input name="" type="radio" value=""/> in the end <input name="" type="radio" value=""/> by question <input name="" type="radio" value=""/> don’t show</p>
+					</div>
+					<div class="col-xs-6 rightScore">
+						<p class="direction">Show Hints/Explanations:  <input name="" type="radio" value=""/> Show <input name="" type="radio" value=""/> Hide</p>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+		<div class="analytics">
+			<div class="row assaindetailsMain">
+				<div class="col-xs-6 assignDetailsHeader">Assignment Details: </div>
+				<div class="col-xs-6 assignButtons text-right">View Assignment 
+					<button title="Summary" alt="Summary" id="btnBacktoLibrary" class="secondary" type="button">Summary</button>
+					<button title="Progress" alt="Progress" id="btnBacktoLibrary" class="secondary" type="button">Progress</button>
+				</div>
+			    <div class="clearfix"></div>
+			</div>
+			<div class="anaBoxes row">
+				<div class="col-xs-4 ">
+					<div class="boxbg">Average Time Spent</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="boxbg">Views</div>
+				</div>
+				<div class="col-xs-4">
+					<div class="boxbg">Average Reaction</div>
+	           </div>
+			   <div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+<div class="clearfix"></div>
+</div>
+</div>
 </ui:UiBinder>
