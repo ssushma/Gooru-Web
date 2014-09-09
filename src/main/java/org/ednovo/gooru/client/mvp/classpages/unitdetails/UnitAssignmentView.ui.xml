@@ -12,13 +12,23 @@
 					<a href="#"><img src="images/blueArrow.png"/> Unit Setup</a>
 				</p>
 				<hr/>
-				<ul class="list-unstyled {unitStyle.unitMenu}">
+				
+				<uc:UlPanel styleName="list-unstyled {unitStyle.unitMenu}">
+				    
+				   <g:HTMLPanel ui:field="unitPanel"></g:HTMLPanel>
+				   
+			    </uc:UlPanel>  
+			    
+				<g:HTMLPanel styleName="{unitStyle.uniSetup}">
+					<a href="#">More Units</a>
+				</g:HTMLPanel>
+				<!-- <ul class="list-unstyled {unitStyle.unitMenu}">
 					<li><a href="#"><span class="{unitStyle.number}">1</span><span class="{unitStyle.name}">Unit  <br/>Name</span></a></li>
 					<hr/>
 					<li class="active"><a href="#"><span class="{unitStyle.number}">2</span><span class="{unitStyle.name}">Unit <br/>Name</span></a></li>
 					<hr/>
 					<li><a href="#"><span class="{unitStyle.number}">3</span><span class="{unitStyle.name}">Unit <br/>Name</span></a></li>
-				</ul>
+				</ul> -->
 			</div>
 			<div class="col-xs-10 {unitStyle.rightPanel}">
 				<div class="row">
