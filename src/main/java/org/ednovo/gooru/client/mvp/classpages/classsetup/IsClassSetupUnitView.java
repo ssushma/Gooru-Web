@@ -23,12 +23,9 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
+import org.ednovo.gooru.client.child.IsChildView;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
-public interface ClassSetupUiHandlers extends BaseUiHandlers{
-
-	void setUnit();
-
+public interface IsClassSetupUnitView extends IsChildView<ClassSetupUnitPresenter>{
 
 }

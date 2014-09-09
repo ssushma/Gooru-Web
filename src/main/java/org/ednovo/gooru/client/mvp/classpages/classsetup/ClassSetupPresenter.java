@@ -24,15 +24,29 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> implements ClassSetupUiHandlers{
 
+	
+	public static final  Object UNITS_SLOT = new Object();
+	
 	@Inject
 	public ClassSetupPresenter(EventBus eventBus, IsClassSetupView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
+		//this.classSetupUnitPresenter=classSetupUnitPresenter1;
+		setUnit();
+
 	}
+	
+	@Override
+	public void setUnit() {
+		 getView().setContent();
+	}
+	
+
 	
 	
 }

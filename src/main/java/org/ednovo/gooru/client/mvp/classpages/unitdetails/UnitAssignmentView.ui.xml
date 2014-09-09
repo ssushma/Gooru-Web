@@ -12,13 +12,23 @@
 					<a href="#"><img src="images/blueArrow.png"/> Unit Setup</a>
 				</p>
 				<hr/>
-				<ul class="list-unstyled {unitStyle.unitMenu}">
+				
+				<uc:UlPanel styleName="list-unstyled {unitStyle.unitMenu}">
+				    
+				   <g:HTMLPanel ui:field="unitPanel"></g:HTMLPanel>
+				   
+			    </uc:UlPanel>  
+			    
+				<g:HTMLPanel styleName="{unitStyle.uniSetup}">
+					<a href="#">More Units</a>
+				</g:HTMLPanel>
+				<!-- <ul class="list-unstyled {unitStyle.unitMenu}">
 					<li><a href="#"><span class="{unitStyle.number}">1</span><span class="{unitStyle.name}">Unit  <br/>Name</span></a></li>
 					<hr/>
 					<li class="active"><a href="#"><span class="{unitStyle.number}">2</span><span class="{unitStyle.name}">Unit <br/>Name</span></a></li>
 					<hr/>
 					<li><a href="#"><span class="{unitStyle.number}">3</span><span class="{unitStyle.name}">Unit <br/>Name</span></a></li>
-				</ul>
+				</ul> -->
 			</div>
 			<div class="col-xs-10 {unitStyle.rightPanel}">
 				<div class="row">
@@ -26,18 +36,31 @@
 						<div class="col-xs-2 {unitStyle.unitHeading}">Unit 2 Details</div>
 						<div class="col-xs-2 {unitStyle.uniRequired}">
 							<div class="{unitStyle.bubble}"></div> 
-							<div>Required</div>
+							<g:Label ui:field="requiredLabel" styleName="{unitStyle.bubbleMain}"/>
+							<!-- <div>Required</div> -->
 						</div>
 						<div class="col-xs-2 {unitStyle.uniRequired}">
 							<div class="{unitStyle.bubbleStyle}"></div> 
-							<div>Optional</div>
+							<g:Label ui:field="optionalLabel" styleName="{unitStyle.bubbleMain}"/>
+							<!-- <div>Optional</div> -->
 						</div>
 						<div class="clearfix"></div>
 					</div>
 				</div>
-				<div class="row {unitStyle.generalSet}">
+			<!-- 	This widget Is used to display Circle -->
+				<g:HTMLPanel styleName="row {unitStyle.generalSet}">
+				   <g:HTMLPanel>
+				       
+				       <g:HTMLPanel styleName="{unitStyle.rowInner}" ui:field="circleContainerPanel" >
+				           <g:Label styleName="{unitStyle.genHead}" ui:field="generalLabel"></g:Label>
+				           </g:HTMLPanel>
+				      </g:HTMLPanel>
+				</g:HTMLPanel>
+				<!-- end circle Widget -->
+				
+				<!-- <div class="row {unitStyle.generalSet}">
 					<div class="col-xs-12">
-						<div class="{unitStyle.rowInner}">
+						<div class="{unitStyle.rowInner}" circleContainerPanel>
 							<div class="{unitStyle.genHead}">General</div>
 							<div class="{unitStyle.leftArrow}"><a href="#"><img src="images/leftSmallarrow.png"></img></a></div>
 							<div class="{unitStyle.bubbleMain}"><a class="{unitStyle.bubbleOuter}  {unitStyle.active}" href="#"><span class="{unitStyle.bubbleBig}">1</span></a></div>
@@ -53,7 +76,7 @@
 							<div class="rightArrow"><a href="#"><img src="images/rightSmallarrow.png"/></a></div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				<div class="row {unitStyle.personalBtn}">
 					<div class="col-xs-12">
 						<div class="{unitStyle.rowInner}">

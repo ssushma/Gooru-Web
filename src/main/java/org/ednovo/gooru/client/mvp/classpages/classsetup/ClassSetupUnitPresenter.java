@@ -23,12 +23,16 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
+import org.ednovo.gooru.client.child.ChildPresenter;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import com.google.inject.Inject;
+public class ClassSetupUnitPresenter extends ChildPresenter<ClassSetupUnitPresenter,IsClassSetupUnitView> implements ClassSetupUnitUiHandlers{
 
-public interface ClassSetupUiHandlers extends BaseUiHandlers{
-
-	void setUnit();
-
-
+	@Inject
+	public ClassSetupUnitPresenter(IsClassSetupUnitView childview) {
+		super(childview);
+		//getView().setUiHandlers(this);
+	}
+	
+	
 }

@@ -26,9 +26,5 @@ package org.ednovo.gooru.client.mvp.classpages.classsetup;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
-public interface ClassSetupUiHandlers extends BaseUiHandlers{
-
-	void setUnit();
-
-
+public interface ClassSetupUnitUiHandlers extends BaseUiHandlers{
 }
