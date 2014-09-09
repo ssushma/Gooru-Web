@@ -1,6 +1,8 @@
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
 
+import org.ednovo.gooru.client.uc.PlayerBundle;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -22,9 +24,6 @@ public class UnitCricleView extends Composite implements HasClickHandlers{
 	interface UnitCricleViewUiBinder extends UiBinder<Widget, UnitCricleView> {
 	}
 	
-	/*@UiField(provided = true)
-	UnitAssignmentCssBundle res;*/
-	
 	@UiField InlineLabel unitNumber;
 	@UiField HTMLPanel bubbleOuterPanel;
 	
@@ -33,28 +32,27 @@ public class UnitCricleView extends Composite implements HasClickHandlers{
 	boolean isRequired; 
 		
 	public UnitCricleView(boolean isRequired,int unitCircleNumber) {
-		/*this.res = UnitAssignmentCssBundle.INSTANCE;
-		res.css().ensureInjected();*/
-		this.isRequired=isRequired;
 		
+		this.isRequired=isRequired;
+		UnitAssignmentCssBundle.INSTANCE.unitAssignment().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 		unitNumber.setText(unitCircleNumber+"");
-		//bubbleMain.setStyleName(res.css().bubbleMain());
 		showCircle();
 		
 	}
-	public void selectcircle()
+	public void selectCircle()
 	{
-	//	bubbleOuterPanel.addStyleName(res.css().active());
+		bubbleOuterPanel.addStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().active());
+	
 		
 	}
-	public void deSelectcircle()
+	public void deSelectCircle()
 	{
-		//bubbleOuterPanel.removeStyleName(res.css().active());	
+		bubbleOuterPanel.removeStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().active());
 	}
 	public void showCircle()
 	{
-		if(isRequired)
+		if(!isRequired)
 		{
 			displayRequiredCircle();
 		}else{
@@ -66,14 +64,16 @@ public class UnitCricleView extends Composite implements HasClickHandlers{
 	 */
 	public void displayRequiredCircle()
 	{
-		
+		unitNumber.removeStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().bubbleOptional());
+		unitNumber.addStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().bubbleBig());
 	}
 	/*
 	 * This method is used to display optional Circle
 	 */
 	public void displayOptionalCircle()
 	{
-		
+		unitNumber.addStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().bubbleBig());
+		unitNumber.addStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().bubbleOptional());
 	}
 	@Override
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
