@@ -13,6 +13,7 @@ public interface UnitAssignmentCssBundle extends ClientBundle{
 		String bubbleMain();
 		String bubbleOuter();
 		String bubbleBig();
+		String unitMenuActive();
 		
 	}
 	
