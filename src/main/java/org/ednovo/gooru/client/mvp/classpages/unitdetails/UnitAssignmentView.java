@@ -27,10 +27,12 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHandlers> implements IsUnitAssignmentView{
-
+ 
 
 	private static UnitAssignmentViewUiBinder uiBinder = GWT.create(UnitAssignmentViewUiBinder.class);
 
@@ -38,11 +40,22 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 	}
 	
+	@UiField HTMLPanel unitPanel;
+		
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	@Inject
 	public UnitAssignmentView(){
 		setWidget(uiBinder.createAndBindUi(this));		
+		showUnitNames();
+	}
+	
+	public void showUnitNames(){
+		for(int i=1; i<5; i++){
+			String s="sun"+i;
+			String number=Integer.toString(i);
+			unitPanel.add(new UnitWidget(number, s));
+		}
 	}
 	
 }
