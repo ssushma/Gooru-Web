@@ -52,6 +52,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.shared.model.library.UnitDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -100,16 +101,16 @@ IsCollectionAssign {
 	@UiField(provided = true)
 	AssignPopUpCBundle res;
 	
-	@UiField Label lblAssignCollectionTitle,lblClasspages,lblClasspagePlaceHolder, lblClasspagesArrow,lblDirections,lblDirectionsOptional;
+	@UiField Label lblAssignCollectionTitle,lblClasspages,lblClasspagesUnits,lblClasspagePlaceHolder,lblClasspageUnitPlaceHolder, lblClasspagesArrow,lblClasspagesUnitArrow,lblDirections,lblDirectionsOptional;
 	
 
 	@UiField Label lblAssignCollectionPrivate, lblNoClassPageMsg,lblNoClassPage,lblDuedate,lblDuedateOptional,directionsErrorLbl;
 	
 	@UiField BlueButtonUc btnAssign;
 	
-	@UiField ScrollPanel spanelClasspagesPanel;
+	@UiField ScrollPanel spanelClasspagesPanel,spanelClasspagesUnitPanel;
 	
-	@UiField HTMLPanel htmlClasspagesListContainer,duedateContainer;
+	@UiField HTMLPanel htmlClasspagesListContainer,htmlClasspagesUnitListContainer,duedateContainer;
 	
 	@UiField HTMLPanel  panelNoClasspages,htmlPanelContainer,panelTitleContainer,loadingImageLabel;
 	
@@ -142,7 +143,8 @@ IsCollectionAssign {
 	boolean toClearAssignment = true;	
 	boolean isAssignmentsEnabled = false;
 	CollectionDo collectionDoGlobal = new CollectionDo();	
-	String classpageId=null;	
+	String classpageId=null;
+	String unitId=null;
 	String assignmentId=null;	
 	boolean isMoreThanLimit=false;	//Limit = 10	
 	String shareType=null;
@@ -274,6 +276,16 @@ IsCollectionAssign {
 				if (spanelClasspagesPanel.getVerticalScrollPosition() == spanelClasspagesPanel.getMaximumVerticalScrollPosition()){
 					toClear = false;
 					getNextClasspages();
+				}
+			}
+		});
+		spanelClasspagesUnitPanel.setVisible(false);
+		spanelClasspagesUnitPanel.addScrollHandler(new ScrollHandler() {
+			
+			@Override
+			public void onScroll(ScrollEvent event) {
+				if(spanelClasspagesUnitPanel.getVerticalScrollPosition() == spanelClasspagesUnitPanel.getMaximumHorizontalScrollPosition()){
+					toClear = false;
 				}
 			}
 		});
@@ -454,6 +466,7 @@ IsCollectionAssign {
 			htmlPanelContainer.setVisible(true);
 			if (toClear){
 				htmlClasspagesListContainer.clear();
+				//htmlClasspagesUnitListContainer.clear();
 				toClear=false;
 			}
 			for (int i = 0; i < resultSize; i++) {
@@ -465,6 +478,11 @@ IsCollectionAssign {
 				//Set Click event for title
 				titleLabel.addClickHandler(new CpTitleLabelClick(titleLabel));
 				htmlClasspagesListContainer.add(titleLabel);
+				/*final Label unitLabel = new Label("unit");
+				unitLabel.setStyleName(AssignPopUpCBundle.INSTANCE.css().classpageTitleText());
+				unitLabel.getElement().setAttribute("id", "unit1");
+				unitLabel.addClickHandler(new CpuTitleLabelClick(unitLabel));
+				htmlClasspagesUnitListContainer.add(unitLabel);*/
 			}
 		}else{
 			//Set if there are not classpages.
@@ -500,7 +518,78 @@ IsCollectionAssign {
 			
 			//Hide the scroll container
 			spanelClasspagesPanel.setVisible(false);
+			UnitDo unitDo = new UnitDo();
+			
+			getUnitList(unitDo);
 		}
+
+		/**
+		 * @function getUnitList 
+		 * 
+		 * @created_date : 09-Sep-2014
+		 * 
+		 * @description
+		 * 
+		 * 
+		 * @parm(s) : @param unitDo
+		 * 
+		 * @return : void
+		 *
+		 * @throws : <Mentioned if any exceptions>
+		 *
+		 * 
+		 *
+		 * 
+		*/
+		
+		private void getUnitList(UnitDo unitDo) {
+			htmlClasspagesUnitListContainer.clear();
+			for(int i=0;i<2;i++){
+				final Label unitLabel = new Label("unit"+i);
+				unitLabel.setStyleName(AssignPopUpCBundle.INSTANCE.css().classpageTitleText());
+				unitLabel.getElement().setAttribute("id", "unit1");
+				unitLabel.addClickHandler(new CpuTitleLabelClick(unitLabel));
+				htmlClasspagesUnitListContainer.add(unitLabel);
+			}
+			lblClasspageUnitPlaceHolder.setText("unit");
+			lblClasspageUnitPlaceHolder.getElement().setId("unit");
+			lblClasspageUnitPlaceHolder.setStyleName(AssignPopUpCBundle.INSTANCE.css().selectedClasspageText());
+			
+			//unitId = unitLabel.getElement().getId();
+			
+			btnAssign.setEnabled(true);
+			btnAssign.setStyleName(AssignPopUpCBundle.INSTANCE.css().activeAssignButton());
+
+			
+			//Hide the scroll container
+			spanelClasspagesUnitPanel.setVisible(false);
+		}
+	}
+	
+	public class CpuTitleLabelClick implements ClickHandler{
+		
+		private Label unitLabel;
+		public CpuTitleLabelClick(Label unitLabel){
+			this.unitLabel = unitLabel;
+		}
+
+
+		@Override
+		public void onClick(ClickEvent event) {
+			lblClasspageUnitPlaceHolder.setText(unitLabel.getText());
+			lblClasspageUnitPlaceHolder.getElement().setId(unitLabel.getElement().getId());
+			lblClasspageUnitPlaceHolder.setStyleName(AssignPopUpCBundle.INSTANCE.css().selectedClasspageText());
+			
+			unitId = unitLabel.getElement().getId();
+			
+			btnAssign.setEnabled(true);
+			btnAssign.setStyleName(AssignPopUpCBundle.INSTANCE.css().activeAssignButton());
+
+			
+			//Hide the scroll container
+			spanelClasspagesUnitPanel.setVisible(false);
+		}
+		
 	}
 	
 	
@@ -689,6 +778,7 @@ IsCollectionAssign {
 	@UiHandler("classPageBtn")
 	public void classPageBtnClicked(ClickEvent event) {
 		htmlClasspagesListContainer.clear();
+		htmlClasspagesUnitListContainer.clear();
 		controlsContainer.setVisible(true);
 		btnAssign.setVisible(true);
 		
@@ -799,8 +889,25 @@ IsCollectionAssign {
 		OpenClasspageContainer();
 	}
 	
+	@UiHandler("lblClasspagesUnitArrow")
+	public void OnClickClasspageUnitArrow(ClickEvent event){
+		OpenClasspageUnitContainer();
+	}
+	
+	@UiHandler("lblClasspageUnitPlaceHolder")
+	public void OnClickClasspageUnitPlaceHolder(ClickEvent event){
+		OpenClasspageUnitContainer();
+	}
+	
 	public void OpenClasspageContainer(){
 		spanelClasspagesPanel.setVisible(!spanelClasspagesPanel.isVisible());
+
+		
+		
+	}
+	
+	public void OpenClasspageUnitContainer(){
+		spanelClasspagesUnitPanel.setVisible(!spanelClasspagesUnitPanel.isVisible());
 
 		
 		
@@ -827,6 +934,12 @@ IsCollectionAssign {
 		lblClasspages.getElement().setAttribute("alt",i18n.GL0102());
 		lblClasspages.getElement().setAttribute("title",i18n.GL0102());
 		
+		lblClasspagesUnits.setText(i18n.GL2173());
+		lblClasspagesUnits.getElement().setId("lblClasspagesUnit");
+		lblClasspagesUnits.getElement().setAttribute("alt",i18n.GL2173());
+		lblClasspagesUnits.getElement().setAttribute("title",i18n.GL2173());
+		
+		
 		btnAssign.setText(i18n.GL0104());
 		btnAssign.getElement().setAttribute("alt",i18n.GL0104());
 		btnAssign.getElement().setAttribute("title",i18n.GL0104());
@@ -835,6 +948,11 @@ IsCollectionAssign {
 		lblClasspagePlaceHolder.getElement().setId("lblClasspagePlaceHolder");
 		lblClasspagePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
 		lblClasspagePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
+		
+		lblClasspageUnitPlaceHolder.setText(i18n.GL0105());
+		lblClasspageUnitPlaceHolder.getElement().setId("lblClasspagePlaceHolder");
+		lblClasspageUnitPlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
+		lblClasspageUnitPlaceHolder.getElement().setAttribute("title",i18n.GL0105());
 		
 		classPageBtn.setText(i18n.GL0517());
 		classPageBtn.getElement().setId("btnClassPage");
@@ -849,6 +967,7 @@ IsCollectionAssign {
 		btnAssign.setStyleName(AssignPopUpCBundle.INSTANCE.css().disableAssignButon());
 
 		lblClasspagePlaceHolder.setStyleName(AssignPopUpCBundle.INSTANCE.css().placeHolderText());
+		lblClasspageUnitPlaceHolder.setStyleName(AssignPopUpCBundle.INSTANCE.css().placeHolderText());
 
 		panelNoClasspages.getElement().setId("pnlNoClasspages");
 		lblNoClassPageImage.getElement().setId("imgLblNoClassPageImage");
@@ -858,8 +977,11 @@ IsCollectionAssign {
 		htmlPanelContainer.getElement().setId("pnlHtmlPanelContainer");
 		controlsContainer.getElement().setId("pnlControlsContainer");
 		lblClasspagesArrow.getElement().setId("lblClasspagesArrow");
+		lblClasspagesUnitArrow.getElement().setId("lblClasspagesUnitArrow");
 		spanelClasspagesPanel.getElement().setId("sbSpanelClasspagesPanel");
+		spanelClasspagesUnitPanel.getElement().setId("spanelClasspagesUnitPanel");
 		htmlClasspagesListContainer.getElement().setId("pnlHtmlClasspagesListContainer");
+		htmlClasspagesUnitListContainer.getElement().setId("pnlhtmlClasspagesUnitListContainer");
 		lblDuedate.getElement().setId("lblDuedate");
 		lblDuedateOptional.getElement().setId("lblDuedateOptional");
 		duedateContainer.getElement().setId("pnlDuedateContainer");

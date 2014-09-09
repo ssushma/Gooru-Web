@@ -274,6 +274,12 @@ public interface AssignPopUpCBundle extends ClientBundle{
 		String privacyCustomizeContainernew();
 		
 		String privacyAlignStyleNew();
+		
+		String labelUnitText();
+		
+		String dropdownUnitContainer();
+		
+		String containerMainDiv(); 
 	}
 
 	@Source("AssignPopUp.css")
