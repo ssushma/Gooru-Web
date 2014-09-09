@@ -123,12 +123,8 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	static HTMLPanel mainContainer, panelSutdentsList;
 
 	@UiField HTMLPanel panelUpdateActionContols;
-	
-	@UiField Button btnReadytoStart;//btnStudentView
 
 	@UiField Label titleAlertMessageLbl;
-
-	@UiField Button btnStudentView;
 
 	@UiField Button btnCollectionEditImage;
 
@@ -342,7 +338,6 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		
 		
 		btnEditImage.getElement().setId("btnEditImage");
-//		btnStudentView.getElement().setId("btnStudentView");
 		btnCollectionEditImage.getElement().setId("btnCollectionEditImage");
 		btnClasspageSave.getElement().setId("btnClasspageSave");
 		btnClasspageCancel.getElement().setId("btnClasspageCancel");
@@ -372,8 +367,6 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 				spanelSutdentsList.setVisible(spanelSutdentsList.isVisible() ? false : true);
 			}
 		});
-		
-		btnReadytoStart.addClickHandler(new addAssignmentHandler());
 		
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
