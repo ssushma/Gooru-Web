@@ -432,7 +432,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
 	     }
 	     else {
-	    	 setInSlot(CLASSLIST_SLOT, classSetupPresenter,false);
+	    	 setInSlot(CLASSLIST_SLOT, unitSetupPresenter,false);
 	     }
 	}
 	public Integer getOffsetValue(){
