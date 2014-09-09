@@ -13,10 +13,11 @@ public interface UnitAssignmentCssBundle extends ClientBundle{
 		String bubbleMain();
 		String bubbleOuter();
 		String bubbleBig();
+		String bubbleOptional();
 		
 	}
 	
 	@NotStrict
 	@Source("unitassignment.css")
-	UnitAssignment css();
+	UnitAssignment unitAssignment();
 }

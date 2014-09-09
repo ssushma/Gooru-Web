@@ -7,8 +7,8 @@
 		type="org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssignmentCssBundle"
 		field="res" /> -->
 	<g:FlowPanel styleName="{unitStyle.bubbleMain}" ui:field="bubbleMain">
-		 <g:HTMLPanel styleName="{unitStyle.bubbleOuter}" ui:field="bubbleOuterPanel">
-			<g:InlineLabel styleName="{unitStyle.bubbleBig}" ui:field="unitNumber"></g:InlineLabel>
+		 <g:HTMLPanel ui:field="bubbleOuterPanel" styleName="{unitStyle.bubbleOuter}">
+			<g:InlineLabel ui:field="unitNumber"></g:InlineLabel>
 		</g:HTMLPanel> 
 	</g:FlowPanel>
 
