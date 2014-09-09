@@ -454,7 +454,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			params.put("analyticsId", collectionId);
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-			EditClasspageView.setAnalyticsData();
+			//EditClasspageView.setAnalyticsData();
 		};
 	}
 	private class monitorProgressEvent implements ClickHandler{
@@ -475,7 +475,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			params.put("monitorid", collectionId);
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-			EditClasspageView.setAnalyticsMonitoringData();
+			//EditClasspageView.setAnalyticsMonitoringData();
 		};
 	}
 	

@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:style field="playerStyle" src="unitassignment.css" />
+	<g:FlowPanel>
+<g:HTMLPanel styleName="{playerStyle.unitDetails}">
+
+<g:HTMLPanel styleName="{playerStyle.containerTeacher}">
+
+<g:HTMLPanel styleName="{playerStyle.col-xs-2} {playerStyle.leftPanel}">
+<g:HTMLPanel styleName="{playerStyle.uniSetup}">
+<g:Anchor href="#"><g:Image src="images/blueArrow.png"/> Unit Setup</g:Anchor>
+</g:HTMLPanel>
+<hr/>
+
+<ul styleName="list-unstyled {playerStyle.unitMenu}">
+<li><a href="#"><span styleName="{playerStyle.number}">1</span><span styleName="{playerStyle.name}">Unit  <br/>Name</span></a></li>
+<hr/>
+<li styleName="{playerStyle.active}"><a href="#"><span styleName="{playerStyle.number}">2</span><span styleName="{playerStyle.name}">Unit <br/>Name</span></a></li>
+<hr/>
+<li><a href="#"><span styleName="{playerStyle.number}">3</span><span styleName="{playerStyle.name}">Unit <br/>Name</span></a></li>
+
+</ul>
+</g:HTMLPanel>
+
+
+
+<g:HTMLPanel styleName="col-xs-10 {playerStyle.rightPanel}">
+
+
+
+
+<g:HTMLPanel styleName="row">
+
+<g:HTMLPanel styleName="col-xs-12">
+<g:HTMLPanel styleName="{playerStyle.col-xs-2} {playerStyle.unitHeading}">
+Unit 2 Details
+</g:HTMLPanel>
+
+<g:HTMLPanel styleName="{playerStyle.col-xs-2} {playerStyle.uniRequired}">
+<g:HTMLPanel styleName="{playerStyle.bubble}"></g:HTMLPanel> Required
+</g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.col-xs-2} {playerStyle.uniRequired}">
+<g:HTMLPanel styleName="{playerStyle.bubbleStyle}"></g:HTMLPanel> Optional
+</g:HTMLPanel>
+<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+</g:HTMLPanel>
+</g:HTMLPanel>
+
+
+
+<g:HTMLPanel styleName="row {playerStyle.generalSet}">
+
+<g:HTMLPanel styleName="col-xs-12">
+<g:HTMLPanel styleName="{playerStyle.rowInner}">
+<g:HTMLPanel styleName="{playerStyle.genHead}">General</g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.leftArrow}"><a href="#"><img src="images/leftSmallarrow.png"/></a></g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.bubbleMain}" ><a styleName="{playerStyle.bubbleOuter}  {playerStyle.active}" href="#"><span styleName="{playerStyle.bubbleBig}">1</span></a></g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.bubbleMain}"><a styleName="{playerStyle.bubbleOuter}" href="#"><span styleName="{playerStyle.bubbleBig}">2</span></a></g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.bubbleMain}"><a styleName="{playerStyle.bubbleOuter}" href="#"><span styleName="{playerStyle.bubbleBig}">3</span></a></g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.bubbleMain}"><a styleName="{playerStyle.bubbleOuter}" href="#"><span styleName="{playerStyle.bubbleBig}">4</span></a></g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.bubbleMain}"><a styleName="{playerStyle.bubbleOuter}" href="#"><span styleName="{playerStyle.bubbleBig}">5</span></a></g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.bubbleMain}"><a styleName="{playerStyle.bubbleOuter}" href="#"><span styleName="{playerStyle.bubbleBig}">6</span></a></g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.bubbleMain}"><a styleName="{playerStyle.bubbleOuter}" href="#"><span styleName="{playerStyle.bubbleBig}">7</span></a></g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.bubbleMain}"><a styleName="{playerStyle.bubbleOuter}" href="#"><span styleName="{playerStyle.bubbleBig}">8</span></a></g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.bubbleMain}"><a styleName="{playerStyle.bubbleOuter}" href="#"><span styleName="{playerStyle.bubbleBig}">9</span></a></g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.bubbleMain}"><a styleName="{playerStyle.bubbleOuter}" href="#"><span styleName="{playerStyle.bubbleBig}">10</span></a></g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.rightArrow}"><a href="#"><img src="images/rightSmallarrow.png"/></a></g:HTMLPanel>
+</g:HTMLPanel>
+</g:HTMLPanel>
+</g:HTMLPanel>
+
+
+<g:HTMLPanel styleName=".row {playerStyle.personalBtn}">
+<g:HTMLPanel styleName="col-xs-12">
+<g:HTMLPanel styleName="{playerStyle.rowInner}">
+
+<p styleName="text-center"><button type="button" styleName="primary" >Personalize Unit 2 for Students</button></p>
+</g:HTMLPanel>
+</g:HTMLPanel>
+</g:HTMLPanel>
+
+
+
+
+
+<g:HTMLPanel styleName="row assign">
+
+<g:HTMLPanel styleName="col-md-12">
+<g:HTMLPanel styleName="{playerStyle.rowInner}">
+
+<g:HTMLPanel styleName="{playerStyle.assignHeaderMain}">
+<g:HTMLPanel styleName="{playerStyle.assignHeader}">Assignment 1 </g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.onoffbtns}">Required
+ <label styleName="{playerStyle.switch} {playerStyle.switch-green}">
+      <input type="checkbox" checked="" styleName="{playerStyle.switch-input}"/>
+      <span  styleName="{playerStyle.switch-label}"></span>
+      <span styleName="{playerStyle.switch-handle}"></span>
+    </label> <span styleName="{playerStyle.text-muted}">Optional</span>
+     </g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.dueDate}">Set Due Date <img src="images/date-ico.png"/></g:HTMLPanel>
+<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+
+</g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.assignMain}">
+
+<g:HTMLPanel styleName="row {playerStyle.assaindetailsMain}">
+<g:HTMLPanel styleName="col-xs-6 {playerStyle.assignDetailsHeader}">Assignment Details: </g:HTMLPanel>
+<g:HTMLPanel styleName="col-xs-6 {playerStyle.assignButtons} text-right"><button type="button" styleName="secondary" id="btnBacktoLibrary" alt="Cancel" title="Cancel">Cancel</button> <button type="button" styleName="primary" id="btnEditCollection" alt="Save" title="Save" >Save</button> </g:HTMLPanel>
+
+
+<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+
+</g:HTMLPanel>
+
+<g:HTMLPanel styleName="{playerStyle.borderBox}">
+
+
+
+
+<p styleName="{playerStyle.direction}">Direction:
+
+
+<input name="" type="text" styleName="{playerStyle.form-control}" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor turpis id nisl iaculis, sit amet convallis nibh dapibus. "/></p>
+
+
+
+
+
+<g:HTMLPanel styleName="{playerStyle.score}">
+
+<g:HTMLPanel styleName="col-xs-6 {playerStyle.leftScore}">
+<p styleName="{playerStyle.direction}">Minimum Score: 
+
+
+<input name="" type="text" styleName="{playerStyle.form-control}" placeholder="85% "/></p>
+</g:HTMLPanel>
+
+<g:HTMLPanel styleName="col-xs-6 {playerStyle.rightScore}">
+<p styleName="{playerStyle.direction}">Suggested Time: 
+
+
+<input name="" type="text" styleName="{playerStyle.form-control}" placeholder="1 "/> <span>hour</span> <input name="" type="text" styleName="{playerStyle.form-control}" placeholder="30"/><span> min </span></p>
+</g:HTMLPanel>
+
+<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+
+</g:HTMLPanel>
+
+
+
+
+
+
+
+
+
+</g:HTMLPanel>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<g:HTMLPanel styleName="row {playerStyle.assaindetailsMain}">
+<g:HTMLPanel styleName="col-xs-6 {playerStyle.assignDetailsHeader}">Collection Assigned: </g:HTMLPanel>
+<g:HTMLPanel styleName="col-xs-6 {playerStyle.assignButtons} text-right"><button type="button" styleName="secondary" id="btnBacktoLibrary" alt="Edit" title="Edit">Edit</button> </g:HTMLPanel>
+
+
+<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+
+</g:HTMLPanel>
+
+<g:HTMLPanel styleName="{playerStyle.borderBox} {playerStyle.collections}">
+
+
+
+<g:HTMLPanel styleName="{playerStyle.col-xs-2}"><img src="images/collectionImg.png"/></g:HTMLPanel>
+
+
+
+<g:HTMLPanel styleName="{playerStyle.col-xs-9}">
+<g:HTMLPanel styleName="row">
+<g:HTMLPanel styleName="col-xs-4 header">
+<h3>Types of Habitats</h3>
+</g:HTMLPanel>
+<g:HTMLPanel styleName="col-xs-8 {playerStyle.collectionsNum}">
+
+
+<g:HTMLPanel styleName="{playerStyle.number}">CCSS.Math.Content.8.F.A.3</g:HTMLPanel> <g:HTMLPanel styleName="{playerStyle.number}">CA.SCI.7.LS.1b</g:HTMLPanel> 
+<g:HTMLPanel styleName="{playerStyle.plusNum}">+2</g:HTMLPanel>
+</g:HTMLPanel>
+</g:HTMLPanel>
+
+<p><strong>Learning Objective:</strong><br/>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. In a egestas ipsum.  Aenean ornare libero eros, ac cursus diam pretium sed. Proin eget tempus magna. Nullam lobortis eleifend lorem, sit amet ultricies tortor porta vel. Praesent sed augue facilisis, euismod urna vel, mollis mauris. Aenean sed.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In a egestas ipsum. Aenean ornare libero eros, ac cursus d</p>
+
+</g:HTMLPanel>
+
+
+
+<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+
+
+
+
+
+
+
+</g:HTMLPanel>
+
+
+
+<g:HTMLPanel styleName="row {playerStyle.assaindetailsMain}">
+<g:HTMLPanel styleName="col-xs-12 {playerStyle.assignDetailsHeader}">Question Details  <span>If there is any in the collection.</span> </g:HTMLPanel>
+<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+
+
+
+</g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.borderBox}">
+
+
+<g:HTMLPanel styleName="{playerStyle.score}">
+
+<g:HTMLPanel styleName="col-xs-6 {playerStyle.leftScore}">
+<p styleName="{playerStyle.direction}">Show Answers:
+
+
+<input name="" type="radio" value=""/> in the end <input name="" type="radio" value=""/> by question <input name="" type="radio" value=""/> don’t show</p>
+</g:HTMLPanel>
+
+<g:HTMLPanel styleName="col-xs-6 {playerStyle.rightScore}">
+<p styleName="{playerStyle.direction}">Show Hints/Explanations:  
+
+<input name="" type="radio" value=""/> Show <input name="" type="radio" value=""/> Hide</p>
+</g:HTMLPanel>
+
+<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+
+</g:HTMLPanel>
+
+
+
+</g:HTMLPanel>
+
+
+
+
+
+
+</g:HTMLPanel>
+
+
+<g:HTMLPanel styleName="{playerStyle.analytics}">
+
+<g:HTMLPanel styleName="row {playerStyle.assaindetailsMain}">
+<g:HTMLPanel styleName="col-xs-6 {playerStyle.assignDetailsHeader}">Assignment Details: </g:HTMLPanel>
+<g:HTMLPanel styleName="col-xs-6 {playerStyle.assignButtons} text-right">View Assignment <button title="Summary" alt="Summary" id="btnBacktoLibrary" styleName="secondary" type="button">Summary</button>
+<button title="Progress" alt="Progress" id="btnBacktoLibrary" styleName="secondary" type="button">Progress</button>
+ </g:HTMLPanel>
+
+
+<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+
+</g:HTMLPanel>
+
+
+<g:HTMLPanel styleName="{playerStyle.anaBoxes} row">
+
+
+<g:HTMLPanel styleName="col-xs-4">
+<g:HTMLPanel styleName="{playerStyle.boxbg}">
+
+Average Time Spent
+</g:HTMLPanel>
+</g:HTMLPanel>
+
+<g:HTMLPanel styleName="col-xs-4">
+<g:HTMLPanel styleName="{playerStyle.boxbg}">
+
+Views
+
+</g:HTMLPanel>
+</g:HTMLPanel>
+
+
+<g:HTMLPanel styleName="col-xs-4">
+<g:HTMLPanel styleName="{playerStyle.boxbg}">
+
+Average Reaction
+
+</g:HTMLPanel>
+</g:HTMLPanel>
+
+<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+
+</g:HTMLPanel>
+
+
+
+
+
+
+
+
+
+</g:HTMLPanel>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</g:HTMLPanel>
+</g:HTMLPanel>
+
+</g:HTMLPanel>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</g:HTMLPanel>
+
+<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+
+
+
+
+</g:HTMLPanel>
+
+
+
+</g:HTMLPanel>
+	</g:FlowPanel>
+</ui:UiBinder>
