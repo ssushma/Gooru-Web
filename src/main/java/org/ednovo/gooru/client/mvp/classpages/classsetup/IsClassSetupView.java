@@ -25,7 +25,14 @@
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 
+import com.google.gwt.user.client.ui.Widget;
+
 
 public interface IsClassSetupView extends IsViewWithHandlers<ClassSetupUiHandlers>{
+
+	void setContent();
+
+
+
 
 }
