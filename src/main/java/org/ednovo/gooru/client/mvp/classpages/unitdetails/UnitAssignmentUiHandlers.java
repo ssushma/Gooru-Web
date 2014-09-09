@@ -25,6 +25,28 @@
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.shared.model.content.ClasspageDo;
 
 public interface UnitAssignmentUiHandlers extends BaseUiHandlers{
+
+	/**
+	 * @function setClasspageData 
+	 * 
+	 * @created_date : 09-Sep-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param classpageDo
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void setClasspageData(ClasspageDo classpageDo);
 }

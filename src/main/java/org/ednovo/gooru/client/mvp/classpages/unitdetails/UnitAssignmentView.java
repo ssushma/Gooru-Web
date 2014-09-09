@@ -24,9 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHandlers> implements IsUnitAssignmentView{
@@ -39,10 +43,25 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	@UiField HTMLPanel panelContainer;
 
 	@Inject
 	public UnitAssignmentView(){
 		setWidget(uiBinder.createAndBindUi(this));		
 	}
 	
+	
+	
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		if (content != null) {
+			 if(slot==UnitAssignmentPresenter._SLOT){
+				 panelContainer.clear();
+				 panelContainer.add(content);
+			}else{
+				panelContainer.setVisible(false);
+			}
+		}
+	}
 }

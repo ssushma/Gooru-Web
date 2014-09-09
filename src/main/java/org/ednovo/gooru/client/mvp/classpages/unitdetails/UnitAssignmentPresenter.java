@@ -23,16 +23,33 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
+import org.ednovo.gooru.shared.model.content.ClasspageDo;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentView> implements UnitAssignmentUiHandlers{
 
+	
+	
+	public static final  Object _SLOT = new Object();
+	
+	private PersonalizeUnitPresenter studentPersonalizePresenter = null;
+	
 	@Inject
-	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view) {
+	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
+		this.studentPersonalizePresenter = studentPersonalizePresenter;
+		
 	}
 	
+	@Override
+	public void setClasspageData(ClasspageDo classpageDo){
+		System.out.println("in set classpage ... ");
+		studentPersonalizePresenter.setClasspageData(classpageDo);
+		setInSlot(_SLOT, studentPersonalizePresenter,false);
+	}
 	
 }

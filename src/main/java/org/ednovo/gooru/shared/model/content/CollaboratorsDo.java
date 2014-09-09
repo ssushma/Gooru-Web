@@ -35,6 +35,37 @@ public class CollaboratorsDo implements Serializable{
 	private String status;
 	private String profileImageUrl;
 	private String associatedDate;
+	private String firstName;
+	private String lastName;
+	
+	/** 
+	 * This method is to get the firstName
+	 */
+	public String getFirstName() {
+		return firstName;
+	}
+
+	/** 
+	 * This method is to set the firstName
+	 */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	/** 
+	 * This method is to get the lastName
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+
+	/** 
+	 * This method is to set the lastName
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
 	//Specific to invite students in Class.
 	private String email;
 	
