@@ -78,6 +78,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -144,18 +145,22 @@ public class EditClasspageView extends
 	
 	/*@UiField ScrollPanel spanelInstructionalPanel;*/
 
+	@UiField Label lblSelected, lblArrow;
+	
+	@UiField ScrollPanel spanelSutdentsList;
+	
 	@UiField
 	static HTMLPanel frameDiv;
 
 	@UiField
-	static HTMLPanel mainContainer;
+	static HTMLPanel mainContainer, panelSutdentsList;
 	
 	@UiField
 	static Frame frameUrl;
 	
 	@UiField Label titleAlertMessageLbl, lblNext, lblPrevious, dropdownPlaceHolder,lblAssignHeader,lblAssignText,lblAssignDes,lblStartAssign,lblAssignDetails,lblSequenceText,lblReadytoStart;
 
-	@UiField Button btnStudentView,btnReadytoStart;
+	@UiField Button btnReadytoStart;//btnStudentView
 
 	@UiField
 	static Button monitorProgress;
@@ -479,10 +484,6 @@ public class EditClasspageView extends
 		btnEditImage.getElement().setAttribute("alt",i18n.GL0138());
 		btnEditImage.getElement().setAttribute("title",i18n.GL0138());
 		
-		btnStudentView.setText(i18n.GL0139());
-		btnStudentView.getElement().setAttribute("alt",i18n.GL0139());
-		btnStudentView.getElement().setAttribute("title",i18n.GL0139());
-		
 		btnCollectionEditImage.setText(i18n.GL0140());
 		btnCollectionEditImage.getElement().setAttribute("alt",i18n.GL0140());
 		btnCollectionEditImage.getElement().setAttribute("title",i18n.GL0140());
@@ -613,12 +614,39 @@ public class EditClasspageView extends
 		backArrowButton.getElement().setId("backArrowButton");
 		
 		btnEditImage.getElement().setId("btnEditImage");
-		btnStudentView.getElement().setId("btnStudentView");
+//		btnStudentView.getElement().setId("btnStudentView");
 		btnCollectionEditImage.getElement().setId("btnCollectionEditImage");
 		btnClasspageSave.getElement().setId("btnClasspageSave");
 		btnClasspageCancel.getElement().setId("btnClasspageCancel");
 		btnNewAssignment.getElement().setId("btnNewAssignment");
 		btnDeleteClasspage.getElement().setId("btnDeleteClasspage");
+		
+		lblSelected.setText(i18n.GL2174());
+		StringUtil.setAttributes(lblSelected.getElement(), "lblSelected", i18n.GL2174(), i18n.GL2174());
+		StringUtil.setAttributes(spanelSutdentsList.getElement(), "spanelSutdentsList", null, null);
+		spanelSutdentsList.getElement().getStyle().setBackgroundColor("white");
+		spanelSutdentsList.getElement().getStyle().setZIndex(9);
+		spanelSutdentsList.setVisible(false);
+		StringUtil.setAttributes(panelSutdentsList.getElement(), "panelSutdentsList", null, null);
+		StringUtil.setAttributes(lblArrow.getElement(), "lblArrow", null, null);
+		
+		
+		lblArrow.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				spanelSutdentsList.setVisible(spanelSutdentsList.isVisible() ? false : true);
+			}
+		});
+		
+		lblSelected.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				spanelSutdentsList.setVisible(spanelSutdentsList.isVisible() ? false : true);
+			}
+		});
+		
 		
 		btnNewAssignment.addClickHandler(new addAssignmentHandler());
 		btnAssignCollection.addClickHandler(new addAssignmentHandler());
@@ -1009,41 +1037,6 @@ public class EditClasspageView extends
 		delete.show();
 		delete.center();
 	}
-
-	@UiHandler("btnStudentView")
-	public void OnClickStudentView(ClickEvent event){
-		MixpanelUtil.Click_StudentView_Classpage();
-
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("id", classpageDo.getClasspageId());
-		params.put("b", "true");
-
-		params.put("pageSize", "5");
-		params.put("pageNum", "0");
-		params.put("pos", "1");
-
-		params.put("source", "E");
-		Cookies.setCookie("pageSize", AppClientFactory.getPlaceManager()
-				.getRequestParameter("pageSize"));
-		Cookies.setCookie("classpageid", AppClientFactory.getPlaceManager()
-				.getRequestParameter("classpageid"));
-		Cookies.setCookie("pageNum", AppClientFactory.getPlaceManager()
-				.getRequestParameter("pageNum"));
-		Cookies.setCookie("pos", AppClientFactory.getPlaceManager()
-				.getRequestParameter("pos"));
-
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,
-				params);
-		
-	}
-
-	/*@UiHandler("btnNewAssignment")
-	public void OnClickNewAssignment(ClickEvent event){
-		MixpanelUtil.Click_Add_NewAssignment();
-		Window.enableScrolling(false);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-		getUiHandlers().addAssignmentsContainerPopup(getClasspageId());
-	}*/
 	
 	public void setClasspageData(ClasspageDo classpageDo){
 		this.classpageDo=classpageDo;
@@ -1076,6 +1069,7 @@ public class EditClasspageView extends
 		imgNotFriendly.addMouseOutHandler(new MouseOutHideToolTip());
 
 		questionMarkPanel.clear();
+		questionMarkPanel.setVisible(false);
 		questionMarkPanel.add(imgNotFriendly);
 		
 		imgClasspageImage.setAltText(classpageDo.getTitle());
