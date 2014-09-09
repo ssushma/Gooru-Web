@@ -61,6 +61,7 @@
 						</div>
 					</div>
 				</div>
+				<g:HTMLPanel ui:field="assignmentContainer"></g:HTMLPanel>
 			</div>
 			<div class="clearfix"></div>
 		</div>

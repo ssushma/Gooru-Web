@@ -24,13 +24,18 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHandlers> implements IsUnitAssignmentView{
 
+	@UiField HTMLPanel assignmentContainer;
 
 	private static UnitAssignmentViewUiBinder uiBinder = GWT.create(UnitAssignmentViewUiBinder.class);
 
@@ -42,7 +47,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	@Inject
 	public UnitAssignmentView(){
-		setWidget(uiBinder.createAndBindUi(this));		
+		setWidget(uiBinder.createAndBindUi(this));
+		assignmentContainer.add(new CollectionsView(null, 0));
 	}
 	
 }
