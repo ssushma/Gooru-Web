@@ -530,8 +530,8 @@ display:inline-block;
 	border:2px solid #ffffff;
 }
 .bubbleOuter{
-	width:40px;
-	height:40px;
+	/* width:40px;
+	height:40px; */
 	background:#ffffff;
 	border-radius:50% 50%;
 	-webkit-border-radius:50% 50%;
@@ -544,15 +544,25 @@ display:inline-block;
 	display:inline;
 }
 .active{
+	background:#87BADD !important;
+	border-radius:50% 50% !important;
+	-webkit-border-radius:50% 50% !important;
+	-moz-border-radius:50% 50% !important;
 	
+}
+ .bubbleOuter:hover{
 	background:#87BADD;
 	border-radius:50% 50%;
 	-webkit-border-radius:50% 50%;
 	-moz-border-radius:50% 50%;
+	opacity:1;
 	
 }
- .bubbleOuter:hover{
+.bubbleOptional{
 	
+	background: #b9bbca url(../images/liners.png) no-repeat !important;
+}
+.bubbleOptional:hover{
 	background:#87BADD;
 	border-radius:50% 50%;
 	-webkit-border-radius:50% 50%;
