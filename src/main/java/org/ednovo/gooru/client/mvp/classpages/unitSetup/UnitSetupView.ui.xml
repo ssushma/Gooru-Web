@@ -5,5 +5,5 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="playerStyle" src="unitsetup.css" />
-	
+	<g:FlowPanel></g:FlowPanel>
 </ui:UiBinder>
