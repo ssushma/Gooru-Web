@@ -10,6 +10,10 @@ public interface UnitAssignmentCssBundle extends ClientBundle{
 	static final UnitAssignmentCssBundle INSTANCE = GWT.create(UnitAssignmentCssBundle.class);
 	public interface  UnitAssignment extends CssResource{
 		String active();
+		String bubbleMain();
+		String bubbleOuter();
+		String bubbleBig();
+		
 	}
 	
 	@NotStrict

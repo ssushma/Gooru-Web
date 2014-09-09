@@ -477,3 +477,52 @@ display:inline-block;
 	.inputnoBorder{
 		border:none !important;
 	}
+	
+	/* new added css */
+	.bubbleBig{
+	width:34px;
+	height:34px;
+	background:#B9BBCA;
+	border-radius:50% 50%;
+	-webkit-border-radius:50% 50%;
+	-moz-border-radius:50% 50%;
+	vertical-align:middle;
+	display:inline-block;
+	margin:3px 3px;
+	text-align:center;
+	line-height:34px;
+	color:#ffffff;
+	font-weight:bold;
+	border:2px solid #ffffff;
+}
+.bubbleOuter{
+	width:40px;
+	height:40px;
+	background:#ffffff;
+	border-radius:50% 50%;
+	-webkit-border-radius:50% 50%;
+	-moz-border-radius:50% 50%;
+	vertical-align:middle;
+	display:inline-block;
+	margin:0 13px;
+}
+.bubbleMain{
+	display:inline;
+}
+.active{
+	
+	background:#87BADD;
+	border-radius:50% 50%;
+	-webkit-border-radius:50% 50%;
+	-moz-border-radius:50% 50%;
+	
+}
+ .bubbleOuter:hover{
+	
+	background:#87BADD;
+	border-radius:50% 50%;
+	-webkit-border-radius:50% 50%;
+	-moz-border-radius:50% 50%;
+	opacity:1;
+	
+}
