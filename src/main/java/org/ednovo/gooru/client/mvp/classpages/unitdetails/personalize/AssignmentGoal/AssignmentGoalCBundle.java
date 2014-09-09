@@ -22,31 +22,28 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+package org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.AssignmentGoal;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.shared.model.content.ClasspageDo;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
 
-public interface UnitAssignmentUiHandlers extends BaseUiHandlers{
+/**
+ * @author Search Team
+ * 
+ */
+public interface AssignmentGoalCBundle extends ClientBundle {
 
-	/**
-	 * @function setClasspageData 
-	 * 
-	 * @created_date : 09-Sep-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @param classpageDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
-	
-	void setClasspageData(ClasspageDo classpageDo);
+	static final AssignmentGoalCBundle INSTANCE = GWT.create(AssignmentGoalCBundle.class);
+
+	public interface GoalCss extends CssResource {
+		String studentNameContainer();
+
+		String studentName();
+
+		String goals();
+	}
+
+	@Source("assignmentgoal.css")
+	GoalCss css();
 }

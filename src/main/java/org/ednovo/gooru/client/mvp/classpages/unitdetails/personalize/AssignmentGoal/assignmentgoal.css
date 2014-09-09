@@ -1,0 +1,16 @@
+.studentNameContainer{
+	padding: 20px 0px;
+}
+
+.studentNameContainer:hover{
+	background: #ccc;
+}
+
+.studentName{
+	float: left;
+	width: 15%;
+}
+
+.goals, .studentName{
+	height: 20px;
+}
