@@ -1511,7 +1511,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode, getLoggedInSessionToken(), statusType, ""+pageSize, offSet+"");
-		System.out.println("getActiveAssociatedStudentListByCode : "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		

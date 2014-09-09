@@ -23,87 +23,89 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
-import org.ednovo.gooru.client.mvp.shelf.ShelfUiHandlers;
+import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.inject.Inject;
-public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> implements IsClassSetupView{
+public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresenter> implements IsClassSetupUnitView{
 
-	@UiField VerticalPanel unitwidget;
-	@UiField Button addUnitBtn;
-	
-	private HandlerRegistration addUnitClickHandler;
-	
-	private static ClassSetupViewUiBinder uiBinder = GWT.create(ClassSetupViewUiBinder.class);
+	@UiField HTMLPanel unitSequence,inputContainer;
+	@UiField Button deleteBtnUnit,cancelBtn,saveBtn;
+	@UiField TextBox unitName;
+	@UiField Label divContainer;
+	private static ClassSetupUnitViewUiBinder uiBinder = GWT.create(ClassSetupUnitViewUiBinder.class);
 
-	interface ClassSetupViewUiBinder extends UiBinder<Widget, ClassSetupView> {
+	interface ClassSetupUnitViewUiBinder extends UiBinder<Widget, ClassSetupUnitView> {
 		
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 
-	@Inject
-	public ClassSetupView(){
-		setWidget(uiBinder.createAndBindUi(this));		
+	public ClassSetupUnitView(){
+		initWidget(uiBinder.createAndBindUi(this));		
+		setPresenter(new ClassSetupUnitPresenter(this));
+	}
+	
+	public ClassSetupUnitView(final int sequenceNum){
+		initWidget(uiBinder.createAndBindUi(this));
+		inputContainer.setVisible(false);
+		divContainer.setVisible(true);
+		unitName.setText("Unit Name "+sequenceNum);
+		divContainer.setText(unitName.getText());
+		setPresenter(new ClassSetupUnitPresenter(this));
+		unitSequence.getElement().setInnerHTML((sequenceNum+1)+".");
 		
-		if(addUnitClickHandler!=null) {
-			addUnitClickHandler.removeHandler();
-		}
-		addUnitClickHandler=addUnitBtn.addClickHandler(new ClickHandler() {
-
+		deleteBtnUnit.addClickHandler(new ClickHandler() {
+			
 			@Override
 			public void onClick(ClickEvent event) {
-			getUiHandlers().setUnit();
+				deleteItem(sequenceNum);
 				
 			}
-			
 		});
-	}
-
-	public VerticalPanel getUnitwidget() {
-		return unitwidget;
-	}
-
-	public void setUnitwidget(VerticalPanel unitwidget) {
-		this.unitwidget = unitwidget;
-	}
-	
-	@Override
-	public void setContent() {
-	//Window.alert("getUnitwidget().getWidgetCount()::"+getUnitwidget().getWidgetCount());
-		 ClassSetupUnitView cv = new ClassSetupUnitView(getUnitwidget().getWidgetCount()) {
+		cancelBtn.addClickHandler(new ClickHandler() {
 			
 			@Override
-			public void deleteItem(int sequenceNum) {
-				try
-				{
-				getUnitwidget().remove(getUnitwidget().getWidgetIndex(this));
-				}
-				catch(Exception ex)
-				{
-					
-				}
+			public void onClick(ClickEvent event) {
+				inputContainer.setVisible(false);
+				divContainer.setVisible(true);
 				
 			}
-		};
-		 getUnitwidget().add(cv);
+		});
+		saveBtn.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				//api call to save data to be added
+				divContainer.setText(unitName.getText());
+				inputContainer.setVisible(false);
+				divContainer.setVisible(true);
+				
+			}
+		});
+		divContainer.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				inputContainer.setVisible(true);
+				divContainer.setVisible(false);
+				
+			}
+		});
 	}
 	
-
-	
-	
+	public abstract void deleteItem(int sequenceNum);
 	
 }

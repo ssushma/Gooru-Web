@@ -525,7 +525,7 @@ display:inline-block;
 	}
 	
 	.numaric{
-		display:inline;
+		display:inline-block;
 		color:#176ba7;
 		font-size:14px;
 		font-weight:bold;
@@ -533,8 +533,8 @@ display:inline-block;
 	}
 	
 	.unitInput{
-		display:inline;
-		margin-right:25px;
+		display:inline-block;
+		margin-right:2px;
 		position:relative;
 
 	
@@ -542,19 +542,19 @@ display:inline-block;
 	
 	.unitInput .saveBtns{
 		position:absolute;
-		top:-9px;
+		top:4px;
 		right:8px;
 	}
 	.unitInput input{
 
 		border:1px solid #bdbcc4;
-		padding:12px 120px 12px 5px;
-		width:484px;
+		padding:10px 120px 10px 1px;
+		width:506px;
 	
 	}
 	
 	.ordButtons{
-		display:inline;
+		display:inline-block;
 		text-align:right;
 	}
 	
@@ -577,3 +577,13 @@ color: inherit;
 	.ptag{
 	margin: 0 0 10px;
 	}
+	.btnstyles{
+	margin-bottom: 20px;
+margin-top: 20px;
+	}
+	.divcontainertext{
+	border: 1px solid #bdbcc4;
+width: 625px;
+height: 28px;
+padding-top: 6px;
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:style field="playerStyle" src="classsetup.css" />
+		<g:HTMLPanel styleName="col-xs-12 {playerStyle.borderboxbottom}">
+
+<g:HTMLPanel styleName="innerConatiner">
+
+<g:HTMLPanel ui:field="unitSequence" styleName="{playerStyle.numaric}"></g:HTMLPanel>
+<g:HTMLPanel styleName="{playerStyle.unitInput}">
+<g:HTMLPanel ui:field="inputContainer">
+<g:TextBox ui:field="unitName" name="" /> 
+<g:HTMLPanel styleName="{playerStyle.saveBtns}" ui:field="buttonsContainer"> <g:Button ui:field="cancelBtn" styleName="secondary"> Cancel</g:Button>  <g:Button ui:field="saveBtn" styleName="primary"> Save</g:Button> </g:HTMLPanel>
+</g:HTMLPanel>
+
+<g:Label ui:field="divContainer" styleName="{playerStyle.unitInput} {playerStyle.divcontainertext}"></g:Label>
+</g:HTMLPanel>
+
+<g:HTMLPanel styleName="{playerStyle.ordButtons}"><g:Button styleName="secondary normalBtn"><img src="images/plusIco.png"/> Assignment</g:Button> 
+<g:Button ui:field="deleteBtnUnit" styleName="secondary normalBtn"><img src="images/delete.png"/> Delete</g:Button> 
+<g:Button styleName="secondary {playerStyle.lgBtn}"><img src="images/reorderIco.png"/> Reorder</g:Button> 
+</g:HTMLPanel>
+</g:HTMLPanel>
+
+
+</g:HTMLPanel>
+</ui:UiBinder>
