@@ -600,6 +600,16 @@ public enum UrlToken {
 	
 	REFRESH_TOKEN_GDC("/gooru-auth/google/refresh-token.g?partyUid={0}"),
 	
+	PATHWAYS_CLASS_OPTIMIZED("/v2/class/{0}/item?sessionToken={1}&limit={2}&offset={3}&orderBy=sequence&optimize=true"),
+	
+	PATHWAYS_CLASS("/v2/class/{0}/item?sessionToken={1}&limit={2}&offset={3}&orderBy=sequence"),
+	
+	PATHWAYS_CLASS_REORDER("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"),
+	
+	PATHWAYS_CREATE("/v2/class/{0}/pathway?sessionToken={1}"),
+	
+	PATHWAYS_UPDATE("/v2/class/{0}/pathway/{1}?sessionToken={2}"),
+	
 	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?partyUid={0}");
 
 	private String url;

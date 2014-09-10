@@ -69,7 +69,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
 		showUnitNames();
-		setData();
+		setCircleData();
 	}
 	
 	public void showUnitNames(){
@@ -91,7 +91,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					@Override
 					public void onClick(ClickEvent event) {
 						String id =widget.getElement().getId();
-						System.out.println("id:"+id );
 						final Iterator<Widget> widgetsPanel = unitPanel.iterator();
 						while (widgetsPanel.hasNext()) {
 							 widgetsPanel.next().removeStyleName(res.unitAssignment().unitMenuActive());
@@ -103,76 +102,47 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		
 	}
-	public void setData()
+	public void setCircleData()
 	{
 		generalLabel.setText("General");
 		requiredLabel.setText("Required");
 		optionalLabel.setText("Optional");
+		leftArrow.addClickHandler(new cleckOnNext());
+		rightArrow.addClickHandler(new cleckOnNext());
 		circleContainerPanel.clear();
 		leftArrow.setUrl("images/leftSmallarrow.png");
 		circleContainerPanel.add(leftArrow);
 		
 		for(int i=1;i<11;i++){
 			final UnitCricleView unitCricleViewObj =new UnitCricleView(true,i);
+			unitCricleViewObj.getElement().setId(i+"");
 			circleContainerPanel.add(unitCricleViewObj);
-			unitCricleViewObj.addClickHandler(new ClickHandler() {
-				@Override
-				public void onClick(ClickEvent event) {
-					unitCricleViewObj.selectCircle();
-				}
-			});
+			
 		}
 		rightArrow.setUrl("images/rightSmallarrow.png");
 		circleContainerPanel.add(rightArrow);
-		leftArrow.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				circleContainerPanel.clear();
-				leftArrow.setUrl("images/leftSmallarrow.png");
-				circleContainerPanel.add(leftArrow);
-				for(int i=1;i<11;i++){
-					final UnitCricleView unitCricleViewObj =new UnitCricleView(true,i);
-					circleContainerPanel.add(unitCricleViewObj);
-					unitCricleViewObj.addClickHandler(new ClickHandler() {
-						
-						@Override
-						public void onClick(ClickEvent event) {
-							unitCricleViewObj.selectCircle();
-							
+		
+		
+		Iterator<Widget> widgets = circleContainerPanel.iterator();
+		
+		while (widgets.hasNext()) {
+			final Widget widget = widgets.next();
+			if (widget instanceof UnitCricleView) {
+				((UnitCricleView) widget).addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						final Iterator<Widget> widgetsPanel = circleContainerPanel.iterator();
+						while (widgetsPanel.hasNext()) {
+							 widgetsPanel.next().removeStyleName(res.unitAssignment().active());
 						}
-					});
-				}
-				rightArrow.setUrl("images/rightSmallarrow.png");
-				circleContainerPanel.add(rightArrow);
-				
-			}
-		});
-		rightArrow.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				circleContainerPanel.clear();
-				leftArrow.setUrl("images/leftSmallarrow.png");
-				circleContainerPanel.add(leftArrow);
-				
-				for(int i=11;i<21;i++){
-					final UnitCricleView unitCricleViewObj =new UnitCricleView(true,i);
-					circleContainerPanel.add(unitCricleViewObj);
-					unitCricleViewObj.addClickHandler(new ClickHandler() {
-						
-						@Override
-						public void onClick(ClickEvent event) {
-							unitCricleViewObj.selectCircle();
-							
-						}
-					});
+						widget.addStyleName(res.unitAssignment().active());
+					}
 					
-				}	
-				rightArrow.setUrl("images/rightSmallarrow.png");
-				circleContainerPanel.add(rightArrow);
-			}
-		});
+			});
+		}
+		}
+		
 	}
 	
 	@Override
@@ -186,4 +156,41 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			}
 		}
 	}
+	public class cleckOnNext implements ClickHandler{
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			circleContainerPanel.clear();
+			leftArrow.setUrl("images/leftSmallarrow.png");
+			circleContainerPanel.add(leftArrow);
+			
+			for(int i=11;i<21;i++){
+				final UnitCricleView unitCricleViewObj =new UnitCricleView(true,i);
+				circleContainerPanel.add(unitCricleViewObj);
+			}
+			rightArrow.setUrl("images/rightSmallarrow.png");
+			circleContainerPanel.add(rightArrow);
+			Iterator<Widget> widgets = circleContainerPanel.iterator();
+			
+			while (widgets.hasNext()) {
+				final Widget widget = widgets.next();
+				if (widget instanceof UnitCricleView) {
+					((UnitCricleView) widget).addClickHandler(new ClickHandler() {
+
+						@Override
+						public void onClick(ClickEvent event) {
+							final Iterator<Widget> widgetsPanel = circleContainerPanel.iterator();
+							while (widgetsPanel.hasNext()) {
+								 widgetsPanel.next().removeStyleName(res.unitAssignment().active());
+							}
+							widget.addStyleName(res.unitAssignment().active());
+						}
+						
+				});
+			}
+			}
+		}
+		
+	}
+	
 }
