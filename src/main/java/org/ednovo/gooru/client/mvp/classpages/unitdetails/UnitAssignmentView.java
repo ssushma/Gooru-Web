@@ -23,6 +23,8 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+import java.util.Iterator;
+
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
@@ -46,6 +48,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 	
 	@UiField HTMLPanel unitPanel;
+	
+	UnitAssignmentCssBundle res;
 		
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -60,6 +64,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@Inject
 	public UnitAssignmentView(){
 		setWidget(uiBinder.createAndBindUi(this));		
+		this.res = UnitAssignmentCssBundle.INSTANCE;
+		res.unitAssignment().ensureInjected();
 		showUnitNames();
 		setData();
 	}
@@ -68,7 +74,30 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		for(int i=1; i<5; i++){
 			String s="sun"+i;
 			String number=Integer.toString(i);
-			unitPanel.add(new UnitWidget(number, s));
+			UnitWidget unitsWidget=new UnitWidget(number, s);
+			unitsWidget.getElement().setId(number);
+			unitPanel.add(unitsWidget);
+		}
+		
+		Iterator<Widget> widgets = unitPanel.iterator();
+		
+		while (widgets.hasNext()) {
+			final Widget widget = widgets.next();
+			if (widget instanceof UnitWidget) {
+				((UnitWidget) widget).getHtPanelUnit().addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						String id =widget.getElement().getId();
+						System.out.println("id:"+id );
+						final Iterator<Widget> widgetsPanel = unitPanel.iterator();
+						while (widgetsPanel.hasNext()) {
+							 widgetsPanel.next().removeStyleName(res.unitAssignment().unitMenuActive());
+							}
+						widget.addStyleName(res.unitAssignment().unitMenuActive());
+					}
+				});
+			}
 		}
 		
 	}
