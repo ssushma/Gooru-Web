@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 import java.util.Iterator;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -39,7 +40,9 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHandlers> implements IsUnitAssignmentView{
- 
+
+	@UiField HTMLPanel assignmentContainer;
+
 
 	private static UnitAssignmentViewUiBinder uiBinder = GWT.create(UnitAssignmentViewUiBinder.class);
 
@@ -63,7 +66,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@Inject
 	public UnitAssignmentView(){
-		setWidget(uiBinder.createAndBindUi(this));		
+		setWidget(uiBinder.createAndBindUi(this));
+		assignmentContainer.add(new CollectionsView(null, 0));
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
 		showUnitNames();
@@ -114,11 +118,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			final UnitCricleView unitCricleViewObj =new UnitCricleView(true,i);
 			circleContainerPanel.add(unitCricleViewObj);
 			unitCricleViewObj.addClickHandler(new ClickHandler() {
-				
 				@Override
 				public void onClick(ClickEvent event) {
 					unitCricleViewObj.selectCircle();
-					
 				}
 			});
 		}
@@ -131,7 +133,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				circleContainerPanel.clear();
 				leftArrow.setUrl("images/leftSmallarrow.png");
 				circleContainerPanel.add(leftArrow);
-				
 				for(int i=1;i<11;i++){
 					final UnitCricleView unitCricleViewObj =new UnitCricleView(true,i);
 					circleContainerPanel.add(unitCricleViewObj);
