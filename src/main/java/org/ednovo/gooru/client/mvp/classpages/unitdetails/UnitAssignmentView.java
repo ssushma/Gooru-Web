@@ -52,6 +52,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	UnitAssignmentCssBundle res;
 		
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	@UiField HTMLPanel panelContainer;
 
 	@UiField HTMLPanel circleContainerPanel;
 	@UiField Label generalLabel,requiredLabel,optionalLabel;
@@ -174,6 +176,15 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		});
 	}
 	
-	
-	
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		if (content != null) {
+			 if(slot==UnitAssignmentPresenter._SLOT){
+				 panelContainer.clear();
+				 panelContainer.add(content);
+			}else{
+				panelContainer.setVisible(false);
+			}
+		}
+	}
 }
