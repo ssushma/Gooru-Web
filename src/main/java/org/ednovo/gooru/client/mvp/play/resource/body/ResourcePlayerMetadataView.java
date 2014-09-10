@@ -25,14 +25,11 @@
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -45,6 +42,7 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEvent;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.BrowserAgent;
@@ -68,7 +66,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.FontStyle;
-import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -323,9 +320,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				collectionContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 			}
-		}else{
+		}
+		
 			displayPublisher();
-			}
+						
 		if(collectionItemDo.getResource().getTitle()!=null){
 			resourceTitleLbl.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
@@ -418,8 +416,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				List<String> publishersList=collectionItemDo.getResource().getPublisher()!=null?collectionItemDo.getResource().getPublisher():null;
 				if(publishersList!=null&&publishersList.size()>0){
-					publishersList.set(0,i18n.GL0566()+publishersList.get(0));
-					SearchUiUtil.renderMetaData(resourcePublisher, publishersList, 0);
+					//publishersList.set(0,i18n.GL0566()+publishersList.get(0));
+					SearchUiUtil.renderMetaData(resourcePublisher, publishersList);
 				}else{
 					resourcePublisher.getElement().setInnerHTML("");
 					resourcePublisher.getElement().getStyle().setPaddingTop(0, Unit.PX);
@@ -1027,8 +1025,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			isRated=true; 
 			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 				if(result.getRatings()!=null){
+					if(isFromThanksPopup){
+						getUiHandlers().updateResourceReview(collectionItemDo.getResource().getGooruOid(),result.getRatings().getReviewCount());
+						AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getReviewCount()));
+						AppClientFactory.fireEvent(new UpdateResourceReviewCountEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getReviewCount()));
+					}
+					getUiHandlers().updateResourceRatings(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage());
 					AppClientFactory.fireEvent(new UpdateResourceRatingCountEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getReviewCount()));
-					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
 				}
 				
 			}
@@ -1037,7 +1040,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			 */
 			else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 				if(result.getRatings()!=null){
-					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
+					if(isFromThanksPopup){
+						getUiHandlers().updateResourceReview(collectionItemDo.getResource().getGooruOid(),result.getRatings().getReviewCount());
+						AppClientFactory.fireEvent(new UpdateResourceReviewCountEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getReviewCount()));
+					}
+					getUiHandlers().updateResourceRatings(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage());
+					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getReviewCount()));
+					
 				}
 			}
 		}else{
@@ -1654,7 +1663,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		ratingsConfirmationPopup.show();
 		ratingsConfirmationPopup.getElement().getStyle().setZIndex(99999);
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-			ratingsConfirmationPopup.setPopupPosition(451,Window.getScrollTop()+120);
+			ratingsConfirmationPopup.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-150),three_star.getElement().getAbsoluteTop()+40);
 		}else{
 			ratingsConfirmationPopup.setPopupPosition(800,Window.getScrollTop()+153);
 		}

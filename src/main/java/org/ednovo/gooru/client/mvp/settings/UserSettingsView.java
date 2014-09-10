@@ -1138,24 +1138,15 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	}
 	@UiHandler("btnConnect")
 	public void onClickConnect(ClickEvent event){
+		
+		
 		if (!isDriveConnected){
-			Map<String, String> parms = new HashMap<String, String>();
-			parms = StringUtil.splitQuery(Window.Location.getHref());
-			parms.put("callback", "refershToken");
-			AppClientFactory.getInjector().getSearchService().getGoogleDrive(Window.Location.getHref(), parms, new SimpleAsyncCallback<String>() {
-	
-				@Override
-				public void onSuccess(String redirectUrl) {
-					
-					MixpanelUtil.mixpanelEvent("Access_Google_Drive");
-					Window.Location.replace(redirectUrl);
-
-				}
-			});
+			getUiHandlers().getGoogleDrive();
+			
 		}else{
 			getUiHandlers().revokeToken();
 			//StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
-			googleDirveStatus(false);
+			//googleDirveStatus(false);
 		}
 	}
 	
@@ -1442,7 +1433,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			}
 		}
 		else{
-			if(v2userDo.getUser().getAccountTypeId() == 2){
+			if(v2userDo.getUser().getAccountTypeId()!=null&&v2userDo.getUser().getAccountTypeId() == 2){
 				gradeLbl.setText(i18n.GL1479());
 				gradeLbl.getElement().setAttribute("alt",i18n.GL1479());
 				gradeLbl.getElement().setAttribute("title", i18n.GL1479());
@@ -2310,9 +2301,6 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			btnConnect.setText(i18n.GL2008());
 			btnConnect.getElement().setAttribute("alt", i18n.GL2008());
 			btnConnect.getElement().setAttribute("title", i18n.GL2008());
-			getUiHandlers().revokeToken();
-			//StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
-			
 		}
 	}
 }

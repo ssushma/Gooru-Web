@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
 import org.ednovo.gooru.client.mvp.play.resource.question.QuestionResourcePresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
+import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarRatingsEvent;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
@@ -98,6 +99,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		addRegisteredHandler(OpenReviewPopUpEvent.TYPE, this);
 		addRegisteredHandler(UpdateUserStarReviewEvent.TYPE,this);
 		addRegisteredHandler(DeletePlayerStarReviewEvent.TYPE,this);
+		addRegisteredHandler(DeletePlayerStarRatingsEvent.TYPE,this);
 	}
 	
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
@@ -433,7 +435,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	}
 
 	@Override
-	public void deleteStarRatings() {
+	public void deleteStarRatings(String gooruId) {
 		getView().deleteRatingsValue();
 	}
 
@@ -485,6 +487,29 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	}
 	public void setMarginTop(){
 		getView().setMarginTop();
+	}
+
+	@Override
+	public void updateResourceReview(String gooruOid,Integer reviewCount) {
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			collectionPlayerPresenter.updateReviewAndRatings(gooruOid,reviewCount); 
+		}else{
+			resourcePlayerPresenter.updateReviewAndRatings(gooruOid,reviewCount);
+		}
+	}
+	
+	@Override
+	public void updateResourceRatings(String gooruOid,double average) {
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			collectionPlayerPresenter.updateRatings(gooruOid,average);  
+		}else{
+			resourcePlayerPresenter.updateRatings(gooruOid,average);   
+		}
+	}
+
+	@Override
+	public void deleteRatingsInPlayer() {
+		getView().deleteRatingsValue();
 	}
 
 	

@@ -345,6 +345,7 @@ public class ShelfCollectionResourceChildView extends
 		initWidget(uiBinder.createAndBindUi(this));
 		this.collectionItemDo = collectionItem;
 		
+		
 		editFloPanel.setVisible(false);
 		editFloPanel.getElement().setId("fpnlEditFloPanel");
 		
@@ -509,6 +510,10 @@ public class ShelfCollectionResourceChildView extends
 		//endPageLbl.setVisible(false);
 		endPageLbl.setText(i18n.GL2026());
 		endPageLbl.getElement().setId("endPageLbl");
+		
+		
+		
+		
 		// To check whether resource is public and is created by logged in user
 		String resourceShare = collectionItemDo.getResource().getSharing();
 	
@@ -811,7 +816,18 @@ public class ShelfCollectionResourceChildView extends
 	 *            instance of {@link CollectionItemDo}
 	 */
 	public void setData(CollectionItemDo collectionItem) {
-//		Window.enableScrolling(true);
+		
+		errorMsgLabel.setText("");
+		videoDisplay.setVisible(true);
+		narrationConatainer.setVisible(true);
+		editFieldsFloPanel.setVisible(false);
+		actionVerPanelForUpdateTime.setVisible(false);
+		editFloPanel.setVisible(false);
+		isEdited = false;
+		disableAllEditMode();
+		lblCharLimit.setVisible(false);
+		resourceNarrationHtml.getElement().getStyle().clearWidth();
+		
 		String tumbnailUrl;
 		//resourceTitleLbl.setText(StringUtil.truncateText(collectionItem.getResource().getTitle(), 70));
 		String resourceTitle = collectionItem.getResource().getTitle()==null?"":collectionItem.getResource().getTitle();
@@ -941,6 +957,7 @@ public class ShelfCollectionResourceChildView extends
 						public void onSuccess(String youtubeInfo) {
 							if (youtubeInfo != null) {
 								totalVideoLength = Integer.parseInt(youtubeInfo);
+								
 								String tolTimeInmin = "";
 								String totalTimeSec = "";
 
@@ -961,7 +978,7 @@ public class ShelfCollectionResourceChildView extends
 									totalTimeSec = totalTimeInseconds
 											+ "";
 								}
-								startStopTimeDisplayText.setText(i18n.GL0957()+tolTimeInmin+":"+totalTimeSec);
+								startStopTimeDisplayText.setText(i18n.GL0957()+tolTimeInmin+" "+i18n.GL0958()+totalTimeSec+" "+i18n.GL0959());
 							}
 						}
 			});
@@ -977,6 +994,7 @@ public class ShelfCollectionResourceChildView extends
 						startSec="00";
 					}
 					String endMm=Integer.parseInt(VideoEndTime[0])*60+Integer.parseInt(VideoEndTime[1])+"";
+					
 					if (VideoEndTime.length>2){
 						endSec=Integer.parseInt(VideoEndTime[2])+"";
 					}else{
@@ -1034,6 +1052,7 @@ public class ShelfCollectionResourceChildView extends
 										public void onSuccess(String youtubeInfo) {
 											if (youtubeInfo != null) {
 												totalVideoLength = Integer.parseInt(youtubeInfo);
+												
 												String tolTimeInmin = "";
 												String totalTimeSec = "";
 
@@ -1521,84 +1540,96 @@ public class ShelfCollectionResourceChildView extends
 		String narration = null;
 		String from = null;
 		String to = null;
-		if (collectionItemDo.getResource().getResourceType().getName()
-				.equalsIgnoreCase("video/youtube")) {
-			from = FROM_START_TIME;
-			to = FROM_STOP_TIME;
-		}
-		/*
-		 * if (resourceNarrationHtml.getHTML().length() > 0) { narration =
-		 * narrationTxtArea.getHTML(); collectionItemDo.setNarration(narration);
-		 * }
-		 */
-		if (fromTxt.getText().length() > 0 && toTxt.getText().length() > 0) {
-			from = fromTxt.getText();
-			fromTxt.setText(from);
-			fromTxt.getElement().setAttribute("alt", from);
-			fromTxt.getElement().setAttribute("title", from);
-			from = toTxt.getText();
-			toTxt.setText(from);
-			toTxt.getElement().setAttribute("alt", from);
-			toTxt.getElement().setAttribute("title", from);
-			String startTimeTxtMin = null;
-			String startTimeTxtSec = null;
-			if (fromTxt.getText().length() < 2) {
-				startTimeTxtMin = "0" + fromTxt.getText();
-
-			} else {
-				startTimeTxtMin = fromTxt.getText();
+		if((fromTxt.getText().trim().length()>0)&&(toTxt.getText().trim().length()>0)&&(EndTimeTxt1.getText().trim().length()>0)&&(EndTimeTxt2.getText().trim().length()>0)){
+			if (collectionItemDo.getResource().getResourceType().getName()
+					.equalsIgnoreCase("video/youtube")) {
+				from = FROM_START_TIME;
+				to = FROM_STOP_TIME;
 			}
-			if (toTxt.getText().length() < 2) {
-				startTimeTxtSec = "0" + toTxt.getText();
-			} else {
-				startTimeTxtSec = toTxt.getText();
+			/*
+			 * if (resourceNarrationHtml.getHTML().length() > 0) { narration =
+			 * narrationTxtArea.getHTML(); collectionItemDo.setNarration(narration);
+			 * }
+			 */
+			if (fromTxt.getText().length() > 0 && toTxt.getText().length() > 0) {
+				from = fromTxt.getText();
+				fromTxt.setText(from);
+				fromTxt.getElement().setAttribute("alt", from);
+				fromTxt.getElement().setAttribute("title", from);
+				from = toTxt.getText();
+				toTxt.setText(from);
+				toTxt.getElement().setAttribute("alt", from);
+				toTxt.getElement().setAttribute("title", from);
+				String startTimeTxtMin = null;
+				String startTimeTxtSec = null;
+				if (fromTxt.getText().length() < 2) {
+					startTimeTxtMin = "0" + fromTxt.getText();
+	
+				} else {
+					startTimeTxtMin = fromTxt.getText();
+				}
+				if (toTxt.getText().length() < 2) {
+					startTimeTxtSec = "0" + toTxt.getText();
+				} else {
+					startTimeTxtSec = toTxt.getText();
+				}
+				from = "00:" + startTimeTxtMin + ":" + startTimeTxtSec;
+				// collectionItemDo.setStart(from);
+	
 			}
-			from = "00:" + startTimeTxtMin + ":" + startTimeTxtSec;
-			// collectionItemDo.setStart(from);
-
-		}
-		if (EndTimeTxt1.getText().length() > 0
-				&& EndTimeTxt2.getText().length() > 0) {
-			to = EndTimeTxt1.getText();
-			EndTimeTxt1.setText(to);
-			EndTimeTxt1.getElement().setAttribute("alt", to);
-			EndTimeTxt1.getElement().setAttribute("title", to);
-			to = EndTimeTxt2.getText();
-			EndTimeTxt2.setText(to);
-			EndTimeTxt2.getElement().setAttribute("alt", to);
-			EndTimeTxt2.getElement().setAttribute("title", to);
-			String EndTimeTxtMin = null;
-			String EndTimeTxtSec = null;
-			if (EndTimeTxt1.getText().length() < 2) {
-				EndTimeTxtMin = "0" + EndTimeTxt1.getText();
-
-			} else {
-				EndTimeTxtMin = EndTimeTxt1.getText();
+			if (EndTimeTxt1.getText().length() > 0
+					&& EndTimeTxt2.getText().length() > 0) {
+				to = EndTimeTxt1.getText();
+				EndTimeTxt1.setText(to);
+				EndTimeTxt1.getElement().setAttribute("alt", to);
+				EndTimeTxt1.getElement().setAttribute("title", to);
+				to = EndTimeTxt2.getText();
+				EndTimeTxt2.setText(to);
+				EndTimeTxt2.getElement().setAttribute("alt", to);
+				EndTimeTxt2.getElement().setAttribute("title", to);
+				String EndTimeTxtMin = null;
+				String EndTimeTxtSec = null;
+				if (EndTimeTxt1.getText().length() < 2) {
+					EndTimeTxtMin = "0" + EndTimeTxt1.getText();
+	
+				} else {
+					EndTimeTxtMin = EndTimeTxt1.getText();
+				}
+				if (EndTimeTxt2.getText().length() < 2) {
+					EndTimeTxtSec = "0" + EndTimeTxt2.getText();
+				} else {
+					EndTimeTxtSec = EndTimeTxt2.getText();
+				}
+				to = "00:" + EndTimeTxtMin + ":" + EndTimeTxtSec;
+				// collectionItemDo.setStop(to);
 			}
-			if (EndTimeTxt2.getText().length() < 2) {
-				EndTimeTxtSec = "0" + EndTimeTxt2.getText();
-			} else {
-				EndTimeTxtSec = EndTimeTxt2.getText();
+	
+			if ((collectionItemDo.getResource().getResourceType().getName()
+					.equalsIgnoreCase("video/youtube"))
+					&& (!from.equals(FROM_START_TIME) || !to.equals(FROM_STOP_TIME))) {
+				this.youtubeValidation(narration, from, to);
+			}else {
+	
+				getPresenter().updateCollectionItem(
+						collectionItemDo.getCollectionItemId(), narrationData,
+						from, to);
+				// setEditMode(false);
+				lblCharLimit.setVisible(false);
+				resourceNarrationHtml.getElement().getStyle().clearWidth();
 			}
-			to = "00:" + EndTimeTxtMin + ":" + EndTimeTxtSec;
-			// collectionItemDo.setStop(to);
+			isEdited = false;
+		}else
+		{
+			actionVerPanelForUpdateTime.setVisible(true);
+			videoDisplay.setVisible(false);
+			narrationConatainer.setVisible(false);
+			editFieldsFloPanel.setVisible(true);
+			ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			fromTxt.setFocus(true);
+			UpdateTextMessage.setVisible(false);		
+			errorMsgLabel.setText("");
+			errorMsgLabel.setText(YOUTUBE_START_END_TIME);
 		}
-
-		if ((collectionItemDo.getResource().getResourceType().getName()
-				.equalsIgnoreCase("video/youtube"))
-				&& (!from.equals(FROM_START_TIME) || !to.equals(FROM_STOP_TIME))) {
-			this.youtubeValidation(narration, from, to);
-		}else {
-
-			getPresenter().updateCollectionItem(
-					collectionItemDo.getCollectionItemId(), narrationData,
-					from, to);
-			// setEditMode(false);
-			lblCharLimit.setVisible(false);
-			resourceNarrationHtml.getElement().getStyle().clearWidth();
-		}
-		isEdited = false;
-
 	}
 	/**
 	 * Update the collection item meta data
@@ -1950,8 +1981,10 @@ public class ShelfCollectionResourceChildView extends
 								public void onSuccess(String youtubeInfo) {
 									int totalVideoLengthInMin;
 									if(youtubeInfo!=null){
+									
 									totalVideoLengthInMin = Integer
 											.parseInt(youtubeInfo);
+									
 									String[] startSplitTimeHours = start
 											.split(":");
 									String[] endSplitTimeHours = stop

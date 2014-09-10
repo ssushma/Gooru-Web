@@ -166,6 +166,34 @@ public class SearchUiUtil{
 			flowPanel.add(toolTipUc);
 		}
 	}
+	
+	public static void renderMetaData(FlowPanel flowPanel, List<String> datas) {
+		
+		// this method is using to display publisher
+		if (datas == null) {
+			return;
+		}
+		
+		renderMetaData(flowPanel, datas.size() > 0 ? i18n.GL0566()+datas.get(0) : null, null, 0);
+		FlowPanel toolTipwidgets = new FlowPanel();
+		FlowPanel toolTipwidget1 = new FlowPanel();
+		for (int count = 0; count < datas.size(); count++) {
+			Label label = new Label(datas.get(count));
+			label.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().moreMetaLbl());
+			if(count==0){
+				toolTipwidget1.add(label);
+			}else{
+				toolTipwidgets.add(label);
+			}
+			
+		}
+		if (datas != null && datas.size() > 1) {
+			Integer moreCount = datas.size() - 1;
+			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreCount), toolTipwidgets);
+			toolTipUc.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().blueLinkPad());
+			flowPanel.add(toolTipUc);
+		}
+	}
 
 	public static Label renderMetaData(FlowPanel flowPanel, String data, String suffix, int wrapLength) {
 		if (suffix != null || StringUtil.hasValidString(data)) {

@@ -967,10 +967,10 @@ button.LoginText {
 
 .privacyContainer{
 	margin: 0px;
-	text-align: center;
+	text-align: left;
 	/* margin-bottom: 10px; */
 	padding: 0px;
-	line-height: 70%;
+	line-height: 66%;
 }
 
 .privacyCustomizeContainer{

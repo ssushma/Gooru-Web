@@ -39,9 +39,12 @@ import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.WelcomeClassView;
+import org.ednovo.gooru.client.mvp.classpages.classsetup.ClassSetupPresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter.IsEditClasspageProxy;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshAssignmentsListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageImageEvent;
+import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupPresenter;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
@@ -101,8 +104,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	private SimpleAsyncCallback<AssignmentsListDo> assignmentsListAsyncCallback;
 	
-//	private ShelfListPresenter shelfListPresenter;
-	
 	private SimpleAsyncCallback<Map<String, String>> shareUrlGenerationAsyncCallback;
 	
 	private SimpleAsyncCallback<CollectionDo> updateAssignmentAsyncCallback;
@@ -113,7 +114,13 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	private Integer limit=5;
 	private static final Integer DEFAULT_LIMITVALUE=5;
 	
-	ClassListPresenter classlistPresenter;
+	private ClassListPresenter classlistPresenter;
+	
+	private ClassSetupPresenter classSetupPresenter;
+	
+	private UnitSetupPresenter unitSetupPresenter;
+	
+	private UnitAssignmentPresenter unitAssignmentPresenter;
 	
 	public static final  Object CLASSLIST_SLOT = new Object();
 	
@@ -135,15 +142,16 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	//ShelfListPresenter shelfTabPresenter
 	@Inject
-	public EditClasspagePresenter(IsEditClasspageView view, IsEditClasspageProxy proxy, AddAssignmentContainerPresenter assignmentContainer,ImageUploadPresenter imageUploadPresenter, ClassListPresenter classlistPresenter) {
+	public EditClasspagePresenter(IsEditClasspageView view, IsEditClasspageProxy proxy, AddAssignmentContainerPresenter assignmentContainer,ImageUploadPresenter imageUploadPresenter, ClassListPresenter classlistPresenter,
+								ClassSetupPresenter classSetupPresenter, UnitSetupPresenter unitSetupPresenter , UnitAssignmentPresenter unitAssignmentPresenter) {
 		super(view, proxy);
-		
 		getView().setUiHandlers(this);
-		
-//		this.shelfListPresenter = shelfTabPresenter;
 		this.assignmentContainer = assignmentContainer;
 		this.imageUploadPresenter=imageUploadPresenter;		
 		this.classlistPresenter=classlistPresenter;
+		this.classSetupPresenter=classSetupPresenter;
+		this.unitSetupPresenter=unitSetupPresenter;
+		this.unitAssignmentPresenter=unitAssignmentPresenter;
 		addRegisteredHandler(AssignmentEvent.TYPE, this);
 		addRegisteredHandler(RefreshAssignmentsListEvent.TYPE, this);
 		addRegisteredHandler(UpdateClasspageImageEvent.TYPE, this);
@@ -243,14 +251,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		});
 		
 	}
-	/*@Override
-	private void generateShareLink(String classpageId){
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("type", AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken());
-		AppClientFactory.getInjector().getSearchService().getShortenShareUrl(classpageId, params, getShareShortenUrlAsyncCallback());
-	}*/
 	
-
 	@Override
 	public void generateShareLink(String classpageId) {
 		try{
@@ -264,8 +265,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	@Override
 	protected void onReset() {
-//		setInSlot(TYPE_SHELF_TAB, shelfListPresenter);
-		
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.TEACH_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
@@ -406,19 +405,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 					});
 					EditClasspagePresenter.this.classpageDo=classpageDo;
 					if(classpageDo.getPermissions()!=null&&classpageDo.getPermissions().contains("edit")&& classpageDo.getClasspageId() != null){
-						offset=0;
-						limit=5;
-						generateShareLink(classpageDo.getClasspageId());
-						getView().setSortingOrderInDropdown(sortingOrder);
-						if(sortingOrder!=null&&(sortingOrder.equals("earliest")||sortingOrder.equals("latest"))){
-							getAssignmentsCount(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder);
-						}else{
-							getClasspageItems(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder,0);
-						}
-						getAssignmentsProgress(classpageId, "0", "20");	// to display assignment progress.
                         getView().setClasspageData(classpageDo);
-                        classlistPresenter.setClassPageDo(classpageDo);
-                        setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
+                        showTabWidget(tab);
 						triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
 					} else {
 						ErrorPopup error = new ErrorPopup(i18n.GL0341());
@@ -428,16 +416,32 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 				}
 			});
 		}else{
-			getView().setSortingOrderInDropdown(sortingOrder);
-			getView().hideNoAssignmentsMessagePanel();
-			if(sortingOrder!=null&&(sortingOrder.equals("earliest")||sortingOrder.equals("latest"))){
-				getAssignmentsCount(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder);
-			}else{
-				getClasspageItems(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder,0);
-			}
+			 showTabWidget(tab);
 		}
 	}
-	
+	public void showTabWidget(String tabValue){
+		System.out.println("tab value...");
+		 if(tab!=null&&tab.equalsIgnoreCase("classList")){
+	     	classlistPresenter.setClassPageDo(classpageDo);
+	     	setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
+	     }else if(tab!=null&&tab.equalsIgnoreCase("reports")){
+	     	
+	     }else if(tab!=null&&tab.equalsIgnoreCase("unitsetup")){
+	    	 setInSlot(CLASSLIST_SLOT, unitSetupPresenter,false);
+	     }
+	     else if(tab!=null&&tab.equalsIgnoreCase("unitdetails")){
+	    	 System.out.println("tab value... 1");
+	    	 unitAssignmentPresenter.setClasspageData(classpageDo);
+	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
+	     }
+	     else {
+
+	    	 System.out.println("tab value... 2");
+	    	 unitAssignmentPresenter.setClasspageData(classpageDo);
+	    	 
+	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
+	     }
+	}
 	public Integer getOffsetValue(){
 		String pageNum=getPlaceManager().getRequestParameter("pageNum","1");
 		int pageNumber=0;
@@ -588,7 +592,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			@Override
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
 				if(classpageItemsList!=null){
-					getView().displayAssignmentPath(classpageItemsList);
 					//getClasspage();
 				}
 			}

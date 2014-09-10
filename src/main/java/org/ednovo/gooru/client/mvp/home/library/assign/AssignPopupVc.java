@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
@@ -60,7 +61,6 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -227,22 +227,14 @@ public abstract class AssignPopupVc extends PopupPanel {
 				toAssignStr = result.getGooruOid();
 
 				if (result.getGooruOid() != null) {
-
 					collectionDoGlobal = result;
-
 					if (AppClientFactory.isAnonymous()) {
 						hideContainers();
-
 					} else {
 						loadListContainers();
 
 					}
-		
-
 				}
-
-
-				
 				loadingImageLabel.setVisible(false);
 				popupContentAssign.setVisible(true);
 
@@ -403,7 +395,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		lblLoginPopupTitle.getElement().setAttribute("alt",i18n.GL0520());
 		lblLoginPopupTitle.getElement().setAttribute("title",i18n.GL0520());
 		
-		donothaveAC.setText(i18n.GL0634()+" ");
+		donothaveAC.getElement().setInnerHTML(i18n.GL0634()+"&nbsp;");
 		donothaveAC.getElement().setId("lblDonothaveAC");
 		donothaveAC.getElement().setAttribute("alt",i18n.GL0634()+" ");
 		donothaveAC.getElement().setAttribute("title",i18n.GL0634()+" ");
@@ -651,31 +643,31 @@ public abstract class AssignPopupVc extends PopupPanel {
 	}
 
 	public void generateShareLink(final String classpageId, final String collectionTitle, final String collectionDesc) {
-
-		final Map<String, String> params = new HashMap<String, String>();
+		Map<String, String> params = new HashMap<String, String>();
+		String classpageItemId=null;
+		String currentPlaceToken=AppClientFactory.getCurrentPlaceToken();
 		params.put("type", "");
+		if(currentPlaceToken!=null&&currentPlaceToken.equals(PlaceTokens.COLLECTION_PLAY)){
+			String classpageCollectionItemId=AppClientFactory.getPlaceManager().getRequestParameter("cid", null);
+			String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
+			if(page!=null&&(page.equalsIgnoreCase("teach")||page.equalsIgnoreCase("study"))&&classpageCollectionItemId!=null){
+				classpageItemId=classpageCollectionItemId;
+				params.put("type", PlaceTokens.COLLECTION_PLAY);
+			}
+		}
 		params.put("shareType", "");
-		//AppClientFactory.getInjector().getSearchService().getShortenShareUrl(classpageId, params, getShareShortenUrlAsyncCallback());
-		AppClientFactory
-				.getInjector()
-				.getSearchService()
-				.getShortenShareUrlforAssign(classpageId, params,
-						new SimpleAsyncCallback<Map<String, String>>() {
-							@Override
-							public void onSuccess(Map<String, String> result) {
-								decodeRawUrl = result.get("decodeRawUrl");
-								shareLinkTxtBox.setText(decodeRawUrl);
-								shareLinkTxtBox.getElement().setAttribute("alt",decodeRawUrl);
-								shareLinkTxtBox.getElement().setAttribute("title",decodeRawUrl);
-								bitlyLink = result.get("shortenUrl");
-								rawUrl = result.get("rawUrl");
-								addShareWidgetInPlay(decodeRawUrl, rawUrl,
-										collectionTitle,
-										collectionDesc,
-										bitlyLink, "",
-										"public");
-							}
-						});
+		AppClientFactory.getInjector().getSearchService().getShortenShareUrlforAssign(classpageId, params,classpageItemId, new SimpleAsyncCallback<Map<String, String>>() {
+			@Override
+			public void onSuccess(Map<String, String> result) {
+				decodeRawUrl = result.get("decodeRawUrl");
+				shareLinkTxtBox.setText(decodeRawUrl);
+				shareLinkTxtBox.getElement().setAttribute("alt",decodeRawUrl);
+				shareLinkTxtBox.getElement().setAttribute("title",decodeRawUrl);
+				bitlyLink = result.get("shortenUrl");
+				rawUrl = result.get("rawUrl");
+				addShareWidgetInPlay(decodeRawUrl, rawUrl,collectionTitle,collectionDesc,bitlyLink, "","public");
+			}
+		});
 	}
 
 	public void addShareWidgetInPlay(String link, String rawUrl, String title,

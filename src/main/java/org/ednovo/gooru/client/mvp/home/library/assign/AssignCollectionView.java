@@ -934,10 +934,10 @@ IsCollectionAssign {
 		lblClasspages.getElement().setAttribute("alt",i18n.GL0102());
 		lblClasspages.getElement().setAttribute("title",i18n.GL0102());
 		
-		lblClasspagesUnits.setText(i18n.GL2173());
+		lblClasspagesUnits.setText(i18n.GL2175());
 		lblClasspagesUnits.getElement().setId("lblClasspagesUnit");
-		lblClasspagesUnits.getElement().setAttribute("alt",i18n.GL2173());
-		lblClasspagesUnits.getElement().setAttribute("title",i18n.GL2173());
+		lblClasspagesUnits.getElement().setAttribute("alt",i18n.GL2175());
+		lblClasspagesUnits.getElement().setAttribute("title",i18n.GL2175());
 		
 		
 		btnAssign.setText(i18n.GL0104());

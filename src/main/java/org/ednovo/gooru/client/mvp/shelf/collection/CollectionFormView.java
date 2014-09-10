@@ -206,7 +206,9 @@ public class CollectionFormView extends
 		hideFromPopup(true);
 		appPopUp = new AppPopUp();
 		appPopUp.setContent(TITLE_THIS_COLLECTION,uiBinder.createAndBindUi(this));
-		getAccountTypeId();
+		if(!(AppClientFactory.isAnonymous())){
+			getAccountTypeId();
+		}
 		mandatoryErrorLbl.setVisible(false);
 		isCheckedValue=false;
 		publicShareFloPanel.setVisible(false);
