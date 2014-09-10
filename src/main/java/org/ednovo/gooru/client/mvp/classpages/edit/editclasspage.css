@@ -707,7 +707,7 @@ margin-left:-1px;
 .teachTab {
 	text-align: center;
 	padding-bottom: 20px;
-	width: 99%;
+	width: 100%;
 	padding-top: 20px;
 	padding-left: 10px;
 	background: #FFF;
@@ -1326,6 +1326,9 @@ margin-bottom: -10px;
 
 .studentList{
 	background: #fff;
+	height: auto;
+	min-height: 24px;
+	max-height: 97px;
 }
 
 .studentListContainer1{
@@ -1359,7 +1362,7 @@ margin-bottom: -10px;
 }
 
 .student{
-	width: 90% !important;
+	width: 93% !important;
 	height: 16px !important;
 	font-size: 13px !important;
 	color: #515151 !important;
@@ -1377,13 +1380,16 @@ margin-bottom: -10px;
 .scrollPanel{
 	background-color: white;
 	z-index: 9;
-	min-height: 50px;
+	min-height: 24px;
 	max-height: 97px;
-	overflow-y: auto;
+	overflow-x: hidden !important;
+	overflow-y: auto !important;
 	position: absolute !important;
 	width: 153px;
+	border: 1px solid #ccc;
 }
 
 #pnlMainContainer{
 	float:left;
+	width: 99%;
 }

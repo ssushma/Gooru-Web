@@ -6,6 +6,31 @@
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="playerStyle" src="classsetup.css" />
 	<g:FlowPanel> 
-		<g:Label>Class setup page...</g:Label>
+		<g:HTMLPanel styleName="{playerStyle.unitDetails}">
+
+<g:HTMLPanel styleName="{playerStyle.containerTeacher}">
+
+
+<g:HTMLPanel styleName="col-xs-12 {playerStyle.gerybg}">
+
+
+<g:HTMLPanel styleName="text-center {playerStyle.headerFont}">Class Setup</g:HTMLPanel>
+<g:HTMLPanel styleName="text-center {playerStyle.ptag}">Setup your class by adding units</g:HTMLPanel>
+
+</g:HTMLPanel>
+
+<g:VerticalPanel ui:field="unitwidget"></g:VerticalPanel>
+
+
+<g:HTMLPanel styleName="text-center">
+<g:Button ui:field="addUnitBtn" styleName="primary {playerStyle.btnstyles}"> Add Unit</g:Button>
+</g:HTMLPanel>
+
+
+</g:HTMLPanel>
+
+
+
+</g:HTMLPanel>
 	</g:FlowPanel>
 </ui:UiBinder>

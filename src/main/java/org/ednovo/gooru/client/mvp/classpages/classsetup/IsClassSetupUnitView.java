@@ -22,31 +22,10 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+package org.ednovo.gooru.client.mvp.classpages.classsetup;
+import org.ednovo.gooru.client.child.IsChildView;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.shared.model.content.ClasspageDo;
 
-public interface UnitAssignmentUiHandlers extends BaseUiHandlers{
+public interface IsClassSetupUnitView extends IsChildView<ClassSetupUnitPresenter>{
 
-	/**
-	 * @function setClasspageData 
-	 * 
-	 * @created_date : 09-Sep-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @param classpageDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
-	
-	void setClasspageData(ClasspageDo classpageDo);
 }

@@ -22,12 +22,36 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+package org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 
-public interface UnitAssignmentUiHandlers extends BaseUiHandlers{
+public interface PersonalizeUnitUiHandlers extends BaseUiHandlers {
+
+	/**
+	 * @function getStudentsList 
+	 * 
+	 * @created_date : 09-Sep-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param offSet
+	 * @param limit
+	 * @param type
+	 * @param classCode
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void getStudentsList(int offSet, int limit, String type, String classCode);
 
 	/**
 	 * @function setClasspageData 
@@ -49,4 +73,24 @@ public interface UnitAssignmentUiHandlers extends BaseUiHandlers{
 	*/
 	
 	void setClasspageData(ClasspageDo classpageDo);
+
+	/**
+	 * @function getList 
+	 * 
+	 * @created_date : 09-Sep-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void getList();
 }

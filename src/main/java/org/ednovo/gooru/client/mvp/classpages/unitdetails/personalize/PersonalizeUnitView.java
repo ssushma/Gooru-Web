@@ -22,88 +22,60 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.classsetup;
+package org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize;
+
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
-import org.ednovo.gooru.client.mvp.shelf.ShelfUiHandlers;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.AssignmentGoal.AssignmentGoalView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> implements IsClassSetupView{
 
-	@UiField VerticalPanel unitwidget;
-	@UiField Button addUnitBtn;
-	
-	private HandlerRegistration addUnitClickHandler;
-	
-	private static ClassSetupViewUiBinder uiBinder = GWT.create(ClassSetupViewUiBinder.class);
 
-	interface ClassSetupViewUiBinder extends UiBinder<Widget, ClassSetupView> {
-		
+/**
+ * 
+ * @fileName : PersonalizeUnitView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 09-Sep-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
+public class PersonalizeUnitView extends
+		BaseViewWithHandlers<PersonalizeUnitUiHandlers> implements
+		IsPersonalizeUnitView {
+
+	private static PersonalizeUnitViewUiBinder uiBinder = GWT
+			.create(PersonalizeUnitViewUiBinder.class);	
+	
+	@UiField HTMLPanel panelPersonalizeContainer;
+
+	interface PersonalizeUnitViewUiBinder extends
+			UiBinder<Widget, PersonalizeUnitView> {
+
 	}
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	@Inject
-	public ClassSetupView(){
+	public PersonalizeUnitView() {
 		setWidget(uiBinder.createAndBindUi(this));		
-		
-		if(addUnitClickHandler!=null) {
-			addUnitClickHandler.removeHandler();
-		}
-		addUnitClickHandler=addUnitBtn.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-			getUiHandlers().setUnit();
-				
-			}
-			
-		});
 	}
 
-	public VerticalPanel getUnitwidget() {
-		return unitwidget;
-	}
-
-	public void setUnitwidget(VerticalPanel unitwidget) {
-		this.unitwidget = unitwidget;
-	}
-	
 	@Override
-	public void setContent() {
-	//Window.alert("getUnitwidget().getWidgetCount()::"+getUnitwidget().getWidgetCount());
-		 ClassSetupUnitView cv = new ClassSetupUnitView(getUnitwidget().getWidgetCount()) {
-			
-			@Override
-			public void deleteItem(int sequenceNum) {
-				try
-				{
-				getUnitwidget().remove(getUnitwidget().getWidgetIndex(this));
-				}
-				catch(Exception ex)
-				{
-					
-				}
-				
-			}
-		};
-		 getUnitwidget().add(cv);
+	public void displayAssignmentsGoals(StudentsAssociatedListDo result){
+		for (int k=0;k<result.getSearchResults().size();k++){
+			panelPersonalizeContainer.add(new AssignmentGoalView(result.getSearchResults().get(k)));
+		}
 	}
-	
-
-	
-	
-	
 }
