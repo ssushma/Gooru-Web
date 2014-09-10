@@ -37,6 +37,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
@@ -183,5 +184,20 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void v2GetPathwaysOptimized(String classpageId, String limit,
 			String offSet, AsyncCallback<ClasspageListDo> callback);
+	
+	public void v2GetPathwaysCompleteDetails(String classpageId, String limit,
+			String offSet, AsyncCallback<ClasspageListDo> callback);
+	
+	public void reOrderPathwaysInaClass(String pathwayId, int newPosSequence, AsyncCallback<ClasspageListDo> callback);
+	
+	void v2CreatePathwayForAClass(String classpageId,
+			String pathwayTitle, AsyncCallback<CollectionDo> callback);
+	
+	void v2CreatePathwayForAClassWithAssignmentItem(String classpageId,
+			String pathwayTitle, String collectionId,
+			CollectionItemDo collectionItemObject,AsyncCallback<AssignmentDo> callback);
+	
+	void v2UpdatePathwayById(String classpageId, String pathwayId,
+			String pathwayTitle, AsyncCallback<CollectionDo> callback);
 	
 }

@@ -37,6 +37,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
@@ -488,4 +489,20 @@ public interface ClasspageService extends BaseService {
 
 	ClasspageListDo v2GetPathwaysOptimized(String classpageId, String limit,
 			String offSet) throws GwtException;
+
+	ClasspageListDo v2GetPathwaysCompleteDetails(String classpageId,
+			String limit, String offSet) throws GwtException;
+
+	ClasspageListDo reOrderPathwaysInaClass(String pathwayId, int newPosSequence);
+
+	CollectionDo v2CreatePathwayForAClass(String classpageId,
+			String pathwayTitle) throws GwtException;
+
+	AssignmentDo v2CreatePathwayForAClassWithAssignmentItem(String classpageId,
+			String pathwayTitle, String collectionId,
+			CollectionItemDo collectionItemObject) throws GwtException;
+
+	CollectionDo v2UpdatePathwayById(String classpageId, String pathwayId,
+			String pathwayTitle) throws GwtException;
+
 }
