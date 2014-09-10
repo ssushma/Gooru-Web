@@ -181,4 +181,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void v2ChangeAssignmentSequence(String classpageId, String classpageAssignmentId, int sequence, AsyncCallback<Void> callback);
 	
+	public void v2GetPathwaysOptimized(String classpageId, String limit,
+			String offSet, AsyncCallback<ClasspageListDo> callback);
+	
 }

@@ -485,4 +485,7 @@ public interface ClasspageService extends BaseService {
 	
 	public void v2ChangeAssignmentSequence(String classpageId,
 			String classpageAssignmentId, int sequence) throws GwtException, ServerDownException;
+
+	ClasspageListDo v2GetPathwaysOptimized(String classpageId, String limit,
+			String offSet) throws GwtException;
 }
