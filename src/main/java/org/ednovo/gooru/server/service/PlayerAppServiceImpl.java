@@ -1335,6 +1335,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			}else{
 				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_RATINGS_REVIEWS,resourceId,getLoggedInSessionToken(),Integer.toString(offSet),limit);
 			}
+			System.out.println("--- url -- "+url);
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonObject = jsonResponseRep.getJsonRepresentation().getJsonObject();
 		} catch (Exception e) {

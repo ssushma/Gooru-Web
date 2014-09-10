@@ -222,3 +222,258 @@
 	height:1px;
 }
 
+
+							/*************** Unit Setup Css *****************/
+
+
+
+.unitDetails .containerTeacher{
+	background:#ffffff;
+	border-top:1px solid #CCCCCC;
+}
+
+.unitDetails .containerTeacher .leftPanel{
+	border-right:1px solid #EFEFEF;
+	padding-top:15px;
+	padding-bottom:15px;
+	padding-left:0;
+	padding-right:0;
+	
+
+    width: 13.6667% !important;
+
+}
+.unitDetails .containerTeacher .leftPanel hr{
+	margin:-1px auto -1px;
+	width:70%;
+	z-index:9;
+	position:relative;
+}
+.unitDetails .containerTeacher .rightPanel{
+
+	padding-top:30px;
+	padding-bottom:30px;
+    width: 86.3333% !important;
+}
+
+.gerybg{
+		background:#fafafa;
+		padding:8px 0;
+}
+
+
+.UnitSetupMain .uniSetup{
+	
+}
+	
+.UnitSetupMain  .uniSetup a{
+	padding:40px 0 0 0;
+}
+
+
+.uniRequired{
+	font-size:10px;
+	line-height:22px;
+}
+.uniRequired .bubble{
+	width:20px;
+	height:20px;
+	background:#B9BBCA;
+	border-radius:50% 50%;
+	-webkit-border-radius:50% 50%;
+	-moz-border-radius:50% 50%;
+	vertical-align:middle;
+	display:inline-block;
+	
+
+}
+.uniRequired .bubbleStyle{
+	width:20px;
+	height:20px;
+	background:#B9BBCA url(../images/bubble-pattren1.png) repeat;
+	border-radius:50% 50%;
+	-webkit-border-radius:50% 50%;
+	-moz-border-radius:50% 50%;
+	vertical-align:middle;
+	display:inline-block;
+	
+
+}
+
+.setupMain{
+	background:#fff;
+	padding-left:0 !important;
+	padding-right:0 !important;
+}
+
+
+.classMenuBlock{
+	width:100%;
+	float:left;
+	position:relative;
+}
+
+.classSetupMenu{
+	float: left;
+    padding:0 0;
+    width: 100%;
+	border-top:1px solid #ffffff;
+	border-bottom:1px solid #ffffff;
+}
+
+
+.classLeftMenu{
+	width:135px;
+	float:left;
+	background:#ffffff;
+	border-left:5px solid #ffffff;
+}
+
+
+.classLeftMenu .blueNumaric{
+	color: #0073bc;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    padding-right: 12px;
+    vertical-align: middle;
+	margin:0 0 0 20px;
+}
+
+.classLeftMenu .unitName{
+    color: #666666;
+    display: inline-block;
+    font-size: 12px;
+	vertical-align:middle;
+}
+
+.numaricName{
+	padding:21px 0;
+}
+
+
+.HoverSetup{ 
+	display: none;
+}
+
+.classMenuBlock:hover .HoverSetup{
+	display : block;
+	position:absolute;
+	top:0;
+}
+
+.HoverSetup{
+	border-top:1px solid #eeeeee;
+	border-bottom:1px solid #eeeeee;
+}
+		
+.HoverSetup .classLeftMenu{
+	border-left:5px solid #76afda;
+	background:#eeeeee;
+}
+		
+.HoverSetup .detailsBtn{
+	background:#76afda;
+	padding:12px 0;
+	color:#ffffff;
+	text-align:center;
+}
+
+.HoverSetup .detailsBtn a{
+	color:#ffffff;
+	display:block;
+}
+
+.classDetailsMain{
+	width:725px;
+	float:left;
+	padding:10px 0;
+}
+		
+.classDetailsMain .classPic{
+	float:left;		
+	padding:0 3px;
+	position:relative;
+	width:62px;
+	height:80px;
+}
+
+.classDetailsMain .classPic .pic{
+	border-left:3px solid #77afde;
+	width:63px;
+	height:46px;
+}
+		
+.classDetailsMain .classBubble{
+	 background: none repeat scroll 0 0 #b9bbca;
+     border-radius: 50%;
+     color: #ffffff;
+     display: inline-block;
+     font-size: 14px;
+     font-weight: bold;
+     height: 30px;
+     left: 27%;
+     line-height: 30px;
+     position: absolute;
+     text-align: center;
+     top: 27px;
+     vertical-align: middle;
+     width: 30px;
+}
+		
+.classDetailsMain .daysCount{
+	display: block;
+    padding: 25px 0 5px;
+    position: relative;
+    text-align: center;
+}
+		
+
+.classDetailsMain .nextArrow{
+	display:inline-block;
+	margin:35px 0 35px 10px;
+}
+
+
+.classButtons{
+	float: left;
+    width: 113px;
+	padding:10px 0;
+}
+		
+.single{
+	margin:35px 0;
+}
+
+.textHeading{
+	text-align: center;
+	font-size: 22px;
+	font-weight: 600;
+}
+
+.textRight{
+	text-align: right;
+}
+
+.textSubHeading{
+	text-align: center;
+	font-size: 14px;
+}
+
+.classSetupLbl{
+	font-size: 14px;
+	color: #1076BA;
+	margin-top: -14px;
+	margin-left: 8px;
+}
+
+.unitdetailsLbl{
+	font-size: 14px;
+	color: #1076BA;
+	margin-right: 26px;
+	margin-bottom: -17px;
+}
+
+.textCenter{
+	text-align: center;
+}

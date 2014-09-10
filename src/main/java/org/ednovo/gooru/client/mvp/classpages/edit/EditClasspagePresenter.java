@@ -435,10 +435,12 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
 	     }
 	     else {
-	    	 System.out.println("tab value... 2");
+	    	 setInSlot(CLASSLIST_SLOT, unitSetupPresenter,false);
+
+	    	 /*System.out.println("tab value... 2");
 	    	 unitAssignmentPresenter.setClasspageData(classpageDo);
 	    	 
-	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
+	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);*/
 	     }
 	}
 	public Integer getOffsetValue(){

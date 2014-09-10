@@ -24,9 +24,15 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> implements IsUnitSetupView{
@@ -39,10 +45,21 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-
+	
+	@UiField PPanel subHeading;
+	@UiField VerticalPanel unitAssignmentWidgetContainer;
+	
+	UnitsAssignmentWidgetView unitsAssignmentWidgetView = new UnitsAssignmentWidgetView();
+	
 	@Inject
 	public UnitSetupView(){
-		setWidget(uiBinder.createAndBindUi(this));		
+		setWidget(uiBinder.createAndBindUi(this));	
+		setIdAndText();
+	}
+
+	private void setIdAndText() {
+		subHeading.getElement().setInnerText("Setup your units by adding assignments");
+		unitAssignmentWidgetContainer.add(unitsAssignmentWidgetView);
 	}
 	
 }
