@@ -49,7 +49,6 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	@UiField PPanel subHeading;
 	@UiField VerticalPanel unitAssignmentWidgetContainer;
 	
-	UnitsAssignmentWidgetView unitsAssignmentWidgetView = new UnitsAssignmentWidgetView();
 	
 	@Inject
 	public UnitSetupView(){
@@ -59,7 +58,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 
 	private void setIdAndText() {
 		subHeading.getElement().setInnerText("Setup your units by adding assignments");
-		unitAssignmentWidgetContainer.add(unitsAssignmentWidgetView);
+		unitAssignmentWidgetContainer.add(new UnitsAssignmentWidgetView(9)); 
 	}
 	
 }
