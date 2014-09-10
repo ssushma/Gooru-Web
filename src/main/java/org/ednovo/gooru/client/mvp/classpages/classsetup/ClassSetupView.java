@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.classpages.classsetup;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.shelf.ShelfUiHandlers;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -37,6 +38,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -44,6 +46,8 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 
 	@UiField VerticalPanel unitwidget;
 	@UiField Button addUnitBtn;
+	@UiField PPanel unitSetupContainer;
+	@UiField Label unitSetupClick;
 	
 	private HandlerRegistration addUnitClickHandler;
 	
@@ -70,6 +74,14 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 				
 			}
 			
+		});
+		unitSetupClick.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().OnUnitSetupClick();
+				
+			}
 		});
 	}
 

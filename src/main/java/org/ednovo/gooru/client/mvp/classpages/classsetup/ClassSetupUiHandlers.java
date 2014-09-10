@@ -36,5 +36,7 @@ public interface ClassSetupUiHandlers extends BaseUiHandlers{
 
 	void deletePathway(String pathwayId);
 
+	void OnUnitSetupClick();
+
 
 }
