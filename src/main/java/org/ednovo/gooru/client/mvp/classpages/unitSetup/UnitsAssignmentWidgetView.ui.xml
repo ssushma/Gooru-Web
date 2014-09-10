@@ -4,7 +4,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="style" src="unitsetup.css" />
 
-	<g:HTMLPanel styleName="{style.classMenuBlock}">
+	<g:HTMLPanel styleName="{style.classMenuBlock} pathwayContainer">
 		<!-- <g:HTMLPanel styleName="{style.classSetupMenu}">
 			<g:HTMLPanel styleName="{style.classLeftMenu}">
 				<g:HTMLPanel styleName="{style.numaricName}">
