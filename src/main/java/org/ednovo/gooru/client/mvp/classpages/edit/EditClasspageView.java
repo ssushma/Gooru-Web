@@ -37,6 +37,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
@@ -53,6 +54,8 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -170,6 +173,12 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	private CollectionsView assignmentTabView;
 
 	private int pageSize = 5;
+	
+	private int studentPageSize = 20;
+	
+	private int studentResultSize = 0;
+	
+	private int studentOffSet=0;
 
 	private int pageNum = 0;
 
@@ -395,6 +404,26 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		StringUtil.setAttributes(classCodeTextBox, true);
 		questionMarkPanel.getElement().setId("pnlQuestionMark");
 		mainContainer.getElement().setId("pnlMainContainer");
+		
+		
+		
+		
+		spanelSutdentsList.addScrollHandler(new ScrollHandler() {
+
+			@Override
+			public void onScroll(ScrollEvent event) {
+				if (spanelSutdentsList.getVerticalScrollPosition() == spanelSutdentsList
+						.getMaximumVerticalScrollPosition()
+						&& studentResultSize >= studentPageSize) {
+					int tmpOffSet = studentOffSet;
+					studentOffSet += studentPageSize;
+					
+					getClassStudentsList(classpageDo.getClasspageCode());
+					
+				}
+			}
+		});
+		
 	}
 
 	
@@ -505,8 +534,6 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	public void setClasspageData(ClasspageDo classpageDo){
 		this.classpageDo=classpageDo;
 		
-
-		
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(classpageDo.getClasspageId()));
@@ -519,6 +546,10 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		
 		classCodeTextBox.setReadOnly(true);
 		classCodeTextBox.addClickHandler(new ClassCodeTextCopy());
+		
+		
+		//Get list of students and list in dropdown
+		getClassStudentsList(classpageDo.getClasspageCode()!=null ? classpageDo.getClasspageCode().toUpperCase() : "");
 
 		final Image imgNotFriendly = new Image("images/mos/questionmark.png");
 		imgNotFriendly.getElement().getStyle().setLeft(97.8, Unit.PCT);
@@ -539,6 +570,83 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		//txtClasspageCodeShare.setText(classpageDo.getClasspageCode().toUpperCase());
 	}
 	
+	/**
+	 * @function getClassStudentsList 
+	 * 
+	 * @created_date : 09-Sep-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param string
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	private void getClassStudentsList(String classCode) {
+		String statusType = "active";
+		
+		AppClientFactory.getInjector().getClasspageService().getActiveAssociatedStudentListByCode(classCode, studentOffSet,  studentPageSize,  statusType, new SimpleAsyncCallback<StudentsAssociatedListDo>() {
+			@Override
+			public void onSuccess(StudentsAssociatedListDo result) {
+				//Display all members in active list.
+				studentResultSize = result.getTotalHitCount();
+				displayStudentList(result);
+			}
+		});
+	}
+	/**
+	 * 
+	 * @function displayStudentList 
+	 * 
+	 * @created_date : 09-Sep-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	private void displayStudentList(StudentsAssociatedListDo result) {
+		for (int i=0; i<result.getSearchResults().size();i++){
+			String studentName = result.getSearchResults().get(i).getUsername().trim();
+			String studentId = result.getSearchResults().get(i).getGooruUid().trim();
+			final Label student = new Label();
+			student.setText(studentName);
+			
+			student.setStyleName(res.css().student());
+			
+			student.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					String selectedStudentId = student.getElement().getAttribute("id"); 
+					System.out.println("selectedStudentId : "+selectedStudentId);
+					lblSelected.setText(student.getText());
+					spanelSutdentsList.setVisible(false);
+					// Need to write logic to navigate to student page.
+				}
+			});
+			
+			StringUtil.setAttributes(student.getElement(), studentId, studentName, studentName);
+			
+			panelSutdentsList.add(student);
+		}
+	}
+
 	public class ClassCodeTextCopy implements ClickHandler{
 
 		@Override
@@ -582,7 +690,6 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 			public void resetPagination(){
 				//restingPagination();
 			}
-			@Override
 			public void updateCollectionsView(){
 				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 				int pageNumber=1;

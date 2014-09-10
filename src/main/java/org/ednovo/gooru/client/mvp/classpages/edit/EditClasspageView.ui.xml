@@ -22,7 +22,7 @@
 						</g:HTMLPanel>
 						<g:ScrollPanel ui:field="spanelSutdentsList" styleName="{res.css.scrollPanel}">
 						    <g:HTMLPanel styleName="{res.css.studentList}" ui:field="panelSutdentsList">
-								<g:Label styleName="{res.css.student}">Student Name...</g:Label>
+								
 							</g:HTMLPanel>
 						</g:ScrollPanel>
 					</g:HTMLPanel>

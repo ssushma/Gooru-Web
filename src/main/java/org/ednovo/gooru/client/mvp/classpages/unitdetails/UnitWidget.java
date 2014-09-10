@@ -12,7 +12,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -33,6 +32,9 @@ public class UnitWidget extends Composite {
  	@UiField HTMLEventPanel htPanelUnit;
  	
  	@UiField LiPanel liPanelUnit;
+ 	
+ 	
+ 	UnitAssignmentCssBundle res;
 
 	/**
 	 * Because this class has a default constructor, it can
@@ -47,6 +49,8 @@ public class UnitWidget extends Composite {
 	 */
 	public UnitWidget(String serialNumber, String unitName) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.res = UnitAssignmentCssBundle.INSTANCE;
+		res.unitAssignment().ensureInjected();
 		ilUnitNumber.setText(serialNumber);
 		ilUnitName.setText(unitName);
 		htPanelUnit.addClickHandler(new UnitClickHandler());
@@ -57,8 +61,16 @@ public class UnitWidget extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
+//			liPanelUnit.removeStyleName(res.css().unitMenuActive());
+//			liPanelUnit.addStyleName(res.css().unitMenuActive());
 		}
 		
 	}
+
+	public HTMLEventPanel getHtPanelUnit() {
+		return htPanelUnit;
+	}
+	
+	
 
 }

@@ -47,7 +47,7 @@
 	padding-right:12px;
 }
 .unitMenu li{
-	z-index:99;
+	z-index:98;
 	position:relative;
 }
 .unitMenu li a{
@@ -225,11 +225,6 @@ display:inline-block;
 
 	float:right;
 }
-
-
-
-
-
 
 .switchContainer {
   position: relative;

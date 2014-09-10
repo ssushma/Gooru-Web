@@ -1,0 +1,17 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:a="urn:import:aj.org.objectweb.asm"
+	xmlns:gt="urn:import:com.tractionsoftware.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:dt="urn:import:com.google.gwt.user.datepicker.client">
+	<ui:style field="style" src="assignmentgoal.css" />
+	<g:FlowPanel>
+		<g:HTMLPanel styleName="{style.studentNameContainer}">
+		    <g:Label styleName="{style.studentName}" ui:field="lblStudentsList">
+		        
+		    </g:Label>
+		    <g:HTMLPanel styleName="{style.goals}" ui:field="panelAssignmentList">
+		        Assignments list...
+		    </g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:FlowPanel>
+</ui:UiBinder> 

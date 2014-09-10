@@ -23,7 +23,10 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+import java.util.Iterator;
+
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -31,14 +34,15 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHandlers> implements IsUnitAssignmentView{
- 
+
+	@UiField HTMLPanel assignmentContainer;
+
 
 	private static UnitAssignmentViewUiBinder uiBinder = GWT.create(UnitAssignmentViewUiBinder.class);
 
@@ -47,8 +51,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 	
 	@UiField HTMLPanel unitPanel;
+	
+	UnitAssignmentCssBundle res;
 		
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	@UiField HTMLPanel panelContainer;
 
 	@UiField HTMLPanel circleContainerPanel;
 	@UiField Label generalLabel,requiredLabel,optionalLabel;
@@ -58,7 +66,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@Inject
 	public UnitAssignmentView(){
-		setWidget(uiBinder.createAndBindUi(this));		
+		setWidget(uiBinder.createAndBindUi(this));
+		assignmentContainer.add(new CollectionsView(null, 0));
+		this.res = UnitAssignmentCssBundle.INSTANCE;
+		res.unitAssignment().ensureInjected();
 		showUnitNames();
 		setData();
 	}
@@ -67,7 +78,30 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		for(int i=1; i<5; i++){
 			String s="sun"+i;
 			String number=Integer.toString(i);
-			unitPanel.add(new UnitWidget(number, s));
+			UnitWidget unitsWidget=new UnitWidget(number, s);
+			unitsWidget.getElement().setId(number);
+			unitPanel.add(unitsWidget);
+		}
+		
+		Iterator<Widget> widgets = unitPanel.iterator();
+		
+		while (widgets.hasNext()) {
+			final Widget widget = widgets.next();
+			if (widget instanceof UnitWidget) {
+				((UnitWidget) widget).getHtPanelUnit().addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						String id =widget.getElement().getId();
+						System.out.println("id:"+id );
+						final Iterator<Widget> widgetsPanel = unitPanel.iterator();
+						while (widgetsPanel.hasNext()) {
+							 widgetsPanel.next().removeStyleName(res.unitAssignment().unitMenuActive());
+							}
+						widget.addStyleName(res.unitAssignment().unitMenuActive());
+					}
+				});
+			}
 		}
 		
 	}
@@ -84,11 +118,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			final UnitCricleView unitCricleViewObj =new UnitCricleView(true,i);
 			circleContainerPanel.add(unitCricleViewObj);
 			unitCricleViewObj.addClickHandler(new ClickHandler() {
-				
 				@Override
 				public void onClick(ClickEvent event) {
 					unitCricleViewObj.selectCircle();
-					
 				}
 			});
 		}
@@ -101,7 +133,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				circleContainerPanel.clear();
 				leftArrow.setUrl("images/leftSmallarrow.png");
 				circleContainerPanel.add(leftArrow);
-				
 				for(int i=1;i<11;i++){
 					final UnitCricleView unitCricleViewObj =new UnitCricleView(true,i);
 					circleContainerPanel.add(unitCricleViewObj);
@@ -146,6 +177,15 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		});
 	}
 	
-	
-	
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		if (content != null) {
+			 if(slot==UnitAssignmentPresenter._SLOT){
+				 panelContainer.clear();
+				 panelContainer.add(content);
+			}else{
+				panelContainer.setVisible(false);
+			}
+		}
+	}
 }

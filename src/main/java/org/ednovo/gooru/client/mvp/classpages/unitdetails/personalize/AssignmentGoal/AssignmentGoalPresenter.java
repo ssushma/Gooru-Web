@@ -22,7 +22,7 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
+package org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.AssignmentGoal;
 
 /**
  * 
@@ -31,34 +31,33 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildPresenter;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
+import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.IsCollectionsView;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.service.ClasspageService;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 
-/*
+/**
  * 
- * @fileName : CollectionsPresenter.java
+ * @fileName : AssignmentGoalPresenter.java
  *
- * @description : This is presenter class for CollectionsView.java
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: Apr 17, 2013
+ * @date: 09-Sep-2014
  *
  * @Author Gooru Team
  *
  * @Reviewer:
  */
-public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, IsCollectionsView> implements CollectionsUiHandlers {
+public class AssignmentGoalPresenter extends ChildPresenter<AssignmentGoalPresenter, IsAssignmentGoalView> implements AssignmentGoalUiHandlers {
 
 	CollectionItemDo collectionItemDo = null;
 	ClasspageService classpageService=null;
 	
-	private EditClasspagePresenter editClasspagePresenter=null;
-		
-	public CollectionsPresenter(IsCollectionsView childView) {
+	public AssignmentGoalPresenter(IsAssignmentGoalView childView) {
 		super(childView);
 	}
 
@@ -77,45 +76,4 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 	public void setClasspageService(ClasspageService classpageService) {
 		this.classpageService = classpageService;
 	}
-	
-	public void updateClasspageItem(String classpageItemId,final String directionText,final String dueDate,final String readStatus){
-		AppClientFactory.getInjector().getClasspageService().updateClasspageItem(classpageItemId, directionText, dueDate,readStatus,new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String result) {
-//				if(directionText!=null){
-//					getView().updateDirection(directionText);
-//				}else if(dueDate!=null){
-//					getView().updateDueDate(dueDate);
-//				}else if(readStatus!=null){
-//					getView().updateCollectionStatus(readStatus);
-//				}
-			}
-		});
-	}
-	
-	public void deleteClasspageItem(String classpageItemId){
-		AppClientFactory.getInjector().getClasspageService().deleteClassPageItem(classpageItemId, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String result) {
-				//getView().removeClasspageItemWidget();
-				//AppClientFactory.fireEvent(new ResetProgressEvent());
-//				AppClientFactory.fireEvent(new RefreshAssignmentsListEvent());
-			}
-		});
-	}
-
-
-	public EditClasspagePresenter getEditClasspagePresenter() {
-		return editClasspagePresenter;
-	}
-
-
-	public void setEditClasspagePresenter(
-			EditClasspagePresenter editClasspagePresenter) {
-		this.editClasspagePresenter = editClasspagePresenter;
-	}
-	
-	
-
-
 }
