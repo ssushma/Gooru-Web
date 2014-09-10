@@ -52,6 +52,7 @@ public class ResourceDo extends ContentDo {
     private LicenseDo license;
     private String grade;
     private String mediaType;
+    private String gooruOid;
     
     private String encodedUrl;
     
@@ -559,6 +560,12 @@ public class ResourceDo extends ContentDo {
 	}
 	public void setResourceTags(ArrayList<ResourceTagsDo> resourceTags) {
 		this.resourceTags = resourceTags;
+	}
+	public String getGooruOid() {
+		return gooruOid;
+	}
+	public void setGooruOid(String gooruOid) {
+		this.gooruOid = gooruOid;
 	}
 	
 	
