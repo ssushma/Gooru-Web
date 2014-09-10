@@ -74,6 +74,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.gwt.dev.json.JsonArray;
 
 @Service("classpageService")
 @ServiceURL("/classpageService")
@@ -1577,7 +1578,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ArrayList<CollectionItemDo> deserializePathwayItem(JsonRepresentation jsonRep) {
 		try {
 				if (jsonRep != null && jsonRep.getSize() != -1) {
-				return JsonDeserializer.deserialize(jsonRep.getJsonObject()
+				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
 						.toString(), new TypeReference<ArrayList<CollectionItemDo>>() {
 				});
 			}
