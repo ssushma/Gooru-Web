@@ -58,11 +58,11 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 		setPresenter(new ClassSetupUnitPresenter(this));
 	}
 	
-	public ClassSetupUnitView(final int sequenceNum){
+	public ClassSetupUnitView(final int sequenceNum, String unitNameVal, final String pathwayId){
 		initWidget(uiBinder.createAndBindUi(this));
 		inputContainer.setVisible(false);
 		divContainer.setVisible(true);
-		unitName.setText("Unit Name "+sequenceNum);
+		unitName.setText(unitNameVal);
 		divContainer.setText(unitName.getText());
 		setPresenter(new ClassSetupUnitPresenter(this));
 		unitSequence.getElement().setInnerHTML((sequenceNum+1)+".");
@@ -71,7 +71,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				deleteItem(sequenceNum);
+				deleteItem(sequenceNum,pathwayId);
 				
 			}
 		});
@@ -92,6 +92,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 				divContainer.setText(unitName.getText());
 				inputContainer.setVisible(false);
 				divContainer.setVisible(true);
+				saveItem(unitName.getText(),pathwayId);
 				
 			}
 		});
@@ -106,6 +107,8 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 		});
 	}
 	
-	public abstract void deleteItem(int sequenceNum);
+	public abstract void deleteItem(int sequenceNum, String pathwayId);
+	
+	public abstract void saveItem(String pathwayTitle, String pathwayId);
 	
 }
