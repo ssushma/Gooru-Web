@@ -1573,6 +1573,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		
 		
 	}	
+
 	public ArrayList<CollectionItemDo> deserializePathwayItem(JsonRepresentation jsonRep) {
 		try {
 				if (jsonRep != null && jsonRep.getSize() != -1) {
@@ -1585,6 +1586,150 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return new ArrayList<CollectionItemDo>();
 		
+	}
+	
+	@Override
+	public ClasspageListDo v2GetPathwaysOptimized(String classpageId, String limit, String offSet) throws GwtException {
+
+		JsonRepresentation jsonRep = null;
+		if(limit == null)
+		{
+			limit ="10";
+		}
+		if(offSet == null)
+		{
+			offSet = "1";
+		}
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.PATHWAYS_CLASS_OPTIMIZED, classpageId, getLoggedInSessionToken(), limit, offSet);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
+				getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeClasspageList(jsonRep);
+	}
+	
+	@Override
+	public ClasspageListDo v2GetPathwaysCompleteDetails(String classpageId, String limit, String offSet) throws GwtException {
+
+		JsonRepresentation jsonRep = null;
+		if(limit == null)
+		{
+			limit ="10";
+		}
+		if(offSet == null)
+		{
+			offSet = "1";
+		}
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.PATHWAYS_CLASS, classpageId, getLoggedInSessionToken(), limit, offSet);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
+				getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeClasspageList(jsonRep);
+	}
+	
+	
+	@Override
+	public ClasspageListDo reOrderPathwaysInaClass(String pathwayId,int newPosSequence){
+		if(newPosSequence == 0)
+		{
+			newPosSequence = 1;
+		}
+		JsonRepresentation jsonRep = null;
+		String newPosVal = String.valueOf(newPosSequence);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.PATHWAYS_CLASS_REORDER, pathwayId, newPosVal, getLoggedInSessionToken());		
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeClasspageList(jsonRep);
+	}
+	
+	@Override
+	public CollectionDo v2CreatePathwayForAClass(String classpageId, String pathwayTitle) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.PATHWAYS_CREATE,classpageId, getLoggedInSessionToken());
+		
+
+		JSONObject titleJsonObject= new JSONObject();
+		try {
+			titleJsonObject.put("title", pathwayTitle);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String formData = titleJsonObject.toString();
+		
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData);
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeCollection(jsonRep);
+	}
+	
+	@Override
+	public AssignmentDo v2CreatePathwayForAClassWithAssignmentItem(String classpageId, String pathwayTitle, String collectionId, CollectionItemDo collectionItemObject) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.PATHWAYS_CREATE,classpageId, getLoggedInSessionToken());
+		
+		JSONObject jsonObject=new JSONObject();
+		try {
+			jsonObject.put(TITLE, pathwayTitle);		
+			jsonObject.put("collectionId", collectionId);
+			jsonObject.put("collectionItem", createCollectionItemJsonObject(collectionItemObject));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), jsonObject.toString());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeAssignments(jsonRep);
+	}
+	
+	protected JSONObject createCollectionItemJsonObject(CollectionItemDo collectionItemDo){
+		JSONObject collectionItemJsonObject=new JSONObject();
+		//JSONObject collectionJsonObject=new JSONObject();
+		try {
+			collectionItemJsonObject.put("collectionItemId", collectionItemDo.getCollectionItemId());
+			if(collectionItemDo.getNarration()!=null){
+				collectionItemJsonObject.put(NARRATION, collectionItemDo.getNarration());
+			}
+
+			collectionItemJsonObject.put("itemSequence", collectionItemDo.getItemSequence());
+			collectionItemJsonObject.put("isRequired", true);
+
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return collectionItemJsonObject;
+	}
+	
+	@Override
+	public CollectionDo v2UpdatePathwayById(String classpageId, String pathwayId, String pathwayTitle) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.PATHWAYS_UPDATE,classpageId,pathwayId, getLoggedInSessionToken());
+		JSONObject jsonObject=new JSONObject();
+		try {
+			jsonObject.put(TITLE, pathwayTitle);	
+		}
+		catch(JSONException e)
+		{
+			
+		}
+
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),jsonObject.toString());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeCollection(jsonRep);
+	}
+	
+	@Override
+	public void deletePathway(String classpageId, String pathwayId) throws GwtException {
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.PATHWAYS_UPDATE, classpageId,pathwayId,
+				getLoggedInSessionToken());
+		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
+
 	}
 }
 

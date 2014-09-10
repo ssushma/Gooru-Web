@@ -55,6 +55,7 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private String likes;
 	private String estimatedTime;
 	private List<CollectionItemDo> collectionItems;
+	private ResourceDo resource;
 	private CollectionMetaInfoDo metaInfo;
 	private MetaDO meta;
 	private Integer statusCode;
@@ -359,6 +360,14 @@ public class CollectionDo extends ResourceDo implements Serializable{
 
 	public void setMemberCount(Integer memberCount) {
 		this.memberCount = memberCount;
+	}
+
+	public ResourceDo getResource() {
+		return resource;
+	}
+
+	public void setResource(ResourceDo resource) {
+		this.resource = resource;
 	}
 
 }

@@ -9,6 +9,8 @@ import org.ednovo.gooru.client.uc.LiPanel;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -19,7 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author janamitra
  *
  */
-public class UnitWidget extends Composite {
+public class UnitWidget extends Composite implements HasClickHandlers{
 
 	private static UnitWidgetUiBinder uiBinder = GWT
 			.create(UnitWidgetUiBinder.class);
@@ -29,7 +31,7 @@ public class UnitWidget extends Composite {
 	
  	@UiField InlineLabel ilUnitNumber,ilUnitName;
  	
- 	@UiField HTMLEventPanel htPanelUnit;
+ 	@UiField HTMLEventPanel unitNameContainer;
  	
  	@UiField LiPanel liPanelUnit;
  	
@@ -53,7 +55,7 @@ public class UnitWidget extends Composite {
 		res.unitAssignment().ensureInjected();
 		ilUnitNumber.setText(serialNumber);
 		ilUnitName.setText(unitName);
-		htPanelUnit.addClickHandler(new UnitClickHandler());
+		unitNameContainer.addClickHandler(new UnitClickHandler());
 	}
 	
 	public  class UnitClickHandler implements ClickHandler{
@@ -66,9 +68,23 @@ public class UnitWidget extends Composite {
 		}
 		
 	}
+	
+	/**
+	 * @return the htPanelUnit
+	 */
+	public HTMLEventPanel getUnitNameContainer() {
+		return unitNameContainer;
+	}
 
-	public HTMLEventPanel getHtPanelUnit() {
-		return htPanelUnit;
+	/**
+	 * @return the liPanelUnit
+	 */
+	public LiPanel getLiPanelUnit() {
+		return liPanelUnit;
+	}
+	
+	public HandlerRegistration addClickHandler(ClickHandler handler) {
+		return addDomHandler(handler, ClickEvent.getType());
 	}
 	
 	
