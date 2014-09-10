@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 import java.util.Iterator;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -34,7 +33,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -50,6 +48,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 	
 	@UiField HTMLPanel unitPanel;
+	
+	UnitAssignmentCssBundle res;
 		
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
@@ -62,6 +62,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@Inject
 	public UnitAssignmentView(){
 		setWidget(uiBinder.createAndBindUi(this));		
+		this.res = UnitAssignmentCssBundle.INSTANCE;
+		res.unitAssignment().ensureInjected();
 		showUnitNames();
 		setData();
 	}
@@ -75,7 +77,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			unitPanel.add(unitsWidget);
 		}
 		
-		/*Iterator<Widget> widgets = unitPanel.iterator();
+		Iterator<Widget> widgets = unitPanel.iterator();
 		
 		while (widgets.hasNext()) {
 			final Widget widget = widgets.next();
@@ -84,11 +86,17 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					
 					@Override
 					public void onClick(ClickEvent event) {
-						
+						String id =widget.getElement().getId();
+						System.out.println("id:"+id );
+						final Iterator<Widget> widgetsPanel = unitPanel.iterator();
+						while (widgetsPanel.hasNext()) {
+							 widgetsPanel.next().removeStyleName(res.unitAssignment().unitMenuActive());
+							}
+						widget.addStyleName(res.unitAssignment().unitMenuActive());
 					}
 				});
 			}
-		}*/
+		}
 		
 	}
 	public void setData()

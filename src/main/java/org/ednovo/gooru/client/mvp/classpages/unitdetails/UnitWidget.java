@@ -34,7 +34,7 @@ public class UnitWidget extends Composite {
  	@UiField LiPanel liPanelUnit;
  	
  	
-	UnitAssignmentCssBundle res;
+ 	UnitAssignmentCssBundle res;
 
 	/**
 	 * Because this class has a default constructor, it can
@@ -50,7 +50,7 @@ public class UnitWidget extends Composite {
 	public UnitWidget(String serialNumber, String unitName) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.res = UnitAssignmentCssBundle.INSTANCE;
-		res.css().ensureInjected();
+		res.unitAssignment().ensureInjected();
 		ilUnitNumber.setText(serialNumber);
 		ilUnitName.setText(unitName);
 		htPanelUnit.addClickHandler(new UnitClickHandler());
@@ -61,8 +61,8 @@ public class UnitWidget extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			liPanelUnit.removeStyleName(res.css().unitMenuActive());
-			liPanelUnit.addStyleName(res.css().unitMenuActive());
+//			liPanelUnit.removeStyleName(res.css().unitMenuActive());
+//			liPanelUnit.addStyleName(res.css().unitMenuActive());
 		}
 		
 	}
