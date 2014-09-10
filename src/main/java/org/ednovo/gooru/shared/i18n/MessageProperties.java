@@ -2684,6 +2684,7 @@ public interface MessageProperties extends Constants {
 	
 	//New Labels for Assign Tab in Collection Edit 
 	String GL2175();
+	String GL2176();
 
 	String GL2173();
 	String GL2174();

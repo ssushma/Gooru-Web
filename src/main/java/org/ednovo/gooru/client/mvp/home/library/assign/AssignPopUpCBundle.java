@@ -280,6 +280,8 @@ public interface AssignPopUpCBundle extends ClientBundle{
 		String dropdownUnitContainer();
 		
 		String containerMainDiv(); 
+		
+		String errorLabelUnit();
 	}
 
 	@Source("AssignPopUp.css")

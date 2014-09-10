@@ -58,6 +58,7 @@
 						</g:ScrollPanel>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="clearfix" ></g:HTMLPanel>
+					<g:Label ui:field="errorLabel" styleName="{res.css.errorLabelUnit}"></g:Label>
 				</g:HTMLPanel>
 				
 	<g:HTMLPanel styleName="{res.css.duedateContainer}">

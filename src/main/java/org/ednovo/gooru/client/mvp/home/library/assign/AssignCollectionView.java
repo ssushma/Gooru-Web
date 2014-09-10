@@ -104,7 +104,7 @@ IsCollectionAssign {
 	@UiField Label lblAssignCollectionTitle,lblClasspages,lblClasspagesUnits,lblClasspagePlaceHolder,lblClasspageUnitPlaceHolder, lblClasspagesArrow,lblClasspagesUnitArrow,lblDirections,lblDirectionsOptional;
 	
 
-	@UiField Label lblAssignCollectionPrivate, lblNoClassPageMsg,lblNoClassPage,lblDuedate,lblDuedateOptional,directionsErrorLbl;
+	@UiField Label lblAssignCollectionPrivate, lblNoClassPageMsg,lblNoClassPage,lblDuedate,lblDuedateOptional,directionsErrorLbl,errorLabel;
 	
 	@UiField BlueButtonUc btnAssign;
 	
@@ -135,6 +135,7 @@ IsCollectionAssign {
 	String toAssignStr = null;	
 	String limit="10";//pagesize	
 	int classpageOffSet=0;
+	int classpageUnitOffSet=0;
 	int assignmentOffSet=0;	
 	boolean isApiCalling=false;	
 	boolean toClear=true;	
@@ -267,6 +268,7 @@ IsCollectionAssign {
 		setLabelsAndIds();
 		htmlPanelContainer.setVisible(false);
 		panelNoClasspages.setVisible(false);
+		errorLabel.setVisible(false);
 		onLoaded();
 		panelTitleContainer.getElement().getStyle().setMarginBottom(15, Unit.PX);
 		spanelClasspagesPanel.setVisible(false);
@@ -286,6 +288,7 @@ IsCollectionAssign {
 			public void onScroll(ScrollEvent event) {
 				if(spanelClasspagesUnitPanel.getVerticalScrollPosition() == spanelClasspagesUnitPanel.getMaximumHorizontalScrollPosition()){
 					toClear = false;
+					getNextClasspagesUnit();
 				}
 			}
 		});
@@ -466,7 +469,6 @@ IsCollectionAssign {
 			htmlPanelContainer.setVisible(true);
 			if (toClear){
 				htmlClasspagesListContainer.clear();
-				//htmlClasspagesUnitListContainer.clear();
 				toClear=false;
 			}
 			for (int i = 0; i < resultSize; i++) {
@@ -478,11 +480,7 @@ IsCollectionAssign {
 				//Set Click event for title
 				titleLabel.addClickHandler(new CpTitleLabelClick(titleLabel));
 				htmlClasspagesListContainer.add(titleLabel);
-				/*final Label unitLabel = new Label("unit");
-				unitLabel.setStyleName(AssignPopUpCBundle.INSTANCE.css().classpageTitleText());
-				unitLabel.getElement().setAttribute("id", "unit1");
-				unitLabel.addClickHandler(new CpuTitleLabelClick(unitLabel));
-				htmlClasspagesUnitListContainer.add(unitLabel);*/
+				
 			}
 		}else{
 			//Set if there are not classpages.
@@ -491,6 +489,45 @@ IsCollectionAssign {
 				panelNoClasspages.setVisible(true);
 				
 			}
+		}
+	}
+	
+	public void setUnitList(ClasspageListDo classpageListDo) {
+		//Label unitLabel = null;
+		int resultSize = classpageListDo.getSearchResults().size();
+		errorLabel.setVisible(false);
+		if (resultSize > 0){
+			//htmlClasspagesUnitListContainer.clear();
+			for(int i=0;i<resultSize;i++){
+				unitId = classpageListDo.getSearchResults().get(i).getGooruOid();
+				String unitTitle = classpageListDo.getSearchResults().get(i).getResource().getTitle();
+				final Label unitLabel = new Label(unitTitle);
+				unitLabel.setStyleName(AssignPopUpCBundle.INSTANCE.css().classpageTitleText());
+				unitLabel.getElement().setAttribute("id", unitId);
+				unitLabel.addClickHandler(new CpuTitleLabelClick(unitLabel));
+				htmlClasspagesUnitListContainer.add(unitLabel);
+			}
+			/*lblClasspageUnitPlaceHolder.setText(unitLabel.getText());
+			lblClasspageUnitPlaceHolder.getElement().setId(unitLabel.getElement().getId());
+			lblClasspageUnitPlaceHolder.setStyleName(AssignPopUpCBundle.INSTANCE.css().selectedClasspageText());*/
+			
+			//unitId = unitLabel.getElement().getId();
+			
+			btnAssign.setEnabled(true);
+			btnAssign.setStyleName(AssignPopUpCBundle.INSTANCE.css().activeAssignButton());
+
+			
+			//Hide the scroll container
+			spanelClasspagesUnitPanel.setVisible(false);
+		}else{
+				htmlClasspagesUnitListContainer.clear();
+				lblClasspageUnitPlaceHolder.setText(i18n.GL0105());
+				lblClasspageUnitPlaceHolder.getElement().setId("lblClasspagePlaceHolder");
+				lblClasspageUnitPlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
+				lblClasspageUnitPlaceHolder.getElement().setAttribute("title",i18n.GL0105());
+				lblClasspageUnitPlaceHolder.removeStyleName(AssignPopUpCBundle.INSTANCE.css().selectedClasspageText());
+				errorLabel.setVisible(true);
+				errorLabel.setText(i18n.GL2176());
 		}
 	}
 	
@@ -518,51 +555,14 @@ IsCollectionAssign {
 			
 			//Hide the scroll container
 			spanelClasspagesPanel.setVisible(false);
-			UnitDo unitDo = new UnitDo();
-			
-			getUnitList(unitDo);
-		}
+			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, limit, String.valueOf(classpageUnitOffSet), new SimpleAsyncCallback<ClasspageListDo>() {
 
-		/**
-		 * @function getUnitList 
-		 * 
-		 * @created_date : 09-Sep-2014
-		 * 
-		 * @description
-		 * 
-		 * 
-		 * @parm(s) : @param unitDo
-		 * 
-		 * @return : void
-		 *
-		 * @throws : <Mentioned if any exceptions>
-		 *
-		 * 
-		 *
-		 * 
-		*/
-		
-		private void getUnitList(UnitDo unitDo) {
-			htmlClasspagesUnitListContainer.clear();
-			for(int i=0;i<2;i++){
-				final Label unitLabel = new Label("unit"+i);
-				unitLabel.setStyleName(AssignPopUpCBundle.INSTANCE.css().classpageTitleText());
-				unitLabel.getElement().setAttribute("id", "unit1");
-				unitLabel.addClickHandler(new CpuTitleLabelClick(unitLabel));
-				htmlClasspagesUnitListContainer.add(unitLabel);
-			}
-			lblClasspageUnitPlaceHolder.setText("unit");
-			lblClasspageUnitPlaceHolder.getElement().setId("unit");
-			lblClasspageUnitPlaceHolder.setStyleName(AssignPopUpCBundle.INSTANCE.css().selectedClasspageText());
-			
-			//unitId = unitLabel.getElement().getId();
-			
-			btnAssign.setEnabled(true);
-			btnAssign.setStyleName(AssignPopUpCBundle.INSTANCE.css().activeAssignButton());
-
-			
-			//Hide the scroll container
-			spanelClasspagesUnitPanel.setVisible(false);
+				@Override
+				public void onSuccess(ClasspageListDo result) {
+					htmlClasspagesUnitListContainer.clear();
+					setUnitList(result);
+				}
+			});
 		}
 	}
 	
@@ -875,9 +875,23 @@ IsCollectionAssign {
 		
 	}
 	
+	public void getAllClasspagesUnit(String limit,String offset){
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, limit, String.valueOf(classpageUnitOffSet), new SimpleAsyncCallback<ClasspageListDo>() {
+
+			@Override
+			public void onSuccess(ClasspageListDo result) {
+				setUnitList(result);
+			}
+		});
+	}
 	public void getNextClasspages() {
 		classpageOffSet = classpageOffSet+10;
 		getAllClasspages(limit,String.valueOf(classpageOffSet));
+	}
+	
+	public void getNextClasspagesUnit(){
+		classpageUnitOffSet = classpageUnitOffSet+10;
+		getAllClasspagesUnit(limit,String.valueOf(classpageUnitOffSet));
 	}
 	
 	@UiHandler("lblClasspagePlaceHolder")
