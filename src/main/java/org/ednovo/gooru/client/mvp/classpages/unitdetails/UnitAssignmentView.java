@@ -77,32 +77,40 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			String s="sun"+i;
 			String number=Integer.toString(i);
 			UnitWidget unitsWidget=new UnitWidget(number, s);
+			unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget));
 			unitsWidget.getElement().setId(number);
 			unitPanel.add(unitsWidget);
 		}
-		
-		Iterator<Widget> widgets = unitPanel.iterator();
-		
-		while (widgets.hasNext()) {
-			final Widget widget = widgets.next();
-			if (widget instanceof UnitWidget) {
-				((UnitWidget) widget).getHtPanelUnit().addClickHandler(new ClickHandler() {
-					
-					@Override
-					public void onClick(ClickEvent event) {
-						String id =widget.getElement().getId();
-						System.out.println("id:"+id );
-						final Iterator<Widget> widgetsPanel = unitPanel.iterator();
-						while (widgetsPanel.hasNext()) {
-							 widgetsPanel.next().removeStyleName(res.unitAssignment().unitMenuActive());
-							}
-						widget.addStyleName(res.unitAssignment().unitMenuActive());
-					}
-				});
-			}
+	}
+	
+	public class UnitChangeEvent implements ClickHandler{
+		private UnitWidget unitsWidget;
+		public UnitChangeEvent(UnitWidget unitsWidget){
+			this.unitsWidget=unitsWidget;
 		}
+		@Override
+		public void onClick(ClickEvent event) {
+			removeUnitSelectedStyle();
+			addUnitSelectStyle(unitsWidget);
+		}
+	}
+	public void removeUnitSelectedStyle(){
+		Iterator<Widget> widgets = unitPanel.iterator();
+		while (widgets.hasNext()) {
+			 Widget widget = widgets.next();
+			if (widget instanceof UnitWidget) {
+				UnitWidget unitsWidget=(UnitWidget)widget;
+				unitsWidget.getUnitNameContainer().removeStyleName(res.unitAssignment().unitMenuActive());
+			}
+		}		
 		
 	}
+	
+	public void addUnitSelectStyle(UnitWidget unitsWidget){
+		unitsWidget.getUnitNameContainer().addStyleName(res.unitAssignment().unitMenuActive());
+	}
+	
+	
 	public void setData()
 	{
 		generalLabel.setText("General");
