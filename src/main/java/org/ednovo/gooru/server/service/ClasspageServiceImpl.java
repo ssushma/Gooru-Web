@@ -1545,5 +1545,25 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			
 		}
 	}	
+	
+	@Override
+	public ClasspageListDo v2GetPathwaysOptimized(String classpageId, String limit, String offSet) throws GwtException {
+
+		JsonRepresentation jsonRep = null;
+		if(limit == null)
+		{
+			limit ="10";
+		}
+		if(offSet == null)
+		{
+			offSet = "1";
+		}
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.PATHWAYS_CLASS_OPTIMIZED, classpageId, getLoggedInSessionToken(), limit, offSet);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
+				getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeClasspageList(jsonRep);
+	}
 }
 

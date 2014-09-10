@@ -435,6 +435,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
 	     }
 	     else {
+
 	    	 System.out.println("tab value... 2");
 	    	 unitAssignmentPresenter.setClasspageData(classpageDo);
 	    	 

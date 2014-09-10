@@ -82,13 +82,13 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 		AppClientFactory.getInjector().getClasspageService().updateClasspageItem(classpageItemId, directionText, dueDate,readStatus,new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String result) {
-				if(directionText!=null){
-					getView().updateDirection(directionText);
-				}else if(dueDate!=null){
-					getView().updateDueDate(dueDate);
-				}else if(readStatus!=null){
-					getView().updateCollectionStatus(readStatus);
-				}
+//				if(directionText!=null){
+//					getView().updateDirection(directionText);
+//				}else if(dueDate!=null){
+//					getView().updateDueDate(dueDate);
+//				}else if(readStatus!=null){
+//					getView().updateCollectionStatus(readStatus);
+//				}
 			}
 		});
 	}
@@ -97,8 +97,8 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 		AppClientFactory.getInjector().getClasspageService().deleteClassPageItem(classpageItemId, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String result) {
-				getView().removeClasspageItemWidget();
-				AppClientFactory.fireEvent(new ResetProgressEvent());
+				//getView().removeClasspageItemWidget();
+				//AppClientFactory.fireEvent(new ResetProgressEvent());
 //				AppClientFactory.fireEvent(new RefreshAssignmentsListEvent());
 			}
 		});

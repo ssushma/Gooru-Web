@@ -690,7 +690,6 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 			public void resetPagination(){
 				//restingPagination();
 			}
-			@Override
 			public void updateCollectionsView(){
 				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 				int pageNumber=1;
