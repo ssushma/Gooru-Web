@@ -24,8 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 
 public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentUiHandlers>{
+	
+	public void showUnitNames(ClasspageListDo classpageListDo);
+	
+	public void hideMoreUnitsLink();
 
 }

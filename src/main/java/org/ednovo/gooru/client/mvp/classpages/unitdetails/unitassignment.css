@@ -34,7 +34,7 @@
 .uniSetup a{
 	padding:20px 15px;
 	display:block;
-		font-size:12px;
+	font-size:12px;
 	line-height:25px;
 	
 	
@@ -570,4 +570,13 @@ display:inline-block;
 	-moz-border-radius:50% 50%;
 	opacity:1;
 	
+}
+
+.moreUnits{
+	padding:20px 15px;
+	display:block;
+	font-size:12px;
+	line-height:25px;
+	cursor: pointer;
+	color: #0066cc;
 }

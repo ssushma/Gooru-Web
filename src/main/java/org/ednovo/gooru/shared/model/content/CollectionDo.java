@@ -73,6 +73,7 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private List<checkboxSelectedDo> instructionalMethod;
 	private List<checkboxSelectedDo> audience;
 	private List<checkboxSelectedDo> learningSkills;
+	private int itemSequence;
 	
 	public CollectionDo(){
 		
@@ -369,5 +370,22 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	public void setResource(ResourceDo resource) {
 		this.resource = resource;
 	}
+
+	/**
+	 * @return the itemSequence
+	 */
+	public int getItemSequence() {
+		return itemSequence;
+	}
+
+	/**
+	 * @param itemSequence the itemSequence to set
+	 */
+	public void setItemSequence(int itemSequence) {
+		this.itemSequence = itemSequence;
+	}
+
+	
+	
 
 }

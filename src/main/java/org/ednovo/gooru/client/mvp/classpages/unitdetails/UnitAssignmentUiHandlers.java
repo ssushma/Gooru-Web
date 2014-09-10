@@ -51,4 +51,6 @@ public interface UnitAssignmentUiHandlers extends BaseUiHandlers{
 	void setClasspageData(ClasspageDo classpageDo);
 	
 	void getPathwayItems();
+	
+	void getPathwayUnits(int limit, int offset);
 }
