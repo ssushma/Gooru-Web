@@ -3,14 +3,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	 <ui:style field="unitStyle" src="unitassignment.css" />
-	<!-- <ui:with
-		type="org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssignmentCssBundle"
-		field="res" /> -->
-	<g:FlowPanel styleName="{unitStyle.bubbleMain}" ui:field="bubbleMain">
 		 <g:HTMLPanel ui:field="bubbleOuterPanel" styleName="{unitStyle.bubbleOuter}">
 			<g:InlineLabel ui:field="unitNumber"></g:InlineLabel>
 		</g:HTMLPanel> 
-	</g:FlowPanel>
-
-
 </ui:UiBinder> 
