@@ -23,6 +23,12 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
@@ -37,14 +43,87 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		//this.classSetupUnitPresenter=classSetupUnitPresenter1;
-		setUnit();
+		getPathways();
 
 	}
 	
 	@Override
-	public void setUnit() {
-		 getView().setContent();
+	public void setUnit(String unitName, String pathwayId) {
+		 getView().setContent(unitName,pathwayId);
 	}
+	
+	public void getPathways(){
+		getView().clearPanel();
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		if(classpageid != null)
+		{
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "10", "0", new SimpleAsyncCallback<ClasspageListDo>() {
+			@Override
+			public void onSuccess(ClasspageListDo classpageItemDo) {
+				System.out.println("classpageItemDo.getSearchResults()::"+classpageItemDo.getSearchResults().size());
+				if(classpageItemDo.getSearchResults().size()>0)
+				{
+					for(int i=0;i<classpageItemDo.getSearchResults().size();i++)
+					{
+						setUnit(classpageItemDo.getSearchResults().get(i).getResource().getTitle(), classpageItemDo.getSearchResults().get(i).getResource().getGooruOid());
+						
+					}
+				}
+			}
+		});
+		}
+	}
+	
+	@Override
+	public void createPathway(String pathwayTitle){
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		if(classpageid != null)
+		{
+		AppClientFactory.getInjector().getClasspageService().v2CreatePathwayForAClass(classpageid, pathwayTitle, new SimpleAsyncCallback<CollectionDo>() {
+			@Override
+			public void onSuccess(CollectionDo pathwayItemObject) {
+				System.out.println("colldo::"+pathwayItemObject.getTitle());
+				if(pathwayItemObject.getTitle() != null)
+				{
+					setUnit(pathwayItemObject.getTitle(),pathwayItemObject.getGooruOid());
+				}
+			}
+		});
+		}
+	}
+	
+	@Override
+	public void updatePathway(String pathwayId, String pathwayTitle){
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		if(classpageid != null)
+		{
+		AppClientFactory.getInjector().getClasspageService().v2UpdatePathwayById(classpageid,pathwayId, pathwayTitle, new SimpleAsyncCallback<CollectionDo>() {
+			@Override
+			public void onSuccess(CollectionDo pathwayItemObject) {
+				System.out.println("colldoupdatePathway::"+pathwayItemObject.getTitle());
+
+			}
+		});
+		}
+	}
+	
+	@Override
+	public void deletePathway(String pathwayId){
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		if(classpageid != null)
+		{
+			System.out.println("classpageid::"+classpageid);
+			System.out.println("pathwayId::"+pathwayId);
+		AppClientFactory.getInjector().getClasspageService().deletePathway(classpageid, pathwayId, new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				getPathways();
+			}
+		});
+		}
+	}
+	
+	
 	
 
 	

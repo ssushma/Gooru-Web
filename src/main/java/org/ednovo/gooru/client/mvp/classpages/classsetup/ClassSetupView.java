@@ -66,7 +66,7 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 
 			@Override
 			public void onClick(ClickEvent event) {
-			getUiHandlers().setUnit();
+			getUiHandlers().createPathway("Unitname");
 				
 			}
 			
@@ -82,20 +82,32 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 	}
 	
 	@Override
-	public void setContent() {
+	public void clearPanel() {
+		getUnitwidget().clear();
+	}
+	
+	@Override
+	public void setContent(String unitName, String pathwayId) {
 	//Window.alert("getUnitwidget().getWidgetCount()::"+getUnitwidget().getWidgetCount());
-		 ClassSetupUnitView cv = new ClassSetupUnitView(getUnitwidget().getWidgetCount()) {
+		 ClassSetupUnitView cv = new ClassSetupUnitView(getUnitwidget().getWidgetCount(),unitName,pathwayId) {
 			
 			@Override
-			public void deleteItem(int sequenceNum) {
+			public void deleteItem(int sequenceNum, String pathwayId) {
 				try
 				{
+				getUiHandlers().deletePathway(pathwayId);
 				getUnitwidget().remove(getUnitwidget().getWidgetIndex(this));
 				}
 				catch(Exception ex)
 				{
 					
 				}
+				
+			}
+
+			@Override
+			public void saveItem(String pathwayTitle, String pathwayId) {
+				getUiHandlers().updatePathway(pathwayId, pathwayTitle);
 				
 			}
 		};
