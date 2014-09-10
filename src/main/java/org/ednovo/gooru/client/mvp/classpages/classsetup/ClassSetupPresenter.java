@@ -25,6 +25,9 @@
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupPresenter;
+import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
+import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -38,19 +41,35 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	
 	public static final  Object UNITS_SLOT = new Object();
 	
+	private UnitSetupPresenter unitSetupPresenter;
+	
 	@Inject
-	public ClassSetupPresenter(EventBus eventBus, IsClassSetupView view) {
+	public ClassSetupPresenter(EventBus eventBus, IsClassSetupView view,UnitSetupPresenter unitSetupPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
-		//this.classSetupUnitPresenter=classSetupUnitPresenter1;
-		getPathways();
+		this.unitSetupPresenter=unitSetupPresenter;
+	
 
+	}
+	
+	@Override
+	public void onReveal() {
+		super.onReveal();
+		
+		getPathways();
 	}
 	
 	@Override
 	public void setUnit(String unitName, String pathwayId) {
 		 getView().setContent(unitName,pathwayId);
 	}
+	
+	@Override
+	public void OnUnitSetupClick() {
+		setInSlot(UNITS_SLOT, unitSetupPresenter,false);
+	}
+	
+
 	
 	public void getPathways(){
 		getView().clearPanel();
@@ -60,7 +79,6 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "10", "0", new SimpleAsyncCallback<ClasspageListDo>() {
 			@Override
 			public void onSuccess(ClasspageListDo classpageItemDo) {
-				System.out.println("classpageItemDo.getSearchResults()::"+classpageItemDo.getSearchResults().size());
 				if(classpageItemDo.getSearchResults().size()>0)
 				{
 					for(int i=0;i<classpageItemDo.getSearchResults().size();i++)
@@ -82,7 +100,6 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		AppClientFactory.getInjector().getClasspageService().v2CreatePathwayForAClass(classpageid, pathwayTitle, new SimpleAsyncCallback<CollectionDo>() {
 			@Override
 			public void onSuccess(CollectionDo pathwayItemObject) {
-				System.out.println("colldo::"+pathwayItemObject.getTitle());
 				if(pathwayItemObject.getTitle() != null)
 				{
 					setUnit(pathwayItemObject.getTitle(),pathwayItemObject.getGooruOid());
@@ -100,7 +117,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		AppClientFactory.getInjector().getClasspageService().v2UpdatePathwayById(classpageid,pathwayId, pathwayTitle, new SimpleAsyncCallback<CollectionDo>() {
 			@Override
 			public void onSuccess(CollectionDo pathwayItemObject) {
-				System.out.println("colldoupdatePathway::"+pathwayItemObject.getTitle());
+
 
 			}
 		});
@@ -112,8 +129,6 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		if(classpageid != null)
 		{
-			System.out.println("classpageid::"+classpageid);
-			System.out.println("pathwayId::"+pathwayId);
 		AppClientFactory.getInjector().getClasspageService().deletePathway(classpageid, pathwayId, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
