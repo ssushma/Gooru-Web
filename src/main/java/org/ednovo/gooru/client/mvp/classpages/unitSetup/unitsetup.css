@@ -353,14 +353,14 @@
 
 
 .HoverSetup{ 
-	display: none;
+	display: block;
 }
 
-.classMenuBlock:hover .HoverSetup{
+/* .classMenuBlock:hover .HoverSetup{
 	display : block;
 	position:absolute;
 	top:0;
-}
+} */
 
 .HoverSetup{
 	border-top:1px solid #eeeeee;
@@ -387,24 +387,24 @@
 .classDetailsMain{
 	width:725px;
 	float:left;
-	padding:10px 0;
+	padding:18px 0;
 }
 		
-.classDetailsMain .classPic{
+.classPic{
 	float:left;		
 	padding:0 3px;
 	position:relative;
-	width:62px;
+	width:70px;
 	height:80px;
 }
 
-.classDetailsMain .classPic .pic{
+.classPic .pic{
 	border-left:3px solid #77afde;
 	width:63px;
 	height:46px;
 }
 		
-.classDetailsMain .classBubble{
+ .classBubble{
 	 background: none repeat scroll 0 0 #b9bbca;
      border-radius: 50%;
      color: #ffffff;
@@ -421,7 +421,7 @@
      width: 30px;
 }
 		
-.classDetailsMain .daysCount{
+.daysCount{
 	display: block;
     padding: 25px 0 5px;
     position: relative;
@@ -477,3 +477,8 @@
 .textCenter{
 	text-align: center;
 }
+
+.dueDaysStyle{
+	margin-top: 15px;
+}
+
