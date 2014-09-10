@@ -23,10 +23,14 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+import java.util.ArrayList;
+
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
-
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentView> implements UnitAssignmentUiHandlers{
@@ -41,8 +45,9 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
-		this.studentPersonalizePresenter = studentPersonalizePresenter;
 		
+		this.studentPersonalizePresenter = studentPersonalizePresenter;
+		getPathwayItems();
 	}
 	
 	@Override
@@ -50,6 +55,25 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		System.out.println("in set classpage ... ");
 		studentPersonalizePresenter.setClasspageData(classpageDo);
 		setInSlot(_SLOT, studentPersonalizePresenter,false);
+	}
+
+	@Override
+	public void getPathwayItems() {
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems("c8afe3ee-8d98-4aa6-a161-9d7cb0626bb2", "25509399-83ab-42f1-b774-c1e424b132d0", "sequence", 10, 1, new AsyncCallback<ArrayList<CollectionItemDo>>() {
+			
+			@Override
+			public void onSuccess(ArrayList<CollectionItemDo> result) {
+				// TODO Auto-generated method stub
+				System.out.println("result,,"+result.get(0).getItemSequence());
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 	}
 	
 }
