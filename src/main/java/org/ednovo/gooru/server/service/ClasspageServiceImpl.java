@@ -1667,11 +1667,26 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public CollectionDo v2UpdatePathwayById(String classpageId, String pathwayId, String pathwayTitle) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.PATHWAYS_UPDATE,classpageId,pathwayId, getLoggedInSessionToken());
-		
+		JSONObject jsonObject=new JSONObject();
+		try {
+			jsonObject.put(TITLE, pathwayTitle);	
+		}
+		catch(JSONException e)
+		{
+			
+		}
 
-		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),jsonObject.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollection(jsonRep);
+	}
+	
+	@Override
+	public void deletePathway(String classpageId, String pathwayId) throws GwtException {
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.PATHWAYS_UPDATE, classpageId,pathwayId,
+				getLoggedInSessionToken());
+		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 }
 
