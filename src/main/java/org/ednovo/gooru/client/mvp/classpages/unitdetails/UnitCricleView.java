@@ -1,8 +1,5 @@
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
-
-import org.ednovo.gooru.client.uc.PlayerBundle;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
