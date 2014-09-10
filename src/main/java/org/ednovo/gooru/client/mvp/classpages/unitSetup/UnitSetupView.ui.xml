@@ -3,7 +3,42 @@
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header"
-	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
-	<ui:style field="playerStyle" src="unitsetup.css" />
-	<g:FlowPanel></g:FlowPanel>
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc"  xmlns:ptag= "urn:import:org.ednovo.gooru.client.uc">
+	<ui:style field="style" src="unitsetup.css" />
+	<g:HTMLPanel styleName="{style.unitDetails}">
+	    <g:HTMLPanel styleName="{style.containerTeacher}">
+			<g:HTMLPanel styleName="col-xs-12 {style.gerybg} {style.UnitSetupMain}">
+				<g:HTMLPanel styleName="col-xs-4">
+					<ptag:PPanel styleName="{style.uniSetup}">
+							<g:Image url="images/blueArrow.png"></g:Image>
+							<g:Label styleName="{style.classSetupLbl}">Class Setup</g:Label>
+					</ptag:PPanel>
+				</g:HTMLPanel>
+
+				<g:HTMLPanel styleName="col-xs-4">
+					<g:Label styleName="{style.textHeading}">Unit Setup</g:Label>
+					<ptag:PPanel styleName="{style.textSubHeading}" ui:field="subHeading"></ptag:PPanel>
+		
+					<ptag:PPanel>
+						<g:HTMLPanel styleName="col-xs-6 {style.uniRequired} {style.textCenter}">
+							<g:HTMLPanel styleName="{style.bubble}"></g:HTMLPanel>
+							Required
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="col-xs-6 {style.uniRequired} {style.textCenter}">
+							<g:HTMLPanel styleName="{style.bubbleStyle}"></g:HTMLPanel>
+							Optional
+						</g:HTMLPanel>
+					</ptag:PPanel>
+				</g:HTMLPanel>
+
+			<g:HTMLPanel styleName="col-xs-4 {style.text-right}">
+				<ptag:PPanel styleName="{style.uniSetup}">
+				    	<g:Label styleName="{style.unitdetailsLbl}">Unit Details</g:Label> 
+						<g:Image url="images/blueRightArrow.png"></g:Image>
+				</ptag:PPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+	   </g:HTMLPanel>
+	</g:HTMLPanel>
 </ui:UiBinder>

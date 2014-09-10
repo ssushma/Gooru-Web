@@ -222,3 +222,113 @@
 	height:1px;
 }
 
+
+							/*************** Unit Setup Css *****************/
+
+
+
+.unitDetails .containerTeacher{
+	background:#ffffff;
+	border-top:1px solid #CCCCCC;
+}
+
+.unitDetails .containerTeacher .leftPanel{
+	border-right:1px solid #EFEFEF;
+	padding-top:15px;
+	padding-bottom:15px;
+	padding-left:0;
+	padding-right:0;
+	
+
+    width: 13.6667% !important;
+
+}
+.unitDetails .containerTeacher .leftPanel hr{
+	margin:-1px auto -1px;
+	width:70%;
+	z-index:9;
+	position:relative;
+}
+.unitDetails .containerTeacher .rightPanel{
+
+	padding-top:30px;
+	padding-bottom:30px;
+    width: 86.3333% !important;
+}
+
+.gerybg{
+		background:#fafafa;
+		padding:8px 0;
+}
+
+
+.UnitSetupMain .uniSetup{
+	
+}
+	
+.UnitSetupMain  .uniSetup a{
+	padding:40px 0 0 0;
+}
+
+
+.uniRequired{
+	font-size:10px;
+	line-height:22px;
+}
+.uniRequired .bubble{
+	width:20px;
+	height:20px;
+	background:#B9BBCA;
+	border-radius:50% 50%;
+	-webkit-border-radius:50% 50%;
+	-moz-border-radius:50% 50%;
+	vertical-align:middle;
+	display:inline-block;
+	
+
+}
+.uniRequired .bubbleStyle{
+	width:20px;
+	height:20px;
+	background:#B9BBCA url(../images/bubble-pattren1.png) repeat;
+	border-radius:50% 50%;
+	-webkit-border-radius:50% 50%;
+	-moz-border-radius:50% 50%;
+	vertical-align:middle;
+	display:inline-block;
+	
+
+}
+
+.textHeading{
+	text-align: center;
+	font-size: 22px;
+	font-weight: 600;
+}
+
+.textRight{
+	text-align: right;
+}
+
+.textSubHeading{
+	text-align: center;
+	font-size: 14px;
+}
+
+.classSetupLbl{
+	font-size: 14px;
+	color: #1076BA;
+	margin-top: -14px;
+	margin-left: 8px;
+}
+
+.unitdetailsLbl{
+	font-size: 14px;
+	color: #1076BA;
+	margin-right: 26px;
+	margin-bottom: -17px;
+}
+
+.textCenter{
+	text-align: center;
+}

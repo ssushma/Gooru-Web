@@ -56,8 +56,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel panelContainer;
-
 	@UiField HTMLPanel circleContainerPanel;
 	@UiField Label generalLabel,requiredLabel,optionalLabel;
 	Image leftArrow = new Image();
@@ -213,10 +211,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
 			 if(slot==UnitAssignmentPresenter._SLOT){
-				 panelContainer.clear();
-				 panelContainer.add(content);
+				 assignmentContainer.clear();
+				 assignmentContainer.add(content);
 			}else{
-				panelContainer.setVisible(false);
+				assignmentContainer.setVisible(false);
 			}
 		}
 	}
