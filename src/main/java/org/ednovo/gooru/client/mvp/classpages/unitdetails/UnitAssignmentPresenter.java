@@ -25,10 +25,13 @@
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
@@ -41,6 +44,9 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	
 	private PersonalizeUnitPresenter studentPersonalizePresenter = null;
 	
+	private int limit = 5;
+	private int offSet = 0;
+	
 	@Inject
 	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter) {
 		super(eventBus, view);
@@ -48,6 +54,8 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		
 		this.studentPersonalizePresenter = studentPersonalizePresenter;
 		getPathwayItems();
+		
+		getPathwayUnits(limit,offSet);
 	}
 	
 	@Override
@@ -74,6 +82,18 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			}
 		});
 		
+	}
+	
+	public void getPathwayUnits(int limit, int offset) {
+		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClasspageListDo>() {
+
+			@Override
+			public void onSuccess(ClasspageListDo result) {
+				System.out.println("sucesss");
+				getView().showUnitNames(result);
+			}
+		});
 	}
 	
 }

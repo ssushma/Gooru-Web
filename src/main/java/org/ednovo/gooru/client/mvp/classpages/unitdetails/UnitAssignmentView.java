@@ -28,12 +28,14 @@ import java.util.Iterator;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -52,7 +54,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@UiField HTMLPanel unitPanel;
 	
+	@UiField Label lblMoreUnits;
+	
 	UnitAssignmentCssBundle res;
+	
+	ClasspageListDo classpageListDo;
+	
+	private int limit = 5;
+	private int offSet = 0;
 		
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -68,7 +77,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		assignmentContainer.add(new CollectionsView(null, 0));
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
-		showUnitNames();
+//		showUnitNames();
 		setCircleData();
 	}
 	
@@ -238,5 +247,32 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		}
 	}
+	@Override
+	public void showUnitNames(ClasspageListDo classpageListDo) {
+		// TODO Auto-generated method stub
+		this.classpageListDo=classpageListDo;
+		for(int i=0; i<limit; i++){
+			String unitName=classpageListDo.getSearchResults().get(i).getResource().getTitle();
+			int number=classpageListDo.getSearchResults().get(i).getItemSequence();
+			String sequenceNumber=Integer.toString(number);
+			UnitWidget unitsWidget=new UnitWidget(sequenceNumber, unitName);
+			unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget));
+			unitsWidget.getElement().setId(sequenceNumber);
+			unitPanel.add(unitsWidget);
+		}
+		
+	}
+	
+	@UiHandler("lblMoreUnits")
+	public void clickOnMoreUnits(ClickEvent event){
+		offSet=offSet+5;
+		getUiHandlers().getPathwayUnits(limit, offSet);
+	}
+
+	@Override
+	public void hideMoreUnitsLink() {
+		
+	}
+
 	
 }

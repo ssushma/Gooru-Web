@@ -20,7 +20,7 @@
 			    </uc:UlPanel>  
 			    
 				<g:HTMLPanel styleName="{unitStyle.uniSetup}">
-					<a href="#">More Units</a>
+					<g:Label styleName="{unitStyle.moreUnits}" ui:field="lblMoreUnits">More Units</g:Label>
 				</g:HTMLPanel>
 				<!-- <ul class="list-unstyled {unitStyle.unitMenu}">
 					<li><a href="#"><span class="{unitStyle.number}">1</span><span class="{unitStyle.name}">Unit  <br/>Name</span></a></li>
