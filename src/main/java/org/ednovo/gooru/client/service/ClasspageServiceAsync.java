@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
@@ -37,10 +38,12 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
+
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -180,5 +183,10 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	public void v2GetAllClass(String limit, String offSet, AsyncCallback<ClasspageListDo> callback);
 	
 	public void v2ChangeAssignmentSequence(String classpageId, String classpageAssignmentId, int sequence, AsyncCallback<Void> callback);
+	
+	public void v2GetPathwayItems(String classpageId,
+			String pathwayGooruOid,String sequence,int limit,int offSet,AsyncCallback<ArrayList<CollectionItemDo>> callback);
+	
+	public void v2ReorderPathwaySequence(String classpageId,String pathwayItemId,int sequence, AsyncCallback<Void> callback);
 	
 }

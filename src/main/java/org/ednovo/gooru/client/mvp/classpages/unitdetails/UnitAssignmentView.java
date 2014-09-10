@@ -107,12 +107,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		generalLabel.setText("General");
 		requiredLabel.setText("Required");
 		optionalLabel.setText("Optional");
-		leftArrow.addClickHandler(new cleckOnNext());
-		rightArrow.addClickHandler(new cleckOnNext());
+		leftArrow.addClickHandler(new cleckOnNext("left"));
+		rightArrow.addClickHandler(new cleckOnNext("right"));
 		circleContainerPanel.clear();
 		leftArrow.setUrl("images/leftSmallarrow.png");
 		circleContainerPanel.add(leftArrow);
-		
+	
 		for(int i=1;i<11;i++){
 			final UnitCricleView unitCricleViewObj =new UnitCricleView(true,i);
 			unitCricleViewObj.getElement().setId(i+"");
@@ -157,9 +157,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 	}
 	public class cleckOnNext implements ClickHandler{
+		String value;
+		private cleckOnNext(String value){
+			this.value = value;
+		}
 		
 		@Override
 		public void onClick(ClickEvent event) {
+			if(value=="right"){
 			circleContainerPanel.clear();
 			leftArrow.setUrl("images/leftSmallarrow.png");
 			circleContainerPanel.add(leftArrow);
@@ -189,8 +194,40 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				});
 			}
 			}
+		}else
+		{
+
+			circleContainerPanel.clear();
+			leftArrow.setUrl("images/leftSmallarrow.png");
+			circleContainerPanel.add(leftArrow);
+			
+			for(int i=1;i<11;i++){
+				final UnitCricleView unitCricleViewObj =new UnitCricleView(true,i);
+				circleContainerPanel.add(unitCricleViewObj);
+			}
+			rightArrow.setUrl("images/rightSmallarrow.png");
+			circleContainerPanel.add(rightArrow);
+			Iterator<Widget> widgets = circleContainerPanel.iterator();
+			
+			while (widgets.hasNext()) {
+				final Widget widget = widgets.next();
+				if (widget instanceof UnitCricleView) {
+					((UnitCricleView) widget).addClickHandler(new ClickHandler() {
+
+						@Override
+						public void onClick(ClickEvent event) {
+							final Iterator<Widget> widgetsPanel = circleContainerPanel.iterator();
+							while (widgetsPanel.hasNext()) {
+								 widgetsPanel.next().removeStyleName(res.unitAssignment().active());
+							}
+							widget.addStyleName(res.unitAssignment().active());
+						}
+						
+				});
+			}
+			}	
 		}
-		
+		}
 	}
 	
 }

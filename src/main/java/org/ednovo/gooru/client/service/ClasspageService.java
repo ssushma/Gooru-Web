@@ -37,6 +37,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
@@ -485,4 +486,49 @@ public interface ClasspageService extends BaseService {
 	
 	public void v2ChangeAssignmentSequence(String classpageId,
 			String classpageAssignmentId, int sequence) throws GwtException, ServerDownException;
+	/**
+	 * @function v2GetPathwayItems 
+	 * 
+	 * @created_date : Sep 10, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param classpageId
+	 * @param pathwayGooruOid
+	 * @throws GwtException,ServerDownException
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	public ArrayList<CollectionItemDo> v2GetPathwayItems(String classpageId,
+			String pathwayGooruOid,String sequence,int limit,int offSet) throws GwtException, ServerDownException;
+	/**
+	 * @function v2ReorderPathwaySequence 
+	 * 
+	 * @created_date : Sep 10, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param classpageId
+	 * @param pathwayGooruOid
+	 * @param sequence
+	 * @throws GwtException,ServerDownException
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	public void v2ReorderPathwaySequence(String classpageId,String pathwayItemId,int sequence) throws GwtException, ServerDownException;
 }
