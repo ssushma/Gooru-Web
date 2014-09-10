@@ -1544,7 +1544,49 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}catch(Exception e){
 			
 		}
+	}
+
+	@Override
+	public ArrayList<CollectionItemDo> v2GetPathwayItems(String classpageId, String pathwayGooruOid,String sequenceNo,int limit,int offSet)
+			throws GwtException, ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.GET_PATHWAY_ITEM,classpageId,pathwayGooruOid,getLoggedInSessionToken(),sequenceNo,limit+"",offSet+"");
+		System.out.println("v2GetPathwayItems.."+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
+				getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializePathwayItem(jsonRep);
+		
+	}
+
+	@Override
+	public void v2ReorderPathwaySequence(String classpageId,
+			String pathwayItemId,int sequence) throws GwtException, ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.REORDER_PATHWAY_SEQUENCE, getLoggedInSessionToken(),classpageId,pathwayItemId,sequence+"");
+		System.out.println("v2ReorderPathwaySequence.."+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),
+				getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		
+		
 	}	
+
+	public ArrayList<CollectionItemDo> deserializePathwayItem(JsonRepresentation jsonRep) {
+		try {
+				if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject()
+						.toString(), new TypeReference<ArrayList<CollectionItemDo>>() {
+				});
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<CollectionItemDo>();
+		
+	}
 	
 	@Override
 	public ClasspageListDo v2GetPathwaysOptimized(String classpageId, String limit, String offSet) throws GwtException {
@@ -1687,6 +1729,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				UrlToken.PATHWAYS_UPDATE, classpageId,pathwayId,
 				getLoggedInSessionToken());
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
+
 	}
 }
+
 

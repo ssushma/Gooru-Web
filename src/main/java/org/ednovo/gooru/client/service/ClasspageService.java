@@ -487,6 +487,53 @@ public interface ClasspageService extends BaseService {
 	public void v2ChangeAssignmentSequence(String classpageId,
 			String classpageAssignmentId, int sequence) throws GwtException, ServerDownException;
 
+	/**
+	 * @function v2GetPathwayItems 
+	 * 
+	 * @created_date : Sep 10, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param classpageId
+	 * @param pathwayGooruOid
+	 * @throws GwtException,ServerDownException
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	public ArrayList<CollectionItemDo> v2GetPathwayItems(String classpageId,
+			String pathwayGooruOid,String sequence,int limit,int offSet) throws GwtException, ServerDownException;
+	/**
+	 * @function v2ReorderPathwaySequence 
+	 * 
+	 * @created_date : Sep 10, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param classpageId
+	 * @param pathwayGooruOid
+	 * @param sequence
+	 * @throws GwtException,ServerDownException
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	public void v2ReorderPathwaySequence(String classpageId,String pathwayItemId,int sequence) throws GwtException, ServerDownException;
+
+
 	ClasspageListDo v2GetPathwaysOptimized(String classpageId, String limit,
 			String offSet) throws GwtException;
 
@@ -507,5 +554,6 @@ public interface ClasspageService extends BaseService {
 
 	void deletePathway(String classpageId, String pathwayId)
 			throws GwtException;
+
 
 }
