@@ -505,4 +505,7 @@ public interface ClasspageService extends BaseService {
 	CollectionDo v2UpdatePathwayById(String classpageId, String pathwayId,
 			String pathwayTitle) throws GwtException;
 
+	void deletePathway(String classpageId, String pathwayId)
+			throws GwtException;
+
 }
