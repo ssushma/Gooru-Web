@@ -19,26 +19,26 @@
 					<g:HTMLPanel styleName="row {style.assaindetailsMain}">
 						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}">Assignment Details:</g:Label>
 						<g:HTMLPanel styleName="col-xs-6 {style.assignButtons} text-right">
-							<g:Button styleName="secondary">Cancel</g:Button> 
-							<g:Button styleName="primary">Save</g:Button>
-							<g:Button styleName="secondary">Edit</g:Button>  
+							<g:Button styleName="secondary" ui:field="cancelAssignmentDetailsButton">Cancel</g:Button> 
+							<g:Button styleName="primary" ui:field="saveAssignmentDetailsButton">Save</g:Button>
+							<g:Button styleName="secondary" ui:field="editAssignmentDetailsButton">Edit</g:Button>  
 						</g:HTMLPanel>
 						<g:Label styleName="clearfix"></g:Label>
 					</g:HTMLPanel>
 					<g:FlowPanel styleName="{style.borderBox}">
 						<g:FlowPanel styleName="{style.directionContainer}">
 							<g:Label styleName="{style.direction}">Direction:&nbsp;&nbsp;</g:Label>
-							<g:HTMLPanel styleName="{style.directionText}" ui:field="directionContentPanel">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor turpis id nisl iaculis, sit amet convallis nibh dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor turpis id nisl iaculis, sit amet convallis nibh dapibus.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor turpis id nisl iaculis, sit amet convallis nibh dapibus.</g:HTMLPanel>
+							<g:HTMLPanel styleName="{style.directionText}" ui:field="directionContentPanel"></g:HTMLPanel>
 						</g:FlowPanel>
 						<g:FlowPanel styleName="{style.score}">
 							<g:FlowPanel styleName="col-xs-6 {style.leftScore}">
 								<g:Label styleName="{style.direction}">Minimum Score: &nbsp;&nbsp;</g:Label>
-								<g:Label styleName="{style.scoreText}">85%</g:Label>
+								<g:HTMLPanel styleName="{style.scoreText}" ui:field="minimumScoreContentPanel"></g:HTMLPanel>
 							</g:FlowPanel>
 							<g:FlowPanel styleName="col-xs-6 {style.rightScore}">
 								<g:Label styleName="{style.direction}">Suggested Time:&nbsp;&nbsp;</g:Label>
-								<g:InlineLabel styleName="{style.scoreText}">02</g:InlineLabel><g:InlineLabel>&nbsp;&nbsp; hour &nbsp;&nbsp;</g:InlineLabel>
-								<g:InlineLabel styleName="{style.scoreText}">20</g:InlineLabel><g:InlineLabel> &nbsp;&nbsp;min</g:InlineLabel>
+								<g:InlineLabel styleName="{style.scoreText}" ui:field="suggestedHourLabel">02</g:InlineLabel><g:InlineLabel>&nbsp;&nbsp; hour &nbsp;&nbsp;</g:InlineLabel>
+								<g:InlineLabel styleName="{style.scoreText}" ui:field="suggestedMinutesLabel">20</g:InlineLabel><g:InlineLabel> &nbsp;&nbsp;min</g:InlineLabel>
 							</g:FlowPanel>
 							<g:Label styleName="clearfix"></g:Label>
 						</g:FlowPanel>

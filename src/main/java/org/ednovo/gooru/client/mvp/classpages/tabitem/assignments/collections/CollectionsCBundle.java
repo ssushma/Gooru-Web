@@ -44,6 +44,7 @@ public interface CollectionsCBundle extends ClientBundle {
 		String openStateCollectionHeader();
 		String completeStateCollectionHeader();
 		String completedStatus();
+		String minimumScoreTextbox();
 	}
 
 	@Source("collectionsstyles.css")
