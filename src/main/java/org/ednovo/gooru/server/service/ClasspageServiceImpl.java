@@ -25,7 +25,6 @@
 package org.ednovo.gooru.server.service;
 
 import java.io.IOException;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -50,6 +49,7 @@ import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
+import org.ednovo.gooru.shared.model.content.ClassSetupDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -1577,7 +1577,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ArrayList<CollectionItemDo> deserializePathwayItem(JsonRepresentation jsonRep) {
 		try {
 				if (jsonRep != null && jsonRep.getSize() != -1) {
-				return JsonDeserializer.deserialize(jsonRep.getJsonObject()
+				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
 						.toString(), new TypeReference<ArrayList<CollectionItemDo>>() {
 				});
 			}
@@ -1731,6 +1731,42 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 
 	}
+	
+	@Override
+	public ArrayList<ClassSetupDo> v2AssignCollectionTOPathway(String classpageId,
+			String pathwayId, String collectionId) throws GwtException,
+			ServerDownException {
+		// TODO Auto-generated method stub
+		JsonRepresentation jsonRep = null;
+		System.out.println("classpageId :::::"+classpageId);
+		System.out.println("pathwayId:::::"+pathwayId);
+		System.out.println("collectionId:::::"+collectionId);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ASSIGN_COLLECTION_TO_PATHWAY, classpageId, pathwayId, collectionId, getLoggedInSessionToken());
+		System.out.println("v2AssignCollectionTOPathway  url:::::"+url);
+		try {
+			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),"");
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return deserializeAssignPathway(jsonRep);
+	}
+
+
+
+	public ArrayList<ClassSetupDo> deserializeAssignPathway(JsonRepresentation jsonRep){
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
+						.toString(), new TypeReference<ArrayList<ClassSetupDo>>() {
+				});
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<ClassSetupDo>();
+	}	
+	
 }
 
 

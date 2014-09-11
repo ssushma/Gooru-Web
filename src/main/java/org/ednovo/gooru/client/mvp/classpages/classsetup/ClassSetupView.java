@@ -23,6 +23,11 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.shelf.ShelfUiHandlers;
@@ -42,12 +47,13 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> implements IsClassSetupView{
 
 	@UiField VerticalPanel unitwidget;
 	@UiField Button addUnitBtn;
 	@UiField PPanel unitSetupContainer;
-	@UiField Label unitSetupClick;
+	@UiField Label unitSetupButton;
 	
 	private HandlerRegistration addUnitClickHandler;
 	
@@ -67,22 +73,14 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			addUnitClickHandler.removeHandler();
 		}
 		addUnitClickHandler=addUnitBtn.addClickHandler(new ClickHandler() {
-
 			@Override
 			public void onClick(ClickEvent event) {
 			getUiHandlers().createPathway("Unitname");
 				
 			}
-			
 		});
-		unitSetupClick.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				getUiHandlers().OnUnitSetupClick();
-				
-			}
-		});
+		
+		unitSetupButton.addClickHandler(new UnitSetupEvent());
 	}
 
 	public VerticalPanel getUnitwidget() {
@@ -101,32 +99,60 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 	@Override
 	public void setContent(String unitName, String pathwayId) {
 	//Window.alert("getUnitwidget().getWidgetCount()::"+getUnitwidget().getWidgetCount());
-		 ClassSetupUnitView cv = new ClassSetupUnitView(getUnitwidget().getWidgetCount(),unitName,pathwayId) {
+		 ClassSetupUnitView classSetupUnitView = new ClassSetupUnitView(getUnitwidget().getWidgetCount(),unitName,pathwayId) {
 			
 			@Override
 			public void deleteItem(int sequenceNum, String pathwayId) {
-				try
-				{
-				getUiHandlers().deletePathway(pathwayId);
-				getUnitwidget().remove(getUnitwidget().getWidgetIndex(this));
+				try{
+					getUiHandlers().deletePathway(pathwayId);
+					getUnitwidget().remove(getUnitwidget().getWidgetIndex(this));
 				}
-				catch(Exception ex)
-				{
-					
+				catch(Exception ex){
 				}
-				
 			}
-
 			@Override
 			public void saveItem(String pathwayTitle, String pathwayId) {
 				getUiHandlers().updatePathway(pathwayId, pathwayTitle);
-				
 			}
 		};
-		 getUnitwidget().add(cv);
+		classSetupUnitView.btnAssignment.addClickHandler(new ShowAssignPopupEvent(pathwayId));
+		 getUnitwidget().add(classSetupUnitView);
 	}
 	
+	private class UnitSetupEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String,String> params = new HashMap<String,String>();
+			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+			String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+			params.put("pageSize", pageSize);
+			params.put("classpageid", classpageid);
+			params.put("pageNum", pageNum);
+			params.put("pos", pos);
+			params.put("tab", "unitsetup");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		}
+	}
+	
+	 private class ShowAssignPopupEvent implements ClickHandler{
 
+		 String pathwayIdVal = "";
+		 public ShowAssignPopupEvent(String pathwayId) {
+			 pathwayIdVal = pathwayId;
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+		 public void onClick(ClickEvent event) {
+			if(!pathwayIdVal.isEmpty())
+			{
+		 getUiHandlers().addAssignmentsContainerPopup(pathwayIdVal);
+			}
+		 }
+	 }
 	
 	
 	

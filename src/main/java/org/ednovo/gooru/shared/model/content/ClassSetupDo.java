@@ -22,20 +22,65 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.unitdetails;
-import java.util.ArrayList;
+package org.ednovo.gooru.shared.model.content;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import java.io.Serializable;
 
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+@JsonInclude(Include.NON_NULL)
+public class ClassSetupDo implements Serializable
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private String collectionItemId;
+	private int itemSequence;
+	private String itemType;
+	private ResourceDo resource;
+	
+	public ClassSetupDo() {}
+	
+	public ResourceDo getResource() {
+		return resource;
+	}
 
-public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentUiHandlers>{
-	 void getSequence(ArrayList<CollectionItemDo> getSeq);
-	 void getPathwayItems();
-	 public void showUnitNames(ClasspageListDo classpageListDo);
-	 public void hideMoreUnitsLink();
+	public void setResource(ResourceDo resource) {
+		this.resource = resource;
+	}
 
+	
+	public String getCollectionItemId() {
+		return collectionItemId;
+	}
+
+
+	public void setCollectionItemId(String collectionItemId) {
+		this.collectionItemId = collectionItemId;
+	}
+
+
+	public int getItemSequence() {
+		return itemSequence;
+	}
+
+
+	public void setItemSequence(int itemSequence) {
+		this.itemSequence = itemSequence;
+	}
+
+
+	public String getItemType() {
+		return itemType;
+	}
+
+
+	public void setItemType(String itemType) {
+		this.itemType = itemType;
+	}
+	
 
 }
