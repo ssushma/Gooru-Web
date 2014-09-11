@@ -1696,7 +1696,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			}
 
 			collectionItemJsonObject.put("itemSequence", collectionItemDo.getItemSequence());
-			collectionItemJsonObject.put("isRequired", true);
+			//collectionItemJsonObject.put("isRequired", true);
 
 
 		} catch (JSONException e) {
@@ -1736,7 +1736,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ArrayList<ClassSetupDo> v2AssignCollectionTOPathway(String classpageId,
 			String pathwayId, String collectionId) throws GwtException,
 			ServerDownException {
-		// TODO Auto-generated method stub
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ASSIGN_COLLECTION_TO_PATHWAY, classpageId, pathwayId, collectionId, getLoggedInSessionToken());
 		try {
@@ -1762,6 +1761,28 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return new ArrayList<ClassSetupDo>();
 	}	
+	
+	
+	@Override
+	public CollectionDo updateAssignmentStatus(String collectionItemId, Boolean isRequiredStatus) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ASSIGN_STATUS_UPDATE,collectionItemId,getLoggedInSessionToken());
+		JSONObject jsonObject=new JSONObject();
+		JSONObject collectionJsonObject=new JSONObject();
+		try {
+			collectionJsonObject.put("itemType", "added");	
+			collectionJsonObject.put("isRequired", isRequiredStatus);
+			jsonObject.put("collectionItem", collectionJsonObject);
+		}
+		catch(JSONException e)
+		{
+			
+		}
+
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),jsonObject.toString());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeCollection(jsonRep);
+	}
 	
 }
 
