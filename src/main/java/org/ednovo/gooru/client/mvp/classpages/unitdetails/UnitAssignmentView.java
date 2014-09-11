@@ -23,8 +23,12 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -36,11 +40,13 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHandlers> implements IsUnitAssignmentView{
 
 	@UiField HTMLPanel assignmentContainer;
@@ -55,6 +61,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@UiField HTMLPanel unitPanel;
 	
 	@UiField Label lblMoreUnits;
+	
+	@UiField Anchor unitSetupButton;
 	
 	UnitAssignmentCssBundle res;
 	
@@ -77,7 +85,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		assignmentContainer.add(new CollectionsView(null, 0));
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
-//		showUnitNames();
+		unitSetupButton.addClickHandler(new UnitSetupEvents());
 		setCircleData();
 	}
 	
@@ -166,12 +174,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
-			 if(slot==UnitAssignmentPresenter._SLOT){
-				 assignmentContainer.clear();
-				 assignmentContainer.add(content);
-			}else{
-				assignmentContainer.setVisible(false);
-			}
+//			 if(slot==UnitAssignmentPresenter._SLOT){
+//				 assignmentContainer.clear();
+//				 assignmentContainer.add(content);
+//			}else{
+//				assignmentContainer.setVisible(false);
+//			}
 		}
 	}
 	public class cleckOnNext implements ClickHandler{
@@ -274,5 +282,28 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 	}
 
+	 private class UnitSetupEvents implements ClickHandler{
+			@Override
+			public void onClick(ClickEvent event) {
+				revealPlace("unitsetup");
+			}
+		}
+		 public void revealPlace(String tabName){
+				Map<String,String> params = new HashMap<String,String>();
+				String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+				String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+				params.put("pageSize", pageSize);
+				params.put("classpageid", classpageid);
+				params.put("pageNum", pageNum);
+				params.put("pos", pos);
+				if(tabName!=null){
+					params.put("tab", tabName);
+				}
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		 }
+		
 	
 }

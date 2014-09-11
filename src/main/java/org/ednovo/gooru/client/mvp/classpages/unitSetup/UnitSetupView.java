@@ -23,16 +23,25 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> implements IsUnitSetupView{
 
 
@@ -47,10 +56,13 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	@UiField PPanel subHeading;
 	@UiField VerticalPanel unitAssignmentWidgetContainer;
 	
+	@UiField Anchor classSetupAnchor,unitDetailsAnchor;
 	
 	@Inject
 	public UnitSetupView(){
 		setWidget(uiBinder.createAndBindUi(this));	
+		classSetupAnchor.addClickHandler(new ClassSetupEvents());
+		unitDetailsAnchor.addClickHandler(new UnitDetailsEvent());
 		setIdAndText();
 	}
 
@@ -58,5 +70,34 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 		subHeading.getElement().setInnerText("Setup your units by adding assignments");
 		unitAssignmentWidgetContainer.add(new UnitsAssignmentWidgetView(9)); 
 	}
+	private class UnitDetailsEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			revealPlace("unitdetails");
+		}
+	}
+	
+	 private class ClassSetupEvents implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			revealPlace(null);
+		}
+	}
+	 public void revealPlace(String tabName){
+			Map<String,String> params = new HashMap<String,String>();
+			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+			String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+			params.put("pageSize", pageSize);
+			params.put("classpageid", classpageid);
+			params.put("pageNum", pageNum);
+			params.put("pos", pos);
+			if(tabName!=null){
+				params.put("tab", tabName);
+			}
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+	 }
 	
 }
