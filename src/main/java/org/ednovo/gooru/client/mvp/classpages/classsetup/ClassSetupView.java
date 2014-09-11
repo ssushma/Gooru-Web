@@ -85,15 +85,21 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 	public ClassSetupView(){
 		setWidget(uiBinder.createAndBindUi(this));		
 		
+		paginationPanel.setVisible(false);
+		unitSetupContainer.setVisible(false);
+		
 		if(addUnitClickHandler!=null) {
 			addUnitClickHandler.removeHandler();
 		}
 		addUnitClickHandler=addUnitBtn.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				
+				unitSetupContainer.setVisible(true);
 	
 				if(totalHitCounter >= 10)
 				{
+					paginationPanel.setVisible(true);
 					int totalPages = (totalHitCounter / 10)
 							+ ((totalHitCounter % 10) > 0 ? 1 : 0);
 					
@@ -145,6 +151,8 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 	
 	@Override
 	public void setContent(String unitName, String pathwayId, int sequenceNum) {
+		
+		unitSetupContainer.setVisible(true);
 		 ClassSetupUnitView classSetupUnitView = new ClassSetupUnitView(sequenceNum,unitName,pathwayId) {
 			
 			@Override
@@ -215,6 +223,9 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			System.out.println("pagenumVal::"+pagenumVal);
 			totalHitCounter = totalCount;
 			paginationPanel.getElement().setInnerHTML("");
+			paginationPanel.setVisible(true);
+			if(totalCount>10)
+			{
 			int totalPages = (totalCount / 10)
 					+ ((totalCount % 10) > 0 ? 1 : 0);
 			if (totalPages > 1) {
@@ -233,6 +244,8 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 					paginationPanel.add(new PaginationButtonUc(pagenumVal + 1, NEXT, this));
 				}
 			}
+			}
+			
 		}
 
 
@@ -257,6 +270,15 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			}
 
 		}
+
+		@Override
+		public void zeroResults() {
+			paginationPanel.setVisible(false);
+			unitSetupContainer.setVisible(false);
+			
+		}
+		
+	
 		
 	
 	

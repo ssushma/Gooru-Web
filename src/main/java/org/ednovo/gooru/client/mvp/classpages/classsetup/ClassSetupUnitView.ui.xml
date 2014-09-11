@@ -13,6 +13,7 @@
 <g:HTMLPanel styleName="{playerStyle.unitInput}">
 <g:HTMLPanel ui:field="inputContainer">
 <g:TextBox ui:field="unitName" name="" /> 
+<g:Label ui:field="unitNameErrorLabel"></g:Label>
 <g:HTMLPanel styleName="{playerStyle.saveBtns}" ui:field="buttonsContainer"> 
 <g:Button ui:field="cancelBtn" styleName="secondary"> Cancel</g:Button>  
 <g:Button ui:field="saveBtn" styleName="primary"> Save</g:Button> </g:HTMLPanel>

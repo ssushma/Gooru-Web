@@ -23,12 +23,18 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -51,7 +57,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 	@UiField TextBox unitName;
 	@UiField Button btnAssignment;
 	@UiField HTMLEventPanel divContainer;
-	@UiField Label unitnameLBL;
+	@UiField Label unitnameLBL,unitNameErrorLabel;
 	private static ClassSetupUnitViewUiBinder uiBinder = GWT.create(ClassSetupUnitViewUiBinder.class);
 
 	interface ClassSetupUnitViewUiBinder extends UiBinder<Widget, ClassSetupUnitView> {
@@ -71,8 +77,10 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 		inputContainer.setVisible(false);
 		divContainer.setVisible(true);
 		editBtn.setVisible(false);
+		unitNameErrorLabel.setVisible(false);
 		unitName.setText(unitNameVal);
 		unitnameLBL.setText(unitName.getText());
+		unitName.setMaxLength(50);
 		setPresenter(new ClassSetupUnitPresenter(this));
 		unitSequence.getElement().setInnerHTML((sequenceNum)+".");
 		
@@ -99,12 +107,48 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 			@Override
 			public void onClick(ClickEvent event) {
 				//api call to save data to be added
-				unitnameLBL.setText(unitName.getText());
-				inputContainer.setVisible(false);
-				divContainer.setVisible(true);
-				editBtn.setVisible(false);
-				saveItem(unitName.getText(),pathwayId);
+				if(!unitName.getText().isEmpty())
+				{
+				Map<String, String> parms = new HashMap<String, String>();
+				parms.put("text", unitName.getText());
+				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+					
+					@Override
+					public void onSuccess(Boolean value) {
+						boolean isHavingBadWords = value;
+						if (isHavingBadWords){
+							unitNameErrorLabel.setText(i18n.GL0554());
+							unitNameErrorLabel.setVisible(true);
+							unitNameErrorLabel.getElement().getStyle().setColor("orange");
+							unitNameErrorLabel.getElement().getStyle().setPosition(Position.ABSOLUTE);
+						}else{
+							unitNameErrorLabel.setVisible(false);
+							unitNameErrorLabel.getElement().getStyle().clearBackgroundColor();
+							unitNameErrorLabel.getElement().getStyle().setBorderColor("#ccc");
+							
+							unitnameLBL.setText(unitName.getText());
+							inputContainer.setVisible(false);
+							divContainer.setVisible(true);
+							editBtn.setVisible(false);
+							saveItem(unitName.getText(),pathwayId);
+							
+						}
+					}
+				});
+				}
+				else
+				{
+					unitNameErrorLabel.setText(i18n.GL2177());
+					unitNameErrorLabel.setVisible(true);
+					unitNameErrorLabel.getElement().getStyle().setBorderColor("orange");
+				}
 				
+				
+				
+				
+				
+				
+		
 			}
 		});
 		editBtn.addClickHandler(new ClickHandler() {
