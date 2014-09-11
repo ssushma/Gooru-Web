@@ -23,22 +23,19 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -198,12 +195,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
-//			 if(slot==UnitAssignmentPresenter._SLOT){
-//				 assignmentContainer.clear();
-//				 assignmentContainer.add(content);
-//			}else{
+			 if(slot==UnitAssignmentPresenter._SLOT){
+				 assignmentContainer.clear();
+				 assignmentContainer.add(content);
+			}else{
 //				assignmentContainer.setVisible(false);
-//			}
+			}
 		}
 	}
 	public class cleckOnNext implements ClickHandler{
