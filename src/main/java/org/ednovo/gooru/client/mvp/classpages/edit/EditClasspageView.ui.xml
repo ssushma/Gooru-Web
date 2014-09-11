@@ -1,11 +1,13 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
-	xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
+	xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home"
+	xmlns:c="urn:import:com.google.gwt.user.cellview.client">
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle"
 		field="res" />
 	<g:FlowPanel ui:field="mainFlowPanel">
+	
 		<g:HTMLPanel styleName="{res.css.newMockLeftAlignController}">
 			<g:FocusPanel styleName="{res.css.myCollectionShareStudentContainer}"
 				ui:field="collectionFloPanel">
@@ -180,10 +182,12 @@
 				<!-- This is not used any more -->
 			</g:HTMLPanel>
 		</g:HTMLPanel>
-		<g:HTMLPanel ui:field="frameDiv">
+		<g:HTMLPanel ui:field="frameDiv" styleName="{res.css.frameDiv}">
 		<g:Button styleName="{res.css.backArrowButton} backArrowButton" ui:field="backArrowButton"></g:Button>
 		<g:Button styleName="primary {res.css.monitorButton}" ui:field="monitorProgress"></g:Button>
 		<g:Frame styleName="{res.css.iframeBorder}" ui:field="frameUrl" width="900" height="500"></g:Frame>
+		<g:VerticalPanel ui:field="ananyticsPanel">
+		</g:VerticalPanel>
 		</g:HTMLPanel>
 		</g:HTMLPanel>
 		<sg:FooterUc />

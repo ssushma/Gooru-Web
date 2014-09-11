@@ -92,5 +92,7 @@ public interface EditClasspageUiHandlers extends BaseUiHandlers, AssignmentHandl
 	*/
 	
 	void getAssignmentsProgress(String classpageId, String offSet, String limit);
+	
+	void getCollectionProgressData();
 
 }

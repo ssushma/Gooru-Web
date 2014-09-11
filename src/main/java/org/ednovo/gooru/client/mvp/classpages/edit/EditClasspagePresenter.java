@@ -50,9 +50,11 @@ import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.shelf.ErrorPopup;
 import org.ednovo.gooru.client.mvp.shelf.event.AssignmentEvent;
+import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
@@ -92,6 +94,9 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	@Inject
 	private ClasspageServiceAsync classpageService;
+	
+	@Inject
+	private  AnalyticsServiceAsync analyticService;
 	
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
 	
@@ -342,6 +347,14 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		this.classpageService = classpageService;
 	}
 	
+	public AnalyticsServiceAsync getAnalyticService() {
+		return analyticService;
+	}
+
+	public void setAnalyticService(AnalyticsServiceAsync analyticService) {
+		this.analyticService = analyticService;
+	}
+
 	/** 
 	 * This method is to get the collectionAsyncCallback
 	 */
@@ -591,6 +604,22 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 					getView().displayAssignmentPath(classpageItemsList);
 					//getClasspage();
 				}
+			}
+		});
+	}
+
+	@Override
+	public void getCollectionProgressData() {
+		this.analyticService.getCollectionProgressData(new AsyncCallback<ArrayList<CollectionProgressDataDo>>() {
+			
+			@Override
+			public void onSuccess(ArrayList<CollectionProgressDataDo> result) {
+				getView().setCollectionProgressData(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
 			}
 		});
 	}

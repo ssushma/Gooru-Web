@@ -1278,3 +1278,76 @@ margin-bottom: -10px;
 	width: 218px;
 	top: 29%;
 }
+.emoticon_i {
+	background-position: -7px -4px;
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+}
+.emoticon_ii {
+	background-position: -53px -4px;
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+}
+.emoticon_iii {
+
+	background-position: -141px -4px;
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+	
+}
+.emoticon_iv {
+	background-position: -184px -4px;
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+}
+.emoticon_v {
+	background-position: -232px -4px;
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+}
+.emoticon_vi {
+	background-position: -267px -4px;
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+}
+.emoticon_vii {
+	background-position: -184px -51px;
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+}
+.emoticon_viii {
+	
+	background-position: -95px -4px;
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+
+}
+.emoticon_ix {
+	background-position:-143px -52px;
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+}
+.emoticon_x {
+	background-position:-223px -52px;
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+}
+.spriteType {
+	background: url(/images/emotics.png) no-repeat;
+}
+.frameDiv{
+	width:100%;
+	overflow: hidden;
+	background-color: white;
+	text-align: center;
+}

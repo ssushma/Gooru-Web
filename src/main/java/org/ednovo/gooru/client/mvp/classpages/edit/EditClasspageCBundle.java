@@ -232,7 +232,19 @@ public interface EditClasspageCBundle extends ClientBundle{
         
         String studentStyle();
         String techerStyle();
-
+       
+        String emoticon_i();
+        String emoticon_ii();
+        String emoticon_iii();
+        String emoticon_iv();
+        String emoticon_v();
+        String emoticon_vi();
+        String emoticon_vii();
+        String emoticon_viii();
+        String emoticon_ix();
+        String emoticon_x();
+        String spriteType();
+        String frameDiv();
 	}
 	@NotStrict
 	@Source("editclasspage.css")
