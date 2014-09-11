@@ -247,12 +247,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		}
 	public class UnitSeqMouseOutHandler implements MouseOutHandler{
-
-		@Override
-		public void onMouseOut(MouseOutEvent event) {
-			unitAssigmentReorder.hide();
-			
-		}
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				unitAssigmentReorder.hide();
+			}
 		}
 
 	@Override
