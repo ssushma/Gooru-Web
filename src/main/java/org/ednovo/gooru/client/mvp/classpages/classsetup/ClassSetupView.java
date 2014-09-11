@@ -215,6 +215,8 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			System.out.println("pagenumVal::"+pagenumVal);
 			totalHitCounter = totalCount;
 			paginationPanel.getElement().setInnerHTML("");
+			if(totalCount>10)
+			{
 			int totalPages = (totalCount / 10)
 					+ ((totalCount % 10) > 0 ? 1 : 0);
 			if (totalPages > 1) {
@@ -233,6 +235,8 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 					paginationPanel.add(new PaginationButtonUc(pagenumVal + 1, NEXT, this));
 				}
 			}
+			}
+			
 		}
 
 

@@ -46,6 +46,8 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	String classpageId="";
 	String pathwayId="";
 	
+	int limit = 10;
+	
 	private UnitSetupPresenter unitSetupPresenter;
 	
 	@Inject
@@ -61,13 +63,31 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	@Override
 	public void onReveal() {
 		super.onReveal();
-		
-		getPathways();
+		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+		int offsetVal = 0;
+		if(pageNum != null)
+		{
+			offsetVal = Integer.parseInt(pageNum);
+			offsetVal = (offsetVal-1);
+		}
+		getPaginatedPathways((offsetVal)*limit);
 	}
 	
 	@Override
 	public void setUnit(String unitName, String pathwayId, int sequenceNum) {
 		 getView().setContent(unitName,pathwayId,sequenceNum);
+	}
+	
+	@Override
+	public void loadPathways() {
+		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+		int offsetVal = 0;
+		if(pageNum != null)
+		{
+			offsetVal = Integer.parseInt(pageNum);
+			offsetVal = (offsetVal-1);
+		}
+		getPaginatedPathways((offsetVal)*limit);
 	}
 	
 	@Override
