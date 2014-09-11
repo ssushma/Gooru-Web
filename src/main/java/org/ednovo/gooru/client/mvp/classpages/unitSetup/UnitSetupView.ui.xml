@@ -40,7 +40,9 @@
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 		<g:VerticalPanel styleName="col-xs-12 {style.setupMain}" ui:field="unitAssignmentWidgetContainer"></g:VerticalPanel>
-		<g:FlowPanel ui:field="paginationFocPanel" />
+		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+		<g:HTMLPanel styleName="{style.paginationStyle}">
+			<ptag:HTMLEventPanel ui:field="paginationPanel" styleName="text-right" ></ptag:HTMLEventPanel></g:HTMLPanel>
 	   </g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>
