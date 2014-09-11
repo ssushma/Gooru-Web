@@ -2,6 +2,8 @@ package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 
 
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -11,6 +13,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class UnitsAssignmentWidgetView extends Composite {
@@ -25,11 +28,17 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	@UiField Button editUnitButton,addAssignmentButton,cancelEditButton;
 	
+	@UiField Label lblUnitName,lblUnitNumber;
+	
+	CollectionDo collectionDo;
+	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	public UnitsAssignmentWidgetView(int totAssignment){
+	public UnitsAssignmentWidgetView(CollectionDo collectionDo){
 		initWidget(uibinder.createAndBindUi(this));
-		setAssignmentsForUnit(totAssignment);
+		this.collectionDo=collectionDo;
+		setAssignmentsForUnit(9);
+		setUnitNameDetails();
 		cancelEditButton.setVisible(false);
 		editUnitButton.addClickHandler(new EditAssignmentEvent());
 		cancelEditButton.addClickHandler(new CancelEditEvent());
@@ -69,6 +78,13 @@ public class UnitsAssignmentWidgetView extends Composite {
 		}
 		addAssignmentButton.setVisible(!hide);
 		cancelEditButton.setVisible(hide);
+	}
+	
+	private void setUnitNameDetails() {
+			int number=collectionDo.getItemSequence();
+			String sequenceNumber=Integer.toString(number);
+			lblUnitName.setText(collectionDo.getResource().getTitle());
+			lblUnitNumber.setText(sequenceNumber);
 	}
 
 }

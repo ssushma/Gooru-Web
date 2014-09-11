@@ -125,9 +125,9 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 		
 		if(isFromClassSetUpPresenter)
 		{
-			AppClientFactory.getInjector().getClasspageService().v2AssignCollectionTOPathway(this.classpageIdToAssign, this.pathwayId, collectionId, new SimpleAsyncCallback<ArrayList<ClassSetupDo>>() {
+			AppClientFactory.getInjector().getClasspageService().v2AssignCollectionTOPathway(this.classpageIdToAssign, this.pathwayId, collectionId,null,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			@Override
-			public void onSuccess(ArrayList<ClassSetupDo> result) {
+			public void onSuccess(ArrayList<ClasspageItemDo> result) {
 			// TODO Auto-generated method stubgetr
 			getView().hideAddCollectionPopup("");
 			}
