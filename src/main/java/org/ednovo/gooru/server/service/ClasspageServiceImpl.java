@@ -1764,7 +1764,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	
 	
 	@Override
-	public CollectionDo updateAssignmentStatus(String collectionItemId, Boolean isRequiredStatus) throws GwtException {
+	public CollectionDo updateAssignmentStatus(String collectionItemId, boolean isRequiredStatus) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ASSIGN_STATUS_UPDATE,collectionItemId,getLoggedInSessionToken());
 		JSONObject jsonObject=new JSONObject();

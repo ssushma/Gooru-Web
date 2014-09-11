@@ -559,6 +559,6 @@ public interface ClasspageService extends BaseService {
 	public ArrayList<ClassSetupDo> v2AssignCollectionTOPathway(String classpageId,String pathwayId,String collectionId) throws GwtException, ServerDownException;
 
 	CollectionDo updateAssignmentStatus(String collectionItemId,
-			Boolean isRequiredStatus) throws GwtException;
+			boolean isRequiredStatus) throws GwtException;
 
 }
