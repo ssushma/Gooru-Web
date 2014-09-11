@@ -251,7 +251,21 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void showUnitNames(ClasspageListDo classpageListDo) {
 		// TODO Auto-generated method stub
 		this.classpageListDo=classpageListDo;
-		for(int i=0; i<limit; i++){
+		int totalCount=classpageListDo.getTotalHitCount();
+		int size;
+		if(totalCount > offSet){
+			if((totalCount-offSet) > limit){
+				size=limit;
+			}else{
+				size=Math.abs(totalCount-offSet);
+				hideMoreUnitsLink();
+			}
+			
+		}else{
+			size=totalCount;
+			hideMoreUnitsLink();
+		}
+		for(int i=0; i<size; i++){
 			String unitName=classpageListDo.getSearchResults().get(i).getResource().getTitle();
 			int number=classpageListDo.getSearchResults().get(i).getItemSequence();
 			String sequenceNumber=Integer.toString(number);
@@ -265,14 +279,18 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@UiHandler("lblMoreUnits")
 	public void clickOnMoreUnits(ClickEvent event){
-		offSet=offSet+5;
+		offSet=offSet+limit;
 		getUiHandlers().getPathwayUnits(limit, offSet);
 	}
 
 	@Override
 	public void hideMoreUnitsLink() {
-		
+		lblMoreUnits.setVisible(false);
 	}
 
+	
+	public void showMoreUnitsLink(){
+		lblMoreUnits.setVisible(true);
+	}
 	
 }
