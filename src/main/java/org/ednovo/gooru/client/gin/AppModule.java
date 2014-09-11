@@ -140,6 +140,10 @@ import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryPresen
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryPresenter.IsCoreLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.IsCoreLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.esyp.EsypLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.esyp.EsypLibraryPresenter.IsEsypLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.esyp.EsypLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.esyp.IsEsypLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter.IsCfciLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryView;
@@ -547,6 +551,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(RusdLibraryPresenter.class, IsRusdLibraryView.class, RusdLibraryView.class,IsRusdLibraryProxy.class);
 		bindPresenter(LpsLibraryPresenter.class, IsLpsLibraryView.class, LpsLibraryView.class,IsLpsLibraryProxy.class);
 		bindPresenter(CoreLibraryPresenter.class, IsCoreLibraryView.class, CoreLibraryView.class,IsCoreLibraryProxy.class);
+		bindPresenter(EsypLibraryPresenter.class, IsEsypLibraryView.class, EsypLibraryView.class,IsEsypLibraryProxy.class);
 		
 	}
 }
