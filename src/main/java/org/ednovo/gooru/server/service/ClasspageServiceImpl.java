@@ -1738,11 +1738,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			ServerDownException {
 		// TODO Auto-generated method stub
 		JsonRepresentation jsonRep = null;
-		System.out.println("classpageId :::::"+classpageId);
-		System.out.println("pathwayId:::::"+pathwayId);
-		System.out.println("collectionId:::::"+collectionId);
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ASSIGN_COLLECTION_TO_PATHWAY, classpageId, pathwayId, collectionId, getLoggedInSessionToken());
-		System.out.println("v2AssignCollectionTOPathway  url:::::"+url);
 		try {
 			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),"");
 			jsonRep=jsonResponseRep.getJsonRepresentation();
