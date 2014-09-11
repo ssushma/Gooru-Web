@@ -353,15 +353,18 @@
 
 
 .HoverSetup{ 
-	display: none;
+	display: block;
 }
 
-.classMenuBlock:hover .HoverSetup{
+/* .classMenuBlock:hover .HoverSetup{
 	display : block;
 	position:absolute;
 	top:0;
-}
+} */
 
+.classMenuBlock:hover .classPic .pic{
+	display:block;
+}
 .HoverSetup{
 	border-top:1px solid #eeeeee;
 	border-bottom:1px solid #eeeeee;
@@ -387,24 +390,25 @@
 .classDetailsMain{
 	width:725px;
 	float:left;
-	padding:10px 0;
+	padding:18px 0;
 }
 		
-.classDetailsMain .classPic{
+.classPic{
 	float:left;		
 	padding:0 3px;
 	position:relative;
-	width:62px;
+	width:70px;
 	height:80px;
 }
 
-.classDetailsMain .classPic .pic{
+ .pic{
 	border-left:3px solid #77afde;
 	width:63px;
 	height:46px;
+	display:none;
 }
 		
-.classDetailsMain .classBubble{
+ .classBubble{
 	 background: none repeat scroll 0 0 #b9bbca;
      border-radius: 50%;
      color: #ffffff;
@@ -421,8 +425,8 @@
      width: 30px;
 }
 		
-.classDetailsMain .daysCount{
-	display: block;
+.daysCount{
+	display: none;
     padding: 25px 0 5px;
     position: relative;
     text-align: center;
@@ -477,3 +481,32 @@
 .textCenter{
 	text-align: center;
 }
+
+.dueDaysStyle{
+	margin-top: 15px;
+}
+
+.classEdit{
+	display: inline-block;
+	margin: 0 15px;
+}
+.cancelbutton{
+	text-align: center;
+	background: url("images/Classpage/closeBtn.png") no-repeat;
+	width:19px;
+	height:19px;
+	margin-left:22px;
+}
+.reorderbutton{
+	text-align: center;
+	background: url("images/Classpage/reorderIcon.png") no-repeat;
+	margin:0 0;
+	width:24px;
+	height:25px;
+	margin-left:22px;
+}
+.onOffButton{
+	text-align: center;
+margin: 6px 0;
+}
+

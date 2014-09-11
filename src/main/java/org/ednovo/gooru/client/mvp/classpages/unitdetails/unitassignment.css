@@ -34,7 +34,7 @@
 .uniSetup a{
 	padding:20px 15px;
 	display:block;
-		font-size:12px;
+	font-size:12px;
 	line-height:25px;
 	
 	
@@ -571,6 +571,7 @@ display:inline-block;
 	opacity:1;
 	
 }
+
 .popupBox {
 	background: #ffffff;
 	padding: 8px 8px;
@@ -615,3 +616,14 @@ display:inline-block;
 .popArrowInner{
 	
 }
+
+
+.moreUnits{
+	padding:20px 15px;
+	display:block;
+	font-size:12px;
+	line-height:25px;
+	cursor: pointer;
+	color: #0066cc;
+}
+

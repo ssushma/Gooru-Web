@@ -1,10 +1,9 @@
 
 .classpageTextarea {
 	font-family: Arial, Helvetica, sans-serif;
-	width: 785px;
+	width: 700px;
 	outline: 0;
 	height: 65px;
-	line-height: 180%;
 	margin-top: 5px;
 	border: 1px solid rgb(221,221,221);
 	background-color: rgb(255,255,255);
@@ -69,4 +68,13 @@
 
 .completedStatus{
 	background: #A3CBA0;	
+}
+.minimumScoreTextbox{
+	border: 1px #E3E3E3 solid !important;
+	background-color: #FFF !important;
+	font-size: 14px !important;
+	width: 50px;
+	font-weight: bold;
+	padding: 5px 4px;
+	color: #0078c0 !important;
 }

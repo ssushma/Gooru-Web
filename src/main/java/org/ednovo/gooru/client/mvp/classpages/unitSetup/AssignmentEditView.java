@@ -22,21 +22,25 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.classsetup;
-
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-
-public interface ClassSetupUiHandlers extends BaseUiHandlers{
-
-	void createPathway(String pathwayTitle);
-
-	void setUnit(String unitName, String pathwayId);
-
-	void updatePathway(String pathwayId, String pathwayTitle);
-
-	void deletePathway(String pathwayId);
-
-	void OnUnitSetupClick();
+package org.ednovo.gooru.client.mvp.classpages.unitSetup;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Widget;
+public class AssignmentEditView extends Composite{
 
 
+	private static AssignmentEditViewUiBinder uiBinder = GWT.create(AssignmentEditViewUiBinder.class);
+
+	interface AssignmentEditViewUiBinder extends UiBinder<Widget, AssignmentEditView> {
+		
+	}
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+
+	public AssignmentEditView(){
+		initWidget(uiBinder.createAndBindUi(this));		
+	}
+	
 }

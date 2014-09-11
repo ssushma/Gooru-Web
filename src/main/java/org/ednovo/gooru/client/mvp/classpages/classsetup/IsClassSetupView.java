@@ -30,7 +30,9 @@ import com.google.gwt.user.client.ui.Widget;
 
 public interface IsClassSetupView extends IsViewWithHandlers<ClassSetupUiHandlers>{
 
-	void setContent();
+	void setContent(String unitName, String pathwayId);
+
+	void clearPanel();
 
 
 

@@ -30,20 +30,37 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 	@UiField HTMLPanel bubbleOuterPanel;
 	boolean isRequired; 
 		
-	public UnitCricleView(boolean isRequired,int unitCircleNumber) {
+	public UnitCricleView() {
+		initWidget(uiBinder.createAndBindUi(this));
+		this.isRequired=true;
+		UnitAssignmentCssBundle.INSTANCE.unitAssignment().ensureInjected();
+		unitNumber.setText("1");
+		showCircle();
 		
+	}
+	public UnitCricleView(boolean isRequired,int unitCircleNumber) {
+		initWidget(uiBinder.createAndBindUi(this));
 		this.isRequired=isRequired;
 		UnitAssignmentCssBundle.INSTANCE.unitAssignment().ensureInjected();
-		initWidget(uiBinder.createAndBindUi(this));
 		unitNumber.setText(unitCircleNumber+"");
 		showCircle();
 		
 	}
 	
-	public void showCircle()
-	{
-		if(isRequired)
-		{
+	public void setBubbleStyleName(String styleName){
+		unitNumber.setStyleName(styleName);
+	}
+	
+	public void setBubbleContainerStyle(String styleName){
+		bubbleOuterPanel.setStyleName(styleName);
+	}
+	
+	public void setUnitSequenceNumber(int sequenceNumber){
+		unitNumber.setText(""+sequenceNumber);
+	}
+	
+	public void showCircle(){
+		if(isRequired){
 			displayRequiredCircle();
 		}else{
 			displayOptionalCircle();
@@ -52,8 +69,7 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 	/*
 	 * This method is used to display required Circle
 	 */
-	public void displayRequiredCircle()
-	{
+	public void displayRequiredCircle(){
 		unitNumber.removeStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().bubbleOptional());
 		unitNumber.addStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().bubbleBig());
 	}

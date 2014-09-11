@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.classpages.classsetup;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.shelf.ShelfUiHandlers;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -37,6 +38,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -44,6 +46,8 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 
 	@UiField VerticalPanel unitwidget;
 	@UiField Button addUnitBtn;
+	@UiField PPanel unitSetupContainer;
+	@UiField Label unitSetupClick;
 	
 	private HandlerRegistration addUnitClickHandler;
 	
@@ -66,10 +70,18 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 
 			@Override
 			public void onClick(ClickEvent event) {
-			getUiHandlers().setUnit();
+			getUiHandlers().createPathway("Unitname");
 				
 			}
 			
+		});
+		unitSetupClick.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().OnUnitSetupClick();
+				
+			}
 		});
 	}
 
@@ -82,20 +94,32 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 	}
 	
 	@Override
-	public void setContent() {
+	public void clearPanel() {
+		getUnitwidget().clear();
+	}
+	
+	@Override
+	public void setContent(String unitName, String pathwayId) {
 	//Window.alert("getUnitwidget().getWidgetCount()::"+getUnitwidget().getWidgetCount());
-		 ClassSetupUnitView cv = new ClassSetupUnitView(getUnitwidget().getWidgetCount()) {
+		 ClassSetupUnitView cv = new ClassSetupUnitView(getUnitwidget().getWidgetCount(),unitName,pathwayId) {
 			
 			@Override
-			public void deleteItem(int sequenceNum) {
+			public void deleteItem(int sequenceNum, String pathwayId) {
 				try
 				{
+				getUiHandlers().deletePathway(pathwayId);
 				getUnitwidget().remove(getUnitwidget().getWidgetIndex(this));
 				}
 				catch(Exception ex)
 				{
 					
 				}
+				
+			}
+
+			@Override
+			public void saveItem(String pathwayTitle, String pathwayId) {
+				getUiHandlers().updatePathway(pathwayId, pathwayTitle);
 				
 			}
 		};

@@ -4,8 +4,8 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="style" src="unitsetup.css" />
 
-	<g:HTMLPanel styleName="{style.classMenuBlock}">
-		<g:HTMLPanel styleName="{style.classSetupMenu}">
+	<g:HTMLPanel styleName="{style.classMenuBlock} pathwayContainer">
+		<!-- <g:HTMLPanel styleName="{style.classSetupMenu}">
 			<g:HTMLPanel styleName="{style.classLeftMenu}">
 				<g:HTMLPanel styleName="{style.numaricName}">
 					<g:HTMLPanel styleName="{style.blueNumaric}">1</g:HTMLPanel>
@@ -53,10 +53,10 @@
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{style.classButtons} {style.single}">
 				<g:Button styleName="secondary btn-block">Assignment
-					<!-- <g:Image url="images/plusIco.png"> Assignment</g:Image> -->
+					<g:Image url="images/plusIco.png"> Assignment</g:Image>
 				</g:Button>
 			</g:HTMLPanel>
-		</g:HTMLPanel>
+		</g:HTMLPanel> -->
 
 		<g:HTMLPanel styleName="{style.classSetupMenu} {style.HoverSetup}">
 			<g:HTMLPanel styleName="{style.classLeftMenu}">
@@ -71,85 +71,7 @@
 					<g:Anchor>Details</g:Anchor>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{style.classDetailsMain}">
-				<g:HTMLPanel styleName="{style.classPic}">
-					<g:HTMLPanel styleName="{style.pic}">
-						<g:Image url="images/classroomSetupImg.png"></g:Image>
-					</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.daysCount}">20 days</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.classBubble}">1</g:HTMLPanel>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{style.classPic}">
-					<g:HTMLPanel styleName="{style.pic}">
-						<g:Image url="images/classroomSetupImg.png"></g:Image>
-					</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.daysCount}">20 days</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.classBubble}">2</g:HTMLPanel>
-				</g:HTMLPanel>
-
-				<g:HTMLPanel styleName="{style.classPic}">
-					<g:HTMLPanel styleName="{style.pic}">
-						<g:Image url="images/classroomSetupImg.png"></g:Image>
-					</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.daysCount}">20 days</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.classBubble}">3</g:HTMLPanel>
-				</g:HTMLPanel>
-
-				<g:HTMLPanel styleName="{style.classPic}">
-					<g:HTMLPanel styleName="{style.pic}">
-						<g:Image url="images/classroomSetupImg.png"></g:Image>
-					</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.daysCount}">20 days</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.classBubble}">4</g:HTMLPanel>
-				</g:HTMLPanel>
-
-				<g:HTMLPanel styleName="{style.classPic}">
-					<g:HTMLPanel styleName="{style.pic}">
-						<g:Image url="images/classroomSetupImg.png"></g:Image>
-					</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.daysCount}">20 days</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.classBubble}">5</g:HTMLPanel>
-				</g:HTMLPanel>
-
-				<g:HTMLPanel styleName="{style.classPic}">
-					<g:HTMLPanel styleName="{style.pic}">
-						<g:Image url="images/classroomSetupImg.png"></g:Image>
-					</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.daysCount}">20 days</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.classBubble}">6</g:HTMLPanel>
-				</g:HTMLPanel>
-
-				<g:HTMLPanel styleName="{style.classPic}">
-					<g:HTMLPanel styleName="{style.pic}">
-						<g:Image url="images/classroomSetupImg.png"></g:Image>
-					</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.daysCount}">20 days</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.classBubble}">7</g:HTMLPanel>
-				</g:HTMLPanel>
-
-				<g:HTMLPanel styleName="{style.classPic}">
-					<g:HTMLPanel styleName="{style.pic}">
-						<g:Image url="images/classroomSetupImg.png"></g:Image>
-					</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.daysCount}">20 days</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.classBubble}">8</g:HTMLPanel>
-				</g:HTMLPanel>
-
-				<g:HTMLPanel styleName="{style.classPic}">
-					<g:HTMLPanel styleName="{style.pic}">
-						<g:Image url="images/classroomSetupImg.png"></g:Image>
-					</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.daysCount}">20 days</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.classBubble}">9</g:HTMLPanel>
-				</g:HTMLPanel>
-
-				<g:HTMLPanel styleName="{style.classPic}">
-					<g:HTMLPanel styleName="{style.pic}">
-						<g:Image url="images/classroomSetupImg.png"></g:Image>
-					</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.daysCount}">20 days</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.classBubble}">10</g:HTMLPanel>
-				</g:HTMLPanel>
+			<g:HTMLPanel ui:field="assignmentsContainer" styleName="{style.classDetailsMain}">
 				<g:HTMLPanel styleName="{style.nextArrow}">
 					<g:Image url="images/rightSmallarrow.png"></g:Image>
 				</g:HTMLPanel>
@@ -159,6 +81,11 @@
 				<g:Button styleName="secondary btn-block">Edit</g:Button>
 					<!-- <g:Image url="images/plusIco.png"> Assignment</g:Image> -->
 			</g:HTMLPanel>
+			
+			<g:HTMLPanel styleName="{style.classButtons}">
+				<g:Button styleName="secondary btn-block">Assignment</g:Button>
+			</g:HTMLPanel>
+			
 		</g:HTMLPanel>
 	</g:HTMLPanel>
 
