@@ -36,19 +36,20 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * 
- * @fileName : CollectionsView.java
+ * @fileName : AssignmentGoalView.java
  *
- * @description : This class is used to display the collection in an assignment tab.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: May 10, 2013
+ * @date: 10-Sep-2014
  *
  * @Author Gooru Team
  *
@@ -63,6 +64,8 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField Label lblStudentsList;
+	
+	@UiField HTMLPanel panelAssignmentList;
 	
 	public interface AssignmentGoalUiBinder extends UiBinder<Widget, AssignmentGoalView> {}
 	
@@ -85,5 +88,16 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 	public void setStaticTexts(){
 		lblStudentsList.setText(collaboratorsDo.getFirstName() + " " + collaboratorsDo.getLastName());
 		StringUtil.setAttributes(lblStudentsList.getElement(), collaboratorsDo.getGooruOid(), null, null);
+		
+		setAssignments();
 	}
+	
+	public void setAssignments(){
+		for (int i=0; i<10; i++){
+			GoalViewVc goalsVc = new GoalViewVc(""+(i+1)) {
+			};
+			panelAssignmentList.add(goalsVc);
+		}
+	}
+	
 }
