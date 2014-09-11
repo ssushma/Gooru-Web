@@ -43,6 +43,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -124,7 +125,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 		
 		if(isFromClassSetUpPresenter)
 		{
-			AppClientFactory.getInjector().getClasspageService().v2AssignCollectionTOPathway(this.classpageIdToAssign, "25509399-83ab-42f1-b774-c1e424b132d0", collectionId, new SimpleAsyncCallback<ArrayList<ClassSetupDo>>() {
+			AppClientFactory.getInjector().getClasspageService().v2AssignCollectionTOPathway(this.classpageIdToAssign, this.pathwayId, collectionId, new SimpleAsyncCallback<ArrayList<ClassSetupDo>>() {
 			@Override
 			public void onSuccess(ArrayList<ClassSetupDo> result) {
 			// TODO Auto-generated method stubgetr
