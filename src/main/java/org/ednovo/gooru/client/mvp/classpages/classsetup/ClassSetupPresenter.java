@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
 import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupPresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
@@ -41,13 +42,18 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	
 	public static final  Object UNITS_SLOT = new Object();
 	
+	AddAssignmentContainerPresenter assignmentContainer=null;
+	String classpageId="";
+	String pathwayId="";
+	
 	private UnitSetupPresenter unitSetupPresenter;
 	
 	@Inject
-	public ClassSetupPresenter(EventBus eventBus, IsClassSetupView view,UnitSetupPresenter unitSetupPresenter) {
+	public ClassSetupPresenter(EventBus eventBus, IsClassSetupView view,UnitSetupPresenter unitSetupPresenter,AddAssignmentContainerPresenter assignmentContainer) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.unitSetupPresenter=unitSetupPresenter;
+		this.assignmentContainer = assignmentContainer;
 	
 
 	}
@@ -138,6 +144,17 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		}
 	}
 	
+	@Override
+	public void addAssignmentsContainerPopup(String pathwayIdVal) {
+	System.out.println("pathwayIdVal::"+pathwayIdVal);
+	classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
+	//pathwayId="25509399-83ab-42f1-b774-c1e424b132d0";
+	assignmentContainer.getUserShelfData();
+	assignmentContainer.setClasspageIdFromClassSetupPresenter(classpageId, pathwayIdVal,this,true);
+	addToPopupSlot(assignmentContainer);
+	}
+	
+
 	
 	
 
