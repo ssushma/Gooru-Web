@@ -27,4 +27,6 @@ package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 public interface UnitSetupUiHandlers extends BaseUiHandlers{
+	
+	void getPathwayCompleteDetails(int limit, int offSet);
 }
