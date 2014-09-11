@@ -362,6 +362,9 @@
 	top:0;
 } */
 
+.classMenuBlock:hover .classPic .pic{
+	display:block;
+}
 .HoverSetup{
 	border-top:1px solid #eeeeee;
 	border-bottom:1px solid #eeeeee;
@@ -398,10 +401,11 @@
 	height:80px;
 }
 
-.classPic .pic{
+ .pic{
 	border-left:3px solid #77afde;
 	width:63px;
 	height:46px;
+	display:none;
 }
 		
  .classBubble{
@@ -422,7 +426,7 @@
 }
 		
 .daysCount{
-	display: block;
+	display: none;
     padding: 25px 0 5px;
     position: relative;
     text-align: center;
@@ -480,5 +484,29 @@
 
 .dueDaysStyle{
 	margin-top: 15px;
+}
+
+.classEdit{
+	display: inline-block;
+	margin: 0 15px;
+}
+.cancelbutton{
+	text-align: center;
+	background: url("images/Classpage/closeBtn.png") no-repeat;
+	width:19px;
+	height:19px;
+	margin-left:22px;
+}
+.reorderbutton{
+	text-align: center;
+	background: url("images/Classpage/reorderIcon.png") no-repeat;
+	margin:0 0;
+	width:24px;
+	height:25px;
+	margin-left:22px;
+}
+.onOffButton{
+	text-align: center;
+margin: 6px 0;
 }
 

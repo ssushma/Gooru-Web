@@ -31,7 +31,7 @@
 					</ptag:PPanel>
 				</g:HTMLPanel>
 
-			<g:HTMLPanel styleName="col-xs-4 {style.text-right}">
+			<g:HTMLPanel styleName="col-xs-4 text-right">
 				<ptag:PPanel styleName="{style.uniSetup}">
 				    	<g:Anchor styleName="{style.unitdetailsLbl}" ui:field="unitDetailsAnchor">Unit Details</g:Anchor> 
 						<g:Image url="images/blueRightArrow.png"></g:Image>
