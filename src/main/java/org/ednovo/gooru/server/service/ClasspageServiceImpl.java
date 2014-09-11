@@ -1565,7 +1565,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			String pathwayItemId,int sequence) throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.REORDER_PATHWAY_SEQUENCE, getLoggedInSessionToken(),classpageId,pathwayItemId,sequence+"");
+				UrlToken.REORDER_PATHWAY_SEQUENCE,classpageId,pathwayItemId,sequence+"",getLoggedInSessionToken());
 		System.out.println("v2ReorderPathwaySequence.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),
 				getRestPassword());

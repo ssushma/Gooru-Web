@@ -142,11 +142,15 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 	
 	
+	
 	public void setCircleData(ArrayList<CollectionItemDo> itemSequence)
 	{
-		generalLabel.setText("General");
+		
 		requiredLabel.setText("Required");
 		optionalLabel.setText("Optional");
+		if(itemSequence!=null &&itemSequence.size()!=0){
+			
+		
 		totalAssignmentHitcount = itemSequence.get(0).getTotalHitCount();
 		try{
 			if(leftHandler!=null) {
@@ -171,10 +175,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			circleContainerPanel.add(unitCricleViewObj);
 			unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler());
 			unitCricleViewObj.addMouseOutHandler(new UnitSeqMouseOutHandler());
+			unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
 			
 		}
-		System.out.println("totalAssignmencount 1........"+totalAssignmencount);
-		System.out.println("totalAssignmentHitcount 1........"+totalAssignmencount);
 		if(totalAssignmencount==totalAssignmentHitcount)
 		{
 			rightArrow.setVisible(false);
@@ -199,9 +202,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		circleContainerPanel.add(rightArrow);
 		
 		
-		Iterator<Widget> widgets = circleContainerPanel.iterator();
+		//Iterator<Widget> widgets = circleContainerPanel.iterator();
 		
-		while (widgets.hasNext()) {
+		/*while (widgets.hasNext()) {
 			final Widget widget = widgets.next();
 			if (widget instanceof UnitCricleView) {
 				((UnitCricleView) widget).addClickHandler(new ClickHandler() {
@@ -220,8 +223,39 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			
 					
 		
+		}*/
+		}else
+		{
+			Label noAssignmentlabel = new Label("Assignment not available");
+			circleContainerPanel.clear();
+			circleContainerPanel.add(noAssignmentlabel);
 		}
+	}
+	public class AssignmentClickChangeEvent implements ClickHandler{
+		private UnitCricleView unitCricleView;
+		public AssignmentClickChangeEvent(UnitCricleView unitCricleView){
+			this.unitCricleView = unitCricleView;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			removeAssignmentSelectedStyle();
+			addAssignmentSelectStyle(unitCricleView);
+		}
+	}
+	public void removeAssignmentSelectedStyle(){
+		Iterator<Widget> widgets = circleContainerPanel.iterator();
+		while (widgets.hasNext()) {
+			 Widget widget = widgets.next();
+			if (widget instanceof UnitCricleView) {
+				UnitCricleView unitCricleView=(UnitCricleView)widget;
+				unitCricleView.removeStyleName(res.unitAssignment().active());
+			}
+		}		
 		
+	}
+	
+	public void addAssignmentSelectStyle(UnitCricleView unitCricleView){
+		unitCricleView.addStyleName(res.unitAssignment().active());
 	}
 	
 	@Override
@@ -268,14 +302,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			unitAssigmentReorder = new UnitAssigmentReorder(classpageListDo,assignmentItemSeq,classpageid);
 			unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop()+40);
 			unitAssigmentReorder.show();
-			/*unitAssigmentReorder.addMouseOverHandler(new MouseOverHandler() {
+			unitAssigmentReorder.addMouseOverHandler(new MouseOverHandler() {
 				
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
-					if(unitAssigmentReorder.isShowing())
-					{
-						unitAssigmentReorder.hide();		
-					}
+					isShowing=true;
 					unitAssigmentReorder.show();		
 				}
 			});
@@ -283,11 +314,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				
 				@Override
 				public void onMouseOut(MouseOutEvent event) {
-					unitAssigmentReorder.hide();	
+					isShowing=false;
 					
 				}
 			});
-			*/
+		
 		}
 		}
 	public class UnitSeqMouseOutHandler implements MouseOutHandler{
@@ -298,7 +329,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			if(!isShowing){
 			unitAssigmentReorder.hide();
 			}
-			isShowing=false;
+			
 		}
 			
 		}
