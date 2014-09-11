@@ -207,6 +207,9 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	public void deletePathway(String classpageId, String pathwayId, AsyncCallback<Void> simpleAsyncCallback);
 	
 	public void v2AssignCollectionTOPathway(String classpageId,String pathwayId,String collectionId, AsyncCallback<ArrayList<ClassSetupDo>> callback);
+	
+	void updateAssignmentStatus(String classpageId, String pathwayId,
+			String pathwayTitle, AsyncCallback<CollectionDo> callback);
 
 	
 }

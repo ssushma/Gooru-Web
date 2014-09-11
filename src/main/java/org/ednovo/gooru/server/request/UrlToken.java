@@ -617,6 +617,8 @@ public enum UrlToken {
 	
 	V2_ASSIGN_COLLECTION_TO_PATHWAY("/v2/class/{0}/pathway/{1}/assign/{2}?sessionToken={3}"),
 	
+	ASSIGN_STATUS_UPDATE("/v2/class/item/{0}?sessionToken={2}"),
+	
 	PATHWAYS_UPDATE("/v2/class/{0}/pathway/{1}?sessionToken={2}");
 	
 	
