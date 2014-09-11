@@ -23,14 +23,19 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
-
 public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentUiHandlers>{
-	
-	public void showUnitNames(ClasspageListDo classpageListDo);
-	
-	public void hideMoreUnitsLink();
+	 void getSequence(ArrayList<CollectionItemDo> getSeq);
+	 void getPathwayItems();
+	 public void showUnitNames(ClasspageListDo classpageListDo);
+	 public void hideMoreUnitsLink();
+
 
 }

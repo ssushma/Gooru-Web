@@ -436,6 +436,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	    	 setInSlot(CLASSLIST_SLOT, classSetupPresenter,false);
 	     }
 	}
+
 	public Integer getOffsetValue(){
 		String pageNum=getPlaceManager().getRequestParameter("pageNum","1");
 		int pageNumber=0;

@@ -51,28 +51,29 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
-		
 		this.studentPersonalizePresenter = studentPersonalizePresenter;
-		getPathwayItems();
+
+		getView().getPathwayItems();
+
 		
 		getPathwayUnits(limit,offSet);
+
 	}
 	
 	@Override
 	public void setClasspageData(ClasspageDo classpageDo){
-		System.out.println("in set classpage ... ");
 		studentPersonalizePresenter.setClasspageData(classpageDo);
 		setInSlot(_SLOT, studentPersonalizePresenter,false);
 	}
 
 	@Override
-	public void getPathwayItems() {
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems("c8afe3ee-8d98-4aa6-a161-9d7cb0626bb2", "25509399-83ab-42f1-b774-c1e424b132d0", "sequence", 10, 1, new AsyncCallback<ArrayList<CollectionItemDo>>() {
+	public void getPathwayItems(String classpageId, String pathwayGooruOid,String sequence,int limit,int offSet) {
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new AsyncCallback<ArrayList<CollectionItemDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionItemDo> result) {
-				// TODO Auto-generated method stub
-				System.out.println("result,,"+result.get(0).getItemSequence());
+				getView().getSequence(result);
+				
 			}
 			
 			@Override
