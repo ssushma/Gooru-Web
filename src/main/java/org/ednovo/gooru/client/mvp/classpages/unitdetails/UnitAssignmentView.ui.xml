@@ -8,11 +8,11 @@
 	<g:HTMLPanel styleName="{unitStyle.unitDetails}">
 		<div class="{unitStyle.containerTeacher}">
 			<div class="col-xs-2 {unitStyle.leftPanel}">
-				<p class="{unitStyle.uniSetup}">
-					<a href="#"><img src="images/blueArrow.png"/> Unit Setup</a>
-				</p>
+				<g:HTMLPanel styleName="{unitStyle.uniSetup}">
+					<img src="images/blueArrow.png"/>
+					<g:Anchor ui:field="unitSetupButton">Unit Setup</g:Anchor>
+				</g:HTMLPanel>
 				<hr/>
-				
 				<uc:UlPanel styleName="list-unstyled {unitStyle.unitMenu}">
 				    
 				   <g:HTMLPanel ui:field="unitPanel"></g:HTMLPanel>
@@ -22,13 +22,6 @@
 				<g:HTMLPanel styleName="{unitStyle.uniSetup}">
 					<g:Label styleName="{unitStyle.moreUnits}" ui:field="lblMoreUnits">More Units</g:Label>
 				</g:HTMLPanel>
-				<!-- <ul class="list-unstyled {unitStyle.unitMenu}">
-					<li><a href="#"><span class="{unitStyle.number}">1</span><span class="{unitStyle.name}">Unit  <br/>Name</span></a></li>
-					<hr/>
-					<li class="active"><a href="#"><span class="{unitStyle.number}">2</span><span class="{unitStyle.name}">Unit <br/>Name</span></a></li>
-					<hr/>
-					<li><a href="#"><span class="{unitStyle.number}">3</span><span class="{unitStyle.name}">Unit <br/>Name</span></a></li>
-				</ul> -->
 			</div>
 			<div class="col-xs-10 {unitStyle.rightPanel}">
 				<div class="row">
@@ -57,26 +50,6 @@
 				      </g:HTMLPanel>
 				</g:HTMLPanel>
 				<!-- end circle Widget -->
-				
-				<!-- <div class="row {unitStyle.generalSet}">
-					<div class="col-xs-12">
-						<div class="{unitStyle.rowInner}" circleContainerPanel>
-							<div class="{unitStyle.genHead}">General</div>
-							<div class="{unitStyle.leftArrow}"><a href="#"><img src="images/leftSmallarrow.png"></img></a></div>
-							<div class="{unitStyle.bubbleMain}"><a class="{unitStyle.bubbleOuter}  {unitStyle.active}" href="#"><span class="{unitStyle.bubbleBig}">1</span></a></div>
-							<div class="{unitStyle.bubbleMain}"><a class="{unitStyle.bubbleOuter}" href="#"><span class="{unitStyle.bubbleBig}">2</span></a></div>
-							<div class="{unitStyle.bubbleMain}"><a class="{unitStyle.bubbleOuter}" href="#"><span class="{unitStyle.bubbleBig}">3</span></a></div>
-							<div class="{unitStyle.bubbleMain}"><a class="{unitStyle.bubbleOuter}" href="#"><span class="{unitStyle.bubbleBig}">4</span></a></div>
-							<div class="{unitStyle.bubbleMain}"><a class="{unitStyle.bubbleOuter}" href="#"><span class="{unitStyle.bubbleBig}">5</span></a></div>
-							<div class="{unitStyle.bubbleMain}"><a class="{unitStyle.bubbleOuter}" href="#"><span class="{unitStyle.bubbleBig}">6</span></a></div>
-							<div class="{unitStyle.bubbleMain}"><a class="{unitStyle.bubbleOuter}" href="#"><span class="{unitStyle.bubbleBig}">7</span></a></div>
-							<div class="{unitStyle.bubbleMain}"><a class="{unitStyle.bubbleOuter}" href="#"><span class="{unitStyle.bubbleBig}">8</span></a></div>
-							<div class="{unitStyle.bubbleMain}"><a class="{unitStyle.bubbleOuter}" href="#"><span class="{unitStyle.bubbleBig}">9</span></a></div>
-							<div class="{unitStyle.bubbleMain}"><a class="{unitStyle.bubbleOuter}" href="#"><span class="{unitStyle.bubbleBig}">10</span></a></div>
-							<div class="rightArrow"><a href="#"><img src="images/rightSmallarrow.png"/></a></div>
-						</div>
-					</div>
-				</div> -->
 				<div class="row {unitStyle.personalBtn}">
 					<div class="col-xs-12">
 						<div class="{unitStyle.rowInner}">
@@ -85,7 +58,6 @@
 					</div>
 				</div>
 				<g:HTMLPanel ui:field="assignmentContainer"></g:HTMLPanel>
-
 			</div>
 			<div class="clearfix"></div>
 		</div>
