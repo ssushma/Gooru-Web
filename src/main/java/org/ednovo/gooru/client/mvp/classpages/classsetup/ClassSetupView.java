@@ -99,7 +99,7 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 	@Override
 	public void setContent(String unitName, String pathwayId) {
 	//Window.alert("getUnitwidget().getWidgetCount()::"+getUnitwidget().getWidgetCount());
-		 ClassSetupUnitView cv = new ClassSetupUnitView(getUnitwidget().getWidgetCount(),unitName,pathwayId) {
+		 ClassSetupUnitView classSetupUnitView = new ClassSetupUnitView(getUnitwidget().getWidgetCount(),unitName,pathwayId) {
 			
 			@Override
 			public void deleteItem(int sequenceNum, String pathwayId) {
@@ -115,7 +115,8 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 				getUiHandlers().updatePathway(pathwayId, pathwayTitle);
 			}
 		};
-		 getUnitwidget().add(cv);
+		classSetupUnitView.btnAssignment.addClickHandler(new ShowAssignPopupEvent(pathwayId));
+		 getUnitwidget().add(classSetupUnitView);
 	}
 	
 	private class UnitSetupEvent implements ClickHandler{
@@ -135,6 +136,23 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 		}
 	}
+	
+	 private class ShowAssignPopupEvent implements ClickHandler{
+
+		 String pathwayIdVal = "";
+		 public ShowAssignPopupEvent(String pathwayId) {
+			 pathwayIdVal = pathwayId;
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+		 public void onClick(ClickEvent event) {
+			if(!pathwayIdVal.isEmpty())
+			{
+		 getUiHandlers().addAssignmentsContainerPopup(pathwayIdVal);
+			}
+		 }
+	 }
 	
 	
 	

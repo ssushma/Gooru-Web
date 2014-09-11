@@ -38,5 +38,7 @@ public interface ClassSetupUiHandlers extends BaseUiHandlers{
 
 	void OnUnitSetupClick();
 
+	void addAssignmentsContainerPopup(String pathwayIdVal);
+
 
 }
