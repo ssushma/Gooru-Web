@@ -97,7 +97,11 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 					int totalPages = (totalHitCounter / 10)
 							+ ((totalHitCounter % 10) > 0 ? 1 : 0);
 					
-					System.out.println("totalpages::"+totalPages);
+
+					getUiHandlers().createPathway("Unitname",(totalPages-1)*limit);
+					
+					totalPages = (totalHitCounter / 10)
+							+ ((totalHitCounter % 10) > 0 ? 1 : 0);
 					
 					Map<String,String> params = new HashMap<String,String>();
 					String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
@@ -110,11 +114,13 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 					params.put("pos", pos);
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-					
-					getUiHandlers().getPaginatedPathways((totalPages-1)*limit);
+
 					
 				}
-				getUiHandlers().createPathway("Unitname");
+				else
+				{
+				getUiHandlers().createPathway("Unitname",(0)*limit);
+				}
 				
 		
 				
@@ -238,8 +244,8 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 				params.put("pos", pos);
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-				
-				getUiHandlers().getPaginatedPathways((pageNumber-1)*limit);
+				System.out.println("getPaginatedPathwaysoffset::"+(pagenumber-1));
+				getUiHandlers().getPaginatedPathways((pagenumber-1)*limit);
 			}
 
 		}
