@@ -165,6 +165,11 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 						
 					}
 				}
+				else
+				{
+					getView().zeroResults();
+				}
+				
 			}
 		});
 		}
