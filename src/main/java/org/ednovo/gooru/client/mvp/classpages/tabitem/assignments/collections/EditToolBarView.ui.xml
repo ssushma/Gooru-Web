@@ -8,8 +8,6 @@
 	    <g:FlowPanel styleName="{style.headerLeft}">
 	     	<g:HTMLPanel styleName="{style.headerText}" ui:field="dueDateText"></g:HTMLPanel>
 	    	<g:HTMLPanel styleName="{style.headerDatePicker}" ui:field="dueDatePanel"></g:HTMLPanel>
-	    </g:FlowPanel>
-	    <g:FlowPanel styleName="{style.headerRight}">
 	      <g:Button styleName="secondary" ui:field="cancelButton"></g:Button>
 	      <g:Button styleName="primary {style.cancelButton}" ui:field="saveButton"></g:Button>
 	      <g:Label styleName="{style.savingText}" ui:field="savingText"></g:Label>
