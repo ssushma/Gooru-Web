@@ -423,11 +423,11 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		System.out.println("tab value...");
 		 if(tab!=null&&tab.equalsIgnoreCase("classList")){
 	     	classlistPresenter.setClassPageDo(classpageDo);
-	     	setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
+	     	setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
 	     }else if(tab!=null&&tab.equalsIgnoreCase("reports")){
 	     	
 	     }else if(tab!=null&&tab.equalsIgnoreCase("unitsetup")){
-	    	 setInSlot(CLASSLIST_SLOT, unitSetupPresenter,false);
+	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
 	     }
 	     else if(tab!=null&&tab.equalsIgnoreCase("unitdetails")){
 	    	 System.out.println("tab value... 1");
@@ -435,7 +435,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
 	     }
 	     else {
-	    	 setInSlot(CLASSLIST_SLOT, unitSetupPresenter,false);
+	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
 
 	    	 /*System.out.println("tab value... 2");
 	    	 unitAssignmentPresenter.setClasspageData(classpageDo);

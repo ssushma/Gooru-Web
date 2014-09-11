@@ -35,6 +35,11 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -67,7 +72,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private String ORDER_BY="sequence";
 	private int limit=10;
 	private int offset=0;
-	
+	UnitAssigmentReorder unitAssigmentReorder = new UnitAssigmentReorder();
+	private HandlerRegistration leftHandler;
+	private HandlerRegistration rightHandler;
 	
 	@Inject
 	public UnitAssignmentView(){
@@ -126,8 +133,18 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		generalLabel.setText("General");
 		requiredLabel.setText("Required");
 		optionalLabel.setText("Optional");
-		leftArrow.addClickHandler(new cleckOnNext("left"));
-		rightArrow.addClickHandler(new cleckOnNext("right"));
+		try{
+			if(leftHandler!=null) {
+				leftHandler.removeHandler();
+			}
+		}catch (AssertionError ae) { }
+		try{
+			if(rightHandler!=null) {
+				rightHandler.removeHandler();
+			}
+		}catch (AssertionError ae) { }
+		leftHandler=leftArrow.addClickHandler(new cleckOnNext("left"));
+		rightHandler=rightArrow.addClickHandler(new cleckOnNext("right"));
 		circleContainerPanel.clear();
 		leftArrow.setUrl("images/leftSmallarrow.png");
 		circleContainerPanel.add(leftArrow);
@@ -136,7 +153,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			final UnitCricleView unitCricleViewObj =new UnitCricleView(true,itemSequence.get(i).getItemSequence());
 			unitCricleViewObj.getElement().setId(i+"");
 			circleContainerPanel.add(unitCricleViewObj);
-			
+			unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler());
+			unitCricleViewObj.addMouseOutHandler(new UnitSeqMouseOutHandler());
 		}
 		rightArrow.setUrl("images/rightSmallarrow.png");
 		circleContainerPanel.add(rightArrow);
@@ -196,6 +214,22 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void getSequence(ArrayList<CollectionItemDo> getSeq) {
 		setCircleData(getSeq);
 	}
+	public class UnitSeqMouseOverHandler implements MouseOverHandler{
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()+40,event.getRelativeElement().getAbsoluteTop()+40);
+			unitAssigmentReorder.show();
+		}
+		}
+	public class UnitSeqMouseOutHandler implements MouseOutHandler{
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			unitAssigmentReorder.hide();
+			
+		}
+		}
 	
 	
 }

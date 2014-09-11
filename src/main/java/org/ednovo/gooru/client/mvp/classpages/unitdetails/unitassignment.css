@@ -571,3 +571,47 @@ display:inline-block;
 	opacity:1;
 	
 }
+.popupBox {
+	background: #ffffff;
+	padding: 8px 8px;
+	border: 1px solid #e9e9e9;
+	border-radius: 6px 6px;
+	box-shadow: 0 0 10px #eaeaea;
+	width: 290px;
+}
+
+.upArrow {
+	text-align: center;
+	margin-top: -24px;
+	margin-bottom: 15px;
+}
+
+.popHeader {
+	font-weight: bold;
+}
+
+.popDescription {
+	margin: 12px 0;
+}
+
+.dropBoxes {
+	font-weight: bold;
+	margin: 12px 0;
+}
+
+.dropBoxes select {
+	width: 70px;
+	display: inline;
+	margin: 0 10px 0 5px;
+	border: 1px solid #dedede;
+	padding: 7px 5px;
+}
+
+.btnGroup {
+	text-align: center;
+	margin: 12px 0;
+}
+
+.popArrowInner{
+	
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="unitStyle" src="unitassignment.css" />
+	<g:HTMLPanel>
+	    <div class="{unitStyle.popupBox}">
+			<div class="{unitStyle.upArrow}">
+			    <g:HTMLPanel styleName="{unitStyle.popArrowInner}"><g:Image ui:field="popupArrow"></g:Image></g:HTMLPanel>
+			</div>
+			<div class="{unitStyle.popHeader}">3. Sample Text Here!</div>
+			<hr>
+			
+			<div class="{unitStyle.popDescription}">Sample Text Here!</div>
+			<div class="{unitStyle.dropBoxes}">
+			Unit <select name="">
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			</select>
+			
+			Assignment <select name="">
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			</select>
+			
+			
+			<div class="clearfix"></div>
+			</div>
+			<div class="{unitStyle.btnGroup}">
+			    <g:Button styleName="secondary" ui:field="CancelButton"></g:Button>
+			     <g:Button styleName="primary" ui:field="saveButton"></g:Button>
+			</div>
+			
+			</hr>
+			</div>
+			
+			
+	</g:HTMLPanel>
+</ui:UiBinder> 
