@@ -598,6 +598,8 @@ display:inline-block;
 .dropBoxes {
 	font-weight: bold;
 	margin: 12px 0;
+	display: inline-block;
+	width: 100%;
 }
 
 .dropBoxes select {
@@ -626,4 +628,60 @@ display:inline-block;
 	cursor: pointer;
 	color: #0066cc;
 }
+.dropdownListPlaceHolder{
+	background:url("images/dropdownMenuArrow.png") no-repeat;
+	background-color: white;
+	background-position: right center;
+	color: #999;
+	padding: 5px 25px 5px 5px;
+	border-bottom: 1px solid #DDD;
+	border: 1px solid #DDD;
+	cursor: pointer;
+	display: inline-block;
+	width: 40px;
+	height: auto;	
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif, Calibri;
+}
+.dropdownListContainerScrollPanel{
+	border: 1px solid #DDD;
+	list-style-type: none;
+	padding:0;
+	margin:0;
+	z-index:9999;
+	max-height:86px;
+	background-color: #f9f9f9;
+	width: 70px;
+	margin-left: 26px;
+	
+}
+.dropdownListContainer{
+	list-style-type: none;
+	padding:0;
+	margin:0;
+	z-index:9999;
+	background-color: #F9F9F9;
+}
 
+.dropdownListItemContainer{
+	padding: 5px;
+	background: white;
+	margin: 0px;
+	font-family: Arial, sans-serif;
+	color: #515151;
+	font-size: 12px;
+}
+.dropdownListItemContainer:hover{
+	background-color: #CFE3F1;
+	cursor: pointer;
+}
+.dropdownPosition
+{
+/* position: relative;
+display: inline; */
+}
+.dropdownPositionAss
+{
+/* position: relative;
+display: inherit; */
+}

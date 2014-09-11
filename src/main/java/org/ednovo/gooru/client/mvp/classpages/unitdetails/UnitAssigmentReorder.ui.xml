@@ -7,24 +7,28 @@
 			<div class="{unitStyle.upArrow}">
 			    <g:HTMLPanel styleName="{unitStyle.popArrowInner}"><g:Image ui:field="popupArrow"></g:Image></g:HTMLPanel>
 			</div>
-			<div class="{unitStyle.popHeader}">3. Sample Text Here!</div>
+			<g:Label ui:field="titleLabel" styleName="{unitStyle.popHeader}"/>
 			<hr>
+			<g:Label ui:field="descLabel" styleName="{unitStyle.popDescription}"/>
+				<div class="{unitStyle.dropBoxes}">
+				    <div styleName="{unitStyle.dropdownPosition}">
+				    Unit
+			    <g:InlineLabel ui:field="dropdownListPlaceHolder" styleName="{unitStyle.dropdownListPlaceHolder}"></g:InlineLabel>
+            	<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="{unitStyle.dropdownListContainerScrollPanel}">
+	            	<g:HTMLPanel ui:field="dropdownListContainer" styleName="{unitStyle.dropdownListContainer}">
+			   		 </g:HTMLPanel>
+		   		 </g:ScrollPanel>
+			   </div> 
+			    
 			
-			<div class="{unitStyle.popDescription}">Sample Text Here!</div>
-			<div class="{unitStyle.dropBoxes}">
-			Unit <select name="">
-			<option>1</option>
-			<option>2</option>
-			<option>3</option>
-			</select>
-			
-			Assignment <select name="">
-			<option>1</option>
-			<option>2</option>
-			<option>3</option>
-			</select>
-			
-			
+			<div styleName="{unitStyle.dropdownPositionAss}">
+			Assignment
+			 <g:InlineLabel ui:field="dropdownListPlaceHolderAssignment" styleName="{unitStyle.dropdownListPlaceHolder}"></g:InlineLabel>
+            	<g:ScrollPanel ui:field="dropdownListContainerScrollPanelAssignment" styleName="{unitStyle.dropdownListContainerScrollPanel}">
+	            	<g:HTMLPanel ui:field="dropdownListContainerAssignment" styleName="{unitStyle.dropdownListContainer}">
+			   		 </g:HTMLPanel>
+		   		 </g:ScrollPanel>
+			</div>
 			<div class="clearfix"></div>
 			</div>
 			<div class="{unitStyle.btnGroup}">
