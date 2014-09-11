@@ -151,7 +151,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	}
 	
 	@Override
-	public void createPathway(String pathwayTitle){
+	public void createPathway(String pathwayTitle,final int offsetVal){
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		if(classpageid != null)
 		{
@@ -160,8 +160,9 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 			public void onSuccess(CollectionDo pathwayItemObject) {
 				if(pathwayItemObject.getTitle() != null)
 				{
-					System.out.println("itemseq::::"+pathwayItemObject.getItemSequence());
-					setUnit(pathwayItemObject.getTitle(),pathwayItemObject.getGooruOid(),pathwayItemObject.getItemSequence());
+					//System.out.println("itemseq::::"+pathwayItemObject.getItemSequence());
+					getPaginatedPathways(offsetVal);
+					//setUnit(pathwayItemObject.getTitle(),pathwayItemObject.getGooruOid(),pathwayItemObject.getItemSequence());
 				}
 			}
 		});

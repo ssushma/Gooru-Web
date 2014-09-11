@@ -74,7 +74,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 		unitName.setText(unitNameVal);
 		unitnameLBL.setText(unitName.getText());
 		setPresenter(new ClassSetupUnitPresenter(this));
-		unitSequence.getElement().setInnerHTML((sequenceNum+1)+".");
+		unitSequence.getElement().setInnerHTML((sequenceNum)+".");
 		
 		deleteBtnUnit.addClickHandler(new ClickHandler() {
 			
