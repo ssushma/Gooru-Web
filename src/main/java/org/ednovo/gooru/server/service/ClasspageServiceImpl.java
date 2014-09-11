@@ -1619,7 +1619,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		if(offSet == null)
 		{
-			offSet = "1";
+			offSet = "0";
 		}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.PATHWAYS_CLASS, classpageId, getLoggedInSessionToken(), limit, offSet);
