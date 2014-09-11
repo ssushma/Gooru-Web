@@ -1733,13 +1733,16 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}
 	
 	@Override
-	public ArrayList<ClassSetupDo> v2AssignCollectionTOPathway(String classpageId,
-			String pathwayId, String collectionId) throws GwtException,
+	public ArrayList<ClasspageItemDo> v2AssignCollectionTOPathway(String classpageId,
+			String pathwayId, String collectionId,String duedate,String directions) throws GwtException,
 			ServerDownException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ASSIGN_COLLECTION_TO_PATHWAY, classpageId, pathwayId, collectionId, getLoggedInSessionToken());
+		System.out.println("v2AssignCollectionTOPathway:::: url:::::::"+url);
+		JSONObject classPageItemJsonObject=createClasspageJsonObject(collectionId, directions, duedate,null);
+		System.out.println("v2AssignCollectionTOPathway:::: form data:::::::"+classPageItemJsonObject.toString());
 		try {
-			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),"");
+			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1749,17 +1752,17 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 
 
 
-	public ArrayList<ClassSetupDo> deserializeAssignPathway(JsonRepresentation jsonRep){
+	public ArrayList<ClasspageItemDo> deserializeAssignPathway(JsonRepresentation jsonRep){
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {
 				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
-						.toString(), new TypeReference<ArrayList<ClassSetupDo>>() {
+						.toString(), new TypeReference<ArrayList<ClasspageItemDo>>() {
 				});
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return new ArrayList<ClassSetupDo>();
+		return new ArrayList<ClasspageItemDo>();
 	}	
 	
 	
