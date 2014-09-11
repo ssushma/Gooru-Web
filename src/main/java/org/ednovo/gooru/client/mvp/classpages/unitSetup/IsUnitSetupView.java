@@ -30,5 +30,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 public interface IsUnitSetupView extends IsViewWithHandlers<UnitSetupUiHandlers>{
 	
 	void showUnitDetails(ClasspageListDo classpageListDo);
+	
+	void setPagination(int totalCount, int pagenumVal);
 
 }

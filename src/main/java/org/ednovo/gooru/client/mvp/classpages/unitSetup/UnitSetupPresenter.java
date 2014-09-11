@@ -45,15 +45,35 @@ public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> impleme
 	@Override
 	public void getPathwayCompleteDetails(int limit, int offset) {
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysCompleteDetails(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClasspageListDo>() {
+		if(classpageId!=null){
+			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysCompleteDetails(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClasspageListDo>() {
 
-			@Override
-			public void onSuccess(ClasspageListDo result) {
-				System.out.println("getPathwayCompleteDetails:");
-				getView().showUnitDetails(result);
-				
-			}
-		});
+				@Override
+				public void onSuccess(ClasspageListDo result) {
+					System.out.println("getPathwayCompleteDetails:");
+					getView().showUnitDetails(result);
+					if(result.getSearchResults().size()>0){
+						String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+						int pageNumVal = 0;
+						if(pageNum != null)
+						{
+							try
+							{
+							pageNumVal = Integer.parseInt(pageNum);
+							}
+							catch(Exception e)
+							{
+								
+							}
+						}
+						getView().setPagination(result.getTotalHitCount(),pageNumVal);
+						
+					}
+					
+				}
+			});
+		}
+		
 	}
 	
 	
