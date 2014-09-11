@@ -675,13 +675,10 @@ display:inline-block;
 	background-color: #CFE3F1;
 	cursor: pointer;
 }
-.dropdownPosition
-{
-/* position: relative;
-display: inline; */
+.dropdownPosition {
+	display: inline-block;
 }
-.dropdownPositionAss
-{
-/* position: relative;
-display: inherit; */
+
+.dropdownPositionAss {
+	display: inline-block;
 }

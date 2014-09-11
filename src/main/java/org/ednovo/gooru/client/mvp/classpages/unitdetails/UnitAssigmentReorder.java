@@ -79,7 +79,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		dropdownListContainerScrollPanel.getElement().getStyle().setDisplay(Display.NONE);
 		dropdownListPlaceHolder.addClickHandler(new OnDropdownListPlaceHolderClick());
 		dropdownListPlaceHolder.getElement().setInnerHTML("1");
-	
+		saveButton.addClickHandler(new clickOnSave());
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		totalCount=classpageListDo.getTotalHitCount()!=null?classpageListDo.getTotalHitCount():0;
 		System.out.println("totalCount.."+totalCount);
@@ -163,7 +163,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			//dropdownListPlaceHolder.getElement().setAttribute("itemsSize", ""+collectionItemsSize);
 			new CustomAnimation(dropdownListContainerScrollPanel).run(300);
 			assignmentTotalSize=0;
-			AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, assignment_limit, totalAssignmencount, new AsyncCallback<ArrayList<CollectionItemDo>>() {
+			AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, assignment_limit, totalAssignmencount, new SimpleAsyncCallback<ArrayList<CollectionItemDo>>() {
 				
 				@Override
 				public void onSuccess(ArrayList<CollectionItemDo> result) {
@@ -182,11 +182,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 					}
 				}
 				}
-				@Override
-				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					
-				}
+				
 			});
 		}
 	}
@@ -211,7 +207,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		public void onScroll(ScrollEvent event) {
 			if((dropdownListContainerScrollPanelAssignment.getVerticalScrollPosition() == dropdownListContainerScrollPanelAssignment.getMaximumVerticalScrollPosition())&&(assignmentTotalCount>assignmentTotalSize)){
 				
-				AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, assignment_limit, assignmentTotalSize, new AsyncCallback<ArrayList<CollectionItemDo>>() {
+				AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, assignment_limit, assignmentTotalSize, new SimpleAsyncCallback<ArrayList<CollectionItemDo>>() {
 					
 					@Override
 					public void onSuccess(ArrayList<CollectionItemDo> result) {
@@ -226,34 +222,17 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 						}
 					}
 					
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						
-					}
+					
 				});
 			}
 			}
 	}
-	@UiHandler("saveButton")
-	public void onclickSaveBtn(ClickEvent event){
-		System.out.println("dropdownListPlaceHolderAssignment.getText().."+dropdownListPlaceHolderAssignment.getText());
-		AppClientFactory.getInjector().getClasspageService().v2ReorderPathwaySequence(classpageId,"25509399-83ab-42f1-b774-c1e424b132d0",Integer.parseInt(dropdownListPlaceHolderAssignment.getText()),new AsyncCallback<Void>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onSuccess(Void result) {
-				System.out.println("result on suceess");	
-			}
-
-			
-	});	
-		
+	
+	
+	@UiHandler("CancelButton")
+	public void onclickCancelBtn(ClickEvent event){
+		System.out.println("onclickCancelBtn");
+		this.hide();
 	}
 	@Override
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
@@ -262,5 +241,19 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	@Override
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
 		return addDomHandler(handler, MouseOverEvent.getType());
+	}
+	public class clickOnSave implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			System.out.println("on click");
+			AppClientFactory.getInjector().getClasspageService().v2ReorderPathwaySequence(classpageId,"25509399-83ab-42f1-b774-c1e424b132d0",Integer.parseInt(dropdownListPlaceHolderAssignment.getText()),new SimpleAsyncCallback<Void>() {
+				@Override
+				public void onSuccess(Void result) {
+					System.out.println("result on suceess");	
+				}
+		});	
+			
+		}
 	}
 }
