@@ -419,30 +419,30 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			 showTabWidget(tab);
 		}
 	}
-	public void showTabWidget(String tabValue){
-		System.out.println("tab value...");
-		 if(tab!=null&&tab.equalsIgnoreCase("classList")){
-	     	classlistPresenter.setClassPageDo(classpageDo);
-	     	setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
-	     }else if(tab!=null&&tab.equalsIgnoreCase("reports")){
-	     	
-	     }else if(tab!=null&&tab.equalsIgnoreCase("unitsetup")){
-	    	 setInSlot(CLASSLIST_SLOT, unitSetupPresenter,false);
-	     }
-	     else if(tab!=null&&tab.equalsIgnoreCase("unitdetails")){
-	    	 System.out.println("tab value... 1");
-	    	 unitAssignmentPresenter.setClasspageData(classpageDo);
-	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
-	     }
-	     else {
-	    	 setInSlot(CLASSLIST_SLOT, classSetupPresenter,false);
+	 public void showTabWidget(String tabValue){
+         System.out.println("tab value...");
+          if(tab!=null&&tab.equalsIgnoreCase("classList")){
+              classlistPresenter.setClassPageDo(classpageDo);
+              setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
+      }else if(tab!=null&&tab.equalsIgnoreCase("reports")){
+              
+      }else if(tab!=null&&tab.equalsIgnoreCase("unitsetup")){
+              setInSlot(CLASSLIST_SLOT, unitSetupPresenter,false);
+      }
+      else if(tab!=null&&tab.equalsIgnoreCase("unitdetails")){
+              System.out.println("tab value... 1");
+              unitAssignmentPresenter.setClasspageData(classpageDo);
+              setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
+      }
+      else {
+              setInSlot(CLASSLIST_SLOT, classSetupPresenter,false);
 
-	    	 /*System.out.println("tab value... 2");
-	    	 unitAssignmentPresenter.setClasspageData(classpageDo);
-	    	 
-	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);*/
-	     }
-	}
+              /*System.out.println("tab value... 2");
+              unitAssignmentPresenter.setClasspageData(classpageDo);
+              
+              setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);-*/
+      }
+ }
 	public Integer getOffsetValue(){
 		String pageNum=getPlaceManager().getRequestParameter("pageNum","1");
 		int pageNumber=0;
