@@ -57,6 +57,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+import com.itextpdf.text.log.SysoCounter;
 public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHandlers> implements IsUnitAssignmentView{
 
 	@UiField HTMLPanel assignmentContainer;
@@ -94,7 +95,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	UnitAssigmentReorder unitAssigmentReorder = new UnitAssigmentReorder();
 	private HandlerRegistration leftHandler;
 	private HandlerRegistration rightHandler;
-	
+	private int totalAssignmentHitcount;
+	private int totalAssignmencount=0;
+	private String classpageid;
 	@Inject
 	public UnitAssignmentView(){
 		setWidget(uiBinder.createAndBindUi(this));
@@ -106,11 +109,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 	@Override
 	public void getPathwayItems(){
-		getUiHandlers().getPathwayItems("c8afe3ee-8d98-4aa6-a161-9d7cb0626bb2", "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, limit_circle, offset);
-
-//		showUnitNames();
-		//setCircleData();
-
+		classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		getUiHandlers().getPathwayItems(classpageid, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, limit_circle, totalAssignmencount);
 	}
 	
 	public void showUnitNames(){
@@ -157,6 +157,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		generalLabel.setText("General");
 		requiredLabel.setText("Required");
 		optionalLabel.setText("Optional");
+		totalAssignmentHitcount = itemSequence.get(0).getTotalHitCount();
 		try{
 			if(leftHandler!=null) {
 				leftHandler.removeHandler();
@@ -173,12 +174,37 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		leftArrow.setUrl("images/leftSmallarrow.png");
 		circleContainerPanel.add(leftArrow);
 		System.out.println("itemSequence.size()"+itemSequence.size());
+		totalAssignmencount=totalAssignmencount+itemSequence.size();
+		
 		for(int i=0;i<itemSequence.size();i++){
 			final UnitCricleView unitCricleViewObj =new UnitCricleView(true,itemSequence.get(i).getItemSequence());
 			unitCricleViewObj.getElement().setId(i+"");
 			circleContainerPanel.add(unitCricleViewObj);
 			unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler());
 			unitCricleViewObj.addMouseOutHandler(new UnitSeqMouseOutHandler());
+			
+		}
+		if(totalAssignmencount==totalAssignmentHitcount)
+		{
+			rightArrow.setVisible(false);
+		}else{
+			rightArrow.setVisible(true);	
+		}
+		if(totalAssignmencount<=10)	{
+			leftArrow.setVisible(false);
+		}else{
+			leftArrow.setVisible(true);
+		}
+		if(totalAssignmentHitcount>totalAssignmencount)
+		{
+			leftHandler=leftArrow.addClickHandler(new cleckOnNext("left"));
+			rightHandler=rightArrow.addClickHandler(new cleckOnNext("right"));
+		
+		}
+		else
+		{
+			rightArrow.setVisible(false);
+			leftArrow.setVisible(false);
 		}
 		rightArrow.setUrl("images/rightSmallarrow.png");
 		circleContainerPanel.add(rightArrow);
@@ -226,10 +252,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		@Override
 		public void onClick(ClickEvent event) {
 			if(value=="right"){
-				getUiHandlers().getPathwayItems("c8afe3ee-8d98-4aa6-a161-9d7cb0626bb2", "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, limit_circle, 10);
+				getUiHandlers().getPathwayItems(classpageid, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, limit_circle, totalAssignmencount);
 			}
 			else{
-				getUiHandlers().getPathwayItems("c8afe3ee-8d98-4aa6-a161-9d7cb0626bb2", "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, limit_circle, offset);
+				totalAssignmencount =totalAssignmencount-10;
+				getUiHandlers().getPathwayItems(classpageid, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, limit_circle, totalAssignmencount);
 			}
 		}
 	}
@@ -242,7 +269,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()+40,event.getRelativeElement().getAbsoluteTop()+40);
+			unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-120,event.getRelativeElement().getAbsoluteTop()+40);
 			unitAssigmentReorder.show();
 		}
 		}
@@ -250,7 +277,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			unitAssigmentReorder.hide();
+			//unitAssigmentReorder.hide();
 			
 		}
 		}

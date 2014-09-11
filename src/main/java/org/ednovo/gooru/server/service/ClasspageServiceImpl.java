@@ -1576,19 +1576,35 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}	
 
 	public ArrayList<CollectionItemDo> deserializePathwayItem(JsonRepresentation jsonRep) {
+		
+		
+		ArrayList<CollectionItemDo> pathwayItemList = new ArrayList<CollectionItemDo>();
 		try {
-				if (jsonRep != null && jsonRep.getSize() != -1) {
-				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
-						.toString(), new TypeReference<ArrayList<CollectionItemDo>>() {
-				});
+			if(jsonRep!=null&&jsonRep.getJsonObject()!=null){
+				JSONObject pathwayJsonObject=jsonRep.getJsonObject();
+			
+		if(pathwayJsonObject!=null){
+			JSONArray pathwayItemsArray=pathwayJsonObject.getJSONArray(SEARCHRESULTS);
+			int totalHitCount=pathwayJsonObject.getInt(TOTALHITCOUNT);
+			if(pathwayItemsArray!=null&&pathwayItemsArray.length()>0){
+				for(int i=0;i<pathwayItemsArray.length();i++){
+					JSONObject pathWayItemJsonObject=pathwayItemsArray.getJSONObject(i);
+					CollectionItemDo collectionItemDo=new CollectionItemDo();
+					collectionItemDo.setItemSequence(pathWayItemJsonObject.getInt("itemSequence"));
+					collectionItemDo.setTotalHitCount(totalHitCount);
+					pathwayItemList.add(collectionItemDo);
+				}
 			}
-		} catch (JSONException e) {
-			e.printStackTrace();
 		}
-		return new ArrayList<CollectionItemDo>();
+		}
+		}
+		catch(Exception ex){ex.printStackTrace();}
+		 return pathwayItemList;
 		
 	}
 	
+		
+		
 	@Override
 	public ClasspageListDo v2GetPathwaysOptimized(String classpageId, String limit, String offSet) throws GwtException {
 
