@@ -361,8 +361,17 @@
 	position:absolute;
 	top:0;
 } */
-
-.classMenuBlock:hover .classPic .pic{
+.editbutton{
+	display:none;
+}
+.classMenuBlock:hover .detailsBtn{
+	display:block;
+}
+.classMenuBlock:hover .classLeftMenu{
+	border-left:5px solid #76afda;	
+	background:#eeeeee;
+}
+.classMenuBlock:hover .editbutton{
 	display:block;
 }
 .HoverSetup{
@@ -371,8 +380,7 @@
 }
 		
 .HoverSetup .classLeftMenu{
-	border-left:5px solid #76afda;
-	background:#eeeeee;
+	
 }
 		
 .HoverSetup .detailsBtn{
@@ -380,6 +388,7 @@
 	padding:12px 0;
 	color:#ffffff;
 	text-align:center;
+	display:none;
 }
 
 .HoverSetup .detailsBtn a{
