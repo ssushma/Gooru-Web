@@ -43,6 +43,7 @@
 	min-width: 1000px;
 	background-color: gray;
 	height: 180px;
+	float: left;
 }
 
 .myCollectionShareStudentContainer > .headerContainer{
@@ -59,7 +60,8 @@
 }
 
 .myClasspageWrapperTwoChapterText {
-	float: left; /*width:257px;*/
+	float: left; 
+	width:625px;
 	height: 28px;
 	margin: 17px;
 	font-size: 20px;
@@ -305,7 +307,9 @@
 .simplePencil {
 	height: 64px;
 	min-width: 50px;
+	float: left;
 }
+
 
 .collectionEditImage {
 	background: url("images/Collection-Search/icon-sprite.png") repeat
@@ -386,9 +390,8 @@
 	word-wrap: break-word;
 }
 .classPagebuttonContainer {
-	float: right;
-	margin-top: -43px;
-	margin-right: 210px;
+	float: left;
+	margin-top: 19px;
 }
 .classPageEditTitleCancelButton {
 	font-family: Arial, Helvetica, sans-serif;
@@ -702,11 +705,12 @@ margin-left:-1px;
        overflow: visible;
 }
 .teachTab {
-       text-align: center;
-       padding-bottom: 20px;
-       margin: 20px auto;
-       width: 62%;
-       /* margin-left:122px; */
+	text-align: center;
+	padding-bottom: 20px;
+	width: 100%;
+	padding-top: 20px;
+	padding-left: 10px;
+	background: #FFF;
 }
 .teachTab .select {
        color: #fff;
@@ -942,19 +946,36 @@ margin-bottom: -10px;
 	display: block;
 	width: 70px !important;
 	height: 30px !important;
-	border: 1px solid #ccc;
 	font-size: 12px !important;
-	/* font-weight: bold; */
 	padding: 0 5px;
-	position: absolute;
+	border: 0px;
 	left: 89%;
-	margin-top: -44px;
 	text-align: center;
+	color: #6CA8C7;
+	border-left: 1px solid #ccc;
 }
 
-.classcodeContainer{
+
+.classcodeLabel{
+	width: 70px !important;
+	height: 30px !important;
+	border: 0px solid #ccc;
+	font-size: 12px !important;
+	padding: 7px 5px;
+	text-align: center;
+	color: #ccc;
 	float: left;
-	
+}
+
+
+
+
+.classcodeContainer{
+	float: right;
+	background: #FFF;
+	height: 33px;
+	margin-right: 20px;
+	padding-top: 6px;
 }
 
 .containerProgress{
@@ -1278,76 +1299,103 @@ margin-bottom: -10px;
 	width: 218px;
 	top: 29%;
 }
-.emoticon_i {
-	background-position: -7px -4px;
-	width: 35px;
-	height: 35px;
-	cursor: pointer;
-}
-.emoticon_ii {
-	background-position: -53px -4px;
-	width: 35px;
-	height: 35px;
-	cursor: pointer;
-}
-.emoticon_iii {
 
-	background-position: -141px -4px;
-	width: 35px;
-	height: 35px;
-	cursor: pointer;
-	
-}
-.emoticon_iv {
-	background-position: -184px -4px;
-	width: 35px;
-	height: 35px;
-	cursor: pointer;
-}
-.emoticon_v {
-	background-position: -232px -4px;
-	width: 35px;
-	height: 35px;
-	cursor: pointer;
-}
-.emoticon_vi {
-	background-position: -267px -4px;
-	width: 35px;
-	height: 35px;
-	cursor: pointer;
-}
-.emoticon_vii {
-	background-position: -184px -51px;
-	width: 35px;
-	height: 35px;
-	cursor: pointer;
-}
-.emoticon_viii {
-	
-	background-position: -95px -4px;
-	width: 35px;
-	height: 35px;
-	cursor: pointer;
-
-}
-.emoticon_ix {
-	background-position:-143px -52px;
-	width: 35px;
-	height: 35px;
-	cursor: pointer;
-}
-.emoticon_x {
-	background-position:-223px -52px;
-	width: 35px;
-	height: 35px;
-	cursor: pointer;
-}
-.spriteType {
-	background: url(/images/emotics.png) no-repeat;
-}
 .frameDiv{
 	width:100%;
 	overflow: hidden;
 	background-color: white;
 	text-align: center;
+}
+#pnlQuestionMark{
+	float: left;
+}
+
+.ccContainer{
+	padding-top: 17px;
+	padding-bottom: 10px;
+	float: right;
+}
+
+
+
+.arrowDropdown{
+	width: 0;
+	height: 0;
+	border: 8px solid;
+	border-color: #999 transparent transparent transparent;
+	float: right;
+	margin-top: 4px;
+	margin-left: 7px;
+	border-bottom: none;
+	cursor: pointer;
+}
+
+.studentList{
+	background: #fff;
+	height: auto;
+	min-height: 24px;
+	max-height: 97px;
+}
+
+.studentListContainer1{
+	position: relative;
+	top: -147px;
+	right: 20px;
+	float: right;
+	padding: 7px;
+	width: 154px;
+}
+
+.studentListContainer {
+	background: #FFF;
+	padding: 7px;
+	border: 1px solid #ccc;
+	height: 12px;
+}
+
+.selectedStudent{
+	float: left;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 115px;
+	cursor: pointer;
+}
+.student:hover{
+	background-color: #cfe3f1;
+	opacity: 1;
+	cursor: pointer;
+}
+
+.student{
+	width: 93% !important;
+	height: 16px !important;
+	font-size: 13px !important;
+	color: #515151 !important;
+	cursor: pointer !important;
+	float: left;
+	text-decoration: none !important;
+	padding: 4px 0;
+	padding-left: 11px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+}
+
+.scrollPanel{
+	background-color: white;
+	z-index: 9;
+	min-height: 24px;
+	max-height: 97px;
+	overflow-x: hidden !important;
+	overflow-y: auto !important;
+	position: absolute !important;
+	width: 153px;
+	border: 1px solid #ccc;
+}
+
+#pnlMainContainer{
+	float:left;
+	width: 99%;
 }

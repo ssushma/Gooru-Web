@@ -89,8 +89,6 @@ public interface IsEditClasspageView extends IsViewWithHandlers<EditClasspageUiH
 	
 	public void setClasspageData(ClasspageDo classpageDo);
 	
-	public void setSortingOrderInDropdown(String sortingOrder);
-	
 	
 	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList, String tab, String analyticsId, String monitorId,ClassListPresenter classListPresenter,int assignmentsCount);
 	
@@ -98,30 +96,7 @@ public interface IsEditClasspageView extends IsViewWithHandlers<EditClasspageUiH
 	
 	public void setClasspageItemOnTop(ClasspageItemDo classpageItemDo);
 	
-	public FlowPanel getClassListContainer();
-	
 	public AssignmentEditLabelUc getCollectionTitleUc();
-
-	/**
-	 * @function displayAssignmentPath 
-	 * 
-	 * @created_date : Jun 11, 2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @param classpageList
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
-	
-	void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageList);
 
 	/**
 	 * @function callAssignmentAPI 
@@ -167,6 +142,7 @@ public interface IsEditClasspageView extends IsViewWithHandlers<EditClasspageUiH
 	*/
 	
 	ArrayList<ClasspageItemDo> getGlobalClasspageProcess();
+
 
 	/**
 	 * @function hideNoAssignmentsMessagePanel 

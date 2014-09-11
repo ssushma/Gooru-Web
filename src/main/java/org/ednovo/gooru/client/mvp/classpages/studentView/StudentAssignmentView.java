@@ -688,18 +688,18 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			noAssignmentMsg.setVisible(false);
 			for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
 				ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
-				CollectionsView collectionsView = new CollectionsView(classpageItemDo,true,(itemIndex+1)){
-					public void resetPagination(){
-						setPagination();
-						contentpanel.add(setLoadingPanel());
-						getUiHandlers().getNextClasspageItems(((pageNumber*limit)-1),1);
-					}
-					public void updateAssignmentCircleColor(String collectionItemId,String readStatus){
-						updateCircleColors(collectionItemId,readStatus);
-					}
-				};
+//				CollectionsView collectionsView = new CollectionsView(classpageItemDo,true,(itemIndex+1)){
+//					public void resetPagination(){
+//						setPagination();
+//						contentpanel.add(setLoadingPanel());
+//						getUiHandlers().getNextClasspageItems(((pageNumber*limit)-1),1);
+//					}
+//					public void updateAssignmentCircleColor(String collectionItemId,String readStatus){
+//						updateCircleColors(collectionItemId,readStatus);
+//					}
+//				};
 				this.totalHitCount=classpageItemDo.getTotalHitCount();
-				contentpanel.add(collectionsView);
+			//	contentpanel.add(collectionsView);
 			}
 			setPagination();
 		}else{

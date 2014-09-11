@@ -47,6 +47,9 @@ import org.ednovo.gooru.client.mvp.classpages.assignments.IsAddAssignmentContain
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListView;
 import org.ednovo.gooru.client.mvp.classpages.classlist.IsClassListView;
+import org.ednovo.gooru.client.mvp.classpages.classsetup.ClassSetupPresenter;
+import org.ednovo.gooru.client.mvp.classpages.classsetup.ClassSetupView;
+import org.ednovo.gooru.client.mvp.classpages.classsetup.IsClassSetupView;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter.IsEditClasspageProxy;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageView;
@@ -63,6 +66,15 @@ import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter.IsClassCodeProxy;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodeView;
 import org.ednovo.gooru.client.mvp.classpages.study.IsClassCodeView;
+import org.ednovo.gooru.client.mvp.classpages.unitSetup.IsUnitSetupView;
+import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupPresenter;
+import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupView;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.IsUnitAssignmentView;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssignmentPresenter;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssignmentView;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.IsPersonalizeUnitView;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitView;
 import org.ednovo.gooru.client.mvp.community.CommunityPresenter;
 import org.ednovo.gooru.client.mvp.community.CommunityPresenter.IsCommunityProxy;
 import org.ednovo.gooru.client.mvp.community.CommunityView;
@@ -547,6 +559,9 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(RusdLibraryPresenter.class, IsRusdLibraryView.class, RusdLibraryView.class,IsRusdLibraryProxy.class);
 		bindPresenter(LpsLibraryPresenter.class, IsLpsLibraryView.class, LpsLibraryView.class,IsLpsLibraryProxy.class);
 		bindPresenter(CoreLibraryPresenter.class, IsCoreLibraryView.class, CoreLibraryView.class,IsCoreLibraryProxy.class);
-		
+		bindPresenterWidget(ClassSetupPresenter.class,IsClassSetupView.class,ClassSetupView.class);
+		bindPresenterWidget(UnitSetupPresenter.class,IsUnitSetupView.class,UnitSetupView.class);
+		bindPresenterWidget(UnitAssignmentPresenter.class,IsUnitAssignmentView.class,UnitAssignmentView.class);
+		bindPresenterWidget(PersonalizeUnitPresenter.class,IsPersonalizeUnitView.class,PersonalizeUnitView.class);
 	}
 }
