@@ -2312,6 +2312,10 @@ fieldset {
   background: #4fb845;
 }
 
+.pathwayContainer:hover .showitem{
+	display:block !important;
+}
+
 .panelHeight{
 	overflow-y: auto;
 	overflow-x: hidden;

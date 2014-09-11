@@ -22,35 +22,25 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+package org.ednovo.gooru.client.mvp.classpages.unitSetup;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Widget;
+public class AssignmentEditView extends Composite{
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.shared.model.content.ClasspageDo;
 
-public interface UnitAssignmentUiHandlers extends BaseUiHandlers{
+	private static AssignmentEditViewUiBinder uiBinder = GWT.create(AssignmentEditViewUiBinder.class);
 
-	/**
-	 * @function setClasspageData 
-	 * 
-	 * @created_date : 09-Sep-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @param classpageDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
+	interface AssignmentEditViewUiBinder extends UiBinder<Widget, AssignmentEditView> {
+		
+	}
 	
-	void setClasspageData(ClasspageDo classpageDo);
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
+
+	public AssignmentEditView(){
+		initWidget(uiBinder.createAndBindUi(this));		
+	}
 	
-	void getPathwayItems();
-	
-	void getPathwayUnits(int limit, int offset);
 }

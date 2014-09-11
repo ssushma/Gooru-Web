@@ -587,3 +587,15 @@ width: 625px;
 height: 28px;
 padding-top: 6px;
 }
+.unitdetailsLbl{
+	font-size: 14px;
+color: #1076ba;
+margin-right: 15px;
+margin-bottom: -15px;
+}
+.unitSetupLabel{
+	position: absolute;
+margin-top: -47px;
+width: 99%;
+cursor:pointer;
+}

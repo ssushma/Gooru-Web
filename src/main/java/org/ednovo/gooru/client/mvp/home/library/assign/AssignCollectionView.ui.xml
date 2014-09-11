@@ -25,7 +25,7 @@
 			<g:HTMLPanel styleName="{res.css.controlsContainer}"
 				ui:field="controlsContainer">
 
-				<g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.containerMainDiv}">
 
 					<g:Label ui:field="lblClasspages" styleName="{res.css.labelText}"></g:Label>
 
@@ -39,6 +39,26 @@
 							</g:HTMLPanel>
 						</g:ScrollPanel>
 					</g:HTMLPanel>
+					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+				
+				</g:HTMLPanel>
+				
+				<g:HTMLPanel styleName="{res.css.containerMainDiv}">
+
+					<g:Label ui:field="lblClasspagesUnits" styleName="{res.css.labelUnitText}"></g:Label>
+
+					<g:HTMLPanel styleName="{res.css.dropdownUnitContainer}">
+						<g:Label ui:field="lblClasspageUnitPlaceHolder" styleName="{res.css.placeHolderText}"></g:Label>
+						<g:Label ui:field="lblClasspagesUnitArrow" styleName="{res.css.arrow}"></g:Label>
+						<g:ScrollPanel ui:field="spanelClasspagesUnitPanel"
+							styleName="{res.css.scrollPanelContainer}">
+							<g:HTMLPanel ui:field="htmlClasspagesUnitListContainer"
+								styleName="">
+							</g:HTMLPanel>
+						</g:ScrollPanel>
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="clearfix" ></g:HTMLPanel>
+					<g:Label ui:field="errorLabel" styleName="{res.css.errorLabelUnit}"></g:Label>
 				</g:HTMLPanel>
 				
 	<g:HTMLPanel styleName="{res.css.duedateContainer}">

@@ -24,29 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
-import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageView;
-import org.ednovo.gooru.client.mvp.home.WaitPopupVc;
-import org.ednovo.gooru.client.mvp.search.event.SetMarkButtonEvent;
-import org.ednovo.gooru.client.mvp.search.event.SetMarkButtonHandler;
-import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataEvent;
-import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataHandler;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.util.StringUtil;
-
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.EventTarget;
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -59,19 +41,17 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
-import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * 
@@ -90,7 +70,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class CollectionsView extends ChildView<CollectionsPresenter> implements IsCollectionsView{
 	
-	@UiField HTMLPanel thumbnailContainer,directionContentPanel;
+	@UiField HTMLPanel thumbnailContainer,directionContentPanel,minimumScoreContentPanel;
 	
 	@UiField HTML learningObject;
 	
@@ -101,6 +81,14 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	@UiField Label assignmentSequenceLabel,dueDateText,dueDateButton;
 	
 	@UiField ChangeAssignmentStatusView changeAssignmentStatusView;
+	
+	@UiField Button editAssignmentDetailsButton,cancelAssignmentDetailsButton,saveAssignmentDetailsButton;
+	
+	@UiField InlineLabel suggestedHourLabel,suggestedMinutesLabel;
+	
+	private Label directionErrorLabel=new Label();
+	
+	private TextArea directionTextArea;
 	
 	private static CollectionsViewUiBinder uiBinder = GWT.create(CollectionsViewUiBinder.class);
 	
@@ -117,6 +105,11 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		setPresenter(new CollectionsPresenter(this));
 		CollectionsCBundle.INSTANCE.css().ensureInjected();
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
+		showSaveButtons(false);
+		changeAssignmentStatusView.getChangeAssignmentStatusButton().addClickHandler(new ChangeStatusEvent());
+		editAssignmentDetailsButton.addClickHandler(new EditAssignmentEvent());
+		setDirection("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor turpis id nisl iaculis, sit amet convallis nibh dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor turpis id nisl iaculis, sit amet convallis nibh dapibus.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor turpis id nisl iaculis, sit amet convallis nibh dapibus.");
+		setMinimumScore("85");
 	}
 	
 	private void setAssignmentSequence(int sequenceNumber){
@@ -124,7 +117,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	private void setAssignmentStatus(boolean assignmentStatus){
-		//changeAssignmentStatusView
+		changeAssignmentStatusView.getChangeAssignmentStatusButton().setValue(assignmentStatus);
 	}
 	
 	private void setDueDate(String dueDate){
@@ -132,7 +125,10 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	private void setMinimumScore(String score){
-		
+		minimumScoreContentPanel.clear();
+		HTML scorePanel=new HTML(score+"%");
+		scorePanel.setStyleName("");
+		minimumScoreContentPanel.add(scorePanel);
 	}
 	
 	private void setSuggestedTime(String time){
@@ -187,5 +183,118 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	public void setErrorImage(ErrorEvent event){
 		collectionImage.setUrl("images/default-collection-image-160x120.png");
 	}
+	
+	public class ChangeStatusEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			updateAssignmentStatus(changeAssignmentStatusView.getChangeAssignmentStatusButton().getValue());
+		}
+	}
+	
+	public void updateAssignmentStatus(boolean assignmentStaus){
+		Window.alert("Assignment status====>"+changeAssignmentStatusView.getChangeAssignmentStatusButton().getValue());
+	}
+	
+	
+	public class EditAssignmentEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			showSaveButtons(true);
+			editDirection("direction texttttttttt directes test direction texttttttttt directes test direction texttttttttt directes test direction texttttttttt directes test direction texttttttttt directes test ");
+			editMinimumScore("54");
+			editSuggestedTime("04","50");
+		}
+	}
+	
+	public void editMinimumScore(String minimumScore){
+		minimumScoreContentPanel.clear();
+		TextBox mimimunScoreTextBox=new TextBox();
+		mimimunScoreTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
+		mimimunScoreTextBox.setText(minimumScore);
+		minimumScoreContentPanel.add(mimimunScoreTextBox);
+	}
+	
+	public void editSuggestedTime(String suggestedHour, String suggestedMinutes){
+		suggestedHourLabel.setText("");
+		TextBox suggestedHourTextBox=new TextBox();
+		suggestedHourTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
+		suggestedHourTextBox.setText(suggestedHour);
+		suggestedHourLabel.getElement().appendChild(suggestedHourTextBox.getElement());
+		
+		suggestedMinutesLabel.setText("");
+		TextBox suggestedMinTextBox=new TextBox();
+		suggestedMinTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
+		suggestedMinTextBox.setText(suggestedMinutes);
+		suggestedMinutesLabel.getElement().appendChild(suggestedMinTextBox.getElement());
+	}
+	
+	public void editDirection(String directionText){
+		directionContentPanel.clear();
+		directionTextArea =new TextArea();
+		directionTextArea.getElement().setAttribute("maxlength", "400");
+		directionTextArea.setStyleName(CollectionsCBundle.INSTANCE.css().classpageTextarea());
+		if(directionText!=null&&!directionText.equals("")&&!directionText.equals("null")){
+			directionTextArea.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
+			directionTextArea.setText(directionText);
+		}else{
+			directionTextArea.setText(i18n.GL1389());
+			directionTextArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
+		}
+		directionTextArea.addFocusHandler(new DirectonFoucsEvent());
+		directionTextArea.addBlurHandler(new DirectionBlurEvent());
+		directionTextArea.addKeyUpHandler(new DirectionKeypressEvent());
+		directionErrorLabel.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentDirectiomErrorMessage());
+		directionContentPanel.clear();
+		directionErrorLabel.setText("");
+		directionContentPanel.add(directionTextArea);
+		directionContentPanel.add(directionErrorLabel);
+	}
+	private class DirectonFoucsEvent implements FocusHandler{
+		@Override
+		public void onFocus(FocusEvent event) {
+			String directionText=directionTextArea.getText().trim();
+			if(directionText.equalsIgnoreCase(i18n.GL1389())){
+				directionTextArea.setText("");
+			}
+			directionTextArea.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
+		}
+	}
+	
+	private class DirectionBlurEvent implements BlurHandler{
+		@Override
+		public void onBlur(BlurEvent event) {
+			String directionText=directionTextArea.getText().trim();
+			if(!directionText.equalsIgnoreCase(i18n.GL1389())&&directionText.length()>0){
+				if(directionText.length()>=400){
+					directionErrorLabel.setText(i18n.GL0143());
+				}else{
+					directionErrorLabel.setText("");
+				}
+			}else{
+				directionTextArea.setText(i18n.GL1389());
+				directionTextArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
+			}
+		}
+	}
+	
+	private class DirectionKeypressEvent implements KeyUpHandler{
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+			String directionText=directionTextArea.getText().trim();
+			if(directionText.length()>=400){
+				directionErrorLabel.setText(i18n.GL0143());
+				//event.preventDefault();
+				}else{
+				directionErrorLabel.setText("");
+			}
+		}
+	}
+
+	public void showSaveButtons(boolean buttonVisibility){
+		editAssignmentDetailsButton.setVisible(!buttonVisibility);
+		cancelAssignmentDetailsButton.setVisible(buttonVisibility);
+		saveAssignmentDetailsButton.setVisible(buttonVisibility);
+	}
+	
 	
 }

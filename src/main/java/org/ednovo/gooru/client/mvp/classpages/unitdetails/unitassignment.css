@@ -34,7 +34,7 @@
 .uniSetup a{
 	padding:20px 15px;
 	display:block;
-		font-size:12px;
+	font-size:12px;
 	line-height:25px;
 	
 	
@@ -479,7 +479,7 @@ display:inline-block;
 		font-size:12px;
 		padding:30px 15px;
 		display:block;
-		border-left:5px solid #ffffff;
+		 border-left:5px solid #ffffff; 
 		cursor:pointer;
 	}
 	
@@ -499,13 +499,19 @@ display:inline-block;
 		
 	}
 	.unitPanelStyle:hover{
-
+        color:#666666;
+		font-size:12px;
+		background:#EFEFEF;
+		border-left:5px solid #75AED7 !important;
 	}
 	.unitMenuActive{
 		color:#666666;
 		font-size:12px;
 		background:#EFEFEF;
-		border-left:5px solid #75AED7;
+		border-left:5px solid #75AED7 !important;
+   }
+   .unitMenuActive:hover{
+       border-left:none;
    }
 	
 	.bubbleBig{
@@ -564,4 +570,13 @@ display:inline-block;
 	-moz-border-radius:50% 50%;
 	opacity:1;
 	
+}
+
+.moreUnits{
+	padding:20px 15px;
+	display:block;
+	font-size:12px;
+	line-height:25px;
+	cursor: pointer;
+	color: #0066cc;
 }
