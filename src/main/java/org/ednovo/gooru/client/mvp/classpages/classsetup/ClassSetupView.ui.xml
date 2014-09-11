@@ -21,6 +21,8 @@
 			<g:HTMLPanel styleName="text-center">
 				<g:Button ui:field="addUnitBtn" styleName="primary {playerStyle.btnstyles}"> Add Unit</g:Button>
 			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{playerStyle.paginationStyle}">
+			<ptag:HTMLEventPanel ui:field="paginationPanel" styleName="text-right" ></ptag:HTMLEventPanel></g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>

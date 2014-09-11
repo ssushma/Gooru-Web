@@ -24,15 +24,21 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
 import org.ednovo.gooru.client.child.ChildView;
+import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -41,10 +47,11 @@ import com.google.gwt.user.client.ui.Widget;
 public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresenter> implements IsClassSetupUnitView{
 
 	@UiField HTMLPanel unitSequence,inputContainer;
-	@UiField Button deleteBtnUnit,cancelBtn,saveBtn;
+	@UiField Button deleteBtnUnit,cancelBtn,saveBtn,editBtn;
 	@UiField TextBox unitName;
-	@UiField Label divContainer;
 	@UiField Button btnAssignment;
+	@UiField HTMLEventPanel divContainer;
+	@UiField Label unitnameLBL;
 	private static ClassSetupUnitViewUiBinder uiBinder = GWT.create(ClassSetupUnitViewUiBinder.class);
 
 	interface ClassSetupUnitViewUiBinder extends UiBinder<Widget, ClassSetupUnitView> {
@@ -63,8 +70,9 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 		initWidget(uiBinder.createAndBindUi(this));
 		inputContainer.setVisible(false);
 		divContainer.setVisible(true);
+		editBtn.setVisible(false);
 		unitName.setText(unitNameVal);
-		divContainer.setText(unitName.getText());
+		unitnameLBL.setText(unitName.getText());
 		setPresenter(new ClassSetupUnitPresenter(this));
 		unitSequence.getElement().setInnerHTML((sequenceNum+1)+".");
 		
@@ -82,6 +90,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 			public void onClick(ClickEvent event) {
 				inputContainer.setVisible(false);
 				divContainer.setVisible(true);
+				editBtn.setVisible(false);
 				
 			}
 		});
@@ -90,19 +99,36 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 			@Override
 			public void onClick(ClickEvent event) {
 				//api call to save data to be added
-				divContainer.setText(unitName.getText());
+				unitnameLBL.setText(unitName.getText());
 				inputContainer.setVisible(false);
 				divContainer.setVisible(true);
+				editBtn.setVisible(false);
 				saveItem(unitName.getText(),pathwayId);
 				
 			}
 		});
-		divContainer.addClickHandler(new ClickHandler() {
+		editBtn.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
 				inputContainer.setVisible(true);
 				divContainer.setVisible(false);
+				
+			}
+		});
+		divContainer.addMouseOverHandler(new MouseOverHandler() {
+			
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				editBtn.setVisible(true);
+				
+			}
+		});
+		divContainer.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				editBtn.setVisible(false);
 				
 			}
 		});
