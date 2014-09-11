@@ -23,16 +23,40 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> implements UnitSetupUiHandlers{
+	
+	private int limit = 5;
+	private int offSet = 0;
 
 	@Inject
 	public UnitSetupPresenter(EventBus eventBus, IsUnitSetupView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
+		getPathwayCompleteDetails(limit,offSet);
 	}
+
+	@Override
+	public void getPathwayCompleteDetails(int limit, int offset) {
+		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysCompleteDetails(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClasspageListDo>() {
+
+			@Override
+			public void onSuccess(ClasspageListDo result) {
+				System.out.println("getPathwayCompleteDetails:");
+				getView().showUnitDetails(result);
+				
+			}
+		});
+	}
+	
+	
 	
 	
 }
