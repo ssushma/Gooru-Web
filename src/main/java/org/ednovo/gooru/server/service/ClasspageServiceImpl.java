@@ -1598,10 +1598,11 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		if(offSet == null)
 		{
-			offSet = "1";
+			offSet = "0";
 		}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.PATHWAYS_CLASS_OPTIMIZED, classpageId, getLoggedInSessionToken(), limit, offSet);
+		System.out.println("v2GetPathwaysOptimized::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
