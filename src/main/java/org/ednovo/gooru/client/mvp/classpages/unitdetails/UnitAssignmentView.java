@@ -105,7 +105,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
 		unitSetupButton.addClickHandler(new UnitSetupEvents());
-		showUnitNames();
 	}
 	@Override
 	public void getPathwayItems(){
@@ -113,16 +112,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		getUiHandlers().getPathwayItems(classpageid, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, limit_circle, totalAssignmencount);
 	}
 	
-	public void showUnitNames(){
-		for(int i=1; i<5; i++){
-			String s="sun"+i;
-			String number=Integer.toString(i);
-			UnitWidget unitsWidget=new UnitWidget(number, s);
-			unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget));
-			unitsWidget.getElement().setId(number);
-			unitPanel.add(unitsWidget);
-		}
-	}
 	
 	public class UnitChangeEvent implements ClickHandler{
 		private UnitWidget unitsWidget;
@@ -275,29 +264,25 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 	public class UnitSeqMouseOutHandler implements MouseOutHandler{
 
+
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			//unitAssigmentReorder.hide();
+			unitAssigmentReorder.hide();
 			
 		}
+			
 		}
 
 	@Override
 	public void showUnitNames(ClasspageListDo classpageListDo) {
 		// TODO Auto-generated method stub
 		this.classpageListDo=classpageListDo;
-		int totalCount=classpageListDo.getTotalHitCount();
-		int size;
-		if(totalCount > offSet){
-			if((totalCount-offSet) > limit){
-				size=limit;
-			}else{
-				size=Math.abs(totalCount-offSet);
-				hideMoreUnitsLink();
-			}
-			
+		int totalCount=classpageListDo.getTotalHitCount()!=null?classpageListDo.getTotalHitCount():0;
+		int size =classpageListDo.getSearchResults().size() ;
+
+		if(Math.abs(totalCount-offSet) > size){
+			showMoreUnitsLink();
 		}else{
-			size=totalCount;
 			hideMoreUnitsLink();
 		}
 		for(int i=0; i<size; i++){
@@ -309,9 +294,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			unitsWidget.getElement().setId(sequenceNumber);
 			unitPanel.add(unitsWidget);
 		}
-		
+
 	}
-	
+
 	@UiHandler("lblMoreUnits")
 	public void clickOnMoreUnits(ClickEvent event){
 		offSet=offSet+limit;

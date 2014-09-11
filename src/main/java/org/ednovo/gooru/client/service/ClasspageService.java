@@ -32,6 +32,7 @@ import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
+import org.ednovo.gooru.shared.model.content.ClassSetupDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -555,5 +556,9 @@ public interface ClasspageService extends BaseService {
 	void deletePathway(String classpageId, String pathwayId)
 			throws GwtException;
 
+	public ArrayList<ClassSetupDo> v2AssignCollectionTOPathway(String classpageId,String pathwayId,String collectionId) throws GwtException, ServerDownException;
+
+	CollectionDo updateAssignmentStatus(String collectionItemId,
+			Boolean isRequiredStatus) throws GwtException;
 
 }

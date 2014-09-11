@@ -33,9 +33,12 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.classsetup.ClassSetupPresenter;
+import org.ednovo.gooru.client.mvp.classpages.classsetup.ClassSetupUnitPresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
+import org.ednovo.gooru.shared.model.content.ClassSetupDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
@@ -64,6 +67,12 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	
 	private String classpageId=null;
 	private EditClasspagePresenter editClasspagePresenter=null;
+	
+	private String classpageIdToAssign=null;
+	private String pathwayId=null;
+	private ClassSetupPresenter classSetupPresenter=null;
+	private ClassSetupUnitPresenter classSetupUnitPresenter=null;
+	boolean isFromClassSetUpPresenter;
 	
 	@Inject
 	public AddAssignmentContainerPresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddAssignmentContainerView view) {
@@ -112,6 +121,19 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	}
 	
 	public void addCollectionToAssign(String collectionId){
+		
+		if(isFromClassSetUpPresenter)
+		{
+			AppClientFactory.getInjector().getClasspageService().v2AssignCollectionTOPathway(this.classpageIdToAssign, "25509399-83ab-42f1-b774-c1e424b132d0", collectionId, new SimpleAsyncCallback<ArrayList<ClassSetupDo>>() {
+			@Override
+			public void onSuccess(ArrayList<ClassSetupDo> result) {
+			// TODO Auto-generated method stubgetr
+			getView().hideAddCollectionPopup("");
+			}
+			});
+		}
+		else
+		{		
 		AppClientFactory.getInjector().getClasspageService().assignItemToClass(this.classpageId, collectionId, null, null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			@Override
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemDoList) {
@@ -127,6 +149,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 				}
 			}
 		});
+		}
 	}
 	
 	public void showCollectionsAfterAddingNewCollections(){
@@ -151,6 +174,19 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	public void setEditClasspagePresenter(EditClasspagePresenter editClasspagePresenter) {
 		this.editClasspagePresenter = editClasspagePresenter;
 	}
+	
+	public void setClasspageIdFromClassSetupPresenter(String classpageId,String pathwayId,ClassSetupPresenter classSetupPresenter,boolean val) {
+		// TODO Auto-generated method stub
+		this.classpageIdToAssign = classpageId;
+		this.pathwayId = pathwayId;
+		isFromClassSetUpPresenter= val;
+		this.setClassSetUpPresenter(classSetupPresenter);
+		}
+
+		private void setClassSetUpPresenter(ClassSetupPresenter classSetupPresenter) {
+		// TODO Auto-generated method stub
+		this.classSetupPresenter = classSetupPresenter;
+		}
 	
 	
 }

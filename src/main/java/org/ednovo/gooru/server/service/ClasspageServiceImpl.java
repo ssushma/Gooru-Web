@@ -25,7 +25,6 @@
 package org.ednovo.gooru.server.service;
 
 import java.io.IOException;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -50,6 +49,7 @@ import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
+import org.ednovo.gooru.shared.model.content.ClassSetupDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -74,7 +74,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.gwt.dev.json.JsonArray;
 
 @Service("classpageService")
 @ServiceURL("/classpageService")
@@ -1713,7 +1712,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			}
 
 			collectionItemJsonObject.put("itemSequence", collectionItemDo.getItemSequence());
-			collectionItemJsonObject.put("isRequired", true);
+			//collectionItemJsonObject.put("isRequired", true);
 
 
 		} catch (JSONException e) {
@@ -1748,6 +1747,59 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 
 	}
+	
+	@Override
+	public ArrayList<ClassSetupDo> v2AssignCollectionTOPathway(String classpageId,
+			String pathwayId, String collectionId) throws GwtException,
+			ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ASSIGN_COLLECTION_TO_PATHWAY, classpageId, pathwayId, collectionId, getLoggedInSessionToken());
+		try {
+			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),"");
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return deserializeAssignPathway(jsonRep);
+	}
+
+
+
+	public ArrayList<ClassSetupDo> deserializeAssignPathway(JsonRepresentation jsonRep){
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
+						.toString(), new TypeReference<ArrayList<ClassSetupDo>>() {
+				});
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<ClassSetupDo>();
+	}	
+	
+	
+	@Override
+	public CollectionDo updateAssignmentStatus(String collectionItemId, Boolean isRequiredStatus) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ASSIGN_STATUS_UPDATE,collectionItemId,getLoggedInSessionToken());
+		JSONObject jsonObject=new JSONObject();
+		JSONObject collectionJsonObject=new JSONObject();
+		try {
+			collectionJsonObject.put("itemType", "added");	
+			collectionJsonObject.put("isRequired", isRequiredStatus);
+			jsonObject.put("collectionItem", collectionJsonObject);
+		}
+		catch(JSONException e)
+		{
+			
+		}
+
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),jsonObject.toString());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeCollection(jsonRep);
+	}
+	
 }
 
 

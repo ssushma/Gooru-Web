@@ -44,6 +44,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 	@UiField Button deleteBtnUnit,cancelBtn,saveBtn;
 	@UiField TextBox unitName;
 	@UiField Label divContainer;
+	@UiField Button btnAssignment;
 	private static ClassSetupUnitViewUiBinder uiBinder = GWT.create(ClassSetupUnitViewUiBinder.class);
 
 	interface ClassSetupUnitViewUiBinder extends UiBinder<Widget, ClassSetupUnitView> {

@@ -26,13 +26,11 @@ package org.ednovo.gooru.client.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import org.ednovo.gooru.shared.exception.GwtException;
-import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
+import org.ednovo.gooru.shared.model.content.ClassSetupDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -43,7 +41,6 @@ import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
-
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -208,6 +205,11 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 			String pathwayTitle, AsyncCallback<CollectionDo> callback);
 	
 	public void deletePathway(String classpageId, String pathwayId, AsyncCallback<Void> simpleAsyncCallback);
+	
+	public void v2AssignCollectionTOPathway(String classpageId,String pathwayId,String collectionId, AsyncCallback<ArrayList<ClassSetupDo>> callback);
+	
+	void updateAssignmentStatus(String classpageId, String pathwayId,
+			String pathwayTitle, AsyncCallback<CollectionDo> callback);
 
 	
 }

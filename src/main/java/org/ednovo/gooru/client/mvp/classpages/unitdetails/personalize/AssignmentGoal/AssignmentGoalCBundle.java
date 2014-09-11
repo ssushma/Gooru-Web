@@ -42,6 +42,18 @@ public interface AssignmentGoalCBundle extends ClientBundle {
 		String studentName();
 
 		String goals();
+		
+		String circleSmall();
+
+		String circle();
+
+		String green();
+
+		String grey();
+
+		String optional();
+		
+		String container();
 	}
 
 	@Source("assignmentgoal.css")

@@ -22,59 +22,54 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize;
-
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.AssignmentGoal.AssignmentGoalView;
+package org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.AssignmentGoal;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
+public abstract class GoalViewVc extends Composite {
 
-/**
- * 
- * @fileName : PersonalizeUnitView.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 09-Sep-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer:
- */
-public class PersonalizeUnitView extends
-		BaseViewWithHandlers<PersonalizeUnitUiHandlers> implements
-		IsPersonalizeUnitView {
+	private static GoalViewVcUiBinder uiBinder = GWT.create(GoalViewVcUiBinder.class);
 
-	private static PersonalizeUnitViewUiBinder uiBinder = GWT
-			.create(PersonalizeUnitViewUiBinder.class);	
+	@UiField Label lblAssignmentNumber;
 	
-	@UiField HTMLPanel panelPersonalizeContainer;
-
-	interface PersonalizeUnitViewUiBinder extends
-			UiBinder<Widget, PersonalizeUnitView> {
-
+	@UiField HTMLPanel panelMembers;
+	
+	String assignmentNo;
+	
+	interface GoalViewVcUiBinder extends UiBinder<Widget, GoalViewVc> {
 	}
-
-	private MessageProperties i18n = GWT.create(MessageProperties.class);
-
-	public PersonalizeUnitView() {
-		setWidget(uiBinder.createAndBindUi(this));		
+	
+	public MessageProperties i18N = GWT.create(MessageProperties.class);
+	
+	public GoalViewVc(String assignmentNo) {
+		initWidget(uiBinder.createAndBindUi(this));
+		this.assignmentNo = assignmentNo;
+		setDebugId();		
 	}
-
+	
 	@Override
-	public void displayAssignmentsGoals(StudentsAssociatedListDo result){
-		for (int k=0;k<result.getSearchResults().size();k++){
-			panelPersonalizeContainer.add(new AssignmentGoalView(result.getSearchResults().get(k)));
-		}
+	public void onLoad() {
+//		setDebugId();
+	}
+
+	public void setDebugId() {
+		
+		int value = Integer.parseInt(assignmentNo) % 2;
+		
+		lblAssignmentNumber.setText(assignmentNo);
+		lblAssignmentNumber.setVisible(false);
+		panelMembers.getElement().addClassName(AssignmentGoalCBundle.INSTANCE.css().circleSmall());
+		panelMembers.getElement().addClassName(value ==0 ? AssignmentGoalCBundle.INSTANCE.css().green() : AssignmentGoalCBundle.INSTANCE.css().grey());
+	}
+	
+	private void removeThisFromParent(){		
+		this.removeFromParent();
 	}
 }
