@@ -68,19 +68,14 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 
 	@Override
 	public void getPathwayItems(String classpageId, String pathwayGooruOid,String sequence,int limit,int offSet) {
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new AsyncCallback<ArrayList<CollectionItemDo>>() {
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<ArrayList<CollectionItemDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionItemDo> result) {
 				getView().getSequence(result);
 				
 			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
+					
 		});
 		
 	}

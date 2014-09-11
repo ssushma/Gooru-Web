@@ -518,4 +518,9 @@
 	text-align: center;
 margin: 6px 0;
 }
+.paginationStyle{
+	position: absolute;
+margin-top: 16px;
+width:100%;
+}
 
