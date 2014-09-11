@@ -34,6 +34,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -79,6 +80,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 		unitNameErrorLabel.setVisible(false);
 		unitName.setText(unitNameVal);
 		unitnameLBL.setText(unitName.getText());
+		unitName.setMaxLength(50);
 		setPresenter(new ClassSetupUnitPresenter(this));
 		unitSequence.getElement().setInnerHTML((sequenceNum)+".");
 		
@@ -115,9 +117,10 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 					public void onSuccess(Boolean value) {
 						boolean isHavingBadWords = value;
 						if (isHavingBadWords){
-							unitNameErrorLabel.setText("profanityfailed");
+							unitNameErrorLabel.setText(i18n.GL0554());
 							unitNameErrorLabel.setVisible(true);
-							unitNameErrorLabel.getElement().getStyle().setBorderColor("orange");
+							unitNameErrorLabel.getElement().getStyle().setColor("orange");
+							unitNameErrorLabel.getElement().getStyle().setPosition(Position.ABSOLUTE);
 						}else{
 							unitNameErrorLabel.setVisible(false);
 							unitNameErrorLabel.getElement().getStyle().clearBackgroundColor();
@@ -135,7 +138,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 				}
 				else
 				{
-					unitNameErrorLabel.setText("Field Can't be empty!");
+					unitNameErrorLabel.setText(i18n.GL2177());
 					unitNameErrorLabel.setVisible(true);
 					unitNameErrorLabel.getElement().getStyle().setBorderColor("orange");
 				}
