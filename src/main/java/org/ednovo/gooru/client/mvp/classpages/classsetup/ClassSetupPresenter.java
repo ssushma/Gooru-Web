@@ -185,14 +185,14 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	}
 	
 	@Override
-	public void deletePathway(String pathwayId){
+	public void deletePathway(String pathwayId, final int offsetVal){
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		if(classpageid != null)
 		{
 		AppClientFactory.getInjector().getClasspageService().deletePathway(classpageid, pathwayId, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				getPathways();
+				getPaginatedPathways(offsetVal);
 			}
 		});
 		}

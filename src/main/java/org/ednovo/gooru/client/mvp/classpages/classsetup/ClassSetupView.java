@@ -150,7 +150,15 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			@Override
 			public void deleteItem(int sequenceNum, String pathwayId) {
 				try{
-					getUiHandlers().deletePathway(pathwayId);
+					
+					String pageNumVal=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+					int pageIntVal = 0;
+					if(pageNumVal != null)
+					{
+						pageIntVal = Integer.parseInt(pageNumVal);
+						pageIntVal = pageIntVal-1;
+					}
+					getUiHandlers().deletePathway(pathwayId,(pageIntVal)*limit);
 					getUnitwidget().remove(getUnitwidget().getWidgetIndex(this));
 				}
 				catch(Exception ex){
