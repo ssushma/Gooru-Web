@@ -51,6 +51,7 @@ import org.ednovo.gooru.client.mvp.library.district.sausd.SausdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.susd.SusdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.valverde.ValVerdeLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.ccstcaltac.CcstCalTacLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.esyp.EsypLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter;
@@ -241,4 +242,6 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<CoreLibraryPresenter> getCoreLibraryPresenter();
 	
 	AsyncProvider<EsypLibraryPresenter> getEsypLibraryPresenter();
+	
+	AsyncProvider<CcstCalTacLibraryPresenter> getCcstCalTacLibraryPresenter();
 }
