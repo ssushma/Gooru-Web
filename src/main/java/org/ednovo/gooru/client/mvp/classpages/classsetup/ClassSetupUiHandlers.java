@@ -31,8 +31,6 @@ public interface ClassSetupUiHandlers extends BaseUiHandlers{
 
 	void updatePathway(String pathwayId, String pathwayTitle);
 
-	void deletePathway(String pathwayId);
-
 	void OnUnitSetupClick();
 
 	void addAssignmentsContainerPopup(String pathwayIdVal);
@@ -42,6 +40,8 @@ public interface ClassSetupUiHandlers extends BaseUiHandlers{
 	void setUnit(String unitName, String pathwayId, int sequenceNum);
 
 	void createPathway(String pathwayTitle, int offsetVal);
+
+	void deletePathway(String pathwayId, int offsetVal);
 
 
 }
