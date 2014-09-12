@@ -530,5 +530,6 @@ width:100%;
 .assignmentsNextArrow{
 	display:inline-block;
 	margin:35px 0 0px 0px;
+	cursor: pointer;
 }
 
