@@ -7,22 +7,16 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.model.content.ClassDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.HasMouseOutHandlers;
-import com.google.gwt.event.dom.client.HasMouseOverHandlers;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -48,7 +42,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	@UiField InlineLabel dropdownListPlaceHolder,dropdownListPlaceHolderAssignment;
 	@UiField ScrollPanel dropdownListContainerScrollPanel,dropdownListContainerScrollPanelAssignment;
 	@UiField HTMLPanel dropdownListContainer,dropdownListContainerAssignment,mainPanel;
-	ClasspageListDo classpageListDo;
+	ClassDo classDo;
 	int totalCount=0;
 	int totalsize=0;
 	int assignmentTotalCount=0;
@@ -59,48 +53,77 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	private int assignment_limit=10;
 	private int totalAssignmencount=0;
 	
-	public UnitAssigmentReorder(ClasspageListDo classpageListDo,ArrayList<CollectionItemDo> assignmentItemSeq,String classpageId) {
+	public UnitAssigmentReorder(ClassDo classDo,ArrayList<CollectionItemDo> assignmentItemSeq,String classpageId) {
 		setWidget(uiBinder.createAndBindUi(this));
-		this.classpageListDo = classpageListDo;
+		this.classDo = classDo;
 		this.classpageId = classpageId;
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
-		setUnitAssignmentData(classpageListDo);
-		getAssignmentDropDown(assignmentItemSeq);
+		setUnitAssignmentData(classDo);
+		//getAssignmentDropDown(assignmentItemSeq);
 		
 	}
-	public void setUnitAssignmentData(ClasspageListDo classpageListDo){
+	public void setUnitAssignmentData(ClassDo classDo){
 		popupArrow.setUrl("images/popArrow.png");
 		saveButton.setText("Save");
 		CancelButton.setText("Cancel");
-		if(classpageListDo.getSearchResults()!=null){
-			titleLabel.setText(classpageListDo.getSearchResults().get(0).getResource().getTitle());
-			descLabel.setText(classpageListDo.getSearchResults().get(0).getResource().getDescription());
-	
 		dropdownListContainerScrollPanel.getElement().getStyle().setDisplay(Display.NONE);
 		dropdownListPlaceHolder.addClickHandler(new OnDropdownListPlaceHolderClick());
 		//dropdownListPlaceHolder.getElement().setInnerHTML("1");
 		saveButton.addClickHandler(new clickOnSave());
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
-		totalCount=classpageListDo.getTotalHitCount()!=null?classpageListDo.getTotalHitCount():0;
-		totalsize =totalsize+classpageListDo.getSearchResults().size() ;
-		for(int i=0; i<totalsize; i++){
 		
-			int number=classpageListDo.getSearchResults().get(i).getItemSequence();
-			dropdownListPlaceHolder.getElement().setInnerHTML(classpageListDo.getSearchResults().get(0).getItemSequence()+"");
-			String pathId=classpageListDo.getSearchResults().get(i).getResource().getGooruOid();
-			Label dropDownListItem=new Label(number+"");
-			dropDownListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
-			dropdownListContainer.add(dropDownListItem);
-			dropDownListItem.addClickHandler(new OnDropdownItemClick(number+"",pathId));
-		}
+		totalCount=classDo.getTotalHitCount()!=null?classDo.getTotalHitCount():0;
+			if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+			ArrayList<ClassUnitsListDo> classListUnitsListDo =classDo.getSearchResults();
+			titleLabel.setText(classListUnitsListDo.get(0).getResource().getTitle());
+			totalsize =totalsize+classListUnitsListDo.size() ;
+			//descLabel.setText(classListUnitsListDo.get(0).getResource().getDescription());
+			for(int i=0; i<classListUnitsListDo.size(); i++){
+				int totalItemCount=classListUnitsListDo.get(i).getResource().getItemCount();
+				displayAssignment(totalItemCount);
+				int number=classListUnitsListDo.get(i).getItemSequence();
+				dropdownListPlaceHolder.getElement().setInnerHTML(classListUnitsListDo.get(0).getItemSequence()+"");
+				String pathId=classListUnitsListDo.get(i).getCollectionItemId();
+				System.out.println("pathId..."+pathId);
+				Label dropDownListItem=new Label(number+"");
+				dropDownListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
+				dropdownListContainer.add(dropDownListItem);
+				dropDownListItem.addClickHandler(new OnDropdownItemClick(number+"",pathId));
+				
+			}
 		}
 		
+				
 	}
-	public void getAssignmentDropDown(ArrayList<CollectionItemDo> assignmentItemSeq)
+	public void displayAssignment(Integer totalItemCount)
 	{
 		dropdownListContainerScrollPanelAssignment.getElement().getStyle().setDisplay(Display.NONE);
 		dropdownListPlaceHolderAssignment.addClickHandler(new OnDropdownListAssignmentPlaceHolderClick());
-		dropdownListPlaceHolderAssignment.getElement().setInnerHTML("1");
+		
+		dropdownListContainerScrollPanel.addScrollHandler(new AssignmentScrollDropdownListContainer());
+		assignmentTotalCount = totalItemCount;
+		assignmentTotalSize = 0;
+		assignmentTotalSize =totalItemCount;
+		if(totalItemCount!=null &&totalItemCount!=0){
+		
+		for(int i=0; i<totalItemCount; i++){
+			dropdownListPlaceHolderAssignment.getElement().setInnerHTML(1+"");
+			int number=i;
+			Label dropDownAssignmentListItem=new Label(number+"");
+			dropDownAssignmentListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
+			dropdownListContainerAssignment.add(dropDownAssignmentListItem);
+			dropDownAssignmentListItem.addClickHandler(new OnDropdownAssignmentItemClick(number+""));
+		}
+		}else
+		{
+			dropdownListPlaceHolderAssignment.getElement().setInnerHTML(1+"");
+		}
+	}
+	/*public void getAssignmentDropDown(ArrayList<CollectionItemDo> assignmentItemSeq)
+	{
+		dropdownListContainerScrollPanelAssignment.getElement().getStyle().setDisplay(Display.NONE);
+		dropdownListPlaceHolderAssignment.addClickHandler(new OnDropdownListAssignmentPlaceHolderClick());
+		dropdownListPlaceHolderAssignment.getElement().setInnerHTML(assignmentItemSeq.get(0).getItemSequence()+"");
 		dropdownListContainerScrollPanel.addScrollHandler(new AssignmentScrollDropdownListContainer());
 		if(assignmentItemSeq!=null){
 		assignmentTotalCount = assignmentItemSeq.get(0).getTotalHitCount();
@@ -115,7 +138,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			dropDownAssignmentListItem.addClickHandler(new OnDropdownAssignmentItemClick(number+""));
 		}
 		}
-	}
+	}*/
 	private class ScrollDropdownListContainer implements ScrollHandler{
 		@Override
 		public void onScroll(ScrollEvent event) {
@@ -166,10 +189,10 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			dropdownListPlaceHolder.setText(seq);
 			dropdownListPlaceHolder.getElement().setId(pathId);
 			dropdownListPlaceHolder.getElement().setAttribute("id", pathId);
-			selectedPathId = dropdownListPlaceHolder.getElement().getId();
+			selectedPathId = pathId;
 			new CustomAnimation(dropdownListContainerScrollPanel).run(300);
 			assignmentTotalSize=0;
-			AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, dropdownListPlaceHolder.getElement().getId(), ORDER_BY, assignment_limit, totalAssignmencount, new SimpleAsyncCallback<ArrayList<CollectionItemDo>>() {
+			AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathId, ORDER_BY, assignment_limit, totalAssignmencount, new SimpleAsyncCallback<ArrayList<CollectionItemDo>>() {
 				
 				@Override
 				public void onSuccess(ArrayList<CollectionItemDo> result) {

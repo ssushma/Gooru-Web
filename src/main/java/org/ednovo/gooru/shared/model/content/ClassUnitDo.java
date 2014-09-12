@@ -31,6 +31,8 @@ public class ClassUnitDo implements Serializable{
 	
 	private UserDo user;
 	
+	private Integer itemCount;
+	
 	private ArrayList<ClasspageItemDo> collectionItems;
 
 	/**
@@ -157,6 +159,14 @@ public class ClassUnitDo implements Serializable{
 	 */
 	public void setCollectionItems(ArrayList<ClasspageItemDo> collectionItems) {
 		this.collectionItems = collectionItems;
+	}
+
+	public Integer getItemCount() {
+		return itemCount;
+	}
+
+	public void setItemCount(Integer itemCount) {
+		this.itemCount = itemCount;
 	}
 	
 }
