@@ -68,7 +68,10 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		if(pageNum != null)
 		{
 			offsetVal = Integer.parseInt(pageNum);
+			if(offsetVal!=0)
+			{	
 			offsetVal = (offsetVal-1);
+			}
 		}
 		getPaginatedPathways((offsetVal)*limit);
 	}
