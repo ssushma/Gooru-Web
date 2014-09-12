@@ -126,7 +126,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 						totalsize = totalsize + result.getSearchResults().size();
 						for(int i=0; i<result.getSearchResults().size(); i++){
 
-							String pathId=classpageListDo.getSearchResults().get(i).getResource().getGooruOid();
+							String pathId=result.getSearchResults().get(i).getCollectionItemId();
 
 							int number=result.getSearchResults().get(i).getItemSequence();
 							Label dropDownListItem=new Label(number+"");

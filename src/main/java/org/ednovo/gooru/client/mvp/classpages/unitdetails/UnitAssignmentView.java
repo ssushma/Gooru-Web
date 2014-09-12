@@ -75,7 +75,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@UiField HTMLPanel unitPanel;
 	
-	@UiField Label lblMoreUnits;
+	@UiField Label lblMoreUnits,unitTitleDetails;
 	
 	@UiField Anchor unitSetupButton;
 	
@@ -317,7 +317,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private boolean eventTargetsPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
+			try{
 			return unitAssigmentReorder.getElement().isOrHasChild(Element.as(target));
+			}catch(Exception ex){}
 		}
 		return false;
 	}
@@ -328,6 +330,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		int size =classDo.getSearchResults().size() ;
 		for(int i=0; i<size; i++){
 			String unitName=classDo.getSearchResults().get(i).getResource().getTitle();
+			unitTitleDetails.setText(classDo.getSearchResults().get(0).getResource().getTitle());
 			int number=classDo.getSearchResults().get(i).getItemSequence();
 			String unitGooruOid=classDo.getSearchResults().get(i).getCollectionItemId();
 			String sequenceNumber=Integer.toString(number);
