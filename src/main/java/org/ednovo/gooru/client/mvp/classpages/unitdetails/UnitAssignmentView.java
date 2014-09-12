@@ -350,7 +350,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		for(int i=0; i<size; i++){
 			String unitName=classDo.getSearchResults().get(i).getResource().getTitle();
 			int number=classDo.getSearchResults().get(i).getItemSequence();
-			String unitGooruOid=classDo.getSearchResults().get(i).getGooruOid();
+			String unitGooruOid=classDo.getSearchResults().get(i).getCollectionItemId();
 			String sequenceNumber=Integer.toString(number);
 			UnitWidget unitsWidget=new UnitWidget(sequenceNumber, unitName,unitGooruOid);
 			unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget));

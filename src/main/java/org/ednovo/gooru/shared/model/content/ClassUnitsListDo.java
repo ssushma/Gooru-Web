@@ -21,7 +21,7 @@ public class ClassUnitsListDo implements Serializable{
 	
 	private Integer itemSequence;
 	
-	private ArrayList<ClassUnitDo> resource;
+	private ClassUnitDo resource;
 	/**
 	 * @return the collectionItemId
 	 */
@@ -81,14 +81,14 @@ public class ClassUnitsListDo implements Serializable{
 	/**
 	 * @return the resource
 	 */
-	public ArrayList<ClassUnitDo> getResource() {
+	public ClassUnitDo getResource() {
 		return resource;
 	}
 
 	/**
 	 * @param resource the resource to set
 	 */
-	public void setResource(ArrayList<ClassUnitDo> resource) {
+	public void setResource(ClassUnitDo resource) {
 		this.resource = resource;
 	}
 
