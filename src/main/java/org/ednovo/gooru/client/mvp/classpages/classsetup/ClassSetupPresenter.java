@@ -146,7 +146,6 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	
 	@Override
 	public void addAssignmentsContainerPopup(String pathwayIdVal) {
-	System.out.println("pathwayIdVal::"+pathwayIdVal);
 	classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
 	//pathwayId="25509399-83ab-42f1-b774-c1e424b132d0";
 	assignmentContainer.getUserShelfData();

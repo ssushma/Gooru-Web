@@ -99,7 +99,7 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 	@Override
 	public void setContent(String unitName, String pathwayId) {
 	//Window.alert("getUnitwidget().getWidgetCount()::"+getUnitwidget().getWidgetCount());
-		 ClassSetupUnitView classSetupUnitView = new ClassSetupUnitView(getUnitwidget().getWidgetCount(),unitName,pathwayId) {
+		 final ClassSetupUnitView classSetupUnitView = new ClassSetupUnitView(getUnitwidget().getWidgetCount(),unitName,pathwayId) {
 			
 			@Override
 			public void deleteItem(int sequenceNum, String pathwayId) {
@@ -116,6 +116,20 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			}
 		};
 		classSetupUnitView.btnAssignment.addClickHandler(new ShowAssignPopupEvent(pathwayId));
+		classSetupUnitView.btnReorder.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				classSetupUnitView.moveAssignmentPopup.setVisible(true);
+				System.out.println("getUnitwidget().getWidgetCount()::::::"+getUnitwidget().getWidgetCount());
+				
+				/*for(int i=0; i<getUnitwidget().getWidgetCount(); i++){
+					classSetupUnitView.resourceTypePanel.add(classSetupUnitView.createLabel(""+(i+1)));
+				}*/
+			}
+		});
+		//classSetupUnitView.btnReorder.addClickHandler(new ShowReorderPathwaysEvent());
 		 getUnitwidget().add(classSetupUnitView);
 	}
 	
