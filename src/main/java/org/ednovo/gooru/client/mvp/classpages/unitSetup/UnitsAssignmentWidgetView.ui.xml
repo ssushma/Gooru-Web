@@ -15,11 +15,11 @@
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel ui:field="assignmentsContainer" styleName="{style.classDetailsMain}">
-				<g:HTMLPanel styleName="{style.nextArrow}">
+			    <g:HTMLPanel styleName="{style.assignmentsNextArrow}">
 					<g:Image url="images/rightSmallarrow.png"></g:Image>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
-
+				
 			<g:HTMLPanel styleName="{style.classButtons}">
 				<g:Button styleName="secondary btn-block {style.editbutton}" ui:field="editUnitButton">Edit</g:Button>
 			</g:HTMLPanel>

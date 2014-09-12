@@ -22,60 +22,38 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.shared.model.content;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.classpages.event;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.event.shared.GwtEvent;
 
-@JsonInclude(Include.NON_NULL)
-public class ClassDo implements Serializable {
+/**
+ * @author Search Team
+ * 
+ */
+public class ResetPaginationEvent extends GwtEvent<ResetPaginationHandler> {
 
+	public static final Type<ResetPaginationHandler> TYPE = new Type<ResetPaginationHandler>();
+
+	private int offSetVal = 0;
 	/**
-	 * 
+	 * Class constructor
 	 */
-	private static final long serialVersionUID = -3223243025838735212L;
-	
-	
-	private ArrayList<ClassUnitsListDo> searchResults;
-	
-	private Integer totalHitCount;
-	
-	public ClassDo(){}
-
-
-
-	/**
-	 * @return the totalHitCount
-	 */
-	public Integer getTotalHitCount() {
-		return totalHitCount;
+	public ResetPaginationEvent(int offSetVal) {
+		offSetVal = offSetVal;
 	}
 
-	/**
-	 * @param totalHitCount the totalHitCount to set
-	 */
-	public void setTotalHitCount(Integer totalHitCount) {
-		this.totalHitCount = totalHitCount;
+	@Override
+	public Type<ResetPaginationHandler> getAssociatedType() {
+		return TYPE;
 	}
 
-
-
-	public ArrayList<ClassUnitsListDo> getSearchResults() {
-		return searchResults;
+	@Override
+	protected void dispatch(ResetPaginationHandler handler) {
+		handler.callPathwaysAPI(offSetVal);
 	}
 
-
-
-	public void setSearchResults(ArrayList<ClassUnitsListDo> searchResults) {
-		this.searchResults = searchResults;
-	}
-	
-	/** 
-	 * This method is to get the pageNum
-	 */
-	
 }

@@ -45,5 +45,7 @@ public interface ClassSetupUiHandlers extends BaseUiHandlers{
 
 	void loadPathways();
 
+	int getPathwayTotalHitcount();
+
 
 }

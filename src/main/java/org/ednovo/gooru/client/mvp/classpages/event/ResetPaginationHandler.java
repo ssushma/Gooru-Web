@@ -22,60 +22,20 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.shared.model.content;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.classpages.event;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.gwt.event.shared.EventHandler;
 
-@JsonInclude(Include.NON_NULL)
-public class ClassDo implements Serializable {
+/**
+ * @author Search Team
+ * 
+ */
+public interface ResetPaginationHandler extends EventHandler, BaseUiHandlers {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3223243025838735212L;
-	
-	
-	private ArrayList<ClassUnitsListDo> searchResults;
-	
-	private Integer totalHitCount;
-	
-	public ClassDo(){}
-
-
-
-	/**
-	 * @return the totalHitCount
-	 */
-	public Integer getTotalHitCount() {
-		return totalHitCount;
-	}
-
-	/**
-	 * @param totalHitCount the totalHitCount to set
-	 */
-	public void setTotalHitCount(Integer totalHitCount) {
-		this.totalHitCount = totalHitCount;
-	}
-
-
-
-	public ArrayList<ClassUnitsListDo> getSearchResults() {
-		return searchResults;
-	}
-
-
-
-	public void setSearchResults(ArrayList<ClassUnitsListDo> searchResults) {
-		this.searchResults = searchResults;
-	}
-	
-	/** 
-	 * This method is to get the pageNum
-	 */
-	
+	void callPathwaysAPI(int offSetVal);
 }
