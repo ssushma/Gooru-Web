@@ -23,17 +23,24 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
+
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.event.ResetPaginationEvent;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -43,21 +50,25 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresenter> implements IsClassSetupUnitView{
 
-	@UiField HTMLPanel unitSequence,inputContainer;
+
+	@UiField HTMLPanel unitSequence,inputContainer,panelComboList,resourceTypePanel,moveAssignmentPopup;
 	@UiField Button deleteBtnUnit,cancelBtn,saveBtn,editBtn;
 	@UiField TextBox unitName;
-	@UiField Button btnAssignment;
+	@UiField Button btnAssignment,btnReorder;
 	@UiField HTMLEventPanel divContainer;
-	@UiField Label unitnameLBL,unitNameErrorLabel;
+	@UiField Label unitnameLBL,unitNameErrorLabel,lblMoveTo,resourceCategoryLabel,resoureDropDownLbl;
+
 	private static ClassSetupUnitViewUiBinder uiBinder = GWT.create(ClassSetupUnitViewUiBinder.class);
 
 	interface ClassSetupUnitViewUiBinder extends UiBinder<Widget, ClassSetupUnitView> {
@@ -72,7 +83,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 		setPresenter(new ClassSetupUnitPresenter(this));
 	}
 	
-	public ClassSetupUnitView(final int sequenceNum, String unitNameVal, final String pathwayId){
+	public ClassSetupUnitView(final int sequenceNum, String unitNameVal, final String pathwayId,final int totalhitCounter,final String collectionItemId){
 		initWidget(uiBinder.createAndBindUi(this));
 		inputContainer.setVisible(false);
 		divContainer.setVisible(true);
@@ -83,6 +94,61 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 		unitName.setMaxLength(50);
 		setPresenter(new ClassSetupUnitPresenter(this));
 		unitSequence.getElement().setInnerHTML((sequenceNum)+".");
+		moveAssignmentPopup.getElement().setId("pnlMoveAssignmentPopup");
+		panelComboList.getElement().setId("pnlComboList");
+		lblMoveTo.getElement().setId("lblMoveTo");
+		lblMoveTo.setText(i18n.GL1912());
+		resourceTypePanel.setVisible(false);
+		lblMoveTo.getElement().setAttribute("alt",i18n.GL1912());
+		lblMoveTo.getElement().setAttribute("title",i18n.GL1912());
+		btnReorder.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				moveAssignmentPopup.getElement().getStyle().setDisplay(Display.BLOCK);
+			}
+		});
+		btnReorder.addMouseOverHandler(new MouseOverHandler() {
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				// TODO Auto-generated method stub
+				moveAssignmentPopup.getElement().getStyle().setDisplay(Display.BLOCK);
+			}
+		});
+		btnReorder.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				// TODO Auto-generated method stub
+				moveAssignmentPopup.getElement().getStyle().setDisplay(Display.NONE);
+			}
+		});
+		resourceCategoryLabel.setText(String.valueOf(sequenceNum));
+		resoureDropDownLbl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				resourceTypePanel.setVisible(resourceTypePanel.isVisible() ? false : true);
+			}
+		});
+		resourceCategoryLabel.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				resourceTypePanel.setVisible(resourceTypePanel.isVisible() ? false : true);
+			}
+		});
+	
+		
+		
+		for (int i=0; i<totalhitCounter; i++){
+			resourceTypePanel.add(createLabel(""+(i+1),collectionItemId,totalhitCounter));
+		}
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hideDropDown(event);
+	          }
+	    });
 		
 		deleteBtnUnit.addClickHandler(new ClickHandler() {
 			
@@ -103,9 +169,10 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 			}
 		});
 		saveBtn.addClickHandler(new ClickHandler() {
-			
+		
 			@Override
 			public void onClick(ClickEvent event) {
+				
 				//api call to save data to be added
 				if(!unitName.getText().isEmpty())
 				{
@@ -142,13 +209,6 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 					unitNameErrorLabel.setVisible(true);
 					unitNameErrorLabel.getElement().getStyle().setBorderColor("orange");
 				}
-				
-				
-				
-				
-				
-				
-		
 			}
 		});
 		editBtn.addClickHandler(new ClickHandler() {
@@ -160,6 +220,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 				
 			}
 		});
+
 		divContainer.addMouseOverHandler(new MouseOverHandler() {
 			
 			@Override
@@ -176,10 +237,84 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 				
 			}
 		});
+
 	}
 	
 	public abstract void deleteItem(int sequenceNum, String pathwayId);
 	
 	public abstract void saveItem(String pathwayTitle, String pathwayId);
 	
+	public Label createLabel(String title,final String pathwayId,final int totalhitCounter){
+		Label lblLabel = new Label();
+		lblLabel.setText(title);
+		lblLabel.getElement().setAttribute("alt", title);
+		lblLabel.getElement().setAttribute("title", title);
+		lblLabel.getElement().setAttribute("id", title);
+		lblLabel.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				final Label lbl = (Label)event.getSource();
+				resourceCategoryLabel.setText(lbl.getText());
+				resourceCategoryLabel.getElement().setAttribute("alt",lbl.getText());
+				resourceCategoryLabel.getElement().setAttribute("title",lbl.getText());
+				AppClientFactory.getInjector().getClasspageService().reOrderPathwaysInaClass(pathwayId, Integer.parseInt(lbl.getText()), new SimpleAsyncCallback<ClasspageListDo>() {
+					@Override
+					public void onSuccess(ClasspageListDo result) {
+						resourceTypePanel.setVisible(resourceTypePanel.isVisible() ? false : true);
+						redirectToPage(totalhitCounter);
+					}
+
+					private void redirectToPage(int totalhitCounter) {
+							if(totalhitCounter>=5){
+							/*	int numberOfPages = (totalhitCounter / 5)
+										+ ((totalhitCounter % 5) > 0 ? 1 : 0);*/
+							int clickedNumber =	Integer.parseInt(lbl.getText());
+								int redirectedPageNumber = (clickedNumber / 5)
+										+((clickedNumber % 5) >0 ?1 : 0);
+								Map<String,String> params = new HashMap<String,String>();
+								String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+								String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+								String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+								String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+								params.put("pageSize", pageSize);
+								params.put("classpageid", classpageid);
+								params.put("pageNum", redirectedPageNumber+"");
+								params.put("pos", pos);
+								PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+								AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+								int offSetVal = 0;
+								if(redirectedPageNumber!=0)
+								{
+								offSetVal = redirectedPageNumber-1;
+								}
+								AppClientFactory.fireEvent(new ResetPaginationEvent(offSetVal*5));
+							}
+						
+					}
+
+				});
+			}
+			
+		});
+		return lblLabel;
+	}
+	
+	public void hideDropDown(NativePreviewEvent event){
+    	if(event.getTypeInt()==Event.ONMOUSEOVER){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsPopup(nativeEvent);
+        	if(!target){
+        		resourceTypePanel.setVisible(false);
+        	}
+    	}
+     }
+	
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			return resourceTypePanel.getElement().isOrHasChild(Element.as(target)) || resourceCategoryLabel.getElement().isOrHasChild(Element.as(target))
+					|| panelComboList.getElement().isOrHasChild(Element.as(target));
+		}
+		return false;
+	}
 }
