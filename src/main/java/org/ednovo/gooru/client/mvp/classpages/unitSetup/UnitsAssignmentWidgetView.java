@@ -3,8 +3,7 @@ package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -31,13 +30,13 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	@UiField Label lblUnitName,lblUnitNumber;
 	
-	ClassUnitsListDo collectionDo;
+	ClassUnitsListDo classUnitsDo;
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	public UnitsAssignmentWidgetView(ClassUnitsListDo collectionDo){
+	public UnitsAssignmentWidgetView(ClassUnitsListDo classUnitsDo){
 		initWidget(uibinder.createAndBindUi(this));
-		this.collectionDo=collectionDo;
+		this.classUnitsDo=classUnitsDo;
 		setAssignmentsForUnit();
 		setUnitNameDetails();
 		cancelEditButton.setVisible(false);
@@ -47,19 +46,11 @@ public class UnitsAssignmentWidgetView extends Composite {
 
 	private void setAssignmentsForUnit() {
 		assignmentsContainer.clear();
-		for(int i=0;i<collectionDo.getResource().getCollectionItems().size();i++){
-			String url = " ";
-			int itemSequence = 0;
-			if(collectionDo!=null && collectionDo.getResource()!=null ){
-				itemSequence=collectionDo.getResource().getCollectionItems().get(i).getSequenceNumber();
-				System.out.println("itemSequence::"+itemSequence);
-				if(collectionDo.getResource().getCollectionItems().get(i).getResource()!=null){
-					System.out.println("secondlevel");
-					url=collectionDo.getResource().getCollectionItems().get(i).getResource().getThumbnails().getUrl()!=null?collectionDo.getResource().getCollectionItems().get(i).getResource().getThumbnails().getUrl():null;
-				   System.out.println("url::"+url);
-				}
+		if(classUnitsDo!=null){
+			for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
+				ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
+				assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo));
 			}
-			assignmentsContainer.add(new AssignmentsContainerWidget(itemSequence,url," "));
 		}
 	}
 	
@@ -93,9 +84,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 	}
 	
 	private void setUnitNameDetails() {
-			int number=collectionDo.getItemSequence();
+			int number=classUnitsDo.getItemSequence();
 			String sequenceNumber=Integer.toString(number);
-			lblUnitName.setText(collectionDo.getResource().getTitle());
+			lblUnitName.setText(classUnitsDo.getResource().getTitle());
 			lblUnitNumber.setText(sequenceNumber);
 	}
 

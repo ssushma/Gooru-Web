@@ -3,6 +3,7 @@ package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitCricleView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -29,11 +30,10 @@ public class AssignmentsContainerWidget extends Composite  {
 	
 	@UiField UnitCricleView unitCircleView;
 	
-	public AssignmentsContainerWidget(int totAssignment, String url, String due){ 
+	public AssignmentsContainerWidget(ClasspageItemDo classpageItemDo){ 
 		initWidget(uibinder.createAndBindUi(this));
-		unitCircleView.setUnitSequenceNumber(totAssignment);
-		assignmentThumbnail.setUrl(url);
-		dueDays.setText(due);
+		unitCircleView.setUnitSequenceNumber(classpageItemDo.getItemSequence());
+		assignmentThumbnail.setUrl(classpageItemDo.getResource().getThumbnails().getUrl());
 	}
 	
 	@UiHandler("assignmentThumbnail")
