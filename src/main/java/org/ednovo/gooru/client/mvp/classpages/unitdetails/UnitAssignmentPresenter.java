@@ -28,12 +28,11 @@ import java.util.ArrayList;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentView> implements UnitAssignmentUiHandlers{
@@ -63,6 +62,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 		String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 		if(unitId!=null&&getView().getCircleContainerPanel().getWidgetCount()<=0){
+			System.out.println("classpageid===="+classId+"====unitId");
 			getPathwayItems(classId,unitId,"",assignmentOffset,assignmentLimit);
 		}
 		if(assignmentId!=null){
@@ -90,15 +90,15 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	}
 	
 	public void getPathwayUnits(final String classId,int limit, int offset,final boolean clearPanel) {
-		System.out.println("offsetgetPathwayUnits::"+Integer.toString(offset));
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClasspageListDo>() {
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
 			@Override
-			public void onSuccess(ClasspageListDo classpageListDo) {
-				getView().showUnitNames(classpageListDo,clearPanel);
-				if(classpageListDo!=null&&classpageListDo.getSearchResults()!=null&&classpageListDo.getSearchResults().size()>0){
+			public void onSuccess(ClassDo classDo) {
+				getView().showUnitNames(classDo,clearPanel);
+				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 					if(unitId==null){
-						getPathwayItems(classId,classpageListDo.getSearchResults().get(0).getGooruOid(),"",assignmentOffset,assignmentLimit);
+						System.out.println("unit id==>"+classId+"====>"+classDo.getSearchResults().get(0).getGooruOid());
+						getPathwayItems(classId,classDo.getSearchResults().get(0).getGooruOid(),"",assignmentOffset,assignmentLimit);
 					}
 				}
 			}

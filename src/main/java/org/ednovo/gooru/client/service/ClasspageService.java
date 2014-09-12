@@ -31,8 +31,8 @@ import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
-import org.ednovo.gooru.shared.model.content.ClassSetupDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -535,11 +535,9 @@ public interface ClasspageService extends BaseService {
 	public void v2ReorderPathwaySequence(String classpageId,String pathwayItemId,int sequence) throws GwtException, ServerDownException;
 
 
-	ClasspageListDo v2GetPathwaysOptimized(String classpageId, String limit,
-			String offSet) throws GwtException;
+	public ClassDo v2GetPathwaysOptimized(String classpageId, String limit,String offSet) throws GwtException;
 
-	ClasspageListDo v2GetPathwaysCompleteDetails(String classpageId,
-			String limit, String offSet) throws GwtException;
+	public ClassDo v2GetPathwaysCompleteDetails(String classpageId,String limit, String offSet) throws GwtException;
 
 	ClasspageListDo reOrderPathwaysInaClass(String pathwayId, int newPosSequence);
 

@@ -22,24 +22,56 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.unitdetails;
-import java.util.ArrayList;
+package org.ednovo.gooru.shared.model.content;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import java.util.List;
 
-import org.ednovo.gooru.shared.model.content.ClassDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+@JsonInclude(Include.NON_NULL)
+public class ClassDo extends ResourceDo {
 
-import com.google.gwt.user.client.ui.HTMLPanel;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3223243025838735212L;
+	private List<CollectionDo> searchResults;
+	
+	private Integer totalHitCount;
+	
+	public ClassDo(){}
 
-public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentUiHandlers>{
-	 void getSequence(ArrayList<CollectionItemDo> getSeq);
-	 void getPathwayItems();
-	 public void showUnitNames(ClassDo classDo,boolean clearPanel);
-	 public void hideMoreUnitsLink();
-	 public HTMLPanel getUnitPanel();
-	 public HTMLPanel getCircleContainerPanel();
+	/**
+	 * @return the searchResults
+	 */
+	public List<CollectionDo> getSearchResults() {
+		return searchResults;
+	}
 
+	/**
+	 * @param searchResults the searchResults to set
+	 */
+	public void setSearchResults(List<CollectionDo> searchResults) {
+		this.searchResults = searchResults;
+	}
+
+	/**
+	 * @return the totalHitCount
+	 */
+	public Integer getTotalHitCount() {
+		return totalHitCount;
+	}
+
+	/**
+	 * @param totalHitCount the totalHitCount to set
+	 */
+	public void setTotalHitCount(Integer totalHitCount) {
+		this.totalHitCount = totalHitCount;
+	}
+	
+	/** 
+	 * This method is to get the pageNum
+	 */
+	
 }

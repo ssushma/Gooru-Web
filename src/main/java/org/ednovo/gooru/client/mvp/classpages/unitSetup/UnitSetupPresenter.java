@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 import com.google.gwt.event.shared.EventBus;
@@ -46,10 +47,10 @@ public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> impleme
 	public void getPathwayCompleteDetails(int limit, int offset) {
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		if(classpageId!=null){
-			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysCompleteDetails(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClasspageListDo>() {
+			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysCompleteDetails(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
 
 				@Override
-				public void onSuccess(ClasspageListDo result) {
+				public void onSuccess(ClassDo result) {
 					System.out.println("getPathwayCompleteDetails:");
 					getView().showUnitDetails(result);
 					if(result.getSearchResults().size()>0){

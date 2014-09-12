@@ -47,13 +47,12 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
-import org.ednovo.gooru.shared.model.content.ClassSetupDo;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
-import org.ednovo.gooru.shared.model.library.UnitDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -493,7 +492,7 @@ IsCollectionAssign {
 		}
 	}
 	
-	public void setUnitList(ClasspageListDo classpageListDo) {
+	public void setUnitList(ClassDo classpageListDo) {
 		Label unitLabel = null;
 		int resultSize = classpageListDo.getSearchResults().size();
 		errorLabel.setVisible(false);
@@ -560,11 +559,9 @@ IsCollectionAssign {
 			
 			//Hide the scroll container
 			spanelClasspagesPanel.setVisible(false);
-			System.out.println("offsetgetAssigncollectionview::"+String.valueOf(classpageUnitOffSet));
-			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, limit, String.valueOf(classpageUnitOffSet), new SimpleAsyncCallback<ClasspageListDo>() {
-
+			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, limit, String.valueOf(classpageUnitOffSet), new SimpleAsyncCallback<ClassDo>() {
 				@Override
-				public void onSuccess(ClasspageListDo result) {
+				public void onSuccess(ClassDo result) {
 					htmlClasspagesUnitListContainer.clear();
 					setUnitList(result);
 				}
@@ -920,11 +917,10 @@ IsCollectionAssign {
 	}
 	
 	public void getAllClasspagesUnit(String limit,String offset){
-		System.out.println("offsetgetgetAllClasspagesUnit::"+String.valueOf(classpageUnitOffSet));
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, limit, String.valueOf(classpageUnitOffSet), new SimpleAsyncCallback<ClasspageListDo>() {
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, limit, String.valueOf(classpageUnitOffSet), new SimpleAsyncCallback<ClassDo>() {
 
 			@Override
-			public void onSuccess(ClasspageListDo result) {
+			public void onSuccess(ClassDo result) {
 				setUnitList(result);
 			}
 		});

@@ -27,14 +27,11 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
 import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupPresenter;
-import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
-import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> implements ClassSetupUiHandlers{
@@ -106,10 +103,14 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		
 		if(classpageid != null)
 		{
+<<<<<<< HEAD
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "10", "0", new SimpleAsyncCallback<ClassDo>() {
+=======
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "5", "0", new SimpleAsyncCallback<ClasspageListDo>() {
+>>>>>>> ddc23c15b9e54b41c2d5420b593d7b125b86cdb9
 			@Override
-			public void onSuccess(ClasspageListDo classpageItemDo) {
-				if(classpageItemDo.getSearchResults().size()>0)
+			public void onSuccess(ClassDo classDo) {
+				if(classDo.getSearchResults().size()>0)
 				{
 					String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 					int pageNumVal = 0;
@@ -124,10 +125,10 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 							
 						}
 					}
-					getView().setPagination(classpageItemDo.getTotalHitCount(),pageNumVal);
-					for(int i=0;i<classpageItemDo.getSearchResults().size();i++)
+					getView().setPagination(classDo.getTotalHitCount(),pageNumVal);
+					for(int i=0;i<classDo.getSearchResults().size();i++)
 					{
-						setUnit(classpageItemDo.getSearchResults().get(i).getResource().getTitle(), classpageItemDo.getSearchResults().get(i).getResource().getGooruOid(),classpageItemDo.getSearchResults().get(i).getItemSequence());
+						setUnit(classDo.getSearchResults().get(i).getResource().getTitle(), classDo.getSearchResults().get(i).getResource().getGooruOid(),classDo.getSearchResults().get(i).getItemSequence());
 						
 					}
 				}
@@ -143,33 +144,30 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 
 		if(classpageid != null)
 		{
+<<<<<<< HEAD
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "10", offsetVal+"", new SimpleAsyncCallback<ClassDo>() {
+=======
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "5", offsetVal+"", new SimpleAsyncCallback<ClasspageListDo>() {
+>>>>>>> ddc23c15b9e54b41c2d5420b593d7b125b86cdb9
 			@Override
-			public void onSuccess(ClasspageListDo classpageItemDo) {
-				if(classpageItemDo.getSearchResults().size()>0)
-				{
+			public void onSuccess(ClassDo classDo) {
+				if(classDo.getSearchResults().size()>0){
 					String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 					int pageNumVal = 0;
-					if(pageNum != null || !pageNum.isEmpty())
-					{
-						try
-						{
-						pageNumVal = Integer.parseInt(pageNum);
+					if(pageNum != null || !pageNum.isEmpty()){
+						try{
+							pageNumVal = Integer.parseInt(pageNum);
 						}
-						catch(Exception e)
-						{
+						catch(Exception e){
 							
 						}
 					}
-					getView().setPagination(classpageItemDo.getTotalHitCount(),pageNumVal);
-					for(int i=0;i<classpageItemDo.getSearchResults().size();i++)
-					{
-						setUnit(classpageItemDo.getSearchResults().get(i).getResource().getTitle(), classpageItemDo.getSearchResults().get(i).getResource().getGooruOid(),classpageItemDo.getSearchResults().get(i).getItemSequence());
-						
+					getView().setPagination(classDo.getTotalHitCount(),pageNumVal);
+					for(int i=0;i<classDo.getSearchResults().size();i++){
+						setUnit(classDo.getSearchResults().get(i).getResource().getTitle(), classDo.getSearchResults().get(i).getResource().getGooruOid(),classDo.getSearchResults().get(i).getItemSequence());
 					}
 				}
-				else
-				{
+				else{
 					getView().zeroResults();
 				}
 				
