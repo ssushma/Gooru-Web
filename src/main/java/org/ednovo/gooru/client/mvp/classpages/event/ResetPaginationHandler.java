@@ -22,30 +22,20 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.classsetup;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.classpages.event;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
-public interface ClassSetupUiHandlers extends BaseUiHandlers{
+import com.google.gwt.event.shared.EventHandler;
 
+/**
+ * @author Search Team
+ * 
+ */
+public interface ResetPaginationHandler extends EventHandler, BaseUiHandlers {
 
-	void updatePathway(String pathwayId, String pathwayTitle);
-
-	void OnUnitSetupClick();
-
-	void addAssignmentsContainerPopup(String pathwayIdVal);
-
-	void getPaginatedPathways(int i);
-
-	void setUnit(String unitName, String pathwayId, int sequenceNum);
-
-	void createPathway(String pathwayTitle, int offsetVal);
-
-	void deletePathway(String pathwayId, int offsetVal);
-
-	void loadPathways();
-
-	int getPathwayTotalHitcount();
-
-
+	void callPathwaysAPI(int offSetVal);
 }

@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
@@ -55,6 +56,12 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 
 public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHandlers> implements IsUnitAssignmentView{
 
@@ -98,6 +105,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private String classpageid;
 	ArrayList<CollectionItemDo> assignmentItemSeq;
 	boolean isShowing=false;
+	UnitCricleView unitCricleViewObj;
 	
 	@Inject
 	public UnitAssignmentView(){
@@ -106,6 +114,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
 		unitSetupButton.addClickHandler(new UnitSetupEvents());
+		
 	}
 	
 	public HTMLPanel getUnitPanel(){
@@ -118,6 +127,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@Override
 	public void getPathwayItems(){
+		leftArrow.setVisible(false);
 		classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		getUiHandlers().getPathwayItems(classpageid, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, limit_circle, totalAssignmencount);
 	}
@@ -130,7 +140,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			revealPlace("unitdetails",null,"");
+			revealPlace("unitdetails",null,unitsWidget.getUnitGooruOid());
 		}
 	}
 	public void removeUnitSelectedStyle(){
@@ -156,89 +166,65 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 		requiredLabel.setText("Required");
 		optionalLabel.setText("Optional");
-		if(itemSequence!=null &&itemSequence.size()!=0){
-			
-		
-		totalAssignmentHitcount = itemSequence.get(0).getTotalHitCount();
-		try{
-			if(leftHandler!=null) {
-				leftHandler.removeHandler();
-			}
-		}catch (AssertionError ae) { }
-		try{
-			if(rightHandler!=null) {
-				rightHandler.removeHandler();
-			}
-		}catch (AssertionError ae) { }
-		leftHandler=leftArrow.addClickHandler(new cleckOnNext("left"));
-		rightHandler=rightArrow.addClickHandler(new cleckOnNext("right"));
-		circleContainerPanel.clear();
-		leftArrow.setUrl("images/leftSmallarrow.png");
-		circleContainerPanel.add(leftArrow);
-		totalAssignmencount=totalAssignmencount+itemSequence.size();
-		
-		for(int i=0;i<itemSequence.size();i++){
-			final UnitCricleView unitCricleViewObj =new UnitCricleView(true,itemSequence.get(i).getItemSequence());
-			unitCricleViewObj.getElement().setId(i+"");
-			circleContainerPanel.add(unitCricleViewObj);
-			unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler());
-			unitCricleViewObj.addMouseOutHandler(new UnitSeqMouseOutHandler());
-			unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
-			
-		}
-		if(totalAssignmencount==totalAssignmentHitcount)
-		{
-			rightArrow.setVisible(false);
-		}else{
-			rightArrow.setVisible(true);	
-		}
-		if(totalAssignmentHitcount<10)
-		{
-			rightArrow.setVisible(false);
-			leftArrow.setVisible(false);
-			
-		
-		}
-		else
-		{
-			leftHandler=leftArrow.addClickHandler(new cleckOnNext("left"));
-			rightHandler=rightArrow.addClickHandler(new cleckOnNext("right"));
-			rightArrow.setVisible(true);
-			leftArrow.setVisible(false);
-		}
-		rightArrow.setUrl("images/rightSmallarrow.png");
-		circleContainerPanel.add(rightArrow);
+		rightArrow.getElement().setAttribute("style", "cursor:pointer");
+		leftArrow.getElement().setAttribute("style", "cursor:pointer");
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hidePopup(event);
+	          }
+	    });
 		
 		
-		//Iterator<Widget> widgets = circleContainerPanel.iterator();
-		
-		/*while (widgets.hasNext()) {
-			final Widget widget = widgets.next();
-			if (widget instanceof UnitCricleView) {
-				((UnitCricleView) widget).addClickHandler(new ClickHandler() {
-
-					@Override
-					public void onClick(ClickEvent event) {
-						final Iterator<Widget> widgetsPanel = circleContainerPanel.iterator();
-						while (widgetsPanel.hasNext()) {
-							 widgetsPanel.next().removeStyleName(res.unitAssignment().active());
+			if(itemSequence!=null &&itemSequence.size()!=0){
+				totalAssignmentHitcount = itemSequence.get(0).getTotalHitCount();
+					try{
+						if(leftHandler!=null) {
+							leftHandler.removeHandler();
 						}
-						widget.addStyleName(res.unitAssignment().active());
-					}
+						if(rightHandler!=null) {
+							rightHandler.removeHandler();
+						}
+					}catch (AssertionError ae) { }
 					
-			});
-		}
-			
+				leftHandler=leftArrow.addClickHandler(new cleckOnNext("left"));
+				rightHandler=rightArrow.addClickHandler(new cleckOnNext("right"));
+				circleContainerPanel.clear();
+				leftArrow.setUrl("images/leftSmallarrow.png");
+				circleContainerPanel.add(leftArrow);
+				totalAssignmencount=totalAssignmencount+itemSequence.size();
+				
+				for(int i=0;i<itemSequence.size();i++){
+					unitCricleViewObj =new UnitCricleView(true,itemSequence.get(i).getItemSequence());
+					unitCricleViewObj.getElement().setId(i+"");
+					circleContainerPanel.add(unitCricleViewObj);
+					unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler());
+					unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
 					
-		
-		}*/
-		}else
+				}
+				
+				if(totalAssignmencount==totalAssignmentHitcount)
+				{
+					rightArrow.setVisible(false);
+				}else{
+					rightArrow.setVisible(true);	
+				}
+				if(totalAssignmentHitcount<10)
+				{
+					rightArrow.setVisible(false);
+					leftArrow.setVisible(false);
+				}
+				
+				rightArrow.setUrl("images/rightSmallarrow.png");
+				circleContainerPanel.add(rightArrow);
+							
+			}else
 		{
 			Label noAssignmentlabel = new Label("Assignment not available");
 			circleContainerPanel.clear();
 			circleContainerPanel.add(noAssignmentlabel);
 		}
 	}
+	
 	public class AssignmentClickChangeEvent implements ClickHandler{
 		private UnitCricleView unitCricleView;
 		public AssignmentClickChangeEvent(UnitCricleView unitCricleView){
@@ -287,11 +273,18 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		public void onClick(ClickEvent event) {
 			if(value=="right"){
 				leftArrow.setVisible(true);
+				if(limit_circle==totalAssignmencount){
+					rightArrow.setVisible(false);	
+				}
 				getUiHandlers().getPathwayItems(classpageid, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, limit_circle, totalAssignmencount);
 			}
 			else{
-				totalAssignmencount =totalAssignmencount-10;
 				
+				totalAssignmencount =totalAssignmencount-20;
+				if(totalAssignmencount<10)
+				{
+					leftArrow.setVisible(false);	
+				}
 				getUiHandlers().getPathwayItems(classpageid, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, limit_circle, totalAssignmencount);
 			}
 		}
@@ -303,61 +296,42 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		setCircleData(getSeq);
 	}
 	public class UnitSeqMouseOverHandler implements MouseOverHandler{
-
-		@Override
+	@Override
 		public void onMouseOver(MouseOverEvent event) {
-			isShowing=true;
 			unitAssigmentReorder = new UnitAssigmentReorder(classpageListDo,assignmentItemSeq,classpageid);
 			unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop()+40);
 			unitAssigmentReorder.show();
-			unitAssigmentReorder.addMouseOverHandler(new MouseOverHandler() {
-				
-				@Override
-				public void onMouseOver(MouseOverEvent event) {
-					isShowing=true;
-					unitAssigmentReorder.show();		
-				}
-			});
-			unitAssigmentReorder.addMouseOutHandler(new MouseOutHandler() {
-				
-				@Override
-				public void onMouseOut(MouseOutEvent event) {
-					isShowing=false;
-					
-				}
-			});
-		
-		}
-		}
-	public class UnitSeqMouseOutHandler implements MouseOutHandler{
-
-
-		@Override
-		public void onMouseOut(MouseOutEvent event) {
-			if(!isShowing){
-			unitAssigmentReorder.hide();
 			}
-			
 		}
-			
-		}
+	public void hidePopup(NativePreviewEvent event){
+    	if(event.getTypeInt()==Event.ONMOUSEOVER){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsPopup(nativeEvent);
+        	if(!target)
+        	{
+        		unitAssigmentReorder.hide();
+        		
+        	}
+    	}
+     }
 	
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			return unitAssigmentReorder.getElement().isOrHasChild(Element.as(target));
+		}
+		return false;
+	}
 	@Override
 	public void showUnitNames(ClassDo classDo,boolean clearPanel) {
-	//	this.classpageListDo=classpageListDo;
-		int totalCount=classDo.getTotalHitCount()!=null?classDo.getTotalHitCount():0;
-		int size =classDo.getSearchResults().size() ;
-		for(int i=0; i<size; i++){
-			String unitName=classDo.getSearchResults().get(i).getResource().getTitle();
-			int number=classDo.getSearchResults().get(i).getItemSequence();
-			String unitGooruOid=classDo.getSearchResults().get(i).getGooruOid();
-			String sequenceNumber=Integer.toString(number);
-			UnitWidget unitsWidget=new UnitWidget(sequenceNumber, unitName,unitGooruOid);
-			unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget));
-			unitsWidget.getElement().setId(sequenceNumber);
-			unitPanel.add(unitsWidget);
+		if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+			ArrayList<ClassUnitsListDo> classListUnitsListDo =classDo.getSearchResults();
+			for(int i=0; i<classListUnitsListDo.size(); i++){
+				UnitWidget unitsWidget=new UnitWidget(classListUnitsListDo.get(i));
+				unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget));
+				unitPanel.add(unitsWidget);
+			}
 		}
-
 	}
 
 	@UiHandler("lblMoreUnits")

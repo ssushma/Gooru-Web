@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
@@ -45,16 +46,16 @@ public class AssignmentEditView extends Composite{
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	CollectionDo collectionDo;
+	ClassUnitsListDo classUnitsDo;
 	
 	public @UiField Label deleteAssignmentLbl,assignmentReorderLbl;
 
 	public String assignmentId=null;
 
 
-	public AssignmentEditView(CollectionDo collectionDo){ 
+	public AssignmentEditView(ClassUnitsListDo classUnitsDo){ 
 		initWidget(uiBinder.createAndBindUi(this));	
-		this.collectionDo = collectionDo;
+		this.classUnitsDo = classUnitsDo;
 	}
 	
 

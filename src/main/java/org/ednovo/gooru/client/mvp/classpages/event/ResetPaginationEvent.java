@@ -22,30 +22,38 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.classsetup;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.classpages.event;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
-public interface ClassSetupUiHandlers extends BaseUiHandlers{
+import com.google.gwt.event.shared.GwtEvent;
 
+/**
+ * @author Search Team
+ * 
+ */
+public class ResetPaginationEvent extends GwtEvent<ResetPaginationHandler> {
 
-	void updatePathway(String pathwayId, String pathwayTitle);
+	public static final Type<ResetPaginationHandler> TYPE = new Type<ResetPaginationHandler>();
 
-	void OnUnitSetupClick();
+	private int offSetVal = 0;
+	/**
+	 * Class constructor
+	 */
+	public ResetPaginationEvent(int offSetVal) {
+		offSetVal = offSetVal;
+	}
 
-	void addAssignmentsContainerPopup(String pathwayIdVal);
+	@Override
+	public Type<ResetPaginationHandler> getAssociatedType() {
+		return TYPE;
+	}
 
-	void getPaginatedPathways(int i);
-
-	void setUnit(String unitName, String pathwayId, int sequenceNum);
-
-	void createPathway(String pathwayTitle, int offsetVal);
-
-	void deletePathway(String pathwayId, int offsetVal);
-
-	void loadPathways();
-
-	int getPathwayTotalHitcount();
-
+	@Override
+	protected void dispatch(ResetPaginationHandler handler) {
+		handler.callPathwaysAPI(offSetVal);
+	}
 
 }

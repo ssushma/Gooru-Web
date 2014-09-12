@@ -323,7 +323,7 @@
 
 
 .classLeftMenu{
-	width:135px;
+	width:115px;
 	float:left;
 	background:#ffffff;
 	border-left:5px solid #ffffff;
@@ -397,14 +397,14 @@
 }
 
 .classDetailsMain{
-	width:725px;
+	width:760px;
 	float:left;
 	padding:18px 0;
 }
 		
 .classPic{
 	float:left;		
-	padding:0 3px;
+	padding:0 2px;
 	position:relative;
 	width:70px;
 	height:80px;
@@ -450,7 +450,7 @@
 
 .classButtons{
 	float: left;
-    width: 113px;
+    width: 86px;
 	padding:10px 0;
 }
 		
@@ -526,5 +526,10 @@ width:100%;
 .classpageResourceImage{
 	width: 63px;
     height: 46px;
+}
+.assignmentsNextArrow{
+	display:inline-block;
+	margin:35px 0 0px 0px;
+	cursor: pointer;
 }
 
