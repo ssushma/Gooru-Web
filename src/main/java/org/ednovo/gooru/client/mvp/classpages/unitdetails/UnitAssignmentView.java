@@ -27,11 +27,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
@@ -341,14 +343,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 	
 	@Override
-	public void showUnitNames(ClasspageListDo classpageListDo,boolean clearPanel) {
-		this.classpageListDo=classpageListDo;
-		int totalCount=classpageListDo.getTotalHitCount()!=null?classpageListDo.getTotalHitCount():0;
-		int size =classpageListDo.getSearchResults().size() ;
+	public void showUnitNames(ClassDo classDo,boolean clearPanel) {
+	//	this.classpageListDo=classpageListDo;
+		int totalCount=classDo.getTotalHitCount()!=null?classDo.getTotalHitCount():0;
+		int size =classDo.getSearchResults().size() ;
 		for(int i=0; i<size; i++){
-			String unitName=classpageListDo.getSearchResults().get(i).getResource().getTitle();
-			int number=classpageListDo.getSearchResults().get(i).getItemSequence();
-			String unitGooruOid=classpageListDo.getSearchResults().get(i).getGooruOid();
+			String unitName=classDo.getSearchResults().get(i).getResource().getTitle();
+			int number=classDo.getSearchResults().get(i).getItemSequence();
+			String unitGooruOid=classDo.getSearchResults().get(i).getGooruOid();
 			String sequenceNumber=Integer.toString(number);
 			UnitWidget unitsWidget=new UnitWidget(sequenceNumber, unitName,unitGooruOid);
 			unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget));

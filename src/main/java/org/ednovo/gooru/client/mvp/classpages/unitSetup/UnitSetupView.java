@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 import com.google.gwt.core.client.GWT;
@@ -117,14 +118,14 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	 }
 
 	@Override
-	public void showUnitDetails(ClasspageListDo classpageListDo) {
-		this.classpageListDo=classpageListDo;
-	    totalCount = classpageListDo.getTotalHitCount();
-	    int unitSize =classpageListDo.getSearchResults().size() ;
+	public void showUnitDetails(ClassDo classDo) {
+		//this.classpageListDo=classpageListDo;
+	    totalCount = classDo.getTotalHitCount();
+	    int unitSize =classDo.getSearchResults().size() ;
 	    System.out.println("totalCount::"+totalCount+"::unitSize::"+unitSize);
 	    unitAssignmentWidgetContainer.clear();
 	    for(int i=0; i<unitSize; i++){
-	    	unitAssignmentWidgetContainer.add(new UnitsAssignmentWidgetView(classpageListDo.getSearchResults().get(i))); 
+	    	unitAssignmentWidgetContainer.add(new UnitsAssignmentWidgetView(classDo.getSearchResults().get(i))); 
 	    }
 		
 	}
