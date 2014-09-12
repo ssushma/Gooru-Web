@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
@@ -139,7 +140,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			revealPlace("unitdetails",null,"");
+			revealPlace("unitdetails",null,unitsWidget.getUnitGooruOid());
 		}
 	}
 	public void removeUnitSelectedStyle(){
@@ -199,13 +200,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler());
 					unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
 					
-				}
-				
-				if(totalAssignmencount==totalAssignmentHitcount)
-				{
-					rightArrow.setVisible(false);
-				}else{
-					rightArrow.setVisible(true);	
 				}
 				if(totalAssignmentHitcount<10)
 				{
@@ -325,21 +319,18 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 	@Override
 	public void showUnitNames(ClassDo classDo,boolean clearPanel) {
-	//	this.classpageListDo=classpageListDo;
-		int totalCount=classDo.getTotalHitCount()!=null?classDo.getTotalHitCount():0;
-		int size =classDo.getSearchResults().size() ;
-		for(int i=0; i<size; i++){
-			String unitName=classDo.getSearchResults().get(i).getResource().getTitle();
-			unitTitleDetails.setText(classDo.getSearchResults().get(0).getResource().getTitle());
-			int number=classDo.getSearchResults().get(i).getItemSequence();
-			String unitGooruOid=classDo.getSearchResults().get(i).getCollectionItemId();
-			String sequenceNumber=Integer.toString(number);
-			UnitWidget unitsWidget=new UnitWidget(sequenceNumber, unitName,unitGooruOid);
-			unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget));
-			unitsWidget.getElement().setId(sequenceNumber);
-			unitPanel.add(unitsWidget);
-		}
 
+	
+		if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+			ArrayList<ClassUnitsListDo> classListUnitsListDo =classDo.getSearchResults();
+			for(int i=0; i<classListUnitsListDo.size(); i++){
+				unitTitleDetails.setText(classDo.getSearchResults().get(0).getResource().getTitle());
+				UnitWidget unitsWidget=new UnitWidget(classListUnitsListDo.get(i));
+				unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget));
+				unitPanel.add(unitsWidget);
+			}
+
+		}
 	}
 
 	@UiHandler("lblMoreUnits")
