@@ -37,7 +37,7 @@ public interface ClassSetupUiHandlers extends BaseUiHandlers{
 
 	void getPaginatedPathways(int i);
 
-	void setUnit(String unitName, String pathwayId, int sequenceNum);
+	void setUnit(String unitName, String pathwayId, int sequenceNum,String collectionItemId);
 
 	void createPathway(String pathwayTitle, int offsetVal);
 

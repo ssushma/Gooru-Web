@@ -74,8 +74,8 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	}
 	
 	@Override
-	public void setUnit(String unitName, String pathwayId, int sequenceNum) {
-		 getView().setContent(unitName,pathwayId,sequenceNum);
+	public void setUnit(String unitName, String pathwayId, int sequenceNum,String collectionItemId) {
+		 getView().setContent(unitName,pathwayId,sequenceNum,collectionItemId);
 	}
 	
 	@Override
@@ -124,7 +124,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 					getView().setPagination(classpageItemDo.getTotalHitCount(),pageNumVal);
 					for(int i=0;i<classpageItemDo.getSearchResults().size();i++)
 					{
-						setUnit(classpageItemDo.getSearchResults().get(i).getResource().getTitle(), classpageItemDo.getSearchResults().get(i).getResource().getGooruOid(),classpageItemDo.getSearchResults().get(i).getItemSequence());
+						setUnit(classpageItemDo.getSearchResults().get(i).getResource().getTitle(), classpageItemDo.getSearchResults().get(i).getResource().getGooruOid(),classpageItemDo.getSearchResults().get(i).getItemSequence(),"f80b2002-caa7-42bb-b4dd-7c0d358616f0");
 						
 					}
 				}
@@ -161,7 +161,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 					getView().setPagination(classpageItemDo.getTotalHitCount(),pageNumVal);
 					for(int i=0;i<classpageItemDo.getSearchResults().size();i++)
 					{
-						setUnit(classpageItemDo.getSearchResults().get(i).getResource().getTitle(), classpageItemDo.getSearchResults().get(i).getResource().getGooruOid(),classpageItemDo.getSearchResults().get(i).getItemSequence());
+						setUnit(classpageItemDo.getSearchResults().get(i).getResource().getTitle(), classpageItemDo.getSearchResults().get(i).getResource().getGooruOid(),classpageItemDo.getSearchResults().get(i).getItemSequence(),"f80b2002-caa7-42bb-b4dd-7c0d358616f0");
 						
 					}
 				}

@@ -29,8 +29,6 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
-import org.ednovo.gooru.client.mvp.shelf.ShelfUiHandlers;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
@@ -42,10 +40,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -151,10 +146,10 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 	
 	@Override
 
-	public void setContent(String unitName, String pathwayId, int sequenceNum) {
+	public void setContent(String unitName, String pathwayId, int sequenceNum,String collectionItemid) {
 		
 		unitSetupContainer.setVisible(true);
-		 final ClassSetupUnitView classSetupUnitView = new ClassSetupUnitView(sequenceNum,unitName,pathwayId) {
+		 final ClassSetupUnitView classSetupUnitView = new ClassSetupUnitView(sequenceNum,unitName,pathwayId,totalHitCounter,collectionItemid) {
 			@Override
 			public void deleteItem(int sequenceNum, String pathwayId) {
 				try{
@@ -178,15 +173,6 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			}
 		};
 		classSetupUnitView.btnAssignment.addClickHandler(new ShowAssignPopupEvent(pathwayId));
-		classSetupUnitView.btnReorder.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-				classSetupUnitView.moveAssignmentPopup.setVisible(true);
-			}
-		});
-		//classSetupUnitView.btnReorder.addClickHandler(new ShowReorderPathwaysEvent());
 		 getUnitwidget().add(classSetupUnitView);
 	}
 	
@@ -224,7 +210,6 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			}
 		 }
 	 }
-	 
 	 
 		@Override
 		public void setPagination(int totalCount, int pagenumVal) {
