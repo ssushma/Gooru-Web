@@ -1657,7 +1657,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.PATHWAYS_CLASS_REORDER, pathwayId, newPosVal, getLoggedInSessionToken());	
 		System.out.println("reorder pathways API:::::"+url);
-		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(), new JSONObject().toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeClasspageList(jsonRep);
 	}

@@ -127,7 +127,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 					getView().setPagination(classpageItemDo.getTotalHitCount(),pageNumVal);
 					for(int i=0;i<classpageItemDo.getSearchResults().size();i++)
 					{
-						setUnit(classpageItemDo.getSearchResults().get(i).getResource().getTitle(), classpageItemDo.getSearchResults().get(i).getResource().getGooruOid(),classpageItemDo.getSearchResults().get(i).getItemSequence(),"f80b2002-caa7-42bb-b4dd-7c0d358616f0");
+						setUnit(classpageItemDo.getSearchResults().get(i).getResource().getTitle(), classpageItemDo.getSearchResults().get(i).getResource().getGooruOid(),classpageItemDo.getSearchResults().get(i).getItemSequence(),classpageItemDo.getSearchResults().get(i).getCollectionItemId());
 						
 					}
 				}
@@ -164,7 +164,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 					getView().setPagination(classpageItemDo.getTotalHitCount(),pageNumVal);
 					for(int i=0;i<classpageItemDo.getSearchResults().size();i++)
 					{
-						setUnit(classpageItemDo.getSearchResults().get(i).getResource().getTitle(), classpageItemDo.getSearchResults().get(i).getResource().getGooruOid(),classpageItemDo.getSearchResults().get(i).getItemSequence(),"f80b2002-caa7-42bb-b4dd-7c0d358616f0");
+						setUnit(classpageItemDo.getSearchResults().get(i).getResource().getTitle(), classpageItemDo.getSearchResults().get(i).getResource().getGooruOid(),classpageItemDo.getSearchResults().get(i).getItemSequence(),classpageItemDo.getSearchResults().get(i).getCollectionItemId());
 						
 					}
 				}
