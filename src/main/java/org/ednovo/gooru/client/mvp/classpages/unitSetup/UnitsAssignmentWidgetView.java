@@ -19,7 +19,7 @@ import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -234,14 +234,14 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	public void getUnitAssignments(){
 		String classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classPageId, classUnitsDo.getResource().getGooruOid(), "", assignmentLimit, assignmentOffset, new SimpleAsyncCallback<ArrayList<CollectionItemDo>>() {
-			@Override
-			public void onSuccess(ArrayList<CollectionItemDo> result) {
-				System.out.println("INININ");
-//				showAssignements(result);
-			}
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classPageId, classUnitsDo.getResource().getGooruOid(), "", assignmentLimit, assignmentOffset, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 
-		});
+			@Override
+			public void onSuccess(UnitAssignmentsDo result) {
+				// TODO Auto-generated method stub
+				
+			}
+		}); 
 	}
 
 
