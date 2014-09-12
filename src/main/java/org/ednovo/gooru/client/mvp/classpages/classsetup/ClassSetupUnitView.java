@@ -62,7 +62,8 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresenter> implements IsClassSetupUnitView{
 
 
-	@UiField HTMLPanel unitSequence,inputContainer,panelComboList,resourceTypePanel,moveAssignmentPopup;
+	@UiField HTMLPanel unitSequence,inputContainer,panelComboList,resourceTypePanel;
+	@UiField HTMLEventPanel moveAssignmentPopup;
 	@UiField Button deleteBtnUnit,cancelBtn,saveBtn,editBtn;
 	@UiField TextBox unitName;
 	@UiField Button btnAssignment,btnReorder;
@@ -121,6 +122,22 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 			public void onMouseOut(MouseOutEvent event) {
 				// TODO Auto-generated method stub
 				moveAssignmentPopup.getElement().getStyle().setDisplay(Display.NONE);
+			}
+		});
+		moveAssignmentPopup.addMouseOverHandler(new MouseOverHandler() {
+			
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				moveAssignmentPopup.getElement().getStyle().setDisplay(Display.BLOCK);
+				
+			}
+		});
+		moveAssignmentPopup.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				moveAssignmentPopup.getElement().getStyle().setDisplay(Display.NONE);
+				
 			}
 		});
 		resourceCategoryLabel.setText(String.valueOf(sequenceNum));

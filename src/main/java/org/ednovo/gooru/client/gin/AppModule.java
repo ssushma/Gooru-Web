@@ -66,8 +66,11 @@ import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter.IsClassCodeProxy;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodeView;
 import org.ednovo.gooru.client.mvp.classpages.study.IsClassCodeView;
+import org.ednovo.gooru.client.mvp.classpages.unitSetup.IsUnitSetupStudentView;
 import org.ednovo.gooru.client.mvp.classpages.unitSetup.IsUnitSetupView;
 import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupPresenter;
+import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupStudentPresenter;
+import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupStudentView;
 import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupView;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.IsUnitAssignmentView;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssignmentPresenter;
@@ -561,6 +564,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(CoreLibraryPresenter.class, IsCoreLibraryView.class, CoreLibraryView.class,IsCoreLibraryProxy.class);
 		bindPresenterWidget(ClassSetupPresenter.class,IsClassSetupView.class,ClassSetupView.class);
 		bindPresenterWidget(UnitSetupPresenter.class,IsUnitSetupView.class,UnitSetupView.class);
+		bindPresenterWidget(UnitSetupStudentPresenter.class,IsUnitSetupStudentView.class,UnitSetupStudentView.class);
 		bindPresenterWidget(UnitAssignmentPresenter.class,IsUnitAssignmentView.class,UnitAssignmentView.class);
 		bindPresenterWidget(PersonalizeUnitPresenter.class,IsPersonalizeUnitView.class,PersonalizeUnitView.class);
 	}

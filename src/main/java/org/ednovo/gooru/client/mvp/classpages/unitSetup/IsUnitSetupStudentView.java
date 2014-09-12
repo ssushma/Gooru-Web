@@ -22,63 +22,16 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.studentView;
-
-import java.util.ArrayList;
-
+package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.ClasspageDo;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.ClassDo;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
-import com.google.gwt.user.client.ui.Button;
 
-public interface IsStudentAssignmentView extends IsViewWithHandlers<StudentAssignmentUiHandlers>  {
-
+public interface IsUnitSetupStudentView extends IsViewWithHandlers<UnitSetupStudentUiHandlers>{
 	
+	void showUnitDetails(ClassDo classDo);
 	
-	
-	public Button getBackToEditPanel();
+	void setPagination(int totalCount, int pagenumVal);
 
-
-	
-
-	void clearAll();
-	
-	
-	void setClasspageData( ClasspageDo classpageDo);
-	void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList, String sortOrder);
-	void showClasspageItemsForAssignmentPath(ArrayList<ClasspageItemDo> classpageItemsList);
-
-
-
-
-	/**
-	 * @function callAssignmentAPI 
-	 * 
-	 * @created_date : Jun 17, 2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @param classpageId
-	 * @param offsetProgress
-	 * @param limitProgress
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
-	
-	void callAssignmentAPI(String classpageId, String offsetProgress,
-			String limitProgress);
-
-
-
-		
-	
-	void resetAll();
 }
