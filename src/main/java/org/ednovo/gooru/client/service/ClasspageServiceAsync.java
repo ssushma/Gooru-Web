@@ -41,6 +41,7 @@ import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -182,7 +183,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	public void v2ChangeAssignmentSequence(String classpageId, String classpageAssignmentId, int sequence, AsyncCallback<Void> callback);
 
 	public void v2GetPathwayItems(String classpageId,
-			String pathwayGooruOid,String sequence,int limit,int offSet,AsyncCallback<ArrayList<CollectionItemDo>> callback);
+			String pathwayGooruOid,String sequence,int limit,int offSet,AsyncCallback<UnitAssignmentsDo> callback);
 	
 	public void v2ReorderPathwaySequence(String classpageId,String pathwayItemId,int sequence, AsyncCallback<Void> callback);
 

@@ -43,6 +43,7 @@ import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -509,7 +510,7 @@ public interface ClasspageService extends BaseService {
 	 * 
 	*/
 	
-	public ArrayList<CollectionItemDo> v2GetPathwayItems(String classpageId,
+	public UnitAssignmentsDo v2GetPathwayItems(String classpageId,
 			String pathwayGooruOid,String sequence,int limit,int offSet) throws GwtException, ServerDownException;
 	/**
 	 * @function v2ReorderPathwaySequence 

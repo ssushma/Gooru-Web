@@ -6,8 +6,8 @@
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:cas="urn:import:org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections">
 	<ui:style field="style" src="unitsetup.css" />
 	<g:FlowPanel styleName="{style.classEdit}">
-		<g:Label styleName="{style.cancelbutton}"></g:Label> 
+		<g:Label ui:field="deleteAssignmentLbl" styleName="{style.cancelbutton}"></g:Label> 
 		<cas:ChangeAssignmentStatusView ui:field="changeAssignmentStatusView" labelDisplayOption="false" switchStyleName="{style.onOffButton}"></cas:ChangeAssignmentStatusView>
-		<g:Label styleName="{style.reorderbutton}"></g:Label>
+		<g:Label ui:field="assignmentReorderLbl" styleName="{style.reorderbutton}"></g:Label>
 	</g:FlowPanel>
 </ui:UiBinder>
