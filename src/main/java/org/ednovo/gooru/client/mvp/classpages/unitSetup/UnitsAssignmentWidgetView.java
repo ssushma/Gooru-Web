@@ -1,8 +1,12 @@
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 
 
+import java.util.Iterator;
+
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.WaitPopupVc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
@@ -15,6 +19,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 
 public class UnitsAssignmentWidgetView extends Composite {
 	
@@ -31,6 +36,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 	@UiField Label lblUnitName,lblUnitNumber;
 	
 	CollectionDo collectionDo;
+	
+	boolean isDeleted=false;
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -52,11 +59,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 			if(collectionDo!=null && collectionDo.getResource()!=null ){
 				System.out.println("fistlevel");
 				itemSequence=collectionDo.getResource().getCollectionItems().get(i).getItemSequence();
-				System.out.println("itemSequence::"+itemSequence);
 				if(collectionDo.getResource().getCollectionItems().get(i).getResource()!=null){
-					System.out.println("secondlevel");
 					url=collectionDo.getResource().getCollectionItems().get(i).getResource().getThumbnails().getUrl()!=null?collectionDo.getResource().getCollectionItems().get(i).getResource().getThumbnails().getUrl():null;
-				   System.out.println("url::"+url);
 				}
 			}
 			assignmentsContainer.add(new AssignmentsContainerWidget(itemSequence,url,"25 days"));
@@ -68,11 +72,71 @@ public class UnitsAssignmentWidgetView extends Composite {
 		public void onClick(ClickEvent event) {
 			hideEditButton(true);
 			assignmentsContainer.clear();
-			for(int i=0;i<9;i++){
-				assignmentsContainer.add(new AssignmentEditView());
+			for(int i=0;i<collectionDo.getResource().getCollectionItems().size();i++){
+				AssignmentEditView assignmentEditView = new AssignmentEditView(collectionDo);
+				assignmentEditView.getDeleteAssignmentLbl().addClickHandler(new DeleteAssignment(collectionDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
+				assignmentEditView.getAssignmentReorderLbl().addClickHandler(new ReorderAssignment(collectionDo.getResource().getCollectionItems().get(i).getCollectionItemId())); 
+				assignmentEditView.setAssignmentId(collectionDo.getResource().getCollectionItems().get(i).getCollectionItemId());
+				
+				assignmentsContainer.add(assignmentEditView);
 			}
 		}
 	}
+	
+	
+	public class DeleteAssignment implements ClickHandler{
+		String collectionItemId=null;
+		
+		public DeleteAssignment(String collectionItemId) {
+			this.collectionItemId = collectionItemId;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			final WaitPopupVc popupVc = new WaitPopupVc(i18n.GL1387(),i18n.GL1388()) { 
+				@Override
+				public void onTextConfirmed() {
+					AppClientFactory.getInjector().getClasspageService().deleteClassPageItem(collectionItemId, new SimpleAsyncCallback<String>() {
+						@Override
+						public void onSuccess(String result) {
+							if(result.equals("200")){
+								boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItemId);
+								if(isAssignmentDeleted){
+									hide();
+//									getPathWayItems();
+								}
+							}
+						}
+					});
+				}
+			};
+		}
+
+	}
+	
+	
+	
+	public void getPathWayItems() {
+		
+	}
+	
+	
+	
+	public class ReorderAssignment implements ClickHandler{
+
+		String collectionItem;
+		
+		public ReorderAssignment(String collectionItem){
+			this.collectionItem = collectionItem;
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			System.out.println("--- in order --");
+		}
+		
+	}
+	
 	
 	public class CancelEditEvent implements ClickHandler{
 		@Override
@@ -92,6 +156,20 @@ public class UnitsAssignmentWidgetView extends Composite {
 		cancelEditButton.setVisible(hide);
 	}
 	
+	public boolean deleteAssignmentWidget(String collectionItemId) { 
+		Iterator<Widget> assignmentContainerWidget = assignmentsContainer.iterator();
+		while(assignmentContainerWidget.hasNext()){
+			Widget widget = assignmentContainerWidget.next();
+			if(widget instanceof AssignmentEditView){
+				if(((AssignmentEditView) widget).getAssignmentId().equals(collectionItemId)){
+					widget.removeFromParent();
+					isDeleted = true;
+				}
+			}
+		}
+		return isDeleted;
+	}
+
 	private void setUnitNameDetails() {
 			int number=collectionDo.getItemSequence();
 			String sequenceNumber=Integer.toString(number);
