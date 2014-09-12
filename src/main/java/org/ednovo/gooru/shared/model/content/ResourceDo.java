@@ -119,6 +119,8 @@ public class ResourceDo extends ContentDo {
 	
 	private customFieldValuesDO customFieldValues;
 	
+	private List<CollectionItemDo> collectionItems;
+	
 	private UserDo user;
 	
 	public List<String> getPublisher() {
@@ -566,6 +568,18 @@ public class ResourceDo extends ContentDo {
 	}
 	public void setGooruOid(String gooruOid) {
 		this.gooruOid = gooruOid;
+	}
+	/**
+	 * @return the collectionItems
+	 */
+	public List<CollectionItemDo> getCollectionItems() {
+		return collectionItems;
+	}
+	/**
+	 * @param collectionItems the collectionItems to set
+	 */
+	public void setCollectionItems(List<CollectionItemDo> collectionItems) {
+		this.collectionItems = collectionItems;
 	}
 	
 	

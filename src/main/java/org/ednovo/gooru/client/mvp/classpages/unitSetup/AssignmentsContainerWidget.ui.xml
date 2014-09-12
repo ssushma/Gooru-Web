@@ -6,7 +6,7 @@
 
 	<g:HTMLPanel styleName="{style.classPic}">
 		<g:HTMLPanel styleName="{style.pic} showitem" >
-			<g:Image ui:field="assignmentThumbnail"></g:Image>
+			<g:Image ui:field="assignmentThumbnail" styleName="{style.classpageResourceImage}"></g:Image>
 		</g:HTMLPanel>
 		<g:Label ui:field="dueDays" styleName="{style.daysCount} showitem"></g:Label>
 		<uc:UnitCricleView bubbleStyleName="{style.classBubble}" bubbleContainerStyle="" ui:field="unitCircleView"></uc:UnitCricleView>
