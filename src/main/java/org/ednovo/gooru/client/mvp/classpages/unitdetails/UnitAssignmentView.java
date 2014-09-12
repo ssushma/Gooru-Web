@@ -27,11 +27,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
@@ -113,6 +115,15 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		unitSetupButton.addClickHandler(new UnitSetupEvents());
 		
 	}
+	
+	public HTMLPanel getUnitPanel(){
+		return unitPanel;
+	}
+	
+	public HTMLPanel getCircleContainerPanel(){
+		return circleContainerPanel;
+	}
+	
 	@Override
 	public void getPathwayItems(){
 		leftArrow.setVisible(false);
@@ -128,8 +139,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			removeUnitSelectedStyle();
-			addUnitSelectStyle(unitsWidget);
+			revealPlace("unitdetails",null,"");
 		}
 	}
 	public void removeUnitSelectedStyle(){
@@ -312,22 +322,16 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		return false;
 	}
 	@Override
-	public void showUnitNames(ClasspageListDo classpageListDo) {
-		// TODO Auto-generated method stub
-		this.classpageListDo=classpageListDo;
-		int totalCount=classpageListDo.getTotalHitCount()!=null?classpageListDo.getTotalHitCount():0;
-		int size =classpageListDo.getSearchResults().size() ;
-
-		if(Math.abs(totalCount-offSet) > size){
-			showMoreUnitsLink();
-		}else{
-			hideMoreUnitsLink();
-		}
+	public void showUnitNames(ClassDo classDo,boolean clearPanel) {
+	//	this.classpageListDo=classpageListDo;
+		int totalCount=classDo.getTotalHitCount()!=null?classDo.getTotalHitCount():0;
+		int size =classDo.getSearchResults().size() ;
 		for(int i=0; i<size; i++){
-			String unitName=classpageListDo.getSearchResults().get(i).getResource().getTitle();
-			int number=classpageListDo.getSearchResults().get(i).getItemSequence();
+			String unitName=classDo.getSearchResults().get(i).getResource().getTitle();
+			int number=classDo.getSearchResults().get(i).getItemSequence();
+			String unitGooruOid=classDo.getSearchResults().get(i).getCollectionItemId();
 			String sequenceNumber=Integer.toString(number);
-			UnitWidget unitsWidget=new UnitWidget(sequenceNumber, unitName);
+			UnitWidget unitsWidget=new UnitWidget(sequenceNumber, unitName,unitGooruOid);
 			unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget));
 			unitsWidget.getElement().setId(sequenceNumber);
 			unitPanel.add(unitsWidget);
@@ -338,7 +342,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@UiHandler("lblMoreUnits")
 	public void clickOnMoreUnits(ClickEvent event){
 		offSet=offSet+limit;
-		getUiHandlers().getPathwayUnits(limit, offSet);
+		//getUiHandlers().getPathwayUnits(limit, offSet);
 	}
 
 	@Override
@@ -349,27 +353,25 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	 private class UnitSetupEvents implements ClickHandler{
 			@Override
 			public void onClick(ClickEvent event) {
-				revealPlace("unitsetup");
+				revealPlace("unitsetup","1",null);
 			}
 		}
-		 public void revealPlace(String tabName){
-				Map<String,String> params = new HashMap<String,String>();
-				String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
-				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-				String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
-				params.put("pageSize", pageSize);
-				params.put("classpageid", classpageid);
+	 public void revealPlace(String tabName,String pageNum,String unitId){
+			Map<String,String> params = new HashMap<String,String>();
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			params.put("classpageid", classpageid);
+			if(pageNum!=null){
 				params.put("pageNum", pageNum);
-				params.put("pos", pos);
-				if(tabName!=null){
-					params.put("tab", tabName);
-				}
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
-				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-		 }
-		
-	
+			}
+			if(tabName!=null){
+				params.put("tab", tabName);
+			}
+			if(unitId!=null){
+				params.put("uid", unitId);
+			}
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+	 }
 	public void showMoreUnitsLink(){
 		lblMoreUnits.setVisible(true);
 	}

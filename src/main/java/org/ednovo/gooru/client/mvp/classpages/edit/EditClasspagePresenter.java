@@ -274,6 +274,18 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		}
 		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE) && AppClientFactory.getPlaceManager().refreshPlace()){
 			getView().getGlobalClasspageProcess().clear();
+			System.out.println("INININ");
+			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+			int offsetVal = 0;
+			if(pageNum != null)
+			{
+				offsetVal = Integer.parseInt(pageNum);
+				if(offsetVal!=0)
+				{
+				offsetVal = (offsetVal-1);
+				}
+			}
+			unitSetupPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
 			//getClasspage();
 		}
 		
@@ -429,7 +441,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	    	 setInSlot(CLASSLIST_SLOT, unitSetupPresenter,false);
 	     }
 	     else if(tab!=null&&tab.equalsIgnoreCase("unitdetails")){
-	    	 unitAssignmentPresenter.setClasspageData(classpageDo);
+	    	 unitAssignmentPresenter.getClassUnits(classpageDo.getClasspageId());
 	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
 	     }
 	     else {

@@ -25,6 +25,9 @@ public class ClasspageItemDo implements Serializable{
 	private String classpageId;
 	private String status;
 	private Integer sequenceNumber;
+	private Boolean isRequired;
+	
+	private ResourceDo resource;
 	
 	
 	public String getUserNameDispaly() {
@@ -162,6 +165,29 @@ public class ClasspageItemDo implements Serializable{
 	public void setSequenceNumber(Integer sequenceNumber) {
 		this.sequenceNumber = sequenceNumber;
 	}
-	
+	/**
+	 * @return the isRequired
+	 */
+	public Boolean getIsRequired() {
+		return isRequired;
+	}
+	/**
+	 * @param isRequired the isRequired to set
+	 */
+	public void setIsRequired(Boolean isRequired) {
+		this.isRequired = isRequired;
+	}
+	/**
+	 * @return the resource
+	 */
+	public ResourceDo getResource() {
+		return resource;
+	}
+	/**
+	 * @param resource the resource to set
+	 */
+	public void setResource(ResourceDo resource) {
+		this.resource = resource;
+	}
 
 }

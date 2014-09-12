@@ -22,37 +22,60 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+package org.ednovo.gooru.shared.model.content;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.shared.model.content.ClasspageDo;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public interface UnitAssignmentUiHandlers extends BaseUiHandlers{
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
+public class ClassDo implements Serializable {
 
 	/**
-	 * @function setClasspageData 
 	 * 
-	 * @created_date : 09-Sep-2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @param classpageDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
+	 */
+	private static final long serialVersionUID = -3223243025838735212L;
 	
-	void setClasspageData(ClasspageDo classpageDo);
 	
+	private ArrayList<ClassUnitsListDo> searchResults;
+	
+	private Integer totalHitCount;
+	
+	public ClassDo(){}
 
-	void getPathwayItems(String classpageId, String pathwayGooruOid,String sequenceNo,int limit,int offSet);
 
-	void getPathwayUnits(String classId,int limit, int offset,boolean clearPanel);
 
+	/**
+	 * @return the totalHitCount
+	 */
+	public Integer getTotalHitCount() {
+		return totalHitCount;
+	}
+
+	/**
+	 * @param totalHitCount the totalHitCount to set
+	 */
+	public void setTotalHitCount(Integer totalHitCount) {
+		this.totalHitCount = totalHitCount;
+	}
+
+
+
+	public ArrayList<ClassUnitsListDo> getSearchResults() {
+		return searchResults;
+	}
+
+
+
+	public void setSearchResults(ArrayList<ClassUnitsListDo> searchResults) {
+		this.searchResults = searchResults;
+	}
+	
+	/** 
+	 * This method is to get the pageNum
+	 */
+	
 }

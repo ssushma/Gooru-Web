@@ -27,15 +27,19 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
+import com.google.gwt.user.client.ui.HTMLPanel;
+
 public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentUiHandlers>{
 	 void getSequence(ArrayList<CollectionItemDo> getSeq);
 	 void getPathwayItems();
-	 public void showUnitNames(ClasspageListDo classpageListDo);
+	 public void showUnitNames(ClassDo classDo,boolean clearPanel);
 	 public void hideMoreUnitsLink();
-
+	 public HTMLPanel getUnitPanel();
+	 public HTMLPanel getCircleContainerPanel();
 
 }

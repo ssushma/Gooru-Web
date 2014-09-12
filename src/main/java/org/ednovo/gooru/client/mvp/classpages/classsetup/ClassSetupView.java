@@ -69,7 +69,7 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 	
 	int pageNumber = 0;
 	
-	int limit = 10;
+	int limit = 5;
 	
 	int totalHitCounter = 0;
 	
@@ -96,18 +96,22 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			public void onClick(ClickEvent event) {
 				
 				unitSetupContainer.setVisible(true);
+				
+				totalHitCounter = getUiHandlers().getPathwayTotalHitcount();
+
 	
-				if(totalHitCounter >= 10)
+				if(totalHitCounter >= 5)
 				{
 					paginationPanel.setVisible(true);
-					int totalPages = (totalHitCounter / 10)
-							+ ((totalHitCounter % 10) > 0 ? 1 : 0);
+					int totalPages = (totalHitCounter / 5)
+							+ ((totalHitCounter % 5) > 0 ? 1 : 0);
 					
 
 					getUiHandlers().createPathway("Unitname",(totalPages-1)*limit);
 					
-					totalPages = (totalHitCounter / 10)
-							+ ((totalHitCounter % 10) > 0 ? 1 : 0);
+					
+					totalPages = (totalHitCounter / 5)
+							+ ((totalHitCounter % 5) > 0 ? 1 : 0);
 					
 					Map<String,String> params = new HashMap<String,String>();
 					String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
@@ -219,24 +223,22 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 	 
 		@Override
 		public void setPagination(int totalCount, int pagenumVal) {
-			System.out.println("totalCount::"+totalCount);
-			System.out.println("pagenumVal::"+pagenumVal);
 			totalHitCounter = totalCount;
 			paginationPanel.getElement().setInnerHTML("");
 			paginationPanel.setVisible(true);
-			if(totalCount>10)
+			if(totalCount>5)
 			{
-			int totalPages = (totalCount / 10)
-					+ ((totalCount % 10) > 0 ? 1 : 0);
+			int totalPages = (totalCount / 5)
+					+ ((totalCount % 5) > 0 ? 1 : 0);
 			if (totalPages > 1) {
 				if (pagenumVal > 1) {
 					paginationPanel.add(new PaginationButtonUc(pagenumVal - 1, PREVIOUS, this));
 					//paginationPanel.add(new PaginationButtonUc(pagenumVal - 1, PREVIOUS, this));
 				}
 			
-				int page = pagenumVal < 10 ? 1 : pagenumVal - 8;
+				int page = pagenumVal < 5 ? 1 : pagenumVal - 3;
 
-				for (int count = 1; count < 10 && page <= totalPages; page++, ++count) 
+				for (int count = 1; count < 5 && page <= totalPages; page++, ++count) 
 				{
 					paginationPanel.add(new PaginationButtonUc(page, page == pagenumVal, this));
 				}
@@ -265,7 +267,6 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 				params.put("pos", pos);
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-				System.out.println("getPaginatedPathwaysoffset::"+(pagenumber-1));
 				getUiHandlers().getPaginatedPathways((pagenumber-1)*limit);
 			}
 

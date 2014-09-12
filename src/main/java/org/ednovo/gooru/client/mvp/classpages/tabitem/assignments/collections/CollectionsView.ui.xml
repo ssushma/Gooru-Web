@@ -10,8 +10,8 @@
 				<g:HTMLPanel styleName="{style.assignHeaderMain}">
 					<g:Label styleName="{style.assignHeader}" ui:field="assignmentSequenceLabel">Assignment 1 </g:Label>
 					<cas:ChangeAssignmentStatusView ui:field="changeAssignmentStatusView"></cas:ChangeAssignmentStatusView>
-					<g:HTMLPanel styleName="{style.dueDate}">
-						<g:Label styleName="{style.dueDateText}" ui:field="dueDateText">Set Due Date</g:Label> <g:Label styleName="{style.dueDateIcon}" ui:field="dueDateButton"></g:Label>
+					<g:HTMLPanel styleName="{style.dueDate}" ui:field="dueDateContentPanel">
+						<g:Label styleName="{style.dueDateText}" ui:field="dueDateText">Due Date</g:Label> <g:Label styleName="{style.dueDateIcon}" ui:field="dueDateButton"></g:Label>
 					</g:HTMLPanel>
 					<g:Label styleName="clearfix"></g:Label>
 				 </g:HTMLPanel>

@@ -2,6 +2,7 @@ package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 
 
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
@@ -30,24 +31,35 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	@UiField Label lblUnitName,lblUnitNumber;
 	
-	CollectionDo collectionDo;
+	ClassUnitsListDo collectionDo;
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	public UnitsAssignmentWidgetView(CollectionDo collectionDo){
+	public UnitsAssignmentWidgetView(ClassUnitsListDo collectionDo){
 		initWidget(uibinder.createAndBindUi(this));
 		this.collectionDo=collectionDo;
-		setAssignmentsForUnit(9);
+		setAssignmentsForUnit();
 		setUnitNameDetails();
 		cancelEditButton.setVisible(false);
 		editUnitButton.addClickHandler(new EditAssignmentEvent());
 		cancelEditButton.addClickHandler(new CancelEditEvent());
 	}
 
-	private void setAssignmentsForUnit(int totAssignment) {
+	private void setAssignmentsForUnit() {
 		assignmentsContainer.clear();
-		for(int i=0;i<totAssignment;i++){
-			assignmentsContainer.add(new AssignmentsContainerWidget((i+1),"images/classroomSetupImg.png","25 days"));
+		for(int i=0;i<collectionDo.getResource().getCollectionItems().size();i++){
+			String url = " ";
+			int itemSequence = 0;
+			if(collectionDo!=null && collectionDo.getResource()!=null ){
+				itemSequence=collectionDo.getResource().getCollectionItems().get(i).getSequenceNumber();
+				System.out.println("itemSequence::"+itemSequence);
+				if(collectionDo.getResource().getCollectionItems().get(i).getResource()!=null){
+					System.out.println("secondlevel");
+					url=collectionDo.getResource().getCollectionItems().get(i).getResource().getThumbnails().getUrl()!=null?collectionDo.getResource().getCollectionItems().get(i).getResource().getThumbnails().getUrl():null;
+				   System.out.println("url::"+url);
+				}
+			}
+			assignmentsContainer.add(new AssignmentsContainerWidget(itemSequence,url,"25 days"));
 		}
 	}
 	
@@ -66,7 +78,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			hideEditButton(false);
-			setAssignmentsForUnit(10);
+			setAssignmentsForUnit();
 		}
 	}
 	
