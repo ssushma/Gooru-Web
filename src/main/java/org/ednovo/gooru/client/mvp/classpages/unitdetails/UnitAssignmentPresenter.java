@@ -90,6 +90,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	}
 	
 	public void getPathwayUnits(final String classId,int limit, int offset,final boolean clearPanel) {
+		System.out.println("offsetgetPathwayUnits::"+Integer.toString(offset));
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClasspageListDo>() {
 			@Override
 			public void onSuccess(ClasspageListDo classpageListDo) {

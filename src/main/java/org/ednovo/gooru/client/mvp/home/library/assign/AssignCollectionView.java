@@ -560,6 +560,7 @@ IsCollectionAssign {
 			
 			//Hide the scroll container
 			spanelClasspagesPanel.setVisible(false);
+			System.out.println("offsetgetAssigncollectionview::"+String.valueOf(classpageUnitOffSet));
 			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, limit, String.valueOf(classpageUnitOffSet), new SimpleAsyncCallback<ClasspageListDo>() {
 
 				@Override
@@ -919,6 +920,7 @@ IsCollectionAssign {
 	}
 	
 	public void getAllClasspagesUnit(String limit,String offset){
+		System.out.println("offsetgetgetAllClasspagesUnit::"+String.valueOf(classpageUnitOffSet));
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, limit, String.valueOf(classpageUnitOffSet), new SimpleAsyncCallback<ClasspageListDo>() {
 
 			@Override
