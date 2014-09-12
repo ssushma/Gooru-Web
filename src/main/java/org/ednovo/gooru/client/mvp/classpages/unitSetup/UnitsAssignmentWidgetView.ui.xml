@@ -11,7 +11,7 @@
 					<g:Label styleName="{style.unitName}" ui:field="lblUnitName"></g:Label>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{style.detailsBtn}">
-					<g:Anchor>Details</g:Anchor>
+					<g:Anchor ui:field="unitDetailsButton">Details</g:Anchor>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel ui:field="assignmentsContainer" styleName="{style.classDetailsMain}">
