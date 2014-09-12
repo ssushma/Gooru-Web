@@ -652,7 +652,8 @@ display:inline-block;
 	max-height:86px;
 	background-color: #f9f9f9;
 	width: 70px;
-	margin-left: 26px;
+	margin-left: 0px;
+	position: absolute !important;
 	
 }
 .dropdownListContainer{
@@ -676,9 +677,16 @@ display:inline-block;
 	cursor: pointer;
 }
 .dropdownPosition {
-	display: inline-block;
+	display: inline;
+	margin-right:20px;
 }
 
 .dropdownPositionAss {
-	display: inline-block;
+	display: inline;
 }
+.dropdownListPlaceHolderMain
+{
+	position:relative;
+	display: inline;
+}
+
