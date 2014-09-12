@@ -2,6 +2,7 @@ package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 
 
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
@@ -30,11 +31,11 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	@UiField Label lblUnitName,lblUnitNumber;
 	
-	CollectionDo collectionDo;
+	ClassUnitsListDo collectionDo;
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	public UnitsAssignmentWidgetView(CollectionDo collectionDo){
+	public UnitsAssignmentWidgetView(ClassUnitsListDo collectionDo){
 		initWidget(uibinder.createAndBindUi(this));
 		this.collectionDo=collectionDo;
 		setAssignmentsForUnit();
@@ -50,8 +51,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 			String url = " ";
 			int itemSequence = 0;
 			if(collectionDo!=null && collectionDo.getResource()!=null ){
-				System.out.println("fistlevel");
-				itemSequence=collectionDo.getResource().getCollectionItems().get(i).getItemSequence();
+				itemSequence=collectionDo.getResource().getCollectionItems().get(i).getSequenceNumber();
 				System.out.println("itemSequence::"+itemSequence);
 				if(collectionDo.getResource().getCollectionItems().get(i).getResource()!=null){
 					System.out.println("secondlevel");

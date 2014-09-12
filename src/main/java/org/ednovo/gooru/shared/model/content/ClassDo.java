@@ -24,37 +24,29 @@
  ******************************************************************************/
 package org.ednovo.gooru.shared.model.content;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-public class ClassDo extends ResourceDo {
+public class ClassDo implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3223243025838735212L;
-	private List<CollectionDo> searchResults;
+	
+	
+	private ArrayList<ClassUnitsListDo> searchResults;
 	
 	private Integer totalHitCount;
 	
 	public ClassDo(){}
 
-	/**
-	 * @return the searchResults
-	 */
-	public List<CollectionDo> getSearchResults() {
-		return searchResults;
-	}
 
-	/**
-	 * @param searchResults the searchResults to set
-	 */
-	public void setSearchResults(List<CollectionDo> searchResults) {
-		this.searchResults = searchResults;
-	}
 
 	/**
 	 * @return the totalHitCount
@@ -68,6 +60,18 @@ public class ClassDo extends ResourceDo {
 	 */
 	public void setTotalHitCount(Integer totalHitCount) {
 		this.totalHitCount = totalHitCount;
+	}
+
+
+
+	public ArrayList<ClassUnitsListDo> getSearchResults() {
+		return searchResults;
+	}
+
+
+
+	public void setSearchResults(ArrayList<ClassUnitsListDo> searchResults) {
+		this.searchResults = searchResults;
 	}
 	
 	/** 
