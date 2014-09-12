@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="style" src="unitsetup.css" />
 	<g:HTMLPanel styleName="{style.classMenuBlock} pathwayContainer">
 		<g:HTMLPanel styleName="{style.classSetupMenu} {style.HoverSetup}">
@@ -11,13 +11,17 @@
 					<g:Label styleName="{style.unitName}" ui:field="lblUnitName"></g:Label>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{style.detailsBtn}">
-					<g:Anchor>Details</g:Anchor>
+					<g:Anchor ui:field="unitDetailsButton">Details</g:Anchor>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
-			<g:HTMLPanel ui:field="assignmentsContainer" styleName="{style.classDetailsMain}">
-			    <g:HTMLPanel styleName="{style.assignmentsNextArrow}">
+			<g:HTMLPanel styleName="{style.classDetailsMain}">
+			    <uc:HTMLEventPanel styleName="{style.assignmentsNextArrow}" ui:field="htPanelPreviousArrow">
+					<g:Image url="images/leftSmallarrow.png"></g:Image>
+				</uc:HTMLEventPanel>
+			    <g:HTMLPanel ui:field="assignmentsContainer"></g:HTMLPanel>
+			    <uc:HTMLEventPanel styleName="{style.assignmentsNextArrow}" ui:field="htPanelNextArrow">
 					<g:Image url="images/rightSmallarrow.png"></g:Image>
-				</g:HTMLPanel>
+				</uc:HTMLEventPanel>
 			</g:HTMLPanel>
 				
 			<g:HTMLPanel styleName="{style.classButtons}">

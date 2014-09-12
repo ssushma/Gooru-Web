@@ -61,6 +61,7 @@ import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.BitlyUrlDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
@@ -1551,7 +1552,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}
 
 	@Override
-	public ArrayList<CollectionItemDo> v2GetPathwayItems(String classpageId, String pathwayGooruOid,String sequenceNo,int limit,int offSet)
+	public UnitAssignmentsDo v2GetPathwayItems(String classpageId, String pathwayGooruOid,String sequenceNo,int limit,int offSet)
 			throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
@@ -1578,32 +1579,18 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		
 	}	
 
-	public ArrayList<CollectionItemDo> deserializePathwayItem(JsonRepresentation jsonRep) {
+	public UnitAssignmentsDo deserializePathwayItem(JsonRepresentation jsonRep) {
 		
 		
-		ArrayList<CollectionItemDo> pathwayItemList = new ArrayList<CollectionItemDo>();
-		try {
-			if(jsonRep!=null&&jsonRep.getJsonObject()!=null){
-				JSONObject pathwayJsonObject=jsonRep.getJsonObject();
-			
-		if(pathwayJsonObject!=null){
-			JSONArray pathwayItemsArray=pathwayJsonObject.getJSONArray(SEARCHRESULTS);
-			int totalHitCount=pathwayJsonObject.getInt(TOTALHITCOUNT);
-			if(pathwayItemsArray!=null&&pathwayItemsArray.length()>0){
-				for(int i=0;i<pathwayItemsArray.length();i++){
-					JSONObject pathWayItemJsonObject=pathwayItemsArray.getJSONObject(i);
-					CollectionItemDo collectionItemDo=new CollectionItemDo();
-					collectionItemDo.setItemSequence(pathWayItemJsonObject.getInt("itemSequence"));
-					collectionItemDo.setTotalHitCount(totalHitCount);
-					pathwayItemList.add(collectionItemDo);
-				}
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				UnitAssignmentsDo unitAssignmentsDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UnitAssignmentsDo.class);				
+				return unitAssignmentsDo;
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
 		}
-		}
-		}
-		catch(Exception ex){ex.printStackTrace();}
-		 return pathwayItemList;
-		
+		return new UnitAssignmentsDo();
 	}
 	
 		

@@ -24,9 +24,16 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 public class AssignmentEditView extends Composite{
 
@@ -38,9 +45,57 @@ public class AssignmentEditView extends Composite{
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	ClassUnitsListDo classUnitsDo;
+	
+	public @UiField Label deleteAssignmentLbl,assignmentReorderLbl;
 
-	public AssignmentEditView(){
-		initWidget(uiBinder.createAndBindUi(this));		
+	public String assignmentId=null;
+
+
+	public AssignmentEditView(ClassUnitsListDo classUnitsDo){ 
+		initWidget(uiBinder.createAndBindUi(this));	
+		this.classUnitsDo = classUnitsDo;
 	}
 	
+
+	/**
+	 * @return the assignmentReorderLbl
+	 */
+	public Label getAssignmentReorderLbl() {
+		return assignmentReorderLbl;
+	}
+
+
+	/**
+	 * @param assignmentReorderLbl the assignmentReorderLbl to set
+	 */
+	public void setAssignmentReorderLbl(Label assignmentReorderLbl) {
+		this.assignmentReorderLbl = assignmentReorderLbl;
+	}
+	
+	
+	/**
+	 * @return the deleteAssignmentLbl
+	 */
+	public Label getDeleteAssignmentLbl() {
+		return deleteAssignmentLbl;
+	}
+
+	
+	
+	/**
+	 * @return the assignmentId
+	 */
+	public String getAssignmentId() {
+		return assignmentId;
+	}
+
+
+	/**
+	 * @param assignmentId the assignmentId to set
+	 */
+	public void setAssignmentId(String assignmentId) {
+		this.assignmentId = assignmentId;
+	}
 }

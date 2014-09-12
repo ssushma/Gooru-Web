@@ -26,6 +26,7 @@ public class ClasspageItemDo implements Serializable{
 	private String status;
 	private Integer sequenceNumber;
 	private Boolean isRequired;
+	private Integer itemSequence;
 	
 	private ResourceDo resource;
 	
@@ -188,6 +189,12 @@ public class ClasspageItemDo implements Serializable{
 	 */
 	public void setResource(ResourceDo resource) {
 		this.resource = resource;
+	}
+	public Integer getItemSequence() {
+		return itemSequence;
+	}
+	public void setItemSequence(Integer itemSequence) {
+		this.itemSequence = itemSequence;
 	}
 
 }

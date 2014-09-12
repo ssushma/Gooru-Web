@@ -1,21 +1,39 @@
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 
 
+import java.util.Iterator;
+
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.WaitPopupVc;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class UnitsAssignmentWidgetView extends Composite {
 	
@@ -31,35 +49,37 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	@UiField Label lblUnitName,lblUnitNumber;
 	
-	ClassUnitsListDo collectionDo;
+	@UiField HTMLEventPanel htPanelNextArrow,htPanelPreviousArrow;
+	@UiField Anchor unitDetailsButton;
+	
+	ClassUnitsListDo classUnitsDo;
+	
+	private int assignmentOffset=10;
+	private int assignmentLimit=10;
+	
+	boolean isDeleted=false;
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	public UnitsAssignmentWidgetView(ClassUnitsListDo collectionDo){
+	public UnitsAssignmentWidgetView(ClassUnitsListDo classUnitsDo){
 		initWidget(uibinder.createAndBindUi(this));
-		this.collectionDo=collectionDo;
+		this.classUnitsDo=classUnitsDo;
 		setAssignmentsForUnit();
 		setUnitNameDetails();
 		cancelEditButton.setVisible(false);
 		editUnitButton.addClickHandler(new EditAssignmentEvent());
 		cancelEditButton.addClickHandler(new CancelEditEvent());
+		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid()));
 	}
 
 	private void setAssignmentsForUnit() {
 		assignmentsContainer.clear();
-		for(int i=0;i<collectionDo.getResource().getCollectionItems().size();i++){
-			String url = " ";
-			int itemSequence = 0;
-			if(collectionDo!=null && collectionDo.getResource()!=null ){
-				itemSequence=collectionDo.getResource().getCollectionItems().get(i).getSequenceNumber();
-				System.out.println("itemSequence::"+itemSequence);
-				if(collectionDo.getResource().getCollectionItems().get(i).getResource()!=null){
-					System.out.println("secondlevel");
-					url=collectionDo.getResource().getCollectionItems().get(i).getResource().getThumbnails().getUrl()!=null?collectionDo.getResource().getCollectionItems().get(i).getResource().getThumbnails().getUrl():null;
-				   System.out.println("url::"+url);
-				}
+
+		if(classUnitsDo!=null){
+			for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
+				ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
+				assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo));
 			}
-			assignmentsContainer.add(new AssignmentsContainerWidget(itemSequence,url," "));
 		}
 	}
 	
@@ -68,11 +88,71 @@ public class UnitsAssignmentWidgetView extends Composite {
 		public void onClick(ClickEvent event) {
 			hideEditButton(true);
 			assignmentsContainer.clear();
-			for(int i=0;i<9;i++){
-				assignmentsContainer.add(new AssignmentEditView());
+			for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
+				AssignmentEditView assignmentEditView = new AssignmentEditView(classUnitsDo);
+				assignmentEditView.getDeleteAssignmentLbl().addClickHandler(new DeleteAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
+				assignmentEditView.getAssignmentReorderLbl().addClickHandler(new ReorderAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId())); 
+				assignmentEditView.setAssignmentId(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId());
+				
+				assignmentsContainer.add(assignmentEditView);
 			}
 		}
 	}
+	
+	
+	public class DeleteAssignment implements ClickHandler{
+		String collectionItemId=null;
+		
+		public DeleteAssignment(String collectionItemId) {
+			this.collectionItemId = collectionItemId;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			final WaitPopupVc popupVc = new WaitPopupVc(i18n.GL1387(),i18n.GL1388()) { 
+				@Override
+				public void onTextConfirmed() {
+					AppClientFactory.getInjector().getClasspageService().deleteClassPageItem(collectionItemId, new SimpleAsyncCallback<String>() {
+						@Override
+						public void onSuccess(String result) {
+							if(result.equals("200")){
+								boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItemId);
+								if(isAssignmentDeleted){
+									hide();
+//									getPathWayItems();
+								}
+							}
+						}
+					});
+				}
+			};
+		}
+
+	}
+	
+	
+	
+	public void getPathWayItems() {
+		
+	}
+	
+	
+	
+	public class ReorderAssignment implements ClickHandler{
+
+		String collectionItem;
+		
+		public ReorderAssignment(String collectionItem){
+			this.collectionItem = collectionItem;
+		}
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			System.out.println("--- in order --");
+		}
+		
+	}
+	
 	
 	public class CancelEditEvent implements ClickHandler{
 		@Override
@@ -81,6 +161,34 @@ public class UnitsAssignmentWidgetView extends Composite {
 			setAssignmentsForUnit();
 		}
 	}
+	
+	public class UnitChangeEvent implements ClickHandler{
+		private String unitGooruOid;
+		public UnitChangeEvent(String unitGooruOid){
+			this.unitGooruOid=unitGooruOid;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			revealPlace("unitdetails",null,unitGooruOid);
+		}
+	}
+	
+	 public void revealPlace(String tabName,String pageNum,String unitId){
+			Map<String,String> params = new HashMap<String,String>();
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			params.put("classpageid", classpageid);
+			if(pageNum!=null){
+				params.put("pageNum", pageNum);
+			}
+			if(tabName!=null){
+				params.put("tab", tabName);
+			}
+			if(unitId!=null){
+				params.put("uid", unitId);
+			}
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+	 }
 	
 	public void hideEditButton(boolean hide){
 		if(hide){
@@ -92,11 +200,49 @@ public class UnitsAssignmentWidgetView extends Composite {
 		cancelEditButton.setVisible(hide);
 	}
 	
+	public boolean deleteAssignmentWidget(String collectionItemId) { 
+		Iterator<Widget> assignmentContainerWidget = assignmentsContainer.iterator();
+		while(assignmentContainerWidget.hasNext()){
+			Widget widget = assignmentContainerWidget.next();
+			if(widget instanceof AssignmentEditView){
+				if(((AssignmentEditView) widget).getAssignmentId().equals(collectionItemId)){
+					widget.removeFromParent();
+					isDeleted = true;
+				}
+			}
+		}
+		return isDeleted;
+	}
+
 	private void setUnitNameDetails() {
-			int number=collectionDo.getItemSequence();
+			int number=classUnitsDo.getItemSequence();
 			String sequenceNumber=Integer.toString(number);
-			lblUnitName.setText(collectionDo.getResource().getTitle());
+			lblUnitName.setText(classUnitsDo.getResource().getTitle());
 			lblUnitNumber.setText(sequenceNumber);
 	}
+	
+	@UiHandler("htPanelNextArrow")
+	public void clickOnNextArrow(ClickEvent clickEvent){
+		getUnitAssignments();
+	}
+	
+	
+	@UiHandler("htPanelPreviousArrow")
+	public void clickOnPreviousArrow(ClickEvent clickEvent){
+		getUnitAssignments();
+	}
+	
+	public void getUnitAssignments(){
+		String classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classPageId, classUnitsDo.getResource().getGooruOid(), "", assignmentLimit, assignmentOffset, new SimpleAsyncCallback<UnitAssignmentsDo>() {
+
+			@Override
+			public void onSuccess(UnitAssignmentsDo result) {
+				// TODO Auto-generated method stub
+				
+			}
+		}); 
+	}
+
 
 }

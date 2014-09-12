@@ -51,7 +51,6 @@ public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> impleme
 
 				@Override
 				public void onSuccess(ClassDo result) {
-					System.out.println("getPathwayCompleteDetails:");
 					getView().showUnitDetails(result);
 					if(result.getSearchResults().size()>0){
 						String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);

@@ -97,12 +97,10 @@ public class PersonalizeUnitPresenter extends
 
 	@Override
 	public void getStudentsList(int offSet, int limit, String type, String classCode){
-		System.out.println("getStudentsList .... : "+classCode);
 		getClasspageService().getActiveAssociatedStudentListByCode(classCode, offSet, limit, type, getStudentAssociatedListDo());		
 	}
 	@Override
 	public void getList(){
-		System.out.println("getList ....");
 		getStudentsList(0, 20, "active", classpageDo.getClasspageCode());
 	}
 
