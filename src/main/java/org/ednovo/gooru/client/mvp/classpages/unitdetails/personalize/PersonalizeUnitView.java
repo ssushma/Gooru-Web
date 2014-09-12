@@ -24,9 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.AssignmentGoal.AssignmentGoalView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 
 import com.google.gwt.core.client.GWT;
@@ -59,6 +62,8 @@ public class PersonalizeUnitView extends
 			.create(PersonalizeUnitViewUiBinder.class);	
 	
 	@UiField HTMLPanel panelPersonalizeContainer;
+	
+	ArrayList<CollectionItemDo> goalsList = null;
 
 	interface PersonalizeUnitViewUiBinder extends
 			UiBinder<Widget, PersonalizeUnitView> {
@@ -69,6 +74,10 @@ public class PersonalizeUnitView extends
 
 	public PersonalizeUnitView() {
 		setWidget(uiBinder.createAndBindUi(this));		
+	}
+	
+	public void setGoalsList(ArrayList<CollectionItemDo> goalsList){
+		this.goalsList = goalsList;
 	}
 
 	@Override
