@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -65,6 +66,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresenter> implements IsClassSetupUnitView{
 
 
@@ -121,14 +123,14 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 				moveAssignmentPopup.getElement().getStyle().setDisplay(Display.BLOCK);
 			}
 		});
-		btnReorder.addMouseOutHandler(new MouseOutHandler() {
+		/*btnReorder.addMouseOutHandler(new MouseOutHandler() {
 			
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
 				// TODO Auto-generated method stub
 				moveAssignmentPopup.getElement().getStyle().setDisplay(Display.NONE);
 			}
-		});
+		});*/
 		resourceCategoryLabel.setText(String.valueOf(sequenceNum));
 		resoureDropDownLbl.addClickHandler(new ClickHandler() {
 			
@@ -148,7 +150,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 		
 		
 		for (int i=0; i<totalhitCounter; i++){
-			resourceTypePanel.add(createLabel(""+(i+1),collectionItemId));
+			resourceTypePanel.add(createLabel(""+(i+1),collectionItemId,totalhitCounter));
 		}
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
@@ -256,7 +258,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 	
 	public abstract void saveItem(String pathwayTitle, String pathwayId);
 	
-	public Label createLabel(String title,final String pathwayId){
+	public Label createLabel(String title,final String pathwayId,final int totalhitCounter){
 		Label lblLabel = new Label();
 		lblLabel.setText(title);
 		/*lblLabel.getElement().addClassName(res.css().myFolderCollectionFolderDropdown());
@@ -268,19 +270,49 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				Label lbl = (Label)event.getSource();
+				final Label lbl = (Label)event.getSource();
 				resourceCategoryLabel.setText(lbl.getText());
 				resourceCategoryLabel.getElement().setAttribute("alt",lbl.getText());
 				resourceCategoryLabel.getElement().setAttribute("title",lbl.getText());
 				System.out.println("pathwayId in click handler:::"+pathwayId);
 				System.out.println("clicked element in click handler:::"+lbl.getText());
+				System.out.println("totalhitCounterin click handler outside :::"+totalhitCounter);
 				AppClientFactory.getInjector().getClasspageService().reOrderPathwaysInaClass(pathwayId, Integer.parseInt(lbl.getText()), new SimpleAsyncCallback<ClasspageListDo>() {
 
 					@Override
 					public void onSuccess(ClasspageListDo result) {
+						resourceTypePanel.setVisible(resourceTypePanel.isVisible() ? false : true);
 						// TODO Auto-generated method stub
+						System.out.println("totalhitCounterin click handler after API Sucess:::"+totalhitCounter);
+
+						
+						redirectToPage(totalhitCounter);
+					}
+
+					private void redirectToPage(int totalhitCounter) {
+							if(totalhitCounter>=5){
+								
+							/*	int numberOfPages = (totalhitCounter / 5)
+										+ ((totalhitCounter % 5) > 0 ? 1 : 0);*/
+							int clickedNumber =	Integer.parseInt(lbl.getText());
+								int redirectedPageNumber = (clickedNumber / 5)
+										+((clickedNumber % 5) >0 ?1 : 0);
+								System.out.println(" redirect to page::::"+redirectedPageNumber);
+								Map<String,String> params = new HashMap<String,String>();
+								String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+								String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+								String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+								String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+								params.put("pageSize", pageSize);
+								params.put("classpageid", classpageid);
+								params.put("pageNum", redirectedPageNumber+"");
+								params.put("pos", pos);
+								PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+								AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+							}
 						
 					}
+
 				});
 			}
 
