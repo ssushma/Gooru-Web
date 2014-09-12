@@ -46,7 +46,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	String classpageId="";
 	String pathwayId="";
 	
-	int limit = 10;
+	int limit = 5;
 	
 	private UnitSetupPresenter unitSetupPresenter;
 	
@@ -68,7 +68,10 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		if(pageNum != null)
 		{
 			offsetVal = Integer.parseInt(pageNum);
+			if(offsetVal!=0)
+			{	
 			offsetVal = (offsetVal-1);
+			}
 		}
 		getPaginatedPathways((offsetVal)*limit);
 	}
@@ -103,7 +106,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		
 		if(classpageid != null)
 		{
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "10", "0", new SimpleAsyncCallback<ClasspageListDo>() {
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "5", "0", new SimpleAsyncCallback<ClasspageListDo>() {
 			@Override
 			public void onSuccess(ClasspageListDo classpageItemDo) {
 				if(classpageItemDo.getSearchResults().size()>0)
@@ -140,7 +143,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 
 		if(classpageid != null)
 		{
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "10", offsetVal+"", new SimpleAsyncCallback<ClasspageListDo>() {
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "5", offsetVal+"", new SimpleAsyncCallback<ClasspageListDo>() {
 			@Override
 			public void onSuccess(ClasspageListDo classpageItemDo) {
 				if(classpageItemDo.getSearchResults().size()>0)

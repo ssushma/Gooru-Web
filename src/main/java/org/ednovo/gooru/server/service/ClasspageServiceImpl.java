@@ -1610,7 +1610,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonRepresentation jsonRep = null;
 		if(limit == null)
 		{
-			limit ="10";
+			limit ="5";
 		}
 		if(offSet == null)
 		{
@@ -1631,7 +1631,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonRepresentation jsonRep = null;
 		if(limit == null)
 		{
-			limit ="10";
+			limit ="5";
 		}
 		if(offSet == null)
 		{

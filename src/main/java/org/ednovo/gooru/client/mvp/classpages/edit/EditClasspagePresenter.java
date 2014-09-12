@@ -280,7 +280,10 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			if(pageNum != null)
 			{
 				offsetVal = Integer.parseInt(pageNum);
+				if(offsetVal!=0)
+				{
 				offsetVal = (offsetVal-1);
+				}
 			}
 			unitSetupPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
 			//getClasspage();
