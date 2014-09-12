@@ -100,7 +100,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	public void getPathways(){
 		getView().clearPanel();
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-
+		
 		if(classpageid != null)
 		{
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "10", "0", new SimpleAsyncCallback<ClasspageListDo>() {

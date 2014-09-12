@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
 
+import java.util.Iterator;
+
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -70,7 +72,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class CollectionsView extends ChildView<CollectionsPresenter> implements IsCollectionsView{
 	
-	@UiField HTMLPanel thumbnailContainer,directionContentPanel,minimumScoreContentPanel;
+	@UiField HTMLPanel thumbnailContainer,directionContentPanel,minimumScoreContentPanel,dueDateContentPanel;
 	
 	@UiField HTML learningObject;
 	
@@ -108,6 +110,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		showSaveButtons(false);
 		changeAssignmentStatusView.getChangeAssignmentStatusButton().addClickHandler(new ChangeStatusEvent());
 		editAssignmentDetailsButton.addClickHandler(new EditAssignmentEvent());
+		dueDateButton.addClickHandler(new EditDueDateEvent());
 		setDirection("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor turpis id nisl iaculis, sit amet convallis nibh dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor turpis id nisl iaculis, sit amet convallis nibh dapibus.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor turpis id nisl iaculis, sit amet convallis nibh dapibus.");
 		setMinimumScore("85");
 	}
@@ -211,7 +214,10 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		TextBox mimimunScoreTextBox=new TextBox();
 		mimimunScoreTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
 		mimimunScoreTextBox.setText(minimumScore);
+		InlineLabel percentageLabel=new InlineLabel("%");
+		percentageLabel.setStyleName("");
 		minimumScoreContentPanel.add(mimimunScoreTextBox);
+		minimumScoreContentPanel.add(percentageLabel);
 	}
 	
 	public void editSuggestedTime(String suggestedHour, String suggestedMinutes){
@@ -289,12 +295,55 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			}
 		}
 	}
-
+	
 	public void showSaveButtons(boolean buttonVisibility){
 		editAssignmentDetailsButton.setVisible(!buttonVisibility);
 		cancelAssignmentDetailsButton.setVisible(buttonVisibility);
 		saveAssignmentDetailsButton.setVisible(buttonVisibility);
 	}
 	
+	private class EditDueDateEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			showEditDueDateView();
+		}
+	}
+	
+	public void showEditDueDateView(){
+		showDueDatePanel(false);
+		EditToolBarView editToolBarView=new EditToolBarView(true);
+		editToolBarView.dueDateText.add(new Label(i18n.GL1390()));
+		editToolBarView.dueDateText.setStyleName(CollectionsCBundle.INSTANCE.css().dueDataIcon());
+		editToolBarView.cancelButton.addClickHandler(new ResetEditContentEvent());
+		editToolBarView.saveButton.addClickHandler(new UpdateEditedDueDateEvent());
+		dueDateContentPanel.add(editToolBarView);
+	}
+	private void showDueDatePanel(boolean visible){
+		dueDateText.setVisible(visible);
+		dueDateButton.setVisible(visible);
+	}
+	private class ResetEditContentEvent implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			removeEditDueDatePanel();
+			showDueDatePanel(true);
+		}
+	}
+	private class UpdateEditedDueDateEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			Window.alert("MEN IN WORK..");
+		}
+	}
+	private void removeEditDueDatePanel(){
+		Iterator<Widget> iterator= dueDateContentPanel.iterator();
+		while(iterator.hasNext()){
+			Widget widget=iterator.next();
+			if(widget instanceof EditToolBarView){
+				widget.removeFromParent();
+			}
+		}
+	}
 	
 }

@@ -22,7 +22,6 @@
 }
 .dueDataIcon{
 	display: inline-block;
-	vertical-align: top;
 	background: url(images/Classpage/calendar.png) no-repeat;
 	padding-left: 21px;
 	height: 18px;
