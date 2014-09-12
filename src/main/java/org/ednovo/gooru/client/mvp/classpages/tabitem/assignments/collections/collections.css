@@ -359,9 +359,14 @@
 	border:none !important;
 }
 .dueDateText{
-	margin-top: 6px;
-	vertical-align: top;
 	display: inline-block;
+	background: url(images/Classpage/calendar.png) no-repeat;
+	padding-left: 21px;
+	height: 18px;
+	vertical-align: bottom;
+	/* margin-top: 6px;
+	vertical-align: top;
+	display: inline-block; */
 }
 .dueDateIcon{
 	background: url("images/date-ico.png") no-repeat;
@@ -369,6 +374,10 @@
 	height: 21px;
 	display: inline-block;
 	vertical-align: top;
+}
+.dueDateIcon:hover{
+	opacity:0.6;
+	cursor: pointer;
 }
 .directionContainer{
 	width:100%;
@@ -410,4 +419,44 @@
 .classpageDesc {
 	color: rgb(81,81,81);
 }
+.classpageHeader{
+	position: relative;
+}
+.headerLeft{
+	display: inline-block;
+	vertical-align: top;
+	margin-top: -6px;
+	margin-left: 10px;
+}
+.dueDataIcon{
+	display: inline-block;
+	vertical-align: top;
+	background: url(images/Classpage/calendar.png) no-repeat;
+	padding-left: 21px;
+	height: 18px;
+}
+.headerText{
+	
+}
+.headerDatePicker{
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 5px;
+	margin-left: 5px;
+	margin-top: 2px;
+}
+.headerDatePicker > div{
+	width:200px !important;
+}
+.headerDatePicker > div > input{
+	width:164px !important;
+}
 
+.cancelButton{
+	margin-left: 5px;
+}
+.savingText{
+	margin-top: 8px;
+font-style: italic;
+color: #999;
+}
