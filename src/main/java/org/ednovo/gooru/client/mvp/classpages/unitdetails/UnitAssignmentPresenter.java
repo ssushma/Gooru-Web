@@ -97,8 +97,8 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 					if(unitId==null){
-						System.out.println("unit id==>"+classId+"====>"+classDo.getSearchResults().get(0).getGooruOid());
-						getPathwayItems(classId,classDo.getSearchResults().get(0).getGooruOid(),"",assignmentOffset,assignmentLimit);
+						//System.out.println("unit id==>"+classId+"====>"+classDo.getSearchResults().get(0).);
+						getPathwayItems(classId,classDo.getSearchResults().get(0).getCollectionItemId(),"",assignmentOffset,assignmentLimit);
 					}
 				}
 			}
