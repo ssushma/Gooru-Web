@@ -53,6 +53,6 @@ public interface UnitAssignmentUiHandlers extends BaseUiHandlers{
 
 	void getPathwayItems(String classpageId, String pathwayGooruOid,String sequenceNo,int limit,int offSet);
 
-	void getPathwayUnits(int limit, int offset);
+	void getPathwayUnits(String classId,int limit, int offset,boolean clearPanel);
 
 }

@@ -68,7 +68,10 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		if(pageNum != null)
 		{
 			offsetVal = Integer.parseInt(pageNum);
+			if(offsetVal!=0)
+			{	
 			offsetVal = (offsetVal-1);
+			}
 		}
 		getPaginatedPathways((offsetVal)*limit);
 	}
@@ -100,7 +103,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	public void getPathways(){
 		getView().clearPanel();
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-
+		
 		if(classpageid != null)
 		{
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "10", "0", new SimpleAsyncCallback<ClasspageListDo>() {
