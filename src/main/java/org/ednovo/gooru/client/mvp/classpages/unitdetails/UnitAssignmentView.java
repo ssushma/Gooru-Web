@@ -76,13 +76,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@UiField HTMLPanel unitPanel;
 	
-	@UiField Label lblMoreUnits;
+	@UiField Label lblMoreUnits,unitTitleDetails;
 	
 	@UiField Anchor unitSetupButton;
 	
 	UnitAssignmentCssBundle res;
 	
-	ClasspageListDo classpageListDo;
+	ClassDo classDo;
 	
 	private int limit = 5;
 	private int offSet = 0;
@@ -129,7 +129,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void getPathwayItems(){
 		leftArrow.setVisible(false);
 		classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-		getUiHandlers().getPathwayItems(classpageid, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, limit_circle, totalAssignmencount);
+			getUiHandlers().getPathwayItems(classpageid, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, limit_circle, totalAssignmencount);
 	}
 	
 	
@@ -168,14 +168,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		optionalLabel.setText("Optional");
 		rightArrow.getElement().setAttribute("style", "cursor:pointer");
 		leftArrow.getElement().setAttribute("style", "cursor:pointer");
-		Event.addNativePreviewHandler(new NativePreviewHandler() {
-	        public void onPreviewNativeEvent(NativePreviewEvent event) {
-	        	hidePopup(event);
-	          }
-	    });
 		
-		
-			if(itemSequence!=null &&itemSequence.size()!=0){
+		if(itemSequence!=null &&itemSequence.size()!=0){
 				totalAssignmentHitcount = itemSequence.get(0).getTotalHitCount();
 					try{
 						if(leftHandler!=null) {
@@ -201,13 +195,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
 					
 				}
-				
-				if(totalAssignmencount==totalAssignmentHitcount)
-				{
-					rightArrow.setVisible(false);
-				}else{
-					rightArrow.setVisible(true);	
-				}
 				if(totalAssignmentHitcount<10)
 				{
 					rightArrow.setVisible(false);
@@ -216,6 +203,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				
 				rightArrow.setUrl("images/rightSmallarrow.png");
 				circleContainerPanel.add(rightArrow);
+				Event.addNativePreviewHandler(new NativePreviewHandler() {
+			        public void onPreviewNativeEvent(NativePreviewEvent event) {
+			        	hidePopup(event);
+			          }
+			    });
 							
 			}else
 		{
@@ -298,7 +290,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public class UnitSeqMouseOverHandler implements MouseOverHandler{
 	@Override
 		public void onMouseOver(MouseOverEvent event) {
-			unitAssigmentReorder = new UnitAssigmentReorder(classpageListDo,assignmentItemSeq,classpageid);
+			unitAssigmentReorder = new UnitAssigmentReorder(classDo,assignmentItemSeq,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null));
 			unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop()+40);
 			unitAssigmentReorder.show();
 			}
@@ -318,19 +310,25 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private boolean eventTargetsPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
+			try{
 			return unitAssigmentReorder.getElement().isOrHasChild(Element.as(target));
+			}catch(Exception ex){}
 		}
 		return false;
 	}
 	@Override
 	public void showUnitNames(ClassDo classDo,boolean clearPanel) {
+		this.classDo = classDo;
+		
 		if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 			ArrayList<ClassUnitsListDo> classListUnitsListDo =classDo.getSearchResults();
 			for(int i=0; i<classListUnitsListDo.size(); i++){
+				unitTitleDetails.setText(classDo.getSearchResults().get(0).getResource().getTitle());
 				UnitWidget unitsWidget=new UnitWidget(classListUnitsListDo.get(i));
 				unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget));
 				unitPanel.add(unitsWidget);
 			}
+
 		}
 	}
 
