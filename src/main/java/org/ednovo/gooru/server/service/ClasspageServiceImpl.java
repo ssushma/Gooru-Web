@@ -48,8 +48,8 @@ import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
-import org.ednovo.gooru.shared.model.content.ClassSetupDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -475,18 +475,22 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeClasspageList(jsonRep);
 	}
+	public ClassDo deserializeClassDo(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				ClassDo classpageList = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ClassDo.class);				
+				return classpageList;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return new ClassDo();
+	}
+	
 	public ClasspageListDo deserializeClasspageList(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
 				ClasspageListDo classpageList = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ClasspageListDo.class);				
-//				List<CollectionDo> collectionDo = classpageList.getSearchResults();
-//				for (int i=0; i<collectionDo.size();i++){
-//					long milliseconds = Long.parseLong(collectionDo.get(i).getTrackActivity().getEndTime());
-//					SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-//					Date resultdate = new Date(milliseconds);
-//					collectionDo.get(i).getTrackActivity().setEndTime(sdf.format(resultdate));
-//				}
-				
 				return classpageList;
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -1605,15 +1609,14 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		
 		
 	@Override
-	public ClasspageListDo v2GetPathwaysOptimized(String classpageId, String limit, String offSet) throws GwtException {
+	public ClassDo v2GetPathwaysOptimized(String classpageId, String limit, String offSet) throws GwtException {
 
 		JsonRepresentation jsonRep = null;
 		if(limit == null)
 		{
-			limit ="10";
+			limit ="5";
 		}
-		if(offSet == null)
-		{
+		if(offSet == null){
 			offSet = "0";
 		}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
@@ -1622,19 +1625,16 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
-		return deserializeClasspageList(jsonRep);
+		return deserializeClassDo(jsonRep);
 	}
 	
 	@Override
-	public ClasspageListDo v2GetPathwaysCompleteDetails(String classpageId, String limit, String offSet) throws GwtException {
-
+	public ClassDo v2GetPathwaysCompleteDetails(String classpageId, String limit, String offSet) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		if(limit == null)
-		{
-			limit ="10";
+		if(limit == null){
+			limit ="5";
 		}
-		if(offSet == null)
-		{
+		if(offSet == null){
 			offSet = "0";
 		}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
@@ -1642,7 +1642,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
-		return deserializeClasspageList(jsonRep);
+		return deserializeClassDo(jsonRep);
 	}
 	
 	

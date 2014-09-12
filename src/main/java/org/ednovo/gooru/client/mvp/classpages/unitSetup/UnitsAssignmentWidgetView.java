@@ -37,17 +37,29 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public UnitsAssignmentWidgetView(CollectionDo collectionDo){
 		initWidget(uibinder.createAndBindUi(this));
 		this.collectionDo=collectionDo;
-		setAssignmentsForUnit(9);
+		setAssignmentsForUnit();
 		setUnitNameDetails();
 		cancelEditButton.setVisible(false);
 		editUnitButton.addClickHandler(new EditAssignmentEvent());
 		cancelEditButton.addClickHandler(new CancelEditEvent());
 	}
 
-	private void setAssignmentsForUnit(int totAssignment) {
+	private void setAssignmentsForUnit() {
 		assignmentsContainer.clear();
-		for(int i=0;i<totAssignment;i++){
-			assignmentsContainer.add(new AssignmentsContainerWidget((i+1),"images/classroomSetupImg.png","25 days"));
+		for(int i=0;i<collectionDo.getResource().getCollectionItems().size();i++){
+			String url = " ";
+			int itemSequence = 0;
+			if(collectionDo!=null && collectionDo.getResource()!=null ){
+				System.out.println("fistlevel");
+				itemSequence=collectionDo.getResource().getCollectionItems().get(i).getItemSequence();
+				System.out.println("itemSequence::"+itemSequence);
+				if(collectionDo.getResource().getCollectionItems().get(i).getResource()!=null){
+					System.out.println("secondlevel");
+					url=collectionDo.getResource().getCollectionItems().get(i).getResource().getThumbnails().getUrl()!=null?collectionDo.getResource().getCollectionItems().get(i).getResource().getThumbnails().getUrl():null;
+				   System.out.println("url::"+url);
+				}
+			}
+			assignmentsContainer.add(new AssignmentsContainerWidget(itemSequence,url,"25 days"));
 		}
 	}
 	
@@ -66,7 +78,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			hideEditButton(false);
-			setAssignmentsForUnit(10);
+			setAssignmentsForUnit();
 		}
 	}
 	
