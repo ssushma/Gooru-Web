@@ -59,7 +59,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 				   System.out.println("url::"+url);
 				}
 			}
-			assignmentsContainer.add(new AssignmentsContainerWidget(itemSequence,url,"25 days"));
+			assignmentsContainer.add(new AssignmentsContainerWidget(itemSequence,url," "));
 		}
 	}
 	
