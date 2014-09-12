@@ -274,6 +274,15 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		}
 		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE) && AppClientFactory.getPlaceManager().refreshPlace()){
 			getView().getGlobalClasspageProcess().clear();
+			System.out.println("INININ");
+			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+			int offsetVal = 0;
+			if(pageNum != null)
+			{
+				offsetVal = Integer.parseInt(pageNum);
+				offsetVal = (offsetVal-1);
+			}
+			unitSetupPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
 			//getClasspage();
 		}
 		
