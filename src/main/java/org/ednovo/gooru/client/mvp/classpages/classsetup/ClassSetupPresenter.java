@@ -103,11 +103,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		
 		if(classpageid != null)
 		{
-<<<<<<< HEAD
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "10", "0", new SimpleAsyncCallback<ClassDo>() {
-=======
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "5", "0", new SimpleAsyncCallback<ClasspageListDo>() {
->>>>>>> ddc23c15b9e54b41c2d5420b593d7b125b86cdb9
 			@Override
 			public void onSuccess(ClassDo classDo) {
 				if(classDo.getSearchResults().size()>0)
@@ -144,11 +140,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 
 		if(classpageid != null)
 		{
-<<<<<<< HEAD
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "10", offsetVal+"", new SimpleAsyncCallback<ClassDo>() {
-=======
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "5", offsetVal+"", new SimpleAsyncCallback<ClasspageListDo>() {
->>>>>>> ddc23c15b9e54b41c2d5420b593d7b125b86cdb9
 			@Override
 			public void onSuccess(ClassDo classDo) {
 				if(classDo.getSearchResults().size()>0){
