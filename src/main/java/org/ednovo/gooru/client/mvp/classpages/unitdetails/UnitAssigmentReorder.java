@@ -9,20 +9,14 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.HasMouseOutHandlers;
-import com.google.gwt.event.dom.client.HasMouseOverHandlers;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -169,24 +163,24 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			selectedPathId = dropdownListPlaceHolder.getElement().getId();
 			new CustomAnimation(dropdownListContainerScrollPanel).run(300);
 			assignmentTotalSize=0;
-			AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, dropdownListPlaceHolder.getElement().getId(), ORDER_BY, assignment_limit, totalAssignmencount, new SimpleAsyncCallback<ArrayList<CollectionItemDo>>() {
+			AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, dropdownListPlaceHolder.getElement().getId(), ORDER_BY, assignment_limit, totalAssignmencount, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 				
 				@Override
-				public void onSuccess(ArrayList<CollectionItemDo> result) {
-					if(result!=null){
-					
-					assignmentTotalCount = result.get(0).getTotalHitCount();
-					assignmentTotalSize = assignmentTotalSize+result.size();
-					dropdownListContainerAssignment.clear();
-					for(int i=0; i<result.size(); i++){
-						
-						int number=result.get(i).getItemSequence();
-						Label dropDownAssignmentListItem=new Label(number+"");
-						dropDownAssignmentListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
-						dropdownListContainerAssignment.add(dropDownAssignmentListItem);
-						dropDownAssignmentListItem.addClickHandler(new OnDropdownAssignmentItemClick(number+""));
-					}
-				}
+				public void onSuccess(UnitAssignmentsDo result) {
+//					if(result!=null){
+//					
+//						assignmentTotalCount = result.get(0).getTotalHitCount();
+//						assignmentTotalSize = assignmentTotalSize+result.size();
+//						dropdownListContainerAssignment.clear();
+//						for(int i=0; i<result.size(); i++){
+//							
+//							int number=result.get(i).getItemSequence();
+//							Label dropDownAssignmentListItem=new Label(number+"");
+//							dropDownAssignmentListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
+//							dropdownListContainerAssignment.add(dropDownAssignmentListItem);
+//							dropDownAssignmentListItem.addClickHandler(new OnDropdownAssignmentItemClick(number+""));
+//						}
+//					}
 				}
 				
 			});
@@ -213,19 +207,19 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		public void onScroll(ScrollEvent event) {
 			if((dropdownListContainerScrollPanelAssignment.getVerticalScrollPosition() == dropdownListContainerScrollPanelAssignment.getMaximumVerticalScrollPosition())&&(assignmentTotalCount>assignmentTotalSize)){
 				
-				AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, assignment_limit, assignmentTotalSize, new SimpleAsyncCallback<ArrayList<CollectionItemDo>>() {
+				AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, assignment_limit, assignmentTotalSize, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 					
 					@Override
-					public void onSuccess(ArrayList<CollectionItemDo> result) {
-						totalAssignmencount=totalAssignmencount+result.size();
-						for(int i=0; i<result.size(); i++){
-							
-							int number=result.get(i).getItemSequence();
-							Label dropDownAssignmentListItem=new Label(number+"");
-							dropDownAssignmentListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
-							dropdownListContainerAssignment.add(dropDownAssignmentListItem);
-							dropDownAssignmentListItem.addClickHandler(new OnDropdownAssignmentItemClick(number+""));
-						}
+					public void onSuccess(UnitAssignmentsDo result) {
+//						totalAssignmencount=totalAssignmencount+result.size();
+//						for(int i=0; i<result.size(); i++){
+//							
+//							int number=result.get(i).getItemSequence();
+//							Label dropDownAssignmentListItem=new Label(number+"");
+//							dropDownAssignmentListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
+//							dropdownListContainerAssignment.add(dropDownAssignmentListItem);
+//							dropDownAssignmentListItem.addClickHandler(new OnDropdownAssignmentItemClick(number+""));
+//						}
 					}
 					
 					

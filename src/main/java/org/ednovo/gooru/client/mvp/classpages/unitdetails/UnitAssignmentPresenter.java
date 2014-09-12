@@ -23,14 +23,12 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
-import java.util.ArrayList;
-
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -62,7 +60,6 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 		String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 		if(unitId!=null&&getView().getCircleContainerPanel().getWidgetCount()<=0){
-			System.out.println("classpageid===="+classId+"====unitId");
 			getPathwayItems(classId,unitId,"",assignmentOffset,assignmentLimit);
 		}
 		if(assignmentId!=null){
@@ -80,10 +77,10 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 
 	@Override
 	public void getPathwayItems(String classpageId, String pathwayGooruOid,String sequence,int limit,int offSet) {
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<ArrayList<CollectionItemDo>>() {
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 			@Override
-			public void onSuccess(ArrayList<CollectionItemDo> result) {
-				getView().getSequence(result);
+			public void onSuccess(UnitAssignmentsDo result) {
+				//getView().getSequence(result);
 			}
 
 		});
@@ -97,8 +94,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 					if(unitId==null){
-						//System.out.println("unit id==>"+classId+"====>"+classDo.getSearchResults().get(0).);
-						getPathwayItems(classId,classDo.getSearchResults().get(0).getResource().getGooruOid(),"",assignmentOffset,assignmentLimit);
+						getPathwayItems(classId,classDo.getSearchResults().get(0).getResource().getGooruOid(),"sequence",assignmentLimit,assignmentOffset);
 					}
 				}
 			}

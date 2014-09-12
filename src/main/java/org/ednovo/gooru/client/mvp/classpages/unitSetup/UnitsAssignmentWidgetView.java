@@ -2,7 +2,10 @@ package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
@@ -17,11 +20,13 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class UnitsAssignmentWidgetView extends Composite {
 	
@@ -38,6 +43,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	@UiField Label lblUnitName,lblUnitNumber;
 	
 	@UiField HTMLEventPanel htPanelNextArrow,htPanelPreviousArrow;
+	@UiField Anchor unitDetailsButton;
 	
 	ClassUnitsListDo classUnitsDo;
 	
@@ -54,6 +60,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		cancelEditButton.setVisible(false);
 		editUnitButton.addClickHandler(new EditAssignmentEvent());
 		cancelEditButton.addClickHandler(new CancelEditEvent());
+		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid()));
 	}
 
 	private void setAssignmentsForUnit() {
@@ -84,6 +91,34 @@ public class UnitsAssignmentWidgetView extends Composite {
 			setAssignmentsForUnit();
 		}
 	}
+	
+	public class UnitChangeEvent implements ClickHandler{
+		private String unitGooruOid;
+		public UnitChangeEvent(String unitGooruOid){
+			this.unitGooruOid=unitGooruOid;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			revealPlace("unitdetails",null,unitGooruOid);
+		}
+	}
+	
+	 public void revealPlace(String tabName,String pageNum,String unitId){
+			Map<String,String> params = new HashMap<String,String>();
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			params.put("classpageid", classpageid);
+			if(pageNum!=null){
+				params.put("pageNum", pageNum);
+			}
+			if(tabName!=null){
+				params.put("tab", tabName);
+			}
+			if(unitId!=null){
+				params.put("uid", unitId);
+			}
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+	 }
 	
 	public void hideEditButton(boolean hide){
 		if(hide){

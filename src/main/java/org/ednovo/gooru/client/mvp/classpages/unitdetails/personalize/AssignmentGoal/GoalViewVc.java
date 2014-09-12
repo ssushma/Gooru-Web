@@ -23,13 +23,13 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.AssignmentGoal;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -39,7 +39,7 @@ public abstract class GoalViewVc extends Composite {
 
 	@UiField Label lblAssignmentNumber;
 	
-	@UiField HTMLPanel panelMembers;
+	@UiField HTMLEventPanel panelMembers;
 	
 	String assignmentNo;
 	
@@ -60,13 +60,7 @@ public abstract class GoalViewVc extends Composite {
 	}
 
 	public void setDebugId() {
-		
-		int value = Integer.parseInt(assignmentNo) % 2;
-		
 		lblAssignmentNumber.setText(assignmentNo);
-		lblAssignmentNumber.setVisible(false);
-		panelMembers.getElement().addClassName(AssignmentGoalCBundle.INSTANCE.css().circleSmall());
-		panelMembers.getElement().addClassName(value ==0 ? AssignmentGoalCBundle.INSTANCE.css().green() : AssignmentGoalCBundle.INSTANCE.css().grey());
 	}
 	
 	private void removeThisFromParent(){		
