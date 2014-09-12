@@ -560,7 +560,6 @@ IsCollectionAssign {
 			//Hide the scroll container
 			spanelClasspagesPanel.setVisible(false);
 			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, limit, String.valueOf(classpageUnitOffSet), new SimpleAsyncCallback<ClassDo>() {
-
 				@Override
 				public void onSuccess(ClassDo result) {
 					htmlClasspagesUnitListContainer.clear();

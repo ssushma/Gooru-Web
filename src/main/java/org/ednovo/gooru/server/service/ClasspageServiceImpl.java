@@ -1612,8 +1612,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ClassDo v2GetPathwaysOptimized(String classpageId, String limit, String offSet) throws GwtException {
 
 		JsonRepresentation jsonRep = null;
-		if(limit == null){
-			limit ="10";
+		if(limit == null)
+		{
+			limit ="5";
 		}
 		if(offSet == null){
 			offSet = "0";
@@ -1631,7 +1632,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ClassDo v2GetPathwaysCompleteDetails(String classpageId, String limit, String offSet) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		if(limit == null){
-			limit ="10";
+			limit ="5";
 		}
 		if(offSet == null){
 			offSet = "0";

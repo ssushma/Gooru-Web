@@ -117,7 +117,6 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		public void onScroll(ScrollEvent event) {
 			if((dropdownListContainerScrollPanel.getVerticalScrollPosition() == dropdownListContainerScrollPanel.getMaximumVerticalScrollPosition())&&(totalCount>totalsize)){
 				AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, Integer.toString(5),  Integer.toString(totalsize), new SimpleAsyncCallback<ClassDo>() {
-
 					@Override
 					public void onSuccess(ClassDo result) {
 						totalsize = totalsize + result.getSearchResults().size();
