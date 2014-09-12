@@ -31,7 +31,9 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.shelf.ShelfUiHandlers;
+import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PPanel;
+import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -42,20 +44,34 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> implements IsClassSetupView{
+public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> implements IsClassSetupView, ClickHandler{
 
 	@UiField VerticalPanel unitwidget;
 	@UiField Button addUnitBtn;
 	@UiField PPanel unitSetupContainer;
 	@UiField Label unitSetupButton;
+	@UiField HTMLEventPanel paginationPanel;
 	
 	private HandlerRegistration addUnitClickHandler;
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	private static final String PREVIOUS = i18n.GL1462().toUpperCase();
+
+	private static final String NEXT = i18n.GL1463().toUpperCase();
+	
+	int pageNumber = 0;
+	
+	int limit = 10;
+	
+	int totalHitCounter = 0;
 	
 	private static ClassSetupViewUiBinder uiBinder = GWT.create(ClassSetupViewUiBinder.class);
 
@@ -63,11 +79,14 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 		
 	}
 	
-	private MessageProperties i18n = GWT.create(MessageProperties.class);
+
 
 	@Inject
 	public ClassSetupView(){
 		setWidget(uiBinder.createAndBindUi(this));		
+		
+		paginationPanel.setVisible(false);
+		unitSetupContainer.setVisible(false);
 		
 		if(addUnitClickHandler!=null) {
 			addUnitClickHandler.removeHandler();
@@ -75,7 +94,41 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 		addUnitClickHandler=addUnitBtn.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-			getUiHandlers().createPathway("Unitname");
+				
+				unitSetupContainer.setVisible(true);
+	
+				if(totalHitCounter >= 10)
+				{
+					paginationPanel.setVisible(true);
+					int totalPages = (totalHitCounter / 10)
+							+ ((totalHitCounter % 10) > 0 ? 1 : 0);
+					
+
+					getUiHandlers().createPathway("Unitname",(totalPages-1)*limit);
+					
+					totalPages = (totalHitCounter / 10)
+							+ ((totalHitCounter % 10) > 0 ? 1 : 0);
+					
+					Map<String,String> params = new HashMap<String,String>();
+					String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+					String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+					String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+					String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+					params.put("pageSize", pageSize);
+					params.put("classpageid", classpageid);
+					params.put("pageNum", totalPages+"");
+					params.put("pos", pos);
+					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+
+					
+				}
+				else
+				{
+				getUiHandlers().createPathway("Unitname",(0)*limit);
+				}
+				
+		
 				
 			}
 		});
@@ -97,14 +150,23 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 	}
 	
 	@Override
-	public void setContent(String unitName, String pathwayId) {
-	//Window.alert("getUnitwidget().getWidgetCount()::"+getUnitwidget().getWidgetCount());
-		 final ClassSetupUnitView classSetupUnitView = new ClassSetupUnitView(getUnitwidget().getWidgetCount(),unitName,pathwayId) {
-			
+
+	public void setContent(String unitName, String pathwayId, int sequenceNum) {
+		
+		unitSetupContainer.setVisible(true);
+		 final ClassSetupUnitView classSetupUnitView = new ClassSetupUnitView(sequenceNum,unitName,pathwayId) {
 			@Override
 			public void deleteItem(int sequenceNum, String pathwayId) {
 				try{
-					getUiHandlers().deletePathway(pathwayId);
+					
+					String pageNumVal=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+					int pageIntVal = 0;
+					if(pageNumVal != null)
+					{
+						pageIntVal = Integer.parseInt(pageNumVal);
+						pageIntVal = pageIntVal-1;
+					}
+					getUiHandlers().deletePathway(pathwayId,(pageIntVal)*limit);
 					getUnitwidget().remove(getUnitwidget().getWidgetIndex(this));
 				}
 				catch(Exception ex){
@@ -122,11 +184,6 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
 				classSetupUnitView.moveAssignmentPopup.setVisible(true);
-				System.out.println("getUnitwidget().getWidgetCount()::::::"+getUnitwidget().getWidgetCount());
-				
-				/*for(int i=0; i<getUnitwidget().getWidgetCount(); i++){
-					classSetupUnitView.resourceTypePanel.add(classSetupUnitView.createLabel(""+(i+1)));
-				}*/
 			}
 		});
 		//classSetupUnitView.btnReorder.addClickHandler(new ShowReorderPathwaysEvent());
@@ -167,6 +224,71 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			}
 		 }
 	 }
+	 
+	 
+		@Override
+		public void setPagination(int totalCount, int pagenumVal) {
+			System.out.println("totalCount::"+totalCount);
+			System.out.println("pagenumVal::"+pagenumVal);
+			totalHitCounter = totalCount;
+			paginationPanel.getElement().setInnerHTML("");
+			paginationPanel.setVisible(true);
+			if(totalCount>10)
+			{
+			int totalPages = (totalCount / 10)
+					+ ((totalCount % 10) > 0 ? 1 : 0);
+			if (totalPages > 1) {
+				if (pagenumVal > 1) {
+					paginationPanel.add(new PaginationButtonUc(pagenumVal - 1, PREVIOUS, this));
+					//paginationPanel.add(new PaginationButtonUc(pagenumVal - 1, PREVIOUS, this));
+				}
+			
+				int page = pagenumVal < 10 ? 1 : pagenumVal - 8;
+
+				for (int count = 1; count < 10 && page <= totalPages; page++, ++count) 
+				{
+					paginationPanel.add(new PaginationButtonUc(page, page == pagenumVal, this));
+				}
+				if (pagenumVal < totalPages) {
+					paginationPanel.add(new PaginationButtonUc(pagenumVal + 1, NEXT, this));
+				}
+			}
+			}
+			
+		}
+
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (event.getSource() instanceof PaginationButtonUc) {
+				int pagenumber = ((PaginationButtonUc) event.getSource()).getPage();
+				pageNumber = pagenumber;
+				Map<String,String> params = new HashMap<String,String>();
+				String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+				String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+				params.put("pageSize", pageSize);
+				params.put("classpageid", classpageid);
+				params.put("pageNum", pageNumber+"");
+				params.put("pos", pos);
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+				System.out.println("getPaginatedPathwaysoffset::"+(pagenumber-1));
+				getUiHandlers().getPaginatedPathways((pagenumber-1)*limit);
+			}
+
+		}
+
+		@Override
+		public void zeroResults() {
+			paginationPanel.setVisible(false);
+			unitSetupContainer.setVisible(false);
+			
+		}
+		
+	
+		
 	
 	
 	

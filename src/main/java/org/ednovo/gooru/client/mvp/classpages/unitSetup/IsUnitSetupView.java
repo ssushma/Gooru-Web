@@ -24,8 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 
 public interface IsUnitSetupView extends IsViewWithHandlers<UnitSetupUiHandlers>{
+	
+	void showUnitDetails(ClasspageListDo classpageListDo);
+	
+	void setPagination(int totalCount, int pagenumVal);
 
 }

@@ -1565,7 +1565,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			String pathwayItemId,int sequence) throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.REORDER_PATHWAY_SEQUENCE, getLoggedInSessionToken(),classpageId,pathwayItemId,sequence+"");
+				UrlToken.REORDER_PATHWAY_SEQUENCE,classpageId,pathwayItemId,sequence+"",getLoggedInSessionToken());
 		System.out.println("v2ReorderPathwaySequence.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),
 				getRestPassword());
@@ -1575,19 +1575,35 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}	
 
 	public ArrayList<CollectionItemDo> deserializePathwayItem(JsonRepresentation jsonRep) {
+		
+		
+		ArrayList<CollectionItemDo> pathwayItemList = new ArrayList<CollectionItemDo>();
 		try {
-				if (jsonRep != null && jsonRep.getSize() != -1) {
-				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
-						.toString(), new TypeReference<ArrayList<CollectionItemDo>>() {
-				});
+			if(jsonRep!=null&&jsonRep.getJsonObject()!=null){
+				JSONObject pathwayJsonObject=jsonRep.getJsonObject();
+			
+		if(pathwayJsonObject!=null){
+			JSONArray pathwayItemsArray=pathwayJsonObject.getJSONArray(SEARCHRESULTS);
+			int totalHitCount=pathwayJsonObject.getInt(TOTALHITCOUNT);
+			if(pathwayItemsArray!=null&&pathwayItemsArray.length()>0){
+				for(int i=0;i<pathwayItemsArray.length();i++){
+					JSONObject pathWayItemJsonObject=pathwayItemsArray.getJSONObject(i);
+					CollectionItemDo collectionItemDo=new CollectionItemDo();
+					collectionItemDo.setItemSequence(pathWayItemJsonObject.getInt("itemSequence"));
+					collectionItemDo.setTotalHitCount(totalHitCount);
+					pathwayItemList.add(collectionItemDo);
+				}
 			}
-		} catch (JSONException e) {
-			e.printStackTrace();
 		}
-		return new ArrayList<CollectionItemDo>();
+		}
+		}
+		catch(Exception ex){ex.printStackTrace();}
+		 return pathwayItemList;
 		
 	}
 	
+		
+		
 	@Override
 	public ClasspageListDo v2GetPathwaysOptimized(String classpageId, String limit, String offSet) throws GwtException {
 
@@ -1598,10 +1614,11 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		if(offSet == null)
 		{
-			offSet = "1";
+			offSet = "0";
 		}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.PATHWAYS_CLASS_OPTIMIZED, classpageId, getLoggedInSessionToken(), limit, offSet);
+		System.out.println("v2GetPathwaysOptimized::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1618,7 +1635,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		if(offSet == null)
 		{
-			offSet = "1";
+			offSet = "0";
 		}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.PATHWAYS_CLASS, classpageId, getLoggedInSessionToken(), limit, offSet);

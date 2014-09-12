@@ -7,11 +7,8 @@
 		<g:HTMLPanel styleName="{style.classSetupMenu} {style.HoverSetup}">
 			<g:HTMLPanel styleName="{style.classLeftMenu}">
 				<g:HTMLPanel styleName="{style.numaricName}">
-					<g:HTMLPanel styleName="{style.blueNumaric}">1</g:HTMLPanel>
-					<g:HTMLPanel styleName="{style.unitName}">
-						Pathway
-						<br> Name</br>
-					</g:HTMLPanel>
+					<g:Label styleName="{style.blueNumaric}" ui:field="lblUnitNumber"></g:Label>
+					<g:Label styleName="{style.unitName}" ui:field="lblUnitName"></g:Label>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{style.detailsBtn}">
 					<g:Anchor>Details</g:Anchor>
