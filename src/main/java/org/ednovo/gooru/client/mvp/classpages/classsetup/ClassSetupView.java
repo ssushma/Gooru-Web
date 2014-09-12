@@ -104,12 +104,8 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 				{
 					paginationPanel.setVisible(true);
 					int totalPages = (totalHitCounter / 5)
-							+ ((totalHitCounter % 5) > 0 ? 1 : 0);
-					
-
-					getUiHandlers().createPathway("Unitname",(totalPages-1)*limit);
-					
-					
+							+ ((totalHitCounter % 5) > 0 ? 1 : 0);			
+					getUiHandlers().createPathway("Unitname",(totalPages-1)*limit);						
 					totalPages = (totalHitCounter / 5)
 							+ ((totalHitCounter % 5) > 0 ? 1 : 0);
 					
