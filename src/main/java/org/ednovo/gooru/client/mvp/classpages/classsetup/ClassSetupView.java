@@ -85,19 +85,29 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 	public ClassSetupView(){
 		setWidget(uiBinder.createAndBindUi(this));		
 		
+		paginationPanel.setVisible(false);
+		unitSetupContainer.setVisible(false);
+		
 		if(addUnitClickHandler!=null) {
 			addUnitClickHandler.removeHandler();
 		}
 		addUnitClickHandler=addUnitBtn.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				
+				unitSetupContainer.setVisible(true);
 	
 				if(totalHitCounter >= 10)
 				{
+					paginationPanel.setVisible(true);
 					int totalPages = (totalHitCounter / 10)
 							+ ((totalHitCounter % 10) > 0 ? 1 : 0);
 					
-					System.out.println("totalpages::"+totalPages);
+
+					getUiHandlers().createPathway("Unitname",(totalPages-1)*limit);
+					
+					totalPages = (totalHitCounter / 10)
+							+ ((totalHitCounter % 10) > 0 ? 1 : 0);
 					
 					Map<String,String> params = new HashMap<String,String>();
 					String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
@@ -110,11 +120,13 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 					params.put("pos", pos);
 					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-					
-					getUiHandlers().getPaginatedPathways((totalPages-1)*limit);
+
 					
 				}
-				getUiHandlers().createPathway("Unitname");
+				else
+				{
+				getUiHandlers().createPathway("Unitname",(0)*limit);
+				}
 				
 		
 				
@@ -139,12 +151,22 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 	
 	@Override
 	public void setContent(String unitName, String pathwayId, int sequenceNum) {
+		
+		unitSetupContainer.setVisible(true);
 		 ClassSetupUnitView classSetupUnitView = new ClassSetupUnitView(sequenceNum,unitName,pathwayId) {
 			
 			@Override
 			public void deleteItem(int sequenceNum, String pathwayId) {
 				try{
-					getUiHandlers().deletePathway(pathwayId);
+					
+					String pageNumVal=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+					int pageIntVal = 0;
+					if(pageNumVal != null)
+					{
+						pageIntVal = Integer.parseInt(pageNumVal);
+						pageIntVal = pageIntVal-1;
+					}
+					getUiHandlers().deletePathway(pathwayId,(pageIntVal)*limit);
 					getUnitwidget().remove(getUnitwidget().getWidgetIndex(this));
 				}
 				catch(Exception ex){
@@ -201,6 +223,9 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			System.out.println("pagenumVal::"+pagenumVal);
 			totalHitCounter = totalCount;
 			paginationPanel.getElement().setInnerHTML("");
+			paginationPanel.setVisible(true);
+			if(totalCount>10)
+			{
 			int totalPages = (totalCount / 10)
 					+ ((totalCount % 10) > 0 ? 1 : 0);
 			if (totalPages > 1) {
@@ -219,6 +244,8 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 					paginationPanel.add(new PaginationButtonUc(pagenumVal + 1, NEXT, this));
 				}
 			}
+			}
+			
 		}
 
 
@@ -238,11 +265,20 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 				params.put("pos", pos);
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-				
-				getUiHandlers().getPaginatedPathways((pageNumber-1)*limit);
+				System.out.println("getPaginatedPathwaysoffset::"+(pagenumber-1));
+				getUiHandlers().getPaginatedPathways((pagenumber-1)*limit);
 			}
 
 		}
+
+		@Override
+		public void zeroResults() {
+			paginationPanel.setVisible(false);
+			unitSetupContainer.setVisible(false);
+			
+		}
+		
+	
 		
 	
 	

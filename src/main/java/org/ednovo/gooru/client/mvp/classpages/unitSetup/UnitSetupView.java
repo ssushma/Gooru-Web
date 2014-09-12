@@ -29,6 +29,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -40,7 +41,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -61,15 +61,18 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	
 	@UiField Anchor classSetupAnchor,unitDetailsAnchor;
 	
-	@UiField FlowPanel paginationFocPanel;
+	@UiField HTMLEventPanel paginationPanel;
 	
 	ClasspageListDo classpageListDo;
 	
 	private static final String NEXT = i18n.GL1463().toUpperCase();
 	
+	private static final String PREVIOUS = i18n.GL1462().toUpperCase();
+	
 	private int totalCount;
 	private int limit = 5;
 	private int offSet = 0;
+	int pageNumber = 0;
 	
 	@Inject
 	public UnitSetupView(){
@@ -119,7 +122,6 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	    totalCount = classpageListDo.getTotalHitCount();
 	    int unitSize =classpageListDo.getSearchResults().size() ;
 	    System.out.println("totalCount::"+totalCount+"::unitSize::"+unitSize);
-	    setPagination();
 	    unitAssignmentWidgetContainer.clear();
 	    for(int i=0; i<unitSize; i++){
 	    	unitAssignmentWidgetContainer.add(new UnitsAssignmentWidgetView(classpageListDo.getSearchResults().get(i))); 
@@ -127,24 +129,51 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 		
 	}
 
-	private void setPagination() {
+	@Override
+	public void setPagination(int totalCount, int pagenumVal) {
+		System.out.println("totalCount::"+totalCount);
+		System.out.println("pagenumVal::"+pagenumVal);
+		this.totalCount = totalCount;
+		paginationPanel.getElement().setInnerHTML("");
+		int totalPages = (totalCount / 5)
+				+ ((totalCount % 5) > 0 ? 1 : 0);
+		if (totalPages > 1) {
+			if (pagenumVal > 1) {
+				paginationPanel.add(new PaginationButtonUc(pagenumVal - 1, PREVIOUS, this));
+				//paginationPanel.add(new PaginationButtonUc(pagenumVal - 1, PREVIOUS, this));
+			}
 		
-		int page=1;
-		int pageCount=totalCount%5;
-		System.out.println("pagecount:"+pageCount);
-		if(page < pageCount+1){
-			for (int count = 1; count < pageCount+1 && page <= pageCount+1; page++, ++count) {
-				paginationFocPanel.add(new PaginationButtonUc(page, page == count, this));
+			int page = pagenumVal < 5 ? 1 : pagenumVal - 3;
+
+			for (int count = 1; count < 5 && page <= totalPages; page++, ++count) 
+			{
+				paginationPanel.add(new PaginationButtonUc(page, page == pagenumVal, this));
+			}
+			if (pagenumVal < totalPages) {
+				paginationPanel.add(new PaginationButtonUc(pagenumVal + 1, NEXT, this));
 			}
 		}
 	}
-
 	@Override
 	public void onClick(ClickEvent event) {
 		// TODO Auto-generated method stub
-		System.out.println("ininin");
-		offSet=offSet+limit;
-		getUiHandlers().getPathwayCompleteDetails(limit,offSet);
+		if (event.getSource() instanceof PaginationButtonUc) {
+			int pagenumber = ((PaginationButtonUc) event.getSource()).getPage();
+			pageNumber = pagenumber;
+			Map<String,String> params = new HashMap<String,String>();
+			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+			String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+			params.put("pageSize", pageSize);
+			params.put("classpageid", classpageid);
+			params.put("pageNum", pageNumber+"");
+			params.put("pos", pos);
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			
+			getUiHandlers().getPathwayCompleteDetails(limit,(pageNumber-1)*limit);
+		}
 	}
 	 
 	 

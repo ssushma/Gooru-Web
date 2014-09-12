@@ -36,6 +36,8 @@ public interface IsClassSetupView extends IsViewWithHandlers<ClassSetupUiHandler
 
 	void setContent(String unitName, String pathwayId, int sequenceNum);
 
+	void zeroResults();
+
 
 
 

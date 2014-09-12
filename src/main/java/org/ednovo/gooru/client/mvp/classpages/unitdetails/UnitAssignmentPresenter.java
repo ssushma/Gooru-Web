@@ -85,6 +85,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			public void onSuccess(ArrayList<CollectionItemDo> result) {
 				getView().getSequence(result);
 			}
+
 		});
 	}
 	

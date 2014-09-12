@@ -28,11 +28,8 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 public interface ClassSetupUiHandlers extends BaseUiHandlers{
 
-	void createPathway(String pathwayTitle);
 
 	void updatePathway(String pathwayId, String pathwayTitle);
-
-	void deletePathway(String pathwayId);
 
 	void OnUnitSetupClick();
 
@@ -41,6 +38,12 @@ public interface ClassSetupUiHandlers extends BaseUiHandlers{
 	void getPaginatedPathways(int i);
 
 	void setUnit(String unitName, String pathwayId, int sequenceNum);
+
+	void createPathway(String pathwayTitle, int offsetVal);
+
+	void deletePathway(String pathwayId, int offsetVal);
+
+	void loadPathways();
 
 
 }

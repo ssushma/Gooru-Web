@@ -46,6 +46,8 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	String classpageId="";
 	String pathwayId="";
 	
+	int limit = 10;
+	
 	private UnitSetupPresenter unitSetupPresenter;
 	
 	@Inject
@@ -61,11 +63,31 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+		int offsetVal = 0;
+		if(pageNum != null)
+		{
+			offsetVal = Integer.parseInt(pageNum);
+			offsetVal = (offsetVal-1);
+		}
+		getPaginatedPathways((offsetVal)*limit);
 	}
 	
 	@Override
 	public void setUnit(String unitName, String pathwayId, int sequenceNum) {
 		 getView().setContent(unitName,pathwayId,sequenceNum);
+	}
+	
+	@Override
+	public void loadPathways() {
+		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+		int offsetVal = 0;
+		if(pageNum != null)
+		{
+			offsetVal = Integer.parseInt(pageNum);
+			offsetVal = (offsetVal-1);
+		}
+		getPaginatedPathways((offsetVal)*limit);
 	}
 	
 	@Override
@@ -143,13 +165,18 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 						
 					}
 				}
+				else
+				{
+					getView().zeroResults();
+				}
+				
 			}
 		});
 		}
 	}
 	
 	@Override
-	public void createPathway(String pathwayTitle){
+	public void createPathway(String pathwayTitle,final int offsetVal){
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		if(classpageid != null)
 		{
@@ -158,8 +185,9 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 			public void onSuccess(CollectionDo pathwayItemObject) {
 				if(pathwayItemObject.getTitle() != null)
 				{
-					System.out.println("itemseq::::"+pathwayItemObject.getItemSequence());
-					setUnit(pathwayItemObject.getTitle(),pathwayItemObject.getGooruOid(),pathwayItemObject.getItemSequence());
+					//System.out.println("itemseq::::"+pathwayItemObject.getItemSequence());
+					getPaginatedPathways(offsetVal);
+					//setUnit(pathwayItemObject.getTitle(),pathwayItemObject.getGooruOid(),pathwayItemObject.getItemSequence());
 				}
 			}
 		});
@@ -182,14 +210,14 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	}
 	
 	@Override
-	public void deletePathway(String pathwayId){
+	public void deletePathway(String pathwayId, final int offsetVal){
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		if(classpageid != null)
 		{
 		AppClientFactory.getInjector().getClasspageService().deletePathway(classpageid, pathwayId, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				getPathways();
+				getPaginatedPathways(offsetVal);
 			}
 		});
 		}
