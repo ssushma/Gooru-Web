@@ -24,31 +24,24 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.child.ChildView;
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.event.ResetPaginationEvent;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
-
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 import com.google.gwt.core.client.GWT;
-
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Display;
-
 import com.google.gwt.dom.client.Style.Position;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -61,7 +54,6 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -91,7 +83,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 		setPresenter(new ClassSetupUnitPresenter(this));
 	}
 	
-	public ClassSetupUnitView(final int sequenceNum, String unitNameVal, final String pathwayId,int totalhitCounter,String collectionItemId){
+	public ClassSetupUnitView(final int sequenceNum, String unitNameVal, final String pathwayId,final int totalhitCounter,final String collectionItemId){
 		initWidget(uiBinder.createAndBindUi(this));
 		inputContainer.setVisible(false);
 		divContainer.setVisible(true);
@@ -123,14 +115,14 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 				moveAssignmentPopup.getElement().getStyle().setDisplay(Display.BLOCK);
 			}
 		});
-		/*btnReorder.addMouseOutHandler(new MouseOutHandler() {
+		btnReorder.addMouseOutHandler(new MouseOutHandler() {
 			
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
 				// TODO Auto-generated method stub
 				moveAssignmentPopup.getElement().getStyle().setDisplay(Display.NONE);
 			}
-		});*/
+		});
 		resourceCategoryLabel.setText(String.valueOf(sequenceNum));
 		resoureDropDownLbl.addClickHandler(new ClickHandler() {
 			
@@ -177,9 +169,10 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 			}
 		});
 		saveBtn.addClickHandler(new ClickHandler() {
-			
+		
 			@Override
 			public void onClick(ClickEvent event) {
+				
 				//api call to save data to be added
 				if(!unitName.getText().isEmpty())
 				{
@@ -216,13 +209,6 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 					unitNameErrorLabel.setVisible(true);
 					unitNameErrorLabel.getElement().getStyle().setBorderColor("orange");
 				}
-				
-				
-				
-				
-				
-				
-		
 			}
 		});
 		editBtn.addClickHandler(new ClickHandler() {
@@ -261,43 +247,30 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 	public Label createLabel(String title,final String pathwayId,final int totalhitCounter){
 		Label lblLabel = new Label();
 		lblLabel.setText(title);
-		/*lblLabel.getElement().addClassName(res.css().myFolderCollectionFolderDropdown());
-		lblLabel.getElement().addClassName(res.css().myFolderCollectionFolderVideoTitle());*/
 		lblLabel.getElement().setAttribute("alt", title);
 		lblLabel.getElement().setAttribute("title", title);
 		lblLabel.getElement().setAttribute("id", title);
 		lblLabel.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
 				final Label lbl = (Label)event.getSource();
 				resourceCategoryLabel.setText(lbl.getText());
 				resourceCategoryLabel.getElement().setAttribute("alt",lbl.getText());
 				resourceCategoryLabel.getElement().setAttribute("title",lbl.getText());
-				System.out.println("pathwayId in click handler:::"+pathwayId);
-				System.out.println("clicked element in click handler:::"+lbl.getText());
-				System.out.println("totalhitCounterin click handler outside :::"+totalhitCounter);
 				AppClientFactory.getInjector().getClasspageService().reOrderPathwaysInaClass(pathwayId, Integer.parseInt(lbl.getText()), new SimpleAsyncCallback<ClasspageListDo>() {
-
 					@Override
 					public void onSuccess(ClasspageListDo result) {
 						resourceTypePanel.setVisible(resourceTypePanel.isVisible() ? false : true);
-						// TODO Auto-generated method stub
-						System.out.println("totalhitCounterin click handler after API Sucess:::"+totalhitCounter);
-
-						
 						redirectToPage(totalhitCounter);
 					}
 
 					private void redirectToPage(int totalhitCounter) {
 							if(totalhitCounter>=5){
-								
 							/*	int numberOfPages = (totalhitCounter / 5)
 										+ ((totalhitCounter % 5) > 0 ? 1 : 0);*/
 							int clickedNumber =	Integer.parseInt(lbl.getText());
 								int redirectedPageNumber = (clickedNumber / 5)
 										+((clickedNumber % 5) >0 ?1 : 0);
-								System.out.println(" redirect to page::::"+redirectedPageNumber);
 								Map<String,String> params = new HashMap<String,String>();
 								String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
 								String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
@@ -309,21 +282,18 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 								params.put("pos", pos);
 								PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 								AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+								int offSetVal = 0;
+								if(redirectedPageNumber!=0)
+								{
+								offSetVal = redirectedPageNumber-1;
+								}
+								AppClientFactory.fireEvent(new ResetPaginationEvent(offSetVal*5));
 							}
 						
 					}
 
 				});
 			}
-
-			
-				// TODO Auto-generated method stub
-				
-			
-
-			
-				// TODO Auto-generated method stub
-				
 			
 		});
 		return lblLabel;

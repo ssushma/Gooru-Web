@@ -25,8 +25,9 @@
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.classpages.event.ResetPaginationHandler;
 
-public interface ClassSetupUiHandlers extends BaseUiHandlers{
+public interface ClassSetupUiHandlers extends BaseUiHandlers,ResetPaginationHandler{
 
 
 	void updatePathway(String pathwayId, String pathwayTitle);
