@@ -45,7 +45,8 @@ public class UnitSetupStudentPresenter extends PresenterWidget<IsUnitSetupStuden
 
 	@Override
 	public void getPathwayCompleteDetails(int limit, int offset) {
-		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		System.out.println("iam called here to bind data");
+		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 		if(classpageId!=null){
 			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysCompleteDetails(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
 

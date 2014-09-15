@@ -194,7 +194,18 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	     }else if(tab!=null&&tab.equalsIgnoreCase("reports")){
 	     	
 	     }else if(tab!=null&&tab.equalsIgnoreCase("unitsetup")){
-	    	
+	    	 String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+				int offsetVal = 0;
+				if(pageNum != null)
+				{
+					offsetVal = Integer.parseInt(pageNum);
+					if(offsetVal!=0)
+					{
+					offsetVal = (offsetVal-1);
+					}
+				}
+			unitSetupStudentPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
+	    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
 	     }
 	     else if(tab!=null&&tab.equalsIgnoreCase("unitdetails")){
 	    	
