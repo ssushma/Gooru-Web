@@ -119,7 +119,6 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 
 	@Override
 	public void showUnitDetails(ClassDo classDo) {
-		System.out.println("unitSize bind datotalCountta"+totalCount);
 	    totalCount = classDo.getTotalHitCount();
 	    int unitSize =classDo.getSearchResults().size() ;
 
@@ -133,8 +132,6 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 
 	@Override
 	public void setPagination(int totalCount, int pagenumVal) {
-		System.out.println("totalCount::"+totalCount);
-		System.out.println("pagenumVal::"+pagenumVal);
 		this.totalCount = totalCount;
 		paginationPanel.getElement().setInnerHTML("");
 		int totalPages = (totalCount / 5)

@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter.IsStudentAssignmentProxy;
 import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupPresenter;
 import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupStudentPresenter;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
@@ -76,6 +77,8 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	
 	private UnitSetupStudentPresenter unitSetupStudentPresenter;
 	
+	private UnitAssignmentPresenter unitAssignmentPresenter;
+	
 	SignUpPresenter signUpViewPresenter = null;
 	private Integer offset=0;
 	private Integer limit=5;
@@ -97,10 +100,11 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	//IndirectProvider<AssignmentPresenter> assignmentFactory;
 	
 	@Inject
-	public StudentAssignmentPresenter(IsStudentAssignmentView view,IsStudentAssignmentProxy proxy,SignUpPresenter signUpViewPresenter,UnitSetupStudentPresenter unitSetupStudentPresenter) {
+	public StudentAssignmentPresenter(IsStudentAssignmentView view,IsStudentAssignmentProxy proxy,SignUpPresenter signUpViewPresenter,UnitSetupStudentPresenter unitSetupStudentPresenter,UnitAssignmentPresenter unitAssignmentPresenter) {
 		super(view, proxy);
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.unitSetupStudentPresenter = unitSetupStudentPresenter;
+		this.unitAssignmentPresenter =unitAssignmentPresenter;
 		getView().setUiHandlers(this);	
 		
 	}
@@ -149,8 +153,8 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
-			initParam();
 		}
+		initParam();
 		//getClasspage();
 	}
 	private void initParam() {
@@ -160,6 +164,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	public void getClasspage(){
 		String classpageId=getPlaceManager().getRequestParameter("id");
 		final String sortingOrder=getPlaceManager().getRequestParameter("order",null);
+		final String tabMode=getPlaceManager().getRequestParameter("tab",null);
 		if(classpageDo==null||(!classpageDo.getClasspageId().equals(classpageId))){
 			getView().resetAll();
 			this.classpageServiceAsync.getClasspage(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
@@ -173,7 +178,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 //							//getView().setSortingOrderInDropdown(sortingOrder);
 //							getClasspageItems(classpageDo.getClasspageId(),""+defaultOffsetForPath,""+defaultLimitForPath,true, "all");	//To do display Assignment progress.
 							getView().setClasspageData(classpageDo);
-							showTabWidget("");
+							showTabWidget(tabMode);
 							triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
 							
 					}else{
@@ -184,7 +189,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 				}
 			});
 		}else{
-			showTabWidget("");
+			showTabWidget(tabMode);
 		}
 	}
 	
@@ -208,7 +213,8 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
 	     }
 	     else if(tab!=null&&tab.equalsIgnoreCase("unitdetails")){
-	    	
+	    	 unitAssignmentPresenter.getClassUnits(classpageDo.getClasspageId());
+	    	 setInSlot(STUDY_SLOT, unitAssignmentPresenter,false);
 	     }
 	     else {
 	     	 String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
