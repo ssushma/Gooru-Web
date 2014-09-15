@@ -63,6 +63,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 	private static final String NEXT="next";
 	private static final String PREVIOUS= "previous";
 	
+	private String pathwayId;
+	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public UnitsAssignmentWidgetView(ClassUnitsListDo classUnitsDo, boolean studentMode){
@@ -82,6 +85,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 		cancelEditButton.addClickHandler(new CancelEditEvent());
 		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid()));
 	}
+
+
 
 	private void setAssignmentsForUnit() {
 		assignmentsContainer.clear();
@@ -272,5 +277,36 @@ public class UnitsAssignmentWidgetView extends Composite {
 				}
 			}
 		}); 
+	}
+	
+	
+	
+	
+	public void addAssignment(ArrayList<ClasspageItemDo> classpageItemDo){ 
+		getUnitAssignments(assignmentOffset,false);
+	}
+	
+	/**
+	 * @return the pathwayId
+	 */
+	public String getPathwayId() {
+		return pathwayId;
+	}
+
+
+
+	/**
+	 * @param pathwayId the pathwayId to set
+	 */
+	public void setPathwayId(String pathwayId) {
+		this.pathwayId = pathwayId;
+	}
+	
+	
+	/**
+	 * @return the addAssignmentButton
+	 */
+	public Button getAddAssignmentButton() {
+		return addAssignmentButton;
 	}
 }
