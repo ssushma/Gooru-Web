@@ -201,9 +201,8 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 				
 				@Override
 				public void onSuccess(UnitAssignmentsDo result) {
-					if(result!=null){
-					
 					assignmentTotalCount = result.getTotalHitCount();
+					if(result.getSearchResults()!=null){
 					assignmentTotalSize = result.getSearchResults().size();
 					dropdownListContainerAssignment.clear();
 					for(int i=0; i<result.getSearchResults().size(); i++){
