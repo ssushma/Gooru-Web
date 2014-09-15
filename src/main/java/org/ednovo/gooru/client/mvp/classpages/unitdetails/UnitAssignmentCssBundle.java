@@ -15,6 +15,8 @@ public interface UnitAssignmentCssBundle extends ClientBundle{
 		String bubbleBig();
 		String unitMenuActive();
 		String bubbleOptional();
+		String selected();
+		String teachTab();
 	}
 	
 	@NotStrict
