@@ -50,6 +50,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	int limit = 5;
 	
 	private UnitSetupPresenter unitSetupPresenter;
+	private static final String CLASS_SETUP = "classSetUpMode";
 	
 	@Inject
 	public ClassSetupPresenter(EventBus eventBus, IsClassSetupView view,UnitSetupPresenter unitSetupPresenter,AddAssignmentContainerPresenter assignmentContainer) {
@@ -242,9 +243,8 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	@Override
 	public void addAssignmentsContainerPopup(String pathwayIdVal) {
 	classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
-	//pathwayId="25509399-83ab-42f1-b774-c1e424b132d0";
 	assignmentContainer.getUserShelfData();
-	assignmentContainer.setClasspageIdFromClassSetupPresenter(classpageId, pathwayIdVal,this,true);
+	assignmentContainer.addAssignmentToPathway(classpageId, pathwayIdVal,CLASS_SETUP);
 	addToPopupSlot(assignmentContainer);
 	}
 	
