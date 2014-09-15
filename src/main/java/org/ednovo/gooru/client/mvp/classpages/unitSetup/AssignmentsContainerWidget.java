@@ -27,6 +27,9 @@ package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 
 
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitCricleView;
+import org.ednovo.gooru.client.mvp.home.register.RegisterCBundle;
+import org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopUpCBundle;
+import org.ednovo.gooru.client.mvp.profilepage.ProfilePageCBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
@@ -55,10 +58,30 @@ public class AssignmentsContainerWidget extends Composite  {
 	
 	@UiField UnitCricleView unitCircleView;
 	
+	@UiField AssignmentContainerWidgetCBundle unitStyle;
+	
+
+	
 	public AssignmentsContainerWidget(ClasspageItemDo classpageItemDo){ 
 		initWidget(uibinder.createAndBindUi(this));
 		unitCircleView.setUnitSequenceNumber(classpageItemDo.getItemSequence());
 		assignmentThumbnail.setUrl(classpageItemDo.getResource().getThumbnails().getUrl());
+		if(classpageItemDo.getStatus() != null)
+		{
+			if(classpageItemDo.getStatus().equalsIgnoreCase("completed"))
+			{
+				unitCircleView.setUnitSequenceNumber(0);
+				unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.greenBubble());
+			}
+		}
+		if(classpageItemDo.getIsRequired() != null)
+		{
+			if(!classpageItemDo.getIsRequired())
+			{
+				unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.stylishBub());
+			}
+		}
+		
 	}
 	
 	@UiHandler("assignmentThumbnail")

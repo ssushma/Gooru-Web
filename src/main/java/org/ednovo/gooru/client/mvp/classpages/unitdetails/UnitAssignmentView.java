@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.Co
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
@@ -112,7 +113,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@Inject
 	public UnitAssignmentView(){
 		setWidget(uiBinder.createAndBindUi(this));
-		assignmentContainer.add(new CollectionsView(null, 0));
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
 		unitSetupButton.addClickHandler(new UnitSetupEvents());
@@ -398,5 +398,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void showMoreUnitsLink(){
 		lblMoreUnits.setVisible(true);
 	}
-	
+
+	@Override
+	public void showAssignment(ClasspageItemDo classpageItemDo) {
+		assignmentContainer.clear();
+		assignmentContainer.add(new CollectionsView(classpageItemDo));
+	}
 }
