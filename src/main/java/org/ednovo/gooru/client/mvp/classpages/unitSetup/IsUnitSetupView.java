@@ -23,8 +23,11 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.ClassDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 
@@ -33,5 +36,7 @@ public interface IsUnitSetupView extends IsViewWithHandlers<UnitSetupUiHandlers>
 	void showUnitDetails(ClassDo classDo);
 	
 	void setPagination(int totalCount, int pagenumVal);
+
+	void addAssignmentWidget(ArrayList<ClasspageItemDo> classpageItemDo, String pathwayId);  
 
 }

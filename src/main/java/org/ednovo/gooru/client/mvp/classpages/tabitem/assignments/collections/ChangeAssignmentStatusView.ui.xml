@@ -6,10 +6,10 @@
 	<ui:style field="style" src="collections.css" />
 	<g:HTMLPanel styleName="{style.onoffbtns}" ui:field="switchContainer">
 		<g:InlineLabel styleName="{style.text-muted}" ui:field="requiredLabel">Required</g:InlineLabel>
-		<label class="{style.switchContainer} switch-green">
-		 	<g:SimpleCheckBox styleName="switch-input" ui:field="changeAssignmentStatusButton"></g:SimpleCheckBox>
-			<g:InlineLabel styleName="switch-label"></g:InlineLabel>
-			<g:InlineLabel styleName="switch-handle" ui:field="sequenceNumberLabel"></g:InlineLabel>
+		<label class="{style.switchContainer} switchGreen">
+		 	<g:SimpleCheckBox styleName="switchInput" ui:field="changeAssignmentStatusButton"></g:SimpleCheckBox>
+			<g:InlineLabel styleName="switchLabel"></g:InlineLabel>
+			<g:InlineLabel styleName="switchHandle" ui:field="sequenceNumberLabel"></g:InlineLabel>
 		</label> 
 		<g:InlineLabel styleName="{style.text-muted}" ui:field="optionalLabel">Optional</g:InlineLabel>
 	</g:HTMLPanel>

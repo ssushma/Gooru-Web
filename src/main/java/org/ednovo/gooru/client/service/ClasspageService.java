@@ -555,7 +555,7 @@ public interface ClasspageService extends BaseService {
 	void deletePathway(String classpageId, String pathwayId)
 			throws GwtException;
 
-	public ArrayList<ClasspageItemDo> v2AssignCollectionTOPathway(String classpageId,String pathwayId,String collectionId,String duedate,String directions) throws GwtException, ServerDownException;
+	public ArrayList<ClasspageItemDo> v2AssignCollectionTOPathway(String classpageId,String pathwayId,String collectionId,String suggestTime,String minScore,String duedate,String directions) throws GwtException, ServerDownException;
 
 	CollectionDo updateAssignmentStatus(String collectionItemId,
 			boolean isRequiredStatus) throws GwtException;

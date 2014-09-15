@@ -206,7 +206,7 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 		 public void onClick(ClickEvent event) {
 			if(!pathwayIdVal.isEmpty())
 			{
-		 getUiHandlers().addAssignmentsContainerPopup(pathwayIdVal);
+				getUiHandlers().addAssignmentsContainerPopup(pathwayIdVal);
 			}
 		 }
 	 }

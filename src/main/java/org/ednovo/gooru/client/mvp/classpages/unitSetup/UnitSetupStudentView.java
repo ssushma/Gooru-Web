@@ -97,17 +97,17 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 	 private class ClassSetupEvents implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			revealPlace(null);
+			revealPlace("unitdetails");
 		}
 	}
 	 public void revealPlace(String tabName){
 			Map<String,String> params = new HashMap<String,String>();
 			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
-			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 			String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
 			params.put("pageSize", pageSize);
-			params.put("classpageid", classpageid);
+			params.put("id", classpageid);
 			params.put("pageNum", pageNum);
 			params.put("pos", pos);
 			if(tabName!=null){

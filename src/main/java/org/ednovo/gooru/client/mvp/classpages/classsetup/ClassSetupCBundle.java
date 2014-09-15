@@ -22,22 +22,27 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+package org.ednovo.gooru.client.mvp.classpages.classsetup;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.ClassDo;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.NotStrict;
 
-import com.google.gwt.user.client.ui.HTMLPanel;
 
-public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentUiHandlers>{
-	 void getSequence(UnitAssignmentsDo unitAssignmentsDo);
-	 void getPathwayItems();
-	 public void showUnitNames(ClassDo classDo,boolean clearPanel);
-	 public void hideMoreUnitsLink();
-	 public HTMLPanel getUnitPanel();
-	 public HTMLPanel getCircleContainerPanel();
-	 public void showAssignment(ClasspageItemDo classpageItemDo);
+public interface ClassSetupCBundle extends ClientBundle {
+
+	static final ClassSetupCBundle INSTANCE = GWT
+			.create(ClassSetupCBundle.class);
+
+	public interface ClassSetupCss extends CssResource {
+	
+		String myFolderCollectionFolderDropdown();
+		String myFolderCollectionFolderVideoTitle();
+	}
+
+	@NotStrict
+	@Source("classsetup.css")
+	ClassSetupCss css();
 
 }

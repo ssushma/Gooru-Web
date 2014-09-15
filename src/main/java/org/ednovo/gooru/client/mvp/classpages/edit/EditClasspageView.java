@@ -686,7 +686,7 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		}
 	}
 	public CollectionsView showClasspageItem(ClasspageItemDo classpageItemDo,int sequenceNum){
-		CollectionsView assignmentCollectionView = new CollectionsView(classpageItemDo,sequenceNum){
+		CollectionsView assignmentCollectionView = new CollectionsView(classpageItemDo){
 			public void resetPagination(){
 				//restingPagination();
 			}

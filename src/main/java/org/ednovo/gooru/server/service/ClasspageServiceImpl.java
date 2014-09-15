@@ -1738,10 +1738,16 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	
 	@Override
 	public ArrayList<ClasspageItemDo> v2AssignCollectionTOPathway(String classpageId,
-			String pathwayId, String collectionId,String duedate,String directions) throws GwtException,
+			String pathwayId, String collectionId,String suggestTime,String miScore,String duedate,String directions) throws GwtException,
 			ServerDownException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ASSIGN_COLLECTION_TO_PATHWAY, classpageId, pathwayId, collectionId, getLoggedInSessionToken());
+		 if(suggestTime!=null){
+             url = url + "&estimatedTime=" + suggestTime;
+	     }
+	     if(miScore!=null){
+	             url = url + "&minimumScore=" + miScore;
+	     }
 		System.out.println("v2AssignCollectionTOPathway:::: url:::::::"+url);
 		JSONObject classPageItemJsonObject=createClasspageJsonObject(collectionId, directions, duedate,null);
 		System.out.println("v2AssignCollectionTOPathway:::: form data:::::::"+classPageItemJsonObject.toString());
