@@ -107,6 +107,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	UnitAssignmentsDo unitAssignmentsDo;
 	boolean isShowing=false;
 	UnitCricleView unitCricleViewObj;
+	private boolean isShowingPopUp = false;
 	
 	@Inject
 	public UnitAssignmentView(){
@@ -209,8 +210,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			          }
 			    });
 							
-			}else
-		{
+			}
+		if(totalAssignmentHitcount==0){
 			Label noAssignmentlabel = new Label("Assignment not available");
 			circleContainerPanel.clear();
 			circleContainerPanel.add(noAssignmentlabel);
@@ -291,21 +292,30 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public class UnitSeqMouseOverHandler implements MouseOverHandler{
 	@Override
 		public void onMouseOver(MouseOverEvent event) {
+		
 			unitAssigmentReorder = new UnitAssigmentReorder(classDo,unitAssignmentsDo,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null));
 			unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop()+40);
 			unitAssigmentReorder.show();
+			isShowingPopUp = true;
 			}
 		}
 	public void hidePopup(NativePreviewEvent event){
+		try{
     	if(event.getTypeInt()==Event.ONMOUSEOVER){
     		Event nativeEvent = Event.as(event.getNativeEvent());
         	boolean target=eventTargetsPopup(nativeEvent);
         	if(!target)
         	{
-        		unitAssigmentReorder.hide();
+        		
+        		if(isShowingPopUp){
+        			
+        			unitAssigmentReorder.hide();
+        		}
+    	
         		
         	}
     	}
+		}catch(Exception ex){ex.printStackTrace();}
      }
 	
 	private boolean eventTargetsPopup(NativeEvent event) {
