@@ -26,9 +26,10 @@ package org.ednovo.gooru.client.mvp.classpages.classsetup;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
+import org.ednovo.gooru.client.mvp.classpages.event.ResetPaginationEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.ResetPaginationHandler;
 import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupPresenter;
-import org.ednovo.gooru.client.mvp.search.event.ResetProgressHandler;
+import org.ednovo.gooru.client.mvp.shelf.event.AssignmentEvent;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
@@ -56,7 +57,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		getView().setUiHandlers(this);
 		this.unitSetupPresenter=unitSetupPresenter;
 		this.assignmentContainer = assignmentContainer;
-	
+		addRegisteredHandler(ResetPaginationEvent.TYPE, this);
 
 	}
 	
@@ -76,19 +77,20 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		getPaginatedPathways((offsetVal)*limit);
 		
 		
-		ResetPaginationHandler reset = new ResetPaginationHandler() {
+		/*ResetPaginationHandler reset = new ResetPaginationHandler() {
 
 			@Override
 			public void callPathwaysAPI(int offSetVal) {
+				System.out.println("1");
 				getPaginatedPathways(offSetVal);
 				
 			}
-		};
+		};*/
 	}
 	
 	@Override
-	public void setUnit(String unitName, String pathwayId, int sequenceNum) {
-		 getView().setContent(unitName,pathwayId,sequenceNum);
+	public void setUnit(String unitName, String pathwayId, int sequenceNum,String collectionItemId) {
+		 getView().setContent(unitName,pathwayId,sequenceNum,collectionItemId);
 	}
 	
 	@Override
@@ -116,7 +118,9 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		
 		if(classpageid != null)
 		{
+
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "5", "0", new SimpleAsyncCallback<ClassDo>() {
+
 			@Override
 			public void onSuccess(ClassDo classDo) {
 				if(classDo.getSearchResults().size()>0)
@@ -137,7 +141,9 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 					getView().setPagination(classDo.getTotalHitCount(),pageNumVal);
 					for(int i=0;i<classDo.getSearchResults().size();i++)
 					{
-						setUnit(classDo.getSearchResults().get(i).getResource().getTitle(), classDo.getSearchResults().get(i).getResource().getGooruOid(),classDo.getSearchResults().get(i).getItemSequence());
+
+						setUnit(classDo.getSearchResults().get(i).getResource().getTitle(), classDo.getSearchResults().get(i).getResource().getGooruOid(),classDo.getSearchResults().get(i).getItemSequence(),classDo.getSearchResults().get(i).getCollectionItemId());
+
 						
 					}
 				}
@@ -148,13 +154,14 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	
 	@Override
 	public void getPaginatedPathways(int offsetVal){
-		System.out.println("event called");
 		getView().clearPanel();
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 
 		if(classpageid != null)
 		{
+
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "5", offsetVal+"", new SimpleAsyncCallback<ClassDo>() {
+
 			@Override
 			public void onSuccess(ClassDo classDo) {
 				if(classDo.getSearchResults().size()>0){
@@ -168,9 +175,11 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 							
 						}
 					}
+
 					getView().setPagination(classDo.getTotalHitCount(),pageNumVal);
 					for(int i=0;i<classDo.getSearchResults().size();i++){
-						setUnit(classDo.getSearchResults().get(i).getResource().getTitle(), classDo.getSearchResults().get(i).getResource().getGooruOid(),classDo.getSearchResults().get(i).getItemSequence());
+						setUnit(classDo.getSearchResults().get(i).getResource().getTitle(), classDo.getSearchResults().get(i).getResource().getGooruOid(),classDo.getSearchResults().get(i).getItemSequence(),classDo.getSearchResults().get(i).getCollectionItemId());
+
 					}
 				}
 				else{
@@ -232,7 +241,6 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	
 	@Override
 	public void addAssignmentsContainerPopup(String pathwayIdVal) {
-	System.out.println("pathwayIdVal::"+pathwayIdVal);
 	classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
 	//pathwayId="25509399-83ab-42f1-b774-c1e424b132d0";
 	assignmentContainer.getUserShelfData();
@@ -278,10 +286,11 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		}
 		return totalHit;
 	}
-	
-	
-	
 
-	
+	@Override
+	public void callPathwaysAPI(int offSetVal) {
+		// TODO Auto-generated method stub
+		getPaginatedPathways(offSetVal);
+	}
 	
 }

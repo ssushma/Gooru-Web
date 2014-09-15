@@ -78,27 +78,7 @@ public interface IsStudentAssignmentView extends IsViewWithHandlers<StudentAssig
 
 
 
-
-	/**
-	 * @function setSortingOrderInDropdown 
-	 * 
-	 * @created_date : Jun 17, 2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @param sortingOrder
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
-	
-	void setSortingOrderInDropdown(String sortingOrder);			
+		
 	
 	void resetAll();
 }

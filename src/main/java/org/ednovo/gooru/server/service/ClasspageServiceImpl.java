@@ -1642,8 +1642,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonRepresentation jsonRep = null;
 		String newPosVal = String.valueOf(newPosSequence);
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.PATHWAYS_CLASS_REORDER, pathwayId, newPosVal, getLoggedInSessionToken());		
-		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword());
+				UrlToken.PATHWAYS_CLASS_REORDER, pathwayId, newPosVal, getLoggedInSessionToken());	
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(), new JSONObject().toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeClasspageList(jsonRep);
 	}

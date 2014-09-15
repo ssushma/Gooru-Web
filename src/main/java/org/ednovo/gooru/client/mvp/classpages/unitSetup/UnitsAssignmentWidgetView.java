@@ -61,9 +61,16 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	public UnitsAssignmentWidgetView(ClassUnitsListDo classUnitsDo){
+	public UnitsAssignmentWidgetView(ClassUnitsListDo classUnitsDo, boolean studentMode){
 		initWidget(uibinder.createAndBindUi(this));
 		this.classUnitsDo=classUnitsDo;
+		
+		if(studentMode)
+		{
+			editUnitButton.removeFromParent();
+			addAssignmentButton.removeFromParent();
+		}
+		
 		setAssignmentsForUnit();
 		setUnitNameDetails();
 		cancelEditButton.setVisible(false);
