@@ -125,7 +125,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	    unitAssignmentWidgetContainer.clear();
 	    for(int i=0; i<unitSize; i++){
 	    	ClassUnitsListDo classListUnitsListDo=classDo.getSearchResults().get(i);
-	    	unitAssignmentWidgetContainer.add(new UnitsAssignmentWidgetView(classListUnitsListDo,false)); 
+	    	unitAssignmentWidgetContainer.add(new UnitsAssignmentWidgetView(classListUnitsListDo)); 
 	    }
 		
 	}
