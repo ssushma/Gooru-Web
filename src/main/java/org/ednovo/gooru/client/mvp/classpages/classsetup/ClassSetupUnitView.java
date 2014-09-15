@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.edit.AssignmentProgressCBundle;
 import org.ednovo.gooru.client.mvp.classpages.event.ResetPaginationEvent;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -53,6 +54,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -61,14 +63,17 @@ import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresenter> implements IsClassSetupUnitView{
 
-
+	@UiField ClassSetupCBundle res;
 	@UiField HTMLPanel unitSequence,inputContainer,panelComboList,resourceTypePanel;
 	@UiField HTMLEventPanel moveAssignmentPopup;
-	@UiField Button deleteBtnUnit,cancelBtn,saveBtn,editBtn;
+	@UiField Button deleteBtnUnit,cancelBtn,saveBtn,editBtn,cancelButton,saveButton;
 	@UiField TextBox unitName;
 	@UiField Button btnAssignment,btnReorder;
 	@UiField HTMLEventPanel divContainer;
 	@UiField Label unitnameLBL,unitNameErrorLabel,lblMoveTo,resourceCategoryLabel,resoureDropDownLbl;
+	
+	String ClickedLabelNum ="";
+	String ClickedCollectionItemId ="";
 
 	private static ClassSetupUnitViewUiBinder uiBinder = GWT.create(ClassSetupUnitViewUiBinder.class);
 
@@ -82,10 +87,14 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 	public ClassSetupUnitView(){
 		initWidget(uiBinder.createAndBindUi(this));		
 		setPresenter(new ClassSetupUnitPresenter(this));
+		this.res = ClassSetupCBundle.INSTANCE;
+		res.css().ensureInjected();
 	}
 	
 	public ClassSetupUnitView(final int sequenceNum, String unitNameVal, final String pathwayId,final int totalhitCounter,final String collectionItemId){
 		initWidget(uiBinder.createAndBindUi(this));
+		this.res = ClassSetupCBundle.INSTANCE;
+		res.css().ensureInjected();
 		inputContainer.setVisible(false);
 		divContainer.setVisible(true);
 		editBtn.setVisible(false);
@@ -102,6 +111,9 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 		resourceTypePanel.setVisible(false);
 		lblMoveTo.getElement().setAttribute("alt",i18n.GL1912());
 		lblMoveTo.getElement().setAttribute("title",i18n.GL1912());
+		resourceTypePanel.getElement().setAttribute("style", "background-color:white;z-index: 9999;");
+		cancelButton.getElement().setAttribute("style", "display: inline-block;");
+		saveButton.getElement().setAttribute("style", "display: inline-block;");
 		btnReorder.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -254,27 +266,14 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 				
 			}
 		});
-
-	}
-	
-	public abstract void deleteItem(int sequenceNum, String pathwayId);
-	
-	public abstract void saveItem(String pathwayTitle, String pathwayId);
-	
-	public Label createLabel(String title,final String pathwayId,final int totalhitCounter){
-		Label lblLabel = new Label();
-		lblLabel.setText(title);
-		lblLabel.getElement().setAttribute("alt", title);
-		lblLabel.getElement().setAttribute("title", title);
-		lblLabel.getElement().setAttribute("id", title);
-		lblLabel.addClickHandler(new ClickHandler() {
+		
+		saveButton.addClickHandler(new ClickHandler() {
+			
 			@Override
 			public void onClick(ClickEvent event) {
-				final Label lbl = (Label)event.getSource();
-				resourceCategoryLabel.setText(lbl.getText());
-				resourceCategoryLabel.getElement().setAttribute("alt",lbl.getText());
-				resourceCategoryLabel.getElement().setAttribute("title",lbl.getText());
-				AppClientFactory.getInjector().getClasspageService().reOrderPathwaysInaClass(pathwayId, Integer.parseInt(lbl.getText()), new SimpleAsyncCallback<ClasspageListDo>() {
+				// TODO Auto-generated method stub
+				if(ClickedLabelNum!=null && !ClickedLabelNum.isEmpty()){
+				AppClientFactory.getInjector().getClasspageService().reOrderPathwaysInaClass(ClickedCollectionItemId, Integer.parseInt(ClickedLabelNum), new SimpleAsyncCallback<ClasspageListDo>() {
 					@Override
 					public void onSuccess(ClasspageListDo result) {
 						resourceTypePanel.setVisible(resourceTypePanel.isVisible() ? false : true);
@@ -282,10 +281,10 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 					}
 
 					private void redirectToPage(int totalhitCounter) {
-							if(totalhitCounter>=5){
-							/*	int numberOfPages = (totalhitCounter / 5)
-										+ ((totalhitCounter % 5) > 0 ? 1 : 0);*/
-							int clickedNumber =	Integer.parseInt(lbl.getText());
+							/*if(totalhitCounter>=5){*/
+								/*int numberOfPages = (totalhitCounter / 5)
+										+ ((totalhitCounter % 5) > 0 ? 1 : 0);*/	
+						int clickedNumber =	Integer.parseInt(ClickedLabelNum);
 								int redirectedPageNumber = (clickedNumber / 5)
 										+((clickedNumber % 5) >0 ?1 : 0);
 								Map<String,String> params = new HashMap<String,String>();
@@ -305,11 +304,50 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 								offSetVal = redirectedPageNumber-1;
 								}
 								AppClientFactory.fireEvent(new ResetPaginationEvent(offSetVal*5));
-							}
+						/*	}*///end if loop
 						
 					}
 
 				});
+				
+		}//end if loop.
+				
+			}
+		});
+		
+		cancelButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				moveAssignmentPopup.getElement().getStyle().setDisplay(Display.NONE);
+			}
+		});
+
+	}
+	
+	public abstract void deleteItem(int sequenceNum, String pathwayId);
+	
+	public abstract void saveItem(String pathwayTitle, String pathwayId);
+	
+	public Label createLabel(String title,final String pathwayId,final int totalhitCounter){
+		Label lblLabel = new Label();
+		lblLabel.setText(title);
+		lblLabel.getElement().addClassName(res.css().myFolderCollectionFolderDropdown());
+		lblLabel.getElement().addClassName(res.css().myFolderCollectionFolderVideoTitle());
+		lblLabel.getElement().setAttribute("alt", title);
+		lblLabel.getElement().setAttribute("title", title);
+		lblLabel.getElement().setAttribute("id", title);
+		
+		lblLabel.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				final Label lbl = (Label)event.getSource();
+				resourceCategoryLabel.setText(lbl.getText());
+				resourceCategoryLabel.getElement().setAttribute("alt",lbl.getText());
+				resourceCategoryLabel.getElement().setAttribute("title",lbl.getText());
+				ClickedLabelNum = lbl.getText();
+				ClickedCollectionItemId = pathwayId;
 			}
 			
 		});

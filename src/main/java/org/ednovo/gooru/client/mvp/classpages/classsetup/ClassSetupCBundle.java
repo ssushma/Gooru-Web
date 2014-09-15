@@ -22,21 +22,27 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.unitSetup;
-import java.util.ArrayList;
+package org.ednovo.gooru.client.mvp.classpages.classsetup;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.ClassDo;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.NotStrict;
 
 
-public interface IsUnitSetupView extends IsViewWithHandlers<UnitSetupUiHandlers>{
+public interface ClassSetupCBundle extends ClientBundle {
+
+	static final ClassSetupCBundle INSTANCE = GWT
+			.create(ClassSetupCBundle.class);
+
+	public interface ClassSetupCss extends CssResource {
 	
-	void showUnitDetails(ClassDo classDo);
-	
-	void setPagination(int totalCount, int pagenumVal);
+		String myFolderCollectionFolderDropdown();
+		String myFolderCollectionFolderVideoTitle();
+	}
 
-	void addAssignmentWidget(ArrayList<ClasspageItemDo> classpageItemDo, String pathwayId);  
+	@NotStrict
+	@Source("classsetup.css")
+	ClassSetupCss css();
 
 }
