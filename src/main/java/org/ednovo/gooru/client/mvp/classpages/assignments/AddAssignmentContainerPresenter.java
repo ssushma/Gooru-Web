@@ -197,7 +197,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 
 
 	private void addAssignment(String collectionId,final String pathwayId) { 
-		AppClientFactory.getInjector().getClasspageService().v2AssignCollectionTOPathway(this.classpageIdToAssign, this.pathwayId, collectionId,null,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+		AppClientFactory.getInjector().getClasspageService().v2AssignCollectionTOPathway(this.classpageIdToAssign, this.pathwayId, collectionId,null,null,null,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			@Override
 			public void onSuccess(ArrayList<ClasspageItemDo> result) {
 				if(mode.equals(CLASS_SETUP)){
