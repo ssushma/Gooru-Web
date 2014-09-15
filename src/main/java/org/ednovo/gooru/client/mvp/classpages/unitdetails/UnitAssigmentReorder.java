@@ -48,7 +48,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	private String selectedPathId;
 	private HandlerRegistration onClickUnit;
 	
-	public UnitAssigmentReorder(ClassDo classDo,UnitAssignmentsDo unitAssignmentsDo,String classpageId) {
+	public UnitAssigmentReorder(ClassDo classDo,String classpageId) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.classDo = classDo;
 		this.classpageId = classpageId;
@@ -205,7 +205,6 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			AppClientFactory.getInjector().getClasspageService().v2ReorderPathwaySequence(classpageId,selectedPathId,Integer.parseInt(dropdownListPlaceHolderAssignment.getText()),new SimpleAsyncCallback<Void>() {
 				@Override
 				public void onSuccess(Void result) {
-					System.out.println("onSuccess");
 					CancelButton.setVisible(true);
 					saveButton.setVisible(true);
 					hide();
