@@ -304,6 +304,8 @@
 	background:#fff;
 	padding-left:0 !important;
 	padding-right:0 !important;
+	width:1000px;
+	margin:0 auto;
 }
 
 
@@ -397,7 +399,7 @@
 }
 
 .classDetailsMain{
-	width:760px;
+	width:765px;
 	float:left;
 	padding:18px 0;
 }
@@ -497,7 +499,7 @@
 
 .classEdit{
 	display: inline-block;
-	margin: 0 15px;
+	margin: 0 5px;
 }
 .cancelbutton{
 	text-align: center;
@@ -529,7 +531,12 @@ width:100%;
 }
 .assignmentsNextArrow{
 	display:inline-block;
-	margin:35px 0 0px 0px;
+	margin:33px 0 0px 0px;
 	cursor: pointer;
 }
-
+.assignmentsPreviousArrow{
+	display:inline-block;
+	margin:51px 0 0px 0px;
+	cursor: pointer;
+	float: left;
+}
