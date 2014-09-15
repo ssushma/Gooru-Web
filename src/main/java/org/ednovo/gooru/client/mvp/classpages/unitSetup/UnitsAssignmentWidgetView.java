@@ -124,7 +124,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 								if(isAssignmentDeleted){
 									clearAssignmentsFromDo();
 									hide();
-									getUnitAssignments();
+									getUnitAssignments(assignmentOffset);
 								}
 							}
 						}
@@ -239,27 +239,38 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	@UiHandler("htPanelNextArrow")
 	public void clickOnNextArrow(ClickEvent clickEvent){
-		getUnitAssignments();
+		getUnitAssignments(assignmentOffset+assignmentLimit);
 	}
 	
 	
 	@UiHandler("htPanelPreviousArrow")
 	public void clickOnPreviousArrow(ClickEvent clickEvent){
-		getUnitAssignments();
+		getUnitAssignments(Math.abs(assignmentOffset-assignmentLimit));
 	}
 	
-	public void getUnitAssignments(){
+	public void getUnitAssignments(int assignmentOffset ){
 		String classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classPageId, classUnitsDo.getResource().getGooruOid(), "", assignmentLimit, assignmentOffset, new SimpleAsyncCallback<UnitAssignmentsDo>() {
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classPageId, classUnitsDo.getResource().getGooruOid(), "sequence", assignmentLimit, assignmentOffset, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 
 			@Override
 			public void onSuccess(UnitAssignmentsDo result) {
 				classUnitsDo.getResource().setCollectionItems(result.getSearchResults());
 //				setAssignmentsForUnit();
 				setAssignmentsEditView();
+				setUnitAssignments(result);
 			}
 		}); 
 	}
 
+	
+	private void setUnitAssignments(UnitAssignmentsDo result) {
+		// TODO Auto-generated method stub
+		assignmentsContainer.clear();
+			for(int i=0;i<result.getSearchResults().size();i++){
+				ClasspageItemDo classpageItemDo=result.getSearchResults().get(i);
+				assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo));
+			}
+		
+	}
 
 }
