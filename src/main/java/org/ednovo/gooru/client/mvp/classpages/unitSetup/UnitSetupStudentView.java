@@ -57,11 +57,10 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 	}
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
-	@UiField PPanel subHeading;
+
 	@UiField VerticalPanel unitAssignmentWidgetContainer;
 	
-	@UiField Anchor classSetupAnchor,unitDetailsAnchor;
+	@UiField Anchor unitDetailsAnchor;
 	
 	@UiField HTMLEventPanel paginationPanel;
 	
@@ -79,15 +78,15 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 	@Inject
 	public UnitSetupStudentView(){
 		setWidget(uiBinder.createAndBindUi(this));	
-		classSetupAnchor.addClickHandler(new ClassSetupEvents());
+		//classSetupAnchor.addClickHandler(new ClassSetupEvents());
 		unitDetailsAnchor.addClickHandler(new UnitDetailsEvent());
-		setIdAndText();
+		//setIdAndText();
 	}
 
-	private void setIdAndText() {
+/*	private void setIdAndText() {
 		subHeading.getElement().setInnerText("Setup your units by adding assignments");
 		
-	}
+	}*/
 	private class UnitDetailsEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -114,7 +113,7 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 			if(tabName!=null){
 				params.put("tab", tabName);
 			}
-			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	 }
 
@@ -122,6 +121,7 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 	public void showUnitDetails(ClassDo classDo) {
 	    totalCount = classDo.getTotalHitCount();
 	    int unitSize =classDo.getSearchResults().size() ;
+
 	    unitAssignmentWidgetContainer.clear();
 	    for(int i=0; i<unitSize; i++){
 	    	ClassUnitsListDo classListUnitsListDo=classDo.getSearchResults().get(i);
@@ -132,8 +132,6 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 
 	@Override
 	public void setPagination(int totalCount, int pagenumVal) {
-		System.out.println("totalCount::"+totalCount);
-		System.out.println("pagenumVal::"+pagenumVal);
 		this.totalCount = totalCount;
 		paginationPanel.getElement().setInnerHTML("");
 		int totalPages = (totalCount / 5)
@@ -170,7 +168,7 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 			params.put("classpageid", classpageid);
 			params.put("pageNum", pageNumber+"");
 			params.put("pos", pos);
-			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 			
 			getUiHandlers().getPathwayCompleteDetails(limit,(pageNumber-1)*limit);
