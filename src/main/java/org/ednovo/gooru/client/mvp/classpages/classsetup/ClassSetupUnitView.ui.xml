@@ -5,6 +5,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="playerStyle" src="classsetup.css" />
+	<ui:with type="org.ednovo.gooru.client.mvp.classpages.classsetup.ClassSetupCBundle" field="res" />
 		<g:HTMLPanel styleName="col-xs-12 {playerStyle.borderboxbottom}">
 
 <g:HTMLPanel >
@@ -47,10 +48,23 @@
 											</g:HTMLPanel>
 										</g:HTMLPanel>	
 										<g:HTMLPanel styleName="{playerStyle.reorderLabelContainer}" ui:field="resourceTypePanel">
-										</g:HTMLPanel>							
+										</g:HTMLPanel>
+										
+										<!-- <g:HTMLPanel>
+										<g:Button ui:field="cancelButton" styleName="primary {playerStyle.btnContainer}">Cancel</g:Button>
+										<g:Button ui:field="saveButton" styleName="primary {playerStyle.btnContainer}">Save</g:Button>
+										</g:HTMLPanel> -->	
+										
+										
+						        
 						        </g:HTMLPanel>
 						        
-					        </g:HTMLPanel>					        
+					        </g:HTMLPanel>		
+					  <g:HTMLPanel styleName="{playerStyle.saveBtnsReorder}" ui:field="buttonsContainerReorder"> 
+							<g:Button ui:field="cancelButton" styleName="secondary"> Cancel</g:Button>  
+							<g:Button ui:field="saveButton" styleName="primary"> Save</g:Button> 
+					  </g:HTMLPanel>		
+					        			        
 			         	</g:HTMLPanel>
 			        </gg:HTMLEventPanel>	
 			         

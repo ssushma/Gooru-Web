@@ -1,20 +1,15 @@
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 
 
-import java.util.Iterator;
-
-import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.home.WaitPopupVc;
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.WaitPopupVc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
@@ -53,6 +48,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 	@UiField Anchor unitDetailsButton;
 	
 	private ClassUnitsListDo classUnitsDo;
+	
+	private UnitAssignmentsDo unitAssignmentsDo;
 	
 	private int assignmentOffset=0;
 	private int assignmentLimit=10;
@@ -95,11 +92,23 @@ public class UnitsAssignmentWidgetView extends Composite {
 		if(classUnitsDo!=null){
 			for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 				ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
+				showAndHidePaginationArrows();
 				assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo));
 			}
 		}
 	}
 	
+	private void showAndHidePaginationArrows() {
+		System.out.println("classUnitsDo.getResource().getItemCount():"+classUnitsDo.getResource().getItemCount());
+		if(classUnitsDo.getResource().getItemCount()>assignmentLimit){
+			htPanelNextArrow.setVisible(true);
+//			htPanelPreviousArrow.setVisible(true);
+		}else{
+			htPanelNextArrow.setVisible(false);
+			htPanelPreviousArrow.setVisible(false);
+		}
+	}
+
 	public void clearAssignmentsFromDo(){
 		classUnitsDo.getResource().setCollectionItems(new ArrayList<ClasspageItemDo>());
 	}
@@ -289,7 +298,30 @@ public class UnitsAssignmentWidgetView extends Composite {
 				}else{
 					setAssignmentsForUnit();
 				}
+				
+				showAndHideAssignmentArrows(result);
 			}
 		}); 
 	}
+
+	
+	private void showAndHideAssignmentArrows(UnitAssignmentsDo unitAssignmentsDo) {
+		// TODO Auto-generated method stub
+		int totalAssignments=unitAssignmentsDo.getTotalHitCount();
+		System.out.println("totalAssignments:"+totalAssignments);
+		if(Math.abs(totalAssignments-assignmentOffset)>assignmentLimit){
+			if(Math.abs(totalAssignments-assignmentOffset)==totalAssignments){
+				htPanelPreviousArrow.setVisible(false);
+				htPanelNextArrow.setVisible(true);
+			}else{
+				htPanelPreviousArrow.setVisible(true);
+				htPanelNextArrow.setVisible(true);
+			}
+			
+		}else{
+			htPanelNextArrow.setVisible(false);
+			htPanelPreviousArrow.setVisible(true);
+		}
+	}
+
 }
