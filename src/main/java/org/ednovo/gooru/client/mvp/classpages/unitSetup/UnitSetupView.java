@@ -210,7 +210,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 			Widget widget = pathWayWidget.next();
 			if(widget instanceof UnitsAssignmentWidgetView){
 				if(((UnitsAssignmentWidgetView) widget).getPathwayId().equals(pathwayId)){
-					((UnitsAssignmentWidgetView) widget).addAssignment();
+					((UnitsAssignmentWidgetView) widget).addAssignment(classpageItemDo);
 				}
 			}
 		}

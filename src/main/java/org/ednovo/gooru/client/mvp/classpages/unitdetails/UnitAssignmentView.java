@@ -107,6 +107,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	UnitAssignmentsDo unitAssignmentsDo;
 	boolean isShowing=false;
 	UnitCricleView unitCricleViewObj;
+	private boolean isShowingPopUp = false;
 	
 	@Inject
 	public UnitAssignmentView(){
@@ -209,8 +210,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			          }
 			    });
 							
-			}else
-		{
+			}
+		if(totalAssignmentHitcount==0){
 			Label noAssignmentlabel = new Label("Assignment not available");
 			circleContainerPanel.clear();
 			circleContainerPanel.add(noAssignmentlabel);
@@ -291,21 +292,30 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public class UnitSeqMouseOverHandler implements MouseOverHandler{
 	@Override
 		public void onMouseOver(MouseOverEvent event) {
+		
 			unitAssigmentReorder = new UnitAssigmentReorder(classDo,unitAssignmentsDo,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null));
 			unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop()+40);
 			unitAssigmentReorder.show();
+			isShowingPopUp = true;
 			}
 		}
 	public void hidePopup(NativePreviewEvent event){
+		try{
     	if(event.getTypeInt()==Event.ONMOUSEOVER){
     		Event nativeEvent = Event.as(event.getNativeEvent());
         	boolean target=eventTargetsPopup(nativeEvent);
         	if(!target)
         	{
-        		unitAssigmentReorder.hide();
+        		
+        		if(isShowingPopUp){
+        			
+        			unitAssigmentReorder.hide();
+        		}
+    	
         		
         	}
     	}
+		}catch(Exception ex){ex.printStackTrace();}
      }
 	
 	private boolean eventTargetsPopup(NativeEvent event) {
@@ -352,8 +362,19 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 	 public void revealPlace(String tabName,String pageNum,String unitId){
 			Map<String,String> params = new HashMap<String,String>();
-			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+			String classpageid="";
+			if(pageLocation.equals(PlaceTokens.STUDENT))
+			{
+			classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			params.put("id", classpageid);
+			}
+			else
+			{
+			classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 			params.put("classpageid", classpageid);
+			}
+		
 			if(pageNum!=null){
 				params.put("pageNum", pageNum);
 			}
@@ -363,7 +384,15 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			if(unitId!=null){
 				params.put("uid", unitId);
 			}
-			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+			PlaceRequest placeRequest=null;
+			if(pageLocation.equals(PlaceTokens.STUDENT))
+			{
+				placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);	
+			}
+			else
+			{
+				placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+			}
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	 }
 	public void showMoreUnitsLink(){

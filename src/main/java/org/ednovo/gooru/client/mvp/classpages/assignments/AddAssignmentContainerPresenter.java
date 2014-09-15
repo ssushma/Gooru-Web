@@ -135,6 +135,26 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 						getView().hideAddCollectionPopup("");
 						//	AppClientFactory.fireEvent(new ResetProgressEvent());
 						/*					for(int i=0;i<classpageItemDoList.size();i++){
+		
+		if(isFromClassSetUpPresenter)
+		{
+			AppClientFactory.getInjector().getClasspageService().v2AssignCollectionTOPathway(this.classpageIdToAssign, this.pathwayId, collectionId,null,null,null,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+			@Override
+			public void onSuccess(ArrayList<ClasspageItemDo> result) {
+			// TODO Auto-generated method stubgetr
+			getView().hideAddCollectionPopup("");
+			}
+			});
+		}
+		else
+		{		
+		AppClientFactory.getInjector().getClasspageService().assignItemToClass(this.classpageId, collectionId, null, null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+			@Override
+			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemDoList) {
+				if(classpageItemDoList!=null&&classpageItemDoList.size()>0){
+					getView().hideAddCollectionPopup("");
+				//	AppClientFactory.fireEvent(new ResetProgressEvent());
+/*					for(int i=0;i<classpageItemDoList.size();i++){
 						ClasspageItemDo classpageItemDo=classpageItemDoList.get(i);
 						getEditClasspagePresenter().setClasspageItemDo(classpageItemDo);
 					}*/
