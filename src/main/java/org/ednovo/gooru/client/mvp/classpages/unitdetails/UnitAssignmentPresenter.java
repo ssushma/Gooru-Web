@@ -28,6 +28,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.event.shared.EventBus;
@@ -63,7 +64,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			getPathwayItems(classId,unitId,"sequence",assignmentOffset,assignmentLimit);
 		}
 		if(assignmentId!=null){
-			//TODO need to implement assignment API:
+			getAssignemntDetails(assignmentId,classId,unitId);
 		}
 	}
 	
@@ -76,13 +77,18 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	}
 
 	@Override
-	public void getPathwayItems(String classpageId, String pathwayGooruOid,String sequence,int limit,int offSet) {
+	public void getPathwayItems(final String classpageId, final String pathwayGooruOid,String sequence,int limit,int offSet) {
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 			@Override
 			public void onSuccess(UnitAssignmentsDo result) {
+				String aid=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
+				if(aid==null){
+					if(result!=null&&result.getSearchResults().size()>0){
+						getAssignemntDetails(result.getSearchResults().get(0).getCollectionItemId(),classpageId,pathwayGooruOid);
+					}
+				}
 				getView().getSequence(result);
 			}
-
 		});
 	}
 	
@@ -100,4 +106,27 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			}
 		});
 	}
+	
+	public void getAssignemntDetails(final String assignmentId,String classpageId,String pathwayGooruOid){
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, "sequence", limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
+			@Override
+			public void onSuccess(UnitAssignmentsDo unitAssignmentDo) {
+				ClasspageItemDo classpageItemDo=getClasspateItemDo(unitAssignmentDo, assignmentId);
+				getView().showAssignment(classpageItemDo);
+			}
+		});
+	}
+	
+	
+	public ClasspageItemDo getClasspateItemDo(UnitAssignmentsDo unitAssignmentDo,String assignmentId){
+		for(int i=0;i<unitAssignmentDo.getSearchResults().size();i++){
+			ClasspageItemDo classpageItemDo1=unitAssignmentDo.getSearchResults().get(i);
+			if(assignmentId.equals(classpageItemDo1.getCollectionItemId())){
+				return classpageItemDo1;
+			}
+		}
+		return null;
+		
+	}
+	
 }

@@ -26,7 +26,9 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.ClassDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
+
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentUiHandlers>{
@@ -36,5 +38,6 @@ public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentU
 	 public void hideMoreUnitsLink();
 	 public HTMLPanel getUnitPanel();
 	 public HTMLPanel getCircleContainerPanel();
+	 public void showAssignment(ClasspageItemDo classpageItemDo);
 
 }
