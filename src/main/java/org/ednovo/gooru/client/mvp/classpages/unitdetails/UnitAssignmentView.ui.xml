@@ -27,7 +27,8 @@
 			<div class="col-xs-10 {unitStyle.rightPanel}">
 				<div class="row">
 					<div class="col-xs-12">
-						<div class="col-xs-2 {unitStyle.unitHeading}">Unit 2 Details</div>
+					    <g:Label ui:field="unitTitleDetails" styleName="col-xs-2 {unitStyle.unitHeading}"/>
+						<!-- <div class="col-xs-2 {unitStyle.unitHeading}">Unit 2 Details</div> -->
 						<div class="col-xs-2 {unitStyle.uniRequired}">
 							<div class="{unitStyle.bubble}"></div>
 							<g:Label ui:field="requiredLabel" styleName="{unitStyle.bubbleMain}" />

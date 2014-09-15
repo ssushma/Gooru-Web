@@ -47,12 +47,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> implements IsUnitSetupView, ClickHandler{
+public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentUiHandlers> implements IsUnitSetupStudentView, ClickHandler{
 
 
-	private static UnitSetupViewUiBinder uiBinder = GWT.create(UnitSetupViewUiBinder.class);
+	private static UnitSetupStudentViewUiBinder uiBinder = GWT.create(UnitSetupStudentViewUiBinder.class);
 
-	interface UnitSetupViewUiBinder extends UiBinder<Widget, UnitSetupView> {
+	interface UnitSetupStudentViewUiBinder extends UiBinder<Widget, UnitSetupStudentView> {
 		
 	}
 	
@@ -77,7 +77,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	int pageNumber = 0;
 	
 	@Inject
-	public UnitSetupView(){
+	public UnitSetupStudentView(){
 		setWidget(uiBinder.createAndBindUi(this));	
 		classSetupAnchor.addClickHandler(new ClassSetupEvents());
 		unitDetailsAnchor.addClickHandler(new UnitDetailsEvent());
@@ -125,7 +125,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	    unitAssignmentWidgetContainer.clear();
 	    for(int i=0; i<unitSize; i++){
 	    	ClassUnitsListDo classListUnitsListDo=classDo.getSearchResults().get(i);
-	    	unitAssignmentWidgetContainer.add(new UnitsAssignmentWidgetView(classListUnitsListDo,false)); 
+	    	unitAssignmentWidgetContainer.add(new UnitsAssignmentWidgetView(classListUnitsListDo,true)); 
 	    }
 		
 	}

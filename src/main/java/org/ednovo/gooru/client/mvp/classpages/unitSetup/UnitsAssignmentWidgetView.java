@@ -52,7 +52,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	@UiField HTMLEventPanel htPanelNextArrow,htPanelPreviousArrow;
 	@UiField Anchor unitDetailsButton;
 	
-	ClassUnitsListDo classUnitsDo;
+	private ClassUnitsListDo classUnitsDo;
 	
 	private int assignmentOffset=0;
 	private int assignmentLimit=10;
@@ -61,9 +61,16 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	public UnitsAssignmentWidgetView(ClassUnitsListDo classUnitsDo){
+	public UnitsAssignmentWidgetView(ClassUnitsListDo classUnitsDo, boolean studentMode){
 		initWidget(uibinder.createAndBindUi(this));
 		this.classUnitsDo=classUnitsDo;
+		
+		if(studentMode)
+		{
+			editUnitButton.removeFromParent();
+			addAssignmentButton.removeFromParent();
+		}
+		
 		setAssignmentsForUnit();
 		setUnitNameDetails();
 		cancelEditButton.setVisible(false);
@@ -83,19 +90,16 @@ public class UnitsAssignmentWidgetView extends Composite {
 		}
 	}
 	
+	public void clearAssignmentsFromDo(){
+		classUnitsDo.getResource().setCollectionItems(new ArrayList<ClasspageItemDo>());
+	}
+	
 	public class EditAssignmentEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
 			hideEditButton(true);
 			assignmentsContainer.clear();
-			for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
-				AssignmentEditView assignmentEditView = new AssignmentEditView(classUnitsDo);
-				assignmentEditView.getDeleteAssignmentLbl().addClickHandler(new DeleteAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
-				assignmentEditView.getAssignmentReorderLbl().addClickHandler(new ReorderAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId())); 
-				assignmentEditView.setAssignmentId(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId());
-				
-				assignmentsContainer.add(assignmentEditView);
-			}
+			setAssignmentsEditView(); 
 		}
 	}
 	
@@ -118,8 +122,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 							if(result.equals("200")){
 								boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItemId);
 								if(isAssignmentDeleted){
+									clearAssignmentsFromDo();
 									hide();
-//									getPathWayItems();
+									getUnitAssignments(assignmentOffset);
 								}
 							}
 						}
@@ -138,6 +143,17 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	
 	
+	public void setAssignmentsEditView() {
+		assignmentsContainer.clear();
+		for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
+			AssignmentEditView assignmentEditView = new AssignmentEditView(classUnitsDo);
+			assignmentEditView.getDeleteAssignmentLbl().addClickHandler(new DeleteAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
+			assignmentEditView.getAssignmentReorderLbl().addClickHandler(new ReorderAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId())); 
+			assignmentEditView.setAssignmentId(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId());
+			assignmentsContainer.add(assignmentEditView);
+		}
+	}
+
 	public class ReorderAssignment implements ClickHandler{
 
 		String collectionItem;
@@ -223,22 +239,24 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	@UiHandler("htPanelNextArrow")
 	public void clickOnNextArrow(ClickEvent clickEvent){
-		getUnitAssignments(assignmentLimit,assignmentOffset+assignmentLimit);
+		getUnitAssignments(assignmentOffset+assignmentLimit);
 	}
 	
 	
 	@UiHandler("htPanelPreviousArrow")
 	public void clickOnPreviousArrow(ClickEvent clickEvent){
-		getUnitAssignments(assignmentLimit,Math.abs(assignmentOffset-assignmentLimit));
+		getUnitAssignments(Math.abs(assignmentOffset-assignmentLimit));
 	}
 	
-	public void getUnitAssignments(int assignmentLimit, int assignmentOffset ){
+	public void getUnitAssignments(int assignmentOffset ){
 		String classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classPageId, classUnitsDo.getResource().getGooruOid(), "sequence", assignmentLimit, assignmentOffset, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 
 			@Override
 			public void onSuccess(UnitAssignmentsDo result) {
-				// TODO Auto-generated method stub
+				classUnitsDo.getResource().setCollectionItems(result.getSearchResults());
+//				setAssignmentsForUnit();
+				setAssignmentsEditView();
 				setUnitAssignments(result);
 			}
 		}); 

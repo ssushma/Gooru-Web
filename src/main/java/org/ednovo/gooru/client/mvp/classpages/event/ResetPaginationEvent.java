@@ -43,7 +43,7 @@ public class ResetPaginationEvent extends GwtEvent<ResetPaginationHandler> {
 	 * Class constructor
 	 */
 	public ResetPaginationEvent(int offSetVal) {
-		offSetVal = offSetVal;
+		this.offSetVal = offSetVal;
 	}
 
 	@Override

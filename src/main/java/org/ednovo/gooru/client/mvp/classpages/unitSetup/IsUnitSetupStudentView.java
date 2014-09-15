@@ -22,31 +22,16 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.classsetup;
-
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.classpages.event.ResetPaginationHandler;
-
-public interface ClassSetupUiHandlers extends BaseUiHandlers,ResetPaginationHandler{
+package org.ednovo.gooru.client.mvp.classpages.unitSetup;
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.content.ClassDo;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 
-	void updatePathway(String pathwayId, String pathwayTitle);
-
-	void OnUnitSetupClick();
-
-	void addAssignmentsContainerPopup(String pathwayIdVal);
-
-	void getPaginatedPathways(int i);
-
-	void setUnit(String unitName, String pathwayId, int sequenceNum,String collectionItemId);
-
-	void createPathway(String pathwayTitle, int offsetVal);
-
-	void deletePathway(String pathwayId, int offsetVal);
-
-	void loadPathways();
-
-	int getPathwayTotalHitcount();
-
+public interface IsUnitSetupStudentView extends IsViewWithHandlers<UnitSetupStudentUiHandlers>{
+	
+	void showUnitDetails(ClassDo classDo);
+	
+	void setPagination(int totalCount, int pagenumVal);
 
 }

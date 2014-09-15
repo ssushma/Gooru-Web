@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
 import org.ednovo.gooru.client.child.ChildPresenter;
+import org.ednovo.gooru.client.mvp.classpages.event.ResetPaginationEvent;
 
 import com.google.inject.Inject;
 public class ClassSetupUnitPresenter extends ChildPresenter<ClassSetupUnitPresenter,IsClassSetupUnitView> implements ClassSetupUnitUiHandlers{
@@ -32,6 +33,7 @@ public class ClassSetupUnitPresenter extends ChildPresenter<ClassSetupUnitPresen
 	public ClassSetupUnitPresenter(IsClassSetupUnitView childview) {
 		super(childview);
 		//getView().setUiHandlers(this);
+	
 	}
 	
 	

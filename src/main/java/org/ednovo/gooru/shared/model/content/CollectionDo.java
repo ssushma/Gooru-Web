@@ -74,7 +74,9 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private List<checkboxSelectedDo> audience;
 	private List<checkboxSelectedDo> learningSkills;
 	private int itemSequence;
+	private String collectionItemId;
 	
+
 	public CollectionDo(){
 		
 	}
@@ -385,7 +387,13 @@ public class CollectionDo extends ResourceDo implements Serializable{
 		this.itemSequence = itemSequence;
 	}
 
-	
+	public String getCollectionItemId() {
+		return collectionItemId;
+	}
+
+	public void setCollectionItemId(String collectionItemId) {
+		this.collectionItemId = collectionItemId;
+	}
 	
 
 }
