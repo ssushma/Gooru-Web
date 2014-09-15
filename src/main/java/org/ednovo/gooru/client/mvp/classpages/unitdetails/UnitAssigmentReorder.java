@@ -54,13 +54,13 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	private int assignment_limit=10;
 	private int totalAssignmencount=0;
 	
-	public UnitAssigmentReorder(ClassDo classDo,ArrayList<CollectionItemDo> assignmentItemSeq,String classpageId) {
+	public UnitAssigmentReorder(ClassDo classDo,UnitAssignmentsDo unitAssignmentsDo,String classpageId) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.classDo = classDo;
 		this.classpageId = classpageId;
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		setUnitAssignmentData(classDo);
-		//getAssignmentDropDown(assignmentItemSeq);
+		getAssignmentDropDown(unitAssignmentsDo);
 		
 	}
 	public void setUnitAssignmentData(ClassDo classDo){
@@ -81,11 +81,12 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			//descLabel.setText(classListUnitsListDo.get(0).getResource().getDescription());
 			for(int i=0; i<classListUnitsListDo.size(); i++){
 				int totalItemCount=classListUnitsListDo.get(i).getResource().getItemCount();
-				displayAssignment(totalItemCount);
+				//displayAssignment(totalItemCount);
 				int number=classListUnitsListDo.get(i).getItemSequence();
 				dropdownListPlaceHolder.getElement().setInnerHTML(classListUnitsListDo.get(0).getItemSequence()+"");
-				String pathId=classListUnitsListDo.get(i).getCollectionItemId();
-				System.out.println("pathId..."+pathId);
+				
+				String pathId = classListUnitsListDo.get(i).getResource().getGooruOid();
+				//String pathId=classListUnitsListDo.get(i).getCollectionItemId();
 				Label dropDownListItem=new Label(number+"");
 				dropDownListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
 				dropdownListContainer.add(dropDownListItem);
@@ -96,12 +97,13 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		
 				
 	}
-	public void displayAssignment(Integer totalItemCount)
+	/*public void displayAssignment(Integer totalItemCount)
 	{
 		dropdownListContainerScrollPanelAssignment.getElement().getStyle().setDisplay(Display.NONE);
 		dropdownListPlaceHolderAssignment.addClickHandler(new OnDropdownListAssignmentPlaceHolderClick());
 		
 		dropdownListContainerScrollPanel.addScrollHandler(new AssignmentScrollDropdownListContainer());
+		
 		assignmentTotalCount = totalItemCount;
 		assignmentTotalSize = 0;
 		assignmentTotalSize =totalItemCount;
@@ -119,27 +121,27 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		{
 			dropdownListPlaceHolderAssignment.getElement().setInnerHTML(1+"");
 		}
-	}
-	/*public void getAssignmentDropDown(ArrayList<CollectionItemDo> assignmentItemSeq)
+	}*/
+	public void getAssignmentDropDown(UnitAssignmentsDo unitAssignmentsDo)
 	{
 		dropdownListContainerScrollPanelAssignment.getElement().getStyle().setDisplay(Display.NONE);
 		dropdownListPlaceHolderAssignment.addClickHandler(new OnDropdownListAssignmentPlaceHolderClick());
-		dropdownListPlaceHolderAssignment.getElement().setInnerHTML(assignmentItemSeq.get(0).getItemSequence()+"");
+		dropdownListPlaceHolderAssignment.getElement().setInnerHTML(unitAssignmentsDo.getSearchResults().get(0).getItemSequence()+"");
 		dropdownListContainerScrollPanel.addScrollHandler(new AssignmentScrollDropdownListContainer());
-		if(assignmentItemSeq!=null){
-		assignmentTotalCount = assignmentItemSeq.get(0).getTotalHitCount();
+		if(unitAssignmentsDo!=null){
+		assignmentTotalCount = unitAssignmentsDo.getTotalHitCount();
 		assignmentTotalSize = 0;
-		assignmentTotalSize = assignmentTotalSize+assignmentItemSeq.size();
-		for(int i=0; i<assignmentItemSeq.size(); i++){
+		assignmentTotalSize = assignmentTotalSize+unitAssignmentsDo.getSearchResults().size();
+		for(int i=0; i<unitAssignmentsDo.getSearchResults().size(); i++){
 			
-			int number=assignmentItemSeq.get(i).getItemSequence();
+			int number=unitAssignmentsDo.getSearchResults().get(i).getItemSequence();
 			Label dropDownAssignmentListItem=new Label(number+"");
 			dropDownAssignmentListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
 			dropdownListContainerAssignment.add(dropDownAssignmentListItem);
 			dropDownAssignmentListItem.addClickHandler(new OnDropdownAssignmentItemClick(number+""));
 		}
 		}
-	}*/
+	}
 	private class ScrollDropdownListContainer implements ScrollHandler{
 		@Override
 		public void onScroll(ScrollEvent event) {
@@ -201,9 +203,9 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 				public void onSuccess(UnitAssignmentsDo result) {
 					if(result!=null){
 					
-					/*assignmentTotalCount = result.getTotalHitCount();
-						assignmentTotalSize = result.getSearchResults().size();
-						dropdownListContainerAssignment.clear();
+					assignmentTotalCount = result.getTotalHitCount();
+					assignmentTotalSize = result.getSearchResults().size();
+					dropdownListContainerAssignment.clear();
 					for(int i=0; i<result.getSearchResults().size(); i++){
 							
 						int number=result.getSearchResults().get(i).getSequenceNumber();
@@ -211,7 +213,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 							dropDownAssignmentListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
 							dropdownListContainerAssignment.add(dropDownAssignmentListItem);
 							dropDownAssignmentListItem.addClickHandler(new OnDropdownAssignmentItemClick(number+""));
-						}*/
+						}
 				}
 				}
 				
@@ -243,15 +245,14 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 					
 					@Override
 					public void onSuccess(UnitAssignmentsDo result) {
-//						totalAssignmencount=totalAssignmencount+result.size();
-//						for(int i=0; i<result.size(); i++){
-//							
-//							int number=result.get(i).getItemSequence();
-//							Label dropDownAssignmentListItem=new Label(number+"");
-//							dropDownAssignmentListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
-//							dropdownListContainerAssignment.add(dropDownAssignmentListItem);
-//							dropDownAssignmentListItem.addClickHandler(new OnDropdownAssignmentItemClick(number+""));
-//						}
+						totalAssignmencount=totalAssignmencount+result.getSearchResults().size();
+						for(int i=0; i<result.getSearchResults().size(); i++){
+							int number=result.getSearchResults().get(i).getItemSequence();
+							Label dropDownAssignmentListItem=new Label(number+"");
+							dropDownAssignmentListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
+							dropdownListContainerAssignment.add(dropDownAssignmentListItem);
+							dropDownAssignmentListItem.addClickHandler(new OnDropdownAssignmentItemClick(number+""));
+					}
 					}
 					
 					

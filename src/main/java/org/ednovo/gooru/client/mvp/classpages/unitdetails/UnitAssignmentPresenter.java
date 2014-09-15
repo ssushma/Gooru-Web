@@ -60,7 +60,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 		String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 		if(unitId!=null&&getView().getCircleContainerPanel().getWidgetCount()<=0){
-			getPathwayItems(classId,unitId,"",assignmentOffset,assignmentLimit);
+			getPathwayItems(classId,unitId,"sequence",assignmentOffset,assignmentLimit);
 		}
 		if(assignmentId!=null){
 			//TODO need to implement assignment API:
@@ -80,7 +80,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 			@Override
 			public void onSuccess(UnitAssignmentsDo result) {
-				//getView().getSequence(result);
+				getView().getSequence(result);
 			}
 
 		});

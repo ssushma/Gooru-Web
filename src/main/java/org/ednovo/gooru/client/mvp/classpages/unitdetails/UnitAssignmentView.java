@@ -37,6 +37,7 @@ import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -103,7 +104,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private int totalAssignmentHitcount;
 	private int totalAssignmencount=0;
 	private String classpageid;
-	ArrayList<CollectionItemDo> assignmentItemSeq;
+	UnitAssignmentsDo unitAssignmentsDo;
 	boolean isShowing=false;
 	UnitCricleView unitCricleViewObj;
 	
@@ -161,16 +162,15 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	
 	
-	public void setCircleData(ArrayList<CollectionItemDo> itemSequence)
+	public void setCircleData(UnitAssignmentsDo unitAssignmentsDo)
 	{
-		
 		requiredLabel.setText("Required");
 		optionalLabel.setText("Optional");
 		rightArrow.getElement().setAttribute("style", "cursor:pointer");
 		leftArrow.getElement().setAttribute("style", "cursor:pointer");
-		
-		if(itemSequence!=null &&itemSequence.size()!=0){
-				totalAssignmentHitcount = itemSequence.get(0).getTotalHitCount();
+		totalAssignmentHitcount = unitAssignmentsDo.getTotalHitCount();
+		if(unitAssignmentsDo!=null &&unitAssignmentsDo.getSearchResults().size()!=0){
+				
 					try{
 						if(leftHandler!=null) {
 							leftHandler.removeHandler();
@@ -185,10 +185,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				circleContainerPanel.clear();
 				leftArrow.setUrl("images/leftSmallarrow.png");
 				circleContainerPanel.add(leftArrow);
-				totalAssignmencount=totalAssignmencount+itemSequence.size();
+				totalAssignmencount=totalAssignmencount+unitAssignmentsDo.getSearchResults().size();
 				
-				for(int i=0;i<itemSequence.size();i++){
-					unitCricleViewObj =new UnitCricleView(true,itemSequence.get(i).getItemSequence());
+				for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
+					unitCricleViewObj =new UnitCricleView(true,unitAssignmentsDo.getSearchResults().get(i).getItemSequence());
 					unitCricleViewObj.getElement().setId(i+"");
 					circleContainerPanel.add(unitCricleViewObj);
 					unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler());
@@ -257,6 +257,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 	public class cleckOnNext implements ClickHandler{
 		String value;
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 		private cleckOnNext(String value){
 			this.value = value;
 		}
@@ -268,7 +269,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				if(limit_circle==totalAssignmencount){
 					rightArrow.setVisible(false);	
 				}
-				getUiHandlers().getPathwayItems(classpageid, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, limit_circle, totalAssignmencount);
+				getUiHandlers().getPathwayItems(classpageid, unitId, ORDER_BY, limit_circle, totalAssignmencount);
 			}
 			else{
 				
@@ -277,20 +278,20 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				{
 					leftArrow.setVisible(false);	
 				}
-				getUiHandlers().getPathwayItems(classpageid, "25509399-83ab-42f1-b774-c1e424b132d0", ORDER_BY, limit_circle, totalAssignmencount);
+				getUiHandlers().getPathwayItems(classpageid, unitId, ORDER_BY, limit_circle, totalAssignmencount);
 			}
 		}
 	}
 	
 	@Override
-	public void getSequence(ArrayList<CollectionItemDo> getSeq) {
-		this.assignmentItemSeq=getSeq;
-		setCircleData(getSeq);
+	public void getSequence(UnitAssignmentsDo unitAssignmentsDo) {
+		this.unitAssignmentsDo = unitAssignmentsDo;
+		setCircleData(unitAssignmentsDo);
 	}
 	public class UnitSeqMouseOverHandler implements MouseOverHandler{
 	@Override
 		public void onMouseOver(MouseOverEvent event) {
-			unitAssigmentReorder = new UnitAssigmentReorder(classDo,assignmentItemSeq,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null));
+			unitAssigmentReorder = new UnitAssigmentReorder(classDo,unitAssignmentsDo,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null));
 			unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop()+40);
 			unitAssigmentReorder.show();
 			}
