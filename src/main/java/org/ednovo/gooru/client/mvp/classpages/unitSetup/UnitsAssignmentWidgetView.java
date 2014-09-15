@@ -1,3 +1,29 @@
+/*******************************************************************************
+ * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
+ * 
+ *  http://www.goorulearning.org/
+ * 
+ *  Permission is hereby granted, free of charge, to any person obtaining
+ *  a copy of this software and associated documentation files (the
+ *  "Software"), to deal in the Software without restriction, including
+ *  without limitation the rights to use, copy, modify, merge, publish,
+ *  distribute, sublicense, and/or sell copies of the Software, and to
+ *  permit persons to whom the Software is furnished to do so, subject to
+ *  the following conditions:
+ * 
+ *  The above copyright notice and this permission notice shall be
+ *  included in all copies or substantial portions of the Software.
+ * 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ ******************************************************************************/
+
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 
 
@@ -61,6 +87,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	private static final String NEXT="next";
 	private static final String PREVIOUS= "previous";
+	private int totalHitCount=0;
 	
 	private String pathwayId;
 	
@@ -93,7 +120,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 
 	private void setAssignmentsForUnit() {
 		assignmentsContainer.clear();
-
 		if(classUnitsDo!=null){
 			for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 				ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
@@ -104,7 +130,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 	}
 	
 	private void showAndHidePaginationArrows() {
-		System.out.println("classUnitsDo.getResource().getItemCount():"+classUnitsDo.getResource().getItemCount());
 		if(classUnitsDo.getResource().getItemCount()>assignmentLimit){
 			htPanelNextArrow.setVisible(true);
 //			htPanelPreviousArrow.setVisible(true);
@@ -297,23 +322,34 @@ public class UnitsAssignmentWidgetView extends Composite {
 
 			@Override
 			public void onSuccess(UnitAssignmentsDo result) {
+				setTotalHitCount(result.getTotalHitCount());
 				classUnitsDo.getResource().setCollectionItems(result.getSearchResults());
 				if(isAssignmentEditmode){
 					setAssignmentsEditView();
 				}else{
 					setAssignmentsForUnit();
 				}
-				
 				showAndHideAssignmentArrows(result);
 			}
 		}); 
 	}
 	
 	
-	public void addAssignment(ArrayList<ClasspageItemDo> classpageItemDo){ 
-		getUnitAssignments(assignmentOffset,false);
+	public void addAssignment(ArrayList<ClasspageItemDo> classpageItemDo){
+		setTotalHitCount(getTotalHitCount()+classpageItemDo.size());
+		getUnitAssignments(getOffsetValue(),false);
 	}
 	
+	private int getOffsetValue() {
+		int pageNum = getTotalHitCount()/10;
+		if(getTotalHitCount()>(pageNum*10)){
+			assignmentOffset = (pageNum*10);
+		}else if(getTotalHitCount()==(pageNum*10)){
+			assignmentOffset = ((pageNum-1)*10);
+		}
+		return assignmentOffset;
+	}
+
 	/**
 	 * @return the pathwayId
 	 */
@@ -340,9 +376,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 
 	
 	private void showAndHideAssignmentArrows(UnitAssignmentsDo unitAssignmentsDo) {
-		// TODO Auto-generated method stub
 		int totalAssignments=unitAssignmentsDo.getTotalHitCount();
-		System.out.println("totalAssignments:"+totalAssignments);
 		if(Math.abs(totalAssignments-assignmentOffset)>assignmentLimit){
 			if(Math.abs(totalAssignments-assignmentOffset)==totalAssignments){
 				htPanelPreviousArrow.setVisible(false);
@@ -356,6 +390,21 @@ public class UnitsAssignmentWidgetView extends Composite {
 			htPanelNextArrow.setVisible(false);
 			htPanelPreviousArrow.setVisible(true);
 		}
+	}
+	
+	
+	/**
+	 * @return the totalHitCount
+	 */
+	public int getTotalHitCount() {
+		return totalHitCount;
+	}
+
+	/**
+	 * @param totalHitCount the totalHitCount to set
+	 */
+	public void setTotalHitCount(int totalHitCount) {
+		this.totalHitCount = totalHitCount;
 	}
 
 }

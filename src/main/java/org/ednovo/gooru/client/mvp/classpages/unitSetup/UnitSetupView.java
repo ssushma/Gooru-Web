@@ -130,7 +130,8 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	    unitAssignmentWidgetContainer.clear();
 	    for(int i=0; i<unitSize; i++){
 	    	ClassUnitsListDo classListUnitsListDo=classDo.getSearchResults().get(i);
-	    	UnitsAssignmentWidgetView unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(classListUnitsListDo, false);
+	    	UnitsAssignmentWidgetView unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(classListUnitsListDo);
+	    	unitsAssignmentWidgetView.setTotalHitCount(classListUnitsListDo.getResource().getItemCount());
 	    	unitsAssignmentWidgetView.getAddAssignmentButton().addClickHandler(new AddAssignmentToUnit(classListUnitsListDo));
 	    	unitsAssignmentWidgetView.setPathwayId(classListUnitsListDo.getResource().getGooruOid());
 	    	unitAssignmentWidgetContainer.add(unitsAssignmentWidgetView); 
