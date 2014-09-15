@@ -59,6 +59,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	boolean isDeleted=false;
 	
+	private static final String NEXT="next";
+	private static final String PREVIOUS= "previous";
+	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public UnitsAssignmentWidgetView(ClassUnitsListDo classUnitsDo, boolean studentMode){
@@ -133,12 +136,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 			};
 		}
 
-	}
-	
-	
-	
-	public void getPathWayItems() {
-		
 	}
 	
 	
@@ -239,13 +236,24 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	@UiHandler("htPanelNextArrow")
 	public void clickOnNextArrow(ClickEvent clickEvent){
-		getUnitAssignments(assignmentOffset+assignmentLimit);
+		clearAssignmentsFromDo();
+		getUnitAssignments(getAssignmentOffsetValue(NEXT));
 	}
 	
 	
+	private int getAssignmentOffsetValue(String direction) {
+		if(direction.equals(NEXT)){
+			assignmentOffset = assignmentOffset+assignmentLimit;
+		}else{
+			assignmentOffset = Math.abs(assignmentOffset-assignmentLimit);
+		}
+		return assignmentOffset;
+	}
+
 	@UiHandler("htPanelPreviousArrow")
 	public void clickOnPreviousArrow(ClickEvent clickEvent){
-		getUnitAssignments(Math.abs(assignmentOffset-assignmentLimit));
+		clearAssignmentsFromDo();
+		getUnitAssignments(getAssignmentOffsetValue(PREVIOUS));
 	}
 	
 	public void getUnitAssignments(int assignmentOffset ){
@@ -255,15 +263,14 @@ public class UnitsAssignmentWidgetView extends Composite {
 			@Override
 			public void onSuccess(UnitAssignmentsDo result) {
 				classUnitsDo.getResource().setCollectionItems(result.getSearchResults());
-//				setAssignmentsForUnit();
 				setAssignmentsEditView();
-				setUnitAssignments(result);
+				setAssignmentsForUnit();
 			}
 		}); 
 	}
 
 	
-	private void setUnitAssignments(UnitAssignmentsDo result) {
+	/*private void setUnitAssignments(UnitAssignmentsDo result) {
 		// TODO Auto-generated method stub
 		assignmentsContainer.clear();
 			for(int i=0;i<result.getSearchResults().size();i++){
@@ -271,6 +278,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 				assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo));
 			}
 		
-	}
+	}*/
 
 }
