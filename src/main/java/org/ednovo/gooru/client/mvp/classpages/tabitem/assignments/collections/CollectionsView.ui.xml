@@ -46,7 +46,7 @@
 					<g:FlowPanel styleName="row {style.assaindetailsMain}">
 						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}">Collection Assigned: </g:Label>
 						<g:FlowPanel styleName="col-xs-6 {style.assignButtons} text-right">
-							<g:Button styleName="secondary" >Edit Collection</g:Button> 
+							<g:Button styleName="secondary" ui:field="editCollectionButton">Edit Collection</g:Button> 
 						</g:FlowPanel>
 						<g:Label styleName="clearfix"></g:Label>
 					</g:FlowPanel>
@@ -57,7 +57,7 @@
 					    <g:FlowPanel styleName="{style.resourceHeaderTextPanel}">
 					      <g:Anchor styleName="{style.resourceTitle}" ui:field="classpageItemTitle">Collection Title</g:Anchor>
 					      <g:Label styleName="{style.classpageHeading}" ui:field="learningObjective">Learning Objective</g:Label>
-					      <g:HTML styleName="{style.classpageDesc}" ui:field="learningObject">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor turpis id nisl iaculis, sit amet convallis nibh dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor turpis id nisl iaculis, sit amet convalli</g:HTML>
+					      <g:HTML styleName="{style.classpageDesc}" ui:field="learningObject"></g:HTML>
 					    </g:FlowPanel>
 					    <g:Label styleName="clearfix"></g:Label>
 		  			</g:FlowPanel>
