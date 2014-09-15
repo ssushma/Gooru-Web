@@ -1,6 +1,8 @@
 .unitDetails .containerTeacher{
 	background:#ffffff;
 	border-top:1px solid #CCCCCC;
+	width:1000px;
+	margin:0 auto;
 }
 
 .unitDetails .containerTeacher .leftPanel{
