@@ -14,10 +14,10 @@
 					<g:Anchor ui:field="unitDetailsButton">Details</g:Anchor>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{style.classDetailsMain}">
-			    <uc:HTMLEventPanel styleName="{style.assignmentsNextArrow}" ui:field="htPanelPreviousArrow">
+			<uc:HTMLEventPanel styleName="{style.assignmentsPreviousArrow}" ui:field="htPanelPreviousArrow">
 					<g:Image url="images/leftSmallarrow.png"></g:Image>
-				</uc:HTMLEventPanel>
+			</uc:HTMLEventPanel>
+			<g:HTMLPanel styleName="{style.classDetailsMain}">
 			    <g:HTMLPanel ui:field="assignmentsContainer"></g:HTMLPanel>
 			    <uc:HTMLEventPanel styleName="{style.assignmentsNextArrow}" ui:field="htPanelNextArrow">
 					<g:Image url="images/rightSmallarrow.png"></g:Image>
