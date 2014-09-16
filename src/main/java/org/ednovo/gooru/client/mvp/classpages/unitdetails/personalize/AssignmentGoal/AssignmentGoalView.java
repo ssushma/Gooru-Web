@@ -93,7 +93,7 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 	}
 	
 	public void setAssignments(){
-		for (int i=0; i<10; i++){
+		for (int i=0; i<1; i++){
 			GoalViewVc goalsVc = new GoalViewVc(""+(i+1)) {
 			};
 			panelAssignmentList.add(goalsVc);

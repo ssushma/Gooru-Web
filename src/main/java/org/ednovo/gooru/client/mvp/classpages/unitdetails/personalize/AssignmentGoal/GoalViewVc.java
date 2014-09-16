@@ -61,6 +61,7 @@ public abstract class GoalViewVc extends Composite {
 
 	public void setDebugId() {
 		lblAssignmentNumber.setText(assignmentNo);
+		lblAssignmentNumber.getElement().addClassName("numaric");
 	}
 	
 	private void removeThisFromParent(){		
