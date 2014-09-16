@@ -51,14 +51,16 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	private String selectedPathId;
 	private HandlerRegistration onClickUnit;
 	
-	public UnitAssigmentReorder(ClassDo classDo,String classpageId) {
+	public UnitAssigmentReorder(ClassDo classDo,String title,String classpageId) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.classDo = classDo;
 		this.classpageId = classpageId;
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
-		setUnitAssignmentData(classDo);
+
+		setUnitAssignmentData(classDo,title);
+				
 	}
-	public void setUnitAssignmentData(ClassDo classDo){
+	public void setUnitAssignmentData(ClassDo classDo,String title){
 		popupArrow.setUrl("images/popArrow.png");
 		saveButton.setText("Save");
 		CancelButton.setText("Cancel");
@@ -70,13 +72,12 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		totalCount=classDo.getTotalHitCount()!=null?classDo.getTotalHitCount():0;
 			if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 			ArrayList<ClassUnitsListDo> classListUnitsListDo =classDo.getSearchResults();
-			
+			titleLabel.setText(title);
+			descLabel.setText(title);
 			totalsize =totalsize+classListUnitsListDo.size() ;
 			
 			for(int i=0; i<classListUnitsListDo.size(); i++){
-//				System.out.println("title.."+classListUnitsListDo.get(i).getResource().getCollectionItems().get(i).getTitle());
-//				titleLabel.setText(classListUnitsListDo.get(i).getResource().getCollectionItems().get(i).getTitle());
-//				descLabel.setText(classListUnitsListDo.get(i).getResource().getCollectionItems().get(i).getDirection());
+
 				int totalItemCount=classListUnitsListDo.get(0).getResource().getItemCount();
 				displayAssignment(totalItemCount);
 				int number=classListUnitsListDo.get(i).getItemSequence();
@@ -88,8 +89,8 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 				dropDownListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
 				dropdownListContainer.add(dropDownListItem);
 				dropDownListItem.addClickHandler(new OnDropdownItemClick(number+"",dropDownListItem.getElement().getId(),unitCollectionItemId));
-				
 			}
+			
 		}
 		
 				
