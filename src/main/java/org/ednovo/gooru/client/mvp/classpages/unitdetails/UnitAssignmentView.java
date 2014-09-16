@@ -33,15 +33,11 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
-import org.ednovo.gooru.client.mvp.classpages.unitSetup.AssignmentsContainerWidget;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
@@ -119,6 +115,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private static final String NEXT="next";
 	private static final String PREVIOUS= "previous";
 	String unitId; 
+	private boolean IsRequired;
 	
 	private int totalAssignmentHitcount;
 	@Inject
@@ -190,15 +187,16 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				circleContainerPanel.clear();
 				leftArrow.setUrl("images/leftSmallarrow.png");
 				circleContainerPanel.add(leftArrow);
+				IsRequired = unitAssignmentsDo.getSearchResults().get(0).getIsRequired();
 				for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
-					unitCricleViewObj =new UnitCricleView(true,unitAssignmentsDo.getSearchResults().get(i).getItemSequence());
+					unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i).getItemSequence());
 					unitCricleViewObj.getElement().setId(i+"");
 					circleContainerPanel.add(unitCricleViewObj);
 					unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler());
 					unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
-					
+					unitCricleViewObj.getValueIsRequired(IsRequired);
 				}
-							
+						
 				rightArrow.setUrl("images/rightSmallarrow.png");
 				circleContainerPanel.add(rightArrow);
 				Event.addNativePreviewHandler(new NativePreviewHandler() {
@@ -404,7 +402,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				leftArrow.setVisible(false);
 				rightArrow.setVisible(true);
 			}else{
-				System.out.println("else");
 				leftArrow.setVisible(true);
 				rightArrow.setVisible(true);
 			}
@@ -457,13 +454,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			circleContainerPanel.add(leftArrow);
 
 			for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
-				unitCricleViewObj =new UnitCricleView(true,unitAssignmentsDo.getSearchResults().get(i).getItemSequence());
+				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i).getItemSequence());
 				unitCricleViewObj.getElement().setId(i+"");
 				circleContainerPanel.add(unitCricleViewObj);
 				unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler());
 				unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
-				
+				unitCricleViewObj.getValueIsRequired(IsRequired);	
 			}
+			
 			rightArrow.setUrl("images/rightSmallarrow.png");
 			circleContainerPanel.add(rightArrow);
 		
