@@ -43,6 +43,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -97,6 +98,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public UnitsAssignmentWidgetView(ClassUnitsListDo classUnitsDo){
 		initWidget(uibinder.createAndBindUi(this));
 		this.classUnitsDo=classUnitsDo;
+		addAssignmentButton.getElement().getStyle().setMarginTop(28, Unit.PX);
 		setAssignmentsForUnit();
 		setUnitNameDetails();
 		cancelEditButton.setVisible(false);
@@ -120,7 +122,11 @@ public class UnitsAssignmentWidgetView extends Composite {
 
 	private void setAssignmentsForUnit() {
 		assignmentsContainer.clear();
-		if(classUnitsDo!=null){
+		if(classUnitsDo!=null && classUnitsDo.getResource()!=null){
+			if(classUnitsDo.getResource().getCollectionItems().size()==0){
+				htPanelNextArrow.setVisible(false);
+				htPanelPreviousArrow.setVisible(false);
+			}
 			for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 				ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
 				showAndHidePaginationArrows();
@@ -132,7 +138,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 	private void showAndHidePaginationArrows() {
 		if(classUnitsDo.getResource().getItemCount()>assignmentLimit){
 			htPanelNextArrow.setVisible(true);
-//			htPanelPreviousArrow.setVisible(true);
 		}else{
 			htPanelNextArrow.setVisible(false);
 			htPanelPreviousArrow.setVisible(false);
@@ -174,6 +179,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 								if(isAssignmentDeleted){
 									clearAssignmentsFromDo();
 									hide();
+									if((getTotalHitCount()-1)==assignmentOffset){
+										assignmentOffset=assignmentOffset-10;
+									}
 									getUnitAssignments(assignmentOffset,isEditMode);
 								}
 							}
@@ -326,6 +334,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 				classUnitsDo.getResource().setCollectionItems(result.getSearchResults());
 				if(isAssignmentEditmode){
 					setAssignmentsEditView();
+					classUnitsDo.getResource().setItemCount(getTotalHitCount());
 				}else{
 					setAssignmentsForUnit();
 				}
