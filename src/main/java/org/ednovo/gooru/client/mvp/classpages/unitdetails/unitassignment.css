@@ -689,7 +689,7 @@ background: -moz-linear-gradient(3% 0 -90deg, #fff 0px, #ddd 100%) repeat scroll
 }
 
 .setGloalBtn{
-  margin-top: -130px;
+  	margin-top: -130px;
     position: relative;
 }
 
@@ -810,6 +810,10 @@ background: -moz-linear-gradient(3% 0 -90deg, #fff 0px, #ddd 100%) repeat scroll
 .col-xs-4{
 	width: 33.33333333%;
 	float: left;
+	padding-right: 15px;
+	padding-left: 15px;
+	box-sizing: border-box;
+	margin-top: 15px;
 }
 
 .scorMetInner{
