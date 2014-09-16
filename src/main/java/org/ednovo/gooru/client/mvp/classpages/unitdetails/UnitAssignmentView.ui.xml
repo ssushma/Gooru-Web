@@ -25,6 +25,12 @@
 				</g:HTMLPanel>
 			</div>
 			<div class="col-xs-10 {unitStyle.rightPanel}">
+			    
+			     <g:HTMLPanel styleName="{unitStyle.teachTab}">
+					<g:Button  ui:field="btnDashBoard">Dashboard</g:Button>
+					<g:Button  ui:field="btnAssignment">Assignments</g:Button>
+				</g:HTMLPanel>
+				<g:HTMLPanel ui:field="containerPanel" >
 				<div class="row">
 					<div class="col-xs-12">
 					    <g:Label ui:field="unitTitleDetails" styleName="col-xs-2 {unitStyle.unitHeading}"/>
@@ -64,6 +70,223 @@
 					</div>
 				</div>
 				<g:HTMLPanel ui:field="assignmentContainer"></g:HTMLPanel>
+			</g:HTMLPanel>	
+			<g:HTMLPanel ui:field="goalContainer">
+			    <div class="clearfix"></div>
+
+				<div class="col-xs-12 goalMain">
+					<div class="col-xs-6 mdiumHeader">Goals</div>
+					<div class="col-xs-6 text-right">
+			      	Not sure how to get the goal?
+					 <button title="Edit" alt="Edit" id="btnBacktoLibrary" class="secondary"
+												type="button">Take a Diagnostic Test</button>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+					
+					<div class="col-xs-12 scoreProggressMain">
+					<div class="">
+					<g:HTMLPanel ui:field="scoreHedingContainer"></g:HTMLPanel>
+					<!-- <g:HTMLPanel styleName="{unitStyle.col-xs-4}">
+					
+						<div class="scorMetInner">
+						
+						<g:Label styleName="{unitStyle.scoreHeding}">Average Correct Answer</g:Label>
+						
+						<div class="goalTracker">
+						
+						<div class="circle" id="tracker">
+						<div class="circle" id="redControll"></div> 
+						<div class="circle" id="controll"></div> 
+						<div class="circle" id="circleMiddle"></div>
+						<div class="emptybox"></div>
+						
+						</div>
+						
+						<div class="setGloalBtn">
+						<div class="perTextBox"><input name="" type="text"/></div>
+						
+						<p><button type="button" class="primary" id="btnBacktoLibrary" alt="Edit" title="Edit">Edit Goal</button></p>
+						</div>
+						
+						
+						
+						
+						</div>
+						
+						
+						
+						</div>
+					
+					</g:HTMLPanel> -->
+					<!-- 
+					<div class="col-xs-4">
+					<div class="scorMetInner">
+					<div class="scoreHeding">Assignment Completed</div>
+					
+					
+					<div class="goalTracker">
+					
+					<div class="circle" id="tracker">
+					<div class="circle" id="redControll"></div> 
+					
+					<div class="circle" id="controll"></div> 
+					<div class="circle" id="circleMiddle"></div>
+					<div class="emptybox"></div>
+					
+					</div>
+					
+					<div class="setGloalBtn">
+					<div class="perTextBox"><input name="" type="text"/></div>
+					
+					<p><button type="button" class="primary" id="btnBacktoLibrary" alt="Edit" title="Edit">Edit Goal</button></p>
+					</div>
+					
+					
+					
+					
+					</div>
+					
+					
+					
+					
+					</div>
+					
+					
+					</div>
+					
+					
+					<div class="col-xs-4">
+					
+					<div class="scorMetInner">
+					
+					<div class="scoreHeding">Time Studing</div>
+					
+					<div class="goalTracker">
+					
+					<div class="circle" id="tracker">
+					<div class="circle" id="greenControll"></div> 
+					
+					<div class="circle" id="controll"></div> 
+					<div class="circle" id="circleMiddle"></div>
+					<div class="emptybox"></div>
+					
+					</div>
+					
+					<div class="setGloalBtn">
+					<div class="perTextBox"><input name="" type="text"/></div>
+					
+					<p><button type="button" class="primary" id="btnBacktoLibrary" alt="Edit" title="Edit">Edit Goal</button></p>
+					</div>
+					
+					
+					
+					
+					</div>
+					</div>
+					
+					</div> -->
+					
+					
+					
+					</div>
+					</div>
+					
+					<div class="row sectionBlockMain">
+					
+					
+					
+					<div class="col-xs-12 goalMain">
+					
+					<div class="col-xs-12 mdiumHeader">
+					
+					Scores <span>The more you study, the more data will be shown here.</span>
+					
+					
+					</div>
+					<div class="clearfix"></div>
+					
+					
+					<div class="col-xs-12">
+					<div class="borderBox">
+					
+					<p class="text-danger">Graph Here!</p>
+					
+					</div>
+					
+					</div>
+					
+					
+					<div class="clearfix"></div>
+					
+					
+					
+					</div>
+					
+					
+					
+					</div>
+					
+					
+					
+					<div class="row sectionBlockMain">
+					
+					
+					
+					<div class="col-xs-12 goalMain">
+					
+					<div class="col-xs-12 mdiumHeader">
+					
+					Personal Preference Summary <span>The more you study, the more data will be shown here.</span>
+					
+					
+					</div>
+					<div class="clearfix"></div>
+					
+					
+					<div class="personalDetails">
+					<div class="col-xs-6">
+					
+					<div class="panel panel-default">
+					  <div class="panel-heading">
+					  <div class="panel-title text-center">Resource Usage</div>
+					  </div>
+					  <div class="panel-body">
+					    Panel content
+					  </div>
+					</div>
+					
+					
+					
+					</div>
+					
+					
+					<div class="col-xs-6">
+					
+					<div class="panel panel-default">
+					  <div class="panel-heading">
+					    <h3 class="panel-title text-center">Study Pattern</h3>
+					  </div>
+					  <div class="panel-body">
+					    Panel content
+					  </div>
+					</div>
+					
+					</div>
+					<div class="clearfix"></div>
+					</div>
+					
+					
+					<div class="clearfix"></div>
+					
+					</div>
+					
+					
+					</div>
+					
+					<div class="clearfix"></div>
+								    
+			</g:HTMLPanel>
 			</div>
 			<div class="clearfix"></div>
 		</div>

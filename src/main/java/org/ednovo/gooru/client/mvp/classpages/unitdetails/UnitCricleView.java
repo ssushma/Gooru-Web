@@ -56,7 +56,14 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 	}
 	
 	public void setUnitSequenceNumber(int sequenceNumber){
+		if(sequenceNumber == 0)
+		{
+			unitNumber.setText("");
+		}
+		else
+		{
 		unitNumber.setText(""+sequenceNumber);
+		}
 	}
 	
 	public void showCircle(){

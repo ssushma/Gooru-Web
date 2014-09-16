@@ -23,8 +23,12 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -35,6 +39,7 @@ import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 import com.google.gwt.core.client.GWT;
@@ -125,8 +130,27 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	    unitAssignmentWidgetContainer.clear();
 	    for(int i=0; i<unitSize; i++){
 	    	ClassUnitsListDo classListUnitsListDo=classDo.getSearchResults().get(i);
-	    	unitAssignmentWidgetContainer.add(new UnitsAssignmentWidgetView(classListUnitsListDo)); 
+	    	UnitsAssignmentWidgetView unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(classListUnitsListDo);
+	    	unitsAssignmentWidgetView.setTotalHitCount(classListUnitsListDo.getResource().getItemCount());
+	    	unitsAssignmentWidgetView.getAddAssignmentButton().addClickHandler(new AddAssignmentToUnit(classListUnitsListDo));
+	    	unitsAssignmentWidgetView.setPathwayId(classListUnitsListDo.getResource().getGooruOid());
+	    	unitAssignmentWidgetContainer.add(unitsAssignmentWidgetView); 
 	    }
+		
+	}
+	
+	public class AddAssignmentToUnit implements ClickHandler{
+		ClassUnitsListDo classListUnitsListDo;
+		
+		public AddAssignmentToUnit(ClassUnitsListDo classListUnitsListDo){
+			this.classListUnitsListDo = classListUnitsListDo;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			String classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			getUiHandlers().addAssignmentToPathway(classPageId,classListUnitsListDo.getResource().getGooruOid(),"unitSetupMode");
+		}
 		
 	}
 
@@ -172,8 +196,24 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 			params.put("pos", pos);
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-			
 			getUiHandlers().getPathwayCompleteDetails(limit,(pageNumber-1)*limit);
+		}
+	}
+
+	@Override
+	public void addAssignmentWidget(ArrayList<ClasspageItemDo> classpageItemDo, String pathwayId) {
+		getPathwayWidgetToAddAssignment(pathwayId,classpageItemDo);
+	}
+
+	private void getPathwayWidgetToAddAssignment(String pathwayId, ArrayList<ClasspageItemDo> classpageItemDo) {  
+		Iterator<Widget> pathWayWidget = unitAssignmentWidgetContainer.iterator();
+		while(pathWayWidget.hasNext()){
+			Widget widget = pathWayWidget.next();
+			if(widget instanceof UnitsAssignmentWidgetView){
+				if(((UnitsAssignmentWidgetView) widget).getPathwayId().equals(pathwayId)){
+					((UnitsAssignmentWidgetView) widget).addAssignment(classpageItemDo);
+				}
+			}
 		}
 	}
 	 

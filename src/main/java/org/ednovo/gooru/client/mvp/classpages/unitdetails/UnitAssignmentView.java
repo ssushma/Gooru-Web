@@ -43,33 +43,32 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
-import com.google.gwt.user.client.Event.NativePreviewHandler;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.EventTarget;
-import com.google.gwt.dom.client.NativeEvent;
 
 public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHandlers> implements IsUnitAssignmentView{
 
-	@UiField HTMLPanel assignmentContainer;
+	@UiField HTMLPanel assignmentContainer,goalContainer;
 
 
 	private static UnitAssignmentViewUiBinder uiBinder = GWT.create(UnitAssignmentViewUiBinder.class);
@@ -78,11 +77,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 	}
 	
-	@UiField HTMLPanel unitPanel;
+	@UiField HTMLPanel unitPanel,containerPanel,scoreHedingContainer;
 	
 	@UiField Label lblMoreUnits,unitTitleDetails;
 	
 	@UiField Anchor unitSetupButton;
+	
+	@UiField Button btnDashBoard,btnAssignment;
 	
 	UnitAssignmentCssBundle res;
 	
@@ -123,11 +124,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@Inject
 	public UnitAssignmentView(){
 		setWidget(uiBinder.createAndBindUi(this));
-		assignmentContainer.add(new CollectionsView(null, 0));
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
 		unitSetupButton.addClickHandler(new UnitSetupEvents());
-		
+		scoreHederView();
 	}
 	
 	public HTMLPanel getUnitPanel(){
@@ -396,6 +396,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void showMoreUnitsLink(){
 		lblMoreUnits.setVisible(true);
 	}
+
 	private void showAndHideAssignmentArrows(UnitAssignmentsDo unitAssignmentsDo) {
 		int totalAssignments=unitAssignmentsDo.getTotalHitCount();
 		if(Math.abs(totalAssignments-assignmentOffset)>assignmentLimit){
@@ -469,5 +470,37 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 						
 			
 		}
+
+	
+	@UiHandler("btnDashBoard")
+	public void clickOnDashBoard(ClickEvent clickEvent){
+		btnDashBoard.setStyleName(res.unitAssignment().selected());
+		btnAssignment.removeStyleName(res.unitAssignment().selected());
+		containerPanel.setVisible(false);
+		goalContainer.setVisible(true);
+	}
+	
+	@UiHandler("btnAssignment")
+	public void clickOnAssignement(ClickEvent clickEvent){
+		btnAssignment.setStyleName(res.unitAssignment().selected());
+		btnDashBoard.removeStyleName(res.unitAssignment().selected());
+		containerPanel.setVisible(true);
+		goalContainer.setVisible(false);
+	}
+	
+	private void scoreHederView() {
+		
+		for(int i=0; i<3; i++){
+			scoreHedingContainer.add(new ScoreHedingView());
+		}
+	}
+	
+	
+
+	@Override
+	public void showAssignment(ClasspageItemDo classpageItemDo) {
+		assignmentContainer.clear();
+		assignmentContainer.add(new CollectionsView(classpageItemDo));
+
 	}
 }

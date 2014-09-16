@@ -23,9 +23,13 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
 import org.ednovo.gooru.shared.model.content.ClassDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 import com.google.gwt.event.shared.EventBus;
@@ -35,11 +39,14 @@ public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> impleme
 	
 	private int limit = 5;
 	private int offSet = 0;
+	
+	AddAssignmentContainerPresenter addAssignmentContainerPresenter=null;
 
 	@Inject
-	public UnitSetupPresenter(EventBus eventBus, IsUnitSetupView view) {
+	public UnitSetupPresenter(EventBus eventBus, IsUnitSetupView view, AddAssignmentContainerPresenter addAssignmentContainerPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
+		this.addAssignmentContainerPresenter = addAssignmentContainerPresenter;
 		getPathwayCompleteDetails(limit,offSet);
 	}
 
@@ -74,6 +81,26 @@ public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> impleme
 			});
 		}
 		
+	}
+
+	/**
+	 * Before calling API.
+	 */
+	@Override
+	public void addAssignmentToPathway(String classPageId, String pathwayId,String mode) {
+		addAssignmentContainerPresenter.setUnitSetupPresenter(this);
+		addAssignmentContainerPresenter.getUserShelfData();
+		addAssignmentContainerPresenter.addAssignmentToPathway(classPageId, pathwayId,mode);
+		addToPopupSlot(addAssignmentContainerPresenter);
+	}
+
+	/**
+	 * After API call success, to add assignment widgets.
+	 * @param pathwayId 
+	 * @param result
+	 */
+	public void addAssignmentToPathway(ArrayList<ClasspageItemDo> classpageItemDo, String pathwayId) {  
+		getView().addAssignmentWidget(classpageItemDo,pathwayId); 
 	}
 	
 	
