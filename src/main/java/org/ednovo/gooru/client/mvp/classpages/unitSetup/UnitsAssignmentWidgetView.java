@@ -35,20 +35,30 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssigmentReorder;
 import org.ednovo.gooru.client.mvp.home.WaitPopupVc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -76,14 +86,18 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	private ClassUnitsListDo classUnitsDo;
 	
+	private ClassDo classDo;
+	
 	private UnitAssignmentsDo unitAssignmentsDo;
+	
+	private UnitAssigmentReorder unitAssigmentReorder;
 	
 	private int assignmentOffset=0;
 	private int assignmentLimit=10;
 	
 	boolean isDeleted=false;
 	private boolean isEditMode=false;
-	
+	private boolean isReorderPopupShowing = false;
 	private boolean isStudentMode=false;
 	
 	private static final String NEXT="next";
@@ -200,24 +214,59 @@ public class UnitsAssignmentWidgetView extends Composite {
 		for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 			AssignmentEditView assignmentEditView = new AssignmentEditView(classUnitsDo);
 			assignmentEditView.getDeleteAssignmentLbl().addClickHandler(new DeleteAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
-			assignmentEditView.getAssignmentReorderLbl().addClickHandler(new ReorderAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId())); 
+			assignmentEditView.getAssignmentReorderLbl().addMouseOverHandler(new ReorderAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId())); 
 			assignmentEditView.setAssignmentId(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId());
 			assignmentsContainer.add(assignmentEditView);
 		}
+		
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hideReorderPopup(event);
+	          }
+	    });
 	}
 
-	public class ReorderAssignment implements ClickHandler{
+	public class ReorderAssignment implements MouseOverHandler{
 
 		String collectionItem;
 		
 		public ReorderAssignment(String collectionItem){
 			this.collectionItem = collectionItem;
 		}
-		
+
 		@Override
-		public void onClick(ClickEvent event) {
+		public void onMouseOver(MouseOverEvent event) {
+			String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(), classPageId);
+			unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-148,event.getRelativeElement().getAbsoluteTop()+36);
+			unitAssigmentReorder.show();
+			isReorderPopupShowing = true;
 		}
-		
+	}
+	
+	public void hideReorderPopup(NativePreviewEvent event){
+		try{
+			if(event.getTypeInt()==Event.ONMOUSEOVER){
+				Event nativeEvent = Event.as(event.getNativeEvent());
+				boolean target=eventTargetsPopup(nativeEvent);
+				if(!target)
+				{
+					if(isReorderPopupShowing){
+						unitAssigmentReorder.hide();
+					}
+				}
+			}
+		}catch(Exception ex){ex.printStackTrace();}
+	}
+
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			try{
+				return unitAssigmentReorder.getElement().isOrHasChild(Element.as(target));
+			}catch(Exception ex){}
+		}
+		return false;
 	}
 	
 	
@@ -414,6 +463,21 @@ public class UnitsAssignmentWidgetView extends Composite {
 	 */
 	public void setTotalHitCount(int totalHitCount) {
 		this.totalHitCount = totalHitCount;
+	}
+	
+	
+	/**
+	 * @return the classDo
+	 */
+	public ClassDo getClassDo() {
+		return classDo;
+	}
+
+	/**
+	 * @param classDo the classDo to set
+	 */
+	public void setClassDo(ClassDo classDo) {
+		this.classDo = classDo;
 	}
 
 }

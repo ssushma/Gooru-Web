@@ -53,7 +53,6 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		this.classpageId = classpageId;
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		setUnitAssignmentData(classDo);
-				
 	}
 	public void setUnitAssignmentData(ClassDo classDo){
 		popupArrow.setUrl("images/popArrow.png");
