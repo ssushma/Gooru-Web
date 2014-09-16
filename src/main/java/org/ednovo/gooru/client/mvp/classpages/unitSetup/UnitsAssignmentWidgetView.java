@@ -236,8 +236,14 @@ public class UnitsAssignmentWidgetView extends Composite {
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(), classPageId);
+			String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(), classPageId){
+
+				@Override
+				public void reorderAssignment(int seqPosition) {
+				}
+				
+			};
 			unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-148,event.getRelativeElement().getAbsoluteTop()+36);
 			unitAssigmentReorder.show();
 			isReorderPopupShowing = true;

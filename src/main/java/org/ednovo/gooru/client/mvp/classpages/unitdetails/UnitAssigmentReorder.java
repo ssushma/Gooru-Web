@@ -31,7 +31,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class UnitAssigmentReorder extends PopupPanel{
+public abstract class UnitAssigmentReorder extends PopupPanel{ 
 private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			.create(UnitAssigmentReorderUiBinder.class);
 
@@ -74,9 +74,9 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			totalsize =totalsize+classListUnitsListDo.size() ;
 			
 			for(int i=0; i<classListUnitsListDo.size(); i++){
-				System.out.println("title.."+classListUnitsListDo.get(i).getResource().getCollectionItems().get(i).getTitle());
-				titleLabel.setText(classListUnitsListDo.get(i).getResource().getCollectionItems().get(i).getTitle());
-				descLabel.setText(classListUnitsListDo.get(i).getResource().getCollectionItems().get(i).getDirection());
+//				System.out.println("title.."+classListUnitsListDo.get(i).getResource().getCollectionItems().get(i).getTitle());
+//				titleLabel.setText(classListUnitsListDo.get(i).getResource().getCollectionItems().get(i).getTitle());
+//				descLabel.setText(classListUnitsListDo.get(i).getResource().getCollectionItems().get(i).getDirection());
 				int totalItemCount=classListUnitsListDo.get(0).getResource().getItemCount();
 				displayAssignment(totalItemCount);
 				int number=classListUnitsListDo.get(i).getItemSequence();
@@ -209,6 +209,8 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			{
 				selectedPathId = dropdownListPlaceHolder.getElement().getId();	
 			}
+			System.out.println("--- selectedPathId - "+selectedPathId);
+			System.out.println("--- id - "+classpageId);
 			AppClientFactory.getInjector().getClasspageService().v2ReorderPathwaySequence(classpageId,selectedPathId,Integer.parseInt(dropdownListPlaceHolderAssignment.getText()),new SimpleAsyncCallback<Void>() {
 				@Override
 				public void onSuccess(Void result) {
@@ -216,7 +218,9 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 					saveButton.setVisible(true);
 					hide();
 					savingTextLabel.setText("");
-					AppClientFactory.fireEvent(new ReorderAssignmentEvent(Integer.parseInt(dropdownListPlaceHolderAssignment.getText())));
+					setAssignmentToNewPosition(Integer.parseInt(dropdownListPlaceHolderAssignment.getText()));
+					
+//					AppClientFactory.fireEvent(new ReorderAssignmentEvent(Integer.parseInt(dropdownListPlaceHolderAssignment.getText())));
 					
 					
 					
@@ -224,6 +228,13 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		});	
 			
 		}
+
+		public void setAssignmentToNewPosition(int seqPosition){
+			reorderAssignment(seqPosition);
+		}
 	}
+
+
+	public abstract void reorderAssignment(int seqPosition); 
 	
 }

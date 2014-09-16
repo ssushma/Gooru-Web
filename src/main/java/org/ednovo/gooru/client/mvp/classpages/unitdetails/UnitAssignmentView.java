@@ -292,7 +292,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public class UnitSeqMouseOverHandler implements MouseOverHandler{
 	@Override
 		public void onMouseOver(MouseOverEvent event) {
-			unitAssigmentReorder = new UnitAssigmentReorder(classDo,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null));
+			unitAssigmentReorder = new UnitAssigmentReorder(classDo,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null)){
+
+				@Override
+				public void reorderAssignment(int seqPosition) {
+					setAssignmentToNewPosition(seqPosition);
+				}
+				
+			};
 			unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop()+40);
 			unitAssigmentReorder.show();
 			isShowingPopUp = true;
@@ -511,20 +518,20 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		assignmentContainer.add(new CollectionsView(classpageItemDo));
 
 	}
+	
+	public void setAssignmentToNewPosition(int pageNumber){
+		assignmentOffset =(pageNumber/assignmentLimit)*assignmentLimit;
+		if(assignmentOffset==pageNumber){
+			assignmentOffset = assignmentOffset-assignmentLimit;
+		}
+		getUnitAssignments(assignmentOffset,isEditMode);
+	}
+	
+	
 	ReorderAssignmentEventHandler reorderAssignmentEventHandler = new ReorderAssignmentEventHandler(){
 
 		@Override
 		public void reorderAssignment(int pageNumber) {
-			assignmentOffset =(pageNumber/assignmentLimit)*assignmentLimit;
-			
-			if(assignmentOffset==pageNumber)
-			{
-				assignmentOffset = assignmentOffset-assignmentLimit;
-			}
-			
-			
-			getUnitAssignments(assignmentOffset,isEditMode);
-		
 			
 		}
 		
