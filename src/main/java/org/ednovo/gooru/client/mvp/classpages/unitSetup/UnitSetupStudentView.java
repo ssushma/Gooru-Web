@@ -43,6 +43,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -64,6 +65,8 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 	
 	@UiField HTMLEventPanel paginationPanel;
 	
+	@UiField HTMLPanel clearfix;
+	
 	ClasspageListDo classpageListDo;
 	
 	private static final String NEXT = i18n.GL1463().toUpperCase();
@@ -79,6 +82,7 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 	public UnitSetupStudentView(){
 		setWidget(uiBinder.createAndBindUi(this));	
 		//classSetupAnchor.addClickHandler(new ClassSetupEvents());
+		clearfix.getElement().getStyle().setBackgroundColor("#fafafa");
 		unitDetailsAnchor.addClickHandler(new UnitDetailsEvent());
 		//setIdAndText();
 	}

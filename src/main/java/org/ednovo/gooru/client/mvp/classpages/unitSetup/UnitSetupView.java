@@ -43,11 +43,13 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -70,6 +72,8 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	
 	@UiField HTMLEventPanel paginationPanel;
 	
+	@UiField HTMLPanel clearfix;
+	
 	ClasspageListDo classpageListDo;
 	
 	private static final String NEXT = i18n.GL1463().toUpperCase();
@@ -91,7 +95,8 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 
 	private void setIdAndText() {
 		subHeading.getElement().setInnerText("Setup your units by adding assignments");
-		
+		clearfix.getElement().getStyle().setBackgroundColor("#fafafa");
+		clearfix.getElement().getStyle().setWidth(101, Unit.PCT);
 	}
 	private class UnitDetailsEvent implements ClickHandler{
 		@Override
