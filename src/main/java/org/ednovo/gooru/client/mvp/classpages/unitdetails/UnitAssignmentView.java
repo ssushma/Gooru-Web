@@ -515,8 +515,16 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 		@Override
 		public void reorderAssignment(int pageNumber) {
+			assignmentOffset =(pageNumber/assignmentLimit)*assignmentLimit;
 			
-		//	getUnitAssignments(getAssignmentOffsetValue(NEXT),isEditMode);
+			if(assignmentOffset==pageNumber)
+			{
+				assignmentOffset = assignmentOffset-assignmentLimit;
+			}
+			
+			
+			getUnitAssignments(assignmentOffset,isEditMode);
+		
 			
 		}
 		

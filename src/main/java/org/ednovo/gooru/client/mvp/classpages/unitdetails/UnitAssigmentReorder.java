@@ -10,6 +10,8 @@ import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -73,8 +75,9 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			totalsize =totalsize+classListUnitsListDo.size() ;
 			
 			for(int i=0; i<classListUnitsListDo.size(); i++){
-				titleLabel.setText(classListUnitsListDo.get(i).getResource().getTitle());
-				descLabel.setText(classListUnitsListDo.get(i).getResource().getTitle());
+				System.out.println("title.."+classListUnitsListDo.get(i).getResource().getCollectionItems().get(i).getTitle());
+				titleLabel.setText(classListUnitsListDo.get(i).getResource().getCollectionItems().get(i).getTitle());
+				descLabel.setText(classListUnitsListDo.get(i).getResource().getCollectionItems().get(i).getDirection());
 				int totalItemCount=classListUnitsListDo.get(0).getResource().getItemCount();
 				displayAssignment(totalItemCount);
 				int number=classListUnitsListDo.get(i).getItemSequence();
@@ -214,7 +217,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 					saveButton.setVisible(true);
 					hide();
 					savingTextLabel.setText("");
-					AppClientFactory.fireEvent(new ReorderAssignmentEvent(1));
+					AppClientFactory.fireEvent(new ReorderAssignmentEvent(Integer.parseInt(dropdownListPlaceHolderAssignment.getText())));
 					
 					
 					
