@@ -118,6 +118,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		res.unitAssignment().ensureInjected();
 		unitSetupButton.addClickHandler(new UnitSetupEvents());
 		scoreHederView();
+		containerPanel.setVisible(false);
+		btnDashBoard.setStyleName(res.unitAssignment().selected());
 	}
 	
 	public HTMLPanel getUnitPanel(){
