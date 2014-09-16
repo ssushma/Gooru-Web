@@ -797,7 +797,7 @@ background: -moz-linear-gradient(3% 0 -90deg, #fff 0px, #ddd 100%) repeat scroll
 	text-align:center;
 	margin-bottom:12px;
 	width:65%;
-	background:url(../images/persentage.png) no-repeat center right;
+	background:url(images/Classpage/student/persentage.png) no-repeat center right;
 }
 .selected{
 	background: -moz-linear-gradient(3% 0 -90deg, #1076bb 0px, #579ecf 100%) repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
@@ -812,7 +812,7 @@ background: -moz-linear-gradient(3% 0 -90deg, #fff 0px, #ddd 100%) repeat scroll
 	float: left;
 }
 
-.col-xs-4 .scorMetInner{
+.scorMetInner{
 	border:2px solid #cccccc;
 	min-height:180px;
 	padding:10px 10px;
