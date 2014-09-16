@@ -43,11 +43,13 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -70,6 +72,8 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	
 	@UiField HTMLEventPanel paginationPanel;
 	
+	@UiField HTMLPanel clearfix;
+	
 	ClasspageListDo classpageListDo;
 	
 	private static final String NEXT = i18n.GL1463().toUpperCase();
@@ -91,7 +95,8 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 
 	private void setIdAndText() {
 		subHeading.getElement().setInnerText("Setup your units by adding assignments");
-		
+		clearfix.getElement().getStyle().setBackgroundColor("#fafafa");
+		clearfix.getElement().getStyle().setWidth(101, Unit.PCT);
 	}
 	private class UnitDetailsEvent implements ClickHandler{
 		@Override
@@ -170,7 +175,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 			}
 		
 			int page = pagenumVal < 5 ? 1 : pagenumVal - 3;
-
+			
 			for (int count = 1; count < 5 && page <= totalPages; page++, ++count) 
 			{
 				paginationPanel.add(new PaginationButtonUc(page, page == pagenumVal, this));
@@ -191,8 +196,10 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 			String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+			String tab=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
 			params.put("pageSize", pageSize);
 			params.put("classpageid", classpageid);
+			params.put("tab", tab);
 			params.put("pageNum", pageNumber+"");
 			params.put("pos", pos);
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
