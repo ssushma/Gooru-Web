@@ -200,7 +200,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i).getItemSequence());
 					unitCricleViewObj.getElement().setId(i+"");
 					circleContainerPanel.add(unitCricleViewObj);
-					unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler());
+					unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle()));
 					unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
 					//IsRequired = unitAssignmentsDo.getSearchResults().get(0).getIsRequired();
 					unitCricleViewObj.getValueIsRequired(true);
@@ -290,9 +290,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		setCircleData(unitAssignmentsDo);
 	}
 	public class UnitSeqMouseOverHandler implements MouseOverHandler{
+		String title;
+	public UnitSeqMouseOverHandler(String title) {
+		this.title = title;
+		}
+
 	@Override
 		public void onMouseOver(MouseOverEvent event) {
-			unitAssigmentReorder = new UnitAssigmentReorder(classDo,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null));
+			unitAssigmentReorder = new UnitAssigmentReorder(classDo,title,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null));
 			unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop()+40);
 			unitAssigmentReorder.show();
 			isShowingPopUp = true;
@@ -407,6 +412,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	private void showAndHideAssignmentArrows(UnitAssignmentsDo unitAssignmentsDo) {
 		int totalAssignments=unitAssignmentsDo.getTotalHitCount();
+		
 		if(Math.abs(totalAssignments-assignmentOffset)>assignmentLimit){
 			if(Math.abs(totalAssignments-assignmentOffset)==totalAssignments){
 				leftArrow.setVisible(false);
@@ -420,6 +426,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			rightArrow.setVisible(false);
 			leftArrow.setVisible(true);
 		}
+		
 	}
 	private void showAndHidePaginationArrows() {
 	if(totalAssignmentHitcount>assignmentLimit){
@@ -467,7 +474,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i).getItemSequence());
 				unitCricleViewObj.getElement().setId(i+"");
 				circleContainerPanel.add(unitCricleViewObj);
-				unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler());
+				unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle()));
 				unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
 				unitCricleViewObj.getValueIsRequired(true);	
 			}
@@ -522,7 +529,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				assignmentOffset = assignmentOffset-assignmentLimit;
 			}
 			
-			
+			clearAssignmentsFromDo();
 			getUnitAssignments(assignmentOffset,isEditMode);
 		
 			
