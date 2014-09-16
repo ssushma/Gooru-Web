@@ -26,14 +26,16 @@
 				
 			<g:HTMLPanel styleName="{style.classButtons}">
 				<g:Button styleName="secondary btn-block {style.editbutton}" ui:field="editUnitButton">Edit</g:Button>
-			</g:HTMLPanel>
-			
-			<g:HTMLPanel styleName="{style.classButtons}">
 				<g:Button styleName="secondary btn-block" ui:field="addAssignmentButton"><img src="images/plusIco.png"/> Assignment</g:Button>
-			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{style.classButtons}">
 				<g:Button styleName="secondary btn-block" ui:field="cancelEditButton">Cancel</g:Button>
 			</g:HTMLPanel>
+			
+			<!-- <g:HTMLPanel styleName="{style.classButtons}">
+				
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{style.classButtons}">
+				
+			</g:HTMLPanel> -->
 			
 		</g:HTMLPanel>
 	</g:HTMLPanel>

@@ -228,8 +228,12 @@
 
 
 .unitDetails .containerTeacher{
-	background:#ffffff;
-	border-top:1px solid #CCCCCC;
+	background: #fff;
+	border-top: 1px solid #ccc;
+	padding-right: 0 !important;
+	width: 1000px;
+	margin: 0 auto;
+	
 }
 
 .unitDetails .containerTeacher .leftPanel{
