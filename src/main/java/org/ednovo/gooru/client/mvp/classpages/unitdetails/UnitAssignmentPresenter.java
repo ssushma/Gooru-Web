@@ -45,7 +45,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	private int limit = 5;
 	private int offSet = 0;
 	private int assignmentOffset=0;
-	private int assignmentLimit=5;
+	private int assignmentLimit=10;
 	
 	@Inject
 	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter) {
