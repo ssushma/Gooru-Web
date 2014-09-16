@@ -273,7 +273,7 @@
 
 
 .UnitSetupMain .uniSetup{
-	width: 1000px;
+	/* width: 1000px; */
 	margin: 0 auto;
 	padding-left: 0 !important;
 	padding-right: 0 !important;

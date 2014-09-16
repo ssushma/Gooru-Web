@@ -180,7 +180,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 			}
 		
 			int page = pagenumVal < 5 ? 1 : pagenumVal - 3;
-
+			
 			for (int count = 1; count < 5 && page <= totalPages; page++, ++count) 
 			{
 				paginationPanel.add(new PaginationButtonUc(page, page == pagenumVal, this));
@@ -201,8 +201,10 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 			String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+			String tab=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
 			params.put("pageSize", pageSize);
 			params.put("classpageid", classpageid);
+			params.put("tab", tab);
 			params.put("pageNum", pageNumber+"");
 			params.put("pos", pos);
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
