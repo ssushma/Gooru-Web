@@ -151,7 +151,7 @@ public interface CollectionAssignCBundle extends ClientBundle{
 		
 		String collectionBlocks();
 		
-		String scoreErrorLabel();
+		//String scoreErrorLabel();
 		
 		String suggestTimeErrorLabel();
 	}

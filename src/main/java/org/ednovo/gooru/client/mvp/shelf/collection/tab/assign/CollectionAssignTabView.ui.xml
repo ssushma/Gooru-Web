@@ -93,7 +93,7 @@
 							<g:Label styleName="{res.css.scoreLbl}" ui:field="scoreLbl"/>
 							<!-- <g:Image styleName="friendlyQuestionMark"></g:Image> -->
 							<g:TextBox styleName="{res.css.textScoreBox}" ui:field="scoreTxt" />
-							<g:Label ui:field="scoreErrorLabel" styleName="{res.css.scoreErrorLabel}"></g:Label>
+							<g:Label ui:field="scoreErrorLabel" styleName="{res.css.suggestTimeErrorLabel}"></g:Label>
 						</g:HTMLPanel>
 
 						<g:HTMLPanel styleName="col-xs-6 {res.css.collectionBlocks}">
