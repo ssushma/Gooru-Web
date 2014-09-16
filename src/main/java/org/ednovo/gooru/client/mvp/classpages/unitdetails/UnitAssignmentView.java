@@ -467,7 +467,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			rightArrow.setUrl("images/rightSmallarrow.png");
 			circleContainerPanel.add(rightArrow);
 		
-						
+		}			
 			
 		}
 
