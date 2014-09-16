@@ -39,6 +39,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
@@ -559,5 +560,34 @@ public interface ClasspageService extends BaseService {
 
 	CollectionDo updateAssignmentStatus(String collectionItemId,
 			boolean isRequiredStatus) throws GwtException;
+	
+	/**
+	 * @function getAssignmentData 
+	 * 
+	 * @created_date : 16-Sep-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param gooruUId
+	 * @param classpageId
+	 * @param pageSize
+	 * @param pageNum
+	 * @return
+	 * @throws GwtException
+	 * @throws ServerDownException
+	 * 
+	 * @return : ArrayList<InsightsUserDataDo>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	List<InsightsUserDataDo> getAssignmentData(String gooruUId,
+			String classpageId, int pageSize, int pageNum) throws GwtException,
+			ServerDownException;
 
 }

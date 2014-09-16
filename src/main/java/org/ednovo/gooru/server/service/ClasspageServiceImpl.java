@@ -56,6 +56,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
@@ -1796,7 +1797,34 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollection(jsonRep);
 	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.service.ClasspageService#getAssignmentData(java.lang.String)
+	 */
+	@Override
+	public List<InsightsUserDataDo> getAssignmentData(String gooruUId, String classpageId, int pageSize, int pageNum)
+			throws GwtException, ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_ASSIGNMENTS, classpageId, getLoggedInSessionToken(), ""+pageSize, ""+pageNum);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeAssignmentsData(jsonRep);
+		
+	}
 	
+	public List<InsightsUserDataDo> deserializeAssignmentsData(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				
+				List<InsightsUserDataDo> insightsData = JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(), new TypeReference<List<InsightsUserDataDo>>(){});
+				
+				return insightsData;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return new ArrayList<InsightsUserDataDo>();
+	}
 }
 
 

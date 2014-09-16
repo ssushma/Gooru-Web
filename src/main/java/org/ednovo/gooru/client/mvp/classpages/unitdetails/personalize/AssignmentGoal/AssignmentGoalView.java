@@ -63,7 +63,7 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField Label lblStudentsList;
+	@UiField Label lblStudentsList, lblPleaseWait;
 	
 	@UiField HTMLPanel panelAssignmentList;
 	
@@ -89,10 +89,11 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 		lblStudentsList.setText(collaboratorsDo.getFirstName() + " " + collaboratorsDo.getLastName());
 		StringUtil.setAttributes(lblStudentsList.getElement(), collaboratorsDo.getGooruOid(), null, null);
 		
-		setAssignments();
+//		setAssignments();
 	}
-	
+	@Override
 	public void setAssignments(){
+		lblPleaseWait.setVisible(false);
 		for (int i=0; i<1; i++){
 			GoalViewVc goalsVc = new GoalViewVc(""+(i+1)) {
 			};

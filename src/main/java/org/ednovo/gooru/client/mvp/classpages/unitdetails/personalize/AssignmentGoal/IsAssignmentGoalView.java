@@ -42,6 +42,26 @@ import org.ednovo.gooru.client.child.IsChildView;
  * @Reviewer:
  */
 public interface IsAssignmentGoalView extends IsChildView<AssignmentGoalPresenter> {
+
+	/**
+	 * @function setAssignments 
+	 * 
+	 * @created_date : 16-Sep-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void setAssignments();
 	
 }
 

@@ -27,12 +27,7 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.Assignmen
 /**
  * 
  */
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildPresenter;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
-import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.IsCollectionsView;
-import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.service.ClasspageService;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
@@ -76,4 +71,10 @@ public class AssignmentGoalPresenter extends ChildPresenter<AssignmentGoalPresen
 	public void setClasspageService(ClasspageService classpageService) {
 		this.classpageService = classpageService;
 	}
+	
+	
+	public void getAnalyticData(){
+		
+	}
+	
 }
