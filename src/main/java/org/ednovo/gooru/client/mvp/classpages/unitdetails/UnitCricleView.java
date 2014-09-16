@@ -29,6 +29,7 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 	@UiField InlineLabel unitNumber;
 	@UiField HTMLPanel bubbleOuterPanel;
 	boolean isRequired; 
+	
 		
 	public UnitCricleView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -38,12 +39,12 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 		showCircle();
 		
 	}
-	public UnitCricleView(boolean isRequired,int unitCircleNumber) {
+	public UnitCricleView(int unitCircleNumber) {
 		initWidget(uiBinder.createAndBindUi(this));
-		this.isRequired=isRequired;
+	//	this.isRequired=isRequired;
 		UnitAssignmentCssBundle.INSTANCE.unitAssignment().ensureInjected();
 		unitNumber.setText(unitCircleNumber+"");
-		showCircle();
+		
 		
 	}
 	
@@ -65,8 +66,14 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 		unitNumber.setText(""+sequenceNumber);
 		}
 	}
-	
 	public void showCircle(){
+		if(isRequired){
+			displayRequiredCircle();
+		}else{
+			displayOptionalCircle();
+		}
+	}
+	public void showCircle(boolean isRequired){
 		if(isRequired){
 			displayRequiredCircle();
 		}else{
@@ -102,5 +109,8 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
 		return addDomHandler(handler, MouseOverEvent.getType());
 	}
-	
+	public void getValueIsRequired(boolean isRequired)
+	{
+		showCircle(isRequired);
+	}
 }
