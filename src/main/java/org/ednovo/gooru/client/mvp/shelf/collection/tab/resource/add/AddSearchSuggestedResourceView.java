@@ -191,7 +191,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		addResourceBtnLbl.getElement().setId("bluebtnAddResourceBtnLbl");
 		imgNotFriendly.setAltText(i18n.GL0737());
 		imgNotFriendly.getElement().setId("imgImgNotFriendly");
-		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
+		imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
 		AppClientFactory.getEventBus().addHandler(UpdateSearchResultMetaDataEvent.TYPE,setUpdateMetaData);
 		AppClientFactory.getEventBus().addHandler(UpdateResourceRatingCountEvent.TYPE,setRatingCount);
 		ratingWidgetView=new RatingWidgetView();
@@ -288,7 +288,9 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 	
 	public void setData(ResourceSearchResultDo resourceSearchResultDo) {
 		this.resourceSearchResultDo = resourceSearchResultDo;
+		ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 		ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount().toString()); 
+		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
 //		ratingWidgetView.setAvgStarRating(2); 
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
@@ -359,10 +361,23 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 		}
 		String mediaType = resourceSearchResultDo.getMediaType();
 		
-		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? true : false : false;
+		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
+		//boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? false : true : true;
 		
-		imgNotFriendly.setVisible(setVisibility);
-		
+		//imgNotFriendly.setVisible(setVisibility);
+		if(setVisibility)
+		{
+			imgNotFriendly.getElement().setId("imgImgFriendly");
+			imgNotFriendly.setTitle(i18n.GL0737_1());
+			imgNotFriendly.setAltText(i18n.GL0737_1());
+			imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
+		}else
+		{
+			imgNotFriendly.getElement().setId("imgImgNotFriendly");
+			imgNotFriendly.setTitle(i18n.GL0737());
+			imgNotFriendly.setAltText(i18n.GL0737());
+			imgNotFriendly.setUrl("images/mos/mobileunfriendly.png");
+		}
 		if (imgNotFriendly.isVisible()){
 			lblResourceTitle.getElement().getStyle().setFloat(Float.LEFT);
 		}else{
@@ -374,7 +389,8 @@ public abstract  class AddSearchSuggestedResourceView extends Composite {
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431()+" "+"<img src='/images/mos/mobileunfriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL_SPL_EXCLAMATION());
+				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setZIndex(9999999);
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);

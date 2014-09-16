@@ -130,7 +130,9 @@ public class ThankYouResourceStarRatings extends PopupPanel{
 	 */
 	private void setAvgRatingWidget() {
 		ratingWidgetView=new RatingWidgetView();
+		ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 		ratingWidgetView.getRatingCountLabel().setText(count.toString());
+		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetView.setAvgStarRating(average);
 		//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 		//ratingWidgetPanel.add(ratingWidgetView);

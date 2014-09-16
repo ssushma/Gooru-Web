@@ -198,7 +198,7 @@ public class NOSearchResultCollectionVc extends Composite {
 						Map<String, String> params = new HashMap<String, String>();
 						params.put("id",collectionThumbnail.getElement().getId());
 						com.google.gwt.user.client.Window.scrollTo(0, 0);
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 					}
 				});
 			}

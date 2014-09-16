@@ -40,6 +40,7 @@ package org.ednovo.gooru.client.mvp.classpages.newclasspage;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -110,7 +111,7 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 		btnCancel.getElement().setAttribute("alt",i18n.GL0142());
 		btnCancel.getElement().setAttribute("title",i18n.GL0142());
 		
-		titlePanel.getElement().setInnerText(i18n.GL0318() + i18n.GL_SPL_STAR());
+		titlePanel.getElement().setInnerText(i18n.GL0318());
 		titlePanel.getElement().setId("pnlTitle");
 		titlePanel.getElement().setAttribute("alt",i18n.GL0318());
 		titlePanel.getElement().setAttribute("title",i18n.GL0318());
@@ -183,7 +184,11 @@ public abstract class NewClasspagePopupView extends AppPopUp{
 		@Override
 		public void onClick(ClickEvent event) {
 			hide();
-			Window.enableScrolling(true);
+			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+				Window.enableScrolling(false);
+			}else{
+				Window.enableScrolling(true);
+			}
 	        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		}		
 	}

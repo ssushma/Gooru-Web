@@ -86,29 +86,56 @@
 				<g:HTMLPanel ui:field="noAssignmentsMessagePanel">
 					<!-- <g:Label ui:field="noAssignmentsMessageLblTwo" styleName="{res.css.noAssignmentMsg}" 
 						/> -->
+						<g:Label  styleName="{res.css.noAssignmentMsg}" ui:field="lblAssignHeader"></g:Label>
 					<g:HTMLPanel styleName="{res.css.classpageHover}">
 						<!-- <g:Label styleName="{res.css.classpageHoverTitle}"
 							ui:field="noAssignmentsMessageLblTwo"> 
 							</g:Label>-->
 							<!-- New layout for empty classpage.  -->
 							  <g:HTMLPanel styleName="{res.css.contentBox}">
-							    <g:HTMLPanel styleName="{res.css.collectionView} {res.css.section2Div}">
+							      <g:HTMLPanel styleName="{res.css.collectionView} {res.css.section2Div}">
 <!-- 							      <g:HTMLPanel styleName="{res.css.circleBlock}">
 							        <g:HTMLPanel styleName="{res.css.circleBg}">
 							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblOne"></g:Label>
 							        </g:HTMLPanel>
 							      </g:HTMLPanel> -->
-							      <g:Label styleName="{res.css.desc}" ui:field="lblIncoporate"></g:Label>
-							      <g:HTMLPanel styleName="{res.css.img}"><g:Image url="images/collection-widget.png" width="626" height="212"></g:Image></g:HTMLPanel>
+							      <g:HTMLPanel styleName="{res.css.desHtml}">
+							          <g:Label styleName="{res.css.desHeader}" ui:field="lblAssignText"/>
+							          <g:Label styleName="{res.css.desc}" ui:field="lblAssignDes"/>
+							      </g:HTMLPanel>
+							      
+							      <g:HTMLPanel styleName="{res.css.imgStyle}">
+							          <g:Button styleName="plusButton {res.css.addAssignmentStyle}" ui:field="btnAssignCollection"></g:Button>
+							          <g:Label styleName="{res.css.assignText}" ui:field="lblStartAssign"/>
+							      </g:HTMLPanel>
 							    </g:HTMLPanel>
+							   
 							    <g:HTMLPanel styleName="{res.css.collectionView} {res.css.section3Div}">
 							      <!-- <g:HTMLPanel styleName="{res.css.circleBlock}">
 							        <g:HTMLPanel styleName="{res.css.circleBg}">
 							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblTwo"></g:Label>
 							        </g:HTMLPanel>
 							      </g:HTMLPanel> -->
-							      <g:Label styleName="{res.css.desc}" ui:field="lblDefine"></g:Label>
-							      <g:HTMLPanel styleName="{res.css.img}"><g:Image url="images/collection-list.png" width="692" height="141"></g:Image></g:HTMLPanel>
+							      
+							      <g:HTMLPanel styleName="{res.css.desHtml}">
+							          <g:Label styleName="{res.css.desHeader}" ui:field="lblSequenceText"/>
+							          <g:Label styleName="{res.css.desc}" ui:field="lblDefine"></g:Label>
+							      </g:HTMLPanel>
+							      <g:HTMLPanel styleName="{res.css.imgStyle}"><g:Image styleName="{res.css.imgStyleDiv}" url="images/Classpage/assignments/sequence.png" width="692" height="141"></g:Image></g:HTMLPanel>
+							    </g:HTMLPanel>
+							    
+							     <g:HTMLPanel styleName="{res.css.collectionView} {res.css.section3Div}">
+<!-- 							      <g:HTMLPanel styleName="{res.css.circleBlock}">
+							        <g:HTMLPanel styleName="{res.css.circleBg}">
+							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblOne"></g:Label>
+							        </g:HTMLPanel>
+							      </g:HTMLPanel> -->
+							      <g:HTMLPanel styleName="{res.css.desHtml}">
+							          <g:Label styleName="{res.css.desHeader}" ui:field="lblAssignDetails"></g:Label>
+							          <g:Label styleName="{res.css.desc}" ui:field="lblIncoporate"></g:Label>
+							      </g:HTMLPanel>
+							      
+							      <g:HTMLPanel styleName="{res.css.imgStyle}"><g:Image styleName="{res.css.imgStyleDiv}" url="images/Classpage/assignments/date_directions.png" width="626" height="212"></g:Image></g:HTMLPanel>
 							    </g:HTMLPanel>
 <!-- 							    <g:HTMLPanel styleName="{res.css.collectionView}">
 							      <g:HTMLPanel styleName="{res.css.circleBlock}">
@@ -121,6 +148,11 @@
 							    </g:HTMLPanel> -->
 							  </g:HTMLPanel>
 					</g:HTMLPanel>
+					
+					<g:HTMLPanel styleName="{res.css.btnContainerStyle}">
+			        	<g:Label  styleName="{res.css.labelCenterAlign}" ui:field="lblReadytoStart"></g:Label>
+					    <g:Button styleName="plusButton {res.css.addAssignmentStyle}" ui:field="btnReadytoStart"/>
+				    </g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.assignmentsContainerHead}" ui:field="assignmentsTabContainerPanel">

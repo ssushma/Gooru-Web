@@ -467,7 +467,9 @@
     overflow-x: hidden;
     position:relative; */
 }
+.editPanel{
 
+}
 
 .editPanel {
     background-color:#f0f0f0;
@@ -482,10 +484,9 @@
     -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
     box-shadow: 0 0 10px rgba(0,0,0,.1); 
     float:right;
-    overflow-y: hidden;
     overflow-x: hidden;
     position:relative;
-    min-height: 638px;
+	overflow-y: hidden;	
 }
 
 .editPanel > div:first-child {
@@ -522,6 +523,12 @@
     padding:5px 30px;
     background: #f0f0f0;
 }
+/* .mainSection{
+	min-height: 340px;
+	overflow-y: scroll;
+	height: 340px;
+} */
+
 
 .editPanelContent .mainSection .addButtons {
     overflow:auto;
@@ -577,6 +584,9 @@
 .contentBlock.collection .info img {
     border-left:8px solid #1076BB;
     margin-bottom:8px;
+}
+.contentBlock.collection .info img:hover{
+	opacity: .6;
 }
 
 .contentBlock.folder .info .image {
@@ -645,6 +655,12 @@
     line-height:20px;
 }
 
+.folder{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 .contentBlock .contents .collection {
     background: url(../images/folders/panel/collection-icon-small.png) no-repeat left center;
 }
@@ -675,6 +691,9 @@
     font-size: 12px;
     vertical-align:top;
 }
+
+
+
 
 .editPanelContent .titleSection .saveCancelContainer {
     width:125px;
@@ -849,7 +868,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
     border: 1px solid #ddd;
     position: absolute;
     z-index: 98;
-    margin-left: -105px;
+    margin-left: -75px;
     line-height: 1.2em;
     -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
 	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);

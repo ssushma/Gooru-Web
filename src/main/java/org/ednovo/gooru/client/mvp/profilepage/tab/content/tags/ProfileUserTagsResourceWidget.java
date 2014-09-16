@@ -30,10 +30,12 @@ import java.util.List;
 
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ErrorEvent;
+import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -52,6 +54,9 @@ public class ProfileUserTagsResourceWidget extends Composite {
 	interface ProfileUserTagsResourceWidgetUiBinder extends
 			UiBinder<Widget, ProfileUserTagsResourceWidget> {
 	}
+	
+	MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField Label resourceType,resourceSource;
 	@UiField HTMLPanel ratingContainer;
 	@UiField Image resourceImage,resourceTypeIcon;
@@ -99,7 +104,9 @@ public class ProfileUserTagsResourceWidget extends Composite {
 	private void setAvgRatingWidget(int ratingCount,double averageRating) {
 		ratingContainer.clear();
 		ratingWidgetView=new RatingWidgetView();
+		ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 		ratingWidgetView.getRatingCountLabel().setText(ratingCount+"");
+		ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 		ratingWidgetView.setAvgStarRating(averageRating);
 		ratingContainer.add(ratingWidgetView);
 	}
@@ -119,42 +126,42 @@ public class ProfileUserTagsResourceWidget extends Composite {
 	public String getResourceTypeImage(String resourceType){
 		
 		if(resourceType.equalsIgnoreCase("Video")||resourceType.equalsIgnoreCase("Videos")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().videoResourceTypeInfo();
+			return PlayerBundle.INSTANCE.getPlayerStyle().videoResourceTypeInfoNew();
 			
 		}else if(resourceType.equalsIgnoreCase("Interactive")){
 			
-			return PlayerBundle.INSTANCE.getPlayerStyle().interactiveResourceTypeInfo();
+			return PlayerBundle.INSTANCE.getPlayerStyle().interactiveResourceTypeInfoNew();
 		}
 		else if(resourceType.equalsIgnoreCase("Website")||resourceType.equalsIgnoreCase("Webpage")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceTypeInfo();		
+			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceTypeInfoNew();		
 		}
 		else if(resourceType.equalsIgnoreCase("Slide")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceTypeInfo();
+			return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceTypeInfoNew();
 		}
 		else if(resourceType.equalsIgnoreCase("Textbook")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfo();
+			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfoNew();
 		}
 		else if(resourceType.equalsIgnoreCase("Question")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().questionResourceTypeInfo();
+			return PlayerBundle.INSTANCE.getPlayerStyle().questionResourceTypeInfoNew();
 		}
 		else if(resourceType.equalsIgnoreCase("lesson")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().lessonResourceTypeInfo();
+			return PlayerBundle.INSTANCE.getPlayerStyle().lessonResourceTypeInfoNew();
 
 		}else if(resourceType.equalsIgnoreCase("Handout")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfo();
+			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfoNew();
 		} else if(resourceType.equalsIgnoreCase("text")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfo();
+			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfoNew();
 		}
 		else if(resourceType.equalsIgnoreCase("image")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceTypeInfo();
+			return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceTypeInfoNew();
 		}
 		else if(resourceType.equalsIgnoreCase("audio")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().audioResourceTypeInfo();
+			return PlayerBundle.INSTANCE.getPlayerStyle().audioResourceTypeInfoNew();
 		}else if(resourceType.equalsIgnoreCase("exam")){
-			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceTypeInfo();
+			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceTypeInfoNew();
 		}
 		else {
-			return PlayerBundle.INSTANCE.getPlayerStyle().otherResourceTypeInfo();
+			return PlayerBundle.INSTANCE.getPlayerStyle().otherResourceTypeInfoNew();
 		}
 	}
 	public void setPublisger(List<String> publisher){
@@ -177,15 +184,9 @@ public class ProfileUserTagsResourceWidget extends Composite {
 		resourceSource.getElement().setAttribute("title",publisherValue);
 	}
 	}
-	@UiHandler("resourceImage")
-	public void onErrorResourceImage(ErrorEvent errorEvent){
-		resourceImage.setUrl("images/resource_trans.png");
-		resourceTypeImage=resourceTypeImage.toLowerCase();
-		resourceImage.setStyleName(getResourceDefaultImage(resourceTypeImage));
-	}
+	
 	@Override
 	public void onLoad(){
-		
 		resourceImage.setUrl(userTagsResourceDO.getThumbnails());
 		if(userTagsResourceDO.getThumbnails()==null||userTagsResourceDO.getThumbnails().equalsIgnoreCase(""))
 		{
@@ -194,6 +195,16 @@ public class ProfileUserTagsResourceWidget extends Composite {
 			resourceTypeImage=resourceTypeImage.toLowerCase();
 			resourceImage.setStyleName(getResourceDefaultImage(resourceTypeImage));
 		}
+		resourceImage.addErrorHandler(new ErrorHandler() {
+			
+			@Override
+			public void onError(ErrorEvent event) {
+				resourceImage.setUrl("images/resource_trans.png");
+				resourceTypeImage=resourceTypeImage.toLowerCase();
+				resourceImage.setStyleName(getResourceDefaultImage(resourceTypeImage));
+				
+			}
+		});
 	}
 	public String getResourceDefaultImage(String resourceType){
 		

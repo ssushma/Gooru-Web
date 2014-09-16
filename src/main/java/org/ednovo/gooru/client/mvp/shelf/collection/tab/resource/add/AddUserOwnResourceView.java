@@ -73,6 +73,7 @@ import com.google.gwt.user.client.ui.FormSubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormSubmitEvent;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -123,16 +124,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 	HTMLPanel resourceTypePanel, resourceDescriptionContainer,panelAction;
 
 	@UiField
-	Label resoureDropDownLbl, resourceCategoryLabel,rightsLbl,agreeText,andText,additionalText,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords;
-	
-	@UiField
-	Anchor copyRightAnr;
-	
-	@UiField
-	Anchor termsAndPolicyAnr,privacyAnr;
-	
-	@UiField
-	Anchor commuGuideLinesAnr;
+	Label resoureDropDownLbl, resourceCategoryLabel,rightsLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords;
 	
 	@UiField
 	FormPanel fileuploadForm;
@@ -145,7 +137,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 	CheckBox rightsChkBox;
 
 	@UiField Label lblAdding;
-	
+	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr;
 	@UiField org.ednovo.gooru.client.uc.HTMLEventPanel imageResourcePanel,textsResourcePanel;
 	
 	 
@@ -243,7 +235,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 		agreeText.getElement().setId("lblAgreeText");
 		agreeText.getElement().setAttribute("alt", i18n.GL0870());
 		agreeText.getElement().setAttribute("title", i18n.GL0870());
-		commuGuideLinesAnr.setText(i18n.GL0871());
+		commuGuideLinesAnr.setText(i18n.GL0871()+i18n.GL_GRR_COMMA());
 		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
 		commuGuideLinesAnr.getElement().setAttribute("alt", i18n.GL0871());
 		commuGuideLinesAnr.getElement().setAttribute("title", i18n.GL0871());
@@ -255,7 +247,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 		privacyAnr.getElement().setId("lnkPrivacyAnr");
 		privacyAnr.getElement().setAttribute("alt", i18n.GL0873());
 		privacyAnr.getElement().setAttribute("title", i18n.GL0873());
-		andText.setText(" "+i18n.GL_GRR_AND()+" ");
+		andText.setText(i18n.GL_GRR_AND());
 		andText.getElement().setId("lblAndText");
 		andText.getElement().setAttribute("alt", i18n.GL_GRR_AND());
 		andText.getElement().setAttribute("title", i18n.GL_GRR_AND());
@@ -508,8 +500,10 @@ public abstract class AddUserOwnResourceView extends Composite {
 		@SuppressWarnings("deprecation")
 		@Override
 		public void onClick(ClickEvent event) {
-			addResourceBtnLbl.setEnabled(false);
-			addResourceBtnLbl.getElement().setAttribute("style", "background: #999;border: none;");
+			addResourceBtnLbl.setEnabled(true);
+			addResourceBtnLbl.getElement().addClassName("secondary");
+			addResourceBtnLbl.getElement().removeClassName("primary");
+			//addResourceBtnLbl.getElement().setAttribute("style", "background: #999;border: none;");
 			final Map<String, String> parms = new HashMap<String, String>();
 			parms.put("text", titleTextBox.getValue());
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
@@ -519,6 +513,8 @@ public abstract class AddUserOwnResourceView extends Composite {
 						if(value){
 							SetStyleForProfanity.SetStyleForProfanityForTextBox(titleTextBox, mandatoryTitleLblForSwareWords,value);
 							addResourceBtnLbl.setEnabled(true);
+							addResourceBtnLbl.getElement().removeClassName("secondary");
+							addResourceBtnLbl.getElement().addClassName("primary");
 						}else{
 							parms.put("text", descriptionTxtAera.getText());
 							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
@@ -529,6 +525,8 @@ public abstract class AddUserOwnResourceView extends Composite {
 									if(result){
 										SetStyleForProfanity.SetStyleForProfanityForTextArea(descriptionTxtAera, mandatoryDescLblForSwareWords, result);
 										addResourceBtnLbl.setEnabled(true);
+										addResourceBtnLbl.getElement().removeClassName("secondary");
+										addResourceBtnLbl.getElement().addClassName("primary");
 									}else{
 										
 										MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
@@ -579,7 +577,9 @@ public abstract class AddUserOwnResourceView extends Composite {
 										}
 										if(isValidate){
 											addResourceBtnLbl.setEnabled(true);
-											addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");
+											addResourceBtnLbl.getElement().removeClassName("secondary");
+											addResourceBtnLbl.getElement().addClassName("primary");
+											/*addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");*/
 											loadingImagePanel.clear();
 											loadingImagePanel.add(setLoadingPanel());
 											fileuploadForm.setAction(AppClientFactory.getLoggedInUser().getSettings().getRestEndPoint() + StringUtil.generateMessage(IMAGE_UPLOAD_URL, AppClientFactory.getLoggedInUser().getToken(), chooseResourceBtn.getFilename()));
@@ -632,11 +632,11 @@ public abstract class AddUserOwnResourceView extends Composite {
 				String mediaFileName=jsonMediaFileValue.isString().toString().replaceAll("^\"|\"$", "");
 				JSONValue jsonOriginalFileValue=jsonObject.get("originalFilename");
 				String originalFileName=jsonOriginalFileValue.isString().toString().replaceAll("^\"|\"$", "");
-				if(resourceCategory.equalsIgnoreCase("Images")||resourceCategory.equalsIgnoreCase("Texts"))
+				if(resourceCategory.equalsIgnoreCase("Image")||resourceCategory.equalsIgnoreCase("Text"))
 				{
-					resourceCategory=resourceCategory.substring(0, resourceCategory.length()-1);
+					//resourceCategory=resourceCategory.substring(0, resourceCategory.length()-1);
 					 if(resourceCategory.equalsIgnoreCase("Image")){
-						 resourceCategory="Slide";
+						 resourceCategory="Image";
 					 }
 				}
 				if(showPreview){
@@ -691,13 +691,19 @@ public abstract class AddUserOwnResourceView extends Composite {
 			filePathContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().ownResourceFormInputControl());
 			resourceContentChkLbl.setVisible(false);
 			addResourceBtnLbl.setEnabled(true);
-			addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");
+			addResourceBtnLbl.getElement().removeClassName("secondary");
+			addResourceBtnLbl.getElement().addClassName("primary");
+			/*addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");*/
 		}
 	}
 	
 	private class TitleKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {
+			addResourceBtnLbl.setEnabled(true);
+			addResourceBtnLbl.getElement().removeClassName("secondary");
+			addResourceBtnLbl.getElement().addClassName("primary");
+			/*addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");*/
 			mandatoryTitleLbl.setVisible(false);
 			resourceTitleContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControl());
 			if (titleTextBox.getText().length() >= 50) {
@@ -712,6 +718,10 @@ public abstract class AddUserOwnResourceView extends Composite {
 	
 	private class DescriptionKeyUpHandler implements KeyUpHandler {
 		public void onKeyUp(KeyUpEvent event) {
+			addResourceBtnLbl.setEnabled(true);
+			addResourceBtnLbl.getElement().removeClassName("secondary");
+			addResourceBtnLbl.getElement().addClassName("primary");
+			/*addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");*/
 			descCharcterLimit.setVisible(false);
 			resourceDescriptionContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControl());
 			resourceDescriptionContainer.addStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormTextarea());
@@ -845,7 +855,9 @@ public abstract class AddUserOwnResourceView extends Composite {
 			}else{
 				parms.put("text", textArea.getText());
 			}
-			addResourceBtnLbl.setEnabled(false);
+			addResourceBtnLbl.setEnabled(true);
+			addResourceBtnLbl.getElement().removeClassName("secondary");
+			addResourceBtnLbl.getElement().addClassName("primary");
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
 				@Override
@@ -876,13 +888,13 @@ public abstract class AddUserOwnResourceView extends Composite {
 					}else{
 						isValidFilePath =true;
 					}
-					if(isValidText && isValidTextArea && isValidFilePath){
+					/*if(isValidText && isValidTextArea && isValidFilePath){
 						addResourceBtnLbl.setEnabled(true);
 						addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");
 					}else{
 						addResourceBtnLbl.setEnabled(false);
 						addResourceBtnLbl.getElement().setAttribute("style", "background: #999;border: none;");
-					}
+					}*/
 				}
 			});
 		}

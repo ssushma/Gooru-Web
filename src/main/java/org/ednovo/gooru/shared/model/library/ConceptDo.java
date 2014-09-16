@@ -51,7 +51,9 @@ public class ConceptDo implements Serializable {
 	private String collectionType;
 	private Integer codeId;
 	private String label;
+	private String code;
 	private ArrayList<ConceptDo> collection;
+	private Integer itemCount;
 	
 	public ConceptDo(){}
 	
@@ -191,5 +193,28 @@ public class ConceptDo implements Serializable {
 	public void setCollection(ArrayList<ConceptDo> collection) {
 		this.collection = collection;
 	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	/**
+	 * @return the itemCount
+	 */
+	public Integer getItemCount() {
+		return itemCount;
+	}
+
+	/**
+	 * @param itemCount the itemCount to set
+	 */
+	public void setItemCount(Integer itemCount) {
+		this.itemCount = itemCount;
+	}
+	
 	
 }

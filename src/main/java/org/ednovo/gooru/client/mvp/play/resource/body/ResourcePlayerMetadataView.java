@@ -26,10 +26,14 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
@@ -38,13 +42,22 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEvent;
+import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
+import org.ednovo.gooru.client.uc.BrowserAgent;
+import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
+import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
+import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
@@ -70,21 +83,24 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePlayerMetadataUiHandlers> implements IsResourcePlayerMetadataView{
 
-	@UiField FlowPanel resourceWidgetContainer;
+	@UiField FlowPanel resourceWidgetContainer,tagsButtonContainer;
 	@UiField
-	static FlowPanel wrapperContainerField;
-	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,needHelpButton;
+	static FlowPanel wrapperContainerField,tagsContainer,resourcePublisher;
+	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,
+					needHelpButton,plusAddTagsButton,narrationButton;
 	@UiField HTMLEventPanel emoticsContainer;
 	@UiField HTMLPanel singleEmoticsContainer,collectionContainer,ratingsContainer;
-	@UiField Label resourcePublisher,reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
+	@UiField Label reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
 	@UiField
 	static ResourcePlayerMetadataBundle playerStyle;
 	@UiField HTML resourceTitleLbl;
@@ -104,11 +120,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 	HandlerRegistration forwardButtonHandler=null, backwardButtonHandler=null;
 	
-	private static final String REACTION_CAN_UNDERSTAND = "i-can-understand";
-	private static final String REACTION_CAN_EXPLAIN = "i-can-explain";
-	private static final String REACTION_MEH = "meh";
-	private static final String REACTION_DONOT_UNDERSTAND = "i-donot-understand";
-	private static final String REACTION_NEED_HELP = "i-need-help";
+	public static final String REACTION_CAN_UNDERSTAND = "i-can-understand";
+	public static final String REACTION_CAN_EXPLAIN = "i-can-explain";
+	public static final String REACTION_MEH = "meh";
+	public static final String REACTION_DONOT_UNDERSTAND = "i-donot-understand";
+	public static final String REACTION_NEED_HELP = "i-need-help";
 	private static final String CREATE_PREVIEW_PLAYER_REACTION = "create-reaction-preview";
 	private static final String CREATE_STUDY_PLAYER_REACTION = "create-reaction";
 	private boolean isCanUnderstandSelected=false;
@@ -135,6 +151,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	private static final String RATINGS_WIDGET="Contentratings";
 	private static final int CHILD_AGE=13;
 	private static final String DEFAULT_RATING_TEXT="Rate this resource";
+	private static final String EMBED="embed";
+	private static final String SYNDICATE="syndicate";
 	private StarRatingsDo starRatingsDo;
 	
 	private static final String FILLED_BLUE = "filled filledBlue";
@@ -146,7 +164,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	Integer score,count;
 	double average;
 	
+	private PopupPanel toolTipPopupPanel=new PopupPanel();
+	
 	int currentRating=0;
+	
+	public HTMLPanel getCollectionContainer(){
+		return collectionContainer;
+	}
+	
+	public Button getNarrationButton(){
+		return narrationButton;
+	}
 	
 	private static ResourcePlayerMetadataViewUiBinder uiBinder = GWT.create(ResourcePlayerMetadataViewUiBinder.class);
 
@@ -171,7 +199,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 		setWidget(uiBinder.createAndBindUi(this));
 		//allEmoticsContainer.getElement().getStyle().setDisplay(Display.BLOCK);
-		//singleEmoticsContainer.setVisible(false);
+		////singleEmoticsContainer.setVisible(false);
 		singleEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
 		//emoticsContainer.addMouseOverHandler(new OnEmoticsMouseOver());
 		//emoticsContainer.addMouseOutHandler(new OnEmoticsMouseOut());
@@ -199,6 +227,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		reactionToolTipFive.getElement().setId("lblReactionToolTipFive");
 		reactionToolTipFive.getElement().setAttribute("alt",i18n.GL0585());
 		reactionToolTipFive.getElement().setAttribute("title",i18n.GL0585());
+		
+		plusAddTagsButton.setText("+ "+i18n.GL2081());
+		plusAddTagsButton.getElement().setId("plusAddTagsButton");
+		plusAddTagsButton.getElement().setAttribute("alt",i18n.GL2081());
+		plusAddTagsButton.getElement().setAttribute("title",i18n.GL2081());
 		
 		/*rating1 = new SimpleRadioButton("rating");
 		rating2 = new SimpleRadioButton("rating");
@@ -247,7 +280,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		  }
 		  else
 		  {
-			  wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
+			 // wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
 			  
 		  }
 		  
@@ -262,19 +295,35 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			three_star.addMouseOutHandler(new OnStarMouseOut(THREE_STAR));
 			four_star.addMouseOutHandler(new OnStarMouseOut(FOUR_STAR));
 			five_star.addMouseOutHandler(new OnStarMouseOut(FIVE_STAR));
-		
 			setId();
+			
+			doNotUnderstandEmoticButton.addMouseOverHandler(new ReactionsMouseOverHandler(doNotUnderstandEmoticButton,i18n.GL0584()));
+			needHelpButton.addMouseOverHandler(new ReactionsMouseOverHandler(needHelpButton, i18n.GL0585()));
+			mehEmoticButton.addMouseOverHandler(new ReactionsMouseOverHandler(mehEmoticButton, i18n.GL0583()));
+			understandEmoticButton.addMouseOverHandler(new ReactionsMouseOverHandler(understandEmoticButton, i18n.GL0582()));
+			canExplainEmoticButton.addMouseOverHandler(new ReactionsMouseOverHandler(canExplainEmoticButton, i18n.GL0581()));
+			
+			doNotUnderstandEmoticButton.addMouseOutHandler(new ReactionsMouseOutHandler());
+			needHelpButton.addMouseOutHandler(new ReactionsMouseOutHandler());
+			mehEmoticButton.addMouseOutHandler(new ReactionsMouseOutHandler());
+			understandEmoticButton.addMouseOutHandler(new ReactionsMouseOutHandler());
+			canExplainEmoticButton.addMouseOutHandler(new ReactionsMouseOutHandler());
 	}
 
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
 		this.collectionItemDo = collectionItemDo;
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			collectionContainer.getElement().getStyle().setMarginTop(51, Unit.PX);
+			tagsButtonContainer.setVisible(false);
 			if(isChildAccount()){
 				collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
 			}else{
 				collectionContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 			}
 		}
+		
+			displayPublisher();
+						
 		if(collectionItemDo.getResource().getTitle()!=null){
 			resourceTitleLbl.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
@@ -284,29 +333,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			resourceTitleLbl.getElement().setAttribute("alt","");
 			resourceTitleLbl.getElement().setAttribute("title","");
 		}
+		
 		getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
-		if(collectionItemDo.getResource().getResourceSource()!=null){
-			String attributionName=collectionItemDo.getResource().getResourceSource().getAttribution();
-			attributionName = attributionName.trim();
-			if(attributionName != null && !attributionName.equals("") && !attributionName.equals("null")){
-				String resourceSource=collectionItemDo.getResource().getResourceSource().getAttribution();
-				if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
-					if(resourceSource.length() > 100){
-					resourcePublisher.setText(i18n.GL0566()+resourceSource.substring(0, 100)+"...");
-					}else{
-						resourcePublisher.setText(i18n.GL0566()+resourceSource);
-					}
-				}else
-				{
-				resourcePublisher.setText("");	
-				}
-			}else{
-				resourcePublisher.setText("");
-			}
-		}else{
-			resourcePublisher.setText("");
-		}
-
 		if(forwardButton!=null){
 			forwardButton.removeFromParent();
 		}
@@ -348,7 +376,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			this.collectionItemDo = collectionItemDo;
 			if(collectionItemDo.getResource().getTitle()!=null){
 				int sequenceNumber=collectionItemDo.getItemSequence();
-				resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
+				String titlelbl1=InfoUtil.removeQuestionTagsOnBoldClick(collectionItemDo.getResource().getTitle());
+			//	resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
+				resourceTitleLbl.setHTML(sequenceNumber+". "+removeHtmlTags(titlelbl1));
 				resourceTitleLbl.getElement().setAttribute("alt",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 				resourceTitleLbl.getElement().setAttribute("title",removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			}else{
@@ -356,30 +386,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				resourceTitleLbl.getElement().setAttribute("alt","");
 				resourceTitleLbl.getElement().setAttribute("title","");
 			}
+			displayPublisher();
 			getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
-			if(collectionItemDo.getResource().getResourceSource()!=null){
-				if(collectionItemDo.getResource().getResourceSource().getAttribution()!=null){
-					String resourceSource=collectionItemDo.getResource().getResourceSource().getAttribution();
-					resourceSource = resourceSource.trim();
-					if(resourceSource != null && !resourceSource.equals("") && !resourceSource.equals("null")){
-						if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
-							if(resourceSource.length() > 100){
-							resourcePublisher.setText(i18n.GL0566()+resourceSource.substring(0, 100)+"...");
-							}else{
-								resourcePublisher.setText(i18n.GL0566()+resourceSource);
-							}
-						}else{resourcePublisher.setText("");
-						}
-					}else{
-						resourcePublisher.setText("");
-					}
-				}else{
-					resourcePublisher.setText("");
-				}
-			}else{
-				resourcePublisher.setText("");
-			}
-
 			if(forwardButtonHandler!=null||backwardButtonHandler!=null){
 				forwardButtonHandler.removeHandler();
 				backwardButtonHandler.removeHandler();
@@ -392,16 +400,41 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 
 	}
+	
+	private void displayPublisher(){
+		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getResourceFormat()!=null){
+			if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+				if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
+					if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+						resourcePublisher.setVisible(true);
+						resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+						resourcePublisher.getElement().getStyle().clearPaddingTop();
+					}else{
+						resourcePublisher.setVisible(false);
+					}
+				}
+			}else{
+				List<String> publishersList=collectionItemDo.getResource().getPublisher()!=null?collectionItemDo.getResource().getPublisher():null;
+				if(publishersList!=null&&publishersList.size()>0){
+					//publishersList.set(0,i18n.GL0566()+publishersList.get(0));
+					SearchUiUtil.renderMetaData(resourcePublisher, publishersList);
+				}else{
+					resourcePublisher.getElement().setInnerHTML("");
+					resourcePublisher.getElement().getStyle().setPaddingTop(0, Unit.PX);
+				}
+			}
+		}
+	}
 
-	public void previewResouceWidget(CollectionItemDo collectionItemDo){
+	public void previewResouceWidget(final CollectionItemDo collectionItemDo){
 		resourceWidgetContainer.clear();
+		setResourceWidgetContainerHeight();
 		String resourceTypeName=collectionItemDo.getResource().getResourceType().getName();
 		wrapperContainerField.getElement().getStyle().clearHeight();
-		System.out.println("resourceTypeName:::"+resourceTypeName);
-		System.out.println("collectionItemDo.getResource().getUrl():::"+collectionItemDo.getResource().getUrl());
 		if(resourceTypeName.equalsIgnoreCase("video/youtube")){
-			wrapperContainerField.getElement().getStyle().setHeight(525	, Unit.PX);
-			resourceWidgetContainer.add(new FlashAndVideoPlayerWidget(ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl()), collectionItemDo.getStart(), collectionItemDo.getStop()));
+			//wrapperContainerField.getElement().getStyle().setHeight(525	, Unit.PX);
+			String utubeId=ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl());
+			getUiHandlers().getYoutubeFeedCallback(utubeId);
 		}else if(resourceTypeName.equalsIgnoreCase("animation/kmz")){
 			resourceWidgetContainer.add(new GwtEarthWidget(collectionItemDo.getResource().getUrl()));
 		}else if(resourceTypeName.equalsIgnoreCase("animation/swf")){
@@ -427,8 +460,14 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 			else{
 				if(resourceTypeName.equalsIgnoreCase("image/png")){
-					final WebResourceWidget webResourceWidget=new WebResourceWidget(collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+collectionItemDo.getResource().getUrl());
-					resourceWidgetContainer.add(webResourceWidget);
+//					final WebResourceWidget webResourceWidget=new WebResourceWidget(collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+collectionItemDo.getResource().getUrl());
+//					System.out.println("webResourceWidget"+webResourceWidget);
+					HTMLPanel htmlPanel = new HTMLPanel("");
+					htmlPanel.addStyleName(playerStyle.collectionPlayerImage());
+					Image img = new Image();
+					img.setUrl(collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+collectionItemDo.getResource().getUrl());
+					htmlPanel.add(img);
+					resourceWidgetContainer.add(htmlPanel);
 				}
 				else{
 					if(!collectionItemDo.getResource().getUrl().startsWith("http")){
@@ -473,7 +512,14 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}
 	}
-	
+	public void setResourceWidgetContainerHeight(){
+		int windowHeight=Window.getClientHeight();
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			resourceWidgetContainer.setHeight((windowHeight-116)+"px");
+		}else{
+			resourceWidgetContainer.setHeight((windowHeight-202)+"px");
+		}
+	}
 	public void setGoogleDriveFileStatusCode(Integer statusCode){
 		if(statusCode==302){
 			ResourceFrameBreakerView resourceFrameBreakerViewnew =new ResourceFrameBreakerView(collectionItemDo,true);
@@ -883,11 +929,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 	}
 	public static void addPadding(){
-		wrapperContainerField.setStyleName(playerStyle.collectionPlayerWrapperPadding());
+		//wrapperContainerField.removeStyleName(playerStyle.collectionPlayerWrapper());
+		//wrapperContainerField.addStyleName(playerStyle.collectionPlayerWrapperPadding());
 	}
 	
 	public static void removePadding(){
-		wrapperContainerField.setStyleName(playerStyle.collectionPlayerWrapper());
+		//wrapperContainerField.removeStyleName(playerStyle.collectionPlayerWrapperPadding());
+		//wrapperContainerField.addStyleName(playerStyle.collectionPlayerWrapper());
 	}
 
 	/**
@@ -977,18 +1025,43 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			isRated=true; 
 			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 				if(result.getRatings()!=null){
-					AppClientFactory.fireEvent(new UpdateResourceRatingCountEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
-					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
+					if(isFromThanksPopup){
+						getUiHandlers().updateResourceReview(collectionItemDo.getResource().getGooruOid(),result.getRatings().getReviewCount());
+						AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getReviewCount()));
+						AppClientFactory.fireEvent(new UpdateResourceReviewCountEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getReviewCount()));
+					}
+					getUiHandlers().updateResourceRatings(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage());
+					AppClientFactory.fireEvent(new UpdateResourceRatingCountEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getReviewCount()));
 				}
 				
-			}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			}
+			/**
+			 * Changed to collection player, as preview player feature removed.
+			 */
+			else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 				if(result.getRatings()!=null){
-					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
+					if(isFromThanksPopup){
+						getUiHandlers().updateResourceReview(collectionItemDo.getResource().getGooruOid(),result.getRatings().getReviewCount());
+						AppClientFactory.fireEvent(new UpdateResourceReviewCountEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getReviewCount()));
+					}
+					getUiHandlers().updateResourceRatings(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage());
+					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getReviewCount()));
+					
 				}
 			}
 		}else{
 			isRated=false;
 		}
+		
+		if(thankYouResourceStarRatingsPoor!=null){
+			if(thankYouResourceStarRatingsPoor.isVisible()){
+				thankYouResourceStarRatingsPoor.hide();
+				if(isFromThanksPopup){
+					displaySuccessPopup();
+				}
+			}
+		}
+		
 		if(thankYouResourceStarRatings!=null){
 			if(thankYouResourceStarRatings.isVisible()){
 				thankYouResourceStarRatings.hide();
@@ -1060,16 +1133,18 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	public void removeRatingContainer(boolean flag){
 		if(flag){
-//			ratingsContainer.removeFromParent();
+	//		ratingsContainer.removeFromParent();
 			ratingsContainer.setVisible(false);
+			emoticsContainer.setVisible(true);
 		}else{
 			if(isChildAccount()){
-//				ratingsContainer.removeFromParent();
+	//			ratingsContainer.removeFromParent();
 				ratingsContainer.setVisible(false);
 			}else{
 				ratingsContainer.setVisible(true);
 			}
-			emoticsContainer.removeFromParent();
+			emoticsContainer.setVisible(false);
+			//emoticsContainer.removeFromParent();
 		}
 	}
 	
@@ -1482,7 +1557,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	public static void onClosingAndriodorIpaddiv()
 	{
-		  wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
+		 // wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
 	}
 
 	/**
@@ -1513,8 +1588,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	@Override
 	public void hideThankYouPopUp() {
-		thankYouResourceStarRatings.hide();
-		displaySuccessPopup();
+		if(thankYouResourceStarRatings!=null){
+			thankYouResourceStarRatings.hide();
+			displaySuccessPopup();
+		}
+		
+		if(thankYouResourceStarRatingsPoor!=null){
+			thankYouResourceStarRatingsPoor.hide();
+			displaySuccessPopup();
+		}
 	}
 
 	/**
@@ -1531,29 +1613,37 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		this.score=score;
 		this.count=count;
 		this.average=average;
-//		if(score > 1)
-//		{
-		thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
-		thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
-		thankYouResourceStarRatings.getElement().getStyle().setPadding(0, Unit.PX);
-		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-			thankYouResourceStarRatings.setPopupPosition(685,Window.getScrollTop()+48);
-		}else{
-			thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
+		if(score > 1)
+		{
+			thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
+			thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
+			thankYouResourceStarRatings.getElement().getStyle().setPadding(0, Unit.PX);
+			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){  
+				thankYouResourceStarRatings.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-150),three_star.getElement().getAbsoluteTop()+40);
+			}else{
+				thankYouResourceStarRatings.setPopupPosition(800,Window.getScrollTop()+153);
+			}
+			
+			thankYouResourceStarRatings.show();
+			thankYouResourceStarRatings.setAutoHideEnabled(true);
+			thankYouResourceStarRatings.getElement().getPreviousSiblingElement().getStyle().setZIndex(999999);
+			thankYouResourceStarRatings.getElement().getPreviousSiblingElement().getStyle().setOpacity(0);
 		}
-		
-		thankYouResourceStarRatings.show();
-		thankYouResourceStarRatings.setAutoHideEnabled(true);
-//		}
-//		else
-//		{
-//			thankYouResourceStarRatingsPoor = new ThankYouResourceStarRatingsPoor(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
-//			thankYouResourceStarRatingsPoor.getElement().getStyle().setZIndex(999999);
-//			thankYouResourceStarRatings.getElement().getStyle().setPadding(0, Unit.PX);
-//			thankYouResourceStarRatingsPoor.setPopupPosition(300,Window.getScrollTop()+48);
-//			thankYouResourceStarRatingsPoor.show();
-//			thankYouResourceStarRatingsPoor.setAutoHideEnabled(true);	
-//		}
+		else
+		{
+			thankYouResourceStarRatingsPoor = new ThankYouResourceStarRatingsPoor(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
+			thankYouResourceStarRatingsPoor.getElement().getStyle().setZIndex(999999);
+			thankYouResourceStarRatingsPoor.getElement().getStyle().setPadding(0, Unit.PX);
+			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+				thankYouResourceStarRatingsPoor.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-150),three_star.getElement().getAbsoluteTop()+40);
+			}else{
+				thankYouResourceStarRatingsPoor.setPopupPosition(800,Window.getScrollTop()+153);
+			}
+			thankYouResourceStarRatingsPoor.show();
+			thankYouResourceStarRatingsPoor.setAutoHideEnabled(true);
+			thankYouResourceStarRatingsPoor.getElement().getPreviousSiblingElement().getStyle().setZIndex(999999);
+			thankYouResourceStarRatingsPoor.getElement().getPreviousSiblingElement().getStyle().setOpacity(0);
+		}
 	}
 	
 	
@@ -1573,9 +1663,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		ratingsConfirmationPopup.show();
 		ratingsConfirmationPopup.getElement().getStyle().setZIndex(99999);
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-			ratingsConfirmationPopup.setPopupPosition(685,Window.getScrollTop()+60);
+			ratingsConfirmationPopup.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-150),three_star.getElement().getAbsoluteTop()+40);
 		}else{
-			ratingsConfirmationPopup.setPopupPosition(314,Window.getScrollTop()+60);
+			ratingsConfirmationPopup.setPopupPosition(800,Window.getScrollTop()+153);
 		}
 		
 		ratingsConfirmationPopup.setAutoHideEnabled(true);
@@ -1607,7 +1697,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				collectionContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 			}
-		}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+		}
+		/**
+		 * Changed to collection player, as preview player feature removed.
+		 */
+		else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 			if(isChild){
 				ratingsContainer.setVisible(false);
 			}else{
@@ -1647,4 +1741,151 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		resourcePublisher.getElement().setId("lblResourcePublisher");
 		resourceWidgetContainer.getElement().setId("fpnlResourceWidgetContainer");
 	}
+
+	@Override
+	public void displayResourceTags(List<ResourceTagsDo> resourceTagsList) {
+		tagsContainer.clear();
+		if(resourceTagsList!=null){
+			FlowPanel toolTipwidgets = new FlowPanel();
+	
+			for(int i=0;i<resourceTagsList.size();i++){
+				if(i<3)
+				{
+				
+					String tagsdefaultLabel = i18n.GL1664() + " : ";
+					String tagLabel = resourceTagsList.get(i).getLabel();
+					HTMLPanel tagPanel = new HTMLPanel("");
+					if(resourceTagsList.get(i).getLabel().toLowerCase().contains(i18n.GL1664().toLowerCase()))
+					{
+						tagLabel = resourceTagsList.get(i).getLabel().toLowerCase().replace(tagsdefaultLabel.toLowerCase(), "");
+						tagLabel = tagLabel.substring(0, 1).toUpperCase() + tagLabel.substring(1);
+					}
+					tagPanel.setStyleName(playerStyle.eductaionalUseDesign());
+					tagPanel.getElement().setInnerHTML(tagLabel);
+					tagsContainer.add(tagPanel);
+				
+				}
+				else
+				{
+					HTMLPanel tagPanel = new HTMLPanel("");
+					String tagsdefaultLabel = i18n.GL1664() + " : ";
+					String tagLabel = resourceTagsList.get(i).getLabel();
+					if(resourceTagsList.get(i).getLabel().toLowerCase().contains(i18n.GL1664().toLowerCase()))
+					{
+						tagLabel = resourceTagsList.get(i).getLabel().toLowerCase().replace(tagsdefaultLabel.toLowerCase(), "");
+						tagLabel = tagLabel.substring(0, 1).toUpperCase() + tagLabel.substring(1);
+					}
+					tagPanel.getElement().setInnerHTML(tagLabel);
+					toolTipwidgets.add(tagPanel);
+					
+		
+				}
+			}
+			if(resourceTagsList.size()>3)
+			{
+				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + (resourceTagsList.size()-3)), toolTipwidgets);
+				toolTipUc.setStyleName(playerStyle.educationalUseMoretags());
+				tagsContainer.add(toolTipUc);
+			}
+			
+		}
+	}
+	@UiHandler("plusAddTagsButton")
+	public void onAddTagsBtnClicked(ClickEvent clickEvent) {
+		addResourceTags();
+	}
+	
+	public void addResourceTags(){
+		if(AppClientFactory.isAnonymous()) {
+			AppClientFactory.fireEvent(new InvokeLoginEvent());
+		} else {
+			AddTagesPopupView addTagesPopupView=new AddTagesPopupView(collectionItemDo.getResource().getGooruOid()) {
+				public void getAddedResourceTags(){
+					getUiHandlers().getResourceTagsToDisplay(collectionItemDo.getResource().getGooruOid());
+				}
+				@Override
+				public void closePoup(boolean isCancelclicked) {
+			        this.hide();
+			        if(!isCancelclicked){
+			        	 SuccessPopupViewVc success = new SuccessPopupViewVc() {
+
+								@Override
+								public void onClickPositiveButton(ClickEvent event) {
+									this.hide();
+								}
+							};
+							success.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTagsGlassPanel());
+							success.setHeight("253px");
+							success.setWidth("450px");
+							success.setPopupTitle(i18n.GL1795());
+							success.setDescText(i18n.GL1796());
+							success.enableTaggingImage();
+							success.setPositiveButtonText(i18n.GL0190());
+							success.center();
+							success.show();
+							success.getElement().getStyle().setZIndex(99999);
+			        }
+				}
+			};
+			addTagesPopupView.show();
+			addTagesPopupView.setPopupPosition(addTagesPopupView.getAbsoluteLeft(),Window.getScrollTop()+10);
+		}
+	}
+
+	@Override
+	public void checkYoutubeAccessControls(Map<String, String> accessControls) {
+		// TODO Auto-generated method stub
+		String device = BrowserAgent.returnFormFactorView();
+		if(accessControls!=null){
+			if(accessControls.get(EMBED).equals("allowed")){
+				if(accessControls.get(SYNDICATE).equals("allowed") || (device.equalsIgnoreCase("desktop"))){
+					resourceWidgetContainer.add(new FlashAndVideoPlayerWidget(ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl()), collectionItemDo.getStart(), collectionItemDo.getStop()));
+				}else {
+					resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
+				}
+				
+			}else{
+				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
+			}
+			
+		}
+	}
+	
+	public void clearMarginTop(){
+		collectionContainer.getElement().getStyle().setMarginTop(0, Unit.PX);
+	}
+	public void setMarginTop(){
+		collectionContainer.getElement().getStyle().setMarginTop(51, Unit.PX);
+	}
+	
+	public class ReactionsMouseOverHandler implements MouseOverHandler{
+		Button widget;
+		String text;
+		ReactionsMouseOverHandler(Button widget,String text){
+			this.widget=widget;
+			this.text=text;
+			}
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			
+			toolTipPopupPanel.clear();
+			toolTipPopupPanel.setWidget(new GlobalToolTip(text));
+			toolTipPopupPanel.setStyleName("");
+			toolTipPopupPanel.setPopupPosition(widget.getElement().getAbsoluteLeft()+18, widget.getElement().getAbsoluteTop()+10);
+			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanel.show();
+			
+		}
+	}
+	
+	public class ReactionsMouseOutHandler implements MouseOutHandler {
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+     		toolTipPopupPanel.hide();
+		}
+		
+	}
+	
 }

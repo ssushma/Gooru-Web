@@ -25,9 +25,20 @@
 package org.ednovo.gooru.client.mvp.play.collection.end;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewHandler;
+import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusHandler;
+import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewHandler;
 
-public interface CollectionEndUiHandlers extends BaseUiHandlers{
-	public void sendEmail(String fromEmail, final String toEmail, String copyEmail,String subject, String message);
-	public void generatePdf(String innerHtml, String completedDateTime,String fromEmail);
-	public void getContentReport(String collectionId);
+public interface CollectionEndUiHandlers extends BaseUiHandlers, SetPlayerLoginStatusHandler,UpdateCommentChildViewHandler,EditCommentChildViewHandler {
+	public void createCommentForCollection(String gooruOid, String comment);
+	
+	public void deleteCommentFromCollection(String gooruOid,String commentUid, String offset, String limit);
+	
+	public void getPaginationResults(String gooruOid, String offset, String limit);
+	
+	public void resetCollectionActivityEventId();
+	
+	public void triggerCollectionShareDataEvent(String collectionId,String itemType, String shareType, boolean confirmStatus) ;
+	
+	public void getAvgReaction();
 }

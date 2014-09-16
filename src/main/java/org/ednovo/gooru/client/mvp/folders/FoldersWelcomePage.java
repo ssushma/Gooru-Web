@@ -35,6 +35,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -70,6 +71,7 @@ public class FoldersWelcomePage extends Composite {
 
 	public FoldersWelcomePage() {
 		initWidget(uiBinder.createAndBindUi(this));
+		Window.enableScrolling(true);
 
 		SetButtonHandler setButtonVisibility = new SetButtonHandler() {
 
@@ -84,7 +86,7 @@ public class FoldersWelcomePage extends Composite {
 		
 		setText();
 		
-		imgSampleCollection.setHref("#preview-play&id=2548d591-9131-4577-b873-83b8f172eda5");
+		imgSampleCollection.setHref("#collection-play&id=2548d591-9131-4577-b873-83b8f172eda5");
 		imgSampleCollection.setTarget("_blank");
 		
 		Image imgComponent = new Image();

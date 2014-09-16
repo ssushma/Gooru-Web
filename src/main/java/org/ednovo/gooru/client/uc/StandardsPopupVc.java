@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -142,8 +143,9 @@ public class StandardsPopupVc extends PopupPanel  {
 		if (iterator != null) {
 			while (this.iterator.hasNext()) {
 				Map<String, String> standard = this.iterator.next();
-				String stdCode = standard.get(i18n.GL1049());
-				String stdDec = standard.get(i18n.GL0904().toLowerCase());
+				
+				String stdCode = standard.get("code");
+				String stdDec = standard.get("description");
 
 				final HTMLPanel standardsPanel = new HTMLPanel("");
 				standardsPanel.setStyleName(UcCBundle.INSTANCE.css().divContainer());
@@ -174,7 +176,11 @@ public class StandardsPopupVc extends PopupPanel  {
 	@UiHandler("cancelButton")
 	public void onCancelClicked(ClickEvent clickEvent) {
 
-		Window.enableScrolling(true);
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+			Window.enableScrolling(false);
+		}else{
+			Window.enableScrolling(true);
+		}
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 
 		hide();

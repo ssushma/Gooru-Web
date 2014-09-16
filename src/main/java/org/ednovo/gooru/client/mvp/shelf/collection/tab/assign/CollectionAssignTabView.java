@@ -477,8 +477,60 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 						dueDateVal = null;
 					}
 					
+					AppClientFactory.getInjector().getClasspageService().assignItemToClass(classpageId, collectionDo.getGooruOid(),dueDateVal, directionsVal, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+
+						@Override
+						public void onSuccess(ArrayList<ClasspageItemDo> result) {
+							// TODO Auto-generated method stub
+							if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)) {
+								AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(collectionDo, RefreshType.INSERT));
+							}
+							
+							btnAssign.setText(i18n.GL0104());
+							btnAssign.getElement().setAttribute("alt",i18n.GL0104());
+							btnAssign.getElement().setAttribute("title",i18n.GL0104());
+							SuccessPopupVc successPopupVc = new SuccessPopupVc(classpageId, collectionDo.getTitle(), lblClasspagePlaceHolder.getText()) {
+								
+								@Override
+								public void closePoup() {
+						
+									
+									lblClasspagePlaceHolder.setText(i18n.GL0105());
+									lblClasspagePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
+									lblClasspagePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
+									lblClasspagePlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().placeHolderText());
+									lblAssignCollectionPrivate.setVisible(false);
+									
+									htmlClasspagesListContainer.clear();
+									getUiHandlers().getAllClasspages("10", "0");
+									
+									Window.enableScrolling(true);
+									AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+									
+									textAreaVal.setText("");
+									textAreaVal.getElement().setAttribute("alt","");
+									textAreaVal.getElement().setAttribute("title","");
+									dateBoxUc.getDateBox().setValue("");
+								
+									btnAssign.getElement().setAttribute("id", "btnAssign");
+									btnAssign.setStyleName(res.css().disableAssignButon());
+									btnAssign.setText(i18n.GL0104());
+									btnAssign.getElement().setAttribute("alt",i18n.GL0104());
+									btnAssign.getElement().setAttribute("title",i18n.GL0104());
+									btnAssign.setEnabled(false);
+									btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
+									
+							        this.hide();
+								}
+							};
+							successPopupVc.center();
+							successPopupVc.show();
+							
+						}
+					});
 					
-					AppClientFactory.getInjector().getClasspageService().createClassPageItem(classpageId, collectionDo.getGooruOid() ,dueDateVal, directionsVal, new SimpleAsyncCallback<ClasspageItemDo>() {
+					
+				/*	AppClientFactory.getInjector().getClasspageService().createClassPageItem(classpageId, collectionDo.getGooruOid() ,dueDateVal, directionsVal, new SimpleAsyncCallback<ClasspageItemDo>() {
 						@Override
 						public void onSuccess(ClasspageItemDo result) {
 							
@@ -533,7 +585,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 			//			public void onFailure(Throwable caught) {
 			//				
 			//			}
-					});
+					});*/
 		}
 		}
 		});

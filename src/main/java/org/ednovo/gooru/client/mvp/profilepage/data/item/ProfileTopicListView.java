@@ -91,7 +91,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class ProfileTopicListView extends Composite{
 
 	@UiField ScrollPanel lessonScrollPanel;
-	@UiField HTMLPanel topicBlock, conceptList,collectionInfo,resourcesInside;
+	@UiField HTMLPanel topicBlock, conceptList,collectionInfo,resourcesInside,moreOnTopicText;
 	@UiField Label topicTitleLbl, noCollectionLbl, libraryTopicLbl;
 	@UiField Image collectionImage;
 	@UiField HTML collectionTitleLbl, collectionDescriptionLbl;
@@ -99,6 +99,7 @@ public class ProfileTopicListView extends Composite{
 	@UiField HTMLPanel loadingImage, collectionViewer;
 	@UiField FlowPanel standardsFloPanel;
 	@UiField ProfilePageLibraryStyleBundle style;
+	@UiField HTMLEventPanel searchLink;
 	
 	private Integer topicId;
 
@@ -124,9 +125,13 @@ public class ProfileTopicListView extends Composite{
 	
 	private static final String SMALL = "Small";
 	
+	private static final String CUSTOMIZE = "customize";
+	
+	private static final String ASSIGN = "assign";
+	
 	private static final String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
 	
-	private static Integer LESSON_PAGE_INITIAL_LIMIT = 10;
+	private static Integer LESSON_PAGE_INITIAL_LIMIT = 20;
 	
 	private static String PAGE = "page";
 	
@@ -153,6 +158,8 @@ public class ProfileTopicListView extends Composite{
 	String lessonCode="";
 	
 	List<String> standPrefCode = new ArrayList<String>();
+	
+	private static boolean isVisible=true;
 
 	private static final String STANDARD_ID = "standardId";
 
@@ -173,19 +180,27 @@ public class ProfileTopicListView extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicNumber;
 		setPlaceToken(placeToken);
-		assignCollectionBtn.setText(i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
+		assignCollectionBtn.setText(i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
 		
-		customizeCollectionBtn.setText(i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
+		customizeCollectionBtn.setText(i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
+		
+		noCollectionLbl.setVisible(false);
 		
 		noCollectionLbl.setText(i18n.GL1170());
 		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());
 		noCollectionLbl.getElement().setAttribute("title",i18n.GL1170());
 		
+		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
+		searchLink.setVisible(false);
+		searchLink.addClickHandler(new OnSearchLinkClick());
 		setTopicLabel(profileFolderDo.getTitle());
+		searchTitle=profileFolderDo.getTitle();
 		collectionInfo.setVisible(false);
 		if(profileFolderDo.getCollections()!=null) {
 			setOnlyConceptData(profileFolderDo.getCollectionItems(), false, profileFolderDo.getGooruOid(), profileFolderDo.getItemCount());
@@ -197,8 +212,20 @@ public class ProfileTopicListView extends Composite{
 		} else {
 			setPartnerLibraryLessonData(profileFolderDo.getCollectionItems(), profileFolderDo.getGooruOid());
 			try {
-				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY) || 
+						AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE) || 
+						AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD) || 
+						AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
 					setConceptData(profileFolderDo.getCollectionItems().get(0).getCollectionItems().get(0).getCollectionItems().get(0),topicId, null, null,null);
+					searchLink.setVisible(false);
+				} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)){
+					setConceptData(profileFolderDo.getCollectionItems().get(0).getCollectionItems().get(0),topicId, null, null,null);
+					searchLink.setVisible(true);
+					
+				}
+				else
+				{
+					searchLink.setVisible(false);
 				}
 			} catch(Exception e) {
 				setDefaultCollectionLbl();
@@ -222,6 +249,7 @@ public class ProfileTopicListView extends Composite{
 		AppClientFactory.getEventBus().addHandler(SetLoadingIconEvent.TYPE, setLoadingIconHandler);
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
 		setId();
+
 	}
 	public void setId(){
 		assignCollectionBtn.getElement().setId("btnAssignCollectionBtn");
@@ -240,23 +268,31 @@ public class ProfileTopicListView extends Composite{
 		collectionDescriptionLbl.getElement().setId("htmlCollectionDescriptionLbl");
 		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
 		resourcesInside.getElement().setId("htmlResourcesInside");
+		moreOnTopicText.getElement().setId("pnlMoreOnTopicText");
 	}
 
 	public ProfileTopicListView(ProfileLibraryDo profileFolderDo, Integer conceptNumber, String placeToken, String collectionType) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
 		setPlaceToken(placeToken);
-		assignCollectionBtn.setText(i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
+		assignCollectionBtn.setText(i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
 		
-		customizeCollectionBtn.setText(i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
+		customizeCollectionBtn.setText(i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
 		
+		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
+		searchLink.setVisible(false);
+		searchLink.addClickHandler(new OnSearchLinkClick());
+	
 		setTopicLabel(profileFolderDo.getTitle());
-		topicTitleLbl.addStyleName(style.collection());
 		searchTitle=profileFolderDo.getTitle();
+		topicTitleLbl.addStyleName(style.collection());
+		
 		
 		try {
 			setConceptData(profileFolderDo,conceptNumber,null, null,null);
@@ -264,6 +300,7 @@ public class ProfileTopicListView extends Composite{
 			collectionInfo.setVisible(false);
 			resourcesInside.setVisible(false);
 			noCollectionLbl.setVisible(true);
+			
 		}
 		
 		//searchLink.getElement().getStyle().setDisplay(Display.NONE);
@@ -290,6 +327,12 @@ public class ProfileTopicListView extends Composite{
 		
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
 		setId();
+		Map<String, String> maps = StringUtil.splitQuery(Window.Location
+				.getHref());
+		if(maps.containsKey("emailId")){
+			showPopupAfterGmailSignin();
+		}
+
 	}
 	
 	private void setOnlyConceptData(ArrayList<ProfileLibraryDo> profileFolderDoList, boolean isTopicCalled, final String parentId, final int partnerItemCount) {
@@ -360,12 +403,15 @@ public class ProfileTopicListView extends Composite{
 	}
 	
 	public void setConceptData(final ProfileLibraryDo conceptDo, Integer topicId, final String lessonId, String lessonLabel,String lessonCode) {
-			setConceptDo(conceptDo);
+		setConceptDo(conceptDo);
+			
 			this.lessonCode=lessonCode;
 			if(this.topicId==topicId) {
 				String id = null;
 				if(conceptDo.getGooruOid()!=null){
 					id=conceptDo.getGooruOid();
+					
+					
 				}
 				if(id!=null) {
 					collectionViewer.setVisible(true);
@@ -411,8 +457,20 @@ public class ProfileTopicListView extends Composite{
 					setMetaDataInfo(conceptDo); 
 					resourcesInside.clear();
 					ArrayList<ProfileLibraryDo> libraryResources =  profileLibraryDo.getCollectionItems();
+					int resourceCount = 0;
 					if(libraryResources!=null) {
-						int resourceCount = libraryResources.size();
+						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)){
+							resourceCount = libraryResources.size();
+						}else{
+							if(conceptDo.getItemCount()!=null){
+								resourceCount = conceptDo.getItemCount();
+							}
+							else
+							{
+								resourceCount = libraryResources.size();
+							}
+							
+						}
 						int resources=resourceCount<=4?resourceCount:4;
 						final Label resourceCountLbl = new Label(resources+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+resourceCount+" "+i18n.GL1094().toLowerCase());
 						resourcesInside.add(resourceCountLbl);
@@ -450,22 +508,64 @@ public class ProfileTopicListView extends Composite{
 								final String categoryImage=categoryString;
 								
 								String sourceAttribution = "";
-								if(profileLibraryItem.getResourceSource()!=null&&profileLibraryItem.getResourceSource().getAttribution()!=null) {
+								/*if(profileLibraryItem.getResourceSource()!=null&&profileLibraryItem.getResourceSource().getAttribution()!=null) {
 									sourceAttribution = profileLibraryItem.getResourceSource().getAttribution();
+								}*/
+								
+//								if(profileLibraryItem.getResourceSource()!=null){
+//									if(profileLibraryItem.getResourceSource().getDomainName()!=null){
+//									if(!profileLibraryItem.getResourceSource().getDomainName().equalsIgnoreCase("docs.google.com"))
+//									{
+//										sourceAttribution = profileLibraryItem.getResourceSource().getAttribution();
+//									}
+//									
+//									}
+//									else
+//									{
+//										sourceAttribution="";
+//									}
+//									
+//								}
+								final List<String> attribution = profileLibraryItem.getPublisher();
+								String domainName = "";
+								if(profileLibraryItem.getResourceSource()!=null&&profileLibraryItem.getResourceSource().getDomainName()!=null) {
+									domainName = profileLibraryItem.getResourceSource().getDomainName();
 								}
-								final String attribution = sourceAttribution;
-								resourceImage.addMouseOverHandler(new MouseOverHandler() {
+								final String domain = domainName;
+								
+								final HTMLEventPanel resourceCategoryIcon = new HTMLEventPanel("");
+								
+								resourceCategoryIcon.addMouseOverHandler(new MouseOverHandler() {
 								   	
 									@Override
 									public void onMouseOver(MouseOverEvent event) {
 										toolTipPopupPanel.clear();
-										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(profileLibraryItem.getTitle(),categoryImage,attribution,profileLibraryItem.getRatings().getCount(),profileLibraryItem.getRatings().getAverage()));
+										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(profileLibraryItem.getTitle(),categoryImage,attribution,profileLibraryItem.getRatings().getCount(),profileLibraryItem.getRatings().getAverage(),domain));
 										toolTipPopupPanel.setStyleName("");
 										toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
 										toolTipPopupPanel.show();
 									}
 								});
 								
+								resourceImage.addMouseOverHandler(new MouseOverHandler() {
+								   	
+									@Override
+									public void onMouseOver(MouseOverEvent event) {
+										toolTipPopupPanel.clear();
+										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(profileLibraryItem.getTitle(),categoryImage,attribution,profileLibraryItem.getRatings().getCount(),profileLibraryItem.getRatings().getAverage(),domain));
+										toolTipPopupPanel.setStyleName("");
+										toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
+										toolTipPopupPanel.show();
+									}
+								});
+								
+								resourceCategoryIcon.addMouseOutHandler(new MouseOutHandler() {
+									
+									@Override
+									public void onMouseOut(MouseOutEvent event) {
+										toolTipPopupPanel.hide();
+									}
+								});
 								resourceImage.addMouseOutHandler(new MouseOutHandler() {
 									
 									@Override
@@ -524,12 +624,42 @@ public class ProfileTopicListView extends Composite{
 											params.put("rootNodeId", standardId);
 										}
 										
-										PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
+										PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+										AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+									}
+								});
+								resourceCategoryIcon.addClickHandler(new ClickHandler() {
+									@Override
+									public void onClick(ClickEvent event) {
+										String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
+										if(page.equals(COURSE_PAGE)) {
+											MixpanelUtil.mixpanelEvent("CoursePage_Plays_Resource");
+										} else {
+											MixpanelUtil.mixpanelEvent("LandingPage_Plays_Resource");
+										}
+										Map<String, String> params = new HashMap<String, String>();
+										params.put("id", conceptDo.getGooruOid());
+										
+										String resourceId = profileLibraryItem.getCollectionItemId();
+										if(resourceId==null) {
+											resourceId = profileLibraryItem.getCollectionItemId();
+										}
+										params.put("rid", resourceId);
+										params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
+										params.put("lessonId", lessonId);
+										if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+											params.put("library", getPlaceToken());
+										}
+										String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
+										if(standardId!=null){
+											params.put("rootNodeId", standardId);
+										}
+										
+										PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 										AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 									}
 								});
 								
-								final HTMLPanel resourceCategoryIcon = new HTMLPanel("");
 								resourceCategoryIcon.addStyleName(UcCBundle.INSTANCE.css().resourceName());
 								resourceCategoryIcon.addStyleName(getDetaultResourceImage(category.toLowerCase()) + SMALL);
 								resourcePanel.add(resourceImage);
@@ -543,6 +673,7 @@ public class ProfileTopicListView extends Composite{
 				} else {
 					collectionInfo.setVisible(false);
 					resourcesInside.setVisible(false);
+					
 					noCollectionLbl.setVisible(true);
 				}
 			}
@@ -562,6 +693,7 @@ public class ProfileTopicListView extends Composite{
 	private void setDefaultCollectionLbl() {
 		collectionInfo.setVisible(false);
 		resourcesInside.setVisible(false);
+		
 		noCollectionLbl.setVisible(true);
 	}
 
@@ -642,7 +774,6 @@ public class ProfileTopicListView extends Composite{
 			if(profileLibraryDo!=null){
 				setMetaDataInfo(profileLibraryDo);
 			}
-			
 		}
 	}
 
@@ -650,6 +781,14 @@ public class ProfileTopicListView extends Composite{
 		@Override
 		public void openProfileCollection(ProfileLibraryDo profileLibraryDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode) {
 			setConceptData(profileLibraryDo, topicId, lessonId, lessonLabel,lessonCode);
+			Map<String, String> maps = StringUtil.splitQuery(Window.Location
+					.getHref());
+			String colId= profileLibraryDo.getGooruOid();
+			if(maps.containsKey("emailId")){
+				if(AppClientFactory.getPlaceManager().getRequestParameter("collectionId").equals(colId)){
+					showPopupAfterGmailSignin();
+				}
+			}
 		}
 	};
 	
@@ -902,7 +1041,7 @@ public class ProfileTopicListView extends Composite{
 			if(standardId!=null){
 				params.put("rootNodeId", standardId);
 			}
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 		}
 	}
 
@@ -911,6 +1050,11 @@ public class ProfileTopicListView extends Composite{
 		String collectionId = getProfileLibraryDo().getGooruOid();
 		if(!isAssignPopup){
 			isAssignPopup=true;
+			final Map<String, String> params = StringUtil.splitQuery(Window.Location
+					.getHref());
+			if(params.containsKey(CUSTOMIZE)){
+				params.remove(CUSTOMIZE);
+			}
 			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals()) {
 				@Override
 				public void closePoup() {
@@ -921,15 +1065,20 @@ public class ProfileTopicListView extends Composite{
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("635px");
+			successPopupVc.setHeight("657px");
 			successPopupVc.show();
 			successPopupVc.center();
 			if (AppClientFactory.isAnonymous()){
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
 			}
 			else {				
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
 			}
+			
+			params.put(ASSIGN, "yes");
+			params.put("collectionId", collectionId);
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 		}
 	}
 	
@@ -944,6 +1093,11 @@ public class ProfileTopicListView extends Composite{
 		} else {
 			loginFlag = false;
 		}
+		final Map<String, String> params = StringUtil.splitQuery(Window.Location
+				.getHref());
+		if(params.containsKey(ASSIGN)){
+			params.remove(ASSIGN);
+		}
 		RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
 			@Override
 			public void closePoup() {
@@ -954,10 +1108,95 @@ public class ProfileTopicListView extends Composite{
 		};
 		Window.scrollTo(0, 0);
 		successPopupVc.setWidth("500px");
-		successPopupVc.setHeight("440px");
+		successPopupVc.setHeight("475px");
 			successPopupVc.show();
 			successPopupVc.center();
+			
+			params.put(CUSTOMIZE, "yes");
+			params.put("collectionId", collectionId);
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 		}
+	}
+	
+	/**
+	 * 
+	 * Showing Customize or Assign popup after login with gmail account.
+	 * 
+	 */
+	
+	private void showPopupAfterGmailSignin() {
+
+		String collectionId = getProfileLibraryDo().getGooruOid()!= null ? getProfileLibraryDo().getGooruOid() : null;
+		String colleId = AppClientFactory.getPlaceManager().getRequestParameter("collectionId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("collectionId") : null;
+		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
+		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
+
+		if(customize!=null && customize.equals("yes")){
+			if(colleId.equals(collectionId) && isVisible ){
+				isVisible=false;
+				Boolean loginFlag = false;
+				if (AppClientFactory.isAnonymous()){
+					loginFlag = true;
+				}
+				else
+				{
+					loginFlag = false;
+				}
+				final Map<String, String> params = StringUtil.splitQuery(Window.Location
+						.getHref());
+				RenameAndCustomizeLibraryPopUp customizePopup = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
+					@Override
+					public void closePoup() {
+						Window.enableScrolling(true);
+						this.hide();	
+						isCustomizePopup = false;
+
+					}
+				};
+				Window.scrollTo(0, 0);
+				customizePopup.setWidth("500px");
+				customizePopup.setHeight("440px");
+				customizePopup.show();
+				customizePopup.center();
+
+
+			}
+
+		}
+		if(assign!=null && assign.equals("yes")){
+			final Map<String, String> params = StringUtil.splitQuery(Window.Location
+					.getHref());
+			if(colleId.equals(collectionId) && isVisible){
+				isVisible=false;
+				AssignPopupVc assignPopup = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals()) {
+					@Override
+					public void closePoup() {
+						Window.enableScrolling(true);
+						this.hide();
+						isAssignPopup=false;
+						params.remove(ASSIGN);
+						PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+					}
+				};
+				Window.scrollTo(0, 0);
+				assignPopup.setWidth("500px");
+				assignPopup.setHeight("657px");
+				assignPopup.show();
+				assignPopup.center();
+				if (AppClientFactory.isAnonymous()){
+					assignPopup.setPopupPosition(assignPopup.getAbsoluteLeft(), 10);
+				}
+				else {				
+					assignPopup.setPopupPosition(assignPopup.getAbsoluteLeft(), 10);
+				}
+
+			}
+
+		}
+
+
 	}
 	
 	private void setTopicLabel(String title) {
@@ -973,6 +1212,23 @@ public class ProfileTopicListView extends Composite{
 			libraryTopicLbl.setText(title);
 			libraryTopicLbl.getElement().setAttribute("alt",title);
 			libraryTopicLbl.getElement().setAttribute("title",title);
+		}
+	}
+	public Map<String, String> updateParams(String searchQuery) {
+		Map<String, String> params = new HashMap<String,String>();
+		params.put("category", "All");
+		params.put("query", searchQuery);
+		params.put("pageSize", "8");
+		params.put("pageNum", "1");
+		return params;
+	}
+	private class OnSearchLinkClick implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+		
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_SEARCH, updateParams(searchTitle));
+			
+
 		}
 	}
 }

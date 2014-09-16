@@ -23,9 +23,11 @@
 					<g:FlowPanel styleName="{res.css.gradeInfoTitleContainer}">
 						<g:Label styleName="{res.css.shelfGradeInfoTitle}"
 							ui:field="gradeLbl" />
-					</g:FlowPanel>
-					<g:Label styleName="{res.css.shelfGradeInfoBottom}"
+					</g:FlowPanel>		
+						<g:Label styleName="{res.css.shelfGradeInfoBottom}"
 						ui:field="selectGradeLbl" />
+									<g:Label styleName="{res.css.shelfGradeInfoBottom} {res.css.gradeInfoLabel}"
+						ui:field="GradeUpdate"  />
 					<g:FlowPanel styleName="{res.css.shelfGradeInfogardenContainer}"
 						ui:field="KinderGarten" />
 					<g:FlowPanel styleName="{res.css.gradeListCont}">
@@ -67,8 +69,9 @@
 					<g:FlowPanel styleName="{res.css.shelfCourseSubject}">
 						<g:FlowPanel styleName="{res.css.shelfNameCourse}">
 							<g:FlowPanel styleName="{res.css.standardsCont}">
+							<g:Button ui:field="browseBtn" styleName="secondary">Browse</g:Button>
 								<uc:AppSuggestBox ui:field="standardSgstBox"
-									width="277px" height="19px" />
+									width="224px" height="19px" />
 								<g:Button styleName="{res.css.infoAddButton}" ui:field="addStandardBtn" />
 								<g:Label styleName="{res.css.standardMaxHide}" ui:field="standardMaxMsg" />
 								<g:FlowPanel ui:field="standardsPanel"

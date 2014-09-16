@@ -3,11 +3,12 @@
 /*real style*/
 
 .openEndedQuestionTotalContainer {
-	width: 960px;
-	min-height: 631px;
+	width: 1000px;
 	height: auto;
 	float: left;
 	background-color: #FFFFFF;
+	border-top: 1px solid #ddd;
+	overflow-y: scroll;
 }
 .openEndedQuestionContainer {
 	float: left;
@@ -254,6 +255,13 @@
 	font-size: 12px;
 	font-style: italic;
 	color: #999;
+}
+
+.charLimit{
+	font-size: 12px;
+	color: #999;
+	float: right;
+	margin-right:5px;
 }
 .addjustSubmitButton{
 	margin-top:15%;

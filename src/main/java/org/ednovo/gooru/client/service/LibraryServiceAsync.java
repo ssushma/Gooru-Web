@@ -62,7 +62,7 @@ public interface LibraryServiceAsync extends BaseServiceAsync {
 	void getConceptForStandards(String gooruOid,String rooteNodeId, boolean skipCollectionItems, AsyncCallback<ConceptDo> callback);
 
 	void getLibraryWorkspace(String gooruUid, int limit,String sharingType, String collectionType, int offset, AsyncCallback<ProfileLibraryListDo> callback);
-	void getLibraryPaginationWorkspace(String parentId,String sharingType, int limit, AsyncCallback<ProfileLibraryListDo> callback);
+	void getLibraryPaginationWorkspace(String parentId,String sharingType, int limit,int offset, AsyncCallback<ProfileLibraryListDo> callback);
 	void getLibraryCoursesList(String parentId,String sharingType, String offset, AsyncCallback<ProfileLibraryListDo> callback);
 	
 	public void  getStandardLibraryMenuList(String subjectCode,String libraryName,AsyncCallback<ArrayList<StandardCourseDo>> callback);

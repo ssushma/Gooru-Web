@@ -42,6 +42,9 @@ public interface CollectionFormUiHandlers extends BaseUiHandlers {
 
 	void copyCollection(String collectionTitle, String collectionId);
 
-	void copyDraggedCollection(String draggedCollectionTitle, String draggedCollectionId,String selectedFolderId);  
+	void copyDraggedCollection(String draggedCollectionTitle, String draggedCollectionId,String selectedFolderId);
+
+	void saveCollectionForSearch(String folderId, String o1, String o2,
+			String o3, String resourceidonclick,String fromAddResource);  
 	
 }

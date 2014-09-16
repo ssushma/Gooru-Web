@@ -32,7 +32,7 @@ body {
 }
 .shelfItemContentDiv {
 	border: 1px solid #CCC;
-	min-height: 400px;
+	min-height: 300px;
 	height: auto;
 	margin: -4px 4px 4px;
 }
@@ -48,11 +48,7 @@ body {
 	padding-top: 20px;
 	padding-bottom: 20px;
 }
-.gwt-Label {
-	text-align: right;
-	width: 150px;
-	padding-right: 10px;
-}
+
 .contentDesc {
 	font-size: 12px;
 	line-height: 120%;

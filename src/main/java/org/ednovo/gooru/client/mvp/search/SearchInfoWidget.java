@@ -4,20 +4,24 @@
 package org.ednovo.gooru.client.mvp.search;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
+import org.ednovo.gooru.client.uc.LiecenceTooltip;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.ToolTipPopUp;
+
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -110,7 +114,7 @@ public class SearchInfoWidget extends Composite {
 	boolean isResourceInfo=false;
 	boolean isAccessibilityInfo=false;
 	boolean isGrades =false;
-	
+	LiecenceTooltip liecenceTooltip;
 	/**
 	 * Because this class has a default constructor, it can
 	 * be used as a binder template. In other words, it can be used in other
@@ -137,61 +141,61 @@ public class SearchInfoWidget extends Composite {
 		publisherText.setText(i18n.GL0566()+" ");
 		setIdForLabel(publisherText,"PublisherText",i18n.GL0566()+" ");
 		
-		lblAggregation.setText(i18n.GL1628()+" "+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(lblAggregation,"LblAggregation",i18n.GL1628()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		lblAggregation.setText(i18n.GL1628().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(lblAggregation,"LblAggregation",i18n.GL1628().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		courseText.setText(i18n.GL0616()+" ");
 		setIdForLabel(courseText,"CourseText",i18n.GL0616()+" ");
 		
-		legalText.setText(i18n.GL0730()+" "+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(legalText,"LegalText",i18n.GL0730()+" "+i18n.GL_SPL_SEMICOLON());
+		legalText.setText(i18n.GL0730().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(legalText,"LegalText",i18n.GL0730().trim()+i18n.GL_SPL_SEMICOLON());
 		
 		standardsText.setText(i18n.GL0619()+" ");
 		setIdForLabel(standardsText,"standardsText",i18n.GL0619()+" ");
 		
 		//		resourceInfoText.setText(i18n.GL0621);
-		gradeTitle.setText(i18n.GL0325()+" "+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(gradeTitle,"GradeTitle",i18n.GL0325()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		gradeTitle.setText(i18n.GL0325().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(gradeTitle,"GradeTitle",i18n.GL0325().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		originalUrlTitle.setText(i18n.GL0976()+" "+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(originalUrlTitle,"OriginalUrlTitle",i18n.GL0976()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		originalUrlTitle.setText(i18n.GL0976().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(originalUrlTitle,"OriginalUrlTitle",i18n.GL0976().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		generalLbl.setText(i18n.GL1708());
 		setIdForLabel(generalLbl,"GeneralLbl",i18n.GL1708());
 		
-		hostLbl.setText(i18n.GL1700()+" "+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(hostLbl,"HostLbl",i18n.GL1700()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		hostLbl.setText(i18n.GL1700().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(hostLbl,"HostLbl",i18n.GL1700().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		//Educational static data
 		educationallLbl.setText(i18n.GL1720());
 		setIdForLabel(educationallLbl,"EducationallLbl",i18n.GL1720());
 		
-		eduAllignLbl.setText(i18n.GL1690()+" "+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(eduAllignLbl,"EduAllignLbl",i18n.GL1690()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		eduAllignLbl.setText(i18n.GL1690().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(eduAllignLbl,"EduAllignLbl",i18n.GL1690().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		eduUseLbl.setText(i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(eduUseLbl,"EduUseLbl",i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		eduUseLbl.setText(i18n.GL1664().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(eduUseLbl,"EduUseLbl",i18n.GL1664().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		eduRoleLbl.setText(i18n.GL1867()+" ");
 		setIdForLabel(eduRoleLbl,"EduRoleLbl",i18n.GL1867()+" ");
 		
-		interactiveLbl.setText(i18n.GL1689()+" "+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(interactiveLbl,"InteractiveLbl",i18n.GL1689()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		interactiveLbl.setText(i18n.GL1689().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(interactiveLbl,"InteractiveLbl",i18n.GL1689().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		ageRangeLbl.setText(i18n.GL1692()+" "+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(ageRangeLbl,"AgeRangeLbl",i18n.GL1692()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		ageRangeLbl.setText(i18n.GL1692().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(ageRangeLbl,"AgeRangeLbl",i18n.GL1692().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		dKnowledgeLbl.setText(i18n.GL1693()+" "+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(dKnowledgeLbl,"DKnowledgeLbl",i18n.GL1693()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		dKnowledgeLbl.setText(i18n.GL1693().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(dKnowledgeLbl,"DKnowledgeLbl",i18n.GL1693().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		momentsoflearningLbl.setText(i18n.GL1678()+" "+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(momentsoflearningLbl,"MomentsoflearningLbl",i18n.GL1678()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		momentsoflearningLbl.setText(i18n.GL1678().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(momentsoflearningLbl,"MomentsoflearningLbl",i18n.GL1678().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		readingLevelLbl.setText(i18n.GL1694()+" "+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(readingLevelLbl,"ReadingLevelLbl",i18n.GL1694()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		readingLevelLbl.setText(i18n.GL1694().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(readingLevelLbl,"ReadingLevelLbl",i18n.GL1694().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		schLevelLbl.setText(i18n.GL1868()+" "+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(schLevelLbl,"SchLevelLbl",i18n.GL1868()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		schLevelLbl.setText(i18n.GL1868().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(schLevelLbl,"SchLevelLbl",i18n.GL1868().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		//Resource Info Static data
 		resourceInfoLbl.setText(i18n.GL1716());
@@ -199,44 +203,44 @@ public class SearchInfoWidget extends Composite {
 		
 		
 //		dateCreatedLbl.setText(i18n.GL1717+i18n.GL_SPL_SEMICOLON);
-		countryCodeLbl.setText(i18n.GL1697()+" "+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(countryCodeLbl,"CountryCodeLbl",i18n.GL1697()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		countryCodeLbl.setText(i18n.GL1697().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(countryCodeLbl,"CountryCodeLbl",i18n.GL1697().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		languageLbl.setText(i18n.GL1696()+" "+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(languageLbl,"LanguageLbl",i18n.GL1696()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		languageLbl.setText(i18n.GL1696().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(languageLbl,"LanguageLbl",i18n.GL1696().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		dataTypeLbl.setText(i18n.GL1688()+" "+i18n.GL_SPL_SEMICOLON()+" ");
-		setIdForLabel(dataTypeLbl,"DataTypeLbl",i18n.GL1688()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		dataTypeLbl.setText(i18n.GL1688().trim()+i18n.GL_SPL_SEMICOLON()+" ");
+		setIdForLabel(dataTypeLbl,"DataTypeLbl",i18n.GL1688().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		authorLbl.setText(i18n.GL0573()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		authorLbl.setText(i18n.GL0573().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		setIdForLabel(authorLbl,"AuthorLbl",i18n.GL0573()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		copyRightLbl.setText(i18n.GL1699()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		copyRightLbl.setText(i18n.GL1699().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		setIdForLabel(copyRightLbl,"CopyRightLbl",i18n.GL1699()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		keywordsTitle.setText(i18n.GL1876()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		keywordsTitle.setText(i18n.GL1876().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		setIdForLabel(keywordsTitle,"KeywordsTitle",i18n.GL1876()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		adsTitle.setText(i18n.GL1800()+" "+i18n.GL_SPL_SEMICOLON());
+		adsTitle.setText(i18n.GL1800().trim()+i18n.GL_SPL_SEMICOLON());
 		setIdForLabel(adsTitle,"AdsTitle",i18n.GL1800()+" "+i18n.GL_SPL_SEMICOLON());
 		
 		//Accessibility Static data
 		accesibilityLbl.setText(i18n.GL1703());
 		setIdForLabel(accesibilityLbl,"AccesibilityLbl",i18n.GL1703());
 		
-		mbFriendlyLbl.setText(i18n.GL1687()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		mbFriendlyLbl.setText(i18n.GL1687().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		setIdForLabel(mbFriendlyLbl,"MbFriendlyLbl",i18n.GL1687()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		accessModelLbl.setText(i18n.GL1707()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		accessModelLbl.setText(i18n.GL1707().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		setIdForLabel(accessModelLbl,"AccessModelLbl",i18n.GL1707()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		mediaFeatureLbl.setText(i18n.GL1706()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		mediaFeatureLbl.setText(i18n.GL1706().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		setIdForLabel(mediaFeatureLbl,"MediaFeatureLbl",i18n.GL1706()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		controlLbl.setText(i18n.GL1704()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		controlLbl.setText(i18n.GL1704().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		setIdForLabel(controlLbl,"ControlLbl",i18n.GL1704()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 
-		acessHazardlLbl.setText(i18n.GL1705()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+		acessHazardlLbl.setText(i18n.GL1705().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 		setIdForLabel(acessHazardlLbl,"AcessHazardlLbl",i18n.GL1705()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 	}
 
@@ -409,28 +413,42 @@ public class SearchInfoWidget extends Composite {
 								.replaceAll("ST", "").replaceAll("nd", "")
 								.replaceAll("ND", "").replaceAll("rd", "")
 								.replaceAll("RD", "");
-						eachGrade1 = eachGrade1.toLowerCase()
-								.replaceAll("Grade", "").replaceAll("grade", "");
-						eachGrade1 = eachGrade1.toLowerCase().replaceAll("K-", "")
+						eachGrade1 = eachGrade1.replaceAll("Grade", "").replaceAll("grade", "");
+						eachGrade1 = eachGrade1.replaceAll("K-", "")
 								.replaceAll("k-", "");
-						eachGrade1 = eachGrade1.toLowerCase().replaceAll("K", "")
-								.replaceAll("k", "");
-						try {
+				/*		eachGrade1 = eachGrade1.toLowerCase().replaceAll("K", "")
+								.replaceAll("k", "");*/
+						
+						gradesdetails.add(eachGrade1);
+						
+/*						try {
 							String grad[] = generateGradeIfHypen(eachGrade1).trim().split(",");
 							for (int i = 0; i < grad.length; i++) {
+								try
+								{
 								gradeListInt.add(Integer.parseInt(grad[i]));
+								}
+								catch(Exception ex)
+								{
+									gradeListInt.add(1000);
+								}
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
-						}
+						}*/
 					}else{
 						gradesdetails.add(eachGrade1);
 					}
 				}
-				gradeListInt = sortList(gradeListInt);
-				for(int glevel=0;glevel<gradeListInt.size();glevel++){
+			//	gradeListInt = sortList(gradeListInt);
+/*				for(int glevel=0;glevel<gradeListInt.size();glevel++){
+					System.out.println("gradeListInt::"+gradeListInt.get(glevel));
+
 					gradesdetails.add(Integer.toString(gradeListInt.get(glevel)));
-				}
+					
+					
+				}*/
+				//List<String> stringList = new ArrayList<String>(Arrays.asList(gradeslist));
 				setGrades(gradesdetails);
 				}
 	        
@@ -442,18 +460,26 @@ public class SearchInfoWidget extends Composite {
 			
 			setOriginalUrl(CollectiongenealInfo.getResource().getAssetURI(),CollectiongenealInfo.getResource().getFolder(),
 					CollectiongenealInfo.getResource().getUrl(),CollectiongenealInfo.getResource().getResourceType().getName());
-			
+
+			if(resourceDo.getPublisher()!=null || CollectiongenealInfo.getResource().getResourceFormat()!=null){
+
 			if(resourceDo.getPublisher()!=null){
 				if(resourceDo.getPublisher().size()>0){
-				InfoUtil.setDepthofknowledgeDetails(CollectiongenealInfo.getResource().getPublisher(), publisherType, publisherText, publisherPanel);
+					InfoUtil.setDepthofknowledgeDetails(CollectiongenealInfo.getResource().getPublisher(), publisherType, publisherText, publisherPanel);
 				isGeneralInfo=true;
 				}
 				else{
 					publisherPanel.setVisible(false);
 				}
-			}else{
-				publisherPanel.setVisible(false);
 			}
+			if(CollectiongenealInfo.getResource().getResourceFormat()!=null){
+				if(CollectiongenealInfo.getResource().getResourceFormat()!=null && CollectiongenealInfo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+					List<String> publisherQuestionUserName = new ArrayList<String>();
+					publisherQuestionUserName.add(CollectiongenealInfo.getResource().getCreator().getUsername());
+					InfoUtil.setDepthofknowledgeDetails(publisherQuestionUserName, publisherType, publisherText, publisherPanel);
+				}
+			}
+		}
 			
 			if(resourceDo.getAggregator()!=null){
 //				setAggregatorvalues(collectionItemDo.getResource().getAggregator());
@@ -515,8 +541,8 @@ public class SearchInfoWidget extends Composite {
 			if(licenseDo.getIcon()!=null&&!licenseDo.getIcon().trim().equals("")){
 				Image image=new Image();
 				image.setUrl(assetUrl+licenseDo.getIcon());
-				image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getCode()+"<br><br>"+licenseDo.getName()));
-				image.addMouseOutHandler(new MouseOutHideToolTip());
+				image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getCode(),licenseDo.getName()));
+				image.addMouseOutHandler(new MouseOutHideToolTipOER());
 				licenceContainer.setVisible(true);
 				rightsLogoContainer.clear();
 				rightsLogoContainer.add(image);
@@ -536,20 +562,30 @@ public class SearchInfoWidget extends Composite {
 	public class MouseOverShowStandardToolTip implements MouseOverHandler
 	{
 		String desc=null;
+		String code=null;
 
-		public MouseOverShowStandardToolTip(String description) {
+		public MouseOverShowStandardToolTip(String code,String description) {
+			this.code = code;
 			this.desc = description;
 		}
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			toolTip = new ToolTipPopUp(desc, (event.getRelativeElement().getAbsoluteLeft()-83),(event.getRelativeElement().getAbsoluteTop()+22));
-			toolTip.setStyleName("");
-			toolTip.show();
-			toolTip.getElement().getStyle().setZIndex(99999);
+			
+			liecenceTooltip = new LiecenceTooltip(code,desc, (event.getRelativeElement().getAbsoluteLeft()-109),(event.getRelativeElement().getAbsoluteTop()+22));
+			liecenceTooltip.setStyleName("");
+			liecenceTooltip.show();
+			liecenceTooltip.getElement().getStyle().setZIndex(99999);
 		}
 	}
+	public class MouseOutHideToolTipOER implements MouseOutHandler
+	{
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			liecenceTooltip.hide();
+		}
 
+	}
 	public class MouseOutHideToolTip implements MouseOutHandler
 	{
 		@Override
@@ -559,6 +595,7 @@ public class SearchInfoWidget extends Composite {
 
 	}
 		
+	
 	/**
 	 * To show Standards Information
 	 * @param standardsContainer
@@ -765,7 +802,7 @@ public class SearchInfoWidget extends Composite {
 				educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
 				educationallLbl.getElement().setAttribute("title",i18n.GL1720());
 				
-				eduUseLbl.setText(i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+				eduUseLbl.setText(i18n.GL1664().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 				eduUseLbl.getElement().setAttribute("alt",i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 				eduUseLbl.getElement().setAttribute("title",i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 				educationallLbl.setVisible(true);
@@ -783,7 +820,7 @@ public class SearchInfoWidget extends Composite {
 				educationallLbl.getElement().setAttribute("alt",i18n.GL1720());
 				educationallLbl.getElement().setAttribute("title",i18n.GL1720());
 				
-				eduUseLbl.setText(i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON()+" ");
+				eduUseLbl.setText(i18n.GL1664().trim()+i18n.GL_SPL_SEMICOLON()+" ");
 				eduUseLbl.getElement().setAttribute("alt",i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 				eduUseLbl.getElement().setAttribute("title",i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON()+" ");
 				educationallLbl.setVisible(true);
@@ -1206,7 +1243,12 @@ public class SearchInfoWidget extends Composite {
 							@Override
 							public void onClickPositiveButton(ClickEvent event) {
 								this.hide();
-								Window.enableScrolling(true);
+								
+								if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+									Window.enableScrolling(false);
+								}else{
+									Window.enableScrolling(true);
+								}
 							}
 							
 						};
@@ -1219,7 +1261,11 @@ public class SearchInfoWidget extends Composite {
 						success.center();
 						success.show();
 					 }else{
-						 Window.enableScrolling(true);
+						 if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+								Window.enableScrolling(false);
+							}else{
+								Window.enableScrolling(true);
+							}
 					 }
 				}
 			};
@@ -1246,7 +1292,14 @@ public class SearchInfoWidget extends Composite {
 				}
 			}
 		} else {
+			try
+			{
 			gradeStr.append(Math.round(Double.parseDouble(gradeList[0].trim())));
+			}
+			catch(Exception ex)
+			{
+				gradeStr.append(gradeList[0].trim());
+			}
 		}
 		return gradeStr.toString();
 	}	

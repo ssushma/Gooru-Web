@@ -195,61 +195,129 @@
 .resource-type-video,.resource-type-slide,
 .resource-type-interactive,.resource-type-question,.resource-type-website,.resource-type-textbook,
 .resource-type-handout,.resource-type-lesson,.resource-type-exam,.resource-type-audio,.resource-type-imageIcon,.resource-type-other,.resource-type-text{
-	background:url("images/resource-type-icons.png") no-repeat;
-	width: 27px;
-	height: 20px;
-	margin-left: 7px;
-	margin-top: -4px;
+	color: #FFFFFF;
+	font-size: 12px;
+	height: 60px;
+	/* left: -8px; */
+	position: relative;
+	text-align: center;
+	top: 0px;
+	width: 81px;
 }
 
 .resource-type-video{
-	background-position: 0px 1px !important;
+	background:url("../images/Video_1.png") no-repeat
+		transparent;
 }
 
 .resource-type-slide{
-	background-position: 0px -251px;
+	background:url("../images/Video_1.png") no-repeat
+		transparent;
 	/* background-position: -0px -168px !important; */
 }
 
 .resource-type-interactive{
-	background-position: 0px -27px !important;
+	background:url("../images/Interactive_1.png") no-repeat
+		transparent;
 }
 
 .resource-type-question{
-	background-position: 0px -139px !important;
+	background:url("../images/Question_1.png") no-repeat
+		transparent;
 }
 .resource-type-website{
-	background-position: 0px -223px !important;
+	background:url("../images/Website_1.png") no-repeat
+		transparent;
 }
 
 .resource-type-textbook{
-	background-position: -0px -55px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 	/* background-position: 0px -195px !important; */
 }
 
 .resource-type-handout{
-	background-position: -0px -55px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 }
 .resource-type-text{
-	background-position: -0px -55px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 }
 .resource-type-lesson{
-	background-position: -0px -55px !important;
+	background:url("../images/Video_1.png") no-repeat
+		transparent;
 	/* background-position: -0px -112px !important; */
 }
 .resource-type-exam{
-	background-position: 0px -223px !important;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 	/* background-position: -0px -83px !important; */
 }
 .resource-type-audio{
-	background-position: 0px -279px;
+	background:url("../images/Audio_1.png") no-repeat
+		transparent;
 }
 .resource-type-imageIcon{
-	background-position: 0px -251px;
+	background:url("../images/Image_1.png") no-repeat
+		transparent;
 }
 .resource-type-other{
-	background-position: 0px -307px;
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
 }
+/*******/
+
+.resource-type-video:hover{
+	background:none !important;
+}
+
+.resource-type-slide:hover{
+	background:none !important;
+	/* background-position: -0px -168px !important; */
+}
+
+.resource-type-interactive:hover{
+	background:none !important;
+}
+
+.resource-type-question:hover{
+	background:none !important;
+}
+.resource-type-website:hover{
+	background:none !important;
+}
+
+.resource-type-textbook:hover{
+	background:none !important;
+	/* background-position: 0px -195px !important; */
+}
+
+.resource-type-handout:hover{
+	background:none !important;
+}
+.resource-type-text:hover{
+	background:none !important;
+}
+.resource-type-lesson:hover{
+	background:none !important;
+	/* background-position: -0px -112px !important; */
+}
+.resource-type-exam:hover{
+	background:none !important;
+	/* background-position: -0px -83px !important; */
+}
+.resource-type-audio:hover{
+	background:none !important;
+}
+.resource-type-imageIcon:hover{
+	background:none !important;
+}
+.resource-type-other:hover{
+	background:none !important;
+}
+
+/***********/
 .resource-type-info-video,.resource-type-info-slide,
 .resource-type-info-interactive,.resource-type-info-question,.resource-type-info-website,.resource-type-info-textbook,
 .resource-type-info-handout,.resource-type-info-lesson,.resource-type-info-exam,.resource-type-info-audio,.resource-type-info-imageIcon,.resource-type-info-other,.resource-type-info-text{
@@ -306,6 +374,129 @@
 	background-position: -0px -55px !important;
 }
 
+
+
+.resource-type-info-video-new,.resource-type-info-slide-new,
+.resource-type-info-interactive-new,.resource-type-info-question-new,.resource-type-info-website-new,.resource-type-info-textbook-new,
+.resource-type-info-handout-new,.resource-type-info-lesson-new,.resource-type-info-exam-new,.resource-type-info-audio-new,.resource-type-info-imageIcon-new,.resource-type-info-other-new,.resource-type-info-text-new{
+	/*background:url("images/resource-type-icons.png") no-repeat;*/
+	color: #FFFFFF;
+	font-size: 12px;
+	height: 60px;
+	left: 3px;
+	position: relative;
+	text-align: center;
+	top: -41px;
+	width: 81px;
+}
+
+.resource-type-info-video-new{
+	background:url("../images/Video_1.png") no-repeat
+		transparent;
+}
+
+.resource-type-info-slide-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+
+.resource-type-info-interactive-new{
+	background:url("../images/Interactive_1.png") no-repeat
+		transparent;
+}
+
+.resource-type-info-question-new{
+	background:url("../images/Question_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-website-new{
+	background:url("../images/Website_1.png") no-repeat
+		transparent;
+}
+
+.resource-type-info-textbook-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+
+.resource-type-info-handout-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-lesson-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-exam-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-audio-new{
+	background:url("../images/Audio_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-imageIcon-new{
+	background:url("../images/Image_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-other-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+.resource-type-info-text-new{
+	background:url("../images/Text_1.png") no-repeat
+		transparent;
+}
+
+/*******/
+
+.resource-type-info-video-new:hover{
+	background:none !important;
+}
+
+.resource-type-info-slide-new:hover{
+	background:none !important;
+}
+
+.resource-type-info-interactive-new:hover{
+	background:none !important;
+}
+
+.resource-type-info-question-new:hover{
+	background:none !important;
+}
+
+.resource-type-info-website-new:hover{
+	background:none !important;
+}
+
+.resource-type-info-textbook-new:hover{
+	background:none !important;
+}
+
+.resource-type-info-handout-new:hover{
+	background:none !important;
+}
+.resource-type-info-lesson-new:hover{
+	background:none !important;
+}
+.resource-type-info-exam-new:hover{
+	background:none !important;
+}
+.resource-type-info-audio-new:hover{
+	background:none !important;
+}
+.resource-type-info-imageIcon-new:hover{
+	background:none !important;
+}
+.resource-type-info-other-new:hover{
+	background:none !important;
+}
+.resource-type-info-text-new:hover{
+	background:none !important;
+}
+/*****/
+
 .resource-default-video,.resource-default-slide,
 .resource-default-interactive,.resource-default-question,.resource-default-website,.resource-default-textbook,
 .resource-default-handout,.resource-default-lesson,.resource-default-exam,.resource-default-text,.resource-default-image,.resource-default-audio,.resource-default-other{
@@ -351,7 +542,7 @@
 	background-position: 0px -182px;	
 }
 .resource-default-image{
-	background-position: 0px -594px;	
+	background-position: 0px -600px;	
 }
 .resource-default-audio{
 	background-position: 0px -536px;	
@@ -441,7 +632,7 @@
 }
 
 .toc-resource-selected{
-	background-color: #414141;
+	background-color: #FFFFFF;
 	-moz-box-shadow: inset 0px 0px 5px rgba(100,100,100,.3);
 	-webkit-box-shadow: inset 0px 0px 5px rgba(100, 100, 100, .3);
 	box-shadow: inset 0px 0px 6px rgba(100, 100, 100, .3);
@@ -460,7 +651,6 @@
 	cursor: pointer;
 	float: left;
 	font-size: 12px;
-	margin-top: 2px;
 	padding-left: 4px;
 }
 .resource-standard-num{
@@ -662,10 +852,10 @@ color: #1076BB;
 
 .ipadFriendlyIconBlock {
 	margin-right: 30px;
-	background: url("images/mos/ipadFriendly.png") -0px -0px no-repeat;
+	background: url("images/mos/MobileFriendly.png") -0px -0px no-repeat;
 	background-position: 0 0;
-	width: 25px;
-	height: 20px;
+	width: 20px;
+	height: 15px;
 	display: inline-block;
 	vertical-align: top;
 	float: right;
@@ -769,6 +959,19 @@ float: left;
 	text-align: center;
 	cursor: pointer;
 }
+.collectionreplayContainer{
+	width: 230px;
+	height: 160px;
+	box-sizing: border-box;
+	text-indent: -228px;
+	position: relative;
+	background: url('images/replay.png') center 30px no-repeat, rgba(0, 0, 0, .6);
+	transition: background-color 0.5s ease;
+	color: white;
+	text-align: center;
+	cursor: pointer;
+}
+}
 .collectionreplayText {
 	padding-top:85px;
 }
@@ -776,7 +979,7 @@ float: left;
 	color: #0f76bb;
     cursor: pointer;
 }
-.collectionreplay:hover{
+.collectionreplay:hover, .collectionreplayContainer:hover{
 	background: url('images/replay.png') center 30px no-repeat, rgba(0, 0, 0, .8);
 }
 .collectionPlayerWrapper{
@@ -927,9 +1130,9 @@ padding-top: 2px;
 margin-top: 22px;
 }
 .editRatingBtn{
-float: right;
-margin-right: 2px;
-margin-top: 4px;
+	float: right;
+	margin-right: 2px;
+	margin-top: 4px;
 }
 .noresourcesAvailable{
 font-weight: bold;
@@ -940,4 +1143,12 @@ padding-top: 50px;
 .textAreaRating{
 	width:96%;
 	
+}
+.sequenceNumber{
+	padding: 0px 7px;
+	background: #555555;
+	color: #ffffff;
+	font-size: 15px;
+	text-align: center;
+	font-weight: bold;
 }

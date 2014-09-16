@@ -75,11 +75,13 @@ import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 
+import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -132,7 +134,7 @@ public class UserSettingsPresenter
 	String aboutUs;
 	String userName;
 	String gender;
-
+	private String Refersh_emailId;
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	
 	String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
@@ -167,6 +169,11 @@ public class UserSettingsPresenter
 				.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		getView().clearPanels();
 		getView().getAboutUsContainer().setVisible(false);
+		
+		if (AppClientFactory.isAnonymous()){
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+		}
+		
 		boolean isConfirmStatus = true;
 		String newMailId = AppClientFactory.getPlaceManager()
 				.getRequestParameter("newMailId");
@@ -219,7 +226,6 @@ public class UserSettingsPresenter
 		}else{
 			getView().googleDirveStatus(false);
 		}
-		
 		
 		String userId = AppClientFactory.getPlaceManager().getRequestParameter(
 				"userId");
@@ -292,7 +298,7 @@ public class UserSettingsPresenter
 
 			@Override
 			public void onSuccess(V2UserDo user) {
-
+				
 				// For child account set the edit button visibility false.
 				// for some old account, AccountTypeId is null.
 				getView().getAccountSavingText().setVisible(false);
@@ -384,16 +390,24 @@ public class UserSettingsPresenter
 							user.getUser().getUsername());
 					getView().hideuserDetailsContainerOnClickOfTab();
 					if (user.getUser().getLoginType()
-							.equalsIgnoreCase("credential")) {
+							.equalsIgnoreCase("credential")) {					
+						if(user.getUserType() != null && user.getUserType().length() > 1)
+						{
+						user.setUserType(user.getUserType().substring(0,1).toUpperCase()+user.getUserType().substring(1, user.getUserType().length()));
+						}
 						if (dob != null) {
 							getView().getLbUName().getElement()
 									.setAttribute("dob", "" + dob);
 							int age = getAge(dob);
 							getView().getLbUName().getElement()
 									.setAttribute("date", "" + age);
-							if (age < 13) {
+					
+							if (age < 13) 
+							{
 								getView().getLbRole().setText(i18n.GL0417());
-							} else {
+							} 
+							else 
+							{
 								getView().getLbRole().setText(
 										user.getUserType());
 							}
@@ -415,9 +429,13 @@ public class UserSettingsPresenter
 					}
 
 					if (user.getExternalId() != null) {
+						Refersh_emailId=user.getExternalId();
 						boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
 						if(isValidEmail){
 							getView().getLbEmail().setText(user.getExternalId());
+							//StringUtil.consoleLog("setEmailId 1"+user.getExternalId());
+							
+							
 						}else{
 							getView().hideEmailContainer();
 						}
@@ -425,8 +443,12 @@ public class UserSettingsPresenter
 					} else {
 						if(user.getUser().getAccountTypeId() != 2){
 							if(user.getUser().getEmailId()!=null){
+								Refersh_emailId=user.getUser().getEmailId();
 								boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
 								if(isValidEmail){
+									//StringUtil.consoleLog("setEmailId 2"+user.getUser().getEmailId());
+									
+									
 									getView().getLbEmail().setText(
 											user.getUser().getEmailId());
 									}
@@ -509,6 +531,7 @@ public class UserSettingsPresenter
 				} else {
 					
 				}
+				updateRefershToken();
 				/**
 				 * This RPC is to get the User profile Details(grade value)
 				 */
@@ -706,10 +729,17 @@ public class UserSettingsPresenter
 
 					if (user.getExternalId() != null) {
 						getView().getLbEmail().setText(user.getExternalId());
+						//StringUtil.consoleLog("setEmailId 3"+user.getExternalId());
+						Refersh_emailId = user.getExternalId();
+						
+						
 					} else {
 						if(user.getUser().getAccountTypeId() != 2){
 						getView().getLbEmail().setText(
 								user.getUser().getEmailId());
+						//StringUtil.consoleLog("setEmailId 4"+user.getUser().getEmailId());
+						Refersh_emailId = user.getUser().getEmailId();
+						
 						}
 					}
 					// getView().getLbEmail().setText(user.getExternalId());
@@ -1137,4 +1167,96 @@ public class UserSettingsPresenter
 		});
 		
 	}
+
+	
+	public void updateRefershToken() {
+		final String refreshToken = AppClientFactory.getLoggedInUser().getRefreshToken();
+		if(refreshToken==null){
+			AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new SimpleAsyncCallback<String>() {
+				@Override
+				public void onSuccess(String result) {
+					UserDo user = AppClientFactory.getLoggedInUser();
+					user.setRefreshToken(result);
+					AppClientFactory.setLoggedInUser(user);
+					if(result!=null&&!result.equals("")&&!result.equals("null")){
+						getGoogleAccessToken(result);
+					}
+				}
+			});
+		}else{
+			getGoogleAccessToken(refreshToken);
+		}
+	}
+
+	public void getGoogleAccessToken(String refreshToken){
+		AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(refreshToken, new SimpleAsyncCallback<GoogleToken>() {
+			@Override
+			public void onSuccess(GoogleToken result) {
+				final String access_token = result.getAccess_token() !=null && !result.getAccess_token().equalsIgnoreCase("") ? result.getAccess_token() : null;
+				if (access_token !=null ){
+					UserDo user = AppClientFactory.getLoggedInUser();
+					user.setAccessToken(access_token);
+					AppClientFactory.setLoggedInUser(user);
+					AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
+						@Override
+						public void onSuccess(GoogleDriveDo googleDriveDo) {
+							if(googleDriveDo!=null){
+								if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+									getView().googleDirveStatus(false);
+								}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+									getView().googleDirveStatus(false);
+								}else{
+									UserDo user = AppClientFactory.getLoggedInUser();
+									user.setAccessToken(access_token);
+									AppClientFactory.setLoggedInUser(user);
+									getView().googleDirveStatus(true);
+								}
+							}else{
+								getView().googleDirveStatus(false);
+							}
+						}
+					});
+				}else{
+					getView().googleDirveStatus(false);
+				}
+			}
+		});
+	}
+	@Override
+	public void revokeToken() {
+		AppClientFactory.getInjector().getUserService().revokeToken(AppClientFactory.getLoggedInUser().getGooruUId(),new AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				getView().googleDirveStatus(true);
+			}
+			@Override
+			public void onSuccess(String result) {
+				UserDo user = AppClientFactory.getLoggedInUser();
+				user.setRefreshToken(null);
+				AppClientFactory.setLoggedInUser(user);			
+				getView().googleDirveStatus(false);
+			}
+		});
+		
+	}
+
+	@Override
+	public void getGoogleDrive() {
+		Map<String, String> parms = new HashMap<String, String>();
+		parms = StringUtil.splitQuery(Window.Location.getHref());
+		parms.put("emailId", Refersh_emailId);
+		AppClientFactory.getInjector().getSearchService().getGoogleDrive(Window.Location.getHref(), parms, new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String redirectUrl) {
+				
+				MixpanelUtil.mixpanelEvent("Access_Google_Drive");
+				Window.Location.replace(redirectUrl);
+
+			}
+		});
+		
+	}
+	
 }

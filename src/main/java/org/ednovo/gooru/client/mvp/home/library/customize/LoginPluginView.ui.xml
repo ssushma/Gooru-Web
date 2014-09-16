@@ -8,17 +8,15 @@
 			<g:HTMLPanel>
 	      	  <g:HTMLPanel styleName="{res.css.popupTitleLogin}" ui:field="hangOnText"></g:HTMLPanel>
 		      <g:Label ui:field="collectionDescription" styleName="{res.css.popupDescLogin}"></g:Label>
+		      <g:HTMLPanel styleName="{res.css.loginPopupStyle}">
 		      <g:Button ui:field="gmailButton" styleName="{res.css.gConnectButton}"></g:Button>
 		      <g:HTMLPanel styleName="{res.css.dividerCustomize}">
 			      <g:Label styleName="{res.css.dividerText}" ui:field="lblOr"/>
 			    </g:HTMLPanel>
+			    <g:Label styleName="{res.css.loginWithGooru}" ui:field="lblLoginwithGooru"></g:Label>
 		      <g:HTMLPanel styleName="{res.css.inputBlockOuter}">
 		       	<gg:TextBoxWithPlaceholder ui:field="loginTxtBox" setFocus="true"/>
-		       	<g:HTMLPanel styleName="{res.css.privacyCustomizeContainer}">
-					<g:InlineLabel ui:field="lblPii"></g:InlineLabel><br></br>
-					<g:Anchor ui:field="ancprivacy" styleName="{res.css.privacyAlignStyle}"></g:Anchor>
-					<g:InlineLabel ui:field="toUsText"></g:InlineLabel>
-				</g:HTMLPanel>
+
 				<gg:TextBoxWithPlaceholder ui:field="passwordTxtBox" password="true" />
 				
 		        <g:HTMLPanel styleName="{res.css.pwdTxt}"><g:Anchor ui:field="forgotPwd"></g:Anchor></g:HTMLPanel>
@@ -26,6 +24,12 @@
 		      <g:HTMLPanel styleName="{res.css.btn}">
 		        <g:Button ui:field="loginButton" styleName="primary  {res.css.LoginText}"></g:Button>
 		        <g:Label ui:field="lblPleaseWait" styleName="{res.css.processing}"></g:Label>
+		      </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res.css.privacyCustomizeContainernew}">
+					<g:InlineLabel ui:field="lblPii"></g:InlineLabel>
+					<g:Anchor ui:field="ancprivacy" styleName="{res.css.privacyAlignStyleNew}"></g:Anchor>
+					<g:InlineLabel ui:field="toUsText"></g:InlineLabel>
+				</g:HTMLPanel>
 		      </g:HTMLPanel>
 		      <g:HTMLPanel styleName="{res.css.signUp}" ui:field="signUpPanel"><g:Label ui:field="donotHaveAcount"></g:Label><g:Anchor ui:field="ancSignUp"></g:Anchor></g:HTMLPanel>
 			</g:HTMLPanel>

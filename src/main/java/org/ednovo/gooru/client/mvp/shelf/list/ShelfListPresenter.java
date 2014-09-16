@@ -41,6 +41,8 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPa
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.InsertMovedCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.OpenParentFolderEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemForSearchInAddResourceEvent;
+
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetCollectionMovedStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleEvent;
@@ -142,6 +144,8 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		addRegisteredHandler(ResourceDragOverShelfEvent.TYPE, this);
 		addRegisteredHandler(CopyDraggedCollectionEvent.TYPE, this);
 		addRegisteredHandler(RefreshFolderItemEvent.TYPE, this);
+		addRegisteredHandler(RefreshFolderItemForSearchInAddResourceEvent.TYPE, this);
+
 		addRegisteredHandler(ChangeShelfPanelActiveStyleEvent.TYPE, this);
 		addRegisteredHandler(UpdateShelfFolderNameEvent.TYPE, this);
 		addRegisteredHandler(RemoveMovedCollectionFolderEvent.TYPE, this); 
@@ -152,6 +156,7 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		addRegisteredHandler(OpenParentFolderEvent.TYPE, this); 
 		addRegisteredHandler(UpdateShelfFolderMetaDataEvent.TYPE, this);
 		addRegisteredHandler(ActivateCollectionStyleEvent.TYPE, this);
+		
 	}
 
 	@Override
@@ -509,5 +514,11 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 	@Override
 	public void activecollectionStyle() {
 		getView().setCollectionActiveStyle();
+	}
+	@Override
+	public void refreshFolderItemInSearch(FolderDo folderDo,
+			RefreshFolderType refreshFolderType, HashMap<String, String> params) {
+		getView().refreshFolderItemDataInSearchAddResource(folderDo, refreshFolderType, params);
+		
 	}
 }

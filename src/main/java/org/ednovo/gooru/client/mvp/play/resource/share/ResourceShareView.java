@@ -178,7 +178,7 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 			@Override
 			public void onTwitter() {
 				getUiHandlers().triggerShareDataLogEvent(collectionItemDo.getResource().getGooruOid(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.TWITTER,false);
-				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL1439()+removeHtmlTags(collectionItemDo.getResource().getTitle()).replaceAll("\\+", "%2B") +": " + shareBitlyUrl, "_blank", "width=600,height=300");
+				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL1439()+" "+removeHtmlTags(collectionItemDo.getResource().getTitle()).replaceAll("\\+", "%2B") +": " + shareBitlyUrl, "_blank", "width=600,height=300");
 			}
 			
 			@Override
@@ -192,7 +192,7 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 			 */
 			@Override
 			public void onEmail() {
-				String emailSubject=i18n.GL1439()+collectionItemDo.getResource().getTitle();
+				String emailSubject=i18n.GL1439()+" "+collectionItemDo.getResource().getTitle();
 				String emailDescription= removeHtmlTags(collectionItemDo.getResource().getTitle())+"<div><br/></div><div>"+shareBitlyUrl+"</div><div><br/></div><div>"+i18n.GL1440()+" "+AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()+" "+i18n.GL1441()+"</div>";
 				 emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){
 					@Override

@@ -483,15 +483,16 @@
 	-moz-border-radius: 4px;
 	position: relative;
 	width: 75%;
-	height: 28px;
+	min-height: 175px;
 	cursor: pointer;
-	margin-top: 23px;
+	margin-top: 73px;
+	color: #515151;
 }
 
 .partnerLibraryContainer {
 	background: white;
 	margin-left: 141px;
-	margin-top: 50px;
+	margin-top: 99px;
 	font-weight: normal;
 	border: 1px solid #ddd;
 	background-color: white;
@@ -501,8 +502,9 @@
 	-moz-border-radius: 4px;
 	position: relative;
 	width: 260px;
-	height: 249px;
+	height: 395px;
 	cursor: pointer;
+	color: #515151;
 }
 .headerStyle{
 	font-size: 12px;

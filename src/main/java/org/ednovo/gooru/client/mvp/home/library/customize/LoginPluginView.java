@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.home.library.customize;
 
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -66,6 +67,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * 
@@ -100,7 +102,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	Anchor forgotPwd, ancSignUp;
 
 	@UiField
-	Label lblPleaseWait, collectionDescription,donotHaveAcount,lblOr;
+	Label lblPleaseWait, collectionDescription,donotHaveAcount,lblOr,lblLoginwithGooru;
 	
 	@UiField HTMLPanel hangOnText,signUpPanel;
 	
@@ -244,6 +246,11 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		lblOr.getElement().setAttribute("alt",i18n.GL0209());
 		lblOr.getElement().setAttribute("title",i18n.GL0209());
 		
+		lblLoginwithGooru.setText(i18n.GL0346());
+		lblLoginwithGooru.getElement().setId("lblLoginwithGooru");
+		lblLoginwithGooru.getElement().setAttribute("alt",i18n.GL0346());
+		lblLoginwithGooru.getElement().setAttribute("title",i18n.GL0346());
+		
 		lblPleaseWait.setVisible(false);
 
 	}
@@ -370,7 +377,14 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		}
 		params.put("callback", "signup");
 		params.put("type", "1");
-		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
+		if(params.containsKey("customize"))
+		{
+			params.remove("customize");
+		}
+		
+		//PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
 		closePoupfromChild();
 	}
 
@@ -397,6 +411,11 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	public void onGmailButtonClicked(ClickEvent clickEvent){
 		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",System.currentTimeMillis(),System.currentTimeMillis(), "", AppClientFactory.getLoggedInUser().getToken());
 		String callBack = Window.Location.getHref();
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			MixpanelUtil.mixpanelEvent("Customize_player_signin_google");
+		}else{
+			MixpanelUtil.mixpanelEvent("Customize_library_signin_google");
+		}
 		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
 		
 			@Override

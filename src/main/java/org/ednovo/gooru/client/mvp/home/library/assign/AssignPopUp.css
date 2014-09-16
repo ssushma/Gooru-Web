@@ -413,7 +413,7 @@ padding-bottom: 18%;
 	-webkit-border-radius: 1px;
 	border-radius: 1px;
 	border-style: solid;
-	height:630px;
+	height:656px;
 }
 .assignContentLoginCustomize {
 	background-color: transparent;
@@ -743,6 +743,7 @@ button.LoginText {
 	color: rgb(81,81,81);
 	text-align: center;
 	font-weight: normal;
+	margin-top: 6px;
 }
 
 .shareLinkContainer {
@@ -894,6 +895,7 @@ button.LoginText {
 	border:1px solid #1076BB;
 	/* margin-bottom: 15px; */
 	cursor: pointer;
+	margin-top:28px;
 }
 
 .gConnectButton:hover {
@@ -912,7 +914,7 @@ button.LoginText {
 	position:relative;
 	top:.5em;
 	padding:0px 10px;
-	background-color:white;
+	background-color:#f0f0f0;
 	font-size: 12px;
 }
 .dividerCustomize {
@@ -931,9 +933,9 @@ button.LoginText {
 .privacyContainer{
 	margin: 0px;
 	text-align: left;
-	margin-bottom: 10px;
+	/* margin-bottom: 10px; */
 	padding: 0px;
-	line-height: 70%;
+	line-height: 66%;
 }
 
 .privacyCustomizeContainer{
@@ -943,8 +945,16 @@ button.LoginText {
 	padding: 0px;
 	line-height: 100%;
 }
-
-
+.privacyCustomizeContainernew{
+	margin: 0px;
+	text-align: center;
+	margin-bottom: 10px;
+	padding: 0px;
+	line-height: 100%;
+}
+.privacyAlignStyleNew{
+	margin-left: 0px;
+}
 .errorLabel{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -952,4 +962,15 @@ button.LoginText {
 	text-align: right;
 	margin-right: -53px;
 	float: right;
+}
+.loginPopupStyle{
+	background-color: #f0f0f0;
+	border: 1px solid #ddd;
+	text-align: center;
+	margin-left: 48px;
+	width: 74%;
+}
+.loginWithGooru{
+	font-size: 12px;
+	font-weight: normal;
 }

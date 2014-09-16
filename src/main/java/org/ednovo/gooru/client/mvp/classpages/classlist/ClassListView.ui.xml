@@ -21,13 +21,13 @@
 				<g:HTMLPanel styleName="{res.css.subBody}">
 				<g:Label styleName="{res.css.subTitle}" ui:field="visibilityTitle"></g:Label>
 				<g:HTMLPanel>
-				<g:SimpleRadioButton name="visibility" ui:field="visibilityRadioOpen" styleName="{res.css.radioBtnVisiblity}"></g:SimpleRadioButton>
-				<g:Label ui:field="openClassLabelTitle" styleName="{res.css.assignSecTitle}"></g:Label>
+				<g:RadioButton name="visibility" ui:field="visibilityRadioOpen" styleName="{res.css.regularRadioButton}"></g:RadioButton>
+				<g:Label ui:field="openClassLabelTitle" styleName="{res.css.assignSecTitleheader}"></g:Label>
 				<g:Label ui:field="openClassLabelDesc"></g:Label>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{res.css.radioBtnVisiblitySecondContainer}">
-				<g:SimpleRadioButton name="visibility" ui:field="visibilityRadioInviteOnly" styleName="{res.css.radioBtnVisiblity}"></g:SimpleRadioButton>
-				<g:Label ui:field="openClosedLabelTitle" styleName="{res.css.assignSecTitle}"></g:Label>
+				<g:RadioButton name="visibility" ui:field="visibilityRadioInviteOnly" styleName="{res.css.regularRadioButton}"></g:RadioButton>
+				<g:Label ui:field="openClosedLabelTitle" styleName="{res.css.assignSecTitleheader}"></g:Label>
 				<g:Label ui:field="openClosedLabelDesc"></g:Label>
 				</g:HTMLPanel>
 				</g:HTMLPanel>
@@ -39,6 +39,7 @@
 				<g:HTMLPanel ui:field="publicAssignContainer" styleName="{res.css.leftInviteContainer}">
 					<g:HTMLPanel styleName="{res.css.assignSec}">
 						<g:HTMLPanel styleName="{res.css.assignSecTitle}" ui:field="shareTxt"></g:HTMLPanel>
+						<g:HTMLPanel ui:field="questionMarkPanel"></g:HTMLPanel>
 			
 						<g:TextBox styleName="{res.css.input1} {res.css.shareTextboxLink}"
 							ui:field="txtClasspageCodeShare" />
@@ -46,6 +47,7 @@
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.assignSec}">
 						<g:HTMLPanel styleName="{res.css.assignSecTitle}" ui:field="shareTitle"></g:HTMLPanel>
+							<g:HTMLPanel ui:field="questionMarkPanel1"></g:HTMLPanel>
 	
 						<g:TextBox
 							styleName="{res.css.input1} {res.css.inputWidth} {res.css.shareTextboxLink}"
@@ -91,9 +93,19 @@
 					ui:field="panelNoMembers">
 					<g:HTMLPanel styleName="{res.css.title}" ui:field="joinTxt"></g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.twoActions}">
-						<g:HTMLPanel styleName="{res.css.manage}" ui:field="manageTxt">  </g:HTMLPanel>
-						<g:HTMLPanel styleName="{res.css.progress}" ui:field="trackTxt">
-					
+						<g:HTMLPanel styleName="{res.css.manageStudents}"> 
+						    <g:HTMLPanel styleName="{res.css.manage}"></g:HTMLPanel>
+						    <g:HTMLPanel styleName="{res.css.progressStudents}">
+						    <g:Label styleName="{res.css.manageText}" ui:field="manageHeader"></g:Label>
+						    <g:Label styleName="{res.css.manageDes}" ui:field="manageTxt"></g:Label>
+						    </g:HTMLPanel>
+					    </g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.manageProgressStudents}">
+					       <g:HTMLPanel styleName="{res.css.progress}"></g:HTMLPanel>
+						    <g:HTMLPanel styleName="{res.css.progressStudents}">
+						   		 <g:Label styleName="{res.css.manageText}" ui:field="trackTxt"></g:Label>
+						   		 <g:Label styleName="{res.css.manageDes}" ui:field="lblMonitorDes"/>
+						    </g:HTMLPanel>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
@@ -101,6 +113,7 @@
 			<g:HTMLPanel styleName="{res.css.membersList}" ui:field="panelMembersList">
 				<g:HTMLPanel styleName="{res.css.pendingContainer}" ui:field="panelPendingMembersContainer">
 					<g:Label styleName="{res.css.pendingMembers}" ui:field="lblPendingMembers"></g:Label>
+					<g:HTMLPanel ui:field="questionMarkPanel2"></g:HTMLPanel>
 					<g:VerticalPanel styleName="" ui:field="panelPendingMembersList">
 
 					</g:VerticalPanel>

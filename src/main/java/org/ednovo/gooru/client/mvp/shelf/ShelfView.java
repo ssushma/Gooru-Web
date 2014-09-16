@@ -130,7 +130,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	@UiField
 	Label copyCollectionLbl, deleteUserCollectionLbl,lblDeleting, collectionEditImageLbl,
-			simplePencilPanel,collectionDescriptionTitle, lblLastEditedBy,moveCollectionLbl;
+			simplePencilPanel,collectionDescriptionTitle, lblLastEditedBy,moveCollectionLbl, lblCharLimit;
 
 	@UiField
 	SimplePanel shelfTabSimPanel;
@@ -430,6 +430,13 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		collectionDescriptionTitle.getElement().setAttribute("alt",i18n.GL0618());
 		collectionDescriptionTitle.getElement().setAttribute("title",i18n.GL0618());
 		
+		String value = StringUtil.generateMessage(i18n.GL2103(), "415");
+		
+		StringUtil.setAttributes(lblCharLimit.getElement(), "lblCharLimit", value, value);
+		lblCharLimit.setText(value);
+		lblCharLimit.setVisible(false);
+		
+		
 		editSelfCollectionDescSaveButtonCancel.setText(i18n.GL0142());
 		editSelfCollectionDescSaveButtonCancel.getElement().setId("btnEditDescCancel");
 		editSelfCollectionDescSaveButtonCancel.getElement().setAttribute("alt",i18n.GL0142());
@@ -482,10 +489,10 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		shareTabVc.getElement().setAttribute("alt",i18n.GL0526());
 		shareTabVc.getElement().setAttribute("title",i18n.GL0526());
 		
-		assignTabVc.setLabel(i18n.GL0519());
+		assignTabVc.setLabel(i18n.GL0519_1());
 		assignTabVc.getElement().setId("lblAssignTab");
-		assignTabVc.getElement().setAttribute("alt",i18n.GL0519());
-		assignTabVc.getElement().setAttribute("title",i18n.GL0519());
+		assignTabVc.getElement().setAttribute("alt",i18n.GL0519_1());
+		assignTabVc.getElement().setAttribute("title",i18n.GL0519_1());
 		
 		collaboratorTabVc.setLabel(i18n.GL0830());
 		collaboratorTabVc.getElement().setId("lblCollaboratorTab");
@@ -511,7 +518,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		shelfTabSimPanel.getElement().setId("spnlShelfTabSimPanel");
 		noCollectionResetPanel.getElement().setId("fpnlNoCollectionResetPanel");
 		loadingImageLabel.getElement().setId("pnlLoadingImageLabel");
-		editPanel.getElement().setId("pnlEditPanel");
+		editPanel.getElement().setId("pnlEditPanel");		
 		folderListPanel.getElement().setId("spnlFolderListPanel");
 		collectionFloPanel.getElement().setId("fpnlCollectionFloPanel");
 		lblLastEditedBy.getElement().setId("lblLastEditedBy");
@@ -524,7 +531,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		editCollectionDescTitle.getElement().setId("epnlEditCollectionDescTitle");
 		simplePencilPanel.getElement().setId("lblSimplePencilPanel");
 		panelFriendly.getElement().setId("pnlPanelFriendly");
-		imgFriendly.getElement().setId("imgImgFriendly");
+		//imgFriendly.getElement().setId("imgImgFriendly");
 		lblFriendly.getElement().setId("lblFriendly");
 		collPopup.getElement().setId("pnlCollPopup");
 		statPopup.getElement().setId("pnlStatPopup");
@@ -668,7 +675,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431()+" "+"<img src='/images/mos/mobileunfriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL_SPL_EXCLAMATION());
+				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 				toolTip.setPopupPosition(imgNotFriendly.getAbsoluteLeft()-(50+22), imgNotFriendly.getAbsoluteTop()+22);
@@ -716,8 +724,12 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 //		}else{
 //			shelfViewMainContainer.getElement().getStyle().setMarginTop(-28, Unit.PX);
 //		}
-//		
-		
+//	
+		if (AppClientFactory.isAnonymous()){
+			Window.enableScrolling(true);
+		}else{
+			Window.enableScrolling(false);
+		}
 	}
 	
 	
@@ -729,6 +741,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		public void onClick(ClickEvent event) {
 			/*collectionDescriptionUc.switchToEdit();
 			collectionDescriptionUc.setText(collectionDo.getGoals());*/
+			lblCharLimit.setVisible(true);
 			editSelfCollectionDescSaveButton.getElement().getStyle()
 					.setDisplay(Display.BLOCK);
 			editSelfCollectionDescSaveButtonCancel.getElement().getStyle()
@@ -1029,7 +1042,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	 *            which needs to be viewed
 	 */
 	public void setTab(Object tab) {
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		setIpadFriendly();
 //		panelFriendly.setVisible(false);
@@ -1100,19 +1113,19 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				notFriendlyCount++;
 			}
 		}
-		imgFriendly.setVisible(true);
+		//imgFriendly.setVisible(true);
 		lblFriendly.setVisible(true);
 		if (notFriendlyCount>0){
-			imgFriendly.getElement().getStyle().clearWidth();
-			imgFriendly.setAltText(i18n.GL0737());
-			imgFriendly.setTitle(i18n.GL0737());
-			imgFriendly.setUrl("images/mos/ipadFriendly.png");
+			//imgFriendly.getElement().getStyle().clearWidth();
+			//imgFriendly.setAltText(i18n.GL0737());
+			//imgFriendly.setTitle(i18n.GL0737());
+			//imgFriendly.setUrl("images/mos/MobileFriendly.png");
 			lblFriendly.setText(StringUtil.generateMessage(i18n.GL0449(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
 		}else{
-			imgFriendly.getElement().getStyle().setWidth(25, Unit.PX);
-			imgFriendly.setUrl("images/mos/friendlyResource.png");
-			imgFriendly.setAltText(i18n.GL0865());
-			imgFriendly.setTitle(i18n.GL0865());
+			//imgFriendly.getElement().getStyle().setWidth(25, Unit.PX);
+			//imgFriendly.setUrl("images/mos/friendlyResource.png");
+			//imgFriendly.setAltText(i18n.GL0865());
+			//imgFriendly.setTitle(i18n.GL0865());
 			lblFriendly.setText(i18n.GL0453());
 		}
 	}
@@ -1458,7 +1471,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		MixpanelUtil.Preview_Collection_From_CollectionEdit();
 		HashMap<String,String> params = new HashMap<String,String>();
 		params.put("id", collectionDo.getGooruOid());
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 	}
 
@@ -1669,6 +1682,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 					collectionTitleUc.getElement().getStyle().clearBackgroundColor();
 					collectionTitleUc.getElement().getStyle().setBorderColor("#ccc");
 //					mandatoryErrorLbl.setVisible(false);
+					lblCharLimit.setVisible(false);
 				}
 			}
 		});
@@ -1687,6 +1701,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				categoryImage.getUrl()));
 		MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
 		 isShowDescPencil=true;
+		 lblCharLimit.setVisible(false);
 	}
 	/**
 	 * This method is used to cancel collection title update
@@ -1704,6 +1719,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		collectionTitleUc.switchToCancelLabel();
 		collectionTitleUc.setText(collectionTitleUc.getText());
 		isShowTitlePencil=true;
+		lblCharLimit.setVisible(false);
 
 	}
 	/**
@@ -1721,7 +1737,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				.setDisplay(Display.NONE);
         isShowDescPencil=true;
 		collectionDescriptionUc.switchToDesCancelLabel();
-
+		lblCharLimit.setVisible(false);
 	}
 
 	public void analyticsClickEvent(){
@@ -1758,7 +1774,11 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		//temporary fix
 //		noCollectionResetPanel.getElement().getStyle().setDisplay(Display.NONE);
 		////
-		Window.enableScrolling(true);
+		if (AppClientFactory.isAnonymous()){
+			Window.enableScrolling(true);
+		}else{
+			Window.enableScrolling(false);
+		}
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		
 		noCollectionResetPanel.clear();
@@ -1777,7 +1797,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public void setOnlyNoDataCollection() {
 		
 		getLoadingImageInvisible();
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		
 		shelfTabSimPanel.setVisible(false);
@@ -1906,7 +1926,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		final DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView(folderName) { 
 			@Override
 			public void onClickPositiveButton(ClickEvent event) {
-				Window.enableScrolling(true);
+//				Window.enableScrolling(true);
 				appPopUp.hide();
 				AppClientFactory.fireEvent(new SetCollectionMovedStyleEvent(folderDo.getGooruOid()));  
 			}
@@ -1962,7 +1982,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		deleteUserCollectionLbl.setVisible(true);
 		lblDeleting.setVisible(false);
 		
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
 	
@@ -2023,5 +2043,20 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			$wnd.element.parentNode.className = "wrapperParent";
 		}
 	}-*/;
+
+	/** 
+	 * This method is to get the editPanel
+	 */
+	@Override
+	public HTMLPanel getEditPanel() {
+		return editPanel;
+	}
+
+	/** 
+	 * This method is to set the editPanel
+	 */
+	public void setEditPanel(HTMLPanel editPanel) {
+		this.editPanel = editPanel;
+	}
 
 }

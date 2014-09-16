@@ -113,7 +113,7 @@ public class ErrorPopup extends PopupPanel{
 	
 	public void closePopup(){
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
-			navigateShelf();
+			//navigateShelf();
 		}else if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
 			navigateClasspage();
 		}else if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT)){
@@ -132,7 +132,7 @@ public class ErrorPopup extends PopupPanel{
 //		closePopup();
 //	}
 	
-	private void navigateShelf(){
+	/*private void navigateShelf(){
 		AppClientFactory.getInjector().getResourceService().getUserCollection(new SimpleAsyncCallback<List<CollectionDo>>() {
             @Override
             public void onSuccess(List<CollectionDo> result) {
@@ -144,7 +144,7 @@ public class ErrorPopup extends PopupPanel{
                 AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent());
             }
         });
-	}
+	}*/
 	private void navigateClasspage(){
 		AppClientFactory.getInjector().getClasspageService().v2GetAllClasspages("1", "0", new SimpleAsyncCallback<ClasspageListDo>() {
 

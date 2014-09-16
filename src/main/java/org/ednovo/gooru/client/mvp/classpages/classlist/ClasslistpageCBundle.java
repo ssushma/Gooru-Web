@@ -66,6 +66,10 @@ public interface ClasslistpageCBundle extends ClientBundle{
 		String twoActions();
 		String manage();
 		String progress();
+		String manageStudents();
+		String progressStudents();
+		String manageDes();
+		String manageProgressStudents();
 		
 		String assignSec();
 		String assignSecTitle();
@@ -142,6 +146,10 @@ public interface ClasslistpageCBundle extends ClientBundle{
 		String leftInviteContainer();
 		String rightInviteContainer();
 		String inviteDivContainer();
+		String assignSecTitleheader();
+		
+		String manageText();
+		String regularRadioButton();
 	}
 	@NotStrict
 	@Source("classlistPage.css")

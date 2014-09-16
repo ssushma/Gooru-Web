@@ -559,7 +559,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,
 				getLoggedInSessionToken());
-		System.out.println("v2GetClasspageById::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -757,7 +756,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public CollectionDo v2getClasspageByCode(String classpageCode) throws GwtException{
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_BY_CODE, classpageCode, getLoggedInSessionToken());
-		System.out.println("v2getClasspageByCode:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		if(jsonRep!=null && jsonRep.getSize()!=1){	
@@ -904,7 +902,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		if(classpageId != null)
 		{
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,getLoggedInSessionToken());
-		System.out.println("getClasspage::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		if(jsonResponseRep.getStatusCode()==200){
 			jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -938,7 +935,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ClasspageItemDo createClassPageItem(String classpageId,String collectionId,String dueDate,String direction){
 		ClasspageItemDo classpageItemDo=new ClasspageItemDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.CREATE_CLASSPAGE_ITEM_V2, classpageId,getLoggedInSessionToken());
+		System.out.println("createClassPageItem::"+url);
 		JSONObject classPageItemJsonObject=createClasspageJsonObject( collectionId, direction, dueDate,null);
+		System.out.println("classPageItemJsonObject::"+classPageItemJsonObject.toString());
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
 		if(jsonResponseRep.getStatusCode()==200){
 			try{
@@ -950,9 +949,27 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		return classpageItemDo;
 	}
 	@Override
-	public ArrayList<ClasspageItemDo> assignItemToClass(String classpageId,String collectionOrFolderId){
+	public ArrayList<ClasspageItemDo> assignItemToClass(String classpageId,String collectionOrFolderId,String dueDate,String direction){
 		ArrayList<ClasspageItemDo> classpageItemDoList=new ArrayList<ClasspageItemDo>();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.ASSIGN_COLLECTION_OR_FOLDER_TO_CLASS_V2, classpageId,collectionOrFolderId,getLoggedInSessionToken());
+		try {
+			if(direction != null)
+			{
+			direction = URLEncoder.encode(direction, "UTF-8");
+			}
+			else
+			{
+				direction = "";
+			}
+			
+			if(dueDate == null)
+			{
+				dueDate = "";
+			}
+			
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.ASSIGN_ITEM_TO_CLASS, classpageId,collectionOrFolderId,getLoggedInSessionToken(),direction,dueDate);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		if(jsonResponseRep.getStatusCode()==200){
 			classpageItemDoList=deserializeClassItems(jsonResponseRep.getJsonRepresentation());
@@ -1006,7 +1023,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			if(studyStatus!=null){
 				url=url+"&status="+studyStatus;
 			}
-			System.out.println("getClasspageItems API:"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		
 		if(jsonResponseRep.getStatusCode()==200){
@@ -1127,7 +1143,14 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 					classpageDo.setClasspageId(classpageJsonObject.getString(GOORUOID));
 					classpageDo.setClasspageCode(classpageJsonObject.getString(CLASSPAGECODE));
 					classpageDo.setTitle(classpageJsonObject.getString(TITLE));
+					if(!classpageJsonObject.isNull(ITEMCOUNT))
+					{
 					classpageDo.setItemCount(classpageJsonObject.getString(ITEMCOUNT));
+					}
+					else
+					{
+					classpageDo.setItemCount("0");
+					}
 					classpageDo.setThumbnailUrl(classpageJsonObject.getJSONObject(THUMBNAIL)!=null?classpageJsonObject.getJSONObject(THUMBNAIL).getString(THUMBNAILURL):"");
 					ArrayList<String> permissionList=new ArrayList<String>();
 					if(!classpageJsonObject.isNull(CREATOR)){
@@ -1161,6 +1184,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 					classpageDo.setPermissions(permissionList);
 				}
 			} catch (JSONException e) {
+				e.printStackTrace();
 				classpageDo=new ClasspageDo();
 			}
 		return classpageDo;
@@ -1189,7 +1213,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			}
 		return classpageItemsList;
 	}
-	protected ArrayList<ClasspageItemDo> deserializeClassItems(JsonRepresentation jsonRep){
+	protected ArrayList<ClasspageItemDo> deserializeClassItems(JsonRepresentation jsonRep ){
 		ArrayList<ClasspageItemDo> classpageItemsList=new ArrayList<ClasspageItemDo>();
 			try {
 				if(jsonRep!=null){
@@ -1197,6 +1221,12 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 					if(classpageItemsArray!=null&&classpageItemsArray.length()>0){
 						for(int i=0;i<classpageItemsArray.length();i++){
 							JSONObject classpageItemJsonObject=classpageItemsArray.getJSONObject(i);
+							/*if(direction!=null){
+								classpageItemJsonObject.put(NARRATION, direction);
+							}
+							if(dueDate!=null){
+								classpageItemJsonObject.put(PLANNEDENDDATE, dueDate);
+							}*/
 							ClasspageItemDo classpageItemDo=deserializeClassPageItem(classpageItemJsonObject,RESOURCE);
 							classpageItemsList.add(classpageItemDo);
 						}

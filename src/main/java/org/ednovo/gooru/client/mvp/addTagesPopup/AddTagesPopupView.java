@@ -112,10 +112,17 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		add(uiBinder.createAndBindUi(this));
 		this.resourceId=resourceId;
 		this.setGlassEnabled(true);
-		//Window.enableScrolling(false);
-		this.getElement().setAttribute("style", "z-index:99999;");
-		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
+		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("resource-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("collection-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("mycollections")){
+				this.getGlassElement().addClassName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
+			}else{
+			
+				this.removeStyleName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
+				this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
+				this.getElement().setAttribute("style", "z-index:999999;");
+		}
+		this.setWidth("596px");
+		this.setHeight("586px");
+		//AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
 		this.center();
 		
 		
@@ -1111,7 +1118,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		}
 		
 		for(final String codeObj:standardsDo){
-			tagList.add("\"" +standardsDefaultText.getText()+"  :"+codeObj+"\"");
+			tagList.add("\"" +standardsDefaultText.getText()+" : "+codeObj+"\"");
 		}
 		
 		if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:"))
@@ -1131,14 +1138,14 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		deleteTagsServiceRequest(tagListGlobal.toString(), tagList.toString());
 	}
 	
-	public void addTagsServiceRequest(String frameTagsStr, String resourceId)
-	{
+	public void addTagsServiceRequest(String frameTagsStr, String resourceId){
 		
 		AppClientFactory.getInjector().getResourceService().addTagsToResource(resourceId, frameTagsStr, new SimpleAsyncCallback<List<ResourceTagsDo>>() {
 			@Override
 			public void onSuccess(List<ResourceTagsDo> result) {
 			//	bindObjectsToUI(result);
 				closeFunction();
+				getAddedResourceTags();
 			}
 		});
 	
@@ -1150,6 +1157,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			@Override
 			public void onSuccess(Void result) {
 				addTagsServiceRequest(addingNewTags.toString(), resourceId);
+				//getAddedResourceTags();
 			}
 		});
 	}
@@ -1612,4 +1620,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	}
 	
 	public abstract void closePoup(boolean isCancelclicked);
+	
+	public void getAddedResourceTags(){
+		
+	}
 }

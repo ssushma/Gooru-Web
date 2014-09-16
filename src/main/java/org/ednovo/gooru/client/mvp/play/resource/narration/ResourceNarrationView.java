@@ -165,7 +165,7 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 			showAddToolTip();
 		}
 		resetNattationData();
-		if(Document.get().getElementById("playerid")!=null){
+		/*if(Document.get().getElementById("playerid")!=null){
 	         final Element myPlayer = Document.get().getElementById("playerid");
 	         if(myPlayer.getPropertyString("src").contains("youtube")){
 	        	 try{
@@ -175,7 +175,7 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 	        		 
 	        	 }
 	         }
-		}
+		}*/
 		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 		String resourceId=AppClientFactory.getPlaceManager().getRequestParameter("rid", null);

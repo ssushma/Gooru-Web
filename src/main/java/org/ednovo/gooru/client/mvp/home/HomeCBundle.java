@@ -512,6 +512,33 @@ public interface HomeCBundle extends ClientBundle{
 		String setAsCenterPopup();
 		String okButtonmargin();
 		String removingText();
+		
+//		New Landing Page Css
+		String headerPanel();
+		
+		String signUpButton();
+
+		String header();
+
+		String subheader();
+		String btnBlock();
+		String secondary();
+		String learnMoreContainer();
+
+		String imageFieldContainer();
+		String lblCollectionProgressDetails();
+		String lblCollectionProgress();
+		String summaryPopupContainer();
+		String summaryText();
+		String popupInner();
+		String reportPopupHeader();
+		String closeButton();
+		String rightImageContainer();
+		String leftImageContainer();
+
+		String description();
+		String setMarketingPopUpCenter();
+
 	}
      @Source("Home.css")
      HomeCss css();

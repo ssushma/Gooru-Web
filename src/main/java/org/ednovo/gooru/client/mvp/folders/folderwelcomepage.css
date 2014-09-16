@@ -531,9 +531,9 @@ text-decoration: none;
 	font-family: 'Arvo', serif !important;
 }
 .navBox .desc {
-	font-size: 12px;
+	font-size: 16px;
 	text-align: left;
-	padding-top: 30px;
+	padding-top: 0px;
 }
 .hoverCircle {
 	position: absolute;
@@ -541,7 +541,6 @@ text-decoration: none;
 	left: -15px;
 	width: 40px;
 	height: 40px;
-	cursor: pointer;
 	background: #fbb03b;
 	border-radius: 20px;
 	-moz-border-radius: 20px;

@@ -81,9 +81,15 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.gargoylesoftware.htmlunit.OnbeforeunloadHandler;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.FontWeight;
+import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -141,6 +147,8 @@ public class LibraryTopicListView extends Composite{
 	
 	private boolean isCustomizePopup = false;
 	
+	private static boolean isVisible=true;
+	
 	private ConceptDo conceptDo;
 	
 	private ArrayList<ConceptDo> conceptDoList;
@@ -167,11 +175,16 @@ public class LibraryTopicListView extends Composite{
 	
 	private static final String PNG_CROP = "-80x60.";
 	
+	private static final String CUSTOMIZE = "customize";
+	
+	private static final String ASSIGN = "assign";
+	
 	private static LibraryTopicViewUiBinder uiBinder = GWT.create(LibraryTopicViewUiBinder.class);
 	
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
 	
 	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
+	private PopupPanel toolTipPopupPanelCustomize = new PopupPanel();
 
 	private String placeToken = null;
 	
@@ -198,7 +211,7 @@ public class LibraryTopicListView extends Composite{
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-
+	
 	public LibraryTopicListView(TopicDo topicDo, Integer topicNumber, String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicDo.getCodeId();
@@ -206,12 +219,12 @@ public class LibraryTopicListView extends Composite{
 		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
 		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
 		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
-		assignCollectionBtn.setText(i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
-		customizeCollectionBtn.setText(i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
+		assignCollectionBtn.setText(i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
+		customizeCollectionBtn.setText(i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
 		noCollectionLbl.setText(i18n.GL1170());
 		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());
 		noCollectionLbl.getElement().setAttribute("title",i18n.GL1170());
@@ -221,6 +234,11 @@ public class LibraryTopicListView extends Composite{
 		searchTitle=topicDo.getLabel();
 		setIds();
 		setAssets();
+		
+		toolTipPopupPanelCustomize.clear();
+		toolTipPopupPanelNew.clear();
+		toolTipPopupPanelCustomize.hide();
+		toolTipPopupPanelNew.hide();
 		if(topicDo.getLesson()!=null) {
 			setLessonData(topicDo.getLesson());
 		} else {
@@ -250,6 +268,7 @@ public class LibraryTopicListView extends Composite{
 		}
 		addCollectionQuizTitleData("lesson");
 		
+		
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
 		if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
 			searchLink.getElement().getStyle().setDisplay(Display.NONE);
@@ -266,6 +285,8 @@ public class LibraryTopicListView extends Composite{
 		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
+		assignCollectionBtn.addBlurHandler(new assignTooltipBlur());
+		customizeCollectionBtn.addBlurHandler(new assignTooltipBlur());
 		
 		if(!AppClientFactory.isAnonymous()){
 			try {
@@ -274,14 +295,36 @@ public class LibraryTopicListView extends Composite{
 		}else{
 			standardsFloPanel.setVisible(true);
 		}
-		
 		AppClientFactory.getEventBus().addHandler(OpenLessonConceptEvent.TYPE, openLessonConceptHandler);
 		AppClientFactory.getEventBus().addHandler(SetLoadingIconEvent.TYPE, setLoadingIconHandler);
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 		AppClientFactory.getEventBus().addHandler(SetConceptQuizDataEvent.TYPE,setConceptQuizDataHandler);
+		Map<String, String> maps = StringUtil.splitQuery(Window.Location
+				.getHref());
+		if(maps.containsKey("emailId")){
+			showPopupAfterGmailSignin();
+		}
+		
 	}
 	
+
+	private boolean setQuizTabVisiblity(ArrayList<ConceptDo> conceptDoList) {
+		boolean isCollectionTabVisible = false;
+		if(conceptDoList!=null&&conceptDoList.size()>0){
+			for(int i=0;i<conceptDoList.size();i++){
+				if(conceptDoList.get(i).getCollectionType().equals("quiz")){
+					isCollectionTabVisible = true;
+					break;
+				}
+			}
+		}else{
+			return false;
+		}
+		return isCollectionTabVisible; 
+	}
+
+
 	StandardPreferenceSettingHandler standardPreferenceSettingHandler= new StandardPreferenceSettingHandler(){
 		@Override
 		public List<String> getCode(List<String> standPrefCode) {
@@ -356,12 +399,12 @@ public class LibraryTopicListView extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
 		setPlaceToken(placeToken);
-		assignCollectionBtn.setText(i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
-		customizeCollectionBtn.setText(i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
+		assignCollectionBtn.setText(i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
+		customizeCollectionBtn.setText(i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
 		topicTitleLbl.setText(conceptDo.getTitle());
 		topicTitleLbl.getElement().setAttribute("alt",conceptDo.getTitle());
 		topicTitleLbl.getElement().setAttribute("title",conceptDo.getTitle());
@@ -383,7 +426,8 @@ public class LibraryTopicListView extends Composite{
 		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
-		
+		assignCollectionBtn.addBlurHandler(new assignTooltipBlur());
+		customizeCollectionBtn.addBlurHandler(new assignTooltipBlur());
 		setIds();
 		setAssets();
 		addCollectionQuizTitleData("concept");
@@ -403,6 +447,12 @@ public class LibraryTopicListView extends Composite{
 		
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
+		
+		Map<String, String> maps = StringUtil.splitQuery(Window.Location
+				.getHref());
+		if(maps.containsKey("emailId")){
+			showPopupAfterGmailSignin();
+		}
 	}
 
 	public LibraryTopicListView(PartnerFolderDo partnerFolderDo, int topicNumber, String placeToken) {
@@ -412,13 +462,17 @@ public class LibraryTopicListView extends Composite{
 		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
 		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
 		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
-		assignCollectionBtn.setText(i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
-		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
-		customizeCollectionBtn.setText(i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
-		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
+		assignCollectionBtn.setText(i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
+		customizeCollectionBtn.setText(i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL2037());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL2037());
 		noCollectionLbl.setText(i18n.GL1170());
+		toolTipPopupPanelCustomize.clear();
+		toolTipPopupPanelNew.clear();
+		toolTipPopupPanelCustomize.hide();
+		toolTipPopupPanelNew.hide();
 		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());
 		noCollectionLbl.getElement().setAttribute("title",i18n.GL1170());
 		topicTitleLbl.setText(partnerFolderDo.getTitle());
@@ -451,6 +505,9 @@ public class LibraryTopicListView extends Composite{
 		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
+		assignCollectionBtn.addBlurHandler(new assignTooltipBlur());
+		customizeCollectionBtn.addBlurHandler(new assignTooltipBlur());
+		
 		if(!AppClientFactory.isAnonymous()){
 			try {
 				getStandardPrefCode(AppClientFactory.getLoggedInUser().getMeta().getTaxonomyPreference().getCode());
@@ -462,6 +519,12 @@ public class LibraryTopicListView extends Composite{
 		AppClientFactory.getEventBus().addHandler(SetLoadingIconEvent.TYPE, setLoadingIconHandler);
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
+		
+		Map<String, String> maps = StringUtil.splitQuery(Window.Location
+				.getHref());
+		if(maps.containsKey("emailId")){
+			showPopupAfterGmailSignin();
+		}
 	}
 
 	private void setPartnerLibraryLessonData(final ArrayList<PartnerFolderDo> lessonDoList) {
@@ -758,11 +821,20 @@ public class LibraryTopicListView extends Composite{
 			standardsDescription.clear();
 			InlineLabel headerLbl = new InlineLabel(i18n.GL1363()+i18n.GL_SPL_SEMICOLON()+" ");
 			headerLbl.getElement().getStyle().setFontWeight(FontWeight.BOLD);
+			InlineLabel textLbl = new InlineLabel("");
+			if(lessonLabel != null)
+			{
 			if(lessonLabel.length() > 400)
 			{
-				lessonLabel = lessonLabel.substring(0, 400) + "...";
+			lessonLabel = lessonLabel.substring(0, 400) + "...";
 			}
-			InlineLabel textLbl = new InlineLabel(lessonLabel);
+			textLbl = new InlineLabel(lessonLabel);
+			}
+			else
+			{				
+			textLbl = new InlineLabel(conceptDo.getLabel());
+			}
+			
 			standardsDescription.add(headerLbl);
 			standardsDescription.add(textLbl);
 			standardsDescription.setVisible(true);
@@ -828,8 +900,21 @@ public class LibraryTopicListView extends Composite{
 				setMetaDataInfo(conceptDo); 
 				resourcesInside.clear();
 				ArrayList<LibraryCollectionItemDo> libraryResources =  conceptDo.getCollectionItems();
+				int resourceCount = 0;
+				//System.out.println("AppClientFactory.getCurrentPlaceToken()87878::"+AppClientFactory.getCurrentPlaceToken());
 				if(libraryResources!=null) {
-					int resourceCount = libraryResources.size();
+					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COMMUNITY)){
+						resourceCount = libraryResources.size();
+					}else{
+						if(conceptDo.getItemCount()!=null){
+							resourceCount = conceptDo.getItemCount();
+						}
+						else
+						{
+							resourceCount = libraryResources.size();
+						}
+						
+					}
 					int resources=resourceCount<=4?resourceCount:4;
 					final Label resourceCountLbl = new Label(resources+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+resourceCount+" "+i18n.GL1094().toLowerCase());
 					resourcesInside.add(resourceCountLbl);
@@ -863,22 +948,87 @@ public class LibraryTopicListView extends Composite{
 							
 							final String categoryImage=categoryString;
 							
-							String sourceAttribution = "";
-							if(libraryResourceDo.getResourceSource()!=null&&libraryResourceDo.getResourceSource().getAttribution()!=null) {
-								sourceAttribution = libraryResourceDo.getResourceSource().getAttribution();
+							final List<String> sourceAttribution = libraryResourceDo.getPublisher();
+//							if(libraryResourceDo.getResourceSource()!=null&&libraryResourceDo.getResourceSource().getAttribution()!=null) {
+//								sourceAttribution = libraryResourceDo.getResourceSource().getAttribution();
+//							}
+//							final String attribution = sourceAttribution;
+							
+							String domainName = "";
+							if(libraryResourceDo.getResourceSource()!=null&&libraryResourceDo.getResourceSource().getDomainName()!=null) {
+								domainName = libraryResourceDo.getResourceSource().getDomainName();
 							}
-							final String attribution = sourceAttribution;
+							final String domain = domainName;
+							final HTMLEventPanel resourceCategoryIcon = new HTMLEventPanel("");
+							resourceCategoryIcon.addMouseOverHandler(new MouseOverHandler() {
+							   	
+								@Override
+								public void onMouseOver(MouseOverEvent event) {
+									try
+									{
+										toolTipPopupPanel.clear();
+										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(libraryResourceDo.getTitle(),categoryImage,sourceAttribution,libraryResourceDo.getRatings().getCount(),libraryResourceDo.getRatings().getAverage(),domain));
+										toolTipPopupPanel.setStyleName("");
+										toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
+										toolTipPopupPanel.show();
+									}
+									catch(Exception ex)
+									{
+										
+									}
+								}
+							});
+							resourceCategoryIcon.addMouseOutHandler(new MouseOutHandler() {
+								
+								@Override
+								public void onMouseOut(MouseOutEvent event) {
+									toolTipPopupPanel.hide();
+								}
+							});
+							
+							resourceCategoryIcon.addClickHandler(new ClickHandler() {
+								@Override
+								public void onClick(ClickEvent event) {
+									String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
+									if(page.equals(COURSE_PAGE)) {
+										MixpanelUtil.mixpanelEvent("CoursePage_Plays_Resource");
+									} else {
+										MixpanelUtil.mixpanelEvent("LandingPage_Plays_Resource");
+									}
+									Map<String, String> params = new HashMap<String, String>();
+									params.put("id", conceptDo.getGooruOid());
+									
+									String resourceId = libraryItem.getCollectionItemId();
+									if(resourceId==null) {
+										resourceId = libraryResourceDo.getCollectionItemId();
+									}
+									params.put("rid", resourceId);
+									params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
+									params.put("lessonId", lessonId);
+									if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY) || getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+										params.put("library", getPlaceToken());
+									}
+									String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
+									if(standardId!=null){
+										params.put("rootNodeId", standardId);
+									}
+									
+									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
+									AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+								}
+							});
+							
 							resourceImage.addMouseOverHandler(new MouseOverHandler() {
 							   	
 								@Override
 								public void onMouseOver(MouseOverEvent event) {
 									try
 									{
-									toolTipPopupPanel.clear();
-									toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(libraryResourceDo.getTitle(),categoryImage,attribution,libraryResourceDo.getRatings().getCount(),libraryResourceDo.getRatings().getAverage()));
-									toolTipPopupPanel.setStyleName("");
-									toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
-									toolTipPopupPanel.show();
+										toolTipPopupPanel.clear();
+										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(libraryResourceDo.getTitle(),categoryImage,sourceAttribution,libraryResourceDo.getRatings().getCount(),libraryResourceDo.getRatings().getAverage(),domain));
+										toolTipPopupPanel.setStyleName("");
+										toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
+										toolTipPopupPanel.show();
 									}
 									catch(Exception ex)
 									{
@@ -945,12 +1095,12 @@ public class LibraryTopicListView extends Composite{
 										params.put("rootNodeId", standardId);
 									}
 									
-									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
+									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, params);
 									AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 								}
 							});
 							
-							final HTMLPanel resourceCategoryIcon = new HTMLPanel("");
+							
 							resourceCategoryIcon.addStyleName(UcCBundle.INSTANCE.css().resourceName());
 							resourceCategoryIcon.addStyleName(getDetaultResourceImage(category.toLowerCase()) + SMALL);
 							resourcePanel.add(resourceImage);
@@ -1096,7 +1246,7 @@ public class LibraryTopicListView extends Composite{
 				if(standardId!=null){
 					params.put("rootNodeId", standardId);
 				}
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
 			}
 	}
 	
@@ -1138,6 +1288,13 @@ public class LibraryTopicListView extends Composite{
 	 */
 	@UiHandler("assignCollectionBtn")
 	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
+		toolTipPopupPanelNew.clear();
+		toolTipPopupPanelNew.hide();
+		final Map<String, String> params = StringUtil.splitQuery(Window.Location
+				.getHref());
+		if(params.containsKey(CUSTOMIZE)){
+			params.remove(CUSTOMIZE);
+		}
 		String collectionId = getConceptDo().getGooruOid();
 		if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
 			MixpanelUtil.mixpanelEvent("standardlibrary_assign_collection");	
@@ -1146,6 +1303,8 @@ public class LibraryTopicListView extends Composite{
 
 				if(!isAssignPopup){
 					isAssignPopup=true;
+				//	Window.enableScrolling(false);
+				//final Map<String,String> params = new HashMap<String,String>();
 				AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals()) {
 					
 					@Override
@@ -1153,21 +1312,33 @@ public class LibraryTopicListView extends Composite{
 						Window.enableScrolling(true);
 				        this.hide();
 				    	isAssignPopup=false;
+/*				    	Map<String, String> paramsAssignPopup = StringUtil.splitQuery(Window.Location.getHref());
+				    	paramsAssignPopup.remove(ASSIGN);
+				    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), paramsAssignPopup);
+						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);*/
 					}
 				};
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("635px");
-
-				successPopupVc.show();
-				successPopupVc.center();
+				successPopupVc.setHeight("658px");
+				if(!successPopupVc.isVisible()){
+					successPopupVc.show();
+					successPopupVc.center();
+				}
+				Window.enableScrolling(false);
+				   
 				if (AppClientFactory.isAnonymous()){
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
 				}
 				else
 				{
-				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
 				}
+				
+				params.put(ASSIGN, "yes");
+				params.put("collectionId", collectionId);
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				
 			}
 			
@@ -1194,14 +1365,77 @@ public class LibraryTopicListView extends Composite{
 	 */
 	@UiHandler("customizeCollectionBtn")
 	public void oncustomizeCollectionBtnClicked(ClickEvent clickEvent) {
+		toolTipPopupPanelCustomize.clear();
+		toolTipPopupPanelCustomize.hide();
 		if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
 			MixpanelUtil.mixpanelEvent("standardlibrary_customize_collection");	
 		}
+		final Map<String, String> params = StringUtil.splitQuery(Window.Location
+				.getHref());
+		if(params.containsKey(ASSIGN)){
+			params.remove(ASSIGN);
+		}
 		String collectionId = getConceptDo().getGooruOid();
 		MixpanelUtil.mixpanelEvent("LandingPage_customize_collection");
+		if(!isCustomizePopup){
+			isCustomizePopup=true;
+			Boolean loginFlag = false;
+			if (AppClientFactory.isAnonymous()){
+				loginFlag = true;
+			}
+			else
+			{
+				loginFlag = false;
+			}
+		//	final Map<String,String> params = new HashMap<String,String>();
+			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getConceptDo().getTitle()) {
 
-				if(!isCustomizePopup){
-					isCustomizePopup=true;
+				@Override
+				public void closePoup() {
+					Window.enableScrolling(true);
+					this.hide();	
+					isCustomizePopup = false;
+/*			    	Map<String, String> paramsAssignPopup = StringUtil.splitQuery(Window.Location.getHref());
+			    	paramsAssignPopup.remove(CUSTOMIZE);
+			    	PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), paramsAssignPopup);
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);*/
+				}
+			};
+			Window.scrollTo(0, 0);
+			successPopupVc.setWidth("500px");
+			successPopupVc.setHeight("471px");
+			successPopupVc.show();
+			successPopupVc.center();
+			
+			
+			params.put(CUSTOMIZE, "yes");
+			params.put("collectionId", collectionId);
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			
+		}
+
+	}	
+	/**
+	 * 
+	 * Showing Customize or Assign popup after login with gmail account.
+	 * 
+	 */
+	
+	private void showPopupAfterGmailSignin() {
+		// TODO Auto-generated method stub
+
+		
+		String collectionId = getConceptDo().getGooruOid()!=null ? getConceptDo().getGooruOid():null;
+		
+		String colleId = AppClientFactory.getPlaceManager().getRequestParameter("collectionId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("collectionId") : null;
+		String customize = AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(CUSTOMIZE) : null;
+		String assign = AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN)!=null ? AppClientFactory.getPlaceManager().getRequestParameter(ASSIGN) : null;
+		String emailId = AppClientFactory.getPlaceManager().getRequestParameter("emailId")!=null ? AppClientFactory.getPlaceManager().getRequestParameter("emailId") : null;
+		
+		if(customize!=null && customize.equals("yes") && emailId!=null){
+			if(colleId.equals(collectionId) && isVisible){
+				isVisible=false;
 				Boolean loginFlag = false;
 				if (AppClientFactory.isAnonymous()){
 					loginFlag = true;
@@ -1210,6 +1444,9 @@ public class LibraryTopicListView extends Composite{
 				{
 					loginFlag = false;
 				}
+				final Map<String, String> params = StringUtil.splitQuery(Window.Location
+						.getHref());
+				//final Map<String,String> params = new HashMap<String,String>();
 				RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getConceptDo().getTitle()) {
 
 					@Override
@@ -1221,12 +1458,47 @@ public class LibraryTopicListView extends Composite{
 				};
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("440px");
+				successPopupVc.setHeight("471px");
 				successPopupVc.show();
 				successPopupVc.center();
 			}
-		
-	}	
+			
+		}
+		if(assign!=null && assign.equals("yes") && emailId!=null){
+		//	final Map<String,String> params = new HashMap<String,String>();
+			final Map<String, String> params = StringUtil.splitQuery(Window.Location
+					.getHref());
+			if(colleId.equals(collectionId) && isVisible ){
+				isVisible=false;
+				AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals()) {
+
+					@Override
+					public void closePoup() {
+						Window.enableScrolling(true);
+						this.hide();
+						isAssignPopup=false;
+					}
+				};
+				Window.scrollTo(0, 0);
+				successPopupVc.setWidth("500px");
+				successPopupVc.setHeight("658px");
+				if(!successPopupVc.isVisible()){
+					successPopupVc.show();
+					successPopupVc.center();
+				}
+				if (AppClientFactory.isAnonymous()){
+					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+				}
+				else
+				{
+					successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 10);
+				}
+			}
+			
+		}
+
+
+	}
 
 	public void renderStandards(FlowPanel standardsContainer, ResourceSearchResultDo searchResultDo) {
 		if (searchResultDo.getStandards() != null) {
@@ -1307,12 +1579,12 @@ public class LibraryTopicListView extends Composite{
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			toolTipPopupPanelNew.clear();
-			toolTipPopupPanelNew.setWidget(new GlobalToolTip(i18n.GL0677()));
-			toolTipPopupPanelNew.setStyleName("");
-			toolTipPopupPanelNew.setPopupPosition(customizeCollectionBtn.getElement().getAbsoluteLeft()+18, customizeCollectionBtn.getElement().getAbsoluteTop()+10);
-			toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
-			toolTipPopupPanelNew.show();
+			toolTipPopupPanelCustomize.clear();
+			toolTipPopupPanelCustomize.setWidget(new GlobalToolTip(i18n.GL0677()));
+			toolTipPopupPanelCustomize.setStyleName("");
+			toolTipPopupPanelCustomize.setPopupPosition(customizeCollectionBtn.getElement().getAbsoluteLeft()+18, customizeCollectionBtn.getElement().getAbsoluteTop()+10);
+			toolTipPopupPanelCustomize.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanelCustomize.show();
 		}
 		
 	}
@@ -1321,7 +1593,7 @@ public class LibraryTopicListView extends Composite{
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			toolTipPopupPanelNew.hide();
+			toolTipPopupPanelCustomize.hide();
 		}
 	}
 	public String getDetaultResourceImage(String category){
@@ -1366,9 +1638,10 @@ public class LibraryTopicListView extends Composite{
 	};
 	
 	private void addCollectionQuizTitleData(String pageType) {
-		if(pageType.equals("lesson")&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+		if(pageType.equals("lesson")&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.DISCOVER)&&AppClientFactory.getPlaceManager().getRequestParameter("standardId")==null&&setQuizTabVisiblity(conceptDoList)) {
 			setCollectionQuizVisibility(true);
 			collectionTitle.addStyleName(libraryStyle.collectionQuizTabActive());
+			quizTitle.removeStyleName(libraryStyle.collectionQuizTabActive());
 		} else {
 			setCollectionQuizVisibility(false);
 		}
@@ -1405,5 +1678,17 @@ public class LibraryTopicListView extends Composite{
 	}
 	public void setConceptDoList(ArrayList<ConceptDo> conceptDoList) {
 		this.conceptDoList = conceptDoList;
+	}
+	public class assignTooltipBlur implements BlurHandler{
+
+		@Override
+		public void onBlur(BlurEvent event) {
+			toolTipPopupPanelCustomize.clear();
+			toolTipPopupPanelNew.clear();
+			toolTipPopupPanelCustomize.hide();
+			toolTipPopupPanelNew.hide();
+			
+		}
+		
 	}
 }

@@ -127,7 +127,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		editCollection.getElement().setAttribute("alt",i18n.GL0636());
 		editCollection.getElement().setAttribute("title",i18n.GL0636());
 		
-		panelAssign.getElement().getStyle().setMarginBottom(10, Unit.PX);
+		panelAssign.getElement().getStyle().setMarginBottom(3, Unit.PX);
 		loginCustom.getElement().getStyle().setMarginBottom(15, Unit.PX);
 		isDraggedFromSearch=false;
 		Window.enableScrolling(false);
@@ -335,7 +335,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 
 		final String collectionTitle = copycollectionTextbox.getText();
 		if(isDraggedFromSearch){
-			if(collectionTitle.isEmpty()|| collectionTitle.equals("")){
+			if(collectionTitle.isEmpty() || collectionTitle.trim().isEmpty()){
 				errorLabel.setText(i18n.GL0693());
 				errorLabel.setVisible(true);
 			}else{
@@ -366,7 +366,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 								SetStyleForProfanity.SetStyleForProfanityForTextBox(copycollectionTextbox, errorLabel, value);
 							}else{
 								
-								if(!collectionTitle.isEmpty())
+								if(!collectionTitle.isEmpty() && !collectionTitle.trim().isEmpty())
 								{
 									closePoup();
 								if(!isCustomizePopup){

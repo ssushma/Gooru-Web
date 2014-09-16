@@ -124,6 +124,8 @@ public interface UcCBundle extends ClientBundle {
 		
 		String resourceName();
 		
+		String resourceNameNew();
+		
 		String resourceHover();
 		
 		String rplayIcon();
@@ -203,7 +205,36 @@ public interface UcCBundle extends ClientBundle {
 		String otherSmall();
 		
 		String webpageSmall();
+
 		
+		String videoSmallNew();
+		
+		String interactiveSmallNew();
+		
+		String websiteSmallNew();
+		
+		String examSmallNew();
+		
+		String textbookSmallNew();
+		
+		String textSmallNew();
+		
+		String handoutSmallNew();
+		
+		String lessonSmallNew();
+		
+		String slideSmallNew();
+		
+		String questionSmallNew();
+
+		String imageSmallNew();
+		
+		String audioSmallNew();
+		
+		String otherSmallNew();
+		
+		String webpageSmallNew();
+
 		String imageUploadPopup();
 		
 		String textBoxWithPlaceholderText();

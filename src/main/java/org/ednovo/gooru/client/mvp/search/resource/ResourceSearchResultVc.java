@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.search.resource;
 
 import java.util.HashMap;
+
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -32,9 +33,14 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
+import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
+import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewHandler;
+import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInSearchEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEventHandler;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEventHandler;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragWithImgUc;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
@@ -61,13 +67,18 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -85,7 +96,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	
 	@UiField HTML lblResourceTitle;
 	
-	@UiField Image imgNotFriendly;
+	@UiField Image imgNotFriendly, imgOER;
 	
 	@UiField
 	HTMLEventPanel resourceTitleContainer;
@@ -132,6 +143,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	private static String aggregatorData = "";
 	private boolean isRatingUpdated=true;
 	
+	private int updateReviewCount=0;
 	
 	/**
 	 * Class constructor, assign new instance of {@link ResourceSearchResultWrapperVc}, and call resource search result setData method
@@ -143,26 +155,56 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		this.res = ResourceSearchResultCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
-		imgNotFriendly.setTitle(i18n.GL0737());
-		imgNotFriendly.setAltText(i18n.GL0737());
-		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
+		
 		wrapperVcr.addStyleName("resourceSearchResultBox");
 		AppClientFactory.getEventBus().addHandler(UpdateSearchResultMetaDataEvent.TYPE,setUpdateMetaData);
 		AppClientFactory.getEventBus().addHandler(UpdateResourceRatingCountEvent.TYPE,setRatingCount);
+		AppClientFactory.getEventBus().addHandler(DeletePlayerStarReviewEvent.TYPE,deleteStarRating);
+		AppClientFactory.getEventBus().addHandler(UpdateResourceReviewCountEvent.TYPE,setReviewCount);
 		ratingWidgetView=new RatingWidgetView();
 		wrapperVcr.ratingWidgetPanel.add(ratingWidgetView);
 		setData(resourceSearchResultDo);
 		
 		resourceTitlePanel.getElement().setId("fpnlResourceTitlePanel");
 		resourceTitleContainer.getElement().setId("epnlResourceTitleContainer");
-		imgNotFriendly.getElement().setId("imgNotFriendly");
+		
 		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
 		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
 		resourceDescriptionHtml.getElement().setId("htmlResourceDescriptionHtml");
+//		imgOER.setVisible(false);
+		imgOER.setUrl("images/oer_icon.png");
+		imgOER.getElement().setAttribute("id", i18n.GL1834());
+		imgOER.getElement().setAttribute("alt", i18n.GL1834());
+		imgOER.getElement().setAttribute("title", i18n.GL1834());
 	}
 	
 	public RatingWidgetView getRatingWidgetView(){
 		return ratingWidgetView;
+	}
+	
+	public int getUpdateReviewCount(){
+		return updateReviewCount;
+	}
+	public void setUpdateReviewCount(int updateReviewCount){
+		this.updateReviewCount= updateReviewCount;
+		ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
+		if(updateReviewCount>0){
+			ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
+			ratingWidgetView.getRatingCountLabel().getElement().getStyle().setPadding(4,Unit.PX);
+		}else{
+			ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: none;text-decoration: none !important;color: #4e9746;");
+		}
+	}
+	
+	public Label getAddButton(){
+		return wrapperVcr.addLbl;
+	}
+	public SimplePanel getAddResourceContainerPanel(){
+		return wrapperVcr.disclosureContentSimPanel;
+	}
+	
+	public DisclosurePanel getDisclosurePanelClose(){
+		return wrapperVcr.disclosureDisPanel;
 	}
 	/**
 	 * 
@@ -245,9 +287,16 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	 */
 	public void setData(ResourceSearchResultDo resourceSearchResultDo) {
 		this.resourceSearchResultDo = resourceSearchResultDo;
-		ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount().toString()); 
+		ratingWidgetView.getAverageRatingLabel().setText(Double.toString(resourceSearchResultDo.getRatings().getAverage())+" ");
+		ratingWidgetView.getAverageRatingLabel().setVisible(false);
+//		ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
+		Integer reviewCount;
+		reviewCount= resourceSearchResultDo.getRatings().getReviewCount();
+		if(reviewCount==null){
+			reviewCount = 0;
+		}
+		ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL2024()); 
 		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
-//		ratingWidgetView.setAvgStarRating(2); 
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 		wrapperVcr.setData(resourceSearchResultDo);
         String description = resourceSearchResultDo.getDescription();
@@ -307,30 +356,45 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getNumOfPages() + PAGES);
 		}
 		title = title.replaceAll("<p>", "").replaceAll("</p>", "");
-		lblResourceTitle.setHTML(title);
-		resourceTitle=resourceSearchResultDo.getResourceTitle();
+		
+		lblResourceTitle.setHTML(title.trim());
+		resourceTitle=resourceSearchResultDo.getResourceTitle().trim();
 		lblResourceTitle.getElement().setId(resourceSearchResultDo.getGooruOid());
-		if (lblResourceTitle.getText().length()>38){
-			lblResourceTitle.getElement().getStyle().setWidth(350, Unit.PX);
+		if (lblResourceTitle.getText().length()>30){
+			lblResourceTitle.getElement().getStyle().setWidth(240, Unit.PX);
 		}
 		String mediaType = resourceSearchResultDo.getMediaType();
 		
-		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? true : false : false;
+		boolean oerVisibility = resourceSearchResultDo.getLicense() !=null &&  resourceSearchResultDo.getLicense().getCode() !=null ? resourceSearchResultDo.getLicense().getCode().contains("CC") ? true : false : false;
+
 		
-		imgNotFriendly.setVisible(setVisibility);
+		imgOER.setVisible(oerVisibility);
 		
-		if (imgNotFriendly.isVisible()){
-			lblResourceTitle.getElement().getStyle().setFloat(Float.LEFT);
-		}else{
-			lblResourceTitle.getElement().getStyle().clearFloat();
+		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
+	
+		//imgNotFriendly.setVisible(setVisibility);
+		if(setVisibility)
+		{
+			imgNotFriendly.getElement().setId("imgImgFriendly");
+			imgNotFriendly.setTitle(i18n.GL0737_1());
+			imgNotFriendly.setAltText(i18n.GL0737_1());
+			imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
+		}else
+		{
+			imgNotFriendly.getElement().setId("imgImgNotFriendly");
+			imgNotFriendly.setTitle(i18n.GL0737());
+			imgNotFriendly.setAltText(i18n.GL0737());
+			imgNotFriendly.setUrl("images/mos/mobileunfriendly.png");
 		}
-		
+		lblResourceTitle.getElement().getStyle().setFloat(Float.LEFT);
+			
 		
 		imgNotFriendly.addMouseOverHandler(new MouseOverHandler() {
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431()+" "+"<img src='/images/mos/mobileunfriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL_SPL_EXCLAMATION());
+				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setZIndex(9999999);
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -363,23 +427,9 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 
 	UpdateResourceRatingCountEventHandler setRatingCount =new UpdateResourceRatingCountEventHandler(){
 		@Override
-		public void setResourceRatingCount(String resourceId,double avg,Integer count) { 
+		public void setResourceRatingCount(String resourceId,double avg,Integer count) {
 			if(resourceSearchResultDo.getGooruOid().equals(resourceId)){
-				ratingWidgetView.getRatingCountLabel().setText(Integer.toString(count)); 
 				ratingWidgetView.setAvgStarRating(avg);
-				if(count==1 && isRatingUpdated){
-					isRatingUpdated=false;
-					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
-					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
-					ratingWidgetView.getRatingCountLabel().addClickHandler(new ClickHandler(){
-
-						@Override
-						public void onClick(ClickEvent event) {
-							AppClientFactory.fireEvent(new UpdateRatingsInSearchEvent(resourceSearchResultDo)); 
-						}
-						
-					});
-				}
 			}
 		}
 		
@@ -474,5 +524,52 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	public void setAddedToShelf(boolean addedToShelf) {
 		wrapperVcr.setAddedToShelf(addedToShelf);
 	}
-
+	
+	DeletePlayerStarReviewHandler deleteStarRating = new DeletePlayerStarReviewHandler(){
+		@Override
+		public void deleteStarRatings(String resourceGooruOid) {
+			if(resourceSearchResultDo.getGooruOid().equals(resourceGooruOid)){
+				if(ratingWidgetView!=null){
+					String[] revCount = ratingWidgetView.getRatingCountLabel().getText().split(" "); 
+					if(Integer.parseInt(revCount[1].trim())==1){
+//						ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
+//						ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: none;text-decoration: none !important;color: grey");
+						ratingWidgetView.setAvgStarRating(0);
+						ratingWidgetView.getRatingCountLabel().setText(" "+ (Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024());
+						setUpdateReviewCount(Integer.parseInt(revCount[1])-1);
+//						ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
+					}else{
+//						ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
+						setUpdateReviewCount(Integer.parseInt(revCount[1])-1);
+						ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024()); 
+					}
+				}
+			}
+		}
+		
+	};
+	
+	UpdateResourceReviewCountEventHandler setReviewCount =new UpdateResourceReviewCountEventHandler(){
+		@Override
+		public void setReviewCount(String resourceId,Integer count) {
+			if(resourceSearchResultDo.getGooruOid().equals(resourceId)){
+				setUpdateReviewCount(count);
+				/*ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
+				ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");*/
+				ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024());
+				ratingWidgetView.getAverageRatingLabel().setVisible(false);
+				/*if(count==1 && isRatingUpdated){
+					isRatingUpdated=false;
+//					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
+//					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
+//					ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#1076bb");
+					if(reviewLabelHandler !=null){
+						reviewLabelHandler.removeHandler();
+					}
+//					reviewLabelHandler = ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+				}*/
+			}
+		}
+		
+	};
 }

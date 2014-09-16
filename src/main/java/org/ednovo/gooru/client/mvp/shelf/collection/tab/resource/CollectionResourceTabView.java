@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -462,7 +463,6 @@ public class CollectionResourceTabView extends
 			dragAndDropLabel.setVisible(true);
 
 		} else {
-
 			collectionItemDo.setCollection(collectionDo);
 			Label sequenceLbl = new Label(collectionItemDo.getItemSequence()
 					+ "");
@@ -476,7 +476,7 @@ public class CollectionResourceTabView extends
 			shelfCollectionResourceVc = new ShelfCollectionResourceChildView(this, collectionItemDo);
 			if(isFlag){
 				isFlag=false;
-				Window.scrollTo(0, (0 + (sequencePostion-1)*113));
+//				Window.scrollTo(0, (0 + (sequencePostion-1)*113));
 				shelfCollectionResourceVc.addNewResource();
 			}
 			shelfCollectionResourceVc.getEditInfoLbl().addClickHandler(	new ClickHandler() {
@@ -487,47 +487,12 @@ public class CollectionResourceTabView extends
 							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99,false));
 							if (collectionItemDo.getResource().getCategory().equalsIgnoreCase("Question")) {
 								getUiHandlers().showEditQuestionResourcePopup(collectionItemDo);
-//								editQuestionPopupWidget = new EditQuestionPopupWidget(collectionItemDo);
-//								editQuestionPopupWidget.getAddQuestion().getElement().getStyle().setDisplay(Display.NONE);
-//								editQuestionPopupWidget.getUpdateQuestionImageView().getUploadImage().addClickHandler(new ClickHandler() {
-//											@Override
-//											public void onClick(ClickEvent event) {
-//												getUiHandlers().updateQustionImage(
-//																collectionItemDo.getResource().getGooruOid());
-//											}
-//										});
-//								editQuestionPopupWidget.getUpdateQuestionImageView().getRemoveImage().addClickHandler(new ClickHandler() {
-//											@Override
-//											public void onClick(ClickEvent event){
-//												editQuestionPopupWidget.hide();
-//												deleteConfirmationPopupVc = new ConfirmationPopupVc(MESSAGE_HEADER,MESSAGE_CONTENT) {
-//													@Override
-//													public void onDelete(ClickEvent clickEvent) {
-//														getUiHandlers().removeQuestionImage(collectionItemDo.getResource().getGooruOid());
-//													}
-//													public void hide() {
-//														super.hide();
-//														Window.enableScrolling(true);
-//														AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-//														editQuestionPopupWidget.show();
-//													}
-//												};
-//											}
-//										});
-//
-//								editQuestionPopupWidget.getAddQuestion().addClickHandler(new ClickHandler() {
-//											@Override
-//											public void onClick(ClickEvent event) {
-//												getUiHandlers().updateQustionImage(collectionItemDo.getResource().getGooruOid());
-//											}
-//										});
-
 							} else if(collectionItemDo.getResource().getResourceType().getName().equals("resource/url") || collectionItemDo.getResource().getResourceType().getName().equals("video/youtube")){
 								editResoruce = new EditResourcePopupVc(collectionItemDo) {
 	
 								@Override
-								public void updateResource(CollectionItemDo collectionItemDo) {
-									getUiHandlers().updateResourceInfo(collectionItemDo);
+								public void updateResource(CollectionItemDo collectionItemDo,List<String> tagList) {
+									getUiHandlers().updateResourceInfo(collectionItemDo,tagList);
 								}
 	
 								@Override
@@ -555,13 +520,13 @@ public class CollectionResourceTabView extends
 										description = desc;
 										category = categoryStr;
 										thumbnailUrl = thumbnailUrlStr;
-										if(category.contains("Images")||category.contains("Texts"))
-										{
-											category=category.substring(0, category.length()-1);
-											/* if(category.contains("Image")||category.contains("Images")){
-												 category="Slide";
-											 }*/
-										}
+//										if(category.contains("Image")||category.contains("Text"))
+//										{
+//											category=category.substring(0, category.length()-1);
+//											/* if(category.contains("Image")||category.contains("Images")){
+//												 category="Slide";
+//											 }*/
+//										}
 										
 										JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr);
 									
@@ -579,8 +544,8 @@ public class CollectionResourceTabView extends
 					collectionDo.getCollectionItems().size()));
 		}
 		hideNoResourceMsg();
-		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
+//		Window.enableScrolling(true);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 	}
 
 	/*public void insertCollectionItemForCopy(
@@ -691,8 +656,8 @@ public class CollectionResourceTabView extends
 							editResoruce = new EditResourcePopupVc(collectionItemDo) {
 
 							@Override
-							public void updateResource(CollectionItemDo collectionItemDo) {
-								getUiHandlers().updateResourceInfo(collectionItemDo);
+							public void updateResource(CollectionItemDo collectionItemDo,List<String> tagList) {
+								getUiHandlers().updateResourceInfo(collectionItemDo,tagList);
 							}
 
 							@Override
@@ -1226,7 +1191,7 @@ public class CollectionResourceTabView extends
 		
 	}
 
-	private JSONObject setEditUserResourceJsonObject(String originalFilename,String mediaFileName, String Editedtitle, String Editeddescription, String Editedcategory,String EditedthumbnailUrl) {
+	private JSONObject setEditUserResourceJsonObject(String originalFilename,String mediaFileName, String editedTitle, String editedDescription, String editedCategory,String editedThumbnailUrl) {
 		JSONObject file = new JSONObject();
 		 if(originalFilename!=null && mediaFileName!=null){
 			 file.put("filename", new JSONString(originalFilename));
@@ -1235,11 +1200,13 @@ public class CollectionResourceTabView extends
 		
 		     
 		 JSONObject attach = new JSONObject();
-        attach.put("title", new JSONString(Editedtitle));
-        attach.put("description", new JSONString(Editeddescription));
-        attach.put("category", new JSONString(Editedcategory));
-        if(EditedthumbnailUrl!=null){
-        	 attach.put("thumbnail", new JSONString(EditedthumbnailUrl));
+        attach.put("title", new JSONString(editedTitle));
+        attach.put("description", new JSONString(editedDescription));
+        JSONObject resourceFormat = new JSONObject();
+        resourceFormat.put("value", new JSONString(editedCategory));
+        attach.put("resourceFormat", resourceFormat);
+        if(editedThumbnailUrl!=null){
+        	 attach.put("thumbnail", new JSONString(editedThumbnailUrl));
         }
         if(originalFilename!=null && mediaFileName!=null){
         	 attach.put("attach", file);

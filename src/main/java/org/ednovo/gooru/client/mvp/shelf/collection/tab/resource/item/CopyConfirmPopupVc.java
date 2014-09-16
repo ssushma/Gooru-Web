@@ -149,13 +149,14 @@ public abstract class CopyConfirmPopupVc{
 		popupPanel.setWidget(uiBinder.createAndBindUi(this));
 		setStaticTexts();
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
-		popupPanel.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().copyResourcePopupContainer());
+		popupPanel.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().copyResourcePopupContainerShelf());
 		popupPanel.setGlassEnabled(true);
 		popupPanel.setAutoHideOnHistoryEventsEnabled(true);
 		popupPanel.show();
 		popupPanel.center();
 		popupPanel.setModal(true);
 		dropdownListContainerScrollPanel.getElement().setId("sbDropdownListContainerScrollPanel");
+		dropdownListContainerScrollPanel.getElement().getStyle().setMarginTop(0, Unit.PX);
 		dropdownListContainerScrollPanel.setVisible(false);
 		chooseCollectionErrorLabel.getElement().setId("lblChooseCollectionErrorLabel");
 		floderTreeContainer.getElement().setId("pnlFloderTreeContainer");
@@ -535,7 +536,7 @@ public abstract class CopyConfirmPopupVc{
 	}
 	public void hide(){
 		popupPanel.hide();
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
 	public abstract void copyResourceToCollection(String collectionId);

@@ -97,6 +97,7 @@ public class CollectionFormInPlayPresenter extends PresenterWidget<IsCollectionF
 	@Override
 	public void onBind() {
 		super.onBind();
+		
 		setSaveCollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
 
 			@Override
@@ -107,10 +108,14 @@ public class CollectionFormInPlayPresenter extends PresenterWidget<IsCollectionF
 				playerType=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 				if(playerType.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 					fireEvent(new RefreshCollectionInShelfListInPlayEvent(result.getGooruOid()));
+					fireEvent(new RefreshDisclosurePanelEvent(result.getGooruOid()));
 				}else if(playerType.equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
 					fireEvent(new RefreshCollectionInShelfListInPreviewPlayEvent(result.getGooruOid()));
 				}else if(playerType.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 					fireEvent(new RefreshCollectionInShelfListInResourcePlayEvent(result.getGooruOid()));
+					fireEvent(new RefreshDisclosurePanelEvent(result.getGooruOid()));
+				}else if(playerType.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+					fireEvent(new RefreshDisclosurePanelEvent(result.getGooruOid()));
 				}
 			}
 		});

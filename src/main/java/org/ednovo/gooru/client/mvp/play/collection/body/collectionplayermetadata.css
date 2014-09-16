@@ -6,7 +6,7 @@
     box-sizing:border-box;
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
-     margin-top:50px;
+   /*   margin-top:50px; */
 }
 .clearfix:after { 
    content: "."; 
@@ -18,7 +18,7 @@
 .leftPanel {
     width:700px;
    /*  min-height:100%; */
-   	height:650px;
+   	min-height:650px;
     float:left;
     box-sizing:border-box;
     -moz-box-sizing:border-box;
@@ -30,7 +30,7 @@
 .rightPanel {
     width:240px;
    /*  height:100%; */
-    height:650px;
+    min-height:650px;
     float:right;
     padding: 30px 20px 20px 20px;
     box-sizing:border-box;
@@ -69,10 +69,10 @@
 .infoSection:first-child {
     margin-top:0px;
 }
-.rightPanel .infoSection h3{
+.infoSection h3{
 	margin-bottom:10px;
 }
-.rightPanel  .userImageContainer {
+  .userImageContainer {
     margin-right:10px;
     width:40px;
     height:40px;
@@ -81,14 +81,14 @@
     vertical-align:middle;
     border:3px solid #87BADD;
 }
-.rightPanel .userImage{
+ .userImage{
     width:40px;
     height:40px;
      border-radius:40px;
     display:inline-block;
     vertical-align:middle;
 }
-.rightPanel  .username {
+ .username {
     display:inline-block;
     vertical-align:middle;
 }
@@ -102,11 +102,11 @@
     font-size:10px;
     font-weight:bold
 }
-.rightPanel .relatedConcepts a {
+ .relatedConcepts a {
     display:block;
     margin:1px 0px;
 }
-.rightPanel a.flagCollection {
+ a.flagCollection {
     color: #515151;
     padding-left:30px;
     background:url('images/flag.png') no-repeat;
@@ -117,7 +117,7 @@
     padding-left:30px;
     background:url('images/flag.png') no-repeat;
 }
-.rightPanel a.flaggedCollection {
+a.flaggedCollection {
     color: #999;
     padding-left:30px;
     background:url('images/flagged.png') no-repeat;
@@ -127,7 +127,7 @@
     padding-left:30px;
     background:url('images/flagged.png') no-repeat;
 }
-.rightPanel a.flaggedCollection:hover {
+ a.flaggedCollection:hover {
     opacity:1;
     cursor:default;
 }
@@ -491,4 +491,68 @@
 .clearBoth{
 	clear: both;
 }
-
+.timeTextBig{
+	color:#fff;
+	font-size:30px;
+}
+.timeTextSmall{
+	color:#fff;
+	font-size:20px;
+}
+.teacherTipOuterContainer{
+	width:200px;
+	word-wrap:break-word;
+	padding:5px;
+	overflow:hidden;
+}
+.depthofKnow{
+	background: -moz-linear-gradient(center top, #666, #515151) repeat scroll 0 0 transparent;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#666), to(#515151));
+	background: -webkit-linear-gradient(top, #666, #515151);
+	background-image: -ms-linear-gradient(top, #666, #515151);
+	background: -o-linear-gradient(top, #666, #515151);
+	background-color: #515151;
+	border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-ms-border-radius: 3px 3px 3px 3px;
+	-khtml-border-radius: 3px 3px 3px 3px;
+	-o-border-radius: 3px 3px 3px 3px;
+	color: white;
+	font-size: 10px;
+	font-weight: normal;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	padding: 3px;
+	cursor: default !important;
+}
+.reactionCanExplain{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -7px -4px;
+	width: 35px;
+	height: 35px;
+}
+.reactionCanUnderstand{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -53px -4px;
+	width: 35px;
+	height: 35px;
+}
+.reactionDonotUnderstand{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -141px -4px;
+	width: 35px;
+	height: 35px;
+}
+.reactionMeh{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -95px -4px;
+	width: 35px;
+	height: 35px;
+}
+.reactionNeedHelp{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -184px -4px;
+	width: 35px;
+	height: 35px;
+}

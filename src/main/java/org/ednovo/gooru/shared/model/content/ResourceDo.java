@@ -57,6 +57,9 @@ public class ResourceDo extends ContentDo {
     
     private ResourceFormatDo resourceFormat;
     
+   
+    private ArrayList<ResourceTagsDo> resourceTags;
+    
     public ResourceDo(){}
     
     private TreeSet<QuestionAnswerDo> answers;
@@ -110,6 +113,8 @@ public class ResourceDo extends ContentDo {
 	private List<String> aggregator;
 	
 	private List<String> publisher;
+	
+	private List<String> host;
 	
 	private customFieldValuesDO customFieldValues;
 	
@@ -543,5 +548,18 @@ public class ResourceDo extends ContentDo {
 		this.ratings = ratings;
 
 	}
+	public List<String> getHost() {
+		return host;
+	}
+	public void setHost(List<String> host) {
+		this.host = host;
+	}
+	public ArrayList<ResourceTagsDo> getResourceTags() {
+		return resourceTags;
+	}
+	public void setResourceTags(ArrayList<ResourceTagsDo> resourceTags) {
+		this.resourceTags = resourceTags;
+	}
+	
 	
 }

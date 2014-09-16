@@ -4,17 +4,23 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=9"> -->
 <meta http-equiv="X-UA-Compatible" content="IE=9" />
-<meta name="viewport" content="width=640, user-scalable=no">
+<!-- <meta name="viewport" content="width=640, user-scalable=no"> -->
 <link type="text/css" rel="stylesheet" href="css/fi/foundation-icons.css">
 <!-- <link type="text/css" rel="stylesheet" href="css/css/font-awesome.css"> -->
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <link type="text/css" rel="stylesheet" href="css/gooru.css">
 <link type="text/css" rel="stylesheet" href="css/gooru-global.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css">
-<link href='http://fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+<link href='css/bootstrap.css' rel='stylesheet' type='text/css'>
+<link href='css/landingpage.css' rel='stylesheet' type='text/css'>
+
+
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Featured Courses | Sign up, Sign in </title>
+<meta name="version" content='${gooru.release.version}'>
+<title>Gooru | Sign up, Sign in </title>
 <script type="text/javascript" src='newgooru/newgooru.nocache.js'></script>
 <script type="text/javascript"
 	src="scripts/tinymce/tinymce/jscripts/tiny_mce/plugins/asciimath/js/ASCIIMathMLwFallback.js"></script>
@@ -34,6 +40,19 @@
      ,i[r].l=1*new Date();a=s.createElement(o),
      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
      })(window,document,'script','//www.google-analytics.com/analytics.js','hewlettOERTracker');
+     
+     function hewlettTracking(a)
+     {
+    	 try
+    	 {
+    		hewlettOERTracker('create', 'UA-5033010-1', 'auto');
+    		hewlettOERTracker('send', 'pageview', a);
+    	 }
+    	 catch(e)
+    	 {
+    		 
+    	 }
+     }
      
 </script>
 <!-- UserVoice JavaScript SDK (only needed once on a page) -->

@@ -50,6 +50,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -72,6 +73,7 @@ import com.google.gwt.user.client.ui.FormSubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormSubmitEvent;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -116,12 +118,12 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 	Label descCharcterLimit;
 	@UiField
 	CheckBox rightsChkBox;
-	@UiField Label resourceCategoryLabel,andText,additionalText,agreeText;
+	@UiField Label resourceCategoryLabel;
 	@UiField HTMLPanel categorypanel,texts,image,resourceTypePanel,panelAction,fileTitleText,
 	descriptionText,categoryLabel,thumbnailImageText;
-	@UiField Anchor copyRightAnr,rollBackToPaperClip;
-	@UiField Anchor termsAndPolicyAnr,privacyAnr;
-	@UiField Anchor commuGuideLinesAnr;
+	@UiField Anchor rollBackToPaperClip;
+		
+	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr;
 	private CopyRightPolicyVc copyRightPolicy;
 	private TermsAndPolicyVc termsAndPolicyVc;
 	private TermsOfUse termsOfUse;
@@ -242,7 +244,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 		agreeText.getElement().setId("lblAgreeText");
 		agreeText.getElement().setAttribute("alt", i18n.GL0870());
 		agreeText.getElement().setAttribute("title", i18n.GL0870());
-		commuGuideLinesAnr.setText(i18n.GL0871());
+		commuGuideLinesAnr.setText(i18n.GL0871()+i18n.GL_GRR_COMMA());
 		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
 		commuGuideLinesAnr.getElement().setAttribute("alt", i18n.GL0871());
 		commuGuideLinesAnr.getElement().setAttribute("title", i18n.GL0871());
@@ -254,7 +256,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 		privacyAnr.getElement().setId("lnkPrivacyAnr");
 		privacyAnr.getElement().setAttribute("alt", i18n.GL0873());
 		privacyAnr.getElement().setAttribute("title", i18n.GL0873());
-		andText.setText(" "+i18n.GL_GRR_AND()+" ");
+		andText.setText(i18n.GL_GRR_AND());
 		andText.getElement().setId("lblAndText");
 		andText.getElement().setAttribute("alt", i18n.GL_GRR_AND());
 		andText.getElement().setAttribute("title", i18n.GL_GRR_AND());
@@ -430,7 +432,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 	public void cancelPopUp(ClickEvent clickEvent) {
 		AppClientFactory.fireEvent(new GetEditPageHeightEvent(this, true));
 
-		Window.enableScrolling(true);
+//		Window.enableScrolling(true);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 
 		hide();
@@ -523,8 +525,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 		}
 
 		setThumbnailImage.setVisible(true);
-		String category = collectionItemDo.getResource().getCategory();
-		
+		String category = collectionItemDo.getResource().getResourceFormat()!=null?collectionItemDo.getResource().getResourceFormat().getValue():"";
+		category=category!=null?category:"";
 		/* if (category.equalsIgnoreCase(i18n.GL0918)) {
 			resourceCategoryLabel.setText(i18n.GL0918 );
 			categorypanel.setStyleName(video.getStyleName());
@@ -576,14 +578,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 	}
 
 	public void setImage(String url, String category){
-		if(category.contains("lesson")||category.contains("textbook")||category.contains("handout"))
-		{
-			category=category.replaceAll("lesson", "text").replaceAll("textbook", "text").replaceAll("handout", "text");
-		}
-		if(category.contains("slide")||category.contains("Slide"))
-		{
-			category=category.replaceAll("slide","image");
-		}
+//		if(category.contains("lesson")||category.contains("textbook")||category.contains("handout"))
+//		{
+//			category=category.replaceAll("lesson", "text").replaceAll("textbook", "text").replaceAll("handout", "text");
+//		}
+//		if(category.contains("slide")||category.contains("Slide"))
+//		{
+//			category=category.replaceAll("slide","image");
+//		}
 		if (thumbnailUrlStr.endsWith("null")) {
 			if (url.indexOf("youtube") >0){
 				String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(url);
@@ -597,6 +599,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 	public void updateUi() {
 		setThumbnailImage.setVisible(true);
 
+	}
+	
+	@UiHandler("setThumbnailImage")
+	public void onImageError(ErrorEvent errorEvent){
+		String category = collectionItemDo.getResource().getResourceFormat()!=null?collectionItemDo.getResource().getResourceFormat().getValue():"";
+		if(category!=null&&!category.equals("")){
+			thumbnailUrlStr = DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG;
+		}
 	}
 	
 	private class ChangeFileBtnClick implements ClickHandler{

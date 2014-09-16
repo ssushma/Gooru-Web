@@ -412,7 +412,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	}
 
 	@ProxyCodeSplit
-	@NameToken(PlaceTokens.PREVIEW_PLAY)
+	@NameToken("sjkldfkal")
 	public interface IsPreviewPlayerProxy extends ProxyPlace<PreviewPlayerPresenter> {
 	}
 
@@ -1004,7 +1004,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	}
 	
 	public void setNavigationResourcesView(String collectionId,String resourceId,boolean isCollectionHome){		
-		collectionPlayerTocPresenter.setNavigationResources(collectionDo);
+		collectionPlayerTocPresenter.setNavigationResources(collectionDo,isCollectionHome);
 		collectionPlayerTocPresenter.setResourceActive(collectionId, resourceId, isCollectionHome);
 		setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, collectionPlayerTocPresenter,false);
 		new CustomAnimation(getView().getNavigationContainer()).run(400);

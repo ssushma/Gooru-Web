@@ -29,13 +29,17 @@ package org.ednovo.gooru.client.mvp.search.resource;
 
 import java.util.List;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchView;
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Widget;
@@ -55,19 +59,37 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 
 	@Override
 	public IsDraggable renderSearchResult(final ResourceSearchResultDo searchResultDo) {
-		ResourceSearchResultVc resourceSearchResultVc=new ResourceSearchResultVc(searchResultDo, dragController);
-		if(searchResultDo.getRatings().getCount()>0){
-			resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().getElement().removeAttribute("class");
+		final ResourceSearchResultVc resourceSearchResultVc=new ResourceSearchResultVc(searchResultDo, dragController);
+//		if(searchResultDo.getRatings().getReviewCount()>0){
+			resourceSearchResultVc.setUpdateReviewCount(searchResultDo.getRatings().getReviewCount());
+			/*resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().getElement().removeAttribute("class");
 			resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
+			resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().getElement().getStyle().setPadding(4,Unit.PX)*/;
 			resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					getUiHandlers().showRatingAndReviewPopup(searchResultDo);
+					if(resourceSearchResultVc.getUpdateReviewCount()>0){
+						getUiHandlers().showRatingAndReviewPopup(searchResultDo);
+					}
 				}
 			});
-		}
+//		}
+		
+		
+		resourceSearchResultVc.getAddButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(AppClientFactory.isAnonymous()){
+					LoginPopupUc loginPopupUc=new LoginPopupUc();
+				}else{
+				getUiHandlers().showAddResourceToShelfView(resourceSearchResultVc.getAddResourceContainerPanel(),searchResultDo,"resource");
+				getUiHandlers().showAndHideDisclosurePanelOnCLick(resourceSearchResultVc.getDisclosurePanelClose());
+				}
+				}
+		});
 		return resourceSearchResultVc;
 	}
+	
 	
 /*	private class ShowRatingPopupEvent implements ClickHandler{
 		@Override
@@ -102,6 +124,15 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 				}
 			}
 		}
+	}
+
+	@Override
+	public void setAddResourceContainerPresenter(AddResourceContainerPresenter addResourceContainerPresenter) {
+//		System.out.println("inside::::"+resourceSearchResultVc);
+//		if(resourceSearchResultVc!=null){
+//			resourceSearchResultVc.getAddResourceContainerPanel().clear();
+//			resourceSearchResultVc.getAddResourceContainerPanel().setWidget(addResourceContainerPresenter.getWidget());
+//		}
 	}
 
 }

@@ -22,27 +22,35 @@
 		   <g:HTMLPanel ui:field="courseBanner">
 		       <g:HTMLPanel ui:field="partnerLogo"/>
 		       <g:Image ui:field="courseImage"/>
-		       <g:Label styleName="{libraryStyle.courseTitle}" ui:field="courseTitle"/>
+		       
+		       <g:HTMLPanel ui:field="districtSpecificPartnersMain">
+  <g:HTMLPanel ui:field="districtSpecificPartnersInnerMain">
+  <g:HTMLPanel ui:field="districtSpecificPartnerLogo"></g:HTMLPanel>
+  <g:HTMLPanel ui:field="districtLibraryHeaderText"></g:HTMLPanel>
+<g:HTMLPanel ui:field="districtLibrarySubHeaderText"></g:HTMLPanel></g:HTMLPanel>
+</g:HTMLPanel>
+
+		       <g:HTML styleName="{libraryStyle.courseTitle}" ui:field="courseTitle"/>
 		   </g:HTMLPanel>
-		   
-		   <g:HTMLPanel ui:field="featuredEducator">
-		    	<g:Image styleName="{libraryStyle.educatorPhoto} {libraryStyle.courseContributorAlign}" ui:field="educatorPhoto"></g:Image>
-				<g:Label ui:field="featuredContributor" styleName="{libraryStyle.courseContributorAlign}"></g:Label>
-				<g:Anchor ui:field="featuredContributorsLink" styleName="{libraryStyle.courseContributorAlign}"></g:Anchor>
-	
-		<!--  <g:Button styleName="secondary" ui:field="viewStandardButton"></g:Button> -->
-		   </g:HTMLPanel>
-		   
-		   <g:HTMLPanel ui:field="leftNav"/>
-		   
-		   <g:HTMLPanel ui:field="scrollPanel" styleName="{libraryStyle.scrollPanel}">
-		       <g:HTMLPanel ui:field="libraryMetaDataContainer"/>
-		       <g:HTMLPanel ui:field="loadingIconPanel" styleName="loadingImage {libraryStyle.loadingIconTopic}"></g:HTMLPanel>
-		       <g:HTMLPanel ui:field="contentScroll"/>
-		   </g:HTMLPanel>
+		   <g:HTMLPanel ui:field="panelBodyContainer" styleName="{libraryStyle.bodyContainer}">
+			   <g:HTMLPanel ui:field="featuredEducator">
+			    	<g:Image styleName="{libraryStyle.educatorPhoto} {libraryStyle.courseContributorAlign}" ui:field="educatorPhoto"></g:Image>
+					<g:Label ui:field="featuredContributor" styleName="{libraryStyle.courseContributorAlign}"></g:Label>
+					<g:Anchor ui:field="featuredContributorsLink" styleName="{libraryStyle.courseContributorAlign}"></g:Anchor>
 		
+			<!--  <g:Button styleName="secondary" ui:field="viewStandardButton"></g:Button> -->
+			   </g:HTMLPanel>
+			   
+			   <g:HTMLPanel ui:field="leftNav"/>
+			   
+			   <g:HTMLPanel ui:field="scrollPanel" styleName="{libraryStyle.scrollPanel}">
+			       <g:HTMLPanel ui:field="libraryMetaDataContainer"/>
+			       <g:HTMLPanel ui:field="loadingIconPanel" styleName="loadingImage {libraryStyle.loadingIconTopic}"></g:HTMLPanel>
+			       <g:Label ui:field="comingSoonLbl" styleName="{libraryStyle.comingSoonText}" visible="false">Coming Soon</g:Label>
+			       <g:HTMLPanel ui:field="contentScroll"/>
+			   </g:HTMLPanel>
+		   </g:HTMLPanel>
 		</g:HTMLPanel>
-		
 		<g:HTMLPanel ui:field="contributorsContainer"/>
 		<sg:FooterUc />
 	</g:HTMLPanel>

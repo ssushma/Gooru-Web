@@ -196,15 +196,13 @@
 
 .noAssignmentMsg{
 	font-family:Arial, Helvetica, sans-serif;
-	font-size:12px;
+	font-size:24px;
 	line-height:120%;
-	font-style:italic;
-	color:rgb(153,153,153);
+	color:#515151;
 	text-align:center;
-	text-align: center;
 	/* width: 350px; */
 	top: 100px;
-	position: relative;
+	/* position: relative; */
 	margin: 0 auto;
 }
 .loadingpanelImage{
@@ -594,6 +592,11 @@
 	margin-left:0px !imporant;
 }
 
+.addAssignmentStyle{
+	margin-top: 20px;
+	margin-left:0px !imporant;
+}
+
 .addAssignment:hover{
 	background: url("images/Classpage/plus_blue.png") 11px 11px no-repeat, #eee;
 	cursor: pointer;
@@ -701,8 +704,9 @@ margin-left:-1px;
 .teachTab {
        text-align: center;
        padding-bottom: 20px;
-       margin: 20px 0px;
-       margin-left:122px;
+       margin: 20px auto;
+       width: 62%;
+       /* margin-left:122px; */
 }
 .teachTab .select {
        color: #fff;
@@ -1013,7 +1017,7 @@ margin-bottom: -10px;
 	border: 1px solid #ddd;
 	cursor: pointer;
 	display: block;
-	width: 129px;
+	width: 158px;
 	height: auto;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif, Calibri;
@@ -1063,7 +1067,7 @@ margin-bottom: -10px;
 	position: relative;
 	background-color: #fff;
 	z-index: 1;
-	width: 91%;
+	width: 100%;
 	padding: 5px 8px 5px 7px;
 }
 .dropdownTextLabel:hover{
@@ -1133,26 +1137,31 @@ margin-bottom: -10px;
 	text-align : center;
 	border-top: 1px solid #CCC;	
 }
+
+.btnContainerStyle{
+	text-align : center;
+	/* border-top: 1px solid #CCC;	 */
+	margin-top: 38px;
+}
 .btnContainerClasswithBG{
 	background: white;
-border-radius: 4px;
--moz-border-radius: 4px;
-height: 100px;
-margin-bottom: -24px;
-
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	height: 100px;
+	margin-bottom: -24px;
 }
 
 .section2Div{
-		background: white;
-border-radius: 4px;
+	background: white;
+	border-radius: 4px;
 	-moz-border-radius: 4px;
 
 }
 .section3Div{
-		background: white;
-border-radius: 4px;
+	background: white;
+	border-radius: 4px;
 	-moz-border-radius: 4px;
-margin-top:20px !important;
+	margin-top:20px !important;
 }
 
 
@@ -1174,7 +1183,9 @@ margin-top:20px !important;
 }
 .collectionView {
 	display: block;
-	min-height: 260px;
+	min-height: 168px;
+	padding: 23px;
+    box-sizing: border-box;
 }
 .circleBlock {
 	display: inline-block;
@@ -1196,30 +1207,48 @@ margin-top:20px !important;
 	line-height: 40px;
 	text-align: center;
 }
+.desHtml{
+	width: 252px;
+	float: left;
+}
+.desHeader{
+	font-size: 18px;
+	float: left;
+}
 .desc {
 	display: inline-block;
 	color: #515151;
 	vertical-align: top;
-	font-size: 18px;
-	padding-left: 10px;
+	font-size: 14px;
+	text-align: left;
+	/* padding-left: 10px; */
 	height: 40px;
-	line-height: 40px;
+	/* line-height: 40px; */
 	margin-top: 14px;
 }
 .collectionView, .img {
-	width: 100%;
+	width: 60%;
 	margin: 0 auto;
+}
+.imgStyle{
+	width: 50%;
+	float: left;
+}
+.imgStyleDiv{
+	max-width: 100%;
 }
 .btn {
 	margin-left: 10px;
 }
-
+.assignText{
+	color: #1076bb;
+}
 
 .containerProgressWidth{
 	width:1000px;
 }
 .assignementOrderHeader{
-	margin: 0 auto; 
+	margin: 20px auto; 
 	text-align: center; 
 	font-size: 14px; 
 	font-weight: bold;
@@ -1234,4 +1263,18 @@ margin-top:20px !important;
 	font-style: italic;
 	font-size: 14px;
 	margin-top: 10px;
+}
+
+.studentStyle{
+	float: right;
+    position: relative;
+	width: 176px;
+	top: 32%;
+}
+
+.techerStyle{
+	float: left;
+    position: relative;
+	width: 218px;
+	top: 29%;
 }

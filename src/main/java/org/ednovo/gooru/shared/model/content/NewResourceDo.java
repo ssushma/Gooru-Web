@@ -49,7 +49,7 @@ public class NewResourceDo extends ResourceDo {
 	private ResourceFormatDo resourceFormat;
 	private ArrayList<checkboxSelectedDo> educationalUse;
 	private ArrayList<checkboxSelectedDo> momentsOfLearning;
-	
+	private ArrayList<String> host;
 	private String thumbnail;
 	
 	/** 
@@ -141,5 +141,15 @@ public class NewResourceDo extends ResourceDo {
 	public void setMomentsOfLearning(ArrayList<checkboxSelectedDo> momentsOfLearning) {
 		this.momentsOfLearning = momentsOfLearning;
 	}
+
+	public ArrayList<String> getHost() {
+		return host;
+	}
+
+	public void setHost(ArrayList<String> host) {
+		this.host = host;
+	}
+
+	
 
 }

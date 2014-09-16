@@ -6,7 +6,7 @@
 }
 .popupInner {
 	border: 1px solid #DDD;
-	height:580px;
+	height:583px;
 }
 .popupHeader {
 	padding: 10px 15px;
@@ -298,4 +298,16 @@ width: 50%;
 }
 .collectionStandardsMargin {
 	margin-top: 10px;
+}
+.tagsStyleSearch{
+	 position:absolute;
+	 left:0px; 
+	 top:0px;
+}
+.tagsStylePlayer{
+	position:absolute;
+	left:0px; 
+	top:0px;
+	background-color: black;
+	opacity: 0.3; 
 }

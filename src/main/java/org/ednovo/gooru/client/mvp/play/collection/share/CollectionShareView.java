@@ -247,7 +247,7 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 
 			@Override
 			public void onTwitter() {
-				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL1439()+collectionDo.getTitle().replaceAll("\\+", "%2B") +": " + shareBitlyUrl, "_blank", "width=600,height=300");
+				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL1439()+" "+collectionDo.getTitle().replaceAll("\\+", "%2B") +": " + shareBitlyUrl, "_blank", "width=600,height=300");
 			}
 			
 			@Override
@@ -257,7 +257,7 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 
 			@Override
 			public void onEmail() {
-				String emailSubject=i18n.GL1439()+collectionDo.getTitle();
+				String emailSubject=i18n.GL1439()+" "+collectionDo.getTitle();
 				String emailDescription= collectionDo.getTitle()+"<div><br/></div><div>"+shareUrl+"</div><div><br/></div><div>"+i18n.GL1440()+" "+AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()+" "+i18n.GL1441()+"</div>";
 				 emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){
 					@Override
@@ -476,7 +476,7 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 			@Override
 			public void onTwitter() {
 				getUiHandlers().triggerShareDatalogEvent(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getCollectionItemId(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.TWITTER,false);
-				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL1439()+removeHtmlTags(collectionItemDo.getResource().getTitle()).replaceAll("\\+", "%2B") +": " + SocialShareView.getEncodedUrl(resourceShareUrl), "_blank", "width=600,height=300");
+				Window.open("http://twitter.com/intent/tweet?text=" + i18n.GL1439()+" "+removeHtmlTags(collectionItemDo.getResource().getTitle()).replaceAll("\\+", "%2B") +": " + SocialShareView.getEncodedUrl(resourceShareUrl), "_blank", "width=600,height=300");
 			}
 			@Override
 			public void onFacebook() {

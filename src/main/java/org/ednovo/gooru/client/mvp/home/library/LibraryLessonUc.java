@@ -76,6 +76,10 @@ public class LibraryLessonUc extends Composite{
 		AppClientFactory.getEventBus().addHandler(SetConceptTitleStyleEvent.TYPE, setConceptTitleStyleHandler);
 		this.topicId = topicId;
 		if(lessonDo.getConcept()!=null&&lessonDo.getConcept().size()>0) {
+			String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
+			if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
+			setLessonData(lessonDo,null,lessonDo.getCollection(),null,isLessonHighlighted,lessonNumber);
+			}
 			setLessonData(lessonDo,null,null,lessonDo.getConcept(),isLessonHighlighted,lessonNumber);
 		} else {
 			setLessonData(lessonDo,null,lessonDo.getCollection(),null,isLessonHighlighted,lessonNumber);
@@ -126,7 +130,6 @@ public class LibraryLessonUc extends Composite{
 			lessonTitle.setStyleName(libraryStyleUc.lessonTitle());
 			
 			if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
-				
 			} else {
 				lessonList.add(lessonTitle);
 			}
@@ -140,7 +143,7 @@ public class LibraryLessonUc extends Composite{
 			lessonTitle.setStyleName(libraryStyleUc.lessonTitle());
 
 			if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
-				
+
 			} else {
 				lessonList.add(lessonTitle);
 			}
@@ -151,7 +154,11 @@ public class LibraryLessonUc extends Composite{
 			for(int i = 0; i<conceptQuizList.size(); i++) {
 				String conceptTitle = "";
 				final ConceptDo conceptDo = conceptQuizList.get(i);
-				conceptTitle = conceptDo.getLabel();
+				if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
+					conceptTitle = conceptDo.getCode();
+				}else{
+					conceptTitle = conceptDo.getLabel();
+				}
 				Label conceptTitleLbl = new Label(conceptTitle);
 				conceptTitleLbl.addStyleName(libraryStyleUc.conceptTitle());
 				lessonList.add(conceptTitleLbl);
@@ -172,6 +179,8 @@ public class LibraryLessonUc extends Composite{
 				});
 			}
 		} else {
+			
+				
 			for(int i = 0; i<conceptDoList.size(); i++) {
 				String conceptTitle = "";
 				final ConceptDo conceptDo = conceptDoList.get(i);

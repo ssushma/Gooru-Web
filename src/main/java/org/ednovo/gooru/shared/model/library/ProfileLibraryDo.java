@@ -69,6 +69,7 @@ public class ProfileLibraryDo implements Serializable{
 	private String ideas;
 	private String performanceTasks;
 	private String questions;
+	private ArrayList<String> publisher;
 	
 	public ProfileLibraryDo(){}
 
@@ -386,6 +387,14 @@ public class ProfileLibraryDo implements Serializable{
 	 */
 	public void setQuestions(String questions) {
 		this.questions = questions;
+	}
+
+	public ArrayList<String> getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(ArrayList<String> publisher) {
+		this.publisher = publisher;
 	}
 	
 	

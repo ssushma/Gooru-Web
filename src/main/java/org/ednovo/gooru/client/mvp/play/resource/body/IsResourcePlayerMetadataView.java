@@ -24,12 +24,18 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
+import java.util.List;
+import java.util.Map;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
+import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<ResourcePlayerMetadataUiHandlers>{
@@ -37,7 +43,7 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public void showResourceWidget(CollectionItemDo collectionItemDo);
 	public void showResourceWidget(PlaceRequest previousResourceRequest);
 	public FlowPanel getResourceWidgetContainer();
-	
+	public HTMLPanel getCollectionContainer();
 	public void setReaction(ReactionDo reactionDo, String gooruReactionId); 
 	
 	public void setDefaultReaction();
@@ -53,4 +59,9 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public void childLoggedIn(boolean isChild);
 	public void deleteRatingsValue(); 
 	public void setGoogleDriveFileStatusCode(Integer statusCode);
+	public void displayResourceTags(List<ResourceTagsDo> resourceTagsList);
+	public void checkYoutubeAccessControls(Map<String, String> result);
+	public Button getNarrationButton();
+	public void clearMarginTop();
+	public void setMarginTop();
 }

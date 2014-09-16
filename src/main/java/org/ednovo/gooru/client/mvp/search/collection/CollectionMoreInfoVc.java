@@ -34,7 +34,10 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
 import org.ednovo.gooru.client.mvp.search.SearchMoreInfoVc;
 import org.ednovo.gooru.client.mvp.search.SimpleResourceVc;
+import org.ednovo.gooru.client.mvp.search.event.UpdateViewCountInSearchEvent;
+import org.ednovo.gooru.client.mvp.search.event.UpdateViewCountInSearchHandler;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -55,6 +58,13 @@ public class CollectionMoreInfoVc extends SearchMoreInfoVc<CollectionSearchResul
 	private static final String RESOURCES_IN_THIS_COLLECTION=i18n.GL1094();
 
 	private String collectionId;
+	
+	UpdateViewCountInSearchHandler updateResourcesViewCount=new UpdateViewCountInSearchHandler() {
+		@Override
+		public void updateCollectionResourceViewCountInCollectionSerach(CollectionDo collectionDo) {
+			updateCollectionResourceViewCountInCollection(collectionDo);
+		}
+	};
 	/**
 	 * Class constructor
 	 * @param searchDragController instance of {@link ResourceDragController}
@@ -64,12 +74,15 @@ public class CollectionMoreInfoVc extends SearchMoreInfoVc<CollectionSearchResul
 		this.collectionId=collectionId;
 /*		getRightsField().setVisible(false);
 		getLikesField().setVisible(false);*/
+		AppClientFactory.getEventBus().addHandler(UpdateViewCountInSearchEvent.TYPE,updateResourcesViewCount);
 	}
 
 	@Override
 	public void renderUsedInResource(CollectionItemSearchResultDo usedInResource) {
 		usedInResource.setCollectionId(collectionId);
-			getUsedInResourcesPanel().addDraggable(new SimpleResourceVc(usedInResource, getUsedInResourcesPanel().getWidgetCount() + 1));
+		SimpleResourceVc simpleReosurceView=new SimpleResourceVc(usedInResource, getUsedInResourcesPanel().getWidgetCount() + 1);
+		getSimpleResourceMap().put(usedInResource.getCollectionItemId(), simpleReosurceView);
+		getUsedInResourcesPanel().addDraggable(simpleReosurceView);
 	}
 
 	@Override
@@ -87,8 +100,9 @@ public class CollectionMoreInfoVc extends SearchMoreInfoVc<CollectionSearchResul
 		for (int j=0; j<getUsedInSearchDo().getCollectionItemsCount()-1; j++){
 			
 			String mediaType = getUsedInSearchDo().getSearchResults().get(j).getMediaType();
-			boolean notFriendly = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? true : false : false;
-			if (notFriendly){
+			boolean notFriendly = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
+			//boolean notFriendly = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? false : true : true;
+			if (!notFriendly){
 				notMobileFriendly++;
 			}
 		}
@@ -107,6 +121,16 @@ public class CollectionMoreInfoVc extends SearchMoreInfoVc<CollectionSearchResul
 	public void requestUsedInResources() {
 		//AppClientFactory.getInjector().getSearchService().getCollectionResources(getUsedInSearchDo(), getUsedInResourcesAsyncCallback());
 		AppClientFactory.getInjector().getSearchService().getCollectionItems(collectionId, getUsedInResourcesAsyncCallback());
+	}
+
+
+	public void updateCollectionResourceViewCountInCollection(CollectionDo collectionDo){
+		if(collectionDo!=null&&collectionId!=null&&collectionDo.getGooruOid().equals(collectionId)){
+			for(int i=0;i<collectionDo.getCollectionItems().size();i++){
+				SimpleResourceVc simpleResourceVc=getSimpleResourceMap().get(collectionDo.getCollectionItems().get(i).getCollectionItemId());
+				simpleResourceVc.updateResourceViewCount(collectionDo.getCollectionItems().get(i).getViews());
+			}
+		}
 	}
 
 }

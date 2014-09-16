@@ -27,20 +27,24 @@ package org.ednovo.gooru.client.mvp.search;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
+import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -61,20 +65,27 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	public interface Style extends CssResource {
 		String bodyHeight();
 		String panelHeight();
+		String resourceBtnActive();
+		String collectionBtnActive();
+		String secondaryResourceSearchBtn();
+		String secondaryCollectionSearchBtn();
 	}
 
 	/*@UiField
 	SearchBarVc searchBarVc;*/
-	/*@UiField
-	FlowPanel flowpanel;*/
-	/*@UiField
-	HTMLPanel contentpanel;*/
+	@UiField
+	FlowPanel flowpanel;
+	@UiField
+	HTMLPanel contentpanel;
 	@UiField
 	SimplePanel searchWrapperSimPanel, shelfTabSimPanel;
 	@UiField FlowPanel panelSearchPage;
 
 	/*@UiField
 	Anchor resourceLinkLbl, collectionLinkLbl;*/
+	
+	@UiField
+	Button resourceSearchBtn, collectionSearchBtn;
 	
 	@UiField
     Label lodingImage;
@@ -90,18 +101,18 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	 */
 	public SearchRootView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		/*resourceLinkLbl.getElement().setId("lblResourceLink");
-		collectionLinkLbl.getElement().setId("lblCollectionLink");
+		resourceSearchBtn.getElement().setId("btnResource");
+		collectionSearchBtn.getElement().setId("btnCollection");
 		
-		resourceLinkLbl.setText(MessageProperties.GL0174);
-		collectionLinkLbl.setText(MessageProperties.GL0175);*/
+		resourceSearchBtn.setText(i18n.GL0174());
+		collectionSearchBtn.setText(i18n.GL0175());
 		queriedTextHtml.getElement().setId("htmlQueriedTextHtml");
 		searchWrapperSimPanel.getElement().setId("spnlSearchWrapperSimPanel");
 		shelfTabSimPanel.getElement().setId("spnlShelfTabSimPanel");
 		lodingImage.getElement().setId("lblLodingImage");
 
 		int windowHeight=Window.getClientHeight();
-		panelSearchPage.setStyleName(style.panelHeight());
+		panelSearchPage.setStyleName("panelHeight");
 		panelSearchPage.getElement().getStyle().setHeight(windowHeight - 50, Unit.PX);
 	}
 
@@ -127,8 +138,8 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	 * Set resource search page view
 	 * @param clickEvent instance of {@link ClickEvent}
 	 */
-	/*@UiHandler("resourceLinkLbl")
-	public void onResourceLinkLblClicked(ClickEvent clickEvent) {
+	@UiHandler("resourceSearchBtn")
+	public void onResourceSearchButtonClicked(ClickEvent clickEvent) {
 		if(getSearchText()!=null || getSearchText().length()>0){
 			MixpanelUtil.Show_Resource_Search_Results();
 			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.RESOURCE_SEARCH,getSearchText()));
@@ -140,12 +151,12 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		}
 	}
 
-	*//**
+	/**
 	 * Set collection search page view 
 	 * @param clickEvent instance of {@link ClickEvent}
-	 *//*
-	@UiHandler("collectionLinkLbl")
-	public void onCollectionLinkLblClicked(ClickEvent clickEvent) {
+	 */
+	@UiHandler("collectionSearchBtn")
+	public void onCollectionSearchBtnClicked(ClickEvent clickEvent) {
 		if(getSearchText()!=null || getSearchText().length()>0){
 			MixpanelUtil.Show_Collection_Search_Results();
 			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.COLLECTION_SEARCH,getSearchText()));
@@ -154,7 +165,7 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 			MixpanelUtil.Show_Collection_Search_Results();
 			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.COLLECTION_SEARCH,AppClientFactory.getPlaceManager().getRequestParameter("query")));
 		}
-	}*/
+	}
 
 	@Override
 	public void reset() {
@@ -172,13 +183,17 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 //				searchBarVc.setInitialSearchQuery();
 		
 		
-		/*if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
-			resourceLinkLbl.addStyleName(style.active());
-			collectionLinkLbl.removeStyleName(style.active());
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
+			resourceSearchBtn.addStyleName(style.resourceBtnActive());
+			collectionSearchBtn.removeStyleName(style.collectionBtnActive());
+			resourceSearchBtn.removeStyleName(style.secondaryResourceSearchBtn()); 
+			collectionSearchBtn.addStyleName(style.secondaryCollectionSearchBtn());
 		} else {
-			collectionLinkLbl.addStyleName(style.active());
-			resourceLinkLbl.removeStyleName(style.active());
-		}*/
+			collectionSearchBtn.addStyleName(style.collectionBtnActive());
+			resourceSearchBtn.removeStyleName(style.resourceBtnActive());
+			collectionSearchBtn.removeStyleName(style.secondaryCollectionSearchBtn());
+			resourceSearchBtn.addStyleName(style.secondaryResourceSearchBtn()); 
+		}
 	}
 
 	@Override

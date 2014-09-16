@@ -25,7 +25,7 @@
 package org.ednovo.gooru.client;
 
 public interface PlaceTokens {
-	String HOME = "discover";
+	String HOME = "home";
 	String RESOURCE_SEARCH = "resource-search";
 	String COLLECTION_SEARCH = "collection-search";
 	String ERROR = "error";
@@ -58,8 +58,21 @@ public interface PlaceTokens {
 	String NGC = "NGC";
 	String WSPWH = "WSPWH";
 	String PSDPAL = "PSD";
-	String FINCAPINC = "CFCI";
+	String FINCAPINC = "NextGenFinance";
 	String SAUSD_LIBRARY = "sausd";	
 	String DRIVE="drive";
+	
+	String COMMUNITY = "community";
+	String YOUTHVOICES = "youthvoices";
+	String GEOEDUCATION = "GeoEducators";
+	String LIFEBOARD = "lifeboard";
+	String SUSD = "susd";
+	String LPS = "lpslibrary";
+	String MURRIETA = "murrieta";
+	String VALVERDE = "valverde";
+	String DISCOVER = "community";
+	String CORE_LIBRARY = "CoreLibrary";
+	String ESYP = "ESYP";
+	String CCST_Cal_TAC = "CCSTCalTAC";
 
 }

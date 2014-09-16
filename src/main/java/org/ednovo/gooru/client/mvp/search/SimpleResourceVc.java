@@ -90,7 +90,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 	@UiField
 	FlowPanel resourceTitlePanel,internalPanel1,metaDataFloPanel,ratingWidgetPanel;
 	
-	@UiField Image imgNotFriendly;
+	@UiField Image imgNotFriendly, imgOER;
 
 	ToolTip toolTip = null;
 	
@@ -99,6 +99,8 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 	private CollectionItemSearchResultDo collectionItemSearchResultDo;
 	
 	private static final String VIEWS_PREFIX_NAME = "Views";  
+	
+	private Label viewCountLabel=null;
 
 	/**
 	 * Class constructor, calls resource search result setData method
@@ -112,10 +114,13 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 		positionLbl.getElement().setAttribute("alt",position + "");
 		positionLbl.getElement().setAttribute("title",position + "");
 		
-		imgNotFriendly.setTitle(i18n.GL0737());
-		imgNotFriendly.getElement().setId("imgNotFriendly");
-		imgNotFriendly.setAltText(i18n.GL0737());
-		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
+			
+		
+		imgOER.setUrl("images/oer_icon.png");
+		imgOER.getElement().setAttribute("id", i18n.GL1834());
+		imgOER.getElement().setAttribute("alt", i18n.GL1834());
+		imgOER.getElement().setAttribute("title", i18n.GL1834());
+		
 		setData(resourceSearchResultDo);
 		
 		internalPanel1.getElement().setId("fpnlInternalPanel1");
@@ -156,13 +161,14 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 		});
 		
 		SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), 30);
-		SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + "", " " + VIEWS_PREFIX_NAME);  
+		viewCountLabel=SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + "", " " + VIEWS_PREFIX_NAME);  
 //		resourceImageUc.renderSearch(resourceSearchResultDo.getCategory(), resourceSearchResultDo.getUrl(), null, resourceSearchResultDo.getCollectionItemId(), PLAYER_NAME,resourceSearchResultDo.getResourceTitle(), false,collectionId);
 		
 		resourceImageUc.renderSearch(resourceSearchResultDo.getCategory(), resourceSearchResultDo.getUrl(), null, resourceSearchResultDo.getCollectionItemId(), resourceSearchResultDo.getResourceTitle(), false, resourceSearchResultDo.getNarration(),collectionItemSearchResultDo.getCollectionId());
 		String mediaType = resourceSearchResultDo.getMediaType();
 		
-		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? true : false : false;
+		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
+		//boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? false : true : true;
 		
 		if (resourceTitleLbl.getText().length() > 30){
 			resourceTitleLbl.getElement().getStyle().setWidth(210, Unit.PX);
@@ -176,8 +182,8 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				
-				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/MobileFriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL04431()+" "+"<img src='/images/mos/mobileunfriendly.png' style='margin-top:0px;width:20px;height:15px;'/>"+" "+i18n.GL_SPL_EXCLAMATION());
+				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 				toolTip.setPopupPosition(imgNotFriendly.getAbsoluteLeft()-(50+22), imgNotFriendly.getAbsoluteTop()+22);
@@ -197,14 +203,40 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 				  }
 			}
 		});
-		imgNotFriendly.setVisible(setVisibility);
+		//imgNotFriendly.setVisible(setVisibility);
+		if(setVisibility)
+		{
+			imgNotFriendly.getElement().setId("imgImgFriendly");
+			imgNotFriendly.setTitle(i18n.GL0737_1());
+			imgNotFriendly.setAltText(i18n.GL0737_1());
+			imgNotFriendly.setUrl("images/mos/MobileFriendly.png");
+		}else
+		{
+			imgNotFriendly.getElement().setId("imgImgNotFriendly");
+			imgNotFriendly.setTitle(i18n.GL0737());
+			imgNotFriendly.setAltText(i18n.GL0737());
+			imgNotFriendly.setUrl("images/mos/mobileunfriendly.png");
+		}
+		
+		boolean oerVisibility = resourceSearchResultDo.getLicense() !=null &&  resourceSearchResultDo.getLicense().getCode() !=null ? resourceSearchResultDo.getLicense().getCode().contains("CC") ? true : false : false;
+
+		imgOER.setVisible(oerVisibility);
+		
+		if (setVisibility || oerVisibility){
+			resourceTitleContainer.getElement().getStyle().setFloat(Float.LEFT);
+		}else{
+			resourceTitleContainer.getElement().getStyle().clearFloat();
+		}
+
+		
 		setAvgRatingWidget(resourceSearchResultDo);
 	}
 	private void setAvgRatingWidget(CollectionItemSearchResultDo resourceSearchResultDo) {
 		ratingWidgetView=new RatingWidgetView();
 		if(resourceSearchResultDo.getRatings()!=null){
-
+			ratingWidgetView.getRatingCountOpenBrace().setText(i18n. GL_SPL_OPEN_SMALL_BRACKET());
 			ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount()!=null?resourceSearchResultDo.getRatings().getCount().toString():"0");
+			ratingWidgetView.getRatingCountCloseBrace().setText(i18n. GL_SPL_CLOSE_SMALL_BRACKET());
 			ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage());
 		}
 		//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
@@ -225,6 +257,13 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 			ratingWidgetView.setAvgStarRating(collectionItemSearchResultDo.getRatings().getAverage());*/
 		}
 	};
+	
+	public void updateResourceViewCount(String viewCount){
+		if(viewCountLabel!=null){
+			System.out.println("viewCountLabel====>"+viewCountLabel.getText());
+			viewCountLabel.setText(viewCount+ " " + VIEWS_PREFIX_NAME);  
+		}
+	}
 
 	/**
 	 * 
@@ -252,10 +291,10 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 	public String getResourceLink(){
 		String collectionId=collectionItemSearchResultDo.getCollectionId();
 		if(collectionItemSearchResultDo.getNarration()!=null&&!collectionItemSearchResultDo.getNarration().trim().equals("")){
-			String resourceLink="#"+PlaceTokens.PREVIEW_PLAY+"&id="+collectionId+"&rid="+collectionItemSearchResultDo.getCollectionItemId()+"&tab=narration";
+			String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemSearchResultDo.getCollectionItemId()+"&tab=narration";
 			return resourceLink;
 		}else{
-			String resourceLink="#"+PlaceTokens.PREVIEW_PLAY+"&id="+collectionId+"&rid="+collectionItemSearchResultDo.getCollectionItemId();
+			String resourceLink="#"+PlaceTokens.COLLECTION_PLAY+"&id="+collectionId+"&rid="+collectionItemSearchResultDo.getCollectionItemId();
 			return resourceLink;
 		}
 	}

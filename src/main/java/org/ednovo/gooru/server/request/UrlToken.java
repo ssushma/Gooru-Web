@@ -474,6 +474,8 @@ public enum UrlToken {
 	
 	V2_GET_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}&offset={2}&limit={3}"),
 	
+	V2_GET_CHILD_FOLDER_LIST_PUBLIC("/v2/folder/{0}/item?sessionToken={1}&offset={2}&limit={3}&sharing=public"),
+	
 	V2_DELETE_COLLABORATORS("/v2/collaborator/content/{0}?sessionToken={1}&data={2}"),
 	
 	V2_LIST_CLASSPAGES_BY_USER_ID("/v2/classpage/collection/{0}?gooruUId={1}&sessionToken={2}"),
@@ -514,7 +516,7 @@ public enum UrlToken {
 	
 	V2_UPDATE_PARTY_CUSTOM_FIELD("/v2/party/{0}/custom-field?sessionToken={1}"),
 	
-	V2_PARTNER_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}&fetchChilds=true&&itemLimit={2}"),
+	V2_PARTNER_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}&fetchChilds=true&&itemLimit={2}&offset={3}"),
 	
 	V2_GET_PARTNERS("/v2/partner?sessionToken={0}"),
 	
@@ -566,7 +568,7 @@ public enum UrlToken {
 	
 	UPDATE_ASSIGNMENT_SEQUENCE("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"),
 	
-	GET_SAUSD_LIBRARY("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&sharing=public&itemLimit={2}&offset={3}&limit={4}&&topLevelCollectionType=folder"),
+	GET_SAUSD_LIBRARY("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&itemLimit={2}&offset={3}&limit={4}&&topLevelCollectionType=folder"),
 	
 	GET_STANDARD_LIBRARY_MENUS("/v2/library/{0}/item?sessionToken={1}"),
 	
@@ -588,11 +590,18 @@ public enum UrlToken {
 	
 	V2_GET_LIBRARY_LESSONS_OPTIMIZED("/v2/library/{0}/item/topic/{1}?sessionToken={2}&offset={3}&limit={4}"),
 	
-	REFRESH_TOKEN("/gooru-auth/google/new/token.g?refreshToken={0}");
-
-
+	V2_LevelWiseStandards("/v2/standard/{0}/{1}?sessionToken={2}"),
 	
+	REFRESH_TOKEN("/gooru-auth/google/new/token.g?refreshToken={0}"),
 	
+	ASSIGN_ITEM_TO_CLASS("/v2/class/{0}/assign/{1}?sessionToken={2}&direction={3}&planedEndDate={4}"),
+	
+	SUGGEST_STANDARD_BY_FILTER_Source_CodeId("/search/standard?sessionToken={0}&query={1}"),
+	
+	REFRESH_TOKEN_GDC("/gooru-auth/google/refresh-token.g?partyUid={0}"),
+	
+	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?partyUid={0}");
+
 	private String url;
 
 	private UrlToken(String url) {

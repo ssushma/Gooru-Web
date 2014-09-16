@@ -183,6 +183,8 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	public static final String AGGREGATOR="aggregator";
 	
 	public static final String PUBLISHER="publisher";
+	
+	public static final String HOST="host";
 
 	public static ResourceSearchResultDo deserializeRecord(JSONObject recordJsonObject) {
 		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
@@ -344,6 +346,16 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		}
 
 		try {
+			if(!recordJsonObject.isNull(HOST)){
+				resourceDo.setHost(JsonDeserializer.deserialize(recordJsonObject.getJSONArray(HOST).toString(), new TypeReference<List<String>>() {
+				}));
+			}
+			
+		} catch (JSONException e2) {
+			e2.printStackTrace();
+		}
+		
+		try {
 			resourceDo.setAggregator(JsonDeserializer.deserialize(recordJsonObject.getJSONArray(AGGREGATOR).toString(), new TypeReference<List<String>>() {
 			}));
 		} catch (JSONException e2) {
@@ -355,6 +367,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			try {
 				JSONObject createrObject = new JSONObject(getJsonString(recordJsonObject, CREATOR));
 				ownerDo.setUsername(getJsonString(createrObject,USERNAME));
+				resourceDo.setCreator(ownerDo);
 				resourceDo.setUser(ownerDo);
 			} catch (JSONException e1) {
 					e1.printStackTrace();

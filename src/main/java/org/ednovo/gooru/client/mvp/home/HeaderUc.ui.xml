@@ -114,6 +114,7 @@
 		{
 			float:right;
 			margin-right:-12px;
+			
 		}
 		.teachUserNameTextContainerAddAssignmentRight
 		{
@@ -365,7 +366,6 @@
 		}
 		.loginInfo{
 	         float: right;
-			 <!-- width: 235px; -->
 			width: 148px;
 		}
 		.classCodeTxtBox{
@@ -396,6 +396,10 @@
 	        margin: 0 auto;
             width: 479px;
 		}
+		.container{
+			height: 10px;
+			
+		}
 	   .resourceRightsInnerPopup {
 			clear: both;
 			color: #515151;
@@ -416,6 +420,7 @@
 	   .anchorText {
 			text-decoration: none !important;
 			cursor: pointer;
+			margin-left: 3px;
 		}
 		.profileImage{
 			border-radius: 50px;
@@ -424,6 +429,10 @@
 			height: 30px;
 			float: left;
 		}
+		.divAlignLeft{
+	float:left;
+
+	}
 	
 	</ui:style>
 	<g:HTMLPanel>
@@ -452,21 +461,31 @@
                <g:HTMLPanel styleName="{style.teachUserNameContainerHoverAddAssignment}" ui:field="mainDotsPanel">
               <g:HTMLPanel styleName="{style.teachUserNameTextContainerAddAssignmentRight}"  ui:field="mainInnerDotsPanel">
                    <g:HTMLPanel ui:field="dotsPanel" styleName="{style.teachUserNameTextContainerAddAssignment}">
+                     <uc:HTMLEventPanel ui:field="discoverLinkMain" styleName="{style.divAlignLeft}">
                       <uc:HTMLEventPanel styleName="{style.menu} {style.borderRightMenu}" ui:field="discoverLinkContainer">
                         	<g:Label ui:field="discoverLink" styleName="{res.css.discoverTextStyle}"/>
                         	<g:HTMLPanel styleName="{res.css.discoverDropDown}" ui:field="dropDownImg"/>
                         	<div style="border-right: 1px solid #616161; height: 34px;  /* margin-left: 69px; */ position: absolute; margin-left: 80px; margin-top: -9px;"></div>
+                        	
                       </uc:HTMLEventPanel>
-                      <uc:HTMLEventPanel styleName="{style.menu}" ui:field="organizeLinkContainer">
-                        	<g:Label ui:field="organizeLink" />
+                      <g:HTMLPanel ui:field="discovertooltippop"></g:HTMLPanel>
                       </uc:HTMLEventPanel>
-                       
+                       <uc:HTMLEventPanel ui:field="organizeLinkMain" styleName="{style.divAlignLeft}">
+                      <uc:HTMLEventPanel ui:field="organizeLinkContainer">
+                        	<g:Label ui:field="organizeLink" />                        	  
+                      </uc:HTMLEventPanel>
+                       		<g:HTMLPanel ui:field="myCollectionsPop"></g:HTMLPanel>
+                      </uc:HTMLEventPanel>
+                           <uc:HTMLEventPanel ui:field="teachLinkMain" styleName="{style.divAlignLeft}">
                       <uc:HTMLEventPanel styleName="{style.teachUserNameTextBlack}" ui:field="teachLinkContainer">
-                        	<g:Label ui:field="teachLink" />
+                        	<g:Label ui:field="teachLink" />                  
+                      </uc:HTMLEventPanel>
+                         	<g:HTMLPanel ui:field="myClassesPop"></g:HTMLPanel>
                       </uc:HTMLEventPanel>
                       <!-- This is hidden -->
                       <uc:HTMLEventPanel styleName="{style.teachUserNameTextBlack}" ui:field="studyLinkContainer">
                         	<g:Label ui:field="studyLink" />
+                        	
                       </uc:HTMLEventPanel>
 
                       <uc:HTMLEventPanel styleName="{style.menu} {style.borderRightMenu}" ui:field="LoginLinkContainer">
@@ -509,7 +528,7 @@
          <uc:HTMLEventPanel styleName="{style.resourceRightsPopupContainer}"  ui:field="acctActivationPl">
 					<g:HTMLPanel styleName="{style.resourceRightsInnerPopup}">
 						<!-- <g:HTMLPanel ui:field="htmlContentRightsDesc"></g:HTMLPanel> -->
-						<g:HTMLPanel>
+						<g:HTMLPanel styleName="{style.container}">
      						<g:Label ui:field="confirmEmailText"></g:Label>
      						<g:Anchor styleName="{style.anchorText}" ui:field="resendEmailAncr"/>
      						<g:Label ui:field="thanksLbl"></g:Label>

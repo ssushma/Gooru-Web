@@ -27,15 +27,20 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
+import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
 import org.ednovo.gooru.client.mvp.play.resource.question.QuestionResourcePresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
+import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarRatingsEvent;
 import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
@@ -45,13 +50,18 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
+import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -82,13 +92,14 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	public ResourcePlayerMetadataPresenter(EventBus eventBus, IsResourcePlayerMetadataView view,QuestionResourcePresenter questionResourcePresenter,CollectionEndPresenter collectionEndPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup) {
 		super(eventBus, view);
 		this.questionResourcePresenter=questionResourcePresenter;
-		this.collectionEndPresenter=collectionEndPresenter;
+		//this.collectionEndPresenter=collectionEndPresenter;
 		this.ratingAndReviewPopup = ratingAndReviewPopup;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(PostUserReviewEvent.TYPE, this);
 		addRegisteredHandler(OpenReviewPopUpEvent.TYPE, this);
 		addRegisteredHandler(UpdateUserStarReviewEvent.TYPE,this);
 		addRegisteredHandler(DeletePlayerStarReviewEvent.TYPE,this);
+		addRegisteredHandler(DeletePlayerStarRatingsEvent.TYPE,this);
 	}
 	
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
@@ -101,9 +112,9 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	
 	public void showResourceWidget(CollectionDo collectionDo,PlaceRequest previousResourceRequest){
 		getView().showResourceWidget(previousResourceRequest);
-		collectionEndPresenter.showCollectionEndPreview(collectionDo,collectionPlayerPresenter.getAttemptAnswersMap());
+		//collectionEndPresenter.showCollectionEndPreview(collectionDo,collectionPlayerPresenter.getAttemptAnswersMap());
 		getView().getResourceWidgetContainer().clear();
-		getView().getResourceWidgetContainer().add(collectionEndPresenter.getWidget());
+		//getView().getResourceWidgetContainer().add(collectionEndPresenter.getWidget());
 	}
 
 	@Override
@@ -116,12 +127,18 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		questionResourcePresenter.setPreviewPlayerPresenter(previewPlayerPresenter);
 		questionResourcePresenter.showQuestionPreview(collectionItemDo);
 		//removeUserAttemptResult();
+		int windowHeight=Window.getClientHeight();
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			questionResourcePresenter.getWidget().setHeight((windowHeight-116)+"px");
+		}else{
+			questionResourcePresenter.getWidget().setHeight((windowHeight-202)+"px");
+		}
 		getView().getResourceWidgetContainer().add(questionResourcePresenter.getWidget());
 	}
 	
 	public void setCollectionPlayerPresnter(CollectionPlayerPresenter collectionPlayerPresenter,boolean isCollectionPlayer){
 		this.collectionPlayerPresenter=collectionPlayerPresenter;
-		collectionEndPresenter.setCollectionPlayerPresenter(collectionPlayerPresenter);
+		//collectionEndPresenter.setCollectionPlayerPresenter(collectionPlayerPresenter);
 		this.isCollectionPlayer=true;
 		this.isResourcePlayer=false;
 		this.isPreviewPlayer=false;
@@ -172,6 +189,11 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 			previewPlayerPresenter.triggerReactiontDataLogEvent(resourceId, startTime, startTime, reactionType,eventName);
 		}
 	}
+	public void saveReactionToShowAvg(String reactionText){
+		if(isCollectionPlayer){
+			collectionPlayerPresenter.saveReactionToShowAvg(reactionText);
+		}
+	}
 	public void resetResourceMetaData(){
 		getView().getResourceWidgetContainer().clear();
 	}
@@ -179,10 +201,11 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		getView().removeRatingContainer(flag);
 	}
 	@Override
-	public void createReaction(String resourceId,String reactionText,String gooruReactionId,String collectionId, String createStudyPlayerReaction) {
+	public void createReaction(String resourceId,final String reactionText,String gooruReactionId,String collectionId, String createStudyPlayerReaction) {
 		AppClientFactory.getInjector().getPlayerAppService().createReaction(resourceId,reactionText,gooruReactionId,collectionId,createStudyPlayerReaction, new SimpleAsyncCallback<ReactionDo>() {
 			@Override
 			public void onSuccess(ReactionDo result) {
+				saveReactionToShowAvg(reactionText);
 				getView().setReaction(result,result.getDeleteReactionGooruOid()); 
 			}
 		});
@@ -224,7 +247,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	}
 	
 	public void updateFlagImageOnEndView(){
-		collectionEndPresenter.updateFlagImageOnEndView();
+		//collectionEndPresenter.updateFlagImageOnEndView();
 	}
 	
 	public void clearIfrmaeContent(){
@@ -412,7 +435,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	}
 
 	@Override
-	public void deleteStarRatings() {
+	public void deleteStarRatings(String gooruId) {
 		getView().deleteRatingsValue();
 	}
 
@@ -423,7 +446,70 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 				getView().setGoogleDriveFileStatusCode(statusCode);
 			}
 		});
+	}
+	
+	public void getResourceTagsToDisplay(String resourceId){
+		AppClientFactory.getInjector().getResourceService().getTagsToResource(resourceId, new SimpleAsyncCallback<List<ResourceTagsDo>>() {
+			@Override
+			public void onSuccess(List<ResourceTagsDo> resourceTagsList) {
+				getView().displayResourceTags(resourceTagsList);
+			}
+		});
+	}
+
+	@Override
+	public void getYoutubeFeedCallback(String utubeId) {
+		// TODO Auto-generated method stub
+		AppClientFactory.getInjector().getPlayerAppService().getYoutubeFeedCallback(utubeId, new SimpleAsyncCallback<Map<String,String>>() {
+
+			@Override
+			public void onSuccess(Map<String, String> result) {
+				
+				getView().checkYoutubeAccessControls(result);
+			}
+		});
 		
+	}
+	public HTMLPanel getCollectionContainer(){
+		return getView().getCollectionContainer();
+	}
+	
+	public FlowPanel getResourceWidgetContainer(){
+		return getView().getResourceWidgetContainer();
+	}
+	
+	public Button getNarrationButton(){
+		return getView().getNarrationButton();
+	}
+	
+	public void clearMarginTop(){
+		getView().clearMarginTop();
+	}
+	public void setMarginTop(){
+		getView().setMarginTop();
+	}
+
+	@Override
+	public void updateResourceReview(String gooruOid,Integer reviewCount) {
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			collectionPlayerPresenter.updateReviewAndRatings(gooruOid,reviewCount); 
+		}else{
+			resourcePlayerPresenter.updateReviewAndRatings(gooruOid,reviewCount);
+		}
+	}
+	
+	@Override
+	public void updateResourceRatings(String gooruOid,double average) {
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			collectionPlayerPresenter.updateRatings(gooruOid,average);  
+		}else{
+			resourcePlayerPresenter.updateRatings(gooruOid,average);   
+		}
+	}
+
+	@Override
+	public void deleteRatingsInPlayer() {
+		getView().deleteRatingsValue();
 	}
 
 	

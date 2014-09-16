@@ -40,7 +40,11 @@ import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionHandler;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionInfoHandler;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropHandler;
+import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+
+import com.google.gwt.user.client.ui.DisclosurePanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
  * @author Search Team
@@ -55,4 +59,17 @@ public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandle
 	
 	public void showRatingAndReviewPopup(ResourceSearchResultDo searchResultDo);
 	
+	public AddResourceContainerPresenter getAddResourceContainerPresenter();
+	
+	public void showAddResourceToShelfView(SimplePanel addResourceContainerPanel,ResourceSearchResultDo searchResultDo,String Type);
+	
+	public void showAddCollectionToShelfView(SimplePanel addResourceContainerPanel,CollectionSearchResultDo collectionsearchResultDo,String Type);
+
+	void getAddStandards();
+
+	void setUpdatedStandards();
+
+	void closeStandardsPopup();
+
+	void showAndHideDisclosurePanelOnCLick(DisclosurePanel DisclosurePanelClose);
 }

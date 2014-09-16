@@ -37,15 +37,24 @@ import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInSearchEvent;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchPresenter;
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelHandler;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.DisclosurePanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -59,9 +68,15 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  * @author Search Team
  * 
  */
-public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSearchResultDo, CollectionSearchResultDo, IsResourceSearchView, ResourceSearchPresenter.IsResourceSearchProxy> implements SearchUiHandlers {
+public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSearchResultDo, CollectionSearchResultDo, IsResourceSearchView, ResourceSearchPresenter.IsResourceSearchProxy> implements SearchUiHandlers,RefreshDisclosurePanelHandler {
 	
 	private RatingAndReviewPopupPresenter ratingAndReviewPopup;
+	
+	private AddResourceContainerPresenter addResourceContainerPresenter;
+	
+	CollectionFormInPlayPresenter collectionFormInPlayPresenter;
+	
+	AddStandardsPresenter addStandardsPresenter = null;
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.RESOURCE_SEARCH)
@@ -76,11 +91,16 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public ResourceSearchPresenter(IsResourceSearchView view, IsResourceSearchProxy proxy,SignUpPresenter signUpViewPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup) {
-		super(view, proxy, signUpViewPresenter);
+	public ResourceSearchPresenter(IsResourceSearchView view, IsResourceSearchProxy proxy,SignUpPresenter signUpViewPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup,
+			AddResourceContainerPresenter addResourceContainerPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter, AddStandardsPresenter addStandardsPresenter) {
+		super(view, proxy, signUpViewPresenter,addStandardsPresenter);
 		this.ratingAndReviewPopup=ratingAndReviewPopup;
+		this.addStandardsPresenter = addStandardsPresenter;
+		this.addResourceContainerPresenter=addResourceContainerPresenter;
+		this.collectionFormInPlayPresenter= collectionFormInPlayPresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(UpdateRatingsInSearchEvent.TYPE,this);
+		addRegisteredHandler(RefreshDisclosurePanelEvent.TYPE, this);
 	}
 
 //	@Override
@@ -146,5 +166,58 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	@Override
 	public void updateRatingInSearch(ResourceSearchResultDo searchResultDo) {
 		showRatingAndReviewPopup(searchResultDo);
+	}
+
+
+	@Override
+	public AddResourceContainerPresenter getAddResourceContainerPresenter() {
+		return addResourceContainerPresenter;
+	}
+
+	@Override
+	public void showAddResourceToShelfView(SimplePanel addResourceContainerPanel,ResourceSearchResultDo searchResultDo,String Type) {
+		addResourceContainerPanel.clear();
+		addResourceContainerPresenter.removePlayerStyle();
+		addResourceContainerPresenter.getUserShelfData(searchResultDo,Type);
+		addResourceContainerPresenter.cleartheSelecteGooruOid();
+		addResourceContainerPresenter.SetDefaultMyCollections();
+		addResourceContainerPanel.setWidget(addResourceContainerPresenter.getWidget());
+		addResourceContainerPresenter.getAddButton().addClickHandler(new ShowNewCollectionWidget(searchResultDo.getGooruOid()));
+		
+	}
+	public class ShowNewCollectionWidget implements ClickHandler{
+		private String resourceId;
+		ShowNewCollectionWidget(String resourceId){
+			this.resourceId=resourceId;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			addToPopupSlot(collectionFormInPlayPresenter);
+			collectionFormInPlayPresenter.setResourceUid(resourceId);
+		}
+	}
+	@Override
+	public void showAddCollectionToShelfView(SimplePanel addResourceContainerPanel,CollectionSearchResultDo collectionsearchResultDo,String searchType) {
+		
+	}
+
+	@Override
+	public void refreshDisclosurePanelinSearch(String collectionId) {
+		addResourceContainerPresenter.clearData();
+		addResourceContainerPresenter.getfolderTreePanel().clear();
+		addResourceContainerPresenter.getWorkspaceData(0, 20, false, "resource");
+	}
+
+	@Override
+	public void showAndHideDisclosurePanelOnCLick(
+			final DisclosurePanel DisclosurePanelClose) {
+		// TODO Auto-generated method stub
+		addResourceContainerPresenter.getCancelButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				DisclosurePanelClose.setOpen(false);
+			}
+		});
 	}
 }

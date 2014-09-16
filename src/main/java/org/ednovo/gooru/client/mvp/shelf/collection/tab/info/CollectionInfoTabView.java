@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -47,6 +48,7 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.GradeLabel;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
+import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
@@ -101,7 +103,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	FlowPanel gradeTopList, gradeMiddleList, gradeBottomList, courseData, standardsPanel, KinderGarten, higherEducation,standardContainer;
 
 	@UiField
-	Label  languageObjectiveTitle,standardMaxMsg, courseLabel, standardLabel, standardsDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl,toggleArrowButtonPrimary,toggleArrowButtonSecondary,instructionalMethod,audienceLabel,audienceTitle,instructionalTitle,languageObjectiveHeader,depthOfKnowledgeHeader,depthOfKnowledgeTitle,learningInnovationHeader,learningInnovationTitle;
+	Label  GradeUpdate, languageObjectiveTitle,standardMaxMsg, courseLabel, standardLabel, standardsDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl,toggleArrowButtonPrimary,toggleArrowButtonSecondary,instructionalMethod,audienceLabel,audienceTitle,instructionalTitle,languageObjectiveHeader,depthOfKnowledgeHeader,depthOfKnowledgeTitle,learningInnovationHeader,learningInnovationTitle;
 	
 	@UiField Label lblAudiencePlaceHolder,lblAudienceArrow,lblInstructionalPlaceHolder,lblInstructionalArrow,languageObjectiveerrLabel;
 	
@@ -125,7 +127,13 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	ToolTip toolTip=null;
 	
+	@UiField Button browseBtn;
+	
 	String courseCode="";
+	
+	private static final List<String> gradeList = new ArrayList<String>();
+	
+	private HandlerRegistration handlerRegistration=null;
 	
 	private CollectionDo collectionDo = null;
 
@@ -147,6 +155,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	private static final String FLT_CODE_ID = "id";
 	
+	private static final String FLT_SOURCE_CODE_ID = 	"flt.sourceCodeId";
+	
+	private static final String NO_MATCH_FOUND = i18n.GL0723();
+	
 	CourseListUc courseListUc;
 	
 	List<String> standardPreflist=null;
@@ -163,7 +175,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 
 	interface CollectionInfoTabViewUiBinder extends UiBinder<Widget, CollectionInfoTabView> {
 	}
-
+	
 	/**
 	 * Class constructor
 	 */
@@ -184,26 +196,33 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				if(!courseCode.isEmpty()) {
 					Map<String,String> filters = new HashMap<String, String>();
 					filters.put(FLT_CODE_ID,courseCode);
+					filters.put(FLT_SOURCE_CODE_ID,courseCode);
 					standardSearchDo.setFilters(filters);
 				}
 				standardSearchDo.setQuery(text);
 				if (text != null && text.trim().length() > 0) {
 					standardsPreferenceOrganizeToolTip.hide();
+					standardSuggestOracle.clear();
 					if(standardPreflist!=null){
 						for(int count=0; count<standardPreflist.size();count++) {
+							if(text.contains("CCSS") || text.contains("TEKS") || text.contains("CA") ||text.contains("NGSS")||text.contains("CAS612")||text.contains("CASK5")||text.contains("CAELD")||text.contains("CSC")) {
 							if(text.contains(standardPreflist.get(count))) {
 								standardsPrefDisplayPopup = true;
 								break;
 							} else {
 								standardsPrefDisplayPopup = false;
 							}
+							}else{
+								standardsPrefDisplayPopup = true;
+							}
 						}
 						
-						
 					}
+						
 					if(standardsPrefDisplayPopup){
 						standardsPreferenceOrganizeToolTip.hide();
-						getUiHandlers().requestStandardsSuggestion(standardSearchDo);
+						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
+						getUiHandlers().getAutoSuggestedStandardsList(standardSearchDo);
 						//standardSgstBox.showSuggestionList();
 					}
 					else{
@@ -211,13 +230,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 						standardSuggestOracle.clear();
 						standardsPreferenceOrganizeToolTip.show();
 						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-	
 						//standardSuggestOracle.add(i18n.GL1613);
-						
-					}
 					}
 					
-				
+					}
 			}
 
 			@Override
@@ -231,6 +247,18 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		res = CollectionCBundle.INSTANCE;
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
+		
+		GradeUpdate.setText("Grades are updating..");
+		GradeUpdate.setVisible(false);
+		browseBtn.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().getAddStandards();
+				
+			}
+		});
+
 		BlurHandler blurhander=new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -241,10 +269,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		};
 		standardSgstBox.addDomHandler(blurhander, BlurEvent.getType());
 		standardSgstBox.getElement().setId("tbautoStandardSgstBox");
-		gradeLbl.setText(i18n.GL1076().toUpperCase());
+		gradeLbl.setText(i18n.GL1076());
 		gradeLbl.getElement().setId("lblGradeLbl");
-		gradeLbl.getElement().setAttribute("alt",i18n.GL1076().toUpperCase());
-		gradeLbl.getElement().setAttribute("title",i18n.GL1076().toUpperCase());
+		gradeLbl.getElement().setAttribute("alt",i18n.GL1076());
+		gradeLbl.getElement().setAttribute("title",i18n.GL1076());
 		
 		selectGradeLbl.setText(i18n.GL0820());
 		selectGradeLbl.getElement().setId("lblSelectGradeLbl");
@@ -266,10 +294,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		removeCourseBtn.getElement().setAttribute("alt",i18n.GL0848());
 		removeCourseBtn.getElement().setAttribute("title",i18n.GL0848());
 		
-		standardLabel.setText(i18n.GL0575().toUpperCase());
+		standardLabel.setText(i18n.GL0575());
 		standardLabel.getElement().setId("lblStandardLabel");
-		standardLabel.getElement().setAttribute("alt",i18n.GL0575().toUpperCase());
-		standardLabel.getElement().setAttribute("title",i18n.GL0575().toUpperCase());
+		standardLabel.getElement().setAttribute("alt",i18n.GL0575());
+		standardLabel.getElement().setAttribute("title",i18n.GL0575());
 		
 		addStandardBtn.setText(i18n.GL0590());
 		addStandardBtn.getElement().setId("btnAddStandardBtn");
@@ -403,7 +431,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		textAreaVal.addFocusHandler(new FocusHandler() {
 			@Override
 			public void onFocus(FocusEvent event) {
-				String directionText=textAreaVal.getText().trim();
+				String directionText=textAreaVal.getText();		
 				if(directionText.equalsIgnoreCase(i18n.GL1641())){
 					textAreaVal.setText("");
 					textAreaVal.getElement().setAttribute("alt","");
@@ -858,7 +886,6 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	public void setData(CollectionDo collectionDoVal) {
 		reset();
 		this.collectionDo = collectionDoVal;
-		
 			if(collectionDoVal.getLanguageObjective() != null)
 			{
 
@@ -874,117 +901,127 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			}
 			
 
-			
-			for(int i=0; i<collectionDoVal.getDepthOfKnowledges().size(); i++)
-			{
-			
-		
-				String compareValueLevel = collectionDoVal.getDepthOfKnowledges().get(i).getValue().replaceAll("\\s+","");
-				String compareValueLevelFetched = chkLevelRecall.getText().replaceAll("\\s+","");
-				String compareValueLevelCheckbox1 = chkLevelSkillConcept.getText().replaceAll("\\s+","");
-				String compareValueLevelCheckbox2 = chkLevelExtendedThinking.getText().replaceAll("\\s+","");
-				String compareValueLevelCheckbox3 = chkLevelStrategicThinking.getText().replaceAll("\\s+","");
-				
-				if(compareValueLevel.equalsIgnoreCase(compareValueLevelFetched))
+			if(collectionDoVal.getDepthOfKnowledges()!=null){
+				for(int i=0; i<collectionDoVal.getDepthOfKnowledges().size(); i++)
 				{
-					if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
+					String compareValueLevel = collectionDoVal.getDepthOfKnowledges().get(i).getValue().replaceAll("\\s+","");
+					String compareValueLevelFetched = chkLevelRecall.getText().replaceAll("\\s+","");
+					String compareValueLevelCheckbox1 = chkLevelSkillConcept.getText().replaceAll("\\s+","");
+					String compareValueLevelCheckbox2 = chkLevelExtendedThinking.getText().replaceAll("\\s+","");
+					String compareValueLevelCheckbox3 = chkLevelStrategicThinking.getText().replaceAll("\\s+","");
+					
+					if(compareValueLevel.equalsIgnoreCase(compareValueLevelFetched))
 					{
-					chkLevelRecall.setValue(true);
+						if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
+						{
+						chkLevelRecall.setValue(true);
+						}
+						else
+						{
+						chkLevelRecall.setValue(false);
+						}
 					}
-					else
+					else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox1))
 					{
-					chkLevelRecall.setValue(false);
+						if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
+						{
+							chkLevelSkillConcept.setValue(true);
+						}
+						else
+						{
+							chkLevelSkillConcept.setValue(false);
+						}
 					}
-				}
-				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox1))
-				{
-					if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
+					else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox2))
 					{
-						chkLevelSkillConcept.setValue(true);
+						if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
+						{
+							chkLevelExtendedThinking.setValue(true);
+						}
+						else
+						{
+							chkLevelExtendedThinking.setValue(false);
+						}
 					}
-					else
+					else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox3))
 					{
-						chkLevelSkillConcept.setValue(false);
-					}
-				}
-				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox2))
-				{
-					if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
-					{
-						chkLevelExtendedThinking.setValue(true);
-					}
-					else
-					{
-						chkLevelExtendedThinking.setValue(false);
-					}
-				}
-				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox3))
-				{
-					if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
-					{
-						chkLevelStrategicThinking.setValue(true);
-					}
-					else
-					{
-						chkLevelStrategicThinking.setValue(false);
+						if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
+						{
+							chkLevelStrategicThinking.setValue(true);
+						}
+						else
+						{
+							chkLevelStrategicThinking.setValue(false);
+						}
 					}
 				}
 			}
 			
-			for(int j=0; j<collectionDoVal.getLearningSkills().size(); j++)
-			{
-				String compareValueLevel = collectionDoVal.getLearningSkills().get(j).getValue().replaceAll("\\s+","");
-				String compareValueLevelFetched = learninglevel1.getText().replaceAll("\\s+","");
-				String compareValueLevelCheckbox1 = learninglevel2.getText().replaceAll("\\s+","");
-				String compareValueLevelCheckbox2 = learninglevel3.getText().replaceAll("\\s+","");
+			if(collectionDoVal.getLearningSkills()!=null){
+				for(int j=0; j<collectionDoVal.getLearningSkills().size(); j++)
+				{
+					String compareValueLevel = collectionDoVal.getLearningSkills().get(j).getValue().replaceAll("\\s+","");
+					String compareValueLevelFetched = learninglevel1.getText().replaceAll("\\s+","");
+					String compareValueLevelCheckbox1 = learninglevel2.getText().replaceAll("\\s+","");
+					String compareValueLevelCheckbox2 = learninglevel3.getText().replaceAll("\\s+","");
 
-				
-				if(compareValueLevel.equalsIgnoreCase(compareValueLevelFetched))
-				{
-					if(collectionDoVal.getLearningSkills().get(j).isSelected()==true)
+					
+					if(compareValueLevel.equalsIgnoreCase(compareValueLevelFetched))
 					{
-						learninglevel1.setValue(true);
+						if(collectionDoVal.getLearningSkills().get(j).isSelected()==true)
+						{
+							learninglevel1.setValue(true);
+						}
+						else
+						{
+							learninglevel1.setValue(false);
+						}
 					}
-					else
+					else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox1))
 					{
-						learninglevel1.setValue(false);
+						if(collectionDoVal.getLearningSkills().get(j).isSelected()==true)
+						{
+							learninglevel2.setValue(true);
+						}
+						else
+						{
+							learninglevel2.setValue(false);
+						}
 					}
-				}
-				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox1))
-				{
-					if(collectionDoVal.getLearningSkills().get(j).isSelected()==true)
+					else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox2))
 					{
-						learninglevel2.setValue(true);
+						if(collectionDoVal.getLearningSkills().get(j).isSelected()==true)
+						{
+							learninglevel3.setValue(true);
+						}
+						else
+						{
+							learninglevel3.setValue(false);
+						}
 					}
-					else
-					{
-						learninglevel2.setValue(false);
-					}
-				}
-				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox2))
-				{
-					if(collectionDoVal.getLearningSkills().get(j).isSelected()==true)
-					{
-						learninglevel3.setValue(true);
-					}
-					else
-					{
-						learninglevel3.setValue(false);
-					}
-				}
 
+				}
 			}
-
-			for(int m=0; m<collectionDoVal.getInstructionalMethod().size(); m++)
-			{
-				if(collectionDoVal.getInstructionalMethod().get(m).getValue() != null || !collectionDoVal.getInstructionalMethod().get(m).getValue().isEmpty())
+			
+			
+			if(collectionDoVal.getInstructionalMethod()!=null){
+				for(int m=0; m<collectionDoVal.getInstructionalMethod().size(); m++)
 				{
-					if(collectionDoVal.getInstructionalMethod().get(m).isSelected()==true)
+					if(collectionDoVal.getInstructionalMethod().get(m).getValue() != null || !collectionDoVal.getInstructionalMethod().get(m).getValue().isEmpty())
 					{
-						lblInstructionalPlaceHolder.setText(collectionDoVal.getInstructionalMethod().get(m).getValue());
-						lblInstructionalPlaceHolder.getElement().setAttribute("alt",collectionDoVal.getInstructionalMethod().get(m).getValue());
-						lblInstructionalPlaceHolder.getElement().setAttribute("title",collectionDoVal.getInstructionalMethod().get(m).getValue());
-						break;
+						if(collectionDoVal.getInstructionalMethod().get(m).isSelected()==true)
+						{
+							lblInstructionalPlaceHolder.setText(collectionDoVal.getInstructionalMethod().get(m).getValue());
+							lblInstructionalPlaceHolder.getElement().setAttribute("alt",collectionDoVal.getInstructionalMethod().get(m).getValue());
+							lblInstructionalPlaceHolder.getElement().setAttribute("title",collectionDoVal.getInstructionalMethod().get(m).getValue());
+							break;
+						}
+						else
+						{
+						lblInstructionalPlaceHolder.setText(i18n.GL0105());
+						lblInstructionalPlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
+						lblInstructionalPlaceHolder.getElement().setAttribute("title",i18n.GL0105());
+						}
 					}
 					else
 					{
@@ -993,69 +1030,66 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					lblInstructionalPlaceHolder.getElement().setAttribute("title",i18n.GL0105());
 					}
 				}
-				else
-				{
-				lblInstructionalPlaceHolder.setText(i18n.GL0105());
-				lblInstructionalPlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
-				lblInstructionalPlaceHolder.getElement().setAttribute("title",i18n.GL0105());
-				}
 			}
 			
-			for(int n=0; n<collectionDoVal.getAudience().size(); n++)
-			{
-				if(collectionDoVal.getAudience().get(n).getValue() != null || !collectionDoVal.getAudience().get(n).getValue().isEmpty())
+			if(collectionDoVal.getAudience()!=null){
+				for(int n=0; n<collectionDoVal.getAudience().size(); n++)
 				{
-					if(collectionDoVal.getAudience().get(n).isSelected()==true)
+					if(collectionDoVal.getAudience().get(n).getValue() != null || !collectionDoVal.getAudience().get(n).getValue().isEmpty())
 					{
-						lblAudiencePlaceHolder.setText(collectionDoVal.getAudience().get(n).getValue());
-						lblAudiencePlaceHolder.getElement().setAttribute("alt",collectionDoVal.getAudience().get(n).getValue());
-						lblAudiencePlaceHolder.getElement().setAttribute("title",collectionDoVal.getAudience().get(n).getValue());
-						break;
+						if(collectionDoVal.getAudience().get(n).isSelected()==true)
+						{
+							lblAudiencePlaceHolder.setText(collectionDoVal.getAudience().get(n).getValue());
+							lblAudiencePlaceHolder.getElement().setAttribute("alt",collectionDoVal.getAudience().get(n).getValue());
+							lblAudiencePlaceHolder.getElement().setAttribute("title",collectionDoVal.getAudience().get(n).getValue());
+							break;
+						}
+						else
+						{
+							lblAudiencePlaceHolder.setText(i18n.GL0105());
+							lblAudiencePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
+							lblAudiencePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
+						}
 					}
 					else
 					{
-						lblAudiencePlaceHolder.setText(i18n.GL0105());
-						lblAudiencePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
-						lblAudiencePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
+					lblAudiencePlaceHolder.setText(i18n.GL0105());
+					lblAudiencePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
+					lblAudiencePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
 					}
 				}
-				else
-				{
-				lblAudiencePlaceHolder.setText(i18n.GL0105());
-				lblAudiencePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
-				lblAudiencePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
-				}
 			}
-		
-			if(collectionDoVal.getTaxonomySet().size()==0){
-				courseData.getElement().getStyle().setDisplay(Display.NONE);
-				addCourseBtn.setText(ADD_COURSE);
-				addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
-				addCourseBtn.getElement().setAttribute("title",ADD_COURSE);
-				removeCourseBtn.setVisible(false);
-				if(courseCode!=null&&!courseCode.equals("")){
-					getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
-				}
-				courseCode="";
-			}else{
-				for (CodeDo code : collectionDoVal.getTaxonomySet()) {
-				
-					if (code.getDepth() == 2) {
-						courseDo.add(code.getLabel());
-						courseData.add(createCourseLabel(code.getLabel(), code.getCodeId() + "", code.getLabel()));
-						//courseLbl.setText(code.getLabel());
-					/*	courseLbl.getElement().setAttribute("alt",code.getLabel());
-						courseLbl.getElement().setAttribute("title",code.getLabel());*/
-						courseData.getElement().getStyle().setDisplay(Display.BLOCK);
-						courseCode=Integer.toString(code.getCodeId());
-						addCourseBtn.setText(ADD_COURSE);
-						addCourseBtn.getElement().setAttribute("alt",CHANGE_COURSE);
-						addCourseBtn.getElement().setAttribute("title",CHANGE_COURSE);
-						removeCourseBtn.setVisible(false);
+			if(collectionDoVal.getTaxonomySet()!=null){
+				if(collectionDoVal.getTaxonomySet().size()==0){
+					courseData.getElement().getStyle().setDisplay(Display.NONE);
+					addCourseBtn.setText(ADD_COURSE);
+					addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
+					addCourseBtn.getElement().setAttribute("title",ADD_COURSE);
+					removeCourseBtn.setVisible(false);
+					if(courseCode!=null&&!courseCode.equals("")){
+						getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
 					}
-					
+					courseCode="";
+				}else{
+					for (CodeDo code : collectionDoVal.getTaxonomySet()) {
+						if (code.getDepth() == 2) {
+							courseDo.add(code.getLabel());
+							courseData.add(createCourseLabel(code.getLabel(), code.getCodeId() + "", code.getLabel()));
+							//courseLbl.setText(code.getLabel());
+						/*	courseLbl.getElement().setAttribute("alt",code.getLabel());
+							courseLbl.getElement().setAttribute("title",code.getLabel());*/
+							courseData.getElement().getStyle().setDisplay(Display.BLOCK);
+							courseCode=Integer.toString(code.getCodeId());
+							addCourseBtn.setText(ADD_COURSE);
+							addCourseBtn.getElement().setAttribute("alt",CHANGE_COURSE);
+							addCourseBtn.getElement().setAttribute("title",CHANGE_COURSE);
+							removeCourseBtn.setVisible(false);
+						}
+						
+					}
 				}
 			}
+			
 			if (collectionDoVal.getMetaInfo() != null && collectionDoVal.getMetaInfo().getStandards() != null) {
 				for (StandardFo standard : collectionDoVal.getMetaInfo().getStandards()) {
 					standardsPanel.add(createStandardLabel(standard.getCode(), standard.getCodeId() + "", standard.getDescription()));
@@ -1108,7 +1142,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 *            courses
 	 * @param courseCode
 	 *            the course of the course code, an absolute course code will be
-	 *            used to create a new course
+	 *            used to create a new coursefinal StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+	
 	 * @return the label of all course created for the collection.
 	 */
 	protected CloseLabel createCourseLabel(final String courseLabel, final String courseCode) {
@@ -1132,7 +1167,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 *            specifies event type
 	 */
 	@UiHandler("addCourseBtn")
-	public void onAddCourseClick(ClickEvent clickEvent) {
+	public void onAddCourseClick(ClickEvent clickEvent) {final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+	
 		if(courseListUc!=null){
 			courseListUc.center();
 			courseListUc.show();
@@ -1187,22 +1223,82 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		standardMaxMsg.removeStyleName(CollectionCBundle.INSTANCE.css().standardMax());
 		standardsPanel.removeStyleName(CollectionCBundle.INSTANCE.css().floatLeftNeeded());
 	}*/
+	
+	public GradeLabel frameLabel(String label, CollectionDo collectionDoInternal)
+	{
+		GradeLabel gradeLblKindergarten = new GradeLabel(label, collectionDoInternal) {			
+			@Override
+			public void onClick(ClickEvent event) {
+				GradeUpdate.setVisible(true);
+			
+				gradeTopList.setVisible(false);
+				gradeMiddleList.setVisible(false);
+				gradeBottomList.setVisible(false);
+				KinderGarten.setVisible(false);
+				higherEducation.setVisible(false);
+				if(this.getElement().getAttribute("selected") != null)
+				{
+				if(this.getElement().getAttribute("selected").contains("selected")){
+					this.getElement().getStyle().setProperty("background", "");
+					this.getElement().getStyle().setColor("#999");
+					this.getElement().removeAttribute("selected");
+					try
+					{
+					gradeList.remove(this.getText());	
+					}
+					catch(Exception ex)
+					{
+						
+					}
+				
+				} else {
+					this.getElement().getStyle().setProperty("background", "#0F76BB");
+					this.getElement().getStyle().setColor("#fff");
+					this.getElement().setAttribute("selected", "selected");
+					if(!gradeList.contains(this.getText())){
+						gradeList.add(this.getText());
+						if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
+							MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+						}
+					}
+				}
+				} else {
+					this.getElement().getStyle().setProperty("background", "#0F76BB");
+					this.getElement().getStyle().setColor("#fff");
+					this.getElement().setAttribute("selected", "selected");
+					if(!gradeList.contains(this.getText())){
+						gradeList.add(this.getText());
+						//updateGrade(gradeList);
+						if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
+							MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+						}
+					}
+				}
+				updateGrade(gradeList);
+				
+			}
+			
+		
+		};
+		return gradeLblKindergarten;
+	}
 
 	/**
 	 * separate the view according to grade level of the collection
 	 */
 	public void setGradeList() {
-		KinderGarten.add(new GradeLabel("Kindergarten", collectionDo));
-		higherEducation.add(new GradeLabel("Higher Education", collectionDo));
+		//gradeList.clear();
+		KinderGarten.add(frameLabel("Kindergarten", collectionDo));
+		higherEducation.add(frameLabel("Higher Education", collectionDo));
 		for (int i = 1; i <= 12; i++) {
 			if (i <= 4) {
-				gradeTopList.add(new GradeLabel(i + "", collectionDo));
+				gradeTopList.add(frameLabel(i + "", collectionDo));
 			}
 			if (i <= 8 && i >= 5) {
-				gradeMiddleList.add(new GradeLabel(i + "", collectionDo));
+				gradeMiddleList.add(frameLabel(i + "", collectionDo));
 			}
 			if (i <= 12 && i >= 9) {
-				gradeBottomList.add(new GradeLabel(i + "", collectionDo));
+				gradeBottomList.add(frameLabel(i + "", collectionDo));
 			}
 		}
 	}
@@ -1217,9 +1313,11 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	}
 
 	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
+		
 		standardSuggestOracle.clear();
 		this.standardSearchDo = standardSearchDo;
 		if (this.standardSearchDo.getSearchResults() != null) {
+			/*if(standardSearchDo.getSearchResults().size()>0){*/
 			List<String> sources = getAddedStandards(standardsPanel);
 			for (CodeDo code : standardSearchDo.getSearchResults()) {
 				if (!sources.contains(code.getCode())) {
@@ -1228,7 +1326,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				standardCodesMap.put(code.getCodeId() + "", code.getLabel());
 			}
 		}
-		standardSgstBox.showSuggestionList();
+		if (standardSuggestOracle.isEmpty()) {
+			standardSuggestOracle.add(NO_MATCH_FOUND);
+		}
+		standardSgstBox.showSuggestionList();		
 	}
 
 	/**
@@ -1253,13 +1354,13 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 */
 	private void resetStandardCount() {
 		if (standardsPanel.getWidgetCount() > 0) {
-			standardLabel.setText(i18n.GL0575().toUpperCase() + " (" + standardsPanel.getWidgetCount() + ")");
-			standardLabel.getElement().setAttribute("alt",i18n.GL0575().toUpperCase() + " (" + standardsPanel.getWidgetCount() + ")");
-			standardLabel.getElement().setAttribute("title",i18n.GL0575().toUpperCase() + " (" + standardsPanel.getWidgetCount() + ")");
+			standardLabel.setText(i18n.GL0575() + " (" + standardsPanel.getWidgetCount() + ")");
+			standardLabel.getElement().setAttribute("alt",i18n.GL0575() + " (" + standardsPanel.getWidgetCount() + ")");
+			standardLabel.getElement().setAttribute("title",i18n.GL0575() + " (" + standardsPanel.getWidgetCount() + ")");
 		} else {
-			standardLabel.setText(i18n.GL0575().toUpperCase());
-			standardLabel.getElement().setAttribute("alt",i18n.GL0575().toUpperCase());
-			standardLabel.getElement().setAttribute("title",i18n.GL0575().toUpperCase());
+			standardLabel.setText(i18n.GL0575());
+			standardLabel.getElement().setAttribute("alt",i18n.GL0575());
+			standardLabel.getElement().setAttribute("title",i18n.GL0575());
 		}
 	}
 
@@ -1267,9 +1368,9 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 * set the course text with count while adding and removing the course
 	 */
 	private void resetCourseCount() {		
-		courseLabel.setText(i18n.GL0574().toUpperCase());
-		courseLabel.getElement().setAttribute("alt",i18n.GL0574().toUpperCase());
-		courseLabel.getElement().setAttribute("title",i18n.GL0574().toUpperCase());
+		courseLabel.setText(i18n.GL0574());
+		courseLabel.getElement().setAttribute("alt",i18n.GL0574());
+		courseLabel.getElement().setAttribute("title",i18n.GL0574());
 		/*if (coursesPanel.getWidgetCount() > 0) {
 			courseLabel.setText("COURSE" + " (" + coursesPanel.getWidgetCount() + ")");
 		} else {
@@ -1280,6 +1381,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	AddCourseHandler addCourseHandler=new AddCourseHandler() {
 		@Override
 		public void onAddCourse(String courseName, String courseId) {
+			courseDo.add(courseName);
 			courseData.add(createCourseLabel(courseName, courseId + "", courseName));
 		//.	courseLbl.setText(courseName);
 			courseLabel.getElement().setAttribute("alt",courseName);
@@ -1485,9 +1587,62 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 			standardPreflist.add(code.substring(0, 2));
 		 }
 		}
-		
 	}
 
+	public void OnStandardsClickEvent(Button standardsButtonClicked)
+	{
+		if(handlerRegistration!=null){
+			handlerRegistration.removeHandler();
+		}
+		handlerRegistration=standardsButtonClicked.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().setUpdatedStandards();
+		
+				
+			}
+		});
+	}
+	
+	public void setUpdatedStandards(String standardsCode, Integer codeId,String descroption)
+	{
+		standardsPanel.add(createStandardLabel(standardsCode, codeId + "", descroption));
+		this.resetStandardCount();
+		getUiHandlers().updateStandard(collectionDo.getGooruOid(), codeId.toString(), "add");
+		getUiHandlers().closeStandardsPopup();
+	}
+	
+	private void updateGrade(List<String> gradeListInternal){
+		System.out.println("gradeListInternal::"+gradeListInternal);
+	AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionDo.getGooruOid(), null, null, join(gradeListInternal, ","), null, null, null,null,null,null, new SimpleAsyncCallback<CollectionDo>(){
+			
+			@Override
+			public void onSuccess(CollectionDo result) {
+				GradeUpdate.setVisible(false);
+				gradeTopList.setVisible(true);
+				gradeMiddleList.setVisible(true);
+				gradeBottomList.setVisible(true);
+				KinderGarten.setVisible(true);
+				higherEducation.setVisible(true);
+				collectionDo.setGrade(result.getGrade());
+			}
+		});
+	}
+	
+	private String join(List<?> list,String separator){
+		StringBuilder builder =null;
+		if(list != null){
+			builder = new StringBuilder();
+			for(Object value:list){
+				if(builder.length() > 0){
+					builder.append(separator);
+				}
+				builder.append(value);
+			}
+		}
+		return builder.toString();
+	}
 	
 
 }

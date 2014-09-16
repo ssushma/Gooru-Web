@@ -130,7 +130,10 @@ public class PartnerLessonUc extends Composite{
 		for(int i = 0; i<profileLibraryDoList.size(); i++) {
 			String conceptTitle = "";
 			ProfileLibraryDo profileLibraryTemp = null;
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)&&(isPaginated==false)) {
+			if((AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)|| 
+					AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)|| 
+					AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)|| 
+					AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE))&&(isPaginated==false)) {
 				profileLibraryTemp = profileLibraryDoList.get(i).getCollectionItems().get(0);
 			} else {
 				profileLibraryTemp = profileLibraryDoList.get(i);
@@ -186,7 +189,8 @@ public class PartnerLessonUc extends Composite{
 				lessonTitle.addStyleName(style.lessonTitle());
 				lessonTitle.addStyleName(style.collection());
 			} else {
-				lessonTitle.addStyleName(style.libraryTitle());
+				//lessonTitle.addStyleName(style.libraryTitle());
+				lessonTitle.addStyleName(style.libraryConceptTitle());
 			}
 		}
 		if(lessonNumber==1&&isLessonHighlighted) {
@@ -208,7 +212,7 @@ public class PartnerLessonUc extends Composite{
 				      com.google.gwt.user.client.Element link =
 				        (com.google.gwt.user.client.Element) links.getItem(i);
 				      link.getFirstChildElement().removeClassName(style.conceptActive());
-
+				      link.getFirstChildElement().removeClassName(style.libraryConceptActive());
 				    }
 				lessonTitle.addStyleName(style.conceptActive());
 			}

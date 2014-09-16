@@ -163,10 +163,12 @@
 
 .conceptActive {
 	background-color:#CFE3F1 !important;
+	font-weight: normal;
 }
 
 .conceptActive:hover {
 	background-color:#CFE3F1 !important;
+	font-weight: normal;
 }
 
 .conceptTitle:hover {
@@ -261,6 +263,9 @@
 
 .open {
     background-image: url('../images/folders/panel/folder-icon-open.png') !important;
+    background-repeat: no-repeat;
+    background-position: 14px 10px;
+    
 }
 
 .collection {
@@ -331,7 +336,7 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-
+	font-weight: bold;
 	/* Old browsers */
 	background: rgb(239,239,239);
 }
@@ -370,4 +375,48 @@
 }
 .marginTop5 {
 	margin-top: 5px;
+}
+#contentScroll .topicBlock .searchLink {
+	float: right;
+	margin:-37px 3px 0px 0px;
+	color:#999;
+}
+
+#contentScroll .topicBlock .searchLink i {
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	vertical-align:middle;
+	font-size:30px;
+	opacity:.5;
+	margin-left:5px;
+}
+
+#contentScroll .topicBlock .searchLink .hoverText {
+	vertical-align:middle;
+	display:none;
+}
+
+#contentScroll .topicBlock .searchLink:hover .hoverText {
+	display:inline-block;
+	margin-top: 5px;
+	font-size: 14px;
+}
+
+#contentScroll .topicBlock .searchLink:hover {
+	cursor:pointer;
+	width: 220px;
+}
+
+#contentScroll .topicBlock .searchLink:hover i {
+	opacity:1;
+}
+.searchMagnify {
+	background: url(/images/library/search-magnify.png);
+	background-size: 30px 30px;
+	height: 30px;
+	width: 30px;
+	opacity: 0.3;
+	display: inline;
+	float: right;
 }

@@ -268,13 +268,14 @@ public class CourseListUc extends PopupPanel {
 		String courseId= Integer.toString(courseCode);
 		if(isSelected){
 			collectionId=collectionDo.getGooruOid();
-			for (CodeDo code : collectionDo.getTaxonomySet()) {
+			for (CodeDo code : new HashSet<CodeDo>(collectionDo.getTaxonomySet())) {
 				if(code.getDepth()==2){
 
-					deleteCourse(collectionId, code.getCodeId());	
+				//	deleteCourse(collectionId, code.getCodeId());	
 				}
 
 					//oldCourseId=Integer.toString(code.getCodeId());
+					//deleteCourse(collectionId, code.getCodeId());	
 					//updateCourse(collectionId, oldCourseId,"delete");					
 
 			}
@@ -301,7 +302,9 @@ public class CourseListUc extends PopupPanel {
 				if(collectionDo!=null){
  					Set<CodeDo> codeSet=new HashSet<CodeDo>();
  					CodeDo codeDo=new CodeDo();
- 					codeDo.setCodeId(Integer.valueOf(courseCode));
+ 					if(!courseCode.equalsIgnoreCase("")){
+ 						codeDo.setCodeId(Integer.valueOf(courseCode));
+ 					}
  					codeDo.setDepth((short)2);
  					codeSet.add(codeDo);
  					collectionDo.setTaxonomySet(codeSet);

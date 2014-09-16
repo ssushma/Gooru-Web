@@ -77,6 +77,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
@@ -192,6 +193,7 @@ public class LoginPopupUc extends PopupPanel{
 		this.getElement().getStyle().setZIndex(99999);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
+       // this.getElement().setAttribute("style", "width: 515px;height: 547px;z-index: 99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;");
 //        lblKeepMeLogedIn.getElement().setId("chkLogin");
 		setTextAndIds();
 		lblPleaseWait.setVisible(false);
@@ -331,7 +333,8 @@ public class LoginPopupUc extends PopupPanel{
 			public void onSuccess(String result) {
 				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
 				Window.Location.replace(result);
-			
+				
+				
 			}
 		});
 	}
@@ -390,7 +393,10 @@ public class LoginPopupUc extends PopupPanel{
 							AppClientFactory.fireEvent(new SetUserDetailsInPlayEvent(result.getToken()));
 							AppClientFactory.fireEvent(new SetUserDetailsInCollectionPlayEvent(result.getToken(),result.getGooruUId()));
 							//to Set the Options butts visibility in Player for comments.
-							if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+							/**
+							 * Changed to collection player, as preview player feature removed.
+							 */
+							if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
 								AppClientFactory.fireEvent(new SetCommentsOptionsEvent());
 							}
 							if(getWidgetMode()!=null){
@@ -414,6 +420,7 @@ public class LoginPopupUc extends PopupPanel{
 						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
 						    	AppClientFactory.fireEvent(new ShowCollectionTabWidgetEvent(getWidgetMode(), false));
 						    }
+						    
 						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY)){
 						    	AppClientFactory.fireEvent(new ShowPreviewTabWidgetEvent(getWidgetMode(), false));
 						    }
@@ -458,7 +465,7 @@ public class LoginPopupUc extends PopupPanel{
 						    if(nameToken.equals(PlaceTokens.TEACH)) {
 //						    	AppClientFactory.fireEvent(new OpenClasspageListEvent());
 						    }  else if(nameToken.equals(PlaceTokens.SHELF)){
-								getCollectionFirstItem();
+								//getCollectionFirstItem();
 						    }
 						    if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
 						    	AppClientFactory.fireEvent(new OpenJoinClassPopupEvent());
@@ -496,6 +503,30 @@ public class LoginPopupUc extends PopupPanel{
 							lblPleaseWait.setVisible(false);
 							new AlertContentUc(i18n.GL1966(), i18n.GL1938());
 						}
+						AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new AsyncCallback<String>() {
+							
+							@Override
+							public void onSuccess(String result) {
+								
+								/*if(result==null)
+								{
+									StringUtil.clearCookies(GOOGLE_REFRESH_TOKEN, "/", result);
+								}else{*/
+								//	Cookies.setCookie(GOOGLE_REFRESH_TOKEN, result);
+									UserDo user = AppClientFactory.getLoggedInUser();
+									user.setRefreshToken(result);
+								
+									AppClientFactory.setLoggedInUser(user);
+								//}
+								
+							}
+							
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
 					}
 
 					
@@ -520,7 +551,7 @@ public class LoginPopupUc extends PopupPanel{
 		}
 	}
 
-	private void getCollectionFirstItem() {
+	/*private void getCollectionFirstItem() {
 		AppClientFactory.getInjector().getResourceService().getUserCollection(new SimpleAsyncCallback<List<CollectionDo>>() {
             public void onSuccess(List<CollectionDo> result) {				                	
             	for (CollectionDo collection : result) {
@@ -531,7 +562,7 @@ public class LoginPopupUc extends PopupPanel{
         		}
             }
         });
-	}
+	}*/
 	/**
 	 * Added click handler to hide the login popup.
 	 * 
@@ -621,7 +652,10 @@ public class LoginPopupUc extends PopupPanel{
 		}
 		this.hide();
 		
-		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
+		//AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, false);
+	
 		
 		/*RegisterVc registerVc = new RegisterVc();
 		registerVc.center();

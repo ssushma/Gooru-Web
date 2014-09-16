@@ -1158,7 +1158,7 @@
 .actionField {
 	text-align: center;
 	width: 100%;
-	margin-top: 30px;
+	margin-top: 10px;
 	margin-bottom: 10px;
 }
 .okButtonmargin{
@@ -1172,7 +1172,7 @@
 }
 
 .removeText {
-	padding: 10px;
+	padding: 15px;
 	width: 90%;
 }
 
@@ -1950,7 +1950,7 @@ font-size:12px;
 .setAsCenterPopup {
 	left: 0 !important;
 	right: 0 !important;
-	top: 56px !important;
+	top: 160px !important;
 	margin: auto;
 	z-index: 999;
 }
@@ -1978,4 +1978,167 @@ font-size:12px;
 	width: 318px;
 }
 .removingText{
+}
+
+/* New landing page */
+.headerPanel {
+	position: relative;
+	width: 1000px;
+	margin: 0 auto;
+	text-align: center;
+	background: url('images/banner2.png') bottom no-repeat;
+	background-size: contain;
+	height: 100%;
+	min-height: 167px;
+}
+.signUpButton{
+	width: 160px;
+	height: 39px;
+	margin-bottom: 3px;
+	margin-top: 15px;
+	font-size: 16px;
+}
+
+.header {
+	color:white;
+	font-size:36px;
+	font-weight:bold;
+	text-align:center;
+	padding-top:23px;
+	font-family :"Arvo", serif !important;
+	text-shadow: 0px 2px 4px #666;
+}
+
+.subheader {
+	color:white;
+	font-size:16px;
+	text-align:center;
+	text-shadow: 0px 2px 4px #666;
+}
+.description {
+	color:white;
+	text-align:center;
+	text-shadow: 0px 1px 4px #999;
+}
+
+.btnBlock{
+	width: 100%;
+	font-size: 14px;
+}
+
+a.secondary {
+	color: #1076BB;
+	padding: 15px;
+	border-radius: 4px;
+	background: #efefef;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#ddd));
+	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
+	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
+	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
+	background: -o-linear-gradient(top, #fdfdfd, #ddd);
+	border: 1px solid #cacaca;
+	font-size: 14px;
+}
+
+a.secondary:hover {
+	opacity: 1.0;
+	cursor:pointer;
+}
+
+.learnMoreContainer{
+	margin: 32px auto;
+	text-align: center;
+	border-bottom: 1px solid #cacaca;
+	height: 10px;
+	margin-bottom: 25px;
+	width: 1000px;
+}
+
+/* For report */
+.summaryPopupContainer{
+	height: 564px !important;
+	margin: 3px 4px 4px;
+}
+
+.imageFieldContainer {
+	width: 85%;
+	margin: 15px auto;
+}
+.lblCollectionProgressDetails{
+	text-align: center;
+	margin-top: 7px;
+}
+.lblCollectionProgress{
+	text-align: center;
+	font-weight: bold;
+	font-size: 22px;
+	margin-top: 7px;	
+}
+.summaryText{
+	margin-top: 10px;
+	margin-left: 10px;
+}
+.popupInner {
+	border: 1px solid #ddd;
+	position: relative;
+}
+.reportPopupHeader {
+	padding:10px 15px;
+	color:white;
+	background: -webkit-linear-gradient(top, #666, #515151);
+	background: -moz-linear-gradient(top, #666, #515151);
+	background: -ms-linear-gradient(top, #666, #515151);
+	background: -o-linear-gradient(top, #666, #515151);
+	background-color: #515151;
+	font-size: 16px;
+	/* IE 6-9 */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#7AB075', EndColorStr='#4e9746');
+}
+
+.closeButton {
+	width:17px;
+	height:17px;
+	background: url("images/login/close-button.png") no-repeat;
+	position:absolute;
+	top:10px;
+	right:10px;
+}
+
+.closeButton:hover {
+	opacity:.6;
+	cursor:pointer;
+}
+.rightImageContainer
+{
+	position: absolute;
+	right: 0;
+	top: 50%;
+	right: 22px;
+	cursor: pointer;
+}
+.leftImageContainer
+{
+	left: 22px;
+	position: absolute;
+	top: 50%;
+	cursor: pointer;
+}
+/* end report */
+
+
+#txtEmbedLink{
+	width: 190px;
+	font-size: 12px;
+}
+.setMarketingPopUpCenter{
+	position: absolute;
+	overflow: visible;
+	left: 0 !important;
+	right: 193px !important;
+	top: 0 !important;
+	bottom: 297px !important;
+	margin: auto;
+	width: 550px;
+	height: 148px;
+	z-index: 1002;
 }

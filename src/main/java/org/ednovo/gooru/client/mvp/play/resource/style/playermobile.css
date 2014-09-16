@@ -1,0 +1,88 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+html
+{
+	width:760px;
+}
+.container{
+	width:760px;
+ 	margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.summaryContainer{
+	width:760px;
+ 	margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.whitebg{}
+.loginStatus{
+	margin-right:35px;
+}
+
+header{
+	width:100%;
+}
+
+.navigationWrapper{
+	width:auto;
+}
+
+.tabButtonsContainer{
+	width:100%;
+}
+.tabButtonsContainer .navigationWrapper{
+	width:50%;
+}
+
+.animationWrapper .navigationWrapper{
+	width:100%;
+}
+.animationWrapper{
+	width:100%;
+}
+.rightWrapper {
+    float: right;
+    text-align: right;
+}
+.header-inner {
+	width:100%;
+}
+
+.nav-toc-wrapperContainerMain{
+	
+}
+.nav-toc-wrapper{
+	width:100%;
+}
+.headerbar{
+	min-width:100%;
+}
+.studyplayer-container{
+	width:760px;
+	position:relative !important;
+	overflow-x:hidden !important;
+	overflow-y:hidden !important;
+}
+.rightPanel{
+	
+}
+.leftPanel{
+}
+.playerBodyContainer{
+	
+}
+.collectionPlayerContainer{
+	
+}
+.blocksmall{}
+
+
+
+
+

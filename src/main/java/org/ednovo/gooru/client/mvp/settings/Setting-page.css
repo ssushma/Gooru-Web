@@ -1366,8 +1366,14 @@ input.styled {
 }
 .standardsCheckBox{
 	float: left;
-	width: 285px;
+	width: 350px;
 	margin: 2px 14px;
+}
+.substandardsCheckBox
+{
+	float: left;
+	width: 350px;
+	margin: 2px 28px;
 }
 .adminStyle{
 	float: left;
@@ -1400,4 +1406,8 @@ input.styled {
 	font-size: 24px;
 	font-weight: bold;
 	padding-bottom: 6px;
+}
+.cssubStadard
+{
+	
 }

@@ -30,6 +30,7 @@ package org.ednovo.gooru.server.service;
 
 import java.net.URLEncoder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,8 +48,15 @@ import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.ShareUrlToken;
 import org.ednovo.gooru.server.request.UrlToken;
+import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
@@ -59,6 +67,8 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 
 /**
  * @author Search Team
@@ -98,6 +108,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	private static final String FLT_CODE_ID = "flt.codeId";
 	
 	private static final String COURSE_CODE_ID = "id";
+	
+	private static final String FLT_SOURCE_CODE_ID = "flt.sourceCodeId";
 	
 	private static final String COLLECTION_EDIT_EVENT ="collection-edit";
 	
@@ -189,7 +201,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(getSearchEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
 		}
-		System.out.println("url:::"+url);
+		System.out.println("getResourceSearchResults:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{
@@ -235,6 +247,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(getSearchEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
 		}
+		System.out.println("getCollectionSearchResults.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		collectionSearchResultDeSerializer.deserialize(jsonRep, searchDo);
@@ -312,7 +325,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(searchDo.getFilters()!=null && searchDo.getFilters().size()>0) {
 			url = url + "&"+COURSE_CODE_ID+"="+searchDo.getFilters().get(COURSE_CODE_ID);
 		}
-		
+		System.out.println("getSuggestStandardByFilterCourseId:::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		searchDo.setSearchResults(autoCompleteDeSerializer.deserializeStandards(jsonRep));
@@ -359,7 +372,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	}
 	
 	@Override
-	public Map<String, String> getShortenShareUrlforAssign(String contentGooruOid, Map<String, String> params) {
+	public Map<String, String> getShortenShareUrlforAssign(String contentGooruOid, Map<String, String> params,String classpageItemId) {
 		JsonRepresentation jsonRep=null;
 		Map<String, String> shortenUrl = new HashMap<String, String>();
 			if (params.get(TYPE).equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)) {	
@@ -370,6 +383,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				}
 			}else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)) 
 				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.CLASSPAGE.getUrl(), contentGooruOid, CLASSPAGE));
+			else if(params.get(TYPE).equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)) 
+				params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_CLASSPAGE_URL.getUrl()+"%26page=study%26share=true", contentGooruOid,classpageItemId));
 			else {
 				if (params.get(SHARETYPE).equalsIgnoreCase("embed")){
 					//params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint()+"/" + ShareUrlToken.COLLECTION_PLAY_URL.getUrl()+"%26embed=true", contentGooruOid));
@@ -377,7 +392,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 				
 				}else{
 					params.put(REAL_URL, UrlGenerator.generateUrl(getHomeEndPoint() +"/" + ShareUrlToken.COLLECTION_PLAY_URLAssign.getUrl()+"%26share=true", contentGooruOid));
-					}
+				}
 			}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SHARE_SHORTEN_URL, params, contentGooruOid, getLoggedInSessionToken());
 		
@@ -404,7 +419,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		parms = parms.replaceAll("!", "%21");
 		parms = parms.replaceAll("&", "%26");
 				
-		String gSigninUrl = getGoogleSignin() + "&domain=gmail.com&callback=" + parms;
+		String gSigninUrl = getGoogleSignin() + "domain=gmail.com&callBackUrl=" + parms;
 		return gSigninUrl;
 	}
 	
@@ -418,7 +433,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		callback = callback.replaceAll("!", "%21");
 		callback = callback.replaceAll("&", "%26");
 		
-		String gSigninUrl = getGoogleSignin() + "&domain=gmail.com&callback=" + callback;
+		String gSigninUrl = getGoogleSignin() + "domain=gmail.com&callBackUrl=" + callback;
 		return gSigninUrl;
 	}
 	
@@ -431,7 +446,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		callback = callback.replaceAll("!", "%21");
 		callback = callback.replaceAll("&", "%26");
 		
-		String gDriveUrl = getDriveGoogle() + "?callBackUrl=" + callback;
+		String gDriveUrl = getDriveGoogle() + "?emailId="+parms.get("emailId")+"&callBackUrl=" + callback;
 		return gDriveUrl;
 	}
 	
@@ -547,6 +562,126 @@ public SearchDo<ResourceSearchResultDo> getCollectionSuggestedResourceSearchResu
 	return searchDOEmpty;
 
 
+}
+
+@Override
+public ArrayList<StandardsLevel1DO> getFirstLevelStandards(String levelOrder, String standardLabel) {
+	JsonRepresentation jsonRep=null;
+	ArrayList<StandardsLevel1DO> standardLevelArry = new ArrayList<StandardsLevel1DO>();
+	
+	String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_LevelWiseStandards,levelOrder,standardLabel, getLoggedInSessionToken());
+
+	if(getSearchEndPoint().contains(HTTPS)){
+		url = appendHttpsURL(url);
+	}
+	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+	jsonRep=jsonResponseRep.getJsonRepresentation();
+	try {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			standardLevelArry = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<StandardsLevel1DO>>() {});
+			return standardLevelArry;
+		}
+	} catch (Exception e) {
+		
+		e.printStackTrace();
+	}
+	return standardLevelArry;
+}
+
+@Override
+public ArrayList<StandardsLevel2DO> getSecondLevelStandards(String levelOrder, String standardLabel) {
+	JsonRepresentation jsonRep=null;
+	ArrayList<StandardsLevel2DO> standardLevelArry = new ArrayList<StandardsLevel2DO>();
+	
+	String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_LevelWiseStandards,levelOrder,standardLabel, getLoggedInSessionToken());
+
+	if(getSearchEndPoint().contains(HTTPS)){
+		url = appendHttpsURL(url);
+	}
+	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+	jsonRep=jsonResponseRep.getJsonRepresentation();
+	try {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+
+			standardLevelArry = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<StandardsLevel2DO>>() {});
+
+			return standardLevelArry;
+		}
+	} catch (Exception e) {
+		
+		e.printStackTrace();
+	}
+	return standardLevelArry;
+}
+
+@Override
+public ArrayList<StandardsLevel3DO> getThirdLevelStandards(String levelOrder, String standardLabel) {
+	JsonRepresentation jsonRep=null;
+	ArrayList<StandardsLevel3DO> standardLevelArry = new ArrayList<StandardsLevel3DO>();
+	
+	String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_LevelWiseStandards,levelOrder,standardLabel, getLoggedInSessionToken());
+
+	if(getSearchEndPoint().contains(HTTPS)){
+		url = appendHttpsURL(url);
+	}
+	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+	jsonRep=jsonResponseRep.getJsonRepresentation();
+	try {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+
+			standardLevelArry = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<StandardsLevel3DO>>() {});
+
+			return standardLevelArry;
+		}
+	} catch (Exception e) {
+		
+		e.printStackTrace();
+	}
+	return standardLevelArry;
+}
+@Override
+public ArrayList<StandardsLevel4DO> getFourthLevelStandards(String levelOrder, String standardLabel) {
+	JsonRepresentation jsonRep=null;
+	ArrayList<StandardsLevel4DO> standardLevelArry = new ArrayList<StandardsLevel4DO>();
+	
+	String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_LevelWiseStandards,levelOrder,standardLabel, getLoggedInSessionToken());
+
+	if(getSearchEndPoint().contains(HTTPS)){
+		url = appendHttpsURL(url);
+	}
+	System.out.println("getFourthLevelStandards:::"+url);
+	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+	jsonRep=jsonResponseRep.getJsonRepresentation();
+	try {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+
+			standardLevelArry = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<StandardsLevel4DO>>() {});
+
+			return standardLevelArry;
+		}
+	} catch (Exception e) {
+		
+		e.printStackTrace();
+	}
+	return standardLevelArry;
+}
+
+
+@Override
+public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(
+		SearchDo<CodeDo> searchDo) throws GwtException, ServerDownException {
+	// TODO Auto-generated method stub
+	JsonRepresentation jsonRep=null;
+	String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SUGGEST_STANDARD_BY_FILTER_Source_CodeId, getLoggedInSessionToken(), searchDo.getSearchQuery());
+	System.out.println("searchDo.getFilters():::::::"+searchDo.getFilters());
+	if(searchDo.getFilters()!=null && searchDo.getFilters().size()>0) {
+		url = url + "&"+FLT_SOURCE_CODE_ID+"="+searchDo.getFilters().get(FLT_SOURCE_CODE_ID);
+	}
+	System.out.println("getSuggestStandardByFiltersource course id 1 CourseId api new:::::::"+url);
+	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+	jsonRep=jsonResponseRep.getJsonRepresentation();
+	searchDo.setSearchResults(autoCompleteDeSerializer.deserializeStandards(jsonRep));
+	return searchDo;
 }
 
 /*@Override

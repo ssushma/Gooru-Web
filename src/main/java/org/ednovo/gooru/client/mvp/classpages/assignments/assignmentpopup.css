@@ -25,7 +25,7 @@
 
 .assignmentButtonsContainer {
 	float: left;
-	margin: 18px 0 15px 150px;
+	margin: 23px 0 15px 150px;
 }
 .navigateButtonsContainer{
 	float: left;
@@ -375,7 +375,7 @@
 }
 .popupContainer .popupContent{
 	border:1px solid #DDD;
-	height:420px;
+	height:422px;
 }
 
 .copyResourcePopupContainer{
@@ -687,7 +687,7 @@
 	font-size: 12px;
 }
 .selectionCountLabel{
-	width:100%;
+	width:88%;
 	margin:0 auto;
 	text-align:center;
 	margin-top:5px;
@@ -697,7 +697,16 @@
 .assignmentButtonsContainerCopy {
 	float: left;
 	margin: 18px 0 15px 150px;
-	position:absolute;
-	margin-top:88px;
+	/* position:absolute;
+	margin-top:88px; */
+}
+.copyResourcePopupContainerShelf{
+	width:450px;
+	padding:3px;
+	background: white;
+	z-index: 999;
+}
+.copyResourcePopupContainerShelf .popupContent{
+	border:1px solid #DDD;
 }
  

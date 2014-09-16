@@ -39,6 +39,8 @@ import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
+import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -150,8 +152,9 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public CollectionDo getSimpleCollectionDetils(String apiKey,String simpleCollectionId, String resourceId, String tabView, String rootNodeId) {
 		CollectionDo collectionDo = new CollectionDo();
 		JsonRepresentation jsonRepresentation = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_COLLECTION,simpleCollectionId,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_COLLECTION,simpleCollectionId,getLoggedInSessionToken(),"true");
 		url+=getStandardId(rootNodeId);
+		System.out.println("getSimpleCollectionDetils:"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -202,7 +205,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		try {
 			if(jsonResponseRep.getStatusCode()==200){
 				collectionItemDo=ResourceCollectionDeSerializer.deserializeCollectionItemDo(jsonRepresentation.getJsonObject());
-				System.out.println("collitem::"+collectionItemDo.getResource().getPublisher());
 				collectionItemDo.setStatusCode(jsonResponseRep.getStatusCode());
 				String decodeUrl=collectionItemDo.getResource().getUrl();
 				if(decodeUrl!=null&&!decodeUrl.equals("")&&!decodeUrl.equals("null")){
@@ -1032,6 +1034,8 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			 }
 			 createStarRatingsJsonObj.put("target",new JSONObject().put("value","content"));
 			 createStarRatingsJsonObj.put("type",new JSONObject().put("value","star"));
+			 System.out.println("--- create star -- "+url);
+			 System.out.println("--- create str payload -- "+createStarRatingsJsonObj.toString()); 
 			 JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url,getRestUsername(), getRestPassword(), createStarRatingsJsonObj.toString());
 			 jsonRep= jsonResponseRep.getJsonRepresentation();
 			 jsonObject= jsonRep.getJsonObject();
@@ -1398,4 +1402,31 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		int responseStatusCode=new WebService(fileUrl,true).getStatusCode("GET");
 		return 	responseStatusCode;	
 	}
+
+	@Override
+	public Map<String, String> getYoutubeFeedCallback(String utubeId)
+			throws GwtException, ServerDownException {
+		// TODO Auto-generated method stub
+		Map<String, String> youtubeValues=new HashMap<String, String>();
+		try{
+			String url = "http://gdata.youtube.com/feeds/api/videos/"+utubeId+"?v=2&alt=jsonc&prettyprint=true";
+//			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_RATINGS,;
+			System.out.println("getyoutube::"+url);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
+			JsonRepresentation jsonRep = jsonResponseRep.getJsonRepresentation();
+			System.out.println("embed:"+jsonRep.getJsonObject().getJSONObject("data").getJSONObject("accessControl").get("embed").toString());
+			if(jsonRep.getJsonObject()!=null && jsonRep.getJsonObject().getJSONObject("data")!=null && jsonRep.getJsonObject().getJSONObject("data").getJSONObject("accessControl")!=null){
+				String embed=jsonRep.getJsonObject().getJSONObject("data").getJSONObject("accessControl").getString("embed");
+				String syndicate=jsonRep.getJsonObject().getJSONObject("data").getJSONObject("accessControl").getString("syndicate");
+				youtubeValues.put("embed", embed);
+				youtubeValues.put("syndicate", syndicate);
+			}
+			
+		}catch(Exception e){
+			
+		}
+		return youtubeValues;
+	}
+	
+	
 }

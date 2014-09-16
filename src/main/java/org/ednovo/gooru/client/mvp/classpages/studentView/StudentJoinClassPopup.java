@@ -44,7 +44,7 @@ public abstract class StudentJoinClassPopup extends PopupPanel {
 		
 		this.classpageDo = classpageDo;
 		
-		String userName = classpageDo.getCreatorUsername();
+		//String userName = classpageDo.getCreatorUsername();
 		setStaticData(classpageDo);
 
 		this.setGlassEnabled(true);
@@ -54,6 +54,8 @@ public abstract class StudentJoinClassPopup extends PopupPanel {
 	}
 
 	private void setStaticData(ClasspageDo classpageDo) {
+		if(classpageDo != null)
+		{
 		headerPanel.getElement().setInnerHTML(i18n.GL1536());
 		headerPanel.getElement().setId("pnlHeader");
 		headerPanel.getElement().setAttribute("alt",i18n.GL1536());
@@ -65,6 +67,7 @@ public abstract class StudentJoinClassPopup extends PopupPanel {
 		lblJoining.getElement().setId("lblJoining");
 		lblJoining.getElement().setAttribute("alt",i18n.GL1976());
 		lblJoining.getElement().setAttribute("title",i18n.GL1976());
+
 		if(classpageDo.getSharing().equalsIgnoreCase("public"))
 		{
 			welcomePanel.setVisible(true);
@@ -100,7 +103,17 @@ public abstract class StudentJoinClassPopup extends PopupPanel {
 			descPanel.setVisible(false);
 			joinLaterBtn.setVisible(false);
 		}
+		}
+		else
+		{
+			welcomePanel.setVisible(false);
+			classNamePanel.setVisible(false);
+			descPanel.setVisible(false);
+			joinLaterBtn.setVisible(false);
+		}
 //		termsPanel.getElement().setInnerHTML(i18n.GL1542);
+		if(classpageDo != null)
+		{
 		String userName = classpageDo.getCreatorUsername();
 		htmlAgree.getElement().setInnerHTML(StringUtil.generateMessage(i18n.GL1543(), userName != null ? userName : ""));
 		htmlAgree.getElement().setId("htmlAgree");
@@ -111,11 +124,13 @@ public abstract class StudentJoinClassPopup extends PopupPanel {
 		htmlInformation.getElement().setId("htmlInformation");
 		htmlInformation.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1558(), userName != null ? userName : ""));
 		htmlInformation.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1558(), userName != null ? userName : ""));
+		
 		joinBtnPanel.getElement().setId("pnlJoin");
 		joinClassBtn.setText(i18n.GL1536());
 		joinClassBtn.getElement().setId("pnlJoinClass");
 		joinClassBtn.getElement().setAttribute("alt",i18n.GL1536());
 		joinClassBtn.getElement().setAttribute("title",i18n.GL1536());
+		}
 		
 	}
 

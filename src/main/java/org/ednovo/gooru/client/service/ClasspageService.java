@@ -293,7 +293,7 @@ public interface ClasspageService extends BaseService {
 	public CollectionDo createClassPage(String classPageTitle) throws GwtException, ServerDownException;
 	public ClasspageDo getClasspage(String classpageId)  throws GwtException, ServerDownException;
 	public ClasspageItemDo createClassPageItem(String classpageId,String collectionId,String dueDate,String direction)  throws GwtException, ServerDownException;
-	public ArrayList<ClasspageItemDo> assignItemToClass(String classpageId,String itemId)  throws GwtException, ServerDownException;
+	public ArrayList<ClasspageItemDo> assignItemToClass(String classpageId,String itemId,String dueDate,String direction)  throws GwtException, ServerDownException;
 	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit,String sortingOrder,String studyStatus) throws GwtException, ServerDownException;
 	public String updateClasspageItem(String classpageItemId,String direction,String dueDate,String readStatus) throws GwtException, ServerDownException;
 	public String deleteClassPageItem(String collectionId) throws GwtException, ServerDownException;

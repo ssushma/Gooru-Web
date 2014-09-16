@@ -31,12 +31,14 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionEditShareEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionEditShareHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.EmbedEnableEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.PublishButtonHideEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareLinksView;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
@@ -209,7 +211,7 @@ public class CollectionShareTabVc extends Composite {
 		finalTeacherTipLabelContainer
 		.addMouseOutHandler(new OnCollectionDescriptionOut());
 		
-		shareCollectiontext.setText(i18n.GL0545().toUpperCase());
+		shareCollectiontext.setText(i18n.GL0545());
 		shareCollectiontext.getElement().setId("lblShareCollectiontext");
 		shareCollectiontext.getElement().setAttribute("alt",i18n.GL0545());
 		shareCollectiontext.getElement().setAttribute("title",i18n.GL0545());
@@ -429,7 +431,7 @@ public class CollectionShareTabVc extends Composite {
 			}
 		});
 		
-		String params = "/#"+PlaceTokens.PREVIEW_PLAY+"&id="+this.collection.getGooruOid();
+		String params = "/#"+PlaceTokens.COLLECTION_PLAY+"&id="+this.collection.getGooruOid();
 		AppClientFactory.getInjector().getSearchService().getCollectionPlayDirectLink(params, new SimpleAsyncCallback<String>() {
 
 			@Override
@@ -625,11 +627,12 @@ public class CollectionShareTabVc extends Composite {
 						 
 						 
 					}else{
+						
 						collectionShareAlertPopup = new CollectionShareAlertPopup() {
 							@Override
 							public void setPublicFromAlert() {
 								if(collection.getSharing().equalsIgnoreCase("public")){
-									collectionShareAlertPopup.setPrivateMsgData();
+//									collectionShareAlertPopup.setPrivateMsgData(); // Do not enable 
 									privateShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 									publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 									linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
@@ -642,19 +645,14 @@ public class CollectionShareTabVc extends Composite {
 						if(collection.getSharing().equalsIgnoreCase("public")){
 							 collectionShareAlertPopup.confirmPopup();
 						}else{
-							collectionShareAlertPopup.setPrivateMsgData();
+//							collectionShareAlertPopup.setPrivateMsgData(); // Do not enable 
 							privateShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 							publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 							linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 							updateShare("private");
 							selectPrivateResource("private");
 						}
-						
-					
 					}
-					
-				      
-					
 				}
 			});
 			
@@ -700,7 +698,8 @@ public class CollectionShareTabVc extends Composite {
 					@Override
 					public void setPublicFromAlert() {
 						if(collection.getSharing().equalsIgnoreCase("public")){
-							collectionShareAlertPopup.setShareableMsgData();
+							
+//							collectionShareAlertPopup.setShareableMsgData(); // Do not enable 
 							linkShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 							privateShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 							publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
@@ -712,7 +711,7 @@ public class CollectionShareTabVc extends Composite {
 				if(collection.getSharing().equalsIgnoreCase("public")){
 					 collectionShareAlertPopup.confirmPopup();
 				}else{
-					collectionShareAlertPopup.setShareableMsgData();
+//					collectionShareAlertPopup.setShareableMsgData(); // Do not enable 
 					linkShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 					privateShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 					publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
@@ -1073,6 +1072,7 @@ public class CollectionShareTabVc extends Composite {
 	}
 	
 	public void clickOnPublic(){
+		
 		if(publicShareFloPanel.getStyleName().contains(ShelfCBundle.INSTANCE.css().inActiveClass())) {
 			if(!lblPublishPending.isVisible()){
 				collectionShareAlertPopup = new CollectionShareAlertPopup() {
@@ -1085,10 +1085,19 @@ public class CollectionShareTabVc extends Composite {
 						
 							@Override
 							public void onClickPositiveButton(ClickEvent event) {
+								
+								if(AppClientFactory.isContentAdmin()){
+									AppClientFactory.fireEvent(new PublishButtonHideEvent());
+								}
+								
 								this.hide();
 								updateShare("public");
 								selectPrivateResource("public");
-								Window.enableScrolling(true);
+								if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+									Window.enableScrolling(false);
+								}else{
+									Window.enableScrolling(true);
+								}
 							}
 						};
 						success.setPopupTitle(i18n.GL1921());

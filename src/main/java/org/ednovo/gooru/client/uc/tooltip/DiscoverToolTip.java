@@ -159,18 +159,18 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 		
 		getPartners();
 				
-		this.addMouseOutHandler(new MouseOutHandler() {
+/*		this.addMouseOutHandler(new MouseOutHandler() {
 			
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
-			    hide();
+			    //hide();
 			}
-		});
+		});*/
         
         lblGooruLibrary.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DISCOVER);
 			}
 		});
         
@@ -195,13 +195,13 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 			partnerLibContainer.getElement().removeAttribute("style");
 		}
 		
-		Window.addWindowScrollHandler(new ScrollHandler() {
+/*		Window.addWindowScrollHandler(new ScrollHandler() {
 			@Override
 			public void onWindowScroll(ScrollEvent event) {
-				partnerLibContainer.getElement().getStyle().setMarginTop(event.getScrollTop()+50, Unit.PX);
-				districtLibContainer.getElement().getStyle().setMarginTop(event.getScrollTop()+23, Unit.PX);
+				partnerLibContainer.getElement().getStyle().setMarginTop(event.getScrollTop()+100, Unit.PX);
+				//districtLibContainer.getElement().getStyle().setMarginTop(event.getScrollTop()+23, Unit.PX);
 			}
-		});
+		});*/
         
 	}
 	
@@ -273,8 +273,7 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 	public void setPartners(ArrayList<LibraryUserDo> partnersList) {
 		for(int i=0;i<partnersList.size();i++) {
 			final LibraryUserDo libraryUserDo = partnersList.get(i);
-			
-			final Label partnerTitle = new Label(StringUtil.getPartnerName(libraryUserDo.getUsername()));
+			final Label partnerTitle = new Label(libraryUserDo.getDisplayName());
 			partnerTitle.addStyleName("courseOption");
 			partnerTitle.addClickHandler(new ClickHandler() {
 				@Override
@@ -287,43 +286,15 @@ public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 		}
 	}
 	
-//	private void getPartnersData() {
-//		List<String> partnersData = new ArrayList<String>();
-//		partnersData.add("Autodesk® ");
-//		partnersData.add("8a6b75b8-0537-492e-8970-c41ade8723a6");
-//		partnersData.add("Foundation for Teaching Economics (FTE)");
-//		partnersData.add("de182361-8379-4d82-9168-e5bd8b658cff");
-//		partnersData.add("SVEF's Lessonopoly");
-//		partnersData.add("cd46b323-83d6-44ef-acf1-cef0705623db");
-//		partnersData.add("New Global Citizens (NGC)");
-//		partnersData.add("bac737f6-4945-4990-b3d6-8c07ec09f9c8");
-//		partnersData.add("Office of Naval Research (ONR)");
-//		partnersData.add("2e8dd71c-cef6-435d-bfd8-0afad9939b07");
-//		partnersData.add("What So Proudly We Hail");
-//		partnersData.add("593eeff6-2fa2-487b-941d-67d197e10201");
-//		setPartnersData(partnersData);
-//	}
-
-	public class RedirectToPartnerPage implements ClickHandler {
-		private String folderId;
-		public RedirectToPartnerPage(String folderId) {
-			this.folderId = folderId;
-		}
-
-		@Override
-		public void onClick(ClickEvent event) {
-			hide();
-			Map<String,String> params = new HashMap<String, String>();
-			params.put("pid", folderId);
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.AUTODESK, params);
-		}
-	}
-	
 	private HashMap<String,String> getPublicLibraryPartners() {
 		HashMap<String,String> publicPartners = new LinkedHashMap<String,String>();
+		publicPartners.put(i18n.GL2108(),PlaceTokens.CORE_LIBRARY);//Phased out of this release
+		publicPartners.put(i18n.GL2053(),PlaceTokens.LPS);
+		//publicPartners.put(i18n.GL2055(),PlaceTokens.MURRIETA); //Phased out of this release
 		publicPartners.put(i18n.GL0515_1(),PlaceTokens.RUSD_LIBRARY);
 		publicPartners.put(i18n.GL1898(),PlaceTokens.SAUSD_LIBRARY);
+		publicPartners.put(i18n.GL2057(),PlaceTokens.SUSD);
+		publicPartners.put(i18n.GL2060(),PlaceTokens.VALVERDE);
 		return publicPartners;
 	}
-	
 }

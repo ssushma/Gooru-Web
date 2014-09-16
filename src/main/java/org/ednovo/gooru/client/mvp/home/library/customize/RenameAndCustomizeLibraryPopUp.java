@@ -37,6 +37,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author BLR Team
@@ -109,7 +110,8 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 						
 						@Override
 						public void closePoupfromChild() {
-							closePoup();
+
+							hide();
 						}
 
 						@Override
@@ -142,16 +144,17 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 		backtoLibrary.getElement().setAttribute("alt",i18n.GL0142());
 		backtoLibrary.getElement().setAttribute("title",i18n.GL0142());
 		
-		editCollection.setText(i18n.GL0636());
+		editCollection.setText(i18n.GL0590());
 		editCollection.getElement().setId("btnEditCollection");
-		editCollection.getElement().setAttribute("alt",i18n.GL0636());
-		editCollection.getElement().setAttribute("title",i18n.GL0636());
+		editCollection.getElement().setAttribute("alt",i18n.GL0590());
+		editCollection.getElement().setAttribute("title",i18n.GL0590());
 		
-		panelAssign.getElement().getStyle().setMarginBottom(10, Unit.PX);
+		panelAssign.getElement().getStyle().setMarginBottom(3, Unit.PX);
 		loginCustom.getElement().getStyle().setMarginBottom(15, Unit.PX);
 		copycollectionTextbox.setMaxLength(50);
 		Window.enableScrolling(false);
-		this.getElement().setAttribute("style", "z-index:99999;");
+		this.getElement().getStyle().setZIndex(99999);
+		//this.getElement().setAttribute("style", "z-index: 99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;");
 		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 		
@@ -218,6 +221,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 	}
 
 	public void showSuccessMsg(String collectionId,String collectionTitle) {
+		
 		loginCustom.setVisible(false);
 		copyCollectionSuccess.setVisible(true);
 		editCollection.getElement().setAttribute("collectionId", collectionId);
@@ -262,10 +266,11 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 							SetStyleForProfanity.SetStyleForProfanityForTextBox(copycollectionTextbox, errorLabel, value);
 						}else{	
 								String collectionTitle = copycollectionTextbox.getText();
-								
-								if(!collectionTitle.isEmpty())
+								if(!collectionTitle.isEmpty() && !collectionTitle.trim().isEmpty())
 								{
-									closePoup();
+								
+									hide();
+								//	closePoup();
 								if(!isCustomizePopup){
 									isCustomizePopup=true;
 								Boolean loginFlag = false;
@@ -307,13 +312,15 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 
 				@Override
 				public void onSuccess(CollectionDo result) {
+					
 						AppClientFactory.getPlaceManager().revealPlace(
 							PlaceTokens.SHELF,
 							new String[] {
 									"id",
 									result.getGooruOid()});
 						AppClientFactory.fireEvent(new RefreshUserShelfCollectionsEvent());
-					closePoup();
+						hide();
+					//closePoup();
 				}
 			};
 		}

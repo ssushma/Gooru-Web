@@ -9,6 +9,7 @@
 					<g:FlowPanel styleName="{res.css.resourceHeaderTextPanel}" ui:field="resourceTitlePanel">
 						<uc:HTMLEventPanel styleName="resourceSearchTitle" ui:field="resourceTitleContainer">
 						    <g:HTML styleName="{res.css.resourceTitle}" ui:field="lblResourceTitle"></g:HTML>
+						    <g:Image  styleName="{res.css.imgHeight}" ui:field="imgOER"></g:Image>
 						    <g:Image  styleName="{res.css.imgHeight}" ui:field="imgNotFriendly"></g:Image>
 						</uc:HTMLEventPanel>
 						<g:FlowPanel styleName="{res.css.metaDataPanel}" ui:field="metaDataFloPanel"/>

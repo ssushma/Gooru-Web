@@ -234,7 +234,7 @@ margin-top: -2px;
 	float: left;
 	margin-bottom: 11px;
 	position: relative;
-	width: 790px;
+	width: 635px;
 	height: 30px;
 	zoom: 1; /* IE gain hasLayout */
 	z-index: 98;
@@ -987,7 +987,7 @@ user agent stylesheetdiv {
 }
 
 .standardsInEditResource{
-	position: relative;
+	/* position: relative; */
 	padding: 20px 0px 0px 0px;
 	margin-top: 43px;
 }
@@ -2394,6 +2394,7 @@ margin-top: 18px; */
 .resourceRightsContainer {
 	margin-left: 79px;
 	width: 100%;
+	float:left;
 }
 
 .resourceRightsContainerWeb {
@@ -2416,6 +2417,7 @@ margin-top: 18px; */
 .anchorText {
 	text-decoration: none !important;
 	cursor: pointer;
+	color: #0066cc;
 }
 
 .processing {
@@ -2525,6 +2527,7 @@ margin-top: 18px; */
 .customAnchorText {
 	text-decoration: none !important;
 	cursor: pointer;
+	color: #0066cc;
 }
 
 .myFolderCollectionFormInputControlForErrors {
@@ -2681,12 +2684,12 @@ margin-top: 18px; */
 	filter: alpha(opacity = 30);
 }
 .andText{
-	float: right;
-	margin-right: 25px;
+	/* float: right;
+	margin-right: 25px; */
 }
 .additionalText{
-	float: right;
-	margin-right: 65px;
+	/* float: right;
+	margin-right: 65px; */
 }
 .updateTextStyle{
 	float: right;	
@@ -2720,7 +2723,7 @@ margin-top: 18px; */
 	margin-top: -265px;
 }
 .dDriveSlides{
-background-position: 0px -55px;
+	background-position: 0px -55px;
     width: 28px;
     height: 22px;
     float: left;
@@ -2728,4 +2731,140 @@ background-position: 0px -55px;
 .driveWebContainer{
 	float: left;
 	padding: 0 21px 0 18px;
+}
+.errorMsgLabel{
+	color: #fbb03b;
+	text-align: center;
+	width: 525px;
+}
+.editpdfContainer{
+	float: left;
+	width: 386px;
+}
+.stopPdfLbl {
+	color: #515151;
+	font-size: 12px;
+	float: left;
+	padding-top: 5px;
+	padding-left: 0px;
+	padding-right: 5px;
+	font-weight: bold;
+	margin-left:10px;
+}
+.h5 {
+	font-size: 12px !important;
+	/* font-weight: bold; */
+	padding: 5px 0px;
+}
+
+.li {
+	cursor: pointer;
+	display: inline-block;
+	margin-right: 5px;
+	padding: 0px 10px 8px 0px;
+}
+
+.clearfix {
+	clear: both;
+}
+.dropdownContainerInstructional{
+	background-color:rgb(255,255,255);
+	width:270px;
+	height:28px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	position: relative;
+}
+.placeHolderText{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:rgb(153,153,153);
+	text-align:left;
+	padding-top: 8px;
+	padding-left: 5px;
+	float: left;
+	cursor: pointer;
+	width: 90%;
+}
+.arrowInstructional {
+    width: 0;
+	height: 0;
+	border: 8px solid;
+	border-color: rgb(153,153,153) transparent transparent transparent;
+	left: 130px;
+	top: -9px;
+	float: right;
+	margin-top: -12px;
+	margin-right: 7px;
+	border-bottom: none;
+	cursor: pointer;
+}
+.scrollPanelContainerInstructional{
+	background-color:rgb(255,255,255);
+	width:270px;
+	height:80px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	top: 7px;
+	left: -1px;
+	z-index: 9;
+	overflow-x:hidden !important;
+}
+.selectsection {
+	display: inline-block;
+	vertical-align: top;
+	width: 150px;
+}
+.fRight {
+	float: left;
+	 margin-top: 8px;
+}
+.OnButtonDeActive {
+	font-size: 12px;
+	width: 57px;
+	height: 29px;
+	cursor: pointer;
+	text-align: center;
+	margin-top: 5px;
+	background: #EFEFEF;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#FDFDFD), to(#DDD));
+	background: -webkit-linear-gradient(top, #FDFDFD, #DDD);
+	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
+	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
+	background: -o-linear-gradient(top, #fdfdfd, #ddd);
+	border: 1px solid #DDD;
+	margin-left:-4px;
+}
+.OnButtonDeActive:hover {
+	cursor: pointer;
+	background: #EEE;
+}
+.accessHazard {
+	font-size: 12px !important;
+	padding: 5px 0px;
+	border-bottom: 1px solid #CCC;
+	width: 74%;
+	margin-bottom: 8px;
+}
+
+.charLimit{
+	float : right;
+	color: #999;
+	margin-right: 122px;
+	font-size: 12px;
 }

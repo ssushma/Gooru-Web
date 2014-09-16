@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.UserService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.deserializer.ResourceDeserializer;
@@ -41,6 +42,7 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
@@ -104,6 +106,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	  	UserDo userDo = null;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_USER_AVAILABILITY, type,getLoggedInSessionToken(), emailId);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
@@ -367,7 +370,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		if(userMetaActiveFlag.equalsIgnoreCase("1")) {
 			url+=USER_META_ACTIVE_FLAG;
 		}
-		
+		System.out.println("getUserProfileV2Details..."+url);
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -387,6 +390,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),postData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
+			System.out.println("jsonRep.getJsonObject().toString(.."+jsonRep.getJsonObject().toString());
 			userDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -730,5 +734,48 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public String getRefershToken(String gooruUid) throws GwtException ,ServerDownException{
+		JsonRepresentation jsonRep = null;
+		String url =UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.REFRESH_TOKEN_GDC,gooruUid);
+		
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();	
+		return deserializeRefreshToken(jsonRep);
+	}
+	
+	public String deserializeRefreshToken(JsonRepresentation jsonRep) {
+		String refreshToken = null;
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try{
+			JSONObject jsonObject=jsonRep.getJsonObject();
+			refreshToken = jsonObject.getString("refreshToken");
+			}catch(JSONException e){}
+				
+		}
+		return refreshToken;
+	}
+
+	@Override
+	public String revokeToken(String gooruUid) throws GwtException,ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url =UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.REVOKE_TOKEN_GD,gooruUid);
+		
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeRevokeToken(jsonRep);
+	}
+	public String deserializeRevokeToken(JsonRepresentation jsonRep) {
+		String refreshToken = null;
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try{
+			JSONObject jsonObject=jsonRep.getJsonObject();
+			refreshToken = jsonObject.getString("refreshToken");
+			}catch(JSONException e){}
+				
+		}
+		return refreshToken;
 	}
 }

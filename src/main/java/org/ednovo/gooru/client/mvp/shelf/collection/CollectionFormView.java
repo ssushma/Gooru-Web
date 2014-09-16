@@ -137,6 +137,8 @@ public class CollectionFormView extends
 	@UiField
 	HTMLEventPanel publicShareFloPanel;
 	
+	boolean fromAddResourcePresenter=false;
+	
 	
 	RadioButton radioButtonPublic = new RadioButton("", "");
 	RadioButton radioButtonShare = new RadioButton("", "");
@@ -204,7 +206,9 @@ public class CollectionFormView extends
 		hideFromPopup(true);
 		appPopUp = new AppPopUp();
 		appPopUp.setContent(TITLE_THIS_COLLECTION,uiBinder.createAndBindUi(this));
-		getAccountTypeId();
+		if(!(AppClientFactory.isAnonymous())){
+			getAccountTypeId();
+		}
 		mandatoryErrorLbl.setVisible(false);
 		isCheckedValue=false;
 		publicShareFloPanel.setVisible(false);
@@ -299,6 +303,11 @@ public class CollectionFormView extends
 								final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
 								final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
 								final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+							//	final String resourceidonclick 	= AppClientFactory.getPlaceManager().getRequestParameter("resourceidfromAddResourcePresenter");
+								final String resourceidonclick 	= AppClientFactory.getPlaceManager().getRequestParameter("resourceid");
+								final String fromAddresourcePresenter 	= 	AppClientFactory.getPlaceManager().getRequestParameter("fromAddresource");
+								
+								
 								btnOk.setEnabled(false);
 //								btnOk.getElement().addClassName("disabled");
 								buttonMainContainer.setVisible(false);
@@ -307,7 +316,10 @@ public class CollectionFormView extends
 									getUiHandlers().copyCollection(collectionTitleTxtBox.getText().trim(),AppClientFactory.getPlaceManager().getRequestParameter("collectionId"));
 								}else if(AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE)!=null&&!AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE).equalsIgnoreCase("")){
 									getUiHandlers().copyDraggedCollection(collectionTitleTxtBox.getText().trim(),AppClientFactory.getPlaceManager().getRequestParameter("collectionId"),AppClientFactory.getPlaceManager().getRequestParameter("selectedFolderId"));
-								}else{
+								}else if(resourceidonclick!=null){
+									getUiHandlers().saveCollectionForSearch(folderId,o1,o2,o3,resourceidonclick,fromAddresourcePresenter);
+									}
+								else{
 									getUiHandlers().saveCollection(folderId,o1,o2,o3); 
 								}
 								
@@ -570,9 +582,9 @@ public class CollectionFormView extends
 			collectionTitleTxtBox.setText(AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE));
 			collectionTitleTxtBox.getElement().setAttribute("alt",AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE));
 			collectionTitleTxtBox.getElement().setAttribute("title",AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE));
-			btnOk.setText(i18n.GL0636());
-			btnOk.getElement().setAttribute("alt",i18n.GL0636());
-			btnOk.getElement().setAttribute("title",i18n.GL0636());
+			btnOk.setText(i18n.GL0590());
+			btnOk.getElement().setAttribute("alt",i18n.GL0590());
+			btnOk.getElement().setAttribute("title",i18n.GL0590());
 			cancelAnr.setText(i18n.GL0142());
 			cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
 			cancelAnr.getElement().setAttribute("title",i18n.GL0142());
@@ -600,7 +612,7 @@ public class CollectionFormView extends
 			appPopUp.setViewTitle(i18n.GL1421());
 			setPopUpStyle();
 		}else{
-			if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.HOME)){
+			if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.DISCOVER)){
 				collPopUpMainheading.setText(i18n.GL0993());
 				collPopUpMainheading.getElement().setAttribute("alt",i18n.GL0993());
 				collPopUpMainheading.getElement().setAttribute("title",i18n.GL0993());
@@ -792,7 +804,7 @@ public class CollectionFormView extends
 
 	@Override
 	public void onUnload() {
-		if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.HOME)){
+		if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.DISCOVER)){
 			AppClientFactory.getPlaceManager().revealPlayerPreviousPlace(false, getDefaultView());
 		}
 	}

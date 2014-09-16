@@ -24,10 +24,16 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.service;
 
+import java.util.ArrayList;
 import java.util.Map;
 
+import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
@@ -63,7 +69,7 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 	
 	void getShortenShareUrl(String contentGooruOid, Map<String, String> params,  AsyncCallback<Map<String, String>> callback);
 	
-	void getShortenShareUrlforAssign(String contentGooruOid, Map<String, String> params,  AsyncCallback<Map<String, String>> callback);
+	void getShortenShareUrlforAssign(String contentGooruOid, Map<String, String> params,String classpageItemId,  AsyncCallback<Map<String, String>> callback);
 	
 	void getGoogleSignin(String parms, AsyncCallback<String> callback);
 	
@@ -85,4 +91,15 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 	void getCollectionSuggestedResourceSearchResults(SearchDo<ResourceSearchResultDo> searchInput,String contentGorruOid, AsyncCallback<SearchDo<ResourceSearchResultDo>> callback);
 	
 	void getGoogleDrive(String url, Map<String, String> parms, AsyncCallback<String> callback);
+	
+	void getFirstLevelStandards(String levelOrder, String standardLabel, AsyncCallback<ArrayList<StandardsLevel1DO>> callback);
+	
+	void getSecondLevelStandards(String levelOrder, String standardLabel, AsyncCallback<ArrayList<StandardsLevel2DO>> callback);
+	
+	void getThirdLevelStandards(String levelOrder, String standardLabel, AsyncCallback<ArrayList<StandardsLevel3DO>> callback);
+	
+	void getFourthLevelStandards(String levelOrder, String standardLabel, AsyncCallback<ArrayList<StandardsLevel4DO>> callback);
+
+	 public void getSuggestStandardByFilterCourseIdsource(SearchDo<CodeDo> searchDo,
+			 AsyncCallback<SearchDo<CodeDo>> callback);
 }

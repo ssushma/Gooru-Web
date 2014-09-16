@@ -633,7 +633,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 		AppClientFactory
 		.getInjector()
 		.getSearchService()
-		.getShortenShareUrlforAssign(classpageId, params,
+		.getShortenShareUrlforAssign(classpageId, params,null,
 				new SimpleAsyncCallback<Map<String, String>>() {
 
 			@Override
@@ -847,6 +847,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 			@Override
 			public void onSuccess(String result) {
 //				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
+				MixpanelUtil.mixpanelEvent("Assign_player_signin_google");
 				Window.Location.replace(result);
 			
 			}
@@ -872,8 +873,8 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 
 			@Override
 			public void openParentPopup() {
-				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+				Window.enableScrolling(false);
 			}
 			
 		};

@@ -6,6 +6,12 @@
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="playerStyle" src="collectionshare.css" />
 	<g:FlowPanel styleName="{playerStyle.collection-narration-container}">
+		<uc:HTMLEventPanel styleName="{playerStyle.resource-info-bottomImageContainer}"
+			ui:field="hideButton">
+			<g:Label styleName="{playerStyle.resource-info-hideImage}" />
+			<g:Label styleName="{playerStyle.resource-info-hideText}"
+				ui:field="hideText"></g:Label>
+		</uc:HTMLEventPanel>
 		<g:FlowPanel styleName="{playerStyle.collection-narration-wrapper}">
 			<g:HTMLPanel styleName="{playerStyle.collection-share-maintitle}"
 				ui:field="shareMainTitle"></g:HTMLPanel>
@@ -39,11 +45,6 @@
 					ui:field="embedLink"></g:InlineLabel>
 			</g:HTMLPanel>
 		</g:FlowPanel>
-		<uc:HTMLEventPanel styleName="{playerStyle.resource-info-bottomImageContainer}"
-			ui:field="hideButton">
-			<g:Label styleName="{playerStyle.resource-info-hideImage}" />
-			<g:Label styleName="{playerStyle.resource-info-hideText}"
-				ui:field="hideText"></g:Label>
-		</uc:HTMLEventPanel>
+		
 	</g:FlowPanel>
 </ui:UiBinder>

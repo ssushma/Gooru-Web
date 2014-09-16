@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -75,7 +76,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	@UiField
 	SimplePanel contentSimPanel;
 
-	@UiField
+	@UiField public
 	DisclosurePanel disclosureDisPanel;
 
 	@UiField
@@ -83,12 +84,15 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 
 	@UiField
 	FocusPanel shareLinkFocPanel;
+	
+	@UiField
+	FocusPanel addLinkFocPanel;
 
 	@UiField
 	Label addedStatusLbl;
 
 	@UiField
-	SimplePanel disclosureContentSimPanel;
+	public SimplePanel disclosureContentSimPanel;
 
 	@UiField
 	FlowPanel disclosureHeaderFloPanel;
@@ -99,6 +103,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	@UiField
 	Label shareLbl;
 	
+	@UiField public Label addLbl;
+	
 	@UiField(provided = true)
 	SearchResultWrapperCBundle res;
 
@@ -107,6 +113,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	
 	@UiField
 	Label resourcePlayerClickPanel;
+	
+	ResourceSearchPresenter resourceSearchPresenter;
 	
 	@UiField public FlowPanel ratingWidgetPanel;
 
@@ -119,12 +127,16 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	private CollectionInfo collectionInfo;
 	
 	private SearchInfoWidget searchInfoWidget;
-
-    private Boolean moreInfoMode = true;
+	
+	private AddResourceContainerView addResourceOrFolderContainerView ;
+	
+	private Boolean moreInfoMode = true;
 	
 	private Boolean colleResMode = true;
 	
 	private Boolean shareMode = true;
+	
+	private Boolean addMode = true;
 
 	private static SearchResultWrapperVc<?, ?> openedResult;
 
@@ -143,7 +155,6 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		setAddedStatus(true);
-
 		moreInfoLbl.setText(i18n.GL1756());
 		moreInfoLbl.getElement().setAttribute("alt",i18n.GL1756());
 		moreInfoLbl.getElement().setAttribute("title",i18n.GL1756());
@@ -151,10 +162,19 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		shareLbl.setText(i18n.GL0526());
 		shareLbl.getElement().setAttribute("alt",i18n.GL0526());
 		shareLbl.getElement().setAttribute("title",i18n.GL0526());
+		if (AppClientFactory.getCurrentPlaceToken().equals(
+				PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(
+						PlaceTokens.COLLECTION_PLAY)) {
+		addLbl.setText(i18n.GL0590());
+		}else{
+			addLbl.setText(i18n.GL2037());
+		}
 		
 		moreInfoLbl.getElement().setId("lblMoreInfo");
 		collcResLbl.getElement().setId("lblResColle");
 		shareLbl.getElement().setId("lblSahre");
+		addLbl.getElement().setId("lblAdd");
+		
 		String browserType = browserAgent.returnFormFactorView();
 		if(!(browserType.equalsIgnoreCase("desktop"))) {
 			setResourcePlayerClickPanelMobile();
@@ -167,6 +187,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		searchShareVc = new SearchShareVc();
 		collectionInfo = new CollectionInfo();
 		searchInfoWidget = new SearchInfoWidget();
+		
+		
 		addStyleName(UcCBundle.INSTANCE.css().userDefaultSelectDisable());
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)){
 			addStyleName(SearchResultWrapperCBundle.INSTANCE.css().collectionPPPPanel());
@@ -182,6 +204,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		contentSimPanel.getElement().setId("spnlContentSimPanel");
 		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 		addedStatusLbl.getElement().setId("lblAddedStatusLbl");
+
 		resourcePlayerClickPanel.getElement().setId("lblResourcePlayerClickPanel");
 		disclosureHeaderFloPanel.getElement().setId("fpnlDisclosureHeaderFloPanel");
 		disclosureDisPanel.getElement().setId("discpnlDisclosureDisPanel");
@@ -228,13 +251,16 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	}
 	
 	public void openMoreInfoContainer() {
-		if (moreInfoMode && (colleResMode || shareMode)) {
+		if (moreInfoMode && (colleResMode || shareMode || addMode)) {
 			moreInfoMode = false;
 			colleResMode = true;
 			shareMode = true;
+			addMode =true;
 			collcResLbl.removeStyleName(res.css().infoLblActive());
 			moreInfoLbl.addStyleName(res.css().moreInfoActive());
 			shareLbl.removeStyleName(res.css().shareActive());
+			addLbl.removeStyleName(res.css().addLblActive());
+			
 			disclosureContentSimPanel.clear();
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
 				disclosureContentSimPanel.setWidget(getSearchInfoWidget());
@@ -251,6 +277,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
 			shareLbl.removeStyleName(res.css().shareActive());
 			collcResLbl.removeStyleName(res.css().infoLblActive());
+			addLbl.removeStyleName(res.css().addLblActive());
 		}
 	}
 	
@@ -261,16 +288,18 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	@UiHandler("shareLinkFocPanel")
 	public void onShareShortenUrlLink(ClickEvent clickEvent) {
 
-		if (shareMode && (colleResMode || moreInfoMode)) {
+		if (shareMode && (colleResMode || moreInfoMode || addMode)) {
 			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
 			collcResLbl.removeStyleName(res.css().infoLblActive());
 			shareLbl.addStyleName(res.css().shareActive());
+			addLbl.removeStyleName(res.css().addLblActive());
 			disclosureContentSimPanel.clear();
 			disclosureContentSimPanel.setWidget(getSearchShareVc());
 			getSearchShareVc().onReveal();
 			shareMode = false;
 			colleResMode = true;
 			moreInfoMode = true;
+			addMode =true;
 			onDisclosureOpen();
 			MixpanelUtil.Click_Share();
 		} else {
@@ -278,6 +307,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
 			shareLbl.removeStyleName(res.css().shareActive());
 			collcResLbl.removeStyleName(res.css().infoLblActive());
+			addLbl.removeStyleName(res.css().addLblActive());
 		}
 	}
 	
@@ -288,13 +318,15 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	@UiHandler("collectionFocPanel")
 	public void onInfoTabClick(ClickEvent clickEvent) {
 
-		if (colleResMode && (shareMode || moreInfoMode)) {
+		if (colleResMode && (shareMode || moreInfoMode || addMode)) {
 			colleResMode = false;
 			moreInfoMode = true;
 			shareMode = true;
+			addMode = true;
 			collcResLbl.addStyleName(res.css().infoLblActive());
 			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
 			shareLbl.removeStyleName(res.css().shareActive());
+			addLbl.removeStyleName(res.css().addLblActive());
 			disclosureContentSimPanel.clear();
 			disclosureContentSimPanel.setWidget(getSearchMoreInfoVc());
 			getSearchMoreInfoVc().setData(this.searchResultDo);
@@ -306,9 +338,39 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
 			shareLbl.removeStyleName(res.css().shareActive());
 			collcResLbl.removeStyleName(res.css().infoLblActive());
+			addLbl.removeStyleName(res.css().addLblActive());
 		}
 	}
 
+	@UiHandler("addLinkFocPanel")
+	public void onaddTabClick(ClickEvent clickEvent) {
+		if (addMode && (shareMode || moreInfoMode || colleResMode)) {
+			addMode = false;
+			moreInfoMode = true;
+			shareMode = true;
+			colleResMode = true;
+			collcResLbl.removeStyleName(res.css().infoLblActive());
+			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
+			shareLbl.removeStyleName(res.css().shareActive());
+			addLbl.addStyleName(res.css().addLblActive());
+
+			/*if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+				disclosureContentSimPanel.setWidget();
+			}else{
+				disclosureContentSimPanel.setWidget();
+			}*/
+			
+			onDisclosureOpen();
+			MixpanelUtil.Click_addInfo();
+		} else {
+			onDisclosureClose();
+			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
+			shareLbl.removeStyleName(res.css().shareActive());
+			collcResLbl.removeStyleName(res.css().infoLblActive());
+			addLbl.removeStyleName(res.css().addLblActive());
+		}
+	}
+	
 	/**
 	 * Close disclosure panel widget
 	 */
@@ -317,6 +379,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		moreInfoMode = true;
 		shareMode = true;
 		colleResMode = true;
+		addMode = true;
 		disclosureDisPanel.setOpen(false);
 	}
 
@@ -366,7 +429,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	 */
 	public void setAddedStatus(Boolean added) {
 //		addedStatusLbl.setVisible(added != null ? added : !addedStatusLbl.getText().equals(DRAG_TO_ADD));
-		addedStatusLbl.setVisible(true);
+		addedStatusLbl.setVisible(false);
 	}
 
 	/**
@@ -454,6 +517,10 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	}
 
 	protected abstract SearchMoreInfoVc<T, C> getSearchMoreInfoVc();
+
+	public AddResourceContainerView getAddResourceOrFolderContainerView() {
+		return addResourceOrFolderContainerView;
+	}
 	
 
 }
