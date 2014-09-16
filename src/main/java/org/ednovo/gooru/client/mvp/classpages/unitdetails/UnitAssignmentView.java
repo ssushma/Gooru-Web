@@ -32,6 +32,8 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.classpages.event.ReorderAssignmentEvent;
+import org.ednovo.gooru.client.mvp.classpages.event.ReorderAssignmentEventHandler;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
@@ -124,7 +126,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
 		unitSetupButton.addClickHandler(new UnitSetupEvents());
-		//containerPanel.setVisible(false);
+		AppClientFactory.getEventBus().addHandler(ReorderAssignmentEvent.TYPE, reorderAssignmentEventHandler);
 	}
 	
 	public HTMLPanel getUnitPanel(){
@@ -172,7 +174,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		leftArrow.getElement().setAttribute("style", "cursor:pointer");
 		totalAssignmentHitcount = unitAssignmentsDo.getTotalHitCount();
 		if(unitAssignmentsDo!=null &&unitAssignmentsDo.getSearchResults().size()!=0){
-				
+			
 					try{
 						if(leftHandler!=null) {
 							leftHandler.removeHandler();
@@ -187,16 +189,16 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				circleContainerPanel.clear();
 				leftArrow.setUrl("images/leftSmallarrow.png");
 				circleContainerPanel.add(leftArrow);
-				if(unitAssignmentsDo.getSearchResults()!=null && unitAssignmentsDo.getSearchResults().get(0).getIsRequired()!=null){
+
 				IsRequired = unitAssignmentsDo.getSearchResults().get(0).getIsRequired();
-				}
 				for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 					unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i).getItemSequence());
 					unitCricleViewObj.getElement().setId(i+"");
 					circleContainerPanel.add(unitCricleViewObj);
 					unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler());
 					unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
-					unitCricleViewObj.getValueIsRequired(IsRequired);
+					//IsRequired = unitAssignmentsDo.getSearchResults().get(0).getIsRequired();
+					unitCricleViewObj.getValueIsRequired(true);
 				}
 						
 				rightArrow.setUrl("images/rightSmallarrow.png");
@@ -279,6 +281,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@Override
 	public void getSequence(UnitAssignmentsDo unitAssignmentsDo) {
 		this.unitAssignmentsDo = unitAssignmentsDo;
+		
 		setCircleData(unitAssignmentsDo);
 	}
 	public class UnitSeqMouseOverHandler implements MouseOverHandler{
@@ -461,7 +464,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				circleContainerPanel.add(unitCricleViewObj);
 				unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler());
 				unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
-				unitCricleViewObj.getValueIsRequired(IsRequired);	
+				unitCricleViewObj.getValueIsRequired(true);	
 			}
 			
 			rightArrow.setUrl("images/rightSmallarrow.png");
@@ -505,6 +508,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	}
 
+
 	@Override
 	public void showDashBoard() {
 		goalContainer.setVisible(true);
@@ -523,4 +527,24 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		goalContainer.removeFromParent();
 		
 	}
+
+	ReorderAssignmentEventHandler reorderAssignmentEventHandler = new ReorderAssignmentEventHandler(){
+
+		@Override
+		public void reorderAssignment(int pageNumber) {
+			assignmentOffset =(pageNumber/assignmentLimit)*assignmentLimit;
+			
+			if(assignmentOffset==pageNumber)
+			{
+				assignmentOffset = assignmentOffset-assignmentLimit;
+			}
+			
+			
+			getUnitAssignments(assignmentOffset,isEditMode);
+		
+			
+		}
+		
+	};
+
 }
