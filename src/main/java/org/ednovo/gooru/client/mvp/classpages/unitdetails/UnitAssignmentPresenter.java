@@ -61,7 +61,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 		String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 		if(unitId!=null&&getView().getCircleContainerPanel().getWidgetCount()<=0){
-			getPathwayItems(classId,unitId,"sequence",assignmentOffset,assignmentLimit);
+			getPathwayItems(classId,unitId,"sequence",assignmentLimit,assignmentOffset);
 		}
 		if(assignmentId!=null){
 			getAssignemntDetails(assignmentId,classId,unitId);
@@ -108,25 +108,14 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	}
 	
 	public void getAssignemntDetails(final String assignmentId,String classpageId,String pathwayGooruOid){
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, "sequence", limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
+		System.out.println("hellooo");
+		AppClientFactory.getInjector().getClasspageService().getAssignemntDetails(assignmentId, new SimpleAsyncCallback<ClasspageItemDo>() {
 			@Override
-			public void onSuccess(UnitAssignmentsDo unitAssignmentDo) {
-				ClasspageItemDo classpageItemDo=getClasspateItemDo(unitAssignmentDo, assignmentId);
+			public void onSuccess(ClasspageItemDo classpageItemDo) {
+				System.out.println("classpageItemDo=====>"+classpageItemDo);
 				getView().showAssignment(classpageItemDo);
 			}
 		});
-	}
-	
-	
-	public ClasspageItemDo getClasspateItemDo(UnitAssignmentsDo unitAssignmentDo,String assignmentId){
-		for(int i=0;i<unitAssignmentDo.getSearchResults().size();i++){
-			ClasspageItemDo classpageItemDo1=unitAssignmentDo.getSearchResults().get(i);
-			if(assignmentId.equals(classpageItemDo1.getCollectionItemId())){
-				return classpageItemDo1;
-			}
-		}
-		return null;
-		
 	}
 	
 }
