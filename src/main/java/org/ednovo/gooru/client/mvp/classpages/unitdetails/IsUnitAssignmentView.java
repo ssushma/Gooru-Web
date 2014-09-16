@@ -39,5 +39,7 @@ public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentU
 	 public HTMLPanel getUnitPanel();
 	 public HTMLPanel getCircleContainerPanel();
 	 public void showAssignment(ClasspageItemDo classpageItemDo);
+	void showDashBoard();
+	void showAssignments();
 
 }
