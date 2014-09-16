@@ -110,6 +110,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	boolean isAssignmentsEnabled = false;
 	
 	boolean isBadWord = false;
+	
+	boolean isValidate = false;
 
 	private CollectionDo collectionDo;
 	
@@ -534,7 +536,10 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 					btnAssign.setEnabled(true);
 				}
 				else
-				{		
+				{	
+					
+					isValidate();
+					if(isValidate){
 					btnAssign.getElement().setAttribute("id", "btnAssign");
 					btnAssign.setStyleName(res.css().disableAssignButon());
 					btnAssign.setText(i18n.GL1172());
@@ -579,6 +584,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 					{
 						dueDateVal = null;
 					}
+					
 					AppClientFactory.getInjector().getClasspageService().v2AssignCollectionTOPathway(classpageId, unitId, collectionDo.getGooruOid(),from,minScore,dueDateVal, directionsVal, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 
 						@Override
@@ -613,6 +619,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 									
 									fromTxt.setText("");
 									toTxt.setText("");
+									from =null;
+									minScore=null;
 									htmlClasspagesListContainer.clear();
 									htmlClasspagesUnitListContainer.clear();
 									getUiHandlers().getAllClasspages("10", "0");
@@ -751,7 +759,12 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 			//				
 			//			}
 					});*/
+		}else{
+			btnAssign.setEnabled(false);
+			btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
+			btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
 		}
+				}
 		}
 		});
 	}
@@ -1006,10 +1019,14 @@ public class CpuTitleLabelClick implements ClickHandler{
 	private class ScoreHandler implements BlurHandler{
 
 		
+		
 		@Override
 		public void onBlur(BlurEvent event) {
 			String score = scoreTxt.getText();
-			if(score != null || score!=""){
+			if(score.isEmpty()){
+				minScore=null;
+				scoreErrorLabel.setVisible(false);
+			}else if(score != null || score != ""){
 				if(Integer.parseInt(score) >100 || Integer.parseInt(score) <=0){
 					scoreErrorLabel.setText(i18n.GL2178());
 					scoreErrorLabel.setVisible(true);
@@ -1019,20 +1036,23 @@ public class CpuTitleLabelClick implements ClickHandler{
 				}else{
 					minScore=score;
 					scoreErrorLabel.setVisible(false);
-					btnAssign.setEnabled(true);
-					btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
-					btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
+					lblClasspagePlaceHolder.getText().equalsIgnoreCase(i18n.GL0105());
+					if(!lblClasspagePlaceHolder.getText().equalsIgnoreCase(i18n.GL0105())){
+						btnAssign.setEnabled(true);
+						btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
+						btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
+					}
 				}
 			}
 		}
-		
+				
 	}
 	private class SuggestedTimeHandler implements BlurHandler{
 
 		
 		@Override
 		public void onBlur(BlurEvent event) {
-			if (fromTxt.getText().length() > 0 && toTxt.getText().length() > 0) {
+			//if (fromTxt.getText().length() > 0 && toTxt.getText().length() > 0) {
 				from = fromTxt.getText();
 				fromTxt.setText(from);
 				fromTxt.getElement().setAttribute("alt", from);
@@ -1044,30 +1064,70 @@ public class CpuTitleLabelClick implements ClickHandler{
 				String startTimeTxtMin = null;
 				String startTimeTxtSec = null;
 				if (fromTxt.getText().length() < 2) {
-					startTimeTxtMin = "0" + fromTxt.getText();
-	
-				} else {
+					startTimeTxtMin = "00" + fromTxt.getText();
+				} else if(fromTxt.getText().isEmpty()) {
+					startTimeTxtMin = "00";
+				}else{
 					startTimeTxtMin = fromTxt.getText();
 				}
 				if (toTxt.getText().length() < 2) {
 					startTimeTxtSec = "0" + toTxt.getText();
-				} else if(Integer.parseInt(toTxt.getText()) > 59) {
+					suggestTimeErrorLabel.setVisible(false);
+				}else if(toTxt.getText().length() >2){
 					startTimeTxtSec = "0" + toTxt.getText();
 					suggestTimeErrorLabel.setText(i18n.GL0970());
 					suggestTimeErrorLabel.setVisible(true);
 					btnAssign.setEnabled(false);
 					btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
 					btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
-				}else{
+				}else if(Integer.parseInt(toTxt.getText()) > 59){
+					startTimeTxtSec = "0" + toTxt.getText();
+					suggestTimeErrorLabel.setText(i18n.GL0970());
+					suggestTimeErrorLabel.setVisible(true);
+					btnAssign.setEnabled(false);
+					btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
+					btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
+				}else if(fromTxt.getText().isEmpty() && Integer.parseInt(toTxt.getText()) > 59) {
+					startTimeTxtSec = "0" + toTxt.getText();
+					suggestTimeErrorLabel.setText(i18n.GL0970());
+					suggestTimeErrorLabel.setVisible(true);
+					btnAssign.setEnabled(false);
+					btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
+					btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
+				}
+				else{
 					startTimeTxtSec = toTxt.getText();
 					from = startTimeTxtMin+"hrs" + " " + startTimeTxtSec+"mins";
 					suggestTimeErrorLabel.setVisible(false);
-					btnAssign.setEnabled(true);
-					btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
-					btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
+					lblClasspagePlaceHolder.getText().equalsIgnoreCase(i18n.GL0105());
+					if(!lblClasspagePlaceHolder.getText().equalsIgnoreCase(i18n.GL0105())){
+						btnAssign.setEnabled(true);
+						btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
+						btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
+					}
+					
 				}
 			}
 		}
+	public void isValidate(){
+		if(from == null|| from.isEmpty() &&  minScore ==null || minScore.isEmpty() ){
+			scoreErrorLabel.setText(i18n.GL2182());
+			scoreErrorLabel.setVisible(true);
+			suggestTimeErrorLabel.setText(i18n.GL2183());
+			suggestTimeErrorLabel.setVisible(true);
+			isValidate=false;
+		}else if(from == null || from.isEmpty() && minScore !=null){
+			suggestTimeErrorLabel.setText(i18n.GL2183());
+			suggestTimeErrorLabel.setVisible(true);
+			isValidate=false;
+		}else if(from !=null && minScore ==null || minScore.isEmpty()){
+			scoreErrorLabel.setText(i18n.GL2182());
+			scoreErrorLabel.setVisible(true);
+			isValidate=false;
+		}else{
+			isValidate=true;
+		}
+	}
 		
 	}
-}
+//}
