@@ -263,7 +263,10 @@
 
 
 .UnitSetupMain .uniSetup{
-	
+	width: 1000px;
+	margin: 0 auto;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
 }
 	
 .UnitSetupMain  .uniSetup a{
@@ -399,7 +402,7 @@
 }
 
 .classDetailsMain{
-	width:765px;
+	width:757px;
 	float:left;
 	padding:18px 0;
 }
@@ -452,8 +455,8 @@
 
 .classButtons{
 	float: left;
-    width: 86px;
-	padding:10px 0;
+    width: 107px;
+	padding:14px 0;
 }
 		
 .single{
