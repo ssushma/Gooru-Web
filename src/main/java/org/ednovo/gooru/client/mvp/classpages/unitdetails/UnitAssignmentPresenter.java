@@ -128,5 +128,15 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		return null;
 		
 	}
+
+	public void showDashBoardDetails() {
+		// TODO Auto-generated method stub
+		getView().showDashBoard();
+	}
+
+	public void showAssignmentDetails() {
+		// TODO Auto-generated method stub
+		getView().showAssignments();
+	}
 	
 }

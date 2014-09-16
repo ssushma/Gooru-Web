@@ -126,13 +126,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
 		unitSetupButton.addClickHandler(new UnitSetupEvents());
-		scoreHederView();
-
 		AppClientFactory.getEventBus().addHandler(ReorderAssignmentEvent.TYPE, reorderAssignmentEventHandler);
-
-		containerPanel.setVisible(false);
-		btnDashBoard.setStyleName(res.unitAssignment().selected());
-
 	}
 	
 	public HTMLPanel getUnitPanel(){
@@ -195,7 +189,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				circleContainerPanel.clear();
 				leftArrow.setUrl("images/leftSmallarrow.png");
 				circleContainerPanel.add(leftArrow);
-				
+
+				IsRequired = unitAssignmentsDo.getSearchResults().get(0).getIsRequired();
 				for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 					unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i).getItemSequence());
 					unitCricleViewObj.getElement().setId(i+"");
@@ -499,13 +494,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void clickOnAssignement(ClickEvent clickEvent){
 		btnAssignment.setStyleName(res.unitAssignment().selected());
 		btnDashBoard.removeStyleName(res.unitAssignment().selected());
-		containerPanel.setVisible(true);
-		goalContainer.setVisible(false);
+		/*containerPanel.setVisible(true);
+		goalContainer.setVisible(false);*/
 	}
 	
 	private void scoreHederView() {
-		
+		scoreHedingContainer.clear();
 		for(int i=0; i<3; i++){
+			
 			scoreHedingContainer.add(new ScoreHedingView());
 		}
 	}
@@ -518,6 +514,27 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		assignmentContainer.add(new CollectionsView(classpageItemDo));
 
 	}
+
+
+	@Override
+	public void showDashBoard() {
+		goalContainer.setVisible(true);
+		System.out.println("showDashBoard");
+		containerPanel.removeFromParent();
+		scoreHederView();
+		btnDashBoard.setStyleName(res.unitAssignment().selected());
+		btnAssignment.removeStyleName(res.unitAssignment().selected());
+	}
+
+	@Override
+	public void showAssignments() {
+		// TODO Auto-generated method stub
+		System.out.println("showAssignments");
+		containerPanel.setVisible(true);
+		goalContainer.removeFromParent();
+		
+	}
+
 	ReorderAssignmentEventHandler reorderAssignmentEventHandler = new ReorderAssignmentEventHandler(){
 
 		@Override
@@ -536,4 +553,5 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		
 	};
+
 }
