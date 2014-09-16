@@ -19,7 +19,7 @@
 						</div>
 						
 						<div class="setGloalBtn">
-						<div class="perTextBox"><input name="" type="text"/></div>
+						<div class="perTextBox"><g:TextBox ui:field="txtScore" /></div>
 						
 						<p><button type="button" class="primary" id="btnBacktoLibrary" alt="Edit" title="Edit">Edit Goal</button></p>
 						</div>
