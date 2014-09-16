@@ -398,6 +398,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void showMoreUnitsLink(){
 		lblMoreUnits.setVisible(true);
 	}
+	
+	public void resetPanels(){
+		
+	}
 
 	@Override
 	public void showAssignment(ClasspageItemDo classpageItemDo) {

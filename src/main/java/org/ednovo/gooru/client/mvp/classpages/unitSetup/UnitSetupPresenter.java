@@ -47,6 +47,9 @@ public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> impleme
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.addAssignmentContainerPresenter = addAssignmentContainerPresenter;
+	}
+	
+	public void getUnitsWithAssignemnts(){
 		getPathwayCompleteDetails(limit,offSet);
 	}
 
@@ -103,7 +106,11 @@ public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> impleme
 		getView().addAssignmentWidget(classpageItemDo,pathwayId); 
 	}
 	
-	
+	public void clearUnitAssignmentWidgetContaner(){
+		getView().clearUnitAssignmentWidgetContaner();
+		limit = 5;
+		offSet = 0;
+	}
 	
 	
 }

@@ -106,6 +106,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 			revealPlace(null);
 		}
 	}
+	 
 	 public void revealPlace(String tabName){
 			Map<String,String> params = new HashMap<String,String>();
 			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
@@ -139,6 +140,11 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 		
 	}
 	
+	public void clearUnitAssignmentWidgetContaner(){
+		 unitAssignmentWidgetContainer.clear();
+		 paginationPanel.clear();
+		 classpageListDo=null;
+	}
 	public class AddAssignmentToUnit implements ClickHandler{
 		ClassUnitsListDo classListUnitsListDo;
 		
