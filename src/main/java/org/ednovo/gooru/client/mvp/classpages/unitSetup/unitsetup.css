@@ -350,9 +350,9 @@
     display: inline-block;
     font-size: 14px;
     font-weight: bold;
-    padding-right: 12px;
+    padding-right: 2px;
     vertical-align: middle;
-	margin:0 0 0 20px;
+	margin:0 0 0 7px;
 }
 
 .classLeftMenu .unitName{
@@ -498,7 +498,7 @@
 .unitdetailsLbl{
 	font-size: 14px;
 	color: #1076BA;
-	margin-right: 15px;
+	margin-right: 5px;
 	margin-bottom: -17px;
 }
 
@@ -589,3 +589,9 @@ width:100%;
      vertical-align: middle;
      width: 30px;
 		}
+.setMarginArrow{
+	margin-top:3px;
+}
+.setMarginArrowclass{
+	margin-top:2px;
+}

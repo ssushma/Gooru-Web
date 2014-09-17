@@ -137,14 +137,25 @@ public class UnitsAssignmentWidgetView extends Composite {
 	private void setAssignmentsForUnit() {
 		assignmentsContainer.clear();
 		if(classUnitsDo!=null && classUnitsDo.getResource()!=null){
+			if(classUnitsDo.getResource().getCollectionItems() != null)
+			{
 			if(classUnitsDo.getResource().getCollectionItems().size()==0){
 				htPanelNextArrow.setVisible(false);
 				htPanelPreviousArrow.setVisible(false);
 			}
+			}
+			else
+			{
+				htPanelNextArrow.setVisible(false);
+				htPanelPreviousArrow.setVisible(false);
+			}
+			if(classUnitsDo.getResource().getCollectionItems() != null)
+			{
 			for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 				ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
 				showAndHidePaginationArrows();
 				assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo));
+			}
 			}
 		}
 	}

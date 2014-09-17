@@ -179,8 +179,19 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		optionalLabel.setText("Optional");
 		rightArrow.getElement().setAttribute("style", "cursor:pointer");
 		leftArrow.getElement().setAttribute("style", "cursor:pointer");
+		if(unitAssignmentsDo.getTotalHitCount() != null)
+		{
 		totalAssignmentHitcount = unitAssignmentsDo.getTotalHitCount();
-		if(unitAssignmentsDo!=null &&unitAssignmentsDo.getSearchResults().size()!=0){
+		}
+		else
+		{
+		totalAssignmentHitcount = 0;
+		}
+		if(unitAssignmentsDo!=null)
+		{
+		if(unitAssignmentsDo.getSearchResults()!=null)
+		{
+		if(unitAssignmentsDo.getSearchResults().size()!=0){
 			
 					try{
 						if(leftHandler!=null) {
@@ -217,6 +228,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			    });
 							
 			}
+	}
+	}
 		if(totalAssignmentHitcount==0){
 			Label noAssignmentlabel = new Label("Assignment not available");
 			circleContainerPanel.clear();
