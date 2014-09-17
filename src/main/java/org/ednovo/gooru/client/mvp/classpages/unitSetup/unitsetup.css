@@ -618,3 +618,15 @@ width:100%;
 .setMarginArrowclass{
 	margin-top:2px;
 }
+
+
+.loadingImagePathWay {
+	background: url(images/core/B-Dot.gif);
+	width: 185px;
+	height: 172px;
+	margin: 0 auto;
+	margin-top: 420px;
+	position: absolute;
+	z-index: 5;
+	margin-left: 375px;
+}
