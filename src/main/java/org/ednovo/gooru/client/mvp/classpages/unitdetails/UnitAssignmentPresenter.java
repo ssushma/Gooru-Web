@@ -118,4 +118,27 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		});
 	}
 	
+	
+	public ClasspageItemDo getClasspateItemDo(UnitAssignmentsDo unitAssignmentDo,String assignmentId){
+		for(int i=0;i<unitAssignmentDo.getSearchResults().size();i++){
+			ClasspageItemDo classpageItemDo1=unitAssignmentDo.getSearchResults().get(i);
+			if(assignmentId.equals(classpageItemDo1.getCollectionItemId())){
+				return classpageItemDo1;
+			}
+		}
+		return null;
+		
+	}
+
+	public void showDashBoardDetails() {
+		// TODO Auto-generated method stub
+		getView().showDashBoard();
+	}
+
+	public void showAssignmentDetails() {
+		// TODO Auto-generated method stub
+		getView().showAssignments();
+	}
+	
+
 }
