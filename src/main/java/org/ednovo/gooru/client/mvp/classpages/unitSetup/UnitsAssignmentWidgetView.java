@@ -244,7 +244,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),title, classPageId){
 
 				@Override
-				public void reorderAssignment(int seqPosition) {
+				public void reorderAssignment(int seqPosition,String selectedPathId) {
 					boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItem);
 					if(isAssignmentDeleted){
 						clearAssignmentsFromDo();
