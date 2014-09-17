@@ -22,29 +22,47 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.service;
-
+package org.ednovo.gooru.client.mvp.analytics.collectionProgress;
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
-import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
+public class CollectionProgressPresenter extends PresenterWidget<IsCollectionProgressView> implements CollectionProgressUiHandlers{
+	@Inject
+	private  AnalyticsServiceAsync analyticService;
+	@Inject
+	public CollectionProgressPresenter(EventBus eventBus, IsCollectionProgressView view) {
+		super(eventBus, view);
+		getView().setUiHandlers(this);
+	}
 
-@RemoteServiceRelativePath("gwt-service/analyticsService")
-public interface AnalyticsService extends BaseService {
+	@Override
+	public void setCollectionProgressData() {
+		this.analyticService.getCollectionProgressData(new AsyncCallback<ArrayList<CollectionProgressDataDo>>() {
+					
+					@Override
+					public void onSuccess(ArrayList<CollectionProgressDataDo> result) {
+						getView().setData(result);
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						
+					}
+				});
+	}
+
+	public AnalyticsServiceAsync getAnalyticService() {
+		return analyticService;
+	}
+
+	public void setAnalyticService(AnalyticsServiceAsync analyticService) {
+		this.analyticService = analyticService;
+	}
 	
-	public ArrayList<CollectionProgressDataDo> getCollectionProgressData();
-	
-	public ArrayList<CollectionSummaryUsersDataDo> getCollectionSummaryUsersData();
-	
-	public ArrayList<CollectionSummaryMetaDataDo> getCollectionMetaData();
-	
-	public ArrayList<UserDataDo> getCollectionResourceData();
-	
-	public ArrayList<CollectionSummaryUsersDataDo> getSessionsDataByUser(String collectionId,String classId,String userId);
-		 
-	public ArrayList<UserDataDo> getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId);
 }

@@ -22,13 +22,13 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+package org.ednovo.gooru.client.mvp.analytics;
 import java.util.ArrayList;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
-import org.ednovo.gooru.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
@@ -36,33 +36,27 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
-public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentView> implements UnitAssignmentUiHandlers{
-
-	
-	
-	public static final  Object _SLOT = new Object();
-	
-	private PersonalizeUnitPresenter studentPersonalizePresenter = null;
+public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> implements AnalyticsUiHandlers{
 	
 	private int limit = 5;
 	private int offSet = 0;
 	
+	private CollectionProgressPresenter collectionProgressPresenter;
+	
+	private CollectionSummaryPresenter collectionSummaryPresenter;
+	
+	public static final  Object COLLECTION_PROGRESS_SLOT = new Object();
+	
+	final String SUMMARY="Summary",PROGRESS="Progress";
+	
 	@Inject
-	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter) {
+	public AnalyticsPresenter(EventBus eventBus, IsAnalyticsView view,CollectionProgressPresenter collectionProgressPresenter,CollectionSummaryPresenter collectionSummaryPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
-		
-		this.studentPersonalizePresenter = studentPersonalizePresenter;
+		this.collectionProgressPresenter=collectionProgressPresenter;
+		this.collectionSummaryPresenter=collectionSummaryPresenter;
 		getPathwayItems();
-		
 		getPathwayUnits(limit,offSet);
-	}
-	
-	@Override
-	public void setClasspageData(ClasspageDo classpageDo){
-		System.out.println("in set classpage ... ");
-		studentPersonalizePresenter.setClasspageData(classpageDo);
-		setInSlot(_SLOT, studentPersonalizePresenter,false);
 	}
 
 	@Override
@@ -71,28 +65,40 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionItemDo> result) {
-				
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
-		
 	}
-	
+
+	@Override
 	public void getPathwayUnits(int limit, int offset) {
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClasspageListDo>() {
 
 			@Override
 			public void onSuccess(ClasspageListDo result) {
-				System.out.println("sucesss");
 				getView().showUnitNames(result);
 			}
 		});
 	}
-	
+
+	@Override
+	public void setClickedTabPresenter(String clickedTab) {
+		clearSlot(COLLECTION_PROGRESS_SLOT);
+		if(clickedTab!=null){
+			if(clickedTab.equalsIgnoreCase(SUMMARY)){
+				collectionSummaryPresenter.setCollectionSummaryData();
+				setInSlot(COLLECTION_PROGRESS_SLOT, collectionSummaryPresenter,false);
+			}else if(clickedTab.equalsIgnoreCase(PROGRESS)){
+				collectionProgressPresenter.setCollectionProgressData();
+				setInSlot(COLLECTION_PROGRESS_SLOT, collectionProgressPresenter,false);
+			}
+		}else{
+			setInSlot(COLLECTION_PROGRESS_SLOT, null,false);
+		}
+	}
 }

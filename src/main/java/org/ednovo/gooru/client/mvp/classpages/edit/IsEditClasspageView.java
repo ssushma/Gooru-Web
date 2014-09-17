@@ -163,6 +163,4 @@ public interface IsEditClasspageView extends IsViewWithHandlers<EditClasspageUiH
 	*/
 	
 	void hideNoAssignmentsMessagePanel();
-	
-	void setCollectionProgressData(ArrayList<CollectionProgressDataDo> collectionProgressData);
 }

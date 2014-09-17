@@ -1,0 +1,12 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="unitStyle" src="collectionSummaryTeacher.css" />
+	<g:HTMLPanel styleName="{unitStyle.reportsTableContainer}">
+		<g:HTMLPanel ui:field="tabContainer" />
+		<g:HTMLPanel ui:field="hiddenChartPnl" />
+		<g:HTMLPanel ui:field="teacherScoredData" />
+		<g:HTMLPanel ui:field="teacherOpenendedData" />
+		<g:HTMLPanel ui:field="teacherResourceBreakdownData" />
+	</g:HTMLPanel>
+</ui:UiBinder> 

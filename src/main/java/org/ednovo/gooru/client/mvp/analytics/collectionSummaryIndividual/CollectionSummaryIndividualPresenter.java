@@ -22,29 +22,46 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.service;
-
+package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
 import java.util.ArrayList;
 
-import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
+import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
+public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsCollectionSummaryIndividualView> implements CollectionSummaryIndividualUiHandlers{
+	@Inject
+	private  AnalyticsServiceAsync analyticService;
+	@Inject
+	public CollectionSummaryIndividualPresenter(EventBus eventBus, IsCollectionSummaryIndividualView view) {
+		super(eventBus, view);
+		getView().setUiHandlers(this);
+	}
 
-@RemoteServiceRelativePath("gwt-service/analyticsService")
-public interface AnalyticsService extends BaseService {
-	
-	public ArrayList<CollectionProgressDataDo> getCollectionProgressData();
-	
-	public ArrayList<CollectionSummaryUsersDataDo> getCollectionSummaryUsersData();
-	
-	public ArrayList<CollectionSummaryMetaDataDo> getCollectionMetaData();
-	
-	public ArrayList<UserDataDo> getCollectionResourceData();
-	
-	public ArrayList<CollectionSummaryUsersDataDo> getSessionsDataByUser(String collectionId,String classId,String userId);
-		 
-	public ArrayList<UserDataDo> getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId);
+	public AnalyticsServiceAsync getAnalyticService() {
+		return analyticService;
+	}
+
+	public void setAnalyticService(AnalyticsServiceAsync analyticService) {
+		this.analyticService = analyticService;
+	}
+
+	@Override
+	public void setIndividualData() {
+		this.analyticService.getUserSessionDataByUser("", "", "", "", new AsyncCallback<ArrayList<UserDataDo>>() {
+			
+			@Override
+			public void onSuccess(ArrayList<UserDataDo> result) {
+				getView().setIndividualData(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+		});
+	}
 }

@@ -22,29 +22,14 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.service;
+package org.ednovo.gooru.client.mvp.analytics;
 
-import java.util.ArrayList;
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
-import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
-import org.ednovo.gooru.shared.model.analytics.UserDataDo;
-
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-
-@RemoteServiceRelativePath("gwt-service/analyticsService")
-public interface AnalyticsService extends BaseService {
+public interface AnalyticsUiHandlers extends BaseUiHandlers{
+	void getPathwayItems();
 	
-	public ArrayList<CollectionProgressDataDo> getCollectionProgressData();
+	void getPathwayUnits(int limit, int offset);
 	
-	public ArrayList<CollectionSummaryUsersDataDo> getCollectionSummaryUsersData();
-	
-	public ArrayList<CollectionSummaryMetaDataDo> getCollectionMetaData();
-	
-	public ArrayList<UserDataDo> getCollectionResourceData();
-	
-	public ArrayList<CollectionSummaryUsersDataDo> getSessionsDataByUser(String collectionId,String classId,String userId);
-		 
-	public ArrayList<UserDataDo> getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId);
+	void setClickedTabPresenter(String clickedTab);
 }

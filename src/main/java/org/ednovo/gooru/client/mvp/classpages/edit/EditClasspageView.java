@@ -13,7 +13,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.Analytics.collectionProgress.CollectionProgressWidget;
+import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressWidget;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageResourceItemListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
@@ -696,7 +696,6 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 			mainContainer.setVisible(true);
 			String order=AppClientFactory.getPlaceManager().getRequestParameter("order",null);
 		}
-		getUiHandlers().getCollectionProgressData();
 	}
 	public CollectionsView showClasspageItem(ClasspageItemDo classpageItemDo,int sequenceNum){
 		CollectionsView assignmentCollectionView = new CollectionsView(classpageItemDo,sequenceNum){
@@ -1291,13 +1290,6 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		}
 	}
 
-	@Override
-	public void setCollectionProgressData(
-			ArrayList<CollectionProgressDataDo> collectionProgressData) {
-		CollectionProgressWidget collectionProgressWidget=new CollectionProgressWidget();
-		ananyticsPanel.add(collectionProgressWidget);
-		collectionProgressWidget.setData(collectionProgressData);
-	}
 	@Override
 	public void hideNoAssignmentsMessagePanel() {
 		// TODO Auto-generated method stub

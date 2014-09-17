@@ -1,6 +1,7 @@
 package org.ednovo.gooru.shared.model.analytics;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -33,7 +34,11 @@ public class UserDataDo implements Serializable{
 	private String feedbackStatus;
 	private String answerObject;
 	private String options;
+	private ArrayList<MetaDataDo> metaData;
 	
+	//This are add for getting the resource data in the teacher summary
+	private String category;
+	private String title;
 	
 	public int getReaction() {
 		return reaction;
@@ -155,4 +160,23 @@ public class UserDataDo implements Serializable{
 	public void setOptions(String options) {
 		this.options = options;
 	}
+	public ArrayList<MetaDataDo> getMetaData() {
+		return metaData;
+	}
+	public void setMetaData(ArrayList<MetaDataDo> metaData) {
+		this.metaData = metaData;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
 }

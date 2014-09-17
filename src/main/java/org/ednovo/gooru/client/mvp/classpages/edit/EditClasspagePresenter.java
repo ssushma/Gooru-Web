@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.client.mvp.analytics.AnalyticsPresenter;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.WelcomeClassView;
@@ -98,9 +99,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	@Inject
 	private ClasspageServiceAsync classpageService;
 	
-	@Inject
-	private  AnalyticsServiceAsync analyticService;
-	
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
 	
 	private SimpleAsyncCallback<CollectionItemDo> assignmentAsyncCallback;
@@ -127,6 +125,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	private UnitAssignmentPresenter unitAssignmentPresenter;
 	
+	private AnalyticsPresenter analyticsPresenter;
+	
 	public static final  Object CLASSLIST_SLOT = new Object();
 	
 	String tab=null;
@@ -148,7 +148,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	//ShelfListPresenter shelfTabPresenter
 	@Inject
 	public EditClasspagePresenter(IsEditClasspageView view, IsEditClasspageProxy proxy, AddAssignmentContainerPresenter assignmentContainer,ImageUploadPresenter imageUploadPresenter, ClassListPresenter classlistPresenter,
-								ClassSetupPresenter classSetupPresenter, UnitSetupPresenter unitSetupPresenter , UnitAssignmentPresenter unitAssignmentPresenter) {
+								ClassSetupPresenter classSetupPresenter, UnitSetupPresenter unitSetupPresenter , UnitAssignmentPresenter unitAssignmentPresenter,AnalyticsPresenter analyticsPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.assignmentContainer = assignmentContainer;
@@ -157,6 +157,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		this.classSetupPresenter=classSetupPresenter;
 		this.unitSetupPresenter=unitSetupPresenter;
 		this.unitAssignmentPresenter=unitAssignmentPresenter;
+		this.analyticsPresenter=analyticsPresenter;
 		addRegisteredHandler(AssignmentEvent.TYPE, this);
 		addRegisteredHandler(RefreshAssignmentsListEvent.TYPE, this);
 		addRegisteredHandler(UpdateClasspageImageEvent.TYPE, this);
@@ -345,14 +346,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	public void setClasspageService(ClasspageServiceAsync classpageService) {
 		this.classpageService = classpageService;
 	}
-	
-	public AnalyticsServiceAsync getAnalyticService() {
-		return analyticService;
-	}
-
-	public void setAnalyticService(AnalyticsServiceAsync analyticService) {
-		this.analyticService = analyticService;
-	}
 
 	/** 
 	 * This method is to get the collectionAsyncCallback
@@ -438,7 +431,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	     	classlistPresenter.setClassPageDo(classpageDo);
 	     	setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
 	     }else if(tab!=null&&tab.equalsIgnoreCase("reports")){
-	     	
+	    	 setInSlot(CLASSLIST_SLOT, analyticsPresenter,false);
 	     }else if(tab!=null&&tab.equalsIgnoreCase("unitsetup")){
 	    	 setInSlot(CLASSLIST_SLOT, unitSetupPresenter,false);
 	     }
@@ -448,8 +441,11 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
 	     }
 	     else {
-	    	 setInSlot(CLASSLIST_SLOT, classSetupPresenter,false);
+	    //	 setInSlot(CLASSLIST_SLOT, classSetupPresenter,false);
 
+	    	 
+	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
+	    	 
 	    	 /*System.out.println("tab value... 2");
 	    	 unitAssignmentPresenter.setClasspageData(classpageDo);
 	    	 
@@ -611,21 +607,4 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			}
 		});
 	}
-
-	@Override
-	public void getCollectionProgressData() {
-		this.analyticService.getCollectionProgressData(new AsyncCallback<ArrayList<CollectionProgressDataDo>>() {
-			
-			@Override
-			public void onSuccess(ArrayList<CollectionProgressDataDo> result) {
-				getView().setCollectionProgressData(result);
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				
-			}
-		});
-	}
-
 }

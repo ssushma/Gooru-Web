@@ -1,22 +1,27 @@
-package org.ednovo.gooru.client.mvp.Analytics.collectionProgress;
+package org.ednovo.gooru.client.mvp.analytics.collectionProgress;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.Analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.Analytics.util.DataView;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -26,7 +31,7 @@ import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.visualizations.Table;
 import com.google.gwt.visualization.client.visualizations.Table.Options;
 
-public class CollectionProgressWidget extends Composite {
+public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionProgressUiHandlers> implements IsCollectionProgressView  {
 
 	private static CollectionProgressWidgetUiBinder uiBinder = GWT
 			.create(CollectionProgressWidgetUiBinder.class);
@@ -39,6 +44,7 @@ public class CollectionProgressWidget extends Composite {
 	
 	@UiField VerticalPanel htmlpnlProgress;
 	@UiField ListBox filterDropDown;
+	@UiField HTMLPanel scrollForCollectionProgress;
 	
 	DataView operationsView;
 	private final String GREEN = "#BCD1B9 !important";
@@ -51,9 +57,10 @@ public class CollectionProgressWidget extends Composite {
 	public CollectionProgressWidget() {
 		this.res=CollectionProgressCBundle.INSTANCE;
 		res.css().ensureInjected();
-		initWidget(uiBinder.createAndBindUi(this));
+		setWidget(uiBinder.createAndBindUi(this));	
+		scrollForCollectionProgress.getElement().setId("scrollForCollectionProgress");
 	}
-	
+	@Override
 	public void setData(ArrayList<CollectionProgressDataDo> collectionProgressData){
 		final List<Integer> questionColumnIndex=new ArrayList<Integer>();
 		final List<Integer> resourceColumnIndex=new ArrayList<Integer>();
@@ -77,8 +84,8 @@ public class CollectionProgressWidget extends Composite {
 			}
 			collectionProgressCount++;
 		}
-		final int[] primitivesQuestions = toIntArray(questionColumnIndex);
-		final int[] primitivesResources = toIntArray(resourceColumnIndex);
+		final int[] primitivesQuestions = AnalyticsUtil.toIntArray(questionColumnIndex);
+		final int[] primitivesResources = AnalyticsUtil.toIntArray(resourceColumnIndex);
 		
 		if(defaultUserDataForUsers!=null){
 			int sizeNames=defaultUserDataForUsers.getUserData().size();
@@ -129,6 +136,7 @@ public class CollectionProgressWidget extends Composite {
 		        					  answerText="--";
 		        					  viewResponselbl.getElement().getParentElement().getStyle().setBackgroundColor(WHITE);
 		        				  }
+		        				  viewResponselbl.getElement().setPropertyString("id", "name of the response");
 		        				  viewResponselbl.setText(answerText);
 		        			  }else{
 		        				  String answerText="";
@@ -183,7 +191,13 @@ public class CollectionProgressWidget extends Composite {
 		        		  data.setCell(i, j+2,mainDataVpnl.toString(),null,p);
 	        	   }
 	        	  data.setValue(i, 0,defaultUserDataForUsers.getUserData().get(i).getUserName());
-	        	  data.setValue(i, 1,score+"/"+noOfQuestions);
+	        	  VerticalPanel scoreWidget=new VerticalPanel();
+	        	  Label noOfQuestionAttened=new Label(score+"/"+noOfQuestions);
+	        	  int percent=((score*100)/noOfQuestions);
+	        	  Label percentage=new Label("("+percent+"%)");
+	        	  scoreWidget.add(noOfQuestionAttened);
+	        	  scoreWidget.add(percentage);
+	        	  data.setValue(i, 1,scoreWidget.toString());
 	        }
 		}
 		
@@ -192,7 +206,7 @@ public class CollectionProgressWidget extends Composite {
         
         final DataView view =DataView.create(data);
         
-        Table table = new Table(view, options);
+        final Table table = new Table(view, options);
         table.setStyleName("collectionProgressTable");
      
         filterDropDown.addItem("All", "All");
@@ -213,10 +227,25 @@ public class CollectionProgressWidget extends Composite {
 					 }
 					 Table table = new Table(operationsView, options);
 				     table.setStyleName("collectionProgressTable");
-				      htmlpnlProgress.add(table);	
+				     htmlpnlProgress.add(table);	
+				     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 			}
 		});
+        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
         htmlpnlProgress.add(table);	
+	}
+	
+	/**
+	 * This class is used to handle the click event on the table cell
+	 */
+	class ClickOnTableCell implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			Element ele=event.getNativeEvent().getEventTarget().cast();
+			if(ele.getInnerText().equalsIgnoreCase("View Response")){
+				//Window.alert("ele:"+ele.getAttribute("id"));
+			}
+		}
 	}
 	/**
 	 * This is used to convert long time format
@@ -255,11 +284,4 @@ public class CollectionProgressWidget extends Composite {
 		}
 		return createdTime;
 	}
-	int[] toIntArray(List<Integer> integerList) {  
-        int[] intArray = new int[integerList.size()];  
-        for (int i = 0; i < integerList.size(); i++) {  
-            intArray[i] = integerList.get(i);  
-        }  
-        return intArray;  
-    }  
 }

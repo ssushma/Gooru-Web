@@ -27,10 +27,18 @@ package org.ednovo.gooru.client.service;
 import java.util.ArrayList;
 
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
+import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 
 public interface AnalyticsServiceAsync extends BaseServiceAsync {
 	void getCollectionProgressData(AsyncCallback<ArrayList<CollectionProgressDataDo>> callback);
+	void getCollectionSummaryUsersData(AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>> callback);
+	void getCollectionMetaData(AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>> callback);
+	void getCollectionResourceData(AsyncCallback<ArrayList<UserDataDo>> callback);
+	void getSessionsDataByUser(String collectionId,String classId,String userId,AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>> callback);
+	void getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId,AsyncCallback<ArrayList<UserDataDo>> callback);
 }

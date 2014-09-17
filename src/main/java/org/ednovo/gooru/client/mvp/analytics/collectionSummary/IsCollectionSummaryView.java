@@ -22,29 +22,18 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.service;
-
+package org.ednovo.gooru.client.mvp.analytics.collectionSummary;
 import java.util.ArrayList;
 
-import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-@RemoteServiceRelativePath("gwt-service/analyticsService")
-public interface AnalyticsService extends BaseService {
-	
-	public ArrayList<CollectionProgressDataDo> getCollectionProgressData();
-	
-	public ArrayList<CollectionSummaryUsersDataDo> getCollectionSummaryUsersData();
-	
-	public ArrayList<CollectionSummaryMetaDataDo> getCollectionMetaData();
-	
-	public ArrayList<UserDataDo> getCollectionResourceData();
-	
-	public ArrayList<CollectionSummaryUsersDataDo> getSessionsDataByUser(String collectionId,String classId,String userId);
-		 
-	public ArrayList<UserDataDo> getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId);
+public interface IsCollectionSummaryView extends IsViewWithHandlers<CollectionSummaryUiHandlers>{
+	void setUsersData(ArrayList<CollectionSummaryUsersDataDo> result);
+	void setCollectionMetaData(ArrayList<CollectionSummaryMetaDataDo> result);
+	void setCollectionResourcesData(ArrayList<UserDataDo> result);
+	void setUserSessionsData(ArrayList<CollectionSummaryUsersDataDo> result);
 }

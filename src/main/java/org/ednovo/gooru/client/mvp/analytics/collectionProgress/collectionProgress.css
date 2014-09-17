@@ -62,9 +62,10 @@
 }
 .htmlpanlProgress{
 	overflow-x: scroll;
-	width: 964px;
+	width: 784px;
 	margin: 2%;
 	border-right: 1px solid #eee;
+	border-left: 1px solid #eee;
 }
 .maincontainer{
 	background-color: white;
@@ -141,12 +142,12 @@ padding-top: 25px;
 padding-left: 23px;
 padding-bottom: 10px;
 }
-::-webkit-scrollbar {
+#scrollForCollectionProgress::-webkit-scrollbar {
 	width: 8px;
 	height: 4px;
 	background: #6f6d6d;
 }
-::-webkit-scrollbar-thumb {
+#scrollForCollectionProgress::-webkit-scrollbar-thumb {
 	background-color: #bdbebd;
 	-webkit-border-radius: 1ex;
 }
