@@ -75,7 +75,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	}
 	
 	
-	@UiField HTMLPanel assignmentsContainer;
+	@UiField HTMLPanel assignmentsContainer,loadingImageLabel;
 	
 	@UiField Button editUnitButton,addAssignmentButton,cancelEditButton;
 	
@@ -113,6 +113,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		initWidget(uibinder.createAndBindUi(this));
 		this.classUnitsDo=classUnitsDo;
 		addAssignmentButton.getElement().getStyle().setMarginTop(28, Unit.PX);
+		loadingImageLabel.setVisible(false);
 		setAssignmentsForUnit();
 		setUnitNameDetails();
 		cancelEditButton.setVisible(false);
@@ -135,6 +136,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 
 
 	private void setAssignmentsForUnit() {
+		loadingImageLabel.setVisible(false);
 		assignmentsContainer.clear();
 		if(classUnitsDo!=null && classUnitsDo.getResource()!=null){
 			if(classUnitsDo.getResource().getCollectionItems() != null)
@@ -204,6 +206,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 								if(isAssignmentDeleted){
 									clearAssignmentsFromDo();
 									hide();
+									loadingImageLabel.setVisible(true);
 									if((getTotalHitCount()-1)==assignmentOffset){
 										assignmentOffset=assignmentOffset-10;
 									}
@@ -221,6 +224,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	
 	public void setAssignmentsEditView() {
+		loadingImageLabel.setVisible(false);
 		assignmentsContainer.clear();
 		for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 			AssignmentEditView assignmentEditView = new AssignmentEditView(classUnitsDo);
@@ -388,6 +392,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	@UiHandler("htPanelNextArrow")
 	public void clickOnNextArrow(ClickEvent clickEvent){
 		clearAssignmentsFromDo();
+		loadingImageLabel.setVisible(true);
 		getUnitAssignments(getAssignmentOffsetValue(NEXT),isEditMode);
 	}
 	
@@ -404,6 +409,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	@UiHandler("htPanelPreviousArrow")
 	public void clickOnPreviousArrow(ClickEvent clickEvent){
 		clearAssignmentsFromDo();
+		loadingImageLabel.setVisible(true);
 		getUnitAssignments(getAssignmentOffsetValue(PREVIOUS),isEditMode);
 	}
 	
@@ -416,8 +422,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 				setTotalHitCount(result.getTotalHitCount());
 				classUnitsDo.getResource().setCollectionItems(result.getSearchResults());
 				if(isAssignmentEditmode){
-					setAssignmentsEditView();
 					classUnitsDo.getResource().setItemCount(getTotalHitCount());
+					setAssignmentsEditView();
 				}else{
 					setAssignmentsForUnit();
 				}
@@ -429,6 +435,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	public void addAssignment(ArrayList<ClasspageItemDo> classpageItemDo){
 		setTotalHitCount(getTotalHitCount()+classpageItemDo.size());
+		loadingImageLabel.setVisible(true);
 		getUnitAssignments(getOffsetValue(),false);
 	}
 	
