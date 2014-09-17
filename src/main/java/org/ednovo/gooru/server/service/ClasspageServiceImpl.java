@@ -1642,7 +1642,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.PATHWAYS_CLASS, classpageId, getLoggedInSessionToken(), limit, offSet);
-		System.out.println("v2GetPathwaysCompleteDetails API Call::::"+url);
+		getLogger().info("v2GetPathwaysCompleteDetails ---->>> "+url);
+//		System.out.println("v2GetPathwaysCompleteDetails API Call::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();

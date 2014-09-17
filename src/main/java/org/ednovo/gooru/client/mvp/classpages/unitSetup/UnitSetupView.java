@@ -73,7 +73,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	
 	@UiField HTMLEventPanel paginationPanel;
 	
-	@UiField HTMLPanel clearfix;
+	@UiField HTMLPanel clearfix,loadingImageLabel;
 	
 	ClasspageListDo classpageListDo;
 	
@@ -143,6 +143,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 
 	@Override
 	public void showUnitDetails(ClassDo classDo) {
+		setLoadingIcon(false);
 	    totalCount = classDo.getTotalHitCount();
 	    int unitSize =classDo.getSearchResults().size() ;
 	    unitAssignmentWidgetContainer.clear();
@@ -187,8 +188,6 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 
 	@Override
 	public void setPagination(int totalCount, int pagenumVal) {
-		System.out.println("totalCount::"+totalCount);
-		System.out.println("pagenumVal::"+pagenumVal);
 		this.totalCount = totalCount;
 		paginationPanel.getElement().setInnerHTML("");
 		int totalPages = (totalCount / 5)
@@ -248,6 +247,11 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 				}
 			}
 		}
+	}
+
+	@Override
+	public void setLoadingIcon(boolean isVisible) {
+		loadingImageLabel.setVisible(isVisible);
 	}
 	 
 	 

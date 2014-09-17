@@ -55,7 +55,7 @@ public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> impleme
 
 	@Override
 	public void getPathwayCompleteDetails(int limit, int offset) {
-		
+		getView().setLoadingIcon(true);
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		if(classpageId!=null){
 			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysCompleteDetails(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
