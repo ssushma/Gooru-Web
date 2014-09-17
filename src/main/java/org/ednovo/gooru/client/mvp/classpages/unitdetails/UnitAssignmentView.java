@@ -33,6 +33,8 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.ScoreHedingView.HasNumbersOnly;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.ScoreHedingView.ScoreHandler;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
@@ -58,6 +60,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -74,13 +77,17 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 	}
 	
-	@UiField HTMLPanel unitPanel,containerPanel;
+	@UiField HTMLPanel unitPanel,containerPanel,scoreHedingContainer;
 	
 	@UiField Label lblMoreUnits,unitTitleDetails;
 	
 	@UiField Anchor unitSetupButton;
 	
-	@UiField Button btnDashBoard,btnAssignment;
+	@UiField Button btnDashBoard,btnAssignment,btnSetGoal;
+	
+	@UiField Label lblControl,lblGreenControl;
+	
+	@UiField TextBox txtMinuts,txtHours;
 	
 	UnitAssignmentCssBundle res;
 	
@@ -529,10 +536,16 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 	
 	private void scoreHederView() {
-		//scoreHedingContainer.clear();
-		for(int i=0; i<3; i++){
-			//scoreHedingContainer.add(new ScoreHedingView());
+		scoreHedingContainer.clear();
+		ScoreHedingView scoreHedingView = null;
+		for(int i=0; i<2; i++){
+			 scoreHedingView=new ScoreHedingView();
+			scoreHedingContainer.add(scoreHedingView);
 		}
+		
+//		txtHours.addBlurHandler(new ScoreHandler());
+		txtHours.addKeyPressHandler(scoreHedingView.new HasNumbersOnly());
+		txtMinuts.addKeyPressHandler(scoreHedingView.new HasNumbersOnly());
 	}
 	
 	
@@ -562,11 +575,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		goalContainer.setVisible(true);
 		containerPanel.setVisible(false);
 		scoreHederView();
+		setDashBoardIds();
 		btnDashBoard.setVisible(true);
 		btnAssignment.setVisible(true);
 		btnDashBoard.setStyleName(res.unitAssignment().selected());
 		btnAssignment.removeStyleName(res.unitAssignment().selected());
 	}
+
 
 	@Override
 	public void showAssignments() {
@@ -577,6 +592,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		containerPanel.setVisible(true);
 		goalContainer.removeFromParent();
 		
+	}
+	
+	private void setDashBoardIds() {
+		// TODO Auto-generated method stub
+		lblControl.getElement().setId("controll");
+//		lblGreenControl.getElement().setId("greenControll");
 	}
 
 	}

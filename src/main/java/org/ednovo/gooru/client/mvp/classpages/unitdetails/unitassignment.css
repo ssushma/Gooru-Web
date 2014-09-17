@@ -394,8 +394,8 @@ display:inline-block;
 	.unitPanelname{
 		display:inline-block;
 		vertical-align:middle;
-
-		
+		width: 69px;
+		word-wrap: break-word;
 	}
 	.unitPanelStyle:hover{
         color:#666666;
@@ -823,6 +823,15 @@ background: -moz-linear-gradient(3% 0 -90deg, #fff 0px, #ddd 100%) repeat scroll
 	overflow:hidden;
 	text-align:center;
 	
+}
+.timeTextBox input{
+	border:1px solid #efefef;
+	padding:8px 0px 8px 0px;
+	font-size:14px;
+	color:#1e7cba;
+	text-align:center;
+	margin-bottom:12px;
+	width:35%;
 }
 
 

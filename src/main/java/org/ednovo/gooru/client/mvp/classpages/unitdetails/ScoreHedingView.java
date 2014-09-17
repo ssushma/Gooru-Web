@@ -91,7 +91,7 @@ public class ScoreHedingView extends Composite {
 	}
 	
 	
-	private class ScoreHandler implements BlurHandler{
+	public class ScoreHandler implements BlurHandler{
 		
 		@Override
 		public void onBlur(BlurEvent event) {
