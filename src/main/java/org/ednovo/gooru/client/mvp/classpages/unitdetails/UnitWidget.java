@@ -86,8 +86,8 @@ public class UnitWidget extends Composite implements HasClickHandlers{
 		initWidget(uiBinder.createAndBindUi(this));
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
-		ilUnitNumber.setText(classUnitDo.getResource().getTitle());
-		ilUnitName.setText(""+classUnitDo.getItemSequence());
+		ilUnitNumber.setText(""+classUnitDo.getItemSequence());
+		ilUnitName.setText(classUnitDo.getResource().getTitle());
 		this.unitGooruOid=classUnitDo.getResource().getGooruOid();
 	}
 	
