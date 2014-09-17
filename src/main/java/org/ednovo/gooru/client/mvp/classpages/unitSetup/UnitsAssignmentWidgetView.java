@@ -137,14 +137,25 @@ public class UnitsAssignmentWidgetView extends Composite {
 	private void setAssignmentsForUnit() {
 		assignmentsContainer.clear();
 		if(classUnitsDo!=null && classUnitsDo.getResource()!=null){
+			if(classUnitsDo.getResource().getCollectionItems() != null)
+			{
 			if(classUnitsDo.getResource().getCollectionItems().size()==0){
 				htPanelNextArrow.setVisible(false);
 				htPanelPreviousArrow.setVisible(false);
 			}
+			}
+			else
+			{
+				htPanelNextArrow.setVisible(false);
+				htPanelPreviousArrow.setVisible(false);
+			}
+			if(classUnitsDo.getResource().getCollectionItems() != null)
+			{
 			for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 				ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
 				showAndHidePaginationArrows();
 				assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo));
+			}
 			}
 		}
 	}
@@ -215,7 +226,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 			AssignmentEditView assignmentEditView = new AssignmentEditView(classUnitsDo);
 			assignmentEditView.getDeleteAssignmentLbl().addClickHandler(new DeleteAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
 			if(classUnitsDo.getResource().getCollectionItems().size()>0){ 
-				assignmentEditView.getAssignmentReorderLbl().addMouseOverHandler(new ReorderAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getResource().getTitle(),classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
+				assignmentEditView.getAssignmentReorderLbl().addMouseOverHandler(new ReorderAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getResource().getTitle(),classUnitsDo.getResource().getCollectionItems().get(i).getNarration(),classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
 			}
 			assignmentEditView.setAssignmentId(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId());
 			assignmentsContainer.add(assignmentEditView);
@@ -230,18 +241,21 @@ public class UnitsAssignmentWidgetView extends Composite {
 
 	public class ReorderAssignment implements MouseOverHandler{
 
-		String collectionItem,title;
+		String collectionItem,title,narration;
 		
 		
-		public ReorderAssignment(String title,String collectionItem){
+		public ReorderAssignment(String title,String narration,String collectionItem){
 			this.title = title;
 			this.collectionItem = collectionItem;
+			this.narration = narration;
 		}
+
+		
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),title, classPageId){
+			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),title, "",classPageId){
 
 				@Override
 				public void reorderAssignment(int seqPosition,String selectedPathId) {
