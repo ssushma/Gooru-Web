@@ -573,9 +573,26 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@Override
 	public void showAssignment(ClasspageItemDo classpageItemDo) {
 		assignmentContainer.clear();
-		assignmentContainer.add(new CollectionsView(classpageItemDo));
-		
-
+		CollectionsView collectionView=new CollectionsView(classpageItemDo){
+			public void updateAssignmentRequiredStatus(Boolean isRequired,String collectionItemId){
+				updateCircleRequiredView(isRequired, collectionItemId);
+			}
+		};
+		assignmentContainer.add(collectionView);
+	}
+	
+	public void updateCircleRequiredView(Boolean isRequired,String collectionItemId){
+		Iterator<Widget> widgets = circleContainerPanel.iterator();
+		while (widgets.hasNext()) {
+			 Widget widget = widgets.next();
+			if (widget instanceof UnitCricleView) {
+				UnitCricleView unitCricleView=(UnitCricleView)widget;
+				if(unitCricleView.getAssignementId().equals(collectionItemId)){
+					unitCricleView.showCircle(isRequired);
+					return;
+				}
+			}
+		}		
 	}
 	
 	public void setAssignmentToNewPosition(int pageNumber,String selectedPathId){

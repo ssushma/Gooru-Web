@@ -55,7 +55,7 @@
 					    	<g:Image  ui:field="collectionImage" styleName="{style.classpageResourceImage}"/> 
 					    </g:HTMLPanel>
 					    <g:FlowPanel styleName="{style.resourceHeaderTextPanel}">
-					      <g:Anchor styleName="{style.resourceTitle}" ui:field="classpageItemTitle">Collection Title</g:Anchor>
+					      <g:Anchor styleName="{style.resourceTitle}" ui:field="classpageItemTitle"></g:Anchor>
 					      <g:Label styleName="{style.classpageHeading}" ui:field="learningObjective">Learning Objective</g:Label>
 					      <g:HTML styleName="{style.classpageDesc}" ui:field="learningObject"></g:HTML>
 					    </g:FlowPanel>

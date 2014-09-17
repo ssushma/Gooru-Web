@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -36,6 +37,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -48,6 +50,7 @@ import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -100,6 +103,12 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	private TextArea directionTextArea;
 	
+	private TextBox mimimunScoreTextBox;
+	
+	private TextBox suggestedHourTextBox;
+	
+	private TextBox suggestedMinTextBox;
+	
 	private ClasspageItemDo classpageItemDo=null;
 	
 	private static CollectionsViewUiBinder uiBinder = GWT.create(CollectionsViewUiBinder.class);
@@ -121,6 +130,8 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		showSaveButtons(false);
 		changeAssignmentStatusView.getChangeAssignmentStatusButton().addClickHandler(new ChangeStatusEvent());
 		editAssignmentDetailsButton.addClickHandler(new EditAssignmentEvent());
+		saveAssignmentDetailsButton.addClickHandler(new UpdateAssignmentDetailsEvent());
+		cancelAssignmentDetailsButton.addClickHandler(new CancelEditAssignmentEvent());
 		dueDateButton.addClickHandler(new EditDueDateEvent());
 		editCollectionButton.addClickHandler(new CollectionEditEvent());
 		showAssignmentDetils();
@@ -133,7 +144,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			setDueDate(classpageItemDo.getPlannedEndDate());
 			setClasspageItemTitle(classpageItemDo.getResource().getTitle());
 			setLearningObject();
-			setDirection(classpageItemDo.getDirection());
+			setDirection(classpageItemDo.getNarration());
 			setThumbnailUrl();
 			setMinimumScore(classpageItemDo.getMinimumScore());
 			setSuggestedTime(classpageItemDo.getEstimatedTime());
@@ -147,28 +158,38 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	private void setAssignmentStatus(boolean assignmentStatus){
 		changeAssignmentStatusView.getChangeAssignmentStatusButton().setValue(assignmentStatus);
+		changeAssignmentStatusView.changeLabelStyle(CollectionsCBundle.INSTANCE.css().enableLabelText(), CollectionsCBundle.INSTANCE.css().disableLabelText());
 	}
 	
-	private void setDueDate(String dueDate){
+	private void setDueDate(Long dueDate){
+		removeEditDueDatePanel();
+		showDueDatePanel(true);
 		if(dueDate!=null){
-			dueDateText.setText(dueDate);
+			dueDateText.setText("Due Date:"+convertMillisecondsToDate(dueDate));
+		}else{
+			dueDateText.setText("Due Date");
 		}
 	}
 	
 	private void setMinimumScore(String score){
 		minimumScoreContentPanel.clear();
-		HTML scorePanel=new HTML(score+"%");
-		scorePanel.setStyleName("");
-		minimumScoreContentPanel.add(scorePanel);
+		if(score!=null){
+			HTML scorePanel=new HTML(score+"%");
+			scorePanel.setStyleName("");
+			minimumScoreContentPanel.add(scorePanel);
+		}
 	}
 	
 	private void setSuggestedTime(String suggestedTime){
+		suggestedHourLabel.setText("");
+		suggestedMinutesLabel.setText("");
 		if(suggestedTime!=null){
 			String[] timeArray=suggestedTime.split(" ");
 			if(timeArray.length>0&&timeArray[0].contains("hrs")){
 				String hours=timeArray[0].replace("hrs", "");
 				suggestedHourLabel.setText(hours);
-			}else if(timeArray.length>1&&timeArray[1].contains("mins")){
+			} 
+			if(timeArray.length>1&&timeArray[1].contains("mins")){
 				String minutes=timeArray[1].replace("mins", "");
 				suggestedMinutesLabel.setText(minutes);
 			}
@@ -231,23 +252,60 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	public void updateAssignmentStatus(boolean assignmentStaus){
-		//TODO
+		updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, null, null, null, null, assignmentStaus, true, false);
 	}
 	
+	public void updateAssignmentDueDate(String dueDate){
+		updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, dueDate, null, null, null, null, false, true);
+	}
+	
+	public void updateAssignmentDetails(String direction,String minimumScore,String suggestedTime){
+		updateAssignmentDetails(classpageItemDo.getCollectionItemId(), direction, null, null, minimumScore, suggestedTime, null, false, false);
+	}
 	
 	public class EditAssignmentEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
 			showSaveButtons(true);
-			editDirection("direction texttttttttt directes test direction texttttttttt directes test direction texttttttttt directes test direction texttttttttt directes test direction texttttttttt directes test ");
-			editMinimumScore("54");
-			editSuggestedTime("04","50");
+			editDirection(classpageItemDo.getNarration());
+			editMinimumScore(classpageItemDo.getMinimumScore());
+			editSuggestedTime(classpageItemDo.getEstimatedTime());
 		}
+	}
+	public class CancelEditAssignmentEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			showUpdatedAssignmentDetails();
+		}
+	}
+	public class UpdateAssignmentDetailsEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			updateAssignmentDetails();
+		}
+	}
+	
+	public void showUpdatedAssignmentDetails(){
+		showSaveButtons(false);
+		if(classpageItemDo!=null){
+			setDirection(classpageItemDo.getNarration());
+			setMinimumScore(classpageItemDo.getMinimumScore());
+			setSuggestedTime(classpageItemDo.getEstimatedTime());
+		}
+	}
+	
+	public void updateAssignmentDetails(){
+		String direction=directionTextArea.getValue();
+		String minimumScore=mimimunScoreTextBox.getValue();
+		String suggestedHour=suggestedHourTextBox.getValue();
+		String suggestedMinutes=suggestedMinTextBox.getValue();
+		String suggestedTime=suggestedHour+"hrs "+suggestedMinutes+"mins";
+		updateAssignmentDetails(direction, minimumScore, suggestedTime);
 	}
 	
 	public void editMinimumScore(String minimumScore){
 		minimumScoreContentPanel.clear();
-		TextBox mimimunScoreTextBox=new TextBox();
+		mimimunScoreTextBox=new TextBox();
 		mimimunScoreTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
 		mimimunScoreTextBox.setText(minimumScore);
 		InlineLabel percentageLabel=new InlineLabel("%");
@@ -256,15 +314,27 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		minimumScoreContentPanel.add(percentageLabel);
 	}
 	
-	public void editSuggestedTime(String suggestedHour, String suggestedMinutes){
+	public void editSuggestedTime(String suggestedTime){
+		String suggestedHour="",suggestedMinutes="";
+		if(suggestedTime!=null){
+			String[] timeArray=suggestedTime.split(" ");
+			if(timeArray.length>0&&timeArray[0].contains("hrs")){
+				suggestedHour=timeArray[0].replace("hrs", "");
+				suggestedHourLabel.setText(suggestedHour);
+			} 
+			if(timeArray.length>1&&timeArray[1].contains("mins")){
+				suggestedMinutes=timeArray[1].replace("mins", "");
+				suggestedMinutesLabel.setText(suggestedMinutes);
+			}
+		}
 		suggestedHourLabel.setText("");
-		TextBox suggestedHourTextBox=new TextBox();
+		suggestedHourTextBox=new TextBox();
 		suggestedHourTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
 		suggestedHourTextBox.setText(suggestedHour);
 		suggestedHourLabel.getElement().appendChild(suggestedHourTextBox.getElement());
 		
 		suggestedMinutesLabel.setText("");
-		TextBox suggestedMinTextBox=new TextBox();
+		suggestedMinTextBox=new TextBox();
 		suggestedMinTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
 		suggestedMinTextBox.setText(suggestedMinutes);
 		suggestedMinutesLabel.getElement().appendChild(suggestedMinTextBox.getElement());
@@ -349,9 +419,12 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		showDueDatePanel(false);
 		EditToolBarView editToolBarView=new EditToolBarView(true);
 		editToolBarView.dueDateText.add(new Label(i18n.GL1390()));
+		if(classpageItemDo.getPlannedEndDate()!=null){
+			editToolBarView.dateBoxUc.getDateBox().setValue(convertMillisecondsToDate(classpageItemDo.getPlannedEndDate()));
+		}
 		editToolBarView.dueDateText.setStyleName(CollectionsCBundle.INSTANCE.css().dueDataIcon());
 		editToolBarView.cancelButton.addClickHandler(new ResetEditContentEvent());
-		editToolBarView.saveButton.addClickHandler(new UpdateEditedDueDateEvent());
+		editToolBarView.saveButton.addClickHandler(new UpdateEditedDueDateEvent(editToolBarView));
 		dueDateContentPanel.add(editToolBarView);
 	}
 	private void showDueDatePanel(boolean visible){
@@ -367,9 +440,16 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 	}
 	private class UpdateEditedDueDateEvent implements ClickHandler{
+		private EditToolBarView editToolBarView;
+		public UpdateEditedDueDateEvent(EditToolBarView editToolBarView){
+			this.editToolBarView=editToolBarView;
+		}
 		@Override
 		public void onClick(ClickEvent event) {
-			Window.alert("MEN IN WORK..");
+			String dueDate=editToolBarView.dateBoxUc.getDate();
+			if(dueDate!=null){
+				updateAssignmentDueDate(dueDate);
+			}
 		}
 	}
 	private void removeEditDueDatePanel(){
@@ -415,6 +495,37 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 				}
 			}
 		});
+	}
+	
+	public void updateAssignmentDetails(String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus,final boolean isUpdateRequiredStatus,final boolean isUpdateDuedate){
+		AppClientFactory.getInjector().getClasspageService().updateAssignmentDetails(collectionItemId, direction, dueDate, readStatus, minimumScore, suggestedTime, isRequiredStatus, new SimpleAsyncCallback<ClasspageItemDo>() {
+			@Override
+			public void onSuccess(ClasspageItemDo classpageItemDo) {
+				if(classpageItemDo!=null){
+					CollectionsView.this.classpageItemDo=classpageItemDo;
+					if(isUpdateRequiredStatus){
+						updateAssignmentRequiredStatus(classpageItemDo.getIsRequired(),classpageItemDo.getCollectionItemId());
+					}
+				}
+				if(isUpdateRequiredStatus||isUpdateDuedate){
+					setAssignmentStatus(classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false);
+					setDueDate(classpageItemDo.getPlannedEndDate());
+				}else{
+					showUpdatedAssignmentDetails();
+				}
+			}
+		});
+	}
+	
+	public void updateAssignmentRequiredStatus(Boolean isRequired,String collectionItemId){
+		
+	}
+	
+	public static String convertMillisecondsToDate(Long milliseconds){
+		Date currentDate = new Date(milliseconds);
+		DateTimeFormat fmt = DateTimeFormat.getFormat ("MM/dd/yyyy");
+		String date=fmt.format(currentDate);
+		return date;
 	}
 	
 }
