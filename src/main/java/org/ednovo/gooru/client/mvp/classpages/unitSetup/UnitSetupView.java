@@ -31,6 +31,7 @@ import java.util.Map;
 import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
@@ -101,17 +102,26 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	private class UnitDetailsEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			revealPlace("unitdetails");
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "1", "0", new SimpleAsyncCallback<ClassDo>() {
+				@Override
+				public void onSuccess(ClassDo classDo) {
+					if(classDo!=null&&classDo.getSearchResults().size()>0){
+						revealPlace("unitdetails",classDo.getSearchResults().get(0).getResource().getGooruOid());
+					}
+				}
+			});
 		}
 	}
 	
 	 private class ClassSetupEvents implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			revealPlace(null);
+			revealPlace(null,null);
 		}
 	}
-	 public void revealPlace(String tabName){
+	 
+	 public void revealPlace(String tabName,String unitId){
 			Map<String,String> params = new HashMap<String,String>();
 			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
 			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
@@ -119,6 +129,9 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 			String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
 			params.put("pageSize", pageSize);
 			params.put("classpageid", classpageid);
+			if(unitId!=null){
+				params.put("uid", unitId);
+			}
 			params.put("pageNum", pageNum);
 			params.put("pos", pos);
 			if(tabName!=null){
@@ -145,6 +158,11 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 		
 	}
 	
+	public void clearUnitAssignmentWidgetContaner(){
+		 unitAssignmentWidgetContainer.clear();
+		 paginationPanel.clear();
+		 classpageListDo=null;
+	}
 	public class AddAssignmentToUnit implements ClickHandler{
 		ClassUnitsListDo classListUnitsListDo;
 		

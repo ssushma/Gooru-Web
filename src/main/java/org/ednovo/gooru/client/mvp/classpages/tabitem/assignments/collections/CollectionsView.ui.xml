@@ -37,8 +37,8 @@
 							</g:FlowPanel>
 							<g:FlowPanel styleName="col-xs-6 {style.rightScore}">
 								<g:Label styleName="{style.direction}">Suggested Time:&nbsp;&nbsp;</g:Label>
-								<g:InlineLabel styleName="{style.scoreText}" ui:field="suggestedHourLabel">02</g:InlineLabel><g:InlineLabel>&nbsp;&nbsp; hour &nbsp;&nbsp;</g:InlineLabel>
-								<g:InlineLabel styleName="{style.scoreText}" ui:field="suggestedMinutesLabel">20</g:InlineLabel><g:InlineLabel> &nbsp;&nbsp;min</g:InlineLabel>
+								<g:InlineLabel styleName="{style.scoreText}" ui:field="suggestedHourLabel"></g:InlineLabel><g:InlineLabel>&nbsp;&nbsp; hour &nbsp;&nbsp;</g:InlineLabel>
+								<g:InlineLabel styleName="{style.scoreText}" ui:field="suggestedMinutesLabel"></g:InlineLabel><g:InlineLabel> &nbsp;&nbsp;min</g:InlineLabel>
 							</g:FlowPanel>
 							<g:Label styleName="clearfix"></g:Label>
 						</g:FlowPanel>

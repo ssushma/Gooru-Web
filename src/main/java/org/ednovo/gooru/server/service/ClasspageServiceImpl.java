@@ -1097,6 +1097,21 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		return classpageItemDo;
 	}
 	
+	@Override
+	public ClasspageItemDo getAssignemntDetails(String assingmentId){
+		ClasspageItemDo classpageItemDo=new ClasspageItemDo();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_ASSIGNMENT_DETAILS, assingmentId,getLoggedInSessionToken());
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		if(jsonResponseRep.getStatusCode()==200){
+			try{
+				return JsonDeserializer.deserialize(jsonResponseRep.getJsonRepresentation().getJsonObject().toString(), ClasspageItemDo.class);
+			}catch(JSONException exception){
+				
+			}
+		}
+		return classpageItemDo;
+	}
+	
 	protected JSONObject createClasspageJsonObject(String collectionId,String direction,String dueDate,String status){
 		JSONObject classPageItemJsonObject=new JSONObject();
 		JSONObject collectionJsonObject=new JSONObject();
