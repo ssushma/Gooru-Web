@@ -573,6 +573,7 @@ public interface ClasspageService extends BaseService {
 	 * @param classpageId
 	 * @param pageSize
 	 * @param pageNum
+	 * @param simpleAsyncCallback 
 	 * @return
 	 * @throws GwtException
 	 * @throws ServerDownException

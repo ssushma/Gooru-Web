@@ -45,5 +45,30 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
  * @Reviewer: 
  */
 public interface AssignmentGoalUiHandlers extends BaseUiHandlers {
+
+	/**
+	 * @function getAnalyticData 
+	 * 
+	 * @created_date : 16-Sep-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param gooruUId
+	 * @param classpageId
+	 * @param pageSize
+	 * @param pageNum
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void getAnalyticData(String gooruUId, String classpageId, int pageSize,
+			int pageNum);
 	
 }

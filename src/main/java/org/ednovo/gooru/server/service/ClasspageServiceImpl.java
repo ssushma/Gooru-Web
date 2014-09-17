@@ -1805,7 +1805,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public List<InsightsUserDataDo> getAssignmentData(String gooruUId, String classpageId, int pageSize, int pageNum)
 			throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_ASSIGNMENTS, classpageId, getLoggedInSessionToken(), ""+pageSize, ""+pageNum);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_INSIGHTS_DATA, classpageId, getLoggedInSessionToken(), gooruUId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeAssignmentsData(jsonRep);

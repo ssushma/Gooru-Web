@@ -24,44 +24,48 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.AssignmentGoal;
 
-import org.ednovo.gooru.client.child.IsChildView;
+import java.util.List;
 
-/**
- * 
- * @fileName : IsCollectionsView.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: Apr 17, 2013
- *
- * @Author Gooru Team 
- *
- * @Reviewer:
- */
-public interface IsAssignmentGoalView extends IsChildView<AssignmentGoalPresenter> {
+import org.ednovo.gooru.client.child.IsChildView;
+import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 
 	/**
-	 * @function setAssignments 
+	 * 
+	 * @fileName : IsCollectionsView.java
+	 * 
+	 * @description :
+	 * 
+	 * 
+	 * @version : 1.0
+	 * 
+	 * @date: Apr 17, 2013
+	 * 
+	 * @Author Gooru Team
+	 * 
+	 * @Reviewer:
+	 */
+	public interface IsAssignmentGoalView extends
+			IsChildView<AssignmentGoalPresenter> {
+
+	/**
+	 * @function setAssignments
 	 * 
 	 * @created_date : 16-Sep-2014
 	 * 
 	 * @description
 	 * 
 	 * 
+	 * @param list
 	 * 
 	 * @return : void
-	 *
+	 * 
 	 * @throws : <Mentioned if any exceptions>
-	 *
 	 * 
-	 *
 	 * 
-	*/
-	
-	void setAssignments();
-	
-}
+	 * 
+	 * 
+	 */
 
+	void setAssignments(List<InsightsUserDataDo> list);
+
+}
