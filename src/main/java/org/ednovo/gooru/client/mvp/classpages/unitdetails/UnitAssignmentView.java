@@ -144,20 +144,23 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		return circleContainerPanel;
 	}
 	
-	public void resetCircleAndAssignmentContainer(){
+	public void resetCircleAndAssignmentContainer(String unitTitle){
 		circleContainerPanel.clear();
 		assignmentContainer.clear();
 		unitTitleDetails.setText("");
+		unitTitleDetails.setText(unitTitle);
 	}
 	
 	public class UnitChangeEvent implements ClickHandler{
 		private UnitWidget unitsWidget;
-		public UnitChangeEvent(UnitWidget unitsWidget){
+		private String unitTitle;
+		public UnitChangeEvent(UnitWidget unitsWidget,String unitTitle){
 			this.unitsWidget=unitsWidget;
+			this.unitTitle = unitTitle;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			resetCircleAndAssignmentContainer();
+			resetCircleAndAssignmentContainer(unitTitle);
 			revealPlace("unitdetails",null,unitsWidget.getUnitGooruOid(),null);
 		}
 	}
@@ -372,8 +375,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				ClassUnitsListDo classListUnitsListDObj=classDo.getSearchResults().get(i);
 				classUnitsDo=classListUnitsListDObj;
 				unitTitleDetails.setText(classDo.getSearchResults().get(0).getResource().getTitle());
+				String unitTitle = classDo.getSearchResults().get(i).getResource().getTitle();
 				UnitWidget unitsWidget=new UnitWidget(classListUnitsListDo.get(i));
-				unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget));
+				unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget,unitTitle));
 				unitPanel.add(unitsWidget);
 			}
 
@@ -450,7 +454,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 
 	private void showAndHideAssignmentArrows(UnitAssignmentsDo unitAssignmentsDo) {
-		int totalAssignments=unitAssignmentsDo.getTotalHitCount();
+		int totalAssignments=0;
+		if(unitAssignmentsDo.getTotalHitCount() != null)
+		{
+			totalAssignments = unitAssignmentsDo.getTotalHitCount();
+		}
+		
 		
 		if(Math.abs(totalAssignments-assignmentOffset)>assignmentLimit){
 			if(Math.abs(totalAssignments-assignmentOffset)==totalAssignments){
@@ -564,6 +573,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void showAssignment(ClasspageItemDo classpageItemDo) {
 		assignmentContainer.clear();
 		assignmentContainer.add(new CollectionsView(classpageItemDo));
+		
 
 	}
 	
