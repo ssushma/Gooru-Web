@@ -35,12 +35,14 @@ import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -53,7 +55,9 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 	@UiField PPanel unitSetupContainer;
 	@UiField Label unitSetupButton;
 	@UiField HTMLEventPanel paginationPanel;
+	@UiField HTMLPanel unitSetupLabel,loadingImageLabel;
 	
+
 	private HandlerRegistration addUnitClickHandler;
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -82,7 +86,8 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 		
 		paginationPanel.setVisible(false);
 		unitSetupContainer.setVisible(false);
-		
+		unitSetupLabel.getElement().getStyle().setWidth(99, Unit.PCT);
+		loadingImageLabel.setVisible(false);
 		if(addUnitClickHandler!=null) {
 			addUnitClickHandler.removeHandler();
 		}
@@ -269,9 +274,11 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			
 		}
 		
-	
-		
-	
+		@Override
+		public void setLoadingIcon(boolean isVisible) {
+			loadingImageLabel.setVisible(isVisible);
+		}
+
 	
 	
 }

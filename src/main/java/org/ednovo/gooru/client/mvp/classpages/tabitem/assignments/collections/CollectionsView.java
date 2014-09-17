@@ -123,7 +123,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		editAssignmentDetailsButton.addClickHandler(new EditAssignmentEvent());
 		dueDateButton.addClickHandler(new EditDueDateEvent());
 		editCollectionButton.addClickHandler(new CollectionEditEvent());
-		
+		showAssignmentDetils();
 	}
 	
 	public void showAssignmentDetils(){
@@ -134,6 +134,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			setClasspageItemTitle(classpageItemDo.getResource().getTitle());
 			setLearningObject();
 			setDirection(classpageItemDo.getDirection());
+			setThumbnailUrl();
+			setMinimumScore(classpageItemDo.getMinimumScore());
+			setSuggestedTime(classpageItemDo.getEstimatedTime());
 		}
 		
 	}
@@ -159,22 +162,30 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		minimumScoreContentPanel.add(scorePanel);
 	}
 	
-	private void setSuggestedTime(String time){
-		
+	private void setSuggestedTime(String suggestedTime){
+		if(suggestedTime!=null){
+			String[] timeArray=suggestedTime.split(" ");
+			if(timeArray.length>0&&timeArray[0].contains("hrs")){
+				String hours=timeArray[0].replace("hrs", "");
+				suggestedHourLabel.setText(hours);
+			}else if(timeArray.length>1&&timeArray[1].contains("mins")){
+				String minutes=timeArray[1].replace("mins", "");
+				suggestedMinutesLabel.setText(minutes);
+			}
+		}
 	}
 	
 	private void setClasspageItemTitle(String collectionItemTitle){
-		classpageItemTitle.setHTML(classpageItemDo.getCollectionTitle());
-		classpageItemTitle.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getCollectionId()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken());
+		classpageItemTitle.setHTML(collectionItemTitle);
+		classpageItemTitle.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getResource().getGooruOid()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken());
 	}
 	
 	private void setAssignmentStandards(){
 		
 	}
 	
-	
 	public void setLearningObject(){
-		String learningObject=classpageItemDo.getGoal();
+		String learningObject=classpageItemDo.getResource().getGoals();
 		if(learningObject!=null&&!learningObject.equals("")&&!learningObject.equals("null")){
 			this.learningObject.setHTML(learningObject);
 			this.learningObject.getElement().setAttribute("alt",learningObject);
@@ -188,9 +199,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	public void setThumbnailUrl(){
-		collectionImage.setUrl(classpageItemDo.getResource().getThumbnails().getUrl()!=null?StringUtil.formThumbnailName(classpageItemDo.getThumbnailUrl(),"-160x120."):"null");
+		collectionImage.setUrl(classpageItemDo.getResource().getThumbnails().getUrl()!=null?StringUtil.formThumbnailName(classpageItemDo.getResource().getThumbnails().getUrl(),"-160x120."):"null");
 		Anchor thumbnailAnchor=new Anchor();
-		thumbnailAnchor.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getCollectionId()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken());
+		thumbnailAnchor.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getResource().getGooruOid()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken());
 		thumbnailAnchor.getElement().appendChild(collectionImage.getElement());
 		thumbnailContainer.add(thumbnailAnchor);
 	}

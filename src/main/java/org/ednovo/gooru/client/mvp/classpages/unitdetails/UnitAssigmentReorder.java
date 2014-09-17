@@ -4,10 +4,14 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.event.ReorderAssignmentEvent;
+import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -27,7 +31,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class UnitAssigmentReorder extends PopupPanel{
+public abstract class UnitAssigmentReorder extends PopupPanel{ 
 private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			.create(UnitAssigmentReorderUiBinder.class);
 
@@ -47,15 +51,16 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	private String selectedPathId;
 	private HandlerRegistration onClickUnit;
 	
-	public UnitAssigmentReorder(ClassDo classDo,String classpageId) {
+	public UnitAssigmentReorder(ClassDo classDo,String title,String narration,String classpageId) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.classDo = classDo;
 		this.classpageId = classpageId;
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
-		setUnitAssignmentData(classDo);
+
+		setUnitAssignmentData(classDo,title,narration);
 				
 	}
-	public void setUnitAssignmentData(ClassDo classDo){
+	public void setUnitAssignmentData(ClassDo classDo,String title,String narration){
 		popupArrow.setUrl("images/popArrow.png");
 		saveButton.setText("Save");
 		CancelButton.setText("Cancel");
@@ -67,10 +72,14 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		totalCount=classDo.getTotalHitCount()!=null?classDo.getTotalHitCount():0;
 			if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 			ArrayList<ClassUnitsListDo> classListUnitsListDo =classDo.getSearchResults();
-			titleLabel.setText(classListUnitsListDo.get(0).getResource().getTitle());
+			titleLabel.setText(title);
+			if(narration!=null){
+				descLabel.setText(narration);
+			}
 			totalsize =totalsize+classListUnitsListDo.size() ;
-			descLabel.setText(classListUnitsListDo.get(0).getResource().getTitle());
+			
 			for(int i=0; i<classListUnitsListDo.size(); i++){
+
 				int totalItemCount=classListUnitsListDo.get(0).getResource().getItemCount();
 				displayAssignment(totalItemCount);
 				int number=classListUnitsListDo.get(i).getItemSequence();
@@ -79,12 +88,11 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 				String unitCollectionItemId=classListUnitsListDo.get(i).getCollectionItemId();
 				Label dropDownListItem=new Label(number+"");
 				dropDownListItem.getElement().setId(classListUnitsListDo.get(i).getResource().getItemCount()+"");
-				
 				dropDownListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
 				dropdownListContainer.add(dropDownListItem);
 				dropDownListItem.addClickHandler(new OnDropdownItemClick(number+"",dropDownListItem.getElement().getId(),unitCollectionItemId));
-				
 			}
+			
 		}
 		
 				
@@ -167,7 +175,6 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			dropdownListPlaceHolder.setText(seq);
 			dropdownListPlaceHolder.getElement().setId(UnitCollectionItemId);
 			dropdownListPlaceHolder.getElement().setAttribute("id", itemCount+"");
-		
 			selectedPathId = UnitCollectionItemId;
 			displayAssignment(Integer.parseInt(itemCount));
 			new CustomAnimation(dropdownListContainerScrollPanel).run(300);
@@ -201,6 +208,10 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			CancelButton.setVisible(false);
 			saveButton.setVisible(false);
 			savingTextLabel.setText("Saving...");
+			if(selectedPathId==null)
+			{
+				selectedPathId = dropdownListPlaceHolder.getElement().getId();	
+			}
 			AppClientFactory.getInjector().getClasspageService().v2ReorderPathwaySequence(classpageId,selectedPathId,Integer.parseInt(dropdownListPlaceHolderAssignment.getText()),new SimpleAsyncCallback<Void>() {
 				@Override
 				public void onSuccess(Void result) {
@@ -209,10 +220,23 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 					hide();
 					savingTextLabel.setText("");
 					
+					setAssignmentToNewPosition(Integer.parseInt(dropdownListPlaceHolderAssignment.getText()),selectedPathId);
+					
+//					AppClientFactory.fireEvent(new ReorderAssignmentEvent(Integer.parseInt(dropdownListPlaceHolderAssignment.getText())));
+					
+					
+					
 				}
 		});	
 			
 		}
+
+		public void setAssignmentToNewPosition(int seqPosition,String selectedPathId){
+			reorderAssignment(seqPosition,selectedPathId);
+		}
 	}
+
+
+	public abstract void reorderAssignment(int seqPosition,String selectedPathId); 
 	
 }

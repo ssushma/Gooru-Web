@@ -619,6 +619,8 @@ public enum UrlToken {
 	
 	ASSIGN_STATUS_UPDATE("/v2/class/item/{0}?sessionToken={2}"),
 	
+	V2_GET_ASSIGNMENT_DETAILS("/v2/classpage/item/{0}?sessionToken={1}"),
+	
 	PATHWAYS_UPDATE("/v2/class/{0}/pathway/{1}?sessionToken={2}");
 	
 	

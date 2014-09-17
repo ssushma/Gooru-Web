@@ -46,6 +46,7 @@ import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 //import org.ednovo.gooru.shared.model.content.ResourceItemDo;
 
@@ -557,7 +558,8 @@ public interface ClasspageService extends BaseService {
 
 	public ArrayList<ClasspageItemDo> v2AssignCollectionTOPathway(String classpageId,String pathwayId,String collectionId,String suggestTime,String minScore,String duedate,String directions) throws GwtException, ServerDownException;
 
-	CollectionDo updateAssignmentStatus(String collectionItemId,
-			boolean isRequiredStatus) throws GwtException;
+	CollectionDo updateAssignmentStatus(String collectionItemId, boolean isRequiredStatus) throws GwtException;
+	
+	public ClasspageItemDo getAssignemntDetails(String assingmentId);
 
 }
