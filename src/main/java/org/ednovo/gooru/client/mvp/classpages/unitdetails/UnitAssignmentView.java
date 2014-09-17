@@ -32,8 +32,6 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.classpages.event.ReorderAssignmentEvent;
-import org.ednovo.gooru.client.mvp.classpages.event.ReorderAssignmentEventHandler;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
@@ -63,6 +61,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+
 
 public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHandlers> implements IsUnitAssignmentView{
 
@@ -127,7 +126,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
 		unitSetupButton.addClickHandler(new UnitSetupEvents());
-		AppClientFactory.getEventBus().addHandler(ReorderAssignmentEvent.TYPE, reorderAssignmentEventHandler);
+		
 		btnDashBoard.setStyleName(res.unitAssignment().selected());
 	}
 	
@@ -198,7 +197,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				leftArrow.setUrl("images/leftSmallarrow.png");
 				circleContainerPanel.add(leftArrow);
 
-				IsRequired = unitAssignmentsDo.getSearchResults().get(0).getIsRequired();
+//				IsRequired = unitAssignmentsDo.getSearchResults().get(0).getIsRequired();
 				for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 					unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
 					unitCricleViewObj.getElement().setId(i+"");
@@ -306,8 +305,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			unitAssigmentReorder = new UnitAssigmentReorder(classDo,title,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null)){
 
 				@Override
-				public void reorderAssignment(int seqPosition) {
-					setAssignmentToNewPosition(seqPosition);
+				public void reorderAssignment(int seqPosition,String selectedPathId) {
+					
+					setAssignmentToNewPosition(seqPosition,selectedPathId);
 				}
 				
 			};
@@ -447,6 +447,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			rightArrow.setVisible(false);
 			leftArrow.setVisible(true);
 		}
+		if(totalAssignments<=10){
+			rightArrow.setVisible(false);
+			leftArrow.setVisible(false);
+		}
 		
 	}
 	private void showAndHidePaginationArrows() {
@@ -540,12 +544,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	}
 	
-	public void setAssignmentToNewPosition(int pageNumber){
+	public void setAssignmentToNewPosition(int pageNumber,String selectedPathId){
+		if(selectedPathId.equalsIgnoreCase(unitId)){
 		assignmentOffset =(pageNumber/assignmentLimit)*assignmentLimit;
 		if(assignmentOffset==pageNumber){
 			assignmentOffset = assignmentOffset-assignmentLimit;
 		}
 		getUnitAssignments(assignmentOffset,isEditMode);
+		}
 	}
 	
 	
@@ -565,6 +571,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@Override
 	public void showAssignments() {
 		// TODO Auto-generated method stub
+
 		btnDashBoard.setVisible(false);
 		btnAssignment.setVisible(false);
 		containerPanel.setVisible(true);
@@ -572,21 +579,4 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 	}
 
-	ReorderAssignmentEventHandler reorderAssignmentEventHandler = new ReorderAssignmentEventHandler(){
-
-		@Override
-		public void reorderAssignment(int pageNumber) {
-			assignmentOffset =(pageNumber/assignmentLimit)*assignmentLimit;
-			
-			if(assignmentOffset==pageNumber)
-			{
-				assignmentOffset = assignmentOffset-assignmentLimit;
-			}
-			
-			clearAssignmentsFromDo();
-			getUnitAssignments(assignmentOffset,isEditMode);
-		}
-		
-	};
-
-}
+	}

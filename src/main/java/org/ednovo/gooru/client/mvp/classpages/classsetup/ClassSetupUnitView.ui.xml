@@ -8,71 +8,54 @@
 	<ui:with type="org.ednovo.gooru.client.mvp.classpages.classsetup.ClassSetupCBundle" field="res" />
 		<g:HTMLPanel styleName="col-xs-12 {playerStyle.borderboxbottom}">
 
-<g:HTMLPanel >
-
-<g:HTMLPanel ui:field="unitSequence" styleName="{playerStyle.numaric}"></g:HTMLPanel>
-<g:HTMLPanel styleName="{playerStyle.unitInput}">
-<g:HTMLPanel ui:field="inputContainer">
-<g:TextBox ui:field="unitName" name="" /> 
-<g:Label ui:field="unitNameErrorLabel"></g:Label>
-<g:HTMLPanel styleName="{playerStyle.saveBtns}" ui:field="buttonsContainer"> 
-<g:Button ui:field="cancelBtn" styleName="secondary"> Cancel</g:Button>  
-<g:Button ui:field="saveBtn" styleName="primary"> Save</g:Button> </g:HTMLPanel>
-</g:HTMLPanel>
-<gg:HTMLEventPanel ui:field="divContainer" styleName="{playerStyle.unitInput} {playerStyle.divcontainertext}">
-<g:Label ui:field="unitnameLBL"></g:Label>
-<g:HTMLPanel styleName="{playerStyle.floatRightcontainer}">
-<g:Button ui:field="editBtn" styleName="primary {playerStyle.btnContainer}"> Edit</g:Button></g:HTMLPanel>
-</gg:HTMLEventPanel>
-</g:HTMLPanel>
-
-<g:HTMLPanel styleName="{playerStyle.ordButtons}"><g:Button ui:field="btnAssignment" styleName="secondary normalBtn"><img src="images/plusIco.png"/> Assignment</g:Button> 
-<g:Button ui:field="deleteBtnUnit" styleName="secondary normalBtn"><img src="images/delete.png"/> Delete</g:Button> 
-
-<g:Button styleName="secondary {playerStyle.lgBtn}" ui:field="btnReorder"><img src="images/reorderIco.png"/> Reorder</g:Button>
- <gg:HTMLEventPanel styleName="{playerStyle.profileVisiblityPopup} {playerStyle.absoluteContainer}" ui:field="moveAssignmentPopup">
-			          	<g:HTMLPanel styleName="{playerStyle.bubblearrowstyle}"></g:HTMLPanel>
-			          	<g:HTMLPanel styleName=" {playerStyle.standardsinner} {playerStyle.standardsPopup}">
-							<g:HTML styleName="{playerStyle.title}" ui:field="htmlCollectiontitle"></g:HTML>
-							<g:HTMLPanel styleName="{playerStyle.moveContainer}">
-								<g:Label styleName="{playerStyle.move}" ui:field="lblMoveTo"></g:Label>
-								<g:HTMLPanel styleName="{playerStyle.myFolderCollectionCategoryDiv}">			
-									<g:HTMLPanel styleName="{playerStyle.myFolderCollectionCategoryInputDiv}" ui:field="panelComboList">
-											<g:HTMLPanel styleName="{playerStyle.myFolderCollectionCategoryDivText}">
-												<g:HTMLPanel>
-													<g:Label styleName="{playerStyle.resourceCategoryLabel}"  ui:field="resourceCategoryLabel" />
-												</g:HTMLPanel>
-											</g:HTMLPanel>
-											<g:HTMLPanel styleName="{playerStyle.myFolderCollectionArrowleftContainer}">
-												<g:Label ui:field="resoureDropDownLbl"	styleName="{playerStyle.myFolderCollectionPopupSprite} {playerStyle.myFolderCollectionArrowleft}"></g:Label>
-											</g:HTMLPanel>
-										</g:HTMLPanel>	
-										<g:HTMLPanel styleName="{playerStyle.reorderLabelContainer}" ui:field="resourceTypePanel">
-										</g:HTMLPanel>
-										
-										<!-- <g:HTMLPanel>
-										<g:Button ui:field="cancelButton" styleName="primary {playerStyle.btnContainer}">Cancel</g:Button>
-										<g:Button ui:field="saveButton" styleName="primary {playerStyle.btnContainer}">Save</g:Button>
-										</g:HTMLPanel> -->	
-										
-										
-						        
-						        </g:HTMLPanel>
-						        
-					        </g:HTMLPanel>		
-					  <g:HTMLPanel styleName="{playerStyle.saveBtnsReorder}" ui:field="buttonsContainerReorder"> 
-							<g:Button ui:field="cancelButton" styleName="secondary"> Cancel</g:Button>  
-							<g:Button ui:field="saveButton" styleName="primary"> Save</g:Button> 
-					  </g:HTMLPanel>		
-					        			        
-			         	</g:HTMLPanel>
-			        </gg:HTMLEventPanel>	
-			         
-		        
-			        
-</g:HTMLPanel>
-</g:HTMLPanel>
-
-
-</g:HTMLPanel>
+<g:HTMLPanel>
+	<g:HTMLPanel ui:field="unitSequence" styleName="{playerStyle.numaric}"></g:HTMLPanel>
+		<g:HTMLPanel styleName="{playerStyle.unitInput}">
+			<g:HTMLPanel ui:field="inputContainer">
+			<g:TextBox ui:field="unitName" name=""></g:TextBox> 
+			<g:Label ui:field="unitNameErrorLabel"></g:Label>
+			<g:HTMLPanel styleName="{playerStyle.saveBtns}" ui:field="buttonsContainer"> 
+				<g:Button ui:field="cancelBtn" styleName="secondary"> Cancel</g:Button>  
+				<g:Button ui:field="saveBtn" styleName="primary"> Save</g:Button> </g:HTMLPanel>
+			</g:HTMLPanel>
+			<gg:HTMLEventPanel ui:field="divContainer" styleName="{playerStyle.unitInput} {playerStyle.divcontainertext}">
+				<g:Label ui:field="unitnameLBL"></g:Label>
+				<g:HTMLPanel styleName="{playerStyle.floatRightcontainer}">
+					<g:Button ui:field="editBtn" styleName="primary {playerStyle.btnContainer}"> Edit</g:Button>
+				</g:HTMLPanel>
+			</gg:HTMLEventPanel>
+		</g:HTMLPanel>
+		<g:HTMLPanel styleName="{playerStyle.ordButtons}">
+			<g:Button ui:field="btnAssignment" styleName="secondary normalBtn"><img src="images/plusIco.png"/> Assignment</g:Button> 
+			<g:Button ui:field="deleteBtnUnit" styleName="secondary normalBtn"><img src="images/delete.png"/> Delete</g:Button> 
+			<g:Button styleName="secondary {playerStyle.lgBtn}" ui:field="btnReorder"><img src="images/reorderIco.png"/> Reorder</g:Button>
+ 			<gg:HTMLEventPanel styleName="{playerStyle.profileVisiblityPopup} {playerStyle.absoluteContainer}" ui:field="moveAssignmentPopup">
+				<g:HTMLPanel styleName="{playerStyle.bubblearrowstyle}"></g:HTMLPanel>
+			    <g:HTMLPanel styleName=" {playerStyle.standardsinner} {playerStyle.standardsPopup}">
+					<g:HTML styleName="{playerStyle.title}" ui:field="htmlCollectiontitle"></g:HTML>
+					<g:HTMLPanel styleName="{playerStyle.moveContainer}">
+						<g:Label styleName="{playerStyle.move}" ui:field="lblMoveTo"></g:Label>
+							<g:HTMLPanel styleName="{playerStyle.myFolderCollectionCategoryDiv}">			
+								<g:HTMLPanel styleName="{playerStyle.myFolderCollectionCategoryInputDiv}" ui:field="panelComboList">
+									<g:HTMLPanel styleName="{playerStyle.myFolderCollectionCategoryDivText}">
+										<g:HTMLPanel>
+											<g:Label styleName="{playerStyle.resourceCategoryLabel}"  ui:field="resourceCategoryLabel" />
+										 </g:HTMLPanel>
+									</g:HTMLPanel>
+									<g:HTMLPanel styleName="{playerStyle.myFolderCollectionArrowleftContainer}">
+										<g:Label ui:field="resoureDropDownLbl"	styleName="{playerStyle.myFolderCollectionPopupSprite} {playerStyle.myFolderCollectionArrowleft}"></g:Label>
+									</g:HTMLPanel>
+								</g:HTMLPanel>	
+								<g:HTMLPanel styleName="{playerStyle.reorderLabelContainer}" ui:field="resourceTypePanel"></g:HTMLPanel>
+						     </g:HTMLPanel>
+					      </g:HTMLPanel>		
+						  <g:HTMLPanel styleName="{playerStyle.saveBtnsReorder}" ui:field="buttonsContainerReorder"> 
+								<g:Button ui:field="cancelButton" styleName="secondary"> Cancel</g:Button>  
+								<g:Button ui:field="saveButton" styleName="primary"> Save</g:Button> 
+						  </g:HTMLPanel>		
+			         </g:HTMLPanel>
+			      </gg:HTMLEventPanel>	
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
 </ui:UiBinder>
