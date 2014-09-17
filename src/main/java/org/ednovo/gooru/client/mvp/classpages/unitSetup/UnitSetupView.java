@@ -168,7 +168,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	
 	public void clearUnitAssignmentWidgetContaner(){
 		 unitAssignmentWidgetContainer.clear();
-		 paginationPanel.clear();
+		 paginationPanel.getElement().setInnerHTML("");
 		 classpageListDo=null;
 	}
 	public class AddAssignmentToUnit implements ClickHandler{
@@ -228,7 +228,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 			params.put("pos", pos);
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-			getUiHandlers().getPathwayCompleteDetails(limit,(pageNumber-1)*limit);
+			getUiHandlers().getPathwayCompleteDetails(limit,(pagenumber-1)*limit);
 		}
 	}
 
