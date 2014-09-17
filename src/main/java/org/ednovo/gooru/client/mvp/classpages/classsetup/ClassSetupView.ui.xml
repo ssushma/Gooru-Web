@@ -20,7 +20,12 @@
 					</ptag:PPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
-			<g:VerticalPanel ui:field="unitwidget"></g:VerticalPanel>
+			    <g:HTMLPanel styleName="{playerStyle.loadingImageMainDiv}" ui:field="loadingImageLabel">
+					<g:Label styleName="{playerStyle.loadingImageForSelfEdit}" />
+				</g:HTMLPanel>
+				
+			    <g:VerticalPanel ui:field="unitwidget"></g:VerticalPanel>
+			    
 			<g:HTMLPanel styleName="text-center">
 				<g:Button ui:field="addUnitBtn" styleName="primary {playerStyle.btnstyles}"> Add Unit</g:Button>
 			</g:HTMLPanel>
