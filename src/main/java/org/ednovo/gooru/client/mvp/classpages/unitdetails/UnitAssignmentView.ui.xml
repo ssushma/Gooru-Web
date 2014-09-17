@@ -25,6 +25,10 @@
 				</g:HTMLPanel>
 			</div>
 			<div class="col-xs-10 {unitStyle.rightPanel}">
+			  <g:HTMLPanel styleName="{unitStyle.teachTab}">
+					<g:Button  ui:field="btnDashBoard">Dashboard</g:Button>
+					<g:Button  ui:field="btnAssignment">Assignments</g:Button>
+				</g:HTMLPanel>
 				<g:HTMLPanel ui:field="containerPanel" >
 				<div class="row">
 					<div class="col-xs-12">
@@ -49,7 +53,6 @@
 
 						<g:HTMLPanel styleName="{unitStyle.rowInner}"
 							ui:field="circleContainerPanel">
-							<g:Label styleName="{unitStyle.genHead}" ui:field="generalLabel"></g:Label>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
@@ -67,10 +70,7 @@
 				<g:HTMLPanel ui:field="assignmentContainer"></g:HTMLPanel>
 			</g:HTMLPanel>	
 			<g:HTMLPanel ui:field="goalContainer">
-			    <g:HTMLPanel styleName="{unitStyle.teachTab}">
-					<g:Button  ui:field="btnDashBoard">Dashboard</g:Button>
-					<g:Button  ui:field="btnAssignment">Assignments</g:Button>
-				</g:HTMLPanel>
+			  
 			    <div class="row sectionBlockMain">
 			    <div class="clearfix"></div>
 
@@ -285,7 +285,6 @@
 					</div>
 					
 					<div class="clearfix"></div>
-								    
 			</g:HTMLPanel>
 			</div>
 			<div class="clearfix"></div>
