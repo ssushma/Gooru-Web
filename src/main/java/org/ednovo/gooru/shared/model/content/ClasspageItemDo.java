@@ -29,6 +29,7 @@ public class ClasspageItemDo implements Serializable{
 	private Integer itemSequence;
 	private String estimatedTime;
 	private String minimumScore;
+	private String narration;
 	
 	private ResourceDo resource;
 	
@@ -209,6 +210,12 @@ public class ClasspageItemDo implements Serializable{
 	}
 	public void setMinimumScore(String minimumScore) {
 		this.minimumScore = minimumScore;
+	}
+	public String getNarration() {
+		return narration;
+	}
+	public void setNarration(String narration) {
+		this.narration = narration;
 	}
 
 }
