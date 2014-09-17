@@ -46,6 +46,7 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 		unitNumber.setText(classpageItemDo.getItemSequence()+"");
 		boolean isRequired=classpageItemDo!=null&&classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false;
 		showCircle(isRequired);
+		
 	}
 	
 	public void setBubbleStyleName(String styleName){
@@ -105,8 +106,5 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
 		return addDomHandler(handler, MouseOverEvent.getType());
 	}
-	public void getValueIsRequired(boolean isRequired)
-	{
-		showCircle(isRequired);
-	}
+	
 }
