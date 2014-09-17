@@ -455,7 +455,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 
 	private void showAndHideAssignmentArrows(UnitAssignmentsDo unitAssignmentsDo) {
-		int totalAssignments=unitAssignmentsDo.getTotalHitCount();
+		int totalAssignments=0;
+		if(unitAssignmentsDo.getTotalHitCount() != null)
+		{
+			totalAssignments = unitAssignmentsDo.getTotalHitCount();
+		}
+		
 		
 		if(Math.abs(totalAssignments-assignmentOffset)>assignmentLimit){
 			if(Math.abs(totalAssignments-assignmentOffset)==totalAssignments){
