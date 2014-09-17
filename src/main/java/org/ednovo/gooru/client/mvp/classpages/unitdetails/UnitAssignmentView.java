@@ -524,8 +524,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void clickOnAssignement(ClickEvent clickEvent){
 		btnAssignment.setStyleName(res.unitAssignment().selected());
 		btnDashBoard.removeStyleName(res.unitAssignment().selected());
-		/*containerPanel.setVisible(true);
-		goalContainer.setVisible(false);*/
+		containerPanel.setVisible(true);
+		goalContainer.setVisible(false);
 	}
 	
 	private void scoreHederView() {
@@ -560,8 +560,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@Override
 	public void showDashBoard() {
 		goalContainer.setVisible(true);
-		containerPanel.removeFromParent();
+		containerPanel.setVisible(false);
 		scoreHederView();
+		btnDashBoard.setVisible(true);
+		btnAssignment.setVisible(true);
 		btnDashBoard.setStyleName(res.unitAssignment().selected());
 		btnAssignment.removeStyleName(res.unitAssignment().selected());
 	}
@@ -569,7 +571,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@Override
 	public void showAssignments() {
 		// TODO Auto-generated method stub
-		
+
+		btnDashBoard.setVisible(false);
+		btnAssignment.setVisible(false);
 		containerPanel.setVisible(true);
 		goalContainer.removeFromParent();
 		
