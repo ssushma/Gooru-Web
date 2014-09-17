@@ -19,7 +19,6 @@
 							<g:Image url="images/blueRightArrow.png"></g:Image>
 					</ptag:PPanel>
 				</g:HTMLPanel>
-				
 			</g:HTMLPanel>
 			<g:VerticalPanel ui:field="unitwidget"></g:VerticalPanel>
 			<g:HTMLPanel styleName="text-center">

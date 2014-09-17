@@ -214,7 +214,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 		for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 			AssignmentEditView assignmentEditView = new AssignmentEditView(classUnitsDo);
 			assignmentEditView.getDeleteAssignmentLbl().addClickHandler(new DeleteAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
-			assignmentEditView.getAssignmentReorderLbl().addMouseOverHandler(new ReorderAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId())); 
+			if(classUnitsDo.getResource().getCollectionItems().size()>0){ 
+				assignmentEditView.getAssignmentReorderLbl().addMouseOverHandler(new ReorderAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getResource().getTitle(),classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
+			}
 			assignmentEditView.setAssignmentId(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId());
 			assignmentsContainer.add(assignmentEditView);
 		}
@@ -228,19 +230,30 @@ public class UnitsAssignmentWidgetView extends Composite {
 
 	public class ReorderAssignment implements MouseOverHandler{
 
-		String collectionItem;
+		String collectionItem,title;
 		
-		public ReorderAssignment(String collectionItem){
+		
+		public ReorderAssignment(String title,String collectionItem){
+			this.title = title;
 			this.collectionItem = collectionItem;
 		}
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),"", classPageId){
+			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),title, classPageId){
 
 				@Override
 				public void reorderAssignment(int seqPosition) {
+					boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItem);
+					if(isAssignmentDeleted){
+						clearAssignmentsFromDo();
+						assignmentOffset =(seqPosition/assignmentLimit)*assignmentLimit;
+						if(assignmentOffset==seqPosition){
+							assignmentOffset = assignmentOffset-assignmentLimit;
+						}
+						getUnitAssignments(assignmentOffset,isEditMode);
+					}
 					
 				}
 				
