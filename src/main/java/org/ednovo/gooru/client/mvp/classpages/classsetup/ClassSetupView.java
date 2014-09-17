@@ -55,8 +55,9 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 	@UiField PPanel unitSetupContainer;
 	@UiField Label unitSetupButton;
 	@UiField HTMLEventPanel paginationPanel;
-	@UiField HTMLPanel unitSetupLabel;
+	@UiField HTMLPanel unitSetupLabel,loadingImageLabel;
 	
+
 	private HandlerRegistration addUnitClickHandler;
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -86,6 +87,7 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 		paginationPanel.setVisible(false);
 		unitSetupContainer.setVisible(false);
 		unitSetupLabel.getElement().getStyle().setWidth(99, Unit.PCT);
+		loadingImageLabel.setVisible(false);
 		if(addUnitClickHandler!=null) {
 			addUnitClickHandler.removeHandler();
 		}
@@ -272,9 +274,11 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			
 		}
 		
-	
-		
-	
+		@Override
+		public void setLoadingIcon(boolean isVisible) {
+			loadingImageLabel.setVisible(isVisible);
+		}
+
 	
 	
 }

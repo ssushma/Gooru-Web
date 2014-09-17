@@ -141,8 +141,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	private static final String MINIMUMSCORE="minimumScore";
 	private static final String SUGGESTEDTIME="estimatedTime";
 	private static final String ISREQUIRED="isRequired";
-	
-	
+
 	private static final String HTTPS = "https";
 	
 	private static final String HTTP = "http";
@@ -1658,6 +1657,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.PATHWAYS_CLASS, classpageId, getLoggedInSessionToken(), limit, offSet);
+		getLogger().info("v2GetPathwaysCompleteDetails ---->>> "+url);
+//		System.out.println("v2GetPathwaysCompleteDetails API Call::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1774,17 +1775,25 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			ServerDownException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ASSIGN_COLLECTION_TO_PATHWAY, classpageId, pathwayId, collectionId, getLoggedInSessionToken());
-		 if(suggestTime!=null){
+		
+		url= url + "&isRequired=false";
+		if(suggestTime!=null){
              url = url + "&estimatedTime=" + suggestTime;
 	     }
 	     if(miScore!=null){
 	             url = url + "&minimumScore=" + miScore;
 	     }
+	     if(directions!=null){
+	    	 url = url + "&direction=" + directions;
+	     }
+	     if(duedate!=null){
+             url = url + "&planedEndDate=" + duedate;
+	     } 
 		System.out.println("v2AssignCollectionTOPathway:::: url:::::::"+url);
 		JSONObject classPageItemJsonObject=createClasspageJsonObject(collectionId, directions, duedate,null,null,null,null);
 		System.out.println("v2AssignCollectionTOPathway:::: form data:::::::"+classPageItemJsonObject.toString());
 		try {
-			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
+			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),new JSONObject().toString());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 		} catch (Exception e) {
 			e.printStackTrace();

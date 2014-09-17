@@ -123,8 +123,20 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 
 	@Override
 	public void showUnitDetails(ClassDo classDo) {
-	    totalCount = classDo.getTotalHitCount();
-	    int unitSize =classDo.getSearchResults().size() ;
+		if(classDo.getTotalHitCount() != null)
+		{
+			 totalCount = classDo.getTotalHitCount();
+		}
+		else
+		{
+			totalCount = 0;
+		}
+		int unitSize = 0;
+		if(classDo.getSearchResults() != null)
+		{
+	    unitSize =classDo.getSearchResults().size() ;
+		}
+		
 
 	    unitAssignmentWidgetContainer.clear();
 	    for(int i=0; i<unitSize; i++){
