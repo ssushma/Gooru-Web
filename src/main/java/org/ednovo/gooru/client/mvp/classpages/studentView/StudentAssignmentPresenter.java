@@ -34,6 +34,9 @@ import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter.IsStudentAssignmentProxy;
+import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupPresenter;
+import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupStudentPresenter;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
@@ -70,7 +73,11 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
 	
-	private SimpleAsyncCallback<AssignmentsListDo> assignmentsListAsyncCallback;	
+	private SimpleAsyncCallback<AssignmentsListDo> assignmentsListAsyncCallback;
+	
+	private UnitSetupStudentPresenter unitSetupStudentPresenter;
+	
+	private UnitAssignmentPresenter unitAssignmentPresenter;
 	
 	SignUpPresenter signUpViewPresenter = null;
 	private Integer offset=0;
@@ -78,6 +85,8 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	private Integer defaultOffsetForPath=0;
 	private Integer defaultLimitForPath=20;
 	private static final Integer DEFAULT_LIMITVALUE=5;
+	
+	public static final  Object STUDY_SLOT = new Object();
 	
 	private ClasspageDo classpageDo=null;
 	
@@ -91,9 +100,11 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	//IndirectProvider<AssignmentPresenter> assignmentFactory;
 	
 	@Inject
-	public StudentAssignmentPresenter(IsStudentAssignmentView view,IsStudentAssignmentProxy proxy,SignUpPresenter signUpViewPresenter) {
+	public StudentAssignmentPresenter(IsStudentAssignmentView view,IsStudentAssignmentProxy proxy,SignUpPresenter signUpViewPresenter,UnitSetupStudentPresenter unitSetupStudentPresenter,UnitAssignmentPresenter unitAssignmentPresenter) {
 		super(view, proxy);
 		this.signUpViewPresenter = signUpViewPresenter;
+		this.unitSetupStudentPresenter = unitSetupStudentPresenter;
+		this.unitAssignmentPresenter =unitAssignmentPresenter;
 		getView().setUiHandlers(this);	
 		
 	}
@@ -133,6 +144,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 			AppClientFactory.setBrowserWindowTitle(SeoTokens.TEACH_TITLE);
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 		}
+  
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
@@ -141,8 +153,8 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
-			initParam();
 		}
+		initParam();
 		//getClasspage();
 	}
 	private void initParam() {
@@ -152,6 +164,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	public void getClasspage(){
 		String classpageId=getPlaceManager().getRequestParameter("id");
 		final String sortingOrder=getPlaceManager().getRequestParameter("order",null);
+		final String tabMode=getPlaceManager().getRequestParameter("tab",null);
 		if(classpageDo==null||(!classpageDo.getClasspageId().equals(classpageId))){
 			getView().resetAll();
 			this.classpageServiceAsync.getClasspage(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
@@ -159,12 +172,13 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 				public void onSuccess(ClasspageDo classpageDo) {
 					if(classpageDo!=null && classpageDo.getClasspageId() != null){
 						StudentAssignmentPresenter.this.classpageDo=classpageDo;
-							offset=0;
-							limit=5;
-							getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString(),false,sortingOrder);	//To display Assignments
-							getView().setSortingOrderInDropdown(sortingOrder);
-							getClasspageItems(classpageDo.getClasspageId(),""+defaultOffsetForPath,""+defaultLimitForPath,true, "all");	//To do display Assignment progress.
+//							offset=0;
+//							limit=5;
+//							getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString(),false,sortingOrder);	//To display Assignments
+//							//getView().setSortingOrderInDropdown(sortingOrder);
+//							getClasspageItems(classpageDo.getClasspageId(),""+defaultOffsetForPath,""+defaultLimitForPath,true, "all");	//To do display Assignment progress.
 							getView().setClasspageData(classpageDo);
+							showTabWidget(tabMode);
 							triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
 							
 					}else{
@@ -175,8 +189,48 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 				}
 			});
 		}else{
-			getClasspageItems(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),false,sortingOrder);
+			showTabWidget(tabMode);
 		}
+	}
+	
+	public void showTabWidget(String tab){
+		 if(tab!=null&&tab.equalsIgnoreCase("classList")){
+	     	
+	     }else if(tab!=null&&tab.equalsIgnoreCase("reports")){
+	     	
+	     }else if(tab!=null&&tab.equalsIgnoreCase("unitsetup")){
+	    	 String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+				int offsetVal = 0;
+				if(pageNum != null)
+				{
+					offsetVal = Integer.parseInt(pageNum);
+					if(offsetVal!=0)
+					{
+					offsetVal = (offsetVal-1);
+					}
+				}
+			unitSetupStudentPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
+	    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
+	     }
+	     else if(tab!=null&&tab.equalsIgnoreCase("unitdetails")){
+	    	 unitAssignmentPresenter.showDashBoardDetails();
+	    	 unitAssignmentPresenter.getClassUnits(classpageDo.getClasspageId());
+	    	 setInSlot(STUDY_SLOT, unitAssignmentPresenter,false);
+	     }
+	     else {
+	     	 String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+				int offsetVal = 0;
+				if(pageNum != null)
+				{
+					offsetVal = Integer.parseInt(pageNum);
+					if(offsetVal!=0)
+					{
+					offsetVal = (offsetVal-1);
+					}
+				}
+			unitSetupStudentPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
+	    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
+	     }
 	}
 	public void getClasspageItems(String classpageId,String offset,final String limit,final boolean isForAssignmentPath, final String sortOrder){
 		this.classpageServiceAsync.getClassPageItems(classpageId, offset, limit,sortOrder,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {

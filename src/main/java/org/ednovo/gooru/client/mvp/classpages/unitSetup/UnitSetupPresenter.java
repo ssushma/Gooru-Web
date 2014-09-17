@@ -23,16 +23,87 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
+import java.util.ArrayList;
+
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
+import org.ednovo.gooru.shared.model.content.ClassDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> implements UnitSetupUiHandlers{
+	
+	private int limit = 5;
+	private int offSet = 0;
+	
+	AddAssignmentContainerPresenter addAssignmentContainerPresenter=null;
 
 	@Inject
-	public UnitSetupPresenter(EventBus eventBus, IsUnitSetupView view) {
+	public UnitSetupPresenter(EventBus eventBus, IsUnitSetupView view, AddAssignmentContainerPresenter addAssignmentContainerPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
+		this.addAssignmentContainerPresenter = addAssignmentContainerPresenter;
+		getPathwayCompleteDetails(limit,offSet);
 	}
+
+	@Override
+	public void getPathwayCompleteDetails(int limit, int offset) {
+		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		if(classpageId!=null){
+			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysCompleteDetails(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
+
+				@Override
+				public void onSuccess(ClassDo result) {
+					getView().showUnitDetails(result);
+					if(result.getSearchResults().size()>0){
+						String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+						int pageNumVal = 0;
+						if(pageNum != null)
+						{
+							try
+							{
+							pageNumVal = Integer.parseInt(pageNum);
+							}
+							catch(Exception e)
+							{
+								
+							}
+						}
+						getView().setPagination(result.getTotalHitCount(),pageNumVal);
+						
+					}
+					
+				}
+			});
+		}
+		
+	}
+
+	/**
+	 * Before calling API.
+	 */
+	@Override
+	public void addAssignmentToPathway(String classPageId, String pathwayId,String mode) {
+		addAssignmentContainerPresenter.setUnitSetupPresenter(this);
+		addAssignmentContainerPresenter.getUserShelfData();
+		addAssignmentContainerPresenter.addAssignmentToPathway(classPageId, pathwayId,mode);
+		addToPopupSlot(addAssignmentContainerPresenter);
+	}
+
+	/**
+	 * After API call success, to add assignment widgets.
+	 * @param pathwayId 
+	 * @param result
+	 */
+	public void addAssignmentToPathway(ArrayList<ClasspageItemDo> classpageItemDo, String pathwayId) {  
+		getView().addAssignmentWidget(classpageItemDo,pathwayId); 
+	}
+	
+	
 	
 	
 }

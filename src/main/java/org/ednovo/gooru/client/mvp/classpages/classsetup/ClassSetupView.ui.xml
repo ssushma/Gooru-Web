@@ -5,39 +5,24 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:ptag= "urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="playerStyle" src="classsetup.css" />
-	<g:FlowPanel> 
-		<g:HTMLPanel styleName="{playerStyle.unitDetails}">
-
-<g:HTMLPanel styleName="{playerStyle.containerTeacher}">
-
-
-<g:HTMLPanel styleName="col-xs-12 {playerStyle.gerybg}">
-
-
-<g:HTMLPanel styleName="text-center {playerStyle.headerFont}">Class Setup</g:HTMLPanel>
-<g:HTMLPanel styleName="text-center {playerStyle.ptag}">Setup your class by adding units</g:HTMLPanel>
-
-<g:HTMLPanel styleName="col-xs-4 text-right {playerStyle.unitSetupLabel}">
-				<ptag:PPanel ui:field="unitSetupContainer" styleName="{playerStyle.uniSetup}">
-				    	<g:Label ui:field="unitSetupClick" styleName="{playerStyle.unitdetailsLbl}">Unit Setup</g:Label> 
-						<g:Image url="images/blueRightArrow.png"></g:Image>
-				</ptag:PPanel>
+	<g:HTMLPanel styleName="{playerStyle.unitDetails}">
+		<g:HTMLPanel styleName="{playerStyle.containerTeacher}">
+			<g:HTMLPanel styleName="col-xs-12 {playerStyle.gerybg}">
+				<g:HTMLPanel styleName="text-center {playerStyle.headerFont}">Class Setup</g:HTMLPanel>
+				<g:HTMLPanel styleName="text-center {playerStyle.ptag}">Setup your class by adding units</g:HTMLPanel>
+				<g:HTMLPanel styleName="col-xs-4 text-right {playerStyle.unitSetupLabel}" ui:field="unitSetupLabel">
+					<ptag:PPanel ui:field="unitSetupContainer" styleName="{playerStyle.uniSetup}">
+					    	<g:Label ui:field="unitSetupButton" styleName="{playerStyle.unitdetailsLbl}">Unit Setup</g:Label> 
+							<g:Image url="images/blueRightArrow.png"></g:Image>
+					</ptag:PPanel>
+				</g:HTMLPanel>
 			</g:HTMLPanel>
-
-</g:HTMLPanel>
-
-<g:VerticalPanel ui:field="unitwidget"></g:VerticalPanel>
-
-
-<g:HTMLPanel styleName="text-center">
-<g:Button ui:field="addUnitBtn" styleName="primary {playerStyle.btnstyles}"> Add Unit</g:Button>
-</g:HTMLPanel>
-
-
-</g:HTMLPanel>
-
-
-
-</g:HTMLPanel>
-	</g:FlowPanel>
+			<g:VerticalPanel ui:field="unitwidget"></g:VerticalPanel>
+			<g:HTMLPanel styleName="text-center">
+				<g:Button ui:field="addUnitBtn" styleName="primary {playerStyle.btnstyles}"> Add Unit</g:Button>
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{playerStyle.paginationStyle}">
+			<ptag:HTMLEventPanel ui:field="paginationPanel" styleName="text-right {playerStyle.paginationBtns}" ></ptag:HTMLEventPanel></g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
 </ui:UiBinder>

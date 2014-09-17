@@ -25,15 +25,15 @@
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
+import org.ednovo.gooru.client.mvp.classpages.event.ResetPaginationEvent;
+import org.ednovo.gooru.client.mvp.classpages.event.ResetPaginationHandler;
 import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupPresenter;
-import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
-import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.client.mvp.shelf.event.AssignmentEvent;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> implements ClassSetupUiHandlers{
@@ -41,27 +41,69 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	
 	public static final  Object UNITS_SLOT = new Object();
 	
+	AddAssignmentContainerPresenter assignmentContainer=null;
+	String classpageId="";
+	String pathwayId="";
+	
+	int totalHit = 0;
+	
+	int limit = 5;
+	
 	private UnitSetupPresenter unitSetupPresenter;
+	private static final String CLASS_SETUP = "classSetUpMode";
 	
 	@Inject
-	public ClassSetupPresenter(EventBus eventBus, IsClassSetupView view,UnitSetupPresenter unitSetupPresenter) {
+	public ClassSetupPresenter(EventBus eventBus, IsClassSetupView view,UnitSetupPresenter unitSetupPresenter,AddAssignmentContainerPresenter assignmentContainer) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.unitSetupPresenter=unitSetupPresenter;
-	
+		this.assignmentContainer = assignmentContainer;
+		addRegisteredHandler(ResetPaginationEvent.TYPE, this);
 
 	}
 	
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+		int offsetVal = 0;
+		if(pageNum != null)
+		{
+			offsetVal = Integer.parseInt(pageNum);
+			if(offsetVal!=0)
+			{	
+			offsetVal = (offsetVal-1);
+			}
+		}
+		getPaginatedPathways((offsetVal)*limit);
 		
-		getPathways();
+		
+		/*ResetPaginationHandler reset = new ResetPaginationHandler() {
+
+			@Override
+			public void callPathwaysAPI(int offSetVal) {
+				System.out.println("1");
+				getPaginatedPathways(offSetVal);
+				
+			}
+		};*/
 	}
 	
 	@Override
-	public void setUnit(String unitName, String pathwayId) {
-		 getView().setContent(unitName,pathwayId);
+	public void setUnit(String unitName, String pathwayId, int sequenceNum,String collectionItemId) {
+		 getView().setContent(unitName,pathwayId,sequenceNum,collectionItemId);
+	}
+	
+	@Override
+	public void loadPathways() {
+		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+		int offsetVal = 0;
+		if(pageNum != null)
+		{
+			offsetVal = Integer.parseInt(pageNum);
+			offsetVal = (offsetVal-1);
+		}
+		getPaginatedPathways((offsetVal)*limit);
 	}
 	
 	@Override
@@ -74,16 +116,35 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	public void getPathways(){
 		getView().clearPanel();
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		
 		if(classpageid != null)
 		{
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "10", "0", new SimpleAsyncCallback<ClasspageListDo>() {
+
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "5", "0", new SimpleAsyncCallback<ClassDo>() {
+
 			@Override
-			public void onSuccess(ClasspageListDo classpageItemDo) {
-				if(classpageItemDo.getSearchResults().size()>0)
+			public void onSuccess(ClassDo classDo) {
+				if(classDo.getSearchResults().size()>0)
 				{
-					for(int i=0;i<classpageItemDo.getSearchResults().size();i++)
+					String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+					int pageNumVal = 0;
+					if(pageNum != null || !pageNum.isEmpty())
 					{
-						setUnit(classpageItemDo.getSearchResults().get(i).getResource().getTitle(), classpageItemDo.getSearchResults().get(i).getResource().getGooruOid());
+						try
+						{
+						pageNumVal = Integer.parseInt(pageNum);
+						}
+						catch(Exception e)
+						{
+							
+						}
+					}
+					getView().setPagination(classDo.getTotalHitCount(),pageNumVal);
+					for(int i=0;i<classDo.getSearchResults().size();i++)
+					{
+
+						setUnit(classDo.getSearchResults().get(i).getResource().getTitle(), classDo.getSearchResults().get(i).getResource().getGooruOid(),classDo.getSearchResults().get(i).getItemSequence(),classDo.getSearchResults().get(i).getCollectionItemId());
+
 						
 					}
 				}
@@ -93,7 +154,46 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	}
 	
 	@Override
-	public void createPathway(String pathwayTitle){
+	public void getPaginatedPathways(int offsetVal){
+		getView().clearPanel();
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+
+		if(classpageid != null)
+		{
+
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "5", offsetVal+"", new SimpleAsyncCallback<ClassDo>() {
+
+			@Override
+			public void onSuccess(ClassDo classDo) {
+				if(classDo.getSearchResults().size()>0){
+					String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+					int pageNumVal = 0;
+					if(pageNum != null || !pageNum.isEmpty()){
+						try{
+							pageNumVal = Integer.parseInt(pageNum);
+						}
+						catch(Exception e){
+							
+						}
+					}
+
+					getView().setPagination(classDo.getTotalHitCount(),pageNumVal);
+					for(int i=0;i<classDo.getSearchResults().size();i++){
+						setUnit(classDo.getSearchResults().get(i).getResource().getTitle(), classDo.getSearchResults().get(i).getResource().getGooruOid(),classDo.getSearchResults().get(i).getItemSequence(),classDo.getSearchResults().get(i).getCollectionItemId());
+
+					}
+				}
+				else{
+					getView().zeroResults();
+				}
+				
+			}
+		});
+		}
+	}
+	
+	@Override
+	public void createPathway(String pathwayTitle,final int offsetVal){
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		if(classpageid != null)
 		{
@@ -102,7 +202,9 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 			public void onSuccess(CollectionDo pathwayItemObject) {
 				if(pathwayItemObject.getTitle() != null)
 				{
-					setUnit(pathwayItemObject.getTitle(),pathwayItemObject.getGooruOid());
+					//System.out.println("itemseq::::"+pathwayItemObject.getItemSequence());
+					getPaginatedPathways(offsetVal);
+					//setUnit(pathwayItemObject.getTitle(),pathwayItemObject.getGooruOid(),pathwayItemObject.getItemSequence());
 				}
 			}
 		});
@@ -125,22 +227,70 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	}
 	
 	@Override
-	public void deletePathway(String pathwayId){
+	public void deletePathway(String pathwayId, final int offsetVal){
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		if(classpageid != null)
 		{
 		AppClientFactory.getInjector().getClasspageService().deletePathway(classpageid, pathwayId, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				getPathways();
+				getPaginatedPathways(offsetVal);
 			}
 		});
 		}
 	}
 	
+	@Override
+	public void addAssignmentsContainerPopup(String pathwayIdVal) {
+	classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
+	assignmentContainer.getUserShelfData();
+	assignmentContainer.addAssignmentToPathway(classpageId, pathwayIdVal,CLASS_SETUP);
+	addToPopupSlot(assignmentContainer);
+	}
 	
+	@Override
+	public int getPathwayTotalHitcount(){
+		//getView().clearPanel();
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 	
+		if(classpageid != null)
+		{
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "2", "0", new SimpleAsyncCallback<ClassDo>() {
+			@Override
+			public void onSuccess(ClassDo classpageItemDo) {
+				totalHit=classpageItemDo.getTotalHitCount();
+		/*		if(classpageItemDo.getSearchResults().size()>0)
+				{
+					String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+					int pageNumVal = 0;
+					if(pageNum != null || !pageNum.isEmpty())
+					{
+						try
+						{
+						pageNumVal = Integer.parseInt(pageNum);
+						}
+						catch(Exception e)
+						{
+							
+						}
+					}
+					getView().setPagination(classpageItemDo.getTotalHitCount(),pageNumVal);
+					for(int i=0;i<classpageItemDo.getSearchResults().size();i++)
+					{
+						setUnit(classpageItemDo.getSearchResults().get(i).getResource().getTitle(), classpageItemDo.getSearchResults().get(i).getResource().getGooruOid(),classpageItemDo.getSearchResults().get(i).getItemSequence());
+						
+					}
+				}*/
+			}
+		});
+		}
+		return totalHit;
+	}
 
-	
+	@Override
+	public void callPathwaysAPI(int offSetVal) {
+		// TODO Auto-generated method stub
+		getPaginatedPathways(offSetVal);
+	}
 	
 }

@@ -25,7 +25,6 @@
 package org.ednovo.gooru.server.service;
 
 import java.io.IOException;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -49,6 +48,7 @@ import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
@@ -61,6 +61,7 @@ import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.BitlyUrlDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
@@ -475,18 +476,22 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeClasspageList(jsonRep);
 	}
+	public ClassDo deserializeClassDo(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				ClassDo classpageList = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ClassDo.class);				
+				return classpageList;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return new ClassDo();
+	}
+	
 	public ClasspageListDo deserializeClasspageList(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
 				ClasspageListDo classpageList = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ClasspageListDo.class);				
-//				List<CollectionDo> collectionDo = classpageList.getSearchResults();
-//				for (int i=0; i<collectionDo.size();i++){
-//					long milliseconds = Long.parseLong(collectionDo.get(i).getTrackActivity().getEndTime());
-//					SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-//					Date resultdate = new Date(milliseconds);
-//					collectionDo.get(i).getTrackActivity().setEndTime(sdf.format(resultdate));
-//				}
-				
 				return classpageList;
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -1547,7 +1552,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}
 
 	@Override
-	public ArrayList<CollectionItemDo> v2GetPathwayItems(String classpageId, String pathwayGooruOid,String sequenceNo,int limit,int offSet)
+	public UnitAssignmentsDo v2GetPathwayItems(String classpageId, String pathwayGooruOid,String sequenceNo,int limit,int offSet)
 			throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
@@ -1565,7 +1570,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			String pathwayItemId,int sequence) throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.REORDER_PATHWAY_SEQUENCE, getLoggedInSessionToken(),classpageId,pathwayItemId,sequence+"");
+				UrlToken.REORDER_PATHWAY_SEQUENCE,classpageId,pathwayItemId,sequence+"",getLoggedInSessionToken());
 		System.out.println("v2ReorderPathwaySequence.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),
 				getRestPassword());
@@ -1574,58 +1579,57 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		
 	}	
 
-	public ArrayList<CollectionItemDo> deserializePathwayItem(JsonRepresentation jsonRep) {
-		try {
-				if (jsonRep != null && jsonRep.getSize() != -1) {
-				return JsonDeserializer.deserialize(jsonRep.getJsonObject()
-						.toString(), new TypeReference<ArrayList<CollectionItemDo>>() {
-				});
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return new ArrayList<CollectionItemDo>();
+	public UnitAssignmentsDo deserializePathwayItem(JsonRepresentation jsonRep) {
 		
+		
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				UnitAssignmentsDo unitAssignmentsDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UnitAssignmentsDo.class);				
+				return unitAssignmentsDo;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return new UnitAssignmentsDo();
 	}
 	
+		
+		
 	@Override
-	public ClasspageListDo v2GetPathwaysOptimized(String classpageId, String limit, String offSet) throws GwtException {
+	public ClassDo v2GetPathwaysOptimized(String classpageId, String limit, String offSet) throws GwtException {
 
 		JsonRepresentation jsonRep = null;
 		if(limit == null)
 		{
-			limit ="10";
+			limit ="5";
 		}
-		if(offSet == null)
-		{
-			offSet = "1";
+		if(offSet == null){
+			offSet = "0";
 		}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.PATHWAYS_CLASS_OPTIMIZED, classpageId, getLoggedInSessionToken(), limit, offSet);
+		System.out.println("v2GetPathwaysOptimized::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
-		return deserializeClasspageList(jsonRep);
+		return deserializeClassDo(jsonRep);
 	}
 	
 	@Override
-	public ClasspageListDo v2GetPathwaysCompleteDetails(String classpageId, String limit, String offSet) throws GwtException {
-
+	public ClassDo v2GetPathwaysCompleteDetails(String classpageId, String limit, String offSet) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		if(limit == null)
-		{
-			limit ="10";
+		if(limit == null){
+			limit ="5";
 		}
-		if(offSet == null)
-		{
-			offSet = "1";
+		if(offSet == null){
+			offSet = "0";
 		}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.PATHWAYS_CLASS, classpageId, getLoggedInSessionToken(), limit, offSet);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
-		return deserializeClasspageList(jsonRep);
+		return deserializeClassDo(jsonRep);
 	}
 	
 	
@@ -1638,8 +1642,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonRepresentation jsonRep = null;
 		String newPosVal = String.valueOf(newPosSequence);
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.PATHWAYS_CLASS_REORDER, pathwayId, newPosVal, getLoggedInSessionToken());		
-		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword());
+				UrlToken.PATHWAYS_CLASS_REORDER, pathwayId, newPosVal, getLoggedInSessionToken());	
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(), new JSONObject().toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeClasspageList(jsonRep);
 	}
@@ -1696,7 +1700,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			}
 
 			collectionItemJsonObject.put("itemSequence", collectionItemDo.getItemSequence());
-			collectionItemJsonObject.put("isRequired", true);
+			//collectionItemJsonObject.put("isRequired", true);
 
 
 		} catch (JSONException e) {
@@ -1731,6 +1735,68 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 
 	}
+	
+	@Override
+	public ArrayList<ClasspageItemDo> v2AssignCollectionTOPathway(String classpageId,
+			String pathwayId, String collectionId,String suggestTime,String miScore,String duedate,String directions) throws GwtException,
+			ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ASSIGN_COLLECTION_TO_PATHWAY, classpageId, pathwayId, collectionId, getLoggedInSessionToken());
+		 if(suggestTime!=null){
+             url = url + "&estimatedTime=" + suggestTime;
+	     }
+	     if(miScore!=null){
+	             url = url + "&minimumScore=" + miScore;
+	     }
+		System.out.println("v2AssignCollectionTOPathway:::: url:::::::"+url);
+		JSONObject classPageItemJsonObject=createClasspageJsonObject(collectionId, directions, duedate,null);
+		System.out.println("v2AssignCollectionTOPathway:::: form data:::::::"+classPageItemJsonObject.toString());
+		try {
+			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return deserializeAssignPathway(jsonRep);
+	}
+
+
+
+	public ArrayList<ClasspageItemDo> deserializeAssignPathway(JsonRepresentation jsonRep){
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
+						.toString(), new TypeReference<ArrayList<ClasspageItemDo>>() {
+				});
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<ClasspageItemDo>();
+	}	
+	
+	
+	@Override
+	public CollectionDo updateAssignmentStatus(String collectionItemId, boolean isRequiredStatus) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ASSIGN_STATUS_UPDATE,collectionItemId,getLoggedInSessionToken());
+		JSONObject jsonObject=new JSONObject();
+		JSONObject collectionJsonObject=new JSONObject();
+		try {
+			collectionJsonObject.put("itemType", "added");	
+			collectionJsonObject.put("isRequired", isRequiredStatus);
+			jsonObject.put("collectionItem", collectionJsonObject);
+		}
+		catch(JSONException e)
+		{
+			
+		}
+
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),jsonObject.toString());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeCollection(jsonRep);
+	}
+	
 }
 
 

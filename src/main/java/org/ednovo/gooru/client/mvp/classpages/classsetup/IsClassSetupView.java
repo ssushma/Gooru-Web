@@ -30,9 +30,13 @@ import com.google.gwt.user.client.ui.Widget;
 
 public interface IsClassSetupView extends IsViewWithHandlers<ClassSetupUiHandlers>{
 
-	void setContent(String unitName, String pathwayId);
-
 	void clearPanel();
+
+	void setPagination(int totalCount, int pagenumVal);
+
+	void setContent(String unitName, String pathwayId, int sequenceNum,String collectionItemid);
+
+	void zeroResults();
 
 
 

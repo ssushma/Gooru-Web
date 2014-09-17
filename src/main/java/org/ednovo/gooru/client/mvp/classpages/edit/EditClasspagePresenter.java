@@ -27,6 +27,7 @@
 */
 package org.ednovo.gooru.client.mvp.classpages.edit;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,11 +55,9 @@ import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.shelf.ErrorPopup;
 import org.ednovo.gooru.client.mvp.shelf.event.AssignmentEvent;
-import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
@@ -280,6 +279,18 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		}
 		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE) && AppClientFactory.getPlaceManager().refreshPlace()){
 			getView().getGlobalClasspageProcess().clear();
+			System.out.println("INININ");
+			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+			int offsetVal = 0;
+			if(pageNum != null)
+			{
+				offsetVal = Integer.parseInt(pageNum);
+				if(offsetVal!=0)
+				{
+				offsetVal = (offsetVal-1);
+				}
+			}
+			unitSetupPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
 			//getClasspage();
 		}
 		
@@ -426,7 +437,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		}
 	}
 	public void showTabWidget(String tabValue){
-		System.out.println("tab value...");
 		 if(tab!=null&&tab.equalsIgnoreCase("classList")){
 	     	classlistPresenter.setClassPageDo(classpageDo);
 	     	setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
@@ -436,22 +446,15 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	    	 setInSlot(CLASSLIST_SLOT, unitSetupPresenter,false);
 	     }
 	     else if(tab!=null&&tab.equalsIgnoreCase("unitdetails")){
-	    	 System.out.println("tab value... 1");
-	    	 unitAssignmentPresenter.setClasspageData(classpageDo);
+	    	 unitAssignmentPresenter.showAssignmentDetails();
+	    	 unitAssignmentPresenter.getClassUnits(classpageDo.getClasspageId());
 	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
 	     }
 	     else {
-	    //	 setInSlot(CLASSLIST_SLOT, classSetupPresenter,false);
-
-	    	 
-	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
-	    	 
-	    	 /*System.out.println("tab value... 2");
-	    	 unitAssignmentPresenter.setClasspageData(classpageDo);
-	    	 
-	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);*/
+	    	 setInSlot(CLASSLIST_SLOT, classSetupPresenter,false);
 	     }
 	}
+
 	public Integer getOffsetValue(){
 		String pageNum=getPlaceManager().getRequestParameter("pageNum","1");
 		int pageNumber=0;

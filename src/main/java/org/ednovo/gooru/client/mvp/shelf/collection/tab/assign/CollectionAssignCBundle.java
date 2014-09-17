@@ -130,6 +130,30 @@ public interface CollectionAssignCBundle extends ClientBundle{
 		String directionsTextArea();
 		
 		String duedateContainer();
+		
+		String unitContainer();
+		
+		String errorLabelUnit();
+		
+		String fromLbl();
+		
+		String textAlignContainer();
+		
+		String textBox();
+		
+		String MinuteLabel();
+		
+		String scoreLbl();
+		
+		String textScoreBox();
+		
+		String mainDivContainer();
+		
+		String collectionBlocks();
+		
+		//String scoreErrorLabel();
+		
+		String suggestTimeErrorLabel();
 	}
 	@Source("CollectionAssign.css")
 	CollectionAssignCss css();

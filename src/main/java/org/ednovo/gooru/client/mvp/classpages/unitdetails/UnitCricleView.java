@@ -4,6 +4,12 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.dom.client.HasMouseOutHandlers;
+import com.google.gwt.event.dom.client.HasMouseOverHandlers;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -12,7 +18,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class UnitCricleView extends Composite implements HasClickHandlers{
+public class UnitCricleView extends Composite implements HasClickHandlers,HasMouseOverHandlers,HasMouseOutHandlers{
 
 	private static UnitCricleViewUiBinder uiBinder = GWT
 			.create(UnitCricleViewUiBinder.class);
@@ -23,6 +29,7 @@ public class UnitCricleView extends Composite implements HasClickHandlers{
 	@UiField InlineLabel unitNumber;
 	@UiField HTMLPanel bubbleOuterPanel;
 	boolean isRequired; 
+	
 		
 	public UnitCricleView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -32,12 +39,12 @@ public class UnitCricleView extends Composite implements HasClickHandlers{
 		showCircle();
 		
 	}
-	public UnitCricleView(boolean isRequired,int unitCircleNumber) {
+	public UnitCricleView(int unitCircleNumber) {
 		initWidget(uiBinder.createAndBindUi(this));
-		this.isRequired=isRequired;
+	//	this.isRequired=isRequired;
 		UnitAssignmentCssBundle.INSTANCE.unitAssignment().ensureInjected();
 		unitNumber.setText(unitCircleNumber+"");
-		showCircle();
+		
 		
 	}
 	
@@ -50,10 +57,23 @@ public class UnitCricleView extends Composite implements HasClickHandlers{
 	}
 	
 	public void setUnitSequenceNumber(int sequenceNumber){
+		if(sequenceNumber == 0)
+		{
+			unitNumber.setText("");
+		}
+		else
+		{
 		unitNumber.setText(""+sequenceNumber);
+		}
 	}
-	
 	public void showCircle(){
+		if(isRequired){
+			displayRequiredCircle();
+		}else{
+			displayOptionalCircle();
+		}
+	}
+	public void showCircle(boolean isRequired){
 		if(isRequired){
 			displayRequiredCircle();
 		}else{
@@ -79,5 +99,18 @@ public class UnitCricleView extends Composite implements HasClickHandlers{
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
 		return addDomHandler(handler, ClickEvent.getType());
 	}
-	
+
+	@Override
+	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
+		return addDomHandler(handler, MouseOutEvent.getType());
+	}
+
+	@Override
+	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
+		return addDomHandler(handler, MouseOverEvent.getType());
+	}
+	public void getValueIsRequired(boolean isRequired)
+	{
+		showCircle(isRequired);
+	}
 }

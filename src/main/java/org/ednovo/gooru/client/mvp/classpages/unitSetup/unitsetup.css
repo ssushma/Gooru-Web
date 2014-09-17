@@ -228,8 +228,12 @@
 
 
 .unitDetails .containerTeacher{
-	background:#ffffff;
-	border-top:1px solid #CCCCCC;
+	background: #fff;
+	border-top: 1px solid #ccc;
+	padding-right: 0 !important;
+	width: 1000px;
+	margin: 0 auto;
+	
 }
 
 .unitDetails .containerTeacher .leftPanel{
@@ -259,11 +263,20 @@
 .gerybg{
 		background:#fafafa;
 		padding:8px 0;
+		font-size: 24px;
+		margin-top: 20px;
+		margin-bottom: 10px;
+		font-weight: 500;
+		line-height: 1.1;
+		color: inherit;
 }
 
 
 .UnitSetupMain .uniSetup{
-	
+	/* width: 1000px; */
+	margin: 0 auto;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
 }
 	
 .UnitSetupMain  .uniSetup a{
@@ -304,6 +317,8 @@
 	background:#fff;
 	padding-left:0 !important;
 	padding-right:0 !important;
+	width:1000px;
+	margin:0 auto;
 }
 
 
@@ -323,7 +338,7 @@
 
 
 .classLeftMenu{
-	width:135px;
+	width:115px;
 	float:left;
 	background:#ffffff;
 	border-left:5px solid #ffffff;
@@ -361,8 +376,17 @@
 	position:absolute;
 	top:0;
 } */
-
-.classMenuBlock:hover .classPic .pic{
+.editbutton{
+	display:none;
+}
+.classMenuBlock:hover .detailsBtn{
+	display:block;
+}
+.classMenuBlock:hover .classLeftMenu{
+	border-left:5px solid #76afda;	
+	background:#eeeeee;
+}
+.classMenuBlock:hover .editbutton{
 	display:block;
 }
 .HoverSetup{
@@ -371,8 +395,7 @@
 }
 		
 .HoverSetup .classLeftMenu{
-	border-left:5px solid #76afda;
-	background:#eeeeee;
+	
 }
 		
 .HoverSetup .detailsBtn{
@@ -380,6 +403,7 @@
 	padding:12px 0;
 	color:#ffffff;
 	text-align:center;
+	display:none;
 }
 
 .HoverSetup .detailsBtn a{
@@ -388,14 +412,14 @@
 }
 
 .classDetailsMain{
-	width:725px;
+	width:757px;
 	float:left;
 	padding:18px 0;
 }
 		
 .classPic{
 	float:left;		
-	padding:0 3px;
+	padding:0 2px;
 	position:relative;
 	width:70px;
 	height:80px;
@@ -441,8 +465,8 @@
 
 .classButtons{
 	float: left;
-    width: 113px;
-	padding:10px 0;
+    width: 107px;
+	padding:14px 0;
 }
 		
 .single{
@@ -474,7 +498,7 @@
 .unitdetailsLbl{
 	font-size: 14px;
 	color: #1076BA;
-	margin-right: 26px;
+	margin-right: 15px;
 	margin-bottom: -17px;
 }
 
@@ -488,7 +512,7 @@
 
 .classEdit{
 	display: inline-block;
-	margin: 0 15px;
+	margin: 0 5px;
 }
 .cancelbutton{
 	text-align: center;
@@ -496,6 +520,7 @@
 	width:19px;
 	height:19px;
 	margin-left:22px;
+	cursor: pointer;
 }
 .reorderbutton{
 	text-align: center;
@@ -509,4 +534,58 @@
 	text-align: center;
 margin: 6px 0;
 }
-
+.paginationStyle{
+	position: absolute;
+margin-top: 16px;
+width:100%;
+}
+.classpageResourceImage{
+	width: 63px;
+    height: 46px;
+}
+.assignmentsNextArrow{
+	display:inline-block;
+	margin:33px 0 0px 0px;
+	cursor: pointer;
+}
+.assignmentsPreviousArrow{
+	display:inline-block;
+	margin:51px 0 0px 0px;
+	cursor: pointer;
+	float: left;
+}
+.redBubble{
+	background:#ff7d71 !important;
+}
+.greenBubble{
+	background:#a7c9a4 url(../images/checkMark.png) no-repeat center !important;
+	 border-radius: 50%;
+     color: #ffffff;
+     display: inline-block;
+     font-size: 14px;
+     font-weight: bold;
+     height: 30px;
+     left: 27%;
+     line-height: 30px;
+     position: absolute;
+     text-align: center;
+     top: 27px;
+     vertical-align: middle;
+     width: 30px;
+}
+.stylishBub{
+			background:#b9bbca url(../images/liners.png) repeat-x !important;
+			 border-radius: 50%;
+     color: #ffffff;
+     display: inline-block;
+     font-size: 14px;
+     font-weight: bold;
+     height: 30px;
+     left: 27%;
+     line-height: 30px;
+     position: absolute;
+     text-align: center;
+     top: 27px;
+     vertical-align: middle;
+     width: 30px;
+		}

@@ -24,10 +24,20 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.util.StringUtil;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -70,7 +80,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class CollectionsView extends ChildView<CollectionsPresenter> implements IsCollectionsView{
 	
-	@UiField HTMLPanel thumbnailContainer,directionContentPanel,minimumScoreContentPanel;
+	@UiField HTMLPanel thumbnailContainer,directionContentPanel,minimumScoreContentPanel,dueDateContentPanel;
 	
 	@UiField HTML learningObject;
 	
@@ -82,13 +92,15 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField ChangeAssignmentStatusView changeAssignmentStatusView;
 	
-	@UiField Button editAssignmentDetailsButton,cancelAssignmentDetailsButton,saveAssignmentDetailsButton;
+	@UiField Button editAssignmentDetailsButton,cancelAssignmentDetailsButton,saveAssignmentDetailsButton,editCollectionButton;
 	
 	@UiField InlineLabel suggestedHourLabel,suggestedMinutesLabel;
 	
 	private Label directionErrorLabel=new Label();
 	
 	private TextArea directionTextArea;
+	
+	private ClasspageItemDo classpageItemDo=null;
 	
 	private static CollectionsViewUiBinder uiBinder = GWT.create(CollectionsViewUiBinder.class);
 	
@@ -100,16 +112,30 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		
 	}
 	
-	public CollectionsView(ClasspageItemDo classpageItemDo,int sequenceNum){
+	public CollectionsView(ClasspageItemDo classpageItemDo){
 		initWidget(uiBinder.createAndBindUi(this));
 		setPresenter(new CollectionsPresenter(this));
+		this.classpageItemDo=classpageItemDo;
 		CollectionsCBundle.INSTANCE.css().ensureInjected();
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
 		showSaveButtons(false);
 		changeAssignmentStatusView.getChangeAssignmentStatusButton().addClickHandler(new ChangeStatusEvent());
 		editAssignmentDetailsButton.addClickHandler(new EditAssignmentEvent());
-		setDirection("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor turpis id nisl iaculis, sit amet convallis nibh dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor turpis id nisl iaculis, sit amet convallis nibh dapibus.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor turpis id nisl iaculis, sit amet convallis nibh dapibus.");
-		setMinimumScore("85");
+		dueDateButton.addClickHandler(new EditDueDateEvent());
+		editCollectionButton.addClickHandler(new CollectionEditEvent());
+		
+	}
+	
+	public void showAssignmentDetils(){
+		if(classpageItemDo!=null){
+			setAssignmentSequence(classpageItemDo.getItemSequence());
+			setAssignmentStatus(classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false);
+			setDueDate(classpageItemDo.getPlannedEndDate());
+			setClasspageItemTitle(classpageItemDo.getResource().getTitle());
+			setLearningObject();
+			setDirection(classpageItemDo.getDirection());
+		}
+		
 	}
 	
 	private void setAssignmentSequence(int sequenceNumber){
@@ -121,7 +147,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	private void setDueDate(String dueDate){
-		//dueDateText
+		if(dueDate!=null){
+			dueDateText.setText(dueDate);
+		}
 	}
 	
 	private void setMinimumScore(String score){
@@ -136,8 +164,8 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	private void setClasspageItemTitle(String collectionItemTitle){
-//		classpageItemTitle.setHTML(classpageItemDo.getCollectionTitle());
-//		classpageItemTitle.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getCollectionId()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken());
+		classpageItemTitle.setHTML(classpageItemDo.getCollectionTitle());
+		classpageItemTitle.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getCollectionId()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken());
 	}
 	
 	private void setAssignmentStandards(){
@@ -146,25 +174,25 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	
 	public void setLearningObject(){
-//		String learningObject=classpageItemDo.getGoal();
-//		if(learningObject!=null&&!learningObject.equals("")&&!learningObject.equals("null")){
-//			this.learningObject.setHTML(learningObject);
-//			this.learningObject.getElement().setAttribute("alt",learningObject);
-//			this.learningObject.getElement().setAttribute("title",learningObject);
-//		}else{
-//			this.learningObject.setStyleName(CollectionsCBundle.INSTANCE.css().systemMessage());
-//			this.learningObject.setHTML(i18n.GL1374());
-//			this.learningObject.getElement().setAttribute("alt",i18n.GL1374());
-//			this.learningObject.getElement().setAttribute("title",i18n.GL1374());
-//		}
+		String learningObject=classpageItemDo.getGoal();
+		if(learningObject!=null&&!learningObject.equals("")&&!learningObject.equals("null")){
+			this.learningObject.setHTML(learningObject);
+			this.learningObject.getElement().setAttribute("alt",learningObject);
+			this.learningObject.getElement().setAttribute("title",learningObject);
+		}else{
+			this.learningObject.setStyleName(CollectionsCBundle.INSTANCE.css().systemMessage());
+			this.learningObject.setHTML(i18n.GL1374());
+			this.learningObject.getElement().setAttribute("alt",i18n.GL1374());
+			this.learningObject.getElement().setAttribute("title",i18n.GL1374());
+		}
 	}
 	
 	public void setThumbnailUrl(){
-//		collectionImage.setUrl(classpageItemDo.getThumbnailUrl()!=null?StringUtil.formThumbnailName(classpageItemDo.getThumbnailUrl(),"-160x120."):"null");
-//		Anchor thumbnailAnchor=new Anchor();
-//		thumbnailAnchor.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getCollectionId()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken());
-//		thumbnailAnchor.getElement().appendChild(collectionImage.getElement());
-//		thumbnailContainer.add(thumbnailAnchor);
+		collectionImage.setUrl(classpageItemDo.getResource().getThumbnails().getUrl()!=null?StringUtil.formThumbnailName(classpageItemDo.getThumbnailUrl(),"-160x120."):"null");
+		Anchor thumbnailAnchor=new Anchor();
+		thumbnailAnchor.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getCollectionId()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken());
+		thumbnailAnchor.getElement().appendChild(collectionImage.getElement());
+		thumbnailContainer.add(thumbnailAnchor);
 	}
 	
 	private void setDirection(String directionText){
@@ -192,7 +220,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	public void updateAssignmentStatus(boolean assignmentStaus){
-		Window.alert("Assignment status====>"+changeAssignmentStatusView.getChangeAssignmentStatusButton().getValue());
+		//TODO
 	}
 	
 	
@@ -211,7 +239,10 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		TextBox mimimunScoreTextBox=new TextBox();
 		mimimunScoreTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
 		mimimunScoreTextBox.setText(minimumScore);
+		InlineLabel percentageLabel=new InlineLabel("%");
+		percentageLabel.setStyleName("");
 		minimumScoreContentPanel.add(mimimunScoreTextBox);
+		minimumScoreContentPanel.add(percentageLabel);
 	}
 	
 	public void editSuggestedTime(String suggestedHour, String suggestedMinutes){
@@ -289,12 +320,90 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			}
 		}
 	}
-
+	
 	public void showSaveButtons(boolean buttonVisibility){
 		editAssignmentDetailsButton.setVisible(!buttonVisibility);
 		cancelAssignmentDetailsButton.setVisible(buttonVisibility);
 		saveAssignmentDetailsButton.setVisible(buttonVisibility);
 	}
 	
+	private class EditDueDateEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			showEditDueDateView();
+		}
+	}
+	
+	public void showEditDueDateView(){
+		showDueDatePanel(false);
+		EditToolBarView editToolBarView=new EditToolBarView(true);
+		editToolBarView.dueDateText.add(new Label(i18n.GL1390()));
+		editToolBarView.dueDateText.setStyleName(CollectionsCBundle.INSTANCE.css().dueDataIcon());
+		editToolBarView.cancelButton.addClickHandler(new ResetEditContentEvent());
+		editToolBarView.saveButton.addClickHandler(new UpdateEditedDueDateEvent());
+		dueDateContentPanel.add(editToolBarView);
+	}
+	private void showDueDatePanel(boolean visible){
+		dueDateText.setVisible(visible);
+		dueDateButton.setVisible(visible);
+	}
+	private class ResetEditContentEvent implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			removeEditDueDatePanel();
+			showDueDatePanel(true);
+		}
+	}
+	private class UpdateEditedDueDateEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			Window.alert("MEN IN WORK..");
+		}
+	}
+	private void removeEditDueDatePanel(){
+		Iterator<Widget> iterator= dueDateContentPanel.iterator();
+		while(iterator.hasNext()){
+			Widget widget=iterator.next();
+			if(widget instanceof EditToolBarView){
+				widget.removeFromParent();
+			}
+		}
+	}
+	public String getCurrentPlaceToken(){
+		String placeToken=AppClientFactory.getCurrentPlaceToken();
+		if(placeToken!=null){
+			if(placeToken.equals(PlaceTokens.EDIT_CLASSPAGE)){
+				placeToken="teach";
+			}else if(placeToken.equals(PlaceTokens.STUDENT)){
+				placeToken="study";
+			}
+		}
+		return placeToken;
+	}
+	
+	private class CollectionEditEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			getCollectionFolders();
+		};
+	}
+	public void getCollectionFolders(){
+		AppClientFactory.getInjector().getClasspageService().getCollectionParentFolders(classpageItemDo.getCollectionId(), new SimpleAsyncCallback<ArrayList<String>>() {
+			@Override
+			public void onSuccess(ArrayList<String> foldersList) {
+				if(foldersList!=null){
+					Map<String,String> parametesMap=new HashMap<String,String>();
+					parametesMap.put("id", classpageItemDo.getCollectionId());
+					if(foldersList.size()>0){
+						for(int i=0;i<foldersList.size();i++){
+							parametesMap.put("o"+(i+1), foldersList.get(i));
+						}
+					}
+					AppClientFactory.getPlaceManager().revealPlace(true, AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, parametesMap));
+				}
+			}
+		});
+	}
 	
 }

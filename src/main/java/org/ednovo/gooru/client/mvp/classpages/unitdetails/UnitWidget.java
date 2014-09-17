@@ -5,6 +5,7 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.LiPanel;
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -36,6 +37,9 @@ public class UnitWidget extends Composite implements HasClickHandlers{
  	@UiField LiPanel liPanelUnit;
  	
  	
+ 	private String unitGooruOid=null;
+ 	
+ 	
  	UnitAssignmentCssBundle res;
 
 	/**
@@ -49,24 +53,13 @@ public class UnitWidget extends Composite implements HasClickHandlers{
 	 * Note that depending on the widget that is used, it may be necessary to
 	 * implement HasHTML instead of HasText.
 	 */
-	public UnitWidget(String serialNumber, String unitName) {
+	public UnitWidget(ClassUnitsListDo classUnitDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
-		ilUnitNumber.setText(serialNumber);
-		ilUnitName.setText(unitName);
-		unitNameContainer.addClickHandler(new UnitClickHandler());
-	}
-	
-	public  class UnitClickHandler implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
-//			liPanelUnit.removeStyleName(res.css().unitMenuActive());
-//			liPanelUnit.addStyleName(res.css().unitMenuActive());
-		}
-		
+		ilUnitNumber.setText(classUnitDo.getResource().getTitle());
+		ilUnitName.setText(""+classUnitDo.getItemSequence());
+		this.unitGooruOid=classUnitDo.getResource().getGooruOid();
 	}
 	
 	/**
@@ -87,6 +80,8 @@ public class UnitWidget extends Composite implements HasClickHandlers{
 		return addDomHandler(handler, ClickEvent.getType());
 	}
 	
-	
+	public String getUnitGooruOid(){
+		return unitGooruOid;
+	}
 
 }

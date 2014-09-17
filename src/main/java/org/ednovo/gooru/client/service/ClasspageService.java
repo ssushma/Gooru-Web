@@ -31,6 +31,7 @@ import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
@@ -42,6 +43,7 @@ import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -508,7 +510,7 @@ public interface ClasspageService extends BaseService {
 	 * 
 	*/
 	
-	public ArrayList<CollectionItemDo> v2GetPathwayItems(String classpageId,
+	public UnitAssignmentsDo v2GetPathwayItems(String classpageId,
 			String pathwayGooruOid,String sequence,int limit,int offSet) throws GwtException, ServerDownException;
 	/**
 	 * @function v2ReorderPathwaySequence 
@@ -534,11 +536,9 @@ public interface ClasspageService extends BaseService {
 	public void v2ReorderPathwaySequence(String classpageId,String pathwayItemId,int sequence) throws GwtException, ServerDownException;
 
 
-	ClasspageListDo v2GetPathwaysOptimized(String classpageId, String limit,
-			String offSet) throws GwtException;
+	public ClassDo v2GetPathwaysOptimized(String classpageId, String limit,String offSet) throws GwtException;
 
-	ClasspageListDo v2GetPathwaysCompleteDetails(String classpageId,
-			String limit, String offSet) throws GwtException;
+	public ClassDo v2GetPathwaysCompleteDetails(String classpageId,String limit, String offSet) throws GwtException;
 
 	ClasspageListDo reOrderPathwaysInaClass(String pathwayId, int newPosSequence);
 
@@ -555,5 +555,9 @@ public interface ClasspageService extends BaseService {
 	void deletePathway(String classpageId, String pathwayId)
 			throws GwtException;
 
+	public ArrayList<ClasspageItemDo> v2AssignCollectionTOPathway(String classpageId,String pathwayId,String collectionId,String suggestTime,String minScore,String duedate,String directions) throws GwtException, ServerDownException;
+
+	CollectionDo updateAssignmentStatus(String collectionItemId,
+			boolean isRequiredStatus) throws GwtException;
 
 }
