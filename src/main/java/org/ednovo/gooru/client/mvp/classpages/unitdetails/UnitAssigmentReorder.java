@@ -51,16 +51,16 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	private String selectedPathId;
 	private HandlerRegistration onClickUnit;
 	
-	public UnitAssigmentReorder(ClassDo classDo,String title,String classpageId) {
+	public UnitAssigmentReorder(ClassDo classDo,String title,String narration,String classpageId) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.classDo = classDo;
 		this.classpageId = classpageId;
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 
-		setUnitAssignmentData(classDo,title);
+		setUnitAssignmentData(classDo,title,narration);
 				
 	}
-	public void setUnitAssignmentData(ClassDo classDo,String title){
+	public void setUnitAssignmentData(ClassDo classDo,String title,String narration){
 		popupArrow.setUrl("images/popArrow.png");
 		saveButton.setText("Save");
 		CancelButton.setText("Cancel");
@@ -73,7 +73,9 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 			ArrayList<ClassUnitsListDo> classListUnitsListDo =classDo.getSearchResults();
 			titleLabel.setText(title);
-			descLabel.setText(title);
+			if(narration!=null){
+				descLabel.setText(narration);
+			}
 			totalsize =totalsize+classListUnitsListDo.size() ;
 			
 			for(int i=0; i<classListUnitsListDo.size(); i++){
@@ -217,6 +219,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 					saveButton.setVisible(true);
 					hide();
 					savingTextLabel.setText("");
+					
 					setAssignmentToNewPosition(Integer.parseInt(dropdownListPlaceHolderAssignment.getText()),selectedPathId);
 					
 //					AppClientFactory.fireEvent(new ReorderAssignmentEvent(Integer.parseInt(dropdownListPlaceHolderAssignment.getText())));

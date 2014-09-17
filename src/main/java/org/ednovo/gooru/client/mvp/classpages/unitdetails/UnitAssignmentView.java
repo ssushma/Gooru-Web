@@ -123,7 +123,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private static final String NEXT="next";
 	private static final String PREVIOUS= "previous";
 	String unitId; 
-	private boolean IsRequired;
+	private Boolean isRequired;
 	
 	
 	private int totalAssignmentHitcount;
@@ -186,8 +186,19 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		optionalLabel.setText("Optional");
 		rightArrow.getElement().setAttribute("style", "cursor:pointer");
 		leftArrow.getElement().setAttribute("style", "cursor:pointer");
+		if(unitAssignmentsDo.getTotalHitCount() != null)
+		{
 		totalAssignmentHitcount = unitAssignmentsDo.getTotalHitCount();
-		if(unitAssignmentsDo!=null &&unitAssignmentsDo.getSearchResults().size()!=0){
+		}
+		else
+		{
+		totalAssignmentHitcount = 0;
+		}
+		if(unitAssignmentsDo!=null)
+		{
+		if(unitAssignmentsDo.getSearchResults()!=null)
+		{
+		if(unitAssignmentsDo.getSearchResults().size()!=0){
 			
 					try{
 						if(leftHandler!=null) {
@@ -203,16 +214,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				circleContainerPanel.clear();
 				leftArrow.setUrl("images/leftSmallarrow.png");
 				circleContainerPanel.add(leftArrow);
-
-//				IsRequired = unitAssignmentsDo.getSearchResults().get(0).getIsRequired();
+			
 				for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 					unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
-					unitCricleViewObj.getElement().setId(i+"");
+					unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid());
 					circleContainerPanel.add(unitCricleViewObj);
-					unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle()));
+					unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration()));
 					unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
-					//IsRequired = unitAssignmentsDo.getSearchResults().get(0).getIsRequired();
-					unitCricleViewObj.getValueIsRequired(true);
 				}
 						
 				rightArrow.setUrl("images/rightSmallarrow.png");
@@ -224,6 +232,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			    });
 							
 			}
+	}
+	}
 		if(totalAssignmentHitcount==0){
 			Label noAssignmentlabel = new Label("Assignment not available");
 			circleContainerPanel.clear();
@@ -303,13 +313,15 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 	public class UnitSeqMouseOverHandler implements MouseOverHandler{
 		String title;
-	public UnitSeqMouseOverHandler(String title) {
-		this.title = title;
+		String narration;
+		public UnitSeqMouseOverHandler(String title, String narration) {
+			this.title = title;
+			this.narration = narration;
 		}
 
 	@Override
 		public void onMouseOver(MouseOverEvent event) {
-			unitAssigmentReorder = new UnitAssigmentReorder(classDo,title,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null)){
+			unitAssigmentReorder = new UnitAssigmentReorder(classDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null)){
 
 				@Override
 				public void reorderAssignment(int seqPosition,String selectedPathId) {
@@ -506,9 +518,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
 				unitCricleViewObj.getElement().setId(i+"");
 				circleContainerPanel.add(unitCricleViewObj);
-				unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle()));
+				unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration()));
 				unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
-				unitCricleViewObj.getValueIsRequired(true);	
 			}
 			
 			rightArrow.setUrl("images/rightSmallarrow.png");

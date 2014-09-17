@@ -83,8 +83,15 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			public void onSuccess(UnitAssignmentsDo result) {
 				String aid=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 				if(aid==null){
-					if(result!=null&&result.getSearchResults().size()>0){
+					if(result!=null)
+					{
+					if(result.getSearchResults() != null)
+					{
+					if(result.getSearchResults().size()>0)
+					{
 						getAssignemntDetails(result.getSearchResults().get(0).getCollectionItemId(),classpageId,pathwayGooruOid);
+					}
+					}
 					}
 				}
 				getView().getSequence(result);

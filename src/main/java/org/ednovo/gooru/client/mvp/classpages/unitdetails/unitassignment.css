@@ -34,8 +34,8 @@
 
 
 .uniSetup a{
-	padding:20px 15px;
-	display:block;
+	padding:20px 5px;
+	display:inline-block;
 	font-size:12px;
 	line-height:25px;
 	
@@ -44,9 +44,8 @@
 .uniSetup a:hover{
 	text-decoration:none;
 }
-.uniSetup a img{
-	vertical-align:middle;
-	padding-right:12px;
+.uniSetup img{
+	margin-left: 8px;
 }
 .unitMenu li{
 	z-index:97;
@@ -813,7 +812,6 @@ background: -moz-linear-gradient(3% 0 -90deg, #fff 0px, #ddd 100%) repeat scroll
 	padding-right: 15px;
 	padding-left: 15px;
 	box-sizing: border-box;
-	margin-top: 15px;
 }
 
 .scorMetInner{
