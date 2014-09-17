@@ -213,6 +213,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
 	     }
 	     else if(tab!=null&&tab.equalsIgnoreCase("unitdetails")){
+	    	 unitAssignmentPresenter.showDashBoardDetails();
 	    	 unitAssignmentPresenter.getClassUnits(classpageDo.getClasspageId());
 	    	 setInSlot(STUDY_SLOT, unitAssignmentPresenter,false);
 	     }
