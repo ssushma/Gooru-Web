@@ -210,8 +210,6 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			{
 				selectedPathId = dropdownListPlaceHolder.getElement().getId();	
 			}
-			System.out.println("--- selectedPathId - "+selectedPathId);
-			System.out.println("--- id - "+classpageId);
 			AppClientFactory.getInjector().getClasspageService().v2ReorderPathwaySequence(classpageId,selectedPathId,Integer.parseInt(dropdownListPlaceHolderAssignment.getText()),new SimpleAsyncCallback<Void>() {
 				@Override
 				public void onSuccess(Void result) {
@@ -219,7 +217,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 					saveButton.setVisible(true);
 					hide();
 					savingTextLabel.setText("");
-					setAssignmentToNewPosition(Integer.parseInt(dropdownListPlaceHolderAssignment.getText()));
+					setAssignmentToNewPosition(Integer.parseInt(dropdownListPlaceHolderAssignment.getText()),selectedPathId);
 					
 //					AppClientFactory.fireEvent(new ReorderAssignmentEvent(Integer.parseInt(dropdownListPlaceHolderAssignment.getText())));
 					
@@ -230,12 +228,12 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			
 		}
 
-		public void setAssignmentToNewPosition(int seqPosition){
-			reorderAssignment(seqPosition);
+		public void setAssignmentToNewPosition(int seqPosition,String selectedPathId){
+			reorderAssignment(seqPosition,selectedPathId);
 		}
 	}
 
 
-	public abstract void reorderAssignment(int seqPosition); 
+	public abstract void reorderAssignment(int seqPosition,String selectedPathId); 
 	
 }
