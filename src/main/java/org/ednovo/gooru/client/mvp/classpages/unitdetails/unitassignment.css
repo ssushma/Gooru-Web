@@ -455,6 +455,7 @@ display:inline-block;
 	-webkit-border-radius:50% 50%;
 	-moz-border-radius:50% 50%;
 	opacity:1;
+	cursor:pointer;
 	
 }
 .bubbleOptional{
@@ -467,6 +468,7 @@ display:inline-block;
 	-webkit-border-radius:50% 50%;
 	-moz-border-radius:50% 50%;
 	opacity:1;
+	cursor:pointer;
 	
 }
 
