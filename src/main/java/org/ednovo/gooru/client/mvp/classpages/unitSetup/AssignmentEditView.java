@@ -23,13 +23,12 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
+import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.ChangeAssignmentStatusView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -51,11 +50,22 @@ public class AssignmentEditView extends Composite{
 	public @UiField Label deleteAssignmentLbl,assignmentReorderLbl;
 
 	public String assignmentId=null;
+	
+	@UiField ChangeAssignmentStatusView changeAssignmentStatusView;
 
-
-	public AssignmentEditView(ClassUnitsListDo classUnitsDo){ 
+	public AssignmentEditView(ClasspageItemDo classpageItemDo){ 
 		initWidget(uiBinder.createAndBindUi(this));	
-		this.classUnitsDo = classUnitsDo;
+		Boolean isRequired=classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false;
+		setAssignementRequiredStatus(isRequired);
+		setAssignmentId(classpageItemDo.getCollectionItemId());
+	}
+	
+	public void setAssignementRequiredStatus(Boolean isRequired){
+		changeAssignmentStatusView.getChangeAssignmentStatusButton().setValue(isRequired);
+	}
+	
+	public ChangeAssignmentStatusView getChangeAssignmentStatusView(){
+		return changeAssignmentStatusView;
 	}
 	
 
