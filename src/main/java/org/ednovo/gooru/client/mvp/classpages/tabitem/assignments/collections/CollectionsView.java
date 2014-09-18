@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.ednovo.gooru.client.DataInsightsUrlTokens;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
@@ -41,6 +42,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -54,9 +56,12 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -93,11 +98,17 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField Label assignmentSequenceLabel,dueDateText,dueDateButton;
 	
+	@UiField FlowPanel frameContainer;
+	
 	@UiField ChangeAssignmentStatusView changeAssignmentStatusView;
 	
 	@UiField Button editAssignmentDetailsButton,cancelAssignmentDetailsButton,saveAssignmentDetailsButton,editCollectionButton;
 	
 	@UiField InlineLabel suggestedHourLabel,suggestedMinutesLabel;
+	
+	@UiField Frame reportsFrame;
+	
+	@UiField Button btnSummary,btnProgress;
 	
 	private Label directionErrorLabel=new Label();
 	
@@ -109,7 +120,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	private TextBox suggestedMinTextBox;
 	
-	private ClasspageItemDo classpageItemDo=null;
+	public ClasspageItemDo classpageItemDo=null;
 	
 	private static CollectionsViewUiBinder uiBinder = GWT.create(CollectionsViewUiBinder.class);
 	
@@ -128,7 +139,10 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		CollectionsCBundle.INSTANCE.css().ensureInjected();
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
 		showSaveButtons(false);
+		frameContainer.setVisible(false);
 		changeAssignmentStatusView.getChangeAssignmentStatusButton().addClickHandler(new ChangeStatusEvent());
+		btnSummary.addClickHandler(new SummaryEvent());
+		btnProgress.addClickHandler(new ProgressEvent());
 		editAssignmentDetailsButton.addClickHandler(new EditAssignmentEvent());
 		saveAssignmentDetailsButton.addClickHandler(new UpdateAssignmentDetailsEvent());
 		cancelAssignmentDetailsButton.addClickHandler(new CancelEditAssignmentEvent());
@@ -148,6 +162,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			setThumbnailUrl();
 			setMinimumScore(classpageItemDo.getMinimumScore());
 			setSuggestedTime(classpageItemDo.getEstimatedTime());
+			//frameContainer.setVisible(false);
 		}
 		
 	}
@@ -261,6 +276,46 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	public void updateAssignmentDetails(String direction,String minimumScore,String suggestedTime){
 		updateAssignmentDetails(classpageItemDo.getCollectionItemId(), direction, null, null, minimumScore, suggestedTime, null, false, false);
+	}
+	
+	public class SummaryEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			frameContainer.setVisible(true);
+			reportsFrame.getElement().getStyle().setWidth(1000, Unit.PX);
+			reportsFrame.getElement().getStyle().setMarginLeft(-136, Unit.PX);
+			reportsFrame.getElement().getStyle().setHeight(800, Unit.PX);
+			reportsFrame.setUrl(frameAnalyticsUrl());
+		}
+	}
+	
+	public class ProgressEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			frameContainer.setVisible(true);
+			reportsFrame.getElement().getStyle().setWidth(1000, Unit.PX);
+			reportsFrame.getElement().getStyle().setMarginLeft(-136, Unit.PX);
+			reportsFrame.getElement().getStyle().setHeight(800, Unit.PX);
+			reportsFrame.setUrl(frameAnalyticsUrlForMonitor());
+		}
+	}
+
+	private String frameAnalyticsUrlForMonitor() {
+
+		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
+		String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.CLASS_COLLECTION_MONITOR_DATA,
+					classpageId,classpageItemDo.getResource().getGooruOid(),AppClientFactory.getLoginSessionToken());
+		
+		urlVal = urlVal+"&"+Math.random();			
+		return urlVal;
+	}
+	
+	private String frameAnalyticsUrl() {
+		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
+		String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.CLASS_COLLECTION_SUMMARY_DATA,classpageId,classpageItemDo.getResource().getGooruOid(),AppClientFactory.getLoginSessionToken());
+
+		urlVal = urlVal+"&"+Math.random();			
+		return urlVal;
 	}
 	
 	public class EditAssignmentEvent implements ClickHandler{
