@@ -238,7 +238,7 @@ public class AssignmentProgressVc extends Composite{
 	
 	public void setDueDateAndDirection(){
 		dueDateContainer.clear();
-		String dueDate=classpageItemDo.getPlannedEndDate();
+		Long dueDate=classpageItemDo.getPlannedEndDate();
 		if(dueDate!=null&&!dueDate.equals("")){
 			Label dueDateText=new Label(i18n.GL1390());
 			dueDateText.setStyleName(this.res.css().dueDataIcon());

@@ -333,7 +333,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				String type="suggestedscore";
-				toolTip = new ToolTip(i18n.GL2187(),type);
+				toolTip = new ToolTip(i18n.GL2193(),type);
 				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 250px;");
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -360,7 +360,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				String type="suggestedtime";
-				toolTip = new ToolTip(i18n.GL2186(),type);
+				toolTip = new ToolTip(i18n.GL2192(),type);
 				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 250px;");
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);

@@ -33,13 +33,12 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
-import org.ednovo.gooru.client.mvp.classpages.unitdetails.ScoreHedingView.HasNumbersOnly;
-import org.ednovo.gooru.client.mvp.classpages.unitdetails.ScoreHedingView.ScoreHandler;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
@@ -77,7 +76,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 	}
 	
-	@UiField HTMLPanel unitPanel,containerPanel,scoreHedingContainer;
+	@UiField HTMLPanel unitPanel,containerPanel,scoreHedingContainer,htmDashBoardTabs;
 	
 	@UiField Label lblMoreUnits,unitTitleDetails;
 	
@@ -455,7 +454,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 
 	private void showAndHideAssignmentArrows(UnitAssignmentsDo unitAssignmentsDo) {
-		int totalAssignments=unitAssignmentsDo.getTotalHitCount();
+		int totalAssignments=0;
+		if(unitAssignmentsDo.getTotalHitCount() != null)
+		{
+			totalAssignments = unitAssignmentsDo.getTotalHitCount();
+		}
+		
 		
 		if(Math.abs(totalAssignments-assignmentOffset)>assignmentLimit){
 			if(Math.abs(totalAssignments-assignmentOffset)==totalAssignments){
@@ -568,9 +572,26 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@Override
 	public void showAssignment(ClasspageItemDo classpageItemDo) {
 		assignmentContainer.clear();
-		assignmentContainer.add(new CollectionsView(classpageItemDo));
-		
-
+		CollectionsView collectionView=new CollectionsView(classpageItemDo){
+			public void updateAssignmentRequiredStatus(Boolean isRequired,String collectionItemId){
+				updateCircleRequiredView(isRequired, collectionItemId);
+			}
+		};
+		assignmentContainer.add(collectionView);
+	}
+	
+	public void updateCircleRequiredView(Boolean isRequired,String collectionItemId){
+		Iterator<Widget> widgets = circleContainerPanel.iterator();
+		while (widgets.hasNext()) {
+			 Widget widget = widgets.next();
+			if (widget instanceof UnitCricleView) {
+				UnitCricleView unitCricleView=(UnitCricleView)widget;
+				if(unitCricleView.getAssignementId().equals(collectionItemId)){
+					unitCricleView.showCircle(isRequired);
+					return;
+				}
+			}
+		}		
 	}
 	
 	public void setAssignmentToNewPosition(int pageNumber,String selectedPathId){
@@ -592,8 +613,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		containerPanel.setVisible(false);
 		scoreHederView();
 		setDashBoardIds();
-		btnDashBoard.setVisible(true);
-		btnAssignment.setVisible(true);
+		htmDashBoardTabs.setVisible(true);
 		btnDashBoard.setStyleName(res.unitAssignment().selected());
 		btnAssignment.removeStyleName(res.unitAssignment().selected());
 	}
@@ -602,16 +622,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@Override
 	public void showAssignments() {
 		// TODO Auto-generated method stub
-
-		btnDashBoard.setVisible(false);
-		btnAssignment.setVisible(false);
+		htmDashBoardTabs.removeFromParent();
 		containerPanel.setVisible(true);
 		goalContainer.removeFromParent();
 		
 	}
 	
 	private void setDashBoardIds() {
-		// TODO Auto-generated method stub
 		lblControl.getElement().setId("controll");
 //		lblGreenControl.getElement().setId("greenControll");
 	}

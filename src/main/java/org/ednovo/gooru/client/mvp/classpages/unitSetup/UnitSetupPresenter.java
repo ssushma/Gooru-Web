@@ -52,6 +52,35 @@ public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> impleme
 	public void getUnitsWithAssignemnts(){
 		getPathwayCompleteDetails(limit,offSet);
 	}
+	
+	@Override
+	public void onReveal() {
+		super.onReveal();
+		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+		int offsetVal = 0;
+		if(pageNum != null)
+		{
+			offsetVal = Integer.parseInt(pageNum);
+			if(offsetVal!=0)
+			{	
+			offsetVal = (offsetVal-1);
+			}
+		}
+		getView().setLoadingIcon(true);
+		getPathwayCompleteDetails(limit,(offsetVal)*limit);
+		
+		
+		/*ResetPaginationHandler reset = new ResetPaginationHandler() {
+
+			@Override
+			public void callPathwaysAPI(int offSetVal) {
+				System.out.println("1");
+				getPaginatedPathways(offSetVal);
+				
+			}
+		};*/
+	}
+	
 
 	@Override
 	public void getPathwayCompleteDetails(int limit, int offset) {
