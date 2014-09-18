@@ -24,8 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.service;
 
-import static org.ednovo.gooru.server.service.BaseServiceImpl.logger;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -76,7 +74,6 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.StringRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -1861,6 +1858,15 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			}
 		}
 		return new ArrayList<InsightsUserDataDo>();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.service.ClasspageService#updateAssignmentStatus(java.lang.String, boolean)
+	 */
+	@Override
+	public CollectionDo updateAssignmentStatus(String collectionItemId,
+			boolean isRequiredStatus) throws GwtException {
+		throw new RuntimeException("Not implemented");
 	}
 }
 
