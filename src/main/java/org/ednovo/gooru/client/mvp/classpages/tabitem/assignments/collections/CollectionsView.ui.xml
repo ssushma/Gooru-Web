@@ -18,7 +18,8 @@
 				 <g:FlowPanel styleName="{style.assignMain}">
 					<g:HTMLPanel styleName="row {style.assaindetailsMain}">
 						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}">Assignment Details:</g:Label>
-						<g:HTMLPanel styleName="col-xs-6 {style.assignButtons} text-right">
+						<g:HTMLPanel styleName="col-xs-6 {style.assignButtons} text-right" ui:field="editAssignmentContainer">
+							<g:Label ui:field="savingLabel"></g:Label> 
 							<g:Button styleName="secondary" ui:field="cancelAssignmentDetailsButton">Cancel</g:Button> 
 							<g:Button styleName="primary" ui:field="saveAssignmentDetailsButton">Save</g:Button>
 							<g:Button styleName="secondary" ui:field="editAssignmentDetailsButton">Edit</g:Button>  

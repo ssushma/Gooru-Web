@@ -242,11 +242,12 @@ public class DateBoxUc extends FlowPanel{
 	 * @return selected date
 	 */	
 	public String getDate() {
+		String dateString="";
 		Date selectedDate = datePickerUc.getDatePicker().getValue();
-		String dateString = DateTimeFormat.getFormat("MM/dd/yyyy").format(selectedDate);
-		
+		if(selectedDate!=null){
+			dateString = DateTimeFormat.getFormat("MM/dd/yyyy").format(selectedDate);	
+		}
 		return dateString;
-	
 	}
 
 	/**
