@@ -1107,6 +1107,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ClasspageItemDo getAssignemntDetails(String assingmentId){
 		ClasspageItemDo classpageItemDo=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_ASSIGNMENT_DETAILS, assingmentId,getLoggedInSessionToken());
+		System.out.println("get Assignment details url::::::"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		if(jsonResponseRep.getStatusCode()==200){
 			try{
@@ -1127,7 +1128,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			if(direction!=null){
 				collectionJsonObject.put(NARRATION, direction);
 			}
-			if(dueDate!=null){
+			if(dueDate!=null && !dueDate.isEmpty()){
 				collectionJsonObject.put(PLANNEDENDDATE, dueDate);
 			}
 			if(status!=null){

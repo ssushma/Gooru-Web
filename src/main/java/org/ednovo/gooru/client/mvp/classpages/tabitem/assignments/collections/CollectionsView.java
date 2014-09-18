@@ -30,17 +30,21 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.ednovo.gooru.client.DataInsightsUrlTokens;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
+
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -48,15 +52,21 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -83,7 +93,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class CollectionsView extends ChildView<CollectionsPresenter> implements IsCollectionsView{
 	
-	@UiField HTMLPanel thumbnailContainer,directionContentPanel,minimumScoreContentPanel,dueDateContentPanel;
+	@UiField HTMLPanel thumbnailContainer,directionContentPanel,minimumScoreContentPanel,dueDateContentPanel,editAssignmentContainer;
 	
 	@UiField HTML learningObject;
 	
@@ -91,7 +101,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField Image collectionImage;
 	
-	@UiField Label assignmentSequenceLabel,dueDateText,dueDateButton;
+	@UiField Label assignmentSequenceLabel,dueDateText,dueDateButton,savingLabel;
+	
+	@UiField FlowPanel frameContainer;
 	
 	@UiField ChangeAssignmentStatusView changeAssignmentStatusView;
 	
@@ -99,17 +111,25 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField InlineLabel suggestedHourLabel,suggestedMinutesLabel;
 	
+	@UiField Frame reportsFrame;
+	
+	@UiField Button btnSummary,btnProgress;
+	
 	private Label directionErrorLabel=new Label();
 	
 	private TextArea directionTextArea;
 	
 	private TextBox mimimunScoreTextBox;
 	
+
 	private TextBox suggestedHourTextBox;
 	
 	private TextBox suggestedMinTextBox;
 	
-	private ClasspageItemDo classpageItemDo=null;
+
+	EditToolBarView editToolBarView;
+
+	public ClasspageItemDo classpageItemDo=null;
 	
 	private static CollectionsViewUiBinder uiBinder = GWT.create(CollectionsViewUiBinder.class);
 	
@@ -128,13 +148,18 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		CollectionsCBundle.INSTANCE.css().ensureInjected();
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
 		showSaveButtons(false);
+		showAssignmentDetils();
+		frameContainer.setVisible(false);
+
 		changeAssignmentStatusView.getChangeAssignmentStatusButton().addClickHandler(new ChangeStatusEvent());
+		btnSummary.addClickHandler(new SummaryEvent());
+		btnProgress.addClickHandler(new ProgressEvent());
 		editAssignmentDetailsButton.addClickHandler(new EditAssignmentEvent());
 		saveAssignmentDetailsButton.addClickHandler(new UpdateAssignmentDetailsEvent());
 		cancelAssignmentDetailsButton.addClickHandler(new CancelEditAssignmentEvent());
+
 		dueDateButton.addClickHandler(new EditDueDateEvent());
 		editCollectionButton.addClickHandler(new CollectionEditEvent());
-		showAssignmentDetils();
 	}
 	
 	public void showAssignmentDetils(){
@@ -144,10 +169,13 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			setDueDate(classpageItemDo.getPlannedEndDate());
 			setClasspageItemTitle(classpageItemDo.getResource().getTitle());
 			setLearningObject();
+
 			setDirection(classpageItemDo.getNarration());
+
 			setThumbnailUrl();
 			setMinimumScore(classpageItemDo.getMinimumScore());
 			setSuggestedTime(classpageItemDo.getEstimatedTime());
+			//frameContainer.setVisible(false);
 		}
 		
 	}
@@ -256,11 +284,55 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	public void updateAssignmentDueDate(String dueDate){
+		showAndHideEditToolBarButtons(false);
 		updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, dueDate, null, null, null, null, false, true);
 	}
 	
 	public void updateAssignmentDetails(String direction,String minimumScore,String suggestedTime){
+		savingLabel.getElement().setInnerText("Saving...");
+		savingLabel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+		hideCancelAndSaveButtons(false);
 		updateAssignmentDetails(classpageItemDo.getCollectionItemId(), direction, null, null, minimumScore, suggestedTime, null, false, false);
+	}
+	
+	public class SummaryEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			frameContainer.setVisible(true);
+			reportsFrame.getElement().getStyle().setWidth(1000, Unit.PX);
+			reportsFrame.getElement().getStyle().setMarginLeft(-136, Unit.PX);
+			reportsFrame.getElement().getStyle().setHeight(800, Unit.PX);
+			reportsFrame.setUrl(frameAnalyticsUrl());
+		}
+	}
+	
+	public class ProgressEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			frameContainer.setVisible(true);
+			reportsFrame.getElement().getStyle().setWidth(1000, Unit.PX);
+			reportsFrame.getElement().getStyle().setMarginLeft(-136, Unit.PX);
+			reportsFrame.getElement().getStyle().setHeight(800, Unit.PX);
+			reportsFrame.setUrl(frameAnalyticsUrlForMonitor());
+		}
+	}
+
+	private String frameAnalyticsUrlForMonitor() {
+
+		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
+		String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.CLASS_COLLECTION_MONITOR_DATA,
+					classpageId,classpageItemDo.getResource().getGooruOid(),AppClientFactory.getLoginSessionToken());
+		
+		urlVal = urlVal+"&"+Math.random();			
+		return urlVal;
+	}
+	
+	private String frameAnalyticsUrl() {
+		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
+		String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.CLASS_COLLECTION_SUMMARY_DATA,classpageId,classpageItemDo.getResource().getGooruOid(),AppClientFactory.getLoginSessionToken());
+
+		urlVal = urlVal+"&"+Math.random();			
+		return urlVal;
 	}
 	
 	public class EditAssignmentEvent implements ClickHandler{
@@ -286,6 +358,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	public void showUpdatedAssignmentDetails(){
+		savingLabel.getElement().setInnerText("");
 		showSaveButtons(false);
 		if(classpageItemDo!=null){
 			setDirection(classpageItemDo.getNarration());
@@ -303,13 +376,16 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		updateAssignmentDetails(direction, minimumScore, suggestedTime);
 	}
 	
-	public void editMinimumScore(String minimumScore){
+
+	public void editMinimumScore(final String minimumScore){
 		minimumScoreContentPanel.clear();
 		mimimunScoreTextBox=new TextBox();
+		mimimunScoreTextBox.setMaxLength(3);
+		mimimunScoreTextBox.addKeyPressHandler(new NumbersOnly());
 		mimimunScoreTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
-		mimimunScoreTextBox.setText(minimumScore);
 		InlineLabel percentageLabel=new InlineLabel("%");
 		percentageLabel.setStyleName("");
+		mimimunScoreTextBox.setText(minimumScore);
 		minimumScoreContentPanel.add(mimimunScoreTextBox);
 		minimumScoreContentPanel.add(percentageLabel);
 	}
@@ -329,12 +405,16 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 		suggestedHourLabel.setText("");
 		suggestedHourTextBox=new TextBox();
+		suggestedHourTextBox.addKeyPressHandler(new NumbersOnly());
+		suggestedHourTextBox.setMaxLength(2);
 		suggestedHourTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
 		suggestedHourTextBox.setText(suggestedHour);
 		suggestedHourLabel.getElement().appendChild(suggestedHourTextBox.getElement());
 		
 		suggestedMinutesLabel.setText("");
 		suggestedMinTextBox=new TextBox();
+		suggestedMinTextBox.addKeyPressHandler(new NumbersOnly());
+		suggestedMinTextBox.setMaxLength(2);
 		suggestedMinTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
 		suggestedMinTextBox.setText(suggestedMinutes);
 		suggestedMinutesLabel.getElement().appendChild(suggestedMinTextBox.getElement());
@@ -406,7 +486,20 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		editAssignmentDetailsButton.setVisible(!buttonVisibility);
 		cancelAssignmentDetailsButton.setVisible(buttonVisibility);
 		saveAssignmentDetailsButton.setVisible(buttonVisibility);
+		
 	}
+	
+	public void showAndHideEditToolBarButtons(boolean buttonVisibility){
+		editToolBarView.saveButton.setVisible(buttonVisibility);
+		editToolBarView.cancelButton.setVisible(buttonVisibility);
+		editToolBarView.savingText.setVisible(!buttonVisibility);
+	}
+	
+	public void hideCancelAndSaveButtons(boolean buttonVisibility){
+		cancelAssignmentDetailsButton.setVisible(buttonVisibility);
+		saveAssignmentDetailsButton.setVisible(buttonVisibility);
+	}
+	
 	
 	private class EditDueDateEvent implements ClickHandler{
 		@Override
@@ -417,7 +510,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	public void showEditDueDateView(){
 		showDueDatePanel(false);
-		EditToolBarView editToolBarView=new EditToolBarView(true);
+		editToolBarView=new EditToolBarView(true);
 		editToolBarView.dueDateText.add(new Label(i18n.GL1390()));
 		if(classpageItemDo.getPlannedEndDate()!=null){
 			editToolBarView.dateBoxUc.getDateBox().setValue(convertMillisecondsToDate(classpageItemDo.getPlannedEndDate()));
@@ -446,9 +539,12 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			String dueDate=editToolBarView.dateBoxUc.getDate();
-			if(dueDate!=null){
-				updateAssignmentDueDate(dueDate);
+			editToolBarView.saveButton.setVisible(false);
+			editToolBarView.cancelButton.setVisible(false);
+			editToolBarView.savingText.setVisible(true);
+				String dueDate=editToolBarView.dateBoxUc.getDate();
+				if(dueDate!=null){
+					updateAssignmentDueDate(dueDate);
 			}
 		}
 	}
@@ -527,5 +623,22 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		String date=fmt.format(currentDate);
 		return date;
 	}
+	private class NumbersOnly implements KeyPressHandler {
+	      
+		@Override
+		public void onKeyPress(KeyPressEvent event) {
+			  if (!Character.isDigit(event.getCharCode()) 
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
+	                ((TextBox) event.getSource()).cancelKey();
+	            }
+					
+		}
+    }
 	
 }
