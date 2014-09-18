@@ -59,7 +59,11 @@ public class PersonalizeUnitPresenter extends
 	
 	private SimpleAsyncCallback<StudentsAssociatedListDo> studentAssociatedListDo = null;
 
-	private ClasspageDo classpageDo = null; 
+	private ClasspageDo classpageDo = null;
+
+	private int offSet=0;
+
+	private int limit=2; 
 	
 	
 	@Inject
@@ -72,8 +76,8 @@ public class PersonalizeUnitPresenter extends
 
 			@Override
 			public void onSuccess(StudentsAssociatedListDo result) {
-				System.out.println("result : "+result.getTotalHitCount());
 				getView().displayAssignmentsGoals(result);
+				getView().displayPagination(result, offSet, limit);
 			}
 		});
 		
@@ -97,11 +101,19 @@ public class PersonalizeUnitPresenter extends
 
 	@Override
 	public void getStudentsList(int offSet, int limit, String type, String classCode){
+		System.out.println("offSet : "+offSet);
+//		this.offSet = offSet;
+		if (classCode == null){
+			classCode = this.classpageDo.getClasspageCode();
+		}	
+		if (limit==0){
+			limit = this.limit; 
+		}
 		getClasspageService().getActiveAssociatedStudentListByCode(classCode, offSet, limit, type, getStudentAssociatedListDo());		
 	}
 	@Override
 	public void getList(){
-		getStudentsList(0, 20, "active", classpageDo.getClasspageCode());
+		getStudentsList(offSet, limit, "active", classpageDo.getClasspageCode());
 	}
 
 	/** 
@@ -123,5 +135,22 @@ public class PersonalizeUnitPresenter extends
 	public void setClasspageData(ClasspageDo classpageDo){
 		this.classpageDo = classpageDo;
 		getList();
+	}
+
+
+	/** 
+	 * This method is to get the classpageDo
+	 */
+	@Override
+	public ClasspageDo getClasspageDo() {
+		return classpageDo;
+	}
+
+
+	/** 
+	 * This method is to set the classpageDo
+	 */
+	public void setClasspageDo(ClasspageDo classpageDo) {
+		this.classpageDo = classpageDo;
 	}
 }

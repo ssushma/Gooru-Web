@@ -67,7 +67,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	 */
 	private static final long serialVersionUID = 7437954157376886661L;
 
-	private static final Logger logger = LoggerFactory.getLogger(BaseServiceImpl.class);
+	protected static final Logger logger = LoggerFactory.getLogger(BaseServiceImpl.class);
 
 	@Resource(name = "restConstants")
 	private Properties restConstants;

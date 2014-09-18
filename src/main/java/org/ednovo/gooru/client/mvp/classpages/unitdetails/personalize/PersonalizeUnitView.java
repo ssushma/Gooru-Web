@@ -26,17 +26,28 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize;
 
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.AssignmentGoal.AssignmentGoalView;
+import org.ednovo.gooru.client.mvp.search.NOSearchResultCollectionVc;
+import org.ednovo.gooru.client.mvp.search.event.RequestShelfCollectionEvent;
+import org.ednovo.gooru.client.mvp.search.event.SearchPaginationEvent;
+import org.ednovo.gooru.client.uc.PaginationButtonUc;
+import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
+import org.ednovo.gooru.shared.model.search.SearchDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.itextpdf.text.log.SysoCounter;
 
 
 /**
@@ -56,21 +67,31 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class PersonalizeUnitView extends
 		BaseViewWithHandlers<PersonalizeUnitUiHandlers> implements
-		IsPersonalizeUnitView {
+		IsPersonalizeUnitView, ClickHandler  {
 
 	private static PersonalizeUnitViewUiBinder uiBinder = GWT
 			.create(PersonalizeUnitViewUiBinder.class);	
 	
-	@UiField HTMLPanel panelPersonalizeContainer;
+	@UiField HTMLPanel panelPersonalizeContainer, panelPagination;
+	
+	int currentPage = 0;
+	
+	int limit = 2;
 	
 	ArrayList<CollectionItemDo> goalsList = null;
+
+	private int offSet;
 
 	interface PersonalizeUnitViewUiBinder extends
 			UiBinder<Widget, PersonalizeUnitView> {
 
 	}
 
-	private MessageProperties i18n = GWT.create(MessageProperties.class);
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	private static final String PREVIOUS = i18n.GL1462().toUpperCase();
+
+	private static final String NEXT = i18n.GL1463().toUpperCase();
 
 	public PersonalizeUnitView() {
 		setWidget(uiBinder.createAndBindUi(this));		
@@ -82,8 +103,47 @@ public class PersonalizeUnitView extends
 
 	@Override
 	public void displayAssignmentsGoals(StudentsAssociatedListDo result){
+		panelPersonalizeContainer.clear();
 		for (int k=0;k<result.getSearchResults().size();k++){
 			panelPersonalizeContainer.add(new AssignmentGoalView(result.getSearchResults().get(k)));
 		}
 	}
+	@Override
+	public void displayPagination(StudentsAssociatedListDo result, int offSet, int limit){
+		panelPagination.clear();
+		this.offSet = offSet;
+		int noOfItem = result.getTotalHitCount() / (limit==0 ? 1 : limit);
+		System.out.println("noOfItem : "+noOfItem);
+		System.out.println("currentPage : "+currentPage);
+		if (result.getSearchResults() != null && result.getSearchResults().size() > 0 && noOfItem > 0) {
+			if (result.getTotalHitCount() > 1) {
+				
+				if (currentPage > 0) {
+					panelPagination.add(new PaginationButtonUc(currentPage - 1, PREVIOUS, this));
+				}
+				
+				for (int count=0; count<noOfItem; count++){
+					panelPagination.add(new PaginationButtonUc(count+1, count == currentPage, this));
+				}
+								
+				if (currentPage < (noOfItem-1)) {
+					panelPagination.add(new PaginationButtonUc(currentPage + 1, NEXT, this));
+				}
+			}
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+	 */
+	@Override
+	public void onClick(ClickEvent event) {
+		if (event.getSource() instanceof PaginationButtonUc) {
+			currentPage = ((PaginationButtonUc) event.getSource()).getPage();
+			System.out.println("currentPage : "+currentPage);
+			getUiHandlers().getStudentsList((limit+offSet), limit, "active", null);
+		} else {
+			Window.alert("Event is not caught");
+		}
+	}	
 }
