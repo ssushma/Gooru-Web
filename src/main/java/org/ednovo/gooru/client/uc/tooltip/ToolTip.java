@@ -121,6 +121,32 @@ public class ToolTip extends PopupPanel implements HasMouseOutHandlers{
 			}
 		});
 	}
+	
+public ToolTip(String description,String type){
+		
+		setWidget(toolTipUiBinder.createAndBindUi(this));
+		lblTitle.getElement().setInnerHTML(description);
+		panelCode.getElement().setId("pnlPanelCode");
+		lblTitle.getElement().setId("pnlLblTitle");
+		lblTitle.getElement().setAttribute("alt", description);
+		lblTitle.getElement().setAttribute("title", description);
+		panelCode.getElement().getStyle().setWidth(150, Unit.PX);
+
+		this.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				hide();
+			}
+		});
+		AppClientFactory.getInjector().getHomeService().mosLink(new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				lblLink.setHref(result);
+			}
+		});
+	}
 
 	@Override
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
