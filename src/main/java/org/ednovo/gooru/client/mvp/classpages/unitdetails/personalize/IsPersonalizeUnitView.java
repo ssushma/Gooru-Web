@@ -65,4 +65,28 @@ public interface IsPersonalizeUnitView extends
 	
 	void displayAssignmentsGoals(StudentsAssociatedListDo result);
 
+	/**
+	 * 
+	 * @function displayPagination 
+	 * 
+	 * @created_date : 18-Sep-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param result
+	 * @param pageNum
+	 * @param pageOffset
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	
+	void displayPagination(StudentsAssociatedListDo result, int offSet, int limit);
+
 }

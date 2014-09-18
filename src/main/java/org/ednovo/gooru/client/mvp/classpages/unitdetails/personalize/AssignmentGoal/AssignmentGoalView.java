@@ -32,6 +32,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -72,6 +73,9 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 	
 	@UiField HTMLPanel panelAssignmentList;
 	
+	int pageSize = 20;
+	int pageNum = 0;
+	
 	public interface AssignmentGoalUiBinder extends UiBinder<Widget, AssignmentGoalView> {}
 	
 	public AssignmentGoalView(CollaboratorsDo collaboratorsDo){
@@ -89,31 +93,30 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 	    });
 		
 		classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid") != null ? AppClientFactory.getPlaceManager().getRequestParameter("classpageid") : null;
-		System.out.println("collaboratorsDo.getGooruUid() : "+collaboratorsDo.getGooruUid());
-		System.out.println("classpageId : "+classpageId);
-		getPresenter().getAnalyticData(collaboratorsDo.getGooruUid(), classpageId, 20, 0);
+		getPresenter().getAnalyticData(collaboratorsDo.getGooruUid(), classpageId, pageSize, pageNum);
 	}
 	
 	public void setStaticTexts(){
 		lblStudentsList.setText(collaboratorsDo.getFirstName() + " " + collaboratorsDo.getLastName());
-//		StringUtil.setAttributes(lblStudentsList.getElement(), collaboratorsDo.getGooruOid(), null, null);
+		StringUtil.setAttributes(lblStudentsList.getElement(), collaboratorsDo.getGooruOid(), null, null);
 		
 //		setAssignments();
 	}
 	@Override
 	public void setAssignments(List<InsightsUserDataDo> list){
 		
-		if (list !=null && list.size() <=0){
+		if (list !=null && list.size() > 0){
 			lblPleaseWait.setVisible(false);
 			for (int i=0; i<list.size(); i++){
-				GoalViewVc goalsVc = new GoalViewVc(""+(i+1)) {
-				};
-				panelAssignmentList.add(goalsVc);
+				if (list.get(i) != null && list.get(i).getTitle() != null){
+					GoalViewVc goalsVc = new GoalViewVc(""+(i+1), list.get(i)) {
+					};
+					panelAssignmentList.add(goalsVc);
+				}
 			}
 		}else{
 			//show messaging...
 			lblPleaseWait.setText("No Assignments.... ");
 		}
-	}
-	
+	}	
 }

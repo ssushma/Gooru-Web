@@ -8,5 +8,7 @@
 		<g:HTMLPanel styleName="col-xs-12" ui:field="panelPersonalizeContainer">
 			
 		</g:HTMLPanel>
+		<g:HTMLPanel ui:field="panelPagination">
+		</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>
