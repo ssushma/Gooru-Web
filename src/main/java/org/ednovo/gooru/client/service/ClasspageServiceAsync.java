@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
@@ -217,4 +217,8 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 
 
 	void getAssignmentData(String gooruUId, String classpageId, int pageSize, int pageNum, AsyncCallback<List<InsightsUserDataDo>> simpleAsyncCallback);
+	
+	void updateAssignmentStatus(String collectionItemId,
+			boolean isRequiredStatus, AsyncCallback<CollectionDo> callback);
+	
 }
