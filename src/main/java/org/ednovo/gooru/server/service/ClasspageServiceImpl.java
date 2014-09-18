@@ -1128,7 +1128,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			if(direction!=null){
 				collectionJsonObject.put(NARRATION, direction);
 			}
-			if(dueDate!=null){
+			if(dueDate!=null && !dueDate.isEmpty()){
 				collectionJsonObject.put(PLANNEDENDDATE, dueDate);
 			}
 			if(status!=null){

@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
+
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -49,6 +50,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -111,6 +115,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	private TextBox suggestedMinTextBox;
 	
+	EditToolBarView editToolBarView;
 
 	private ClasspageItemDo classpageItemDo=null;
 	
@@ -262,10 +267,14 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	public void updateAssignmentDueDate(String dueDate){
+		showAndHideEditToolBarButtons(false);
 		updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, dueDate, null, null, null, null, false, true);
 	}
 	
 	public void updateAssignmentDetails(String direction,String minimumScore,String suggestedTime){
+		savingLabel.getElement().setInnerText("Saving...");
+		savingLabel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+		hideCancelAndSaveButtons(false);
 		updateAssignmentDetails(classpageItemDo.getCollectionItemId(), direction, null, null, minimumScore, suggestedTime, null, false, false);
 	}
 	
@@ -292,6 +301,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	public void showUpdatedAssignmentDetails(){
+		savingLabel.getElement().setInnerText("");
 		showSaveButtons(false);
 		if(classpageItemDo!=null){
 			setDirection(classpageItemDo.getNarration());
@@ -310,13 +320,15 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 
-	public void editMinimumScore(String minimumScore){
+	public void editMinimumScore(final String minimumScore){
 		minimumScoreContentPanel.clear();
 		mimimunScoreTextBox=new TextBox();
+		mimimunScoreTextBox.setMaxLength(3);
+		mimimunScoreTextBox.addKeyPressHandler(new NumbersOnly());
 		mimimunScoreTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
-		mimimunScoreTextBox.setText(minimumScore);
 		InlineLabel percentageLabel=new InlineLabel("%");
 		percentageLabel.setStyleName("");
+		mimimunScoreTextBox.setText(minimumScore);
 		minimumScoreContentPanel.add(mimimunScoreTextBox);
 		minimumScoreContentPanel.add(percentageLabel);
 	}
@@ -336,12 +348,16 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 		suggestedHourLabel.setText("");
 		suggestedHourTextBox=new TextBox();
+		suggestedHourTextBox.addKeyPressHandler(new NumbersOnly());
+		suggestedHourTextBox.setMaxLength(2);
 		suggestedHourTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
 		suggestedHourTextBox.setText(suggestedHour);
 		suggestedHourLabel.getElement().appendChild(suggestedHourTextBox.getElement());
 		
 		suggestedMinutesLabel.setText("");
 		suggestedMinTextBox=new TextBox();
+		suggestedMinTextBox.addKeyPressHandler(new NumbersOnly());
+		suggestedMinTextBox.setMaxLength(2);
 		suggestedMinTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
 		suggestedMinTextBox.setText(suggestedMinutes);
 		suggestedMinutesLabel.getElement().appendChild(suggestedMinTextBox.getElement());
@@ -413,7 +429,20 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		editAssignmentDetailsButton.setVisible(!buttonVisibility);
 		cancelAssignmentDetailsButton.setVisible(buttonVisibility);
 		saveAssignmentDetailsButton.setVisible(buttonVisibility);
+		
 	}
+	
+	public void showAndHideEditToolBarButtons(boolean buttonVisibility){
+		editToolBarView.saveButton.setVisible(buttonVisibility);
+		editToolBarView.cancelButton.setVisible(buttonVisibility);
+		editToolBarView.savingText.setVisible(!buttonVisibility);
+	}
+	
+	public void hideCancelAndSaveButtons(boolean buttonVisibility){
+		cancelAssignmentDetailsButton.setVisible(buttonVisibility);
+		saveAssignmentDetailsButton.setVisible(buttonVisibility);
+	}
+	
 	
 	private class EditDueDateEvent implements ClickHandler{
 		@Override
@@ -424,7 +453,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	public void showEditDueDateView(){
 		showDueDatePanel(false);
-		EditToolBarView editToolBarView=new EditToolBarView(true);
+		editToolBarView=new EditToolBarView(true);
 		editToolBarView.dueDateText.add(new Label(i18n.GL1390()));
 		if(classpageItemDo.getPlannedEndDate()!=null){
 			editToolBarView.dateBoxUc.getDateBox().setValue(convertMillisecondsToDate(classpageItemDo.getPlannedEndDate()));
@@ -453,9 +482,12 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			String dueDate=editToolBarView.dateBoxUc.getDate();
-			if(dueDate!=null){
-				updateAssignmentDueDate(dueDate);
+			editToolBarView.saveButton.setVisible(false);
+			editToolBarView.cancelButton.setVisible(false);
+			editToolBarView.savingText.setVisible(true);
+				String dueDate=editToolBarView.dateBoxUc.getDate();
+				if(dueDate!=null){
+					updateAssignmentDueDate(dueDate);
 			}
 		}
 	}
@@ -534,5 +566,22 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		String date=fmt.format(currentDate);
 		return date;
 	}
+	private class NumbersOnly implements KeyPressHandler {
+	      
+		@Override
+		public void onKeyPress(KeyPressEvent event) {
+			  if (!Character.isDigit(event.getCharCode()) 
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
+	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
+	                ((TextBox) event.getSource()).cancelKey();
+	            }
+					
+		}
+    }
 	
 }
