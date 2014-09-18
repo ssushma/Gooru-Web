@@ -2,23 +2,22 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gui="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style field="style" src="assignmentgoal.css" />
-	<gui:HTMLEventPanel styleName="bubbleMain greenBubble" ui:field="panelMembers">
+	<gui:HTMLEventPanel styleName="bubbleMain" ui:field="panelMembers">
 		<g:Label styleName="numaric" ui:field="lblAssignmentNumber"></g:Label>
 		<div class="progressPopupBox">
 			<div class="topHandle">
 				<div class="handleInner"></div>
 			</div>
 			<div class="progressPopupBox1">
-				<div class="popHeader">3. Sample Text Here!</div>
+				<g:HTML styleName="popHeader" ui:field="htmlTitle"></g:HTML>
 				<hr />
 				<div class="progressBars">
 					<div class="progress">
-						<div class="progress-bar progress-bar-danger" role="progressbar"
-							aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
+						<g:HTMLPanel styleName="progress-bar" ui:field="panelProgressBar">
 							<span class="sr-only">80% Complete</span>
-						</div>
+						</g:HTMLPanel>
 					</div>
-					<div class="proInfo">25%</div>
+					<g:Label styleName="proInfo" ui:field="lblPercentage"/>
 				</div>
 				<!-- <div class="popDescription">Anna viewd 2 suggested Rresources</div> 
 					<p> <a href="#">+ Democracy</a> </p> <p> <a href="#">+ Social Change</a> 

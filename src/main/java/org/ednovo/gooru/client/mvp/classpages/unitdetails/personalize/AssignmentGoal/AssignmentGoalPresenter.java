@@ -93,8 +93,6 @@ public class AssignmentGoalPresenter extends ChildPresenter<AssignmentGoalPresen
 	}
 	@Override
 	public void getAnalyticData(String gooruUId, String classpageId, int pageSize, int pageNum){
-		System.out.println("collaboratorsDo.getGooruUid() 1 : "+gooruUId);
-		System.out.println("classpageId 1 : "+classpageId);
 	 	AppClientFactory.getInjector().getClasspageService().getAssignmentData(gooruUId, classpageId, pageSize, pageNum, new SimpleAsyncCallback<List<InsightsUserDataDo>>() {
 
 			@Override

@@ -37,6 +37,7 @@ public class InsightsUserDataDo implements Serializable{
 	 */
 	private static final long serialVersionUID = -1909303124373795643L;
 
+	private String title;
 	private Long avgTimeSpent=null;
 	private Integer status=null;
 	private String gooruUId=null;
@@ -48,6 +49,22 @@ public class InsightsUserDataDo implements Serializable{
 	
 	
 	public InsightsUserDataDo(){}
+
+
+	/** 
+	 * This method is to get the title
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+
+	/** 
+	 * This method is to set the title
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 
 	/** 
