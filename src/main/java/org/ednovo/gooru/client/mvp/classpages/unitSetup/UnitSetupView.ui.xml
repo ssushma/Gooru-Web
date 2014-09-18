@@ -10,7 +10,7 @@
 			<g:HTMLPanel styleName="col-xs-12 {style.gerybg} {style.UnitSetupMain}">
 				<g:HTMLPanel styleName="col-xs-4">
 					<ptag:PPanel styleName="{style.uniSetup}">
-							<g:Image url="images/blueArrow.png"></g:Image>
+							<g:Image styleName="{style.setMarginArrow}" url="images/blueArrow.png"></g:Image>
 							<g:Anchor styleName="{style.classSetupLbl}" ui:field="classSetupAnchor">Class Setup</g:Anchor>
 					</ptag:PPanel>
 				</g:HTMLPanel>
@@ -34,11 +34,14 @@
 			<g:HTMLPanel styleName="col-xs-4 text-right">
 				<ptag:PPanel styleName="{style.uniSetup}">
 				    	<g:Anchor styleName="{style.unitdetailsLbl}" ui:field="unitDetailsAnchor">Unit Details</g:Anchor> 
-						<g:Image url="images/blueRightArrow.png"></g:Image>
+						<g:Image styleName="{style.setMarginArrowclass}" url="images/blueRightArrow.png"></g:Image>
 				</ptag:PPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="clearfix" ui:field="clearfix"></g:HTMLPanel>
+		<g:HTMLPanel styleName="{style.loadingImageMainDiv}" ui:field="loadingImageLabel">
+			<g:Label styleName="{style.loadingImagePathWay}" />
+		</g:HTMLPanel>
 		<g:VerticalPanel styleName="col-xs-12 {style.setupMain}" ui:field="unitAssignmentWidgetContainer"></g:VerticalPanel>
 		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 		<g:HTMLPanel styleName="{style.paginationStyle}">

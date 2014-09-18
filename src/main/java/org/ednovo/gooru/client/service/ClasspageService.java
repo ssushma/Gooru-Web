@@ -47,6 +47,7 @@ import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 //import org.ednovo.gooru.shared.model.content.ResourceItemDo;
 
@@ -590,5 +591,7 @@ public interface ClasspageService extends BaseService {
 	List<InsightsUserDataDo> getAssignmentData(String gooruUId,
 			String classpageId, int pageSize, int pageNum) throws GwtException,
 			ServerDownException;
-
+	public ClasspageItemDo updateAssignmentDetails(String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus) throws GwtException;
+	
+	public ClasspageItemDo getAssignemntDetails(String assingmentId);
 }

@@ -123,8 +123,20 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 
 	@Override
 	public void showUnitDetails(ClassDo classDo) {
-	    totalCount = classDo.getTotalHitCount();
-	    int unitSize =classDo.getSearchResults().size() ;
+		if(classDo.getTotalHitCount() != null)
+		{
+			 totalCount = classDo.getTotalHitCount();
+		}
+		else
+		{
+			totalCount = 0;
+		}
+		int unitSize = 0;
+		if(classDo.getSearchResults() != null)
+		{
+	    unitSize =classDo.getSearchResults().size() ;
+		}
+		
 
 	    unitAssignmentWidgetContainer.clear();
 	    for(int i=0; i<unitSize; i++){
@@ -165,11 +177,11 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 			pageNumber = pagenumber;
 			Map<String,String> params = new HashMap<String,String>();
 			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
-			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 			String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
 			params.put("pageSize", pageSize);
-			params.put("classpageid", classpageid);
+			params.put("id", id);
 			params.put("pageNum", pageNumber+"");
 			params.put("pos", pos);
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);

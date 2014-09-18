@@ -18,6 +18,9 @@
 					<g:Image url="images/leftSmallarrow.png"></g:Image>
 			</uc:HTMLEventPanel>
 			<g:HTMLPanel styleName="{style.classDetailsMain}">
+			    <g:HTMLPanel styleName="{style.loadingImageMainDiv}" ui:field="loadingImageLabel">
+					<g:Label styleName="{style.loadingImageForSelfEdit}" />
+				</g:HTMLPanel>
 			    <g:HTMLPanel ui:field="assignmentsContainer"></g:HTMLPanel>
 			    <uc:HTMLEventPanel styleName="{style.assignmentsNextArrow}" ui:field="htPanelNextArrow">
 					<g:Image url="images/rightSmallarrow.png"></g:Image>
@@ -29,14 +32,6 @@
 				<g:Button styleName="secondary btn-block" ui:field="addAssignmentButton"><img src="images/plusIco.png"/> Assignment</g:Button>
 				<g:Button styleName="secondary btn-block" ui:field="cancelEditButton">Cancel</g:Button>
 			</g:HTMLPanel>
-			
-			<!-- <g:HTMLPanel styleName="{style.classButtons}">
-				
-			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{style.classButtons}">
-				
-			</g:HTMLPanel> -->
-			
 		</g:HTMLPanel>
 	</g:HTMLPanel>
 

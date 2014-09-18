@@ -272,7 +272,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		if(isTab==null){
 			getView().clearPanel();
 		}
-		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE) && AppClientFactory.getPlaceManager().refreshPlace()){
+/*		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE) && AppClientFactory.getPlaceManager().refreshPlace()){
 			getView().getGlobalClasspageProcess().clear();
 			System.out.println("INININ");
 			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
@@ -287,7 +287,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			}
 			unitSetupPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
 			//getClasspage();
-		}
+		}*/
 		
 	}
 	
@@ -438,6 +438,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	     }else if(tab!=null&&tab.equalsIgnoreCase("reports")){
 	     	
 	     }else if(tab!=null&&tab.equalsIgnoreCase("unitsetup")){
+	    	 unitSetupPresenter.clearUnitAssignmentWidgetContaner();
+	    	 //unitSetupPresenter.getUnitsWithAssignemnts();
 	    	 setInSlot(CLASSLIST_SLOT, unitSetupPresenter,false);
 	     }
 	     else if(tab!=null&&tab.equalsIgnoreCase("unitdetails")){

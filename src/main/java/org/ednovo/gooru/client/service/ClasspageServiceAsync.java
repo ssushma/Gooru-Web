@@ -211,8 +211,9 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void v2AssignCollectionTOPathway(String classpageId,String pathwayId,String collectionId,String suggestTime,String minScore,String duedate,String directions, AsyncCallback<ArrayList<ClasspageItemDo>> callback);
 	
-	void updateAssignmentStatus(String collectionItemId,
-			boolean isRequiredStatus, AsyncCallback<CollectionDo> callback);
+	void updateAssignmentDetails(String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus, AsyncCallback<ClasspageItemDo> callback);
+	
+	public void getAssignemntDetails(String assingmentId,AsyncCallback<ClasspageItemDo> callback);
 
 
 	void getAssignmentData(String gooruUId, String classpageId, int pageSize, int pageNum, AsyncCallback<List<InsightsUserDataDo>> simpleAsyncCallback);

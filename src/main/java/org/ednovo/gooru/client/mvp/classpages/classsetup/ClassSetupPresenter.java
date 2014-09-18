@@ -75,6 +75,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 			offsetVal = (offsetVal-1);
 			}
 		}
+		getView().setLoadingIcon(true);
 		getPaginatedPathways((offsetVal)*limit);
 		
 		
@@ -91,7 +92,8 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	
 	@Override
 	public void setUnit(String unitName, String pathwayId, int sequenceNum,String collectionItemId) {
-		 getView().setContent(unitName,pathwayId,sequenceNum,collectionItemId);
+		getView().setLoadingIcon(false);
+		getView().setContent(unitName,pathwayId,sequenceNum,collectionItemId);
 	}
 	
 	@Override
@@ -156,6 +158,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	@Override
 	public void getPaginatedPathways(int offsetVal){
 		getView().clearPanel();
+		getView().setLoadingIcon(true);
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 
 		if(classpageid != null)

@@ -54,7 +54,7 @@ background:#b9bbca url(../images/liners.png) repeat-x !important;
 	display:inline-block;
 }
 .widthoverride{
-	width: 16.333333%;
+	width: 16.333333% !important;
 }
 .outerContainer{
 width: 1000px;

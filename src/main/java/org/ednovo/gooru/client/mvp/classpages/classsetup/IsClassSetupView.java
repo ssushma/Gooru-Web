@@ -38,6 +38,8 @@ public interface IsClassSetupView extends IsViewWithHandlers<ClassSetupUiHandler
 
 	void zeroResults();
 
+	void setLoadingIcon(boolean isVisible);
+
 
 
 

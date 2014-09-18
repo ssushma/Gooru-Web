@@ -61,7 +61,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 		String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 		if(unitId!=null&&getView().getCircleContainerPanel().getWidgetCount()<=0){
-			getPathwayItems(classId,unitId,"sequence",assignmentOffset,assignmentLimit);
+			getPathwayItems(classId,unitId,"sequence",assignmentLimit,assignmentOffset);
 		}
 		if(assignmentId!=null){
 			getAssignemntDetails(assignmentId,classId,unitId);
@@ -83,8 +83,15 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			public void onSuccess(UnitAssignmentsDo result) {
 				String aid=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 				if(aid==null){
-					if(result!=null&&result.getSearchResults().size()>0){
+					if(result!=null)
+					{
+					if(result.getSearchResults() != null)
+					{
+					if(result.getSearchResults().size()>0)
+					{
 						getAssignemntDetails(result.getSearchResults().get(0).getCollectionItemId(),classpageId,pathwayGooruOid);
+					}
+					}
 					}
 				}
 				getView().getSequence(result);
@@ -97,21 +104,20 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			@Override
 			public void onSuccess(ClassDo classDo) {
 				getView().showUnitNames(classDo,clearPanel);
-				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
-					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
-					if(unitId==null){
-						getPathwayItems(classId,classDo.getSearchResults().get(0).getResource().getGooruOid(),"sequence",assignmentLimit,assignmentOffset);
-					}
-				}
+//				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+//					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+//					if(unitId==null){
+//						getPathwayItems(classId,classDo.getSearchResults().get(0).getResource().getGooruOid(),"sequence",assignmentLimit,assignmentOffset);
+//					}
+//				}
 			}
 		});
 	}
 	
 	public void getAssignemntDetails(final String assignmentId,String classpageId,String pathwayGooruOid){
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, "sequence", limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
+		AppClientFactory.getInjector().getClasspageService().getAssignemntDetails(assignmentId, new SimpleAsyncCallback<ClasspageItemDo>() {
 			@Override
-			public void onSuccess(UnitAssignmentsDo unitAssignmentDo) {
-				ClasspageItemDo classpageItemDo=getClasspateItemDo(unitAssignmentDo, assignmentId);
+			public void onSuccess(ClasspageItemDo classpageItemDo) {
 				getView().showAssignment(classpageItemDo);
 			}
 		});
@@ -139,4 +145,5 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		getView().showAssignments();
 	}
 	
+
 }
