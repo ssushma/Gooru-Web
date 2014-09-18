@@ -67,8 +67,8 @@
 						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}">Assignment Details: </g:Label>
 						<g:HTMLPanel styleName="col-xs-6 {style.assignButtons} text-right">
 							<g:Label styleName="{style.bubbleMain}">View Assignment </g:Label>
-							<g:Button styleName="secondary" >Summary</g:Button>
-							<g:Button styleName="secondary">Progress</g:Button>
+							<g:Button styleName="secondary" ui:field="btnSummary">Summary</g:Button>
+							<g:Button styleName="secondary" ui:field="btnProgress">Progress</g:Button>
 						</g:HTMLPanel>
 					    <g:Label styleName="clearfix"></g:Label>
 					</g:FlowPanel>
@@ -83,9 +83,12 @@
 							<g:Label styleName="{style.boxbg}">Average Reaction</g:Label>
 			           </g:HTMLPanel>
 					   <g:Label styleName="clearfix"></g:Label>
-					</g:FlowPanel>
+					</g:FlowPanel>			
 				</g:FlowPanel>
 			</g:HTMLPanel>
 		</g:FlowPanel>
+				<g:FlowPanel ui:field="frameContainer">
+					<g:Frame ui:field="reportsFrame"></g:Frame>
+					</g:FlowPanel>
 	</g:FlowPanel>
 </ui:UiBinder> 
