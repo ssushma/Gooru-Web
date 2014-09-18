@@ -227,7 +227,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 		loadingImageLabel.setVisible(false);
 		assignmentsContainer.clear();
 		for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
-			AssignmentEditView assignmentEditView = new AssignmentEditView(classUnitsDo);
+			AssignmentEditView assignmentEditView = new AssignmentEditView(classUnitsDo.getResource().getCollectionItems().get(i));
+			assignmentEditView.getChangeAssignmentStatusView().getChangeAssignmentStatusButton().addClickHandler(new AssignmentStatusChangeEvent(assignmentEditView));
 			assignmentEditView.getDeleteAssignmentLbl().addClickHandler(new DeleteAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
 			if(classUnitsDo.getResource().getCollectionItems().size()>0){ 
 				assignmentEditView.getAssignmentReorderLbl().addMouseOverHandler(new ReorderAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getResource().getTitle(),classUnitsDo.getResource().getCollectionItems().get(i).getNarration(),classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
@@ -242,19 +243,47 @@ public class UnitsAssignmentWidgetView extends Composite {
 	          }
 	    });
 	}
+	
+	public class AssignmentStatusChangeEvent implements ClickHandler{
+		private AssignmentEditView assignmentEditView;
+		public AssignmentStatusChangeEvent(AssignmentEditView assignmentEditView){
+			this.assignmentEditView=assignmentEditView;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			System.out.println("inside clickevetn");
+			Boolean isRequiredStatus=assignmentEditView.getChangeAssignmentStatusView().getChangeAssignmentStatusButton().getValue();
+			AppClientFactory.getInjector().getClasspageService().updateAssignmentDetails(assignmentEditView.getAssignmentId(), null, null, null, null, null,isRequiredStatus , new SimpleAsyncCallback<ClasspageItemDo>() {
+				@Override
+				public void onSuccess(ClasspageItemDo classpageItemDo) {
+					Boolean isRequired=classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false;
+					assignmentEditView.getChangeAssignmentStatusView().getChangeAssignmentStatusButton().setValue(isRequired);
+					updateClasspageItemDo(classpageItemDo);
+				}
+			});
+		}
+	}
+	
+	public void updateClasspageItemDo(ClasspageItemDo classpageItemDo){
+		if(classUnitsDo!=null){
+			for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
+				if(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId().equals(classpageItemDo.getCollectionItemId())){
+					classUnitsDo.getResource().getCollectionItems().get(i).setIsRequired(classpageItemDo.getIsRequired());
+					return;
+				}
+			}
+		}
+	}
 
 	public class ReorderAssignment implements MouseOverHandler{
 
 		String collectionItem,title,narration;
-		
 		
 		public ReorderAssignment(String title,String narration,String collectionItem){
 			this.title = title;
 			this.collectionItem = collectionItem;
 			this.narration = narration;
 		}
-
-		
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
