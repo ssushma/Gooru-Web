@@ -39,6 +39,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -80,7 +81,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class CollectionsView extends ChildView<CollectionsPresenter> implements IsCollectionsView{
 	
-	@UiField HTMLPanel thumbnailContainer,directionContentPanel,minimumScoreContentPanel,dueDateContentPanel;
+	@UiField HTMLPanel thumbnailContainer,directionContentPanel,minimumScoreContentPanel,dueDateContentPanel,editAssignmentContainer;
 	
 	@UiField HTML learningObject;
 	
@@ -88,7 +89,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField Image collectionImage;
 	
-	@UiField Label assignmentSequenceLabel,dueDateText,dueDateButton;
+	@UiField Label assignmentSequenceLabel,dueDateText,dueDateButton,savingLabel;
 	
 	@UiField ChangeAssignmentStatusView changeAssignmentStatusView;
 	
@@ -99,6 +100,8 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	private Label directionErrorLabel=new Label();
 	
 	private TextArea directionTextArea;
+	
+	private TextBox mimimunScoreTextBox;
 	
 	private ClasspageItemDo classpageItemDo=null;
 	
@@ -119,11 +122,12 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		CollectionsCBundle.INSTANCE.css().ensureInjected();
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
 		showSaveButtons(false);
+		showAssignmentDetils();
 		changeAssignmentStatusView.getChangeAssignmentStatusButton().addClickHandler(new ChangeStatusEvent());
 		editAssignmentDetailsButton.addClickHandler(new EditAssignmentEvent());
+		saveAssignmentDetailsButton.addClickHandler(new SaveAssignmentDetails());
 		dueDateButton.addClickHandler(new EditDueDateEvent());
 		editCollectionButton.addClickHandler(new CollectionEditEvent());
-		showAssignmentDetils();
 	}
 	
 	public void showAssignmentDetils(){
@@ -133,6 +137,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			setDueDate(classpageItemDo.getPlannedEndDate());
 			setClasspageItemTitle(classpageItemDo.getResource().getTitle());
 			setLearningObject();
+			System.out.println("showAssignmentDetils:::::"+classpageItemDo.getDirection());
 			setDirection(classpageItemDo.getDirection());
 			setThumbnailUrl();
 			setMinimumScore(classpageItemDo.getMinimumScore());
@@ -239,15 +244,57 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		@Override
 		public void onClick(ClickEvent event) {
 			showSaveButtons(true);
-			editDirection("direction texttttttttt directes test direction texttttttttt directes test direction texttttttttt directes test direction texttttttttt directes test direction texttttttttt directes test ");
+			System.out.println("here inside inner text::::"+directionContentPanel.getElement().getInnerText());
+			editDirection(directionContentPanel.getElement().getInnerText());
 			editMinimumScore("54");
 			editSuggestedTime("04","50");
 		}
 	}
 	
+
+	public class SaveAssignmentDetails implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			savingLabel.getElement().setInnerText("Saving...");
+			savingLabel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+			saveDirection(directionTextArea.getText());
+			System.out.println("minscore :::::"+mimimunScoreTextBox.getText());
+			saveMinScore(mimimunScoreTextBox.getText());
+			
+			/*editDirection("direction texttttttttt directes test direction texttttttttt directes test direction texttttttttt directes test direction texttttttttt directes test direction texttttttttt directes test ");
+			editMinimumScore("54");
+			editSuggestedTime("04","50");*/
+		}
+
+		private void saveMinScore(String score) {
+			// TODO Auto-generated method stub
+			minimumScoreContentPanel.clear();
+			HTML scorePanel=new HTML(score+"%");
+			scorePanel.setStyleName("");
+			minimumScoreContentPanel.add(scorePanel);
+		}
+
+		public void saveDirection(String directionText) {
+			// TODO Auto-generated method stub
+			directionContentPanel.clear();
+			HTML directionContent=new HTML();
+			directionContent.setStyleName("");
+			if(directionText==null||directionText.equals("")||directionText.equals("null")){
+				directionContent.setStyleName(CollectionsCBundle.INSTANCE.css().systemMessage());
+				directionText=i18n.GL1374();
+			}
+			directionContent.setHTML(directionText);
+			directionContentPanel.add(directionContent);
+			/*directionTextArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());*/
+			showSaveButtons(false);
+			savingLabel.getElement().setInnerText("");
+		}
+	}
+	
+	
 	public void editMinimumScore(String minimumScore){
 		minimumScoreContentPanel.clear();
-		TextBox mimimunScoreTextBox=new TextBox();
+		mimimunScoreTextBox=new TextBox();
 		mimimunScoreTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
 		mimimunScoreTextBox.setText(minimumScore);
 		InlineLabel percentageLabel=new InlineLabel("%");
