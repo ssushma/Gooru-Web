@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.CommentWidgetChildView;
@@ -672,8 +673,10 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		teacherProfileContainer.add(new TeacherImage(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()));
 	}
 	
-	public void setDueDateText(String text){
-		if(text!=null&&!text.trim().equals("")){
+	public void setDueDateText(Long date){
+		
+		if(date!=null&&!date.equals("")){
+			String text=CollectionsView.convertMillisecondsToDate(date);
 			dueDate.setText(text);
 			dueDate.getElement().setAttribute("alt",text);
 			dueDate.getElement().setAttribute("title",text);

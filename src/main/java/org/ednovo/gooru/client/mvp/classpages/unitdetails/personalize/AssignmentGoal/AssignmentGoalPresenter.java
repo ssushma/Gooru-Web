@@ -27,14 +27,18 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.Assignmen
 /**
  * 
  */
+import java.util.List;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildPresenter;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
-import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.IsCollectionsView;
-import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.service.ClasspageService;
+import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
+import org.ednovo.gooru.shared.model.user.UserDo;
+
+import com.google.inject.Inject;
 
 
 /**
@@ -55,25 +59,64 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 public class AssignmentGoalPresenter extends ChildPresenter<AssignmentGoalPresenter, IsAssignmentGoalView> implements AssignmentGoalUiHandlers {
 
 	CollectionItemDo collectionItemDo = null;
-	ClasspageService classpageService=null;
+	
+	@Inject
+	private ClasspageServiceAsync classpageService;
+	 
+	
+	private SimpleAsyncCallback<List<InsightsUserDataDo>> insightStudentData;
 	
 	public AssignmentGoalPresenter(IsAssignmentGoalView childView) {
 		super(childView);
-	}
+		
+		setInsightStudentData(new SimpleAsyncCallback<List<InsightsUserDataDo>>() {
 
+			@Override
+			public void onSuccess(List<InsightsUserDataDo> result) {
+				getView().setAssignments(result);
+			}
+		});		
+	}
 	
 	/** 
 	 * This method is to get the classpageService
 	 */
-	public ClasspageService getClasspageService() {
+	public ClasspageServiceAsync getClasspageService() {
 		return classpageService;
 	}
-
 
 	/** 
 	 * This method is to set the classpageService
 	 */
-	public void setClasspageService(ClasspageService classpageService) {
+	public void setClasspageService(ClasspageServiceAsync classpageService) {
 		this.classpageService = classpageService;
 	}
+	@Override
+	public void getAnalyticData(String gooruUId, String classpageId, int pageSize, int pageNum){
+	 	AppClientFactory.getInjector().getClasspageService().getAssignmentData(gooruUId, classpageId, pageSize, pageNum, new SimpleAsyncCallback<List<InsightsUserDataDo>>() {
+
+			@Override
+			public void onSuccess(List<InsightsUserDataDo> result) {
+				getView().setAssignments(result);
+			}
+		});		
+	}
+
+
+	/** 
+	 * This method is to get the insightStudentData
+	 */
+	public SimpleAsyncCallback<List<InsightsUserDataDo>> getInsightStudentData() {
+		return insightStudentData;
+	}
+
+
+	/** 
+	 * This method is to set the insightStudentData
+	 */
+	public void setInsightStudentData(
+			SimpleAsyncCallback<List<InsightsUserDataDo>> insightStudentData) {
+		this.insightStudentData = insightStudentData;
+	}
+	
 }

@@ -255,6 +255,19 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			libraryUserDo.setPartnerUrl(i18n.GL2111());
 
 		}
+		else if(partnerPlace.equals(PlaceTokens.ESYP)) {
+				courseDo.setLabel(i18n.GL2186());
+				thumbnailDo.setUrl("../images/library/partners/esyp.jpg");
+				
+				libraryUserDo.setPartnerName(i18n.GL2187());
+				libraryUserDo.setPartnerUrl(i18n.GL2188());
+			}
+		else if(partnerPlace.equals(PlaceTokens.CCST_Cal_TAC)) {
+				courseDo.setLabel(i18n.GL2191());
+				thumbnailDo.setUrl("../images/library/partners/ccst.png");
+				libraryUserDo.setPartnerName(i18n.GL2189());
+				libraryUserDo.setPartnerUrl(i18n.GL2190());
+			}
 		
 		courseDo.setThumbnails(thumbnailDo);
 		courseDo.setCreator(libraryUserDo);

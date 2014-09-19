@@ -104,22 +104,20 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			@Override
 			public void onSuccess(ClassDo classDo) {
 				getView().showUnitNames(classDo,clearPanel);
-				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
-					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
-					if(unitId==null){
-						getPathwayItems(classId,classDo.getSearchResults().get(0).getResource().getGooruOid(),"sequence",assignmentLimit,assignmentOffset);
-					}
-				}
+//				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+//					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+//					if(unitId==null){
+//						getPathwayItems(classId,classDo.getSearchResults().get(0).getResource().getGooruOid(),"sequence",assignmentLimit,assignmentOffset);
+//					}
+//				}
 			}
 		});
 	}
 	
 	public void getAssignemntDetails(final String assignmentId,String classpageId,String pathwayGooruOid){
-		System.out.println("hellooo");
 		AppClientFactory.getInjector().getClasspageService().getAssignemntDetails(assignmentId, new SimpleAsyncCallback<ClasspageItemDo>() {
 			@Override
 			public void onSuccess(ClasspageItemDo classpageItemDo) {
-				System.out.println("classpageItemDo=====>"+classpageItemDo);
 				getView().showAssignment(classpageItemDo);
 			}
 		});

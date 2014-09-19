@@ -536,8 +536,13 @@ margin: 6px 0;
 }
 .paginationStyle{
 	position: absolute;
-margin-top: 16px;
-width:100%;
+	margin-top: 16px;
+	width:100%;
+}
+.paginationStudentStyle{
+	position: absolute;
+	margin-top: 16px;
+	width:78%;
 }
 .classpageResourceImage{
 	width: 63px;
@@ -617,4 +622,16 @@ width:100%;
 }
 .setMarginArrowclass{
 	margin-top:2px;
+}
+
+
+.loadingImagePathWay {
+	background: url(images/core/B-Dot.gif);
+	width: 185px;
+	height: 172px;
+	margin: 0 auto;
+	margin-top: 420px;
+	position: absolute;
+	z-index: 5;
+	margin-left: 375px;
 }

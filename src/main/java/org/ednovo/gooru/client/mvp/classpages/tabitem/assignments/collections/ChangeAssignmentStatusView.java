@@ -43,4 +43,13 @@ public class ChangeAssignmentStatusView extends Composite{
 	public void setSwitchStyleName(String styleName){
 		switchContainer.setStyleName(styleName);
 	}
+	public void changeLabelStyle(String enableStyle,String disableStyle){
+		if(changeAssignmentStatusButton.getValue()){
+			requiredLabel.setStyleName(enableStyle);
+			optionalLabel.setStyleName(disableStyle);
+		}else{
+			requiredLabel.setStyleName(disableStyle);
+			optionalLabel.setStyleName(enableStyle);
+		}
+	}
 }

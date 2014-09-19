@@ -64,3 +64,9 @@
 .optional{
 	background: #b9bbca url(../images/bubble-pattren1.png) repeat;
 }
+
+.pleaseWait{
+	margin: 10px 91px;
+	color: #515151;
+	font-style: italic;
+}

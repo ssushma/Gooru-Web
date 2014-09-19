@@ -517,7 +517,6 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
-			System.out.println("clear..");
 			 if(slot==EditClasspagePresenter.CLASSLIST_SLOT){
 				getClassContainer().clear();
 				getClassContainer().add(content);

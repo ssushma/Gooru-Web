@@ -77,3 +77,10 @@
 	padding: 5px 4px;
 	color: #0078c0 !important;
 }
+
+.enableLabelText{
+	color:#333;	
+}
+.disableLabelText{
+	color: #eee;
+}

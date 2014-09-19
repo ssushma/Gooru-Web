@@ -73,7 +73,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	
 	@UiField HTMLEventPanel paginationPanel;
 	
-	@UiField HTMLPanel clearfix;
+	@UiField HTMLPanel clearfix,loadingImageLabel;
 	
 	ClasspageListDo classpageListDo;
 	
@@ -143,6 +143,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 
 	@Override
 	public void showUnitDetails(ClassDo classDo) {
+		setLoadingIcon(false);
 	    totalCount = classDo.getTotalHitCount();
 	    int unitSize =classDo.getSearchResults().size() ;
 	    unitAssignmentWidgetContainer.clear();
@@ -167,7 +168,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	
 	public void clearUnitAssignmentWidgetContaner(){
 		 unitAssignmentWidgetContainer.clear();
-		 paginationPanel.clear();
+		 paginationPanel.getElement().setInnerHTML("");
 		 classpageListDo=null;
 	}
 	public class AddAssignmentToUnit implements ClickHandler{
@@ -187,8 +188,6 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 
 	@Override
 	public void setPagination(int totalCount, int pagenumVal) {
-		System.out.println("totalCount::"+totalCount);
-		System.out.println("pagenumVal::"+pagenumVal);
 		this.totalCount = totalCount;
 		paginationPanel.getElement().setInnerHTML("");
 		int totalPages = (totalCount / 5)
@@ -229,7 +228,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 			params.put("pos", pos);
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-			getUiHandlers().getPathwayCompleteDetails(limit,(pageNumber-1)*limit);
+			getUiHandlers().getPathwayCompleteDetails(limit,(pagenumber-1)*limit);
 		}
 	}
 
@@ -248,6 +247,11 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 				}
 			}
 		}
+	}
+
+	@Override
+	public void setLoadingIcon(boolean isVisible) {
+		loadingImageLabel.setVisible(isVisible);
 	}
 	 
 	 

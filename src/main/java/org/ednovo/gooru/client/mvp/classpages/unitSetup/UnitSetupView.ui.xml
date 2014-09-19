@@ -39,6 +39,9 @@
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="clearfix" ui:field="clearfix"></g:HTMLPanel>
+		<g:HTMLPanel styleName="{style.loadingImageMainDiv}" ui:field="loadingImageLabel">
+			<g:Label styleName="{style.loadingImagePathWay}" />
+		</g:HTMLPanel>
 		<g:VerticalPanel styleName="col-xs-12 {style.setupMain}" ui:field="unitAssignmentWidgetContainer"></g:VerticalPanel>
 		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 		<g:HTMLPanel styleName="{style.paginationStyle}">

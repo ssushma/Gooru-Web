@@ -6,8 +6,7 @@
 
 		<div class="scorMetInner">
 
-			<g:Label styleName="{unitStyle.scoreHeding}" ui:field="lblTitle">Average
-				Correct Answer</g:Label>
+			<g:Label styleName="{unitStyle.scoreHeding}" ui:field="lblTitle">Average Correct Answer</g:Label>
 
 			<div class="goalTracker">
 
@@ -16,14 +15,13 @@
 					<g:Label styleName="{unitStyle.circle}" ui:field="lblControl"></g:Label>
 					<div class="circle" id="circleMiddle"></div>
 					<div class="emptybox"></div>
-
 				</div>
 
 				<div class="setGloalBtn">
 					<div class="perTextBox">
 						<g:TextBox ui:field="txtScore" />
 					</div>
-
+                    <g:Label styleName="{unitStyle.scoreLabelStyle}" ui:field="lblScore"></g:Label>
 					<p>
 						<g:Button styleName="primary" ui:field="btnSetGoal">Set Goal</g:Button>
 					</p>

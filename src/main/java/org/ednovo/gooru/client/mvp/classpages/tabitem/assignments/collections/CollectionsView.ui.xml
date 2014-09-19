@@ -18,7 +18,8 @@
 				 <g:FlowPanel styleName="{style.assignMain}">
 					<g:HTMLPanel styleName="row {style.assaindetailsMain}">
 						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}">Assignment Details:</g:Label>
-						<g:HTMLPanel styleName="col-xs-6 {style.assignButtons} text-right">
+						<g:HTMLPanel styleName="col-xs-6 {style.assignButtons} text-right" ui:field="editAssignmentContainer">
+							<g:Label ui:field="savingLabel"></g:Label> 
 							<g:Button styleName="secondary" ui:field="cancelAssignmentDetailsButton">Cancel</g:Button> 
 							<g:Button styleName="primary" ui:field="saveAssignmentDetailsButton">Save</g:Button>
 							<g:Button styleName="secondary" ui:field="editAssignmentDetailsButton">Edit</g:Button>  
@@ -55,7 +56,7 @@
 					    	<g:Image  ui:field="collectionImage" styleName="{style.classpageResourceImage}"/> 
 					    </g:HTMLPanel>
 					    <g:FlowPanel styleName="{style.resourceHeaderTextPanel}">
-					      <g:Anchor styleName="{style.resourceTitle}" ui:field="classpageItemTitle">Collection Title</g:Anchor>
+					      <g:Anchor styleName="{style.resourceTitle}" ui:field="classpageItemTitle"></g:Anchor>
 					      <g:Label styleName="{style.classpageHeading}" ui:field="learningObjective">Learning Objective</g:Label>
 					      <g:HTML styleName="{style.classpageDesc}" ui:field="learningObject"></g:HTML>
 					    </g:FlowPanel>
@@ -67,8 +68,8 @@
 						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}">Assignment Details: </g:Label>
 						<g:HTMLPanel styleName="col-xs-6 {style.assignButtons} text-right">
 							<g:Label styleName="{style.bubbleMain}">View Assignment </g:Label>
-							<g:Button styleName="secondary" >Summary</g:Button>
-							<g:Button styleName="secondary">Progress</g:Button>
+							<g:Button styleName="secondary" ui:field="btnSummary">Summary</g:Button>
+							<g:Button styleName="secondary" ui:field="btnProgress">Progress</g:Button>
 						</g:HTMLPanel>
 					    <g:Label styleName="clearfix"></g:Label>
 					</g:FlowPanel>
@@ -83,9 +84,12 @@
 							<g:Label styleName="{style.boxbg}">Average Reaction</g:Label>
 			           </g:HTMLPanel>
 					   <g:Label styleName="clearfix"></g:Label>
-					</g:FlowPanel>
+					</g:FlowPanel>			
 				</g:FlowPanel>
 			</g:HTMLPanel>
 		</g:FlowPanel>
+				<g:FlowPanel ui:field="frameContainer">
+					<g:Frame ui:field="reportsFrame"></g:Frame>
+					</g:FlowPanel>
 	</g:FlowPanel>
 </ui:UiBinder> 

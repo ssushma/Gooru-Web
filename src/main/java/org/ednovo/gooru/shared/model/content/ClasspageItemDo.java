@@ -12,7 +12,7 @@ public class ClasspageItemDo implements Serializable{
 
 	public ClasspageItemDo(){}
 	
-	private String plannedEndDate;
+	private Long plannedEndDate;
 	private Integer totalHitCount;
 	private String collectionTitle;
 	private String direction; // narration from API
@@ -52,13 +52,13 @@ public class ClasspageItemDo implements Serializable{
 	/**
 	 * @return the plannedEndDate
 	 */
-	public String getPlannedEndDate() {
+	public Long getPlannedEndDate() {
 		return plannedEndDate;
 	}
 	/**
 	 * @param plannedEndDate the plannedEndDate to set
 	 */
-	public void setPlannedEndDate(String plannedEndDate) {
+	public void setPlannedEndDate(Long plannedEndDate) {
 		this.plannedEndDate = plannedEndDate;
 	}
 	/**

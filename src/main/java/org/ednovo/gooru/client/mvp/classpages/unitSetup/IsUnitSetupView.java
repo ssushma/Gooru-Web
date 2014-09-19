@@ -41,4 +41,6 @@ public interface IsUnitSetupView extends IsViewWithHandlers<UnitSetupUiHandlers>
 	
 	public void clearUnitAssignmentWidgetContaner();
 
+	void setLoadingIcon(boolean isVisible);
+
 }
