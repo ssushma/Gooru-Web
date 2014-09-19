@@ -150,13 +150,13 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	//Labels
 	@UiField Label lblAssignCollectionTitle,lblClasspages,lblClasspagesUnit,lblClasspagePlaceHolder,lblClasspageUnitPlaceHolder, lblClasspagesArrow,lblClasspagesUnitArrow,lblDirections,directionsErrorLbl,directionsErrorLength;
 	
-	@UiField Label lblAssignCollectionPrivate,lblDuedate,remainderLbl,errorLabel;
+	@UiField Label lblAssignCollectionPrivate,lblDuedate,remainderLbl,errorLabel,scoreLbl,fromLbl;
 	
 	@UiField BlueButtonUc btnAssign;
 	
 	@UiField ScrollPanel spanelClasspagesPanel,spanelClasspagesUnitPanel;
 	
-	@UiField HTMLPanel htmlClasspagesListContainer,duedateContainer,htmlClasspagesUnitListContainer,hoursText,minutesText,scoreLbl,fromLbl;
+	@UiField HTMLPanel htmlClasspagesListContainer,duedateContainer,htmlClasspagesUnitListContainer,hoursText,minutesText;
 	
 	@UiField HTMLEventPanel htmlEvenPanelContainer;
 	
@@ -168,13 +168,13 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
     
     @UiField TextBox fromTxt,toTxt,scoreTxt;
     
-    //@UiField Image scoreQuestionMark;
+    @UiField Image scoreQuestionMark,suggestTimeQuestionMark;
     
-    Image scoreQuestionMark = new Image();
+   // Image scoreQuestionMark = new Image();
     
 	private DateBoxUc dateBoxUc;
 	
-	Image suggestTimeQuestionMark = new Image();
+	//Image suggestTimeQuestionMark = new Image();
 	
 	ToolTip toolTip=null;
     
@@ -198,8 +198,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		toTxt.setFocus(true);
 		toTxt.getElement().setId("txtToTxt");
 		
-		fromTxt.getElement().setAttribute("maxlength", "4");
-		toTxt.getElement().setAttribute("maxlength", "4");
+		fromTxt.getElement().setAttribute("maxlength", "2");
+		toTxt.getElement().setAttribute("maxlength", "2");
 		
 		fromTxt.addKeyPressHandler(new NumbersOnly());
 		toTxt.addKeyPressHandler(new NumbersOnly());
@@ -209,10 +209,33 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		toTxt.addBlurHandler(new SuggestedTimeHandler());
 		fromTxt.addBlurHandler(new SuggestedTimeHandler());
 		
-		scoreTxt.getElement().setAttribute("placeholder", i18n.GL2179());
+	
 		scoreTxt.addBlurHandler(new ScoreHandler());
 		
 		btnAssign.getElement().setAttribute("style", "margin-right:25px;");
+		
+		
+		scoreQuestionMark.setTitle(i18n.GL0732());
+		scoreQuestionMark.getElement().setId("suggestScoreLbl");
+	//	scoreQuestionMark.setStyleName("friendlyQuestionMark");
+		scoreQuestionMark.getElement().setAttribute("alt",i18n.GL0732());
+		scoreQuestionMark.getElement().setAttribute("title",i18n.GL0732());
+		scoreQuestionMark.setAltText(i18n.GL0732());
+		scoreQuestionMark.setUrl("images/mos/questionmark.png");
+		
+		
+	//	scoreLbl.add(scoreQuestionMark);
+		
+		suggestTimeQuestionMark.setTitle(i18n.GL0732());
+		suggestTimeQuestionMark.getElement().setId("suggestTimeLbl");
+		//suggestTimeQuestionMark.setStyleName("friendlyQuestionMark");
+		suggestTimeQuestionMark.getElement().setAttribute("alt",i18n.GL0732());
+		suggestTimeQuestionMark.getElement().setAttribute("title",i18n.GL0732());
+		suggestTimeQuestionMark.setAltText(i18n.GL0732());
+		suggestTimeQuestionMark.setUrl("images/mos/questionmark.png");
+		
+	//	fromLbl.add(suggestTimeQuestionMark);
+		
 		
 		lblDirections.setText(i18n.GL1166()+" "+i18n.GL1167());
 		lblDirections.getElement().setId("lblDirections");
@@ -476,6 +499,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		
 		scoreLbl.getElement().setId("lblScoreLbl");
 		scoreLbl.getElement().setInnerHTML(i18n.GL2181());
+		scoreTxt.getElement().setAttribute("placeholder", i18n.GL2179());
 		
 		hoursText.getElement().setInnerHTML(i18n.GL1436());
 		hoursText.getElement().setId("pnlHoursText");
@@ -523,28 +547,6 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		duedateContainer.getElement().setId("pnlDuedateContainer");
 		directionsErrorLength.getElement().setId("lblDirectionsErrorLength");
 		directionsErrorLbl.getElement().setId("lblDirectionsErrorLbl");
-		
-		
-		scoreQuestionMark.setTitle(i18n.GL0732());
-		scoreQuestionMark.getElement().setId("suggestScoreLbl");
-		scoreQuestionMark.setStyleName("friendlyQuestionMark");
-		scoreQuestionMark.getElement().setAttribute("alt",i18n.GL0732());
-		scoreQuestionMark.getElement().setAttribute("title",i18n.GL0732());
-		scoreQuestionMark.setAltText(i18n.GL0732());
-		scoreQuestionMark.setUrl("images/mos/questionmark.png");
-		
-		
-		scoreLbl.add(scoreQuestionMark);
-		
-		suggestTimeQuestionMark.setTitle(i18n.GL0732());
-		suggestTimeQuestionMark.getElement().setId("suggestTimeLbl");
-		suggestTimeQuestionMark.setStyleName("friendlyQuestionMark");
-		suggestTimeQuestionMark.getElement().setAttribute("alt",i18n.GL0732());
-		suggestTimeQuestionMark.getElement().setAttribute("title",i18n.GL0732());
-		suggestTimeQuestionMark.setAltText(i18n.GL0732());
-		suggestTimeQuestionMark.setUrl("images/mos/questionmark.png");
-		
-		fromLbl.add(suggestTimeQuestionMark);
 		
 	}
 	/**
