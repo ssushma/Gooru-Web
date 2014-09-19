@@ -1,4 +1,4 @@
-package org.ednovo.gooru.client.mvp.Analytics.util;
+package org.ednovo.gooru.client.mvp.analytics.util;
 
 public interface Sortable {
  // Constants defining the current direction of the 
