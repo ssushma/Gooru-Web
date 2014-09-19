@@ -37,14 +37,14 @@
 	       		<g:HTMLPanel styleName="{unitStyle.left_session}">
 					<g:HTMLPanel styleName="{unitStyle.collection_last_accessed}">
 						<span class="collectionLastAccessed">Session Start Time : </span>
-						<span class="lastModifiedDate">07/25/2014 04:29:13PM</span>
+						<g:InlineLabel ui:field="lastModifiedTime"></g:InlineLabel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 	       		<g:HTMLPanel styleName="{unitStyle.right_session}">
 	       		<g:HTMLPanel>
 				<g:HTMLPanel styleName="{unitStyle.d_filter_session_text}"><span>Session</span><span class="tooltip-icon"><img class="report-info" style="background:none;float: right; margin-top: 12px;margin-left: 4px;" src="images/question_blue.png" data-text="Select the student session (collection attempt) to be represented below." original-title=""></img>:</span></g:HTMLPanel>
 				<g:HTMLPanel styleName="{unitStyle.session_data}">
-				 <g:ListBox ui:field="sessionsDropDown" styleName="{unitStyle.filterDropDown}">
+				 <g:ListBox ui:field="sessionsDropDown" styleName="{unitStyle.filterDropDownSessions}">
 				 </g:ListBox>
 				</g:HTMLPanel>
 				</g:HTMLPanel> 

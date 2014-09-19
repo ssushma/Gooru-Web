@@ -12,6 +12,7 @@ import org.ednovo.gooru.client.mvp.Analytics.util.AnalyticsReactionWidget;
 import org.ednovo.gooru.client.mvp.Analytics.util.AnalyticsTabContainer;
 import org.ednovo.gooru.client.mvp.Analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.Analytics.util.DataView;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
@@ -49,8 +50,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			UiBinder<Widget, CollectionSummaryIndividualView> {
 	}
 	
-	@UiField HTMLPanel tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData;
+	@UiField HTMLPanel totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData;
 	@UiField ListBox filterDropDown;
+	@UiField Label totalTimeSpentlbl,totalViewlbl;
 	
 	AnalyticsTabContainer individualTabContainer;
 	DataView operationsView;
@@ -191,7 +193,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	            data.setValue(i, 1,categorylbl.toString());
 	            
 	            //Set Question Title
-	            Label questionTitle=new Label(result.get(i).getTitle());
+	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 	            data.setValue(i, 2, questionTitle.toString());
 	          
@@ -258,7 +260,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	data.setCell(i, 0, i+1, null, getPropertiesCell());
 	        	
 	            //Set Question Title
-	            Label questionTitle=new Label(result.get(i).getTitle());
+	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 	            data.setValue(i, 1, questionTitle.toString());
 	          
@@ -282,6 +284,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	           
 	            //set View response label
 	            Label viewResponselbl=new Label("View Response");
+	            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
 	            data.setValue(i, 5, viewResponselbl.toString());
 	        }
 	        Options options = Options.create();
@@ -316,7 +319,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        for(int i=0;i<result.size();i++) {
 	            data.setCell(i, 0, i+1, null, getPropertiesCell());
 	           
-	            Label questionTitle=new Label(result.get(i).getTitle());
+	            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 	            data.setValue(i, 1, questionTitle.toString());
 	            int noOfAttempts=result.get(i).getAttempts();
@@ -329,17 +332,19 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
 	        			 JSONValue value = JSONParser.parseStrict(result.get(i).getOptions());
 	        			 JSONObject authorObject = value.isObject();
-	        			 String userSelectedOption=authorObject.keySet().iterator().next();
-	        			 correctAnser=getCorrectAnswer(result.get(i).getMetaData());
-	        			 if(userSelectedOption!=null && correctAnser!=null){
-	        				 anserlbl.setText(userSelectedOption);
-	        				 if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts==1){
-	        					 anserlbl.getElement().getStyle().setColor(CORRECT);
-	        				 }else if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts>1){
-	        					 anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-	        				 }else{
-	        					 anserlbl.getElement().getStyle().setColor(INCORRECT);
-	        				 }
+	        			 if(authorObject.keySet().size()!=0){
+	        				 String userSelectedOption=authorObject.keySet().iterator().next();
+		        			 correctAnser=getCorrectAnswer(result.get(i).getMetaData());
+		        			 if(userSelectedOption!=null && correctAnser!=null){
+		        				 anserlbl.setText(userSelectedOption);
+		        				 if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts==1){
+		        					 anserlbl.getElement().getStyle().setColor(CORRECT);
+		        				 }else if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts>1){
+		        					 anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+		        				 }else{
+		        					 anserlbl.getElement().getStyle().setColor(INCORRECT);
+		        				 }
+		        			 }
 	        			 }
 	        		}
 	        		anserlbl.setStyleName(res.css().alignCenterAndBackground());
@@ -365,20 +370,22 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 							answersArry=answerTextFormat.split(",");
 							userFibOption =result.get(i).getText().split(",");
 						}
-						for (int k = 0; k < answersArry.length; k++) { 
-							Label answerChoice=new Label();
-							if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
-								answerChoice.setText(userFibOption[k]);
-								answerChoice.getElement().getStyle().setColor(CORRECT);
-							}else if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts > 1)) {
-								answerChoice.setText(userFibOption[k]);
-								answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-							}else{
-								answerChoice.setText(userFibOption[k]);
-								answerChoice.getElement().getStyle().setColor(INCORRECT);
+						if(answersArry!=null){
+							for (int k = 0; k < answersArry.length; k++) { 
+								Label answerChoice=new Label();
+								if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
+									answerChoice.setText(userFibOption[k]);
+									answerChoice.getElement().getStyle().setColor(CORRECT);
+								}else if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts > 1)) {
+									answerChoice.setText(userFibOption[k]);
+									answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+								}else{
+									answerChoice.setText(userFibOption[k]);
+									answerChoice.getElement().getStyle().setColor(INCORRECT);
+								}
+								answerChoice.setStyleName(res.css().alignCenterAndBackground());
+								answerspnl.add(answerChoice);
 							}
-							answerChoice.setStyleName(res.css().alignCenterAndBackground());
-							answerspnl.add(answerChoice);
 						}
 	        		}
 	        		 answerspnl.setStyleName(res.css().setMarginAuto());
@@ -443,56 +450,11 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	String getCorrectAnswer(ArrayList<MetaDataDo> metaDataObj){
 		for (MetaDataDo metaDataDo : metaDataObj) {
 			if(metaDataDo.getIs_correct()==1){
-				return getCharForNumber(metaDataDo.getSequence()-1);
+				return AnalyticsUtil.getCharForNumber(metaDataDo.getSequence()-1);
 			}
 		}
 		return null;
 	}
-	private String getCharForNumber(int i) {
-	    char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-	    if (i > 25) {
-	        return null;
-	    }
-	    return Character.toString(alphabet[i]);
-	}
-	/**
-	 * This is used to convert long time format
-	 * @param commentCreatedTime
-	 * @return
-	 */
-	private String getTimeSpent(Long commentCreatedTime) {
-		String createdTime = null;
-		int seconds = (int) (commentCreatedTime / 1000) % 60 ;
-		int minutes = (int) ((commentCreatedTime / (1000*60)) % 60);
-		int hours   = (int) ((commentCreatedTime / (1000*60*60)) % 24);
-		int days = (int) (commentCreatedTime / (1000*60*60*24));
-		if(days!=0){
-			createdTime=days+":";
-		}
-		if(hours!=0){
-			if(createdTime!=null){
-				createdTime=createdTime+hours+" ";
-			}else{
-				createdTime=hours+" ";
-			}
-		}
-		if(minutes!=0){
-			if(createdTime!=null){
-				createdTime=createdTime+((minutes<10)?"0"+minutes+"min":minutes+"min")+" ";
-			}else{
-				createdTime=((minutes<10)?"0"+minutes+"min":minutes+"min")+" ";
-			}
-		}
-		if(seconds!=0){
-			if(createdTime!=null){
-				createdTime=createdTime+((seconds<10)?"0"+seconds+"sec":seconds+"sec")+"";
-			}else{
-				createdTime="0min"+" "+((seconds<10)?"0"+seconds+"sec":seconds+"sec")+"";
-			}
-		}
-		return createdTime;
-	}
-	
 	com.google.gwt.visualization.client.Properties getPropertiesCell(){
 		  Properties properties=Properties.create();
 		  properties.set("style", "text-align:center;");
@@ -500,8 +462,18 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		  return p;
 	}
 	Label getTimeStampLabel(long timeSpent){
-		 Label timeStamplbl=new Label(getTimeSpent(timeSpent));
+		 Label timeStamplbl=new Label(AnalyticsUtil.getTimeSpent(timeSpent));
          timeStamplbl.setStyleName(res.css().alignCenterAndBackground());
          return timeStamplbl;
+	}
+	@Override
+	public void setIndividualCollectionMetaData(
+			ArrayList<CollectionSummaryMetaDataDo> result) {
+		//Set collection meta data
+		totalTimeSpentlbl.setText(AnalyticsUtil.getTimeSpent(result.get(0).getAvgTimeSpent()));
+		totalViewlbl.setText(Integer.toString(result.get(0).getViews()));
+		totalAvgReactionlbl.clear();
+		totalAvgReactionlbl.add(new AnalyticsReactionWidget(result.get(0).getAvgReaction()));
+		
 	}
 }

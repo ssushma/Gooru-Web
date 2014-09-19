@@ -35,10 +35,11 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 
 public interface AnalyticsServiceAsync extends BaseServiceAsync {
-	void getCollectionProgressData(AsyncCallback<ArrayList<CollectionProgressDataDo>> callback);
-	void getCollectionSummaryUsersData(AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>> callback);
-	void getCollectionMetaData(AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>> callback);
-	void getCollectionResourceData(AsyncCallback<ArrayList<UserDataDo>> callback);
+	void getCollectionProgressData(String collectionId,String classPageId,AsyncCallback<ArrayList<CollectionProgressDataDo>> callback);
+	void getCollectionSummaryUsersData(String classpageId,AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>> callback);
+	void getCollectionMetaData(String collectionId,String classpageId,AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>> callback);
+	void getCollectionMetaDataByUserAndSession(String collectionId,String classId,String userId,String sessionId,AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>> callback);
+	void getCollectionResourceData(String collectionId,String classpageId,AsyncCallback<ArrayList<UserDataDo>> callback);
 	void getSessionsDataByUser(String collectionId,String classId,String userId,AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>> callback);
 	void getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId,AsyncCallback<ArrayList<UserDataDo>> callback);
 }

@@ -619,12 +619,21 @@ public enum UrlToken {
 	
 	ASSIGN_STATUS_UPDATE("/v2/class/item/{0}?sessionToken={2}"),
 	
-	PATHWAYS_UPDATE("/v2/class/{0}/pathway/{1}?sessionToken={2}");
+	PATHWAYS_UPDATE("/v2/class/{0}/pathway/{1}?sessionToken={2}"),
 	
+	V1_COLLECTIONPROGRESSDATA("/v1/classpage/{0}/users/usage.json?sessionToken={1}&data={2}"),
 	
+	V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?sessionToken={1}&data={2}"),
 	
+	V1_GETCOLLECTIONMETADATA("/v1/classpage/{0}.json?sessionToken={1}&data={2}"),
 	
-
+	V1_GETCOLLECTIONRESOURCEDATA("/v1/classpage/{0}/resources.json?sessionToken={1}&data={2}"),
+	
+	V1_GETSESSIONSDATABYUSER("/v1/classpage/{0}/sessions.json?sessionToken={1}&data={2}"),
+	
+	V1_GETSESSIONDATABYUSERSESSION("/v1/classpage/{0}/resources.json?sessionToken={1}&data={2}")
+	;
+	
 
 	private String url;
 

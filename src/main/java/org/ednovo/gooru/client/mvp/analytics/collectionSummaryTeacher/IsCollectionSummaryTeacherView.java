@@ -26,9 +26,10 @@ package org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher;
 import java.util.ArrayList;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 
 public interface IsCollectionSummaryTeacherView extends IsViewWithHandlers<CollectionSummaryTeacherUiHandlers>{
-	void setTeacherResourceData(ArrayList<UserDataDo> resourcesData);
+	void setTeacherResourceData(ArrayList<UserDataDo> resourcesData,ArrayList<CollectionSummaryMetaDataDo> collectionMetaData);
 }

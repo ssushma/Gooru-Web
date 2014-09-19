@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.service.AnalyticsService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
+import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
@@ -53,10 +54,12 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public ArrayList<CollectionProgressDataDo> getCollectionProgressData() {
+	public ArrayList<CollectionProgressDataDo> getCollectionProgressData(String collectionId,String classPageId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<CollectionProgressDataDo> collectionProgressDataList=new ArrayList<CollectionProgressDataDo>();
-		String url ="http://www.goorulearning.org/insights/api/v1/classpage/fe78faa5-f7f0-4927-9282-a58a4e3deb5d/users/usage.json?sessionToken=64daf466-3711-11e4-8d6c-123141016e2a&data={%22fields%22:%22timeSpent,avgTimeSpent,resourceGooruOId,OE,questionType,category,gooruUId,userName,userData,metaData,reaction,gooruOId,title,description,options,skip%22,%22filters%22:{%22session%22:%22FS%22,%22classId%22:%226a4cdb36-c579-4994-8ea0-5130a9838cbd%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}&timestamp=1410150911006";
+		String dataPassing="{%22fields%22:%22timeSpent,avgTimeSpent,resourceGooruOId,OE,questionType,category,gooruUId,userName,userData,metaData,reaction,gooruOId,title,description,options,skip%22,%22filters%22:{%22session%22:%22FS%22,%22classId%22:%22"+classPageId+"%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}";
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_COLLECTIONPROGRESSDATA, collectionId,"64daf466-3711-11e4-8d6c-123141016e2a",dataPassing);
+		System.out.println("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -71,10 +74,12 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	}
 
 	@Override
-	public ArrayList<CollectionSummaryUsersDataDo> getCollectionSummaryUsersData() {
+	public ArrayList<CollectionSummaryUsersDataDo> getCollectionSummaryUsersData(String classpageId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<CollectionSummaryUsersDataDo> collectionSummaryUsersDataDoList=new ArrayList<CollectionSummaryUsersDataDo>();
-		String url ="http://www.goorulearning.org/insights/api/v1/classpage/6a4cdb36-c579-4994-8ea0-5130a9838cbd/users.json?sessionToken=959afdf0-39a3-11e4-8d6c-123141016e2a&data={%22fields%22:%22userGroupUId,userName,gooruUId%22}&timestamp=1410435515179";
+		String dataPassing="{%22fields%22:%22userGroupUId,userName,gooruUId%22}";
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETUSERSFORPATHWAY, classpageId,"64daf466-3711-11e4-8d6c-123141016e2a",dataPassing);
+		System.out.println("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -89,10 +94,13 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	}
 
 	@Override
-	public ArrayList<CollectionSummaryMetaDataDo> getCollectionMetaData() {
+	public ArrayList<CollectionSummaryMetaDataDo> getCollectionMetaData(String collectionId,String classpageId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<CollectionSummaryMetaDataDo> collectionSummaryMetaDataDoList=new ArrayList<CollectionSummaryMetaDataDo>();
-		String url ="http://www.goorulearning.org/insights/api/v1/classpage/fe78faa5-f7f0-4927-9282-a58a4e3deb5d.json?sessionToken=959afdf0-39a3-11e4-8d6c-123141016e2a&data={%22fields%22:%22thumbnail,userCount,lastModified,timeSpent,views,avgTimeSpent,OE,gooruOId,title,description,options,skip,score,avgReaction,totalQuestionCount,gradeInPercentage%22,%22filters%22:{%22userUId%22:%22%22,%22session%22:%22AS%22,%22sessionId%22:%22%22,%22classId%22:%226a4cdb36-c579-4994-8ea0-5130a9838cbd%22}}&timestamp=1410435516485";
+		
+		String dataPassing="{%22fields%22:%22thumbnail,userCount,lastModified,timeSpent,views,avgTimeSpent,OE,gooruOId,title,description,options,skip,score,avgReaction,totalQuestionCount,gradeInPercentage%22,%22filters%22:{%22userUId%22:%22%22,%22session%22:%22AS%22,%22sessionId%22:%22%22,%22classId%22:%22"+classpageId+"%22}}";
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA, collectionId,"64daf466-3711-11e4-8d6c-123141016e2a",dataPassing);
+		System.out.println("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -107,10 +115,13 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	}
 
 	@Override
-	public ArrayList<UserDataDo> getCollectionResourceData() {
+	public ArrayList<UserDataDo> getCollectionResourceData(String collectionId,String classpageId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<UserDataDo> collectionResourcesList=new ArrayList<UserDataDo>();
-		String url ="http://www.goorulearning.org/insights/api/v1/classpage/fe78faa5-f7f0-4927-9282-a58a4e3deb5d/resources.json?sessionToken=959afdf0-39a3-11e4-8d6c-123141016e2a&data={%22fields%22:%22answerObject,score,totalAttemptUserCount,timeSpent,views,avgTimeSpent,OE,collectionGooruOId,category,resourceGooruOId,metaData,title,questionType,options,description,options,skip,totalInCorrectCount,avgReaction,reaction,attempts,text,totalCorrectCount,itemSequence%22,%22filters%22:{%22userUId%22:%22%22,%22session%22:%22AS%22,%22sessionId%22:%22%22,%22classId%22:%226a4cdb36-c579-4994-8ea0-5130a9838cbd%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}&timestamp=1410435516994";
+		
+		String dataPassing="{%22fields%22:%22answerObject,score,totalAttemptUserCount,timeSpent,views,avgTimeSpent,OE,collectionGooruOId,category,resourceGooruOId,metaData,title,questionType,options,description,options,skip,totalInCorrectCount,avgReaction,reaction,attempts,text,totalCorrectCount,itemSequence%22,%22filters%22:{%22userUId%22:%22%22,%22session%22:%22AS%22,%22sessionId%22:%22%22,%22classId%22:%22"+classpageId+"%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}";
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONRESOURCEDATA, collectionId,"64daf466-3711-11e4-8d6c-123141016e2a",dataPassing);
+		System.out.println("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -130,7 +141,9 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		JsonRepresentation jsonRep = null;
 		ArrayList<CollectionSummaryUsersDataDo> sessionDataList=new ArrayList<CollectionSummaryUsersDataDo>();
 		//String url ="http://www.goorulearning.org/insights/api/v1/classpage/fe78faa5-f7f0-4927-9282-a58a4e3deb5d/sessions.json?sessionToken=959afdf0-39a3-11e4-8d6c-123141016e2a&data={%22fields%22:%22%22,%22filters%22:{%22userUId%22:\""+userId+"\",%22classId%22:\""+classId+"\"},%22paginate%22:{%22sortBy%22:%22timeStamp%22,%22sortOrder%22:%22ASC%22}}&timestamp=1410441363771";
-		String url ="http://www.goorulearning.org/insights/api/v1/classpage/fe78faa5-f7f0-4927-9282-a58a4e3deb5d/sessions.json?sessionToken=959afdf0-39a3-11e4-8d6c-123141016e2a&data={%22fields%22:%22%22,%22filters%22:{%22userUId%22:\""+userId+"\",%22classId%22:%226a4cdb36-c579-4994-8ea0-5130a9838cbd%22},%22paginate%22:{%22sortBy%22:%22timeStamp%22,%22sortOrder%22:%22ASC%22}}&timestamp=1410441363771";
+		String dataPassing ="{%22fields%22:%22%22,%22filters%22:{%22userUId%22:\""+userId+"\",%22classId%22:%22"+classId+"%22},%22paginate%22:{%22sortBy%22:%22timeStamp%22,%22sortOrder%22:%22ASC%22}}&";
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONSDATABYUSER, collectionId,"64daf466-3711-11e4-8d6c-123141016e2a",dataPassing);
+		System.out.println("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -149,7 +162,9 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			String classId, String userId,String sessionId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<UserDataDo> collectionResourcesList=new ArrayList<UserDataDo>();
-		String url ="http://www.goorulearning.org/insights/api/v1/classpage/fe78faa5-f7f0-4927-9282-a58a4e3deb5d/resources.json?sessionToken=06acd172-3c96-11e4-8d6c-123141016e2a&data={%22fields%22:%22answerObject,score,totalAttemptUserCount,timeSpent,views,avgTimeSpent,OE,collectionGooruOId,category,resourceGooruOId,metaData,title,questionType,options,description,options,skip,totalInCorrectCount,avgReaction,reaction,attempts,text,totalCorrectCount,itemSequence%22,%22filters%22:{%22userUId%22:%22841169dd-330e-46f6-80d9-f8b360707a66%22,%22session%22:%22CS%22,%22sessionId%22:%227091131F-7E6D-4C88-9020-BBB09DF63E65%22,%22classId%22:%226a4cdb36-c579-4994-8ea0-5130a9838cbd%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}&timestamp=1410757700537";
+		String dataPassing ="{%22fields%22:%22answerObject,score,totalAttemptUserCount,timeSpent,views,avgTimeSpent,OE,collectionGooruOId,category,resourceGooruOId,metaData,title,questionType,options,description,options,skip,totalInCorrectCount,avgReaction,reaction,attempts,text,totalCorrectCount,itemSequence%22,%22filters%22:{%22userUId%22:%22"+userId+"%22,%22session%22:%22CS%22,%22sessionId%22:%22"+sessionId+"%22,%22classId%22:%22"+classId+"%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}&timestamp=1410757700537";
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONDATABYUSERSESSION, collectionId,"64daf466-3711-11e4-8d6c-123141016e2a",dataPassing);
+		System.out.println("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -161,5 +176,26 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		}else{
 		}
 		return collectionResourcesList;
+	}
+
+	@Override
+	public ArrayList<CollectionSummaryMetaDataDo> getCollectionMetaDataByUserAndSession(
+			String collectionId, String classId, String userId, String sessionId) {
+		JsonRepresentation jsonRep = null;
+		ArrayList<CollectionSummaryMetaDataDo> collectionSummaryMetaDataDoList=new ArrayList<CollectionSummaryMetaDataDo>();
+		String dataPassing="{%22fields%22:%22thumbnail,userCount,lastModified,timeSpent,views,avgTimeSpent,OE,gooruOId,title,description,options,skip,score,avgReaction,totalQuestionCount,gradeInPercentage%22,%22filters%22:{%22userUId%22:%22"+userId+"%22,%22session%22:%22CS%22,%22sessionId%22:%22"+sessionId+"%22,%22classId%22:%22"+classId+"%22}}";
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA, collectionId,"64daf466-3711-11e4-8d6c-123141016e2a",dataPassing);
+		System.out.println("url:+"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		if(jsonResponseRep.getStatusCode()==200){
+			try {
+				collectionSummaryMetaDataDoList= (ArrayList<CollectionSummaryMetaDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionSummaryMetaDataDo>>() {});
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}else{
+		}
+		return collectionSummaryMetaDataDoList;
 	}
 }

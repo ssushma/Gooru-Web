@@ -4,7 +4,7 @@
 	<ui:style field="unitStyle" src="collectionSummaryIndividual.css" />
 	<g:HTMLPanel>
 		<g:HTMLPanel ui:field="tabContainer"/>
-		<g:HTMLPanel ui:field="individualScoredDatapnl">
+		 <g:HTMLPanel ui:field="individualScoredDatapnl">
 		 <g:HTMLPanel styleName="{unitStyle.resource_monitor_header_title}">
 		      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.correct_legend_one}" ></g:InlineLabel><span class="correct-one">Correct on first attempt</span></g:HTMLPanel>
 		      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.correct_legend_other}"></g:InlineLabel><span class="correct-other">Correct after multiple attempts</span></g:HTMLPanel>
@@ -16,17 +16,17 @@
 		<g:HTMLPanel ui:field="individualResourceBreakdownDatapnl">
 			 <div class="{unitStyle.clearfix}">
 			 <div  class="{unitStyle.collectionOverviewText}">Collection Overview</div>
-				  <div class="{unitStyle.collectionBreakDown_infobox}">
-				  <div class="{unitStyle.collectionBreakDown_infobox_titles}">Total Time Spent</div>
-				  <div class="{unitStyle.collectionBreakDown_infobox_titles}">Total Time Spent</div>
-				  </div>
 				   <div class="{unitStyle.collectionBreakDown_infobox}">
-				  <div class="{unitStyle.collectionBreakDown_infobox_titles}">Views</div>
-				  <div class="{unitStyle.collectionBreakDown_infobox_titles}">Total Time Spent</div>
-				  </div>
+				   <div class="{unitStyle.collectionBreakDown_infobox_titles}">Total Time Spent</div>
+				   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles}" ui:field="totalTimeSpentlbl"></g:Label>
+				   </div>
+				   <div class="{unitStyle.collectionBreakDown_infobox}">
+				   <div class="{unitStyle.collectionBreakDown_infobox_titles}">Views</div>
+				   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles}" ui:field="totalViewlbl"></g:Label>
+				   </div>
 				   <div class="{unitStyle.collectionBreakDown_infobox}">
 				  <div class="{unitStyle.collectionBreakDown_infobox_titles}">Average Reaction</div>
-				  <div class="{unitStyle.collectionBreakDown_infobox_titles}">Total Time Spent</div>
+				  <g:HTMLPanel styleName="{unitStyle.collectionBreakDown_infobox_titles}" ui:field="totalAvgReactionlbl"></g:HTMLPanel> 
 				  </div>
 			 </div>
 			 <g:ListBox ui:field="filterDropDown" styleName="{unitStyle.filterDropDown}"/>

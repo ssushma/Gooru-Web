@@ -36,13 +36,15 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("gwt-service/analyticsService")
 public interface AnalyticsService extends BaseService {
 	
-	public ArrayList<CollectionProgressDataDo> getCollectionProgressData();
+	public ArrayList<CollectionProgressDataDo> getCollectionProgressData(String collectionId,String classPageId);
 	
-	public ArrayList<CollectionSummaryUsersDataDo> getCollectionSummaryUsersData();
+	public ArrayList<CollectionSummaryUsersDataDo> getCollectionSummaryUsersData(String classpageId);
 	
-	public ArrayList<CollectionSummaryMetaDataDo> getCollectionMetaData();
+	public ArrayList<CollectionSummaryMetaDataDo> getCollectionMetaData(String collectionId,String classpageId);
 	
-	public ArrayList<UserDataDo> getCollectionResourceData();
+	public ArrayList<CollectionSummaryMetaDataDo> getCollectionMetaDataByUserAndSession(String collectionId,String classId,String userId,String sessionId);
+	
+	public ArrayList<UserDataDo> getCollectionResourceData(String collectionId,String classpageId);
 	
 	public ArrayList<CollectionSummaryUsersDataDo> getSessionsDataByUser(String collectionId,String classId,String userId);
 		 

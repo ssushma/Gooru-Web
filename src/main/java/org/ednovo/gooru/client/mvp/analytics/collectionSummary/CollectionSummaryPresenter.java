@@ -42,6 +42,8 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	private CollectionSummaryTeacherPresenter collectionSummaryTeacherPresenter;
 	
 	private CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter;
+
+    ArrayList<CollectionSummaryMetaDataDo> collectionMetadata;
 	
 	@Inject
 	private  AnalyticsServiceAsync analyticService;
@@ -51,7 +53,6 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 		this.collectionSummaryTeacherPresenter=collectionSummaryTeacherPresenter;
 		this.collectionSummaryIndividualPresenter=collectionSummaryIndividualPresenter;
 		getView().setUiHandlers(this);
-		setTeacherData();
 	}
 
 	public AnalyticsServiceAsync getAnalyticService() {
@@ -63,8 +64,10 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	}
 
 	@Override
-	public void setCollectionSummaryData() {
-		this.analyticService.getCollectionSummaryUsersData(new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
+	public void setCollectionSummaryData(final String collectionId) {
+		//String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
+		this.analyticService.getCollectionSummaryUsersData(classpageId,new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
@@ -75,11 +78,13 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 			public void onFailure(Throwable caught) {
 			}
 		});
-		this.analyticService.getCollectionMetaData(new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+		this.analyticService.getCollectionMetaData(collectionId,classpageId,new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
 				getView().setCollectionMetaData(result);
+				collectionMetadata=result;
+				setTeacherData(collectionId,classpageId);
 			}
 			
 			@Override
@@ -89,13 +94,14 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	}
 
 	@Override
-	public void loadUserSessions(String collectionId,String classId,String userId) {
+	public void loadUserSessions(final String collectionId,final String classId,final String userId) {
 		this.analyticService.getSessionsDataByUser(collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
 				getView().setUserSessionsData(result);
-				setIndividualData();
+				if(result.size()!=0)
+				setIndividualData(collectionId,classId,userId,result.get(0).getSessionId());
 			}
 			
 			@Override
@@ -105,16 +111,16 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	}
 
 	@Override
-	public void setTeacherData() {
+	public void setTeacherData(String collectionId,String classpageId) {
 		clearSlot(TEACHER_STUDENT_SLOT);
-		collectionSummaryTeacherPresenter.setTeacherData();
+		collectionSummaryTeacherPresenter.setTeacherData(collectionId,classpageId,collectionMetadata);
 		setInSlot(TEACHER_STUDENT_SLOT, collectionSummaryTeacherPresenter,false);		
 	}
 
 	@Override
-	public void setIndividualData() {
+	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId) {
 		clearSlot(TEACHER_STUDENT_SLOT);
-		collectionSummaryIndividualPresenter.setIndividualData();
+		collectionSummaryIndividualPresenter.setIndividualData(collectionId,classpageId,userId,sessionId);
 		setInSlot(TEACHER_STUDENT_SLOT, collectionSummaryIndividualPresenter,false);	
 	}
 	

@@ -198,3 +198,18 @@
 	font-weight: bold;
 	color: #515151;
 }
+.viewResponseTextOpended{
+	padding: 3px;
+	border-radius: 4px;
+	text-align: center;
+	cursor: pointer;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFF), to(#EDEDED));
+	background: -webkit-linear-gradient(top, #FFF, #EDEDED);
+	background: -moz-linear-gradient(top, #FFF, #EDEDED);
+	background: -ms-linear-gradient(top, #FFF, #EDEDED);
+	background: -o-linear-gradient(top, #FFF, #EDEDED);
+	border: 1px solid #CCC;
+	color: #1076BB;
+	margin: 18px 15px;
+	width: 100px;
+}

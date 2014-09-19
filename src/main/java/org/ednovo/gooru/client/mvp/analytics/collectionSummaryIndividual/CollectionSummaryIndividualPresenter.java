@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
 import java.util.ArrayList;
 
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.event.shared.EventBus;
@@ -50,8 +51,20 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 	}
 
 	@Override
-	public void setIndividualData() {
-		this.analyticService.getUserSessionDataByUser("", "", "", "", new AsyncCallback<ArrayList<UserDataDo>>() {
+	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId) {
+		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+			
+			@Override
+			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
+				getView().setIndividualCollectionMetaData(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+			
+			}
+		});
+		this.analyticService.getUserSessionDataByUser(collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<UserDataDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<UserDataDo> result) {

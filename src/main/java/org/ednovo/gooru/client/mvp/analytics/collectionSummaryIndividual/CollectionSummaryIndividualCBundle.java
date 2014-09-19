@@ -34,6 +34,7 @@ public interface CollectionSummaryIndividualCBundle extends ClientBundle{
 	        
 	        String setProgressBar();
 	        String resourceBreakDownTimeSpent();
+	        String viewResponseTextOpended();
 	        
 	}
 	@NotStrict

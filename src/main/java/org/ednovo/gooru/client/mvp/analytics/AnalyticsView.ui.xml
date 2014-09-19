@@ -53,13 +53,13 @@
 				<!-- load all collections end -->
 				
 				<!-- 	This widget Is used for view assignments-->
-				<g:HTMLPanel styleName="row {unitStyle.generalSet}">
+				<g:HTMLPanel styleName="row {unitStyle.generalSet} {unitStyle.arrowStyle}">
 				   <g:HTMLPanel>
 				       <g:HorizontalPanel styleName="{unitStyle.rowInner}">
 				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Label styleName="{unitStyle.viewAssignmentText}">View Assignment</g:Label>  </g:HTMLPanel>
-				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionSummary" styleName="primary">Summary</g:Button>  </g:HTMLPanel>
-				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionProgress" styleName="primary">Progress</g:Button>  </g:HTMLPanel>
-				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button styleName="primary">Responses</g:Button>  </g:HTMLPanel>
+				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionSummary" styleName="primary">Summary</g:Button> <g:Label ui:field="summaryArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
+				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionProgress" styleName="primary">Progress</g:Button><g:Label ui:field="progressArrowlbl" styleName="{unitStyle.caretUp}"></g:Label> </g:HTMLPanel>
+				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionResponses"  styleName="primary">Responses</g:Button> <g:Label ui:field="responsesArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
 				        </g:HorizontalPanel> 
 				      </g:HTMLPanel>
 				</g:HTMLPanel>
@@ -73,6 +73,138 @@
 				      </g:HTMLPanel>
 				</g:HTMLPanel>
 				<!-- end view assignments -->
+				
+				
+				<g:HTMLPanel styleName="row {unitStyle.setBroder}">
+					<div class=" {unitStyle.studentPerformance}">
+					<div class="row">
+						<div class="{unitStyle.unitHeadingAnalytics}">
+						Student Performance <span>Heighlight students with certain score range below.</span>
+						</div>
+						<div class="{unitStyle.scoreText}">
+						Minimum score: <span>85%</span>
+						</div>
+						<div class="clearfix"></div>
+						</div>
+					<div class="row">
+						  <div class="col-xs-12">
+					      <div class="{unitStyle.progress}">
+						  <div class="{unitStyle.progress_org}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:20%;">
+						  </div>
+					  	  <div class="{unitStyle.progress_green}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:20%;">
+					  	  </div>
+					      <div class="{unitStyle.progress_blue}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+					      </div>
+					</div>
+					</div>
+					</div>
+					
+					<div class="row scores">
+					<div class="col-xs-6">
+					Score Below: <input name="" type="text" class="{unitStyle.form_control}" placeholder="20"/> %
+					</div>
+					<div class="col-xs-6 text-right">
+					Score Above: <input name="" type="text" class="{unitStyle.form_control}" placeholder="20"/> %
+					</div>
+					<div class="clearfix"></div>
+					</div>
+					
+					<div class="row {unitStyle.scoresTable}">
+					<div class="col-xs-6 {unitStyle.org}">
+					</div>
+					<div class="col-xs-6 {unitStyle.green}">
+					</div>
+					
+					<div class="clearfix"></div>
+					</div>
+					<div class="row scoresTableList">
+					<div class="col-xs-6">
+					<ul class="list-unstyled list-inline">
+					<li><img src="images/score-img.png"/></li>
+					<li>Anna</li>
+					<li>score</li>
+					<li>Time</li>
+					<li>Reaction</li>
+					</ul>
+					
+					<ul class="list-unstyled list-inline">
+					<li><img src="images/score-img.png"/></li>
+					<li>Anna</li>
+					<li>score</li>
+					<li>Time</li>
+					<li>Reaction</li>
+					</ul>
+					
+					
+					<ul class="list-unstyled list-inline">
+					<li><img src="images/score-img.png"/></li>
+					<li>Anna</li>
+					<li>score</li>
+					<li>Time</li>
+					<li>Reaction</li>
+					</ul>
+					
+					
+					<ul class="list-unstyled list-inline">
+					<li><img src="images/score-img.png"/></li>
+					<li>Anna</li>
+					<li>score</li>
+					<li>Time</li>
+					<li>Reaction</li>
+					</ul>
+					
+					
+					<ul class="list-unstyled list-inline">
+					<li><img src="images/score-img.png"/></li>
+					<li>Anna</li>
+					<li>score</li>
+					<li>Time</li>
+					<li>Reaction</li>
+					</ul>
+					</div>
+					<div class="col-xs-6">
+					<ul class="list-unstyled list-inline">
+					<li><img src="images/score-img.png"/></li>
+					<li>Dave</li>
+					<li>score</li>
+					<li>Time</li>
+					<li>Reaction</li>
+					</ul>
+					<ul class="list-unstyled list-inline">
+					<li><img src="images/score-img.png"/></li>
+					<li>Dave</li>
+					<li>score</li>
+					<li>Time</li>
+					<li>Reaction</li>
+					</ul>
+					<ul class="list-unstyled list-inline">
+					<li><img src="images/score-img.png"/></li>
+					<li>Dave</li>
+					<li>score</li>
+					<li>Time</li>
+					<li>Reaction</li>
+					</ul>
+					<ul class="list-unstyled list-inline">
+					<li><img src="images/score-img.png"/></li>
+					<li>Dave</li>
+					<li>score</li>
+					<li>Time</li>
+					<li>Reaction</li>
+					</ul>
+					<ul class="list-unstyled list-inline">
+					<li><img src="images/score-img.png"/></li>
+					<li>Dave</li>
+					<li>score</li>
+					<li>Time</li>
+					<li>Reaction</li>
+					</ul>
+					</div>
+					
+					<div class="clearfix"></div>
+					</div>
+					</div>
+				</g:HTMLPanel>
+				
 				
 				<div class="row {unitStyle.personalBtn}">
 					<div class="col-xs-12">

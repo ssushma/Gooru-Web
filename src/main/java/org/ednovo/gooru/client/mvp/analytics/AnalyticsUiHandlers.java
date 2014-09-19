@@ -27,9 +27,9 @@ package org.ednovo.gooru.client.mvp.analytics;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 public interface AnalyticsUiHandlers extends BaseUiHandlers{
-	void getPathwayItems();
+	void getPathwayItems(String classpageId,String pathwayGooruOid,String sequence,int limit,int offSet);
 	
-	void getPathwayUnits(int limit, int offset);
+	void getPathwayUnits(String classId,int limit, int offset ,boolean clearPanel);
 	
 	void setClickedTabPresenter(String clickedTab);
 }

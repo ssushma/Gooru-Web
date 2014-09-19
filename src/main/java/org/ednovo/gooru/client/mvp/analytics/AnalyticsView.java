@@ -1,9 +1,16 @@
 package org.ednovo.gooru.client.mvp.analytics;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitWidget;
+import org.ednovo.gooru.shared.model.content.ClassDo;
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 import com.google.gwt.core.client.GWT;
@@ -18,6 +25,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> implements IsAnalyticsView {
 
@@ -31,11 +39,11 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	
 	@UiField VerticalPanel unitPanel;
 	
-	@UiField Label lblMoreUnits;
+	@UiField Label lblMoreUnits,summaryArrowlbl,progressArrowlbl,responsesArrowlbl;
 	
 	@UiField HTMLPanel graphWidget,slotWidget;
 	
-	@UiField Button btnCollectionSummary,btnCollectionProgress;
+	@UiField Button btnCollectionSummary,btnCollectionProgress,btnCollectionResponses;
 	
 	@UiField ListBox loadCollections;
 	
@@ -47,6 +55,9 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	
 	private int limit = 5;
 	private int offSet = 0;
+	String unitId; 
+	ClassDo classDo;
+	private ClassUnitsListDo classUnitsDo;
 	
 	public AnalyticsView() {
 		this.res = AnalyticsCssBundle.INSTANCE;
@@ -56,31 +67,6 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		btnCollectionSummary.addClickHandler(new ViewAssignmentClickEvent("Summary"));
 		btnCollectionProgress.addClickHandler(new ViewAssignmentClickEvent("Progress"));
 	}
-
-	@Override
-	public void showUnitNames(ClasspageListDo classpageListDo) {
-		this.classpageListDo=classpageListDo;
-		for(int i=0; i<limit; i++){
-					String unitName=classpageListDo.getSearchResults().get(i).getResource().getTitle();
-					int number=classpageListDo.getSearchResults().get(i).getItemSequence();
-					String sequenceNumber=Integer.toString(number);
-					UnitWidget unitsWidget=new UnitWidget(sequenceNumber, unitName);
-					unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget));
-					unitsWidget.getElement().setId(sequenceNumber);
-					unitPanel.add(unitsWidget);
-		}
-	}
-	public class UnitChangeEvent implements ClickHandler{
-		private UnitWidget unitsWidget;
-		public UnitChangeEvent(UnitWidget unitsWidget){
-			this.unitsWidget=unitsWidget;
-		}
-		@Override
-		public void onClick(ClickEvent event) {
-			removeUnitSelectedStyle();
-			addUnitSelectStyle(unitsWidget);
-		}
-	}
 	public class ViewAssignmentClickEvent implements ClickHandler{
 		private String clicked;
 		public ViewAssignmentClickEvent(String clicked){
@@ -88,6 +74,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			clearDownArrow();
 			if(clicked.equalsIgnoreCase(PROGRESS)){
 				isSummayClicked=false;
 				if(isProgressClicked){
@@ -96,6 +83,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 				}else{
 					isProgressClicked=true;
 					getUiHandlers().setClickedTabPresenter(PROGRESS);
+					progressArrowlbl.addStyleName(res.unitAssignment().activeCaretup());
 				}
 			}else if(clicked.equalsIgnoreCase(SUMMARY)){
 				isProgressClicked=false;
@@ -105,11 +93,17 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 				}else{
 					isSummayClicked=true;
 					getUiHandlers().setClickedTabPresenter(SUMMARY);
+					summaryArrowlbl.addStyleName(res.unitAssignment().activeCaretup());
 				}
 			}else{
 				
 			}
 		}
+	}
+	void clearDownArrow(){
+		summaryArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
+		progressArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
+		responsesArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
 	}
 	public void removeUnitSelectedStyle(){
 		Iterator<Widget> widgets = unitPanel.iterator();
@@ -120,7 +114,6 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 				unitsWidget.getUnitNameContainer().removeStyleName(res.unitAssignment().unitMenuActive());
 			}
 		}		
-		
 	}
 	
 	public void addUnitSelectStyle(UnitWidget unitsWidget){
@@ -128,8 +121,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	}
 	@UiHandler("lblMoreUnits")
 	public void clickOnMoreUnits(ClickEvent event){
-		offSet=offSet+5;
-		getUiHandlers().getPathwayUnits(limit, offSet);
+		offSet=offSet+limit;
 	}
 	@Override
 	public void hideMoreUnitsLink() {
@@ -151,4 +143,70 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		}
 	}
 
+	@Override
+	public void showUnitNames(ClassDo classDo, boolean clearPanel) {
+		this.classDo = classDo;
+		unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+		if(unitId==null){
+			unitId = classDo.getSearchResults().get(0).getResource().getGooruOid();
+		}
+		if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+			ArrayList<ClassUnitsListDo> classListUnitsListDo =classDo.getSearchResults();
+			for(int i=0; i<classListUnitsListDo.size(); i++){
+				ClassUnitsListDo classListUnitsListDObj=classDo.getSearchResults().get(i);
+				classUnitsDo=classListUnitsListDObj;
+				//unitTitleDetails.setText(classDo.getSearchResults().get(0).getResource().getTitle());
+				UnitWidget unitsWidget=new UnitWidget(classListUnitsListDo.get(i));
+				unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget));
+				unitPanel.add(unitsWidget);
+			}
+		}
+	}
+
+	public class UnitChangeEvent implements ClickHandler{
+		private UnitWidget unitsWidget;
+		public UnitChangeEvent(UnitWidget unitsWidget){
+			this.unitsWidget=unitsWidget;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			revealPlace("unitdetails",null,unitsWidget.getUnitGooruOid());
+		}
+	}
+	 public void revealPlace(String tabName,String pageNum,String unitId){
+		 	
+			Map<String,String> params = new HashMap<String,String>();
+			String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+			String classpageid="";
+			if(pageLocation.equals(PlaceTokens.STUDENT))
+			{
+			classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			params.put("id", classpageid);
+			}
+			else
+			{
+			classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			params.put("classpageid", classpageid);
+			}
+		
+			if(pageNum!=null){
+				params.put("pageNum", pageNum);
+			}
+			if(tabName!=null){
+				params.put("tab", tabName);
+			}
+			if(unitId!=null){
+				params.put("uid", unitId);
+			}
+			PlaceRequest placeRequest=null;
+			if(pageLocation.equals(PlaceTokens.STUDENT))
+			{
+				placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);	
+			}
+			else
+			{
+				placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+			}
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+	 }
 }

@@ -15,6 +15,7 @@ public interface AnalyticsCssBundle extends ClientBundle{
 		String bubbleBig();
 		String unitMenuActive();
 		String bubbleOptional();
+		String activeCaretup();
 	}
 	
 	@NotStrict

@@ -23,23 +23,23 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.analytics;
-import java.util.ArrayList;
-
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.ClassDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> implements AnalyticsUiHandlers{
 	
+
 	private int limit = 5;
 	private int offSet = 0;
+	private int assignmentOffset=0;
+	private int assignmentLimit=10;
 	
 	private CollectionProgressPresenter collectionProgressPresenter;
 	
@@ -55,33 +55,39 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		getView().setUiHandlers(this);
 		this.collectionProgressPresenter=collectionProgressPresenter;
 		this.collectionSummaryPresenter=collectionSummaryPresenter;
-		getPathwayItems();
-		getPathwayUnits(limit,offSet);
+		getPathwayUnits("",limit,offSet,true);
 	}
 
 	@Override
-	public void getPathwayItems() {
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems("c8afe3ee-8d98-4aa6-a161-9d7cb0626bb2", "25509399-83ab-42f1-b774-c1e424b132d0", "sequence", 10, 1, new AsyncCallback<ArrayList<CollectionItemDo>>() {
-			
+	public void getPathwayItems(final String classpageId, final String pathwayGooruOid,String sequence,int limit,int offSet) {
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 			@Override
-			public void onSuccess(ArrayList<CollectionItemDo> result) {
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				
+
+			public void onSuccess(UnitAssignmentsDo result) {
+				String aid=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
+				if(aid==null){
+					if(result!=null&&result.getSearchResults().size()>0){
+						//getAssignemntDetails(result.getSearchResults().get(0).getCollectionItemId(),classpageId,pathwayGooruOid);
+					}
+				}
+				//getView().getSequence(result);
 			}
 		});
 	}
 
 	@Override
-	public void getPathwayUnits(int limit, int offset) {
-		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClasspageListDo>() {
-
+	public void getPathwayUnits(final String classId,int limit, int offset,final boolean clearPanel) {
+		final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
 			@Override
-			public void onSuccess(ClasspageListDo result) {
-				getView().showUnitNames(result);
+			public void onSuccess(ClassDo classDo) {
+				getView().showUnitNames(classDo,clearPanel);
+				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+					if(unitId==null){
+						getPathwayItems(classpageId,classDo.getSearchResults().get(0).getResource().getGooruOid(),"sequence",assignmentLimit,assignmentOffset);
+					}
+				}
 			}
 		});
 	}
@@ -91,10 +97,10 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		clearSlot(COLLECTION_PROGRESS_SLOT);
 		if(clickedTab!=null){
 			if(clickedTab.equalsIgnoreCase(SUMMARY)){
-				collectionSummaryPresenter.setCollectionSummaryData();
+				collectionSummaryPresenter.setCollectionSummaryData("fe78faa5-f7f0-4927-9282-a58a4e3deb5d");
 				setInSlot(COLLECTION_PROGRESS_SLOT, collectionSummaryPresenter,false);
 			}else if(clickedTab.equalsIgnoreCase(PROGRESS)){
-				collectionProgressPresenter.setCollectionProgressData();
+				collectionProgressPresenter.setCollectionProgressData("fe78faa5-f7f0-4927-9282-a58a4e3deb5d");
 				setInSlot(COLLECTION_PROGRESS_SLOT, collectionProgressPresenter,false);
 			}
 		}else{

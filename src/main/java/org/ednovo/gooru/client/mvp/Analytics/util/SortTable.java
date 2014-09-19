@@ -284,17 +284,17 @@ public class SortTable extends FlexTable implements Sortable, TableListener{
 	  private void renderTableHeader(String name, int index){
 	    StringBuffer headerText = new StringBuffer();
 	    headerText.append(name);
-	    headerText.append("&nbsp;<img border='0' src=");
+	   // headerText.append("&nbsp;<img border='0' src=");
 	    if(this.sortColIndex == index){
 	      if(this.sortDirection == SORT_ASC){
-	        headerText.append("'" + this.sortAscImage + "' alt='Ascending' ");  
+	      //  headerText.append("'" + this.sortAscImage + "' alt='Ascending' ");  
 	      }else{
-	        headerText.append("'" + this.sortDescImage + "' alt='Descending' ");
+	     //   headerText.append("'" + this.sortDescImage + "' alt='Descending' ");
 	      }
 	    }else{
-	      headerText.append("'" + this.blankImage + "'");
+	     // headerText.append("'" + this.blankImage + "'");
 	    }
-	    headerText.append("/>");
+	   // headerText.append("/>");
 
 	    this.setHTML(0, index, headerText.toString());
 	  }

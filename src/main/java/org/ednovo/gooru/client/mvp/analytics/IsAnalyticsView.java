@@ -24,12 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.analytics;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 
 public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>{
 	
-	public void showUnitNames(ClasspageListDo classpageListDo);
+	 public void showUnitNames(ClassDo classDo,boolean clearPanel);
 	
 	public void hideMoreUnitsLink();
 }

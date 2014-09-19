@@ -96,14 +96,12 @@ public class HCBarChart {
 	                3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8  
 	            })  
 	        );  
-	  
+	       
 	        return chart;  
         }  
     public Chart createBarChart(){
 	    	  final Chart chart = new Chart()  
 	          .setType(Series.Type.BAR)  
-	          .setChartTitleText("Historic World Population by Region")  
-	          .setChartSubtitleText("Source: Wikipedia.org")  
 	          .setBarPlotOptions(new BarPlotOptions()  
 	              .setDataLabels(new DataLabels()  
 	                  .setEnabled(true)  
@@ -144,27 +142,22 @@ public class HCBarChart {
 	          .setName("Year 1800")  
 	          .setPoints(new Number[] { 107, 31, 635, 203, 2 })  
 	      );  
-	      chart.addSeries(chart.createSeries()  
-	          .setName("Year 1900")  
-	          .setPoints(new Number[] { 133, 156, 947, 408, 6 })  
-	      );  
-	      chart.addSeries(chart.createSeries()  
-	          .setName("Year 2008")  
-	          .setPoints(new Number[] { 973, 914, 4054, 732, 34 })  
-	      );  
-	
+	      
+	      chart.setWidth(150);
+	    chart.setHeight(150);
 	      return chart;  
         } 
     public Chart createPieChart(){
 	    	 final Chart chart = new Chart()  
 	         .setType(Series.Type.PIE)  
+	         .setChartTitleText("")
 	         .setPlotBackgroundColor((String) null)  
 	         .setPlotBorderWidth(null)  
 	         .setPlotShadow(false)  
 	         .setPiePlotOptions(new PiePlotOptions()  
-	             .setAllowPointSelect(true)  
+	         /*  .setAllowPointSelect(false)  
 	             .setCursor(PlotOptions.Cursor.POINTER)  
-	             .setPieDataLabels(new PieDataLabels()  
+	            /* .setPieDataLabels(new PieDataLabels()  
 	                 .setConnectorColor("#000000")  
 	                 .setEnabled(true)  
 	                 .setColor("#000000")  
@@ -173,39 +166,37 @@ public class HCBarChart {
 	                         return "<b>" + dataLabelsData.getPointName() + "</b>: " + dataLabelsData.getYAsDouble() + " %";  
 	                     }  
 	                 })  
-	             )  
+	             )  */
 	         )  
+	         .setToolTip(new ToolTip()
+	         	.setEnabled(false)
+	         )
 	         .setLegend(new Legend()  
 	             .setLayout(Legend.Layout.VERTICAL)  
 	             .setAlign(Legend.Align.RIGHT)  
 	             .setVerticalAlign(Legend.VerticalAlign.TOP)  
 	             .setX(-100)  
 	             .setY(100)  
-	             .setFloating(true)  
+	             .setFloating(false)  
 	             .setBorderWidth(1)  
 	             .setBackgroundColor("#FFFFFF")  
-	             .setShadow(true)  
-	         )  
-	         .setToolTip(new ToolTip()  
+	             .setShadow(false)  
+	         ) ; 
+	        /* .setToolTip(new ToolTip()  
 	             .setFormatter(new ToolTipFormatter() {  
 	                 public String format(ToolTipData toolTipData) {  
 	                     return "<b>" + toolTipData.getPointName() + "</b>: " + toolTipData.getYAsDouble() + " %";  
 	                 }  
 	             })  
-	         );  
+	         );  */
 	    	 chart.addSeries(chart.createSeries()  
 	    	            .setPoints(new Point[]{  
-	    	                new Point("Firefox", 45.0),  
-	    	                new Point("IE", 26.8),  
-	    	                new Point("Chrome", 12.8)  
-	    	                    .setSliced(true)  
-	    	                    .setSelected(true),  
-	    	                new Point("Safari", 8.5),  
-	    	                new Point("Opera", 6.2),  
-	    	                new Point("Others", 0.7)  
+	    	                new Point("", 45.0),  
+	    	                new Point("", 26.8),  
+	    	                new Point("", 50)  
 	    	            })  
 	    	        ); 
-	    	 chart.setWidth(300);
+	    	 chart.setWidth(150);
 	    	 chart.setHeight(100);
 	
 	     return chart;  
