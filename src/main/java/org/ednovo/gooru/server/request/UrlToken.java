@@ -237,7 +237,7 @@ public enum UrlToken {
 	
 	UPDATE_CLASSPAGE_ITEMS_V2("/v2/class/item/{0}?sessionToken={1}"),
 	
-	DELETE_CLASSPAGE_ITEMS_V2("/v2/classpage/item/{0}?sessionToken={1}"),
+	DELETE_CLASSPAGE_ITEMS_V2("/v2/class/{0}/pathway/{1}/item/{2}?sessionToken={3}"),
 	
 	GET_COLLECTION_PARENT_FOLDERS("/v2/collection/{0}/parents?sessionToken={1}"),
 	
