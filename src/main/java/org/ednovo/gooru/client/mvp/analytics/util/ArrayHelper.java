@@ -1,4 +1,4 @@
-package org.ednovo.gooru.client.mvp.analytics.util;
+package org.ednovo.gooru.client.mvp.Analytics.util;
 /*
  * Copyright 2008 Google Inc.
  * 
