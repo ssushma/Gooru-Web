@@ -90,22 +90,28 @@
 					</g:HTMLPanel> -->
 
 						<g:HTMLPanel styleName="col-xs-6 {res.css.collectionBlocks}">
-							<g:Label styleName="{res.css.scoreLbl}" ui:field="scoreLbl"/>
-							<!-- <g:Image styleName="friendlyQuestionMark"></g:Image> -->
+						    <g:HTMLPanel styleName="{res.css.scoreMainDev}">
+							 <g:Label styleName="{res.css.scoreLbl}" ui:field="scoreLbl"/>
+							     <g:Image styleName="{res.css.questionImage}" ui:field="scoreQuestionMark"></g:Image>
+							</g:HTMLPanel> 
+								<!--  -->
 							<g:TextBox styleName="{res.css.textScoreBox}" ui:field="scoreTxt" />
 							<g:Label ui:field="scoreErrorLabel" styleName="{res.css.suggestTimeErrorLabel}"></g:Label>
 						</g:HTMLPanel>
 
 						<g:HTMLPanel styleName="col-xs-6 {res.css.collectionBlocks}">
+						    <g:HTMLPanel styleName="{res.css.scoreMainDev}">
 							<g:Label styleName="{res.css.fromLbl}" ui:field="fromLbl"/>
+								<g:Image styleName="{res.css.questionImage}" ui:field="suggestTimeQuestionMark"></g:Image>
+							</g:HTMLPanel>
 						    	<g:FlowPanel styleName="{res.css.textAlignContainer}">
 						  	 	<g:TextBox styleName="{res.css.textBox}" ui:field="fromTxt" />
 						   		</g:FlowPanel>
-								<g:HTMLPanel styleName="{res.css.MinuteLabel}" ui:field="minsText"></g:HTMLPanel>
+								<g:HTMLPanel styleName="{res.css.MinuteLabel}" ui:field="hoursText"></g:HTMLPanel>
 								<g:FlowPanel styleName="{res.css.textAlignContainer}">
 							<g:TextBox styleName="{res.css.textBox}" ui:field="toTxt" />
 							</g:FlowPanel>
-							<g:HTMLPanel styleName="{res.css.MinuteLabel}" ui:field="secondsText"></g:HTMLPanel>
+							<g:HTMLPanel styleName="{res.css.MinuteLabel}" ui:field="minutesText"></g:HTMLPanel>
 							<g:Label ui:field="suggestTimeErrorLabel" styleName="{res.css.suggestTimeErrorLabel}"></g:Label>
 					   </g:HTMLPanel>
 					  

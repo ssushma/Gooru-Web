@@ -105,7 +105,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 	private int totalHitCount=0;
 	
 	private String pathwayId;
-	
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -114,7 +113,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		this.classUnitsDo=classUnitsDo;
 		addAssignmentButton.getElement().getStyle().setMarginTop(28, Unit.PX);
 		loadingImageLabel.setVisible(false);
-		setAssignmentsForUnit();
+//		setAssignmentsForUnit();
 		setUnitNameDetails();
 		cancelEditButton.setVisible(false);
 		editUnitButton.addClickHandler(new EditAssignmentEvent());
@@ -135,29 +134,28 @@ public class UnitsAssignmentWidgetView extends Composite {
 
 
 
-	private void setAssignmentsForUnit() {
+	public void setAssignmentsForUnit() {
 		loadingImageLabel.setVisible(false);
 		assignmentsContainer.clear();
 		if(classUnitsDo!=null && classUnitsDo.getResource()!=null){
-			if(classUnitsDo.getResource().getCollectionItems() != null)
-			{
-			if(classUnitsDo.getResource().getCollectionItems().size()==0){
-				htPanelNextArrow.setVisible(false);
-				htPanelPreviousArrow.setVisible(false);
-			}
-			}
-			else
-			{
-				htPanelNextArrow.setVisible(false);
-				htPanelPreviousArrow.setVisible(false);
-			}
-			if(classUnitsDo.getResource().getCollectionItems() != null)
-			{
-			for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
-				ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
-				showAndHidePaginationArrows();
-				assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo));
-			}
+//			if(classUnitsDo.getResource().getCollectionItems() != null){
+//				if(classUnitsDo.getResource().getCollectionItems().size()==0){
+//					htPanelNextArrow.setVisible(false);
+//					htPanelPreviousArrow.setVisible(false);
+//				}
+//			}else{
+//				htPanelNextArrow.setVisible(false);
+//				htPanelPreviousArrow.setVisible(false);
+//			}
+			
+			if(classUnitsDo.getResource().getCollectionItems() != null){
+				for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
+					ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
+//					showAndHidePaginationArrows();
+					assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo));
+				}
+				showAndHideAssignmentArrows();
+//				arrowButton(null);
 			}
 		}
 	}
@@ -165,6 +163,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	private void showAndHidePaginationArrows() {
 		if(classUnitsDo.getResource().getItemCount()>assignmentLimit){
 			htPanelNextArrow.setVisible(true);
+			htPanelPreviousArrow.setVisible(false);
 		}else{
 			htPanelNextArrow.setVisible(false);
 			htPanelPreviousArrow.setVisible(false);
@@ -210,7 +209,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 									if((getTotalHitCount()-1)==assignmentOffset){
 										assignmentOffset=assignmentOffset-10;
 									}
-									getUnitAssignments(assignmentOffset,isEditMode);
+									getUnitAssignments(assignmentOffset,isEditMode,null);
 								}
 							}
 						}
@@ -299,7 +298,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 						if(assignmentOffset==seqPosition){
 							assignmentOffset = assignmentOffset-assignmentLimit;
 						}
-						getUnitAssignments(assignmentOffset,isEditMode);
+						getUnitAssignments(assignmentOffset,isEditMode,null);
 					}
 					
 				}
@@ -422,7 +421,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public void clickOnNextArrow(ClickEvent clickEvent){
 		clearAssignmentsFromDo();
 		loadingImageLabel.setVisible(true);
-		getUnitAssignments(getAssignmentOffsetValue(NEXT),isEditMode);
+		getUnitAssignments(getAssignmentOffsetValue(NEXT),isEditMode,NEXT);
 	}
 	
 	
@@ -439,10 +438,15 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public void clickOnPreviousArrow(ClickEvent clickEvent){
 		clearAssignmentsFromDo();
 		loadingImageLabel.setVisible(true);
-		getUnitAssignments(getAssignmentOffsetValue(PREVIOUS),isEditMode);
+		getUnitAssignments(getAssignmentOffsetValue(PREVIOUS),isEditMode,PREVIOUS);
 	}
 	
-	public void getUnitAssignments(int assignmentOffset,final boolean isAssignmentEditmode){
+	public void getUnitAssignments(int assignmentOffset,final boolean isAssignmentEditmode, final String direction){
+		/*if(direction!=null&&direction.equals(PREVIOUS)){
+			assignmentOffset = decreseAssignment();
+			System.out.println("---->>> "+assignmentOffset);
+		}*/
+		
 		String classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classPageId, classUnitsDo.getResource().getGooruOid(), "sequence", assignmentLimit, assignmentOffset, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 
@@ -456,16 +460,39 @@ public class UnitsAssignmentWidgetView extends Composite {
 				}else{
 					setAssignmentsForUnit();
 				}
-				showAndHideAssignmentArrows(result);
+				showAndHideAssignmentArrows();
+//				arrowButton(direction);
 			}
 		}); 
 	}
 	
 	
+	public void arrowButton(String direction){
+		if(direction==null||direction.equals(NEXT)){
+			assignmentOffset=assignmentOffset+assignmentLimit;
+		}
+		if(assignmentOffset<getTotalHitCount()){
+			htPanelPreviousArrow.setVisible(false);
+			htPanelNextArrow.setVisible(true);
+			//show rightArrow
+		}
+		if(assignmentOffset>assignmentLimit){
+			htPanelPreviousArrow.setVisible(true);
+			htPanelNextArrow.setVisible(false);
+			//show left arrow
+		}
+	}
+	
+	/*public int decreseAssignment(){
+		assignmentOffset=assignmentOffset-(assignmentLimit*2);
+		return assignmentOffset;
+	}*/
+	
+	
 	public void addAssignment(ArrayList<ClasspageItemDo> classpageItemDo){
 		setTotalHitCount(getTotalHitCount()+classpageItemDo.size());
 		loadingImageLabel.setVisible(true);
-		getUnitAssignments(getOffsetValue(),false);
+		getUnitAssignments(getOffsetValue(),false,null);
 	}
 	
 	private int getOffsetValue() {
@@ -503,20 +530,46 @@ public class UnitsAssignmentWidgetView extends Composite {
 	}
 
 	
-	private void showAndHideAssignmentArrows(UnitAssignmentsDo unitAssignmentsDo) {
-		int totalAssignments=unitAssignmentsDo.getTotalHitCount();
-		if(Math.abs(totalAssignments-assignmentOffset)>assignmentLimit){
-			if(Math.abs(totalAssignments-assignmentOffset)==totalAssignments){
+	private void showAndHideAssignmentArrows() {
+		System.out.println("-- total hit count -- "+getTotalHitCount());
+		System.out.println("--- 1 -- "+Math.abs(getTotalHitCount()-assignmentOffset));
+		System.out.println("---- 2 -- "+assignmentLimit+"\n\n");
+		
+		
+		
+		if(Math.abs(getTotalHitCount()-assignmentOffset)>assignmentLimit){
+			if(Math.abs(getTotalHitCount()-assignmentOffset)==getTotalHitCount()){
 				htPanelPreviousArrow.setVisible(false);
 				htPanelNextArrow.setVisible(true);
 			}else{
 				htPanelPreviousArrow.setVisible(true);
 				htPanelNextArrow.setVisible(true);
 			}
+		}
+		
+		if(Math.abs(getTotalHitCount()-assignmentOffset)<assignmentLimit){
+			if(getTotalHitCount()<assignmentLimit){
+				htPanelPreviousArrow.setVisible(false);
+				htPanelNextArrow.setVisible(false);
+			}else{
+				htPanelPreviousArrow.setVisible(true);
+				htPanelNextArrow.setVisible(false);
+			}
+		}
+		if(Math.abs(getTotalHitCount()-assignmentOffset)==0){
+			if(getTotalHitCount()>assignmentLimit){
+				htPanelPreviousArrow.setVisible(true);
+				htPanelNextArrow.setVisible(false);
+			}else{
+				htPanelPreviousArrow.setVisible(false);
+				htPanelNextArrow.setVisible(false);
+			}
 			
-		}else{
-			htPanelNextArrow.setVisible(false);
-			htPanelPreviousArrow.setVisible(true);
+		}
+		
+		if(Math.abs(getTotalHitCount()-assignmentOffset)==assignmentLimit){
+			htPanelNextArrow.setVisible(false); 
+			htPanelPreviousArrow.setVisible(false);
 		}
 	}
 	

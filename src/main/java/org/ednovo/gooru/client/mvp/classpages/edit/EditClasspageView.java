@@ -13,6 +13,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressWidget;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageResourceItemListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
@@ -31,6 +32,7 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
@@ -70,10 +72,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-
 /**
  * @fileName : EditClasspageView.java
  * 
@@ -146,6 +148,8 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	@UiField TextBox classCodeTextBox;
 	
 	@UiField HTMLPanel questionMarkPanel;
+	
+	@UiField VerticalPanel ananyticsPanel;
 
 	NewClasspagePopupView newPopup = null;
 	private  ClasspageDo classpageDo =null;
@@ -194,6 +198,7 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	private int totalHitCount=0;
 	private int limit=5;
 	private int pageNumber=0;
+	private int collectionProgressCount=1;
 	
 	private final String START_PAGE = "1";
 	
@@ -205,15 +210,21 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	
 	List<String> sortingOptionsList=new ArrayList<String>();
 
+
+
+
 	private static EditClassPageViewUiBinder uiBinder = GWT.create(EditClassPageViewUiBinder.class);
+
 	
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	String dropSortOptionsStr = i18n.GL1947();
 
-	interface EditClassPageViewUiBinder extends UiBinder<Widget, EditClasspageView> {
-
+	interface EditClassPageViewUiBinder extends
+			UiBinder<Widget, EditClasspageView> {
+		
 	}
+
 
 	@Inject
 	public EditClasspageView() {
@@ -668,6 +679,7 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 			reportsTab.addStyleName(res.css().selected());
 			assignmentsTab.getElement().setClassName("");
 			classListTab.getElement().setClassName("");
+			assignmentsTab.setEnabled(true);
 		}
 		else if(analyticsId!=null)
 		{
@@ -1202,6 +1214,15 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	public class reportsTabClicked implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
+
+			reportsTab.addStyleName(res.css().selected());
+			classListTab.getElement().setClassName("");
+			assignmentsTab.getElement().setClassName("");
+			refresh=false;
+			/*droplistContianer.setVisible(false);*/
+			assignmentsTab.setEnabled(true);
+			
+
 			Map<String,String> params = new HashMap<String,String>();
 			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
 			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
@@ -1268,6 +1289,10 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		}
 	}
 
+	@Override
+	public void hideNoAssignmentsMessagePanel() {
+		// TODO Auto-generated method stub
 		
+	}
 }
 
