@@ -1,4 +1,4 @@
-package org.ednovo.gooru.client.mvp.analytics.collectionProgress;
+package org.ednovo.gooru.client.mvp.Analytics.collectionProgress;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;

@@ -1,4 +1,4 @@
-package org.ednovo.gooru.client.mvp.analytics;
+package org.ednovo.gooru.client.mvp.Analytics;
 
 import org.moxieapps.gwt.highcharts.client.AxisTitle;
 import org.moxieapps.gwt.highcharts.client.Chart;
@@ -14,13 +14,9 @@ import org.moxieapps.gwt.highcharts.client.ToolTipFormatter;
 import org.moxieapps.gwt.highcharts.client.labels.AxisLabelsData;
 import org.moxieapps.gwt.highcharts.client.labels.AxisLabelsFormatter;
 import org.moxieapps.gwt.highcharts.client.labels.DataLabels;
-import org.moxieapps.gwt.highcharts.client.labels.DataLabelsData;
-import org.moxieapps.gwt.highcharts.client.labels.DataLabelsFormatter;
-import org.moxieapps.gwt.highcharts.client.labels.PieDataLabels;
 import org.moxieapps.gwt.highcharts.client.labels.YAxisLabels;
 import org.moxieapps.gwt.highcharts.client.plotOptions.BarPlotOptions;
 import org.moxieapps.gwt.highcharts.client.plotOptions.PiePlotOptions;
-import org.moxieapps.gwt.highcharts.client.plotOptions.PlotOptions;
 
 
 public class HCBarChart {
