@@ -187,6 +187,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 					}
 				}
 				else{
+					getView().setLoadingIcon(false);
 					getView().zeroResults();
 				}
 				
