@@ -25,10 +25,6 @@
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
 
-import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -91,7 +87,7 @@ public class ScoreHedingView extends Composite {
 	 * Note that depending on the widget that is used, it may be necessary to
 	 * implement HasHTML instead of HasText.
 	 */
-	public ScoreHedingView() {
+	public ScoreHedingView(String title) {
 		initWidget(uiBinder.createAndBindUi(this));
 		txtScore.addBlurHandler(new ScoreHandler());
 		txtScore.addKeyPressHandler(new HasNumbersOnly());
@@ -159,8 +155,10 @@ public class ScoreHedingView extends Composite {
 				lblRedControl.getElement().setId("redControll");
 				if(Integer.parseInt(txtScore.getText())<=50){
 					lblRedControl.getElement().setAttribute("style", "-webkit-transform: rotate("+redScore+"deg); background: none repeat scroll 0 0 #a0c79a;");
+					lblScore.getElement().setAttribute("style", "color:#a0c79a");
 				}else{
 					lblRedControl.getElement().setAttribute("style", "-webkit-transform: rotate("+redScore+"deg);");
+					lblScore.getElement().setAttribute("style", "color:#fb7c73");
 				}
 				/*AppClientFactory.getInjector().getClasspageService().updateUnitStatus(collectionItemId, minimumScore, assignementStatus, timeStudying, new SimpleAsyncCallback<CollectionDo>() {
 
@@ -192,4 +190,9 @@ public class ScoreHedingView extends Composite {
 			lblScore.setVisible(false);
 		}
 	}
+	public Label getLblTitle() {
+		return lblTitle;
+	}
+	
+	
 }
