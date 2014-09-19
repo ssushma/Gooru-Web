@@ -1,4 +1,4 @@
-package org.ednovo.gooru.client.mvp.Analytics.collectionProgress;
+package org.ednovo.gooru.client.mvp.analytics.collectionProgress;
 
 import java.util.ArrayList;
 import java.util.List;

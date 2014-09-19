@@ -1,4 +1,4 @@
-package org.ednovo.gooru.client.mvp.Analytics;
+package org.ednovo.gooru.client.mvp.analytics;
 
 import org.moxieapps.gwt.highcharts.client.AxisTitle;
 import org.moxieapps.gwt.highcharts.client.Chart;

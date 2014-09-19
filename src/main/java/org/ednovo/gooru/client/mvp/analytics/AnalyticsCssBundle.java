@@ -1,4 +1,4 @@
-package org.ednovo.gooru.client.mvp.Analytics;
+package org.ednovo.gooru.client.mvp.analytics;
 
 
 import com.google.gwt.core.client.GWT;
