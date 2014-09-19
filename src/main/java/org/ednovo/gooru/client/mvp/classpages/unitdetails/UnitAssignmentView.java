@@ -550,6 +550,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
 				unitCricleViewObj.getElement().setId(i+"");
 				circleContainerPanel.add(unitCricleViewObj);
+				if(i==0){
+					addAssignmentSelectStyle(unitCricleViewObj);
+				}
 				unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration()));
 				unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
 			}
