@@ -91,6 +91,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	public void getPathwayItems(final String classpageId, final String pathwayGooruOid,String sequence,int limit,int offSet) {
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 			@Override
+
 			public void onSuccess(UnitAssignmentsDo result) {
 				String aid=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 				if(aid==null){
@@ -106,6 +107,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 					}
 				}
 				getView().getSequence(result);
+
 			}
 		});
 	}
