@@ -1,4 +1,4 @@
-package org.ednovo.gooru.client.mvp.Analytics.util;
+package org.ednovo.gooru.client.mvp.analytics.util;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
