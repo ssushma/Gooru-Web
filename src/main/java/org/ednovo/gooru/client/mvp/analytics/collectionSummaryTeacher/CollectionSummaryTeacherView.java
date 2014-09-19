@@ -8,12 +8,12 @@ import java.util.List;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.Analytics.HCBarChart;
-import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsReactionWidget;
-import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsTabContainer;
-import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
-import org.ednovo.gooru.client.mvp.analytics.util.DataView;
-import org.ednovo.gooru.client.mvp.analytics.util.Print;
-import org.ednovo.gooru.client.mvp.analytics.util.SortTable;
+import org.ednovo.gooru.client.mvp.Analytics.util.AnalyticsReactionWidget;
+import org.ednovo.gooru.client.mvp.Analytics.util.AnalyticsTabContainer;
+import org.ednovo.gooru.client.mvp.Analytics.util.AnalyticsUtil;
+import org.ednovo.gooru.client.mvp.Analytics.util.DataView;
+import org.ednovo.gooru.client.mvp.Analytics.util.Print;
+import org.ednovo.gooru.client.mvp.Analytics.util.SortTable;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
