@@ -664,6 +664,24 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		}
 		
 	}
+	public void highlightTab(String tabValue)
+	{
+		assignmentsTab.removeStyleName(res.css().selected());
+		classListTab.removeStyleName(res.css().selected());
+		reportsTab.removeStyleName(res.css().selected());		
+		if(tabValue!=null && tabValue.equalsIgnoreCase("classList"))
+		{
+			classListTab.addStyleName(res.css().selected());
+		}
+		else if(tabValue!=null && tabValue.equalsIgnoreCase("reports"))
+		{
+			reportsTab.addStyleName(res.css().selected());
+		}
+		else{
+			assignmentsTab.addStyleName(res.css().selected());
+		}
+		
+	}
 	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList1,String tab, String analyticsId, String monitorId,ClassListPresenter classlistPresenter,int assignmentsCount){
 		this.classlistPresenter = classlistPresenter;
 
