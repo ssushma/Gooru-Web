@@ -22,7 +22,7 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
+package org.ednovo.gooru.client.mvp.Analytics.collectionSummaryIndividual;
 import java.util.ArrayList;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;

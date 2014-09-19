@@ -37,7 +37,7 @@ import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
-import org.ednovo.gooru.client.mvp.analytics.AnalyticsPresenter;
+import org.ednovo.gooru.client.mvp.Analytics.AnalyticsPresenter;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.WelcomeClassView;
