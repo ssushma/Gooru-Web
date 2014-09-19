@@ -51,16 +51,17 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	private String selectedPathId;
 	private HandlerRegistration onClickUnit;
 	
-	public UnitAssigmentReorder(ClassDo classDo,String title,String narration,String classpageId) {
+	public UnitAssigmentReorder(ClassDo classDo,String title,String narration,String classpageId,int selectedUnitNumber) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.classDo = classDo;
 		this.classpageId = classpageId;
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 
-		setUnitAssignmentData(classDo,title,narration);
+		setUnitAssignmentData(classDo,title,narration,selectedUnitNumber);
 				
 	}
-	public void setUnitAssignmentData(ClassDo classDo,String title,String narration){
+	public void setUnitAssignmentData(ClassDo classDo,String title,String narration,int selectedUnitNumber){
+		int totalItemCount = 0;
 		popupArrow.setUrl("images/popArrow.png");
 		saveButton.setText("Save");
 		CancelButton.setText("Cancel");
@@ -70,7 +71,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		
 		totalCount=classDo.getTotalHitCount()!=null?classDo.getTotalHitCount():0;
-			if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+		if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 			ArrayList<ClassUnitsListDo> classListUnitsListDo =classDo.getSearchResults();
 			titleLabel.setText(title);
 			if(narration!=null){
@@ -80,10 +81,16 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			
 			for(int i=0; i<classListUnitsListDo.size(); i++){
 
-				int totalItemCount=classListUnitsListDo.get(0).getResource().getItemCount();
+				totalItemCount=classListUnitsListDo.get(0).getResource().getItemCount();
 				displayAssignment(totalItemCount);
 				int number=classListUnitsListDo.get(i).getItemSequence();
-				dropdownListPlaceHolder.getElement().setInnerHTML(classListUnitsListDo.get(0).getItemSequence()+"");
+				
+				if(selectedUnitNumber==0){
+					dropdownListPlaceHolder.getElement().setInnerHTML(classListUnitsListDo.get(0).getItemSequence()+"");
+				}else{
+					dropdownListPlaceHolder.getElement().setInnerHTML(selectedUnitNumber+"");
+				}
+				
 				dropdownListPlaceHolder.getElement().setId(classListUnitsListDo.get(0).getResource().getGooruOid());
 				String unitCollectionItemId=classListUnitsListDo.get(i).getResource().getGooruOid();
 				Label dropDownListItem=new Label(number+"");
@@ -91,6 +98,12 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 				dropDownListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
 				dropdownListContainer.add(dropDownListItem);
 				dropDownListItem.addClickHandler(new OnDropdownItemClick(number+"",dropDownListItem.getElement().getId(),unitCollectionItemId));
+			}
+			if(totalCount==1 && totalItemCount==1)	{
+				saveButton.setVisible(false);
+			}
+			else{
+				saveButton.setVisible(true);
 			}
 			
 		}

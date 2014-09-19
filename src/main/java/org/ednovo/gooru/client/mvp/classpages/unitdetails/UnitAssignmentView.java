@@ -123,8 +123,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private static final String NEXT="next";
 	private static final String PREVIOUS= "previous";
 	String unitId; 
-	private Boolean isRequired;
-	
+	private int selectedUnitNumber;
 	
 	private int totalAssignmentHitcount;
 	@Inject
@@ -156,12 +155,15 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public class UnitChangeEvent implements ClickHandler{
 		private UnitWidget unitsWidget;
 		private String unitTitle;
-		public UnitChangeEvent(UnitWidget unitsWidget,String unitTitle){
+		private int unitNumber;
+		public UnitChangeEvent(UnitWidget unitsWidget,String unitTitle,int unitNumber){
 			this.unitsWidget=unitsWidget;
 			this.unitTitle = unitTitle;
+			this.unitNumber = unitNumber;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			selectedUnitNumber = unitNumber;
 			resetCircleAndAssignmentContainer(unitTitle);
 			revealPlace("unitdetails",null,unitsWidget.getUnitGooruOid(),null);
 			removeAndAddUnitSelectedStyle();
@@ -327,7 +329,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	@Override
 	public void onMouseOver(MouseOverEvent event) {
-		unitAssigmentReorder = new UnitAssigmentReorder(classDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null)){
+		unitAssigmentReorder = new UnitAssigmentReorder(classDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null),selectedUnitNumber){
 			@Override
 			public void reorderAssignment(int seqPosition,String selectedPathId) {
 				setAssignmentToNewPosition(seqPosition,selectedPathId);
@@ -384,8 +386,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				if(unitTitle!=null && unitTitle.length()>11){
 					unitTitle = unitTitle.substring(0,11)+"...";
 				}
+				int unitNumber = classDo.getSearchResults().get(i).getItemSequence();
 				UnitWidget unitsWidget=new UnitWidget(classListUnitsListDo.get(i));
-				unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget,unitTitle));
+				unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget,unitTitle,unitNumber));
 				if(unitId!=null&&unitId.equals(unitsWidget.getUnitGooruOid())){
 					unitsWidget.getUnitNameContainer().removeStyleName(res.unitAssignment().unitMenuActive());
 					unitsWidget.getUnitNameContainer().addStyleName(res.unitAssignment().unitMenuActive());
