@@ -586,11 +586,15 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		scoreHedingContainer.clear();
 		ScoreHedingView scoreHedingView = null;
 		for(int i=0; i<2; i++){
-			 scoreHedingView=new ScoreHedingView();
+			scoreHedingView=new ScoreHedingView("");
 			scoreHedingContainer.add(scoreHedingView);
+			if(i==0){
+				scoreHedingView.getLblTitle().setText("Average Correct Answer");
+			}else{
+				scoreHedingView.getLblTitle().setText("Assignment Completed");
+			}
 		}
-		
-//		txtHours.addBlurHandler(new ScoreHandler());
+		//txtHours.addBlurHandler(new ScoreHandler());
 		txtHours.addKeyPressHandler(scoreHedingView.new HasNumbersOnly());
 		txtMinuts.addKeyPressHandler(scoreHedingView.new HasNumbersOnly());
 	}
