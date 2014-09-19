@@ -269,6 +269,7 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 
 		@Override
 		public void zeroResults() {
+			
 			paginationPanel.setVisible(false);
 			unitSetupContainer.setVisible(false);
 			

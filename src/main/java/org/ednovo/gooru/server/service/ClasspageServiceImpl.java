@@ -1050,8 +1050,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		return jsonResponseRep.getStatusCode().toString();
 	}
 	
-	public String deleteClassPageItem(String collectionId){
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.DELETE_CLASSPAGE_ITEMS_V2, collectionId,getLoggedInSessionToken());
+	public String deleteClassPageItem(String classPageId,String pathwayId,String collectionId){
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.DELETE_CLASSPAGE_ITEMS_V2,classPageId,pathwayId,collectionId,getLoggedInSessionToken());
 		getLogger().info("url---- "+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 		return jsonResponseRep.getStatusCode().toString();
