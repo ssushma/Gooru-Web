@@ -102,11 +102,11 @@ width: 50%; */
 .assignmentsContainer{
 	/* float : right;
 	width:50%; */
-	margin-top:32px;
+	margin-top:6%;
 	
 }
 .duedateContainer{
-	margin-top: 10%;
+	margin-top: 6%;
 }
 
 .buttonAssignContainer{
@@ -452,6 +452,7 @@ width: 50%; */
  */	padding-top: 20px;
 	padding-left: 0px;
 	padding-right: 5px;
+	display:inline;
 	
 }
 .textAlignContainer {
@@ -476,7 +477,8 @@ width: 50%; */
 /* 	float: left;
  */	padding-top: 20px;
 	padding-left: 0px;
-	padding-right: 5px;
+	padding-right: 0px;
+	display:inline;
 
 }
 .textScoreBox{
@@ -502,7 +504,13 @@ width: 50%; */
 	margin-right: 54px;
 	float:left;
 }
-
+.scoreMainDev{
+	margin: 20px 0 5px;
+}
+.questionImage{
+	cursor: pointer;
+	margin-top: 1px;
+}
 /*End Success popup */
 
 
