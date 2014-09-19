@@ -187,6 +187,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	public class DeleteAssignment implements ClickHandler{
 		String collectionItemId=null;
+		String classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		
 		public DeleteAssignment(String collectionItemId) {
 			this.collectionItemId = collectionItemId;
@@ -197,7 +198,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 			final WaitPopupVc popupVc = new WaitPopupVc(i18n.GL1387(),i18n.GL1388()) { 
 				@Override
 				public void onTextConfirmed() {
-					AppClientFactory.getInjector().getClasspageService().deleteClassPageItem(collectionItemId, new SimpleAsyncCallback<String>() {
+					AppClientFactory.getInjector().getClasspageService().deleteClassPageItem(classPageId,classUnitsDo.getResource().getGooruOid(),collectionItemId, new SimpleAsyncCallback<String>() {
 						@Override
 						public void onSuccess(String result) {
 							if(result.equals("200")){
@@ -287,7 +288,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),title, "",classPageId){
+			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),title, "",classPageId,0){
 
 				@Override
 				public void reorderAssignment(int seqPosition,String selectedPathId) {

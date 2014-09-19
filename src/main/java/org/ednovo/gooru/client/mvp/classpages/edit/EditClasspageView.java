@@ -13,7 +13,6 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressWidget;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageResourceItemListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
@@ -32,7 +31,6 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
@@ -663,6 +661,24 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		public void onClick(ClickEvent event) {
 			classCodeTextBox.selectAll();
 			classCodeTextBox.setFocus(true);
+		}
+		
+	}
+	public void highlightTab(String tabValue)
+	{
+		assignmentsTab.removeStyleName(res.css().selected());
+		classListTab.removeStyleName(res.css().selected());
+		reportsTab.removeStyleName(res.css().selected());		
+		if(tabValue!=null && tabValue.equalsIgnoreCase("classList"))
+		{
+			classListTab.addStyleName(res.css().selected());
+		}
+		else if(tabValue!=null && tabValue.equalsIgnoreCase("reports"))
+		{
+			reportsTab.addStyleName(res.css().selected());
+		}
+		else{
+			assignmentsTab.addStyleName(res.css().selected());
 		}
 		
 	}

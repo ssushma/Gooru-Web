@@ -26,6 +26,7 @@
 package org.ednovo.gooru.client.gin;
 
 import org.ednovo.gooru.client.AppPlaceKeeper;
+
 import org.ednovo.gooru.client.AppRootPresenter;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.mvp.analytics.AnalyticsPresenter;

@@ -94,14 +94,14 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 	}
 	
 	public void deleteClasspageItem(String classpageItemId){
-		AppClientFactory.getInjector().getClasspageService().deleteClassPageItem(classpageItemId, new SimpleAsyncCallback<String>() {
+		/*AppClientFactory.getInjector().getClasspageService().deleteClassPageItem(classpageItemId, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String result) {
 				//getView().removeClasspageItemWidget();
 				//AppClientFactory.fireEvent(new ResetProgressEvent());
 //				AppClientFactory.fireEvent(new RefreshAssignmentsListEvent());
 			}
-		});
+		});*/
 	}
 
 

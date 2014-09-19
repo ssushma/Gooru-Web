@@ -139,6 +139,7 @@ IsCollectionAssign {
 	int assignmentOffSet=0;	
 	boolean isApiCalling=false;	
 	boolean toClear=true;	
+	boolean toUnitClear=true;
 	boolean isAdded = false;	
 	List<String> collectionsList = new ArrayList<String>();
 	boolean toClearAssignment = true;	
@@ -282,12 +283,15 @@ IsCollectionAssign {
 			}
 		});
 		spanelClasspagesUnitPanel.setVisible(false);
+		
 		spanelClasspagesUnitPanel.addScrollHandler(new ScrollHandler() {
+			
+			
 			
 			@Override
 			public void onScroll(ScrollEvent event) {
-				if(spanelClasspagesUnitPanel.getVerticalScrollPosition() == spanelClasspagesUnitPanel.getMaximumHorizontalScrollPosition()){
-					toClear = false;
+				if(spanelClasspagesUnitPanel.getVerticalScrollPosition() == spanelClasspagesUnitPanel.getMaximumVerticalScrollPosition()){
+					toUnitClear = false;
 					getNextClasspagesUnit();
 				}
 			}
@@ -498,6 +502,10 @@ IsCollectionAssign {
 		errorLabel.setVisible(false);
 		if (resultSize > 0){
 			//htmlClasspagesUnitListContainer.clear();
+			if(toUnitClear){
+				htmlClasspagesUnitListContainer.clear();
+				toUnitClear=false;
+			}
 			for(int i=0;i<resultSize;i++){
 				unitId = classpageListDo.getSearchResults().get(i).getResource().getGooruOid();
 				String unitTitle = classpageListDo.getSearchResults().get(i).getResource().getTitle();
@@ -520,6 +528,7 @@ IsCollectionAssign {
 			//Hide the scroll container
 			spanelClasspagesUnitPanel.setVisible(false);
 		}else{
+			if(toUnitClear){
 				htmlClasspagesUnitListContainer.clear();
 				lblClasspageUnitPlaceHolder.setText(i18n.GL0105());
 				lblClasspageUnitPlaceHolder.getElement().setId("lblClasspagePlaceHolder");
@@ -532,6 +541,10 @@ IsCollectionAssign {
 				btnAssign.setEnabled(false);
 				btnAssign.removeStyleName(AssignPopUpCBundle.INSTANCE.css().activeAssignButton());
 				btnAssign.setStyleName(AssignPopUpCBundle.INSTANCE.css().disableAssignButon());
+			}else{
+				errorLabel.setVisible(false);
+				//errorLabel.setText(i18n.GL2176());
+			}
 		}
 	}
 	
@@ -559,10 +572,12 @@ IsCollectionAssign {
 			
 			//Hide the scroll container
 			spanelClasspagesPanel.setVisible(false);
+			classpageUnitOffSet=0;
 			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, limit, String.valueOf(classpageUnitOffSet), new SimpleAsyncCallback<ClassDo>() {
 				@Override
 				public void onSuccess(ClassDo result) {
-					htmlClasspagesUnitListContainer.clear();
+					//htmlClasspagesUnitListContainer.clear();
+					toUnitClear=true;
 					setUnitList(result);
 				}
 			});
@@ -916,8 +931,9 @@ IsCollectionAssign {
 		
 	}
 	
-	public void getAllClasspagesUnit(String limit,String offset){
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, limit, String.valueOf(classpageUnitOffSet), new SimpleAsyncCallback<ClassDo>() {
+	public void getAllClasspagesUnit(String classpageId,String limit,String offset){
+		this.classpageId = classpageId;
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, limit, String.valueOf(offset), new SimpleAsyncCallback<ClassDo>() {
 
 			@Override
 			public void onSuccess(ClassDo result) {
@@ -931,8 +947,11 @@ IsCollectionAssign {
 	}
 	
 	public void getNextClasspagesUnit(){
-		classpageUnitOffSet = classpageUnitOffSet+10;
-		getAllClasspagesUnit(limit,String.valueOf(classpageUnitOffSet));
+		if(classpageId!=null){
+			classpageUnitOffSet = classpageUnitOffSet+10;
+			getAllClasspagesUnit(classpageId,limit,String.valueOf(classpageUnitOffSet));
+		}
+		
 	}
 	
 	@UiHandler("lblClasspagePlaceHolder")
