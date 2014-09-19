@@ -621,7 +621,11 @@ public enum UrlToken {
 	
 	V2_GET_ASSIGNMENT_DETAILS("/v2/collection/item/{0}?sessionToken={1}"),
 	
-	PATHWAYS_UPDATE("/v2/class/{0}/pathway/{1}?sessionToken={2}");
+	PATHWAYS_UPDATE("/v2/class/{0}/pathway/{1}?sessionToken={2}"),
+	
+	GET_INSIGHTS_DATA("insights-api-dev/v1/classpage/{0}/grade.json?sessionToken={1}&data={%22fields%22:%22timeSpent,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,gooruOId,title%22,%22filters%22:{%22session%22:%22FS%22,%22userUId%22:%22{2}%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}");
+	
+	
 	
 	
 	

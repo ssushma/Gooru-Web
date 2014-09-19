@@ -177,11 +177,11 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 			pageNumber = pagenumber;
 			Map<String,String> params = new HashMap<String,String>();
 			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
-			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 			String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
 			params.put("pageSize", pageSize);
-			params.put("classpageid", classpageid);
+			params.put("id", id);
 			params.put("pageNum", pageNumber+"");
 			params.put("pos", pos);
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);

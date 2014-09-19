@@ -25,7 +25,7 @@
 				</g:HTMLPanel>
 			</div>
 			<div class="col-xs-10 {unitStyle.rightPanel}">
-				<g:HTMLPanel styleName="{unitStyle.teachTab}">
+				<g:HTMLPanel styleName="{unitStyle.teachTab}" ui:field="htmDashBoardTabs">
 					<g:Button ui:field="btnDashBoard">Dashboard</g:Button>
 					<g:Button ui:field="btnAssignment">Assignments</g:Button>
 				</g:HTMLPanel>

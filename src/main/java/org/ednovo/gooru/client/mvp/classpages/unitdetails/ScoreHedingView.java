@@ -62,13 +62,17 @@ public class ScoreHedingView extends Composite {
 	interface ScoreHedingViewUiBinder extends UiBinder<Widget, ScoreHedingView> {
 	}
 	
-	@UiField Label lblTitle,lblControl,lblRedControl;
+	@UiField Label lblTitle,lblControl,lblRedControl,lblScore;
 	
 	@UiField TextBox txtScore;
 	
 	@UiField Button btnSetGoal;
 	
 	private int redScore, finalScore;
+	
+	private String SETGOAL= "Set Goal";
+	
+	private String EDITGOAL= "Edit Goal";
 	
 	
 
@@ -88,6 +92,7 @@ public class ScoreHedingView extends Composite {
 		txtScore.addBlurHandler(new ScoreHandler());
 		txtScore.addKeyPressHandler(new HasNumbersOnly());
 		lblControl.getElement().setId("controll");
+		lblScore.setVisible(false);
 	}
 	
 	
@@ -99,7 +104,7 @@ public class ScoreHedingView extends Composite {
 			 if(score != null || score != ""){
 				try{
 					if(Integer.parseInt(score) >100 || Integer.parseInt(score) <=0){
-						
+						lblControl.getElement().setId("controll");
 					}else{
 						int scoreValue= Integer.parseInt(txtScore.getText());
 						finalScore=((scoreValue*176)/100);
@@ -132,7 +137,6 @@ public class ScoreHedingView extends Composite {
 	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
 	                ((TextBox) event.getSource()).cancelKey();
 	            }
-			  
 					
 		}
     }
@@ -141,9 +145,33 @@ public class ScoreHedingView extends Composite {
 	public void clickOnSetGoal(ClickEvent clickEvent){
 		
 		if(txtScore.getText()!=null){
-			System.out.println("redScore:"+redScore);
-			lblRedControl.getElement().setId("redControll");
-			lblRedControl.getElement().setAttribute("style", "-webkit-transform: rotate("+redScore+"deg);");
+			if(btnSetGoal.getText().equals(SETGOAL)){
+				System.out.println("redScore:"+redScore);
+				showAndHideTextBox();
+				lblScore.setText(txtScore.getText());
+				btnSetGoal.setStyleName("secondary");
+				btnSetGoal.setText(EDITGOAL);
+				lblRedControl.getElement().setId("redControll");
+				lblRedControl.getElement().setAttribute("style", "-webkit-transform: rotate("+redScore+"deg);");
+			}else{
+				showAndHideTextBox();
+				btnSetGoal.setStyleName("primary");
+				btnSetGoal.setText(SETGOAL);
+				lblRedControl.getElement().setId("redControll");
+			}
+			
+		}
+	}
+	/*
+	 * show and hide text boxes
+	 */
+	public void showAndHideTextBox(){
+		if(btnSetGoal.getText().equals(SETGOAL)){
+			txtScore.setVisible(false);
+			lblScore.setVisible(true);
+		}else{
+			txtScore.setVisible(true);
+			lblScore.setVisible(false);
 		}
 	}
 }

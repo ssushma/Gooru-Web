@@ -72,5 +72,7 @@ public interface PlaceTokens {
 	String VALVERDE = "valverde";
 	String DISCOVER = "community";
 	String CORE_LIBRARY = "CoreLibrary";
+	String ESYP = "ESYP";
+	String CCST_Cal_TAC = "CCSTCalTAC";
 
 }
