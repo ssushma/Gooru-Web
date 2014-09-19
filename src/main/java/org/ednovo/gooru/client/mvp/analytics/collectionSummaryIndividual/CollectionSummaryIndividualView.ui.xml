@@ -14,7 +14,7 @@
 		</g:HTMLPanel>
 		<g:HTMLPanel ui:field="individualOpenendedData"  styleName="{unitStyle.individualScore}" />
 		<g:HTMLPanel ui:field="individualResourceBreakdownDatapnl">
-			 <div class="{unitStyle.clearfix}">
+			 <div class="clearfix">
 			 <div  class="{unitStyle.collectionOverviewText}">Collection Overview</div>
 				   <div class="{unitStyle.collectionBreakDown_infobox}">
 				   <div class="{unitStyle.collectionBreakDown_infobox_titles}">Total Time Spent</div>
