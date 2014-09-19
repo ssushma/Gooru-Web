@@ -18,14 +18,16 @@ public abstract class AnalyticsTabContainer extends Composite {
 			UiBinder<Widget, AnalyticsTabContainer> {
 	}
 
-	@UiField Button btnScoredQuestions,btnOpenEndedQuestions,btnCollectionBreakDown;
-	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab";
+	@UiField Button btnScoredQuestions,btnOpenEndedQuestions,btnCollectionBreakDown,btnPtint,btnSave;
+	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab",PRINT="print",SAVEBTN="save";
 	
 	public AnalyticsTabContainer() {
 		initWidget(uiBinder.createAndBindUi(this));
 		btnScoredQuestions.addClickHandler(new ClickImplemntation(SCORED));
 		btnOpenEndedQuestions.addClickHandler(new ClickImplemntation(OPENENDED));
 		btnCollectionBreakDown.addClickHandler(new ClickImplemntation(BREAKDOWN));
+		btnPtint.addClickHandler(new ClickImplemntation(PRINT));
+		btnSave.addClickHandler(new ClickImplemntation(SAVEBTN));
 	}
 	
 	public class ClickImplemntation implements ClickHandler{

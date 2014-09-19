@@ -11,6 +11,7 @@ import org.ednovo.gooru.client.mvp.Analytics.util.AnalyticsReactionWidget;
 import org.ednovo.gooru.client.mvp.Analytics.util.AnalyticsTabContainer;
 import org.ednovo.gooru.client.mvp.Analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.Analytics.util.DataView;
+import org.ednovo.gooru.client.mvp.Analytics.util.Print;
 import org.ednovo.gooru.client.mvp.Analytics.util.SortTable;
 import org.ednovo.gooru.client.mvp.analytics.HCBarChart;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
@@ -18,7 +19,7 @@ import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -26,6 +27,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -91,6 +93,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 				}else if(tabClicked.equalsIgnoreCase(BREAKDOWN)){
 					hideAllPanels();
 					teacherResourceBreakdownDatapnl.setVisible(true);
+				}else{
+					 Element element = DOM.getElementById("results");
+					 Print.it(element);
 				}
 			}
 		};

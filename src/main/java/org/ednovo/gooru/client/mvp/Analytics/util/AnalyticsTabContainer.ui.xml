@@ -8,6 +8,8 @@
 				  <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnScoredQuestions" styleName="primary">Scored Questions</g:Button>  </g:HTMLPanel>
 				  <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnOpenEndedQuestions" styleName="primary">Open-Ended Questions</g:Button>  </g:HTMLPanel>
 				  <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button styleName="primary" ui:field="btnCollectionBreakDown">	Collection Breakdown</g:Button>  </g:HTMLPanel>
+				  <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button styleName="primary" ui:field="btnPtint">Print</g:Button>  </g:HTMLPanel>
+			      <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button styleName="primary" ui:field="btnSave">Save</g:Button>  </g:HTMLPanel>
 				</g:HorizontalPanel>
 			</div>
 	</g:HTMLPanel>
