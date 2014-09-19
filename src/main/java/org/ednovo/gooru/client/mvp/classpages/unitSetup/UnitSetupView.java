@@ -151,14 +151,13 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	    	ClassUnitsListDo classListUnitsListDo=classDo.getSearchResults().get(i);
 	    	UnitsAssignmentWidgetView unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(classListUnitsListDo);
 	    	unitsAssignmentWidgetView.setClassDo(classDo);
-	    	if(classListUnitsListDo.getResource().getItemCount() != null)
-	    	{
-	    	unitsAssignmentWidgetView.setTotalHitCount(classListUnitsListDo.getResource().getItemCount());
+	    	if(classListUnitsListDo.getResource().getItemCount() != null){
+	    		unitsAssignmentWidgetView.setTotalHitCount(classListUnitsListDo.getResource().getItemCount());
 	    	}
-	    	else
-	    	{
-	    	unitsAssignmentWidgetView.setTotalHitCount(0);	
+	    	else{
+	    		unitsAssignmentWidgetView.setTotalHitCount(0);	
 	    	}
+	    	unitsAssignmentWidgetView.setAssignmentsForUnit();
 	    	unitsAssignmentWidgetView.getAddAssignmentButton().addClickHandler(new AddAssignmentToUnit(classListUnitsListDo));
 	    	unitsAssignmentWidgetView.setPathwayId(classListUnitsListDo.getResource().getGooruOid());
 	    	unitAssignmentWidgetContainer.add(unitsAssignmentWidgetView); 

@@ -56,6 +56,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
@@ -73,7 +74,6 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.StringRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -946,7 +946,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ClasspageItemDo createClassPageItem(String classpageId,String collectionId,String dueDate,String direction){
 		ClasspageItemDo classpageItemDo=new ClasspageItemDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.CREATE_CLASSPAGE_ITEM_V2, classpageId,getLoggedInSessionToken());
-		System.out.println("createClassPageItem::"+url);
 		JSONObject classPageItemJsonObject=createClasspageJsonObject( collectionId, direction, dueDate,null,null,null,null);
 		System.out.println("classPageItemJsonObject::"+classPageItemJsonObject.toString());
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
@@ -1053,6 +1052,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	
 	public String deleteClassPageItem(String collectionId){
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.DELETE_CLASSPAGE_ITEMS_V2, collectionId,getLoggedInSessionToken());
+		getLogger().info("url---- "+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 		return jsonResponseRep.getStatusCode().toString();
 	}
@@ -1548,6 +1548,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode, getLoggedInSessionToken(), statusType, ""+pageSize, offSet+"");
+		logger.debug("getActiveAssociatedStudentListByCode : "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		
@@ -1589,7 +1590,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.GET_PATHWAY_ITEM,classpageId,pathwayGooruOid,getLoggedInSessionToken(),sequenceNo,limit+"",offSet+"");
-		System.out.println("v2GetPathwayItems.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1603,7 +1603,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.REORDER_PATHWAY_SEQUENCE,classpageId,pathwayItemId,sequence+"",getLoggedInSessionToken());
-		System.out.println("v2ReorderPathwaySequence.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1640,7 +1639,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.PATHWAYS_CLASS_OPTIMIZED, classpageId, getLoggedInSessionToken(), limit, offSet);
-		System.out.println("v2GetPathwaysOptimized::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1784,6 +1782,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	     if(miScore!=null){
 	             url = url + "&minimumScore=" + miScore;
 	     }
+
 	     if(directions!=null){
 	    	 url = url + "&direction=" + directions;
 	     }
@@ -1793,6 +1792,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		System.out.println("v2AssignCollectionTOPathway:::: url:::::::"+url);
 		JSONObject classPageItemJsonObject=createClasspageJsonObject(collectionId, directions, duedate,null,null,null,null);
 		System.out.println("v2AssignCollectionTOPathway:::: form data:::::::"+classPageItemJsonObject.toString());
+
 		try {
 			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),new JSONObject().toString());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
@@ -1832,7 +1832,43 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return null;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.service.ClasspageService#getAssignmentData(java.lang.String)
+	 */
+	@Override
+	public List<InsightsUserDataDo> getAssignmentData(String gooruUId, String classpageId, int pageSize, int pageNum)
+			throws GwtException, ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.GET_INSIGHTS_DATA, classpageId, getLoggedInSessionToken(), gooruUId);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeAssignmentsData(jsonRep);
+		
+	}
 	
+	public List<InsightsUserDataDo> deserializeAssignmentsData(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				
+				List<InsightsUserDataDo> insightsData = JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(), new TypeReference<List<InsightsUserDataDo>>(){});
+				
+				return insightsData;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return new ArrayList<InsightsUserDataDo>();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.service.ClasspageService#updateAssignmentStatus(java.lang.String, boolean)
+	 */
+	@Override
+	public CollectionDo updateAssignmentStatus(String collectionItemId,
+			boolean isRequiredStatus) throws GwtException {
+		throw new RuntimeException("Not implemented");
+	}
 }
 
 

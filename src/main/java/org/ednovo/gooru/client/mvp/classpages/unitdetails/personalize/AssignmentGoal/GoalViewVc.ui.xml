@@ -3,6 +3,29 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gui="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style field="style" src="assignmentgoal.css" />
 	<gui:HTMLEventPanel styleName="bubbleMain" ui:field="panelMembers">
-		<g:Label styleName="bubbleBig redBubble" ui:field="lblAssignmentNumber"></g:Label>
+		<g:Label styleName="numaric" ui:field="lblAssignmentNumber"></g:Label>
+		<div class="progressPopupBox">
+			<div class="topHandle">
+				<div class="handleInner"></div>
+			</div>
+			<div class="progressPopupBox1">
+				<g:HTML styleName="popHeader" ui:field="htmlTitle"></g:HTML>
+				<hr />
+				<div class="progressBars">
+					<div class="progress">
+						<g:HTMLPanel styleName="progress-bar" ui:field="panelProgressBar">
+							<span class="sr-only">80% Complete</span>
+						</g:HTMLPanel>
+					</div>
+					<g:Label styleName="proInfo" ui:field="lblPercentage"/>
+				</div>
+				<!-- <div class="popDescription">Anna viewd 2 suggested Rresources</div> 
+					<p> <a href="#">+ Democracy</a> </p> <p> <a href="#">+ Social Change</a> 
+					</p> <div class="requestInput"> <input type="text" name="" placeholder="Any 
+					feedback?" /> <button type="button" class="primary" id="btnBacktoLibrary" 
+					alt="Edit" title="Edit">Send</button> </div> -->
+			</div>
+		</div>
+		 
 	</gui:HTMLEventPanel>
 </ui:UiBinder> 
