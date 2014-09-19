@@ -9,7 +9,7 @@
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<properties>
-		<env>qa</env>
+		<env>dev</env>
 		<!-- Spring properties -->
 		<org.springframework.version>3.1.2.RELEASE</org.springframework.version>
 		<org.springframework.security.version>3.1.1.RELEASE</org.springframework.security.version>
@@ -47,7 +47,27 @@
     </repository>
 	  </repositories>
 	<dependencies>
-
+		<dependency>
+	            <groupId>highcharts.com</groupId>
+	            <artifactId>gwt-highcharts</artifactId>
+	            <version>1.0</version>
+	    </dependency>
+	   <dependency>
+				<groupId>com.google.gwt.google-apis</groupId>
+				<artifactId>gwt-visualization</artifactId>
+				<version>1.0.2</version>
+	   </dependency>
+	 <dependency>
+			<groupId>com.google.gwt.google-apis</groupId>
+			<artifactId>gwt-ajaxloader</artifactId>
+			<version>1.1.0</version>
+			<exclusions>
+			<exclusion>
+					<artifactId>gwt-dev</artifactId>
+					<groupId>com.google.gwt</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<!-- Spring dependencies -->
 
 		<dependency>
