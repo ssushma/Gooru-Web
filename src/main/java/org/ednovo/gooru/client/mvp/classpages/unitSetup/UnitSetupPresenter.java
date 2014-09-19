@@ -92,6 +92,8 @@ public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> impleme
 				@Override
 				public void onSuccess(ClassDo result) {
 					getView().showUnitDetails(result);
+					if(result.getSearchResults() != null)
+					{
 					if(result.getSearchResults().size()>0){
 						String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 						int pageNumVal = 0;
@@ -109,6 +111,7 @@ public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> impleme
 						getView().setPagination(result.getTotalHitCount(),pageNumVal);
 						
 					}
+				}
 					
 				}
 			});

@@ -26,8 +26,24 @@
 package org.ednovo.gooru.client.gin;
 
 import org.ednovo.gooru.client.AppPlaceKeeper;
+
 import org.ednovo.gooru.client.AppRootPresenter;
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.mvp.analytics.AnalyticsPresenter;
+import org.ednovo.gooru.client.mvp.analytics.AnalyticsView;
+import org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView;
+import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
+import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressWidget;
+import org.ednovo.gooru.client.mvp.analytics.collectionProgress.IsCollectionProgressView;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryView;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummary.IsCollectionSummaryView;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualPresenter;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualView;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsCollectionSummaryIndividualView;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherPresenter;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherView;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.IsCollectionSummaryTeacherView;
 import org.ednovo.gooru.client.mvp.authentication.IsSignUpView;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpView;
@@ -575,7 +591,15 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(UnitSetupStudentPresenter.class,IsUnitSetupStudentView.class,UnitSetupStudentView.class);
 		bindPresenterWidget(UnitAssignmentPresenter.class,IsUnitAssignmentView.class,UnitAssignmentView.class);
 		bindPresenterWidget(PersonalizeUnitPresenter.class,IsPersonalizeUnitView.class,PersonalizeUnitView.class);
+
+		bindPresenterWidget(AnalyticsPresenter.class,IsAnalyticsView.class,AnalyticsView.class);
+		bindPresenterWidget(CollectionProgressPresenter.class,IsCollectionProgressView.class,CollectionProgressWidget.class);
+		bindPresenterWidget(CollectionSummaryPresenter.class,IsCollectionSummaryView.class,CollectionSummaryView.class);
+		bindPresenterWidget(CollectionSummaryTeacherPresenter.class,IsCollectionSummaryTeacherView.class,CollectionSummaryTeacherView.class);
+		bindPresenterWidget(CollectionSummaryIndividualPresenter.class,IsCollectionSummaryIndividualView.class,CollectionSummaryIndividualView.class);
+		
 		bindPresenter(EsypLibraryPresenter.class, IsEsypLibraryView.class, EsypLibraryView.class,IsEsypLibraryProxy.class);
 		bindPresenter(CcstCalTacLibraryPresenter.class, IsCcstCalTacLibraryView.class, CcstCalTacLibraryView.class,IsCcstCalTacLibraryProxy.class);
+
 	}
 }

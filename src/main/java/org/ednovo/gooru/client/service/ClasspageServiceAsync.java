@@ -132,7 +132,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void updateClasspageItem(String classpageItemId,String direction,String dueDate,String readStatus, AsyncCallback<String> callback);
 	
-	public void deleteClassPageItem(String collectionId, AsyncCallback<String> callback);
+	public void deleteClassPageItem(String classPageId,String pathwayId,String collectionId, AsyncCallback<String> callback);
 	
 	public void getCollectionUsedCount(String collectionId, AsyncCallback<Integer> callback);
 	
@@ -220,5 +220,8 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	void updateAssignmentStatus(String collectionItemId,
 			boolean isRequiredStatus, AsyncCallback<CollectionDo> callback);
+	
+	void updateAssignmentStatusAsCompleteorOpen(String collectionItemId,
+			boolean isComplete, AsyncCallback<CollectionDo> callback);
 	
 }

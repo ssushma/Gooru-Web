@@ -34,6 +34,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.uc.AssignmentEditLabelUc;
+import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
@@ -142,4 +143,24 @@ public interface IsEditClasspageView extends IsViewWithHandlers<EditClasspageUiH
 	
 	ArrayList<ClasspageItemDo> getGlobalClasspageProcess();
 
+
+	/**
+	 * @function hideNoAssignmentsMessagePanel 
+	 * 
+	 * @created_date : Jun 16, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void hideNoAssignmentsMessagePanel();
 }
