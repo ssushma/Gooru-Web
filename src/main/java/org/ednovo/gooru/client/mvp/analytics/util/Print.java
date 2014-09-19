@@ -1,4 +1,4 @@
-package org.ednovo.gooru.client.mvp.Analytics.util;
+package org.ednovo.gooru.client.mvp.analytics.util;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
