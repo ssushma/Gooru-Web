@@ -1,4 +1,4 @@
-package org.ednovo.gooru.client.mvp.Analytics.collectionSummary;
+package org.ednovo.gooru.client.mvp.analytics.collectionSummary;
 
 import java.util.ArrayList;
 import java.util.HashMap;
