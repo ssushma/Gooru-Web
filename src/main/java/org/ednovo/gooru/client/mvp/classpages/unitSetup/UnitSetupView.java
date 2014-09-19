@@ -81,7 +81,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	
 	private static final String PREVIOUS = i18n.GL1462().toUpperCase();
 	
-	private int totalCount;
+	private int totalCount = 0;
 	private int limit = 5;
 	private int offSet = 0;
 	int pageNumber = 0;
@@ -144,8 +144,15 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	@Override
 	public void showUnitDetails(ClassDo classDo) {
 		setLoadingIcon(false);
+		if(classDo.getTotalHitCount() != null)
+		{
 	    totalCount = classDo.getTotalHitCount();
-	    int unitSize =classDo.getSearchResults().size() ;
+		}
+		int unitSize = 0;
+		if(classDo.getSearchResults() != null)
+		{
+	    unitSize =classDo.getSearchResults().size() ;
+		}
 	    unitAssignmentWidgetContainer.clear();
 	    for(int i=0; i<unitSize; i++){
 	    	ClassUnitsListDo classListUnitsListDo=classDo.getSearchResults().get(i);

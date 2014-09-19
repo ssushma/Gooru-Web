@@ -154,6 +154,10 @@ public interface CollectionAssignCBundle extends ClientBundle{
 		//String scoreErrorLabel();
 		
 		String suggestTimeErrorLabel();
+		
+		String scoreMainDev();
+		
+		String questionImage();
 	}
 	@Source("CollectionAssign.css")
 	CollectionAssignCss css();

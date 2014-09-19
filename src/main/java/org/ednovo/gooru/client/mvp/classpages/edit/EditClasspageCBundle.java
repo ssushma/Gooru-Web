@@ -232,6 +232,9 @@ public interface EditClasspageCBundle extends ClientBundle{
         
         String studentStyle();
         String techerStyle();
+    
+        String frameDiv();
+
         String classcodeLabel();
         String ccContainer();
         String arrowDropdown();
@@ -241,7 +244,6 @@ public interface EditClasspageCBundle extends ClientBundle{
         String studentListContainer1();
         String student();
         String scrollPanel();
-
 	}
 	@NotStrict
 	@Source("editclasspage.css")

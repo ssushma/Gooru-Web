@@ -1869,6 +1869,34 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			boolean isRequiredStatus) throws GwtException {
 		throw new RuntimeException("Not implemented");
 	}
+	
+	@Override
+	public CollectionDo updateAssignmentStatusAsCompleteorOpen(String collectionItemId, boolean isComplete) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ASSIGN_STATUS_UPDATE,collectionItemId,getLoggedInSessionToken());
+		JSONObject jsonObject=new JSONObject();
+		JSONObject collectionJsonObject=new JSONObject();
+		try {
+			collectionJsonObject.put("itemType", "added");
+			if(isComplete)
+			{
+			collectionJsonObject.put("status", "completed");
+			}
+			else
+			{
+			collectionJsonObject.put("status", "open");
+			}
+			jsonObject.put("collectionItem", collectionJsonObject);
+		}
+		catch(JSONException e)
+		{
+			
+		}
+
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),jsonObject.toString());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeCollection(jsonRep);
+	}
 }
 
 
