@@ -84,8 +84,8 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 				displayAssignment(totalItemCount);
 				int number=classListUnitsListDo.get(i).getItemSequence();
 				dropdownListPlaceHolder.getElement().setInnerHTML(classListUnitsListDo.get(0).getItemSequence()+"");
-				dropdownListPlaceHolder.getElement().setId(classListUnitsListDo.get(0).getCollectionItemId());
-				String unitCollectionItemId=classListUnitsListDo.get(i).getCollectionItemId();
+				dropdownListPlaceHolder.getElement().setId(classListUnitsListDo.get(0).getResource().getGooruOid());
+				String unitCollectionItemId=classListUnitsListDo.get(i).getResource().getGooruOid();
 				Label dropDownListItem=new Label(number+"");
 				dropDownListItem.getElement().setId(classListUnitsListDo.get(i).getResource().getItemCount()+"");
 				dropDownListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
@@ -133,7 +133,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 						totalsize = totalsize + result.getSearchResults().size();
 						for(int i=0; i<result.getSearchResults().size(); i++){
 
-							String CollectionItemId=result.getSearchResults().get(i).getCollectionItemId();
+							String CollectionItemId=result.getSearchResults().get(i).getResource().getGooruOid();
 							int totalItemCount=result.getSearchResults().get(i).getResource().getItemCount();
 							int number=result.getSearchResults().get(i).getItemSequence();
 							Label dropDownListItem=new Label(number+"");
@@ -173,7 +173,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		@Override
 		public void onClick(ClickEvent event) {
 			dropdownListPlaceHolder.setText(seq);
-			dropdownListPlaceHolder.getElement().setId(UnitCollectionItemId);
+			//dropdownListPlaceHolder.getElement().setId(UnitCollectionItemId);
 			dropdownListPlaceHolder.getElement().setAttribute("id", itemCount+"");
 			selectedPathId = UnitCollectionItemId;
 			displayAssignment(Integer.parseInt(itemCount));
