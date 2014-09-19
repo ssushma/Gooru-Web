@@ -38,5 +38,9 @@ public interface IsUnitSetupView extends IsViewWithHandlers<UnitSetupUiHandlers>
 	void setPagination(int totalCount, int pagenumVal);
 
 	void addAssignmentWidget(ArrayList<ClasspageItemDo> classpageItemDo, String pathwayId);  
+	
+	public void clearUnitAssignmentWidgetContaner();
+
+	void setLoadingIcon(boolean isVisible);
 
 }

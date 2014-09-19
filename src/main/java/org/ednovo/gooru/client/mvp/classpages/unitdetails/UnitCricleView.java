@@ -1,5 +1,7 @@
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -28,23 +30,22 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 	
 	@UiField InlineLabel unitNumber;
 	@UiField HTMLPanel bubbleOuterPanel;
-	boolean isRequired; 
 	
-		
+	private ClasspageItemDo classpageItemDo;
+	
 	public UnitCricleView() {
 		initWidget(uiBinder.createAndBindUi(this));
-		this.isRequired=true;
 		UnitAssignmentCssBundle.INSTANCE.unitAssignment().ensureInjected();
 		unitNumber.setText("1");
-		showCircle();
 		
 	}
-	public UnitCricleView(int unitCircleNumber) {
+	public UnitCricleView(ClasspageItemDo classpageItemDo) {
 		initWidget(uiBinder.createAndBindUi(this));
-	//	this.isRequired=isRequired;
+		this.classpageItemDo=classpageItemDo;
 		UnitAssignmentCssBundle.INSTANCE.unitAssignment().ensureInjected();
-		unitNumber.setText(unitCircleNumber+"");
-		
+		unitNumber.setText(classpageItemDo.getItemSequence()+"");
+		boolean isRequired=classpageItemDo!=null&&classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false;
+		showCircle(isRequired);
 		
 	}
 	
@@ -57,28 +58,24 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 	}
 	
 	public void setUnitSequenceNumber(int sequenceNumber){
-		if(sequenceNumber == 0)
-		{
+		if(sequenceNumber == 0){
 			unitNumber.setText("");
 		}
-		else
-		{
-		unitNumber.setText(""+sequenceNumber);
+		else{
+			unitNumber.setText(""+sequenceNumber);
 		}
 	}
-	public void showCircle(){
-		if(isRequired){
-			displayRequiredCircle();
-		}else{
-			displayOptionalCircle();
-		}
-	}
+	
 	public void showCircle(boolean isRequired){
 		if(isRequired){
 			displayRequiredCircle();
 		}else{
 			displayOptionalCircle();
 		}
+	}
+	
+	public String getAssignementId(){
+		return classpageItemDo!=null?classpageItemDo.getCollectionItemId():"";
 	}
 	/*
 	 * This method is used to display required Circle
@@ -109,8 +106,5 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
 		return addDomHandler(handler, MouseOverEvent.getType());
 	}
-	public void getValueIsRequired(boolean isRequired)
-	{
-		showCircle(isRequired);
-	}
+	
 }

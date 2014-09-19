@@ -1621,7 +1621,7 @@ public class LibraryTopicListView extends Composite{
 	};
 	
 	private void addCollectionQuizTitleData(String pageType) {
-		if(pageType.equals("lesson")&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.DISCOVER)&&AppClientFactory.getPlaceManager().getRequestParameter("standardId")==null) {
+		if(pageType.equals("lesson")&&conceptDoList!=null&&conceptDoList.size()>0&&AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.DISCOVER)&&AppClientFactory.getPlaceManager().getRequestParameter("standardId")==null&&setQuizTabVisiblity(conceptDoList)) {
 			setCollectionQuizVisibility(true);
 			collectionTitle.addStyleName(libraryStyle.collectionQuizTabActive());
 			quizTitle.removeStyleName(libraryStyle.collectionQuizTabActive());
@@ -1674,4 +1674,19 @@ public class LibraryTopicListView extends Composite{
 		}
 		
 	}
+	
+	private boolean setQuizTabVisiblity(ArrayList<ConceptDo> conceptDoList) {
+			boolean isCollectionTabVisible = false;
+			if(conceptDoList!=null&&conceptDoList.size()>0){
+			for(int i=0;i<conceptDoList.size();i++){
+			if(conceptDoList.get(i).getCollectionType().equals("quiz")){
+			isCollectionTabVisible = true;
+			break;
+			}
+			}
+			}else{
+			return false;
+			}
+			return isCollectionTabVisible; 
+			}
 }

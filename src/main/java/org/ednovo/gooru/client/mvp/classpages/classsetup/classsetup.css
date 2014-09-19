@@ -68,8 +68,8 @@ header{
 
 
 .uniSetup a{
-	padding:20px 15px;
-	display:block;
+	padding:20px 4px;
+	display:inline-block;
 		font-size:12px;
 	line-height:25px;
 	
@@ -78,9 +78,9 @@ header{
 .uniSetup a:hover{
 	text-decoration:none;
 }
-.uniSetup a img{
+.uniSetup img{
 	vertical-align:middle;
-	padding-right:12px;
+	padding-right:3px;
 }
 .unitMenu li{
 	z-index:99;
@@ -593,12 +593,12 @@ padding-top: 6px;
 .unitdetailsLbl{
 	font-size: 14px;
 color: #1076ba;
-margin-right: 15px;
+margin-right: 11px;
 margin-bottom: -15px;
 }
 .unitSetupLabel{
 	position: absolute;
-margin-top: -47px;
+margin-top: 32px !important;
 width: 99%;
 cursor:pointer;
 }
@@ -764,4 +764,32 @@ margin-left: 37px;
 	line-height: 120%;
 	color: rgb(153, 153, 153);
 	text-align: left;
+}
+
+
+
+
+
+
+
+.loadingImageMainDiv {
+	width: 100%;
+    height: 100%;
+	position: absolute;
+	/* background-color: #FFF; */
+	/* opacity: 0.4; */
+	top: 0px;
+    left: 0px;
+    z-index:1;
+}
+
+.loadingImageForSelfEdit {
+	background: url("images/core/B-Dot.gif");
+	width: 166px;
+	height: 170px;
+	margin: 0 auto;
+	margin-top: 65px;
+	position: absolute;
+	z-index: 5;
+	margin-left: 375px;
 }

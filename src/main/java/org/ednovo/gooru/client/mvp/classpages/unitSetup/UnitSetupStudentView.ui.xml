@@ -61,7 +61,7 @@
 		<g:HTMLPanel styleName="clearfix" ui:field="clearfix"></g:HTMLPanel>
 		<g:VerticalPanel styleName="col-xs-12 {style.setupMain}" ui:field="unitAssignmentWidgetContainer"></g:VerticalPanel>
 		<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-		<g:HTMLPanel styleName="{style.paginationStyle}">
+		<g:HTMLPanel styleName="{style.paginationStudentStyle}">
 			<ptag:HTMLEventPanel ui:field="paginationPanel" styleName="text-right" ></ptag:HTMLEventPanel></g:HTMLPanel>
 	   </g:HTMLPanel>
 	</g:HTMLPanel>

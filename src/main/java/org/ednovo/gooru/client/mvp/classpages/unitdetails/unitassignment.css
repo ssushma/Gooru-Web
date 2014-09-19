@@ -34,8 +34,8 @@
 
 
 .uniSetup a{
-	padding:20px 15px;
-	display:block;
+	padding:20px 5px;
+	display:inline-block;
 	font-size:12px;
 	line-height:25px;
 	
@@ -44,9 +44,8 @@
 .uniSetup a:hover{
 	text-decoration:none;
 }
-.uniSetup a img{
-	vertical-align:middle;
-	padding-right:12px;
+.uniSetup img{
+	margin-left: 8px;
 }
 .unitMenu li{
 	z-index:97;
@@ -394,8 +393,8 @@ display:inline-block;
 	.unitPanelname{
 		display:inline-block;
 		vertical-align:middle;
-
-		
+		width: 69px;
+		word-wrap: break-word;
 	}
 	.unitPanelStyle:hover{
         color:#666666;
@@ -456,6 +455,7 @@ display:inline-block;
 	-webkit-border-radius:50% 50%;
 	-moz-border-radius:50% 50%;
 	opacity:1;
+	cursor:pointer;
 	
 }
 .bubbleOptional{
@@ -468,6 +468,7 @@ display:inline-block;
 	-webkit-border-radius:50% 50%;
 	-moz-border-radius:50% 50%;
 	opacity:1;
+	cursor:pointer;
 	
 }
 
@@ -712,7 +713,7 @@ background: -moz-linear-gradient(3% 0 -90deg, #fff 0px, #ddd 100%) repeat scroll
 	left:105px;
     width:118px;
 	border-radius:0 0;
-	-webkit-transform: rotate(-30deg);
+	-webkit-transform: rotate(-176deg);
      transform: rotate(-30deg);
      -webkit-transform-origin: 0 100%;
      transform-origin: 0 100%;
@@ -730,7 +731,7 @@ background: -moz-linear-gradient(3% 0 -90deg, #fff 0px, #ddd 100%) repeat scroll
 	left:86px;
     width:340px;
 	border-radius:0 0;
-	-webkit-transform: rotate(-80deg);
+	-webkit-transform: rotate(-119deg);
      transform: rotate(-80deg);
      -webkit-transform-origin: 0 100%;
      transform-origin: 0 100%;
@@ -813,7 +814,6 @@ background: -moz-linear-gradient(3% 0 -90deg, #fff 0px, #ddd 100%) repeat scroll
 	padding-right: 15px;
 	padding-left: 15px;
 	box-sizing: border-box;
-	margin-top: 15px;
 }
 
 .scorMetInner{
@@ -823,6 +823,24 @@ background: -moz-linear-gradient(3% 0 -90deg, #fff 0px, #ddd 100%) repeat scroll
 	overflow:hidden;
 	text-align:center;
 	
+}
+.timeTextBox input{
+	border:1px solid #efefef;
+	padding:8px 0px 8px 0px;
+	font-size:14px;
+	color:#1e7cba;
+	text-align:center;
+	margin-bottom:12px;
+	width:35%;
+}
+.scoreLabelStyle{
+	font-size: 35px;
+	color: #fb7c73;
+	text-align: center;
+	padding: 0px 3px 0px 76px;
+	width: 31%;
+	margin-bottom: 4px;
+	background: url(images/Classpage/student/persentage.png) no-repeat center right;
 }
 
 

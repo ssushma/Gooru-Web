@@ -12,7 +12,7 @@ public class ClasspageItemDo implements Serializable{
 
 	public ClasspageItemDo(){}
 	
-	private String plannedEndDate;
+	private Long plannedEndDate;
 	private Integer totalHitCount;
 	private String collectionTitle;
 	private String direction; // narration from API
@@ -27,6 +27,9 @@ public class ClasspageItemDo implements Serializable{
 	private Integer sequenceNumber;
 	private Boolean isRequired;
 	private Integer itemSequence;
+	private String estimatedTime;
+	private String minimumScore;
+	private String narration;
 	
 	private ResourceDo resource;
 	
@@ -49,13 +52,13 @@ public class ClasspageItemDo implements Serializable{
 	/**
 	 * @return the plannedEndDate
 	 */
-	public String getPlannedEndDate() {
+	public Long getPlannedEndDate() {
 		return plannedEndDate;
 	}
 	/**
 	 * @param plannedEndDate the plannedEndDate to set
 	 */
-	public void setPlannedEndDate(String plannedEndDate) {
+	public void setPlannedEndDate(Long plannedEndDate) {
 		this.plannedEndDate = plannedEndDate;
 	}
 	/**
@@ -195,6 +198,24 @@ public class ClasspageItemDo implements Serializable{
 	}
 	public void setItemSequence(Integer itemSequence) {
 		this.itemSequence = itemSequence;
+	}
+	public String getEstimatedTime() {
+		return estimatedTime;
+	}
+	public void setEstimatedTime(String estimatedTime) {
+		this.estimatedTime = estimatedTime;
+	}
+	public String getMinimumScore() {
+		return minimumScore;
+	}
+	public void setMinimumScore(String minimumScore) {
+		this.minimumScore = minimumScore;
+	}
+	public String getNarration() {
+		return narration;
+	}
+	public void setNarration(String narration) {
+		this.narration = narration;
 	}
 
 }

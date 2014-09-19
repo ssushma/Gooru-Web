@@ -30,7 +30,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageDo;
 public interface PersonalizeUnitUiHandlers extends BaseUiHandlers {
 
 	/**
-	 * @function getStudentsList 
+	 * @function getStudentsList
 	 * 
 	 * @created_date : 09-Sep-2014
 	 * 
@@ -43,18 +43,18 @@ public interface PersonalizeUnitUiHandlers extends BaseUiHandlers {
 	 * @param classCode
 	 * 
 	 * @return : void
-	 *
+	 * 
 	 * @throws : <Mentioned if any exceptions>
-	 *
 	 * 
-	 *
 	 * 
-	*/
-	
+	 * 
+	 * 
+	 */
+
 	void getStudentsList(int offSet, int limit, String type, String classCode);
 
 	/**
-	 * @function setClasspageData 
+	 * @function setClasspageData
 	 * 
 	 * @created_date : 09-Sep-2014
 	 * 
@@ -64,18 +64,18 @@ public interface PersonalizeUnitUiHandlers extends BaseUiHandlers {
 	 * @param classpageDo
 	 * 
 	 * @return : void
-	 *
+	 * 
 	 * @throws : <Mentioned if any exceptions>
-	 *
 	 * 
-	 *
 	 * 
-	*/
-	
+	 * 
+	 * 
+	 */
+
 	void setClasspageData(ClasspageDo classpageDo);
 
 	/**
-	 * @function getList 
+	 * @function getList
 	 * 
 	 * @created_date : 09-Sep-2014
 	 * 
@@ -84,13 +84,34 @@ public interface PersonalizeUnitUiHandlers extends BaseUiHandlers {
 	 * 
 	 * 
 	 * @return : void
-	 *
+	 * 
 	 * @throws : <Mentioned if any exceptions>
-	 *
 	 * 
-	 *
 	 * 
-	*/
-	
+	 * 
+	 * 
+	 */
+
 	void getList();
+
+	/**
+	 * @function getClasspageDo
+	 * 
+	 * @created_date : 18-Sep-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @return
+	 * 
+	 * @return : ClasspageDo
+	 * 
+	 * @throws : <Mentioned if any exceptions>
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+
+	ClasspageDo getClasspageDo();
 }

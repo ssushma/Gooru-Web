@@ -56,6 +56,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
@@ -71,6 +72,8 @@ import org.json.JSONObject;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.StringRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -80,7 +83,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 @ServiceURL("/classpageService")
 public class ClasspageServiceImpl extends BaseServiceImpl implements
 		ClasspageService {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(ClasspageServiceImpl.class);
 	/**
 	 * 
 	 */
@@ -135,6 +138,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	private static final String PROFILEIMAGEURL="profileImageUrl";
 	private static final String USER="user";
 	private static final String ITEMSEQUENCE="itemSequence";
+	private static final String MINIMUMSCORE="minimumScore";
+	private static final String SUGGESTEDTIME="estimatedTime";
+	private static final String ISREQUIRED="isRequired";
 
 	private static final String HTTPS = "https";
 	
@@ -940,8 +946,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ClasspageItemDo createClassPageItem(String classpageId,String collectionId,String dueDate,String direction){
 		ClasspageItemDo classpageItemDo=new ClasspageItemDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.CREATE_CLASSPAGE_ITEM_V2, classpageId,getLoggedInSessionToken());
-		System.out.println("createClassPageItem::"+url);
-		JSONObject classPageItemJsonObject=createClasspageJsonObject( collectionId, direction, dueDate,null);
+		JSONObject classPageItemJsonObject=createClasspageJsonObject( collectionId, direction, dueDate,null,null,null,null);
 		System.out.println("classPageItemJsonObject::"+classPageItemJsonObject.toString());
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
 		if(jsonResponseRep.getStatusCode()==200){
@@ -1040,13 +1045,14 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	
 	public String updateClasspageItem(String classpageItemId,String direction,String dueDate,String readStatus){
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.UPDATE_CLASSPAGE_ITEMS_V2, classpageItemId,getLoggedInSessionToken());
-		JSONObject classPageItemJsonObject=createClasspageJsonObject(null, direction, dueDate,readStatus);
+		JSONObject classPageItemJsonObject=createClasspageJsonObject(null, direction, dueDate,readStatus,null,null,null);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
 		return jsonResponseRep.getStatusCode().toString();
 	}
 	
 	public String deleteClassPageItem(String collectionId){
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.DELETE_CLASSPAGE_ITEMS_V2, collectionId,getLoggedInSessionToken());
+		getLogger().info("url---- "+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 		return jsonResponseRep.getStatusCode().toString();
 	}
@@ -1097,7 +1103,24 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		return classpageItemDo;
 	}
 	
-	protected JSONObject createClasspageJsonObject(String collectionId,String direction,String dueDate,String status){
+	@Override
+	public ClasspageItemDo getAssignemntDetails(String assingmentId){
+		ClasspageItemDo classpageItemDo=null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_ASSIGNMENT_DETAILS, assingmentId,getLoggedInSessionToken());
+		System.out.println("get Assignment details url::::::"+url);
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		if(jsonResponseRep.getStatusCode()==200){
+			try{
+				LOGGER.info("RESPONSE==>"+jsonResponseRep.getJsonRepresentation().getJsonObject());
+				return JsonDeserializer.deserialize(jsonResponseRep.getJsonRepresentation().getJsonObject().toString(), ClasspageItemDo.class);
+			}catch(JSONException exception){
+				LOGGER.error("Exception",exception);
+			}
+		}
+		return classpageItemDo;
+	}
+	
+	protected JSONObject createClasspageJsonObject(String collectionId,String direction,String dueDate,String status,String miminumScore,String suggestedTime,Boolean isRequired){
 		JSONObject classPageItemJsonObject=new JSONObject();
 		JSONObject collectionJsonObject=new JSONObject();
 		try {
@@ -1105,11 +1128,20 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			if(direction!=null){
 				collectionJsonObject.put(NARRATION, direction);
 			}
-			if(dueDate!=null){
+			if(dueDate!=null && !dueDate.isEmpty()){
 				collectionJsonObject.put(PLANNEDENDDATE, dueDate);
 			}
 			if(status!=null){
 				collectionJsonObject.put(STATUS, status);
+			}
+			if(miminumScore!=null){
+				collectionJsonObject.put(MINIMUMSCORE, miminumScore);
+			}
+			if(suggestedTime!=null){
+				collectionJsonObject.put(SUGGESTEDTIME, suggestedTime);
+			}
+			if(isRequired!=null){
+				collectionJsonObject.put(ISREQUIRED, isRequired);
 			}
 			classPageItemJsonObject.put(COLLECTIONITEM, collectionJsonObject);
 			if(collectionId!=null){
@@ -1249,7 +1281,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			classpageItemDo.setDirection(classpageItemJsonObject.isNull(NARRATION)?null:classpageItemJsonObject.getString(NARRATION));
 			classpageItemDo.setStatus(classpageItemJsonObject.isNull(STATUS)?null:classpageItemJsonObject.getString(STATUS));
 			classpageItemDo.setSequenceNumber(classpageItemJsonObject.isNull(ITEMSEQUENCE)?0:classpageItemJsonObject.getInt(ITEMSEQUENCE));
-			classpageItemDo.setPlannedEndDate(convertMilliSecondsToDate(classpageItemJsonObject.isNull(PLANNEDENDDATE)?null:classpageItemJsonObject.getLong(PLANNEDENDDATE)));
+			//classpageItemDo.setPlannedEndDate(convertMilliSecondsToDate(classpageItemJsonObject.isNull(PLANNEDENDDATE)?null:classpageItemJsonObject.getLong(PLANNEDENDDATE)));
 			JSONObject resourceJsonObject=classpageItemJsonObject.isNull(resourceType)?null:classpageItemJsonObject.getJSONObject(resourceType);
 			if(resourceJsonObject!=null){
 				classpageItemDo.setCollectionTitle(resourceJsonObject.getString(TITLE));
@@ -1516,6 +1548,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode, getLoggedInSessionToken(), statusType, ""+pageSize, offSet+"");
+		logger.debug("getActiveAssociatedStudentListByCode : "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		
@@ -1557,7 +1590,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.GET_PATHWAY_ITEM,classpageId,pathwayGooruOid,getLoggedInSessionToken(),sequenceNo,limit+"",offSet+"");
-		System.out.println("v2GetPathwayItems.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1571,7 +1603,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.REORDER_PATHWAY_SEQUENCE,classpageId,pathwayItemId,sequence+"",getLoggedInSessionToken());
-		System.out.println("v2ReorderPathwaySequence.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1608,7 +1639,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.PATHWAYS_CLASS_OPTIMIZED, classpageId, getLoggedInSessionToken(), limit, offSet);
-		System.out.println("v2GetPathwaysOptimized::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1626,6 +1656,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.PATHWAYS_CLASS, classpageId, getLoggedInSessionToken(), limit, offSet);
+		getLogger().info("v2GetPathwaysCompleteDetails ---->>> "+url);
+//		System.out.println("v2GetPathwaysCompleteDetails API Call::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -1742,17 +1774,27 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			ServerDownException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ASSIGN_COLLECTION_TO_PATHWAY, classpageId, pathwayId, collectionId, getLoggedInSessionToken());
-		 if(suggestTime!=null){
+		
+		url= url + "&isRequired=false";
+		if(suggestTime!=null){
              url = url + "&estimatedTime=" + suggestTime;
 	     }
 	     if(miScore!=null){
 	             url = url + "&minimumScore=" + miScore;
 	     }
+
+	     if(directions!=null){
+	    	 url = url + "&direction=" + directions;
+	     }
+	     if(duedate!=null){
+             url = url + "&planedEndDate=" + duedate;
+	     } 
 		System.out.println("v2AssignCollectionTOPathway:::: url:::::::"+url);
-		JSONObject classPageItemJsonObject=createClasspageJsonObject(collectionId, directions, duedate,null);
+		JSONObject classPageItemJsonObject=createClasspageJsonObject(collectionId, directions, duedate,null,null,null,null);
 		System.out.println("v2AssignCollectionTOPathway:::: form data:::::::"+classPageItemJsonObject.toString());
+
 		try {
-			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
+			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),new JSONObject().toString());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1777,26 +1819,56 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	
 	
 	@Override
-	public CollectionDo updateAssignmentStatus(String collectionItemId, boolean isRequiredStatus) throws GwtException {
-		JsonRepresentation jsonRep = null;
+	public ClasspageItemDo updateAssignmentDetails(String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus) throws GwtException {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ASSIGN_STATUS_UPDATE,collectionItemId,getLoggedInSessionToken());
-		JSONObject jsonObject=new JSONObject();
-		JSONObject collectionJsonObject=new JSONObject();
+		LOGGER.info("ASSIGN_STATUS_UPDATE API==>"+url);
+		JSONObject classPageItemJsonObject=createClasspageJsonObject(null, direction, dueDate,readStatus,minimumScore,suggestedTime,isRequiredStatus);
+		LOGGER.info("JSON_PAYLOAD==>"+classPageItemJsonObject);
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
 		try {
-			collectionJsonObject.put("itemType", "added");	
-			collectionJsonObject.put("isRequired", isRequiredStatus);
-			jsonObject.put("collectionItem", collectionJsonObject);
-		}
-		catch(JSONException e)
-		{
+			return JsonDeserializer.deserialize(jsonResponseRep.getJsonRepresentation().getJsonObject().toString(), ClasspageItemDo.class);
+		} catch (JSONException e) {
 			
 		}
+		return null;
+	}
 
-		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),jsonObject.toString());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeCollection(jsonRep);
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.service.ClasspageService#getAssignmentData(java.lang.String)
+	 */
+	@Override
+	public List<InsightsUserDataDo> getAssignmentData(String gooruUId, String classpageId, int pageSize, int pageNum)
+			throws GwtException, ServerDownException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.GET_INSIGHTS_DATA, classpageId, getLoggedInSessionToken(), gooruUId);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeAssignmentsData(jsonRep);
+		
 	}
 	
+	public List<InsightsUserDataDo> deserializeAssignmentsData(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				
+				List<InsightsUserDataDo> insightsData = JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(), new TypeReference<List<InsightsUserDataDo>>(){});
+				
+				return insightsData;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return new ArrayList<InsightsUserDataDo>();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.service.ClasspageService#updateAssignmentStatus(java.lang.String, boolean)
+	 */
+	@Override
+	public CollectionDo updateAssignmentStatus(String collectionItemId,
+			boolean isRequiredStatus) throws GwtException {
+		throw new RuntimeException("Not implemented");
+	}
 }
 
 

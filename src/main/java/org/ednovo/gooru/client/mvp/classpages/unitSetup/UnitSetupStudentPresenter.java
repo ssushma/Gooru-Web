@@ -52,6 +52,7 @@ public class UnitSetupStudentPresenter extends PresenterWidget<IsUnitSetupStuden
 				@Override
 				public void onSuccess(ClassDo result) {
 					getView().showUnitDetails(result);
+					if(result.getSearchResults() != null){
 					if(result.getSearchResults().size()>0){
 						String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 						int pageNumVal = 0;
@@ -69,6 +70,7 @@ public class UnitSetupStudentPresenter extends PresenterWidget<IsUnitSetupStuden
 						getView().setPagination(result.getTotalHitCount(),pageNumVal);
 						
 					}
+				}
 					
 				}
 			});

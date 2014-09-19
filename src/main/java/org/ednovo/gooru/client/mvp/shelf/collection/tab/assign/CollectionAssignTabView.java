@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.DateBoxUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -54,6 +55,9 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -65,6 +69,10 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -73,6 +81,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -141,13 +150,13 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	//Labels
 	@UiField Label lblAssignCollectionTitle,lblClasspages,lblClasspagesUnit,lblClasspagePlaceHolder,lblClasspageUnitPlaceHolder, lblClasspagesArrow,lblClasspagesUnitArrow,lblDirections,directionsErrorLbl,directionsErrorLength;
 	
-	@UiField Label lblAssignCollectionPrivate,lblDuedate,remainderLbl,errorLabel,fromLbl,scoreLbl;
+	@UiField Label lblAssignCollectionPrivate,lblDuedate,remainderLbl,errorLabel,scoreLbl,fromLbl;
 	
 	@UiField BlueButtonUc btnAssign;
 	
 	@UiField ScrollPanel spanelClasspagesPanel,spanelClasspagesUnitPanel;
 	
-	@UiField HTMLPanel htmlClasspagesListContainer,duedateContainer,htmlClasspagesUnitListContainer,minsText,secondsText;
+	@UiField HTMLPanel htmlClasspagesListContainer,duedateContainer,htmlClasspagesUnitListContainer,hoursText,minutesText;
 	
 	@UiField HTMLEventPanel htmlEvenPanelContainer;
 	
@@ -159,9 +168,15 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
     
     @UiField TextBox fromTxt,toTxt,scoreTxt;
     
-    //@UiField Image imgNotFriendly;
+    @UiField Image scoreQuestionMark,suggestTimeQuestionMark;
+    
+   // Image scoreQuestionMark = new Image();
     
 	private DateBoxUc dateBoxUc;
+	
+	//Image suggestTimeQuestionMark = new Image();
+	
+	ToolTip toolTip=null;
     
 	/**
 	 * Class constructor
@@ -183,17 +198,44 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		toTxt.setFocus(true);
 		toTxt.getElement().setId("txtToTxt");
 		
-		fromTxt.getElement().setAttribute("maxlength", "4");
-		toTxt.getElement().setAttribute("maxlength", "4");
+		fromTxt.getElement().setAttribute("maxlength", "2");
+		toTxt.getElement().setAttribute("maxlength", "2");
+		
 		fromTxt.addKeyPressHandler(new NumbersOnly());
 		toTxt.addKeyPressHandler(new NumbersOnly());
+		scoreTxt.getElement().setAttribute("maxlength", "4");
+		scoreTxt.addKeyPressHandler(new NumbersOnly());
 		
 		toTxt.addBlurHandler(new SuggestedTimeHandler());
+		fromTxt.addBlurHandler(new SuggestedTimeHandler());
 		
-		scoreTxt.getElement().setAttribute("placeholder", i18n.GL2179());
+	
 		scoreTxt.addBlurHandler(new ScoreHandler());
 		
 		btnAssign.getElement().setAttribute("style", "margin-right:25px;");
+		
+		
+		scoreQuestionMark.setTitle(i18n.GL0732());
+		scoreQuestionMark.getElement().setId("suggestScoreLbl");
+	//	scoreQuestionMark.setStyleName("friendlyQuestionMark");
+		scoreQuestionMark.getElement().setAttribute("alt",i18n.GL0732());
+		scoreQuestionMark.getElement().setAttribute("title",i18n.GL0732());
+		scoreQuestionMark.setAltText(i18n.GL0732());
+		scoreQuestionMark.setUrl("images/mos/questionmark.png");
+		
+		
+	//	scoreLbl.add(scoreQuestionMark);
+		
+		suggestTimeQuestionMark.setTitle(i18n.GL0732());
+		suggestTimeQuestionMark.getElement().setId("suggestTimeLbl");
+		//suggestTimeQuestionMark.setStyleName("friendlyQuestionMark");
+		suggestTimeQuestionMark.getElement().setAttribute("alt",i18n.GL0732());
+		suggestTimeQuestionMark.getElement().setAttribute("title",i18n.GL0732());
+		suggestTimeQuestionMark.setAltText(i18n.GL0732());
+		suggestTimeQuestionMark.setUrl("images/mos/questionmark.png");
+		
+	//	fromLbl.add(suggestTimeQuestionMark);
+		
 		
 		lblDirections.setText(i18n.GL1166()+" "+i18n.GL1167());
 		lblDirections.getElement().setId("lblDirections");
@@ -308,6 +350,60 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 				}
 			}
 		});
+		
+		scoreQuestionMark.addMouseOverHandler(new MouseOverHandler() {
+			
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				String type="suggestedscore";
+				toolTip = new ToolTip(i18n.GL2193(),type);
+				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 250px;");
+				toolTip.getElement().getStyle().setBackgroundColor("transparent");
+				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+				toolTip.setPopupPosition(scoreQuestionMark.getAbsoluteLeft()-(50+22), scoreQuestionMark.getAbsoluteTop()+22);
+				toolTip.show();
+			}
+		});
+		
+		scoreQuestionMark.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				EventTarget target = event.getRelatedTarget();
+				  if (Element.is(target)) {
+					  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+						  toolTip.hide();
+					  }
+				  }
+			}
+		});
+		
+		suggestTimeQuestionMark.addMouseOverHandler(new MouseOverHandler() {
+			
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				String type="suggestedtime";
+				toolTip = new ToolTip(i18n.GL2192(),type);
+				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 250px;");
+				toolTip.getElement().getStyle().setBackgroundColor("transparent");
+				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+				toolTip.setPopupPosition(suggestTimeQuestionMark.getAbsoluteLeft()-(50+22), suggestTimeQuestionMark.getAbsoluteTop()+22);
+				toolTip.show();
+			}
+		});
+		
+		suggestTimeQuestionMark.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				EventTarget target = event.getRelatedTarget();
+				  if (Element.is(target)) {
+					  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+						  toolTip.hide();
+					  }
+				  }
+			}
+		});
 
 	}
 	
@@ -398,21 +494,22 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		lblClasspageUnitPlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
 		lblClasspageUnitPlaceHolder.getElement().setAttribute("title",i18n.GL0105());
 		
-		fromLbl.getElement().setId("lblFromLbl");
-		fromLbl.setText(i18n.GL2180());
+		fromLbl.getElement().setId("lblSuggestTimeLbl");
+		fromLbl.getElement().setInnerHTML(i18n.GL2180());
 		
 		scoreLbl.getElement().setId("lblScoreLbl");
-		scoreLbl.setText(i18n.GL2181());
+		scoreLbl.getElement().setInnerHTML(i18n.GL2181());
+		scoreTxt.getElement().setAttribute("placeholder", i18n.GL2179());
 		
-		minsText.getElement().setInnerHTML(i18n.GL1436());
-		minsText.getElement().setId("pnlMinsText");
-		minsText.getElement().setAttribute("alt", i18n.GL1436());
-		minsText.getElement().setAttribute("title", i18n.GL1436());
+		hoursText.getElement().setInnerHTML(i18n.GL1436());
+		hoursText.getElement().setId("pnlHoursText");
+		hoursText.getElement().setAttribute("alt", i18n.GL1436());
+		hoursText.getElement().setAttribute("title", i18n.GL1436());
 		
-		secondsText.getElement().setInnerHTML(i18n.GL0958());
-		secondsText.getElement().setId("pnlSecondsText");
-		secondsText.getElement().setAttribute("alt", i18n.GL0958());
-		secondsText.getElement().setAttribute("title", i18n.GL0958());
+		minutesText.getElement().setInnerHTML(i18n.GL0958());
+		minutesText.getElement().setId("pnlMinutesText");
+		minutesText.getElement().setAttribute("alt", i18n.GL0958());
+		minutesText.getElement().setAttribute("title", i18n.GL0958());
 		
 		
 		lblNoClasspages.setText(i18n.GL0106());
@@ -451,13 +548,6 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		directionsErrorLength.getElement().setId("lblDirectionsErrorLength");
 		directionsErrorLbl.getElement().setId("lblDirectionsErrorLbl");
 		
-		
-		/*imgNotFriendly.setTitle(i18n.GL0732());
-		imgNotFriendly.getElement().setId("moveCollectionLbl");
-		imgNotFriendly.getElement().setAttribute("alt",i18n.GL0732());
-		imgNotFriendly.getElement().setAttribute("title",i18n.GL0732());
-		imgNotFriendly.setAltText(i18n.GL0732());
-		imgNotFriendly.setUrl("images/mos/questionmark.png");*/
 	}
 	/**
 	 * 
@@ -538,8 +628,6 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 				else
 				{	
 					
-					isValidate();
-					if(isValidate){
 					btnAssign.getElement().setAttribute("id", "btnAssign");
 					btnAssign.setStyleName(res.css().disableAssignButon());
 					btnAssign.setText(i18n.GL1172());
@@ -759,11 +847,6 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 			//				
 			//			}
 					});*/
-		}else{
-			btnAssign.setEnabled(false);
-			btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
-			btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
-		}
 				}
 		}
 		});
@@ -1023,10 +1106,12 @@ public class CpuTitleLabelClick implements ClickHandler{
 		@Override
 		public void onBlur(BlurEvent event) {
 			String score = scoreTxt.getText();
+			
 			if(score.isEmpty()){
 				minScore=null;
 				scoreErrorLabel.setVisible(false);
 			}else if(score != null || score != ""){
+				score=score.replace("%", "").trim();
 				if(Integer.parseInt(score) >100 || Integer.parseInt(score) <=0){
 					scoreErrorLabel.setText(i18n.GL2178());
 					scoreErrorLabel.setVisible(true);
@@ -1052,7 +1137,9 @@ public class CpuTitleLabelClick implements ClickHandler{
 		
 		@Override
 		public void onBlur(BlurEvent event) {
-			//if (fromTxt.getText().length() > 0 && toTxt.getText().length() > 0) {
+			
+			
+			if (fromTxt.getText().length() > 0 || toTxt.getText().length() > 0) {
 				from = fromTxt.getText();
 				fromTxt.setText(from);
 				fromTxt.getElement().setAttribute("alt", from);
@@ -1063,60 +1150,43 @@ public class CpuTitleLabelClick implements ClickHandler{
 				toTxt.getElement().setAttribute("title", from);
 				String startTimeTxtMin = null;
 				String startTimeTxtSec = null;
-				if (fromTxt.getText().length() < 2) {
+				if(fromTxt.getText().isEmpty()){
 					startTimeTxtMin = "00" + fromTxt.getText();
-				} else if(fromTxt.getText().isEmpty()) {
-					startTimeTxtMin = "00";
-				}else{
+				}else if (fromTxt.getText().length() < 2 && !fromTxt.getText().isEmpty()) {
+					startTimeTxtMin = "0" + fromTxt.getText();
+	
+				} else {
 					startTimeTxtMin = fromTxt.getText();
 				}
-				if (toTxt.getText().length() < 2) {
+				if(toTxt.getText().isEmpty()){
+					startTimeTxtSec = "00" + toTxt.getText();
+				} else if (toTxt.getText().length() < 2 && !toTxt.getText().isEmpty()) {
 					startTimeTxtSec = "0" + toTxt.getText();
-					suggestTimeErrorLabel.setVisible(false);
-				}else if(toTxt.getText().length() >2){
-					startTimeTxtSec = "0" + toTxt.getText();
-					suggestTimeErrorLabel.setText(i18n.GL0970());
-					suggestTimeErrorLabel.setVisible(true);
-					btnAssign.setEnabled(false);
-					btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
-					btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
-				}else if(Integer.parseInt(toTxt.getText()) > 59){
-					startTimeTxtSec = "0" + toTxt.getText();
-					suggestTimeErrorLabel.setText(i18n.GL0970());
-					suggestTimeErrorLabel.setVisible(true);
-					btnAssign.setEnabled(false);
-					btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
-					btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
-				}else if(fromTxt.getText().isEmpty() && Integer.parseInt(toTxt.getText()) > 59) {
-					startTimeTxtSec = "0" + toTxt.getText();
-					suggestTimeErrorLabel.setText(i18n.GL0970());
-					suggestTimeErrorLabel.setVisible(true);
-					btnAssign.setEnabled(false);
-					btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
-					btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
-				}
-				else{
+				} else {
 					startTimeTxtSec = toTxt.getText();
-					from = startTimeTxtMin+"hrs" + " " + startTimeTxtSec+"mins";
+				}
+				from =  startTimeTxtMin + ":" + startTimeTxtSec;
+				boolean timeValidate = validateTime(from);
+				if(timeValidate){
+					from = startTimeTxtMin+i18n.GL2184() + " " + startTimeTxtSec+i18n.GL2185();
 					suggestTimeErrorLabel.setVisible(false);
-					lblClasspagePlaceHolder.getText().equalsIgnoreCase(i18n.GL0105());
 					if(!lblClasspagePlaceHolder.getText().equalsIgnoreCase(i18n.GL0105())){
 						btnAssign.setEnabled(true);
 						btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
 						btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
 					}
-					
+				}else{
+					suggestTimeErrorLabel.setText(i18n.GL0970());
+					suggestTimeErrorLabel.setVisible(true);
+					btnAssign.setEnabled(false);
+					btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
+					btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
 				}
 			}
 		}
+	}
 	public void isValidate(){
-		if(from == null|| from.isEmpty() &&  minScore ==null || minScore.isEmpty() ){
-			scoreErrorLabel.setText(i18n.GL2182());
-			scoreErrorLabel.setVisible(true);
-			suggestTimeErrorLabel.setText(i18n.GL2183());
-			suggestTimeErrorLabel.setVisible(true);
-			isValidate=false;
-		}else if(from == null || from.isEmpty() && minScore !=null){
+		if(from == null || from.isEmpty() && minScore !=null){
 			suggestTimeErrorLabel.setText(i18n.GL2183());
 			suggestTimeErrorLabel.setVisible(true);
 			isValidate=false;
@@ -1124,10 +1194,31 @@ public class CpuTitleLabelClick implements ClickHandler{
 			scoreErrorLabel.setText(i18n.GL2182());
 			scoreErrorLabel.setVisible(true);
 			isValidate=false;
+		}else if(from == null || from.isEmpty() &&  minScore == null || minScore.isEmpty() ){
+			scoreErrorLabel.setText(i18n.GL2182());
+			scoreErrorLabel.setVisible(true);
+			suggestTimeErrorLabel.setText(i18n.GL2183());
+			suggestTimeErrorLabel.setVisible(true);
+			isValidate=false;
 		}else{
 			isValidate=true;
 		}
 	}
-		
+	public int validateNumber(String numberString) {
+	    try {
+	        int number = Integer.valueOf(numberString);
+	        return number;
+	    } catch (NumberFormatException e) {
+	        return -1;
+	    }
 	}
-//}
+	public boolean validateTime(String timeString) {
+	    if (timeString.length() != 5) return false;
+	    if (!timeString.substring(2, 3).equals(":")) return false;
+	    int hour = validateNumber(timeString.substring(0, 2));
+	    int minute = validateNumber(timeString.substring(3));
+	    if (hour < 0 ) return false;
+	    if (minute < 0 || minute >= 60) return false;
+	    return true;
+	}
+}

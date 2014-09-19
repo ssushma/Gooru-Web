@@ -166,10 +166,18 @@ import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPrese
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter.IsAutodeskLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.IsAutodeskLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.ccstcaltac.CcstCalTacLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.ccstcaltac.CcstCalTacLibraryPresenter.IsCcstCalTacLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.ccstcaltac.CcstCalTacLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.ccstcaltac.IsCcstCalTacLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryPresenter.IsCoreLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.IsCoreLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.esyp.EsypLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.esyp.EsypLibraryPresenter.IsEsypLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.esyp.EsypLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.esyp.IsEsypLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter.IsCfciLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryView;
@@ -582,11 +590,15 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(UnitSetupStudentPresenter.class,IsUnitSetupStudentView.class,UnitSetupStudentView.class);
 		bindPresenterWidget(UnitAssignmentPresenter.class,IsUnitAssignmentView.class,UnitAssignmentView.class);
 		bindPresenterWidget(PersonalizeUnitPresenter.class,IsPersonalizeUnitView.class,PersonalizeUnitView.class);
+
 		bindPresenterWidget(AnalyticsPresenter.class,IsAnalyticsView.class,AnalyticsView.class);
 		bindPresenterWidget(CollectionProgressPresenter.class,IsCollectionProgressView.class,CollectionProgressWidget.class);
 		bindPresenterWidget(CollectionSummaryPresenter.class,IsCollectionSummaryView.class,CollectionSummaryView.class);
 		bindPresenterWidget(CollectionSummaryTeacherPresenter.class,IsCollectionSummaryTeacherView.class,CollectionSummaryTeacherView.class);
 		bindPresenterWidget(CollectionSummaryIndividualPresenter.class,IsCollectionSummaryIndividualView.class,CollectionSummaryIndividualView.class);
 		
+		bindPresenter(EsypLibraryPresenter.class, IsEsypLibraryView.class, EsypLibraryView.class,IsEsypLibraryProxy.class);
+		bindPresenter(CcstCalTacLibraryPresenter.class, IsCcstCalTacLibraryView.class, CcstCalTacLibraryView.class,IsCcstCalTacLibraryProxy.class);
+
 	}
 }

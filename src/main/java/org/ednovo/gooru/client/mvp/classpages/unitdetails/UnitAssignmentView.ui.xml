@@ -10,7 +10,7 @@
 			<div class="col-xs-2 {unitStyle.leftPanel}">
 				<g:HTMLPanel styleName="{unitStyle.uniSetup}">
 					<img src="images/blueArrow.png" />
-					<g:Anchor ui:field="unitSetupButton">Unit Setup</g:Anchor>
+					<g:Anchor ui:field="unitSetupButton">Class Overview</g:Anchor>
 				</g:HTMLPanel>
 				<hr />
 				<uc:UlPanel styleName="list-unstyled {unitStyle.unitMenu}">
@@ -25,268 +25,192 @@
 				</g:HTMLPanel>
 			</div>
 			<div class="col-xs-10 {unitStyle.rightPanel}">
-				<g:HTMLPanel ui:field="containerPanel" >
-				<div class="row">
-					<div class="col-xs-12">
-					    <g:Label ui:field="unitTitleDetails" styleName="col-xs-2 {unitStyle.unitHeading}"/>
-						<!-- <div class="col-xs-2 {unitStyle.unitHeading}">Unit 2 Details</div> -->
-						<div class="col-xs-2 {unitStyle.uniRequired}">
-							<div class="{unitStyle.bubble}"></div>
-							<g:Label ui:field="requiredLabel" styleName="{unitStyle.bubbleMain}" />
-							<!-- <div>Required</div> -->
+				<g:HTMLPanel styleName="{unitStyle.teachTab}" ui:field="htmDashBoardTabs">
+					<g:Button ui:field="btnDashBoard">Dashboard</g:Button>
+					<g:Button ui:field="btnAssignment">Assignments</g:Button>
+				</g:HTMLPanel>
+				<g:HTMLPanel ui:field="containerPanel">
+					<div class="row">
+						<div class="col-xs-12">
+							<g:Label ui:field="unitTitleDetails" styleName="col-xs-2 {unitStyle.unitHeading}" />
+							<!-- <div class="col-xs-2 {unitStyle.unitHeading}">Unit 2 Details</div> -->
+							<div class="col-xs-2 {unitStyle.uniRequired}">
+								<div class="{unitStyle.bubble}"></div>
+								<g:Label ui:field="requiredLabel" styleName="{unitStyle.bubbleMain}" />
+								<!-- <div>Required</div> -->
+							</div>
+							<div class="col-xs-2 {unitStyle.uniRequired}">
+								<div class="{unitStyle.bubbleStyle}"></div>
+								<g:Label ui:field="optionalLabel" styleName="{unitStyle.bubbleMain}" />
+								<!-- <div>Optional</div> -->
+							</div>
+							<div class="clearfix"></div>
 						</div>
-						<div class="col-xs-2 {unitStyle.uniRequired}">
-							<div class="{unitStyle.bubbleStyle}"></div>
-							<g:Label ui:field="optionalLabel" styleName="{unitStyle.bubbleMain}" />
-							<!-- <div>Optional</div> -->
-						</div>
-						<div class="clearfix"></div>
 					</div>
-				</div>
-				<!-- This widget Is used to display Circle -->
-				<g:HTMLPanel styleName="row {unitStyle.generalSet}">
-					<g:HTMLPanel>
+					<!-- This widget Is used to display Circle -->
+					<g:HTMLPanel styleName="row {unitStyle.generalSet}">
+						<g:HTMLPanel>
 
-						<g:HTMLPanel styleName="{unitStyle.rowInner}"
-							ui:field="circleContainerPanel">
-							<g:Label styleName="{unitStyle.genHead}" ui:field="generalLabel"></g:Label>
+							<g:HTMLPanel styleName="{unitStyle.rowInner}"
+								ui:field="circleContainerPanel">
+							</g:HTMLPanel>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
-				</g:HTMLPanel>
-				<!-- end circle Widget -->
-				<div class="row {unitStyle.personalBtn}">
-					<div class="col-xs-12">
-						<div class="{unitStyle.rowInner}">
-							<p class="text-center">
-								<button type="button" class="primary">Personalize Unit 2 for
-									Students</button>
-							</p>
+					<!-- end circle Widget -->
+					<div class="row {unitStyle.personalBtn}">
+						<div class="col-xs-12">
+							<div class="{unitStyle.rowInner}">
+								<p class="text-center">
+									<button type="button" class="primary">Personalize Unit 2 for
+										Students</button>
+								</p>
+							</div>
 						</div>
 					</div>
-				</div>
-				<g:HTMLPanel ui:field="assignmentContainer"></g:HTMLPanel>
-			</g:HTMLPanel>	
-			<g:HTMLPanel ui:field="goalContainer">
-			    <g:HTMLPanel styleName="{unitStyle.teachTab}">
-					<g:Button  ui:field="btnDashBoard">Dashboard</g:Button>
-					<g:Button  ui:field="btnAssignment">Assignments</g:Button>
+					<g:HTMLPanel ui:field="assignmentContainer"></g:HTMLPanel>
 				</g:HTMLPanel>
-			    <div class="row sectionBlockMain">
-			    <div class="clearfix"></div>
+				<g:HTMLPanel ui:field="goalContainer">
 
-				<div class="col-xs-12 goalMain">
-					<div class="col-xs-6 mdiumHeader">Goals</div>
-					<div class="col-xs-6 text-right">
-			      	Not sure how to get the goal?
-					 <button title="Edit" alt="Edit" id="btnBacktoLibrary" class="secondary"
-												type="button">Take a Diagnostic Test</button>
-					</div>
-				</div>
-				<div class="clearfix"></div>
-					
-					<div class="col-xs-12 scoreProggressMain">
-					<div class="">
-					<g:HTMLPanel ui:field="scoreHedingContainer"></g:HTMLPanel>
-					<!-- <g:HTMLPanel styleName="{unitStyle.col-xs-4}">
-					
-						<div class="scorMetInner">
-						
-						<g:Label styleName="{unitStyle.scoreHeding}">Average Correct Answer</g:Label>
-						
-						<div class="goalTracker">
-						
-						<div class="circle" id="tracker">
-						<div class="circle" id="redControll"></div> 
-						<div class="circle" id="controll"></div> 
-						<div class="circle" id="circleMiddle"></div>
-						<div class="emptybox"></div>
-						
-						</div>
-						
-						<div class="setGloalBtn">
-						<div class="perTextBox"><input name="" type="text"/></div>
-						
-						<p><button type="button" class="primary" id="btnBacktoLibrary" alt="Edit" title="Edit">Edit Goal</button></p>
-						</div>
-						
-						
-						
-						
-						</div>
-						
-						
-						
-						</div>
-					
-					</g:HTMLPanel> -->
-					<!-- 
-					<div class="col-xs-4">
-					<div class="scorMetInner">
-					<div class="scoreHeding">Assignment Completed</div>
-					
-					
-					<div class="goalTracker">
-					
-					<div class="circle" id="tracker">
-					<div class="circle" id="redControll"></div> 
-					
-					<div class="circle" id="controll"></div> 
-					<div class="circle" id="circleMiddle"></div>
-					<div class="emptybox"></div>
-					
-					</div>
-					
-					<div class="setGloalBtn">
-					<div class="perTextBox"><input name="" type="text"/></div>
-					
-					<p><button type="button" class="primary" id="btnBacktoLibrary" alt="Edit" title="Edit">Edit Goal</button></p>
-					</div>
-					
-					
-					
-					
-					</div>
-					
-					
-					
-					
-					</div>
-					
-					
-					</div>
-					
-					
-					<div class="col-xs-4">
-					
-					<div class="scorMetInner">
-					
-					<div class="scoreHeding">Time Studing</div>
-					
-					<div class="goalTracker">
-					
-					<div class="circle" id="tracker">
-					<div class="circle" id="greenControll"></div> 
-					
-					<div class="circle" id="controll"></div> 
-					<div class="circle" id="circleMiddle"></div>
-					<div class="emptybox"></div>
-					
-					</div>
-					
-					<div class="setGloalBtn">
-					<div class="perTextBox"><input name="" type="text"/></div>
-					
-					<p><button type="button" class="primary" id="btnBacktoLibrary" alt="Edit" title="Edit">Edit Goal</button></p>
-					</div>
-					
-					
-					
-					
-					</div>
-					</div>
-					
-					</div> -->
-					
-					
-					
-					</div>
-					</div>
-				</div>	
 					<div class="row sectionBlockMain">
-					
-					
-					
-					<div class="col-xs-12 goalMain">
-					
-					<div class="col-xs-12 mdiumHeader">
-					
-					Scores <span>The more you study, the more data will be shown here.</span>
-					
-					
+						<div class="clearfix"></div>
+
+						<div class="col-xs-12 goalMain">
+							<div class="col-xs-6 mdiumHeader">Goals</div>
+							<div class="col-xs-6 text-right">
+								Not sure how to get the goal?
+								<button title="Edit" alt="Edit" id="btnBacktoLibrary"
+									class="secondary" type="button">Take a Diagnostic Test</button>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+
+						<div class="col-xs-12 scoreProggressMain">
+							<div class="">
+								<g:HTMLPanel ui:field="scoreHedingContainer"></g:HTMLPanel>
+								<!-- <g:HTMLPanel styleName="{unitStyle.col-xs-4}"> <div class="scorMetInner"> 
+									<g:Label styleName="{unitStyle.scoreHeding}">Average Correct Answer</g:Label> 
+									<div class="goalTracker"> <div class="circle" id="tracker"> <div class="circle" 
+									id="redControll"></div> <div class="circle" id="controll"></div> <div class="circle" 
+									id="circleMiddle"></div> <div class="emptybox"></div> </div> <div class="setGloalBtn"> 
+									<div class="perTextBox"><input name="" type="text"/></div> <p><button type="button" 
+									class="primary" id="btnBacktoLibrary" alt="Edit" title="Edit">Edit Goal</button></p> 
+									</div> </div> </div> </g:HTMLPanel> -->
+								   <div class="col-xs-4"> <div class="scorMetInner"> <div class="scoreHeding">Time 
+									Studing</div> 
+										<div class="goalTracker"> <div class="circle" id="tracker"> 
+										<g:Label styleName="{unitStyle.circle}" ui:field="lblGreenControl" ></g:Label>
+									    <g:Label styleName="{unitStyle.circle}" ui:field="lblControl"></g:Label> 
+										<div class="circle" id="circleMiddle"></div>
+									    <div class="emptybox"></div> 
+										</div> 
+										<div class="setGloalBtn"> <div class="timeTextBox">
+										    <g:TextBox ui:field="txtHours" />
+										    <g:TextBox ui:field="txtMinuts" />
+										</div> 
+										<p><g:Button  styleName="primary" ui:field="btnSetGoal">Set Goal</g:Button></p> </div> </div> </div>
+								    </div> 
+
+
+
+							</div>
+						</div>
 					</div>
-					<div class="clearfix"></div>
-					
-					
-					<div class="col-xs-12">
-					<div class="borderBox">
-					
-					<p class="text-danger">Graph Here!</p>
-					
-					</div>
-					
-					</div>
-					
-					
-					<div class="clearfix"></div>
-					
-					
-					
-					</div>
-					
-					
-					
-					</div>
-					
-					
-					
 					<div class="row sectionBlockMain">
-					
-					
-					
-					<div class="col-xs-12 goalMain">
-					
-					<div class="col-xs-12 mdiumHeader">
-					
-					Personal Preference Summary <span>The more you study, the more data will be shown here.</span>
-					
-					
+
+
+
+						<div class="col-xs-12 goalMain">
+
+							<div class="col-xs-12 mdiumHeader">
+
+								Scores
+								<span>The more you study, the more data will be shown here.</span>
+
+
+							</div>
+							<div class="clearfix"></div>
+
+
+							<div class="col-xs-12">
+								<div class="borderBox">
+
+									<p class="text-danger">Graph Here!</p>
+
+								</div>
+
+							</div>
+
+
+							<div class="clearfix"></div>
+
+
+
+						</div>
+
+
+
 					</div>
+
+
+
+					<div class="row sectionBlockMain">
+
+
+
+						<div class="col-xs-12 goalMain">
+
+							<div class="col-xs-12 mdiumHeader">
+
+								Personal Preference Summary
+								<span>The more you study, the more data will be shown here.</span>
+
+
+							</div>
+							<div class="clearfix"></div>
+
+
+							<div class="personalDetails">
+								<div class="col-xs-6">
+
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<div class="panel-title text-center">Resource Usage</div>
+										</div>
+										<div class="panel-body">
+											Panel content
+										</div>
+									</div>
+
+
+
+								</div>
+
+
+								<div class="col-xs-6">
+
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h3 class="panel-title text-center">Study Pattern</h3>
+										</div>
+										<div class="panel-body">
+											Panel content
+										</div>
+									</div>
+
+								</div>
+								<div class="clearfix"></div>
+							</div>
+
+
+							<div class="clearfix"></div>
+
+						</div>
+
+
+					</div>
+
 					<div class="clearfix"></div>
-					
-					
-					<div class="personalDetails">
-					<div class="col-xs-6">
-					
-					<div class="panel panel-default">
-					  <div class="panel-heading">
-					  <div class="panel-title text-center">Resource Usage</div>
-					  </div>
-					  <div class="panel-body">
-					    Panel content
-					  </div>
-					</div>
-					
-					
-					
-					</div>
-					
-					
-					<div class="col-xs-6">
-					
-					<div class="panel panel-default">
-					  <div class="panel-heading">
-					    <h3 class="panel-title text-center">Study Pattern</h3>
-					  </div>
-					  <div class="panel-body">
-					    Panel content
-					  </div>
-					</div>
-					
-					</div>
-					<div class="clearfix"></div>
-					</div>
-					
-					
-					<div class="clearfix"></div>
-					
-					</div>
-					
-					
-					</div>
-					
-					<div class="clearfix"></div>
-								    
-			</g:HTMLPanel>
+				</g:HTMLPanel>
 			</div>
 			<div class="clearfix"></div>
 		</div>
