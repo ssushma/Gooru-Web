@@ -513,7 +513,7 @@
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
 					<logLevel>ERROR</logLevel>
 					<style>${gwt.style}</style>
-					<extraJvmArgs>-XX:MaxPermSize=1024m -Xmx4024m</extraJvmArgs>
+					<!-- <extraJvmArgs>-XX:MaxPermSize=1024m -Xmx4024m</extraJvmArgs> -->
 					<copyWebapp>true</copyWebapp>
 				</configuration>
 				<dependencies>

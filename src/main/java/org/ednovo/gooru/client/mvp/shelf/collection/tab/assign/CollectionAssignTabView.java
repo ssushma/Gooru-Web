@@ -110,6 +110,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	
 	boolean toClear=true;
 	
+	boolean toUnitClear=true;
+	
 	boolean isAdded = false;
 	
 	List<String> collectionsList = new ArrayList<String>();
@@ -344,8 +346,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 			
 			@Override
 			public void onScroll(ScrollEvent event) {
-				if(spanelClasspagesUnitPanel.getVerticalScrollPosition() == spanelClasspagesUnitPanel.getMaximumHorizontalScrollPosition()){
-					toClear = false;
+				if(spanelClasspagesUnitPanel.getVerticalScrollPosition() == spanelClasspagesUnitPanel.getMaximumVerticalScrollPosition()){
+					toUnitClear = false;
 					getNextClasspagesUnit();
 				}
 			}
@@ -499,6 +501,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		
 		scoreLbl.getElement().setId("lblScoreLbl");
 		scoreLbl.getElement().setInnerHTML(i18n.GL2181());
+		
+		
 		scoreTxt.getElement().setAttribute("placeholder", i18n.GL2179());
 		
 		hoursText.getElement().setInnerHTML(i18n.GL1436());
@@ -913,12 +917,13 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 						btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
 						//btnAssign.setStyleName(AssignPopUpCBundle.INSTANCE.css().activeAssignButton());
 
-						
+						classpageUnitOffSet=0;
 						AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, limit, String.valueOf(classpageUnitOffSet), new SimpleAsyncCallback<ClassDo>() {
 
 							@Override
 							public void onSuccess(ClassDo result) {
-								htmlClasspagesUnitListContainer.clear();
+								//htmlClasspagesUnitListContainer.clear();
+								toUnitClear=true;
 								setUnitList(result);
 							}
 						});
@@ -943,6 +948,10 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		int resultSize = classpageListDo.getSearchResults().size();
 		errorLabel.setVisible(false);
 		if (resultSize > 0){
+			if(toUnitClear){
+				htmlClasspagesUnitListContainer.clear();
+				toUnitClear=false;
+			}
 			//htmlClasspagesUnitListContainer.clear();
 			for(int i=0;i<resultSize;i++){
 				unitId = classpageListDo.getSearchResults().get(i).getResource().getGooruOid();
@@ -966,6 +975,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 			//Hide the scroll container
 			spanelClasspagesUnitPanel.setVisible(false);
 		}else{
+			if(toUnitClear){
 				htmlClasspagesUnitListContainer.clear();
 				lblClasspageUnitPlaceHolder.setText(i18n.GL0105());
 				lblClasspageUnitPlaceHolder.getElement().setId("lblClasspagePlaceHolder");
@@ -978,6 +988,9 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 				btnAssign.setEnabled(false);
 				btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
 				btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
+			}else{
+				errorLabel.setVisible(false);
+			}
 		}
 	}
 	
@@ -1069,12 +1082,16 @@ public class CpuTitleLabelClick implements ClickHandler{
 	}
 
 	public void getNextClasspagesUnit(){
-		classpageUnitOffSet = classpageUnitOffSet+10;
-		getAllClasspagesUnit(limit,String.valueOf(classpageUnitOffSet));
+		if(classpageId != null){
+			classpageUnitOffSet = classpageUnitOffSet+10;
+			getAllClasspagesUnit(classpageId,limit,String.valueOf(classpageUnitOffSet));
+		}
+		
 	}
 	
-	public void getAllClasspagesUnit(String limit,String offset){
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, limit, String.valueOf(classpageUnitOffSet), new SimpleAsyncCallback<ClassDo>() {
+	public void getAllClasspagesUnit(String classpageId,String limit,String offset){
+		this.classpageId=classpageId;
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, limit, String.valueOf(offset), new SimpleAsyncCallback<ClassDo>() {
 
 			@Override
 			public void onSuccess(ClassDo result) {
@@ -1122,7 +1139,8 @@ public class CpuTitleLabelClick implements ClickHandler{
 					minScore=score;
 					scoreErrorLabel.setVisible(false);
 					lblClasspagePlaceHolder.getText().equalsIgnoreCase(i18n.GL0105());
-					if(!lblClasspagePlaceHolder.getText().equalsIgnoreCase(i18n.GL0105())){
+					
+					if(!lblClasspagePlaceHolder.getText().equalsIgnoreCase(i18n.GL0105()) && !lblClasspageUnitPlaceHolder.getText().equalsIgnoreCase(i18n.GL0105())){
 						btnAssign.setEnabled(true);
 						btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
 						btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
@@ -1170,13 +1188,13 @@ public class CpuTitleLabelClick implements ClickHandler{
 				if(timeValidate){
 					from = startTimeTxtMin+i18n.GL2184() + " " + startTimeTxtSec+i18n.GL2185();
 					suggestTimeErrorLabel.setVisible(false);
-					if(!lblClasspagePlaceHolder.getText().equalsIgnoreCase(i18n.GL0105())){
+					if(!lblClasspagePlaceHolder.getText().equalsIgnoreCase(i18n.GL0105()) && !lblClasspageUnitPlaceHolder.getText().equalsIgnoreCase(i18n.GL0105())){
 						btnAssign.setEnabled(true);
 						btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
 						btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
 					}
 				}else{
-					suggestTimeErrorLabel.setText(i18n.GL0970());
+					suggestTimeErrorLabel.setText(i18n.GL2194());
 					suggestTimeErrorLabel.setVisible(true);
 					btnAssign.setEnabled(false);
 					btnAssign.removeStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
@@ -1217,7 +1235,7 @@ public class CpuTitleLabelClick implements ClickHandler{
 	    if (!timeString.substring(2, 3).equals(":")) return false;
 	    int hour = validateNumber(timeString.substring(0, 2));
 	    int minute = validateNumber(timeString.substring(3));
-	    if (hour < 0 ) return false;
+	    if (hour < 0 || hour >24 ) return false;
 	    if (minute < 0 || minute >= 60) return false;
 	    return true;
 	}
