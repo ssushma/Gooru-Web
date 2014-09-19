@@ -1300,6 +1300,12 @@ margin-bottom: -10px;
 	top: 29%;
 }
 
+.frameDiv{
+	width:100%;
+	overflow: hidden;
+	background-color: white;
+	text-align: center;
+}
 #pnlQuestionMark{
 	float: left;
 }

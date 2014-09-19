@@ -27,6 +27,7 @@
 */
 package org.ednovo.gooru.client.mvp.classpages.edit;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +37,7 @@ import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.client.mvp.Analytics.AnalyticsPresenter;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.WelcomeClassView;
@@ -122,6 +124,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	private UnitAssignmentPresenter unitAssignmentPresenter;
 	
+	private AnalyticsPresenter analyticsPresenter;
+	
 	public static final  Object CLASSLIST_SLOT = new Object();
 	
 	String tab=null;
@@ -143,7 +147,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	//ShelfListPresenter shelfTabPresenter
 	@Inject
 	public EditClasspagePresenter(IsEditClasspageView view, IsEditClasspageProxy proxy, AddAssignmentContainerPresenter assignmentContainer,ImageUploadPresenter imageUploadPresenter, ClassListPresenter classlistPresenter,
-								ClassSetupPresenter classSetupPresenter, UnitSetupPresenter unitSetupPresenter , UnitAssignmentPresenter unitAssignmentPresenter) {
+								ClassSetupPresenter classSetupPresenter, UnitSetupPresenter unitSetupPresenter , UnitAssignmentPresenter unitAssignmentPresenter,AnalyticsPresenter analyticsPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.assignmentContainer = assignmentContainer;
@@ -152,6 +156,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		this.classSetupPresenter=classSetupPresenter;
 		this.unitSetupPresenter=unitSetupPresenter;
 		this.unitAssignmentPresenter=unitAssignmentPresenter;
+		this.analyticsPresenter=analyticsPresenter;
 		addRegisteredHandler(AssignmentEvent.TYPE, this);
 		addRegisteredHandler(RefreshAssignmentsListEvent.TYPE, this);
 		addRegisteredHandler(UpdateClasspageImageEvent.TYPE, this);
@@ -352,7 +357,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	public void setClasspageService(ClasspageServiceAsync classpageService) {
 		this.classpageService = classpageService;
 	}
-	
+
 	/** 
 	 * This method is to get the collectionAsyncCallback
 	 */
@@ -436,7 +441,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	     	classlistPresenter.setClassPageDo(classpageDo);
 	     	setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
 	     }else if(tab!=null&&tab.equalsIgnoreCase("reports")){
-	     	
+	    	 setInSlot(CLASSLIST_SLOT, analyticsPresenter,false);
 	     }else if(tab!=null&&tab.equalsIgnoreCase("unitsetup")){
 	    	 unitSetupPresenter.clearUnitAssignmentWidgetContaner();
 	    	 //unitSetupPresenter.getUnitsWithAssignemnts();
@@ -607,5 +612,4 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			}
 		});
 	}
-
 }

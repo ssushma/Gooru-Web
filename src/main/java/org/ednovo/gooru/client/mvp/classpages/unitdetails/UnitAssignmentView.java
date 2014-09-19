@@ -164,15 +164,22 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		public void onClick(ClickEvent event) {
 			resetCircleAndAssignmentContainer(unitTitle);
 			revealPlace("unitdetails",null,unitsWidget.getUnitGooruOid(),null);
+			removeAndAddUnitSelectedStyle();
 		}
 	}
-	public void removeUnitSelectedStyle(){
+	public void removeAndAddUnitSelectedStyle(){
 		Iterator<Widget> widgets = unitPanel.iterator();
 		while (widgets.hasNext()) {
 			 Widget widget = widgets.next();
 			if (widget instanceof UnitWidget) {
 				UnitWidget unitsWidget=(UnitWidget)widget;
-				unitsWidget.getUnitNameContainer().removeStyleName(res.unitAssignment().unitMenuActive());
+				String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", "");
+				if(unitId.equals(unitsWidget.getUnitGooruOid())){
+					unitsWidget.getUnitNameContainer().removeStyleName(res.unitAssignment().unitMenuActive());
+					unitsWidget.getUnitNameContainer().addStyleName(res.unitAssignment().unitMenuActive());
+				}else{
+					unitsWidget.getUnitNameContainer().removeStyleName(res.unitAssignment().unitMenuActive());
+				}
 			}
 		}		
 		
@@ -214,6 +221,15 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 						circleContainerPanel.add(unitCricleViewObj);
 						unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration()));
 						unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
+						String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
+						if(assignmentId!=null&&assignmentId.equals(unitCricleViewObj.getAssignementId())){
+							unitCricleViewObj.removeStyleName(res.unitAssignment().active());
+							unitCricleViewObj.addStyleName(res.unitAssignment().active());
+						}
+						if(assignmentId==null&&i==0){
+							unitCricleViewObj.removeStyleName(res.unitAssignment().active());
+							unitCricleViewObj.addStyleName(res.unitAssignment().active());
+						}
 					}
 					rightArrow.setUrl("images/rightSmallarrow.png");
 					circleContainerPanel.add(rightArrow);
@@ -365,14 +381,26 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				classUnitsDo=classListUnitsListDObj;
 				//unitTitleDetails.setText(classDo.getSearchResults().get(0).getResource().getTitle());
 				String unitTitle = classDo.getSearchResults().get(i).getResource().getTitle();
+				if(unitTitle!=null && unitTitle.length()>11){
+					unitTitle = unitTitle.substring(0,11)+"...";
+				}
 				UnitWidget unitsWidget=new UnitWidget(classListUnitsListDo.get(i));
 				unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget,unitTitle));
+				if(unitId!=null&&unitId.equals(unitsWidget.getUnitGooruOid())){
+					unitsWidget.getUnitNameContainer().removeStyleName(res.unitAssignment().unitMenuActive());
+					unitsWidget.getUnitNameContainer().addStyleName(res.unitAssignment().unitMenuActive());
+				}else{
+					unitsWidget.getUnitNameContainer().removeStyleName(res.unitAssignment().unitMenuActive());
+				}
 				unitPanel.add(unitsWidget);
 			}
 
 		}
 	}
 
+	public void setUnitName(String unitName){
+		unitTitleDetails.setText(unitName!=null?unitName:"");
+	}
 	@Override
 	public void getPathwayItems(){
 		classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
@@ -384,6 +412,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		String classpageid=currentPlaceToken.equals(PlaceTokens.EDIT_CLASSPAGE)?AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null):AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 		getUiHandlers().getPathwayUnits(classpageid, limit, (limit*unitsPageNumber),false);
+		removeAndAddUnitSelectedStyle();
 	}
 
 	private void updatePageNumber(){
@@ -521,6 +550,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
 				unitCricleViewObj.getElement().setId(i+"");
 				circleContainerPanel.add(unitCricleViewObj);
+				
 				unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration()));
 				unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
 			}

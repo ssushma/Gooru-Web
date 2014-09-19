@@ -594,5 +594,8 @@ public interface ClasspageService extends BaseService {
 	public ClasspageItemDo updateAssignmentDetails(String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus) throws GwtException;
 	
 	public ClasspageItemDo getAssignemntDetails(String assingmentId);
+
+	CollectionDo updateAssignmentStatusAsCompleteorOpen(
+			String collectionItemId, boolean isComplete) throws GwtException;
 	
 }
