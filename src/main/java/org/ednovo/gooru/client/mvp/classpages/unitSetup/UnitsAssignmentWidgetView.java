@@ -567,10 +567,14 @@ public class UnitsAssignmentWidgetView extends Composite {
 			}
 			
 		}
-		
 		if(Math.abs(getTotalHitCount()-assignmentOffset)==assignmentLimit){
-			htPanelNextArrow.setVisible(false); 
-			htPanelPreviousArrow.setVisible(false);
+			if(getTotalHitCount()==assignmentLimit){
+				htPanelNextArrow.setVisible(false); 
+				htPanelPreviousArrow.setVisible(false);
+			}else{
+				htPanelPreviousArrow.setVisible(true);
+				htPanelNextArrow.setVisible(false); 
+			}
 		}
 	}
 	
