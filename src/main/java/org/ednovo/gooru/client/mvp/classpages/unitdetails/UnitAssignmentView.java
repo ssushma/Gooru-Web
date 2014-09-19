@@ -365,6 +365,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				classUnitsDo=classListUnitsListDObj;
 				//unitTitleDetails.setText(classDo.getSearchResults().get(0).getResource().getTitle());
 				String unitTitle = classDo.getSearchResults().get(i).getResource().getTitle();
+				if(unitTitle!=null && unitTitle.length()>11){
+					unitTitle = unitTitle.substring(0,11)+"...";
+				}
 				UnitWidget unitsWidget=new UnitWidget(classListUnitsListDo.get(i));
 				unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget,unitTitle));
 				unitPanel.add(unitsWidget);
