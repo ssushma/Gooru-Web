@@ -107,7 +107,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField ChangeAssignmentStatusView changeAssignmentStatusView;
 	
-	@UiField Button editAssignmentDetailsButton,cancelAssignmentDetailsButton,saveAssignmentDetailsButton,editCollectionButton;
+	@UiField Button editAssignmentDetailsButton,cancelAssignmentDetailsButton,saveAssignmentDetailsButton,editCollectionButton,unitCircleView;
 	
 	@UiField InlineLabel suggestedHourLabel,suggestedMinutesLabel;
 	
@@ -150,14 +150,21 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		showSaveButtons(false);
 		showAssignmentDetils();
 		frameContainer.setVisible(false);
-
 		changeAssignmentStatusView.getChangeAssignmentStatusButton().addClickHandler(new ChangeStatusEvent());
 		btnSummary.addClickHandler(new SummaryEvent());
 		btnProgress.addClickHandler(new ProgressEvent());
 		editAssignmentDetailsButton.addClickHandler(new EditAssignmentEvent());
 		saveAssignmentDetailsButton.addClickHandler(new UpdateAssignmentDetailsEvent());
 		cancelAssignmentDetailsButton.addClickHandler(new CancelEditAssignmentEvent());
-
+		
+		String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(pageLocation.equals(PlaceTokens.STUDENT)){
+			dueDateButton.setVisible(false);
+			unitCircleView.setVisible(true);
+		}else if(pageLocation.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
+			dueDateButton.setVisible(true);
+			unitCircleView.setVisible(false);
+		}
 		dueDateButton.addClickHandler(new EditDueDateEvent());
 		editCollectionButton.addClickHandler(new CollectionEditEvent());
 	}
