@@ -146,6 +146,17 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		showSaveButtons(false);
 		showAssignmentDetils();
 		frameContainer.setVisible(false);
+
+		String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(pageLocation.equals(PlaceTokens.STUDENT))
+		{
+			editAssignmentDetailsButton.removeFromParent();
+			analyticsContainer.removeFromParent();
+			editCollectionButton.removeFromParent();
+			changeAssignmentStatusView.removeFromParent();
+			dueDateButton.removeFromParent();
+		}
+
 		changeAssignmentStatusView.getChangeAssignmentStatusButton().addClickHandler(new ChangeStatusEvent());
 		btnSummary.addClickHandler(new SummaryEvent());
 		btnProgress.addClickHandler(new ProgressEvent());
@@ -153,7 +164,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		saveAssignmentDetailsButton.addClickHandler(new UpdateAssignmentDetailsEvent());
 		cancelAssignmentDetailsButton.addClickHandler(new CancelEditAssignmentEvent());
 		
-		String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		
 		if(pageLocation.equals(PlaceTokens.STUDENT)){
 			dueDateButton.setVisible(false);
 			unitCircleView.setVisible(true);

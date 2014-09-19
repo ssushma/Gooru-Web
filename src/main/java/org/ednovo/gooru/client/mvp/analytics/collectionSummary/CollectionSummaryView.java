@@ -1,11 +1,11 @@
-package org.ednovo.gooru.client.mvp.Analytics.collectionSummary;
+package org.ednovo.gooru.client.mvp.analytics.collectionSummary;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.Analytics.util.AnalyticsUtil;
+import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;

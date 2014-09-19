@@ -163,4 +163,6 @@ public interface IsEditClasspageView extends IsViewWithHandlers<EditClasspageUiH
 	*/
 	
 	void hideNoAssignmentsMessagePanel();
+	
+	public void highlightTab(String tabValue);
 }

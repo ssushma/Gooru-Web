@@ -1,12 +1,12 @@
-package org.ednovo.gooru.client.mvp.Analytics.collectionProgress;
+package org.ednovo.gooru.client.mvp.analytics.collectionProgress;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.Analytics.util.AnalyticsUtil;
-import org.ednovo.gooru.client.mvp.Analytics.util.DataView;
+import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
+import org.ednovo.gooru.client.mvp.analytics.util.DataView;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 
 import com.google.gwt.ajaxloader.client.Properties;
