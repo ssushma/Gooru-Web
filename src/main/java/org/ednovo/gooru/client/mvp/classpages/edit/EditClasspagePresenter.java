@@ -437,6 +437,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		}
 	}
 	public void showTabWidget(String tabValue){
+		getView().highlightTab(tab);
 		 if(tab!=null&&tab.equalsIgnoreCase("classList")){
 	     	classlistPresenter.setClassPageDo(classpageDo);
 	     	setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
