@@ -1,6 +1,6 @@
 package org.ednovo.gooru.client.mvp.Analytics.util;
 
-import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualCBundle;
+import org.ednovo.gooru.client.mvp.Analytics.collectionSummaryIndividual.CollectionSummaryIndividualCBundle;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
