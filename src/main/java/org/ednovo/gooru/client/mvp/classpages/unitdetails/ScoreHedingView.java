@@ -87,7 +87,7 @@ public class ScoreHedingView extends Composite {
 	 * Note that depending on the widget that is used, it may be necessary to
 	 * implement HasHTML instead of HasText.
 	 */
-	public ScoreHedingView() {
+	public ScoreHedingView(String title) {
 		initWidget(uiBinder.createAndBindUi(this));
 		txtScore.addBlurHandler(new ScoreHandler());
 		txtScore.addKeyPressHandler(new HasNumbersOnly());
@@ -109,7 +109,8 @@ public class ScoreHedingView extends Composite {
 						int scoreValue= Integer.parseInt(txtScore.getText());
 						finalScore=((scoreValue*176)/100);
 						finalScore=finalScore-176;
-					    redScore=((scoreValue*66)/100);
+						System.out.println("finalScore:"+finalScore);
+					    redScore=((50*66)/100);
 						System.out.println("redScore:"+redScore);
 						redScore=redScore-119;
 						lblControl.getElement().setAttribute("style", "-webkit-transform: rotate("+finalScore+"deg);");
@@ -152,7 +153,22 @@ public class ScoreHedingView extends Composite {
 				btnSetGoal.setStyleName("secondary");
 				btnSetGoal.setText(EDITGOAL);
 				lblRedControl.getElement().setId("redControll");
-				lblRedControl.getElement().setAttribute("style", "-webkit-transform: rotate("+redScore+"deg);");
+				if(Integer.parseInt(txtScore.getText())<=50){
+					lblRedControl.getElement().setAttribute("style", "-webkit-transform: rotate("+redScore+"deg); background: none repeat scroll 0 0 #a0c79a;");
+					lblScore.getElement().setAttribute("style", "color:#a0c79a");
+				}else{
+					lblRedControl.getElement().setAttribute("style", "-webkit-transform: rotate("+redScore+"deg);");
+					lblScore.getElement().setAttribute("style", "color:#fb7c73");
+				}
+				/*AppClientFactory.getInjector().getClasspageService().updateUnitStatus(collectionItemId, minimumScore, assignementStatus, timeStudying, new SimpleAsyncCallback<CollectionDo>() {
+
+					@Override
+					public void onSuccess(CollectionDo result) {
+						// TODO Auto-generated method stub
+						
+					}
+				});*/
+				
 			}else{
 				showAndHideTextBox();
 				btnSetGoal.setStyleName("primary");
@@ -174,4 +190,9 @@ public class ScoreHedingView extends Composite {
 			lblScore.setVisible(false);
 		}
 	}
+	public Label getLblTitle() {
+		return lblTitle;
+	}
+	
+	
 }

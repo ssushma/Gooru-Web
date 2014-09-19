@@ -110,7 +110,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row sectionBlockMain">
+					<!-- <div class="row sectionBlockMain">
 
 
 
@@ -202,7 +202,7 @@
 						</div>
 
 
-					</div>
+					</div> -->
 
 					<div class="clearfix"></div>
 				</g:HTMLPanel>
