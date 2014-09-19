@@ -98,11 +98,8 @@
 				<!-- This is not used any more -->
 			</g:HTMLPanel>
 		</g:HTMLPanel>
-		<g:HTMLPanel ui:field="frameDiv" styleName="{res.css.frameDiv}">
-		<g:Button styleName="{res.css.backArrowButton} backArrowButton" ui:field="backArrowButton"></g:Button>
-		<g:Button styleName="primary {res.css.monitorButton}" ui:field="monitorProgress"></g:Button>
-		<g:Frame styleName="{res.css.iframeBorder}" ui:field="frameUrl" width="900" height="500"></g:Frame>
-		<g:VerticalPanel ui:field="ananyticsPanel">
+		<g:HTMLPanel>
+			<g:VerticalPanel ui:field="ananyticsPanel">
 		</g:VerticalPanel>
 		</g:HTMLPanel>
 		<sg:FooterUc />
