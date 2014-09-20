@@ -37,7 +37,6 @@ public interface AssignmentGoalCBundle extends ClientBundle {
 	static final AssignmentGoalCBundle INSTANCE = GWT.create(AssignmentGoalCBundle.class);
 
 	public interface GoalCss extends CssResource {
-		String studentNameContainer();
 
 		String studentName();
 
@@ -55,7 +54,7 @@ public interface AssignmentGoalCBundle extends ClientBundle {
 		
 		String container();
 		
-		String pleaseWait();
+		String pleaseWait();		
 	}
 
 	@Source("assignmentgoal.css")

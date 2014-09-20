@@ -6,7 +6,7 @@
 	<ui:style field="style" src="assignmentgoal.css" />
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />	
 	<g:FlowPanel styleName="{style.container} detailsMenuBlock">
-		<g:HTMLPanel styleName="{style.studentNameContainer} rowInner">
+		<g:HTMLPanel styleName="studentNameContainer rowInner">
 		    <g:Label styleName="genHead" ui:field="lblStudentsList">
 		        
 		    </g:Label>
