@@ -43,7 +43,7 @@
 	min-width: 1000px;
 	background-color: gray;
 	height: 180px;
-	float: left;
+	float:left;
 }
 
 .myCollectionShareStudentContainer > .headerContainer{
@@ -1300,6 +1300,12 @@ margin-bottom: -10px;
 	top: 29%;
 }
 
+.frameDiv{
+	width:100%;
+	overflow: hidden;
+	background-color: white;
+	text-align: center;
+}
 #pnlQuestionMark{
 	float: left;
 }

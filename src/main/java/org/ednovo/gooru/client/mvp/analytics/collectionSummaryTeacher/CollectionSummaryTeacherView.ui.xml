@@ -1,0 +1,38 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="unitStyle" src="collectionSummaryTeacher.css" />
+	<g:HTMLPanel styleName="{unitStyle.reportsTableContainer}">
+		<g:HTMLPanel ui:field="tabContainer" />
+		<g:HTMLPanel ui:field="hiddenChartPnl" />
+		 <g:HTMLPanel ui:field="teacherScoredDatapnl">
+		 <g:HTMLPanel styleName="{unitStyle.resource_monitor_header_title}">
+		      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.correct_legend_one}" ></g:InlineLabel><span class="correct-one">Correct</span></g:HTMLPanel>
+		      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.correct_legend_other}"></g:InlineLabel><span class="correct-other">Incorrect</span></g:HTMLPanel>
+		      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.incorrect_legend}"></g:InlineLabel><span class="incorrect-ans">Skip</span></g:HTMLPanel>
+		 </g:HTMLPanel>
+		<g:HTMLPanel ui:field="teacherScoredData" styleName="{unitStyle.individualScore}"/>
+		</g:HTMLPanel>
+		<g:HTMLPanel ui:field="teacherOpenendedData"  styleName="{unitStyle.individualScore}"/>
+		<g:HTMLPanel ui:field="teacherResourceBreakdownDatapnl">
+			 <div class="clearfix">
+			 <div  class="{unitStyle.collectionOverviewText}">Collection Overview</div>
+				  <div class="{unitStyle.collectionBreakDown_infobox}">
+				  <div class="{unitStyle.collectionBreakDown_infobox_titles}">Total Time Spent</div>
+				  <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles}" ui:field="totalTimeSpentlbl"></g:Label>
+				  </div>
+				   <div class="{unitStyle.collectionBreakDown_infobox}">
+				  <div class="{unitStyle.collectionBreakDown_infobox_titles}">Views</div>
+				  <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles}" ui:field="totalViewlbl"></g:Label>
+				  </div>
+				   <div class="{unitStyle.collectionBreakDown_infobox}">
+				  <div class="{unitStyle.collectionBreakDown_infobox_titles}">Average Reaction</div>
+				  <g:HTMLPanel styleName="{unitStyle.collectionBreakDown_infobox_titles}" ui:field="totalAvgReactionlbl"></g:HTMLPanel> 
+				  </div>
+			 </div>
+			 <g:ListBox ui:field="filterDropDown" styleName="{unitStyle.filterDropDown}"/>
+			<g:HTMLPanel ui:field="teacherResourceBreakdownData"  styleName="{unitStyle.individualScore}" />
+	 </g:HTMLPanel>
+		
+	</g:HTMLPanel>
+</ui:UiBinder> 

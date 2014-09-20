@@ -36,10 +36,8 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
-
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -61,8 +59,6 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -103,7 +99,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField Label assignmentSequenceLabel,dueDateText,dueDateButton,savingLabel;
 	
-	@UiField FlowPanel frameContainer;
+	@UiField FlowPanel frameContainer,analyticsContainer;
 	
 	@UiField ChangeAssignmentStatusView changeAssignmentStatusView;
 	
@@ -150,6 +146,15 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		showSaveButtons(false);
 		showAssignmentDetils();
 		frameContainer.setVisible(false);
+		String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(pageLocation.equals(PlaceTokens.STUDENT))
+		{
+			editAssignmentDetailsButton.removeFromParent();
+			analyticsContainer.removeFromParent();
+			editCollectionButton.removeFromParent();
+			changeAssignmentStatusView.removeFromParent();
+			dueDateButton.removeFromParent();
+		}
 
 		changeAssignmentStatusView.getChangeAssignmentStatusButton().addClickHandler(new ChangeStatusEvent());
 		btnSummary.addClickHandler(new SummaryEvent());
@@ -299,8 +304,8 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		@Override
 		public void onClick(ClickEvent event) {
 			frameContainer.setVisible(true);
-			reportsFrame.getElement().getStyle().setWidth(1000, Unit.PX);
-			reportsFrame.getElement().getStyle().setMarginLeft(-136, Unit.PX);
+			reportsFrame.getElement().getStyle().setWidth(771, Unit.PX);
+			//reportsFrame.getElement().getStyle().setMarginLeft(-136, Unit.PX);
 			reportsFrame.getElement().getStyle().setHeight(800, Unit.PX);
 			reportsFrame.setUrl(frameAnalyticsUrl());
 		}
@@ -310,8 +315,8 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		@Override
 		public void onClick(ClickEvent event) {
 			frameContainer.setVisible(true);
-			reportsFrame.getElement().getStyle().setWidth(1000, Unit.PX);
-			reportsFrame.getElement().getStyle().setMarginLeft(-136, Unit.PX);
+			reportsFrame.getElement().getStyle().setWidth(771, Unit.PX);
+			//reportsFrame.getElement().getStyle().setMarginLeft(-136, Unit.PX);
 			reportsFrame.getElement().getStyle().setHeight(800, Unit.PX);
 			reportsFrame.setUrl(frameAnalyticsUrlForMonitor());
 		}
