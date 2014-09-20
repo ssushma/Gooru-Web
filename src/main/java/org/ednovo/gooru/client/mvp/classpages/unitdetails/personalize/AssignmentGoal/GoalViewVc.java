@@ -63,7 +63,7 @@ public abstract class GoalViewVc extends Composite {
 
 	int minGoal = 75;
 
-	boolean isOptional = true;
+	boolean isOptional = false;
 
 	boolean goalStatus;
 
@@ -101,7 +101,6 @@ public abstract class GoalViewVc extends Composite {
 	 */
 
 	private void setData() {
-		isOptional = true;
 		
 		panelProgressBar.getElement().setAttribute("role", "progressbar");
 		panelProgressBar.getElement().setAttribute("aria-valuenow",

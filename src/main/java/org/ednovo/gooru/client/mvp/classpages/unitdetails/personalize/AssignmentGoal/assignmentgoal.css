@@ -3,17 +3,6 @@
 	width: 100%;
 }
 
-
-.studentNameContainer{
-	padding: 15px 0px;
-	height: 35px;
-}
-
-.studentNameContainer:hover{
-	background: #ccc;
-	border-radius: 5px;
-}
-
 .studentName{
 	float: left;
 	width: 15%;
