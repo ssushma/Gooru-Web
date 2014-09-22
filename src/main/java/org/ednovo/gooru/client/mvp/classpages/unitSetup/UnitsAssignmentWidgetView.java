@@ -138,16 +138,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 		loadingImageLabel.setVisible(false);
 		assignmentsContainer.clear();
 		if(classUnitsDo!=null && classUnitsDo.getResource()!=null){
-//			if(classUnitsDo.getResource().getCollectionItems() != null){
-//				if(classUnitsDo.getResource().getCollectionItems().size()==0){
-//					htPanelNextArrow.setVisible(false);
-//					htPanelPreviousArrow.setVisible(false);
-//				}
-//			}else{
-//				htPanelNextArrow.setVisible(false);
-//				htPanelPreviousArrow.setVisible(false);
-//			}
-			
 			if(classUnitsDo.getResource().getCollectionItems() != null){
 				for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 					ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
@@ -288,10 +278,10 @@ public class UnitsAssignmentWidgetView extends Composite {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),title, "",classPageId,0){
+			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),title, "direction",classPageId,classUnitsDo.getItemSequence()){
 
 				@Override
-				public void reorderAssignment(int seqPosition,String selectedPathId) {
+				public void reorderAssignment(int seqPosition,String selectedPathwayId) {
 					boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItem);
 					if(isAssignmentDeleted){
 						clearAssignmentsFromDo();
@@ -455,8 +445,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 			public void onSuccess(UnitAssignmentsDo result) {
 				setTotalHitCount(result.getTotalHitCount());
 				classUnitsDo.getResource().setCollectionItems(result.getSearchResults());
+				classUnitsDo.getResource().setItemCount(getTotalHitCount());
 				if(isAssignmentEditmode){
-					classUnitsDo.getResource().setItemCount(getTotalHitCount());
 					setAssignmentsEditView();
 				}else{
 					setAssignmentsForUnit();
@@ -532,11 +522,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 
 	
 	private void showAndHideAssignmentArrows() {
-		System.out.println("-- total hit count -- "+getTotalHitCount());
-		System.out.println("--- 1 -- "+Math.abs(getTotalHitCount()-assignmentOffset));
-		System.out.println("---- 2 -- "+assignmentLimit+"\n\n");
-		
-		
 		
 		if(Math.abs(getTotalHitCount()-assignmentOffset)>assignmentLimit){
 			if(Math.abs(getTotalHitCount()-assignmentOffset)==getTotalHitCount()){
