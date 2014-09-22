@@ -12,7 +12,7 @@
 			<g:Label ui:field="descLabel" styleName="{unitStyle.popDescription}"/>
 				<div class="{unitStyle.dropBoxes}">
 				    <div class="{unitStyle.dropdownPosition}">
-				    Unit
+				    <g:Label ui:field="unitTextLbl"></g:Label>
 				    <div class="{unitStyle.dropdownListPlaceHolderMain}">
 			    <g:InlineLabel ui:field="dropdownListPlaceHolder" styleName="{unitStyle.dropdownListPlaceHolder}"></g:InlineLabel>
             	<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="{unitStyle.dropdownListContainerScrollPanel}">
@@ -24,7 +24,7 @@
 			    
 			
 			<div class="{unitStyle.dropdownPositionAss}">
-			Assignment
+			 <g:Label ui:field="assignmentTextLbl"></g:Label>
 			<div class="{unitStyle.dropdownListPlaceHolderMain}">
 			 <g:InlineLabel ui:field="dropdownListPlaceHolderAssignment" styleName="{unitStyle.dropdownListPlaceHolder}"></g:InlineLabel>
             	<g:ScrollPanel ui:field="dropdownListContainerScrollPanelAssignment" styleName="{unitStyle.dropdownListContainerScrollPanel}">

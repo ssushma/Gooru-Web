@@ -73,6 +73,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 
 	private static UnitAssignmentViewUiBinder uiBinder = GWT.create(UnitAssignmentViewUiBinder.class);
+	
 
 	interface UnitAssignmentViewUiBinder extends UiBinder<Widget, UnitAssignmentView> {
 		
@@ -133,14 +134,23 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		setWidget(uiBinder.createAndBindUi(this));
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
+		unitSetupButton.setText(i18n.GL2198());
+		lblMoreUnits.setText(i18n.GL2199());
+		btnDashBoard.setText(i18n.GL2200());
+		btnAssignment.setText(i18n.GL1933());
 		unitSetupButton.addClickHandler(new UnitSetupEvents());
 		btnDashBoard.setStyleName(res.unitAssignment().selected());
-		requiredLabel.setText("Required");
-		optionalLabel.setText("Optional");
+
+		requiredLabel.setText(i18n.GL2200());
+		optionalLabel.setText(i18n.GL2201());
+		btnSetGoal.setText(i18n.GL2197());
+
+		
 		txtHours.getElement().setAttribute("placeholder", "h");
 		txtMinuts.getElement().setAttribute("placeholder", "min");
 		txtHours.getElement().setAttribute("style", "text-align:right");
 		txtMinuts.getElement().setAttribute("style", "text-align:right");
+
 	}
 	
 	public HTMLPanel getUnitPanel(){
@@ -251,7 +261,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			}
 		}
 		if(totalAssignmentHitcount==0){
-			Label noAssignmentlabel = new Label("Assignment not available");
+			Label noAssignmentlabel = new Label(i18n.GL2202());
 			circleContainerPanel.clear();
 			circleContainerPanel.add(noAssignmentlabel);
 		}
@@ -595,9 +605,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			scoreHedingView=new ScoreHedingView(classDo);
 			scoreHedingContainer.add(scoreHedingView);
 			if(i==0){
-				scoreHedingView.getLblTitle().setText("Average Correct Answer");
+				scoreHedingView.getLblTitle().setText(i18n.GL2195());
 			}else{
-				scoreHedingView.getLblTitle().setText("Assignment Completed");
+				scoreHedingView.getLblTitle().setText(i18n.GL2203());
 			}
 		}
 		//txtHours.addBlurHandler(new ScoreHandler());
