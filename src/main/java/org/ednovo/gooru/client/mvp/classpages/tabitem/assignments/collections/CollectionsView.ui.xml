@@ -12,7 +12,7 @@
 					<cas:ChangeAssignmentStatusView ui:field="changeAssignmentStatusView"></cas:ChangeAssignmentStatusView>
 					<g:HTMLPanel styleName="{style.dueDate}" ui:field="dueDateContentPanel">
 						<g:Label styleName="{style.dueDateText}" ui:field="dueDateText">Due Date</g:Label> <g:Label styleName="{style.dueDateIcon}" ui:field="dueDateButton"></g:Label>
-					  <g:Button styleName="{style.classBubble}" ui:field="unitCircleView"></g:Button>
+					  	<g:CheckBox ui:field="assignmentMarkCheckBox"></g:CheckBox>
 					</g:HTMLPanel>
 					<g:Label styleName="clearfix"></g:Label>
 				 </g:HTMLPanel>
