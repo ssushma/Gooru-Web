@@ -837,10 +837,17 @@ background: -moz-linear-gradient(3% 0 -90deg, #fff 0px, #ddd 100%) repeat scroll
 	font-size: 35px;
 	color: #fb7c73;
 	text-align: center;
-	padding: 0px 3px 0px 76px;
+	padding: 0px 9px 0px 76px;
 	width: 31%;
 	margin-bottom: 4px;
 	background: url(images/Classpage/student/persentage.png) no-repeat center right;
+}
+.timeLabelStyle{
+	font-size: 31px;
+	color: #a0c79a;
+	text-align: center;
+	/* width: 109%; */
+	margin-bottom: 6px;
 }
 
 /* student view assignment */

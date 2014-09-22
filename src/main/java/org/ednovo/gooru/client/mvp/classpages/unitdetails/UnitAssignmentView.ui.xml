@@ -116,7 +116,13 @@
 										    <g:TextBox ui:field="txtHours" />
 										    <g:TextBox ui:field="txtMinuts" />
 										</div> 
+										<g:HTMLPanel ui:field="timeLablePanel">
+										   <g:Label styleName="{unitStyle.timeLabelStyle}" ui:field="lblTimeHours"></g:Label> 
+										   <g:Label styleName="{unitStyle.timeLabelStyle}" ui:field="lblTimeMin"></g:Label> 
+										</g:HTMLPanel>
+										
 										<p><g:Button  styleName="primary" ui:field="btnSetGoal"></g:Button></p> </div> </div> </div>
+
 								    </div> 
 
 
