@@ -607,9 +607,9 @@ public enum UrlToken {
 	
 	REORDER_PATHWAY_SEQUENCE("/v2/class/{0}/pathway/{1}/reorder/{2}?sessionToken={3}"),
 
-	PATHWAYS_CLASS_OPTIMIZED("/v2/class/{0}/item?sessionToken={1}&limit={2}&offset={3}&orderBy=sequence&optimize=true"),
+	PATHWAYS_CLASS_OPTIMIZED("/v2/class/{0}/item?sessionToken={1}&limit={2}&offset={3}&orderBy=sequence&optimize=true&type=pathway"),
 	
-	PATHWAYS_CLASS("/v2/class/{0}/item?sessionToken={1}&limit={2}&offset={3}&orderBy=sequence"),
+	PATHWAYS_CLASS("/v2/class/{0}/item?sessionToken={1}&limit={2}&offset={3}&orderBy=sequence&type=pathway"),
 	
 	PATHWAYS_CLASS_REORDER("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"),
 	
@@ -617,7 +617,7 @@ public enum UrlToken {
 	
 	V2_ASSIGN_COLLECTION_TO_PATHWAY("/v2/class/{0}/pathway/{1}/assign/{2}?sessionToken={3}"),
 	
-	ASSIGN_STATUS_UPDATE("/v2/class/item/{0}?sessionToken={1}"),
+	ASSIGN_STATUS_UPDATE("gooruapi/rest/v2/class/{0}/pathway/{1}/item/{2}?sessionToken={3}"),
 	
 	V2_GET_ASSIGNMENT_DETAILS("/v2/collection/item/{0}?sessionToken={1}"),
 	

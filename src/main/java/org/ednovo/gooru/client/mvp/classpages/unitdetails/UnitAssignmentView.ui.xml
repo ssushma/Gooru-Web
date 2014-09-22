@@ -10,7 +10,7 @@
 			<div class="col-xs-2 {unitStyle.leftPanel}">
 				<g:HTMLPanel styleName="{unitStyle.uniSetup}">
 					<img src="images/blueArrow.png" />
-					<g:Anchor ui:field="unitSetupButton">Class Overview</g:Anchor>
+					<g:Anchor ui:field="unitSetupButton"></g:Anchor>
 				</g:HTMLPanel>
 				<hr />
 				<uc:UlPanel styleName="list-unstyled {unitStyle.unitMenu}">
@@ -20,30 +20,44 @@
 				</uc:UlPanel>
 
 				<g:HTMLPanel styleName="{unitStyle.uniSetup}">
-					<g:Label styleName="{unitStyle.moreUnits}" ui:field="lblMoreUnits">More
-						Units</g:Label>
+					<g:Label styleName="{unitStyle.moreUnits}" ui:field="lblMoreUnits"></g:Label>
 				</g:HTMLPanel>
 			</div>
 			<div class="col-xs-10 {unitStyle.rightPanel}">
 				<g:HTMLPanel styleName="{unitStyle.teachTab}" ui:field="htmDashBoardTabs">
-					<g:Button ui:field="btnDashBoard">Dashboard</g:Button>
-					<g:Button ui:field="btnAssignment">Assignments</g:Button>
+					<g:Button ui:field="btnDashBoard"></g:Button>
+					<g:Button ui:field="btnAssignment"></g:Button>
 				</g:HTMLPanel>
 				<g:HTMLPanel ui:field="containerPanel">
 					<div class="row">
 						<div class="col-xs-12">
 							<g:Label ui:field="unitTitleDetails" styleName="col-xs-2 {unitStyle.unitHeading}" />
-							<!-- <div class="col-xs-2 {unitStyle.unitHeading}">Unit 2 Details</div> -->
-							<div class="col-xs-2 {unitStyle.uniRequired}">
-								<div class="{unitStyle.bubble}"></div>
-								<g:Label ui:field="requiredLabel" styleName="{unitStyle.bubbleMain}" />
-								<!-- <div>Required</div> -->
-							</div>
-							<div class="col-xs-2 {unitStyle.uniRequired}">
-								<div class="{unitStyle.bubbleStyle}"></div>
-								<g:Label ui:field="optionalLabel" styleName="{unitStyle.bubbleMain}" />
-								<!-- <div>Optional</div> -->
-							</div>
+							<g:HTMLPanel styleName="row {unitStyle.classOptionsMain}">
+									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions} text-center">
+										<g:InlineLabel styleName="{unitStyle.bubbleSmall}"></g:InlineLabel> 
+										<g:InlineLabel>Required</g:InlineLabel> 
+									</g:HTMLPanel>
+									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions} text-center">
+										<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.stylishBub}"></g:InlineLabel>
+										<g:InlineLabel>Optional</g:InlineLabel> 
+									</g:HTMLPanel>
+									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions} text-center">
+										<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.greenBubble}"></g:InlineLabel>
+										<g:InlineLabel>Score Met</g:InlineLabel> 
+									</g:HTMLPanel>
+									<g:HTMLPanel styleName="col-xs-2 {unitStyle.classOverOptions} text-center">
+										<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.redBubble}"></g:InlineLabel> 
+										<g:InlineLabel>Score Not Met</g:InlineLabel>
+									</g:HTMLPanel>
+									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidth} {unitStyle.classOverOptions} text-center">
+										<g:InlineLabel styleName="{unitStyle.bubbleSmallrounded}"></g:InlineLabel> 
+										<g:InlineLabel>Made Extra Efforts</g:InlineLabel>
+									</g:HTMLPanel>
+									<g:HTMLPanel styleName="col-xs-2 {unitStyle.classOverOptions} text-center">
+										<img src="images/checkMarkWhite.png"/> 
+										<g:InlineLabel>Complete</g:InlineLabel>
+									</g:HTMLPanel>
+							</g:HTMLPanel>
 							<div class="clearfix"></div>
 						</div>
 					</div>
@@ -102,7 +116,7 @@
 										    <g:TextBox ui:field="txtHours" />
 										    <g:TextBox ui:field="txtMinuts" />
 										</div> 
-										<p><g:Button  styleName="primary" ui:field="btnSetGoal">Set Goal</g:Button></p> </div> </div> </div>
+										<p><g:Button  styleName="primary" ui:field="btnSetGoal"></g:Button></p> </div> </div> </div>
 								    </div> 
 
 

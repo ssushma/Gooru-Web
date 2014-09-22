@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
@@ -94,24 +95,30 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 	private class UnitDetailsEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			revealPlace("unitdetails");
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "1", "0", new SimpleAsyncCallback<ClassDo>() {
+				@Override
+				public void onSuccess(ClassDo classDo) {
+					if(classDo!=null&&classDo.getSearchResults().size()>0){
+						revealPlace("unitdetails",classDo.getSearchResults().get(0).getResource().getGooruOid());
+					}
+				}
+			});
 		}
 	}
 	
-	 private class ClassSetupEvents implements ClickHandler{
-		@Override
-		public void onClick(ClickEvent event) {
-			revealPlace("unitdetails");
-		}
-	}
-	 public void revealPlace(String tabName){
+	
+	 public void revealPlace(String tabName,String unitId){
 			Map<String,String> params = new HashMap<String,String>();
 			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
 			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 			String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
 			params.put("pageSize", pageSize);
-			params.put("id", classpageid);
+			params.put("classpageid", classpageid);
+			if(unitId!=null){
+				params.put("uid", unitId);
+			}
 			params.put("pageNum", pageNum);
 			params.put("pos", pos);
 			if(tabName!=null){
@@ -121,23 +128,19 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	 }
 
+
 	@Override
 	public void showUnitDetails(ClassDo classDo) {
-		if(classDo.getTotalHitCount() != null)
-		{
+		if(classDo.getTotalHitCount() != null){
 			 totalCount = classDo.getTotalHitCount();
 		}
-		else
-		{
+		else{
 			totalCount = 0;
 		}
 		int unitSize = 0;
-		if(classDo.getSearchResults() != null)
-		{
-	    unitSize =classDo.getSearchResults().size() ;
+		if(classDo.getSearchResults() != null){
+			unitSize =classDo.getSearchResults().size() ;
 		}
-		
-
 	    unitAssignmentWidgetContainer.clear();
 	    for(int i=0; i<unitSize; i++){
 	    	ClassUnitsListDo classListUnitsListDo=classDo.getSearchResults().get(i);

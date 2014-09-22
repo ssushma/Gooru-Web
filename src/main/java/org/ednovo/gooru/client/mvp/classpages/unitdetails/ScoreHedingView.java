@@ -25,10 +25,14 @@
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
 
+
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -63,6 +67,8 @@ public class ScoreHedingView extends Composite {
 
 	private static ScoreHedingViewUiBinder uiBinder = GWT
 			.create(ScoreHedingViewUiBinder.class);
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface ScoreHedingViewUiBinder extends UiBinder<Widget, ScoreHedingView> {
 	}
@@ -77,9 +83,9 @@ public class ScoreHedingView extends Composite {
 	
 	private int redScore, finalScore;
 	
-	private String SETGOAL= "Set Goal";
+	private String SETGOAL= i18n.GL2197();
 	
-	private String EDITGOAL= "Edit Goal";
+	private String EDITGOAL= i18n.GL2196();
 	
 	
 
@@ -97,6 +103,8 @@ public class ScoreHedingView extends Composite {
 	public ScoreHedingView(ClassDo classDo) {
 		this.classDo=classDo;
 		initWidget(uiBinder.createAndBindUi(this));
+		lblTitle.setText(i18n.GL2195());
+		btnSetGoal.setText(SETGOAL);
 		txtScore.addBlurHandler(new ScoreHandler());
 		txtScore.addKeyPressHandler(new HasNumbersOnly());
 		txtScore.setMaxLength(3);
