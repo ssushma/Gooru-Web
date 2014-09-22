@@ -12,7 +12,7 @@
 					<g:Label styleName="{style.unitName}" ui:field="lblUnitName"></g:Label>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{style.detailsBtn}">
-					<g:Anchor ui:field="unitDetailsButton" text="{i18n.GL2195}"></g:Anchor>
+					<g:Anchor ui:field="unitDetailsButton" text="{i18n.GL2204}"></g:Anchor>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<uc:HTMLEventPanel styleName="{style.assignmentsPreviousArrow}" ui:field="htPanelPreviousArrow">
@@ -30,7 +30,7 @@
 				
 			<g:HTMLPanel styleName="{style.classButtons}">
 				<g:Button styleName="secondary btn-block {style.editbutton}" ui:field="editUnitButton">Edit</g:Button>
-				<g:Button styleName="secondary btn-block" ui:field="addAssignmentButton"><img src="images/plusIco.png"/> Assignment</g:Button>
+				<g:Button styleName="secondary btn-block" ui:field="addAssignmentButton" text="{i18n.GL2205}"><img src="images/plusIco.png"/></g:Button>
 				<g:Button styleName="secondary btn-block" ui:field="cancelEditButton">Cancel</g:Button>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
