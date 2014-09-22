@@ -99,7 +99,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel circleContainerPanel;
-	@UiField Label requiredLabel,optionalLabel;
+
 	Image leftArrow = new Image();
 	Image rightArrow = new Image();
 		
@@ -133,8 +133,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		res.unitAssignment().ensureInjected();
 		unitSetupButton.addClickHandler(new UnitSetupEvents());
 		btnDashBoard.setStyleName(res.unitAssignment().selected());
-		requiredLabel.setText("Required");
-		optionalLabel.setText("Optional");
 	}
 	
 	public HTMLPanel getUnitPanel(){
@@ -605,8 +603,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void showAssignment(ClasspageItemDo classpageItemDo) {
 		assignmentContainer.clear();
 		CollectionsView collectionView=new CollectionsView(classpageItemDo){
-			public void updateAssignmentRequiredStatus(Boolean isRequired,String collectionItemId){
+			@Override
+			public void updateAssignmentRequiredStatus(Boolean isRequired,String collectionItemId,String readStatus,boolean isUpdateRequiredStatus){
+				if(isUpdateRequiredStatus){
 				updateCircleRequiredView(isRequired, collectionItemId);
+				}else{
+					updateAssingmentCircleReadStatus(isRequired,collectionItemId,readStatus);
+				}
 			}
 		};
 		assignmentContainer.add(collectionView);
@@ -620,6 +623,19 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				UnitCricleView unitCricleView=(UnitCricleView)widget;
 				if(unitCricleView.getAssignementId().equals(collectionItemId)){
 					unitCricleView.showCircle(isRequired);
+					return;
+				}
+			}
+		}		
+	}
+	public void updateAssingmentCircleReadStatus(Boolean isRequired,String collectionItemId,String readStatus){
+		Iterator<Widget> widgets = circleContainerPanel.iterator();
+		while (widgets.hasNext()) {
+			 Widget widget = widgets.next();
+			if (widget instanceof UnitCricleView) {
+				UnitCricleView unitCricleView=(UnitCricleView)widget;
+				if(unitCricleView.getAssignementId().equals(collectionItemId)){
+					unitCricleView.assignmentReadStatus(isRequired,readStatus);
 					return;
 				}
 			}
