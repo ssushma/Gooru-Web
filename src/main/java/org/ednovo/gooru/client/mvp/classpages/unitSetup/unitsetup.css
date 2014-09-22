@@ -361,7 +361,7 @@
 }
 
 .numaricName{
-	padding:21px 0;
+	padding:25px 0;
 }
 
 
@@ -390,6 +390,8 @@
 .HoverSetup{
 	border-top:1px solid #eeeeee;
 	border-bottom:1px solid #eeeeee;
+	max-height: 97px;
+min-height: 97px;
 }
 		
 .HoverSetup .classLeftMenu{
@@ -398,7 +400,7 @@
 		
 .HoverSetup .detailsBtn{
 	background:#76afda;
-	padding:12px 0;
+	padding:8px 0;
 	color:#ffffff;
 	text-align:center;
 	display:none;
@@ -412,7 +414,7 @@
 .classDetailsMain{
 	width:757px;
 	float:left;
-	padding:18px 0;
+	padding:6px 0;
 }
 		
 .classPic{
@@ -464,7 +466,7 @@
 .classButtons{
 	float: left;
     width: 107px;
-	padding:14px 0;
+	padding:5px 0;
 }
 		
 .single{

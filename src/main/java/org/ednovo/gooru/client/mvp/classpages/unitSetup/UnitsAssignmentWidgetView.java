@@ -112,7 +112,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public UnitsAssignmentWidgetView(ClassUnitsListDo classUnitsDo){
 		initWidget(uibinder.createAndBindUi(this));
 		this.classUnitsDo=classUnitsDo;
-		addAssignmentButton.getElement().getStyle().setMarginTop(28, Unit.PX);
+		//addAssignmentButton.getElement().getStyle().setMarginTop(28, Unit.PX);
 		loadingImageLabel.setVisible(false);
 		setUnitNameDetails();
 		cancelEditButton.setVisible(false);
