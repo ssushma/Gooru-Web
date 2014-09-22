@@ -2,9 +2,9 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
 import java.util.ArrayList;
 
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.classpages.event.ReorderAssignmentEvent;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -232,16 +232,11 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 					saveButton.setVisible(true);
 					hide();
 					savingTextLabel.setText("");
-					
+
 					setAssignmentToNewPosition(Integer.parseInt(dropdownListPlaceHolderAssignment.getText()),selectedPathId);
-					
-//					AppClientFactory.fireEvent(new ReorderAssignmentEvent(Integer.parseInt(dropdownListPlaceHolderAssignment.getText())));
-					
-					
-					
 				}
-		});	
-			
+			});	
+
 		}
 
 		public void setAssignmentToNewPosition(int seqPosition,String selectedPathId){
