@@ -25,6 +25,8 @@
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
 
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -58,6 +60,8 @@ public class ScoreHedingView extends Composite {
 
 	private static ScoreHedingViewUiBinder uiBinder = GWT
 			.create(ScoreHedingViewUiBinder.class);
+	
+	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface ScoreHedingViewUiBinder extends UiBinder<Widget, ScoreHedingView> {
 	}
@@ -70,9 +74,9 @@ public class ScoreHedingView extends Composite {
 	
 	private int redScore, finalScore;
 	
-	private String SETGOAL= "Set Goal";
+	private String SETGOAL= i18n.GL2197();
 	
-	private String EDITGOAL= "Edit Goal";
+	private String EDITGOAL= i18n.GL2196();
 	
 	
 
@@ -89,6 +93,8 @@ public class ScoreHedingView extends Composite {
 	 */
 	public ScoreHedingView(String title) {
 		initWidget(uiBinder.createAndBindUi(this));
+		lblTitle.setText(i18n.GL2195());
+		btnSetGoal.setText(SETGOAL);
 		txtScore.addBlurHandler(new ScoreHandler());
 		txtScore.addKeyPressHandler(new HasNumbersOnly());
 		lblControl.getElement().setId("controll");
