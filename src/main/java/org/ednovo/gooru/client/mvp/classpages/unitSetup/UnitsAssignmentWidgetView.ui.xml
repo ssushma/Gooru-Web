@@ -3,6 +3,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="style" src="unitsetup.css" />
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel styleName="{style.classMenuBlock} pathwayContainer">
 		<g:HTMLPanel styleName="{style.classSetupMenu} {style.HoverSetup}">
 			<g:HTMLPanel styleName="{style.classLeftMenu}">
@@ -11,7 +12,7 @@
 					<g:Label styleName="{style.unitName}" ui:field="lblUnitName"></g:Label>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{style.detailsBtn}">
-					<g:Anchor ui:field="unitDetailsButton">Details</g:Anchor>
+					<g:Anchor ui:field="unitDetailsButton" text="{i18n.GL2204}"></g:Anchor>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<uc:HTMLEventPanel styleName="{style.assignmentsPreviousArrow}" ui:field="htPanelPreviousArrow">
@@ -29,7 +30,7 @@
 				
 			<g:HTMLPanel styleName="{style.classButtons}">
 				<g:Button styleName="secondary btn-block {style.editbutton}" ui:field="editUnitButton">Edit</g:Button>
-				<g:Button styleName="secondary btn-block" ui:field="addAssignmentButton"><img src="images/plusIco.png"/> Assignment</g:Button>
+				<g:Button styleName="secondary btn-block" ui:field="addAssignmentButton" text="{i18n.GL2205}"><img src="images/plusIco.png"/></g:Button>
 				<g:Button styleName="secondary btn-block" ui:field="cancelEditButton">Cancel</g:Button>
 			</g:HTMLPanel>
 		</g:HTMLPanel>

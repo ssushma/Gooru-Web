@@ -48,6 +48,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -113,7 +114,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 		this.classUnitsDo=classUnitsDo;
 		addAssignmentButton.getElement().getStyle().setMarginTop(28, Unit.PX);
 		loadingImageLabel.setVisible(false);
-//		setAssignmentsForUnit();
 		setUnitNameDetails();
 		cancelEditButton.setVisible(false);
 		editUnitButton.addClickHandler(new EditAssignmentEvent());
@@ -137,6 +137,12 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public void setAssignmentsForUnit() {
 		loadingImageLabel.setVisible(false);
 		assignmentsContainer.clear();
+		if(getTotalHitCount() == 0){
+			Label label = new Label();
+			label.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+			label.setText("Zero Assignments");
+			assignmentsContainer.add(label); 
+		}
 		if(classUnitsDo!=null && classUnitsDo.getResource()!=null){
 			if(classUnitsDo.getResource().getCollectionItems() != null){
 				for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
@@ -279,6 +285,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			System.out.println("---- pathway id -- "+classUnitsDo.getResource().getGooruOid());
+			System.out.println("---- pathway item -- "+collectionItem);
+			System.out.println("---- pathway CP -- "+classPageId);
 			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),title, "direction",classPageId,classUnitsDo.getItemSequence()){
 
 				@Override

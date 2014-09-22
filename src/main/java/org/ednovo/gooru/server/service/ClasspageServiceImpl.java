@@ -1592,6 +1592,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				UrlToken.GET_PATHWAY_ITEM,classpageId,pathwayGooruOid,getLoggedInSessionToken(),sequenceNo,limit+"",offSet+"");
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
+		getLogger().info("--- v2GetPathwaysOptimized  -- "+url);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializePathwayItem(jsonRep);
 		
