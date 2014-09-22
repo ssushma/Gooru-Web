@@ -101,7 +101,7 @@ public class PersonalizeUnitPresenter extends
 
 	@Override
 	public void getStudentsList(int offSet, int limit, String type, String classCode){
-		System.out.println("offSet : "+offSet);
+		System.out.println("getStudentsList offSet : "+offSet);
 //		this.offSet = offSet;
 		if (classCode == null){
 			classCode = this.classpageDo.getClasspageCode();
