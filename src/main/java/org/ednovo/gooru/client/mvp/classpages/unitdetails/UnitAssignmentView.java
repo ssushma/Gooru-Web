@@ -98,6 +98,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private int limit = 5;
 	private int unitsPageNumber = 0;
 	private int unitsTotalCount = 0;
+	
+	private Boolean isClickOnAssignment =false;
 		
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -210,6 +212,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	
 	public void setCircleData(UnitAssignmentsDo unitAssignmentsDo){
+	
 		rightArrow.getElement().setAttribute("style", "cursor:pointer");
 		leftArrow.getElement().setAttribute("style", "cursor:pointer");
 		if(unitAssignmentsDo.getTotalHitCount() != null){
@@ -228,6 +231,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 							rightHandler.removeHandler();
 						}
 					}catch (AssertionError ae) { }
+					
 					leftHandler=leftArrow.addClickHandler(new cleckOnNext("left"));
 					rightHandler=rightArrow.addClickHandler(new cleckOnNext("right"));
 					circleContainerPanel.clear();
@@ -276,11 +280,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			isClickOnAssignment = true;
 			removeAssignmentSelectedStyle();
 			addAssignmentSelectStyle(unitCricleView);
 			assignmentContainer.clear();
 			String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 			revealPlace("unitdetails", null, unitId, unitCricleView.getAssignementId());
+			
 		}
 	}
 	public void removeAssignmentSelectedStyle(){
@@ -303,7 +309,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
 			 if(slot==UnitAssignmentPresenter._SLOT){
-				 assignmentContainer.clear();
+				  assignmentContainer.clear();
 				 assignmentContainer.add(content);
 			}else{
 //				assignmentContainer.setVisible(false);
@@ -461,6 +467,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			if(pageLocation.equals(PlaceTokens.STUDENT)){
 				classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 				params.put("id", classpageid);
+				
 			}
 			else{
 				classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
@@ -532,7 +539,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 	}
 	public void getUnitAssignments(int assignmentOffset,final boolean isAssignmentEditmode){
-		String classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		String classPageId;
+		classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		if(classPageId==null){
+			classPageId= AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		}
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classPageId, unitId, "sequence", assignmentLimit, assignmentOffset, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 
 			@Override
@@ -592,6 +603,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@UiHandler("btnAssignment")
 	public void clickOnAssignement(ClickEvent clickEvent){
+		
 		btnAssignment.setStyleName(res.unitAssignment().selected());
 		btnDashBoard.removeStyleName(res.unitAssignment().selected());
 		containerPanel.setVisible(true);
@@ -659,18 +671,22 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	@Override
 	public void showDashBoard() {
-		goalContainer.setVisible(true);
-		containerPanel.setVisible(false);
-		scoreHederView();
-		setDashBoardIds();
-		htmDashBoardTabs.setVisible(true);
-		btnDashBoard.setStyleName(res.unitAssignment().selected());
-		btnAssignment.removeStyleName(res.unitAssignment().selected());
+		if(!isClickOnAssignment){
+			goalContainer.setVisible(true);
+			containerPanel.setVisible(false);
+			scoreHederView();
+			setDashBoardIds();
+			htmDashBoardTabs.setVisible(true);
+			btnDashBoard.setStyleName(res.unitAssignment().selected());
+			btnAssignment.removeStyleName(res.unitAssignment().selected());
+		}
+		isClickOnAssignment =false;
 	}
 
 
 	@Override
 	public void showAssignments() {
+		
 		// TODO Auto-generated method stub
 		htmDashBoardTabs.removeFromParent();
 		containerPanel.setVisible(true);
@@ -733,5 +749,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		return null;
 	}
+
+	
 
 	}

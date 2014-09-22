@@ -57,6 +57,9 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	public UnitAssigmentReorder(ClassDo classDo,String title,String narration,String classpageId,int selectedUnitNumber) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.classDo = classDo;
+		if(classpageId == null){
+			classpageId = AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		}
 		this.classpageId = classpageId;
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		unitTextLbl.setText(i18n.GL2175());
