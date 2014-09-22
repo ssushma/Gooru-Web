@@ -224,4 +224,6 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	void updateAssignmentStatusAsCompleteorOpen(String collectionItemId,
 			boolean isComplete, AsyncCallback<CollectionDo> callback);
 	
+	void updateUnitStatus(String collectionItemId,String minimumScore, String assignementStatus, String timeStudying, AsyncCallback<CollectionItemDo> callback);
+	
 }

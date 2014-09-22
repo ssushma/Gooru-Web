@@ -103,7 +103,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField ChangeAssignmentStatusView changeAssignmentStatusView;
 	
-	@UiField Button editAssignmentDetailsButton,cancelAssignmentDetailsButton,saveAssignmentDetailsButton,editCollectionButton;
+	@UiField Button editAssignmentDetailsButton,cancelAssignmentDetailsButton,saveAssignmentDetailsButton,editCollectionButton,unitCircleView;
 	
 	@UiField InlineLabel suggestedHourLabel,suggestedMinutesLabel;
 	
@@ -146,6 +146,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		showSaveButtons(false);
 		showAssignmentDetils();
 		frameContainer.setVisible(false);
+
 		String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if(pageLocation.equals(PlaceTokens.STUDENT))
 		{
@@ -154,15 +155,18 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			editCollectionButton.removeFromParent();
 			changeAssignmentStatusView.removeFromParent();
 			dueDateButton.removeFromParent();
+			unitCircleView.setVisible(true);
+			unitCircleView.addClickHandler(new MarkProgressEvent());
+		}else if(pageLocation.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
+			dueDateButton.setVisible(true);
+			unitCircleView.setVisible(false);
 		}
-
 		changeAssignmentStatusView.getChangeAssignmentStatusButton().addClickHandler(new ChangeStatusEvent());
 		btnSummary.addClickHandler(new SummaryEvent());
 		btnProgress.addClickHandler(new ProgressEvent());
 		editAssignmentDetailsButton.addClickHandler(new EditAssignmentEvent());
 		saveAssignmentDetailsButton.addClickHandler(new UpdateAssignmentDetailsEvent());
 		cancelAssignmentDetailsButton.addClickHandler(new CancelEditAssignmentEvent());
-
 		dueDateButton.addClickHandler(new EditDueDateEvent());
 		editCollectionButton.addClickHandler(new CollectionEditEvent());
 	}
@@ -339,6 +343,14 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		urlVal = urlVal+"&"+Math.random();			
 		return urlVal;
 	}
+	
+	public class MarkProgressEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, null, null, null, null, null, false, true);
+		}
+	}
+	
 	
 	public class EditAssignmentEvent implements ClickHandler{
 		@Override

@@ -49,4 +49,8 @@ public interface AnalyticsService extends BaseService {
 	public ArrayList<CollectionSummaryUsersDataDo> getSessionsDataByUser(String collectionId,String classId,String userId);
 		 
 	public ArrayList<UserDataDo> getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId);
+
+	public void getMinimumScoredBelowData(String collectionId,String classId,String score);
+	
+	public void getMinimumScoredAboveData(String collectionId,String classId,String score);
 }
