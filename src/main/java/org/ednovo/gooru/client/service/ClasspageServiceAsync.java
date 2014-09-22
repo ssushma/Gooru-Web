@@ -211,7 +211,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void v2AssignCollectionTOPathway(String classpageId,String pathwayId,String collectionId,String suggestTime,String minScore,String duedate,String directions, AsyncCallback<ArrayList<ClasspageItemDo>> callback);
 	
-	void updateAssignmentDetails(String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus, AsyncCallback<ClasspageItemDo> callback);
+	void updateAssignmentDetails(String classId,String unitId,String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus, AsyncCallback<ClasspageItemDo> callback);
 	
 	public void getAssignemntDetails(String assingmentId,AsyncCallback<ClasspageItemDo> callback);
 
@@ -221,7 +221,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	void updateAssignmentStatus(String collectionItemId,
 			boolean isRequiredStatus, AsyncCallback<CollectionDo> callback);
 	
-	void updateAssignmentStatusAsCompleteorOpen(String collectionItemId,
+	void updateAssignmentStatusAsCompleteorOpen(String classpageId,String unitGooruOid,String collectionItemId,
 			boolean isComplete, AsyncCallback<CollectionDo> callback);
 	
 	void updateUnitStatus(String collectionItemId,String minimumScore, String assignementStatus, String timeStudying, AsyncCallback<CollectionItemDo> callback);

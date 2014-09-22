@@ -17,6 +17,8 @@ public interface UnitAssignmentCssBundle extends ClientBundle{
 		String bubbleOptional();
 		String selected();
 		String teachTab();
+		String assingmentcompleted();
+		String assignmentCompletedWithOptional();
 	}
 	
 	@NotStrict

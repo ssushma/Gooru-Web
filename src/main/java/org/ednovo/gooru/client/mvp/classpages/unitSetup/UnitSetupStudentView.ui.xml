@@ -14,43 +14,35 @@
 							
 					</ptag:PPanel>
 				</g:HTMLPanel>
-
-<g:HTMLPanel styleName="col-xs-8">
-
-<h3 class="text-center">Class Overview</h3>
-
-
-<g:HTMLPanel styleName="row {stylenew.classOptionsMain}">
-
-<g:HTMLPanel styleName="col-xs-2 {stylenew.smallerWidth} {stylenew.classOverOptions} text-center">
-<g:HTMLPanel styleName="{stylenew.bubbleSmall}"></g:HTMLPanel> Required
-</g:HTMLPanel>
-<g:HTMLPanel styleName="col-xs-2 {stylenew.smallerWidth} {stylenew.classOverOptions} text-center">
-<g:HTMLPanel styleName="{stylenew.bubbleSmall} {stylenew.stylishBub}"></g:HTMLPanel> Optional
-</g:HTMLPanel>
-
-<g:HTMLPanel styleName="col-xs-2 {stylenew.smallerWidth} {stylenew.classOverOptions} text-center">
-<g:HTMLPanel styleName="{stylenew.bubbleSmall} {stylenew.greenBubble}"></g:HTMLPanel> Score Met
-</g:HTMLPanel>
-
-<g:HTMLPanel styleName="col-xs-2 {stylenew.classOverOptions} text-center">
-<g:HTMLPanel styleName="{stylenew.bubbleSmall} {stylenew.redBubble}"></g:HTMLPanel> Score Not Met
-</g:HTMLPanel>
-
-
-<g:HTMLPanel styleName="col-xs-2 {stylenew.smallWidth} {stylenew.classOverOptions} text-center">
-<g:HTMLPanel styleName="{stylenew.bubbleSmallrounded}"></g:HTMLPanel> Made Extra Efforts
-</g:HTMLPanel>
-
-<g:HTMLPanel styleName="col-xs-2 {stylenew.classOverOptions} text-center">
-<img src="images/checkMarkWhite.png"/> Complete
-</g:HTMLPanel>
-
-
-</g:HTMLPanel>
-</g:HTMLPanel>
-
-
+				<g:HTMLPanel styleName="col-xs-8">
+					<h3 class="text-center">Class Overview</h3>
+					<g:HTMLPanel styleName="row {stylenew.classOptionsMain}">
+						<g:HTMLPanel styleName="col-xs-2 {stylenew.smallerWidth} {stylenew.classOverOptions} text-center">
+							<g:InlineLabel styleName="{stylenew.bubbleSmall}"></g:InlineLabel> 
+							<g:InlineLabel>Required</g:InlineLabel> 
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="col-xs-2 {stylenew.smallerWidth} {stylenew.classOverOptions} text-center">
+							<g:InlineLabel styleName="{stylenew.bubbleSmall} {stylenew.stylishBub}"></g:InlineLabel>
+							<g:InlineLabel>Optional</g:InlineLabel> 
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="col-xs-2 {stylenew.smallerWidth} {stylenew.classOverOptions} text-center">
+							<g:InlineLabel styleName="{stylenew.bubbleSmall} {stylenew.greenBubble}"></g:InlineLabel>
+							<g:InlineLabel>Score Met</g:InlineLabel> 
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="col-xs-2 {stylenew.classOverOptions} text-center">
+							<g:InlineLabel styleName="{stylenew.bubbleSmall} {stylenew.redBubble}"></g:InlineLabel> 
+							<g:InlineLabel>Score Not Met</g:InlineLabel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="col-xs-2 {stylenew.smallWidth} {stylenew.classOverOptions} text-center">
+							<g:InlineLabel styleName="{stylenew.bubbleSmallrounded}"></g:InlineLabel> 
+							<g:InlineLabel>Made Extra Efforts</g:InlineLabel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="col-xs-2 {stylenew.classOverOptions} text-center">
+							<img src="images/checkMarkWhite.png"/> 
+							<g:InlineLabel>Complete</g:InlineLabel>
+						</g:HTMLPanel>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
 			<g:HTMLPanel styleName="col-xs-4 text-right {stylenew.widthoverride}">
 				<ptag:PPanel styleName="{style.uniSetup}">
 				    	<g:Anchor styleName="{style.unitdetailsLbl}" ui:field="unitDetailsAnchor">Unit Details</g:Anchor> 

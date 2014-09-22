@@ -47,6 +47,10 @@ public interface CollectionsCBundle extends ClientBundle {
 		String minimumScoreTextbox();
 		String enableLabelText();
 		String disableLabelText();
+		String requiredBuble();
+		String optionalBuble();
+		String assignmentCompleted();
+		String assignmentCompletedWithOptional();
 	}
 
 	@Source("collectionsstyles.css")

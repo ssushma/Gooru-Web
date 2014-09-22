@@ -244,6 +244,7 @@ public interface EditClasspageCBundle extends ClientBundle{
         String studentListContainer1();
         String student();
         String scrollPanel();
+        String tabContainerDiv();
 	}
 	@NotStrict
 	@Source("editclasspage.css")
