@@ -43,6 +43,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -137,6 +139,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		btnDashBoard.setStyleName(res.unitAssignment().selected());
 		requiredLabel.setText("Required");
 		optionalLabel.setText("Optional");
+		txtHours.getElement().setAttribute("placeholder", "h");
+		txtMinuts.getElement().setAttribute("placeholder", "min");
+		txtHours.getElement().setAttribute("style", "text-align:right");
+		txtMinuts.getElement().setAttribute("style", "text-align:right");
 	}
 	
 	public HTMLPanel getUnitPanel(){
@@ -598,7 +604,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		scoreHedingContainer.clear();
 		ScoreHedingView scoreHedingView = null;
 		for(int i=0; i<2; i++){
-			scoreHedingView=new ScoreHedingView("");
+			scoreHedingView=new ScoreHedingView(classDo);
 			scoreHedingContainer.add(scoreHedingView);
 			if(i==0){
 				scoreHedingView.getLblTitle().setText("Average Correct Answer");
@@ -609,6 +615,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		//txtHours.addBlurHandler(new ScoreHandler());
 		txtHours.addKeyPressHandler(scoreHedingView.new HasNumbersOnly());
 		txtMinuts.addKeyPressHandler(scoreHedingView.new HasNumbersOnly());
+		txtHours.addBlurHandler(new TimeHandler());
+		txtMinuts.addBlurHandler(new TimeHandler());
 	}
 	
 	
@@ -679,6 +687,57 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private void setDashBoardIds() {
 		lblControl.getElement().setId("controll");
 //		lblGreenControl.getElement().setId("greenControll");
+	}
+	
+	public class TimeHandler implements BlurHandler{
+
+		@Override
+		public void onBlur(BlurEvent event) {
+			String hours = txtHours.getText();
+			String min = txtMinuts.getText();
+			if((hours != null || hours != "")){
+				try{
+					if(Integer.parseInt(hours) >24 || Integer.parseInt(hours)<0){
+						txtHours.setText(getValidationTime(hours, true));
+					}else{
+
+					}
+
+				}catch(NumberFormatException numberFormatException){
+					numberFormatException.printStackTrace();
+				}
+
+			}
+			if(min !=null || min != ""){
+				try{
+					if(Integer.parseInt(min) >60 || Integer.parseInt(min) <0){
+						txtMinuts.setText(getValidationTime(min, false));
+					}else{
+
+					}
+				}catch(Exception exception){
+
+				}
+
+			}
+
+		}
+
+	}
+	
+
+	private String getValidationTime(String time, boolean isHours) {
+		// TODO Auto-generated method stub
+		if(isHours){
+			if(Integer.parseInt(time) >24){
+				return "24";
+			}
+		}else{
+			if(Integer.parseInt(time)>60){
+				return "60";
+			}
+		}
+		return null;
 	}
 
 	
