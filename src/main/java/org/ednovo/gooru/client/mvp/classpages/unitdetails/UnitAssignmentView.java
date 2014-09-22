@@ -78,9 +78,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 	}
 	
-	@UiField HTMLPanel unitPanel,containerPanel,scoreHedingContainer,htmDashBoardTabs;
+	@UiField HTMLPanel unitPanel,containerPanel,scoreHedingContainer,htmDashBoardTabs,timeLablePanel;
 	
-	@UiField Label lblMoreUnits,unitTitleDetails;
+	@UiField Label lblMoreUnits,unitTitleDetails,lblTimeHours,lblTimeMin;
 	
 	@UiField Anchor unitSetupButton;
 	
@@ -97,6 +97,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private int limit = 5;
 	private int unitsPageNumber = 0;
 	private int unitsTotalCount = 0;
+	
+	private String SETGOAL= "Set Goal";
+	
+	private String EDITGOAL= "Edit Goal";
 		
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -141,6 +145,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		txtMinuts.getElement().setAttribute("placeholder", "min");
 		txtHours.getElement().setAttribute("style", "text-align:right");
 		txtMinuts.getElement().setAttribute("style", "text-align:right");
+		timeLablePanel.setVisible(false);
 	}
 	
 	public HTMLPanel getUnitPanel(){
@@ -723,5 +728,40 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		return null;
 	}
-
+	
+	@UiHandler("btnSetGoal")
+	public void clickOnGoalBtn(ClickEvent clickEvent){
+		
+		if(txtHours.getText()!=null || txtMinuts.getText()!=null ){
+			if(btnSetGoal.getText().equals(SETGOAL)){
+				lblTimeHours.setText(txtHours.getText()+" h");
+				lblTimeMin.setText(txtMinuts.getText()+" min");
+				showAndHideTextBox();
+				btnSetGoal.setText(EDITGOAL);
+				lblGreenControl.getElement().setId("greenControll");
+				lblControl.getElement().setAttribute("style", "-webkit-transform: rotate(-50deg);");
+			}else{
+				btnSetGoal.setStyleName("primary");
+				showAndHideTextBox();
+				btnSetGoal.setText(SETGOAL);
+			}
+			
+		}
 	}
+	
+	/*
+	 * show and hide text boxes
+	 */
+	public void showAndHideTextBox(){
+		if(btnSetGoal.getText().equals(SETGOAL)){
+			txtHours.setVisible(false);
+			txtMinuts.setVisible(false);
+			timeLablePanel.setVisible(true);
+		}else{
+			txtHours.setVisible(true);
+			txtMinuts.setVisible(true);
+			timeLablePanel.setVisible(false);
+		}
+	}
+
+}
