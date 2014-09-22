@@ -106,7 +106,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField ChangeAssignmentStatusView changeAssignmentStatusView;
 	
-	@UiField Button editAssignmentDetailsButton,cancelAssignmentDetailsButton,saveAssignmentDetailsButton,editCollectionButton;
+	@UiField Button editAssignmentDetailsButton,cancelAssignmentDetailsButton,saveAssignmentDetailsButton,editCollectionButton,studyCollectionButton;
 	
 	@UiField InlineLabel suggestedHourLabel,suggestedMinutesLabel;
 	
@@ -160,12 +160,12 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			changeAssignmentStatusView.removeFromParent();
 			dueDateButton.removeFromParent();
 			displayAssignmentMarkButton();
-			//unitCircleView.setVisible(true);
-			//unitCircleView.addClickHandler(new MarkProgressEvent());
 			assignmentMarkCheckBox.addValueChangeHandler(new MarkProgressEvent());
+			studyCollectionButton.addClickHandler(new StudyCollectionEvent());
 		}else if(pageLocation.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
 			dueDateButton.setVisible(true);
 			assignmentMarkCheckBox.removeFromParent();
+			studyCollectionButton.removeFromParent();
 		}
 		changeAssignmentStatusView.getChangeAssignmentStatusButton().addClickHandler(new ChangeStatusEvent());
 		btnSummary.addClickHandler(new SummaryEvent());
@@ -628,6 +628,18 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 		return placeToken;
 	}
+	private class StudyCollectionEvent implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String,String> parametesMap=new HashMap<String,String>();
+			parametesMap.put("id", classpageItemDo.getCollectionId());
+			parametesMap.put("cid", classpageItemDo.getCollectionItemId());
+			parametesMap.put("page", getCurrentPlaceToken());
+			AppClientFactory.getPlaceManager().revealPlace(true, AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, parametesMap));
+		}
+		
+	}
 	
 	private class CollectionEditEvent implements ClickHandler{
 		@Override
@@ -636,12 +648,12 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		};
 	}
 	public void getCollectionFolders(){
-		AppClientFactory.getInjector().getClasspageService().getCollectionParentFolders(classpageItemDo.getCollectionId(), new SimpleAsyncCallback<ArrayList<String>>() {
+		AppClientFactory.getInjector().getClasspageService().getCollectionParentFolders(classpageItemDo.getResource().getGooruOid(), new SimpleAsyncCallback<ArrayList<String>>() {
 			@Override
 			public void onSuccess(ArrayList<String> foldersList) {
 				if(foldersList!=null){
 					Map<String,String> parametesMap=new HashMap<String,String>();
-					parametesMap.put("id", classpageItemDo.getCollectionId());
+					parametesMap.put("id", classpageItemDo.getResource().getGooruOid());
 					if(foldersList.size()>0){
 						for(int i=0;i<foldersList.size();i++){
 							parametesMap.put("o"+(i+1), foldersList.get(i));
