@@ -82,124 +82,43 @@
 						Student Performance <span>Heighlight students with certain score range below.</span>
 						</div>
 						<div class="{unitStyle.scoreText}">
-						Minimum score: <span>85%</span>
+						Minimum score: <g:InlineLabel ui:field="minimumScorelbl">85%</g:InlineLabel>
 						</div>
 						<div class="clearfix"></div>
 						</div>
 					<div class="row">
 						  <div class="col-xs-12">
 					      <div class="{unitStyle.progress}">
-						  <div class="{unitStyle.progress_org}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:20%;">
-						  </div>
-					  	  <div class="{unitStyle.progress_green}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:20%;">
-					  	  </div>
-					      <div class="{unitStyle.progress_blue}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
-					      </div>
+						  <g:HTMLPanel  styleName="{unitStyle.progress_org}" ui:field="orangeProgressBar">
+						  </g:HTMLPanel>
+					  	  <g:HTMLPanel styleName="{unitStyle.progress_green}" ui:field="greenProgressBar">
+					  	  </g:HTMLPanel>
+					      <g:HTMLPanel styleName="{unitStyle.progress_blue}" ui:field="blueProgressBar">
+					      </g:HTMLPanel>
 					</div>
 					</div>
 					</div>
 					
 					<div class="row scores">
 					<div class="col-xs-6">
-					Score Below: <input name="" type="text" class="{unitStyle.form_control}" placeholder="20"/> %
+					Score Below: <g:TextBox ui:field="minimumScoreBelow" styleName="{unitStyle.form_control}"></g:TextBox>%
 					</div>
 					<div class="col-xs-6 text-right">
-					Score Above: <input name="" type="text" class="{unitStyle.form_control}" placeholder="20"/> %
+					Score Above: <g:TextBox ui:field="minimumScoreAbove" styleName="{unitStyle.form_control}"></g:TextBox>%
 					</div>
 					<div class="clearfix"></div>
 					</div>
 					
 					<div class="row {unitStyle.scoresTable}">
-					<div class="col-xs-6 {unitStyle.org}">
-					</div>
-					<div class="col-xs-6 {unitStyle.green}">
-					</div>
+					
+					<div class="col-xs-6 {unitStyle.org}"/>
+					<div class="col-xs-6 {unitStyle.green}"/>
 					
 					<div class="clearfix"></div>
 					</div>
 					<div class="row scoresTableList">
-					<div class="col-xs-6">
-					<ul class="list-unstyled list-inline">
-					<li><img src="images/score-img.png"/></li>
-					<li>Anna</li>
-					<li>score</li>
-					<li>Time</li>
-					<li>Reaction</li>
-					</ul>
-					
-					<ul class="list-unstyled list-inline">
-					<li><img src="images/score-img.png"/></li>
-					<li>Anna</li>
-					<li>score</li>
-					<li>Time</li>
-					<li>Reaction</li>
-					</ul>
-					
-					
-					<ul class="list-unstyled list-inline">
-					<li><img src="images/score-img.png"/></li>
-					<li>Anna</li>
-					<li>score</li>
-					<li>Time</li>
-					<li>Reaction</li>
-					</ul>
-					
-					
-					<ul class="list-unstyled list-inline">
-					<li><img src="images/score-img.png"/></li>
-					<li>Anna</li>
-					<li>score</li>
-					<li>Time</li>
-					<li>Reaction</li>
-					</ul>
-					
-					
-					<ul class="list-unstyled list-inline">
-					<li><img src="images/score-img.png"/></li>
-					<li>Anna</li>
-					<li>score</li>
-					<li>Time</li>
-					<li>Reaction</li>
-					</ul>
-					</div>
-					<div class="col-xs-6">
-					<ul class="list-unstyled list-inline">
-					<li><img src="images/score-img.png"/></li>
-					<li>Dave</li>
-					<li>score</li>
-					<li>Time</li>
-					<li>Reaction</li>
-					</ul>
-					<ul class="list-unstyled list-inline">
-					<li><img src="images/score-img.png"/></li>
-					<li>Dave</li>
-					<li>score</li>
-					<li>Time</li>
-					<li>Reaction</li>
-					</ul>
-					<ul class="list-unstyled list-inline">
-					<li><img src="images/score-img.png"/></li>
-					<li>Dave</li>
-					<li>score</li>
-					<li>Time</li>
-					<li>Reaction</li>
-					</ul>
-					<ul class="list-unstyled list-inline">
-					<li><img src="images/score-img.png"/></li>
-					<li>Dave</li>
-					<li>score</li>
-					<li>Time</li>
-					<li>Reaction</li>
-					</ul>
-					<ul class="list-unstyled list-inline">
-					<li><img src="images/score-img.png"/></li>
-					<li>Dave</li>
-					<li>score</li>
-					<li>Time</li>
-					<li>Reaction</li>
-					</ul>
-					</div>
-					
+					<g:HTMLPanel ui:field="scoredBelowPanel" styleName="col-xs-6"/>
+					<g:HTMLPanel ui:field="scoredAbovePanel" styleName="col-xs-6"/>
 					<div class="clearfix"></div>
 					</div>
 					</div>

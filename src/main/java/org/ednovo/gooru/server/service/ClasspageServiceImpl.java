@@ -1897,6 +1897,41 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollection(jsonRep);
 	}
+
+	@Override
+	public ClasspageItemDo updateUnitStatus(String pathWayId,
+			String minimumScore, String assignementStatus, String timeStudying)
+			throws GwtException {
+		JsonRepresentation jsonRep = null;
+				String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_UNIT_STATUS,pathWayId,getLoggedInSessionToken());
+				LOGGER.info("ASSIGN_STATUS_UPDATE API==>"+url);
+				JSONObject jsonObject=new JSONObject();
+				JSONObject collectionJsonObject=new JSONObject();
+				try {
+					if(minimumScore!=null){
+						collectionJsonObject.put("minimumScoreByUser", minimumScore);
+					}
+					if(assignementStatus!=null)
+					{
+						collectionJsonObject.put("assignmentCompleted", assignementStatus);
+					}
+					if(timeStudying!=null)
+					{
+						collectionJsonObject.put("timeStudying",timeStudying);
+					}
+					jsonObject.put("collectionItem", collectionJsonObject);
+					
+					LOGGER.info("JSON_PAYLOAD==>"+jsonObject.toString());
+					JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),jsonObject.toString());
+					jsonRep = jsonResponseRep.getJsonRepresentation();
+				    return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ClasspageItemDo.class);
+				}	
+				catch(JSONException e)
+				{
+					e.printStackTrace();
+				}
+				 return null;
+	}
 }
 
 

@@ -32,4 +32,8 @@ public interface AnalyticsUiHandlers extends BaseUiHandlers{
 	void getPathwayUnits(String classId,int limit, int offset ,boolean clearPanel);
 	
 	void setClickedTabPresenter(String clickedTab);
+	
+	void getMinimumBelowScoredData();
+	
+	void getMinimumAboveScoredData();
 }
