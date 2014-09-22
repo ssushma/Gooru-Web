@@ -25,6 +25,11 @@
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.model.content.ClassDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -68,6 +73,8 @@ public class ScoreHedingView extends Composite {
 	
 	@UiField Button btnSetGoal;
 	
+	private ClassDo classDo;
+	
 	private int redScore, finalScore;
 	
 	private String SETGOAL= "Set Goal";
@@ -87,10 +94,12 @@ public class ScoreHedingView extends Composite {
 	 * Note that depending on the widget that is used, it may be necessary to
 	 * implement HasHTML instead of HasText.
 	 */
-	public ScoreHedingView(String title) {
+	public ScoreHedingView(ClassDo classDo) {
+		this.classDo=classDo;
 		initWidget(uiBinder.createAndBindUi(this));
 		txtScore.addBlurHandler(new ScoreHandler());
 		txtScore.addKeyPressHandler(new HasNumbersOnly());
+		txtScore.setMaxLength(3);
 		lblControl.getElement().setId("controll");
 		lblScore.setVisible(false);
 	}
@@ -103,15 +112,14 @@ public class ScoreHedingView extends Composite {
 			String score = txtScore.getText();
 			 if(score != null || score != ""){
 				try{
-					if(Integer.parseInt(score) >100 || Integer.parseInt(score) <=0){
+					if(Integer.parseInt(score) >100 || Integer.parseInt(score)<0){
 						lblControl.getElement().setId("controll");
+						txtScore.setText(getValidationScore(score));
 					}else{
 						int scoreValue= Integer.parseInt(txtScore.getText());
 						finalScore=((scoreValue*176)/100);
 						finalScore=finalScore-176;
-						System.out.println("finalScore:"+finalScore);
 					    redScore=((50*66)/100);
-						System.out.println("redScore:"+redScore);
 						redScore=redScore-119;
 						lblControl.getElement().setAttribute("style", "-webkit-transform: rotate("+finalScore+"deg);");
 					}
@@ -121,7 +129,19 @@ public class ScoreHedingView extends Composite {
 				
 			}
 		}
-				
+
+	}
+	
+	private String getValidationScore(String score) {
+		// TODO Auto-generated method stub
+		if(Integer.parseInt(score) >100){
+			return "100";
+		}
+		if(Integer.parseInt(score)<0){
+			
+			return "0";
+		}
+		return null;
 	}
 	
 	public class HasNumbersOnly implements KeyPressHandler {
@@ -160,14 +180,15 @@ public class ScoreHedingView extends Composite {
 					lblRedControl.getElement().setAttribute("style", "-webkit-transform: rotate("+redScore+"deg);");
 					lblScore.getElement().setAttribute("style", "color:#fb7c73");
 				}
-				/*AppClientFactory.getInjector().getClasspageService().updateUnitStatus(collectionItemId, minimumScore, assignementStatus, timeStudying, new SimpleAsyncCallback<CollectionDo>() {
+//				System.out.println("collecctionitemid:"+classDo.getSearchResults().get(0).getCollectionItemId());
+				AppClientFactory.getInjector().getClasspageService().updateUnitStatus("10923bde-3778-4136-b580-f7f6424a005a", txtScore.getText(), "", "", new SimpleAsyncCallback<CollectionItemDo>() {
 
 					@Override
-					public void onSuccess(CollectionDo result) {
+					public void onSuccess(CollectionItemDo result) {
 						// TODO Auto-generated method stub
 						
 					}
-				});*/
+				});
 				
 			}else{
 				showAndHideTextBox();
