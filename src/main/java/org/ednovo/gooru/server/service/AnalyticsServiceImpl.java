@@ -198,4 +198,16 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		}
 		return collectionSummaryMetaDataDoList;
 	}
+
+	@Override
+	public void getMinimumScoredBelowData(String collectionId, String classId,
+			String score) {
+		
+	}
+
+	@Override
+	public void getMinimumScoredAboveData(String collectionId, String classId,
+			String score) {
+		
+	}
 }

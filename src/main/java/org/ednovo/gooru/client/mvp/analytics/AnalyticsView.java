@@ -8,21 +8,27 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.analytics.util.StudentScoredAboveBelowUlPanel;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitWidget;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -41,17 +47,21 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	
 	@UiField Label lblMoreUnits,summaryArrowlbl,progressArrowlbl,responsesArrowlbl;
 	
-	@UiField HTMLPanel graphWidget,slotWidget;
+	@UiField HTMLPanel graphWidget,slotWidget,orangeProgressBar,greenProgressBar,blueProgressBar,scoredBelowPanel,scoredAbovePanel;
 	
 	@UiField Button btnCollectionSummary,btnCollectionProgress,btnCollectionResponses;
 	
 	@UiField ListBox loadCollections;
 	
+	@UiField InlineLabel minimumScorelbl;
+	
+	@UiField TextBox minimumScoreBelow,minimumScoreAbove;
+	
 	ClasspageListDo classpageListDo;
 	
 	boolean isSummayClicked=false,isProgressClicked=false;
 	
-	final String SUMMARY="Summary",PROGRESS="Progress";
+	final String SUMMARY="Summary",PROGRESS="Progress",BELOWSCORE="BelowScore",ABOVESCORE="AboveScore";
 	
 	private int limit = 5;
 	private int offSet = 0;
@@ -66,6 +76,10 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		graphWidget.add(new HCBarChart().createLineChart());
 		btnCollectionSummary.addClickHandler(new ViewAssignmentClickEvent("Summary"));
 		btnCollectionProgress.addClickHandler(new ViewAssignmentClickEvent("Progress"));
+		minimumScoreBelow.setText("0");
+		minimumScoreAbove.setText("0");
+		minimumScoreBelow.addKeyUpHandler(new MiniMumScoreKeyUpHandler(BELOWSCORE));
+		minimumScoreAbove.addKeyUpHandler(new MiniMumScoreKeyUpHandler(ABOVESCORE));
 	}
 	public class ViewAssignmentClickEvent implements ClickHandler{
 		private String clicked;
@@ -173,6 +187,30 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			revealPlace("unitdetails",null,unitsWidget.getUnitGooruOid());
 		}
 	}
+	
+	public class MiniMumScoreKeyUpHandler implements KeyUpHandler{
+		private String scoreVal;
+		public MiniMumScoreKeyUpHandler(String scoreVal){
+			this.scoreVal=scoreVal;
+		}
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+			String originalScoredVal=minimumScorelbl.getText();
+			String minimumScoreBelowVal=minimumScoreBelow.getText();
+			String minimumScoreAboveVal=minimumScoreAbove.getText();
+			if(originalScoredVal!=null && !originalScoredVal.trim().isEmpty()){
+				originalScoredVal=originalScoredVal.replaceAll("%", "");
+				if((Integer.parseInt(originalScoredVal)<Integer.parseInt(minimumScoreAboveVal)) && scoreVal.equalsIgnoreCase(ABOVESCORE)){
+					greenProgressBar.getElement().getStyle().setWidth((100-Integer.parseInt(minimumScoreAboveVal)), Unit.PCT);
+					getUiHandlers().getMinimumAboveScoredData();
+				}
+				if((Integer.parseInt(originalScoredVal)>Integer.parseInt(minimumScoreBelowVal)) && scoreVal.equalsIgnoreCase(BELOWSCORE)){
+					orangeProgressBar.getElement().getStyle().setWidth(Integer.parseInt(minimumScoreBelowVal), Unit.PCT);
+					getUiHandlers().getMinimumBelowScoredData();
+				}
+			}
+		}
+	}
 	 public void revealPlace(String tabName,String pageNum,String unitId){
 		 	
 			Map<String,String> params = new HashMap<String,String>();
@@ -209,4 +247,19 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			}
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	 }
+	 
+	@Override
+	public void setMinimumAvobeScoredData() {
+		scoredAbovePanel.clear();
+		for(int i=0;i<3;i++){
+			scoredAbovePanel.add(new StudentScoredAboveBelowUlPanel());
+		}
+	}
+	@Override
+	public void setMinimumBelowScoredData() {
+		scoredBelowPanel.clear();
+		for(int i=0;i<3;i++){
+			scoredBelowPanel.add(new StudentScoredAboveBelowUlPanel());
+		}
+	}
 }
