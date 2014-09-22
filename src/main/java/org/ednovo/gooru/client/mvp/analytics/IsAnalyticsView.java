@@ -32,4 +32,8 @@ public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>
 	 public void showUnitNames(ClassDo classDo,boolean clearPanel);
 	
 	public void hideMoreUnitsLink();
+	
+	public void setMinimumAvobeScoredData();
+	
+	public void setMinimumBelowScoredData();
 }
