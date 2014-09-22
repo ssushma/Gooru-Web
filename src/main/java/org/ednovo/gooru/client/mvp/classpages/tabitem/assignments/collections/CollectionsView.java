@@ -599,7 +599,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	public void updateAssignmentDetails(String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus,final boolean isUpdateRequiredStatus,final boolean isUpdateDuedate){
-		AppClientFactory.getInjector().getClasspageService().updateAssignmentDetails(collectionItemId, direction, dueDate, readStatus, minimumScore, suggestedTime, isRequiredStatus, new SimpleAsyncCallback<ClasspageItemDo>() {
+		String classId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+		AppClientFactory.getInjector().getClasspageService().updateAssignmentDetails(classId,unitId,collectionItemId, direction, dueDate, readStatus, minimumScore, suggestedTime, isRequiredStatus, new SimpleAsyncCallback<ClasspageItemDo>() {
 			@Override
 			public void onSuccess(ClasspageItemDo classpageItemDo) {
 				if(classpageItemDo!=null){

@@ -229,6 +229,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 			AssignmentEditView assignmentEditView = new AssignmentEditView(classUnitsDo.getResource().getCollectionItems().get(i));
 			assignmentEditView.getChangeAssignmentStatusView().getChangeAssignmentStatusButton().addClickHandler(new AssignmentStatusChangeEvent(assignmentEditView));
+			assignmentEditView.setUnitId(classUnitsDo.getResource().getGooruOid());
 			assignmentEditView.getDeleteAssignmentLbl().addClickHandler(new DeleteAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
 			if(classUnitsDo.getResource().getCollectionItems().size()>0){ 
 				assignmentEditView.getAssignmentReorderLbl().addMouseOverHandler(new ReorderAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getResource().getTitle(),classUnitsDo.getResource().getCollectionItems().get(i).getNarration(),classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
@@ -251,9 +252,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			System.out.println("inside clickevetn");
 			Boolean isRequiredStatus=assignmentEditView.getChangeAssignmentStatusView().getChangeAssignmentStatusButton().getValue();
-			AppClientFactory.getInjector().getClasspageService().updateAssignmentDetails(assignmentEditView.getAssignmentId(), null, null, null, null, null,isRequiredStatus , new SimpleAsyncCallback<ClasspageItemDo>() {
+			String classId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			AppClientFactory.getInjector().getClasspageService().updateAssignmentDetails(classId,assignmentEditView.getUnitId(),assignmentEditView.getAssignmentId(), null, null, null, null, null,isRequiredStatus , new SimpleAsyncCallback<ClasspageItemDo>() {
 				@Override
 				public void onSuccess(ClasspageItemDo classpageItemDo) {
 					Boolean isRequired=classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false;
