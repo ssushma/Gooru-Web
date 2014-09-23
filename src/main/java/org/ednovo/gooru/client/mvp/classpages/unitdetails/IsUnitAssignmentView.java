@@ -41,5 +41,6 @@ public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentU
 	 public void showAssignment(ClasspageItemDo classpageItemDo);
 	void showDashBoard();
 	void showAssignments();
+	void scoreHederView(String collectionItemId);
 
 }
