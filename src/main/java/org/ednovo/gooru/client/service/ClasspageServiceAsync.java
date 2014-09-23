@@ -226,4 +226,5 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	void updateUnitStatus(String collectionItemId,String minimumScore, String assignementStatus, String timeStudying, AsyncCallback<CollectionItemDo> callback);
 	
+	void pathwayItemMoveWithReorder(String classId,String pathwaygooruOid,String collectionItemId,String newSequence,AsyncCallback<Void> callback);
 }
