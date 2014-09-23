@@ -137,11 +137,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public void setAssignmentsForUnit() {
 		loadingImageLabel.setVisible(false);
 		assignmentsContainer.clear();
+		getZeroAssignmentLabel();
 		if(getTotalHitCount() == 0){
-			Label label = new Label();
-			label.getElement().getStyle().setTextAlign(TextAlign.CENTER);
-			label.setText("Zero Assignments");
-			assignmentsContainer.add(label); 
+			assignmentsContainer.add(getZeroAssignmentLabel()); 
 		}
 		if(classUnitsDo!=null && classUnitsDo.getResource()!=null){
 			if(classUnitsDo.getResource().getCollectionItems() != null){
@@ -156,6 +154,14 @@ public class UnitsAssignmentWidgetView extends Composite {
 		}
 	}
 	
+	private Label getZeroAssignmentLabel() {
+		Label label = new Label();
+		label.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+		label.getElement().getStyle().setMarginTop(32, Unit.PX); 
+		label.setText(i18n.GL2206());
+		return label;
+	}
+
 	private void showAndHidePaginationArrows() {
 		if(classUnitsDo.getResource().getItemCount()>assignmentLimit){
 			htPanelNextArrow.setVisible(true);
@@ -204,7 +210,11 @@ public class UnitsAssignmentWidgetView extends Composite {
 									hide();
 									loadingImageLabel.setVisible(true);
 									if((getTotalHitCount()-1)==assignmentOffset){
-										assignmentOffset=assignmentOffset-10;
+										if((getTotalHitCount()-1)==0){
+											assignmentOffset=0;
+										}else{
+											assignmentOffset=assignmentOffset-10;
+										}
 									}
 									getUnitAssignments(assignmentOffset,isEditMode,null);
 								}
@@ -222,6 +232,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public void setAssignmentsEditView() {
 		loadingImageLabel.setVisible(false);
 		assignmentsContainer.clear();
+		if(getTotalHitCount() == 0){
+			assignmentsContainer.add(getZeroAssignmentLabel()); 
+		}
 		for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 			AssignmentEditView assignmentEditView = new AssignmentEditView(classUnitsDo.getResource().getCollectionItems().get(i));
 			assignmentEditView.getChangeAssignmentStatusView().getChangeAssignmentStatusButton().addClickHandler(new AssignmentStatusChangeEvent(assignmentEditView));
