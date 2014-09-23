@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,27 +23,47 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.unitSetup;
-import java.util.ArrayList;
+package org.ednovo.gooru.client.mvp.classpages.event;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.ClassDo;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.GwtEvent.Type;
 
+/**
+ * 
+ * @fileName : RefreshPathwayItemsEvent.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.1
+ *
+ * @date: Sept 23, 2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 
-public interface IsUnitSetupView extends IsViewWithHandlers<UnitSetupUiHandlers>{
+public class RefreshPathwayItemsEvent extends GwtEvent<RefreshPathwayItemsEventHandler> {
 	
-	void showUnitDetails(ClassDo classDo);
+	public static final Type<RefreshPathwayItemsEventHandler> TYPE = new Type<RefreshPathwayItemsEventHandler>();
 	
-	void setPagination(int totalCount, int pagenumVal);
-
-	void addAssignmentWidget(ArrayList<ClasspageItemDo> classpageItemDo, String pathwayId);  
+	private String pathwayId;
+	private String classpageId;
 	
-	public void clearUnitAssignmentWidgetContaner();
+	public RefreshPathwayItemsEvent(String pathwayId,String classpageId){
+		this.pathwayId = pathwayId;
+		this.classpageId = classpageId;
+	}
 
-	void setLoadingIcon(boolean isVisible);
+	@Override
+	public com.google.gwt.event.shared.GwtEvent.Type<RefreshPathwayItemsEventHandler> getAssociatedType() {
+		return TYPE;
+	}
 
-	void refreshPathwayItems(String classpageId, String pathwayId); 
+	@Override
+	protected void dispatch(RefreshPathwayItemsEventHandler handler) {
+		handler.refreshPathway(classpageId,pathwayId); 
+	}
 
 }

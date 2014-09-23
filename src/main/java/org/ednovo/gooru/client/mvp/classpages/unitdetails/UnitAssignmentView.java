@@ -361,7 +361,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void onMouseOver(MouseOverEvent event) {
 		unitAssigmentReorder = new UnitAssigmentReorder(classDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null),selectedUnitNumber,totalHintCount,selectedAssignmentId){
 			@Override
-			public void reorderAssignment(int seqPosition,String selectedPathId) {
+			public void reorderAssignment(int seqPosition,String selectedPathId,String targetUnitNumb) { 
 				setAssignmentToNewPosition(seqPosition,selectedPathId);
 			}
 		};
