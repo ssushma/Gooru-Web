@@ -12,6 +12,7 @@ import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsReactionWidget;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsTabContainer;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.DataView;
+import org.ednovo.gooru.client.mvp.analytics.util.Print;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
@@ -30,6 +31,7 @@ import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -63,7 +65,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	final List<Integer> resourceRowIndex=new ArrayList<Integer>();
 	
 	final String INCORRECT="#db0f0f",CORRECT="#4d9645",ONMULTIPULEATTEMPTS="#FBB03B";
-	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab";
+	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab",PRINT="print";
 	
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
 	ArrayList<UserDataDo> openendedData=new ArrayList<UserDataDo>();
@@ -92,6 +94,11 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				}else if(tabClicked.equalsIgnoreCase(BREAKDOWN)){
 					hideAllPanels();
 					individualResourceBreakdownDatapnl.setVisible(true);
+				}else if(tabClicked.equalsIgnoreCase(PRINT)){
+					com.google.gwt.user.client.Element element = DOM.getElementById("individulaDataScored");
+				    Print.it(element);
+				}else{
+					getUiHandlers().setHtmltopdf(individualScoredData.toString());
 				}
 			}
 		};
@@ -445,6 +452,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        Options options = Options.create();
 	        options.setAllowHtml(true);
 	        Table table = new Table(data, options);
+	        table.getElement().setId("individulaDataScored");
 	        individualScoredData.add(table);
 	}
 	String getCorrectAnswer(ArrayList<MetaDataDo> metaDataObj){
