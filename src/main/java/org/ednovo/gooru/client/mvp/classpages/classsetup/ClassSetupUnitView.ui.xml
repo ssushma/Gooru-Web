@@ -11,24 +11,19 @@
 <g:HTMLPanel>
 	<g:HTMLPanel ui:field="unitSequence" styleName="{playerStyle.numaric}"></g:HTMLPanel>
 		<g:HTMLPanel styleName="{playerStyle.unitInput}">
-			<g:HTMLPanel ui:field="inputContainer">
+			<g:HTMLPanel ui:field="inputContainer" styleName="{playerStyle.textBoxContainer}">
 			<g:TextBox ui:field="unitName" name=""></g:TextBox> 
 			<g:Label ui:field="unitNameErrorLabel"></g:Label>
-			<g:HTMLPanel styleName="{playerStyle.saveBtns}" ui:field="buttonsContainer"> 
-				<g:Button ui:field="cancelBtn" styleName="secondary"> Cancel</g:Button>  
-				<g:Button ui:field="saveBtn" styleName="primary"> Save</g:Button> </g:HTMLPanel>
-			</g:HTMLPanel>
-			<gg:HTMLEventPanel ui:field="divContainer" styleName="{playerStyle.unitInput} {playerStyle.divcontainertext}">
-				<g:Label ui:field="unitnameLBL"></g:Label>
-				<g:HTMLPanel styleName="{playerStyle.floatRightcontainer}">
-					<g:Button ui:field="editBtn" styleName="primary {playerStyle.btnContainer}"> Edit</g:Button>
-				</g:HTMLPanel>
-			</gg:HTMLEventPanel>
 		</g:HTMLPanel>
+		<gg:HTMLEventPanel ui:field="divContainer" styleName="{playerStyle.unitInput} {playerStyle.divcontainertext}">
+				<g:Label ui:field="unitnameLBL"></g:Label>
+		</gg:HTMLEventPanel>
 		<g:HTMLPanel styleName="{playerStyle.ordButtons}">
-			<g:Button ui:field="btnAssignment" styleName="secondary normalBtn"><img src="images/plusIco.png"/> Assignment</g:Button> 
-			<g:Button ui:field="deleteBtnUnit" styleName="secondary normalBtn"><img src="images/delete.png"/> Delete</g:Button> 
-			<g:Button styleName="secondary {playerStyle.lgBtn}" ui:field="btnReorder"><img src="images/reorderIco.png"/> Reorder</g:Button>
+			<g:Button ui:field="editBtn" styleName="secondary normalBtn">Edit</g:Button> 
+			<g:Button ui:field="cancelBtn" styleName="secondary"> Cancel</g:Button>  
+			<g:Button ui:field="saveBtn" styleName="primary"> Save</g:Button> 
+			<g:Button ui:field="deleteBtnUnit" styleName="secondary normalBtn">Delete</g:Button> 
+			<g:Button styleName="secondary normalBtn {playerStyle.lgBtn}" ui:field="btnReorder">Reorder</g:Button></g:HTMLPanel>
  			<gg:HTMLEventPanel styleName="{playerStyle.profileVisiblityPopup} {playerStyle.absoluteContainer}" ui:field="moveAssignmentPopup">
 				<g:HTMLPanel styleName="{playerStyle.bubblearrowstyle}"></g:HTMLPanel>
 			    <g:HTMLPanel styleName=" {playerStyle.standardsinner} {playerStyle.standardsPopup}">

@@ -524,10 +524,13 @@ display:inline-block;
 		background:#fff;
 		padding-bottom: 20px;
 		padding-top: 10px;
+		padding-left: 116px;
+		width: 1000px;
 	}
 	
 	.numaric{
 		display:inline-block;
+		
 		color:#176ba7;
 		font-size:14px;
 		font-weight:bold;
@@ -551,13 +554,12 @@ display:inline-block;
 
 		border:1px solid #bdbcc4;
 		padding:7px 120px 10px 1px;
-		width:506px;
+		width:379px;
 	
 	}
 	
 	.ordButtons{
 		display:inline-block;
-		text-align:right;
 		vertical-align: bottom;
 	}
 	
@@ -567,7 +569,7 @@ display:inline-block;
 	}
 	
 	.lgBtn{
-		padding:3px 9px !important;
+	
 	}
 	.headerFont{
 	font-size: 24px;
@@ -586,7 +588,7 @@ margin-top: 20px;
 	}
 	.divcontainertext{
 	border: 1px solid #bdbcc4;
-width: 625px;
+width: 570px;
 height: 24px;
 padding-top: 6px;
 }
@@ -730,8 +732,8 @@ width:100%;
 }
 .absoluteContainer{
 	position: absolute;
-left: 812px;
-margin-top: 30px;
+left: 589px;
+margin-top: 26px;
 }
 .saveBtnsReorder{
 position: relative;
@@ -792,4 +794,7 @@ margin-left: 37px;
 	position: absolute;
 	z-index: 5;
 	margin-left: 375px;
+}
+.textBoxContainer {
+	display:inline-block;
 }

@@ -117,6 +117,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		setClassUnitsDo(classUnitsDo);
 		setUnitNameDetails();
 		cancelEditButton.setVisible(false);
+		editUnitButton.setVisible(true);
 		editUnitButton.addClickHandler(new EditAssignmentEvent());
 		cancelEditButton.addClickHandler(new CancelEditEvent());
 		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),PlaceTokens.EDIT_CLASSPAGE));
@@ -139,10 +140,10 @@ public class UnitsAssignmentWidgetView extends Composite {
 		setLoadingIcon(false);
 		assignmentsContainer.clear();
 		if(getTotalHitCount() == 0){
-			Label label = new Label();
-			label.getElement().getStyle().setTextAlign(TextAlign.CENTER);
-			label.setText(i18n.GL2208());
-			assignmentsContainer.add(label); 
+			//Label label = new Label();
+			//label.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+			//label.setText(i18n.GL2208());
+			//assignmentsContainer.add(label); 
 			assignmentsContainer.add(getZeroAssignmentLabel()); 
 		}
 		if(classUnitsDo!=null && classUnitsDo.getResource()!=null){
