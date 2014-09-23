@@ -117,6 +117,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		setClassUnitsDo(classUnitsDo);
 		setUnitNameDetails();
 		cancelEditButton.setVisible(false);
+		editUnitButton.setVisible(true);
 		editUnitButton.addClickHandler(new EditAssignmentEvent());
 		cancelEditButton.addClickHandler(new CancelEditEvent());
 		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),PlaceTokens.EDIT_CLASSPAGE));

@@ -10,12 +10,12 @@
 			<g:HTMLPanel styleName="col-xs-12 {playerStyle.gerybg}">
 				<g:HTMLPanel styleName="col-xs-2"></g:HTMLPanel>
 				<g:FlowPanel styleName="col-xs-8">
-					<g:HTMLPanel styleName="text-center {playerStyle.headerFont}">Class Setup</g:HTMLPanel>
-					<g:HTMLPanel styleName="text-center {playerStyle.ptag}">Setup your class by adding units</g:HTMLPanel>
+					<g:HTMLPanel styleName="text-center {playerStyle.headerFont}">Unit Setup</g:HTMLPanel>
+					<g:HTMLPanel styleName="text-center {playerStyle.ptag}">You can add, delete and reorder units on this page</g:HTMLPanel>
 				</g:FlowPanel>
 				<g:HTMLPanel styleName="col-xs-4 text-right {playerStyle.unitSetupLabel}" ui:field="unitSetupLabel">
 					<ptag:PPanel ui:field="unitSetupContainer" styleName="{playerStyle.uniSetup}">
-					    	<g:Label ui:field="unitSetupButton" styleName="{playerStyle.unitdetailsLbl}">Unit Setup</g:Label> 
+					    	<g:Label ui:field="unitSetupButton" styleName="{playerStyle.unitdetailsLbl}">Add Assignments</g:Label> 
 							<g:Image url="images/blueRightArrow.png"></g:Image>
 					</ptag:PPanel>
 				</g:HTMLPanel>
