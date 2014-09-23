@@ -1592,7 +1592,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				UrlToken.GET_PATHWAY_ITEM,classpageId,pathwayGooruOid,getLoggedInSessionToken(),sequenceNo,limit+"",offSet+"");
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
-		getLogger().info("--- v2GetPathwaysOptimized  -- "+url);
+		getLogger().info("--- v2GetPathwayItems  -- "+url);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializePathwayItem(jsonRep);
 		
@@ -1905,7 +1905,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 				String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_UNIT_STATUS,pathWayId,getLoggedInSessionToken());
-				LOGGER.info("ASSIGN_STATUS_UPDATE API==>"+url);
+				LOGGER.info("updateUnitStatus API==>"+url);
 				JSONObject jsonObject=new JSONObject();
 				JSONObject collectionJsonObject=new JSONObject();
 				try {
@@ -1951,6 +1951,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				
 				
 			}catch(JSONException ex){}
+			getLogger().info("--- reorder assignment url -- "+url);
+			getLogger().info("--- payload -- "+jsonObject.toString());
+			
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),jsonObject.toString());
 			jsonRep =jsonResponseRep.getJsonRepresentation();
 		

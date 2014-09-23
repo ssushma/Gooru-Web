@@ -198,7 +198,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			String originalScoredVal=minimumScorelbl.getText();
 			String minimumScoreBelowVal=minimumScoreBelow.getText();
 			String minimumScoreAboveVal=minimumScoreAbove.getText();
-			if(originalScoredVal!=null && !originalScoredVal.trim().isEmpty()){
+			if(originalScoredVal!=null && !originalScoredVal.trim().isEmpty() && !minimumScoreBelowVal.trim().isEmpty() && !minimumScoreAboveVal.trim().isEmpty()){
 				originalScoredVal=originalScoredVal.replaceAll("%", "");
 				if((Integer.parseInt(originalScoredVal)<Integer.parseInt(minimumScoreAboveVal)) && scoreVal.equalsIgnoreCase(ABOVESCORE)){
 					greenProgressBar.getElement().getStyle().setWidth((100-Integer.parseInt(minimumScoreAboveVal)), Unit.PCT);

@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.ednovo.gooru.client.service.AnalyticsService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
+import org.ednovo.gooru.server.form.ResourceFormFactory;
 import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
@@ -37,6 +38,7 @@ import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Service;
@@ -209,5 +211,21 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public void getMinimumScoredAboveData(String collectionId, String classId,
 			String score) {
 		
+	}
+
+	@Override
+	public void setHTMLtoPDF(String htmlString) {
+		String url = "http://www.goorulearning.org/gooruapi/rest/v2/media/htmltopdf?sessionToken=aec96f9c-42df-11e4-8d6c-123141016e2a";
+		JsonRepresentation jsonRep = null;
+		String dataPassing="{%22fileName%22:%22Mymedia%22,%22html%22:%22"+htmlString+"%22}";
+		System.out.println(dataPassing);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), dataPassing);
+		jsonRep = jsonResponseRep.getJsonRepresentation(); 
+		System.out.println(jsonResponseRep.getStatusCode());
+		if(jsonResponseRep.getStatusCode()==200){
+			
+		}else{
+			
+		}		
 	}
 }

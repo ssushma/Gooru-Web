@@ -33,7 +33,47 @@ public class ClasspageItemDo implements Serializable{
 	
 	private ResourceDo resource;
 	
+	private Integer minimumScoreByUser;
+	private Integer assignmentCompleted;
+	private Integer timeStudying;
 	
+	
+	/**
+	 * @return the minimumScoreByUser
+	 */
+	public Integer getMinimumScoreByUser() {
+		return minimumScoreByUser;
+	}
+	/**
+	 * @param minimumScoreByUser the minimumScoreByUser to set
+	 */
+	public void setMinimumScoreByUser(Integer minimumScoreByUser) {
+		this.minimumScoreByUser = minimumScoreByUser;
+	}
+	/**
+	 * @return the assignmentCompleted
+	 */
+	public Integer getAssignmentCompleted() {
+		return assignmentCompleted;
+	}
+	/**
+	 * @param assignmentCompleted the assignmentCompleted to set
+	 */
+	public void setAssignmentCompleted(Integer assignmentCompleted) {
+		this.assignmentCompleted = assignmentCompleted;
+	}
+	/**
+	 * @return the timeStudying
+	 */
+	public Integer getTimeStudying() {
+		return timeStudying;
+	}
+	/**
+	 * @param timeStudying the timeStudying to set
+	 */
+	public void setTimeStudying(Integer timeStudying) {
+		this.timeStudying = timeStudying;
+	}
 	public String getUserNameDispaly() {
 		return userNameDispaly;
 	}
