@@ -71,6 +71,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -731,7 +732,12 @@ public class HeaderUc extends Composite implements
 			new RequestBuilder(RequestBuilder.GET, "./images/json/product-beta-status.json").sendRequest("", new RequestCallback() {
 				  @Override
 				  public void onResponseReceived(Request req, Response resp) {
-					  lblBeta.setVisible(getStatus(resp.getText()));
+					  boolean status = getStatus(resp.getText());
+					  if (status){
+						  lblBeta.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+					  }else{
+						  lblBeta.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+					  }
 				  }
 
 				  @Override
