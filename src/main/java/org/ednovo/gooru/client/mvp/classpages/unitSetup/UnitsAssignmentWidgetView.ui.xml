@@ -29,7 +29,7 @@
 			</g:HTMLPanel>
 				
 			<g:HTMLPanel styleName="{style.classButtons}">
-				<g:Button styleName="secondary btn-block {style.editbutton}" ui:field="editUnitButton">Edit</g:Button>
+				<g:Button styleName="secondary btn-block {style.editbutton}" ui:field="editUnitButton" text="{i18n.GL0140}"></g:Button>
 				<g:Button styleName="secondary btn-block" ui:field="addAssignmentButton" text="{i18n.GL2205}"><img src="images/plusIco.png"/></g:Button>
 				<g:Button styleName="secondary btn-block" ui:field="cancelEditButton">Done</g:Button>
 			</g:HTMLPanel>
