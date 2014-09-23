@@ -148,7 +148,24 @@ public abstract class GoalViewVc extends Composite {
 	public void onLoad() {
 		// setDebugId();
 	}
-	
+	/**
+	 * 
+	 * @function removeThisFromParent 
+	 * 
+	 * @created_date : 23-Sep-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void removeThisFromParent() {
 		this.removeFromParent();
 	}
