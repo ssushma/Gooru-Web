@@ -140,10 +140,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 		setLoadingIcon(false);
 		assignmentsContainer.clear();
 		if(getTotalHitCount() == 0){
-			//Label label = new Label();
-			//label.getElement().getStyle().setTextAlign(TextAlign.CENTER);
-			//label.setText(i18n.GL2208());
-			//assignmentsContainer.add(label); 
 			assignmentsContainer.add(getZeroAssignmentLabel()); 
 		}
 		if(classUnitsDo!=null && classUnitsDo.getResource()!=null){
@@ -173,7 +169,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public class EditAssignmentEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			isEditMode = true;
+//			isEditMode = true;
+			setEditMode(true);
 			hideEditButton(true);
 			assignmentsContainer.clear();
 			setAssignmentsEditView(); 
@@ -210,7 +207,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 											assignmentOffset=assignmentOffset-10;
 										}
 									}
-									getUnitAssignments(assignmentOffset,isEditMode,null);
+									getUnitAssignments(assignmentOffset,isEditMode(),null);
 								}
 							}
 						}
@@ -235,7 +232,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 			assignmentEditView.setUnitId(classUnitsDo.getResource().getGooruOid());
 			assignmentEditView.getDeleteAssignmentLbl().addClickHandler(new DeleteAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
 			if(classUnitsDo.getResource().getCollectionItems().size()>0){ 
-				assignmentEditView.getAssignmentReorderLbl().addMouseOverHandler(new ReorderAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getResource().getTitle(),classUnitsDo.getResource().getCollectionItems().get(i).getNarration(),classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
+				assignmentEditView.getAssignmentReorderLbl().addMouseOverHandler(new ReorderAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getItemSequence(),classUnitsDo.getResource().getCollectionItems().get(i).getResource().getTitle(),classUnitsDo.getResource().getCollectionItems().get(i).getNarration(),classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
 			}
 			assignmentEditView.setAssignmentId(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId());
 			assignmentsContainer.add(assignmentEditView);
@@ -282,8 +279,10 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public class ReorderAssignment implements MouseOverHandler{
 
 		String collectionItem,title,narration;
+		int assignmentSeq;
 		
-		public ReorderAssignment(String title,String narration,String collectionItem){
+		public ReorderAssignment(int assignmentSeq,String title,String narration,String collectionItem){
+			this.assignmentSeq=assignmentSeq;
 			this.title = title;
 			this.collectionItem = collectionItem;
 			this.narration = narration;
@@ -292,7 +291,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			final String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			unitAssigmentReorder = new UnitAssigmentReorder(0,getClassDo(),title, narration,classPageId,classUnitsDo.getItemSequence(),getTotalHitCount(),collectionItem){
+			unitAssigmentReorder = new UnitAssigmentReorder(assignmentSeq,getClassDo(),title, narration,classPageId,classUnitsDo.getItemSequence(),getTotalHitCount(),collectionItem){
 				@Override
 				public void reorderAssignment(int seqPosition,String selectedPathwayId,String targetPathway) {
 					boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItem);
@@ -303,7 +302,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 						if(assignmentOffset==seqPosition){
 							assignmentOffset = assignmentOffset-assignmentLimit;
 						}
-						getUnitAssignments(assignmentOffset,isEditMode,null);
+						getUnitAssignments(assignmentOffset,isEditMode(),null);
 						if(Integer.parseInt(targetPathway)!=classUnitsDo.getItemSequence()){
 							AppClientFactory.fireEvent(new RefreshPathwayItemsEvent(selectedPathwayId, classPageId));  
 						}
@@ -347,7 +346,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public class CancelEditEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			isEditMode = false;
+			setEditMode(false);
+//			isEditMode = false;
 			hideEditButton(false);
 			setAssignmentsForUnit();
 		}
@@ -429,7 +429,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public void clickOnNextArrow(ClickEvent clickEvent){
 		clearAssignmentsFromDo();
 		setLoadingIcon(true);
-		getUnitAssignments(getAssignmentOffsetValue(NEXT),isEditMode,NEXT);
+		getUnitAssignments(getAssignmentOffsetValue(NEXT),isEditMode(),NEXT);
 	}
 	
 	
@@ -446,7 +446,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public void clickOnPreviousArrow(ClickEvent clickEvent){
 		clearAssignmentsFromDo();
 		setLoadingIcon(true);
-		getUnitAssignments(getAssignmentOffsetValue(PREVIOUS),isEditMode,PREVIOUS);
+		getUnitAssignments(getAssignmentOffsetValue(PREVIOUS),isEditMode(),PREVIOUS);
 	}
 	
 	public void getUnitAssignments(int assignmentOffset,final boolean isAssignmentEditmode, final String direction){
@@ -610,6 +610,20 @@ public class UnitsAssignmentWidgetView extends Composite {
 	 */
 	public void setClassUnitsDo(ClassUnitsListDo classUnitsDo) {
 		this.classUnitsDo = classUnitsDo;
+	}
+	
+	/**
+	 * @return the isEditMode
+	 */
+	public boolean isEditMode() {
+		return isEditMode;
+	}
+
+	/**
+	 * @param isEditMode the isEditMode to set
+	 */
+	public void setEditMode(boolean isEditMode) {
+		this.isEditMode = isEditMode;
 	}
 	
 	public void setLoadingIcon(boolean showIcon){

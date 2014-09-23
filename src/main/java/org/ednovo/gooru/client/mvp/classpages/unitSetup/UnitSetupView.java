@@ -288,7 +288,11 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 				unitsAssignmentWidgetView.setTotalHitCount(result.getTotalHitCount());
 				unitsAssignmentWidgetView.getClassUnitsDo().getResource().setCollectionItems(new ArrayList<ClasspageItemDo>()); 
 				unitsAssignmentWidgetView.getClassUnitsDo().getResource().setCollectionItems(result.getSearchResults());
-				unitsAssignmentWidgetView.setAssignmentsForUnit(); 
+				if(unitsAssignmentWidgetView.isEditMode()){
+					unitsAssignmentWidgetView.setAssignmentsEditView();
+				}else{
+					unitsAssignmentWidgetView.setAssignmentsForUnit(); 
+				}
 			}
 		});
 	}
