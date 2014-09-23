@@ -2,9 +2,9 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
 import java.util.ArrayList;
 
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.classpages.event.ReorderAssignmentEvent;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -57,6 +57,9 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	public UnitAssigmentReorder(ClassDo classDo,String title,String narration,String classpageId,int selectedUnitNumber) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.classDo = classDo;
+		if(classpageId == null){
+			classpageId = AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		}
 		this.classpageId = classpageId;
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		unitTextLbl.setText(i18n.GL2175());
@@ -238,16 +241,11 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 					saveButton.setVisible(true);
 					hide();
 					savingTextLabel.setText("");
-					
+
 					setAssignmentToNewPosition(Integer.parseInt(dropdownListPlaceHolderAssignment.getText()),selectedPathId);
-					
-//					AppClientFactory.fireEvent(new ReorderAssignmentEvent(Integer.parseInt(dropdownListPlaceHolderAssignment.getText())));
-					
-					
-					
 				}
-		});	
-			
+			});	
+
 		}
 
 		public void setAssignmentToNewPosition(int seqPosition,String selectedPathId){

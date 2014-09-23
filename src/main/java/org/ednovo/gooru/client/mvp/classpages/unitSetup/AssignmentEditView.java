@@ -51,6 +51,8 @@ public class AssignmentEditView extends Composite{
 
 	public String assignmentId=null;
 	
+	private String unitGooruOid=null;
+	
 	@UiField ChangeAssignmentStatusView changeAssignmentStatusView;
 
 	public AssignmentEditView(ClasspageItemDo classpageItemDo){ 
@@ -107,5 +109,13 @@ public class AssignmentEditView extends Composite{
 	 */
 	public void setAssignmentId(String assignmentId) {
 		this.assignmentId = assignmentId;
+	}
+
+	public void setUnitId(String unitGooruOid) {
+		this.unitGooruOid=unitGooruOid;
+	}
+	
+	public String getUnitId() {
+		return unitGooruOid;
 	}
 }

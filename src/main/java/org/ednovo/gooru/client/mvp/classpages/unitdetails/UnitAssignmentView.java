@@ -79,9 +79,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 	}
 	
-	@UiField HTMLPanel unitPanel,containerPanel,scoreHedingContainer,htmDashBoardTabs;
+	@UiField HTMLPanel unitPanel,containerPanel,scoreHedingContainer,htmDashBoardTabs,timeLablePanel;
 	
-	@UiField Label lblMoreUnits,unitTitleDetails;
+	@UiField Label lblMoreUnits,unitTitleDetails,lblTimeHours,lblTimeMin;
 	
 	@UiField Anchor unitSetupButton;
 	
@@ -98,11 +98,16 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private int limit = 5;
 	private int unitsPageNumber = 0;
 	private int unitsTotalCount = 0;
+	
+	private String SETGOAL= "Set Goal";
+	
+	private String EDITGOAL= "Edit Goal";
+	private Boolean isClickOnAssignment =false;
 		
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel circleContainerPanel;
-	@UiField Label requiredLabel,optionalLabel;
+
 	Image leftArrow = new Image();
 	Image rightArrow = new Image();
 		
@@ -141,8 +146,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		unitSetupButton.addClickHandler(new UnitSetupEvents());
 		btnDashBoard.setStyleName(res.unitAssignment().selected());
 
-		requiredLabel.setText(i18n.GL2200());
-		optionalLabel.setText(i18n.GL2201());
+//		requiredLabel.setText(i18n.GL2200());
+//		optionalLabel.setText(i18n.GL2201());
 		btnSetGoal.setText(i18n.GL2197());
 
 		
@@ -150,7 +155,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		txtMinuts.getElement().setAttribute("placeholder", "min");
 		txtHours.getElement().setAttribute("style", "text-align:right");
 		txtMinuts.getElement().setAttribute("style", "text-align:right");
-
+		timeLablePanel.setVisible(false);
 	}
 	
 	public HTMLPanel getUnitPanel(){
@@ -210,6 +215,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	
 	public void setCircleData(UnitAssignmentsDo unitAssignmentsDo){
+	
 		rightArrow.getElement().setAttribute("style", "cursor:pointer");
 		leftArrow.getElement().setAttribute("style", "cursor:pointer");
 		if(unitAssignmentsDo.getTotalHitCount() != null){
@@ -228,6 +234,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 							rightHandler.removeHandler();
 						}
 					}catch (AssertionError ae) { }
+					
 					leftHandler=leftArrow.addClickHandler(new cleckOnNext("left"));
 					rightHandler=rightArrow.addClickHandler(new cleckOnNext("right"));
 					circleContainerPanel.clear();
@@ -276,11 +283,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			isClickOnAssignment = true;
 			removeAssignmentSelectedStyle();
 			addAssignmentSelectStyle(unitCricleView);
 			assignmentContainer.clear();
 			String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 			revealPlace("unitdetails", null, unitId, unitCricleView.getAssignementId());
+			
 		}
 	}
 	public void removeAssignmentSelectedStyle(){
@@ -303,7 +312,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
 			 if(slot==UnitAssignmentPresenter._SLOT){
-				 assignmentContainer.clear();
+				  assignmentContainer.clear();
 				 assignmentContainer.add(content);
 			}else{
 //				assignmentContainer.setVisible(false);
@@ -461,6 +470,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			if(pageLocation.equals(PlaceTokens.STUDENT)){
 				classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 				params.put("id", classpageid);
+				
 			}
 			else{
 				classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
@@ -532,7 +542,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 	}
 	public void getUnitAssignments(int assignmentOffset,final boolean isAssignmentEditmode){
-		String classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		String classPageId;
+		classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		if(classPageId==null){
+			classPageId= AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		}
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classPageId, unitId, "sequence", assignmentLimit, assignmentOffset, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 
 			@Override
@@ -592,6 +606,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@UiHandler("btnAssignment")
 	public void clickOnAssignement(ClickEvent clickEvent){
+		
 		btnAssignment.setStyleName(res.unitAssignment().selected());
 		btnDashBoard.removeStyleName(res.unitAssignment().selected());
 		containerPanel.setVisible(true);
@@ -623,8 +638,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void showAssignment(ClasspageItemDo classpageItemDo) {
 		assignmentContainer.clear();
 		CollectionsView collectionView=new CollectionsView(classpageItemDo){
-			public void updateAssignmentRequiredStatus(Boolean isRequired,String collectionItemId){
+			@Override
+			public void updateAssignmentRequiredStatus(Boolean isRequired,String collectionItemId,String readStatus,boolean isUpdateRequiredStatus){
+				if(isUpdateRequiredStatus){
 				updateCircleRequiredView(isRequired, collectionItemId);
+				}else{
+					updateAssingmentCircleReadStatus(isRequired,collectionItemId,readStatus);
+				}
 			}
 		};
 		assignmentContainer.add(collectionView);
@@ -638,6 +658,19 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				UnitCricleView unitCricleView=(UnitCricleView)widget;
 				if(unitCricleView.getAssignementId().equals(collectionItemId)){
 					unitCricleView.showCircle(isRequired);
+					return;
+				}
+			}
+		}		
+	}
+	public void updateAssingmentCircleReadStatus(Boolean isRequired,String collectionItemId,String readStatus){
+		Iterator<Widget> widgets = circleContainerPanel.iterator();
+		while (widgets.hasNext()) {
+			 Widget widget = widgets.next();
+			if (widget instanceof UnitCricleView) {
+				UnitCricleView unitCricleView=(UnitCricleView)widget;
+				if(unitCricleView.getAssignementId().equals(collectionItemId)){
+					unitCricleView.assignmentReadStatus(isRequired,readStatus);
 					return;
 				}
 			}
@@ -659,18 +692,22 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	@Override
 	public void showDashBoard() {
-		goalContainer.setVisible(true);
-		containerPanel.setVisible(false);
-		scoreHederView();
-		setDashBoardIds();
-		htmDashBoardTabs.setVisible(true);
-		btnDashBoard.setStyleName(res.unitAssignment().selected());
-		btnAssignment.removeStyleName(res.unitAssignment().selected());
+		if(!isClickOnAssignment){
+			goalContainer.setVisible(true);
+			containerPanel.setVisible(false);
+			scoreHederView();
+			setDashBoardIds();
+			htmDashBoardTabs.setVisible(true);
+			btnDashBoard.setStyleName(res.unitAssignment().selected());
+			btnAssignment.removeStyleName(res.unitAssignment().selected());
+		}
+		isClickOnAssignment =false;
 	}
 
 
 	@Override
 	public void showAssignments() {
+		
 		// TODO Auto-generated method stub
 		htmDashBoardTabs.removeFromParent();
 		containerPanel.setVisible(true);
@@ -733,5 +770,41 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		return null;
 	}
+	
+	@UiHandler("btnSetGoal")
+	public void clickOnGoalBtn(ClickEvent clickEvent){
+		
+		if(txtHours.getText()!=null || txtMinuts.getText()!=null ){
+			if(btnSetGoal.getText().equals(SETGOAL)){
+				lblTimeHours.setText(txtHours.getText()+" h");
+				lblTimeMin.setText(txtMinuts.getText()+" min");
+				showAndHideTextBox();
+				btnSetGoal.setText(EDITGOAL);
+				lblGreenControl.getElement().setId("greenControll");
+				lblControl.getElement().setAttribute("style", "-webkit-transform: rotate(-50deg);");
+			}else{
+				btnSetGoal.setStyleName("primary");
+				showAndHideTextBox();
+				btnSetGoal.setText(SETGOAL);
+			}
+			
+		}
 
 	}
+	
+	/*
+	 * show and hide text boxes
+	 */
+	public void showAndHideTextBox(){
+		if(btnSetGoal.getText().equals(SETGOAL)){
+			txtHours.setVisible(false);
+			txtMinuts.setVisible(false);
+			timeLablePanel.setVisible(true);
+		}else{
+			txtHours.setVisible(true);
+			txtMinuts.setVisible(true);
+			timeLablePanel.setVisible(false);
+		}
+	}
+
+}

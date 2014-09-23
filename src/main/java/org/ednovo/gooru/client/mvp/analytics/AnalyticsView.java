@@ -162,7 +162,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		this.classDo = classDo;
 		unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 		if(unitId==null){
-			unitId = classDo.getSearchResults().get(0).getResource().getGooruOid();
+//			unitId = classDo.getSearchResults().get(0).getResource().getGooruOid();
 		}
 		if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 			ArrayList<ClassUnitsListDo> classListUnitsListDo =classDo.getSearchResults();

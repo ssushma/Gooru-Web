@@ -1,5 +1,8 @@
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsCBundle;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.core.client.GWT;
@@ -36,7 +39,6 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 	public UnitCricleView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		UnitAssignmentCssBundle.INSTANCE.unitAssignment().ensureInjected();
-		unitNumber.setText("1");
 		
 	}
 	public UnitCricleView(ClasspageItemDo classpageItemDo) {
@@ -46,6 +48,10 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 		unitNumber.setText(classpageItemDo.getItemSequence()+"");
 		boolean isRequired=classpageItemDo!=null&&classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false;
 		showCircle(isRequired);
+		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(viewToken.equals(PlaceTokens.STUDY)){
+			assignmentReadStatus(isRequired,classpageItemDo.getStatus());
+		}
 		
 	}
 	
@@ -71,6 +77,21 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 			displayRequiredCircle();
 		}else{
 			displayOptionalCircle();
+		}
+	}
+	
+	public void assignmentReadStatus(boolean isRequired,String readStatus){
+		unitNumber.removeStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().assingmentcompleted());
+		unitNumber.removeStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().assignmentCompletedWithOptional());
+		boolean assignmentStudyStatus=readStatus!=null&&readStatus.equals("completed")?true:false;
+		if(isRequired){
+			if(assignmentStudyStatus){
+				unitNumber.addStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().assingmentcompleted());
+			}
+		}else{
+			if(assignmentStudyStatus){
+				unitNumber.addStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().assignmentCompletedWithOptional());
+			}
 		}
 	}
 	

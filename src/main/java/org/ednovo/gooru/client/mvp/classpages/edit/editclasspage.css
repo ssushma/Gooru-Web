@@ -43,7 +43,6 @@
 	min-width: 1000px;
 	background-color: gray;
 	height: 180px;
-	float:left;
 }
 
 .myCollectionShareStudentContainer > .headerContainer{
@@ -726,7 +725,7 @@ margin-left:-1px;
        -webkit-box-shadow: inset 0px 0px 4px rgba(0,0,0,0.15);
        box-shadow: inset 0px 0px 4px rgba(0,0,0,0.15);
 }
-/* .teachTab .selected {
+/* .tabContainerDiv .selected {
        position: relative;
        left: 7px;
        border-radius: 5px 0px 0px 5px;
@@ -784,7 +783,7 @@ margin-left:-1px;
 }
 
 
-.teachTab button:first-child{
+.tabContainerDiv button:first-child{
 	color: #515151;
 	cursor: pointer;
 	padding: 10px 60px;
@@ -798,7 +797,7 @@ margin-left:-1px;
 	border-radius: 5px 0px 0px 5px;
 }
 
-.teachTab button{
+.tabContainerDiv button{
 	margin-left: -4px;
 	color: #515151;
 	cursor: pointer;
@@ -813,7 +812,7 @@ margin-left:-1px;
 	/* border-radius: 0px 5px 5px 0px; */
 	
 }
-.teachTab button:last-child{
+.tabContainerDiv button:last-child{
 	margin-left: -4px;
 	color: #515151;
 	cursor: pointer;
@@ -828,7 +827,7 @@ margin-left:-1px;
 	border-radius: 0px 5px 5px 0px;
 	
 }
-.teachTab button:nth-last-child(2){
+.tabContainerDiv button:nth-last-child(2){
 	margin-left: -4px;
 	color: #515151;
 	cursor: pointer;
@@ -844,7 +843,7 @@ margin-left:-1px;
 	
 }
 
-.teachTab > .selected{
+.tabContainerDiv > .selected{
     color: #FFF !important;
     background: #1076BB;
     background: -moz-linear-gradient(3% 0 -90deg, #1076bb 0, #579ecf 100%) !important;
@@ -1396,6 +1395,9 @@ margin-bottom: -10px;
 }
 
 #pnlMainContainer{
-	float:left;
 	width: 99%;
+}
+.tabContainerDiv{
+	margin: 0 auto;
+width: 660px;
 }
