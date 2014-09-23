@@ -74,7 +74,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	private static UnitAssignmentViewUiBinder uiBinder = GWT.create(UnitAssignmentViewUiBinder.class);
 	
-
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	interface UnitAssignmentViewUiBinder extends UiBinder<Widget, UnitAssignmentView> {
 		
 	}
@@ -99,13 +100,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private int unitsPageNumber = 0;
 	private int unitsTotalCount = 0;
 	
-	private String SETGOAL= "Set Goal";
+	private String SETGOAL= i18n.GL2197();
 	
-	private String EDITGOAL= "Edit Goal";
+	private String EDITGOAL= i18n.GL2196();
 	private Boolean isClickOnAssignment =false;
 		
-	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
 	@UiField HTMLPanel circleContainerPanel;
 
 	Image leftArrow = new Image();
@@ -128,8 +127,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private boolean isEditMode=false;
 	
 	private ClassUnitsListDo classUnitsDo;
-	private static final String NEXT="next";
-	private static final String PREVIOUS= "previous";
+	private static final String NEXT=i18n.GL1463();
+	private static final String PREVIOUS= i18n.GL1462();
 	String unitId; 
 	private int selectedUnitNumber;
 	

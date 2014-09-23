@@ -5,6 +5,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="unitStyle" src="unitassignment.css" />
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel styleName="{unitStyle.unitDetails}">
 		<div class="{unitStyle.containerTeacher}">
 			<div class="col-xs-2 {unitStyle.leftPanel}">
@@ -35,11 +36,11 @@
 							<g:HTMLPanel styleName="row {unitStyle.classOptionsMain}">
 									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions} text-center">
 										<g:InlineLabel styleName="{unitStyle.bubbleSmall}"></g:InlineLabel> 
-										<g:InlineLabel>Required</g:InlineLabel> 
+										<g:InlineLabel text="{i18n.GL2209}"></g:InlineLabel> 
 									</g:HTMLPanel>
 									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions} text-center">
 										<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.stylishBub}"></g:InlineLabel>
-										<g:InlineLabel>Optional</g:InlineLabel> 
+										<g:InlineLabel text="{i18n.GL2201}"></g:InlineLabel> 
 									</g:HTMLPanel>
 					<!-- 				<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions} text-center">
 										<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.greenBubble}"></g:InlineLabel>
@@ -102,7 +103,7 @@
 									id="redControll"></div> <div class="circle" id="controll"></div> <div class="circle" 
 									id="circleMiddle"></div> <div class="emptybox"></div> </div> <div class="setGloalBtn"> 
 									<div class="perTextBox"><input name="" type="text"/></div> <p><button type="button" 
-									class="primary" id="btnBacktoLibrary" alt="Edit" title="Edit">Edit Goal</button></p> 
+									class="primary" id="btnBacktoLibrary" alt="Edit" title="Edi kushboo, it">Edit Goal</button></p> 
 									</div> </div> </div> </g:HTMLPanel> -->
 								   <div class="col-xs-4"> <div class="scorMetInner"> <div class="scoreHeding">Time 
 									Studing</div> 
