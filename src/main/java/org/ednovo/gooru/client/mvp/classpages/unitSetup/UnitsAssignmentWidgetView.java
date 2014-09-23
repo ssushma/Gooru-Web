@@ -138,10 +138,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		loadingImageLabel.setVisible(false);
 		assignmentsContainer.clear();
 		if(getTotalHitCount() == 0){
-			Label label = new Label();
-			label.getElement().getStyle().setTextAlign(TextAlign.CENTER);
-			label.setText("Zero Assignments");
-			assignmentsContainer.add(label); 
+			assignmentsContainer.add(getZeroAssignmentLabel()); 
 		}
 		if(classUnitsDo!=null && classUnitsDo.getResource()!=null){
 			if(classUnitsDo.getResource().getCollectionItems() != null){
@@ -156,6 +153,14 @@ public class UnitsAssignmentWidgetView extends Composite {
 		}
 	}
 	
+	private Label getZeroAssignmentLabel() {
+		Label label = new Label();
+		label.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+		label.getElement().getStyle().setMarginTop(32, Unit.PX); 
+		label.setText(i18n.GL2208());
+		return label;
+	}
+
 	private void showAndHidePaginationArrows() {
 		if(classUnitsDo.getResource().getItemCount()>assignmentLimit){
 			htPanelNextArrow.setVisible(true);
@@ -204,7 +209,11 @@ public class UnitsAssignmentWidgetView extends Composite {
 									hide();
 									loadingImageLabel.setVisible(true);
 									if((getTotalHitCount()-1)==assignmentOffset){
-										assignmentOffset=assignmentOffset-10;
+										if((getTotalHitCount()-1)==0){
+											assignmentOffset=0;
+										}else{
+											assignmentOffset=assignmentOffset-10;
+										}
 									}
 									getUnitAssignments(assignmentOffset,isEditMode,null);
 								}
@@ -222,6 +231,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public void setAssignmentsEditView() {
 		loadingImageLabel.setVisible(false);
 		assignmentsContainer.clear();
+		if(getTotalHitCount() == 0){
+			assignmentsContainer.add(getZeroAssignmentLabel()); 
+		}
 		for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 			AssignmentEditView assignmentEditView = new AssignmentEditView(classUnitsDo.getResource().getCollectionItems().get(i));
 			assignmentEditView.getChangeAssignmentStatusView().getChangeAssignmentStatusButton().addClickHandler(new AssignmentStatusChangeEvent(assignmentEditView));
@@ -285,10 +297,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			System.out.println("---- pathway id -- "+classUnitsDo.getResource().getGooruOid());
-			System.out.println("---- pathway item -- "+collectionItem);
-			System.out.println("---- pathway CP -- "+classPageId);
-			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),title, "direction",classPageId,classUnitsDo.getItemSequence()){
+
+			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),title, "direction",classPageId,classUnitsDo.getItemSequence(),0,""){
+
 
 				@Override
 				public void reorderAssignment(int seqPosition,String selectedPathwayId) {

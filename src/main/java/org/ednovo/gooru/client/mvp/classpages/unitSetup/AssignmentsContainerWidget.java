@@ -70,7 +70,7 @@ public class AssignmentsContainerWidget extends Composite  {
 		{
 			if(classpageItemDo.getStatus().equalsIgnoreCase("completed"))
 			{
-				unitCircleView.setUnitSequenceNumber(0);
+				//unitCircleView.setUnitSequenceNumber(0);
 				unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.greenBubble());
 			}
 		}

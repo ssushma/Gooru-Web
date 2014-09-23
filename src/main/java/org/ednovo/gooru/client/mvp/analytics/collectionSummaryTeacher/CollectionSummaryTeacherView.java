@@ -121,10 +121,13 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 			questionRowIndex.clear();
 			resourceRowIndex.clear();
 			//Set collection meta data
+			if(collectionMetaData != null)
+			{
 			totalTimeSpentlbl.setText(getTimeSpent(collectionMetaData.get(0).getAvgTimeSpent()));
 			totalViewlbl.setText(Integer.toString(collectionMetaData.get(0).getViews()));
 			totalAvgReactionlbl.clear();
 			totalAvgReactionlbl.add(new AnalyticsReactionWidget(collectionMetaData.get(0).getAvgReaction()));
+			}
 			
 	        //This is used for segrate data based on the category
 	        for (UserDataDo userDataDo : resourcesData) {

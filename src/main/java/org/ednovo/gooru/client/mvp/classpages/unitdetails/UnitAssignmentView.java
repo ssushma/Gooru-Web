@@ -245,9 +245,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					circleContainerPanel.add(leftArrow);
 					for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 						unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
-						unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid());
+						//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid());
+						unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());	
 						circleContainerPanel.add(unitCricleViewObj);
-						unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration()));
+						unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId()));
 						unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
 						String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 						if(assignmentId!=null&&assignmentId.equals(unitCricleViewObj.getAssignementId())){
@@ -350,14 +351,18 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public class UnitSeqMouseOverHandler implements MouseOverHandler{
 		String title;
 		String narration;
-		public UnitSeqMouseOverHandler(String title, String narration) {
+		int totalHintCount;
+		String selectedAssignmentId;
+		public UnitSeqMouseOverHandler(String title, String narration, int totalHintCount,String selectedAssignmentId) {
 			this.title = title;
 			this.narration = narration;
+			this.totalHintCount = totalHintCount;
+			this.selectedAssignmentId = selectedAssignmentId;
 		}
 
 	@Override
 	public void onMouseOver(MouseOverEvent event) {
-		unitAssigmentReorder = new UnitAssigmentReorder(classDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null),selectedUnitNumber){
+		unitAssigmentReorder = new UnitAssigmentReorder(classDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null),selectedUnitNumber,totalHintCount,selectedAssignmentId){
 			@Override
 			public void reorderAssignment(int seqPosition,String selectedPathId) {
 				setAssignmentToNewPosition(seqPosition,selectedPathId);
@@ -584,10 +589,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 			for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
-				unitCricleViewObj.getElement().setId(i+"");
+				//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid()+"");
+				unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());
 				circleContainerPanel.add(unitCricleViewObj);
 				
-				unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration()));
+				unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId()));
 				unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
 			}
 			
@@ -686,13 +692,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 	
 	public void setAssignmentToNewPosition(int pageNumber,String selectedPathId){
-		if(selectedPathId.equalsIgnoreCase(unitId)){
+		//if(selectedPathId.equalsIgnoreCase(unitId)){
 		assignmentOffset =(pageNumber/assignmentLimit)*assignmentLimit;
 		if(assignmentOffset==pageNumber){
 			assignmentOffset = assignmentOffset-assignmentLimit;
 		}
 		getUnitAssignments(assignmentOffset,isEditMode);
-		}
+		//}
 	}
 	
 	
