@@ -44,4 +44,5 @@ public interface AnalyticsServiceAsync extends BaseServiceAsync {
 	void getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId,AsyncCallback<ArrayList<UserDataDo>> callback);
     void getMinimumScoredBelowData(String collectionId,String classId,String score,AsyncCallback<Void> callback);
     void getMinimumScoredAboveData(String collectionId,String classId,String score,AsyncCallback<Void> callback);
+    void setHTMLtoPDF(String htmlString,AsyncCallback<Void> callback);
 }

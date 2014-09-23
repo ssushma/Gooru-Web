@@ -28,4 +28,5 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 public interface CollectionSummaryIndividualUiHandlers extends BaseUiHandlers{
 	void setIndividualData(String collectionId,String classpageId,String userId,String sessionId);
+	void setHtmltopdf(String htmlString);
 }
