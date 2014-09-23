@@ -116,7 +116,7 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 			}
 		}else{
 			//show messaging...
-			lblPleaseWait.setText("No Assignments.... ");
+			lblPleaseWait.setText(i18n.GL2204());
 		}
 	}	
 }
