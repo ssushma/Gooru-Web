@@ -288,7 +288,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),title, "",classPageId,0){
+			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),title, "",classPageId,0,0){
 
 				@Override
 				public void reorderAssignment(int seqPosition,String selectedPathId) {

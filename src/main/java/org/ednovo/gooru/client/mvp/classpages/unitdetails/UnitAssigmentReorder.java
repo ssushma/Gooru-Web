@@ -50,14 +50,13 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	String classpageId;
 	private String selectedPathId;
 	private HandlerRegistration onClickUnit;
+	private int totalHintCount;
 	
-	public UnitAssigmentReorder(ClassDo classDo,String title,String narration,String classpageId,int selectedUnitNumber) {
+	public UnitAssigmentReorder(ClassDo classDo,String title,String narration,String classpageId,int selectedUnitNumber,int totalHintCount) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.classDo = classDo;
-		if(classpageId == null){
-			classpageId = AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		}
 		this.classpageId = classpageId;
+		this.totalHintCount = totalHintCount;
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 
 		setUnitAssignmentData(classDo,title,narration,selectedUnitNumber);
@@ -84,8 +83,8 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			
 			for(int i=0; i<classListUnitsListDo.size(); i++){
 
-				totalItemCount=classListUnitsListDo.get(0).getResource().getItemCount();
-				displayAssignment(totalItemCount);
+				//totalItemCount=classListUnitsListDo.get(0).getResource().getItemCount();
+				displayAssignment(totalHintCount);
 				int number=classListUnitsListDo.get(i).getItemSequence();
 				
 				if(selectedUnitNumber==0){
