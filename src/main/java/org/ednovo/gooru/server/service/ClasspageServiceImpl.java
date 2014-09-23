@@ -1951,6 +1951,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				
 				
 			}catch(JSONException ex){}
+			getLogger().info("--- reorder assignment url -- "+url);
+			getLogger().info("--- payload -- "+jsonObject.toString());
+			
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),jsonObject.toString());
 			jsonRep =jsonResponseRep.getJsonRepresentation();
 		
