@@ -53,14 +53,15 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	String classpageId;
 	private String selectedPathId;
 	private HandlerRegistration onClickUnit;
+	private int totalHintCount;
+	private String selectedAssignmentId;
 	
-	public UnitAssigmentReorder(ClassDo classDo,String title,String narration,String classpageId,int selectedUnitNumber) {
+	public UnitAssigmentReorder(ClassDo classDo,String title,String narration,String classpageId,int selectedUnitNumber,int totalHintCount,String selectedAssignmentId) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.classDo = classDo;
-		if(classpageId == null){
-			classpageId = AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		}
 		this.classpageId = classpageId;
+		this.totalHintCount = totalHintCount;
+		this.selectedAssignmentId = selectedAssignmentId;
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		unitTextLbl.setText(i18n.GL2175());
 		unitTextLbl.getElement().setAttribute("style", "display: inline-block;");
@@ -90,8 +91,8 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			
 			for(int i=0; i<classListUnitsListDo.size(); i++){
 
-				totalItemCount=classListUnitsListDo.get(0).getResource().getItemCount();
-				displayAssignment(totalItemCount);
+				//totalItemCount=classListUnitsListDo.get(0).getResource().getItemCount();
+				displayAssignment(totalHintCount);
 				int number=classListUnitsListDo.get(i).getItemSequence();
 				
 				if(selectedUnitNumber==0){
@@ -99,9 +100,14 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 				}else{
 					dropdownListPlaceHolder.getElement().setInnerHTML(selectedUnitNumber+"");
 				}
-				
-				dropdownListPlaceHolder.getElement().setId(classListUnitsListDo.get(0).getResource().getGooruOid());
+				String uid = AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+				if(uid==null){
+					dropdownListPlaceHolder.getElement().setId(classListUnitsListDo.get(0).getResource().getGooruOid());
+				}else{
+					dropdownListPlaceHolder.getElement().setId(uid);	
+				}
 				String unitCollectionItemId=classListUnitsListDo.get(i).getResource().getGooruOid();
+				
 				Label dropDownListItem=new Label(number+"");
 				dropDownListItem.getElement().setId(classListUnitsListDo.get(i).getResource().getItemCount()+"");
 				dropDownListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
@@ -136,9 +142,10 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 				dropdownListPlaceHolderAssignment.getElement().setInnerHTML(1+"");
 				int number=i;
 				Label dropDownAssignmentListItem=new Label(number+"");
+				
 				dropDownAssignmentListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
 				dropdownListContainerAssignment.add(dropDownAssignmentListItem);
-				dropDownAssignmentListItem.addClickHandler(new OnDropdownAssignmentItemClick(number+""));
+				dropDownAssignmentListItem.addClickHandler(new OnDropdownAssignmentItemClick(number+"",dropDownAssignmentListItem.getElement().getId()));
 			}
 		}else
 		{
@@ -186,16 +193,18 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		private String seq="";
 		private String itemCount;
 		private String UnitCollectionItemId;
+		
+		
 	
 		public OnDropdownItemClick(String seq,String itemCount,String UnitCollectionItemId){
 			this.seq = seq;
 			this.itemCount = itemCount;
 			this.UnitCollectionItemId = UnitCollectionItemId;
+			
 		}
 		@Override
 		public void onClick(ClickEvent event) {
 			dropdownListPlaceHolder.setText(seq);
-			//dropdownListPlaceHolder.getElement().setId(UnitCollectionItemId);
 			dropdownListPlaceHolder.getElement().setAttribute("id", itemCount+"");
 			selectedPathId = UnitCollectionItemId;
 			displayAssignment(Integer.parseInt(itemCount));
@@ -205,14 +214,17 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		}
 	}
 	private class OnDropdownAssignmentItemClick implements ClickHandler{
-		private String seq="";
-			public OnDropdownAssignmentItemClick(String seq){
+			private String seq="";
+			private String selectedTargetId;
+			public OnDropdownAssignmentItemClick(String seq,String selectedTargetId){
 			this.seq=seq;
+			this.selectedTargetId = selectedTargetId;
 			
 		}
 		@Override
 		public void onClick(ClickEvent event) {
 			dropdownListPlaceHolderAssignment.setText(seq);
+			dropdownListPlaceHolderAssignment.getElement().setId(selectedTargetId);
 			new CustomAnimation(dropdownListContainerScrollPanelAssignment).run(300);
 		}
 	}
@@ -222,7 +234,9 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	public void onclickCancelBtn(ClickEvent event){
 		this.hide();
 	}
-	
+	/*
+	 * This class is used to reorder the assignment in pathway
+	 */
 	public class clickOnSave implements ClickHandler{
 
 		@Override
@@ -234,7 +248,9 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			{
 				selectedPathId = dropdownListPlaceHolder.getElement().getId();	
 			}
-			AppClientFactory.getInjector().getClasspageService().v2ReorderPathwaySequence(classpageId,selectedPathId,Integer.parseInt(dropdownListPlaceHolderAssignment.getText()),new SimpleAsyncCallback<Void>() {
+				
+			AppClientFactory.getInjector().getClasspageService().pathwayItemMoveWithReorder(classpageId,selectedPathId,selectedAssignmentId,dropdownListPlaceHolderAssignment.getText(),new SimpleAsyncCallback<Void>(){
+
 				@Override
 				public void onSuccess(Void result) {
 					CancelButton.setVisible(true);
@@ -243,9 +259,11 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 					savingTextLabel.setText("");
 
 					setAssignmentToNewPosition(Integer.parseInt(dropdownListPlaceHolderAssignment.getText()),selectedPathId);
+					
 				}
-			});	
-
+				
+			});
+			
 		}
 
 		public void setAssignmentToNewPosition(int seqPosition,String selectedPathId){
