@@ -95,7 +95,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	}
 
 	private void setIdAndText() {
-		subHeading.getElement().setInnerText("Setup your units by adding assignments");
+		subHeading.getElement().setInnerText(i18n.GL2217());
 		clearfix.getElement().getStyle().setBackgroundColor("#fafafa");
 		clearfix.getElement().getStyle().setWidth(100, Unit.PCT);
 	}
@@ -161,7 +161,6 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 			} else {
 				unitsAssignmentWidgetView.setTotalHitCount(0);
 			}
-			
 			unitsAssignmentWidgetView.setAssignmentsForUnit();
 			unitsAssignmentWidgetView.getAddAssignmentButton().addClickHandler(new AddAssignmentToUnit(classListUnitsListDo));
 			unitsAssignmentWidgetView.setPathwayId(classListUnitsListDo.getResource().getGooruOid());
