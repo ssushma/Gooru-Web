@@ -2,6 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gui="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style field="style" src="assignmentgoal.css" />
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />	
 	<gui:HTMLEventPanel styleName="bubbleMain" ui:field="panelMembers">
 		<g:Label styleName="numaric" ui:field="lblAssignmentNumber"></g:Label>
 		<div class="progressPopupBox">
@@ -14,7 +15,7 @@
 				<div class="progressBars">
 					<div class="progress">
 						<g:HTMLPanel styleName="progress-bar" ui:field="panelProgressBar">
-							<span class="sr-only">80% Complete</span>
+							<span class="sr-only" text="{i18n.GL2207}"></span>
 						</g:HTMLPanel>
 					</div>
 					<g:Label styleName="proInfo" ui:field="lblPercentage"/>
