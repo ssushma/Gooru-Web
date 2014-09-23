@@ -599,5 +599,28 @@ public interface ClasspageService extends BaseService {
 			String classpageId,String unitGooruOid,String collectionItemId, boolean isComplete) throws GwtException;
 
     ClasspageItemDo updateUnitStatus(String pathWayId,String minimumScore, String assignementStatus, String timeStudying) throws GwtException;
-	
+    /**
+	 * @function pathwayItemMoveWithReorder 
+	 * 
+	 * @created_date : Sep 23, 2014
+	 * 
+	 * @description
+	 * To reorder the pathway assignment in different unit
+	 * 
+	 * @param classpageId
+	 * @param pathwayGooruOid
+	 * @param collectionItemId
+	 * @param targetId
+	 * @param sequence
+	 * @throws GwtException,ServerDownException
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+   public void pathwayItemMoveWithReorder(String classId,String pathwaygooruOid,String collectionItemId,String newSequence)throws GwtException;
 }
