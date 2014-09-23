@@ -5,35 +5,36 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc"  xmlns:ptag= "urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="style" src="unitsetup.css" />
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel styleName="{style.unitDetails}">
 	    <g:HTMLPanel styleName="{style.containerTeacher}">
 			<g:HTMLPanel styleName="col-xs-12 {style.gerybg} {style.UnitSetupMain}">
 				<g:HTMLPanel styleName="col-xs-4">
 					<ptag:PPanel styleName="{style.uniSetup}">
 							<g:Image styleName="{style.setMarginArrow}" url="images/blueArrow.png"></g:Image>
-							<g:Anchor styleName="{style.classSetupLbl}" ui:field="classSetupAnchor">Class Setup</g:Anchor>
+							<g:Anchor styleName="{style.classSetupLbl}" ui:field="classSetupAnchor" text="{i18n.GL2215}"></g:Anchor>
 					</ptag:PPanel>
 				</g:HTMLPanel>
 
 				<g:HTMLPanel styleName="col-xs-4">
-					<g:Label styleName="{style.textHeading}">Unit Setup</g:Label>
+					<g:Label styleName="{style.textHeading}" text="{i18n.GL2216}"></g:Label>
 					<ptag:PPanel styleName="{style.textSubHeading}" ui:field="subHeading"></ptag:PPanel>
 		
 					<ptag:PPanel>
 						<g:HTMLPanel styleName="col-xs-6 {style.uniRequired} {style.textCenter}">
 							<g:HTMLPanel styleName="{style.bubble}"></g:HTMLPanel>
-							Required
+							<g:Label text="{i18n.GL2209}" styleName="{style.requiredLabel}"></g:Label>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-xs-6 {style.uniRequired} {style.textCenter}">
 							<g:HTMLPanel styleName="{style.bubbleStyle}"></g:HTMLPanel>
-							Optional
+							<g:Label text="{i18n.GL2201}" styleName="{style.requiredLabel}"></g:Label>
 						</g:HTMLPanel>
 					</ptag:PPanel>
 				</g:HTMLPanel>
 
 			<g:HTMLPanel styleName="col-xs-4 text-right">
 				<ptag:PPanel styleName="{style.uniSetup}">
-				    	<g:Anchor styleName="{style.unitdetailsLbl}" ui:field="unitDetailsAnchor">Unit Details</g:Anchor> 
+				    	<g:Anchor styleName="{style.unitdetailsLbl}" ui:field="unitDetailsAnchor" text="{i18n.GL2214}"></g:Anchor> 
 						<g:Image styleName="{style.setMarginArrowclass}" url="images/blueRightArrow.png"></g:Image>
 				</ptag:PPanel>
 			</g:HTMLPanel>

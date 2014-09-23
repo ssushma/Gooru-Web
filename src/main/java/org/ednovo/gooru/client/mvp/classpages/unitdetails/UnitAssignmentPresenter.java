@@ -117,6 +117,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			@Override
 			public void onSuccess(ClassDo classDo) {
 				getView().showUnitNames(classDo,clearPanel);
+				getView().scoreHederView(classDo.getSearchResults().get(0).getCollectionItemId());
 //				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 //					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 //					if(unitId==null){

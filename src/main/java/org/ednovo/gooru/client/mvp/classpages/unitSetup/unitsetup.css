@@ -635,3 +635,6 @@ margin: 6px 0;
 	z-index: 5;
 	margin-left: 375px;
 }
+.requiredLabel{
+	display:inline-block;
+}

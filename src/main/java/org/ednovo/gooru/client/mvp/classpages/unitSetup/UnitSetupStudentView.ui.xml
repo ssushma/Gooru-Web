@@ -6,6 +6,7 @@
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc"  xmlns:ptag= "urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="style" src="unitsetup.css" />
 		<ui:style field="stylenew" src="unitsetupstudent.css" />
+		<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel styleName="{style.unitDetails} {stylenew.outerContainer}">
 	    <g:HTMLPanel styleName="{style.containerTeacher}">
 			<g:HTMLPanel styleName="col-xs-12 {style.gerybg} {style.UnitSetupMain}">
@@ -15,37 +16,37 @@
 					</ptag:PPanel>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="col-xs-8">
-					<h3 class="text-center">Class Overview</h3>
+					<h3 class="text-center" text="{i18n.GL2198}"></h3>
 					<g:HTMLPanel styleName="row {stylenew.classOptionsMain}">
 						<g:HTMLPanel styleName="col-xs-2 {stylenew.smallerWidth} {stylenew.classOverOptions} text-center">
 							<g:InlineLabel styleName="{stylenew.bubbleSmall}"></g:InlineLabel> 
-							<g:InlineLabel>Required</g:InlineLabel> 
+							<g:InlineLabel text="{i18n.GL2209}"></g:InlineLabel> 
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-xs-2 {stylenew.smallerWidth} {stylenew.classOverOptions} text-center">
 							<g:InlineLabel styleName="{stylenew.bubbleSmall} {stylenew.stylishBub}"></g:InlineLabel>
-							<g:InlineLabel>Optional</g:InlineLabel> 
+							<g:InlineLabel text="{i18n.GL2201}"></g:InlineLabel> 
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-xs-2 {stylenew.smallerWidth} {stylenew.classOverOptions} text-center">
 							<g:InlineLabel styleName="{stylenew.bubbleSmall} {stylenew.greenBubble}"></g:InlineLabel>
-							<g:InlineLabel>Score Met</g:InlineLabel> 
+							<g:InlineLabel text="{i18n.GL2210}"></g:InlineLabel> 
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-xs-2 {stylenew.classOverOptions} text-center">
 							<g:InlineLabel styleName="{stylenew.bubbleSmall} {stylenew.redBubble}"></g:InlineLabel> 
-							<g:InlineLabel>Score Not Met</g:InlineLabel>
+							<g:InlineLabel text="{i18n.GL2211}"></g:InlineLabel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-xs-2 {stylenew.smallWidth} {stylenew.classOverOptions} text-center">
 							<g:InlineLabel styleName="{stylenew.bubbleSmallrounded}"></g:InlineLabel> 
-							<g:InlineLabel>Made Extra Efforts</g:InlineLabel>
+							<g:InlineLabel text="{i18n.GL2212}"></g:InlineLabel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-xs-2 {stylenew.classOverOptions} text-center">
 							<img src="images/checkMarkWhite.png"/> 
-							<g:InlineLabel>Complete</g:InlineLabel>
+							<g:InlineLabel text="{i18n.GL2213}"></g:InlineLabel>
 						</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="col-xs-4 text-right {stylenew.widthoverride}">
 				<ptag:PPanel styleName="{style.uniSetup}">
-				    	<g:Anchor styleName="{style.unitdetailsLbl}" ui:field="unitDetailsAnchor">Unit Details</g:Anchor> 
+				    	<g:Anchor styleName="{style.unitdetailsLbl}" ui:field="unitDetailsAnchor" text="{i18n.GL2214}"></g:Anchor> 
 						<g:Image url="images/blueRightArrow.png"></g:Image>
 				</ptag:PPanel>
 			</g:HTMLPanel>
