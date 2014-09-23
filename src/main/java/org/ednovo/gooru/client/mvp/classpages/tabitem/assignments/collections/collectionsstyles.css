@@ -125,7 +125,7 @@
 	color: #fff;
 	font-weight: bold;
 	border: 2px solid #fff;
-	background: #b9bbca url(../images/liners.png) no-repeat;
+	background: #b9bbca url(../images/liners.png) -38px -22px no-repeat;
 }
 .assignmentCompleted label{
 	background: #b9bbca url("../images/checkMarkWhite.png") 7px 9px no-repeat !important;
