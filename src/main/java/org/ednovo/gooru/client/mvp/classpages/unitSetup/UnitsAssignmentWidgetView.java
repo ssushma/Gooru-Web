@@ -138,6 +138,10 @@ public class UnitsAssignmentWidgetView extends Composite {
 		loadingImageLabel.setVisible(false);
 		assignmentsContainer.clear();
 		if(getTotalHitCount() == 0){
+			Label label = new Label();
+			label.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+			label.setText(i18n.GL2208());
+			assignmentsContainer.add(label); 
 			assignmentsContainer.add(getZeroAssignmentLabel()); 
 		}
 		if(classUnitsDo!=null && classUnitsDo.getResource()!=null){
