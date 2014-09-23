@@ -41,7 +41,7 @@
 										<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.stylishBub}"></g:InlineLabel>
 										<g:InlineLabel>Optional</g:InlineLabel> 
 									</g:HTMLPanel>
-									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions} text-center">
+					<!-- 				<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions} text-center">
 										<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.greenBubble}"></g:InlineLabel>
 										<g:InlineLabel>Score Met</g:InlineLabel> 
 									</g:HTMLPanel>
@@ -56,7 +56,7 @@
 									<g:HTMLPanel styleName="col-xs-2 {unitStyle.classOverOptions} text-center">
 										<img src="images/checkMarkWhite.png"/> 
 										<g:InlineLabel>Complete</g:InlineLabel>
-									</g:HTMLPanel>
+									</g:HTMLPanel> -->
 							</g:HTMLPanel>
 							<div class="clearfix"></div>
 						</div>
