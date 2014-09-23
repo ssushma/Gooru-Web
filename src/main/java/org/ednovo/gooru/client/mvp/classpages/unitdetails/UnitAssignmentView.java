@@ -95,6 +95,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	ClassDo classDo;
 	
+	String unitCollectionId;
+	
 	private int limit = 5;
 	private int unitsPageNumber = 0;
 	private int unitsTotalCount = 0;
@@ -186,6 +188,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		public void onClick(ClickEvent event) {
 			selectedUnitNumber = unitNumber;
 			resetCircleAndAssignmentContainer(unitTitle);
+			setUnitCollectionId(unitsWidget.getUnitCollectionItemId());
 			revealPlace("unitdetails",null,unitsWidget.getUnitGooruOid(),null);
 			removeAndAddUnitSelectedStyle();
 		}
@@ -613,11 +616,16 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		goalContainer.setVisible(false);
 	}
 	
-	private void scoreHederView() {
+	public void scoreHederView(String collectionItemId) {
 		scoreHedingContainer.clear();
 		ScoreHedingView scoreHedingView = null;
+		String collectionId=getUnitCollectionId();
+		System.out.println("unitid----------------:"+collectionId);
+		if(collectionId==null){
+			collectionId=collectionItemId;
+		}
 		for(int i=0; i<2; i++){
-			scoreHedingView=new ScoreHedingView(classDo);
+			scoreHedingView=new ScoreHedingView(collectionId);
 			scoreHedingContainer.add(scoreHedingView);
 			if(i==0){
 				scoreHedingView.getLblTitle().setText(i18n.GL2195());
@@ -692,10 +700,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	@Override
 	public void showDashBoard() {
+		System.out.println("showDashBoard");
 		if(!isClickOnAssignment){
 			goalContainer.setVisible(true);
 			containerPanel.setVisible(false);
-			scoreHederView();
+//			scoreHederView();
 			setDashBoardIds();
 			htmDashBoardTabs.setVisible(true);
 			btnDashBoard.setStyleName(res.unitAssignment().selected());
@@ -773,8 +782,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@UiHandler("btnSetGoal")
 	public void clickOnGoalBtn(ClickEvent clickEvent){
-		
-		if(txtHours.getText()!=null || txtMinuts.getText()!=null ){
+		System.out.println("txtHours.getText():"+txtHours.getText());
+		if((txtHours.getText()!=null && txtHours.getText()!="")|| (txtMinuts.getText()!=null && txtMinuts.getText()!="") ){
 			if(btnSetGoal.getText().equals(SETGOAL)){
 				lblTimeHours.setText(txtHours.getText()+" h");
 				lblTimeMin.setText(txtMinuts.getText()+" min");
@@ -807,4 +816,18 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 	}
 
+	/**
+	 * @return the unitCollectionId
+	 */
+	public String getUnitCollectionId() {
+		return unitCollectionId;
+	}
+
+	/**
+	 * @param unitCollectionId the unitCollectionId to set
+	 */
+	public void setUnitCollectionId(String unitCollectionId) {
+		this.unitCollectionId = unitCollectionId;
+	}
+	
 }
