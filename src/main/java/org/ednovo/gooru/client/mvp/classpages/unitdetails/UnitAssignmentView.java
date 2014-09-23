@@ -128,13 +128,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	UnitCricleView unitCricleViewObj;
 	private boolean isShowingPopUp = false;
 	private boolean isEditMode=false;
-	
+	private boolean isShowingPopUpforStudent = false;
 	private ClassUnitsListDo classUnitsDo;
 	private static final String NEXT="next";
 	private static final String PREVIOUS= "previous";
 	String unitId; 
 	private int selectedUnitNumber;
-	
+	UnitAssignentStudentPlayView UnitAssignentStudentPlayView =null;
 	private int totalAssignmentHitcount;
 	@Inject
 	public UnitAssignmentView(){
@@ -248,7 +248,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 						//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid());
 						unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());	
 						circleContainerPanel.add(unitCricleViewObj);
-						unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId()));
+						String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+						
+						if(pageLocation.equals(PlaceTokens.STUDENT)){
+							unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getEstimatedTime(),unitAssignmentsDo.getSearchResults().get(i).getDirection(),unitAssignmentsDo.getSearchResults().get(i).getCollectionId(),unitCricleViewObj.getElement().getId()));
+							
+						}else{
+							unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId()));
+						}
 						unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
 						String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 						if(assignmentId!=null&&assignmentId.equals(unitCricleViewObj.getAssignementId())){
@@ -348,6 +355,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 		setCircleData(unitAssignmentsDo);
 	}
+	/*This class is used to display tooltip on assignment for Teacher */
 	public class UnitSeqMouseOverHandler implements MouseOverHandler{
 		String title;
 		String narration;
@@ -373,6 +381,32 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		isShowingPopUp = true;
 		}
 	}
+	/*This class is used to display tooltip on assignment for student*/
+	
+	public class StudentAssignmentMouseOverHandler implements MouseOverHandler{
+		int seqNumber;
+		String title,dueDate,direction,collectionId,collectionItemId;
+		public StudentAssignmentMouseOverHandler(int seqNumber,String title,String dueDate,String direction,String collectionId,String collectionItemId){
+			this.seqNumber = seqNumber;
+			this.title = title;
+			this.dueDate = dueDate;
+			this.direction = direction;
+			this.collectionId = collectionId;
+			this.collectionItemId = collectionItemId;
+			
+		}
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			UnitAssignentStudentPlayView = new UnitAssignentStudentPlayView(seqNumber,title,dueDate,direction,collectionId,collectionItemId);
+			
+			UnitAssignentStudentPlayView.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop()+40);
+			UnitAssignentStudentPlayView.show();
+			isShowingPopUpforStudent = true;
+		}
+		
+	}
+	
+	
 	public void hidePopup(NativePreviewEvent event){
 		try{
     	if(event.getTypeInt()==Event.ONMOUSEOVER){
@@ -383,7 +417,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
         		if(isShowingPopUp){
         			unitAssigmentReorder.hide();
         		}
+        		
     	   	}
+        	boolean targetStu=eventTargetsPopupStudent(nativeEvent);
+        	if(!targetStu){
+    		if(isShowingPopUpforStudent){
+    			UnitAssignentStudentPlayView.hide();
+    		}
+        	}
     	}
 		}catch(Exception ex){ex.printStackTrace();}
      }
@@ -393,6 +434,15 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		if (Element.is(target)) {
 			try{
 				return unitAssigmentReorder.getElement().isOrHasChild(Element.as(target));
+			}catch(Exception ex){}
+		}
+		return false;
+	}
+	private boolean eventTargetsPopupStudent(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			try{
+				return UnitAssignentStudentPlayView.getElement().isOrHasChild(Element.as(target));
 			}catch(Exception ex){}
 		}
 		return false;
@@ -592,8 +642,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid()+"");
 				unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());
 				circleContainerPanel.add(unitCricleViewObj);
+				String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 				
-				unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId()));
+				if(pageLocation.equals(PlaceTokens.STUDENT)){
+					unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getEstimatedTime(),unitAssignmentsDo.getSearchResults().get(i).getDirection(),unitAssignmentsDo.getSearchResults().get(i).getCollectionId(),unitCricleViewObj.getElement().getId()));
+					
+				}else{
+					unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId()));
+					}
 				unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
 			}
 			
