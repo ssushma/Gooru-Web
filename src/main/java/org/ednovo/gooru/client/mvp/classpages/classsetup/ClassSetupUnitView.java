@@ -68,7 +68,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 	@UiField HTMLEventPanel moveAssignmentPopup;
 	@UiField Button deleteBtnUnit,cancelBtn,saveBtn,editBtn,cancelButton,saveButton;
 	@UiField TextBox unitName;
-	@UiField Button btnAssignment,btnReorder;
+	@UiField Button btnReorder;
 	@UiField HTMLEventPanel divContainer;
 	@UiField Label unitnameLBL,unitNameErrorLabel,lblMoveTo,resourceCategoryLabel,resoureDropDownLbl;
 	
@@ -97,8 +97,10 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 		res.css().ensureInjected();
 		inputContainer.setVisible(false);
 		divContainer.setVisible(true);
-		editBtn.setVisible(false);
+		//editBtn.setVisible(false);
 		unitNameErrorLabel.setVisible(false);
+		saveBtn.setVisible(false);
+		cancelBtn.setVisible(false);
 		unitName.setText(unitNameVal);
 		unitnameLBL.setText(unitName.getText());
 		unitName.setMaxLength(50);
@@ -193,7 +195,9 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 			public void onClick(ClickEvent event) {
 				inputContainer.setVisible(false);
 				divContainer.setVisible(true);
-				editBtn.setVisible(false);
+				saveBtn.setVisible(false);
+				cancelBtn.setVisible(false);
+				editBtn.setVisible(true);
 				
 			}
 		});
@@ -225,7 +229,9 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 							unitnameLBL.setText(unitName.getText());
 							inputContainer.setVisible(false);
 							divContainer.setVisible(true);
-							editBtn.setVisible(false);
+							saveBtn.setVisible(false);
+							cancelBtn.setVisible(false);
+							editBtn.setVisible(true);
 							saveItem(unitName.getText(),pathwayId);
 							
 						}
@@ -246,11 +252,14 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 			public void onClick(ClickEvent event) {
 				inputContainer.setVisible(true);
 				divContainer.setVisible(false);
+				saveBtn.setVisible(true);
+				cancelBtn.setVisible(true);
+				editBtn.setVisible(false);
 				
 			}
 		});
 
-		divContainer.addMouseOverHandler(new MouseOverHandler() {
+/*		divContainer.addMouseOverHandler(new MouseOverHandler() {
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
@@ -262,10 +271,10 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 			
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
-				editBtn.setVisible(false);
+				editBtn.setVisible(true);
 				
 			}
-		});
+		});*/
 		
 		saveButton.addClickHandler(new ClickHandler() {
 			
@@ -303,6 +312,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 								{
 								offSetVal = redirectedPageNumber-1;
 								}
+
 								AppClientFactory.fireEvent(new ResetPaginationEvent(offSetVal*5));
 						/*	}*///end if loop
 						
@@ -321,6 +331,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
 				moveAssignmentPopup.getElement().getStyle().setDisplay(Display.NONE);
+
 			}
 		});
 

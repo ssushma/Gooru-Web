@@ -177,7 +177,7 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 				getUiHandlers().updatePathway(pathwayId, pathwayTitle);
 			}
 		};
-		classSetupUnitView.btnAssignment.addClickHandler(new ShowAssignPopupEvent(pathwayId));
+		//classSetupUnitView.btnAssignment.addClickHandler(new ShowAssignPopupEvent(pathwayId));
 		 getUnitwidget().add(classSetupUnitView);
 	}
 	
