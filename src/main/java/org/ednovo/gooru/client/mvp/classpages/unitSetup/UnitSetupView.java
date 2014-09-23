@@ -144,32 +144,30 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	@Override
 	public void showUnitDetails(ClassDo classDo) {
 		setLoadingIcon(false);
-		if(classDo.getTotalHitCount() != null)
-		{
-	    totalCount = classDo.getTotalHitCount();
+		if (classDo.getTotalHitCount() != null) {
+			totalCount = classDo.getTotalHitCount();
 		}
 		int unitSize = 0;
-		if(classDo.getSearchResults() != null)
-		{
-	    unitSize =classDo.getSearchResults().size() ;
+		if (classDo.getSearchResults() != null) {
+			unitSize = classDo.getSearchResults().size();
 		}
-	    unitAssignmentWidgetContainer.clear();
-	    for(int i=0; i<unitSize; i++){
-	    	ClassUnitsListDo classListUnitsListDo=classDo.getSearchResults().get(i);
-	    	UnitsAssignmentWidgetView unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(classListUnitsListDo);
-	    	unitsAssignmentWidgetView.setClassDo(classDo);
-	    	if(classListUnitsListDo.getResource().getItemCount() != null){
-	    		unitsAssignmentWidgetView.setTotalHitCount(classListUnitsListDo.getResource().getItemCount());
-	    	}
-	    	else{
-	    		unitsAssignmentWidgetView.setTotalHitCount(0);	
-	    	}
-	    	unitsAssignmentWidgetView.setAssignmentsForUnit();
-	    	unitsAssignmentWidgetView.getAddAssignmentButton().addClickHandler(new AddAssignmentToUnit(classListUnitsListDo));
-	    	unitsAssignmentWidgetView.setPathwayId(classListUnitsListDo.getResource().getGooruOid());
-	    	unitAssignmentWidgetContainer.add(unitsAssignmentWidgetView); 
-	    }
-		
+		unitAssignmentWidgetContainer.clear();
+		for (int i = 0; i < unitSize; i++) {
+			ClassUnitsListDo classListUnitsListDo = classDo.getSearchResults().get(i);
+			UnitsAssignmentWidgetView unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(classListUnitsListDo);
+			unitsAssignmentWidgetView.setClassDo(classDo);
+			if (classListUnitsListDo.getResource().getItemCount() != null) {
+				unitsAssignmentWidgetView.setTotalHitCount(classListUnitsListDo.getResource().getItemCount());
+			} else {
+				unitsAssignmentWidgetView.setTotalHitCount(0);
+			}
+			
+			unitsAssignmentWidgetView.setAssignmentsForUnit();
+			unitsAssignmentWidgetView.getAddAssignmentButton().addClickHandler(new AddAssignmentToUnit(classListUnitsListDo));
+			unitsAssignmentWidgetView.setPathwayId(classListUnitsListDo.getResource().getGooruOid());
+			unitAssignmentWidgetContainer.add(unitsAssignmentWidgetView);
+		}
+
 	}
 	
 	public void clearUnitAssignmentWidgetContaner(){

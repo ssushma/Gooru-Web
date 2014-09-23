@@ -1592,6 +1592,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				UrlToken.GET_PATHWAY_ITEM,classpageId,pathwayGooruOid,getLoggedInSessionToken(),sequenceNo,limit+"",offSet+"");
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
+		getLogger().info("--- v2GetPathwaysOptimized  -- "+url);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializePathwayItem(jsonRep);
 		
@@ -1819,8 +1820,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	
 	
 	@Override
-	public ClasspageItemDo updateAssignmentDetails(String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus) throws GwtException {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ASSIGN_STATUS_UPDATE,collectionItemId,getLoggedInSessionToken());
+	public ClasspageItemDo updateAssignmentDetails(String classId,String unitId,String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus) throws GwtException {
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ASSIGN_STATUS_UPDATE,classId,unitId,collectionItemId,getLoggedInSessionToken());
 		LOGGER.info("ASSIGN_STATUS_UPDATE API==>"+url);
 		JSONObject classPageItemJsonObject=createClasspageJsonObject(null, direction, dueDate,readStatus,minimumScore,suggestedTime,isRequiredStatus);
 		LOGGER.info("JSON_PAYLOAD==>"+classPageItemJsonObject);
@@ -1871,9 +1872,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}
 	
 	@Override
-	public CollectionDo updateAssignmentStatusAsCompleteorOpen(String collectionItemId, boolean isComplete) throws GwtException {
+	public CollectionDo updateAssignmentStatusAsCompleteorOpen(String classpageId,String unitGooruOid,String collectionItemId, boolean isComplete) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ASSIGN_STATUS_UPDATE,collectionItemId,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ASSIGN_STATUS_UPDATE,classpageId,unitGooruOid,collectionItemId,getLoggedInSessionToken());
 		JSONObject jsonObject=new JSONObject();
 		JSONObject collectionJsonObject=new JSONObject();
 		try {
@@ -1896,6 +1897,41 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),jsonObject.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollection(jsonRep);
+	}
+
+	@Override
+	public ClasspageItemDo updateUnitStatus(String pathWayId,
+			String minimumScore, String assignementStatus, String timeStudying)
+			throws GwtException {
+		JsonRepresentation jsonRep = null;
+				String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_UNIT_STATUS,pathWayId,getLoggedInSessionToken());
+				LOGGER.info("ASSIGN_STATUS_UPDATE API==>"+url);
+				JSONObject jsonObject=new JSONObject();
+				JSONObject collectionJsonObject=new JSONObject();
+				try {
+					if(minimumScore!=null){
+						collectionJsonObject.put("minimumScoreByUser", minimumScore);
+					}
+					if(assignementStatus!=null)
+					{
+						collectionJsonObject.put("assignmentCompleted", assignementStatus);
+					}
+					if(timeStudying!=null)
+					{
+						collectionJsonObject.put("timeStudying",timeStudying);
+					}
+					jsonObject.put("collectionItem", collectionJsonObject);
+					
+					LOGGER.info("JSON_PAYLOAD==>"+jsonObject.toString());
+					JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),jsonObject.toString());
+					jsonRep = jsonResponseRep.getJsonRepresentation();
+				    return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ClasspageItemDo.class);
+				}	
+				catch(JSONException e)
+				{
+					e.printStackTrace();
+				}
+				 return null;
 	}
 }
 

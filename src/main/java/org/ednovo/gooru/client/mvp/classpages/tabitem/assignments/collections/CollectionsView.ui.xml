@@ -12,6 +12,7 @@
 					<cas:ChangeAssignmentStatusView ui:field="changeAssignmentStatusView"></cas:ChangeAssignmentStatusView>
 					<g:HTMLPanel styleName="{style.dueDate}" ui:field="dueDateContentPanel">
 						<g:Label styleName="{style.dueDateText}" ui:field="dueDateText">Due Date</g:Label> <g:Label styleName="{style.dueDateIcon}" ui:field="dueDateButton"></g:Label>
+					  	<g:CheckBox ui:field="assignmentMarkCheckBox"></g:CheckBox>
 					</g:HTMLPanel>
 					<g:Label styleName="clearfix"></g:Label>
 				 </g:HTMLPanel>
@@ -48,6 +49,7 @@
 						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}">Collection Assigned: </g:Label>
 						<g:FlowPanel styleName="col-xs-6 {style.assignButtons} text-right">
 							<g:Button styleName="secondary" ui:field="editCollectionButton">Edit Collection</g:Button> 
+							<g:Button styleName="studyplay" ui:field="studyCollectionButton">Study</g:Button> 
 						</g:FlowPanel>
 						<g:Label styleName="clearfix"></g:Label>
 					</g:FlowPanel>

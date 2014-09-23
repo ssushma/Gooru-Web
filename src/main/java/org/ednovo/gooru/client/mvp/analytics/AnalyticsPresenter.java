@@ -27,10 +27,12 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
+import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> implements AnalyticsUiHandlers{
@@ -48,6 +50,9 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	public static final  Object COLLECTION_PROGRESS_SLOT = new Object();
 	
 	final String SUMMARY="Summary",PROGRESS="Progress";
+	
+	@Inject
+	private  AnalyticsServiceAsync analyticService;
 	
 	@Inject
 	public AnalyticsPresenter(EventBus eventBus, IsAnalyticsView view,CollectionProgressPresenter collectionProgressPresenter,CollectionSummaryPresenter collectionSummaryPresenter) {
@@ -73,6 +78,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 				//getView().getSequence(result);
 			}
 		});
+
 	}
 
 	@Override
@@ -81,6 +87,9 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
 			@Override
 			public void onSuccess(ClassDo classDo) {
+				getMinimumBelowScoredData();
+				getMinimumAboveScoredData();
+				
 				getView().showUnitNames(classDo,clearPanel);
 				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
@@ -106,5 +115,45 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		}else{
 			setInSlot(COLLECTION_PROGRESS_SLOT, null,false);
 		}
+	}
+
+	public AnalyticsServiceAsync getAnalyticService() {
+		return analyticService;
+	}
+
+	public void setAnalyticService(AnalyticsServiceAsync analyticService) {
+		this.analyticService = analyticService;
+	}
+
+	@Override
+	public void getMinimumBelowScoredData() {
+		this.analyticService.getMinimumScoredBelowData("", "", "", new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				getView().setMinimumBelowScoredData();
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+		});
+	}
+
+	@Override
+	public void getMinimumAboveScoredData() {
+		this.analyticService.getMinimumScoredAboveData("", "", "",new AsyncCallback<Void>() {
+
+		   @Override
+		   public void onSuccess(Void result) {
+						getView().setMinimumAvobeScoredData();
+		   }
+
+		  @Override
+		  public void onFailure(Throwable caught) {
+
+		  }
+		});
 	}
 }

@@ -607,9 +607,9 @@ public enum UrlToken {
 	
 	REORDER_PATHWAY_SEQUENCE("/v2/class/{0}/pathway/{1}/reorder/{2}?sessionToken={3}"),
 
-	PATHWAYS_CLASS_OPTIMIZED("/v2/class/{0}/item?sessionToken={1}&limit={2}&offset={3}&orderBy=sequence&optimize=true"),
+	PATHWAYS_CLASS_OPTIMIZED("/v2/class/{0}/item?sessionToken={1}&limit={2}&offset={3}&orderBy=sequence&optimize=true&type=pathway"),
 	
-	PATHWAYS_CLASS("/v2/class/{0}/item?sessionToken={1}&limit={2}&offset={3}&orderBy=sequence"),
+	PATHWAYS_CLASS("/v2/class/{0}/item?sessionToken={1}&limit={2}&offset={3}&orderBy=sequence&type=pathway"),
 	
 	PATHWAYS_CLASS_REORDER("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"),
 	
@@ -617,11 +617,13 @@ public enum UrlToken {
 	
 	V2_ASSIGN_COLLECTION_TO_PATHWAY("/v2/class/{0}/pathway/{1}/assign/{2}?sessionToken={3}"),
 	
-	ASSIGN_STATUS_UPDATE("/v2/class/item/{0}?sessionToken={1}"),
+	ASSIGN_STATUS_UPDATE("/v2/class/{0}/pathway/{1}/item/{2}?sessionToken={3}"),
 	
 	V2_GET_ASSIGNMENT_DETAILS("/v2/collection/item/{0}?sessionToken={1}"),
 	
 	PATHWAYS_UPDATE("/v2/class/{0}/pathway/{1}?sessionToken={2}"),
+	
+	V2_UPDATE_UNIT_STATUS("/v2/class/item/{0}?sessionToken={1}"),
 	
 	GET_INSIGHTS_DATA("insights-api-dev/v1/classpage/{0}/grade.json?sessionToken={1}&data={%22fields%22:%22timeSpent,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,gooruOId,title%22,%22filters%22:{%22session%22:%22FS%22,%22userUId%22:%22{2}%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}"),
 	
