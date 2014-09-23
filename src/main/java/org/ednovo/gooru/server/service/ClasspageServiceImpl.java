@@ -1592,6 +1592,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				UrlToken.GET_PATHWAY_ITEM,classpageId,pathwayGooruOid,getLoggedInSessionToken(),sequenceNo,limit+"",offSet+"");
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
+		getLogger().info("--- v2GetPathwaysOptimized  -- "+url);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializePathwayItem(jsonRep);
 		
@@ -1819,8 +1820,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	
 	
 	@Override
-	public ClasspageItemDo updateAssignmentDetails(String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus) throws GwtException {
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ASSIGN_STATUS_UPDATE,collectionItemId,getLoggedInSessionToken());
+	public ClasspageItemDo updateAssignmentDetails(String classId,String unitId,String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus) throws GwtException {
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ASSIGN_STATUS_UPDATE,classId,unitId,collectionItemId,getLoggedInSessionToken());
 		LOGGER.info("ASSIGN_STATUS_UPDATE API==>"+url);
 		JSONObject classPageItemJsonObject=createClasspageJsonObject(null, direction, dueDate,readStatus,minimumScore,suggestedTime,isRequiredStatus);
 		LOGGER.info("JSON_PAYLOAD==>"+classPageItemJsonObject);
@@ -1871,9 +1872,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}
 	
 	@Override
-	public CollectionDo updateAssignmentStatusAsCompleteorOpen(String collectionItemId, boolean isComplete) throws GwtException {
+	public CollectionDo updateAssignmentStatusAsCompleteorOpen(String classpageId,String unitGooruOid,String collectionItemId, boolean isComplete) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ASSIGN_STATUS_UPDATE,collectionItemId,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ASSIGN_STATUS_UPDATE,classpageId,unitGooruOid,collectionItemId,getLoggedInSessionToken());
 		JSONObject jsonObject=new JSONObject();
 		JSONObject collectionJsonObject=new JSONObject();
 		try {

@@ -73,14 +73,15 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 
 	private static UnitAssignmentViewUiBinder uiBinder = GWT.create(UnitAssignmentViewUiBinder.class);
+	
 
 	interface UnitAssignmentViewUiBinder extends UiBinder<Widget, UnitAssignmentView> {
 		
 	}
 	
-	@UiField HTMLPanel unitPanel,containerPanel,scoreHedingContainer,htmDashBoardTabs;
+	@UiField HTMLPanel unitPanel,containerPanel,scoreHedingContainer,htmDashBoardTabs,timeLablePanel;
 	
-	@UiField Label lblMoreUnits,unitTitleDetails;
+	@UiField Label lblMoreUnits,unitTitleDetails,lblTimeHours,lblTimeMin;
 	
 	@UiField Anchor unitSetupButton;
 	
@@ -98,12 +99,15 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private int unitsPageNumber = 0;
 	private int unitsTotalCount = 0;
 	
+	private String SETGOAL= "Set Goal";
+	
+	private String EDITGOAL= "Edit Goal";
 	private Boolean isClickOnAssignment =false;
 		
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel circleContainerPanel;
-	@UiField Label requiredLabel,optionalLabel;
+
 	Image leftArrow = new Image();
 	Image rightArrow = new Image();
 		
@@ -135,14 +139,23 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		setWidget(uiBinder.createAndBindUi(this));
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
+		unitSetupButton.setText(i18n.GL2198());
+		lblMoreUnits.setText(i18n.GL2199());
+		btnDashBoard.setText(i18n.GL2200());
+		btnAssignment.setText(i18n.GL1933());
 		unitSetupButton.addClickHandler(new UnitSetupEvents());
 		btnDashBoard.setStyleName(res.unitAssignment().selected());
-		requiredLabel.setText("Required");
-		optionalLabel.setText("Optional");
+
+//		requiredLabel.setText(i18n.GL2200());
+//		optionalLabel.setText(i18n.GL2201());
+		btnSetGoal.setText(i18n.GL2197());
+
+		
 		txtHours.getElement().setAttribute("placeholder", "h");
 		txtMinuts.getElement().setAttribute("placeholder", "min");
 		txtHours.getElement().setAttribute("style", "text-align:right");
 		txtMinuts.getElement().setAttribute("style", "text-align:right");
+		timeLablePanel.setVisible(false);
 	}
 	
 	public HTMLPanel getUnitPanel(){
@@ -255,7 +268,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			}
 		}
 		if(totalAssignmentHitcount==0){
-			Label noAssignmentlabel = new Label("Assignment not available");
+			Label noAssignmentlabel = new Label(i18n.GL2202());
 			circleContainerPanel.clear();
 			circleContainerPanel.add(noAssignmentlabel);
 		}
@@ -609,9 +622,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			scoreHedingView=new ScoreHedingView(classDo);
 			scoreHedingContainer.add(scoreHedingView);
 			if(i==0){
-				scoreHedingView.getLblTitle().setText("Average Correct Answer");
+				scoreHedingView.getLblTitle().setText(i18n.GL2195());
 			}else{
-				scoreHedingView.getLblTitle().setText("Assignment Completed");
+				scoreHedingView.getLblTitle().setText(i18n.GL2203());
 			}
 		}
 		//txtHours.addBlurHandler(new ScoreHandler());
@@ -627,8 +640,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void showAssignment(ClasspageItemDo classpageItemDo) {
 		assignmentContainer.clear();
 		CollectionsView collectionView=new CollectionsView(classpageItemDo){
-			public void updateAssignmentRequiredStatus(Boolean isRequired,String collectionItemId){
+			@Override
+			public void updateAssignmentRequiredStatus(Boolean isRequired,String collectionItemId,String readStatus,boolean isUpdateRequiredStatus){
+				if(isUpdateRequiredStatus){
 				updateCircleRequiredView(isRequired, collectionItemId);
+				}else{
+					updateAssingmentCircleReadStatus(isRequired,collectionItemId,readStatus);
+				}
 			}
 		};
 		assignmentContainer.add(collectionView);
@@ -642,6 +660,19 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				UnitCricleView unitCricleView=(UnitCricleView)widget;
 				if(unitCricleView.getAssignementId().equals(collectionItemId)){
 					unitCricleView.showCircle(isRequired);
+					return;
+				}
+			}
+		}		
+	}
+	public void updateAssingmentCircleReadStatus(Boolean isRequired,String collectionItemId,String readStatus){
+		Iterator<Widget> widgets = circleContainerPanel.iterator();
+		while (widgets.hasNext()) {
+			 Widget widget = widgets.next();
+			if (widget instanceof UnitCricleView) {
+				UnitCricleView unitCricleView=(UnitCricleView)widget;
+				if(unitCricleView.getAssignementId().equals(collectionItemId)){
+					unitCricleView.assignmentReadStatus(isRequired,readStatus);
 					return;
 				}
 			}
@@ -741,7 +772,41 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		return null;
 	}
-
 	
+	@UiHandler("btnSetGoal")
+	public void clickOnGoalBtn(ClickEvent clickEvent){
+		
+		if(txtHours.getText()!=null || txtMinuts.getText()!=null ){
+			if(btnSetGoal.getText().equals(SETGOAL)){
+				lblTimeHours.setText(txtHours.getText()+" h");
+				lblTimeMin.setText(txtMinuts.getText()+" min");
+				showAndHideTextBox();
+				btnSetGoal.setText(EDITGOAL);
+				lblGreenControl.getElement().setId("greenControll");
+				lblControl.getElement().setAttribute("style", "-webkit-transform: rotate(-50deg);");
+			}else{
+				btnSetGoal.setStyleName("primary");
+				showAndHideTextBox();
+				btnSetGoal.setText(SETGOAL);
+			}
+			
+		}
 
 	}
+	
+	/*
+	 * show and hide text boxes
+	 */
+	public void showAndHideTextBox(){
+		if(btnSetGoal.getText().equals(SETGOAL)){
+			txtHours.setVisible(false);
+			txtMinuts.setVisible(false);
+			timeLablePanel.setVisible(true);
+		}else{
+			txtHours.setVisible(true);
+			txtMinuts.setVisible(true);
+			timeLablePanel.setVisible(false);
+		}
+	}
+
+}
