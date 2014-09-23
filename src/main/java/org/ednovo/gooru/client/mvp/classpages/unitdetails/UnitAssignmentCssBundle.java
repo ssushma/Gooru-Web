@@ -19,6 +19,12 @@ public interface UnitAssignmentCssBundle extends ClientBundle{
 		String teachTab();
 		String assingmentcompleted();
 		String assignmentCompletedWithOptional();
+		String dueDataIcon();
+		String headerDueDate();
+		String directionHeading();
+		String directionDesc();
+		
+		
 	}
 	
 	@NotStrict
