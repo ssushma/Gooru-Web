@@ -297,10 +297,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			System.out.println("---- pathway id -- "+classUnitsDo.getResource().getGooruOid());
-			System.out.println("---- pathway item -- "+collectionItem);
-			System.out.println("---- pathway CP -- "+classPageId);
-			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),title, "direction",classPageId,classUnitsDo.getItemSequence()){
+
+			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),title, "direction",classPageId,classUnitsDo.getItemSequence(),0,""){
+
 
 				@Override
 				public void reorderAssignment(int seqPosition,String selectedPathwayId) {

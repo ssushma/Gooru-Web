@@ -1933,6 +1933,28 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				}
 				 return null;
 	}
+
+	@Override
+	public void pathwayItemMoveWithReorder(String classId,
+			String pathwaygooruOid, String collectionItemId,
+			String newSequence) throws GwtException {
+			JsonRepresentation jsonRep = null;
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PATHWAY_ITEM_MOVE_WITH_REORDER,classId,pathwaygooruOid,collectionItemId,getLoggedInSessionToken());
+		
+			JSONObject jsonObject=new JSONObject();
+			try {
+				if(pathwaygooruOid!=null){
+					jsonObject.put("targetId", pathwaygooruOid);
+				}
+				
+				jsonObject.put("newSequence", newSequence);
+				
+				
+			}catch(JSONException ex){}
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),jsonObject.toString());
+			jsonRep =jsonResponseRep.getJsonRepresentation();
+		
+	}
 }
 
 
