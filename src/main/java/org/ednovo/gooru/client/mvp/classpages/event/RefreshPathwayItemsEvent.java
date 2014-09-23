@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,25 +23,47 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+package org.ednovo.gooru.client.mvp.classpages.event;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.ClassDo;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
+import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.GwtEvent.Type;
 
-import com.google.gwt.user.client.ui.HTMLPanel;
+/**
+ * 
+ * @fileName : RefreshPathwayItemsEvent.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.1
+ *
+ * @date: Sept 23, 2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 
-public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentUiHandlers>{
-	 void getSequence(UnitAssignmentsDo unitAssignmentsDo);
-	 void getPathwayItems();
-	 public void showUnitNames(ClassDo classDo,boolean clearPanel);
-	 public void hideMoreUnitsLink();
-	 public HTMLPanel getUnitPanel();
-	 public HTMLPanel getCircleContainerPanel();
-	 public void showAssignment(ClasspageItemDo classpageItemDo);
-	void showDashBoard();
-	void showAssignments();
-	void scoreHederView(String collectionItemId);
+public class RefreshPathwayItemsEvent extends GwtEvent<RefreshPathwayItemsEventHandler> {
+	
+	public static final Type<RefreshPathwayItemsEventHandler> TYPE = new Type<RefreshPathwayItemsEventHandler>();
+	
+	private String pathwayId;
+	private String classpageId;
+	
+	public RefreshPathwayItemsEvent(String pathwayId,String classpageId){
+		this.pathwayId = pathwayId;
+		this.classpageId = classpageId;
+	}
+
+	@Override
+	public com.google.gwt.event.shared.GwtEvent.Type<RefreshPathwayItemsEventHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(RefreshPathwayItemsEventHandler handler) {
+		handler.refreshPathway(classpageId,pathwayId); 
+	}
 
 }

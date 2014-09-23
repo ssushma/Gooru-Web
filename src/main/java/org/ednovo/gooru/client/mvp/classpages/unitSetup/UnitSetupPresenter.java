@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
+import org.ednovo.gooru.client.mvp.classpages.event.RefreshPathwayItemsEvent;
+import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarRatingsEvent;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -47,6 +49,7 @@ public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> impleme
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.addAssignmentContainerPresenter = addAssignmentContainerPresenter;
+		addRegisteredHandler(RefreshPathwayItemsEvent.TYPE,this);
 	}
 	
 	public void getUnitsWithAssignemnts(){
@@ -144,6 +147,10 @@ public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> impleme
 		limit = 5;
 		offSet = 0;
 	}
-	
-	
+
+	@Override
+	public void refreshPathway(String classpageId, String pathwayId) {
+		getView().refreshPathwayItems(classpageId,pathwayId);
+	}
+
 }

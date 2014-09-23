@@ -837,12 +837,84 @@ background: -moz-linear-gradient(3% 0 -90deg, #fff 0px, #ddd 100%) repeat scroll
 	font-size: 35px;
 	color: #fb7c73;
 	text-align: center;
-	padding: 0px 3px 0px 76px;
+	padding: 0px 9px 0px 76px;
 	width: 31%;
 	margin-bottom: 4px;
 	background: url(images/Classpage/student/persentage.png) no-repeat center right;
 }
+.timeLabelStyle{
+	font-size: 31px;
+	color: #a0c79a;
+	text-align: center;
+	/* width: 109%; */
+	display:inline-block;
+	margin-bottom: 6px;
+}
 
+/* student view assignment */
+
+.classOptionsMain{
+	margin-bottom:10px;
+}
+.smallerWidth{
+	width:15.6667% !important;
+}
+.classOverOptions{
+	font-size:10px;
+	padding-left:3px !important;
+	padding-right:3px !important;
+	line-height:25px;
+}
+.bubbleSmall{
+	width:20px;
+	height:20px;
+	background:#B9BBCA;
+	border-radius:50% 50%;
+	-webkit-border-radius:50% 50%;
+	-moz-border-radius:50% 50%;
+	vertical-align:middle;
+	display:inline-block;
+}
+.stylishBub{
+background:#b9bbca url(../images/liners.png) repeat-x !important;
+}
+.redBubble{
+	background:#ff7d71 !important;
+}
+.greenBubble{
+	background:#a7c9a4 !important;
+}
+.smallWidth{
+	width:18.6667% !important;
+}
+.bubbleSmallrounded{
+	width:18px;
+	height:18px;
+	background:#ffffff;
+	border-radius:50% 50%;
+	-webkit-border-radius:50% 50%;
+	-moz-border-radius:50% 50%;
+	vertical-align:middle;
+	display:inline-block;
+	border:2px solid #c8c8c8;
+}
+.bubbleSmallPattren{
+	width:20px;
+	height:20px;
+	background:#B9BBCA url(../images/bubble-pattren1.png) repeat;
+	border-radius:50% 50%;
+	-webkit-border-radius:50% 50%;
+	-moz-border-radius:50% 50%;
+	vertical-align:middle;
+	display:inline-block;
+}
+
+.assingmentcompleted{
+	background: #b9bbca url("images/checkMarkWhite.png") 7px 9px no-repeat !important;
+}
+.assignmentCompletedWithOptional{
+	background: #b9bbca url(../images/liners.png) -37px -22px no-repeat !important;
+}
 
 
 

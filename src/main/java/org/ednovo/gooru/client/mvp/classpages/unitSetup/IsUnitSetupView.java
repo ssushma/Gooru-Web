@@ -43,4 +43,6 @@ public interface IsUnitSetupView extends IsViewWithHandlers<UnitSetupUiHandlers>
 
 	void setLoadingIcon(boolean isVisible);
 
+	void refreshPathwayItems(String classpageId, String pathwayId); 
+
 }

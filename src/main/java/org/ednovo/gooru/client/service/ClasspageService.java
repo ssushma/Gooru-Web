@@ -591,11 +591,36 @@ public interface ClasspageService extends BaseService {
 	List<InsightsUserDataDo> getAssignmentData(String gooruUId,
 			String classpageId, int pageSize, int pageNum) throws GwtException,
 			ServerDownException;
-	public ClasspageItemDo updateAssignmentDetails(String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus) throws GwtException;
+	public ClasspageItemDo updateAssignmentDetails(String classId,String unitId,String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus) throws GwtException;
 	
 	public ClasspageItemDo getAssignemntDetails(String assingmentId);
 
 	CollectionDo updateAssignmentStatusAsCompleteorOpen(
-			String collectionItemId, boolean isComplete) throws GwtException;
-	
+			String classpageId,String unitGooruOid,String collectionItemId, boolean isComplete) throws GwtException;
+
+    ClasspageItemDo updateUnitStatus(String pathWayId,String minimumScore, String assignementStatus, String timeStudying) throws GwtException;
+    /**
+	 * @function pathwayItemMoveWithReorder 
+	 * 
+	 * @created_date : Sep 23, 2014
+	 * 
+	 * @description
+	 * To reorder the pathway assignment in different unit
+	 * 
+	 * @param classpageId
+	 * @param pathwayGooruOid
+	 * @param collectionItemId
+	 * @param targetId
+	 * @param sequence
+	 * @throws GwtException,ServerDownException
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+   public void pathwayItemMoveWithReorder(String classId,String pathwaygooruOid,String collectionItemId,String newSequence)throws GwtException;
 }

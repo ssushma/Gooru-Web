@@ -55,12 +55,15 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
@@ -103,13 +106,15 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField ChangeAssignmentStatusView changeAssignmentStatusView;
 	
-	@UiField Button editAssignmentDetailsButton,cancelAssignmentDetailsButton,saveAssignmentDetailsButton,editCollectionButton,unitCircleView;
+	@UiField Button editAssignmentDetailsButton,cancelAssignmentDetailsButton,saveAssignmentDetailsButton,editCollectionButton,studyCollectionButton;
 	
 	@UiField InlineLabel suggestedHourLabel,suggestedMinutesLabel;
 	
 	@UiField Frame reportsFrame;
 	
 	@UiField Button btnSummary,btnProgress;
+	
+	@UiField CheckBox assignmentMarkCheckBox;
 	
 	private Label directionErrorLabel=new Label();
 	
@@ -146,7 +151,6 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		showSaveButtons(false);
 		showAssignmentDetils();
 		frameContainer.setVisible(false);
-
 		String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if(pageLocation.equals(PlaceTokens.STUDENT))
 		{
@@ -155,11 +159,13 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			editCollectionButton.removeFromParent();
 			changeAssignmentStatusView.removeFromParent();
 			dueDateButton.removeFromParent();
-			unitCircleView.setVisible(true);
-			unitCircleView.addClickHandler(new MarkProgressEvent());
+			displayAssignmentMarkButton();
+			assignmentMarkCheckBox.addValueChangeHandler(new MarkProgressEvent());
+			studyCollectionButton.addClickHandler(new StudyCollectionEvent());
 		}else if(pageLocation.equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
 			dueDateButton.setVisible(true);
-			unitCircleView.setVisible(false);
+			assignmentMarkCheckBox.removeFromParent();
+			studyCollectionButton.removeFromParent();
 		}
 		changeAssignmentStatusView.getChangeAssignmentStatusButton().addClickHandler(new ChangeStatusEvent());
 		btnSummary.addClickHandler(new SummaryEvent());
@@ -170,6 +176,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		dueDateButton.addClickHandler(new EditDueDateEvent());
 		editCollectionButton.addClickHandler(new CollectionEditEvent());
 	}
+	
 	
 	public void showAssignmentDetils(){
 		if(classpageItemDo!=null){
@@ -276,6 +283,29 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		directionContentPanel.add(directionContent);
 	}
 	
+	private void displayAssignmentMarkButton(){
+		if(classpageItemDo!=null){
+			Boolean isRequired=classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false;
+			if(isRequired){
+				assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().requiredBuble());
+				boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals("completed")?true:false;
+				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompleted());
+				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
+				if(assignmentStudyStatus){
+					assignmentMarkCheckBox.addStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompleted());
+				}
+			}else{
+				assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().optionalBuble());
+				boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals("completed")?true:false;
+				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompleted());
+				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
+				if(assignmentStudyStatus){
+					assignmentMarkCheckBox.addStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
+				}
+			}
+		}
+	}
+	
 	@UiHandler("collectionImage")
 	public void setErrorImage(ErrorEvent event){
 		collectionImage.setUrl("images/default-collection-image-160x120.png");
@@ -289,19 +319,19 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	public void updateAssignmentStatus(boolean assignmentStaus){
-		updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, null, null, null, null, assignmentStaus, true, false);
+		updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, null, null, null, null, assignmentStaus, true, false,false);
 	}
 	
 	public void updateAssignmentDueDate(String dueDate){
 		showAndHideEditToolBarButtons(false);
-		updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, dueDate, null, null, null, null, false, true);
+		updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, dueDate, null, null, null, null, false, true,false);
 	}
 	
 	public void updateAssignmentDetails(String direction,String minimumScore,String suggestedTime){
 		savingLabel.getElement().setInnerText("Saving...");
 		savingLabel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		hideCancelAndSaveButtons(false);
-		updateAssignmentDetails(classpageItemDo.getCollectionItemId(), direction, null, null, minimumScore, suggestedTime, null, false, false);
+		updateAssignmentDetails(classpageItemDo.getCollectionItemId(), direction, null, null, minimumScore, suggestedTime, null, false, false,false);
 	}
 	
 	public class SummaryEvent implements ClickHandler{
@@ -344,12 +374,25 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		return urlVal;
 	}
 	
-	public class MarkProgressEvent implements ClickHandler{
+	public class MarkProgressEvent implements ValueChangeHandler<Boolean>{
 		@Override
-		public void onClick(ClickEvent event) {
-			updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, null, null, null, null, null, false, true);
+		public void onValueChange(ValueChangeEvent<Boolean> event) {
+			Boolean assignmentMarkStatus=event.getValue();
+			if(assignmentMarkStatus){
+				updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, null, "completed", null, null, null, false, false,true);
+			}else{
+				updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, null, "open", null, null, null, false, false,true);
+			}
 		}
 	}
+	
+//	public class MarkProgressEvent implements ValueChangeHandler<T>{
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			String status=classpageItemDo.getStatus();
+//			updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, null, null, null, null, null, false, true);
+//		}
+//	}
 	
 	
 	public class EditAssignmentEvent implements ClickHandler{
@@ -585,6 +628,18 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 		return placeToken;
 	}
+	private class StudyCollectionEvent implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			Map<String,String> parametesMap=new HashMap<String,String>();
+			parametesMap.put("id", classpageItemDo.getCollectionId());
+			parametesMap.put("cid", classpageItemDo.getCollectionItemId());
+			parametesMap.put("page", getCurrentPlaceToken());
+			AppClientFactory.getPlaceManager().revealPlace(true, AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, parametesMap));
+		}
+		
+	}
 	
 	private class CollectionEditEvent implements ClickHandler{
 		@Override
@@ -593,12 +648,12 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		};
 	}
 	public void getCollectionFolders(){
-		AppClientFactory.getInjector().getClasspageService().getCollectionParentFolders(classpageItemDo.getCollectionId(), new SimpleAsyncCallback<ArrayList<String>>() {
+		AppClientFactory.getInjector().getClasspageService().getCollectionParentFolders(classpageItemDo.getResource().getGooruOid(), new SimpleAsyncCallback<ArrayList<String>>() {
 			@Override
 			public void onSuccess(ArrayList<String> foldersList) {
 				if(foldersList!=null){
 					Map<String,String> parametesMap=new HashMap<String,String>();
-					parametesMap.put("id", classpageItemDo.getCollectionId());
+					parametesMap.put("id", classpageItemDo.getResource().getGooruOid());
 					if(foldersList.size()>0){
 						for(int i=0;i<foldersList.size();i++){
 							parametesMap.put("o"+(i+1), foldersList.get(i));
@@ -610,19 +665,26 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		});
 	}
 	
-	public void updateAssignmentDetails(String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus,final boolean isUpdateRequiredStatus,final boolean isUpdateDuedate){
-		AppClientFactory.getInjector().getClasspageService().updateAssignmentDetails(collectionItemId, direction, dueDate, readStatus, minimumScore, suggestedTime, isRequiredStatus, new SimpleAsyncCallback<ClasspageItemDo>() {
+	public void updateAssignmentDetails(String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus,final boolean isUpdateRequiredStatus,final boolean isUpdateDuedate,final boolean isReadStatus){
+		String classId=getClasspageId();
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+		AppClientFactory.getInjector().getClasspageService().updateAssignmentDetails(classId,unitId,collectionItemId, direction, dueDate, readStatus, minimumScore, suggestedTime, isRequiredStatus, new SimpleAsyncCallback<ClasspageItemDo>() {
 			@Override
 			public void onSuccess(ClasspageItemDo classpageItemDo) {
 				if(classpageItemDo!=null){
 					CollectionsView.this.classpageItemDo=classpageItemDo;
 					if(isUpdateRequiredStatus){
-						updateAssignmentRequiredStatus(classpageItemDo.getIsRequired(),classpageItemDo.getCollectionItemId());
+						updateAssignmentRequiredStatus(classpageItemDo.getIsRequired(),classpageItemDo.getCollectionItemId(),classpageItemDo.getStatus(),true);
+					}
+					if(isReadStatus){
+						updateAssignmentRequiredStatus(classpageItemDo.getIsRequired(),classpageItemDo.getCollectionItemId(),classpageItemDo.getStatus(),false);
 					}
 				}
 				if(isUpdateRequiredStatus||isUpdateDuedate){
 					setAssignmentStatus(classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false);
 					setDueDate(classpageItemDo.getPlannedEndDate());
+				}else if(isReadStatus){
+					displayAssignmentMarkButton();
 				}else{
 					showUpdatedAssignmentDetails();
 				}
@@ -630,7 +692,15 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		});
 	}
 	
-	public void updateAssignmentRequiredStatus(Boolean isRequired,String collectionItemId){
+	public String getClasspageId(){
+		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(viewToken.equals(PlaceTokens.EDIT_CLASSPAGE)){
+			return AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		}else{
+			return AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		}
+	}
+	public void updateAssignmentRequiredStatus(Boolean isRequired,String collectionItemId,String readStatus,boolean isUpdateRequiredStatus){
 		
 	}
 	
