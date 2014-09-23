@@ -7,7 +7,8 @@
 			<div class="{unitStyle.upArrow}">
 			    <g:HTMLPanel styleName="{unitStyle.popArrowInner}"><g:Image ui:field="popupArrow"></g:Image></g:HTMLPanel>
 			</div>
-			<g:Label ui:field="titleLabel" styleName="{unitStyle.popHeader}"/>
+			<g:InlineLabel ui:field="seqNum" styleName="{unitStyle.popHeader}"/>
+			<g:InlineLabel ui:field="titleLabel" styleName="{unitStyle.popHeader}"/>
 			<hr>
 			<g:Label ui:field="descLabel" styleName="{unitStyle.popDescription}"/>
 				<div class="{unitStyle.dropBoxes}">
