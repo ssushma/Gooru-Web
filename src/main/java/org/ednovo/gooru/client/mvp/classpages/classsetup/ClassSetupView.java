@@ -241,6 +241,7 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 
 		@Override
 		public void onClick(ClickEvent event) {
+			clearPanel();
 			if (event.getSource() instanceof PaginationButtonUc) {
 				int pagenumber = ((PaginationButtonUc) event.getSource()).getPage();
 				pageNumber = pagenumber;
@@ -272,7 +273,13 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 		public void setLoadingIcon(boolean isVisible) {
 			loadingImageLabel.setVisible(isVisible);
 		}
+		
+		@Override
+		public void clearPaginationPanel() {
+			paginationPanel.setVisible(false);
+		}
 
+		
 	
 	
 }
