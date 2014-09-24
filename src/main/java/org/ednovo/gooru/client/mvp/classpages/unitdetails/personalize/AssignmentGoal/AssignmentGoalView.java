@@ -69,6 +69,8 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 	
 	String classpageId = null;
 	
+	String unitId = null;
+	
 	@UiField Label lblStudentsList, lblPleaseWait;
 	
 	@UiField HTMLPanel panelAssignmentList;
@@ -93,7 +95,10 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 	    });
 		
 		classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid") != null ? AppClientFactory.getPlaceManager().getRequestParameter("classpageid") : null;
-		getPresenter().getAnalyticData(collaboratorsDo.getGooruUid(), classpageId, pageSize, pageNum);
+		unitId = AppClientFactory.getPlaceManager().getRequestParameter("uid") != null ? AppClientFactory.getPlaceManager().getRequestParameter("uid") : null;
+		
+		
+		getPresenter().getAnalyticData(collaboratorsDo.getGooruUid(), classpageId, pageSize, pageNum, unitId);
 	}
 	
 	public void setStaticTexts(){
