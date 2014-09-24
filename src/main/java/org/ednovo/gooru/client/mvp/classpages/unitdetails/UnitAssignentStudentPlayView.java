@@ -84,6 +84,7 @@ public class UnitAssignentStudentPlayView extends PopupPanel {
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
 		setView(seq,title,dueDate,direction,collectionId,collectionItemId);
+		this.getElement().setAttribute("style","background: transparent");
 	}
 	/**
 	 * @method name :setView
