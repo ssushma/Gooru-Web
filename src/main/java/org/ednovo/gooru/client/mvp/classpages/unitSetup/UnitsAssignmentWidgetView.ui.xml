@@ -15,7 +15,7 @@
 					<g:Anchor ui:field="unitDetailsButton" text="{i18n.GL2204}"></g:Anchor>
 				</g:HTMLPanel>
 			</uc:HTMLEventPanel>
-			</g:HTMLPanel>
+			
 			
 			<g:HTMLPanel styleName="{style.classDetailsMain}">
 			    <uc:HTMLEventPanel styleName="{style.assignmentsPreviousArrow}" ui:field="htPanelPreviousArrow">
@@ -27,7 +27,6 @@
 				</g:HTMLPanel>
 				
 			    <g:HTMLPanel ui:field="assignmentsContainer">
-			        
 			        <uc:HTMLEventPanel styleName="{style.assignmentsNextArrow}" ui:field="htPanelNextArrow">
 					  <g:Image url="images/rightSmallarrow.png"></g:Image>
 				   </uc:HTMLEventPanel>
