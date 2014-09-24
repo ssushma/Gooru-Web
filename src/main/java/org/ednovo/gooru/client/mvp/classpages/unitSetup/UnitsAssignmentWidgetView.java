@@ -51,6 +51,7 @@ import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -145,6 +146,11 @@ public class UnitsAssignmentWidgetView extends Composite {
 		assignmentsContainer.clear();
 		if(getTotalHitCount() == 0){
 			assignmentsContainer.add(getZeroAssignmentLabel()); 
+			editUnitButton.setEnabled(false);
+			editUnitButton.getElement().addClassName("disabled");
+		}else{
+			editUnitButton.setEnabled(true);
+			editUnitButton.getElement().removeClassName("disabled");
 		}
 		if(classUnitsDo!=null && classUnitsDo.getResource()!=null){
 			if(classUnitsDo.getResource().getCollectionItems() != null){
@@ -152,6 +158,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 					ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
 					assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo));
 				}
+				assignmentsContainer.add(htPanelNextArrow);
 				showAndHideAssignmentArrows();
 			}
 		}
@@ -241,7 +248,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 			assignmentEditView.setAssignmentId(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId());
 			assignmentsContainer.add(assignmentEditView);
 		}
-		
+		assignmentsContainer.add(htPanelNextArrow);
+		showAndHideAssignmentArrows();
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
 	        	hideReorderPopup(event);
@@ -300,15 +308,21 @@ public class UnitsAssignmentWidgetView extends Composite {
 				public void reorderAssignment(int seqPosition,String selectedPathwayId,String targetPathway) {
 					boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItem);
 					if(isAssignmentDeleted){
+						System.out.println("-- hello --");
 						setLoadingIcon(true);
 						clearAssignmentsFromDo();
-						assignmentOffset =(seqPosition/assignmentLimit)*assignmentLimit;
-						if(assignmentOffset==seqPosition){
-							assignmentOffset = assignmentOffset-assignmentLimit;
-						}
-						getUnitAssignments(assignmentOffset,isEditMode(),null);
-						if(Integer.parseInt(targetPathway)!=classUnitsDo.getItemSequence()){
-							AppClientFactory.fireEvent(new RefreshPathwayItemsEvent(selectedPathwayId, classPageId));  
+						if(Integer.parseInt(targetPathway)==classUnitsDo.getItemSequence()){
+							assignmentOffset =(seqPosition/assignmentLimit)*assignmentLimit;
+							if(assignmentOffset==seqPosition){
+								assignmentOffset = assignmentOffset-assignmentLimit;
+							}
+							getUnitAssignments(assignmentOffset,isEditMode(),null);
+						}else{
+							if((getTotalHitCount()-1)==assignmentOffset){
+								assignmentOffset=assignmentOffset-assignmentLimit;
+							}
+							getUnitAssignments(assignmentOffset,isEditMode(),null);
+							AppClientFactory.fireEvent(new RefreshPathwayItemsEvent(selectedPathwayId, classPageId)); 
 						}
 					}
 
@@ -460,7 +474,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 	}
 	
 	public void getUnitAssignments(int assignmentOffset,final boolean isAssignmentEditmode, final String direction){
-
 		String classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classPageId, classUnitsDo.getResource().getGooruOid(), "sequence", assignmentLimit, assignmentOffset, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 
@@ -478,22 +491,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 			}
 		}); 
 	}
-	
-	
-	public void arrowButton(String direction){
-		if(direction==null||direction.equals(NEXT)){
-			assignmentOffset=assignmentOffset+assignmentLimit;
-		}
-		if(assignmentOffset<getTotalHitCount()){
-			htPanelPreviousArrow.setVisible(false);
-			htPanelNextArrow.setVisible(true);
-		}
-		if(assignmentOffset>assignmentLimit){
-			htPanelPreviousArrow.setVisible(true);
-			htPanelNextArrow.setVisible(false);
-		}
-	}
-	
 	
 	public void addAssignment(ArrayList<ClasspageItemDo> classpageItemDo){
 		setTotalHitCount(getTotalHitCount()+classpageItemDo.size());
@@ -540,40 +537,64 @@ public class UnitsAssignmentWidgetView extends Composite {
 		
 		if(Math.abs(getTotalHitCount()-assignmentOffset)>assignmentLimit){
 			if(Math.abs(getTotalHitCount()-assignmentOffset)==getTotalHitCount()){
-				htPanelPreviousArrow.setVisible(false);
-				htPanelNextArrow.setVisible(true);
+//				setVisible(false);
+//				htPanelNextArrow.setVisible(true);
+				htPanelPreviousArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+				htPanelNextArrow.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			}else{
-				htPanelPreviousArrow.setVisible(true);
-				htPanelNextArrow.setVisible(true);
+//				htPanelPreviousArrow.setVisible(true);
+//				htPanelNextArrow.setVisible(true);
+				
+				htPanelPreviousArrow.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+				htPanelNextArrow.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+				
 			}
 		}
 		
 		if(Math.abs(getTotalHitCount()-assignmentOffset)<assignmentLimit){
 			if(getTotalHitCount()<assignmentLimit){
-				htPanelPreviousArrow.setVisible(false);
-				htPanelNextArrow.setVisible(false);
+//				htPanelPreviousArrow.setVisible(false);
+//				htPanelNextArrow.setVisible(false);
+				
+				htPanelPreviousArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+				htPanelNextArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+				
+				
 			}else{
-				htPanelPreviousArrow.setVisible(true);
-				htPanelNextArrow.setVisible(false);
+//				htPanelPreviousArrow.setVisible(true);
+//				htPanelNextArrow.setVisible(false);
+				htPanelPreviousArrow.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+				htPanelNextArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+				
 			}
 		}
 		if(Math.abs(getTotalHitCount()-assignmentOffset)==0){
 			if(getTotalHitCount()>assignmentLimit){
-				htPanelPreviousArrow.setVisible(true);
-				htPanelNextArrow.setVisible(false);
+//				htPanelPreviousArrow.setVisible(true);
+//				htPanelNextArrow.setVisible(false);
+				
+				htPanelPreviousArrow.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+				htPanelNextArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			}else{
-				htPanelPreviousArrow.setVisible(false);
-				htPanelNextArrow.setVisible(false);
+//				htPanelPreviousArrow.setVisible(false);
+//				htPanelNextArrow.setVisible(false);
+				
+				htPanelPreviousArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+				htPanelNextArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			}
 			
 		}
 		if(Math.abs(getTotalHitCount()-assignmentOffset)==assignmentLimit){
 			if(getTotalHitCount()==assignmentLimit){
-				htPanelNextArrow.setVisible(false); 
-				htPanelPreviousArrow.setVisible(false);
+//				htPanelNextArrow.setVisible(false); 
+//				htPanelPreviousArrow.setVisible(false);
+				htPanelPreviousArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+				htPanelNextArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			}else{
-				htPanelPreviousArrow.setVisible(true);
-				htPanelNextArrow.setVisible(false); 
+//				htPanelPreviousArrow.setVisible(true);
+//				htPanelNextArrow.setVisible(false); 
+				htPanelPreviousArrow.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+				htPanelNextArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			}
 		}
 	}
