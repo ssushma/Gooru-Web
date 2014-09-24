@@ -303,15 +303,14 @@ public class UnitsAssignmentWidgetView extends Composite {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			final String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			unitAssigmentReorder = new UnitAssigmentReorder(assignmentSeq,getClassDo(),title, narration,classPageId,classUnitsDo.getItemSequence(),getTotalHitCount(),collectionItem){
+			unitAssigmentReorder = new UnitAssigmentReorder(assignmentSeq,getClassDo(),title, narration,classPageId,Integer.parseInt(seqNumber),getTotalHitCount(),collectionItem,classUnitsDo.getResource().getGooruOid()){
 				@Override
 				public void reorderAssignment(int seqPosition,String selectedPathwayId,String targetPathway) {
 					boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItem);
 					if(isAssignmentDeleted){
-						System.out.println("-- hello --");
 						setLoadingIcon(true);
 						clearAssignmentsFromDo();
-						if(Integer.parseInt(targetPathway)==classUnitsDo.getItemSequence()){
+						if(Integer.parseInt(targetPathway)==Integer.parseInt(seqNumber)){
 							assignmentOffset =(seqPosition/assignmentLimit)*assignmentLimit;
 							if(assignmentOffset==seqPosition){
 								assignmentOffset = assignmentOffset-assignmentLimit;
