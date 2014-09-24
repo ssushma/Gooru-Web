@@ -55,6 +55,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	}
 	@Override
 	protected void onHide() {
+		System.out.println("onhide method...........");
 		getView().resetUnitAssignmentView();
 	}
 	
