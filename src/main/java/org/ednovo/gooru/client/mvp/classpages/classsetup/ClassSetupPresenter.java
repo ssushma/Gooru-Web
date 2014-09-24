@@ -70,20 +70,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	@Override
 	public void onReveal() {
 		super.onReveal();
-		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-		int offsetVal = 0;
-		if(pageNum != null)
-		{
-			offsetVal = Integer.parseInt(pageNum);
-			if(offsetVal!=0)
-			{	
-			offsetVal = (offsetVal-1);
-			}
-		}
-		getView().setLoadingIcon(true);
-		getPaginatedPathways((offsetVal)*limit);
-		
-		
+		loadPathways();	
 		/*ResetPaginationHandler reset = new ResetPaginationHandler() {
 
 			@Override
@@ -93,6 +80,13 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 				
 			}
 		};*/
+	}
+
+	@Override
+	protected void onReset() {
+		// TODO Auto-generated method stub
+		super.onReset();
+		loadPathways();
 	}
 	
 	@Override
@@ -108,8 +102,12 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		if(pageNum != null)
 		{
 			offsetVal = Integer.parseInt(pageNum);
+			if(offsetVal!=0)
+			{	
 			offsetVal = (offsetVal-1);
+			}
 		}
+		getView().setLoadingIcon(true);
 		getPaginatedPathways((offsetVal)*limit);
 	}
 	
@@ -117,8 +115,6 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	public void OnUnitSetupClick() {
 		setInSlot(UNITS_SLOT, unitSetupPresenter,false);
 	}
-	
-
 	
 	public void getPathways(){
 		getView().clearPanel();
@@ -165,7 +161,6 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		getView().clearPanel();
 		getView().setLoadingIcon(true);
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-
 		if(classpageid != null)
 		{
 

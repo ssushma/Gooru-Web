@@ -3,18 +3,22 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="unitStyle" src="unitassignment.css" />
 	<g:HTMLPanel>
-	    <!--  <g:FlowPanel styleName="{unitStyle.assignmentStudyPopup}" ui:field="assignmentInfoPopup"> -->
-			          	<g:HTMLPanel styleName="{unitStyle.assignmentStudyPopupArrow}"></g:HTMLPanel>
-			          	<g:HTMLPanel styleName=" {unitStyle.standardsinner} {unitStyle.studyPopup}">
-			          	    <g:HTMLPanel styleName="{unitStyle.circleInside}" ui:field="panelCicle1">
-			          	    	<g:Label styleName="{unitStyle.assignmentNumbers}" ui:field="lblCircle1"></g:Label>
-			          	    </g:HTMLPanel>
-							<g:HTML styleName="{unitStyle.assignmentCollectionTitle}" ui:field="assignmentCollectiontitle"></g:HTML>
-							
-							<g:HTMLPanel styleName="{unitStyle.headerLeft}" ui:field="dueDateContainer">
-							</g:HTMLPanel>	
-					        <g:Button styleName="{unitStyle.studyPlay}" ui:field="studyButtonText"></g:Button>				        
-			         	</g:HTMLPanel>
-			       <!--  </g:FlowPanel> -->
+		<g:HTMLPanel styleName="{unitStyle.assignmentStudyPopupArrow}"></g:HTMLPanel>
+		<g:HTMLPanel styleName=" {unitStyle.standardsinner} {unitStyle.studyPopup}">
+			<g:HTMLPanel styleName="{unitStyle.circleInside}"
+				ui:field="panelCicle1">
+				<g:Label styleName="{unitStyle.assignmentNumbers}" ui:field="lblCircle1"></g:Label>
+			</g:HTMLPanel>
+			<g:HTML styleName="{unitStyle.assignmentCollectionTitle}"
+				ui:field="assignmentCollectiontitle"></g:HTML>
+
+			<g:HTMLPanel styleName="{unitStyle.headerLeft}" ui:field="dueDateContainer">
+			</g:HTMLPanel>
+			<g:Button styleName="{unitStyle.studyPlay}" ui:field="studyButtonText"></g:Button>
+			<g:HTMLPanel styleName="{unitStyle.directionStyle}"
+				ui:field="directionContainer" />
+
+		</g:HTMLPanel>
+
 	</g:HTMLPanel>
 </ui:UiBinder> 
