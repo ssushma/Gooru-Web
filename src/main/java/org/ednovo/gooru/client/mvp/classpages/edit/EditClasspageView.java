@@ -131,7 +131,7 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 
 	@UiField Button btnCollectionEditImage;
 
-	@UiField Button btnEditImage;
+	@UiField Button btnEditImage,btnDeleteClasspage;
 
 	@UiField Button assignmentsTab;
 
@@ -337,6 +337,8 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		titleAlertMessageLbl.getElement().setId("lblTitleAlertMessage");
 		titleAlertMessageLbl.getElement().setAttribute("alt",i18n.GL0143());
 		titleAlertMessageLbl.getElement().setAttribute("title",i18n.GL0143());
+		
+		btnDeleteClasspage.setText(i18n.GL2218());
 		
 	
 		

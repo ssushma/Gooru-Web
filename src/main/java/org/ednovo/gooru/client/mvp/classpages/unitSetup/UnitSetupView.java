@@ -42,6 +42,7 @@ import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -81,6 +82,8 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	
 	private static final String PREVIOUS = i18n.GL1462().toUpperCase();
 	
+	private UnitsAssignmentWidgetView unitsAssignmentWidgetView;
+	
 	private int totalCount = 0;
 	private int limit = 5;
 	private int offSet = 0;
@@ -95,7 +98,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	}
 
 	private void setIdAndText() {
-		subHeading.getElement().setInnerText("Setup your units by adding assignments");
+		subHeading.getElement().setInnerText(i18n.GL2217());
 		clearfix.getElement().getStyle().setBackgroundColor("#fafafa");
 		clearfix.getElement().getStyle().setWidth(100, Unit.PCT);
 	}
@@ -154,14 +157,13 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 		unitAssignmentWidgetContainer.clear();
 		for (int i = 0; i < unitSize; i++) {
 			ClassUnitsListDo classListUnitsListDo = classDo.getSearchResults().get(i);
-			UnitsAssignmentWidgetView unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(classListUnitsListDo);
+			unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(classListUnitsListDo);
 			unitsAssignmentWidgetView.setClassDo(classDo);
 			if (classListUnitsListDo.getResource().getItemCount() != null) {
 				unitsAssignmentWidgetView.setTotalHitCount(classListUnitsListDo.getResource().getItemCount());
 			} else {
 				unitsAssignmentWidgetView.setTotalHitCount(0);
 			}
-			
 			unitsAssignmentWidgetView.setAssignmentsForUnit();
 			unitsAssignmentWidgetView.getAddAssignmentButton().addClickHandler(new AddAssignmentToUnit(classListUnitsListDo));
 			unitsAssignmentWidgetView.setPathwayId(classListUnitsListDo.getResource().getGooruOid());
@@ -256,6 +258,43 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 	@Override
 	public void setLoadingIcon(boolean isVisible) {
 		loadingImageLabel.setVisible(isVisible);
+	}
+
+	@Override
+	public void refreshPathwayItems(String classpageId, String pathwayId) {
+		if(unitsAssignmentWidgetView!=null){
+			getPathwayWidgetToRefresh(classpageId,pathwayId);
+		}
+	}
+
+	private void getPathwayWidgetToRefresh(String classpageId, String pathwayId) { 
+		Iterator<Widget> pathWayWidget = unitAssignmentWidgetContainer.iterator();
+		while(pathWayWidget.hasNext()){
+			Widget widget = pathWayWidget.next();
+			if(widget instanceof UnitsAssignmentWidgetView){
+				if(((UnitsAssignmentWidgetView) widget).getPathwayId().equals(pathwayId)){
+					((UnitsAssignmentWidgetView) widget).setLoadingIcon(true);
+					refreshPathway(classpageId,pathwayId,((UnitsAssignmentWidgetView) widget));
+				}
+			}
+		}
+	}
+
+	private void refreshPathway(String classpageId, String pathwayId,final UnitsAssignmentWidgetView unitsAssignmentWidgetView){ 
+		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayId, "sequence", 10, 0, new SimpleAsyncCallback<UnitAssignmentsDo>() {
+
+			@Override
+			public void onSuccess(UnitAssignmentsDo result) {
+				unitsAssignmentWidgetView.setTotalHitCount(result.getTotalHitCount());
+				unitsAssignmentWidgetView.getClassUnitsDo().getResource().setCollectionItems(new ArrayList<ClasspageItemDo>()); 
+				unitsAssignmentWidgetView.getClassUnitsDo().getResource().setCollectionItems(result.getSearchResults());
+				if(unitsAssignmentWidgetView.isEditMode()){
+					unitsAssignmentWidgetView.setAssignmentsEditView();
+				}else{
+					unitsAssignmentWidgetView.setAssignmentsForUnit(); 
+				}
+			}
+		});
 	}
 	 
 	 

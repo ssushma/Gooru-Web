@@ -90,7 +90,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 				getMinimumBelowScoredData();
 				getMinimumAboveScoredData();
 				
-				getView().showUnitNames(classDo,clearPanel);
+				//getView().showUnitNames(classDo,clearPanel);
 				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 					if(unitId==null){

@@ -53,4 +53,6 @@ public interface AnalyticsService extends BaseService {
 	public void getMinimumScoredBelowData(String collectionId,String classId,String score);
 	
 	public void getMinimumScoredAboveData(String collectionId,String classId,String score);
+	
+	public void setHTMLtoPDF(String htmlString);
 }
