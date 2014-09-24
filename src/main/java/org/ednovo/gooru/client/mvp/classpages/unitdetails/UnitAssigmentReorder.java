@@ -91,7 +91,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	private String selectedPathId;
 	private HandlerRegistration onClickUnit;
 	private int totalHintCount;
-	private String selectedAssignmentId;
+	private String selectedAssignmentId,pathwayId;
 	/**
 	 * 
 	 * @constructor : UnitAssigmentReorder
@@ -105,12 +105,13 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	 * @param : totalHintCount
 	 * @param : selectedAssignmentId
 	 */
-	public UnitAssigmentReorder(int seqNo,ClassDo classDo,String title,String narration,String classpageId,int selectedUnitNumber,int totalHintCount,String selectedAssignmentId) {
+	public UnitAssigmentReorder(int seqNo,ClassDo classDo,String title,String narration,String classpageId,int selectedUnitNumber,int totalHintCount,String selectedAssignmentId,String  pathwayId) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.classDo = classDo;
 		this.classpageId = classpageId;
 		this.totalHintCount = totalHintCount;
 		this.selectedAssignmentId = selectedAssignmentId;
+		this.pathwayId=pathwayId;
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		unitTextLbl.setText(i18n.GL2175());
 		unitTextLbl.getElement().setId("unitTextLbl");
@@ -124,6 +125,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		seqNum.setText(seqNo+".");
 		seqNum.getElement().setId("seqNum");
 		seqNum.getElement().setAttribute("alt",seqNo+"");
+		this.getElement().setAttribute("style","background: transparent");
 		
 				
 	}
@@ -176,11 +178,10 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 				}else{
 					dropdownListPlaceHolder.getElement().setInnerHTML(selectedUnitNumber+"");
 				}
-				String uid = AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
-				if(uid==null){
+				if(pathwayId==null){
 					dropdownListPlaceHolder.getElement().setId(classListUnitsListDo.get(0).getResource().getGooruOid());
 				}else{
-					dropdownListPlaceHolder.getElement().setId(uid);	
+					dropdownListPlaceHolder.getElement().setId(pathwayId);	
 				}
 				String unitCollectionItemId=classListUnitsListDo.get(i).getResource().getGooruOid();
 				
