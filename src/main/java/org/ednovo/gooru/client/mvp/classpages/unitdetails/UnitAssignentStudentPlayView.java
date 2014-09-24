@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import java.util.Map;
@@ -35,6 +36,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
@@ -71,13 +73,13 @@ public class UnitAssignentStudentPlayView extends PopupPanel {
 	interface UnitAssignentStudentPlayViewUiBinder extends
 			UiBinder<Widget, UnitAssignentStudentPlayView> {
 	}
-	@UiField HTMLPanel panelCicle1,dueDateContainer;
+	@UiField HTMLPanel panelCicle1,dueDateContainer,directionContainer;
 	@UiField Label lblCircle1;
 	@UiField HTML assignmentCollectiontitle;
 	@UiField Button studyButtonText;
 	UnitAssignmentCssBundle res;
 	
-	public UnitAssignentStudentPlayView(int seq,String title,String dueDate,String direction,String collectionId,String collectionItemId) {
+	public UnitAssignentStudentPlayView(int seq,String title,Long dueDate,String direction,String collectionId,String collectionItemId) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
@@ -97,7 +99,7 @@ public class UnitAssignentStudentPlayView extends PopupPanel {
 	 * @return type : void
 	 */
 	
-	public void setView(int seq,String title,String dueDate,String direction,final String collectionId,final String collectionItemId)
+	public void setView(int seq,String title,Long dueDate,String direction,final String collectionId,final String collectionItemId)
 	{
 		studyButtonText.setText(i18n.GL0182());
 		studyButtonText.getElement().setAttribute("alt",i18n.GL0182());
@@ -115,8 +117,8 @@ public class UnitAssignentStudentPlayView extends PopupPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				Map<String, String> parms = new HashMap<String, String>();
-				parms.put("id", collectionId);
-				parms.put("cid", collectionItemId);
+				parms.put("id", collectionItemId);
+				//parms.put("cid", collectionItemId);
 				parms.put("page", "study");
 				
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, parms, false);
@@ -126,20 +128,25 @@ public class UnitAssignentStudentPlayView extends PopupPanel {
 		if(dueDate!=null&&!dueDate.equals("")){
 			Label dueDateText=new Label(i18n.GL1390());
 			dueDateText.setStyleName(res.unitAssignment().dueDataIcon());
-			Label dueDateLabel=new Label(dueDate.toString());
+			Label dueDateLabel=new Label(convertMillisecondsToDate(dueDate));
 			dueDateLabel.setStyleName(res.unitAssignment().headerDueDate());
 			dueDateContainer.add(dueDateText);
 			dueDateContainer.add(dueDateLabel);
 		}
-	
+		directionContainer.clear();
 		if(direction!=null&&!direction.equals("")){
 			InlineLabel directionHeadLabel=new InlineLabel(i18n.GL1372());
 			directionHeadLabel.setStyleName(res.unitAssignment().directionHeading());
 			InlineLabel directionTextLabel=new InlineLabel(direction);
 			directionTextLabel.setStyleName(res.unitAssignment().directionDesc());
-			dueDateContainer.add(directionHeadLabel);
-			dueDateContainer.add(directionTextLabel);
+			directionContainer.add(directionHeadLabel);
+			directionContainer.add(directionTextLabel);
 		}
 	}
-
+	public static String convertMillisecondsToDate(Long milliseconds){
+		Date currentDate = new Date(milliseconds);
+		DateTimeFormat fmt = DateTimeFormat.getFormat ("MM/dd/yyyy");
+		String date=fmt.format(currentDate);
+		return date;
+	}
 }
