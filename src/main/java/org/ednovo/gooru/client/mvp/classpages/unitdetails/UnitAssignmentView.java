@@ -459,6 +459,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		if(clearPanel){
 			unitPanel.clear();
+			unitsPageNumber=0;
 		}
 		unitsTotalCount=classDo.getTotalHitCount();
 		updatePageNumber();
@@ -490,6 +491,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void setUnitName(String unitName){
 		unitTitleDetails.setText(unitName!=null?unitName:"");
 	}
+	public void getUnitsPanel(){
+		unitPanel.clear();
+	}
 	@Override
 	public void getPathwayItems(){
 		classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
@@ -505,10 +509,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 
 	private void updatePageNumber(){
+		System.out.println("total count==>"+unitsTotalCount);
 		unitsPageNumber++;
 		if((limit*unitsPageNumber)<unitsTotalCount){
+			System.out.println("total count==> inside if");
 			lblMoreUnits.setVisible(true);
 		}else{
+			System.out.println("total count==> inside else");
 			lblMoreUnits.setVisible(false);
 		}
 	}
@@ -684,6 +691,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void scoreHederView(ClassUnitsListDo classUnitsListDo) {
 		scoreHedingContainer.clear();
 		ScoreHedingView scoreHedingView = null;
+
 		ClassUnitsListDo collectionId=getClassUnitsListDo();
 		System.out.println("unitid----------------:"+collectionId);
 		if(collectionId==null){

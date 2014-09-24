@@ -114,6 +114,9 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	}
 	
 	public void getPathwayUnits(final String classId,int limit, int offset,final boolean clearPanel) {
+		if(clearPanel){
+			getView().getUnitPanel().clear();
+		}
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
 			@Override
 			public void onSuccess(ClassDo classDo) {
