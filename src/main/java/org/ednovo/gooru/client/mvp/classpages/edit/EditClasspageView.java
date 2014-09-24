@@ -629,6 +629,9 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	 *
 	 */
 	private void displayStudentList(StudentsAssociatedListDo result) {
+		if (studentOffSet==0){
+			panelSutdentsList.clear();
+		}
 		for (int i=0; i<result.getSearchResults().size();i++){
 			String studentName = result.getSearchResults().get(i).getUsername().trim();
 			String studentId = result.getSearchResults().get(i).getGooruUid().trim();
