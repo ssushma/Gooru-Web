@@ -379,7 +379,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		unitAssigmentReorder = new UnitAssigmentReorder(seqNo,classDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null),selectedUnitNumber,totalHintCount,selectedAssignmentId){
 			@Override
 			public void reorderAssignment(int seqPosition,String selectedPathId,String targetUnitNumb) { 
-				setAssignmentToNewPosition(seqPosition,selectedPathId);
+				setAssignmentToNewPosition(seqPosition,selectedPathId,totalHintCount);
 			}
 		};
 		unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop()+40);
@@ -764,14 +764,21 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}		
 	}
 	
-	public void setAssignmentToNewPosition(int pageNumber,String selectedPathId){
-		//if(selectedPathId.equalsIgnoreCase(unitId)){
-		assignmentOffset =(pageNumber/assignmentLimit)*assignmentLimit;
-		if(assignmentOffset==pageNumber){
-			assignmentOffset = assignmentOffset-assignmentLimit;
+	public void setAssignmentToNewPosition(int pageNumber,String selectedPathId,int totalHintCount){
+		
+		if(selectedPathId.equalsIgnoreCase(unitId)){
+			assignmentOffset =(pageNumber/assignmentLimit)*assignmentLimit;
+			if(assignmentOffset==pageNumber){
+				assignmentOffset = assignmentOffset-assignmentLimit;
+			}
+			getUnitAssignments(assignmentOffset,isEditMode);
+		}else{
+			if(totalHintCount-1==assignmentOffset){
+				assignmentOffset=assignmentOffset-assignmentLimit;
+			}
+			getUnitAssignments(assignmentOffset,isEditMode);
+			
 		}
-		getUnitAssignments(assignmentOffset,isEditMode);
-		//}
 	}
 	
 	
