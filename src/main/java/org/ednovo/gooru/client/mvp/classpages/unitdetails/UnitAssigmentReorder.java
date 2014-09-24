@@ -125,6 +125,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		seqNum.setText(seqNo+".");
 		seqNum.getElement().setId("seqNum");
 		seqNum.getElement().setAttribute("alt",seqNo+"");
+		this.getElement().setAttribute("style","background: transparent");
 		
 				
 	}
