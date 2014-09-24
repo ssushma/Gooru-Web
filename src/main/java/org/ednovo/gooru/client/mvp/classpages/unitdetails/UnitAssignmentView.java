@@ -176,6 +176,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		unitTitleDetails.setText(unitTitle);
 	}
 	
+	public void resetUnitAssignmentView(){
+		circleContainerPanel.clear();
+		assignmentContainer.clear();
+		unitPanel.clear();
+		unitTitleDetails.setText("");
+	}
+	
 	public class UnitChangeEvent implements ClickHandler{
 		private UnitWidget unitsWidget;
 		private String unitTitle;
@@ -509,13 +516,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 
 	private void updatePageNumber(){
-		System.out.println("total count==>"+unitsTotalCount);
 		unitsPageNumber++;
 		if((limit*unitsPageNumber)<unitsTotalCount){
-			System.out.println("total count==> inside if");
 			lblMoreUnits.setVisible(true);
 		}else{
-			System.out.println("total count==> inside else");
 			lblMoreUnits.setVisible(false);
 		}
 	}
