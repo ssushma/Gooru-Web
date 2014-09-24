@@ -250,7 +250,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 						String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 						
 						if(pageLocation.equals(PlaceTokens.STUDENT)){
-							unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getEstimatedTime(),unitAssignmentsDo.getSearchResults().get(i).getDirection(),unitAssignmentsDo.getSearchResults().get(i).getCollectionId(),unitCricleViewObj.getElement().getId()));
+							unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getPlannedEndDate(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getSearchResults().get(i).getCollectionId(),unitCricleViewObj.getElement().getId()));
 							
 						}else{
 							unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId()));
@@ -385,8 +385,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	public class StudentAssignmentMouseOverHandler implements MouseOverHandler{
 		int seqNumber;
-		String title,dueDate,direction,collectionId,collectionItemId;
-		public StudentAssignmentMouseOverHandler(int seqNumber,String title,String dueDate,String direction,String collectionId,String collectionItemId){
+		String title,direction,collectionId,collectionItemId;
+		Long dueDate;
+		public StudentAssignmentMouseOverHandler(int seqNumber,String title,Long dueDate,String direction,String collectionId,String collectionItemId){
 			this.seqNumber = seqNumber;
 			this.title = title;
 			this.dueDate = dueDate;
@@ -645,7 +646,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 				
 				if(pageLocation.equals(PlaceTokens.STUDENT)){
-					unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getEstimatedTime(),unitAssignmentsDo.getSearchResults().get(i).getDirection(),unitAssignmentsDo.getSearchResults().get(i).getCollectionId(),unitCricleViewObj.getElement().getId()));
+					unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getPlannedEndDate(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getSearchResults().get(i).getCollectionId(),unitCricleViewObj.getElement().getId()));
 					
 				}else{
 					unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId()));
