@@ -105,14 +105,16 @@ public class UnitsAssignmentWidgetView extends Composite {
 	private static final String NEXT="next";
 	private static final String PREVIOUS= "previous";
 	private int totalHitCount=0;
+	private String seqNumber;
 	
 	private String pathwayId;
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	public UnitsAssignmentWidgetView(ClassUnitsListDo classUnitsDo){
+	public UnitsAssignmentWidgetView(int sequenceNum,ClassUnitsListDo classUnitsDo){
 		initWidget(uibinder.createAndBindUi(this));
 		this.classUnitsDo=classUnitsDo;
+		seqNumber=Integer.toString(sequenceNum);
 		setLoadingIcon(false);
 		setClassUnitsDo(classUnitsDo);
 		setUnitNameDetails();
@@ -124,7 +126,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		unitDetailsPanel.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
 	}
 	
-	public UnitsAssignmentWidgetView(ClassUnitsListDo classUnitsDo, boolean studentMode){
+	public UnitsAssignmentWidgetView(int sequenceNum,ClassUnitsListDo classUnitsDo, boolean studentMode){
 		initWidget(uibinder.createAndBindUi(this));
 		editUnitButton.removeFromParent();
 		addAssignmentButton.removeFromParent();
@@ -428,8 +430,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 	private void setUnitNameDetails() {
 			int number=classUnitsDo.getItemSequence();
 			String sequenceNumber=Integer.toString(number);
+			System.out.println("sequenceNumber:::::::::"+sequenceNumber);	
 			lblUnitName.setText(classUnitsDo.getResource().getTitle());
-			lblUnitNumber.setText(sequenceNumber);
+			lblUnitNumber.setText(seqNumber);
 	}
 	
 	@UiHandler("htPanelNextArrow")
