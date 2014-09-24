@@ -111,14 +111,14 @@ public class UnitAssignentStudentPlayView extends PopupPanel {
 		dueDateContainer.getElement().setId("pnlDueDateContainer");
 		assignmentCollectiontitle.getElement().setId("htmlAssignmentCollectionTitle");
 		assignmentCollectiontitle.setText(title);
-		
+	
 		studyButtonText.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
 				Map<String, String> parms = new HashMap<String, String>();
-				parms.put("id", collectionItemId);
-				//parms.put("cid", collectionItemId);
+				parms.put("id", collectionId);
+				parms.put("cid", collectionItemId);
 				parms.put("page", "study");
 				
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, parms, false);
