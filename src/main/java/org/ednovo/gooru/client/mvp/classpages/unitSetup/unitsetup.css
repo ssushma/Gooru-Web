@@ -342,7 +342,7 @@
 	border-left:5px solid #ffffff;
 }
 .classLeftMenu:hover{
-	width:115px;
+	width:108px;
 	float:left;
 	background:#ffffff;
 	border-left:5px solid #ffffff;
@@ -367,7 +367,10 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
-	width: 85px;
+	width: 69px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .numaricName{
