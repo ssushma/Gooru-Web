@@ -42,6 +42,12 @@ public interface CollectionSummaryTeacherCBundle extends ClientBundle{
 	        String tableHeader();
 	        String tableRowEven();
 	        String tableRowOdd();
+	        String assignment_quesiton_ans_bar();
+	        String wrongSelectStyle();
+	        String barGraphCharacter();
+	        String tickMarkImgCss();
+	        String tickMarkImg();
+	        
 	}
 	@NotStrict
 	@Source("collectionSummaryTeacher.css")

@@ -26,13 +26,12 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
 
 
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -79,6 +78,10 @@ public class ScoreHedingView extends Composite {
 	
 	@UiField Button btnSetGoal;
 	
+	String collectionItemId;
+	
+	ClassUnitsListDo classUnitsListDo;
+	
 	private ClassDo classDo;
 	
 	private int redScore, finalScore;
@@ -100,8 +103,8 @@ public class ScoreHedingView extends Composite {
 	 * Note that depending on the widget that is used, it may be necessary to
 	 * implement HasHTML instead of HasText.
 	 */
-	public ScoreHedingView(ClassDo classDo) {
-		this.classDo=classDo;
+	public ScoreHedingView(ClassUnitsListDo classUnitsListDo) {
+		this.classUnitsListDo=classUnitsListDo;
 		initWidget(uiBinder.createAndBindUi(this));
 		lblTitle.setText(i18n.GL2195());
 		btnSetGoal.setText(SETGOAL);
@@ -139,6 +142,11 @@ public class ScoreHedingView extends Composite {
 		}
 
 	}
+	/**
+	 * Get the valid assignments average score
+	 * @param score
+	 * @return valid score
+	 */
 	
 	private String getValidationScore(String score) {
 		// TODO Auto-generated method stub
@@ -188,15 +196,15 @@ public class ScoreHedingView extends Composite {
 					lblRedControl.getElement().setAttribute("style", "-webkit-transform: rotate("+redScore+"deg);");
 					lblScore.getElement().setAttribute("style", "color:#fb7c73");
 				}
-//				System.out.println("collecctionitemid:"+classDo.getSearchResults().get(0).getCollectionItemId());
-				AppClientFactory.getInjector().getClasspageService().updateUnitStatus("10923bde-3778-4136-b580-f7f6424a005a", txtScore.getText(), "", "", new SimpleAsyncCallback<CollectionItemDo>() {
-
-					@Override
-					public void onSuccess(CollectionItemDo result) {
-						// TODO Auto-generated method stub
-						
+				collectionItemId=classUnitsListDo.getCollectionItemId();
+				if(collectionItemId!=null){
+					if(getLblTitle().getText().equals(i18n.GL2195())){
+						updateUnitstatus(collectionItemId, txtScore.getText(), "", "");
+					}else{
+						updateUnitstatus(collectionItemId, "", txtScore.getText(), "");
 					}
-				});
+				}
+				
 				
 			}else{
 				showAndHideTextBox();
@@ -207,7 +215,7 @@ public class ScoreHedingView extends Composite {
 			
 		}
 	}
-	/*
+	/**
 	 * show and hide text boxes
 	 */
 	public void showAndHideTextBox(){
@@ -221,6 +229,18 @@ public class ScoreHedingView extends Composite {
 	}
 	public Label getLblTitle() {
 		return lblTitle;
+	}
+	
+	public void updateUnitstatus(String collectionItemId, String minimumScoreByuser, String assignmentStatus, String time){
+		AppClientFactory.getInjector().getClasspageService().updateUnitStatus(collectionItemId, minimumScoreByuser,assignmentStatus,time, new SimpleAsyncCallback<ClasspageItemDo>() {
+
+			@Override
+			public void onSuccess(ClasspageItemDo result) {
+				// TODO Auto-generated method stub
+				System.out.println("mini::::::"+result.getMinimumScoreByUser());
+				
+			}
+		});
 	}
 	
 	

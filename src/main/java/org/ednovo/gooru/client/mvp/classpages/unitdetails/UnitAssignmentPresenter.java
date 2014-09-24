@@ -117,7 +117,16 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
 			@Override
 			public void onSuccess(ClassDo classDo) {
-				getView().showUnitNames(classDo,clearPanel);
+				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+					getView().showUnitNames(classDo,clearPanel);
+					String seqNumber=AppClientFactory.getPlaceManager().getRequestParameter("sequenceNumber", null);
+					if(seqNumber!=null){
+						int number=Integer.parseInt(seqNumber);
+						number=number-1;
+						getView().scoreHederView(classDo.getSearchResults().get(number));
+					}
+				}
+				
 //				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 //					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 //					if(unitId==null){

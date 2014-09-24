@@ -35,6 +35,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.event.RefreshPathwayItemsEvent;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssigmentReorder;
 import org.ednovo.gooru.client.mvp.home.WaitPopupVc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
@@ -112,13 +113,14 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public UnitsAssignmentWidgetView(ClassUnitsListDo classUnitsDo){
 		initWidget(uibinder.createAndBindUi(this));
 		this.classUnitsDo=classUnitsDo;
-		//addAssignmentButton.getElement().getStyle().setMarginTop(28, Unit.PX);
-		loadingImageLabel.setVisible(false);
+		setLoadingIcon(false);
+		setClassUnitsDo(classUnitsDo);
 		setUnitNameDetails();
 		cancelEditButton.setVisible(false);
+		editUnitButton.setVisible(true);
 		editUnitButton.addClickHandler(new EditAssignmentEvent());
 		cancelEditButton.addClickHandler(new CancelEditEvent());
-		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),PlaceTokens.EDIT_CLASSPAGE));
+		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
 	}
 	
 	public UnitsAssignmentWidgetView(ClassUnitsListDo classUnitsDo, boolean studentMode){
@@ -129,13 +131,13 @@ public class UnitsAssignmentWidgetView extends Composite {
 		this.classUnitsDo=classUnitsDo;
 		setAssignmentsForUnit();
 		setUnitNameDetails();
-		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),PlaceTokens.STUDENT));
+		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(classUnitsDo.getItemSequence()),PlaceTokens.STUDENT));
 	}
 
 
 
 	public void setAssignmentsForUnit() {
-		loadingImageLabel.setVisible(false);
+		setLoadingIcon(false);
 		assignmentsContainer.clear();
 		if(getTotalHitCount() == 0){
 			assignmentsContainer.add(getZeroAssignmentLabel()); 
@@ -144,11 +146,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 			if(classUnitsDo.getResource().getCollectionItems() != null){
 				for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 					ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
-//					showAndHidePaginationArrows();
 					assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo));
 				}
 				showAndHideAssignmentArrows();
-//				arrowButton(null);
 			}
 		}
 	}
@@ -161,15 +161,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 		return label;
 	}
 
-	private void showAndHidePaginationArrows() {
-		if(classUnitsDo.getResource().getItemCount()>assignmentLimit){
-			htPanelNextArrow.setVisible(true);
-			htPanelPreviousArrow.setVisible(false);
-		}else{
-			htPanelNextArrow.setVisible(false);
-			htPanelPreviousArrow.setVisible(false);
-		}
-	}
 
 	public void clearAssignmentsFromDo(){
 		classUnitsDo.getResource().setCollectionItems(new ArrayList<ClasspageItemDo>());
@@ -178,7 +169,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public class EditAssignmentEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			isEditMode = true;
+//			isEditMode = true;
+			setEditMode(true);
 			hideEditButton(true);
 			assignmentsContainer.clear();
 			setAssignmentsEditView(); 
@@ -207,7 +199,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 								if(isAssignmentDeleted){
 									clearAssignmentsFromDo();
 									hide();
-									loadingImageLabel.setVisible(true);
+									setLoadingIcon(true);
 									if((getTotalHitCount()-1)==assignmentOffset){
 										if((getTotalHitCount()-1)==0){
 											assignmentOffset=0;
@@ -215,7 +207,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 											assignmentOffset=assignmentOffset-10;
 										}
 									}
-									getUnitAssignments(assignmentOffset,isEditMode,null);
+									getUnitAssignments(assignmentOffset,isEditMode(),null);
 								}
 							}
 						}
@@ -229,7 +221,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	
 	public void setAssignmentsEditView() {
-		loadingImageLabel.setVisible(false);
+		setLoadingIcon(false);
 		assignmentsContainer.clear();
 		if(getTotalHitCount() == 0){
 			assignmentsContainer.add(getZeroAssignmentLabel()); 
@@ -240,7 +232,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 			assignmentEditView.setUnitId(classUnitsDo.getResource().getGooruOid());
 			assignmentEditView.getDeleteAssignmentLbl().addClickHandler(new DeleteAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
 			if(classUnitsDo.getResource().getCollectionItems().size()>0){ 
-				assignmentEditView.getAssignmentReorderLbl().addMouseOverHandler(new ReorderAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getResource().getTitle(),classUnitsDo.getResource().getCollectionItems().get(i).getNarration(),classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
+				assignmentEditView.getAssignmentReorderLbl().addMouseOverHandler(new ReorderAssignment(classUnitsDo.getResource().getCollectionItems().get(i).getItemSequence(),classUnitsDo.getResource().getCollectionItems().get(i).getResource().getTitle(),classUnitsDo.getResource().getCollectionItems().get(i).getNarration(),classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId()));
 			}
 			assignmentEditView.setAssignmentId(classUnitsDo.getResource().getCollectionItems().get(i).getCollectionItemId());
 			assignmentsContainer.add(assignmentEditView);
@@ -287,8 +279,10 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public class ReorderAssignment implements MouseOverHandler{
 
 		String collectionItem,title,narration;
+		int assignmentSeq;
 		
-		public ReorderAssignment(String title,String narration,String collectionItem){
+		public ReorderAssignment(int assignmentSeq,String title,String narration,String collectionItem){
+			this.assignmentSeq=assignmentSeq;
 			this.title = title;
 			this.collectionItem = collectionItem;
 			this.narration = narration;
@@ -296,25 +290,26 @@ public class UnitsAssignmentWidgetView extends Composite {
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-
-			unitAssigmentReorder = new UnitAssigmentReorder(getClassDo(),title, "direction",classPageId,classUnitsDo.getItemSequence(),0,""){
-
-
+			final String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			unitAssigmentReorder = new UnitAssigmentReorder(assignmentSeq,getClassDo(),title, narration,classPageId,classUnitsDo.getItemSequence(),getTotalHitCount(),collectionItem){
 				@Override
-				public void reorderAssignment(int seqPosition,String selectedPathwayId) {
+				public void reorderAssignment(int seqPosition,String selectedPathwayId,String targetPathway) {
 					boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItem);
 					if(isAssignmentDeleted){
+						setLoadingIcon(true);
 						clearAssignmentsFromDo();
 						assignmentOffset =(seqPosition/assignmentLimit)*assignmentLimit;
 						if(assignmentOffset==seqPosition){
 							assignmentOffset = assignmentOffset-assignmentLimit;
 						}
-						getUnitAssignments(assignmentOffset,isEditMode,null);
+						getUnitAssignments(assignmentOffset,isEditMode(),null);
+						if(Integer.parseInt(targetPathway)!=classUnitsDo.getItemSequence()){
+							AppClientFactory.fireEvent(new RefreshPathwayItemsEvent(selectedPathwayId, classPageId));  
+						}
 					}
-					
+
 				}
-				
+
 			};
 			unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-148,event.getRelativeElement().getAbsoluteTop()+36);
 			unitAssigmentReorder.show();
@@ -351,7 +346,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public class CancelEditEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			isEditMode = false;
+			setEditMode(false);
+//			isEditMode = false;
 			hideEditButton(false);
 			setAssignmentsForUnit();
 		}
@@ -360,17 +356,19 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public class UnitChangeEvent implements ClickHandler{
 		private String unitGooruOid;
 		private String viewToken;
-		public UnitChangeEvent(String unitGooruOid,String viewToken){
+		private String sequenceNumber;
+		public UnitChangeEvent(String unitGooruOid, String sequenceNumber,String viewToken){
 			this.unitGooruOid=unitGooruOid;
 			this.viewToken=viewToken;
+			this.sequenceNumber=sequenceNumber;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			revealPlace("unitdetails",null,unitGooruOid,viewToken);
+			revealPlace("unitdetails",null,unitGooruOid,viewToken,sequenceNumber);
 		}
 	}
 	
-	 public void revealPlace(String tabName,String pageNum,String unitId,String viewToken){
+	 public void revealPlace(String tabName,String pageNum,String unitId,String viewToken,String sequenceNumber){
 			Map<String,String> params = new HashMap<String,String>();
 			String classpageid= "";
 			if(viewToken.equals(PlaceTokens.STUDENT))
@@ -392,6 +390,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 			}
 			if(unitId!=null){
 				params.put("uid", unitId);
+			}
+			if(sequenceNumber!=null){
+				params.put("sequenceNumber", sequenceNumber);
 			}
 			PlaceRequest placeRequest= null;
 			placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
@@ -432,8 +433,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 	@UiHandler("htPanelNextArrow")
 	public void clickOnNextArrow(ClickEvent clickEvent){
 		clearAssignmentsFromDo();
-		loadingImageLabel.setVisible(true);
-		getUnitAssignments(getAssignmentOffsetValue(NEXT),isEditMode,NEXT);
+		setLoadingIcon(true);
+		getUnitAssignments(getAssignmentOffsetValue(NEXT),isEditMode(),NEXT);
 	}
 	
 	
@@ -449,16 +450,12 @@ public class UnitsAssignmentWidgetView extends Composite {
 	@UiHandler("htPanelPreviousArrow")
 	public void clickOnPreviousArrow(ClickEvent clickEvent){
 		clearAssignmentsFromDo();
-		loadingImageLabel.setVisible(true);
-		getUnitAssignments(getAssignmentOffsetValue(PREVIOUS),isEditMode,PREVIOUS);
+		setLoadingIcon(true);
+		getUnitAssignments(getAssignmentOffsetValue(PREVIOUS),isEditMode(),PREVIOUS);
 	}
 	
 	public void getUnitAssignments(int assignmentOffset,final boolean isAssignmentEditmode, final String direction){
-		/*if(direction!=null&&direction.equals(PREVIOUS)){
-			assignmentOffset = decreseAssignment();
-			System.out.println("---->>> "+assignmentOffset);
-		}*/
-		
+
 		String classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classPageId, classUnitsDo.getResource().getGooruOid(), "sequence", assignmentLimit, assignmentOffset, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 
@@ -473,7 +470,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 					setAssignmentsForUnit();
 				}
 				showAndHideAssignmentArrows();
-//				arrowButton(direction);
 			}
 		}); 
 	}
@@ -486,24 +482,17 @@ public class UnitsAssignmentWidgetView extends Composite {
 		if(assignmentOffset<getTotalHitCount()){
 			htPanelPreviousArrow.setVisible(false);
 			htPanelNextArrow.setVisible(true);
-			//show rightArrow
 		}
 		if(assignmentOffset>assignmentLimit){
 			htPanelPreviousArrow.setVisible(true);
 			htPanelNextArrow.setVisible(false);
-			//show left arrow
 		}
 	}
-	
-	/*public int decreseAssignment(){
-		assignmentOffset=assignmentOffset-(assignmentLimit*2);
-		return assignmentOffset;
-	}*/
 	
 	
 	public void addAssignment(ArrayList<ClasspageItemDo> classpageItemDo){
 		setTotalHitCount(getTotalHitCount()+classpageItemDo.size());
-		loadingImageLabel.setVisible(true);
+		setLoadingIcon(true);
 		getUnitAssignments(getOffsetValue(),false,null);
 	}
 	
@@ -612,6 +601,42 @@ public class UnitsAssignmentWidgetView extends Composite {
 	 */
 	public void setClassDo(ClassDo classDo) {
 		this.classDo = classDo;
+	}
+	
+	/**
+	 * @return the classUnitsDo
+	 */
+	public ClassUnitsListDo getClassUnitsDo() {
+		return classUnitsDo;
+	}
+
+	/**
+	 * @param classUnitsDo the classUnitsDo to set
+	 */
+	public void setClassUnitsDo(ClassUnitsListDo classUnitsDo) {
+		this.classUnitsDo = classUnitsDo;
+	}
+	
+	/**
+	 * @return the isEditMode
+	 */
+	public boolean isEditMode() {
+		return isEditMode;
+	}
+
+	/**
+	 * @param isEditMode the isEditMode to set
+	 */
+	public void setEditMode(boolean isEditMode) {
+		this.isEditMode = isEditMode;
+	}
+	
+	public void setLoadingIcon(boolean showIcon){
+		if(showIcon){
+			loadingImageLabel.setVisible(true);
+		}else{
+			loadingImageLabel.setVisible(false);
+		}
 	}
 
 }

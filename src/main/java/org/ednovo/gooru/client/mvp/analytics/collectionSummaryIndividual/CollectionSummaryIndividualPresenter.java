@@ -77,4 +77,20 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 			}
 		});
 	}
+
+	@Override
+	public void setHtmltopdf(String htmlString) {
+		this.analyticService.setHTMLtoPDF(htmlString, new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+		});
+	}
 }

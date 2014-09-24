@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,11 +23,28 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
+package org.ednovo.gooru.client.mvp.classpages.event;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import com.google.gwt.event.shared.EventHandler;
 
-public interface CollectionSummaryIndividualUiHandlers extends BaseUiHandlers{
-	void setIndividualData(String collectionId,String classpageId,String userId,String sessionId);
-	void setHtmltopdf(String htmlString);
+/**
+ * 
+ * @fileName : RefreshPathwayItemsEventHandler.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.1
+ *
+ * @date: Sept 23, 2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
+
+public interface RefreshPathwayItemsEventHandler extends EventHandler {
+
+	void refreshPathway(String classpageId,String pathwayId);
+
 }

@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,11 +23,47 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
+package org.ednovo.gooru.client.mvp.classpages.event;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.GwtEvent.Type;
 
-public interface CollectionSummaryIndividualUiHandlers extends BaseUiHandlers{
-	void setIndividualData(String collectionId,String classpageId,String userId,String sessionId);
-	void setHtmltopdf(String htmlString);
+/**
+ * 
+ * @fileName : RefreshPathwayItemsEvent.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.1
+ *
+ * @date: Sept 23, 2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
+
+public class RefreshPathwayItemsEvent extends GwtEvent<RefreshPathwayItemsEventHandler> {
+	
+	public static final Type<RefreshPathwayItemsEventHandler> TYPE = new Type<RefreshPathwayItemsEventHandler>();
+	
+	private String pathwayId;
+	private String classpageId;
+	
+	public RefreshPathwayItemsEvent(String pathwayId,String classpageId){
+		this.pathwayId = pathwayId;
+		this.classpageId = classpageId;
+	}
+
+	@Override
+	public com.google.gwt.event.shared.GwtEvent.Type<RefreshPathwayItemsEventHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(RefreshPathwayItemsEventHandler handler) {
+		handler.refreshPathway(classpageId,pathwayId); 
+	}
+
 }

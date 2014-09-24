@@ -16,7 +16,9 @@ import org.ednovo.gooru.client.mvp.analytics.util.Print;
 import org.ednovo.gooru.client.mvp.analytics.util.SortTable;
 
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.shared.model.user.UserMetaDo;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
@@ -25,6 +27,9 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.DOM;
@@ -33,6 +38,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 import com.google.gwt.visualization.client.DataTable;
@@ -95,8 +101,8 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 					hideAllPanels();
 					teacherResourceBreakdownDatapnl.setVisible(true);
 				}else{
-					 Element element = DOM.getElementById("results");
-					 Print.it(element);
+					 Element element = DOM.getElementById("collectionBreakDown");
+					 Print.it(teacherScoredDatapnl.getElement());
 				}
 			}
 		};
@@ -205,6 +211,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        Options options = Options.create();
 	        options.setAllowHtml(true);
 	        final Table table = new Table(data, options);
+	        table.getElement().setId("opendedData");
 	        teacherOpenendedData.add(table);
 	        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 	}
@@ -319,6 +326,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        final Options options = Options.create();
 	        options.setAllowHtml(true);
 	        Table table = new Table(data, options);
+	        table.getElement().setId("collectionBreakDown");
 	        teacherResourceBreakdownData.add(table);
 	        filterDropDown.addChangeHandler(new ChangeHandler() {
 	    		
@@ -335,6 +343,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 						 }
 						 Table table = new Table(operationsView, options);
 					     table.setStyleName("collectionProgressTable");
+					     table.getElement().setId("collectionBreakDown");
 					     teacherResourceBreakdownData.add(table);	
 					     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 				}
@@ -381,7 +390,57 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
         	 sortableTable.setValue(i, 0,i);
              sortableTable.setValue(i, 1, AnalyticsUtil.html2text(scoredQuestionsData.get(i-1).getTitle()));
              sortableTable.setWidget(i, 2, new HCBarChart().createPieChart());
-             sortableTable.setWidget(i, 3, new HCBarChart().createBarChart());
+             VerticalPanel answerBreakDownpnl=new VerticalPanel();
+             if(scoredQuestionsData.get(i-1).getType()!=null){
+            	  String getQuestionType=scoredQuestionsData.get(i-1).getType();
+                  if(getQuestionType.equalsIgnoreCase("MC") || getQuestionType.equalsIgnoreCase("TF")){
+                 		if((scoredQuestionsData.get(i-1).getMetaData() !=null) && (scoredQuestionsData.get(i-1).getMetaData().size() != 0)) {
+                 			int metaDataSize=scoredQuestionsData.get(i-1).getMetaData().size();
+                 			int totalcount=scoredQuestionsData.get(i-1).getAttempts();
+                 			
+                 			for(int j=0;j<metaDataSize;j++){
+                 				     MetaDataDo metaData=scoredQuestionsData.get(i-1).getMetaData().get(j);
+                 	            	 HorizontalPanel datagrap=new HorizontalPanel();
+                 	            	 Label tickmarklbl=new Label();
+                 	            	 tickmarklbl.setStyleName(res.css().tickMarkImgCss());
+                 	            	 datagrap.add(tickmarklbl);
+                 	            	 String questionSequence= AnalyticsUtil.getCharForNumber(metaData.getSequence()-1);
+                 	            	 int attemptCount=0;
+                 	            	 Label sequenceCharlbl=new Label(questionSequence+")");
+                 	            	 sequenceCharlbl.setStyleName(res.css().barGraphCharacter());
+                 	            	 datagrap.add(sequenceCharlbl);
+                 	            	 if(scoredQuestionsData.get(i-1).getOptions()!=null){
+                  	        			 JSONValue value = JSONParser.parseStrict(scoredQuestionsData.get(i-1).getOptions());
+                  	        			 JSONObject authorObject = value.isObject();
+   	               	        			 if(authorObject.keySet().size()!=0 && authorObject.get(questionSequence)!=null){
+   	               	        				attemptCount = (int)authorObject.get(questionSequence).isArray().get(0).isNumber().doubleValue();
+   	               	        			 }
+                    	             }
+                 	            	
+                 	            	 Label progressBarlbl=new Label("");
+                 	            	 if(metaData.getIs_correct()==1){
+                 	            		tickmarklbl.addStyleName(res.css().tickMarkImg());
+                 	            		progressBarlbl.addStyleName(res.css().assignment_quesiton_ans_bar()); 
+                 	            	 }else{
+                 	            		progressBarlbl.addStyleName(res.css().wrongSelectStyle());
+                 	            	 }
+                 	            	 float setWidth=((float)attemptCount/(float)totalcount)*100;
+                 	            	 setWidth=(setWidth==0.0?1:setWidth);
+                 	            	 progressBarlbl.getElement().getStyle().setWidth(setWidth, Unit.PX);
+                 	            	 datagrap.add(progressBarlbl);
+                 	            	 
+                 	            	 Label countlbl=new Label("("+attemptCount+")");
+                 	            	 datagrap.add(countlbl);
+                 	            	 answerBreakDownpnl.add(datagrap);
+                 		}
+                  } 
+             }else if(getQuestionType.equalsIgnoreCase("OE")|| getQuestionType.equalsIgnoreCase("fib") ||getQuestionType.equalsIgnoreCase("MA")){
+            	 Label viewResponselbl=new Label("View Response");
+ 	             viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
+            	 answerBreakDownpnl.add(viewResponselbl);
+             }
+           
+             sortableTable.setWidget(i, 3, answerBreakDownpnl);
              sortableTable.setValue(i, 4,getTimeStampLabel(scoredQuestionsData.get(i-1).getAvgTimeSpent()).getText());
              sortableTable.setWidget(i, 5,new AnalyticsReactionWidget(scoredQuestionsData.get(i-1).getAvgReaction()));
              //set row style
@@ -389,8 +448,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
             	 sortableTable.getRowFormatter().addStyleName(i, res.css().tableRowOdd());
              }else{
             	 sortableTable.getRowFormatter().addStyleName(i, res.css().tableRowEven());
-             }
-        }
+	            }
+	        }
+		}
 	}
 	com.google.gwt.visualization.client.Properties getPropertiesCell(){
 		  Properties properties=Properties.create();
