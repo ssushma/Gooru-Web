@@ -259,23 +259,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 			}
 		});
 
-/*		divContainer.addMouseOverHandler(new MouseOverHandler() {
-			
-			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				editBtn.setVisible(true);
-				
-			}
-		});
-		divContainer.addMouseOutHandler(new MouseOutHandler() {
-			
-			@Override
-			public void onMouseOut(MouseOutEvent event) {
-				editBtn.setVisible(true);
-				
-			}
-		});*/
-		
+	
 		saveButton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -290,9 +274,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 					}
 
 					private void redirectToPage(int totalhitCounter) {
-							/*if(totalhitCounter>=5){*/
-								/*int numberOfPages = (totalhitCounter / 5)
-										+ ((totalhitCounter % 5) > 0 ? 1 : 0);*/	
+
 						int clickedNumber =	Integer.parseInt(ClickedLabelNum);
 								int redirectedPageNumber = (clickedNumber / 5)
 										+((clickedNumber % 5) >0 ?1 : 0);
