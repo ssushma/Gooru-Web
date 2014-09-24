@@ -142,7 +142,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		setWidget(uiBinder.createAndBindUi(this));
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
-		unitSetupButton.setText(i18n.GL2198());
+		String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(pageLocation.equals(PlaceTokens.STUDENT)){
+			unitSetupButton.setText(i18n.GL2198());			
+		}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
+			unitSetupButton.setText(i18n.GL2216());	
+		}
 		lblMoreUnits.setText(i18n.GL2199());
 		btnDashBoard.setText(i18n.GL2200());
 		btnAssignment.setText(i18n.GL1933());

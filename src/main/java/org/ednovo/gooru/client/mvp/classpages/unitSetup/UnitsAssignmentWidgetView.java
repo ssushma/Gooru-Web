@@ -133,7 +133,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		setAssignmentsForUnit();
 		setUnitNameDetails();
 		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(classUnitsDo.getItemSequence()),PlaceTokens.STUDENT));
-		unitDetailsPanel.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
+		unitDetailsPanel.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(classUnitsDo.getItemSequence()),PlaceTokens.STUDENT));
 	}
 
 
