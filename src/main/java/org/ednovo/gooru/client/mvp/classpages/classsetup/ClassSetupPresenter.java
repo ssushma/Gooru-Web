@@ -70,7 +70,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	@Override
 	public void onReveal() {
 		super.onReveal();
-		loadPathways();	
+		//loadPathways();	
 		/*ResetPaginationHandler reset = new ResetPaginationHandler() {
 
 			@Override
