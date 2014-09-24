@@ -216,7 +216,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	public void getAssignemntDetails(String assingmentId,AsyncCallback<ClasspageItemDo> callback);
 
 
-	void getAssignmentData(String gooruUId, String classpageId, int pageSize, int pageNum, AsyncCallback<List<InsightsUserDataDo>> simpleAsyncCallback);
+	void getAssignmentData(String gooruUId, String classpageId, int pageSize, int pageNum, String unitId, AsyncCallback<List<InsightsUserDataDo>> simpleAsyncCallback);
 	
 	void updateAssignmentStatus(String collectionItemId,
 			boolean isRequiredStatus, AsyncCallback<CollectionDo> callback);
