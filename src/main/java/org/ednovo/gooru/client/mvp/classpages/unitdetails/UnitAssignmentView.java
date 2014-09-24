@@ -96,6 +96,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	ClassDo classDo;
 	
+	ClassUnitsListDo classUnitsListDo;
+	
 	String unitCollectionId;
 	
 	private int limit = 5;
@@ -187,7 +189,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		public void onClick(ClickEvent event) {
 			selectedUnitNumber = unitNumber;
 			resetCircleAndAssignmentContainer(unitTitle);
-			setUnitCollectionId(unitsWidget.getUnitCollectionItemId());
+			setClassUnitsListDo(unitsWidget.getClassUnitDo());
 			revealPlace("unitdetails",null,unitsWidget.getUnitGooruOid(),null);
 			removeAndAddUnitSelectedStyle();
 		}
@@ -679,13 +681,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		goalContainer.setVisible(false);
 	}
 	
-	public void scoreHederView(String collectionItemId) {
+	public void scoreHederView(ClassUnitsListDo classUnitsListDo) {
 		scoreHedingContainer.clear();
 		ScoreHedingView scoreHedingView = null;
-		String collectionId=getUnitCollectionId();
+		ClassUnitsListDo collectionId=getClassUnitsListDo();
 		System.out.println("unitid----------------:"+collectionId);
 		if(collectionId==null){
-			collectionId=collectionItemId;
+			collectionId=classUnitsListDo;
 		}
 		for(int i=0; i<2; i++){
 			scoreHedingView=new ScoreHedingView(collectionId);
@@ -827,7 +829,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 
 	}
-	
+	/**
+	 * Get the valid Unit completion time.
+	 * @param time @string
+	 * @param isHours 
+	 * @return validation time
+	 */
 
 	private String getValidationTime(String time, boolean isHours) {
 		// TODO Auto-generated method stub
@@ -892,5 +899,21 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void setUnitCollectionId(String unitCollectionId) {
 		this.unitCollectionId = unitCollectionId;
 	}
+
+	/**
+	 * @return the classUnitsListDo
+	 */
+	public ClassUnitsListDo getClassUnitsListDo() {
+		return classUnitsListDo;
+	}
+
+	/**
+	 * @param classUnitsListDo the classUnitsListDo to set
+	 */
+	public void setClassUnitsListDo(ClassUnitsListDo classUnitsListDo) {
+		this.classUnitsListDo = classUnitsListDo;
+	}
+	
+	
 	
 }
