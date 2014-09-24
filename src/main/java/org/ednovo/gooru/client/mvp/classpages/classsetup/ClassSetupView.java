@@ -27,12 +27,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -96,40 +98,16 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			public void onClick(ClickEvent event) {
 				
 				unitSetupContainer.setVisible(true);
-				
-				totalHitCounter = getUiHandlers().getPathwayTotalHitcount();
 
+				String pageNumVal=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+				int pageIntVal = 0;
+				if(pageNumVal != null)
+				{
+					pageIntVal = Integer.parseInt(pageNumVal);
+					pageIntVal = pageIntVal-1;
+				}
 	
-				if(totalHitCounter >= 5)
-				{
-					paginationPanel.setVisible(true);
-					int totalPages = (totalHitCounter / 5)
-							+ ((totalHitCounter % 5) > 0 ? 1 : 0);			
-					getUiHandlers().createPathway("Unitname",(totalPages-1)*limit);						
-					totalPages = (totalHitCounter / 5)
-							+ ((totalHitCounter % 5) > 0 ? 1 : 0);
-					
-					Map<String,String> params = new HashMap<String,String>();
-					String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
-					String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-					String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-					String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
-					params.put("pageSize", pageSize);
-					params.put("classpageid", classpageid);
-					params.put("pageNum", totalPages+"");
-					params.put("pos", pos);
-					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
-					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-
-					
-				}
-				else
-				{
-				getUiHandlers().createPathway("Unitname",(0)*limit);
-				}
-				
-		
-				
+				getUiHandlers().createPathway("Unitname",(pageIntVal)*limit);
 			}
 		});
 		
@@ -151,12 +129,25 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 	
 	@Override
 
-	public void setContent(String unitName, String pathwayId, int sequenceNum,String collectionItemid) {
+	public void setContent(String unitName, String pathwayId, String collectionItemid) {
 		
 		unitSetupContainer.setVisible(true);
-		 final ClassSetupUnitView classSetupUnitView = new ClassSetupUnitView(sequenceNum,unitName,pathwayId,totalHitCounter,collectionItemid) {
+		String pageNumVal=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+		int pageIntVal = 0;
+		if(pageNumVal != null)
+		{
+			pageIntVal = Integer.parseInt(pageNumVal);
+			if(pageIntVal!=0)
+			{
+			pageIntVal = pageIntVal-1;
+			}
+		}
+		int sequenceNum = getUnitwidget().getWidgetCount();
+		sequenceNum = (pageIntVal * 5)+sequenceNum;
+		sequenceNum = sequenceNum + 1;
+		 ClassSetupUnitView classSetupUnitView = new ClassSetupUnitView(sequenceNum,unitName,pathwayId,totalHitCounter,collectionItemid) {
 			@Override
-			public void deleteItem(int sequenceNum, String pathwayId) {
+			public void deleteItem(int sequenceNum, final String pathwayId) {
 				try{
 					
 					String pageNumVal=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
@@ -168,6 +159,10 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 					}
 					getUiHandlers().deletePathway(pathwayId,(pageIntVal)*limit);
 					getUnitwidget().remove(getUnitwidget().getWidgetIndex(this));
+					
+					
+				
+					
 				}
 				catch(Exception ex){
 				}
@@ -177,7 +172,6 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 				getUiHandlers().updatePathway(pathwayId, pathwayTitle);
 			}
 		};
-		//classSetupUnitView.btnAssignment.addClickHandler(new ShowAssignPopupEvent(pathwayId));
 		 getUnitwidget().add(classSetupUnitView);
 	}
 	
@@ -228,7 +222,6 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 			if (totalPages > 1) {
 				if (pagenumVal > 1) {
 					paginationPanel.add(new PaginationButtonUc(pagenumVal - 1, PREVIOUS, this));
-					//paginationPanel.add(new PaginationButtonUc(pagenumVal - 1, PREVIOUS, this));
 				}
 			
 				int page = pagenumVal < 5 ? 1 : pagenumVal - 3;

@@ -38,15 +38,13 @@ public interface ClassSetupUiHandlers extends BaseUiHandlers,ResetPaginationHand
 
 	void getPaginatedPathways(int i);
 
-	void setUnit(String unitName, String pathwayId, int sequenceNum,String collectionItemId);
+	void setUnit(String unitName, String pathwayId, String collectionItemId);
 
 	void createPathway(String pathwayTitle, int offsetVal);
 
 	void deletePathway(String pathwayId, int offsetVal);
 
 	void loadPathways();
-
-	int getPathwayTotalHitcount();
 
 
 }

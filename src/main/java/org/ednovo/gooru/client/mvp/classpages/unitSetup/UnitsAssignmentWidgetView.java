@@ -83,7 +83,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	@UiField Label lblUnitName,lblUnitNumber;
 	
-	@UiField HTMLEventPanel htPanelNextArrow,htPanelPreviousArrow;
+	@UiField HTMLEventPanel htPanelNextArrow,htPanelPreviousArrow,unitDetailsPanel;
 	@UiField Anchor unitDetailsButton;
 	
 	private ClassUnitsListDo classUnitsDo;
@@ -121,6 +121,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		editUnitButton.addClickHandler(new EditAssignmentEvent());
 		cancelEditButton.addClickHandler(new CancelEditEvent());
 		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
+		unitDetailsPanel.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
 	}
 	
 	public UnitsAssignmentWidgetView(ClassUnitsListDo classUnitsDo, boolean studentMode){
@@ -132,6 +133,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		setAssignmentsForUnit();
 		setUnitNameDetails();
 		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(classUnitsDo.getItemSequence()),PlaceTokens.STUDENT));
+		unitDetailsPanel.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
 	}
 
 
