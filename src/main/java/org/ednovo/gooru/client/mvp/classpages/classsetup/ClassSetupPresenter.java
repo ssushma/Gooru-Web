@@ -70,7 +70,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	@Override
 	public void onReveal() {
 		super.onReveal();
-		loadPathways();	
+		//loadPathways();	
 		/*ResetPaginationHandler reset = new ResetPaginationHandler() {
 
 			@Override
@@ -86,7 +86,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	protected void onReset() {
 		// TODO Auto-generated method stub
 		super.onReset();
-		loadPathways();
+		//loadPathways();
 	}
 	
 	@Override
@@ -109,6 +109,14 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		}
 		getView().setLoadingIcon(true);
 		getPaginatedPathways((offsetVal)*limit);
+	}
+	
+	@Override
+	protected void onHide() {
+		super.onHide();
+		getView().clearPanel();
+		getView().clearPaginationPanel();
+		
 	}
 	
 	@Override
@@ -143,6 +151,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 						}
 					}
 					getView().setPagination(classDo.getTotalHitCount(),pageNumVal);
+					getView().clearPanel();
 					for(int i=0;i<classDo.getSearchResults().size();i++)
 					{
 
@@ -181,6 +190,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 					}
 
 					getView().setPagination(classDo.getTotalHitCount(),pageNumVal);
+					getView().clearPanel();
 					for(int i=0;i<classDo.getSearchResults().size();i++){
 						setUnit(classDo.getSearchResults().get(i).getResource().getTitle(), classDo.getSearchResults().get(i).getResource().getGooruOid(),classDo.getSearchResults().get(i).getCollectionItemId());
 
@@ -286,7 +296,6 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 				
 				if(classpageid != null)
 				{
-			
 				AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "2", "0", new SimpleAsyncCallback<ClassDo>() {
 					@Override
 					public void onSuccess(ClassDo classpageItemDo) {
@@ -307,9 +316,23 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 							String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 							String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 							String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+							
+							int pageIntVal = 0;
+							if(pageNum != null)
+							{
+								pageIntVal = Integer.parseInt(pageNum);
+							}
 							params.put("pageSize", pageSize);
 							params.put("classpageid", classpageid);
-							params.put("pageNum", totalPages+"");
+							if(pageIntVal<=totalPages)
+							{
+								totalPages = pageIntVal;
+								params.put("pageNum", pageIntVal+"");
+							}
+							else
+							{
+								params.put("pageNum", totalPages+"");	
+							}
 							params.put("pos", pos);
 							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 							AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
@@ -324,6 +347,16 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 						}
 						else
 						{
+							Map<String,String> params = new HashMap<String,String>();
+							String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+							String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+							String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+							String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+							params.put("pageSize", pageSize);
+							params.put("classpageid", classpageid);
+							params.put("pageNum", "0");
+							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+							AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 							getPaginatedPathways(0);
 						}
 					}
