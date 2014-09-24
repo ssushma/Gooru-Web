@@ -118,7 +118,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		cancelEditButton.setVisible(false);
 		editUnitButton.addClickHandler(new EditAssignmentEvent());
 		cancelEditButton.addClickHandler(new CancelEditEvent());
-		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),PlaceTokens.EDIT_CLASSPAGE));
+		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
 	}
 	
 	public UnitsAssignmentWidgetView(ClassUnitsListDo classUnitsDo, boolean studentMode){
@@ -129,7 +129,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		this.classUnitsDo=classUnitsDo;
 		setAssignmentsForUnit();
 		setUnitNameDetails();
-		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),PlaceTokens.STUDENT));
+		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(classUnitsDo.getItemSequence()),PlaceTokens.STUDENT));
 	}
 
 
@@ -360,17 +360,19 @@ public class UnitsAssignmentWidgetView extends Composite {
 	public class UnitChangeEvent implements ClickHandler{
 		private String unitGooruOid;
 		private String viewToken;
-		public UnitChangeEvent(String unitGooruOid,String viewToken){
+		private String sequenceNumber;
+		public UnitChangeEvent(String unitGooruOid, String sequenceNumber,String viewToken){
 			this.unitGooruOid=unitGooruOid;
 			this.viewToken=viewToken;
+			this.sequenceNumber=sequenceNumber;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			revealPlace("unitdetails",null,unitGooruOid,viewToken);
+			revealPlace("unitdetails",null,unitGooruOid,viewToken,sequenceNumber);
 		}
 	}
 	
-	 public void revealPlace(String tabName,String pageNum,String unitId,String viewToken){
+	 public void revealPlace(String tabName,String pageNum,String unitId,String viewToken,String sequenceNumber){
 			Map<String,String> params = new HashMap<String,String>();
 			String classpageid= "";
 			if(viewToken.equals(PlaceTokens.STUDENT))
@@ -392,6 +394,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 			}
 			if(unitId!=null){
 				params.put("uid", unitId);
+			}
+			if(sequenceNumber!=null){
+				params.put("sequenceNumber", sequenceNumber);
 			}
 			PlaceRequest placeRequest= null;
 			placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
