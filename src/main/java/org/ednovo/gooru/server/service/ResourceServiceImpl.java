@@ -138,7 +138,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		if (codeId != null) {
 			form.add(TAXONOMY_CODE, codeId);
 		}
-
+System.out.println("createCollection:::"+url);
+System.out.println("createCollectionform:::"+form);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
 		jsonRep = jsonResponseRep.getJsonRepresentation(); 
 		if(jsonResponseRep.getStatusCode()==200){
