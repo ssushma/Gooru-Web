@@ -74,7 +74,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	private static UnitAssignmentViewUiBinder uiBinder = GWT.create(UnitAssignmentViewUiBinder.class);
 	
-
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	interface UnitAssignmentViewUiBinder extends UiBinder<Widget, UnitAssignmentView> {
 		
 	}
@@ -101,13 +102,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private int unitsPageNumber = 0;
 	private int unitsTotalCount = 0;
 	
-	private String SETGOAL= "Set Goal";
+	private String SETGOAL= i18n.GL2197();
 	
-	private String EDITGOAL= "Edit Goal";
+	private String EDITGOAL= i18n.GL2196();
 	private Boolean isClickOnAssignment =false;
 		
-	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
 	@UiField HTMLPanel circleContainerPanel;
 
 	Image leftArrow = new Image();
@@ -128,13 +127,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	UnitCricleView unitCricleViewObj;
 	private boolean isShowingPopUp = false;
 	private boolean isEditMode=false;
-	
+	private boolean isShowingPopUpforStudent = false;
 	private ClassUnitsListDo classUnitsDo;
-	private static final String NEXT="next";
-	private static final String PREVIOUS= "previous";
+	private static final String NEXT=i18n.GL1463();
+	private static final String PREVIOUS= i18n.GL1462();
 	String unitId; 
 	private int selectedUnitNumber;
-	
+	UnitAssignentStudentPlayView UnitAssignentStudentPlayView =null;
 	private int totalAssignmentHitcount;
 	@Inject
 	public UnitAssignmentView(){
@@ -248,7 +247,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 						//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid());
 						unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());	
 						circleContainerPanel.add(unitCricleViewObj);
-						unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId()));
+						String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+						
+						if(pageLocation.equals(PlaceTokens.STUDENT)){
+							unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getEstimatedTime(),unitAssignmentsDo.getSearchResults().get(i).getDirection(),unitAssignmentsDo.getSearchResults().get(i).getCollectionId(),unitCricleViewObj.getElement().getId()));
+							
+						}else{
+							unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId()));
+						}
 						unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
 						String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 						if(assignmentId!=null&&assignmentId.equals(unitCricleViewObj.getAssignementId())){
@@ -348,21 +354,23 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 		setCircleData(unitAssignmentsDo);
 	}
+	/*This class is used to display tooltip on assignment for Teacher */
 	public class UnitSeqMouseOverHandler implements MouseOverHandler{
 		String title;
 		String narration;
-		int totalHintCount;
+		int totalHintCount,seqNo;
 		String selectedAssignmentId;
-		public UnitSeqMouseOverHandler(String title, String narration, int totalHintCount,String selectedAssignmentId) {
+		public UnitSeqMouseOverHandler(int seqNo,String title, String narration, int totalHintCount,String selectedAssignmentId) {
 			this.title = title;
 			this.narration = narration;
 			this.totalHintCount = totalHintCount;
 			this.selectedAssignmentId = selectedAssignmentId;
+			this.seqNo =seqNo;
 		}
 
 	@Override
 	public void onMouseOver(MouseOverEvent event) {
-		unitAssigmentReorder = new UnitAssigmentReorder(classDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null),selectedUnitNumber,totalHintCount,selectedAssignmentId){
+		unitAssigmentReorder = new UnitAssigmentReorder(seqNo,classDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null),selectedUnitNumber,totalHintCount,selectedAssignmentId){
 			@Override
 			public void reorderAssignment(int seqPosition,String selectedPathId,String targetUnitNumb) { 
 				setAssignmentToNewPosition(seqPosition,selectedPathId);
@@ -373,6 +381,32 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		isShowingPopUp = true;
 		}
 	}
+	/*This class is used to display tooltip on assignment for student*/
+	
+	public class StudentAssignmentMouseOverHandler implements MouseOverHandler{
+		int seqNumber;
+		String title,dueDate,direction,collectionId,collectionItemId;
+		public StudentAssignmentMouseOverHandler(int seqNumber,String title,String dueDate,String direction,String collectionId,String collectionItemId){
+			this.seqNumber = seqNumber;
+			this.title = title;
+			this.dueDate = dueDate;
+			this.direction = direction;
+			this.collectionId = collectionId;
+			this.collectionItemId = collectionItemId;
+			
+		}
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			UnitAssignentStudentPlayView = new UnitAssignentStudentPlayView(seqNumber,title,dueDate,direction,collectionId,collectionItemId);
+			
+			UnitAssignentStudentPlayView.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop()+40);
+			UnitAssignentStudentPlayView.show();
+			isShowingPopUpforStudent = true;
+		}
+		
+	}
+	
+	
 	public void hidePopup(NativePreviewEvent event){
 		try{
     	if(event.getTypeInt()==Event.ONMOUSEOVER){
@@ -383,7 +417,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
         		if(isShowingPopUp){
         			unitAssigmentReorder.hide();
         		}
+        		
     	   	}
+        	boolean targetStu=eventTargetsPopupStudent(nativeEvent);
+        	if(!targetStu){
+    		if(isShowingPopUpforStudent){
+    			UnitAssignentStudentPlayView.hide();
+    		}
+        	}
     	}
 		}catch(Exception ex){ex.printStackTrace();}
      }
@@ -393,6 +434,15 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		if (Element.is(target)) {
 			try{
 				return unitAssigmentReorder.getElement().isOrHasChild(Element.as(target));
+			}catch(Exception ex){}
+		}
+		return false;
+	}
+	private boolean eventTargetsPopupStudent(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			try{
+				return UnitAssignentStudentPlayView.getElement().isOrHasChild(Element.as(target));
 			}catch(Exception ex){}
 		}
 		return false;
@@ -592,8 +642,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid()+"");
 				unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());
 				circleContainerPanel.add(unitCricleViewObj);
+				String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 				
-				unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId()));
+				if(pageLocation.equals(PlaceTokens.STUDENT)){
+					unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getEstimatedTime(),unitAssignmentsDo.getSearchResults().get(i).getDirection(),unitAssignmentsDo.getSearchResults().get(i).getCollectionId(),unitCricleViewObj.getElement().getId()));
+					
+				}else{
+					unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId()));
+					}
 				unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
 			}
 			
