@@ -42,5 +42,6 @@ public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentU
 	void showDashBoard();
 	void showAssignments();
 	void scoreHederView(String collectionItemId);
+	public void getUnitsPanel();
 
 }
