@@ -208,7 +208,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	private void setDueDate(Long dueDate){
 		removeEditDueDatePanel();
 		showDueDatePanel(true);
-		if(dueDate!=null){
+		if(dueDate!=null&&!dueDate.equals("")&&!dueDate.equals("null")){
 			dueDateText.setText("Due Date:"+convertMillisecondsToDate(dueDate));
 		}else{
 			dueDateText.setText("Due Date");
@@ -572,7 +572,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		showDueDatePanel(false);
 		editToolBarView=new EditToolBarView(true);
 		editToolBarView.dueDateText.add(new Label(i18n.GL1390()));
-		if(classpageItemDo.getPlannedEndDate()!=null){
+		if(classpageItemDo.getPlannedEndDate()!=null&&!classpageItemDo.getPlannedEndDate().equals("")){
 			editToolBarView.dateBoxUc.getDateBox().setValue(convertMillisecondsToDate(classpageItemDo.getPlannedEndDate()));
 		}
 		editToolBarView.dueDateText.setStyleName(CollectionsCBundle.INSTANCE.css().dueDataIcon());
@@ -599,12 +599,12 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			editToolBarView.saveButton.setVisible(false);
-			editToolBarView.cancelButton.setVisible(false);
-			editToolBarView.savingText.setVisible(true);
-				String dueDate=editToolBarView.dateBoxUc.getDate();
-				if(dueDate!=null){
-					updateAssignmentDueDate(dueDate);
+			String dueDate=editToolBarView.dateBoxUc.getDateBox().getValue();
+			if(dueDate!=null&&!dueDate.equals("")){
+				editToolBarView.saveButton.setVisible(false);
+				editToolBarView.cancelButton.setVisible(false);
+				editToolBarView.savingText.setVisible(true);
+				updateAssignmentDueDate(dueDate);
 			}
 		}
 	}
