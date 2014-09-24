@@ -1838,10 +1838,11 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	 * @see org.ednovo.gooru.client.service.ClasspageService#getAssignmentData(java.lang.String)
 	 */
 	@Override
-	public List<InsightsUserDataDo> getAssignmentData(String gooruUId, String classpageId, int pageSize, int pageNum)
+	public List<InsightsUserDataDo> getAssignmentData(String gooruUId, String classpageId, int pageSize, int pageNum, String unitId)
 			throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.GET_INSIGHTS_DATA, classpageId, getLoggedInSessionToken(), gooruUId);
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.GET_INSIGHTS_DATA, classpageId, getLoggedInSessionToken(), gooruUId, unitId);
+		System.out.println("GET_INSIGHTS_DATA : "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeAssignmentsData(jsonRep);

@@ -92,8 +92,8 @@ public class AssignmentGoalPresenter extends ChildPresenter<AssignmentGoalPresen
 		this.classpageService = classpageService;
 	}
 	@Override
-	public void getAnalyticData(String gooruUId, String classpageId, int pageSize, int pageNum){
-	 	AppClientFactory.getInjector().getClasspageService().getAssignmentData(gooruUId, classpageId, pageSize, pageNum, new SimpleAsyncCallback<List<InsightsUserDataDo>>() {
+	public void getAnalyticData(String gooruUId, String classpageId, int pageSize, int pageNum, String pathwayId){
+	 	AppClientFactory.getInjector().getClasspageService().getAssignmentData(gooruUId, classpageId, pageSize, pageNum, pathwayId, new SimpleAsyncCallback<List<InsightsUserDataDo>>() {
 
 			@Override
 			public void onSuccess(List<InsightsUserDataDo> result) {
