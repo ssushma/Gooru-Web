@@ -181,6 +181,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		unitTitleDetails.setText(unitTitle);
 	}
 	
+	public void resetUnitAssignmentView(){
+		circleContainerPanel.clear();
+		assignmentContainer.clear();
+		unitPanel.clear();
+		unitTitleDetails.setText("");
+	}
+	
 	public class UnitChangeEvent implements ClickHandler{
 		private UnitWidget unitsWidget;
 		private String unitTitle;
@@ -478,6 +485,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					unitTitle = unitTitle.substring(0,11)+"...";
 				}
 				int unitNumber = classDo.getSearchResults().get(i).getItemSequence();
+				classListUnitsListDo.get(i).setItemSequence(unitPanel.getWidgetCount()+1);
 				UnitWidget unitsWidget=new UnitWidget(classListUnitsListDo.get(i));
 				unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget,unitTitle,unitNumber));
 				if(unitId!=null&&unitId.equals(unitsWidget.getUnitGooruOid())){
@@ -513,13 +521,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 
 	private void updatePageNumber(){
-		System.out.println("total count==>"+unitsTotalCount);
 		unitsPageNumber++;
 		if((limit*unitsPageNumber)<unitsTotalCount){
-			System.out.println("total count==> inside if");
 			lblMoreUnits.setVisible(true);
 		}else{
-			System.out.println("total count==> inside else");
 			lblMoreUnits.setVisible(false);
 		}
 	}

@@ -589,7 +589,7 @@ public interface ClasspageService extends BaseService {
 	*/
 	
 	List<InsightsUserDataDo> getAssignmentData(String gooruUId,
-			String classpageId, int pageSize, int pageNum) throws GwtException,
+			String classpageId, int pageSize, int pageNum,String unitId) throws GwtException,
 			ServerDownException;
 	public ClasspageItemDo updateAssignmentDetails(String classId,String unitId,String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus) throws GwtException;
 	

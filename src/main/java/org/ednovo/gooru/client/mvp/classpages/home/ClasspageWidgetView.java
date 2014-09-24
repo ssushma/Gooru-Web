@@ -112,11 +112,11 @@ public class ClasspageWidgetView extends Composite {
 		}
 		if(collectionDoObj.getItemCount() == 1)
 		{
-			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1934());
+			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL2219());
 		}
 		else
 		{
-			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1933());
+			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL2220());
 		}
 		
 		imgUserProfile.setVisible(false);
@@ -141,11 +141,11 @@ public class ClasspageWidgetView extends Composite {
 		{
 		if(collectionDoObj.getItemCount() == 1)
 		{
-			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1934());
+			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL2219());
 		}
 		else
 		{
-			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1933());	
+			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL2220());	
 		}
 		ownerName.getElement().setInnerHTML(collectionDoObj.getUser().getUserName()+"'s"+" "+"class");
 		imgUserProfile.setVisible(true);

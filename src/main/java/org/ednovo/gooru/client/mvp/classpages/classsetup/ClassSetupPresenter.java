@@ -112,6 +112,14 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	}
 	
 	@Override
+	protected void onHide() {
+		super.onHide();
+		getView().clearPanel();
+		getView().clearPaginationPanel();
+		
+	}
+	
+	@Override
 	public void OnUnitSetupClick() {
 		setInSlot(UNITS_SLOT, unitSetupPresenter,false);
 	}
@@ -143,6 +151,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 						}
 					}
 					getView().setPagination(classDo.getTotalHitCount(),pageNumVal);
+					getView().clearPanel();
 					for(int i=0;i<classDo.getSearchResults().size();i++)
 					{
 
@@ -181,6 +190,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 					}
 
 					getView().setPagination(classDo.getTotalHitCount(),pageNumVal);
+					getView().clearPanel();
 					for(int i=0;i<classDo.getSearchResults().size();i++){
 						setUnit(classDo.getSearchResults().get(i).getResource().getTitle(), classDo.getSearchResults().get(i).getResource().getGooruOid(),classDo.getSearchResults().get(i).getCollectionItemId());
 
