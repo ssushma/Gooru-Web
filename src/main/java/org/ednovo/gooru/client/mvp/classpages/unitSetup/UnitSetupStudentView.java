@@ -146,8 +146,24 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 	    for(int i=0; i<unitSize; i++){
 /*	    	ClassUnitsListDo classListUnitsListDo=classDo.getSearchResults().get(i);
 	    	unitAssignmentWidgetContainer.add(new UnitsAssignmentWidgetView(classListUnitsListDo,true)); */
+	    	
+	    	String pageNumVal=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+			int pageIntVal = 0;
+			if(pageNumVal != null)
+			{
+				pageIntVal = Integer.parseInt(pageNumVal);
+				if(pageIntVal!=0)
+				{
+				pageIntVal = pageIntVal-1;
+				}
+			}
+			int sequenceNum = unitAssignmentWidgetContainer.getWidgetCount();
+			System.out.println("seq:"+sequenceNum);
+			sequenceNum = (pageIntVal * 5)+sequenceNum;
+			sequenceNum = sequenceNum + 1;
+			System.out.println("studentsequenceNum::"+sequenceNum);
 	    	ClassUnitsListDo classListUnitsListDo = classDo.getSearchResults().get(i);
-			UnitsAssignmentWidgetView unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(classListUnitsListDo,true);
+			UnitsAssignmentWidgetView unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(sequenceNum,classListUnitsListDo,true);
 			unitsAssignmentWidgetView.setClassDo(classDo);
 			if (classListUnitsListDo.getResource().getItemCount() != null) {
 				unitsAssignmentWidgetView.setTotalHitCount(classListUnitsListDo.getResource().getItemCount());
