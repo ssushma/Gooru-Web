@@ -1,3 +1,27 @@
+/*******************************************************************************
+ * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+ * 
+ *  http://www.goorulearning.org/
+ * 
+ *  Permission is hereby granted, free of charge, to any person obtaining
+ *  a copy of this software and associated documentation files (the
+ *  "Software"), to deal in the Software without restriction, including
+ *  without limitation the rights to use, copy, modify, merge, publish,
+ *  distribute, sublicense, and/or sell copies of the Software, and to
+ *  permit persons to whom the Software is furnished to do so, subject to
+ *  the following conditions:
+ * 
+ *  The above copyright notice and this permission notice shall be
+ *  included in all copies or substantial portions of the Software.
+ * 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
 import java.util.ArrayList;
@@ -5,14 +29,11 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
-import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -31,7 +52,21 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
-
+/**
+ * 
+ * @fileName : UnitAssigmentReorder.java
+ * 
+ * @description :This class is used to display tooltip of assignment for teachers
+ * 
+ * 
+ * @version : 1.1
+ * 
+ * @date: Sep 14, 2014
+ * 
+ * @Author Gooru Team
+ * 
+ * @Reviewer:
+ */
 public abstract class UnitAssigmentReorder extends PopupPanel{ 
 private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			.create(UnitAssigmentReorderUiBinder.class);
@@ -57,7 +92,19 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	private HandlerRegistration onClickUnit;
 	private int totalHintCount;
 	private String selectedAssignmentId;
-	
+	/**
+	 * 
+	 * @constructor : UnitAssigmentReorder
+	 * 
+	 * @param : Sequence Number
+	 * @param : ClassDo object
+	 * @param : assignment title
+	 * @param : assignment narration
+	 * @param : classpageId
+	 * @param : selectedUnitNumber
+	 * @param : totalHintCount
+	 * @param : selectedAssignmentId
+	 */
 	public UnitAssigmentReorder(int seqNo,ClassDo classDo,String title,String narration,String classpageId,int selectedUnitNumber,int totalHintCount,String selectedAssignmentId) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.classDo = classDo;
@@ -66,21 +113,44 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		this.selectedAssignmentId = selectedAssignmentId;
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		unitTextLbl.setText(i18n.GL2175());
+		unitTextLbl.getElement().setId("unitTextLbl");
+		unitTextLbl.getElement().setAttribute("alt",i18n.GL2175());
 		unitTextLbl.getElement().setAttribute("style", "display: inline-block;");
 		assignmentTextLbl.setText(i18n.GL0103());
+		assignmentTextLbl.getElement().setId("assignmentTextLbl");
+		assignmentTextLbl.getElement().setAttribute("alt",i18n.GL0103());
 		assignmentTextLbl.getElement().setAttribute("style", "display: inline-block;");
 		setUnitAssignmentData(classDo,title,narration,selectedUnitNumber);
 		seqNum.setText(seqNo+".");
+		seqNum.getElement().setId("seqNum");
+		seqNum.getElement().setAttribute("alt",seqNo+"");
 		
 				
 	}
+	/**
+	 * 
+	 * @method name : setUnitAssignmentData
+	 * 
+	 * @param : classDo 
+	 * @param : assignment title
+	 * @param : assignment narration
+	 * @param : selectedUnitNumber
+	 */
 	public void setUnitAssignmentData(ClassDo classDo,String title,String narration,int selectedUnitNumber){
 		int totalItemCount = 0;
 		popupArrow.setUrl("images/popArrow.png");
 		saveButton.setText(i18n.GL0141());
+		saveButton.getElement().setId("saveButton");
+		saveButton.getElement().setAttribute("alt",i18n.GL0141());
 		CancelButton.setText(i18n.GL0142());
+		CancelButton.getElement().setId("CancelButton");
+		CancelButton.getElement().setAttribute("alt",i18n.GL0142());
+		titleLabel.getElement().setId("titleLabel");
+		descLabel.getElement().setId("descLabel");
 		dropdownListContainerScrollPanel.getElement().getStyle().setDisplay(Display.NONE);
+		dropdownListContainerScrollPanel.getElement().setId("dropdownListContainerScrollPanel");
 		dropdownListPlaceHolder.addClickHandler(new OnDropdownListPlaceHolderClick());
+		
 		saveButton.addClickHandler(new clickOnSave());
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		
@@ -88,8 +158,10 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 			ArrayList<ClassUnitsListDo> classListUnitsListDo =classDo.getSearchResults();
 			titleLabel.setText(title);
+			titleLabel.getElement().setAttribute("alt",title);
 			if(narration!=null){
 				descLabel.setText(narration);
+				descLabel.getElement().setAttribute("alt",narration);
 			}
 			totalsize =totalsize+classListUnitsListDo.size() ;
 			
@@ -129,6 +201,14 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		
 				
 	}
+	/**
+	 * 
+	 * @method name : displayAssignment
+	 * 
+	 * @discription : This method is used to display the assignment in dropdown
+	 * 
+	 * @param : totalItemCount 
+	 */
 	public void displayAssignment(Integer totalItemCount)
 	{
 		dropdownListContainerAssignment.clear();
@@ -156,6 +236,14 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			dropdownListPlaceHolderAssignment.getElement().setInnerHTML(1+"");
 		}
 	}
+	/**
+	 * 
+	 * @classname name : ScrollDropdownListContainer
+	 * 
+	 * @discription : This class is used to display the more unit on scroll
+	 * if unit is greater than 5.
+	 * 
+	 */
 	private class ScrollDropdownListContainer implements ScrollHandler{
 		@Override
 		public void onScroll(ScrollEvent event) {
@@ -180,19 +268,36 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 				}
 			}
 	}
+	/**
+	 * 
+	 * @classname name : OnDropdownListPlaceHolderClick
+	 * 
+	 * @discription : This click event is used to display unit on dropdown
+	 */
 	private class OnDropdownListPlaceHolderClick implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
 			new CustomAnimation(dropdownListContainerScrollPanel).run(300);
 		}
 	}
+	/**
+	 * 
+	 * @classname name : OnDropdownListAssignmentPlaceHolderClick
+	 * 
+	 * @discription : This click event is used to display assignment on dropdown
+	 */
 	private class OnDropdownListAssignmentPlaceHolderClick implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
 			new CustomAnimation(dropdownListContainerScrollPanelAssignment).run(300);
 		}
 	}
-	
+	/**
+	 * 
+	 * @classname name : OnDropdownItemClick
+	 * 
+	 * @discription : This click event is used to select unit number
+	 */
 	private class OnDropdownItemClick implements ClickHandler{
 		private String seq="";
 		private String itemCount;
@@ -217,6 +322,12 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 			
 		}
 	}
+	/**
+	 * 
+	 * @classname name : OnDropdownAssignmentItemClick
+	 * 
+	 * @discription : This click event is used to select assignment number
+	 */
 	private class OnDropdownAssignmentItemClick implements ClickHandler{
 			private String seq="";
 			private String selectedTargetId;
@@ -233,14 +344,23 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		}
 	}
 		
-	
+	/**
+	 * 
+	 * @UiHandler : CancelButton
+	 * 
+	 * @discription : This click event is used to hide popup
+	 */
 	@UiHandler("CancelButton")
 	public void onclickCancelBtn(ClickEvent event){
 		this.hide();
 	}
-	/*
-	 * This class is used to reorder the assignment in pathway
+	/**
+	 * 
+	 * @classname : clickOnSave
+	 * 
+	 * @discription : This click event is used reorder the assignment on click of save button 
 	 */
+	
 	public class clickOnSave implements ClickHandler{
 
 		@Override
@@ -275,7 +395,14 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		}
 	}
 
-
+	/**
+	 * 
+	 * @method name : reorderAssignment
+	 * 
+	 * @param : seqPosition
+	 * @param : selectedPathId
+	 * @param : targetUnit
+	 */
 	public abstract void reorderAssignment(int seqPosition,String selectedPathId,String targetUnit); 
 	
 }
