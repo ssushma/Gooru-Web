@@ -135,8 +135,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 		this.classUnitsDo=classUnitsDo;
 		setAssignmentsForUnit();
 		setUnitNameDetails();
-		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(classUnitsDo.getItemSequence()),PlaceTokens.STUDENT));
-		unitDetailsPanel.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(classUnitsDo.getItemSequence()),PlaceTokens.STUDENT));
+		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
+		unitDetailsPanel.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
 	}
 
 
@@ -410,7 +410,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 				params.put("uid", unitId);
 			}
 			if(sequenceNumber!=null){
-				params.put("sequenceNumber", sequenceNumber);
+				params.put("seqnumber", sequenceNumber);
 			}
 			PlaceRequest placeRequest= null;
 			placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
