@@ -998,6 +998,7 @@ background:#b9bbca url(../images/liners.png) repeat-x !important;
 	background: url(images/preview-arrow-small.png) 70px center no-repeat, -o-linear-gradient(top, #4c98cc, #1076bb);
 	float: right;
 	cursor: pointer;
+	margin-right: 22px;
 }
 .headerLeft {
 	display: inline-block;
@@ -1017,7 +1018,7 @@ background:#b9bbca url(../images/liners.png) repeat-x !important;
 	padding-left: 21px;
 	height: 18px;
 	margin-bottom: 5px;
-	margin-left: -19px;
+	
 }
 .headerDueDate {
 	display: inline-block;
@@ -1032,4 +1033,13 @@ background:#b9bbca url(../images/liners.png) repeat-x !important;
 }
 .directionDesc {
 	color: #515151;
+}
+.directionStyle{
+	
+}
+
+.titleContainer {
+	float: left;
+	border-bottom: 1px solid #eee;
+	margin-bottom: 10px;
 }

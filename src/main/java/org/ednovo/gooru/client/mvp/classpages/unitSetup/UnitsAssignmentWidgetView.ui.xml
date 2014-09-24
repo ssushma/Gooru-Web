@@ -6,7 +6,7 @@
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel styleName="{style.classMenuBlock} pathwayContainer">
 		<g:HTMLPanel styleName="{style.classSetupMenu} {style.HoverSetup}">
-			<g:HTMLPanel styleName="{style.classLeftMenu}">
+			<uc:HTMLEventPanel styleName="{style.classLeftMenu}" ui:field="unitDetailsPanel">
 				<g:HTMLPanel styleName="{style.numaricName}">
 					<g:Label styleName="{style.blueNumaric}" ui:field="lblUnitNumber"></g:Label>
 					<g:Label styleName="{style.unitName}" ui:field="lblUnitName"></g:Label>
@@ -14,6 +14,7 @@
 				<g:HTMLPanel styleName="{style.detailsBtn}">
 					<g:Anchor ui:field="unitDetailsButton" text="{i18n.GL2204}"></g:Anchor>
 				</g:HTMLPanel>
+			</uc:HTMLEventPanel>
 			</g:HTMLPanel>
 			
 			<g:HTMLPanel styleName="{style.classDetailsMain}">

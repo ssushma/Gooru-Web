@@ -70,6 +70,8 @@ public class UnitWidget extends Composite implements HasClickHandlers{
  	
  	private String unitCollectionItemId=null;
  	
+ 	ClassUnitsListDo classUnitDo;
+ 	
  	
  	UnitAssignmentCssBundle res;
 
@@ -86,12 +88,14 @@ public class UnitWidget extends Composite implements HasClickHandlers{
 	 */
 	public UnitWidget(ClassUnitsListDo classUnitDo) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.classUnitDo=classUnitDo;
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
 		ilUnitNumber.setText(""+classUnitDo.getItemSequence());
 		ilUnitName.setText(classUnitDo.getResource().getTitle());
 		this.unitGooruOid=classUnitDo.getResource().getGooruOid();
 		this.unitCollectionItemId=classUnitDo.getCollectionItemId();
+		System.out.println("unitCollectionItemId::"+unitCollectionItemId);
 	}
 	
 	/**
@@ -119,6 +123,14 @@ public class UnitWidget extends Composite implements HasClickHandlers{
 	public String getUnitCollectionItemId() {
 		return unitCollectionItemId;
 	}
+
+	/**
+	 * @return the classUnitDo
+	 */
+	public ClassUnitsListDo getClassUnitDo() {
+		return classUnitDo;
+	}
+	
 	
 
 }

@@ -96,6 +96,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	ClassDo classDo;
 	
+	ClassUnitsListDo classUnitsListDo;
+	
 	String unitCollectionId;
 	
 	private int limit = 5;
@@ -140,7 +142,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		setWidget(uiBinder.createAndBindUi(this));
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
-		unitSetupButton.setText(i18n.GL2198());
+		String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(pageLocation.equals(PlaceTokens.STUDENT)){
+			unitSetupButton.setText(i18n.GL2198());			
+		}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
+			unitSetupButton.setText(i18n.GL2216());	
+		}
 		lblMoreUnits.setText(i18n.GL2199());
 		btnDashBoard.setText(i18n.GL2200());
 		btnAssignment.setText(i18n.GL1933());
@@ -187,7 +194,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		public void onClick(ClickEvent event) {
 			selectedUnitNumber = unitNumber;
 			resetCircleAndAssignmentContainer(unitTitle);
-			setUnitCollectionId(unitsWidget.getUnitCollectionItemId());
+			setClassUnitsListDo(unitsWidget.getClassUnitDo());
 			revealPlace("unitdetails",null,unitsWidget.getUnitGooruOid(),null);
 			removeAndAddUnitSelectedStyle();
 		}
@@ -248,9 +255,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 						unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());	
 						circleContainerPanel.add(unitCricleViewObj);
 						String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-						
 						if(pageLocation.equals(PlaceTokens.STUDENT)){
-							unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getEstimatedTime(),unitAssignmentsDo.getSearchResults().get(i).getDirection(),unitAssignmentsDo.getSearchResults().get(i).getCollectionId(),unitCricleViewObj.getElement().getId()));
+							unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getPlannedEndDate(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid(),unitCricleViewObj.getElement().getId()));
 							
 						}else{
 							unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId()));
@@ -385,8 +391,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	public class StudentAssignmentMouseOverHandler implements MouseOverHandler{
 		int seqNumber;
-		String title,dueDate,direction,collectionId,collectionItemId;
-		public StudentAssignmentMouseOverHandler(int seqNumber,String title,String dueDate,String direction,String collectionId,String collectionItemId){
+		String title,direction,collectionId,collectionItemId;
+		Long dueDate;
+		public StudentAssignmentMouseOverHandler(int seqNumber,String title,Long dueDate,String direction,String collectionId,String collectionItemId){
 			this.seqNumber = seqNumber;
 			this.title = title;
 			this.dueDate = dueDate;
@@ -456,6 +463,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		if(clearPanel){
 			unitPanel.clear();
+			unitsPageNumber=0;
 		}
 		unitsTotalCount=classDo.getTotalHitCount();
 		updatePageNumber();
@@ -464,7 +472,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			for(int i=0; i<classListUnitsListDo.size(); i++){
 				ClassUnitsListDo classListUnitsListDObj=classDo.getSearchResults().get(i);
 				classUnitsDo=classListUnitsListDObj;
-				//unitTitleDetails.setText(classDo.getSearchResults().get(0).getResource().getTitle());
+				unitTitleDetails.setText(classDo.getSearchResults().get(0).getResource().getTitle());
 				String unitTitle = classDo.getSearchResults().get(i).getResource().getTitle();
 				if(unitTitle!=null && unitTitle.length()>11){
 					unitTitle = unitTitle.substring(0,11)+"...";
@@ -487,6 +495,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void setUnitName(String unitName){
 		unitTitleDetails.setText(unitName!=null?unitName:"");
 	}
+	public void getUnitsPanel(){
+		unitPanel.clear();
+	}
 	@Override
 	public void getPathwayItems(){
 		classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
@@ -502,10 +513,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 
 	private void updatePageNumber(){
+		System.out.println("total count==>"+unitsTotalCount);
 		unitsPageNumber++;
 		if((limit*unitsPageNumber)<unitsTotalCount){
+			System.out.println("total count==> inside if");
 			lblMoreUnits.setVisible(true);
 		}else{
+			System.out.println("total count==> inside else");
 			lblMoreUnits.setVisible(false);
 		}
 	}
@@ -643,14 +657,16 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());
 				circleContainerPanel.add(unitCricleViewObj);
 				String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-				
 				if(pageLocation.equals(PlaceTokens.STUDENT)){
-					unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getEstimatedTime(),unitAssignmentsDo.getSearchResults().get(i).getDirection(),unitAssignmentsDo.getSearchResults().get(i).getCollectionId(),unitCricleViewObj.getElement().getId()));
+					unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getPlannedEndDate(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid(),unitCricleViewObj.getElement().getId()));
 					
 				}else{
 					unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId()));
 					}
 				unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
+				
+			
+				
 			}
 			
 			rightArrow.setUrl("images/rightSmallarrow.png");
@@ -678,13 +694,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		goalContainer.setVisible(false);
 	}
 	
-	public void scoreHederView(String collectionItemId) {
+	public void scoreHederView(ClassUnitsListDo classUnitsListDo) {
 		scoreHedingContainer.clear();
 		ScoreHedingView scoreHedingView = null;
-		String collectionId=getUnitCollectionId();
-		System.out.println("unitid----------------:"+collectionId);
+
+		ClassUnitsListDo collectionId=getClassUnitsListDo();
+		
 		if(collectionId==null){
-			collectionId=collectionItemId;
+			collectionId=classUnitsListDo;
 		}
 		for(int i=0; i<2; i++){
 			scoreHedingView=new ScoreHedingView(collectionId);
@@ -762,7 +779,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	@Override
 	public void showDashBoard() {
-		System.out.println("showDashBoard");
+		
 		if(!isClickOnAssignment){
 			goalContainer.setVisible(true);
 			containerPanel.setVisible(false);
@@ -826,7 +843,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 
 	}
-	
+	/**
+	 * Get the valid Unit completion time.
+	 * @param time @string
+	 * @param isHours 
+	 * @return validation time
+	 */
 
 	private String getValidationTime(String time, boolean isHours) {
 		// TODO Auto-generated method stub
@@ -891,5 +913,21 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void setUnitCollectionId(String unitCollectionId) {
 		this.unitCollectionId = unitCollectionId;
 	}
+
+	/**
+	 * @return the classUnitsListDo
+	 */
+	public ClassUnitsListDo getClassUnitsListDo() {
+		return classUnitsListDo;
+	}
+
+	/**
+	 * @param classUnitsListDo the classUnitsListDo to set
+	 */
+	public void setClassUnitsListDo(ClassUnitsListDo classUnitsListDo) {
+		this.classUnitsListDo = classUnitsListDo;
+	}
+	
+	
 	
 }

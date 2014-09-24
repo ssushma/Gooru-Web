@@ -3,48 +3,56 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="unitStyle" src="unitassignment.css" />
 	<g:HTMLPanel ui:field="mainPanel">
-	    <div class="{unitStyle.popupBox}">
+		<div class="{unitStyle.popupBox}">
 			<div class="{unitStyle.upArrow}">
-			    <g:HTMLPanel styleName="{unitStyle.popArrowInner}"><g:Image ui:field="popupArrow"></g:Image></g:HTMLPanel>
+				<g:HTMLPanel styleName="{unitStyle.popArrowInner}">
+					<g:Image ui:field="popupArrow"></g:Image>
+				</g:HTMLPanel>
 			</div>
-			<g:InlineLabel ui:field="seqNum" styleName="{unitStyle.popHeader}"/>
-			<g:InlineLabel ui:field="titleLabel" styleName="{unitStyle.popHeader}"/>
+			<g:InlineLabel ui:field="seqNum" styleName="{unitStyle.popHeader}" />
+			<g:InlineLabel ui:field="titleLabel" styleName="{unitStyle.popHeader}" />
 			<hr>
-			<g:Label ui:field="descLabel" styleName="{unitStyle.popDescription}"/>
+				<g:Label ui:field="descLabel" styleName="{unitStyle.popDescription}" />
 				<div class="{unitStyle.dropBoxes}">
-				    <div class="{unitStyle.dropdownPosition}">
-				    <g:Label ui:field="unitTextLbl"></g:Label>
-				    <div class="{unitStyle.dropdownListPlaceHolderMain}">
-			    <g:InlineLabel ui:field="dropdownListPlaceHolder" styleName="{unitStyle.dropdownListPlaceHolder}"></g:InlineLabel>
-            	<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="{unitStyle.dropdownListContainerScrollPanel}">
-	            	<g:HTMLPanel ui:field="dropdownListContainer" styleName="{unitStyle.dropdownListContainer}">
-			   		 </g:HTMLPanel>
-		   		 </g:ScrollPanel>
-		   		 </div>
-			   </div> 
-			    
-			
-			<div class="{unitStyle.dropdownPositionAss}">
-			 <g:Label ui:field="assignmentTextLbl"></g:Label>
-			<div class="{unitStyle.dropdownListPlaceHolderMain}">
-			 <g:InlineLabel ui:field="dropdownListPlaceHolderAssignment" styleName="{unitStyle.dropdownListPlaceHolder}"></g:InlineLabel>
-            	<g:ScrollPanel ui:field="dropdownListContainerScrollPanelAssignment" styleName="{unitStyle.dropdownListContainerScrollPanel}">
-	            	<g:HTMLPanel ui:field="dropdownListContainerAssignment" styleName="{unitStyle.dropdownListContainer}">
-			   		 </g:HTMLPanel>
-		   		 </g:ScrollPanel>
-		   		 </div>
-			</div>
-			<div class="clearfix"></div>
-			</div>
-			<div class="{unitStyle.btnGroup}">
-			    <g:Button styleName="secondary" ui:field="CancelButton"></g:Button>
-			     <g:Button styleName="primary" ui:field="saveButton"></g:Button>
-			     <g:Label ui:field="savingTextLabel"/>
-			</div>
-			
+					<div class="{unitStyle.dropdownPosition}">
+						<g:Label ui:field="unitTextLbl"></g:Label>
+						<div class="{unitStyle.dropdownListPlaceHolderMain}">
+							<g:InlineLabel ui:field="dropdownListPlaceHolder"
+								styleName="{unitStyle.dropdownListPlaceHolder}"></g:InlineLabel>
+							<g:ScrollPanel ui:field="dropdownListContainerScrollPanel"
+								styleName="{unitStyle.dropdownListContainerScrollPanel}">
+								<g:HTMLPanel ui:field="dropdownListContainer"
+									styleName="{unitStyle.dropdownListContainer}">
+								</g:HTMLPanel>
+							</g:ScrollPanel>
+						</div>
+					</div>
+
+
+					<div class="{unitStyle.dropdownPositionAss}">
+						<g:Label ui:field="assignmentTextLbl"></g:Label>
+						<div class="{unitStyle.dropdownListPlaceHolderMain}">
+							<g:InlineLabel ui:field="dropdownListPlaceHolderAssignment"
+								styleName="{unitStyle.dropdownListPlaceHolder}"></g:InlineLabel>
+							<g:ScrollPanel ui:field="dropdownListContainerScrollPanelAssignment"
+								styleName="{unitStyle.dropdownListContainerScrollPanel}">
+								<g:HTMLPanel ui:field="dropdownListContainerAssignment"
+									styleName="{unitStyle.dropdownListContainer}">
+								</g:HTMLPanel>
+							</g:ScrollPanel>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="{unitStyle.btnGroup}">
+					<g:Button styleName="secondary" ui:field="CancelButton"></g:Button>
+					<g:Button styleName="primary" ui:field="saveButton"></g:Button>
+					<g:Label ui:field="savingTextLabel" />
+				</div>
+
 			</hr>
-			</div>
-			
-			
+		</div>
+
+
 	</g:HTMLPanel>
 </ui:UiBinder> 

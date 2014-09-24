@@ -34,7 +34,7 @@ public interface IsClassSetupView extends IsViewWithHandlers<ClassSetupUiHandler
 
 	void setPagination(int totalCount, int pagenumVal);
 
-	void setContent(String unitName, String pathwayId, int sequenceNum,String collectionItemid);
+	void setContent(String unitName, String pathwayId, String collectionItemid);
 
 	void zeroResults();
 

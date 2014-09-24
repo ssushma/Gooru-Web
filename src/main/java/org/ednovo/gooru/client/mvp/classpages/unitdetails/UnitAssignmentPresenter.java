@@ -84,6 +84,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	@Override
 	public void setClasspageData(ClasspageDo classpageDo){
 		studentPersonalizePresenter.setClasspageData(classpageDo);
+		getPathwayUnits(classpageDo.getClasspageId(), 5, 0, true);
 		setInSlot(_SLOT, studentPersonalizePresenter,false);
 	}
 
@@ -113,11 +114,22 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	}
 	
 	public void getPathwayUnits(final String classId,int limit, int offset,final boolean clearPanel) {
+		if(clearPanel){
+			getView().getUnitPanel().clear();
+		}
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
 			@Override
 			public void onSuccess(ClassDo classDo) {
-				getView().showUnitNames(classDo,clearPanel);
-				getView().scoreHederView(classDo.getSearchResults().get(0).getCollectionItemId());
+				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+					getView().showUnitNames(classDo,clearPanel);
+					String seqNumber=AppClientFactory.getPlaceManager().getRequestParameter("sequenceNumber", null);
+					if(seqNumber!=null){
+						int number=Integer.parseInt(seqNumber);
+						number=number-1;
+						getView().scoreHederView(classDo.getSearchResults().get(number));
+					}
+				}
+				
 //				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 //					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 //					if(unitId==null){
