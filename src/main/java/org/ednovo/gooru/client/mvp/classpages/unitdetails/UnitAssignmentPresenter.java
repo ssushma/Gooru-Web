@@ -84,6 +84,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	@Override
 	public void setClasspageData(ClasspageDo classpageDo){
 		studentPersonalizePresenter.setClasspageData(classpageDo);
+		getPathwayUnits(classpageDo.getClasspageId(), 5, 0, true);
 		setInSlot(_SLOT, studentPersonalizePresenter,false);
 	}
 
