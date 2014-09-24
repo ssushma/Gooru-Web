@@ -83,6 +83,20 @@ public class UnitAssignentStudentPlayView extends PopupPanel {
 		res.unitAssignment().ensureInjected();
 		setView(seq,title,dueDate,direction,collectionId,collectionItemId);
 	}
+	/**
+	 * @method name :setView
+	 * 
+	 * @description : This method is used to display the view 
+	 * 
+	 * @param : Sequence number
+	 * @param : assignment title
+	 * @param : due date
+	 * @param : direction
+	 * @param : collectionId
+	 * @param : collectionItemId
+	 * @return type : void
+	 */
+	
 	public void setView(int seq,String title,String dueDate,String direction,final String collectionId,final String collectionItemId)
 	{
 		studyButtonText.setText(i18n.GL0182());
