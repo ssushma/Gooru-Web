@@ -27,11 +27,11 @@ package org.ednovo.gooru.client.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -224,7 +224,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	void updateAssignmentStatusAsCompleteorOpen(String classpageId,String unitGooruOid,String collectionItemId,
 			boolean isComplete, AsyncCallback<CollectionDo> callback);
 	
-	void updateUnitStatus(String collectionItemId,String minimumScore, String assignementStatus, String timeStudying, AsyncCallback<ClasspageItemDo> callback);
+	void updateUnitStatus(String collectionItemId,String minimumScore, String assignementStatus, String timeStudying, AsyncCallback<ClassUnitsListDo> callback);
 	
 	void pathwayItemMoveWithReorder(String classId,String pathwaygooruOid,String collectionItemId,String newSequence,AsyncCallback<Void> callback);
 }
