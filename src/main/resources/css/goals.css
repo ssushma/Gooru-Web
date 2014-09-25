@@ -18,7 +18,7 @@
 
 
 .rowInner {
-    padding-left: 15px;
+    padding-left: 0px !important;
     padding-right: 15px;
 }
 

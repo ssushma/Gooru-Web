@@ -57,6 +57,20 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
+/**
+* @fileName : AssignmentsContainerWidget.java
+*
+* @description : This class creates the widget for Assignments.
+* 
+* @version : 1.1
+*
+* @date:  Sept, 2014.
+*
+* @Author: Gooru Team.
+* 
+* @Reviewer: Gooru Team.
+*/
+
 public class AssignmentsContainerWidget extends Composite  {
 	
 	private static AssignmentsContainerWidgetUiBinder uibinder = GWT.create(AssignmentsContainerWidgetUiBinder.class);
@@ -77,12 +91,18 @@ public class AssignmentsContainerWidget extends Composite  {
 	UnitAssignentStudentPlayView UnitAssignentStudentPlayView =null;
 	
 	private boolean isShowingPopUpforStudent = false;
-	
+
 	private ClasspageItemDo classpageItemDo = null;
 	
 	private String unitId = null;
 	
-	public AssignmentsContainerWidget(ClasspageItemDo classpageItemDo, String unitId){ 
+
+	/**
+	 * Class constructor
+	 * @param classpageItemDo {@link ClasspageItemDo}
+	 */
+		public AssignmentsContainerWidget(ClasspageItemDo classpageItemDo, String unitId){ 
+
 		initWidget(uibinder.createAndBindUi(this));
 		this.classpageItemDo = classpageItemDo;
 		this.unitId = unitId;  
@@ -123,6 +143,10 @@ public class AssignmentsContainerWidget extends Composite  {
 		
 	}
 	
+	/**
+	 * 
+	 * @param event
+	 */
 	@UiHandler("assignmentThumbnail")
 	public void setErrorImage(ErrorEvent event){
 		assignmentThumbnail.setUrl("images/default-collection-image-160x120.png");

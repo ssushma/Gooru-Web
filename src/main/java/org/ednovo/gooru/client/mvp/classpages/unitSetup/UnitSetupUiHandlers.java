@@ -31,5 +31,5 @@ public interface UnitSetupUiHandlers extends BaseUiHandlers,RefreshPathwayItemsE
 	
 	void getPathwayCompleteDetails(int limit, int offSet);
 
-	void addAssignmentToPathway(String classPageId, String gooruOid,String mode); 
+	void addAssignmentToPathway(String classPageId, String gooruOid,String mode,String unitTitle); 
 }

@@ -200,7 +200,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 		@Override
 		public void onClick(ClickEvent event) {
 			String classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			getUiHandlers().addAssignmentToPathway(classPageId,classListUnitsListDo.getResource().getGooruOid(),"unitSetupMode");
+			getUiHandlers().addAssignmentToPathway(classPageId,classListUnitsListDo.getResource().getGooruOid(),"unitSetupMode",classListUnitsListDo.getResource().getTitle());
 		}
 		
 	}

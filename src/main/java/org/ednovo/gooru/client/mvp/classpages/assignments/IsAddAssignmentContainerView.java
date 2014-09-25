@@ -49,5 +49,6 @@ public interface IsAddAssignmentContainerView extends PopupView, IsViewWithHandl
 	public void clearShelfData();
 	public void setFolderItems(TreeItem item,FolderListDo folderListDo);
 	public void hideAddCollectionPopup(String collectionTitle);
-	public void displayNoCollectionsMsg(); 
+	public void displayNoCollectionsMsg();
+	public void setUnitTitle(String pathwayTitle); 
 }

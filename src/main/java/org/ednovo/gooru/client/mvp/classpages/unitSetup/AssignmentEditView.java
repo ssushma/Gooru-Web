@@ -34,6 +34,21 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+
+/**
+* @fileName : AssignmentEditView.java
+*
+* @description : This class creates the widget for assignment edit.
+* 
+* @version : 1.1
+*
+* @date:  Sept, 2014.
+*
+* @Author: Gooru Team.
+* 
+* @Reviewer: Gooru Team.
+*/
+
 public class AssignmentEditView extends Composite{
 
 
@@ -55,6 +70,10 @@ public class AssignmentEditView extends Composite{
 	
 	@UiField ChangeAssignmentStatusView changeAssignmentStatusView;
 
+	/**
+	 * Class constructor
+	 * @param classpageItemDo {@link ClasspageItemDo}
+	 */
 	public AssignmentEditView(ClasspageItemDo classpageItemDo){ 
 		initWidget(uiBinder.createAndBindUi(this));	
 		Boolean isRequired=classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false;
@@ -62,6 +81,10 @@ public class AssignmentEditView extends Composite{
 		setAssignmentId(classpageItemDo.getCollectionItemId());
 	}
 	
+	/**
+	 * sets the isRequired
+	 * @param isRequired {@link Boolean}
+	 */
 	public void setAssignementRequiredStatus(Boolean isRequired){
 		changeAssignmentStatusView.getChangeAssignmentStatusButton().setValue(isRequired);
 	}
@@ -110,11 +133,17 @@ public class AssignmentEditView extends Composite{
 	public void setAssignmentId(String assignmentId) {
 		this.assignmentId = assignmentId;
 	}
-
+	
+	/**
+	 * @param unitGooruOid the unitGooruOid to set
+	 */
 	public void setUnitId(String unitGooruOid) {
 		this.unitGooruOid=unitGooruOid;
 	}
 	
+	/**
+	 * @return the unitGooruOid
+	 */
 	public String getUnitId() {
 		return unitGooruOid;
 	}
