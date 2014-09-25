@@ -43,6 +43,20 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+* @fileName : AssignmentsContainerWidget.java
+*
+* @description : This class creates the widget for Assignments.
+* 
+* @version : 1.1
+*
+* @date:  Sept, 2014.
+*
+* @Author: Gooru Team.
+* 
+* @Reviewer: Gooru Team.
+*/
+
 public class AssignmentsContainerWidget extends Composite  {
 	
 	private static AssignmentsContainerWidgetUiBinder uibinder = GWT.create(AssignmentsContainerWidgetUiBinder.class);
@@ -61,7 +75,10 @@ public class AssignmentsContainerWidget extends Composite  {
 	@UiField AssignmentContainerWidgetCBundle unitStyle;
 	
 
-	
+	/**
+	 * Class constructor
+	 * @param classpageItemDo {@link ClasspageItemDo}
+	 */
 	public AssignmentsContainerWidget(ClasspageItemDo classpageItemDo){ 
 		initWidget(uibinder.createAndBindUi(this));
 		unitCircleView.setUnitSequenceNumber(classpageItemDo.getItemSequence());
@@ -84,6 +101,10 @@ public class AssignmentsContainerWidget extends Composite  {
 		
 	}
 	
+	/**
+	 * 
+	 * @param event
+	 */
 	@UiHandler("assignmentThumbnail")
 	public void setErrorImage(ErrorEvent event){
 		assignmentThumbnail.setUrl("images/default-collection-image-160x120.png");
