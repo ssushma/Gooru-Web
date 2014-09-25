@@ -28,7 +28,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.client.DataInsightsUrlTokens;
 import org.ednovo.gooru.client.PlaceTokens;
@@ -36,7 +38,12 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
+import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
+import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
+import org.ednovo.gooru.client.uc.StandardSgItemVc;
+import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -92,6 +99,14 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class CollectionsView extends ChildView<CollectionsPresenter> implements IsCollectionsView{
 	
+	public static final String STANDARD_CODE = "code";
+	
+	public static final String STANDARD_DESCRIPTION = "description";
+	
+	public static final String COMPLETED="completed";
+	
+	public static final String OPEN="open";
+	
 	@UiField HTMLPanel thumbnailContainer,directionContentPanel,minimumScoreContentPanel,dueDateContentPanel,editAssignmentContainer;
 	
 	@UiField HTML learningObject;
@@ -100,9 +115,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField Image collectionImage;
 	
-	@UiField Label assignmentSequenceLabel,dueDateText,dueDateButton,savingLabel;
+	@UiField Label assignmentSequenceLabel,dueDateText,dueDateButton,savingLabel,scoreErrorLabel,minutesErrorLabel;
 	
-	@UiField FlowPanel frameContainer,analyticsContainer;
+	@UiField FlowPanel frameContainer,analyticsContainer,standardsContainer;
 	
 	@UiField ChangeAssignmentStatusView changeAssignmentStatusView;
 	
@@ -115,6 +130,8 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	@UiField Button btnSummary,btnProgress;
 	
 	@UiField CheckBox assignmentMarkCheckBox;
+	
+	@UiField FlowPanel clearFixPanel;
 	
 	private Label directionErrorLabel=new Label();
 	
@@ -147,7 +164,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		setPresenter(new CollectionsPresenter(this));
 		this.classpageItemDo=classpageItemDo;
 		CollectionsCBundle.INSTANCE.css().ensureInjected();
+		SearchResultWrapperCBundle.INSTANCE.css().ensureInjected();
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
+		UcCBundle.INSTANCE.css().ensureInjected();
 		showSaveButtons(false);
 		showAssignmentDetils();
 		frameContainer.setVisible(false);
@@ -191,13 +210,14 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			setThumbnailUrl();
 			setMinimumScore(classpageItemDo.getMinimumScore());
 			setSuggestedTime(classpageItemDo.getEstimatedTime());
+			renderStandards(standardsContainer, getStandardsMap(classpageItemDo.getResource().getTaxonomySet()));
 			//frameContainer.setVisible(false);
 		}
 		
 	}
 	
 	private void setAssignmentSequence(int sequenceNumber){
-		assignmentSequenceLabel.setText("Assignment "+sequenceNumber);
+		assignmentSequenceLabel.setText(i18n.GL0103()+" "+sequenceNumber);
 	}
 	
 	private void setAssignmentStatus(boolean assignmentStatus){
@@ -209,9 +229,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		removeEditDueDatePanel();
 		showDueDatePanel(true);
 		if(dueDate!=null&&!dueDate.equals("")&&!dueDate.equals("null")){
-			dueDateText.setText("Due Date:"+convertMillisecondsToDate(dueDate));
+			dueDateText.setText(i18n.GL1390()+convertMillisecondsToDate(dueDate));
 		}else{
-			dueDateText.setText("Due Date");
+			dueDateText.setText(i18n.GL1581());
 		}
 	}
 	
@@ -245,9 +265,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		classpageItemTitle.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getResource().getGooruOid()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken());
 	}
 	
-	private void setAssignmentStandards(){
-		
-	}
+	
 	
 	public void setLearningObject(){
 		String learningObject=classpageItemDo.getResource().getGoals();
@@ -257,7 +275,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			this.learningObject.getElement().setAttribute("title",learningObject);
 		}else{
 			this.learningObject.setStyleName(CollectionsCBundle.INSTANCE.css().systemMessage());
-			this.learningObject.setHTML(i18n.GL1374());
+			//this.learningObject.setHTML(i18n.GL1374());
 			this.learningObject.getElement().setAttribute("alt",i18n.GL1374());
 			this.learningObject.getElement().setAttribute("title",i18n.GL1374());
 		}
@@ -277,7 +295,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		directionContent.setStyleName("");
 		if(directionText==null||directionText.equals("")||directionText.equals("null")){
 			directionContent.setStyleName(CollectionsCBundle.INSTANCE.css().systemMessage());
-			directionText=i18n.GL1374();
+			//directionText=i18n.GL1374();
 		}
 		directionContent.setHTML(directionText);
 		directionContentPanel.add(directionContent);
@@ -288,7 +306,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			Boolean isRequired=classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false;
 			if(isRequired){
 				assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().requiredBuble());
-				boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals("completed")?true:false;
+				boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals(COMPLETED)?true:false;
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompleted());
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
 				if(assignmentStudyStatus){
@@ -296,7 +314,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 				}
 			}else{
 				assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().optionalBuble());
-				boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals("completed")?true:false;
+				boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals(COMPLETED)?true:false;
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompleted());
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
 				if(assignmentStudyStatus){
@@ -328,9 +346,6 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	public void updateAssignmentDetails(String direction,String minimumScore,String suggestedTime){
-		savingLabel.getElement().setInnerText("Saving...");
-		savingLabel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
-		hideCancelAndSaveButtons(false);
 		updateAssignmentDetails(classpageItemDo.getCollectionItemId(), direction, null, null, minimumScore, suggestedTime, null, false, false,false);
 	}
 	
@@ -379,9 +394,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		public void onValueChange(ValueChangeEvent<Boolean> event) {
 			Boolean assignmentMarkStatus=event.getValue();
 			if(assignmentMarkStatus){
-				updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, null, "completed", null, null, null, false, false,true);
+				updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, null, COMPLETED, null, null, null, false, false,true);
 			}else{
-				updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, null, "open", null, null, null, false, false,true);
+				updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, null, OPEN, null, null, null, false, false,true);
 			}
 		}
 	}
@@ -407,13 +422,42 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	public class CancelEditAssignmentEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
+			scoreErrorLabel.setText("");
+			minutesErrorLabel.setText("");
+			directionErrorLabel.setText("");
 			showUpdatedAssignmentDetails();
 		}
 	}
 	public class UpdateAssignmentDetailsEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			updateAssignmentDetails();
+			//updateAssignmentDetails();
+			savingLabel.setText(i18n.GL0808());
+			savingLabel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+			hideCancelAndSaveButtons(false);
+			isTextHavingBadWords();
+		}
+	}
+	
+	public void isTextHavingBadWords(){
+		String direction=directionTextArea.getValue();
+		if(direction==null||direction.trim().equals("")||direction.trim().equals(i18n.GL1389())){
+			direction="";
+			updateAssignmentDetails(direction,false);
+		}else{
+			final Map<String, String> parms = new HashMap<String, String>();
+			parms.put("text", direction);
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+				@Override
+				public void onSuccess(Boolean value) {
+					if(value){
+						directionErrorLabel.setText(i18n.GL0554());
+					}else{
+						directionErrorLabel.setText("");
+					}
+					updateAssignmentDetails(parms.get("text"),value);
+				}
+			});
 		}
 	}
 	
@@ -427,13 +471,63 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 	}
 	
-	public void updateAssignmentDetails(){
-		String direction=directionTextArea.getValue();
+	public void updateAssignmentDetails(String direction,boolean isHavingBadWords){
+		boolean scoreFlag=true,minutesFlag=true,hoursFlag=true;
+		Integer minScore=0,hour=0,minutes=0;
 		String minimumScore=mimimunScoreTextBox.getValue();
 		String suggestedHour=suggestedHourTextBox.getValue();
 		String suggestedMinutes=suggestedMinTextBox.getValue();
-		String suggestedTime=suggestedHour+"hrs "+suggestedMinutes+"mins";
-		updateAssignmentDetails(direction, minimumScore, suggestedTime);
+		try{
+			if(minimumScore!=null&&!minimumScore.equals("")){
+				minScore=new Integer(minimumScore);
+				if(minScore>100){
+					scoreFlag=false;
+					scoreErrorLabel.setText(i18n.GL2231());
+				}else{
+					scoreFlag=true;
+				}
+			}else{
+				scoreFlag=true;
+			}
+		}catch(NumberFormatException e){
+			scoreFlag=false;
+			scoreErrorLabel.setText(i18n.GL2232());
+		}
+		try{
+			if(suggestedHour!=null&&!suggestedHour.equals("")){
+				hour=new Integer(suggestedHour);
+			}
+			minutesFlag=true;
+		}catch(NumberFormatException e){
+			minutesFlag=false;
+			minutesErrorLabel.setText(i18n.GL2233());
+		}
+		try{
+			if(suggestedMinutes!=null&&!suggestedMinutes.equals("")){
+				minutes=new Integer(suggestedMinutes);
+				if(minutes>59){
+					hoursFlag=false;
+					minutesErrorLabel.setText(i18n.GL2234());
+				}else{
+					hoursFlag=true;
+				}
+			}else{
+				hoursFlag=true;
+			}
+		}catch(NumberFormatException e){
+			hoursFlag=false;
+			minutesErrorLabel.setText(i18n.GL2235());
+		}
+		if(!isHavingBadWords&&scoreFlag&&minutesFlag&&hoursFlag){
+			minutesErrorLabel.setText("");
+			scoreErrorLabel.setText("");
+			directionErrorLabel.setText("");
+			String suggestedTime=hour+i18n.GL2184()+" "+minutes+i18n.GL2185();
+			updateAssignmentDetails(direction, minScore.toString(), suggestedTime);
+		}else{
+			savingLabel.setText("");
+			hideCancelAndSaveButtons(true);
+		}
 	}
 	
 
@@ -465,11 +559,15 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 		suggestedHourLabel.setText("");
 		suggestedHourTextBox=new TextBox();
-		suggestedHourTextBox.addKeyPressHandler(new NumbersOnly());
 		suggestedHourTextBox.setMaxLength(2);
+		suggestedHourTextBox.addKeyPressHandler(new NumbersOnly());
 		suggestedHourTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
 		suggestedHourTextBox.setText(suggestedHour);
-		suggestedHourLabel.getElement().appendChild(suggestedHourTextBox.getElement());
+		clearFixPanel.clear();
+		clearFixPanel.setVisible(false);
+		clearFixPanel.add(suggestedHourTextBox);
+		suggestedHourLabel.getElement().appendChild(clearFixPanel.getWidget(0).getElement());
+		clearFixPanel.setVisible(true);
 		
 		suggestedMinutesLabel.setText("");
 		suggestedMinTextBox=new TextBox();
@@ -477,7 +575,11 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		suggestedMinTextBox.setMaxLength(2);
 		suggestedMinTextBox.setStyleName(CollectionsCBundle.INSTANCE.css().minimumScoreTextbox());
 		suggestedMinTextBox.setText(suggestedMinutes);
-		suggestedMinutesLabel.getElement().appendChild(suggestedMinTextBox.getElement());
+		//clearFixPanel.clear();
+		clearFixPanel.setVisible(false);
+		clearFixPanel.add(suggestedMinTextBox);
+		suggestedMinutesLabel.getElement().appendChild(clearFixPanel.getWidget(1).getElement());
+		clearFixPanel.setVisible(true);
 	}
 	
 	public void editDirection(String directionText){
@@ -727,5 +829,56 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 					
 		}
     }
+	
+	
+	public List<Map<String,String>> getStandardsMap(Set<CodeDo> taxonomyset){
+		List<Map<String,String>> standardsList=new ArrayList<Map<String,String>>();
+		Iterator<CodeDo> iterator = taxonomyset.iterator();
+		while (iterator.hasNext()) {
+			CodeDo codeDo=iterator.next();
+			Map<String, String> standardMap=new HashMap<String, String>();
+			standardMap.put(STANDARD_CODE, codeDo.getCode());
+			standardMap.put(STANDARD_DESCRIPTION, codeDo.getLabel());
+			standardsList.add(standardMap);
+		}
+		return standardsList;
+	}
+	
+	public void renderStandards(FlowPanel standardsContainer, List<Map<String,String>> standards) {
+		standardsContainer.clear();
+		if (standards != null) {
+			Iterator<Map<String, String>> iterator = standards.iterator();
+			int count = 0;
+			FlowPanel toolTipwidgets = new FlowPanel();
+			while (iterator.hasNext()) {
+				Map<String, String> standard = iterator.next();
+				String stdCode = standard.get(STANDARD_CODE);
+				String stdDec = standard.get(STANDARD_DESCRIPTION);
+				if (count > 1) {
+					if (count < 18){
+						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+						toolTipwidgets.add(standardItem);
+					}
+				} else {
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standards);
+					toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandard());
+					standardsContainer.add(toolTipUc);
+				}
+				count++;
+			}
+			if (standards.size()>18){
+				final Label left = new Label(i18n.GL_SPL_PLUS()+(standards.size() - 18));
+				toolTipwidgets.add(left);
+			}
+			if (standards.size() > 2) {
+				Integer moreStandardsCount = standards.size() - 2;
+				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreStandardsCount), toolTipwidgets, standards);
+				toolTipUc.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().blueLink());
+				standardsContainer.add(toolTipUc);
+				toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
+				
+			}
+		}
+	}
 	
 }

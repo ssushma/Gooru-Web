@@ -18,7 +18,7 @@
 
 
 .rowInner {
-    padding-left: 15px;
+    padding-left: 0px !important;
     padding-right: 15px;
 }
 
@@ -294,4 +294,8 @@
 	width: 34px !important;
 	height: 34px !important;
 	margin: 0px 10px !important;
+}
+
+.personalizeBorder{
+	border: 1px solid #1076bb !important;
 }

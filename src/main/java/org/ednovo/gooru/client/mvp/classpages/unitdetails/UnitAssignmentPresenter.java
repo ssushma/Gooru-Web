@@ -55,6 +55,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	}
 	@Override
 	protected void onHide() {
+		System.out.println("onhide method...........");
 		getView().resetUnitAssignmentView();
 	}
 	
@@ -76,7 +77,6 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	@Override
 	public void setClasspageData(ClasspageDo classpageDo){
 		studentPersonalizePresenter.setClasspageData(classpageDo);
-		getPathwayUnits(classpageDo.getClasspageId(), 5, 0, true);
 		setInSlot(_SLOT, studentPersonalizePresenter,false);
 	}
 
@@ -88,15 +88,12 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			public void onSuccess(UnitAssignmentsDo result) {
 				String aid=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 				if(aid==null){
-					if(result!=null)
-					{
-					if(result.getSearchResults() != null)
-					{
-					if(result.getSearchResults().size()>0)
-					{
-						getAssignemntDetails(result.getSearchResults().get(0).getCollectionItemId(),classpageId,pathwayGooruOid);
-					}
-					}
+					if(result!=null){
+						if(result.getSearchResults() != null){
+							if(result.getSearchResults().size()>0){
+								getAssignemntDetails(result.getSearchResults().get(0).getCollectionItemId(),classpageId,pathwayGooruOid);
+							}
+						}
 					}
 				}
 				getView().getSequence(result);

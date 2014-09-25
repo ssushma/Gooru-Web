@@ -692,12 +692,15 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	}
 	private void addShareClass() {
 		shareDo = new SocialShareDo();
+		if(classpageDo != null)
+		{
 		shareDo.setTitle(classpageDo.getTitle());
 		shareDo.setDecodeRawUrl(txtClasspageCodeShare.getText());
 		shareDo.setBitlylink(txtClasspageLinkShare.getText());
 		shareDo.setCategoryType(AppClientFactory.getLoggedInUser().getUsername());
 		shareDo.setOnlyIcon(false);
 		shareDo.setIsSearchShare(false);
+		}
 	}
 
 	/**

@@ -859,6 +859,14 @@ background: -moz-linear-gradient(3% 0 -90deg, #fff 0px, #ddd 100%) repeat scroll
 .smallerWidth{
 	width:15.6667% !important;
 }
+.smallWidthGoalNotMet
+{
+	width:14.6667% !important;
+}
+.smallWidthFDS
+{
+	width:15.6667% !important;
+}
 .classOverOptions{
 	font-size:10px;
 	padding-left:3px !important;
@@ -885,7 +893,7 @@ background:#b9bbca url(../images/liners.png) repeat-x !important;
 	background:#a7c9a4 !important;
 }
 .smallWidth{
-	width:18.6667% !important;
+	width:13.6667% !important;
 }
 .bubbleSmallrounded{
 	width:18px;
@@ -1042,4 +1050,39 @@ background:#b9bbca url(../images/liners.png) repeat-x !important;
 	float: left;
 	border-bottom: 1px solid #eee;
 	margin-bottom: 10px;
+}
+.bubbleBlueFeedBack{
+	width: 11px;
+	height: 11px;
+	background: #1076bb;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	vertical-align: middle;
+	display: inline-block;
+	border: 2px solid #1076bb;
+}
+.assignOverOptions
+{
+	font-size: 10px;
+	padding-left: 3px !important;
+	padding-right: 3px !important;
+	line-height: 25px;
+	margin-left: -50px;
+}
+.classOverOptions1
+{
+	font-size: 10px;
+	padding-left: 3px !important;
+	padding-right: 3px !important;
+	line-height: 25px;
+	margin-left: -30px;
+}
+.classOverOptionsFeedback
+{
+	font-size: 10px;
+	padding-left: 3px !important;
+	padding-right: 3px !important;
+	line-height: 25px;
+	margin-left: 11px;
 }
