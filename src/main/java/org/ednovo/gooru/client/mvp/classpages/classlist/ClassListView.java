@@ -241,6 +241,8 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	
 	private void setUiElements() {
 		panelLoading.getElement().setId("pnlLoadingPanel");
+		panelLoading.getElement().getStyle().setZIndex(9999);
+		panelLoading.getElement().getStyle().setPosition(Position.RELATIVE);
 		
 		txtClasspageCodeShare.setReadOnly(true);
 		txtClasspageCodeShare.getElement().setId("txtClassPageCodeShare");
