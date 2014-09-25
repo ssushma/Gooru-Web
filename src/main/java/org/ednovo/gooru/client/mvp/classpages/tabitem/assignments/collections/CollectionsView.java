@@ -275,7 +275,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			this.learningObject.getElement().setAttribute("title",learningObject);
 		}else{
 			this.learningObject.setStyleName(CollectionsCBundle.INSTANCE.css().systemMessage());
-			this.learningObject.setHTML(i18n.GL1374());
+			//this.learningObject.setHTML(i18n.GL1374());
 			this.learningObject.getElement().setAttribute("alt",i18n.GL1374());
 			this.learningObject.getElement().setAttribute("title",i18n.GL1374());
 		}
@@ -295,7 +295,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		directionContent.setStyleName("");
 		if(directionText==null||directionText.equals("")||directionText.equals("null")){
 			directionContent.setStyleName(CollectionsCBundle.INSTANCE.css().systemMessage());
-			directionText=i18n.GL1374();
+			//directionText=i18n.GL1374();
 		}
 		directionContent.setHTML(directionText);
 		directionContentPanel.add(directionContent);
