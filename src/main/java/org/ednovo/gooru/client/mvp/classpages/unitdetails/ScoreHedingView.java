@@ -31,7 +31,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -106,16 +105,52 @@ public class ScoreHedingView extends Composite {
 	public ScoreHedingView(ClassUnitsListDo classUnitsListDo) {
 		this.classUnitsListDo=classUnitsListDo;
 		initWidget(uiBinder.createAndBindUi(this));
-		lblTitle.setText(i18n.GL2195());
-		btnSetGoal.setText(SETGOAL);
+		setStaticText();
 		txtScore.addBlurHandler(new ScoreHandler());
 		txtScore.addKeyPressHandler(new HasNumbersOnly());
 		txtScore.setMaxLength(3);
-		lblControl.getElement().setId("controll");
 		lblScore.setVisible(false);
+		showUnitStatus();
 	}
 	
-	
+	private void setStaticText() {
+		lblTitle.setText(i18n.GL2195());
+		lblControl.getElement().setId("controll");
+		btnSetGoal.setText(SETGOAL);
+	}
+
+	/**
+	 * To show unit goals values 
+	 */
+	private void showUnitStatus() {
+		// TODO Auto-generated method stub
+		if(classUnitsListDo!=null){
+			if(getLblTitle().getText().equals(i18n.GL2195())){
+				System.out.println("minimumscore::"+classUnitsListDo.getMinimumScoreByUser());
+				if(classUnitsListDo.getMinimumScoreByUser()!=null){
+					showAndHideTextBox();
+					txtScore.setText(classUnitsListDo.getMinimumScoreByUser()+"");
+					lblScore.setText(txtScore.getText());
+					btnSetGoal.setStyleName("secondary");
+					btnSetGoal.setText(EDITGOAL);
+					showingScoreReader();
+				}
+			}else{
+				if(classUnitsListDo.getAssignmentCompleted()!=null){
+					showAndHideTextBox();
+					txtScore.setText(classUnitsListDo.getAssignmentCompleted()+"");
+					lblScore.setText(txtScore.getText());
+					btnSetGoal.setStyleName("secondary");
+					btnSetGoal.setText(EDITGOAL);
+					showingScoreReader();
+				}
+			}
+		}
+	}
+    /**
+     * To show the score reader values and validate the set goal values
+     *
+     */
 	public class ScoreHandler implements BlurHandler{
 		
 		@Override
@@ -127,12 +162,7 @@ public class ScoreHedingView extends Composite {
 						lblControl.getElement().setId("controll");
 						txtScore.setText(getValidationScore(score));
 					}else{
-						int scoreValue= Integer.parseInt(txtScore.getText());
-						finalScore=((scoreValue*176)/100);
-						finalScore=finalScore-176;
-					    redScore=((50*66)/100);
-						redScore=redScore-119;
-						lblControl.getElement().setAttribute("style", "-webkit-transform: rotate("+finalScore+"deg);");
+						showingScoreReader();
 					}
 				}catch(NumberFormatException numberFormatException){
 					numberFormatException.printStackTrace();
@@ -142,6 +172,20 @@ public class ScoreHedingView extends Composite {
 		}
 
 	}
+	/**
+	 * To show the score reader position.
+	 */
+	private void showingScoreReader() {
+		// TODO Auto-generated method stub
+		int scoreValue= Integer.parseInt(txtScore.getText());
+		finalScore=((scoreValue*176)/100);
+		finalScore=finalScore-176;
+	    redScore=((50*66)/100);
+		redScore=redScore-119;
+		lblControl.getElement().setId("controll");
+		lblControl.getElement().setAttribute("style", "-webkit-transform: rotate("+finalScore+"deg);");
+	}
+
 	/**
 	 * Get the valid assignments average score
 	 * @param score
@@ -160,6 +204,11 @@ public class ScoreHedingView extends Composite {
 		return null;
 	}
 	
+	/**
+	 * This inner class used for to restrict text box values only numbers
+	 *
+	 */
+	
 	public class HasNumbersOnly implements KeyPressHandler {
 	      
 		@Override
@@ -177,7 +226,10 @@ public class ScoreHedingView extends Composite {
 					
 		}
     }
-	
+	/**
+	 * Click event for Set Goal Button
+	 * @param clickEvent
+	 */
 	@UiHandler("btnSetGoal")
 	public void clickOnSetGoal(ClickEvent clickEvent){
 		
@@ -188,14 +240,14 @@ public class ScoreHedingView extends Composite {
 				lblScore.setText(txtScore.getText());
 				btnSetGoal.setStyleName("secondary");
 				btnSetGoal.setText(EDITGOAL);
-				lblRedControl.getElement().setId("redControll");
+				/*lblRedControl.getElement().setId("redControll");
 				if(Integer.parseInt(txtScore.getText())<=50){
 					lblRedControl.getElement().setAttribute("style", "-webkit-transform: rotate("+redScore+"deg); background: none repeat scroll 0 0 #a0c79a;");
 					lblScore.getElement().setAttribute("style", "color:#a0c79a");
 				}else{
 					lblRedControl.getElement().setAttribute("style", "-webkit-transform: rotate("+redScore+"deg);");
 					lblScore.getElement().setAttribute("style", "color:#fb7c73");
-				}
+				}*/
 				collectionItemId=classUnitsListDo.getCollectionItemId();
 				if(collectionItemId!=null){
 					if(getLblTitle().getText().equals(i18n.GL2195())){
@@ -227,15 +279,24 @@ public class ScoreHedingView extends Composite {
 			lblScore.setVisible(false);
 		}
 	}
+	/**
+	 * @return lblTitle
+	 */
 	public Label getLblTitle() {
 		return lblTitle;
 	}
-	
+	/**
+	 * This API used for to Update the Unit status.
+	 * @param collectionItemId as Unit id	
+	 * @param minimumScoreByuser 
+	 * @param assignmentStatus
+	 * @param time
+	 */
 	public void updateUnitstatus(String collectionItemId, String minimumScoreByuser, String assignmentStatus, String time){
-		AppClientFactory.getInjector().getClasspageService().updateUnitStatus(collectionItemId, minimumScoreByuser,assignmentStatus,time, new SimpleAsyncCallback<ClasspageItemDo>() {
+		AppClientFactory.getInjector().getClasspageService().updateUnitStatus(collectionItemId, minimumScoreByuser,assignmentStatus,time, new SimpleAsyncCallback<ClassUnitsListDo>() {
 
 			@Override
-			public void onSuccess(ClasspageItemDo result) {
+			public void onSuccess(ClassUnitsListDo result) {
 				// TODO Auto-generated method stub
 				System.out.println("mini::::::"+result.getMinimumScoreByUser());
 				
