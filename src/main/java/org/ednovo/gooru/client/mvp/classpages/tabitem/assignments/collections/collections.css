@@ -508,3 +508,13 @@ width: 30px;
 	font-weight: bold;
 	border: 2px solid #fff;
 }
+
+.standardtext{
+	float: right;
+	/* margin-top: -15px; */
+}
+
+.errorstyle{
+font-style: italic;
+color: #fbb03b;
+}
