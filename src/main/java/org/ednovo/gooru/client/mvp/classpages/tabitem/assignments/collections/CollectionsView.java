@@ -103,6 +103,10 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	public static final String STANDARD_DESCRIPTION = "description";
 	
+	public static final String COMPLETED="completed";
+	
+	public static final String OPEN="open";
+	
 	@UiField HTMLPanel thumbnailContainer,directionContentPanel,minimumScoreContentPanel,dueDateContentPanel,editAssignmentContainer;
 	
 	@UiField HTML learningObject;
@@ -213,7 +217,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	private void setAssignmentSequence(int sequenceNumber){
-		assignmentSequenceLabel.setText("Assignment "+sequenceNumber);
+		assignmentSequenceLabel.setText(i18n.GL0103()+" "+sequenceNumber);
 	}
 	
 	private void setAssignmentStatus(boolean assignmentStatus){
@@ -225,9 +229,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		removeEditDueDatePanel();
 		showDueDatePanel(true);
 		if(dueDate!=null&&!dueDate.equals("")&&!dueDate.equals("null")){
-			dueDateText.setText("Due Date:"+convertMillisecondsToDate(dueDate));
+			dueDateText.setText(i18n.GL1390()+convertMillisecondsToDate(dueDate));
 		}else{
-			dueDateText.setText("Due Date");
+			dueDateText.setText(i18n.GL1581());
 		}
 	}
 	
@@ -302,7 +306,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			Boolean isRequired=classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false;
 			if(isRequired){
 				assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().requiredBuble());
-				boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals("completed")?true:false;
+				boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals(COMPLETED)?true:false;
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompleted());
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
 				if(assignmentStudyStatus){
@@ -310,7 +314,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 				}
 			}else{
 				assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().optionalBuble());
-				boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals("completed")?true:false;
+				boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals(COMPLETED)?true:false;
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompleted());
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
 				if(assignmentStudyStatus){
@@ -390,9 +394,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		public void onValueChange(ValueChangeEvent<Boolean> event) {
 			Boolean assignmentMarkStatus=event.getValue();
 			if(assignmentMarkStatus){
-				updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, null, "completed", null, null, null, false, false,true);
+				updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, null, COMPLETED, null, null, null, false, false,true);
 			}else{
-				updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, null, "open", null, null, null, false, false,true);
+				updateAssignmentDetails(classpageItemDo.getCollectionItemId(), null, null, OPEN, null, null, null, false, false,true);
 			}
 		}
 	}
@@ -428,7 +432,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		@Override
 		public void onClick(ClickEvent event) {
 			//updateAssignmentDetails();
-			savingLabel.setText("Saving...");
+			savingLabel.setText(i18n.GL0808());
 			savingLabel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 			hideCancelAndSaveButtons(false);
 			isTextHavingBadWords();
@@ -478,7 +482,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 				minScore=new Integer(minimumScore);
 				if(minScore>100){
 					scoreFlag=false;
-					scoreErrorLabel.setText("Minimum score should be less than or equal to 100.");
+					scoreErrorLabel.setText(i18n.GL2231());
 				}else{
 					scoreFlag=true;
 				}
@@ -487,7 +491,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			}
 		}catch(NumberFormatException e){
 			scoreFlag=false;
-			scoreErrorLabel.setText("Minimum score should be in digits");
+			scoreErrorLabel.setText(i18n.GL2232());
 		}
 		try{
 			if(suggestedHour!=null&&!suggestedHour.equals("")){
@@ -496,14 +500,14 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			minutesFlag=true;
 		}catch(NumberFormatException e){
 			minutesFlag=false;
-			minutesErrorLabel.setText("Hours should be in digits");
+			minutesErrorLabel.setText(i18n.GL2233());
 		}
 		try{
 			if(suggestedMinutes!=null&&!suggestedMinutes.equals("")){
 				minutes=new Integer(suggestedMinutes);
 				if(minutes>59){
 					hoursFlag=false;
-					minutesErrorLabel.setText("Minutes should be less than or equal to 59.");
+					minutesErrorLabel.setText(i18n.GL2234());
 				}else{
 					hoursFlag=true;
 				}
@@ -512,13 +516,13 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			}
 		}catch(NumberFormatException e){
 			hoursFlag=false;
-			minutesErrorLabel.setText("Minutes should be in digits");
+			minutesErrorLabel.setText(i18n.GL2235());
 		}
 		if(!isHavingBadWords&&scoreFlag&&minutesFlag&&hoursFlag){
 			minutesErrorLabel.setText("");
 			scoreErrorLabel.setText("");
 			directionErrorLabel.setText("");
-			String suggestedTime=hour+"hrs "+minutes+"mins";
+			String suggestedTime=hour+i18n.GL2184()+" "+minutes+i18n.GL2185();
 			updateAssignmentDetails(direction, minScore.toString(), suggestedTime);
 		}else{
 			savingLabel.setText("");
