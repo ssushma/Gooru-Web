@@ -487,7 +487,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			for(int i=0; i<classListUnitsListDo.size(); i++){
 				ClassUnitsListDo classListUnitsListDObj=classDo.getSearchResults().get(i);
 				classUnitsDo=classListUnitsListDObj;
-				unitTitleDetails.setText(classDo.getSearchResults().get(0).getResource().getTitle());
+				//unitTitleDetails.setText(classDo.getSearchResults().get(0).getResource().getTitle());
 				String unitTitle = classDo.getSearchResults().get(i).getResource().getTitle();
 				if(unitTitle!=null && unitTitle.length()>11){
 					unitTitle = unitTitle.substring(0,11)+"...";
