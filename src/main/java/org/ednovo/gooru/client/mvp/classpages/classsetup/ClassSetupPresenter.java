@@ -371,7 +371,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	public void addAssignmentsContainerPopup(String pathwayIdVal) {
 	classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
 	assignmentContainer.getUserShelfData();
-	assignmentContainer.addAssignmentToPathway(classpageId, pathwayIdVal,CLASS_SETUP);
+	assignmentContainer.addAssignmentToPathway(classpageId, pathwayIdVal,CLASS_SETUP,"");
 	addToPopupSlot(assignmentContainer);
 	}
 	
