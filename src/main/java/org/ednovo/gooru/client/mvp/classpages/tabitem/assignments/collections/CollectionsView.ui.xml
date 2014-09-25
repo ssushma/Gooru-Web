@@ -18,7 +18,7 @@
 				 </g:HTMLPanel>
 				 <g:FlowPanel styleName="{style.assignMain}">
 					<g:HTMLPanel styleName="row {style.assaindetailsMain}">
-						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}">Assignment Details:</g:Label>
+						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}">Collection Analytics:</g:Label>
 						<g:HTMLPanel styleName="col-xs-6 {style.assignButtons} text-right" ui:field="editAssignmentContainer">
 							<g:Label ui:field="savingLabel"></g:Label> 
 							<g:Button styleName="secondary" ui:field="cancelAssignmentDetailsButton">Cancel</g:Button> 
@@ -29,20 +29,22 @@
 					</g:HTMLPanel>
 					<g:FlowPanel styleName="{style.borderBox}">
 						<g:FlowPanel styleName="{style.directionContainer}">
-							<g:Label styleName="{style.direction}">Direction:&nbsp;&nbsp;</g:Label>
+							<g:Label styleName="{style.direction}">Directions:&nbsp;&nbsp;</g:Label>
 							<g:HTMLPanel styleName="{style.directionText}" ui:field="directionContentPanel"></g:HTMLPanel>
 						</g:FlowPanel>
 						<g:FlowPanel styleName="{style.score}">
 							<g:FlowPanel styleName="col-xs-6 {style.leftScore}">
 								<g:Label styleName="{style.direction}">Minimum Score: &nbsp;&nbsp;</g:Label>
 								<g:HTMLPanel styleName="{style.scoreText}" ui:field="minimumScoreContentPanel"></g:HTMLPanel>
+								<g:Label styleName="{style.errorstyle}" ui:field="scoreErrorLabel"></g:Label>
 							</g:FlowPanel>
 							<g:FlowPanel styleName="col-xs-6 {style.rightScore}">
 								<g:Label styleName="{style.direction}">Suggested Time:&nbsp;&nbsp;</g:Label>
 								<g:InlineLabel styleName="{style.scoreText}" ui:field="suggestedHourLabel"></g:InlineLabel><g:InlineLabel>&nbsp;&nbsp; hour &nbsp;&nbsp;</g:InlineLabel>
 								<g:InlineLabel styleName="{style.scoreText}" ui:field="suggestedMinutesLabel"></g:InlineLabel><g:InlineLabel> &nbsp;&nbsp;min</g:InlineLabel>
+								<g:Label styleName="{style.errorstyle}" ui:field="minutesErrorLabel"></g:Label>
 							</g:FlowPanel>
-							<g:Label styleName="clearfix"></g:Label>
+							<g:FlowPanel styleName="clearfix" ui:field="clearFixPanel"></g:FlowPanel>
 						</g:FlowPanel>
 					</g:FlowPanel>
 					<g:FlowPanel styleName="row {style.assaindetailsMain}">
@@ -59,6 +61,7 @@
 					    </g:HTMLPanel>
 					    <g:FlowPanel styleName="{style.resourceHeaderTextPanel}">
 					      <g:Anchor styleName="{style.resourceTitle}" ui:field="classpageItemTitle"></g:Anchor>
+					      <g:FlowPanel ui:field="standardsContainer" styleName="{style.standardtext}"></g:FlowPanel>
 					      <g:Label styleName="{style.classpageHeading}" ui:field="learningObjective">Learning Objective</g:Label>
 					      <g:HTML styleName="{style.classpageDesc}" ui:field="learningObject"></g:HTML>
 					    </g:FlowPanel>
@@ -67,9 +70,9 @@
 				</g:FlowPanel>
 				<g:FlowPanel ui:field="analyticsContainer" styleName="{style.analytics}">
 					<g:FlowPanel styleName="row {style.assaindetailsMain}">
-						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}">Assignment Details: </g:Label>
+						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}">Collection Analytics: </g:Label>
 						<g:HTMLPanel styleName="col-xs-6 {style.assignButtons} text-right">
-							<g:Label styleName="{style.bubbleMain}">View Assignment </g:Label>
+							<g:Label styleName="{style.bubbleMain}">View Collection </g:Label>
 							<g:Button styleName="secondary" ui:field="btnSummary">Summary</g:Button>
 							<g:Button styleName="secondary" ui:field="btnProgress">Progress</g:Button>
 						</g:HTMLPanel>
