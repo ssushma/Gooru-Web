@@ -127,12 +127,13 @@ public class UnitsAssignmentWidgetView extends Composite {
 		unitDetailsPanel.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
 	}
 	
-	public UnitsAssignmentWidgetView(int sequenceNum,ClassUnitsListDo classUnitsDo, boolean studentMode){
+	public UnitsAssignmentWidgetView(int sequenceNum,ClassUnitsListDo classUnitsDo, boolean isStudentMode){
 		initWidget(uibinder.createAndBindUi(this));
+		this.classUnitsDo=classUnitsDo;
+		this.isStudentMode =isStudentMode; 
 		editUnitButton.removeFromParent();
 		addAssignmentButton.removeFromParent();
 		cancelEditButton.removeFromParent();
-		this.classUnitsDo=classUnitsDo;
 		setAssignmentsForUnit();
 		setUnitNameDetails();
 		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
@@ -443,7 +444,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 	private void setUnitNameDetails() {
 			int number=classUnitsDo.getItemSequence();
 			String sequenceNumber=Integer.toString(number);
-			System.out.println("sequenceNumber:::::::::"+sequenceNumber);	
 			lblUnitName.setText(classUnitsDo.getResource().getTitle());
 			lblUnitNumber.setText(seqNumber);
 	}
@@ -473,7 +473,12 @@ public class UnitsAssignmentWidgetView extends Composite {
 	}
 	
 	public void getUnitAssignments(int assignmentOffset,final boolean isAssignmentEditmode, final String direction){
-		String classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		String classPageId;
+		if(isStudentMode){
+			classPageId= AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		}else{
+			classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		}
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classPageId, classUnitsDo.getResource().getGooruOid(), "sequence", assignmentLimit, assignmentOffset, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 
 			@Override
