@@ -223,6 +223,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			resetCircleAndAssignmentContainer(unitTitle);
 			setClassUnitsListDo(unitsWidget.getClassUnitDo());
 			revealPlace("unitdetails",null,unitsWidget.getUnitGooruOid(),null);
+			scoreHederView(unitsWidget.getClassUnitDo());
 			removeAndAddUnitSelectedStyle();
 		}
 	}
@@ -783,13 +784,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		scoreHedingContainer.clear();
 		ScoreHedingView scoreHedingView = null;
 
-		ClassUnitsListDo collectionId=getClassUnitsListDo();
+		ClassUnitsListDo classUnits=getClassUnitsListDo();
 		
-		if(collectionId==null){
-			collectionId=classUnitsListDo;
+		if(classUnits==null){
+			classUnits=classUnitsListDo;
 		}
 		for(int i=0; i<2; i++){
-			scoreHedingView=new ScoreHedingView(collectionId);
+			scoreHedingView=new ScoreHedingView(classUnits);
 			scoreHedingContainer.add(scoreHedingView);
 			if(i==0){
 				scoreHedingView.getLblTitle().setText(i18n.GL2195());
