@@ -342,9 +342,6 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	public void updateAssignmentDetails(String direction,String minimumScore,String suggestedTime){
-		savingLabel.getElement().setInnerText("Saving...");
-		savingLabel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
-		hideCancelAndSaveButtons(false);
 		updateAssignmentDetails(classpageItemDo.getCollectionItemId(), direction, null, null, minimumScore, suggestedTime, null, false, false,false);
 	}
 	
@@ -423,13 +420,40 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		public void onClick(ClickEvent event) {
 			scoreErrorLabel.setText("");
 			minutesErrorLabel.setText("");
+			directionErrorLabel.setText("");
 			showUpdatedAssignmentDetails();
 		}
 	}
 	public class UpdateAssignmentDetailsEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			updateAssignmentDetails();
+			//updateAssignmentDetails();
+			savingLabel.setText("Saving...");
+			savingLabel.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
+			hideCancelAndSaveButtons(false);
+			isTextHavingBadWords();
+		}
+	}
+	
+	public void isTextHavingBadWords(){
+		String direction=directionTextArea.getValue();
+		if(direction==null||direction.trim().equals("")||direction.trim().equals(i18n.GL1389())){
+			direction="";
+			updateAssignmentDetails(direction,false);
+		}else{
+			final Map<String, String> parms = new HashMap<String, String>();
+			parms.put("text", direction);
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+				@Override
+				public void onSuccess(Boolean value) {
+					if(value){
+						directionErrorLabel.setText(i18n.GL0554());
+					}else{
+						directionErrorLabel.setText("");
+					}
+					updateAssignmentDetails(parms.get("text"),value);
+				}
+			});
 		}
 	}
 	
@@ -443,12 +467,8 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 	}
 	
-	public void updateAssignmentDetails(){
+	public void updateAssignmentDetails(String direction,boolean isHavingBadWords){
 		boolean scoreFlag=true,minutesFlag=true,hoursFlag=true;
-		String direction=directionTextArea.getValue();
-		if(direction==null||direction.trim().equals("")||direction.trim().equals(i18n.GL1389())){
-			direction="";
-		}
 		Integer minScore=0,hour=0,minutes=0;
 		String minimumScore=mimimunScoreTextBox.getValue();
 		String suggestedHour=suggestedHourTextBox.getValue();
@@ -494,11 +514,15 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			hoursFlag=false;
 			minutesErrorLabel.setText("Minutes should be in digits");
 		}
-		if(scoreFlag&&minutesFlag&&hoursFlag){
+		if(!isHavingBadWords&&scoreFlag&&minutesFlag&&hoursFlag){
 			minutesErrorLabel.setText("");
 			scoreErrorLabel.setText("");
+			directionErrorLabel.setText("");
 			String suggestedTime=hour+"hrs "+minutes+"mins";
 			updateAssignmentDetails(direction, minScore.toString(), suggestedTime);
+		}else{
+			savingLabel.setText("");
+			hideCancelAndSaveButtons(true);
 		}
 	}
 	
