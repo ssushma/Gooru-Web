@@ -180,7 +180,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 				if(classDo.getSearchResults().size()>0){
 					String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 					int pageNumVal = 0;
-					if(pageNum != null || !pageNum.isEmpty()){
+					if(pageNum != null){
 						try{
 							pageNumVal = Integer.parseInt(pageNum);
 						}
