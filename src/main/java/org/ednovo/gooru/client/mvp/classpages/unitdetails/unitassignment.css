@@ -565,6 +565,8 @@
 	width: 70px;
 	margin-left: 0px;
 	position: absolute !important;
+	left:0px;
+
 }
 
 .dropdownListContainer {
@@ -603,7 +605,9 @@
 	display: inline;
 }
 
+
 /* Goal css */
+
 .teachTab {
 	margin: 0px auto;
 	padding-bottom: 40px;
