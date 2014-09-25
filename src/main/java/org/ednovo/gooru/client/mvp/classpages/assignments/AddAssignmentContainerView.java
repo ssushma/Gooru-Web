@@ -240,9 +240,9 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 			enableAssignButton(true);
 			String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 			if(pageLocation.equals(PlaceTokens.STUDENT)){
-				displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+StringUtil.generateMessage(i18n.GL2224(), unitTitle));
+				displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+StringUtil.generateMessage(i18n.GL2242(), unitTitle));
 			}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
-				displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+StringUtil.generateMessage(i18n.GL2224(), unitTitle));
+				displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+StringUtil.generateMessage(i18n.GL2242(), unitTitle));
 			}else{
 				displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
 			}
@@ -256,9 +256,9 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 			String label=count==1?count+" collection":count+" collections";
 			String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 			if(pageLocation.equals(PlaceTokens.STUDENT)){
-				displayCountLabel.setText(label+" "+StringUtil.generateMessage(i18n.GL2224(), unitTitle));
+				displayCountLabel.setText(label+" "+StringUtil.generateMessage(i18n.GL2242(), unitTitle));
 			}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
-				displayCountLabel.setText(label+" "+StringUtil.generateMessage(i18n.GL2224(), unitTitle));
+				displayCountLabel.setText(label+" "+StringUtil.generateMessage(i18n.GL2242(), unitTitle));
 			}else{
 				displayCountLabel.setText(label+" "+i18n.GL1975());
 			}

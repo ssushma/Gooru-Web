@@ -77,7 +77,6 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	@Override
 	public void setClasspageData(ClasspageDo classpageDo){
 		studentPersonalizePresenter.setClasspageData(classpageDo);
-		getPathwayUnits(classpageDo.getClasspageId(), 5, 0, true);
 		setInSlot(_SLOT, studentPersonalizePresenter,false);
 	}
 
@@ -89,15 +88,12 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			public void onSuccess(UnitAssignmentsDo result) {
 				String aid=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 				if(aid==null){
-					if(result!=null)
-					{
-					if(result.getSearchResults() != null)
-					{
-					if(result.getSearchResults().size()>0)
-					{
-						getAssignemntDetails(result.getSearchResults().get(0).getCollectionItemId(),classpageId,pathwayGooruOid);
-					}
-					}
+					if(result!=null){
+						if(result.getSearchResults() != null){
+							if(result.getSearchResults().size()>0){
+								getAssignemntDetails(result.getSearchResults().get(0).getCollectionItemId(),classpageId,pathwayGooruOid);
+							}
+						}
 					}
 				}
 				getView().getSequence(result);
@@ -115,11 +111,9 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			@Override
 			public void onSuccess(ClassDo classDo) {
 				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
-					System.out.println("inin");
 					getView().showUnitNames(classDo,clearPanel);
 					String seqNumber=AppClientFactory.getPlaceManager().getRequestParameter("seqnumber", null);
 					if(seqNumber!=null){
-						System.out.println("seqNumber::::"+seqNumber);
 						int number=Integer.parseInt(seqNumber);
 						number=number-1;
 						getView().scoreHederView(classDo.getSearchResults().get(number));
