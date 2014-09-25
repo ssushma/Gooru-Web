@@ -233,7 +233,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	
 	public void setCircleData(UnitAssignmentsDo unitAssignmentsDo){
-		requiredText.setText(i18n.GL2221());
+		requiredText.setText(i18n.GL2222());
 		rightArrow.getElement().setAttribute("style", "cursor:pointer");
 		leftArrow.getElement().setAttribute("style", "cursor:pointer");
 		if(unitAssignmentsDo.getTotalHitCount() != null){
@@ -655,7 +655,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	return assignmentOffset;
 	}
 	private void setAssignmentsForUnit(UnitAssignmentsDo unitAssignmentsDo) {
-		requiredText.setText(i18n.GL2221());
+		requiredText.setText(i18n.GL2222());
 		circleContainerPanel.clear();
 		circleContainerPanel.add(requiredText);
 		if(classUnitsDo!=null){
