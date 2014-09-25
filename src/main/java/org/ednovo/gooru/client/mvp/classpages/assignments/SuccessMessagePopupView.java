@@ -93,9 +93,9 @@ public class SuccessMessagePopupView extends Composite{
 		
 		String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if(pageLocation.equals(PlaceTokens.STUDENT)){
-			successPopupBodyText.setHTML(StringUtil.generateMessage(i18n.GL2223(), collectonTitle));
+			successPopupBodyText.setHTML(StringUtil.generateMessage(i18n.GL2241(), collectonTitle));
 		}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
-			successPopupBodyText.setHTML(StringUtil.generateMessage(i18n.GL2223(), collectonTitle));
+			successPopupBodyText.setHTML(StringUtil.generateMessage(i18n.GL2241(), collectonTitle));
 		}else{
 			successPopupBodyText.setHTML(StringUtil.generateMessage(i18n.GL1385(), collectonTitle));
 		}
