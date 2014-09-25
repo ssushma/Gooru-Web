@@ -181,6 +181,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		unitTitleDetails.setText(unitTitle);
 	}
 	
+	public void resetUnitAssignmentView(){
+		circleContainerPanel.clear();
+		assignmentContainer.clear();
+		unitPanel.clear();
+		unitTitleDetails.setText("");
+	}
+	
 	public class UnitChangeEvent implements ClickHandler{
 		private UnitWidget unitsWidget;
 		private String unitTitle;
@@ -376,10 +383,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	@Override
 	public void onMouseOver(MouseOverEvent event) {
-		unitAssigmentReorder = new UnitAssigmentReorder(seqNo,classDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null),selectedUnitNumber,totalHintCount,selectedAssignmentId){
+		unitAssigmentReorder = new UnitAssigmentReorder(seqNo,classDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null),selectedUnitNumber,totalHintCount,selectedAssignmentId,AppClientFactory.getPlaceManager().getRequestParameter("uid", null)){
 			@Override
 			public void reorderAssignment(int seqPosition,String selectedPathId,String targetUnitNumb) { 
-				setAssignmentToNewPosition(seqPosition,selectedPathId);
+				setAssignmentToNewPosition(seqPosition,selectedPathId,totalHintCount);
 			}
 		};
 		unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop()+40);
@@ -478,6 +485,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					unitTitle = unitTitle.substring(0,11)+"...";
 				}
 				int unitNumber = classDo.getSearchResults().get(i).getItemSequence();
+				classListUnitsListDo.get(i).setItemSequence(unitPanel.getWidgetCount()+1);
 				UnitWidget unitsWidget=new UnitWidget(classListUnitsListDo.get(i));
 				unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget,unitTitle,unitNumber));
 				if(unitId!=null&&unitId.equals(unitsWidget.getUnitGooruOid())){
@@ -513,13 +521,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 
 	private void updatePageNumber(){
-		System.out.println("total count==>"+unitsTotalCount);
 		unitsPageNumber++;
 		if((limit*unitsPageNumber)<unitsTotalCount){
-			System.out.println("total count==> inside if");
 			lblMoreUnits.setVisible(true);
 		}else{
-			System.out.println("total count==> inside else");
 			lblMoreUnits.setVisible(false);
 		}
 	}
@@ -764,14 +769,21 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}		
 	}
 	
-	public void setAssignmentToNewPosition(int pageNumber,String selectedPathId){
-		//if(selectedPathId.equalsIgnoreCase(unitId)){
-		assignmentOffset =(pageNumber/assignmentLimit)*assignmentLimit;
-		if(assignmentOffset==pageNumber){
-			assignmentOffset = assignmentOffset-assignmentLimit;
+	public void setAssignmentToNewPosition(int pageNumber,String selectedPathId,int totalHintCount){
+		
+		if(selectedPathId.equalsIgnoreCase(unitId)){
+			assignmentOffset =(pageNumber/assignmentLimit)*assignmentLimit;
+			if(assignmentOffset==pageNumber){
+				assignmentOffset = assignmentOffset-assignmentLimit;
+			}
+			getUnitAssignments(assignmentOffset,isEditMode);
+		}else{
+			if(totalHintCount-1==assignmentOffset){
+				assignmentOffset=assignmentOffset-assignmentLimit;
+			}
+			getUnitAssignments(assignmentOffset,isEditMode);
+			
 		}
-		getUnitAssignments(assignmentOffset,isEditMode);
-		//}
 	}
 	
 	

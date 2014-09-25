@@ -135,8 +135,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 		this.classUnitsDo=classUnitsDo;
 		setAssignmentsForUnit();
 		setUnitNameDetails();
-		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(classUnitsDo.getItemSequence()),PlaceTokens.STUDENT));
-		unitDetailsPanel.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(classUnitsDo.getItemSequence()),PlaceTokens.STUDENT));
+		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
+		unitDetailsPanel.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
 	}
 
 
@@ -303,15 +303,14 @@ public class UnitsAssignmentWidgetView extends Composite {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			final String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			unitAssigmentReorder = new UnitAssigmentReorder(assignmentSeq,getClassDo(),title, narration,classPageId,classUnitsDo.getItemSequence(),getTotalHitCount(),collectionItem){
+			unitAssigmentReorder = new UnitAssigmentReorder(assignmentSeq,getClassDo(),title, narration,classPageId,Integer.parseInt(seqNumber),getTotalHitCount(),collectionItem,classUnitsDo.getResource().getGooruOid()){
 				@Override
 				public void reorderAssignment(int seqPosition,String selectedPathwayId,String targetPathway) {
 					boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItem);
 					if(isAssignmentDeleted){
-						System.out.println("-- hello --");
 						setLoadingIcon(true);
 						clearAssignmentsFromDo();
-						if(Integer.parseInt(targetPathway)==classUnitsDo.getItemSequence()){
+						if(Integer.parseInt(targetPathway)==Integer.parseInt(seqNumber)){
 							assignmentOffset =(seqPosition/assignmentLimit)*assignmentLimit;
 							if(assignmentOffset==seqPosition){
 								assignmentOffset = assignmentOffset-assignmentLimit;
@@ -410,7 +409,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 				params.put("uid", unitId);
 			}
 			if(sequenceNumber!=null){
-				params.put("sequenceNumber", sequenceNumber);
+				params.put("seqnumber", sequenceNumber);
 			}
 			PlaceRequest placeRequest= null;
 			placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);

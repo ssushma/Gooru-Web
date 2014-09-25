@@ -2339,7 +2339,7 @@ fieldset {
 .studyplay:hover{
 	cursor: pointer;
 	color:white;
-	background:#1076BB;
+	background: url(../images/preview-arrow-small.png) 70px center no-repeat, #1076bb;
 }
 @media screen and (min-width: 0px) and (max-width: 1275px) {
 	.panelHeight{

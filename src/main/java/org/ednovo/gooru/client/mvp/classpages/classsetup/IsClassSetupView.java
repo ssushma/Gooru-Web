@@ -40,6 +40,8 @@ public interface IsClassSetupView extends IsViewWithHandlers<ClassSetupUiHandler
 
 	void setLoadingIcon(boolean isVisible);
 
+	void clearPaginationPanel();
+
 
 
 
