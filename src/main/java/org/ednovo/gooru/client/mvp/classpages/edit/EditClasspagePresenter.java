@@ -438,6 +438,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	}
 	public void showTabWidget(String tabValue){
 		getView().highlightTab(tab);
+		generateShareLink(classpageId);
 		 if(tab!=null&&tab.equalsIgnoreCase("classList")){
 	     	classlistPresenter.setClassPageDo(classpageDo);
 	     	setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
@@ -514,7 +515,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		getView().getClasspageById(classpageId, pageSize, pageNum, pos);
 //		getView().getAssignemntsByClasspageId(classpageId, pageSize, pageNum);
 //		getAssignmentsByClasspageById(classpageId, pageSize, pageNum);
-//		generateShareLink(classpageId);
+		generateShareLink(classpageId);
 	}
 
 	@Override
