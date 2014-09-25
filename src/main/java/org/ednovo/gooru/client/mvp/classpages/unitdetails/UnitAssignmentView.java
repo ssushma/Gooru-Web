@@ -43,6 +43,9 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -80,7 +83,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 	}
 	
-	@UiField HTMLPanel unitPanel,containerPanel,scoreHedingContainer,htmDashBoardTabs,timeLablePanel;
+	@UiField HTMLPanel unitPanel,containerPanel,scoreHedingContainer,htmDashBoardTabs,timeLablePanel,personalizePanel;
 	
 	@UiField Label lblMoreUnits,unitTitleDetails,lblTimeHours,lblTimeMin;
 	
@@ -166,6 +169,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		txtHours.getElement().setAttribute("style", "text-align:right");
 		txtMinuts.getElement().setAttribute("style", "text-align:right");
 		timeLablePanel.setVisible(false);
+		displayPersonalizeOptions(false);
 	}
 	
 	public HTMLPanel getUnitPanel(){
@@ -597,29 +601,29 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 		if(Math.abs(totalAssignments-assignmentOffset)>assignmentLimit){
 			if(Math.abs(totalAssignments-assignmentOffset)==totalAssignments){
-				leftArrow.setVisible(false);
-				rightArrow.setVisible(true);
+				leftArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+				rightArrow.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			}else{
-				leftArrow.setVisible(true);
-				rightArrow.setVisible(true);
+				leftArrow.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+				rightArrow.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			}
 			
 		}else{
-			rightArrow.setVisible(false);
-			leftArrow.setVisible(true);
+			leftArrow.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+			rightArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		}
 		if(totalAssignments<=10){
-			rightArrow.setVisible(false);
-			leftArrow.setVisible(false);
+			leftArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			rightArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		}
 		
 	}
 	private void showAndHidePaginationArrows() {
 	if(totalAssignmentHitcount>assignmentLimit){
-			rightArrow.setVisible(true);
+		rightArrow.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 		}else{
-			rightArrow.setVisible(false);
-			leftArrow.setVisible(false);
+			leftArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			rightArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		}
 	}
 	public void getUnitAssignments(int assignmentOffset,final boolean isAssignmentEditmode){
@@ -647,11 +651,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		classUnitsDo.getResource().setCollectionItems(new ArrayList<ClasspageItemDo>());
 	}
 	private int getAssignmentOffsetValue(String direction) {
+		
 	if(direction.equals(NEXT)){
 			assignmentOffset = assignmentOffset+assignmentLimit;
 		}else{
 			assignmentOffset = Math.abs(assignmentOffset-assignmentLimit);
 		}
+	
 	return assignmentOffset;
 	}
 	private void setAssignmentsForUnit(UnitAssignmentsDo unitAssignmentsDo) {
@@ -885,7 +891,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@UiHandler("btnSetGoal")
 	public void clickOnGoalBtn(ClickEvent clickEvent){
-		System.out.println("txtHours.getText():"+txtHours.getText());
+		
 		if((txtHours.getText()!=null && txtHours.getText()!="")|| (txtMinuts.getText()!=null && txtMinuts.getText()!="") ){
 			if(btnSetGoal.getText().equals(SETGOAL)){
 				lblTimeHours.setText(txtHours.getText()+" h");
@@ -947,6 +953,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		this.classUnitsListDo = classUnitsListDo;
 	}
 	
-	
+	public void displayPersonalizeOptions(boolean isPersonalize)
+	{
+		personalizePanel.setVisible(isPersonalize);
+	}
 	
 }

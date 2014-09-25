@@ -34,30 +34,34 @@
 						<div class="col-xs-12">
 							<g:Label ui:field="unitTitleDetails" styleName="col-xs-2 {unitStyle.unitHeading}" />
 							<g:HTMLPanel styleName="row {unitStyle.classOptionsMain}">
-									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions} text-center">
+									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.assignOverOptions} text-center">
 										<g:InlineLabel styleName="{unitStyle.bubbleSmall}"></g:InlineLabel> 
 										<g:InlineLabel text="{i18n.GL2209}"></g:InlineLabel> 
 									</g:HTMLPanel>
-									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions} text-center">
+									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions1} text-center">
 										<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.stylishBub}"></g:InlineLabel>
 										<g:InlineLabel text="{i18n.GL2201}"></g:InlineLabel> 
 									</g:HTMLPanel>
-					<!-- 				<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions} text-center">
-										<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.greenBubble}"></g:InlineLabel>
-										<g:InlineLabel>Score Met</g:InlineLabel> 
+									
+									<g:HTMLPanel ui:field="personalizePanel">
+						 				<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions1} text-center">
+											<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.greenBubble}"></g:InlineLabel>
+											<g:InlineLabel text="{i18n.GL2224}"></g:InlineLabel> 
+										</g:HTMLPanel>
+										<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidthGoalNotMet} {unitStyle.classOverOptions1} text-center">
+											<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.redBubble}"></g:InlineLabel> 
+											<g:InlineLabel text="{i18n.GL2225}"></g:InlineLabel>
+										</g:HTMLPanel>
+										<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidth} {unitStyle.classOverOptions} text-center">
+											<g:InlineLabel styleName="{unitStyle.bubbleSmallrounded}"></g:InlineLabel> 
+											<g:InlineLabel text="{i18n.GL2212}"></g:InlineLabel>
+										</g:HTMLPanel>
+										<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidthFDS} {unitStyle.classOverOptionsFeedback} text-center">
+										    <g:InlineLabel styleName="{unitStyle.bubbleBlueFeedBack}"></g:InlineLabel> 
+										   	<g:InlineLabel text="{i18n.GL2223}"></g:InlineLabel>
+										</g:HTMLPanel> 
 									</g:HTMLPanel>
-									<g:HTMLPanel styleName="col-xs-2 {unitStyle.classOverOptions} text-center">
-										<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.redBubble}"></g:InlineLabel> 
-										<g:InlineLabel>Score Not Met</g:InlineLabel>
-									</g:HTMLPanel>
-									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidth} {unitStyle.classOverOptions} text-center">
-										<g:InlineLabel styleName="{unitStyle.bubbleSmallrounded}"></g:InlineLabel> 
-										<g:InlineLabel>Made Extra Efforts</g:InlineLabel>
-									</g:HTMLPanel>
-									<g:HTMLPanel styleName="col-xs-2 {unitStyle.classOverOptions} text-center">
-										<img src="images/checkMarkWhite.png"/> 
-										<g:InlineLabel>Complete</g:InlineLabel>
-									</g:HTMLPanel> -->
+									
 							</g:HTMLPanel>
 							<div class="clearfix"></div>
 						</div>
