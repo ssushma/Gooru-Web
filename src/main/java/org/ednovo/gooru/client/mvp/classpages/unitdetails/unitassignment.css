@@ -554,6 +554,7 @@ display:inline-block;
 	width: 70px;
 	margin-left: 0px;
 	position: absolute !important;
+	left:0px;
 	
 }
 .dropdownListContainer{
@@ -586,11 +587,9 @@ display:inline-block;
 }
 .dropdownListPlaceHolderMain
 {
-	position:relative;
+	position: relative;
 	display: inline;
 }
-
-/* Goal css */
 
 
 .teachTab {
