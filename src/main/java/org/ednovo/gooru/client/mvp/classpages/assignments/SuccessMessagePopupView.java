@@ -40,7 +40,9 @@ package org.ednovo.gooru.client.mvp.classpages.assignments;
  * @Reviewer:
  */
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssignmentView.StudentAssignmentMouseOverHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -89,7 +91,14 @@ public class SuccessMessagePopupView extends Composite{
 		successPopupHeader.getElement().setAttribute("alt",i18n.GL1384());
 		successPopupHeader.getElement().setAttribute("title",i18n.GL1384());
 		
-		successPopupBodyText.setHTML(StringUtil.generateMessage(i18n.GL1385(), collectonTitle));
+		String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(pageLocation.equals(PlaceTokens.STUDENT)){
+			successPopupBodyText.setHTML(StringUtil.generateMessage(i18n.GL2241(), collectonTitle));
+		}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
+			successPopupBodyText.setHTML(StringUtil.generateMessage(i18n.GL2241(), collectonTitle));
+		}else{
+			successPopupBodyText.setHTML(StringUtil.generateMessage(i18n.GL1385(), collectonTitle));
+		}
 		successPopupBodyText.getElement().setId("htmlSuccessPoupBodyText");
 		successPopupBodyText.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1385(), collectonTitle));
 		successPopupBodyText.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1385(), collectonTitle));

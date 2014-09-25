@@ -185,7 +185,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 			if(classUnitsDo.getResource().getCollectionItems() != null){
 				for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 					ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
-					assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo));
+					assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid()));
 				}
 				assignmentsContainer.add(htPanelNextArrow);
 				showAndHideAssignmentArrows();

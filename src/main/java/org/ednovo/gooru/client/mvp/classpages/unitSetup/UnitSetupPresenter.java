@@ -35,6 +35,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> implements UnitSetupUiHandlers{
@@ -126,10 +127,10 @@ public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> impleme
 	 * Before calling API.
 	 */
 	@Override
-	public void addAssignmentToPathway(String classPageId, String pathwayId,String mode) {
+	public void addAssignmentToPathway(String classPageId, String pathwayId,String mode,String pathwayTitle) {
 		addAssignmentContainerPresenter.setUnitSetupPresenter(this);
 		addAssignmentContainerPresenter.getUserShelfData();
-		addAssignmentContainerPresenter.addAssignmentToPathway(classPageId, pathwayId,mode);
+		addAssignmentContainerPresenter.addAssignmentToPathway(classPageId, pathwayId,mode,pathwayTitle);
 		addToPopupSlot(addAssignmentContainerPresenter);
 	}
 

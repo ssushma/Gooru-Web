@@ -76,7 +76,7 @@
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 					<!-- end circle Widget -->
-					<div class="row {unitStyle.personalBtn}">
+					<g:HTMLPanel styleName="row {unitStyle.personalBtn}" ui:field="panelPersonalizeButtonContainer">
 						<div class="col-xs-12">
 							<div class="{unitStyle.rowInner}">
 								<p class="text-center">
@@ -84,7 +84,7 @@
 								</p>
 							</div>
 						</div>
-					</div>
+					</g:HTMLPanel>
 					<g:HTMLPanel ui:field="assignmentContainer"></g:HTMLPanel>
 				</g:HTMLPanel>
 				<g:HTMLPanel ui:field="goalContainer">

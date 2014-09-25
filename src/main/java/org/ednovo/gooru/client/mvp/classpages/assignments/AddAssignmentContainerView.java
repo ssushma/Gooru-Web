@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.uc.DateBoxUcCustomizedForAssign;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -106,7 +107,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	private CollectionTreeItem previousSelectedItem=null;
 	private FolderTreeItem currentFolderSelectedTreeItem=null;
 	private FolderTreeItem previousFolderSelectedTreeItem=null;
-	
+	private String unitTitle ="";
 	
 	
 	@Inject
@@ -155,6 +156,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 				    item.getTree().setSelectedItem(parent, false); // TODO FIX ME
 				    if(!folderTreeItemWidget.isApiCalled()){
 				    	folderTreeItemWidget.setApiCalled(true);
+				    	
 				    	getFolderItems(item,folderTreeItemWidget.getGooruOid());
 				    }
 				    if(parent != null)
@@ -236,7 +238,14 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	public void setSelectedCollectionTitle(){
 		if(cureentcollectionTreeItem!=null){
 			enableAssignButton(true);
-			displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
+			String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+			if(pageLocation.equals(PlaceTokens.STUDENT)){
+				displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+StringUtil.generateMessage(i18n.GL2242(), unitTitle));
+			}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
+				displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+StringUtil.generateMessage(i18n.GL2242(), unitTitle));
+			}else{
+				displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
+			}
 			displayCountLabel.getElement().setAttribute("alt","\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
 			displayCountLabel.getElement().setAttribute("title","\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
 		}
@@ -245,7 +254,14 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		if(count>0){
 			enableAssignButton(true);
 			String label=count==1?count+" collection":count+" collections";
-			displayCountLabel.setText(label+" "+i18n.GL1975());
+			String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+			if(pageLocation.equals(PlaceTokens.STUDENT)){
+				displayCountLabel.setText(label+" "+StringUtil.generateMessage(i18n.GL2242(), unitTitle));
+			}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
+				displayCountLabel.setText(label+" "+StringUtil.generateMessage(i18n.GL2242(), unitTitle));
+			}else{
+				displayCountLabel.setText(label+" "+i18n.GL1975());
+			}
 			displayCountLabel.getElement().setAttribute("alt",label+" "+i18n.GL1975());
 			displayCountLabel.getElement().setAttribute("title",label+" "+i18n.GL1975());
 		
@@ -692,6 +708,12 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().popupContainer());
 		appPopUp.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgOuterContainer());
 		popupContent.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgContainer());
+	}
+
+	@Override
+	public void setUnitTitle(String pathwayTitle) {
+		// TODO Auto-generated method stub
+		this.unitTitle = pathwayTitle;
 	}
 
 }

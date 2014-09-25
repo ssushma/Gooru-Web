@@ -75,6 +75,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	private ClassSetupUnitPresenter classSetupUnitPresenter=null;
 	private UnitSetupPresenter unitSetupPresenter=null;
 	private String mode;
+	private String	pathwayTitle = null;
 	private static final String CLASS_SETUP="classSetUpMode";
 	private static final String UNIT_SETUP="unitSetupMode";
 	
@@ -189,10 +190,12 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 		this.editClasspagePresenter = editClasspagePresenter;
 	}
 	
-	public void addAssignmentToPathway(String classpageId,String pathwayId,String mode){
+	public void addAssignmentToPathway(String classpageId,String pathwayId,String mode,String pathwayTitle){
 		this.classpageIdToAssign = classpageId;
 		this.pathwayId = pathwayId;
 		this.mode= mode;
+		this.pathwayTitle = pathwayTitle;
+		getView().setUnitTitle(pathwayTitle);
 	}
 
 
@@ -204,7 +207,8 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 					getView().hideAddCollectionPopup("");
 				}else if(mode.equals(UNIT_SETUP)){
 					if(unitSetupPresenter !=null){
-						getView().hideAddCollectionPopup("");
+						//getView().hideAddCollectionPopup("");
+						getView().hideAddCollectionPopup(pathwayTitle);
 						unitSetupPresenter.addAssignmentToPathway(result,pathwayId);
 					}
 				}

@@ -44,8 +44,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -73,7 +71,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHandlers> implements IsUnitAssignmentView{
 
-	@UiField HTMLPanel assignmentContainer,goalContainer,personalizeContainer;
+	@UiField HTMLPanel assignmentContainer,goalContainer,personalizeContainer, panelPersonalizeButtonContainer;
 
 
 	private static UnitAssignmentViewUiBinder uiBinder = GWT.create(UnitAssignmentViewUiBinder.class);
@@ -175,9 +173,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		StringUtil.setAttributes(assignmentContainer.getElement(), "divAssignmentContainer", null, null);
 		StringUtil.setAttributes(personalizeContainer.getElement(), "divPersonalizeContainer", null, null);
 		StringUtil.setAttributes(btnPersonalize.getElement(), "btnPersonalize", "Personalize Units", "Personalize Units");
-		
+		panelPersonalizeButtonContainer.setVisible(false);
 		displayPersonalizeOptions(false);
-
+		setPersonalizeState(false);
 	}
 	
 	public HTMLPanel getUnitPanel(){
@@ -219,6 +217,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			String tempUntiTitle=unitTitle;
+			if (unitTitle.length() > 10){
+				tempUntiTitle = unitTitle.substring(0, 11) + "...";
+			}
+			btnPersonalize.setText(StringUtil.generateMessage(i18n.GL2221(), tempUntiTitle));
 			selectedUnitNumber = unitNumber;
 			resetCircleAndAssignmentContainer(unitTitle);
 			setClassUnitsListDo(unitsWidget.getClassUnitDo());
@@ -255,13 +258,18 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		requiredText.setText(i18n.GL2222());
 		rightArrow.getElement().setAttribute("style", "cursor:pointer");
 		leftArrow.getElement().setAttribute("style", "cursor:pointer");
+		
+		
+		
 		if(unitAssignmentsDo.getTotalHitCount() != null){
 			totalAssignmentHitcount = unitAssignmentsDo.getTotalHitCount();
 		}else{
 			totalAssignmentHitcount = 0;
 		}
 		if(unitAssignmentsDo!=null){
+			
 			if(unitAssignmentsDo.getSearchResults()!=null){
+				
 				if(unitAssignmentsDo.getSearchResults().size()!=0){
 					try{
 						if(leftHandler!=null) {
@@ -333,9 +341,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			removeAssignmentSelectedStyle();
 			addAssignmentSelectStyle(unitCricleView);
 			assignmentContainer.clear();
+			isPersonalize = false;
+			displayPersonalizeOptions(isPersonalize);
+			setPersonalizeState(isPersonalize);
 			String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 			revealPlace("unitdetails", null, unitId, unitCricleView.getAssignementId());
-			
 		}
 	}
 	public void removeAssignmentSelectedStyle(){
@@ -356,11 +366,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@Override
 	public void setInSlot(Object slot, Widget content) {
-		System.out.println("set in slot 1 ");
 		if (content != null) {
-			System.out.println("set in slot 2 ");
 			 if(slot==UnitAssignmentPresenter._SLOT){
-				 System.out.println("set in slot 3 ");
 				 personalizeContainer.clear();
 				 personalizeContainer.add(content);
 				 personalizeContainer.setVisible(false);
@@ -501,6 +508,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		unitsTotalCount=classDo.getTotalHitCount();
 		updatePageNumber();
 		if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+			String tempUntiTitle=classDo.getSearchResults().get(0).getResource().getTitle();
+			if (tempUntiTitle.length() > 10){
+				tempUntiTitle = tempUntiTitle.substring(0, 11) + "...";
+			}
+			btnPersonalize.setText(StringUtil.generateMessage(i18n.GL2221(), tempUntiTitle));
+			
 			ArrayList<ClassUnitsListDo> classListUnitsListDo =classDo.getSearchResults();
 			for(int i=0; i<classListUnitsListDo.size(); i++){
 				ClassUnitsListDo classListUnitsListDObj=classDo.getSearchResults().get(i);
@@ -510,7 +523,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				if(unitTitle!=null && unitTitle.length()>11){
 					unitTitle = unitTitle.substring(0,11)+"...";
 				}
-				btnPersonalize.setText(StringUtil.generateMessage(i18n.GL2221(), unitTitle));
+				
 				int unitNumber = classDo.getSearchResults().get(i).getItemSequence();
 				classListUnitsListDo.get(i).setItemSequence(unitPanel.getWidgetCount()+1);
 				UnitWidget unitsWidget=new UnitWidget(classListUnitsListDo.get(i));
