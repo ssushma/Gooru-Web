@@ -133,7 +133,7 @@ public class AssignmentsContainerWidget extends Composite  {
 			// TODO Auto-generated method stub
 			UnitAssignentStudentPlayView = new UnitAssignentStudentPlayView(seqNumber,title,dueDate,direction,collectionId,collectionItemId);
 			
-			UnitAssignentStudentPlayView.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop());
+			UnitAssignentStudentPlayView.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop()-40);
 			UnitAssignentStudentPlayView.show();
 			isShowingPopUpforStudent = true;
 		}
