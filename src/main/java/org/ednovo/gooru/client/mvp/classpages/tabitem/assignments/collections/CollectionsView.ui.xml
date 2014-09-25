@@ -18,7 +18,7 @@
 				 </g:HTMLPanel>
 				 <g:FlowPanel styleName="{style.assignMain}">
 					<g:HTMLPanel styleName="row {style.assaindetailsMain}">
-						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}">Assignment Details:</g:Label>
+						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}">Collection Analytics:</g:Label>
 						<g:HTMLPanel styleName="col-xs-6 {style.assignButtons} text-right" ui:field="editAssignmentContainer">
 							<g:Label ui:field="savingLabel"></g:Label> 
 							<g:Button styleName="secondary" ui:field="cancelAssignmentDetailsButton">Cancel</g:Button> 
@@ -29,7 +29,7 @@
 					</g:HTMLPanel>
 					<g:FlowPanel styleName="{style.borderBox}">
 						<g:FlowPanel styleName="{style.directionContainer}">
-							<g:Label styleName="{style.direction}">Direction:&nbsp;&nbsp;</g:Label>
+							<g:Label styleName="{style.direction}">Directions:&nbsp;&nbsp;</g:Label>
 							<g:HTMLPanel styleName="{style.directionText}" ui:field="directionContentPanel"></g:HTMLPanel>
 						</g:FlowPanel>
 						<g:FlowPanel styleName="{style.score}">
@@ -70,9 +70,9 @@
 				</g:FlowPanel>
 				<g:FlowPanel ui:field="analyticsContainer" styleName="{style.analytics}">
 					<g:FlowPanel styleName="row {style.assaindetailsMain}">
-						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}">Assignment Details: </g:Label>
+						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}">Collection Analytics: </g:Label>
 						<g:HTMLPanel styleName="col-xs-6 {style.assignButtons} text-right">
-							<g:Label styleName="{style.bubbleMain}">View Assignment </g:Label>
+							<g:Label styleName="{style.bubbleMain}">View Collection </g:Label>
 							<g:Button styleName="secondary" ui:field="btnSummary">Summary</g:Button>
 							<g:Button styleName="secondary" ui:field="btnProgress">Progress</g:Button>
 						</g:HTMLPanel>
