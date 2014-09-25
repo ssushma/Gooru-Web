@@ -80,11 +80,20 @@
 	background: #EFEFEF;
 	border-left: 5px solid #75AED7;
 }
-
 .unitHeading {
 	font-size: 16px;
 	font-weight: 600;
 	color: #515151;
+}
+.uniRequired .bubbleStyle{
+	width:20px;
+	height:20px;
+	background:#B9BBCA url(images/liners.png) repeat;
+	border-radius:50% 50%;
+	-webkit-border-radius:50% 50%;
+	-moz-border-radius:50% 50%;
+	vertical-align:middle;
+	display:inline-block;
 }
 
 .uniRequired {
