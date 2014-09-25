@@ -137,12 +137,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private int selectedUnitNumber;
 	UnitAssignentStudentPlayView UnitAssignentStudentPlayView =null;
 	private int totalAssignmentHitcount;
+	Label requiredText =new Label();
 	@Inject
 	public UnitAssignmentView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
 		String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		requiredText.getElement().setAttribute("style", "display: inline");
 		if(pageLocation.equals(PlaceTokens.STUDENT)){
 			unitSetupButton.setText(i18n.GL2198());			
 		}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
@@ -231,7 +233,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	
 	public void setCircleData(UnitAssignmentsDo unitAssignmentsDo){
-	
+		requiredText.setText(i18n.GL2222());
 		rightArrow.getElement().setAttribute("style", "cursor:pointer");
 		leftArrow.getElement().setAttribute("style", "cursor:pointer");
 		if(unitAssignmentsDo.getTotalHitCount() != null){
@@ -254,7 +256,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					leftHandler=leftArrow.addClickHandler(new cleckOnNext("left"));
 					rightHandler=rightArrow.addClickHandler(new cleckOnNext("right"));
 					circleContainerPanel.clear();
+					circleContainerPanel.add(requiredText);
 					leftArrow.setUrl("images/leftSmallarrow.png");
+					leftArrow.getElement().setAttribute("style","margin-left: 10px");
 					circleContainerPanel.add(leftArrow);
 					for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 						unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
@@ -651,9 +655,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	return assignmentOffset;
 	}
 	private void setAssignmentsForUnit(UnitAssignmentsDo unitAssignmentsDo) {
+		requiredText.setText(i18n.GL2222());
 		circleContainerPanel.clear();
+		circleContainerPanel.add(requiredText);
 		if(classUnitsDo!=null){
 			leftArrow.setUrl("images/leftSmallarrow.png");
+			leftArrow.getElement().setAttribute("style","margin-left: 10px");
 			circleContainerPanel.add(leftArrow);
 
 			for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
