@@ -26,6 +26,9 @@
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssignentStudentPlayView;
@@ -37,6 +40,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
@@ -50,6 +55,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class AssignmentsContainerWidget extends Composite  {
 	
@@ -72,8 +78,14 @@ public class AssignmentsContainerWidget extends Composite  {
 	
 	private boolean isShowingPopUpforStudent = false;
 	
-	public AssignmentsContainerWidget(ClasspageItemDo classpageItemDo){ 
+	private ClasspageItemDo classpageItemDo = null;
+	
+	private String unitId = null;
+	
+	public AssignmentsContainerWidget(ClasspageItemDo classpageItemDo, String unitId){ 
 		initWidget(uibinder.createAndBindUi(this));
+		this.classpageItemDo = classpageItemDo;
+		this.unitId = unitId;  
 		unitCircleView.setUnitSequenceNumber(classpageItemDo.getItemSequence());
 		unitCircleView.getElement().setId(classpageItemDo.getCollectionItemId());
 		
@@ -83,6 +95,8 @@ public class AssignmentsContainerWidget extends Composite  {
 		}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
 			
 		}
+		
+		
 		
 		assignmentThumbnail.setUrl(classpageItemDo.getResource().getThumbnails().getUrl());
 		if(classpageItemDo.getStatus() != null)
@@ -113,6 +127,12 @@ public class AssignmentsContainerWidget extends Composite  {
 	public void setErrorImage(ErrorEvent event){
 		assignmentThumbnail.setUrl("images/default-collection-image-160x120.png");
 	}
+	
+	@UiHandler("assignmentThumbnail")
+	public void assignmentThumbnailClickEvent(ClickEvent event){
+		revealPlace("unitdetails",null,unitId,classpageItemDo.getCollectionItemId());
+	}
+
 	
 	public class StudentAssignmentMouseOverHandler implements MouseOverHandler{
 		int seqNumber;
@@ -164,4 +184,41 @@ public class AssignmentsContainerWidget extends Composite  {
 		}
 		return false;
 	}
+	
+	 public void revealPlace(String tabName,String pageNum,String unitId,String assignmentId){
+		 	
+			Map<String,String> params = new HashMap<String,String>();
+			String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+			String classpageid="";
+			if(pageLocation.equals(PlaceTokens.STUDENT)){
+				classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+				params.put("id", classpageid);
+				
+			}
+			else{
+				classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				params.put("classpageid", classpageid);
+			}
+		
+			if(pageNum!=null){
+				params.put("pageNum", pageNum);
+			}
+			if(tabName!=null){
+				params.put("tab", tabName);
+			}
+			if(unitId!=null){
+				params.put("uid", unitId);
+			}
+			if(assignmentId!=null){
+				params.put("aid", assignmentId);
+			}
+			PlaceRequest placeRequest=null;
+			if(pageLocation.equals(PlaceTokens.STUDENT)){
+				placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);	
+			}
+			else{
+				placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+			}
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+	 }
 }

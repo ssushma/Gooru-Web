@@ -81,4 +81,9 @@ public interface IsStudentAssignmentView extends IsViewWithHandlers<StudentAssig
 		
 	
 	void resetAll();
+
+
+
+
+	void hidePanel();
 }
