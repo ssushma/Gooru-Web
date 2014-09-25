@@ -50,6 +50,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
@@ -112,7 +113,14 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	@Override
 	public void onBind() {
 		super.onBind();
-	}	
+	}
+	
+	@Override
+	protected void onHide() {
+		super.onHide();
+		classpageDo=null;
+		getView().hidePanel();
+	}
 	
 	
 	@Override
@@ -165,6 +173,9 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		String classpageId=getPlaceManager().getRequestParameter("id");
 		final String sortingOrder=getPlaceManager().getRequestParameter("order",null);
 		final String tabMode=getPlaceManager().getRequestParameter("tab",null);
+		System.out.println("classpageId:::"+classpageId);
+		if(classpageId != null)
+		{
 		if(classpageDo==null||(!classpageDo.getClasspageId().equals(classpageId))){
 			getView().resetAll();
 			this.classpageServiceAsync.getClasspage(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
@@ -191,12 +202,27 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		}else{
 			showTabWidget(tabMode);
 		}
+	  }
 	}
 	
 	public void showTabWidget(String tab){
-		 if(tab!=null&&tab.equalsIgnoreCase("classList")){
-	     	
-	     }else if(tab!=null&&tab.equalsIgnoreCase("reports")){
+		if(tab!=null)
+		{
+		 if(tab.equalsIgnoreCase("classList")){
+			 
+			 String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+				int offsetVal = 0;
+				if(pageNum != null)
+				{
+					offsetVal = Integer.parseInt(pageNum);
+					if(offsetVal!=0)
+					{
+					offsetVal = (offsetVal-1);
+					}
+				}
+			unitSetupStudentPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
+	    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
+	     }else if(tab.equalsIgnoreCase("reports")){
 	     	
 	     }else if(tab!=null&&tab.equalsIgnoreCase("unitsetup")){
 	    	 String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
@@ -212,7 +238,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 			unitSetupStudentPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
 	    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
 	     }
-	     else if(tab!=null&&tab.equalsIgnoreCase("unitdetails")){
+	     else if(tab.equalsIgnoreCase("unitdetails")){
 	    	 unitAssignmentPresenter.showDashBoardDetails();
 	    	 unitAssignmentPresenter.getClassUnits(classpageDo.getClasspageId());
 	    	 setInSlot(STUDY_SLOT, unitAssignmentPresenter,false);
@@ -231,6 +257,22 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 			unitSetupStudentPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
 	    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
 	     }
+		}
+	     else {
+	     	 String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+				int offsetVal = 0;
+				if(pageNum != null)
+				{
+					offsetVal = Integer.parseInt(pageNum);
+					if(offsetVal!=0)
+					{
+					offsetVal = (offsetVal-1);
+					}
+				}
+			unitSetupStudentPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
+	    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
+	     }
+		
 	}
 	public void getClasspageItems(String classpageId,String offset,final String limit,final boolean isForAssignmentPath, final String sortOrder){
 		this.classpageServiceAsync.getClassPageItems(classpageId, offset, limit,sortOrder,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
@@ -365,7 +407,27 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 			@Override
 			public void onSuccess(Void result) {
 				AppClientFactory.fireEvent(new DeleteClasspageListEvent(classpageDo.getClasspageId()));
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+				AppClientFactory.getInjector().getClasspageService().v2GetAllClass("2", "0",new SimpleAsyncCallback<ClasspageListDo>() {
+					@Override
+					public void onSuccess(ClasspageListDo result) {
+				//	hasClasses = result.getSearchResults().size() > 0 ? true : false; 
+						if(result.getSearchResults()!=null){
+						if (result.getSearchResults().size()>0){
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+							////classpageId = result.getSearchResults().get(0).getGooruOid();
+							//String userId = result.getSearchResults().get(0).getUser().getGooruUId();
+						//OpenClasspageEdit(classpageId, userId);
+							//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,null,true);
+						}else{
+							AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+							//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
+						}
+					}else
+					{
+						AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+					}
+					}
+			});
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				Window.enableScrolling(true);
 				
