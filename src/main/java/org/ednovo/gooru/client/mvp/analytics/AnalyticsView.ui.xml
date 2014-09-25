@@ -41,7 +41,7 @@
 				<g:HTMLPanel styleName="row {unitStyle.generalSet} {unitStyle.arrowStyle}">
 				   <g:HTMLPanel>
 				       <g:HorizontalPanel styleName="{unitStyle.rowInner}">
-				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Label styleName="{unitStyle.viewAssignmentText}">View Assignment</g:Label>  </g:HTMLPanel>
+				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Label styleName="{unitStyle.viewAssignmentText}">View Collection</g:Label>  </g:HTMLPanel>
 				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionSummary" styleName="primary">Summary</g:Button> <g:Label ui:field="summaryArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
 				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionProgress" styleName="primary">Progress</g:Button><g:Label ui:field="progressArrowlbl" styleName="{unitStyle.caretUp}"></g:Label> </g:HTMLPanel>
 				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionResponses"  styleName="primary">Responses</g:Button> <g:Label ui:field="responsesArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
