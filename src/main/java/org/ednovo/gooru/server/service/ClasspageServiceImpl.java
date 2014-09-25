@@ -50,6 +50,7 @@ import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -1901,7 +1902,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}
 
 	@Override
-	public ClasspageItemDo updateUnitStatus(String pathWayId,
+	public ClassUnitsListDo updateUnitStatus(String pathWayId,
 			String minimumScore, String assignementStatus, String timeStudying)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
@@ -1926,7 +1927,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 					LOGGER.info("JSON_PAYLOAD==>"+jsonObject.toString());
 					JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),jsonObject.toString());
 					jsonRep = jsonResponseRep.getJsonRepresentation();
-				    return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ClasspageItemDo.class);
+				    return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ClassUnitsListDo.class);
 				}	
 				catch(JSONException e)
 				{
