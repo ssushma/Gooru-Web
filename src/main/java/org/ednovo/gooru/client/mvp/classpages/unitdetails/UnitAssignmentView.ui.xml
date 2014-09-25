@@ -74,12 +74,11 @@
 					<!-- end circle Widget -->
 					<div class="row {unitStyle.personalBtn}">
 						<div class="col-xs-12">
-						<!-- 	<div class="{unitStyle.rowInner}">
+							<div class="{unitStyle.rowInner}">
 								<p class="text-center">
-									<button type="button" class="primary">Personalize Unit 2 for
-										Students</button>
+									<g:Button styleName="primary" ui:field="btnPersonalize"></g:Button>
 								</p>
-							</div> -->
+							</div>
 						</div>
 					</div>
 					<g:HTMLPanel ui:field="assignmentContainer"></g:HTMLPanel>
@@ -226,6 +225,9 @@
 					</div> -->
 
 					<div class="clearfix"></div>
+				</g:HTMLPanel>
+				<g:HTMLPanel ui:field="personalizeMainContainer">
+				    <g:HTMLPanel ui:field="personalizeContainer"></g:HTMLPanel>
 				</g:HTMLPanel>
 			</div>
 			<div class="clearfix"></div>
