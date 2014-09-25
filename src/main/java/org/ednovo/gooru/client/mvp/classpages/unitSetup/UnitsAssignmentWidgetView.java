@@ -383,6 +383,10 @@ public class UnitsAssignmentWidgetView extends Composite {
 					if(isAssignmentDeleted){
 						setLoadingIcon(true);
 						clearAssignmentsFromDo();
+						/**
+						 * Following condition written in order to check weather assignment moved to the same pathway
+						 * or different pathway, based on this offset value will be decided and respective pathway will get refresh.
+						 */
 						if(Integer.parseInt(targetPathway)==Integer.parseInt(seqNumber)){
 							assignmentOffset =(seqPosition/assignmentLimit)*assignmentLimit;
 							if(assignmentOffset==seqPosition){
@@ -391,7 +395,11 @@ public class UnitsAssignmentWidgetView extends Composite {
 							getUnitAssignments(assignmentOffset,isEditMode(),null);
 						}else{
 							if((getTotalHitCount()-1)==assignmentOffset){
-								assignmentOffset=assignmentOffset-assignmentLimit;
+								if((getTotalHitCount()-1)==0){
+									assignmentOffset=0;
+								}else{
+									assignmentOffset=assignmentOffset-assignmentLimit;
+								}
 							}
 							getUnitAssignments(assignmentOffset,isEditMode(),null);
 							AppClientFactory.fireEvent(new RefreshPathwayItemsEvent(selectedPathwayId, classPageId)); 
