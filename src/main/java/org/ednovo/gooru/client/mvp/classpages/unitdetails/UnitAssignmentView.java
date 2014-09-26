@@ -193,8 +193,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void resetCircleAndAssignmentContainer(String unitTitle){
 		circleContainerPanel.clear();
 		assignmentContainer.clear();
-		unitTitleDetails.setText("");
-		unitTitleDetails.setText(unitTitle);
+		setUnitName(unitTitle);
 		String tempUntiTitle=unitTitle;
 		if (unitTitle.length() > 10){
 			tempUntiTitle = unitTitle.substring(0, 11) + "...";
