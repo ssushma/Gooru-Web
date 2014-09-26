@@ -23,10 +23,13 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
+import java.util.List;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -35,6 +38,9 @@ public class UnitSetupStudentPresenter extends PresenterWidget<IsUnitSetupStuden
 	
 	private int limit = 5;
 	private int offSet = 0;
+	String gooruUid;
+	String pathwayId;
+	ClassDo classDo;
 
 	@Inject
 	public UnitSetupStudentPresenter(EventBus eventBus, IsUnitSetupStudentView view) {
@@ -51,10 +57,13 @@ public class UnitSetupStudentPresenter extends PresenterWidget<IsUnitSetupStuden
 
 				@Override
 				public void onSuccess(ClassDo result) {
-					getView().showUnitDetails(result);
 					if(result.getSearchResults() != null){
+						classDo=result;
 					if(result.getSearchResults().size()>0){
 						String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+						gooruUid=result.getSearchResults().get(0).getResource().getUser().getGooruUId();
+						pathwayId=result.getSearchResults().get(0).getResource().getGooruOid();
+						getAnalyticData(gooruUid,pathwayId);
 						int pageNumVal = 0;
 						if(pageNum != null)
 						{
@@ -78,7 +87,20 @@ public class UnitSetupStudentPresenter extends PresenterWidget<IsUnitSetupStuden
 		
 	}
 	
-	
+	@Override
+	public void getAnalyticData(String gooruUId, String pathwayId){
+		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+	 	AppClientFactory.getInjector().getClasspageService().getAssignmentData(gooruUId, classpageId, 20, 0, pathwayId, new SimpleAsyncCallback<List<InsightsUserDataDo>>() {
+
+			@Override
+			public void onSuccess(List<InsightsUserDataDo> result) {
+//				getView().setAssignments(result);
+				getView().showUnitDetails(classDo,result);
+				System.out.println("sucesss:"+result.get(0).getStatus());
+				
+			}
+		});		
+	}
 	
 	
 }

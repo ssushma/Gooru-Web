@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -35,6 +36,7 @@ import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssignentStudentPl
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitCricleView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -94,18 +96,22 @@ public class AssignmentsContainerWidget extends Composite  {
 
 	private ClasspageItemDo classpageItemDo = null;
 	
+	private List<InsightsUserDataDo> insightsUserList;
+	
 	private String unitId = null;
 	
 
 	/**
 	 * Class constructor
 	 * @param classpageItemDo {@link ClasspageItemDo}
+	 * @param insightsUserList 
 	 */
-		public AssignmentsContainerWidget(ClasspageItemDo classpageItemDo, String unitId){ 
+		public AssignmentsContainerWidget(ClasspageItemDo classpageItemDo, String unitId, List<InsightsUserDataDo> insightsUserList){ 
 
 		initWidget(uibinder.createAndBindUi(this));
 		this.classpageItemDo = classpageItemDo;
 		this.unitId = unitId;  
+		this.insightsUserList=insightsUserList;
 		unitCircleView.setUnitSequenceNumber(classpageItemDo.getItemSequence());
 		unitCircleView.getElement().setId(classpageItemDo.getCollectionItemId());
 		

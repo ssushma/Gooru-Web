@@ -30,6 +30,7 @@ package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -43,6 +44,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.core.client.GWT;
@@ -105,6 +107,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	private ClassDo classDo;
 	
+	private List<InsightsUserDataDo> insightsUserList;
+	
 	private UnitAssignmentsDo unitAssignmentsDo;
 	
 	private UnitAssigmentReorder unitAssigmentReorder;
@@ -131,6 +135,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 	 * 
 	 * @param sequenceNum {@link Integer}
 	 * @param classUnitsDo {@link ClassUnitsListDo}
+	 * @param b 
+	 * @param insightsUserList 
 	 */
 	public UnitsAssignmentWidgetView(int sequenceNum,ClassUnitsListDo classUnitsDo){
 		initWidget(uibinder.createAndBindUi(this));
@@ -153,9 +159,10 @@ public class UnitsAssignmentWidgetView extends Composite {
 	 * @param classUnitsDo {@link ClassUnitsListDo}
 	 * @param isStudentMode {@link Boolean}
 	 */
-	public UnitsAssignmentWidgetView(int sequenceNum,ClassUnitsListDo classUnitsDo, boolean isStudentMode){
+	public UnitsAssignmentWidgetView(int sequenceNum,ClassUnitsListDo classUnitsDo,List<InsightsUserDataDo> insightsUserList, boolean isStudentMode){
 		initWidget(uibinder.createAndBindUi(this));
 		this.classUnitsDo=classUnitsDo;
+		this.insightsUserList=insightsUserList;
 		this.isStudentMode =isStudentMode; 
 		editUnitButton.removeFromParent();
 		addAssignmentButton.removeFromParent();
@@ -185,7 +192,12 @@ public class UnitsAssignmentWidgetView extends Composite {
 			if(classUnitsDo.getResource().getCollectionItems() != null){
 				for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 					ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
-					assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid()));
+					if(isStudentMode){
+						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),insightsUserList));
+					}else{
+						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),null));
+					}
+					
 				}
 				assignmentsContainer.add(htPanelNextArrow);
 				showAndHideAssignmentArrows();
