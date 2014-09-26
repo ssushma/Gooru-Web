@@ -20,7 +20,6 @@
 				 <g:FlowPanel styleName="{style.assignMain}">
 					<g:HTMLPanel styleName="row {style.assaindetailsMain}">
 						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}" text="{i18n.GL2236}"></g:Label>
-						<g:Label styleName="col-xs-6 {style.analyticsDetailsHeader}">Collection Analytics:</g:Label>
 						<g:HTMLPanel styleName="col-xs-6 {style.assignButtons} text-right" ui:field="editAssignmentContainer">
 							<g:Label ui:field="savingLabel"></g:Label> 
 							<g:Button styleName="secondary" ui:field="cancelAssignmentDetailsButton" text="{i18n.GL0142}"></g:Button> 
