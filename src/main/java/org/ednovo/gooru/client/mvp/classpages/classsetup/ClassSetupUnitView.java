@@ -49,6 +49,8 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -361,6 +363,29 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 				// TODO Auto-generated method stub
 				moveAssignmentPopup.getElement().getStyle().setDisplay(Display.NONE);
 
+			}
+		});
+		
+		unitName.addKeyUpHandler(new KeyUpHandler() {
+			
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				if(unitName.getText().length()==50)
+				{
+					unitNameErrorLabel.setText(i18n.GL0143());
+					unitNameErrorLabel.setVisible(true);
+					unitNameErrorLabel.getElement().getStyle().setBorderColor("orange");
+					unitNameErrorLabel.getElement().getStyle().setPosition(Position.ABSOLUTE);
+					unitNameErrorLabel.getElement().getStyle().setColor("red");
+				}
+				else
+				{
+					unitNameErrorLabel.setVisible(false);
+					unitNameErrorLabel.getElement().getStyle().clearBackgroundColor();
+					unitNameErrorLabel.getElement().getStyle().setBorderColor("#ccc");
+					
+				}
+				
 			}
 		});
 
