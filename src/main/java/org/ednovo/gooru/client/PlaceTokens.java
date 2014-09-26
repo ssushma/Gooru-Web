@@ -74,5 +74,6 @@ public interface PlaceTokens {
 	String CORE_LIBRARY = "CoreLibrary";
 	String ESYP = "ESYP";
 	String CCST_Cal_TAC = "CCSTCalTAC";
+	String LUSD = "lusd";	
 
 }
