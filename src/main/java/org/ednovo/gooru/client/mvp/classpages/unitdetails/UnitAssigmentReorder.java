@@ -92,6 +92,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 	private HandlerRegistration onClickUnit;
 	private int totalHintCount;
 	private String selectedAssignmentId,pathwayId;
+	Label dropDownListItem;
 	/**
 	 * 
 	 * @constructor : UnitAssigmentReorder
@@ -165,14 +166,15 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 				descLabel.setText(narration);
 				descLabel.getElement().setAttribute("alt",narration);
 			}
+			totalsize = 0;
 			totalsize =totalsize+classListUnitsListDo.size() ;
 			
 			for(int i=0; i<classListUnitsListDo.size(); i++){
 
 				//totalItemCount=classListUnitsListDo.get(0).getResource().getItemCount();
 				displayAssignment(totalHintCount);
-				int number=classListUnitsListDo.get(i).getItemSequence();
-				
+				//int number=classListUnitsListDo.get(i).getItemSequence();
+				int number=i+1;
 				if(selectedUnitNumber==0){
 					dropdownListPlaceHolder.getElement().setInnerHTML(classListUnitsListDo.get(0).getItemSequence()+"");
 				}else{
@@ -185,7 +187,7 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 				}
 				String unitCollectionItemId=classListUnitsListDo.get(i).getResource().getGooruOid();
 				
-				Label dropDownListItem=new Label(number+"");
+				dropDownListItem=new Label(number+"");
 				dropDownListItem.getElement().setId(classListUnitsListDo.get(i).getResource().getItemCount()+"");
 				dropDownListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
 				dropdownListContainer.add(dropDownListItem);
@@ -252,20 +254,24 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 				AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, Integer.toString(5),  Integer.toString(totalsize), new SimpleAsyncCallback<ClassDo>() {
 					@Override
 					public void onSuccess(ClassDo result) {
-						totalsize = totalsize + result.getSearchResults().size();
+					
+						int newseq=0;
 						for(int i=0; i<result.getSearchResults().size(); i++){
-
+							
+							newseq = totalsize+i+1;
 							String CollectionItemId=result.getSearchResults().get(i).getResource().getGooruOid();
 							int totalItemCount=result.getSearchResults().get(i).getResource().getItemCount();
-							int number=result.getSearchResults().get(i).getItemSequence();
-							Label dropDownListItem=new Label(number+"");
+							//int number=result.getSearchResults().get(i).getItemSequence();
+							dropDownListItem=new Label(newseq+"");
 							dropDownListItem.getElement().setId(totalItemCount+"");
 							dropDownListItem.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().dropdownListItemContainer());
 							dropdownListContainer.add(dropDownListItem);
-							dropDownListItem.addClickHandler(new OnDropdownItemClick(number+"",dropDownListItem.getElement().getId(),CollectionItemId));
+							dropDownListItem.addClickHandler(new OnDropdownItemClick(newseq+"",dropDownListItem.getElement().getId(),CollectionItemId));
 						}
+						totalsize = totalsize + result.getSearchResults().size();
 				}
 				});
+				
 				}
 			}
 	}
