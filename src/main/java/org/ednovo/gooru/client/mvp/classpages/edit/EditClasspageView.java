@@ -14,6 +14,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
+import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageResourceItemListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleEvent;
@@ -24,6 +25,7 @@ import org.ednovo.gooru.client.mvp.search.event.ResetProgressHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.DeleteConfirmPopupVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AssignmentEditLabelUc;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
@@ -35,6 +37,7 @@ import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
@@ -631,6 +634,9 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	 *
 	 */
 	private void displayStudentList(StudentsAssociatedListDo result) {
+		if (studentOffSet==0){
+			panelSutdentsList.clear();
+		}
 		for (int i=0; i<result.getSearchResults().size();i++){
 			String studentName = result.getSearchResults().get(i).getUsername().trim();
 			String studentId = result.getSearchResults().get(i).getGooruUid().trim();
@@ -1312,5 +1318,96 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		// TODO Auto-generated method stub
 		
 	}
+
+	@UiHandler("btnDeleteClasspage")
+	public void OnClickDeleteClasspage(ClickEvent event) {
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+		DeletePopupViewVc delete = new DeletePopupViewVc() {
+			@Override
+			public void onClickPositiveButton(ClickEvent event) {
+				AppClientFactory
+						.getInjector()
+						.getClasspageService()
+						.deleteClasspage(classpageDo.getClasspageId(),
+								new SimpleAsyncCallback<Void>() {
+									@Override
+									public void onSuccess(Void result) {
+										Window.enableScrolling(true);
+										AppClientFactory
+												.fireEvent(new SetHeaderZIndexEvent(
+														0, true));
+										AppClientFactory
+												.fireEvent(new DeleteClasspageListEvent(
+														classpageDo
+																.getClasspageId()));
+										Window.enableScrolling(true);
+										AppClientFactory
+												.fireEvent(new SetHeaderZIndexEvent(
+														0, true));
+										hide();
+										if (!AppClientFactory.getLoggedInUser().getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
+										AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",new SimpleAsyncCallback<ClasspageListDo>() {
+													@Override
+													public void onSuccess(ClasspageListDo result) {
+														if(result.getSearchResults()!=null){
+														if (result.getSearchResults().size()>0){
+															AppClientFactory.getInjector().getClasspageService().v2GetAllClass("2", "0",new SimpleAsyncCallback<ClasspageListDo>() {
+																@Override
+																public void onSuccess(ClasspageListDo result) {
+															//	hasClasses = result.getSearchResults().size() > 0 ? true : false; 
+																	if(result.getSearchResults()!=null){
+																	if (result.getSearchResults().size()>0){
+																		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+																		////classpageId = result.getSearchResults().get(0).getGooruOid();
+																		//String userId = result.getSearchResults().get(0).getUser().getGooruUId();
+																	//OpenClasspageEdit(classpageId, userId);
+																		//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,null,true);
+																	}else{
+																		AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+																		//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
+																	}
+																}else
+																{
+																	AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+																}
+																}
+														});
+															}else{
+															AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+														}
+													}else
+													{
+														AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+													}
+													}
+											});
+										}
+										}
+									
+								});
+			}
+
+			@Override
+			public void onClickNegitiveButton(ClickEvent event) {
+				// TODO Auto-generated method stub
+				Window.enableScrolling(true);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+				hide();
+			}
+		};
+		delete.setPopupTitle((i18n.GL0748()));
+		delete.setNotes(i18n.GL0748());
+		delete.setDescText(StringUtil.generateMessage(i18n.GL0824() + "\""
+				+ classpageDo.getTitle() + "\"" + " " + i18n.GL0102()
+				+ i18n.GL_SPL_FULLSTOP() + " " + i18n.GL0825()));
+		delete.setPositiveButtonText(i18n.GL0190());
+		delete.setNegitiveButtonText(i18n.GL0142());
+		delete.setDeleteValidate("delete");
+		delete.setPixelSize(450, 345);
+		delete.show();
+		delete.center();
+	}
+
 }
 

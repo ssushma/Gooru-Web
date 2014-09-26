@@ -34,11 +34,13 @@ public interface IsClassSetupView extends IsViewWithHandlers<ClassSetupUiHandler
 
 	void setPagination(int totalCount, int pagenumVal);
 
-	void setContent(String unitName, String pathwayId, int sequenceNum,String collectionItemid);
+	void setContent(String unitName, String pathwayId, String collectionItemid);
 
 	void zeroResults();
 
 	void setLoadingIcon(boolean isVisible);
+
+	void clearPaginationPanel();
 
 
 

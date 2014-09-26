@@ -49,7 +49,7 @@ public interface AssignmentGoalUiHandlers extends BaseUiHandlers {
 	/**
 	 * @function getAnalyticData 
 	 * 
-	 * @created_date : 16-Sep-2014
+	 * @created_date : 24-Sep-2014
 	 * 
 	 * @description
 	 * 
@@ -58,6 +58,7 @@ public interface AssignmentGoalUiHandlers extends BaseUiHandlers {
 	 * @param classpageId
 	 * @param pageSize
 	 * @param pageNum
+	 * @param pathwayId
 	 * 
 	 * @return : void
 	 *
@@ -69,6 +70,6 @@ public interface AssignmentGoalUiHandlers extends BaseUiHandlers {
 	*/
 	
 	void getAnalyticData(String gooruUId, String classpageId, int pageSize,
-			int pageNum);
+			int pageNum, String pathwayId);
 	
 }

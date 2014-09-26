@@ -50,6 +50,7 @@ import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -1838,10 +1839,11 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	 * @see org.ednovo.gooru.client.service.ClasspageService#getAssignmentData(java.lang.String)
 	 */
 	@Override
-	public List<InsightsUserDataDo> getAssignmentData(String gooruUId, String classpageId, int pageSize, int pageNum)
+	public List<InsightsUserDataDo> getAssignmentData(String gooruUId, String classpageId, int pageSize, int pageNum, String unitId)
 			throws GwtException, ServerDownException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.GET_INSIGHTS_DATA, classpageId, getLoggedInSessionToken(), gooruUId);
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.GET_INSIGHTS_DATA, classpageId, getLoggedInSessionToken(), gooruUId, unitId);
+		System.out.println("GET_INSIGHTS_DATA : "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeAssignmentsData(jsonRep);
@@ -1900,7 +1902,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}
 
 	@Override
-	public ClasspageItemDo updateUnitStatus(String pathWayId,
+	public ClassUnitsListDo updateUnitStatus(String pathWayId,
 			String minimumScore, String assignementStatus, String timeStudying)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
@@ -1925,7 +1927,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 					LOGGER.info("JSON_PAYLOAD==>"+jsonObject.toString());
 					JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),jsonObject.toString());
 					jsonRep = jsonResponseRep.getJsonRepresentation();
-				    return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ClasspageItemDo.class);
+				    return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ClassUnitsListDo.class);
 				}	
 				catch(JSONException e)
 				{

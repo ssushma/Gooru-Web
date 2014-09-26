@@ -26,18 +26,12 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize;
 
 import java.util.ArrayList;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.AssignmentGoal.AssignmentGoalView;
-import org.ednovo.gooru.client.mvp.search.NOSearchResultCollectionVc;
-import org.ednovo.gooru.client.mvp.search.event.RequestShelfCollectionEvent;
-import org.ednovo.gooru.client.mvp.search.event.SearchPaginationEvent;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
-import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
-import org.ednovo.gooru.shared.model.search.SearchDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -46,8 +40,8 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.itextpdf.text.log.SysoCounter;
 
 
 /**
@@ -104,8 +98,14 @@ public class PersonalizeUnitView extends
 	@Override
 	public void displayAssignmentsGoals(StudentsAssociatedListDo result){
 		panelPersonalizeContainer.clear();
-		for (int k=0;k<result.getSearchResults().size();k++){
-			panelPersonalizeContainer.add(new AssignmentGoalView(result.getSearchResults().get(k)));
+		if (result.getSearchResults().size() <=0){
+			Label noStudents = new Label();
+			noStudents.setText("No Students were invited to this class. Please invite students.");
+			panelPersonalizeContainer.add(noStudents);
+		}else{
+			for (int k=0;k<result.getSearchResults().size();k++){
+				panelPersonalizeContainer.add(new AssignmentGoalView(result.getSearchResults().get(k)));
+			}
 		}
 	}
 	@Override

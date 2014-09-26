@@ -6,7 +6,7 @@
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel styleName="{style.classMenuBlock} pathwayContainer">
 		<g:HTMLPanel styleName="{style.classSetupMenu} {style.HoverSetup}">
-			<g:HTMLPanel styleName="{style.classLeftMenu}">
+			<uc:HTMLEventPanel styleName="{style.classLeftMenu}" ui:field="unitDetailsPanel">
 				<g:HTMLPanel styleName="{style.numaricName}">
 					<g:Label styleName="{style.blueNumaric}" ui:field="lblUnitNumber"></g:Label>
 					<g:Label styleName="{style.unitName}" ui:field="lblUnitName"></g:Label>
@@ -14,23 +14,31 @@
 				<g:HTMLPanel styleName="{style.detailsBtn}">
 					<g:Anchor ui:field="unitDetailsButton" text="{i18n.GL2204}"></g:Anchor>
 				</g:HTMLPanel>
-			</g:HTMLPanel>
-			<uc:HTMLEventPanel styleName="{style.assignmentsPreviousArrow}" ui:field="htPanelPreviousArrow">
-					<g:Image url="images/leftSmallarrow.png"></g:Image>
 			</uc:HTMLEventPanel>
+			
+			
 			<g:HTMLPanel styleName="{style.classDetailsMain}">
+			    <uc:HTMLEventPanel styleName="{style.assignmentsPreviousArrow}" ui:field="htPanelPreviousArrow">
+					<g:Image url="images/leftSmallarrow.png"></g:Image>
+			    </uc:HTMLEventPanel>
+			    
 			    <g:HTMLPanel styleName="{style.loadingImageMainDiv}" ui:field="loadingImageLabel">
 					<g:Label styleName="{style.loadingImageForSelfEdit}" />
 				</g:HTMLPanel>
-			    <g:HTMLPanel ui:field="assignmentsContainer"></g:HTMLPanel>
-			    <uc:HTMLEventPanel styleName="{style.assignmentsNextArrow}" ui:field="htPanelNextArrow">
-					<g:Image url="images/rightSmallarrow.png"></g:Image>
-				</uc:HTMLEventPanel>
+				
+			    <g:HTMLPanel ui:field="assignmentsContainer">
+			        <uc:HTMLEventPanel styleName="{style.assignmentsNextArrow}" ui:field="htPanelNextArrow">
+					  <g:Image url="images/rightSmallarrow.png"></g:Image>
+				   </uc:HTMLEventPanel>
+			        
+			    </g:HTMLPanel>
+			    
+			    
 			</g:HTMLPanel>
 				
 			<g:HTMLPanel styleName="{style.classButtons}">
 				<g:Button styleName="secondary btn-block {style.editbutton}" ui:field="editUnitButton" text="{i18n.GL0140}"></g:Button>
-				<g:Button styleName="secondary btn-block" ui:field="addAssignmentButton" text="{i18n.GL2205}"><img src="images/plusIco.png"/></g:Button>
+				<g:Button styleName="secondary btn-block {style.addAssignment}" ui:field="addAssignmentButton" text="{i18n.GL2205}"><img src="images/plusIco.png"/></g:Button>
 				<g:Button styleName="secondary btn-block" ui:field="cancelEditButton" text="{i18n.GL0745}"></g:Button>
 			</g:HTMLPanel>
 		</g:HTMLPanel>

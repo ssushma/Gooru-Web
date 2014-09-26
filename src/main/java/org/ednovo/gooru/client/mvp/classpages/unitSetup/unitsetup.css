@@ -301,7 +301,7 @@
 .uniRequired .bubbleStyle{
 	width:20px;
 	height:20px;
-	background:#B9BBCA url(../images/bubble-pattren1.png) repeat;
+	background:#B9BBCA url(images/liners.png) repeat;
 	border-radius:50% 50%;
 	-webkit-border-radius:50% 50%;
 	-moz-border-radius:50% 50%;
@@ -336,12 +336,18 @@
 
 
 .classLeftMenu{
-	width:115px;
+	width:108px;
 	float:left;
 	background:#ffffff;
 	border-left:5px solid #ffffff;
 }
-
+.classLeftMenu:hover{
+	width:108px;
+	float:left;
+	background:#ffffff;
+	border-left:5px solid #ffffff;
+	cursor:pointer;
+}
 
 .classLeftMenu .blueNumaric{
 	color: #0073bc;
@@ -361,7 +367,10 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
-	width: 85px;
+	width: 69px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .numaricName{
@@ -380,6 +389,8 @@
 } */
 .editbutton{
 	display:block;
+	width: 117px;
+	padding: 8px 9px !important;
 }
 .classMenuBlock:hover .detailsBtn{
 	display:block;
@@ -395,7 +406,7 @@
 	border-top:1px solid #eeeeee;
 	border-bottom:1px solid #eeeeee;
 	max-height: 97px;
-min-height: 97px;
+	min-height: 97px;
 }
 		
 .HoverSetup .classLeftMenu{
@@ -425,7 +436,7 @@ min-height: 97px;
 	float:left;		
 	padding:0 2px;
 	position:relative;
-	width:70px;
+	width:68px;
 	height:80px;
 }
 
@@ -470,7 +481,7 @@ min-height: 97px;
 .classButtons{
 	float: left;
     width: 107px;
-	padding:5px 0;
+	padding:10px 0;
 }
 		
 .single{
@@ -516,7 +527,7 @@ min-height: 97px;
 
 .classEdit{
 	display: inline-block;
-	margin: 0 5px;
+	margin: 0 4px;
 }
 .cancelbutton{
 	text-align: center;
@@ -559,7 +570,7 @@ margin: 6px 0;
 }
 .assignmentsPreviousArrow{
 	display:inline-block;
-	margin:51px 0 0px 0px;
+	margin:33px 0 0px 0px;
 	cursor: pointer;
 	float: left;
 }
@@ -613,7 +624,7 @@ margin: 6px 0;
 .loadingImageForSelfEdit {
 	background: url("images/core/B-Dot.gif");
 	width: 166px;
-	height: 153px;
+	height: 128px;
 	margin: 0 auto;
 	margin-top: -35px;
 	position: absolute;
@@ -641,4 +652,10 @@ margin: 6px 0;
 }
 .requiredLabel{
 	display:inline-block;
+}
+
+.addAssignment{
+	width: 117px;
+	padding: 8px 9px !important;
+	margin-top: 12px !important;
 }

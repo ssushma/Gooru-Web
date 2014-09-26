@@ -23,6 +23,10 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.classsetup;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
@@ -36,6 +40,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> implements ClassSetupUiHandlers{
 
 	
@@ -65,6 +70,33 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		//loadPathways();	
+		/*ResetPaginationHandler reset = new ResetPaginationHandler() {
+
+			@Override
+			public void callPathwaysAPI(int offSetVal) {
+				System.out.println("1");
+				getPaginatedPathways(offSetVal);
+				
+			}
+		};*/
+	}
+
+	@Override
+	protected void onReset() {
+		// TODO Auto-generated method stub
+		super.onReset();
+		//loadPathways();
+	}
+	
+	@Override
+	public void setUnit(String unitName, String pathwayId, String collectionItemId) {
+		getView().setLoadingIcon(false);
+		getView().setContent(unitName,pathwayId,collectionItemId);
+	}
+	
+	@Override
+	public void loadPathways() {
 		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 		int offsetVal = 0;
 		if(pageNum != null)
@@ -77,43 +109,20 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		}
 		getView().setLoadingIcon(true);
 		getPaginatedPathways((offsetVal)*limit);
-		
-		
-		/*ResetPaginationHandler reset = new ResetPaginationHandler() {
-
-			@Override
-			public void callPathwaysAPI(int offSetVal) {
-				System.out.println("1");
-				getPaginatedPathways(offSetVal);
-				
-			}
-		};*/
 	}
 	
 	@Override
-	public void setUnit(String unitName, String pathwayId, int sequenceNum,String collectionItemId) {
-		getView().setLoadingIcon(false);
-		getView().setContent(unitName,pathwayId,sequenceNum,collectionItemId);
-	}
-	
-	@Override
-	public void loadPathways() {
-		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-		int offsetVal = 0;
-		if(pageNum != null)
-		{
-			offsetVal = Integer.parseInt(pageNum);
-			offsetVal = (offsetVal-1);
-		}
-		getPaginatedPathways((offsetVal)*limit);
+	protected void onHide() {
+		super.onHide();
+		getView().clearPanel();
+		getView().clearPaginationPanel();
+		
 	}
 	
 	@Override
 	public void OnUnitSetupClick() {
 		setInSlot(UNITS_SLOT, unitSetupPresenter,false);
 	}
-	
-
 	
 	public void getPathways(){
 		getView().clearPanel();
@@ -142,10 +151,11 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 						}
 					}
 					getView().setPagination(classDo.getTotalHitCount(),pageNumVal);
+					getView().clearPanel();
 					for(int i=0;i<classDo.getSearchResults().size();i++)
 					{
 
-						setUnit(classDo.getSearchResults().get(i).getResource().getTitle(), classDo.getSearchResults().get(i).getResource().getGooruOid(),classDo.getSearchResults().get(i).getItemSequence(),classDo.getSearchResults().get(i).getCollectionItemId());
+						setUnit(classDo.getSearchResults().get(i).getResource().getTitle(), classDo.getSearchResults().get(i).getResource().getGooruOid(),classDo.getSearchResults().get(i).getCollectionItemId());
 
 						
 					}
@@ -160,7 +170,6 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		getView().clearPanel();
 		getView().setLoadingIcon(true);
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-
 		if(classpageid != null)
 		{
 
@@ -171,7 +180,7 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 				if(classDo.getSearchResults().size()>0){
 					String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 					int pageNumVal = 0;
-					if(pageNum != null || !pageNum.isEmpty()){
+					if(pageNum != null){
 						try{
 							pageNumVal = Integer.parseInt(pageNum);
 						}
@@ -181,8 +190,9 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 					}
 
 					getView().setPagination(classDo.getTotalHitCount(),pageNumVal);
+					getView().clearPanel();
 					for(int i=0;i<classDo.getSearchResults().size();i++){
-						setUnit(classDo.getSearchResults().get(i).getResource().getTitle(), classDo.getSearchResults().get(i).getResource().getGooruOid(),classDo.getSearchResults().get(i).getItemSequence(),classDo.getSearchResults().get(i).getCollectionItemId());
+						setUnit(classDo.getSearchResults().get(i).getResource().getTitle(), classDo.getSearchResults().get(i).getResource().getGooruOid(),classDo.getSearchResults().get(i).getCollectionItemId());
 
 					}
 				}
@@ -206,9 +216,53 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 			public void onSuccess(CollectionDo pathwayItemObject) {
 				if(pathwayItemObject.getTitle() != null)
 				{
-					//System.out.println("itemseq::::"+pathwayItemObject.getItemSequence());
-					getPaginatedPathways(offsetVal);
-					//setUnit(pathwayItemObject.getTitle(),pathwayItemObject.getGooruOid(),pathwayItemObject.getItemSequence());
+					
+					String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+					
+					if(classpageid != null)
+					{
+					
+					AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "2", "0", new SimpleAsyncCallback<ClassDo>() {
+						@Override
+						public void onSuccess(ClassDo classpageItemDo) {
+						
+							
+							int totalHitCounter = classpageItemDo.getTotalHitCount();
+							
+							if(totalHitCounter >= 5)
+							{
+								int totalPages = (totalHitCounter / 5)
+										+ ((totalHitCounter % 5) > 0 ? 1 : 0);		
+			
+								totalPages = (totalHitCounter / 5)
+										+ ((totalHitCounter % 5) > 0 ? 1 : 0);
+
+								Map<String,String> params = new HashMap<String,String>();
+								String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+								String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+								String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+								String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+								params.put("pageSize", pageSize);
+								params.put("classpageid", classpageid);
+								params.put("pageNum", totalPages+"");
+								params.put("pos", pos);
+								PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+								AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+
+								if(totalPages!=0)
+								{	
+									totalPages = (totalPages-1);
+								}
+								getPaginatedPathways((totalPages)*limit);
+								
+							}
+							else
+							{
+								getPaginatedPathways(0);
+							}
+						}
+					});
+					}
 				}
 			}
 		});
@@ -238,7 +292,76 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		AppClientFactory.getInjector().getClasspageService().deletePathway(classpageid, pathwayId, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				getPaginatedPathways(offsetVal);
+				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				
+				if(classpageid != null)
+				{
+				AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "2", "0", new SimpleAsyncCallback<ClassDo>() {
+					@Override
+					public void onSuccess(ClassDo classpageItemDo) {
+					
+						
+						int totalHitCounter = classpageItemDo.getTotalHitCount();
+						
+						if(totalHitCounter > 5)
+						{
+							int totalPages = (totalHitCounter / 5)
+									+ ((totalHitCounter % 5) > 0 ? 1 : 0);			
+							
+							totalPages = (totalHitCounter / 5)
+									+ ((totalHitCounter % 5) > 0 ? 1 : 0);
+									
+							Map<String,String> params = new HashMap<String,String>();
+							String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+							String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+							String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+							String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+							
+							int pageIntVal = 0;
+							if(pageNum != null)
+							{
+								pageIntVal = Integer.parseInt(pageNum);
+							}
+							params.put("pageSize", pageSize);
+							params.put("classpageid", classpageid);
+							if(pageIntVal<=totalPages)
+							{
+								totalPages = pageIntVal;
+								params.put("pageNum", pageIntVal+"");
+							}
+							else
+							{
+								params.put("pageNum", totalPages+"");	
+							}
+							params.put("pos", pos);
+							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+							AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+							
+							if(totalPages!=0)
+							{	
+								totalPages = (totalPages-1);
+							}
+							getPaginatedPathways((totalPages)*limit);
+
+							
+						}
+						else
+						{
+							Map<String,String> params = new HashMap<String,String>();
+							String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+							String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+							String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+							String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+							params.put("pageSize", pageSize);
+							params.put("classpageid", classpageid);
+							params.put("pageNum", "0");
+							PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+							AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+							getPaginatedPathways(0);
+						}
+					}
+				});
+				}
 			}
 		});
 		}
@@ -248,49 +371,10 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 	public void addAssignmentsContainerPopup(String pathwayIdVal) {
 	classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
 	assignmentContainer.getUserShelfData();
-	assignmentContainer.addAssignmentToPathway(classpageId, pathwayIdVal,CLASS_SETUP);
+	assignmentContainer.addAssignmentToPathway(classpageId, pathwayIdVal,CLASS_SETUP,"");
 	addToPopupSlot(assignmentContainer);
 	}
 	
-	@Override
-	public int getPathwayTotalHitcount(){
-		//getView().clearPanel();
-		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-	
-		if(classpageid != null)
-		{
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "2", "0", new SimpleAsyncCallback<ClassDo>() {
-			@Override
-			public void onSuccess(ClassDo classpageItemDo) {
-				totalHit=classpageItemDo.getTotalHitCount();
-		/*		if(classpageItemDo.getSearchResults().size()>0)
-				{
-					String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-					int pageNumVal = 0;
-					if(pageNum != null || !pageNum.isEmpty())
-					{
-						try
-						{
-						pageNumVal = Integer.parseInt(pageNum);
-						}
-						catch(Exception e)
-						{
-							
-						}
-					}
-					getView().setPagination(classpageItemDo.getTotalHitCount(),pageNumVal);
-					for(int i=0;i<classpageItemDo.getSearchResults().size();i++)
-					{
-						setUnit(classpageItemDo.getSearchResults().get(i).getResource().getTitle(), classpageItemDo.getSearchResults().get(i).getResource().getGooruOid(),classpageItemDo.getSearchResults().get(i).getItemSequence());
-						
-					}
-				}*/
-			}
-		});
-		}
-		return totalHit;
-	}
-
 	@Override
 	public void callPathwaysAPI(int offSetVal) {
 		// TODO Auto-generated method stub

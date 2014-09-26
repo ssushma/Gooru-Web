@@ -33,6 +33,7 @@ import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -47,7 +48,6 @@ import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 //import org.ednovo.gooru.shared.model.content.ResourceItemDo;
 
@@ -589,7 +589,7 @@ public interface ClasspageService extends BaseService {
 	*/
 	
 	List<InsightsUserDataDo> getAssignmentData(String gooruUId,
-			String classpageId, int pageSize, int pageNum) throws GwtException,
+			String classpageId, int pageSize, int pageNum,String unitId) throws GwtException,
 			ServerDownException;
 	public ClasspageItemDo updateAssignmentDetails(String classId,String unitId,String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus) throws GwtException;
 	
@@ -598,7 +598,7 @@ public interface ClasspageService extends BaseService {
 	CollectionDo updateAssignmentStatusAsCompleteorOpen(
 			String classpageId,String unitGooruOid,String collectionItemId, boolean isComplete) throws GwtException;
 
-    ClasspageItemDo updateUnitStatus(String pathWayId,String minimumScore, String assignementStatus, String timeStudying) throws GwtException;
+	ClassUnitsListDo updateUnitStatus(String pathWayId,String minimumScore, String assignementStatus, String timeStudying) throws GwtException;
     /**
 	 * @function pathwayItemMoveWithReorder 
 	 * 

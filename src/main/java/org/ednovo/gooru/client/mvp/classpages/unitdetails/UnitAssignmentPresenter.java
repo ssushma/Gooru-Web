@@ -53,32 +53,25 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		getView().setUiHandlers(this);
 		this.studentPersonalizePresenter = studentPersonalizePresenter;
 	}
+	@Override
+	protected void onHide() {
+		System.out.println("onhide method...........");
+		getView().resetUnitAssignmentView();
+	}
 	
 	public void getClassUnits(String classId){
-		if(getView().getUnitPanel().getWidgetCount()>=0){
+		if(getView().getUnitPanel().getWidgetCount()==0){
 			getPathwayUnits(classId,limit,offSet,true);
-			/*String pageNum = AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-			if(pageNum!=null){
-				if(pageNum.equals("0")){
-					pageNum="1";
-				}
-				int offsetValue=Integer.parseInt(pageNum);
-				getPathwayUnits(classId,limit,(offsetValue*5),true);
-			}else{
-				getPathwayUnits(classId,limit,offSet,true);
-			}*/
-			
 		}
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 		String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
-		if(unitId!=null&&getView().getCircleContainerPanel().getWidgetCount()>=0){
+		if(unitId!=null&&getView().getCircleContainerPanel().getWidgetCount()==0){
 			getPathwayItems(classId,unitId,"sequence",assignmentLimit,assignmentOffset);
 		}
 		if(assignmentId!=null){
 			getAssignemntDetails(assignmentId,classId,unitId);
 		}
 	}
-	
 	
 	
 	@Override
@@ -95,15 +88,12 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			public void onSuccess(UnitAssignmentsDo result) {
 				String aid=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 				if(aid==null){
-					if(result!=null)
-					{
-					if(result.getSearchResults() != null)
-					{
-					if(result.getSearchResults().size()>0)
-					{
-						getAssignemntDetails(result.getSearchResults().get(0).getCollectionItemId(),classpageId,pathwayGooruOid);
-					}
-					}
+					if(result!=null){
+						if(result.getSearchResults() != null){
+							if(result.getSearchResults().size()>0){
+								getAssignemntDetails(result.getSearchResults().get(0).getCollectionItemId(),classpageId,pathwayGooruOid);
+							}
+						}
 					}
 				}
 				getView().getSequence(result);
@@ -113,17 +103,23 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	}
 	
 	public void getPathwayUnits(final String classId,int limit, int offset,final boolean clearPanel) {
+		if(clearPanel){
+			getView().getUnitPanel().clear();
+		}
+		System.out.println("getPathwayUnits");
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
 			@Override
 			public void onSuccess(ClassDo classDo) {
-				getView().showUnitNames(classDo,clearPanel);
-				getView().scoreHederView(classDo.getSearchResults().get(0).getCollectionItemId());
-//				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
-//					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
-//					if(unitId==null){
-//						getPathwayItems(classId,classDo.getSearchResults().get(0).getResource().getGooruOid(),"sequence",assignmentLimit,assignmentOffset);
-//					}
-//				}
+				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+					getView().showUnitNames(classDo,clearPanel);
+					String seqNumber=AppClientFactory.getPlaceManager().getRequestParameter("seqnumber", null);
+					if(seqNumber!=null){
+						int number=Integer.parseInt(seqNumber);
+						number=number-1;
+						getView().scoreHederView(classDo.getSearchResults().get(number));
+					}
+				}
+				
 			}
 		});
 	}
@@ -150,12 +146,10 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	}
 
 	public void showDashBoardDetails() {
-		// TODO Auto-generated method stub
 		getView().showDashBoard();
 	}
 
 	public void showAssignmentDetails() {
-		// TODO Auto-generated method stub
 		getView().showAssignments();
 	}
 	

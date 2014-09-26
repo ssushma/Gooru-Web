@@ -238,6 +238,7 @@
 	font-weight:bold;
 	font-family: arial;
 	font-size:12px;
+	margin-right:5px;
 	display: inline-block;
 }
 .directionText {
@@ -507,4 +508,17 @@ width: 30px;
 	color: #fff;
 	font-weight: bold;
 	border: 2px solid #fff;
+}
+
+.standardtext{
+	float: right;
+	/* margin-top: -15px; */
+}
+
+.errorstyle{
+	font-style: italic;
+	color: #fbb03b;
+}
+.hourlabel{
+	margin-right:5px;
 }

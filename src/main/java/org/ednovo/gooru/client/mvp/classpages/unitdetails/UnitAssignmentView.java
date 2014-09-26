@@ -38,11 +38,13 @@ import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -69,7 +71,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHandlers> implements IsUnitAssignmentView{
 
-	@UiField HTMLPanel assignmentContainer,goalContainer;
+	@UiField HTMLPanel assignmentContainer,goalContainer,personalizeContainer, panelPersonalizeButtonContainer;
 
 
 	private static UnitAssignmentViewUiBinder uiBinder = GWT.create(UnitAssignmentViewUiBinder.class);
@@ -80,13 +82,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 	}
 	
-	@UiField HTMLPanel unitPanel,containerPanel,scoreHedingContainer,htmDashBoardTabs,timeLablePanel;
+	@UiField HTMLPanel unitPanel,containerPanel,scoreHedingContainer,htmDashBoardTabs,timeLablePanel,personalizePanel;
 	
 	@UiField Label lblMoreUnits,unitTitleDetails,lblTimeHours,lblTimeMin;
 	
 	@UiField Anchor unitSetupButton;
 	
-	@UiField Button btnDashBoard,btnAssignment,btnSetGoal;
+	@UiField Button btnDashBoard,btnAssignment,btnSetGoal, btnPersonalize;
 	
 	@UiField Label lblControl,lblGreenControl;
 	
@@ -95,6 +97,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	UnitAssignmentCssBundle res;
 	
 	ClassDo classDo;
+	
+	ClassUnitsListDo classUnitsListDo;
 	
 	String unitCollectionId;
 	
@@ -106,6 +110,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	private String EDITGOAL= i18n.GL2196();
 	private Boolean isClickOnAssignment =false;
+	private Boolean isPersonalize = false;
 		
 	@UiField HTMLPanel circleContainerPanel;
 
@@ -135,12 +140,19 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private int selectedUnitNumber;
 	UnitAssignentStudentPlayView UnitAssignentStudentPlayView =null;
 	private int totalAssignmentHitcount;
+	Label requiredText =new Label();
 	@Inject
 	public UnitAssignmentView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
-		unitSetupButton.setText(i18n.GL2198());
+		String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		requiredText.getElement().setAttribute("style", "display: inline;margin-right: 22px;");
+		if(pageLocation.equals(PlaceTokens.STUDENT)){
+			unitSetupButton.setText(i18n.GL2198());			
+		}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
+			unitSetupButton.setText(i18n.GL2216());	
+		}
 		lblMoreUnits.setText(i18n.GL2199());
 		btnDashBoard.setText(i18n.GL2200());
 		btnAssignment.setText(i18n.GL1933());
@@ -157,6 +169,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		txtHours.getElement().setAttribute("style", "text-align:right");
 		txtMinuts.getElement().setAttribute("style", "text-align:right");
 		timeLablePanel.setVisible(false);
+		
+		StringUtil.setAttributes(assignmentContainer.getElement(), "divAssignmentContainer", null, null);
+		StringUtil.setAttributes(personalizeContainer.getElement(), "divPersonalizeContainer", null, null);
+		StringUtil.setAttributes(btnPersonalize.getElement(), "btnPersonalize", "Personalize Units", "Personalize Units");
+		panelPersonalizeButtonContainer.setVisible(false);
+		displayPersonalizeOptions(false);
+		setPersonalizeState(false);
 	}
 	
 	public HTMLPanel getUnitPanel(){
@@ -172,6 +191,19 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		assignmentContainer.clear();
 		unitTitleDetails.setText("");
 		unitTitleDetails.setText(unitTitle);
+		String tempUntiTitle=unitTitle;
+		if (unitTitle.length() > 10){
+			tempUntiTitle = unitTitle.substring(0, 11) + "...";
+		}
+		btnPersonalize.setText(StringUtil.generateMessage(i18n.GL2221(), tempUntiTitle));
+		setPersonalizeState(false);
+	}
+	
+	public void resetUnitAssignmentView(){
+		circleContainerPanel.clear();
+		assignmentContainer.clear();
+		unitPanel.clear();
+		unitTitleDetails.setText("");
 	}
 	
 	public class UnitChangeEvent implements ClickHandler{
@@ -185,10 +217,16 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			String tempUntiTitle=unitTitle;
+			if (unitTitle.length() > 10){
+				tempUntiTitle = unitTitle.substring(0, 11) + "...";
+			}
+			btnPersonalize.setText(StringUtil.generateMessage(i18n.GL2221(), tempUntiTitle));
 			selectedUnitNumber = unitNumber;
 			resetCircleAndAssignmentContainer(unitTitle);
-			setUnitCollectionId(unitsWidget.getUnitCollectionItemId());
+			setClassUnitsListDo(unitsWidget.getClassUnitDo());
 			revealPlace("unitdetails",null,unitsWidget.getUnitGooruOid(),null);
+			scoreHederView(unitsWidget.getClassUnitDo());
 			removeAndAddUnitSelectedStyle();
 		}
 	}
@@ -217,16 +255,21 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	
 	public void setCircleData(UnitAssignmentsDo unitAssignmentsDo){
-	
+		requiredText.setText(i18n.GL2222());
 		rightArrow.getElement().setAttribute("style", "cursor:pointer");
 		leftArrow.getElement().setAttribute("style", "cursor:pointer");
+		
+		
+		
 		if(unitAssignmentsDo.getTotalHitCount() != null){
 			totalAssignmentHitcount = unitAssignmentsDo.getTotalHitCount();
 		}else{
 			totalAssignmentHitcount = 0;
 		}
 		if(unitAssignmentsDo!=null){
+			
 			if(unitAssignmentsDo.getSearchResults()!=null){
+				
 				if(unitAssignmentsDo.getSearchResults().size()!=0){
 					try{
 						if(leftHandler!=null) {
@@ -240,7 +283,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					leftHandler=leftArrow.addClickHandler(new cleckOnNext("left"));
 					rightHandler=rightArrow.addClickHandler(new cleckOnNext("right"));
 					circleContainerPanel.clear();
+					circleContainerPanel.add(requiredText);
 					leftArrow.setUrl("images/leftSmallarrow.png");
+					leftArrow.getElement().setAttribute("style","margin-left: 10px");
 					circleContainerPanel.add(leftArrow);
 					for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 						unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
@@ -248,9 +293,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 						unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());	
 						circleContainerPanel.add(unitCricleViewObj);
 						String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-						
 						if(pageLocation.equals(PlaceTokens.STUDENT)){
-							unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getEstimatedTime(),unitAssignmentsDo.getSearchResults().get(i).getDirection(),unitAssignmentsDo.getSearchResults().get(i).getCollectionId(),unitCricleViewObj.getElement().getId()));
+							unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getPlannedEndDate(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid(),unitCricleViewObj.getElement().getId()));
 							
 						}else{
 							unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId()));
@@ -297,9 +341,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			removeAssignmentSelectedStyle();
 			addAssignmentSelectStyle(unitCricleView);
 			assignmentContainer.clear();
+			isPersonalize = false;
+			displayPersonalizeOptions(isPersonalize);
+			setPersonalizeState(isPersonalize);
 			String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 			revealPlace("unitdetails", null, unitId, unitCricleView.getAssignementId());
-			
 		}
 	}
 	public void removeAssignmentSelectedStyle(){
@@ -322,10 +368,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
 			 if(slot==UnitAssignmentPresenter._SLOT){
-				  assignmentContainer.clear();
-				 assignmentContainer.add(content);
+				 personalizeContainer.clear();
+				 personalizeContainer.add(content);
+				 personalizeContainer.setVisible(false);
 			}else{
-//				assignmentContainer.setVisible(false);
 			}
 		}
 	}
@@ -370,10 +416,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	@Override
 	public void onMouseOver(MouseOverEvent event) {
-		unitAssigmentReorder = new UnitAssigmentReorder(seqNo,classDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null),selectedUnitNumber,totalHintCount,selectedAssignmentId){
+		unitAssigmentReorder = new UnitAssigmentReorder(seqNo,classDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null),selectedUnitNumber,totalHintCount,selectedAssignmentId,AppClientFactory.getPlaceManager().getRequestParameter("uid", null)){
 			@Override
 			public void reorderAssignment(int seqPosition,String selectedPathId,String targetUnitNumb) { 
-				setAssignmentToNewPosition(seqPosition,selectedPathId);
+				setAssignmentToNewPosition(seqPosition,selectedPathId,totalHintCount);
 			}
 		};
 		unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop()+40);
@@ -385,8 +431,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	public class StudentAssignmentMouseOverHandler implements MouseOverHandler{
 		int seqNumber;
-		String title,dueDate,direction,collectionId,collectionItemId;
-		public StudentAssignmentMouseOverHandler(int seqNumber,String title,String dueDate,String direction,String collectionId,String collectionItemId){
+		String title,direction,collectionId,collectionItemId;
+		Long dueDate;
+		public StudentAssignmentMouseOverHandler(int seqNumber,String title,Long dueDate,String direction,String collectionId,String collectionItemId){
 			this.seqNumber = seqNumber;
 			this.title = title;
 			this.dueDate = dueDate;
@@ -456,10 +503,17 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		if(clearPanel){
 			unitPanel.clear();
+			unitsPageNumber=0;
 		}
 		unitsTotalCount=classDo.getTotalHitCount();
 		updatePageNumber();
 		if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+			String tempUntiTitle=classDo.getSearchResults().get(0).getResource().getTitle();
+			if (tempUntiTitle.length() > 10){
+				tempUntiTitle = tempUntiTitle.substring(0, 11) + "...";
+			}
+			btnPersonalize.setText(StringUtil.generateMessage(i18n.GL2221(), tempUntiTitle));
+			
 			ArrayList<ClassUnitsListDo> classListUnitsListDo =classDo.getSearchResults();
 			for(int i=0; i<classListUnitsListDo.size(); i++){
 				ClassUnitsListDo classListUnitsListDObj=classDo.getSearchResults().get(i);
@@ -469,7 +523,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				if(unitTitle!=null && unitTitle.length()>11){
 					unitTitle = unitTitle.substring(0,11)+"...";
 				}
+				
 				int unitNumber = classDo.getSearchResults().get(i).getItemSequence();
+				classListUnitsListDo.get(i).setItemSequence(unitPanel.getWidgetCount()+1);
 				UnitWidget unitsWidget=new UnitWidget(classListUnitsListDo.get(i));
 				unitsWidget.addClickHandler(new UnitChangeEvent(unitsWidget,unitTitle,unitNumber));
 				if(unitId!=null&&unitId.equals(unitsWidget.getUnitGooruOid())){
@@ -486,6 +542,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	public void setUnitName(String unitName){
 		unitTitleDetails.setText(unitName!=null?unitName:"");
+	}
+	public void getUnitsPanel(){
+		unitPanel.clear();
 	}
 	@Override
 	public void getPathwayItems(){
@@ -574,29 +633,29 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 		if(Math.abs(totalAssignments-assignmentOffset)>assignmentLimit){
 			if(Math.abs(totalAssignments-assignmentOffset)==totalAssignments){
-				leftArrow.setVisible(false);
-				rightArrow.setVisible(true);
+				leftArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+				rightArrow.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			}else{
-				leftArrow.setVisible(true);
-				rightArrow.setVisible(true);
+				leftArrow.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+				rightArrow.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			}
 			
 		}else{
-			rightArrow.setVisible(false);
-			leftArrow.setVisible(true);
+			leftArrow.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+			rightArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		}
 		if(totalAssignments<=10){
-			rightArrow.setVisible(false);
-			leftArrow.setVisible(false);
+			leftArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			rightArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		}
 		
 	}
 	private void showAndHidePaginationArrows() {
 	if(totalAssignmentHitcount>assignmentLimit){
-			rightArrow.setVisible(true);
+		rightArrow.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 		}else{
-			rightArrow.setVisible(false);
-			leftArrow.setVisible(false);
+			leftArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			rightArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		}
 	}
 	public void getUnitAssignments(int assignmentOffset,final boolean isAssignmentEditmode){
@@ -624,17 +683,22 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		classUnitsDo.getResource().setCollectionItems(new ArrayList<ClasspageItemDo>());
 	}
 	private int getAssignmentOffsetValue(String direction) {
+		
 	if(direction.equals(NEXT)){
 			assignmentOffset = assignmentOffset+assignmentLimit;
 		}else{
 			assignmentOffset = Math.abs(assignmentOffset-assignmentLimit);
 		}
+	
 	return assignmentOffset;
 	}
 	private void setAssignmentsForUnit(UnitAssignmentsDo unitAssignmentsDo) {
+		requiredText.setText(i18n.GL2222());
 		circleContainerPanel.clear();
+		circleContainerPanel.add(requiredText);
 		if(classUnitsDo!=null){
 			leftArrow.setUrl("images/leftSmallarrow.png");
+			leftArrow.getElement().setAttribute("style","margin-left: 10px");
 			circleContainerPanel.add(leftArrow);
 
 			for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
@@ -643,14 +707,16 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());
 				circleContainerPanel.add(unitCricleViewObj);
 				String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-				
 				if(pageLocation.equals(PlaceTokens.STUDENT)){
-					unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getEstimatedTime(),unitAssignmentsDo.getSearchResults().get(i).getDirection(),unitAssignmentsDo.getSearchResults().get(i).getCollectionId(),unitCricleViewObj.getElement().getId()));
+					unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getPlannedEndDate(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid(),unitCricleViewObj.getElement().getId()));
 					
 				}else{
 					unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId()));
 					}
 				unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
+				
+			
+				
 			}
 			
 			rightArrow.setUrl("images/rightSmallarrow.png");
@@ -658,15 +724,62 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 		}			
 			
+	}
+	/**
+	 * 
+	 * @function setPersonalizeState 
+	 * 
+	 * @created_date : 25-Sep-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param state
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void setPersonalizeState(boolean state){
+		if (state){			
+			btnPersonalize.getElement().replaceClassName("primary", "secondary");
+			btnPersonalize.getElement().addClassName("personalizeBorder");
+		}else{			
+			btnPersonalize.getElement().replaceClassName("secondary", "primary");
+			btnPersonalize.getElement().removeClassName("personalizeBorder");			
 		}
+	}
 
-	
+	@UiHandler("btnPersonalize")
+	public void clickOnPersonalize(ClickEvent event){
+		containerPanel.setVisible(true);
+		goalContainer.setVisible(false);
+		if (!isPersonalize){
+			isPersonalize = true;
+			
+			assignmentContainer.setVisible(false);
+			personalizeContainer.setVisible(true);
+		}else{
+			isPersonalize = false;
+			
+			assignmentContainer.setVisible(true);
+			personalizeContainer.setVisible(false);
+		}
+		setPersonalizeState(isPersonalize);
+		displayPersonalizeOptions(isPersonalize);
+	}
 	@UiHandler("btnDashBoard")
 	public void clickOnDashBoard(ClickEvent clickEvent){
 		btnDashBoard.setStyleName(res.unitAssignment().selected());
 		btnAssignment.removeStyleName(res.unitAssignment().selected());
 		containerPanel.setVisible(false);
 		goalContainer.setVisible(true);
+		assignmentContainer.setVisible(false);
+		personalizeContainer.setVisible(false);
 	}
 	
 	@UiHandler("btnAssignment")
@@ -676,18 +789,21 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		btnDashBoard.removeStyleName(res.unitAssignment().selected());
 		containerPanel.setVisible(true);
 		goalContainer.setVisible(false);
+		assignmentContainer.setVisible(false);
+		personalizeContainer.setVisible(false);
 	}
 	
-	public void scoreHederView(String collectionItemId) {
+	public void scoreHederView(ClassUnitsListDo classUnitsListDo) {
 		scoreHedingContainer.clear();
 		ScoreHedingView scoreHedingView = null;
-		String collectionId=getUnitCollectionId();
-		System.out.println("unitid----------------:"+collectionId);
-		if(collectionId==null){
-			collectionId=collectionItemId;
+
+		ClassUnitsListDo classUnits=getClassUnitsListDo();
+		
+		if(classUnits==null){
+			classUnits=classUnitsListDo;
 		}
 		for(int i=0; i<2; i++){
-			scoreHedingView=new ScoreHedingView(collectionId);
+			scoreHedingView=new ScoreHedingView(classUnits);
 			scoreHedingContainer.add(scoreHedingView);
 			if(i==0){
 				scoreHedingView.getLblTitle().setText(i18n.GL2195());
@@ -747,14 +863,21 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}		
 	}
 	
-	public void setAssignmentToNewPosition(int pageNumber,String selectedPathId){
-		//if(selectedPathId.equalsIgnoreCase(unitId)){
-		assignmentOffset =(pageNumber/assignmentLimit)*assignmentLimit;
-		if(assignmentOffset==pageNumber){
-			assignmentOffset = assignmentOffset-assignmentLimit;
+	public void setAssignmentToNewPosition(int pageNumber,String selectedPathId,int totalHintCount){
+		
+		if(selectedPathId.equalsIgnoreCase(unitId)){
+			assignmentOffset =(pageNumber/assignmentLimit)*assignmentLimit;
+			if(assignmentOffset==pageNumber){
+				assignmentOffset = assignmentOffset-assignmentLimit;
+			}
+			getUnitAssignments(assignmentOffset,isEditMode);
+		}else{
+			if(totalHintCount-1==assignmentOffset){
+				assignmentOffset=assignmentOffset-assignmentLimit;
+			}
+			getUnitAssignments(assignmentOffset,isEditMode);
+			
 		}
-		getUnitAssignments(assignmentOffset,isEditMode);
-		//}
 	}
 	
 	
@@ -762,10 +885,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	@Override
 	public void showDashBoard() {
-		System.out.println("showDashBoard");
+		
 		if(!isClickOnAssignment){
 			goalContainer.setVisible(true);
 			containerPanel.setVisible(false);
+			assignmentContainer.setVisible(true);
+			personalizeContainer.setVisible(false);
 //			scoreHederView();
 			setDashBoardIds();
 			htmDashBoardTabs.setVisible(true);
@@ -783,6 +908,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		htmDashBoardTabs.removeFromParent();
 		containerPanel.setVisible(true);
 		goalContainer.removeFromParent();
+		assignmentContainer.setVisible(true);
+		personalizeContainer.setVisible(false);
 		
 	}
 	
@@ -826,7 +953,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 
 	}
-	
+	/**
+	 * Get the valid Unit completion time.
+	 * @param time @string
+	 * @param isHours 
+	 * @return validation time
+	 */
 
 	private String getValidationTime(String time, boolean isHours) {
 		// TODO Auto-generated method stub
@@ -844,7 +976,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@UiHandler("btnSetGoal")
 	public void clickOnGoalBtn(ClickEvent clickEvent){
-		System.out.println("txtHours.getText():"+txtHours.getText());
+		
 		if((txtHours.getText()!=null && txtHours.getText()!="")|| (txtMinuts.getText()!=null && txtMinuts.getText()!="") ){
 			if(btnSetGoal.getText().equals(SETGOAL)){
 				lblTimeHours.setText(txtHours.getText()+" h");
@@ -890,6 +1022,25 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	 */
 	public void setUnitCollectionId(String unitCollectionId) {
 		this.unitCollectionId = unitCollectionId;
+	}
+
+	/**
+	 * @return the classUnitsListDo
+	 */
+	public ClassUnitsListDo getClassUnitsListDo() {
+		return classUnitsListDo;
+	}
+
+	/**
+	 * @param classUnitsListDo the classUnitsListDo to set
+	 */
+	public void setClassUnitsListDo(ClassUnitsListDo classUnitsListDo) {
+		this.classUnitsListDo = classUnitsListDo;
+	}
+	
+	public void displayPersonalizeOptions(boolean isPersonalize)
+	{
+		personalizePanel.setVisible(isPersonalize);
 	}
 	
 }

@@ -40,7 +40,7 @@ public class UnitSetupStudentPresenter extends PresenterWidget<IsUnitSetupStuden
 	public UnitSetupStudentPresenter(EventBus eventBus, IsUnitSetupStudentView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
-		getPathwayCompleteDetails(limit,offSet);
+		//getPathwayCompleteDetails(limit,offSet);
 	}
 
 	@Override

@@ -28,8 +28,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -157,7 +155,22 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 		unitAssignmentWidgetContainer.clear();
 		for (int i = 0; i < unitSize; i++) {
 			ClassUnitsListDo classListUnitsListDo = classDo.getSearchResults().get(i);
-			unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(classListUnitsListDo);
+			String pageNumVal=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+			int pageIntVal = 0;
+			if(pageNumVal != null)
+			{
+				pageIntVal = Integer.parseInt(pageNumVal);
+				if(pageIntVal!=0)
+				{
+				pageIntVal = pageIntVal-1;
+				}
+			}
+			int sequenceNum = unitAssignmentWidgetContainer.getWidgetCount();
+			System.out.println("seq:"+sequenceNum);
+			sequenceNum = (pageIntVal * 5)+sequenceNum;
+			sequenceNum = sequenceNum + 1;
+			System.out.println("sequenceNum::"+sequenceNum);
+			unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(sequenceNum,classListUnitsListDo);
 			unitsAssignmentWidgetView.setClassDo(classDo);
 			if (classListUnitsListDo.getResource().getItemCount() != null) {
 				unitsAssignmentWidgetView.setTotalHitCount(classListUnitsListDo.getResource().getItemCount());
@@ -187,7 +200,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 		@Override
 		public void onClick(ClickEvent event) {
 			String classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			getUiHandlers().addAssignmentToPathway(classPageId,classListUnitsListDo.getResource().getGooruOid(),"unitSetupMode");
+			getUiHandlers().addAssignmentToPathway(classPageId,classListUnitsListDo.getResource().getGooruOid(),"unitSetupMode",classListUnitsListDo.getResource().getTitle());
 		}
 		
 	}

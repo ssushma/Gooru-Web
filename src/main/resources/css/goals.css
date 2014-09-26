@@ -18,7 +18,7 @@
 
 
 .rowInner {
-    padding-left: 15px;
+    padding-left: 0px !important;
     padding-right: 15px;
 }
 
@@ -79,12 +79,11 @@
 	font-weight: bold;
 	height: 20px;
 	line-height: 34px;
-	margin: 0px 16px;
 	text-align: center;
 	vertical-align: middle;
 	width: 20px;
 	border-radius: 50px;
-	margin: 10px;
+	margin: 7px 17px;
 }
 
 .detailsMenuBlock:hover .bubbleMain .numaric {
@@ -294,5 +293,9 @@
 .studentNameContainer:hover .bubbleMain{
 	width: 34px !important;
 	height: 34px !important;
-	margin: 0px !important;
+	margin: 0px 10px !important;
+}
+
+.personalizeBorder{
+	border: 1px solid #1076bb !important;
 }
