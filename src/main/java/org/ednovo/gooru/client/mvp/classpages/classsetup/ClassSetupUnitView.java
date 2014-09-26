@@ -214,8 +214,8 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 								}
 							};
 							delete.setPopupTitle((i18n.GL0748()));
-							delete.setNotes(i18n.GL2243());
-							delete.setDescText(StringUtil.generateMessage(i18n.GL2244() + i18n.GL_SPL_FULLSTOP() + i18n.GL2245()+ i18n.GL_SPL_FULLSTOP(),totalNoOfAssignments));
+							delete.setNotes(i18n.GL2244());
+							delete.setDescText(StringUtil.generateMessage(i18n.GL2245() + i18n.GL_SPL_FULLSTOP() + i18n.GL2246()+ i18n.GL_SPL_FULLSTOP(),totalNoOfAssignments));
 							delete.setPositiveButtonText(i18n.GL0190());
 							delete.setNegitiveButtonText(i18n.GL0142());
 							delete.setDeleteValidate("delete");
