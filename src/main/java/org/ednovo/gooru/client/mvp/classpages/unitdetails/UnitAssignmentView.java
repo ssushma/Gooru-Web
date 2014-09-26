@@ -109,6 +109,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private String SETGOAL= i18n.GL2197();
 	
 	private String EDITGOAL= i18n.GL2196();
+	
+	private String ASSIGNMENTS="assignments";
 	private Boolean isClickOnAssignment =false;
 	private Boolean isPersonalize = false;
 		
@@ -778,8 +780,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		btnAssignment.removeStyleName(res.unitAssignment().selected());
 		containerPanel.setVisible(false);
 		goalContainer.setVisible(true);
-		assignmentContainer.setVisible(false);
+		assignmentContainer.setVisible(true);
 		personalizeContainer.setVisible(false);
+		
+		revealPlace("dashboard");
+		
 	}
 	
 	@UiHandler("btnAssignment")
@@ -789,8 +794,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		btnDashBoard.removeStyleName(res.unitAssignment().selected());
 		containerPanel.setVisible(true);
 		goalContainer.setVisible(false);
-		assignmentContainer.setVisible(false);
+		assignmentContainer.setVisible(true);
 		personalizeContainer.setVisible(false);
+		revealPlace(ASSIGNMENTS);
 	}
 	
 	public void scoreHederView(ClassUnitsListDo classUnitsListDo) {
@@ -879,13 +885,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			
 		}
 	}
-	
-	
-
 
 	@Override
 	public void showDashBoard() {
-		
 		if(!isClickOnAssignment){
 			goalContainer.setVisible(true);
 			containerPanel.setVisible(false);
@@ -896,6 +898,15 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			htmDashBoardTabs.setVisible(true);
 			btnDashBoard.setStyleName(res.unitAssignment().selected());
 			btnAssignment.removeStyleName(res.unitAssignment().selected());
+		}
+		String isAssign=AppClientFactory.getPlaceManager().getRequestParameter("tabname",null);
+		if(isAssign!=null && isAssign.equals(ASSIGNMENTS)){
+			btnAssignment.setStyleName(res.unitAssignment().selected());
+			btnDashBoard.removeStyleName(res.unitAssignment().selected());
+			containerPanel.setVisible(true);
+			goalContainer.setVisible(false);
+			assignmentContainer.setVisible(false);
+			personalizeContainer.setVisible(false);
 		}
 		isClickOnAssignment =false;
 	}
@@ -1042,5 +1053,37 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	{
 		personalizePanel.setVisible(isPersonalize);
 	}
+	
+	/**
+	 * On click of DashBoard/Assignment details it reveals the pathway details page.
+	 * 
+	 * @param tabName {@link String}
+	 */
+	 public void revealPlace(String tabName){
+			Map<String,String> params = new HashMap<String,String>();
+				String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+				params.put("id", id);
+				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+				params.put("pageNum", pageNum);
+				String sequenceNumber=AppClientFactory.getPlaceManager().getRequestParameter("seqnumber", null);
+				String unitId=AppClientFactory.getPlaceManager().getRequestParameter("unitId", null);
+				String tab=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
+			
+			if(tab!=null){
+				params.put("tab", tab);
+			}
+			if(tabName!=null){
+				params.put("tabname", tabName);
+			}
+			if(unitId!=null){
+				params.put("uid", unitId);
+			}
+			if(sequenceNumber!=null){
+				params.put("seqnumber", sequenceNumber);
+			}
+			PlaceRequest placeRequest= null;
+			placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+	 }
 	
 }
