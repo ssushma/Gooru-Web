@@ -72,7 +72,7 @@
 				</g:FlowPanel>
 				<g:FlowPanel ui:field="analyticsContainer" styleName="{style.analytics}">
 					<g:FlowPanel styleName="row {style.assaindetailsMain}">
-						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}" text="{i18n.GL2236}"></g:Label>
+						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}" text="{i18n.GL2247}"></g:Label>
 						<g:HTMLPanel styleName="col-xs-6 {style.assignButtons} text-right">
 							<g:Label styleName="{style.bubbleMain}" text="{i18n.GL2227}"></g:Label>
 							<g:Button styleName="secondary" ui:field="btnSummary" text="{i18n.GL2228}"></g:Button>
