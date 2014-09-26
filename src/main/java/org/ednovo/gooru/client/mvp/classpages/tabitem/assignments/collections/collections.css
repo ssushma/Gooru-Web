@@ -522,3 +522,10 @@ width: 30px;
 .hourlabel{
 	margin-right:5px;
 }
+.analyticsDetailsHeader{
+	font-size:14px;
+	font-weight:bold;
+	padding-top:6px;
+	padding-bottom:6px;
+	display:none;
+	}
