@@ -25,6 +25,8 @@ public class UserDataDo implements Serializable{
 	private String type;
 	private long timeSpent;
 	private int totalInCorrectCount;
+	private int totalCorrectCount;
+	private int skip;
 	private long avgTimeSpent;
 	private int views;
 	private int attempts;
@@ -178,5 +180,16 @@ public class UserDataDo implements Serializable{
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+	public int getTotalCorrectCount() {
+		return totalCorrectCount;
+	}
+	public void setTotalCorrectCount(int totalCorrectCount) {
+		this.totalCorrectCount = totalCorrectCount;
+	}
+	public int getSkip() {
+		return skip;
+	}
+	public void setSkip(int skip) {
+		this.skip = skip;
+	}
 }

@@ -14,11 +14,9 @@ import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.DataView;
 import org.ednovo.gooru.client.mvp.analytics.util.Print;
 import org.ednovo.gooru.client.mvp.analytics.util.SortTable;
-
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
-import org.ednovo.gooru.shared.model.user.UserMetaDo;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
@@ -360,12 +358,12 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
         sortableTable.setBorderWidth(1);
         sortableTable.setCellPadding(4);
         sortableTable.setCellSpacing(1);
-
+        sortableTable.setWidth("800");
         sortableTable.addColumnHeader("No.",  0);
         sortableTable.addColumnHeader("Question", 1);
         sortableTable.addColumnHeader("#Correct", 2);
-        sortableTable.addColumnHeader("Answer Breakdown", 3);
-        sortableTable.addColumnHeader("Time Spent", 4);
+        sortableTable.addColumnHeader("Answer&nbsp;Breakdown", 3);
+        sortableTable.addColumnHeader("Time&nbsp;Spent", 4);
         sortableTable.addColumnHeader("Reaction", 5);
         sortableTable.getRowFormatter().addStyleName(0, res.css().tableHeader());
         sortableTable.addClickHandler(new ClickHandler() {
@@ -389,7 +387,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		 for(int i=1;i<=scoredQuestionsData.size();i++){
         	 sortableTable.setValue(i, 0,i);
              sortableTable.setValue(i, 1, AnalyticsUtil.html2text(scoredQuestionsData.get(i-1).getTitle()));
-             sortableTable.setWidget(i, 2, new HCBarChart().createPieChart());
+             
              VerticalPanel answerBreakDownpnl=new VerticalPanel();
              if(scoredQuestionsData.get(i-1).getType()!=null){
             	  String getQuestionType=scoredQuestionsData.get(i-1).getType();
@@ -443,11 +441,19 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
              sortableTable.setWidget(i, 3, answerBreakDownpnl);
              sortableTable.setValue(i, 4,getTimeStampLabel(scoredQuestionsData.get(i-1).getAvgTimeSpent()).getText());
              sortableTable.setWidget(i, 5,new AnalyticsReactionWidget(scoredQuestionsData.get(i-1).getAvgReaction()));
+             
+                int[] pieChatValues=new int[3];
+	            pieChatValues[0]=scoredQuestionsData.get(i-1).getTotalInCorrectCount();
+	            pieChatValues[1]=scoredQuestionsData.get(i-1).getTotalCorrectCount();
+	            pieChatValues[2]=scoredQuestionsData.get(i-1).getSkip();
+             
              //set row style
              if ( i % 2 == 0 ){
             	 sortableTable.getRowFormatter().addStyleName(i, res.css().tableRowOdd());
+            	 sortableTable.setWidget(i, 2, new HCBarChart().pieChart("#fafafa",pieChatValues));
              }else{
             	 sortableTable.getRowFormatter().addStyleName(i, res.css().tableRowEven());
+            	 sortableTable.setWidget(i, 2, new HCBarChart().pieChart("#fff",pieChatValues));
 	            }
 	        }
 		}

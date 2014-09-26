@@ -83,6 +83,7 @@
 
 .question_resource_details {
 	line-height: 30px;
+	display: inline-block;
 }
 
 .resource_in_collection_teacher_summary {

@@ -23,11 +23,14 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.analytics;
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
+import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
@@ -60,7 +63,6 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		getView().setUiHandlers(this);
 		this.collectionProgressPresenter=collectionProgressPresenter;
 		this.collectionSummaryPresenter=collectionSummaryPresenter;
-		getPathwayUnits("",limit,offSet,true);
 	}
 
 	@Override
@@ -69,13 +71,10 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 			@Override
 
 			public void onSuccess(UnitAssignmentsDo result) {
-				String aid=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
-				if(aid==null){
-					if(result!=null&&result.getSearchResults().size()>0){
-						//getAssignemntDetails(result.getSearchResults().get(0).getCollectionItemId(),classpageId,pathwayGooruOid);
-					}
-				}
-				//getView().getSequence(result);
+				//classpageId,pathwayid
+				getGradeCollectionJson(classpageId, pathwayGooruOid);
+				getMinimumBelowScoredData();
+				getMinimumAboveScoredData();
 			}
 		});
 
@@ -87,10 +86,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
 			@Override
 			public void onSuccess(ClassDo classDo) {
-				getMinimumBelowScoredData();
-				getMinimumAboveScoredData();
-				
-				//getView().showUnitNames(classDo,clearPanel);
+				getView().showUnitNames(classDo,clearPanel);
 				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 					if(unitId==null){
@@ -102,14 +98,15 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	}
 
 	@Override
-	public void setClickedTabPresenter(String clickedTab) {
+	public void setClickedTabPresenter(String clickedTab,String collectionId) {
+		String pathWayId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 		clearSlot(COLLECTION_PROGRESS_SLOT);
 		if(clickedTab!=null){
 			if(clickedTab.equalsIgnoreCase(SUMMARY)){
-				collectionSummaryPresenter.setCollectionSummaryData("fe78faa5-f7f0-4927-9282-a58a4e3deb5d");
+				collectionSummaryPresenter.setCollectionSummaryData(collectionId,pathWayId);
 				setInSlot(COLLECTION_PROGRESS_SLOT, collectionSummaryPresenter,false);
 			}else if(clickedTab.equalsIgnoreCase(PROGRESS)){
-				collectionProgressPresenter.setCollectionProgressData("fe78faa5-f7f0-4927-9282-a58a4e3deb5d");
+				collectionProgressPresenter.setCollectionProgressData(collectionId,pathWayId);
 				setInSlot(COLLECTION_PROGRESS_SLOT, collectionProgressPresenter,false);
 			}
 		}else{
@@ -155,5 +152,28 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 
 		  }
 		});
+	}
+
+	@Override
+	public void getGradeCollectionJson(String classpageId, String pathwayId) {
+		this.analyticService.getAnalyticsGradeData(classpageId, pathwayId, new AsyncCallback<ArrayList<GradeJsonData>>() {
+			@Override
+			public void onSuccess(ArrayList<GradeJsonData> result) {
+				getView().setGradeCollectionData(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
+	}
+	public void getClassUnits(String classId){
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+		if(getView().getUnitPanel().getWidgetCount()>=0){
+			getPathwayUnits(classId,limit,offSet,true);
+		}
+		if(unitId!=null){
+			getPathwayItems(classId,unitId,"sequence",assignmentLimit,assignmentOffset);
+		}
 	}
 }

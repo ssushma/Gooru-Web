@@ -41,7 +41,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 
 	Map<String, String> sessionData=new HashMap<String, String>();
 	
-	String collectionId=null;
+	String collectionId=null,pathwayId=null;
 	
 	public CollectionSummaryView() {
 		this.res = CollectionSummaryCBundle.INSTANCE;
@@ -62,7 +62,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 				sessionspnl.setVisible(false);
 				//String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 				final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
-				getUiHandlers().setTeacherData(collectionId,classpageId);
+				getUiHandlers().setTeacherData(collectionId,classpageId,pathwayId);
 			}else{
                // String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
                 final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
@@ -93,11 +93,13 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 
 	@Override
 	public void setCollectionMetaData(
-			ArrayList<CollectionSummaryMetaDataDo> result) {
+			ArrayList<CollectionSummaryMetaDataDo> result,String pathwayId) {
+		this.pathwayId=pathwayId;
 		if(result.size()!=0){
 			collectionId=result.get(0).getGooruOId();
 			collectionTitle.setText(result.get(0).getTitle());
 			collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getLastModified())));
+			if(result.get(0).getThumbnail()!=null)
 			collectionImage.setUrl(result.get(0).getThumbnail());
 		}
 	}
@@ -132,6 +134,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		}
 	}
 	public void setSessionStartTime(int selectedIndex) {
+		if(sessionData.size()!=0)
 		  lastModifiedTime.setText(sessionData.get(sessionsDropDown.getValue(selectedIndex)).toString());
 	}
 }

@@ -8,7 +8,7 @@
 			<div class="col-xs-2 {unitStyle.leftPanel}">
 				<hr/>
 				<uc:UlPanel styleName="list-unstyled {unitStyle.unitMenu}">
-				   <g:VerticalPanel ui:field="unitPanel"></g:VerticalPanel>
+				   <g:HTMLPanel ui:field="unitPanel"></g:HTMLPanel>
 			    </uc:UlPanel>  
 			    
 				<g:HTMLPanel styleName="{unitStyle.uniSetup}">
@@ -67,7 +67,7 @@
 						Student Performance <span>Heighlight students with certain score range below.</span>
 						</div>
 						<div class="{unitStyle.scoreText}">
-						Minimum score: <g:InlineLabel ui:field="minimumScorelbl">85%</g:InlineLabel>
+						Minimum score: <g:InlineLabel ui:field="minimumScorelbl"></g:InlineLabel>
 						</div>
 						<div class="clearfix"></div>
 						</div>
