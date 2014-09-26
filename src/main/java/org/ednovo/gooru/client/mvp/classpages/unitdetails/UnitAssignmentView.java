@@ -399,7 +399,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@Override
 	public void getSequence(UnitAssignmentsDo unitAssignmentsDo) {
 		this.unitAssignmentsDo = unitAssignmentsDo;
-		
+		if(unitAssignmentsDo!=null){
+			setUnitName(unitAssignmentsDo.getTitle());
+		}
 		setCircleData(unitAssignmentsDo);
 	}
 	/*This class is used to display tooltip on assignment for Teacher */
