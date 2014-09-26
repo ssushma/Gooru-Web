@@ -305,9 +305,9 @@ public enum UrlToken {
 	
 	V2_GET_CLASSPAGE_ASSIGNMENTS("/v2/classpage/{0}/item?sessionToken={1}&data={%22limit%22:%22{2}%22,%22offset%22:%22{3}%22}"),
 	
-	V2_GET_LISTTEACHCLASSES("/v2/class/my/teach?sessionToken={0}&limit={1}&offset={2}&randomId={3}"),
+	V2_GET_LISTTEACHCLASSES("/v2/class/my/teach?sessionToken={0}&limit={1}&offset={2}&randomId={3}&itemType=pathway"),
 	
-	V2_GET_LISTSTUDYCLASSES("/v2/class/my/study?sessionToken={0}&limit={1}&offset={2}&randomId={3}"),
+	V2_GET_LISTSTUDYCLASSES("/v2/class/my/study?sessionToken={0}&limit={1}&offset={2}&randomId={3}&itemType=pathway"),
 	
 	V2_CLASSPAGE_DELETE("/v2/class/{0}?sessionToken={1}"),
 	
