@@ -731,6 +731,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 						assignmentContainer.clear();
 						removeAssignmentSelectedStyle();
 						addAssignmentSelectStyle(unitCricleViewObj);
+						isPersonalize = false;
+						displayPersonalizeOptions(isPersonalize);
+						setPersonalizeState(isPersonalize);
 						String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 						revealPlace("unitdetails", null, unitId, newSeqCollectionItemId);
 					}
@@ -743,6 +746,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 							assignmentContainer.clear();
 							removeAssignmentSelectedStyle();
 							addAssignmentSelectStyle(unitCricleViewObj);
+							isPersonalize = false;
+							displayPersonalizeOptions(isPersonalize);
+							setPersonalizeState(isPersonalize);
 							String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 							revealPlace("unitdetails", null, unitId, newSeqCollectionItemId);
 						}
@@ -754,6 +760,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 							assignmentContainer.clear();
 							removeAssignmentSelectedStyle();
 							addAssignmentSelectStyle(unitCricleViewObj);
+							isPersonalize = false;
+							displayPersonalizeOptions(isPersonalize);
+							setPersonalizeState(isPersonalize);
 							String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 							revealPlace("unitdetails", null, unitId, newSeqCollectionItemId);
 						}
