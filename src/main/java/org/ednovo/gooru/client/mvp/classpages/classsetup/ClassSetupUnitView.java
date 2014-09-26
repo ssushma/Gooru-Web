@@ -60,6 +60,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.visualization.client.formatters.BarFormat.Color;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresenter> implements IsClassSetupUnitView{
 
@@ -219,8 +220,9 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 						if (isHavingBadWords){
 							unitNameErrorLabel.setText(i18n.GL0554());
 							unitNameErrorLabel.setVisible(true);
-							unitNameErrorLabel.getElement().getStyle().setColor("orange");
+							unitNameErrorLabel.getElement().getStyle().setBorderColor("orange");
 							unitNameErrorLabel.getElement().getStyle().setPosition(Position.ABSOLUTE);
+							unitNameErrorLabel.getElement().getStyle().setColor("red");
 						}else{
 							unitNameErrorLabel.setVisible(false);
 							unitNameErrorLabel.getElement().getStyle().clearBackgroundColor();
@@ -240,9 +242,12 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 				}
 				else
 				{
+					
 					unitNameErrorLabel.setText(i18n.GL2177());
 					unitNameErrorLabel.setVisible(true);
 					unitNameErrorLabel.getElement().getStyle().setBorderColor("orange");
+					unitNameErrorLabel.getElement().getStyle().setPosition(Position.ABSOLUTE);
+					unitNameErrorLabel.getElement().getStyle().setColor("red");
 				}
 			}
 		});
@@ -250,6 +255,11 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 			
 			@Override
 			public void onClick(ClickEvent event) {
+//here
+				unitNameErrorLabel.setVisible(false);
+				unitNameErrorLabel.getElement().getStyle().clearBackgroundColor();
+				unitNameErrorLabel.getElement().getStyle().setBorderColor("#ccc");
+				unitName.setText(unitnameLBL.getText());
 				inputContainer.setVisible(true);
 				divContainer.setVisible(false);
 				saveBtn.setVisible(true);
