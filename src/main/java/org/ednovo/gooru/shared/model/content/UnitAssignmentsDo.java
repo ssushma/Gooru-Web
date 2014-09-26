@@ -17,6 +17,8 @@ public class UnitAssignmentsDo implements Serializable{
 	
 	private Integer totalHitCount;
 	
+	private String title;
+	
 	
 	private ArrayList<ClasspageItemDo> searchResults;
 
@@ -49,6 +51,16 @@ public class UnitAssignmentsDo implements Serializable{
 	 */
 	public void setSearchResults(ArrayList<ClasspageItemDo> searchResults) {
 		this.searchResults = searchResults;
+	}
+
+
+	public String getTitle() {
+		return title;
+	}
+
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	
