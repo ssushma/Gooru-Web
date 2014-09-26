@@ -915,7 +915,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@Override
 	public void showAssignments() {
 		
-		// TODO Auto-generated method stub
 		htmDashBoardTabs.removeFromParent();
 		containerPanel.setVisible(true);
 		goalContainer.removeFromParent();
@@ -926,7 +925,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	private void setDashBoardIds() {
 		lblControl.getElement().setId("controll");
-//		lblGreenControl.getElement().setId("greenControll");
 	}
 	
 	public class TimeHandler implements BlurHandler{
