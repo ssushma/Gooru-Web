@@ -770,7 +770,7 @@ IsCollectionAssign {
 					{
 						dueDateVal = null;
 					}
-					AppClientFactory.getInjector().getClasspageService().v2AssignCollectionTOPathway(classpageId, unitId, collectionDoGlobal.getGooruOid(),dueDateVal,directionsVal,null,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+					AppClientFactory.getInjector().getClasspageService().v2AssignCollectionTOPathway(classpageId, unitId, collectionDoGlobal.getGooruOid(),null,null,dueDateVal,directionsVal, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 
 						@Override
 						public void onSuccess(ArrayList<ClasspageItemDo> result) {

@@ -1007,6 +1007,18 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		contentpanel.add(setLoadingPanel());
 		limit=5;
 		pageNumber=1;*/
+
+	}
+	
+	@Override
+	public void hidePanel() {
+		/*paginationFocPanel.clear();
+		paginationFocPanel1.clear();
+		contentpanel.clear();
+		contentpanel.add(setLoadingPanel());
+		limit=5;
+		pageNumber=1;*/
+		mainContainer.setVisible(false);
 	}
 
 	@Override
