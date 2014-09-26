@@ -113,6 +113,10 @@ import org.ednovo.gooru.client.mvp.library.district.lifeboard.IsLifeboardLibrary
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter.IsLifeboardLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.lusd.IsLusdLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.lusd.LusdLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.lusd.LusdLibraryPresenter.IsLusdLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.district.lusd.LusdLibraryView;
 import org.ednovo.gooru.client.mvp.library.district.rusd.IsRusdLibraryView;
 import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryPresenter.IsRusdLibraryProxy;
@@ -557,6 +561,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(CoreLibraryPresenter.class, IsCoreLibraryView.class, CoreLibraryView.class,IsCoreLibraryProxy.class);
 		bindPresenter(EsypLibraryPresenter.class, IsEsypLibraryView.class, EsypLibraryView.class,IsEsypLibraryProxy.class);
 		bindPresenter(CcstCalTacLibraryPresenter.class, IsCcstCalTacLibraryView.class, CcstCalTacLibraryView.class,IsCcstCalTacLibraryProxy.class);
+		bindPresenter(LusdLibraryPresenter.class, IsLusdLibraryView.class, LusdLibraryView.class,IsLusdLibraryProxy.class);
 		
 	}
 }
