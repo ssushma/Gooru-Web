@@ -1352,7 +1352,27 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 													public void onSuccess(ClasspageListDo result) {
 														if(result.getSearchResults()!=null){
 														if (result.getSearchResults().size()>0){
-															AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+															AppClientFactory.getInjector().getClasspageService().v2GetAllClass("2", "0",new SimpleAsyncCallback<ClasspageListDo>() {
+																@Override
+																public void onSuccess(ClasspageListDo result) {
+															//	hasClasses = result.getSearchResults().size() > 0 ? true : false; 
+																	if(result.getSearchResults()!=null){
+																	if (result.getSearchResults().size()>0){
+																		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
+																		////classpageId = result.getSearchResults().get(0).getGooruOid();
+																		//String userId = result.getSearchResults().get(0).getUser().getGooruUId();
+																	//OpenClasspageEdit(classpageId, userId);
+																		//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,null,true);
+																	}else{
+																		AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+																		//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
+																	}
+																}else
+																{
+																	AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+																}
+																}
+														});
 															}else{
 															AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
 														}

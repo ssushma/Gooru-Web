@@ -100,7 +100,7 @@ public class PersonalizeUnitView extends
 		panelPersonalizeContainer.clear();
 		if (result.getSearchResults().size() <=0){
 			Label noStudents = new Label();
-			noStudents.setText("No Students were invited to this class. Please invite students.");
+			noStudents.setText(i18n.GL2243());
 			panelPersonalizeContainer.add(noStudents);
 		}else{
 			for (int k=0;k<result.getSearchResults().size();k++){
