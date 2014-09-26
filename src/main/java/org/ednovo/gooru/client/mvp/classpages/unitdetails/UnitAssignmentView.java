@@ -737,16 +737,29 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				}
 				if(mouseOverAssignmentSeqPos!=0)
 				{
-					if(mouseOverAssignmentSeqPos==i+1){
-						String newSeqCollectionItemId = unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId();
-						assignmentContainer.clear();
-						removeAssignmentSelectedStyle();
-						addAssignmentSelectStyle(unitCricleViewObj);
-						String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
-						revealPlace("unitdetails", null, unitId, newSeqCollectionItemId);
+					if(unitAssignmentsDo.getSearchResults().size()<mouseOverAssignmentSeqPos){
+						if(i+2==mouseOverAssignmentSeqPos){
+							String newSeqCollectionItemId = unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId();
+							assignmentContainer.clear();
+							removeAssignmentSelectedStyle();
+							addAssignmentSelectStyle(unitCricleViewObj);
+							String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+							revealPlace("unitdetails", null, unitId, newSeqCollectionItemId);
+						}
+				}
+					else
+					{
+						if(mouseOverAssignmentSeqPos==i+1){
+							String newSeqCollectionItemId = unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId();
+							assignmentContainer.clear();
+							removeAssignmentSelectedStyle();
+							addAssignmentSelectStyle(unitCricleViewObj);
+							String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+							revealPlace("unitdetails", null, unitId, newSeqCollectionItemId);
+						}
+				
 					}
 				}
-			
 				
 			}
 			
