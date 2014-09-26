@@ -25,7 +25,7 @@ public class ClassUnitsListDo implements Serializable{
 	
 	private Integer minimumScoreByUser;
 	private Integer assignmentCompleted;
-	private Integer timeStudying;
+	private String timeStudying;
 	
 	
 	/**
@@ -126,19 +126,15 @@ public class ClassUnitsListDo implements Serializable{
 		this.assignmentCompleted = assignmentCompleted;
 	}
 
-	/**
-	 * @return the timeStudying
-	 */
-	public Integer getTimeStudying() {
+	public String getTimeStudying() {
 		return timeStudying;
 	}
 
-	/**
-	 * @param timeStudying the timeStudying to set
-	 */
-	public void setTimeStudying(Integer timeStudying) {
+	public void setTimeStudying(String timeStudying) {
 		this.timeStudying = timeStudying;
 	}
+
+
     
 
 	
