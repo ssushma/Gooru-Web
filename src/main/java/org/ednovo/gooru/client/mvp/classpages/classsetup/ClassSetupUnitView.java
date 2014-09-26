@@ -33,9 +33,13 @@ import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.edit.AssignmentProgressCBundle;
 import org.ednovo.gooru.client.mvp.classpages.event.ResetPaginationEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -74,6 +78,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 	
 	String ClickedLabelNum ="";
 	String ClickedCollectionItemId ="";
+	String totalNoOfAssignments="";
 
 	private static ClassSetupUnitViewUiBinder uiBinder = GWT.create(ClassSetupUnitViewUiBinder.class);
 
@@ -182,11 +187,43 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 	    });
 		
 		deleteBtnUnit.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
-				deleteItem(sequenceNum,pathwayId);
-				
+				String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				if(classpageId != null){
+					AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayId, "sequence", 1, 0, new SimpleAsyncCallback<UnitAssignmentsDo>() {
+						@Override
+						public void onSuccess(UnitAssignmentsDo result) {
+							totalNoOfAssignments = result.getTotalHitCount().toString();
+							Window.enableScrolling(false);
+							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+							DeletePopupViewVc delete = new DeletePopupViewVc() {
+								@Override
+								public void onClickPositiveButton(ClickEvent event) {
+									deleteItem(sequenceNum,pathwayId);
+									Window.enableScrolling(true);
+									AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+									hide();
+								}
+								@Override
+								public void onClickNegitiveButton(ClickEvent event) {
+									Window.enableScrolling(true);
+									AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+									hide();
+								}
+							};
+							delete.setPopupTitle((i18n.GL0748()));
+							delete.setNotes(i18n.GL2243());
+							delete.setDescText(StringUtil.generateMessage(i18n.GL2244() + i18n.GL_SPL_FULLSTOP() + i18n.GL2245()+ i18n.GL_SPL_FULLSTOP(),totalNoOfAssignments));
+							delete.setPositiveButtonText(i18n.GL0190());
+							delete.setNegitiveButtonText(i18n.GL0142());
+							delete.setDeleteValidate("delete");
+							delete.setPixelSize(450, 345);
+							delete.show();
+							delete.center();
+						}
+					});
+				}
 			}
 		});
 		cancelBtn.addClickHandler(new ClickHandler() {
