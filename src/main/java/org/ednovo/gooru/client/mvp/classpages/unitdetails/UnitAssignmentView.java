@@ -778,7 +778,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		btnAssignment.removeStyleName(res.unitAssignment().selected());
 		containerPanel.setVisible(false);
 		goalContainer.setVisible(true);
-		assignmentContainer.setVisible(false);
+		assignmentContainer.setVisible(true);
 		personalizeContainer.setVisible(false);
 	}
 	
@@ -789,7 +789,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		btnDashBoard.removeStyleName(res.unitAssignment().selected());
 		containerPanel.setVisible(true);
 		goalContainer.setVisible(false);
-		assignmentContainer.setVisible(false);
+		assignmentContainer.setVisible(true);
 		personalizeContainer.setVisible(false);
 	}
 	

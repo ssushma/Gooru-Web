@@ -96,6 +96,7 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 		addUnitClickHandler=addUnitBtn.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				addUnitBtn.setEnabled(false);
 				
 				unitSetupContainer.setVisible(true);
 
@@ -271,6 +272,10 @@ public class ClassSetupView extends BaseViewWithHandlers<ClassSetupUiHandlers> i
 		
 		@Override
 		public void setLoadingIcon(boolean isVisible) {
+			if(!isVisible)
+			{
+				addUnitBtn.setEnabled(true);
+			}
 			loadingImageLabel.setVisible(isVisible);
 		}
 		
