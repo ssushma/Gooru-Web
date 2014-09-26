@@ -155,6 +155,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
 			unitSetupButton.setText(i18n.GL2216());	
 		}
+		assignmentContainer.setVisible(true);
 		lblMoreUnits.setText(i18n.GL2199());
 		btnDashBoard.setText(i18n.GL2200());
 		btnAssignment.setText(i18n.GL1933());
@@ -763,7 +764,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		if (!isPersonalize){
 			isPersonalize = true;
 			
-			assignmentContainer.setVisible(false);
+			assignmentContainer.setVisible(true);
 			personalizeContainer.setVisible(true);
 		}else{
 			isPersonalize = false;
@@ -789,12 +790,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@UiHandler("btnAssignment")
 	public void clickOnAssignement(ClickEvent clickEvent){
-		
+		assignmentContainer.setVisible(true);
 		btnAssignment.setStyleName(res.unitAssignment().selected());
 		btnDashBoard.removeStyleName(res.unitAssignment().selected());
 		containerPanel.setVisible(true);
-		goalContainer.setVisible(false);
-		assignmentContainer.setVisible(true);
+		goalContainer.setVisible(false);	
 		personalizeContainer.setVisible(false);
 		revealPlace(ASSIGNMENTS);
 	}
@@ -905,7 +905,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			btnDashBoard.removeStyleName(res.unitAssignment().selected());
 			containerPanel.setVisible(true);
 			goalContainer.setVisible(false);
-			assignmentContainer.setVisible(false);
+			assignmentContainer.setVisible(true);
 			personalizeContainer.setVisible(false);
 		}
 		isClickOnAssignment =false;
