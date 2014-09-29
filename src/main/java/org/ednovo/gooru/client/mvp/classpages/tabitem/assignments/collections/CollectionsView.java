@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -65,6 +66,7 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -149,6 +151,10 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 
 	public ClasspageItemDo classpageItemDo=null;
 	
+	/* HTML5 Storage implementation for tab persistance */
+	private Storage stockStore = null;
+
+	
 	private static CollectionsViewUiBinder uiBinder = GWT.create(CollectionsViewUiBinder.class);
 	
 	MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -210,7 +216,8 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			setThumbnailUrl();
 			setMinimumScore(classpageItemDo.getMinimumScore());
 			setSuggestedTime(classpageItemDo.getEstimatedTime());
-			renderStandards(standardsContainer, getStandardsMap(classpageItemDo.getResource().getTaxonomySet()));
+			
+			renderStandards(standardsContainer, getStandardsMap(classpageItemDo.getStandards()));
 			//frameContainer.setVisible(false);
 		}
 		
@@ -761,6 +768,14 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 							parametesMap.put("o"+(i+1), foldersList.get(i));
 						}
 					}
+					parametesMap.put("edit","assignment");
+					stockStore = Storage.getLocalStorageIfSupported();
+					if (stockStore != null) {
+						stockStore = Storage.getLocalStorageIfSupported();
+						if (stockStore != null) {
+							stockStore.setItem("tabKey", "resourceTab");
+						}
+					}
 					AppClientFactory.getPlaceManager().revealPlace(true, AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, parametesMap));
 				}
 			}
@@ -831,14 +846,14 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
     }
 	
 	
-	public List<Map<String,String>> getStandardsMap(Set<CodeDo> taxonomyset){
+	public List<Map<String,String>> getStandardsMap(Set<StandardFo> taxonomyset){
 		List<Map<String,String>> standardsList=new ArrayList<Map<String,String>>();
-		Iterator<CodeDo> iterator = taxonomyset.iterator();
+		Iterator<StandardFo> iterator = taxonomyset.iterator();
 		while (iterator.hasNext()) {
-			CodeDo codeDo=iterator.next();
+			StandardFo standardFo=iterator.next();
 			Map<String, String> standardMap=new HashMap<String, String>();
-			standardMap.put(STANDARD_CODE, codeDo.getCode());
-			standardMap.put(STANDARD_DESCRIPTION, codeDo.getLabel());
+			standardMap.put(STANDARD_CODE, standardFo.getCode());
+			standardMap.put(STANDARD_DESCRIPTION, standardFo.getDescription());
 			standardsList.add(standardMap);
 		}
 		return standardsList;
