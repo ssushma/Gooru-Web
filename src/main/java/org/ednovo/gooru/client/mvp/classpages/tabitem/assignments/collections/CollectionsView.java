@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -210,7 +211,8 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			setThumbnailUrl();
 			setMinimumScore(classpageItemDo.getMinimumScore());
 			setSuggestedTime(classpageItemDo.getEstimatedTime());
-			renderStandards(standardsContainer, getStandardsMap(classpageItemDo.getResource().getTaxonomySet()));
+			
+			renderStandards(standardsContainer, getStandardsMap(classpageItemDo.getStandards()));
 			//frameContainer.setVisible(false);
 		}
 		
@@ -831,14 +833,14 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
     }
 	
 	
-	public List<Map<String,String>> getStandardsMap(Set<CodeDo> taxonomyset){
+	public List<Map<String,String>> getStandardsMap(Set<StandardFo> taxonomyset){
 		List<Map<String,String>> standardsList=new ArrayList<Map<String,String>>();
-		Iterator<CodeDo> iterator = taxonomyset.iterator();
+		Iterator<StandardFo> iterator = taxonomyset.iterator();
 		while (iterator.hasNext()) {
-			CodeDo codeDo=iterator.next();
+			StandardFo standardFo=iterator.next();
 			Map<String, String> standardMap=new HashMap<String, String>();
-			standardMap.put(STANDARD_CODE, codeDo.getCode());
-			standardMap.put(STANDARD_DESCRIPTION, codeDo.getLabel());
+			standardMap.put(STANDARD_CODE, standardFo.getCode());
+			standardMap.put(STANDARD_DESCRIPTION, standardFo.getDescription());
 			standardsList.add(standardMap);
 		}
 		return standardsList;
