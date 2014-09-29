@@ -144,7 +144,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	private TextBox suggestedMinTextBox;
 	
-
+	private boolean directionChanged; 
 	EditToolBarView editToolBarView;
 
 	public ClasspageItemDo classpageItemDo=null;
@@ -641,6 +641,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 				}else{
 				directionErrorLabel.setText("");
 			}
+			directionChanged=true;
 		}
 	}
 	
@@ -790,6 +791,13 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 				}else{
 					showUpdatedAssignmentDetails();
 				}
+				
+				if(directionChanged&&(classpageItemDo.getNarration()!=null&&!classpageItemDo.getNarration().equalsIgnoreCase(""))){
+					
+					updateAssignmentDirection(classpageItemDo.getCollectionItemId(), classpageItemDo.getNarration());
+					
+				}
+				
 			}
 		});
 	}
@@ -803,6 +811,10 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 	}
 	public void updateAssignmentRequiredStatus(Boolean isRequired,String collectionItemId,String readStatus,boolean isUpdateRequiredStatus){
+		
+	}
+	
+	public void updateAssignmentDirection(String collectionItemId,String readStatus){
 		
 	}
 	
