@@ -166,4 +166,6 @@ public interface IsShelfListView extends IsViewWithHandlers<ShelfListUiHandlers>
 	
 	void refreshFolderItemDataInSearchAddResource(FolderDo folderDo,
 			RefreshFolderType refreshFolderType, HashMap<String, String> params);
+
+	void highlightAssignment(String o1, String o2, String o3, String id); 
 }

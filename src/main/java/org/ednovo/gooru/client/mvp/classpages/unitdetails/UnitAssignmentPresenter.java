@@ -23,6 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
@@ -115,8 +116,8 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			public void onSuccess(ClassDo classDo) {
 				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 					getView().showUnitNames(classDo,clearPanel);
-					String seqNumber=AppClientFactory.getPlaceManager().getRequestParameter("seqnumber", null);
-					if(seqNumber!=null){
+					String seqNumber=AppClientFactory.getPlaceManager().getRequestParameter("seqnumber", "1");
+					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
 						int number=Integer.parseInt(seqNumber);
 						number=number-1;
 						getView().scoreHederView(classDo.getSearchResults().get(number));
