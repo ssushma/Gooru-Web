@@ -43,5 +43,6 @@ public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentU
 	public void getUnitsPanel();
 	void scoreHederView(ClassUnitsListDo classUnitsListDo);
 	public void resetUnitAssignmentView();
+	public HTMLPanel getAssignmentPanel();
 
 }
