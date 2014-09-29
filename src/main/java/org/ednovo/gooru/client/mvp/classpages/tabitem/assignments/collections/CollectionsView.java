@@ -751,7 +751,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		@Override
 		public void onClick(ClickEvent event) {
 			Map<String,String> parametesMap=new HashMap<String,String>();
-			parametesMap.put("id", classpageItemDo.getCollectionId());
+			parametesMap.put("id", classpageItemDo.getResource().getGooruOid());
 			parametesMap.put("cid", classpageItemDo.getCollectionItemId());
 			parametesMap.put("page", getCurrentPlaceToken());
 			AppClientFactory.getPlaceManager().revealPlace(true, AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.COLLECTION_PLAY, parametesMap));
