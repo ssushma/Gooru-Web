@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,13 +23,31 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.unitSetup;
+package org.ednovo.gooru.client.mvp.shelf.event;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import com.google.gwt.event.shared.GwtEvent;
 
-public interface UnitSetupStudentUiHandlers extends BaseUiHandlers{
+public class HighlightAssignmentToEditEvent extends GwtEvent<HighlightAssignmentToEditEventHandler> {
+
+	public static final Type<HighlightAssignmentToEditEventHandler> TYPE = new Type<HighlightAssignmentToEditEventHandler>();
 	
-	void getPathwayCompleteDetails(int limit, int offSet);
+	private String o1,o2,o3,collectionId;
+	
+	public HighlightAssignmentToEditEvent(String o1,String o2,String o3,String collectionId){
+		this.o1 = o1;
+		this.o2 = o2;
+		this.o3 = o3;
+		this.collectionId = collectionId;
+	}
+	
+	@Override
+	public com.google.gwt.event.shared.GwtEvent.Type<HighlightAssignmentToEditEventHandler> getAssociatedType() {
+		return TYPE;
+	}
 
-	void getAnalyticData(String gooruUId, String pathwayId);
+	@Override
+	protected void dispatch(HighlightAssignmentToEditEventHandler handler) {
+		handler.highlightAssignmentToEdit(o1,o2,o3,collectionId);
+	}
+
 }
