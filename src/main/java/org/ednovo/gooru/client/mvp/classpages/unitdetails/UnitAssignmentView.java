@@ -96,7 +96,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	UnitAssignmentCssBundle res;
 	
-	ClassDo classDo;
+	private ClassDo classDo;
+	
+	private ClassDo unitsDo;
 	
 	ClassUnitsListDo classUnitsListDo;
 	
@@ -435,7 +437,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		if(isNarrationUpdate){
 			narration=descriptionDetails.get(selectedAssignmentId)!=null?descriptionDetails.get(selectedAssignmentId):narration;
 		}
-			unitAssigmentReorder = new UnitAssigmentReorder(seqNo,classDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null),selectedUnitNumber,totalHintCount,selectedAssignmentId,AppClientFactory.getPlaceManager().getRequestParameter("uid", null)){
+			unitAssigmentReorder = new UnitAssigmentReorder(seqNo,unitsDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null),selectedUnitNumber,totalHintCount,selectedAssignmentId,AppClientFactory.getPlaceManager().getRequestParameter("uid", null)){
 			@Override
 			public void reorderAssignment(int seqPosition,String selectedPathId,String targetUnitNumb,String selectedAssignmentId) { 
 				setAssignmentToNewPosition(seqPosition,selectedPathId,totalHintCount,selectedAssignmentId,UnitCriclevieObj,seqNo);
@@ -523,6 +525,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		if(clearPanel){
 			unitPanel.clear();
 			unitsPageNumber=0;
+			unitsDo=null;
+		}
+		if(unitsDo!=null){
+			unitsDo.getSearchResults().addAll(classDo.getSearchResults());
+		}else{
+			this.unitsDo=classDo;
 		}
 		unitsTotalCount=classDo.getTotalHitCount();
 		updatePageNumber();
