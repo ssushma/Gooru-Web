@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.ClassDo;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 
 
 public interface IsUnitSetupStudentView extends IsViewWithHandlers<UnitSetupStudentUiHandlers>{

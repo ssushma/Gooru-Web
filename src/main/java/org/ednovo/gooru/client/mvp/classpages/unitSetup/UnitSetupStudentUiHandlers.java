@@ -29,4 +29,6 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 public interface UnitSetupStudentUiHandlers extends BaseUiHandlers{
 	
 	void getPathwayCompleteDetails(int limit, int offSet);
+
+	void getAnalyticData(String gooruUId, String pathwayId);
 }
