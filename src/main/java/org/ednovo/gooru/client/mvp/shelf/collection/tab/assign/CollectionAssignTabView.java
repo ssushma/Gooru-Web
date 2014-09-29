@@ -189,6 +189,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		
+		
 		setLabelsAndIds();
 		
 		showHideScrollPanel(false);
@@ -414,6 +415,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		setCollectionDo(null);
 		
 		setLabelsAndIds();
+		resetAll();
 		
 		showHideScrollPanel(false);
 		
@@ -451,6 +453,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	 *
 	 */
 	public void setLabelsAndIds(){
+		
 		
 		remainderLbl.setText(i18n.GL1889());
 		remainderLbl.getElement().setId("lblRemainderLbl");
@@ -552,6 +555,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		directionsErrorLength.getElement().setId("lblDirectionsErrorLength");
 		directionsErrorLbl.getElement().setId("lblDirectionsErrorLbl");
 		
+	
 	}
 	/**
 	 * 
@@ -912,7 +916,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 						lblClasspagePlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
 						
 						classpageId = titleLabel.getElement().getId();
-						
+						resetText();
 						btnAssign.setEnabled(true);
 						btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
 						//btnAssign.setStyleName(AssignPopUpCBundle.INSTANCE.css().activeAssignButton());
@@ -1009,6 +1013,7 @@ public class CpuTitleLabelClick implements ClickHandler{
 			lblClasspageUnitPlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
 			
 			unitId = unitLabel.getElement().getId();
+			
 			
 			
 			btnAssign.setEnabled(true);
@@ -1203,25 +1208,26 @@ public class CpuTitleLabelClick implements ClickHandler{
 			}
 		}
 	}
-	public void isValidate(){
-		if(from == null || from.isEmpty() && minScore !=null){
-			suggestTimeErrorLabel.setText(i18n.GL2183());
-			suggestTimeErrorLabel.setVisible(true);
-			isValidate=false;
-		}else if(from !=null && minScore ==null || minScore.isEmpty()){
-			scoreErrorLabel.setText(i18n.GL2182());
-			scoreErrorLabel.setVisible(true);
-			isValidate=false;
-		}else if(from == null || from.isEmpty() &&  minScore == null || minScore.isEmpty() ){
-			scoreErrorLabel.setText(i18n.GL2182());
-			scoreErrorLabel.setVisible(true);
-			suggestTimeErrorLabel.setText(i18n.GL2183());
-			suggestTimeErrorLabel.setVisible(true);
-			isValidate=false;
-		}else{
-			isValidate=true;
-		}
-	}
+	/**
+	 * 
+	 * @function validateNumber 
+	 * 
+	 * @created_date : Jul 30, 2013
+	 * 
+	 * @description
+	 * 	for validating the suggested time String into integer.
+	 * 
+	 * @parm(s) : numberString
+	 * 
+	 * @return : int
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+
 	public int validateNumber(String numberString) {
 	    try {
 	        int number = Integer.valueOf(numberString);
@@ -1230,6 +1236,26 @@ public class CpuTitleLabelClick implements ClickHandler{
 	        return -1;
 	    }
 	}
+	/**
+	 * 
+	 * @function validateTime 
+	 * 
+	 * @created_date : Jul 30, 2013
+	 * 
+	 * @description
+	 * 	for validating the suggested time in hours and minutes.
+	 * 
+	 * @parm(s) : timestring
+	 * 
+	 * @return : boolean
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+
 	public boolean validateTime(String timeString) {
 	    if (timeString.length() != 5) return false;
 	    if (!timeString.substring(2, 3).equals(":")) return false;
@@ -1238,5 +1264,92 @@ public class CpuTitleLabelClick implements ClickHandler{
 	    if (hour < 0 || hour >24 ) return false;
 	    if (minute < 0 || minute >= 60) return false;
 	    return true;
+	}
+	/**
+	 * 
+	 * @function resetText 
+	 * 
+	 * @created_date : September 29, 2014
+	 * 
+	 * @description
+	 * 	This method is used to reset the suggested time and minimum score for selecting the one class to other class.
+	 * 
+	 * @parm(s) : NONE
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void resetText(){
+		String scoreText=scoreTxt.getText();
+		String hoursTime = fromTxt.getText();
+		String mintuesTme =toTxt.getText();
+		if(scoreText!=null){
+			if(scoreErrorLabel.isVisible()){
+				scoreErrorLabel.setVisible(false);
+				scoreTxt.setText("");
+				scoreTxt.getElement().setAttribute("placeholder", i18n.GL2179());
+			}
+		}
+		if(hoursTime !=null || mintuesTme != null){
+			if(suggestTimeErrorLabel.isVisible()){
+				suggestTimeErrorLabel.setVisible(false);
+				fromTxt.setText("");
+				toTxt.setText("");
+			}
+		}
+	}
+	/**
+	 * 
+	 * @function resetAll 
+	 * 
+	 * @created_date : September 29, 2014
+	 * 
+	 * @description
+	 * 	This method is used to reset all the text fields once tag is navigated from assign.
+	 * 
+	 * @parm(s) : NONE
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void resetAll(){
+		if(textAreaVal.getText()!=null){
+			
+			textAreaVal.setText(i18n.GL1389());
+			textAreaVal.getElement().setId("tatTextAreaVal");
+			textAreaVal.getElement().setAttribute("alt",i18n.GL1389());
+			textAreaVal.getElement().setAttribute("title",i18n.GL1389());
+			if(directionsErrorLbl.isVisible()){
+				directionsErrorLbl.setVisible(false);
+			}
+		}
+		if(dateBoxUc.getDateBox().getValue() != null){
+			dateBoxUc.getDateBox().setValue("");
+		}
+		if(scoreTxt.getText() !=null){
+			scoreTxt.setText("");
+			scoreTxt.getElement().setAttribute("placeholder", i18n.GL2179());
+			if(scoreErrorLabel.isVisible()){
+				scoreErrorLabel.setVisible(false);
+			}
+		}
+		if(fromTxt.getText() !=null || toTxt.getText() !=null){
+			fromTxt.setText("");
+			toTxt.setText("");
+			if(suggestTimeErrorLabel.isVisible() || directionsErrorLength.isVisible()){
+				suggestTimeErrorLabel.setVisible(false);
+				directionsErrorLength.setVisible(false);
+			}
+		}
 	}
 }
