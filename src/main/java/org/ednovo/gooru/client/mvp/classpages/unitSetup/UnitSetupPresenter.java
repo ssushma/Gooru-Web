@@ -100,6 +100,7 @@ public class UnitSetupPresenter extends PresenterWidget<IsUnitSetupView> impleme
 					{
 					if(result.getSearchResults().size()>0){
 						String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+						pageNum=pageNum!=null&&!pageNum.equalsIgnoreCase("0")?pageNum:"1";
 						int pageNumVal = 0;
 						if(pageNum != null)
 						{

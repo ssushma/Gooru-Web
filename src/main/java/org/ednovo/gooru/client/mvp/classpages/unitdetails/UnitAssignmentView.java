@@ -96,7 +96,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	UnitAssignmentCssBundle res;
 	
-	ClassDo classDo;
+	private ClassDo classDo;
+	
+	private ClassDo unitsDo;
 	
 	ClassUnitsListDo classUnitsListDo;
 	
@@ -144,6 +146,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private int totalAssignmentHitcount;
 	Label requiredText =new Label();
 	CollectionsView collectionView=null;
+	private boolean isNarrationUpdate=false;
+	Map<String,String> descriptionDetails=new HashMap<String,String>();
 	
 	int toalassignmentSize=0;
 	
@@ -430,7 +434,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	@Override
 	public void onMouseOver(MouseOverEvent event) {
-		unitAssigmentReorder = new UnitAssigmentReorder(seqNo,classDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null),selectedUnitNumber,totalHintCount,selectedAssignmentId,AppClientFactory.getPlaceManager().getRequestParameter("uid", null)){
+		if(isNarrationUpdate){
+			narration=descriptionDetails.get(selectedAssignmentId)!=null?descriptionDetails.get(selectedAssignmentId):narration;
+		}
+			unitAssigmentReorder = new UnitAssigmentReorder(seqNo,unitsDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null),selectedUnitNumber,totalHintCount,selectedAssignmentId,AppClientFactory.getPlaceManager().getRequestParameter("uid", null)){
 			@Override
 			public void reorderAssignment(int seqPosition,String selectedPathId,String targetUnitNumb,String selectedAssignmentId) { 
 				setAssignmentToNewPosition(seqPosition,selectedPathId,totalHintCount,selectedAssignmentId,UnitCriclevieObj,seqNo);
@@ -518,6 +525,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		if(clearPanel){
 			unitPanel.clear();
 			unitsPageNumber=0;
+			unitsDo=null;
+		}
+		if(unitsDo!=null){
+			unitsDo.getSearchResults().addAll(classDo.getSearchResults());
+		}else{
+			this.unitsDo=classDo;
 		}
 		unitsTotalCount=classDo.getTotalHitCount();
 		updatePageNumber();
@@ -913,6 +926,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					updateAssingmentCircleReadStatus(isRequired,collectionItemId,readStatus);
 				}
 			}
+			@Override
+			public void updateAssignmentDirection(String collectionItemId,String direction){
+				isNarrationUpdate=true;	
+				descriptionDetails.put(collectionItemId, direction);
+			}
 		};
 		assignmentContainer.add(collectionView);
 	}
@@ -1177,5 +1195,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	 }
+
+	@Override
+	public HTMLPanel getAssignmentPanel() {
+		// TODO Auto-generated method stub
+		return assignmentContainer;
+	}
 	
 }

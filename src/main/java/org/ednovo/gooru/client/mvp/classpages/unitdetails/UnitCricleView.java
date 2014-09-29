@@ -2,7 +2,6 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsCBundle;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 
 import com.google.gwt.core.client.GWT;
