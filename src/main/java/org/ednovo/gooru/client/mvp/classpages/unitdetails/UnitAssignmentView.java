@@ -988,10 +988,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			String min = txtMinuts.getText();
 			if((hours != null || hours != "")){
 				try{
+					if(!hours.isEmpty()){
 					if(Integer.parseInt(hours) >24 || Integer.parseInt(hours)<0){
 						txtHours.setText(getValidationTime(hours, true));
 					}else{
 
+					}
 					}
 
 				}catch(NumberFormatException numberFormatException){
@@ -1041,8 +1043,23 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 		if((txtHours.getText()!=null && txtHours.getText()!="")|| (txtMinuts.getText()!=null && txtMinuts.getText()!="") ){
 			if(btnSetGoal.getText().equals(SETGOAL)){
-				lblTimeHours.setText(txtHours.getText()+" h");
-				lblTimeMin.setText(txtMinuts.getText()+" min");
+				if(txtHours.getText().isEmpty() && !txtMinuts.getText().isEmpty()){
+					lblTimeHours.setText(txtHours.getText());
+					lblTimeMin.setText(txtMinuts.getText()+" min");
+				}
+				if(txtMinuts.getText().isEmpty() && !txtHours.getText().isEmpty()){
+					lblTimeMin.setText(txtMinuts.getText());
+					lblTimeHours.setText(txtHours.getText()+" h");
+				}
+				if(!txtHours.getText().isEmpty()&& !txtMinuts.getText().isEmpty())
+				{
+					lblTimeHours.setText(txtHours.getText()+" h");
+					lblTimeMin.setText(txtMinuts.getText()+" min");
+				}
+				if(txtHours.getText().isEmpty()&& txtMinuts.getText().isEmpty()){
+					lblTimeHours.setText(txtHours.getText());
+					lblTimeMin.setText(txtMinuts.getText());
+				}
 				showAndHideTextBox();
 				btnSetGoal.setText(EDITGOAL);
 				lblGreenControl.getElement().setId("greenControll");
