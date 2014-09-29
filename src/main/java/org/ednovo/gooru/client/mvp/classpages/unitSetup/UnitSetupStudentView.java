@@ -122,6 +122,7 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 			}
 			params.put("pageNum", pageNum);
 			params.put("pos", pos);
+			params.put("seqnumber", "1");
 			if(tabName!=null){
 				params.put("tab", tabName);
 			}

@@ -378,7 +378,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 			final String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 			unitAssigmentReorder = new UnitAssigmentReorder(assignmentSeq,getClassDo(),title, narration,classPageId,Integer.parseInt(seqNumber),getTotalHitCount(),collectionItem,classUnitsDo.getResource().getGooruOid()){
 				@Override
-				public void reorderAssignment(int seqPosition,String selectedPathwayId,String targetPathway) {
+				public void reorderAssignment(int seqPosition,String selectedPathwayId,String targetPathway,String selectedAssignmentId) {
 					boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItem);
 					if(isAssignmentDeleted){
 						setLoadingIcon(true);
