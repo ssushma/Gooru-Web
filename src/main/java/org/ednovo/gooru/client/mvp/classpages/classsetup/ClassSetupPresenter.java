@@ -172,13 +172,13 @@ public class ClassSetupPresenter extends PresenterWidget<IsClassSetupView> imple
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		if(classpageid != null)
 		{
-
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "5", offsetVal+"", new SimpleAsyncCallback<ClassDo>() {
+			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageid, "5", offsetVal+"", new SimpleAsyncCallback<ClassDo>() {
 
 			@Override
 			public void onSuccess(ClassDo classDo) {
 				if(classDo.getSearchResults().size()>0){
 					String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+					pageNum=pageNum!=null&&!pageNum.equalsIgnoreCase("0")?pageNum:"1";
 					int pageNumVal = 0;
 					if(pageNum != null){
 						try{
