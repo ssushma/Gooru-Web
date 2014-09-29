@@ -31,7 +31,9 @@ import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.ui.Image;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentView> implements UnitAssignmentUiHandlers{
@@ -46,6 +48,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	private int offSet = 0;
 	private int assignmentOffset=0;
 	private int assignmentLimit=10;
+	private static final String IMAGE_URL="images/core/B-Dot.gif";
 	
 	@Inject
 	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter) {
@@ -125,6 +128,13 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	}
 	
 	public void getAssignemntDetails(final String assignmentId,String classpageId,String pathwayGooruOid){
+		Image image=new Image();
+		image.setUrl(IMAGE_URL);
+		image.setWidth("200px");
+		image.setHeight("200px");
+		image.getElement().getStyle().setMarginLeft(39, Unit.PCT);
+		image.getElement().getStyle().setMarginTop(10, Unit.PX);
+		getView().getAssignmentPanel().add(image);
 		AppClientFactory.getInjector().getClasspageService().getAssignemntDetails(assignmentId, new SimpleAsyncCallback<ClasspageItemDo>() {
 			@Override
 			public void onSuccess(ClasspageItemDo classpageItemDo) {

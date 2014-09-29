@@ -1163,5 +1163,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	 }
+
+	@Override
+	public HTMLPanel getAssignmentPanel() {
+		// TODO Auto-generated method stub
+		return assignmentContainer;
+	}
 	
 }
