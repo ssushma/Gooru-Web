@@ -364,7 +364,6 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		btnCollectionEditImage.getElement().setId("btnCollectionEditImage");
 		btnClasspageSave.getElement().setId("btnClasspageSave");
 		btnClasspageCancel.getElement().setId("btnClasspageCancel");
-		
 		lblSelected.setText(i18n.GL2174());
 		StringUtil.setAttributes(lblSelected.getElement(), "lblSelected", i18n.GL2174(), i18n.GL2174());
 		StringUtil.setAttributes(spanelSutdentsList.getElement(), "spanelSutdentsList", null, null);
@@ -546,7 +545,6 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	
 	public void setClasspageData(ClasspageDo classpageDo){
 		this.classpageDo=classpageDo;
-		
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(classpageDo.getClasspageId()));
@@ -556,7 +554,7 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		classCodeTextBox.setText(classpageDo.getClasspageCode()!=null ? classpageDo.getClasspageCode().toUpperCase() : "");
 		classCodeTextBox.getElement().setAttribute("alt",classpageDo.getClasspageCode()!=null ? classpageDo.getClasspageCode().toUpperCase() : "");
 		classCodeTextBox.getElement().setAttribute("title",classpageDo.getClasspageCode()!=null ? classpageDo.getClasspageCode().toUpperCase() : "");
-		
+		lblSelected.setText(i18n.GL2174());
 		classCodeTextBox.setReadOnly(true);
 		classCodeTextBox.addClickHandler(new ClassCodeTextCopy());
 		
