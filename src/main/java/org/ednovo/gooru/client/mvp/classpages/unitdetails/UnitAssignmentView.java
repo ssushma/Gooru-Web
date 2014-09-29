@@ -144,6 +144,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private int totalAssignmentHitcount;
 	Label requiredText =new Label();
 	CollectionsView collectionView=null;
+	
+	int toalassignmentSize=0;
+	
 	@Inject
 	public UnitAssignmentView(){
 		setWidget(uiBinder.createAndBindUi(this));
@@ -389,11 +392,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		public void onClick(ClickEvent event) {
 			if(value=="right"){
 				clearAssignmentsFromDo();
-				getUnitAssignments(getAssignmentOffsetValue(NEXT),isEditMode,0,0);
+				getUnitAssignments(getAssignmentOffsetValue(NEXT),isEditMode,0,0,"");
 			}
 			else{
 				clearAssignmentsFromDo();
-				getUnitAssignments(getAssignmentOffsetValue(PREVIOUS),isEditMode,0,0);
+				getUnitAssignments(getAssignmentOffsetValue(PREVIOUS),isEditMode,0,0,"");
 			}
 		}
 	}
@@ -552,7 +555,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 
 	public void setUnitName(String unitName){
-		unitTitleDetails.setText(unitName!=null?unitName:"");
+	unitName= unitName!=null?unitName:"";
+		if (unitName.length() > 10){
+			unitName = unitName.substring(0, 11) + "...";
+		}
+		unitTitleDetails.setText(unitName);
 	}
 	public void getUnitsPanel(){
 		unitPanel.clear();
@@ -669,7 +676,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			rightArrow.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		}
 	}
-	public void getUnitAssignments(int assignmentOffset,final boolean isAssignmentEditmode,final int pagenumber,final int mouseOverAssignmentSeqPos){
+	public void getUnitAssignments(int assignmentOffset,final boolean isAssignmentEditmode,final int pagenumber,final int mouseOverAssignmentSeqPos,final String selectedAssignmentId){
 		String classPageId;
 		classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		if(classPageId==null){
@@ -683,7 +690,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				if(isAssignmentEditmode){
 					//setAssignmentsEditView();
 				}else{
-					setAssignmentsForUnit(result,pagenumber,mouseOverAssignmentSeqPos);
+					setAssignmentsForUnit(result,pagenumber,mouseOverAssignmentSeqPos,selectedAssignmentId);
 				}
 				
 				showAndHideAssignmentArrows(result);
@@ -703,7 +710,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	return assignmentOffset;
 	}
-	private void setAssignmentsForUnit(UnitAssignmentsDo unitAssignmentsDo,int pagenumber,int mouseOverAssignmentSeqPos) {
+	private void setAssignmentsForUnit(UnitAssignmentsDo unitAssignmentsDo,int pagenumber,int mouseOverAssignmentSeqPos,String selectedAssignmentId) {
+		toalassignmentSize =unitAssignmentsDo.getTotalHitCount();
+		String aid = AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 		requiredText.setText(i18n.GL2222());
 		circleContainerPanel.clear();
 		circleContainerPanel.add(requiredText);
@@ -721,13 +730,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 				if(pageLocation.equals(PlaceTokens.STUDENT)){
 					unitCricleViewObj.addMouseOverHandler(new StudentAssignmentMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getPlannedEndDate(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid(),unitCricleViewObj.getElement().getId()));
-					
 				}else{
 					unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId(),unitCricleViewObj));
-					}
+				}
 				unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
 				if(pagenumber!=0){
-					if(pagenumber==i+1){
+					if(pagenumber==assignmentOffset+i+1){
 						String newSeqCollectionItemId = unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId();
 						assignmentContainer.clear();
 						removeAssignmentSelectedStyle();
@@ -741,8 +749,38 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				}
 				if(mouseOverAssignmentSeqPos!=0)
 				{
-					if(unitAssignmentsDo.getSearchResults().size()<mouseOverAssignmentSeqPos){
-						if(i+2==mouseOverAssignmentSeqPos){
+						if(selectedAssignmentId.equalsIgnoreCase(aid)){
+							if(mouseOverAssignmentSeqPos > toalassignmentSize){
+								mouseOverAssignmentSeqPos = mouseOverAssignmentSeqPos-1;
+								if(mouseOverAssignmentSeqPos==assignmentOffset+i+1){
+									String newSeqCollectionItemId = unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId();
+									assignmentContainer.clear();
+									removeAssignmentSelectedStyle();
+									addAssignmentSelectStyle(unitCricleViewObj);
+									isPersonalize = false;
+									displayPersonalizeOptions(isPersonalize);
+									setPersonalizeState(isPersonalize);
+									String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+									revealPlace("unitdetails", null, unitId, newSeqCollectionItemId);
+								}
+							}
+						else
+						{
+							if(mouseOverAssignmentSeqPos==assignmentOffset+i+1){
+								String newSeqCollectionItemId = unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId();
+								assignmentContainer.clear();
+								removeAssignmentSelectedStyle();
+								addAssignmentSelectStyle(unitCricleViewObj);
+								isPersonalize = false;
+								displayPersonalizeOptions(isPersonalize);
+								setPersonalizeState(isPersonalize);
+								String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+								revealPlace("unitdetails", null, unitId, newSeqCollectionItemId);	
+								}
+						}
+					}else{
+						
+						if(aid.equalsIgnoreCase(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId())){
 							String newSeqCollectionItemId = unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId();
 							assignmentContainer.clear();
 							removeAssignmentSelectedStyle();
@@ -753,23 +791,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 							String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 							revealPlace("unitdetails", null, unitId, newSeqCollectionItemId);
 						}
-				}
-					else
-					{
-						if(mouseOverAssignmentSeqPos==i+1){
-							String newSeqCollectionItemId = unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId();
-							assignmentContainer.clear();
-							removeAssignmentSelectedStyle();
-							addAssignmentSelectStyle(unitCricleViewObj);
-							isPersonalize = false;
-							displayPersonalizeOptions(isPersonalize);
-							setPersonalizeState(isPersonalize);
-							String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
-							revealPlace("unitdetails", null, unitId, newSeqCollectionItemId);
-						}
-				
 					}
 				}
+				
 				
 			}
 			
@@ -927,12 +951,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			if(assignmentOffset==selectedAssignmentpageNumber){
 				assignmentOffset = assignmentOffset-assignmentLimit;
 			}
-			getUnitAssignments(assignmentOffset,isEditMode,selectedAssignmentpageNumber,0);
+			getUnitAssignments(assignmentOffset,isEditMode,selectedAssignmentpageNumber,0,"");
 		}else{
 			if(totalHintCount-1==assignmentOffset){
 				assignmentOffset=assignmentOffset-assignmentLimit;
 			}
-			getUnitAssignments(assignmentOffset,isEditMode,0,mouseOverAssignmentSeqPos);
+			getUnitAssignments(assignmentOffset,isEditMode,0,mouseOverAssignmentSeqPos,selectedAssignmentId);
 						
 		}
 		
