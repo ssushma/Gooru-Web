@@ -635,30 +635,36 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		if (studentOffSet==0){
 			panelSutdentsList.clear();
 		}
-		for (int i=0; i<result.getSearchResults().size();i++){
-			String studentName = result.getSearchResults().get(i).getUsername().trim();
-			String studentId = result.getSearchResults().get(i).getGooruUid().trim();
-			final Label student = new Label();
-			student.setText(studentName);
-			
-			student.setStyleName(res.css().student());
-			
-			student.addClickHandler(new ClickHandler() {
-				
-				@Override
-				public void onClick(ClickEvent event) {
-					String selectedStudentId = student.getElement().getAttribute("id"); 
-					System.out.println("selectedStudentId : "+selectedStudentId);
-					lblSelected.setText(student.getText());
-					spanelSutdentsList.setVisible(false);
-					// Need to write logic to navigate to student page.
-				}
-			});
-			
-			StringUtil.setAttributes(student.getElement(), studentId, studentName, studentName);
-			
-			panelSutdentsList.add(student);
+		if(result.getSearchResults().size()>0){
+				for (int i=0; i<result.getSearchResults().size();i++){
+					String studentName = result.getSearchResults().get(i).getUsername().trim();
+					String studentId = result.getSearchResults().get(i).getGooruUid().trim();
+					final Label student = new Label();
+					student.setText(studentName);
+					
+					student.setStyleName(res.css().student());
+					
+					student.addClickHandler(new ClickHandler() {
+						
+						@Override
+						public void onClick(ClickEvent event) {
+							String selectedStudentId = student.getElement().getAttribute("id"); 
+							lblSelected.setText(student.getText());
+							spanelSutdentsList.setVisible(false);
+							// Need to write logic to navigate to student page.
+						}
+					});
+					
+					StringUtil.setAttributes(student.getElement(), studentId, studentName, studentName);
+					panelSutdentsList.add(student);
+				}//end for loop
+		}else{
+			panelSutdentsList.clear();
+			Label noStudentsLbl = new Label(i18n.GL2248());
+			noStudentsLbl.getElement().setAttribute("style", "margin-left: 8px;");
+			panelSutdentsList.add(noStudentsLbl);
 		}
+		
 	}
 
 	public class ClassCodeTextCopy implements ClickHandler{
