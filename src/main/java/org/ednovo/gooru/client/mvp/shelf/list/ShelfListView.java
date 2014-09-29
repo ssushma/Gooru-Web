@@ -2172,4 +2172,33 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 }
 	}
 
+	@Override
+	public void highlightAssignment(String o1, String o2, String o3, String id) {
+		if(o3!=null) {
+			isDragged=true;	
+			onDragOverOpenFolder(o1,false);
+			isDragged=true;
+			onDragOverOpenFolder(o2,false);
+			isDragged=true;
+			onDragOverOpenFolder(o3,false);
+			isDragged=true;
+			onDragOverOpenFolder(id,false);
+		} else if(o2!=null) {
+			isDragged=true;
+			onDragOverOpenFolder(o1,false);
+			isDragged=true;
+			onDragOverOpenFolder(o2,false);
+			isDragged=true;
+			onDragOverOpenFolder(id,false);
+		} else if(o1!=null) {
+			isDragged=true;
+			onDragOverOpenFolder(o1,false);
+			isDragged=true;
+			onDragOverOpenFolder(id,false);
+		}else{
+			isDragged=true;
+			onDragOverOpenFolder(id,false);
+		}
+	}
+
 }

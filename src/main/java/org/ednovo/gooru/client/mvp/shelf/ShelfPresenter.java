@@ -61,6 +61,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.HighlightAssignmentToEditEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.service.ShelfServiceAsync;
@@ -256,6 +257,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 						if (collection.getMeta().getPermissions().toString().contains("edit")){
 							getView().setCollection(collection);
 							fireEvent(new RefreshCollectionInShelfListEvent(collection, RefreshType.OPEN));
+							highlightAssignmnet();
 							getView().getLoadingImageInvisible();
 						}else{
 							getView().getLoadingImageLabel().setVisible(false);
@@ -278,6 +280,25 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 		});
 	}
 	
+	protected void highlightAssignmnet() {
+		String id = getPlaceManager().getRequestParameter("id");
+		String o1 = getPlaceManager().getRequestParameter("o1");
+		String o2 = getPlaceManager().getRequestParameter("o2");
+		String o3 = getPlaceManager().getRequestParameter("o3");
+		String assignmentEdit = getPlaceManager().getRequestParameter("edit");
+		if(assignmentEdit!=null){
+			if(o3!=null) {
+				fireEvent(new HighlightAssignmentToEditEvent(o1,o2,o3,id));
+			} else if(o2!=null) {
+				fireEvent(new HighlightAssignmentToEditEvent(o1,o2,null,id));
+			} else if(o1!=null) {
+				fireEvent(new HighlightAssignmentToEditEvent(o1,null,null,id));
+			}else{
+				fireEvent(new HighlightAssignmentToEditEvent(null,null,null,id));
+			}
+		}
+	}
+
 	@Override
 	public void onUnbind(){
 		super.onUnbind();
@@ -334,7 +355,6 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			String o1 = getPlaceManager().getRequestParameter("o1");
 			String o2 = getPlaceManager().getRequestParameter("o2");
 			String o3 = getPlaceManager().getRequestParameter("o3");
-			
 			if(o3!=null&&id==null) {
 				setFoldersSlot(o3);
 			} else if(o2!=null&&id==null) {

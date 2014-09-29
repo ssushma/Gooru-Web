@@ -619,7 +619,7 @@ public enum UrlToken {
 	
 	ASSIGN_STATUS_UPDATE("/v2/class/{0}/pathway/{1}/item/{2}?sessionToken={3}"),
 	
-	V2_GET_ASSIGNMENT_DETAILS("/v2/collection/item/{0}?sessionToken={1}"),
+	V2_GET_ASSIGNMENT_DETAILS("/v2/collection/item/{0}?sessionToken={1}&includeAdditionalInfo=true"),
 	
 	PATHWAYS_UPDATE("/v2/class/{0}/pathway/{1}?sessionToken={2}"),
 	

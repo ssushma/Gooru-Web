@@ -1,6 +1,10 @@
 package org.ednovo.gooru.shared.model.content;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.ednovo.gooru.shared.model.code.CodeDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -38,6 +42,15 @@ public class ClasspageItemDo implements Serializable{
 	private Integer timeStudying;
 	
 	
+	private Set<StandardFo> standards = new HashSet<StandardFo>();
+	
+	
+	public Set<StandardFo> getStandards() {
+		return standards;
+	}
+	public void setStandards(Set<StandardFo> standards) {
+		this.standards = standards;
+	}
 	/**
 	 * @return the minimumScoreByUser
 	 */
