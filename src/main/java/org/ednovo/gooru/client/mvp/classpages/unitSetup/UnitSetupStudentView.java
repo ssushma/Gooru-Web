@@ -24,22 +24,18 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupView.AddAssignmentToUnit;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
-import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
-import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -134,7 +130,7 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 
 
 	@Override
-	public void showUnitDetails(ClassDo classDo,List<InsightsUserDataDo> insightsUserList) {
+	public void showUnitDetails(ClassDo classDo) {
 		if(classDo.getTotalHitCount() != null){
 			 totalCount = classDo.getTotalHitCount();
 		}
@@ -166,7 +162,7 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 			sequenceNum = sequenceNum + 1;
 			System.out.println("studentsequenceNum::"+sequenceNum);
 	    	ClassUnitsListDo classListUnitsListDo = classDo.getSearchResults().get(i);
-			UnitsAssignmentWidgetView unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(sequenceNum,classListUnitsListDo,insightsUserList,true);
+			UnitsAssignmentWidgetView unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(sequenceNum,classListUnitsListDo,true);
 			unitsAssignmentWidgetView.setClassDo(classDo);
 			if (classListUnitsListDo.getResource().getItemCount() != null) {
 				unitsAssignmentWidgetView.setTotalHitCount(classListUnitsListDo.getResource().getItemCount());

@@ -159,15 +159,15 @@ public class UnitsAssignmentWidgetView extends Composite {
 	 * @param classUnitsDo {@link ClassUnitsListDo}
 	 * @param isStudentMode {@link Boolean}
 	 */
-	public UnitsAssignmentWidgetView(int sequenceNum,ClassUnitsListDo classUnitsDo,List<InsightsUserDataDo> insightsUserList, boolean isStudentMode){
+	public UnitsAssignmentWidgetView(int sequenceNum,ClassUnitsListDo classUnitsDo, boolean isStudentMode){
 		initWidget(uibinder.createAndBindUi(this));
 		this.classUnitsDo=classUnitsDo;
-		this.insightsUserList=insightsUserList;
 		this.isStudentMode =isStudentMode; 
 		editUnitButton.removeFromParent();
 		addAssignmentButton.removeFromParent();
 		cancelEditButton.removeFromParent();
-		setAssignmentsForUnit();
+//		getAnalyticData(classUnitsDo.getResource().getUser().getGooruUId(), classUnitsDo.getResource().getGooruOid());
+		getAnalyticData();
 		setUnitNameDetails();
 		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
 		unitDetailsPanel.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
@@ -808,6 +808,23 @@ public class UnitsAssignmentWidgetView extends Composite {
 		}else{
 			loadingImageLabel.setVisible(false);
 		}
+	}
+	
+	public void getAnalyticData(){
+		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String gooruUId=classUnitsDo.getResource().getUser().getGooruUId();
+		String pathwayId=classUnitsDo.getResource().getGooruOid();
+		
+	 	AppClientFactory.getInjector().getClasspageService().getAssignmentData(gooruUId, classpageId, 20, 0, pathwayId, new SimpleAsyncCallback<List<InsightsUserDataDo>>() {
+
+			@Override
+			public void onSuccess(List<InsightsUserDataDo> result) {
+//				getView().setAssignments(result);
+				insightsUserList=result;
+				System.out.println("sucesss:"+result.size());
+				setAssignmentsForUnit();
+			}
+		});		
 	}
 
 }

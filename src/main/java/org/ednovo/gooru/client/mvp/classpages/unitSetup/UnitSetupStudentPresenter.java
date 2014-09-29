@@ -61,9 +61,7 @@ public class UnitSetupStudentPresenter extends PresenterWidget<IsUnitSetupStuden
 						classDo=result;
 					if(result.getSearchResults().size()>0){
 						String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-						gooruUid=result.getSearchResults().get(0).getResource().getUser().getGooruUId();
-						pathwayId=result.getSearchResults().get(0).getResource().getGooruOid();
-						getAnalyticData(gooruUid,pathwayId);
+						getView().showUnitDetails(classDo);
 						int pageNumVal = 0;
 						if(pageNum != null)
 						{
@@ -95,9 +93,7 @@ public class UnitSetupStudentPresenter extends PresenterWidget<IsUnitSetupStuden
 			@Override
 			public void onSuccess(List<InsightsUserDataDo> result) {
 //				getView().setAssignments(result);
-				getView().showUnitDetails(classDo,result);
-				System.out.println("sucesss:"+result.get(0).getStatus());
-				
+				System.out.println("sucesss:"+result.get(0).getTitle());
 			}
 		});		
 	}
