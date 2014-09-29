@@ -8,6 +8,14 @@
 	},
 	
 	{
+		"label": "Lammersville USD",
+		"courseId":0,
+		"subjectId":0,
+		"link": "#lusd",
+		"extraParms": null
+	},
+	
+	{
 		"label": "Leadership Public Schools",
 		"courseId":0,
 		"subjectId":0,
