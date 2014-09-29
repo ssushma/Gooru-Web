@@ -67,6 +67,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RequestShelfEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RequestShelfOpenClickEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.ResourceDragOverShelfEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.UserInfoMsgShelfEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.HighlightAssignmentToEditEvent;
 import org.ednovo.gooru.client.service.FolderServiceAsync;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -156,6 +157,7 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		addRegisteredHandler(OpenParentFolderEvent.TYPE, this); 
 		addRegisteredHandler(UpdateShelfFolderMetaDataEvent.TYPE, this);
 		addRegisteredHandler(ActivateCollectionStyleEvent.TYPE, this);
+		addRegisteredHandler(HighlightAssignmentToEditEvent.TYPE,this);
 		
 	}
 
@@ -520,5 +522,18 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 			RefreshFolderType refreshFolderType, HashMap<String, String> params) {
 		getView().refreshFolderItemDataInSearchAddResource(folderDo, refreshFolderType, params);
 		
+	}
+
+	@Override
+	public void highlightAssignmentToEdit(String o1, String o2, String o3,String id) {
+		if(o3!=null) {
+			getView().highlightAssignment(o1,o2,o3,id);
+		} else if(o2!=null) {
+			getView().highlightAssignment(o1,o2,null,id);
+		} else if(o1!=null) {
+			getView().highlightAssignment(o1,null,null,id);
+		}else{
+			getView().highlightAssignment(null,null,null,id);
+		}
 	}
 }

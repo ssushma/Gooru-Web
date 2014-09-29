@@ -66,6 +66,7 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -149,6 +150,10 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	EditToolBarView editToolBarView;
 
 	public ClasspageItemDo classpageItemDo=null;
+	
+	/* HTML5 Storage implementation for tab persistance */
+	private Storage stockStore = null;
+
 	
 	private static CollectionsViewUiBinder uiBinder = GWT.create(CollectionsViewUiBinder.class);
 	
@@ -761,6 +766,14 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 					if(foldersList.size()>0){
 						for(int i=0;i<foldersList.size();i++){
 							parametesMap.put("o"+(i+1), foldersList.get(i));
+						}
+					}
+					parametesMap.put("edit","assignment");
+					stockStore = Storage.getLocalStorageIfSupported();
+					if (stockStore != null) {
+						stockStore = Storage.getLocalStorageIfSupported();
+						if (stockStore != null) {
+							stockStore.setItem("tabKey", "resourceTab");
 						}
 					}
 					AppClientFactory.getPlaceManager().revealPlace(true, AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, parametesMap));
