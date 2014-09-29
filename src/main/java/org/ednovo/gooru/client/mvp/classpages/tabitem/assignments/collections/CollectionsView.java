@@ -475,13 +475,13 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	public void updateAssignmentDetails(String direction,boolean isHavingBadWords){
 		boolean scoreFlag=true,minutesFlag=true,hoursFlag=true;
-		Integer minScore=0,hour=0,minutes=0;
+		Integer minScore=null,hour=null,minutes=null;
 		String minimumScore=mimimunScoreTextBox.getValue();
 		String suggestedHour=suggestedHourTextBox.getValue();
 		String suggestedMinutes=suggestedMinTextBox.getValue();
 		try{
-			if(minimumScore!=null&&!minimumScore.equals("")){
-				minScore=new Integer(minimumScore);
+			if(minimumScore!=null&&!minimumScore.trim().equals("")){
+				minScore=new Integer(minimumScore.trim());
 				if(minScore>100){
 					scoreFlag=false;
 					scoreErrorLabel.setText(i18n.GL2231());
@@ -496,8 +496,8 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			scoreErrorLabel.setText(i18n.GL2232());
 		}
 		try{
-			if(suggestedHour!=null&&!suggestedHour.equals("")){
-				hour=new Integer(suggestedHour);
+			if(suggestedHour!=null&&!suggestedHour.trim().equals("")){
+				hour=new Integer(suggestedHour.trim());
 			}
 			minutesFlag=true;
 		}catch(NumberFormatException e){
@@ -505,8 +505,8 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			minutesErrorLabel.setText(i18n.GL2233());
 		}
 		try{
-			if(suggestedMinutes!=null&&!suggestedMinutes.equals("")){
-				minutes=new Integer(suggestedMinutes);
+			if(suggestedMinutes!=null&&!suggestedMinutes.trim().equals("")){
+				minutes=new Integer(suggestedMinutes.trim());
 				if(minutes>59){
 					hoursFlag=false;
 					minutesErrorLabel.setText(i18n.GL2234());
@@ -524,8 +524,16 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			minutesErrorLabel.setText("");
 			scoreErrorLabel.setText("");
 			directionErrorLabel.setText("");
-			String suggestedTime=hour+i18n.GL2184()+" "+minutes+i18n.GL2185();
-			updateAssignmentDetails(direction, minScore.toString(), suggestedTime);
+			minimumScore=minScore!=null?minScore.toString():null;
+			String suggestedTime=null;
+			if(hour==null&&minutes!=null){
+				suggestedTime="0"+i18n.GL2184()+" "+minutes+i18n.GL2185();
+			}else if(hour!=null&&minutes==null){
+				suggestedTime=hour+i18n.GL2184()+" "+"00"+i18n.GL2185();
+			}else if(hour!=null&&minutes!=null){
+				suggestedTime=hour+i18n.GL2184()+" "+minutes+i18n.GL2185();
+			}
+			updateAssignmentDetails(direction, minimumScore, suggestedTime);
 		}else{
 			savingLabel.setText("");
 			hideCancelAndSaveButtons(true);
