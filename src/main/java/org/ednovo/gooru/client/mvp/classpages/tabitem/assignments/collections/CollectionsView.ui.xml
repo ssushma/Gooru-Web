@@ -81,13 +81,22 @@
 					</g:FlowPanel>
 					<g:FlowPanel styleName="{style.anaBoxes} row">
 						<g:HTMLPanel styleName="col-xs-4 ">
-							<g:Label styleName="{style.boxbg}" text="{i18n.GL2230}"></g:Label>
+							<g:HTMLPanel styleName="{style.boxbg}">
+									<g:Label styleName="{style.analyticstext}" text="{i18n.GL2230}"></g:Label>
+									<g:Label styleName="{style.analyticsData}" ui:field="averageTimeLabel"></g:Label>
+							</g:HTMLPanel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-xs-4">
-							<g:Label styleName="{style.boxbg}" text="{i18n.GL0934}"></g:Label>
+							<g:HTMLPanel styleName="{style.boxbg}">
+								<g:Label styleName="{style.analyticstext}" text="{i18n.GL0934}"></g:Label>
+								<g:Label styleName="{style.analyticsData}" ui:field="viewsLabel"></g:Label>
+							</g:HTMLPanel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-xs-4">
-							<g:Label styleName="{style.boxbg}" text="{i18n.GL2086}"></g:Label>
+							<g:HTMLPanel styleName="{style.boxbg}">
+									<g:Label styleName="{style.analyticstext}" text="{i18n.GL2086}"></g:Label>
+									<g:Label ui:field="avarageReactionLabel"></g:Label>
+							</g:HTMLPanel>
 			           </g:HTMLPanel>
 					   <g:Label styleName="clearfix"></g:Label>
 					</g:FlowPanel>		

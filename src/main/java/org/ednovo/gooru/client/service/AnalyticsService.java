@@ -58,4 +58,6 @@ public interface AnalyticsService extends BaseService {
 	public ArrayList<GradeJsonData> getAnalyticsGradeData(String classpageId,String pathwayId);
 	
 	public String exportPathwayOE(String classpageId,String pathwayId);
+	
+	public CollectionSummaryMetaDataDo getAssignmentAverageData(String classId,String unitId,String collectionId);
 }

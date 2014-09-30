@@ -529,4 +529,13 @@ width: 30px;
 	padding-top:6px;
 	padding-bottom:6px;
 	display:none;
-	}
+}
+.analyticstext{
+	text-align: center;
+font-size: 14px;
+}
+.analyticsData{
+	text-align: center;
+	padding-top: 40px;
+	font-size: 14px;
+}

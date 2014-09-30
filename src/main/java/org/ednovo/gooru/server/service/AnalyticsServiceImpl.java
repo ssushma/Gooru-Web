@@ -38,7 +38,9 @@ import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +55,26 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	
+	public static final String FIELDS="fields";
+	public static final String AVGTIMESPENT="avgTimeSpent";
+	public static final String VIEWS="views";
+	public static final String AVGREACTION="avgReaction";
+	public static final String SESSION="session";
+	public static final String USERUID="userUId";
+	public static final String COLLECTIONGOORUOID="collectionGooruOId";
+	public static final String PATHWAYID="pathwayId";
+	
+	public static final String FILTERS="filters";
+	public static final String PAGINATE="paginate";
+	public static final String SORTBY="sortBy";
+	public static final String SORTORDER="sortOrder";
+	
+	public static final String ITEMSEQUENCE="itemSequence";
+	public static final String ASCENDING="ASC";
+	
+	public static final String CLASSID="classId";
 
 	@Override
 	public ArrayList<CollectionProgressDataDo> getCollectionProgressData(String collectionId,String classPageId,String pathwayId) {
@@ -265,4 +287,59 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		}
 		return collectionResourcesList;
 	}
+	
+	
+	@Override
+	public CollectionSummaryMetaDataDo getAssignmentAverageData(String classId,String unitId,String collectionId){
+		
+		JsonRepresentation jsonRep = null;
+		CollectionSummaryMetaDataDo collectionSummaryMetaDataDo=null;
+		String requiredFields=AVGTIMESPENT +","+AVGREACTION+","+VIEWS;
+		
+		String urlDataParameterValue=createJsonPayloadObject(unitId,classId,"",requiredFields);
+		
+		String  url= UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA, collectionId,getLoggedInSessionToken(),urlDataParameterValue);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		if(jsonResponseRep.getStatusCode()==200){
+			try {
+				JSONArray jsonArray=jsonRep.getJsonObject().getJSONArray("content");
+				if(jsonArray!=null&&jsonArray.length()>0){
+					collectionSummaryMetaDataDo=JsonDeserializer.deserialize(jsonArray.getJSONObject(0).toString(),new TypeReference<CollectionSummaryMetaDataDo>(){});
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return collectionSummaryMetaDataDo;
+	}
+	
+	public String createJsonPayloadObject(String unitId,String classId,String userUid,String requiredFields){
+		JSONObject jsonDataObject=new JSONObject(); 
+		try {
+			jsonDataObject.put(FIELDS, requiredFields);
+			
+			JSONObject filtersJsonObject=new JSONObject();
+			filtersJsonObject.put(SESSION, "AS");
+			filtersJsonObject.put(USERUID, userUid);
+			filtersJsonObject.put(CLASSID, classId);
+			filtersJsonObject.put(PATHWAYID, unitId);
+			
+			jsonDataObject.put(FILTERS, filtersJsonObject);
+			
+			JSONObject paginateJsonObject=new JSONObject();
+			paginateJsonObject.put(SORTBY, ITEMSEQUENCE);
+			paginateJsonObject.put(SORTORDER, ASCENDING);
+			
+			jsonDataObject.put(PAGINATE, paginateJsonObject);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonDataObject.toString();
+	}
+	
+	
+	
+	
 }

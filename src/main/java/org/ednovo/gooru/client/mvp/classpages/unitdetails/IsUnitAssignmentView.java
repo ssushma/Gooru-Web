@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
@@ -44,5 +45,6 @@ public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentU
 	void scoreHederView(ClassUnitsListDo classUnitsListDo);
 	public void resetUnitAssignmentView();
 	public HTMLPanel getAssignmentPanel();
+	public void setCollectionSummaryData(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo);
 
 }

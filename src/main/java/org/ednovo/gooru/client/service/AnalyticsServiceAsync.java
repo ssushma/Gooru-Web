@@ -47,4 +47,5 @@ public interface AnalyticsServiceAsync extends BaseServiceAsync {
     void setHTMLtoPDF(String htmlString,AsyncCallback<Void> callback);
     void getAnalyticsGradeData(String classpageId,String pathwayId,AsyncCallback<ArrayList<GradeJsonData>> AsyncCallback);
     void exportPathwayOE(String classpageId,String pathwayId,AsyncCallback<String> AsyncCallback);
+    public void getAssignmentAverageData(String classId,String unitId,String collectionId,AsyncCallback<CollectionSummaryMetaDataDo> callback);
 }

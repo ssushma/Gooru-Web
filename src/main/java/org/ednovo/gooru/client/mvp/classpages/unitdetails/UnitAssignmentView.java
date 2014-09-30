@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
@@ -1198,8 +1199,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	@Override
 	public HTMLPanel getAssignmentPanel() {
-		// TODO Auto-generated method stub
 		return assignmentContainer;
 	}
+
+	@Override
+	public void setCollectionSummaryData(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo) {
+		
+	}
+	
 	
 }

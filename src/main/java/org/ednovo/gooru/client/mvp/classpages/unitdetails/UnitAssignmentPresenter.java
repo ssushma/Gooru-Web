@@ -27,6 +27,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
@@ -128,7 +129,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		});
 	}
 	
-	public void getAssignemntDetails(final String assignmentId,String classpageId,String pathwayGooruOid){
+	public void getAssignemntDetails(final String assignmentId,final String classpageId, final String pathwayGooruOid){
 		Image image=new Image();
 		image.setUrl(IMAGE_URL);
 		image.setWidth("200px");
@@ -139,6 +140,16 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		AppClientFactory.getInjector().getClasspageService().getAssignemntDetails(assignmentId, new SimpleAsyncCallback<ClasspageItemDo>() {
 			@Override
 			public void onSuccess(ClasspageItemDo classpageItemDo) {
+				if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.EDIT_CLASSPAGE)){
+					if(classpageItemDo!=null&&classpageItemDo.getResource()!=null){
+						AppClientFactory.getInjector().getAnalyticsService().getAssignmentAverageData(classpageId, pathwayGooruOid, classpageItemDo.getResource().getGooruOid(), new SimpleAsyncCallback<CollectionSummaryMetaDataDo>() {
+							@Override
+							public void onSuccess(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo) {
+								getView().setCollectionSummaryData(collectionSummaryMetaDataDo);
+							}
+						});
+					}
+				}
 				getView().showAssignment(classpageItemDo);
 			}
 		});

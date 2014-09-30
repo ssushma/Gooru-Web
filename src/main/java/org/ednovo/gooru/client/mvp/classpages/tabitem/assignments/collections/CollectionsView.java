@@ -117,7 +117,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField Image collectionImage;
 	
-	@UiField Label assignmentSequenceLabel,dueDateText,dueDateButton,savingLabel,scoreErrorLabel,minutesErrorLabel;
+	@UiField Label assignmentSequenceLabel,dueDateText,dueDateButton,savingLabel,scoreErrorLabel,minutesErrorLabel,avarageReactionLabel,viewsLabel,averageTimeLabel;
 	
 	@UiField FlowPanel frameContainer,analyticsContainer,standardsContainer;
 	
@@ -914,6 +914,10 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 				
 			}
 		}
+	}
+	
+	public void setCollectionSummaryData(){
+		//avarageReactionLabel,viewsLabel,averageTimeLabel
 	}
 	
 }
