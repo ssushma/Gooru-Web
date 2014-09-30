@@ -113,8 +113,6 @@ public class PersonalizeUnitView extends
 		panelPagination.clear();
 		this.offSet = offSet;
 		int noOfItem = result.getTotalHitCount() / (limit==0 ? 1 : limit);
-		System.out.println("noOfItem : "+noOfItem);
-		System.out.println("currentPage : "+currentPage);
 		if (result.getSearchResults() != null && result.getSearchResults().size() > 0 && noOfItem > 0) {
 			if (result.getTotalHitCount() > 1) {
 				

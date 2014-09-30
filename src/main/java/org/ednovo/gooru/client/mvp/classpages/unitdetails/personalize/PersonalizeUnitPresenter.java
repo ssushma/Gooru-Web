@@ -113,6 +113,7 @@ public class PersonalizeUnitPresenter extends
 	}
 	@Override
 	public void getList(){
+		System.out.println("getList .... ");
 		getStudentsList(offSet, limit, "active", classpageDo.getClasspageCode());
 	}
 
@@ -134,6 +135,7 @@ public class PersonalizeUnitPresenter extends
 	@Override
 	public void setClasspageData(ClasspageDo classpageDo){
 		this.classpageDo = classpageDo;
+		System.out.println("setClasspageData .... ");
 		getList();
 	}
 
