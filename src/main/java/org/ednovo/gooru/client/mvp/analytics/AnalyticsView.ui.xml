@@ -23,6 +23,9 @@
 				       <g:HTMLPanel styleName="{unitStyle.rowInner}" ui:field="graphWidget" >
 				          
 				        </g:HTMLPanel>
+				    <g:HTMLPanel styleName="{unitStyle.loadingImageMainDiv}" ui:field="loadingImageLabel">
+					<g:Label styleName="{unitStyle.loadingImageForSelfEdit}" />
+				</g:HTMLPanel>
 				      </g:HTMLPanel>
 				</g:HTMLPanel>
 				<!-- end Graph Widget -->

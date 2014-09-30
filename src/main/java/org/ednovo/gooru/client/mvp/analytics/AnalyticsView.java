@@ -51,7 +51,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	
 	@UiField Label lblMoreUnits,summaryArrowlbl,progressArrowlbl,responsesArrowlbl;
 	
-	@UiField HTMLPanel graphWidget,slotWidget,orangeProgressBar,greenProgressBar,blueProgressBar,scoredBelowPanel,scoredAbovePanel;
+	@UiField HTMLPanel graphWidget,slotWidget,orangeProgressBar,greenProgressBar,blueProgressBar,scoredBelowPanel,scoredAbovePanel,loadingImageLabel;
 	
 	@UiField Button btnCollectionSummary,btnCollectionProgress,btnCollectionResponses;
 	
@@ -354,6 +354,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			}
 			setMinimumScoresData();
 		}
+		loadingImageLabel.setVisible(false);
 	}
 	/**
 	 * @param unitCollectionId the unitCollectionId to set
@@ -381,4 +382,15 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		orangeProgressBar.getElement().getStyle().setWidth((minimunScoreVal==0)?0:(minimunScoreVal-1), Unit.PCT);
 		greenProgressBar.getElement().getStyle().setWidth(100-(minimunScoreVal+1), Unit.PCT);
 	}
+	@Override
+	public void LoadingImageLabeltrue() {
+		loadingImageLabel.setVisible(true);
+	}
+	@Override
+	public void LoadingImageLabelFalse() {
+		loadingImageLabel.setVisible(false);
+	}
+
+	
+	
 }
