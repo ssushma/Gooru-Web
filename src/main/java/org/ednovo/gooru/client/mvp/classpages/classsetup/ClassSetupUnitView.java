@@ -31,11 +31,14 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.classpages.edit.AssignmentProgressCBundle;
 import org.ednovo.gooru.client.mvp.classpages.event.ResetPaginationEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -45,6 +48,8 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -74,6 +79,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 	
 	String ClickedLabelNum ="";
 	String ClickedCollectionItemId ="";
+	String totalNoOfAssignments="";
 
 	private static ClassSetupUnitViewUiBinder uiBinder = GWT.create(ClassSetupUnitViewUiBinder.class);
 
@@ -182,11 +188,43 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 	    });
 		
 		deleteBtnUnit.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
-				deleteItem(sequenceNum,pathwayId);
-				
+				String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				if(classpageId != null){
+					AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayId, "sequence", 1, 0, new SimpleAsyncCallback<UnitAssignmentsDo>() {
+						@Override
+						public void onSuccess(UnitAssignmentsDo result) {
+							totalNoOfAssignments = result.getTotalHitCount().toString();
+							Window.enableScrolling(false);
+							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+							DeletePopupViewVc delete = new DeletePopupViewVc() {
+								@Override
+								public void onClickPositiveButton(ClickEvent event) {
+									deleteItem(sequenceNum,pathwayId);
+									Window.enableScrolling(true);
+									AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+									hide();
+								}
+								@Override
+								public void onClickNegitiveButton(ClickEvent event) {
+									Window.enableScrolling(true);
+									AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+									hide();
+								}
+							};
+							delete.setPopupTitle((i18n.GL0748()));
+							delete.setNotes(i18n.GL2244());
+							delete.setDescText(StringUtil.generateMessage(i18n.GL2245() + i18n.GL_SPL_FULLSTOP() + i18n.GL2246()+ i18n.GL_SPL_FULLSTOP(),totalNoOfAssignments));
+							delete.setPositiveButtonText(i18n.GL0190());
+							delete.setNegitiveButtonText(i18n.GL0142());
+							delete.setDeleteValidate("delete");
+							delete.setPixelSize(450, 345);
+							delete.show();
+							delete.center();
+						}
+					});
+				}
 			}
 		});
 		cancelBtn.addClickHandler(new ClickHandler() {
@@ -219,8 +257,9 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 						if (isHavingBadWords){
 							unitNameErrorLabel.setText(i18n.GL0554());
 							unitNameErrorLabel.setVisible(true);
-							unitNameErrorLabel.getElement().getStyle().setColor("orange");
+							unitNameErrorLabel.getElement().getStyle().setBorderColor("orange");
 							unitNameErrorLabel.getElement().getStyle().setPosition(Position.ABSOLUTE);
+							unitNameErrorLabel.getElement().getStyle().setColor("orange");
 						}else{
 							unitNameErrorLabel.setVisible(false);
 							unitNameErrorLabel.getElement().getStyle().clearBackgroundColor();
@@ -240,9 +279,12 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 				}
 				else
 				{
+					
 					unitNameErrorLabel.setText(i18n.GL2177());
 					unitNameErrorLabel.setVisible(true);
 					unitNameErrorLabel.getElement().getStyle().setBorderColor("orange");
+					unitNameErrorLabel.getElement().getStyle().setPosition(Position.ABSOLUTE);
+					unitNameErrorLabel.getElement().getStyle().setColor("orange");
 				}
 			}
 		});
@@ -250,6 +292,11 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 			
 			@Override
 			public void onClick(ClickEvent event) {
+//here
+				unitNameErrorLabel.setVisible(false);
+				unitNameErrorLabel.getElement().getStyle().clearBackgroundColor();
+				unitNameErrorLabel.getElement().getStyle().setBorderColor("#ccc");
+				unitName.setText(unitnameLBL.getText());
 				inputContainer.setVisible(true);
 				divContainer.setVisible(false);
 				saveBtn.setVisible(true);
@@ -314,6 +361,29 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 				// TODO Auto-generated method stub
 				moveAssignmentPopup.getElement().getStyle().setDisplay(Display.NONE);
 
+			}
+		});
+		
+		unitName.addKeyUpHandler(new KeyUpHandler() {
+			
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				if(unitName.getText().length()==50)
+				{
+					unitNameErrorLabel.setText(i18n.GL0143());
+					unitNameErrorLabel.setVisible(true);
+					unitNameErrorLabel.getElement().getStyle().setBorderColor("orange");
+					unitNameErrorLabel.getElement().getStyle().setPosition(Position.ABSOLUTE);
+					unitNameErrorLabel.getElement().getStyle().setColor("orange");
+				}
+				else
+				{
+					unitNameErrorLabel.setVisible(false);
+					unitNameErrorLabel.getElement().getStyle().clearBackgroundColor();
+					unitNameErrorLabel.getElement().getStyle().setBorderColor("#ccc");
+					
+				}
+				
 			}
 		});
 

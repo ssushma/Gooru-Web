@@ -467,6 +467,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_ASSIGNMENTS, classpageId, getLoggedInSessionToken(), pageSize, pageNum);
+
+		System.out.println("classpageId::"+classpageId);
+		System.out.println("v2GetAssignemtsByClasspageId::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeV2AssignmentsList(jsonRep);
@@ -571,6 +574,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,
 				getLoggedInSessionToken());
+		System.out.println("classpageId::"+classpageId);
+		System.out.println("v2GetClasspageById::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -585,6 +590,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.SIMPLE_COLL_GETAPI, classpageId,
 				getLoggedInSessionToken());
+		System.out.println("getSCollIdClasspageById::"+url);
+		System.out.println("classpageId::"+classpageId);
 		
 		try{
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
@@ -1549,7 +1556,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode, getLoggedInSessionToken(), statusType, ""+pageSize, offSet+"");
-		logger.debug("getActiveAssociatedStudentListByCode : "+url);
+		logger.info("getActiveAssociatedStudentListByCode : "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		

@@ -350,6 +350,7 @@
 	margin-right:15px;
 	padding:10px 10px;
 	box-sizing: border-box;
+	text-align: center;
 }
 
 .inputnoBorder{
@@ -522,3 +523,10 @@ width: 30px;
 .hourlabel{
 	margin-right:5px;
 }
+.analyticsDetailsHeader{
+	font-size:14px;
+	font-weight:bold;
+	padding-top:6px;
+	padding-bottom:6px;
+	display:none;
+	}

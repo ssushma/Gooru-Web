@@ -30,6 +30,7 @@ package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -43,6 +44,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.core.client.GWT;
@@ -105,6 +107,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	private ClassDo classDo;
 	
+	private List<InsightsUserDataDo> insightsUserList;
+	
 	private UnitAssignmentsDo unitAssignmentsDo;
 	
 	private UnitAssigmentReorder unitAssigmentReorder;
@@ -131,6 +135,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 	 * 
 	 * @param sequenceNum {@link Integer}
 	 * @param classUnitsDo {@link ClassUnitsListDo}
+	 * @param b 
+	 * @param insightsUserList 
 	 */
 	public UnitsAssignmentWidgetView(int sequenceNum,ClassUnitsListDo classUnitsDo){
 		initWidget(uibinder.createAndBindUi(this));
@@ -160,7 +166,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 		editUnitButton.removeFromParent();
 		addAssignmentButton.removeFromParent();
 		cancelEditButton.removeFromParent();
-		setAssignmentsForUnit();
+//		getAnalyticData(classUnitsDo.getResource().getUser().getGooruUId(), classUnitsDo.getResource().getGooruOid());
+		getAnalyticData();
 		setUnitNameDetails();
 		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
 		unitDetailsPanel.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
@@ -185,7 +192,12 @@ public class UnitsAssignmentWidgetView extends Composite {
 			if(classUnitsDo.getResource().getCollectionItems() != null){
 				for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 					ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
-					assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid()));
+					if(isStudentMode){
+						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),insightsUserList));
+					}else{
+						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),null));
+					}
+					
 				}
 				assignmentsContainer.add(htPanelNextArrow);
 				showAndHideAssignmentArrows();
@@ -378,7 +390,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 			final String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 			unitAssigmentReorder = new UnitAssigmentReorder(assignmentSeq,getClassDo(),title, narration,classPageId,Integer.parseInt(seqNumber),getTotalHitCount(),collectionItem,classUnitsDo.getResource().getGooruOid()){
 				@Override
-				public void reorderAssignment(int seqPosition,String selectedPathwayId,String targetPathway) {
+				public void reorderAssignment(int seqPosition,String selectedPathwayId,String targetPathway,String selectedAssignmentId) {
 					boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItem);
 					if(isAssignmentDeleted){
 						setLoadingIcon(true);
@@ -796,6 +808,23 @@ public class UnitsAssignmentWidgetView extends Composite {
 		}else{
 			loadingImageLabel.setVisible(false);
 		}
+	}
+	
+	public void getAnalyticData(){
+		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String gooruUId=classUnitsDo.getResource().getUser().getGooruUId();
+		String pathwayId=classUnitsDo.getResource().getGooruOid();
+		
+	 	AppClientFactory.getInjector().getClasspageService().getAssignmentData(gooruUId, classpageId, 20, 0, pathwayId, new SimpleAsyncCallback<List<InsightsUserDataDo>>() {
+
+			@Override
+			public void onSuccess(List<InsightsUserDataDo> result) {
+//				getView().setAssignments(result);
+				insightsUserList=result;
+				System.out.println("sucesss:"+result.size());
+				setAssignmentsForUnit();
+			}
+		});		
 	}
 
 }

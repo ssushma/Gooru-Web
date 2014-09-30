@@ -305,9 +305,9 @@ public enum UrlToken {
 	
 	V2_GET_CLASSPAGE_ASSIGNMENTS("/v2/classpage/{0}/item?sessionToken={1}&data={%22limit%22:%22{2}%22,%22offset%22:%22{3}%22}"),
 	
-	V2_GET_LISTTEACHCLASSES("/v2/class/my/teach?sessionToken={0}&limit={1}&offset={2}&randomId={3}"),
+	V2_GET_LISTTEACHCLASSES("/v2/class/my/teach?sessionToken={0}&limit={1}&offset={2}&randomId={3}&itemType=pathway"),
 	
-	V2_GET_LISTSTUDYCLASSES("/v2/class/my/study?sessionToken={0}&limit={1}&offset={2}&randomId={3}"),
+	V2_GET_LISTSTUDYCLASSES("/v2/class/my/study?sessionToken={0}&limit={1}&offset={2}&randomId={3}&itemType=pathway"),
 	
 	V2_CLASSPAGE_DELETE("/v2/class/{0}?sessionToken={1}"),
 	
@@ -619,14 +619,14 @@ public enum UrlToken {
 	
 	ASSIGN_STATUS_UPDATE("/v2/class/{0}/pathway/{1}/item/{2}?sessionToken={3}"),
 	
-	V2_GET_ASSIGNMENT_DETAILS("/v2/collection/item/{0}?sessionToken={1}"),
+	V2_GET_ASSIGNMENT_DETAILS("/v2/collection/item/{0}?sessionToken={1}&includeAdditionalInfo=true"),
 	
 	PATHWAYS_UPDATE("/v2/class/{0}/pathway/{1}?sessionToken={2}"),
 	
 	V2_UPDATE_UNIT_STATUS("/v2/class/item/{0}?sessionToken={1}"),
 	
 //	GET_INSIGHTS_DATA("insights-api-dev/v1/classpage/{0}/grade.json?sessionToken={1}&data={%22fields%22:%22timeSpent,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,gooruOId,title%22,%22filters%22:{%22session%22:%22FS%22,%22userUId%22:%22{2}%22},%22collectionGooruOId%22:%22{3}%22,%22pathwayId%22:%22{3}%22,%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}"),
-	GET_INSIGHTS_DATA("insights-api-dev/v1/classpage/{0}/grade.json?sessionToken={1}&data={%22fields%22:%22timeSpent,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,gooruOId,title%22,%22filters%22:{%22session%22:%22FS%22,%22userUId%22:%22{2}%22,%22pathwayId%22:%22{3}%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}"),
+	GET_INSIGHTS_DATA("insights-api-dev/v1/classpage/{0}/grade.json?sessionToken={1}&data={%22fields%22:%22timeSpent,views,avgTimeSpent,text,questionType,type,score,attemptStatus,resourceGooruOId,userName,gooruUId,timeSpent,avgReaction,reaction,views,avgTimeSpent,collectionGooruOId,,title,description,lastModified,category,thumbnail,options,metaData,userData,skip,totalAttemptUserCount,attempts,totalCorrectCount,totalInCorrectCount,yetToAnswer,status,userCount,itemSequence,gradeInPercentage,totalQuestionCount,answerObject,feedbackStatus,feedbackText,feedbackProviderUId,feedbackTimestamp,feedbackTeacherName,isRequired,minimumScore,estimatedTime%22,%22filters%22:{%22session%22:%22FS%22,%22userUId%22:%22{2}%22,%22pathwayId%22:%22{3}%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}"),
 	
 	V1_COLLECTIONPROGRESSDATA("/v1/classpage/{0}/users/usage.json?sessionToken={1}&data={2}"),
 	

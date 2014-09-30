@@ -23,6 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
@@ -31,7 +32,9 @@ import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.ui.Image;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentView> implements UnitAssignmentUiHandlers{
@@ -46,6 +49,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	private int offSet = 0;
 	private int assignmentOffset=0;
 	private int assignmentLimit=10;
+	private static final String IMAGE_URL="images/core/B-Dot.gif";
 	
 	@Inject
 	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter) {
@@ -84,7 +88,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	public void getPathwayItems(final String classpageId, final String pathwayGooruOid,String sequence,int limit,int offSet) {
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 			@Override
-
+			
 			public void onSuccess(UnitAssignmentsDo result) {
 				String aid=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 				if(aid==null){
@@ -112,8 +116,8 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			public void onSuccess(ClassDo classDo) {
 				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 					getView().showUnitNames(classDo,clearPanel);
-					String seqNumber=AppClientFactory.getPlaceManager().getRequestParameter("seqnumber", null);
-					if(seqNumber!=null){
+					String seqNumber=AppClientFactory.getPlaceManager().getRequestParameter("seqnumber", "1");
+					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
 						int number=Integer.parseInt(seqNumber);
 						number=number-1;
 						getView().scoreHederView(classDo.getSearchResults().get(number));
@@ -125,6 +129,13 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	}
 	
 	public void getAssignemntDetails(final String assignmentId,String classpageId,String pathwayGooruOid){
+		Image image=new Image();
+		image.setUrl(IMAGE_URL);
+		image.setWidth("200px");
+		image.setHeight("200px");
+		image.getElement().getStyle().setMarginLeft(39, Unit.PCT);
+		image.getElement().getStyle().setMarginTop(10, Unit.PX);
+		getView().getAssignmentPanel().add(image);
 		AppClientFactory.getInjector().getClasspageService().getAssignemntDetails(assignmentId, new SimpleAsyncCallback<ClasspageItemDo>() {
 			@Override
 			public void onSuccess(ClasspageItemDo classpageItemDo) {

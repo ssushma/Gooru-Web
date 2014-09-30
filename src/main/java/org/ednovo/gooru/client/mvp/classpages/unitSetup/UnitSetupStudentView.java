@@ -30,9 +30,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupView.AddAssignmentToUnit;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
-import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
@@ -122,6 +120,7 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 			}
 			params.put("pageNum", pageNum);
 			params.put("pos", pos);
+			params.put("seqnumber", "1");
 			if(tabName!=null){
 				params.put("tab", tabName);
 			}

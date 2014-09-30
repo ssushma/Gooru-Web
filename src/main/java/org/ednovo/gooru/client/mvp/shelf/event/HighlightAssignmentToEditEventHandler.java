@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,13 +23,12 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.unitSetup;
+package org.ednovo.gooru.client.mvp.shelf.event;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import com.google.gwt.event.shared.EventHandler;
 
-public interface UnitSetupStudentUiHandlers extends BaseUiHandlers{
-	
-	void getPathwayCompleteDetails(int limit, int offSet);
+public interface HighlightAssignmentToEditEventHandler extends EventHandler {
 
-	void getAnalyticData(String gooruUId, String pathwayId);
+	void highlightAssignmentToEdit(String o1, String o2, String o3,String collectionId);
+
 }
