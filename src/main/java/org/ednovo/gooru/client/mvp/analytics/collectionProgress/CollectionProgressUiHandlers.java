@@ -27,5 +27,5 @@ package org.ednovo.gooru.client.mvp.analytics.collectionProgress;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 public interface CollectionProgressUiHandlers extends BaseUiHandlers{
-  void setCollectionProgressData(String collectionId);
+  void setCollectionProgressData(String collectionId,String pathwayId);
 }

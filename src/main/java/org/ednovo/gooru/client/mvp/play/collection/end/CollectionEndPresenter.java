@@ -27,32 +27,32 @@ package org.ednovo.gooru.client.mvp.play.collection.end;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
-import org.ednovo.gooru.client.mvp.play.collection.body.IsCollectionPlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.collection.end.study.CollectionHomeMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.preview.end.PreviewEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomePresenter;
-import org.ednovo.gooru.client.mvp.play.collection.share.email.SummaryPageEmailShareUc;
+import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.client.service.LibraryServiceAsync;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
-import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
@@ -65,6 +65,9 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 
 	@Inject
 	private PlayerAppServiceAsync playerAppService;
+	
+	@Inject
+	private AnalyticsServiceAsync analyticService;
 	
 	@Inject
 	private LibraryServiceAsync libraryService;
@@ -81,7 +84,11 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	
 	private CollectionHomeMetadataPresenter collectionHomeMetadataPresenter;
 	
+	private CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter;
+	
 	public static final  Object METADATA_PRESENTER_SLOT = new Object();
+	
+	public static final  Object COLLECTION_REPORTS_SLOT=new Object();
 	
 	private static final String PAGE = "course-page";
 	
@@ -99,12 +106,13 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	
 	@Inject
 	public CollectionEndPresenter(EventBus eventBus, IsCollectionEndView view,PreviewHomePresenter previewHomePresenter,
-			PreviewEndPresenter previewEndPresenter,CollectionHomeMetadataPresenter collectionHomeMetadataPresenter) {
+			PreviewEndPresenter previewEndPresenter,CollectionHomeMetadataPresenter collectionHomeMetadataPresenter,CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.previewHomePresenter=previewHomePresenter;
 		this.previewEndPresenter=previewEndPresenter;
 		this.collectionHomeMetadataPresenter=collectionHomeMetadataPresenter;
+		this.collectionSummaryIndividualPresenter=collectionSummaryIndividualPresenter;
 		addRegisteredHandler(SetPlayerLoginStatusEvent.TYPE, this);
 		addRegisteredHandler(UpdateCommentChildViewEvent.TYPE, this);
 		addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
@@ -146,6 +154,19 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		setInSlot(METADATA_PRESENTER_SLOT, collectionHomeMetadataPresenter,false);
 	}
 	
+	public void setCollectionSummaryBasedOnClasspageIdSessionId(){
+		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		if(classpageId==null){
+			classpageId="";
+		}
+		getSessionsDataByUser(collectionDo.getGooruOid(),classpageId,collectionDo.getUser().getGooruUId());
+	}
+	
+	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId){
+		clearSlot(COLLECTION_REPORTS_SLOT);
+		collectionSummaryIndividualPresenter.setIndividualData(collectionId, classpageId, userId, sessionId);
+		setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
+	}
 	public void setViewCount(String viewCount){
 		getView().setViewCount(viewCount);
 	}
@@ -378,5 +399,50 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		}
 		
 	}
-	
+
+	@Override
+	public void getCollectionMetaDataByUserAndSession(String collectionId, String classId, String userId, String sessionId) {
+		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+			
+			@Override
+			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
+				if(result.size()!=0){
+					getView().setCollectionMetaDataByUserAndSession(result);
+				}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+		});
+	}
+
+	public AnalyticsServiceAsync getAnalyticService() {
+		return analyticService;
+	}
+
+	public void setAnalyticService(AnalyticsServiceAsync analyticService) {
+		this.analyticService = analyticService;
+	}
+
+	@Override
+	public void getSessionsDataByUser(final String collectionId,final String classId,final String userId) {
+		this.analyticService.getSessionsDataByUser(collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
+			
+			@Override
+			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
+				if(result.size()!=0){
+					getCollectionMetaDataByUserAndSession(collectionId, classId, userId, result.get(result.size()-1).getSessionId());
+					setCollectionSummaryData(collectionId, classId, userId, result.get(result.size()-1).getSessionId());
+					getView().setSessionsData(result);
+				}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+		});
+	}
 }
