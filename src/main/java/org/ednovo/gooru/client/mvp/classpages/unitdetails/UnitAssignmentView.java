@@ -88,7 +88,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 
 
-	@UiField Label lblMoreUnits,unitTitleDetails,lblTimeHours,lblTimeMin,lblTimeValidation;
+	@UiField Label lblMoreUnits,lblTimeHours,lblTimeMin,lblTimeValidation;
 
 	
 	@UiField Anchor unitSetupButton;
