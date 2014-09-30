@@ -55,4 +55,8 @@ public interface UnitAssignmentUiHandlers extends BaseUiHandlers{
 
 	void getPathwayUnits(String classId,int limit, int offset,boolean clearPanel);
 
+
+	void updateUnitstatus(String collectionItemId, String minimumScoreByuser,
+			String assignmentStatus, String time);
+
 }
