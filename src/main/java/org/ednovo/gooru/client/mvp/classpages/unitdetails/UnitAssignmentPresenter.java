@@ -28,6 +28,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
 import org.ednovo.gooru.shared.model.content.ClassDo;
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
@@ -175,6 +176,26 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		getView().getAssignmentWidgetPanel().clear();
 		getView().getAssignmentWidgetPanel().add(assignmentWidgetPresenter.getWidget());
 		
+	}
+	
+	/**
+	 * This API used for to Update the Unit status.
+	 * @param collectionItemId as Unit id	
+	 * @param minimumScoreByuser 
+	 * @param assignmentStatus
+	 * @param time
+	 */
+	@Override
+	public void updateUnitstatus(String collectionItemId, String minimumScoreByuser, String assignmentStatus, String time){
+		AppClientFactory.getInjector().getClasspageService().updateUnitStatus(collectionItemId, minimumScoreByuser,assignmentStatus,time, new SimpleAsyncCallback<ClassUnitsListDo>() {
+
+			@Override
+			public void onSuccess(ClassUnitsListDo result) {
+				// TODO Auto-generated method stub
+				System.out.println("mini::::::"+result.getMinimumScoreByUser());
+				
+			}
+		});
 	}
 	
 

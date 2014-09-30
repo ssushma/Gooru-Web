@@ -59,4 +59,8 @@ public interface UnitAssignmentUiHandlers extends BaseUiHandlers{
 	
 	void setUnitAssignmentWidget(UnitAssignmentsDo unitAssignmentsDo,ClassDo classDo);
 
+
+	void updateUnitstatus(String collectionItemId, String minimumScoreByuser,
+			String assignmentStatus, String time);
+
 }

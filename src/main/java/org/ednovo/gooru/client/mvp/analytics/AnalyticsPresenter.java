@@ -138,12 +138,16 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 
 	@Override
 	public void getGradeCollectionJson(final String classpageId, final String pathwayId) {
+		getView().LoadingImageLabeltrue();
 		this.analyticService.getAnalyticsGradeData(classpageId, pathwayId, new AsyncCallback<ArrayList<GradeJsonData>>() {
 			@Override
 			public void onSuccess(ArrayList<GradeJsonData> result) {
+	
 				getView().setGradeCollectionData(result);
+				
 				if(result.size()!=0){
 					getBottomAndTopScoresData(classpageId, pathwayId,result.get(0).getResourceGooruOId());
+			
 				}
 			}
 			
