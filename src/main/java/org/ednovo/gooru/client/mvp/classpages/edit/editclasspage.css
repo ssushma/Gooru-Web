@@ -60,7 +60,6 @@
 
 .myClasspageWrapperTwoChapterText {
 	float: left; 
-	width:625px;
 	height: 28px;
 	margin: 17px;
 	font-size: 20px;
@@ -950,7 +949,7 @@ margin-bottom: -10px;
 	border: 0px;
 	left: 89%;
 	text-align: center;
-	color: #6CA8C7;
+	color: blue;
 	border-left: 1px solid #ccc;
 }
 
