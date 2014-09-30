@@ -149,8 +149,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 		editUnitButton.setVisible(true);
 		editUnitButton.addClickHandler(new EditAssignmentEvent());
 		cancelEditButton.addClickHandler(new CancelEditEvent());
-		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
-		unitDetailsPanel.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
+		unitDetailsButton.addClickHandler(new UnitChangeEvent("unitdetails",classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
+		unitDetailsPanel.addClickHandler(new UnitChangeEvent("unitdetails",classUnitsDo.getResource().getGooruOid(),null,PlaceTokens.EDIT_CLASSPAGE));
 	}
 	
 	/**
@@ -169,8 +169,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 //		getAnalyticData(classUnitsDo.getResource().getUser().getGooruUId(), classUnitsDo.getResource().getGooruOid());
 		getAnalyticData();
 		setUnitNameDetails();
-		unitDetailsButton.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
-		unitDetailsPanel.addClickHandler(new UnitChangeEvent(classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
+		unitDetailsButton.addClickHandler(new UnitChangeEvent("dashboard",classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
+		unitDetailsPanel.addClickHandler(new UnitChangeEvent("dashboard",classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
 	}
 
 
@@ -482,14 +482,16 @@ public class UnitsAssignmentWidgetView extends Composite {
 		private String unitGooruOid;
 		private String viewToken;
 		private String sequenceNumber;
-		public UnitChangeEvent(String unitGooruOid, String sequenceNumber,String viewToken){
+		private String tabName;
+		public UnitChangeEvent(String tabName,String unitGooruOid, String sequenceNumber,String viewToken){
 			this.unitGooruOid=unitGooruOid;
 			this.viewToken=viewToken;
 			this.sequenceNumber=sequenceNumber;
+			this.tabName=tabName;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			revealPlace("unitdetails",null,unitGooruOid,viewToken,sequenceNumber);
+			revealPlace(tabName,null,unitGooruOid,viewToken,sequenceNumber);
 		}
 	}
 	
