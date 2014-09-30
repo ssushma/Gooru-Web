@@ -28,7 +28,7 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 public interface CollectionSummaryUiHandlers extends BaseUiHandlers{
   void setCollectionSummaryData(String collectionId,String pathwayId);
-  void loadUserSessions(String collectionId,String classId,String userId);
+  void loadUserSessions(String collectionId,String classId,String userId,String pathwayId);
   void setTeacherData(String collectionId,String classpageId,String pathwayId);
-  void setIndividualData(String collectionId,String classpageId,String userId,String sessionId);
+  void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId);
 }

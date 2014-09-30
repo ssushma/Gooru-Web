@@ -368,3 +368,21 @@
 	clear:both;
 	padding-top: 16px;
 }
+.displayMessageTextForScoredQuestions{
+	float: left;
+	border-bottom: 1px solid #eee;
+	border-left: 1px solid #eee;
+	border-right: 1px solid #eee;
+	margin-left: 2%;
+	width: 402px;
+	padding: 24px;
+}
+.displayMessageTextForOEQuestions{
+	float: left;
+	border-bottom: 1px solid #eee;
+	border-left: 1px solid #eee;
+	border-right: 1px solid #eee;
+	/* margin-left: 2%; */
+	width: 423px;
+	padding: 24px;
+}
