@@ -30,7 +30,7 @@
 					<g:Button ui:field="btnAssignment"></g:Button>
 				</g:HTMLPanel>
 				<g:HTMLPanel ui:field="containerPanel">
-					<div class="row">
+					<!-- <div class="row">
 						<div class="col-xs-12">
 							<g:Label ui:field="unitTitleDetails" styleName="col-xs-2 {unitStyle.unitHeading}" />
 							<g:HTMLPanel styleName="row {unitStyle.classOptionsMain}">
@@ -65,9 +65,9 @@
 							</g:HTMLPanel>
 							<div class="clearfix"></div>
 						</div>
-					</div>
+					</div> -->
 					<!-- This widget Is used to display Circle -->
-					<g:HTMLPanel styleName="row {unitStyle.generalSet}">
+					<!-- <g:HTMLPanel styleName="row {unitStyle.generalSet}">
 						<g:HTMLPanel>
 
 							<g:HTMLPanel styleName="{unitStyle.rowInner}"
@@ -75,7 +75,9 @@
 							</g:HTMLPanel>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
+				 -->
 					<!-- end circle Widget -->
+						<g:HTMLPanel ui:field="assignmentWidgetConatiner"/>
 					<g:HTMLPanel styleName="row {unitStyle.personalBtn}" ui:field="panelPersonalizeButtonContainer">
 						<div class="col-xs-12">
 							<div class="{unitStyle.rowInner}">

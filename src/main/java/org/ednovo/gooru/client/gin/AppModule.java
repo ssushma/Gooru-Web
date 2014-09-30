@@ -88,6 +88,9 @@ import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupPresenter;
 import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupStudentPresenter;
 import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupStudentView;
 import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupView;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.AssignmentWidgetPresenter;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.AssignmentWidgetView;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.IsAssignmentWidget;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.IsUnitAssignmentView;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssignmentView;
@@ -600,6 +603,6 @@ public class AppModule extends AppPresenterModule {
 		
 		bindPresenter(EsypLibraryPresenter.class, IsEsypLibraryView.class, EsypLibraryView.class,IsEsypLibraryProxy.class);
 		bindPresenter(CcstCalTacLibraryPresenter.class, IsCcstCalTacLibraryView.class, CcstCalTacLibraryView.class,IsCcstCalTacLibraryProxy.class);
-
+		bindPresenterWidget(AssignmentWidgetPresenter.class, IsAssignmentWidget.class,AssignmentWidgetView.class);
 	}
 }

@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.home.ClassHomePresenter;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.AssignmentWidgetPresenter;
 import org.ednovo.gooru.client.mvp.community.CommunityPresenter;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
@@ -244,4 +245,6 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<EsypLibraryPresenter> getEsypLibraryPresenter();
 	
 	AsyncProvider<CcstCalTacLibraryPresenter> getCcstCalTacLibraryPresenter();
+	
+	AsyncProvider<AssignmentWidgetPresenter> getAssignmentWidgetPresenter();
 }
