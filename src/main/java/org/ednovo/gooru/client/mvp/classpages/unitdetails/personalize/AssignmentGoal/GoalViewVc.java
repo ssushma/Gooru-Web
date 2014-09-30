@@ -82,11 +82,7 @@ public abstract class GoalViewVc extends Composite {
 		percentage = Integer.parseInt(insightsDo.getUserData().get(0).getGradeInPercentage() !=null ? insightsDo.getUserData().get(0).getGradeInPercentage() : "0"); 
 		
 		goalStatus = percentage < minGoal ? false : true;
-		
-		System.out.println("User ID : "+insightsDo.getUserData().get(0).getGooruUId()+"... percentage : "+percentage+"... Goal Statu : "+goalStatus);
-		System.out.println("insightsDo.getIsRequired() : "+insightsDo.getIsRequired());
-		System.out.println("goalStatus : "+goalStatus);
-		
+				
 		isOptional = insightsDo.getIsRequired()==1 ? false : true;
 		
 		setData();
