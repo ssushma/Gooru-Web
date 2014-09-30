@@ -117,7 +117,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	private String EDITGOAL= i18n.GL2196();
 	
-	private String ASSIGNMENTS="assignments";
+	private String ASSIGNMENTS="unitdetails";
 	private Boolean isClickOnAssignment =false;
 	private Boolean isPersonalize = false;
 		
@@ -171,7 +171,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		btnDashBoard.setText(i18n.GL2200());
 		btnAssignment.setText(i18n.GL1933());
 		unitSetupButton.addClickHandler(new UnitSetupEvents());
-		btnDashBoard.setStyleName(res.unitAssignment().selected());
+//		btnDashBoard.setStyleName(res.unitAssignment().selected());
 
 //		requiredLabel.setText(i18n.GL2200());
 //		optionalLabel.setText(i18n.GL2201());
@@ -243,7 +243,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			selectedUnitNumber = unitNumber;
 			resetCircleAndAssignmentContainer(unitTitle);
 			setClassUnitsListDo(unitsWidget.getClassUnitDo());
-			revealPlace("unitdetails",null,unitsWidget.getUnitGooruOid(),null);
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
+				revealPlace("dashboard",null,unitsWidget.getUnitGooruOid(),null);
+			}else{
+				revealPlace("unitdetails",null,unitsWidget.getUnitGooruOid(),null);
+			}
 			scoreHederView(unitsWidget.getClassUnitDo());
 			removeAndAddUnitSelectedStyle();
 		}
@@ -946,7 +950,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					txtMinuts.setText(timeSplit[1]);
 				}
 			}
-			System.out.println("::::"+txtHours.getText().replace("hrs", "h"));
 			timeLablePanel.setVisible(true);
 			lblTimeHours.setText(txtHours.getText().replace("hrs", "h"));
 			lblTimeMin.setText(txtMinuts.getText());
@@ -957,7 +960,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			System.out.println("showUnitsstydingtime");
 			lblControl.getElement().setAttribute("style", "-webkit-transform: rotate(-50deg);");
 		}else{
-			System.out.println("enter:::::::::else");
 			txtHours.setVisible(true);
 			txtMinuts.setVisible(true);
 			txtHours.setText("");
@@ -1049,7 +1051,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			btnDashBoard.setStyleName(res.unitAssignment().selected());
 			btnAssignment.removeStyleName(res.unitAssignment().selected());
 		}
-		String isAssign=AppClientFactory.getPlaceManager().getRequestParameter("tabname",null);
+		String isAssign=AppClientFactory.getPlaceManager().getRequestParameter("tab",null);
 		if(isAssign!=null && isAssign.equals(ASSIGNMENTS)){
 			btnAssignment.setStyleName(res.unitAssignment().selected());
 			btnDashBoard.removeStyleName(res.unitAssignment().selected());
@@ -1278,14 +1280,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				params.put("pageNum", pageNum);
 				String sequenceNumber=AppClientFactory.getPlaceManager().getRequestParameter("seqnumber", null);
 				String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
-				String tab=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
 			
-			if(tab!=null){
-				params.put("tab", tab);
-			}
 			if(tabName!=null){
-				params.put("tabname", tabName);
+				params.put("tab", tabName);
 			}
+			/*if(tabName!=null){
+				params.put("tabname", tabName);
+			}*/
 			if(unitId!=null){
 				params.put("uid", unitId);
 			}
