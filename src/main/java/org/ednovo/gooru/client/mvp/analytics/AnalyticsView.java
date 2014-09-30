@@ -328,10 +328,16 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	public void setBottomAndTopScoresData(ArrayList<GradeJsonData> result) {
 		scoredAbovePanel.clear();
 		scoredBelowPanel.clear();
+		if(result.size()>0)
+		{
+		if(result.get(0).getUserData() != null)
+		{
 		for(int i=0;i<result.get(0).getUserData().size();i++){
 			UserDataDo userData=result.get(0).getUserData().get(i);
 			scoredAbovePanel.add(new StudentScoredAboveBelowUlPanel(userData));
 			scoredBelowPanel.add(new StudentScoredAboveBelowUlPanel(userData));
+		}
+		}
 		}
 	}
 	

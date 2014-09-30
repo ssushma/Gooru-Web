@@ -117,6 +117,8 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 				new SimpleAsyncCallback<ClasspageListDo >() {
 					@Override
 					public void onSuccess(ClasspageListDo result) {
+						if(result.getTotalHitCount()!=null)
+						{
 						if(result.getTotalHitCount()>pageInitialLimitOwner)
 						{
 							seeMorebtnOwner.setVisible(true);
@@ -125,7 +127,13 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						{
 							seeMorebtnOwner.setVisible(false);
 						}
-
+						}
+						else
+						{
+							seeMorebtnOwner.setVisible(false);
+						}
+						if(result.getSearchResults() != null)
+						{
 						if(result.getSearchResults().size()>0)
 						{
 							ownerClassesContainer.getElement().setInnerHTML("");
@@ -134,6 +142,11 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 							ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
 							classpageWidget.setClassPageImage(result.getSearchResults().get(i),"Teach");
 							ownerClassesContainer.add(classpageWidget);
+						}
+						}
+						else
+						{
+							ownerClassesContainer.getElement().setInnerHTML(i18n.GL1929());
 						}
 						}
 						else

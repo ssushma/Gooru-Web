@@ -30,6 +30,7 @@ import java.util.List;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
+import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
@@ -48,6 +49,7 @@ import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 //import org.ednovo.gooru.shared.model.content.ResourceItemDo;
 
@@ -623,4 +625,7 @@ public interface ClasspageService extends BaseService {
 	 * 
 	*/
    public void pathwayItemMoveWithReorder(String classId,String pathwaygooruOid,String collectionItemId,String newSequence)throws GwtException;
+   
+   public  AssignmentParentDo getAssignmentParentDetails(String assignmentId) throws GwtException;
+   
 }

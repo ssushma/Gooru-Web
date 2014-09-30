@@ -41,6 +41,8 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 	    for(int i=0;i<size;i++){
 	    	if(gradeData.get(i).getEstimatedTime()!=null){
 	    		String estimatedTime=gradeData.get(i).getEstimatedTime().replaceAll("hrs", ":").replaceAll("mins", "").trim();
+	    		if(estimatedTime.contains(":"))
+	    		{
 	    		String[] convertMins=estimatedTime.split(":");
 	    		int convertedEstimateTime=(Integer.parseInt(convertMins[0].trim())*60)+(Integer.parseInt(convertMins[1].trim()));
 	    		if(gradeData.get(i).getAvgTimeSpent()!=0){
@@ -55,9 +57,10 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 	    		suggestedTime[i]=0;
 	    	}
 	    	if(gradeData.get(i).getMinimumScore()!=null){
-	        	int miniscoreVal=Integer.parseInt(gradeData.get(i).getMinimumScore())+0;
+	        	int miniscoreVal=Integer.parseInt(gradeData.get(i).getMinimumScore());
 	        	minimumScore[i]=miniscoreVal;
 		    	averageScore[i]= miniscoreVal-(miniscoreVal/2);	
+	    		}
 	    	}else{
 	    		minimumScore[i]=0;
 	    		averageScore[i]=0;
