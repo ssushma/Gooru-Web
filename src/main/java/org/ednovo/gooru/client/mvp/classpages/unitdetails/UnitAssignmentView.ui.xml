@@ -120,6 +120,7 @@
 										    <g:TextBox ui:field="txtHours" />
 										    <g:TextBox ui:field="txtMinuts" />
 										</div> 
+										<g:Label ui:field="lblTimeValidation"></g:Label>
 										<g:HTMLPanel ui:field="timeLablePanel">
 										   <g:Label styleName="{unitStyle.timeLabelStyle}" ui:field="lblTimeHours"></g:Label> 
 										   <g:Label styleName="{unitStyle.timeLabelStyle}" ui:field="lblTimeMin"></g:Label> 

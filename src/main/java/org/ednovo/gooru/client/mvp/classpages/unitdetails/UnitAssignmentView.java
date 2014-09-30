@@ -84,7 +84,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@UiField HTMLPanel unitPanel,containerPanel,scoreHedingContainer,htmDashBoardTabs,timeLablePanel,personalizePanel;
 	
-	@UiField Label lblMoreUnits,unitTitleDetails,lblTimeHours,lblTimeMin;
+	@UiField Label lblMoreUnits,unitTitleDetails,lblTimeHours,lblTimeMin,lblTimeValidation;
 	
 	@UiField Anchor unitSetupButton;
 	
@@ -175,9 +175,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		
 		txtHours.getElement().setAttribute("placeholder", "h");
 		txtMinuts.getElement().setAttribute("placeholder", "min");
+		txtMinuts.setMaxLength(2);
+		txtHours.setMaxLength(2);
 		txtHours.getElement().setAttribute("style", "text-align:right");
 		txtMinuts.getElement().setAttribute("style", "text-align:right");
 		timeLablePanel.setVisible(false);
+		lblTimeValidation.setVisible(false);
 		
 		StringUtil.setAttributes(assignmentContainer.getElement(), "divAssignmentContainer", null, null);
 		StringUtil.setAttributes(personalizeContainer.getElement(), "divPersonalizeContainer", null, null);
@@ -888,15 +891,18 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		if(classUnits==null){
 			classUnits=classUnitsListDo;
 		}
+		setClassUnitsListDo(classUnits);
 		for(int i=0; i<2; i++){
 			scoreHedingView=new ScoreHedingView(classUnits);
-			scoreHedingContainer.add(scoreHedingView);
 			if(i==0){
 				scoreHedingView.getLblTitle().setText(i18n.GL2195());
 			}else{
 				scoreHedingView.getLblTitle().setText(i18n.GL2203());
 			}
+			scoreHedingView.showUnitStatus();
+			scoreHedingContainer.add(scoreHedingView);
 		}
+		showUnitsStudyingTime(classUnits);
 		//txtHours.addBlurHandler(new ScoreHandler());
 		txtHours.addKeyPressHandler(scoreHedingView.new HasNumbersOnly());
 		txtMinuts.addKeyPressHandler(scoreHedingView.new HasNumbersOnly());
@@ -905,6 +911,50 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 	
 	
+
+	private void showUnitsStudyingTime(ClassUnitsListDo classUnits) {
+		// TODO Auto-generated method stub
+		if(classUnits!=null && classUnits.getTimeStudying()!=null && !classUnits.getTimeStudying().equals("")){
+			String timeOfStudying=classUnits.getTimeStudying();
+			String[] timeSplit =timeOfStudying.split(" ");
+			showAndHideTextBox();
+			if(timeSplit!=null){
+				System.out.println("timesp::"+timeSplit.length);
+				if(timeSplit.length==1){
+					if(timeSplit[0].contains("hrs")){
+						txtHours.setText(timeSplit[0]);
+						txtMinuts.setText("");
+					}else{
+						txtMinuts.setText(timeSplit[0]);
+						txtHours.setText("");
+					}
+				}else{
+					txtHours.setText(timeSplit[0]);
+					txtMinuts.setText(timeSplit[1]);
+				}
+			}
+			System.out.println("::::"+txtHours.getText().replace("hrs", "h"));
+			timeLablePanel.setVisible(true);
+			lblTimeHours.setText(txtHours.getText().replace("hrs", "h"));
+			lblTimeMin.setText(txtMinuts.getText());
+			txtHours.setVisible(false);
+			txtMinuts.setVisible(false);
+			btnSetGoal.setStyleName("secondary");
+			btnSetGoal.setText(EDITGOAL);
+			System.out.println("showUnitsstydingtime");
+			lblControl.getElement().setAttribute("style", "-webkit-transform: rotate(-50deg);");
+		}else{
+			System.out.println("enter:::::::::else");
+			txtHours.setVisible(true);
+			txtMinuts.setVisible(true);
+			txtHours.setText("");
+			txtMinuts.setText("");
+			timeLablePanel.setVisible(false);
+			btnSetGoal.setStyleName("primary");
+			btnSetGoal.setText(SETGOAL);
+		}
+		
+	}
 
 	@Override
 	public void showAssignment(ClasspageItemDo classpageItemDo) {
@@ -1020,27 +1070,33 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		public void onBlur(BlurEvent event) {
 			String hours = txtHours.getText();
 			String min = txtMinuts.getText();
-			if((hours != null || hours != "")){
+			/*if((hours != null || hours != "")){
 				try{
 					if(!hours.isEmpty()){
 					if(Integer.parseInt(hours) >24 || Integer.parseInt(hours)<0){
-						txtHours.setText(getValidationTime(hours, true));
+//						txtHours.setText(getValidationTime(hours, true));
+						setTimeValidation(i18n.GL2251());
 					}else{
-
+						txtHours.getElement().setAttribute("style", "border-color: #efefef !important;");
+					    txtMinuts.getElement().setAttribute("style", "border-color: #efefef !important;");
+						lblTimeValidation.setVisible(false);
 					}
-					}
+				}
 
 				}catch(NumberFormatException numberFormatException){
 					numberFormatException.printStackTrace();
 				}
 
-			}
+			}*/
 			if(min !=null || min != ""){
 				try{
-					if(Integer.parseInt(min) >60 || Integer.parseInt(min) <0){
-						txtMinuts.setText(getValidationTime(min, false));
+					if(Integer.parseInt(min) >59 || Integer.parseInt(min) <0){
+//						txtMinuts.setText(getValidationTime(min, false));
+						setTimeValidation(i18n.GL2251());
 					}else{
-
+						txtHours.getElement().setAttribute("style", "border-color: #efefef !important;");
+						txtMinuts.getElement().setAttribute("style", "border-color: #efefef !important;");
+						lblTimeValidation.setVisible(false);
 					}
 				}catch(Exception exception){
 
@@ -1065,8 +1121,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				return "24";
 			}
 		}else{
-			if(Integer.parseInt(time)>60){
-				return "60";
+			if(Integer.parseInt(time)>59){
+				return "59";
 			}
 		}
 		return null;
@@ -1074,36 +1130,64 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@UiHandler("btnSetGoal")
 	public void clickOnGoalBtn(ClickEvent clickEvent){
-		
 		if((txtHours.getText()!=null && txtHours.getText()!="")|| (txtMinuts.getText()!=null && txtMinuts.getText()!="") ){
-			if(btnSetGoal.getText().equals(SETGOAL)){
-				if(txtHours.getText().isEmpty() && !txtMinuts.getText().isEmpty()){
-					lblTimeHours.setText(txtHours.getText());
-					lblTimeMin.setText(txtMinuts.getText()+" min");
+			try{
+				if(Integer.parseInt(txtMinuts.getText())>59){
+					setTimeValidation(i18n.GL2251());
+				}else{
+					txtHours.getElement().setAttribute("style", "border-color: #efefef !important;");
+					txtMinuts.getElement().setAttribute("style", "border-color: #efefef !important;");
+					lblTimeValidation.setVisible(false);
+					if(btnSetGoal.getText().equals(SETGOAL)){
+						if(txtHours.getText().isEmpty() && !txtMinuts.getText().isEmpty()){
+							lblTimeHours.setText(txtHours.getText());
+							lblTimeMin.setText(txtMinuts.getText()+" min");
+						}
+						if(txtMinuts.getText().isEmpty() && !txtHours.getText().isEmpty()){
+							lblTimeMin.setText(txtMinuts.getText());
+							lblTimeHours.setText(txtHours.getText()+" h");
+						}
+						if(!txtHours.getText().isEmpty()&& !txtMinuts.getText().isEmpty())
+						{
+							lblTimeHours.setText(txtHours.getText()+" h");
+							lblTimeMin.setText(txtMinuts.getText()+" min");
+						}
+						if(txtHours.getText().isEmpty()&& txtMinuts.getText().isEmpty()){
+							lblTimeHours.setText(txtHours.getText());
+							lblTimeMin.setText(txtMinuts.getText());
+						}
+						showAndHideTextBox();
+						btnSetGoal.setStyleName("secondary");
+						btnSetGoal.setText(EDITGOAL);
+//						lblGreenControl.getElement().setId("greenControll");
+						if(getClassUnitsListDo().getCollectionItemId()!=null){
+							String hours = "", mintus="";
+							if(txtHours.getText()!=null && !txtHours.getText().equals("")){
+								hours=txtHours.getText()+ "hrs ";
+							}
+							if(txtMinuts.getText()!=null && !txtMinuts.getText().equals("")){
+								mintus=txtMinuts.getText()+ "min";
+							}
+							String time =hours+mintus;
+							getUiHandlers().updateUnitstatus(getClassUnitsListDo().getCollectionItemId(), null, null,time);
+						}
+						lblControl.getElement().setAttribute("style", "-webkit-transform: rotate(-50deg);");
+					}else{
+						btnSetGoal.setStyleName("primary");
+						showAndHideTextBox();
+						btnSetGoal.setText(SETGOAL);
+					}
 				}
-				if(txtMinuts.getText().isEmpty() && !txtHours.getText().isEmpty()){
-					lblTimeMin.setText(txtMinuts.getText());
-					lblTimeHours.setText(txtHours.getText()+" h");
-				}
-				if(!txtHours.getText().isEmpty()&& !txtMinuts.getText().isEmpty())
-				{
-					lblTimeHours.setText(txtHours.getText()+" h");
-					lblTimeMin.setText(txtMinuts.getText()+" min");
-				}
-				if(txtHours.getText().isEmpty()&& txtMinuts.getText().isEmpty()){
-					lblTimeHours.setText(txtHours.getText());
-					lblTimeMin.setText(txtMinuts.getText());
-				}
-				showAndHideTextBox();
-				btnSetGoal.setText(EDITGOAL);
-				lblGreenControl.getElement().setId("greenControll");
-				lblControl.getElement().setAttribute("style", "-webkit-transform: rotate(-50deg);");
-			}else{
-				btnSetGoal.setStyleName("primary");
-				showAndHideTextBox();
-				btnSetGoal.setText(SETGOAL);
+				
+				
+			}catch(Exception e){
+				
 			}
 			
+			
+		}else{
+			System.out.println("validations");
+			setTimeValidation(i18n.GL2250());
 		}
 
 	}
@@ -1121,6 +1205,18 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			txtMinuts.setVisible(true);
 			timeLablePanel.setVisible(false);
 		}
+	}
+	
+	/**
+	 * To set the time validation msgs
+	 */
+	private void setTimeValidation(String msg) {
+		System.out.println("enter");
+		txtHours.getElement().setAttribute("style", "border-color: #FBB03B !important;");
+		txtMinuts.getElement().setAttribute("style", "border-color: #FBB03B !important;");
+		lblTimeValidation.setVisible(true);
+		lblTimeValidation.setStyleName("errorMessage");
+		lblTimeValidation.setText(msg);
 	}
 
 	/**
@@ -1168,7 +1264,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 				params.put("pageNum", pageNum);
 				String sequenceNumber=AppClientFactory.getPlaceManager().getRequestParameter("seqnumber", null);
-				String unitId=AppClientFactory.getPlaceManager().getRequestParameter("unitId", null);
+				String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 				String tab=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
 			
 			if(tab!=null){
