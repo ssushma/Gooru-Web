@@ -41,6 +41,10 @@
                         <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lblclassTitle"></g:Label>
                         <g:Label styleName="{playerStyle.courseTitle}" ui:field="classTitleValue"></g:Label>
                     </g:HTMLPanel>
+                    <g:HTMLPanel styleName="{playerStyle.infoSection}">
+                        <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lblunitTitle"></g:Label>
+                        <g:Label styleName="{playerStyle.courseTitle}" ui:field="unitTitleValue"></g:Label>
+                    </g:HTMLPanel>
                     <g:HTMLPanel ui:field="teacherPanel" styleName="{playerStyle.infoSection}">
                         <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lblTeacher"></g:Label>
                         <g:HTMLPanel styleName="{playerStyle.userImageContainer}" ui:field="teacherProfileContainer">
