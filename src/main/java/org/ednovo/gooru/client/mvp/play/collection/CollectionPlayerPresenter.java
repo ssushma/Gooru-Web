@@ -75,6 +75,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPla
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -184,6 +185,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
     private String resourcePlayEventName=null;
     
     private String classpageId=null;
+    
+    private String classUnitId=null;
        
 	private Map<String,AttemptedAnswersDo> attemptAnswersMap=new HashMap<String,AttemptedAnswersDo>();
 	
@@ -477,21 +480,23 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 
 	private void getClassPageDetails(String classItemId) {
-		AppClientFactory.getInjector().getClasspageService().getClassPageItem(classItemId, new SimpleAsyncCallback<ClasspageItemDo>() {
+		AppClientFactory.getInjector().getClasspageService().getAssignmentParentDetails(classItemId, new SimpleAsyncCallback<AssignmentParentDo>() {
 			@Override
-			public void onSuccess(ClasspageItemDo classpageItemDo) { 
-				metadataPresenter.setTeacherInfo(classpageItemDo);
-				classpageId=classpageItemDo.getClasspageId();
-				metadataPresenter.getBackToClassButton().addClickHandler(new BackToClassHandler(classpageItemDo.getClasspageId()));
+			public void onSuccess(AssignmentParentDo assignmentParentDo) { 
+				metadataPresenter.setTeacherInfo(assignmentParentDo);
+				classpageId=assignmentParentDo.getClassGooruOid();
+				classUnitId=assignmentParentDo.getPathwayGooruOid();
+				//metadataPresenter.getBackToClassButton().addClickHandler(new BackToClassHandler(classpageItemDo.getClasspageId()));
 			}
 		});
 	}
 	
 	public void getClassPageId(String classItemId){
-		AppClientFactory.getInjector().getClasspageService().getClassPageItem(classItemId, new SimpleAsyncCallback<ClasspageItemDo>() {
+		AppClientFactory.getInjector().getClasspageService().getAssignmentParentDetails(classItemId, new SimpleAsyncCallback<AssignmentParentDo>() {
 			@Override
-			public void onSuccess(ClasspageItemDo classpageItemDo) { 
-				classpageId=classpageItemDo.getClasspageId();
+			public void onSuccess(AssignmentParentDo assignmentParentDo) { 
+				classpageId=assignmentParentDo.getClassGooruOid();
+				classUnitId=assignmentParentDo.getPathwayGooruOid();
 				String view=getPlaceManager().getRequestParameter("view", null);
 				boolean isHomeView=view!=null?false:true;
 				setClasspageInsightsUrl(isHomeView);
@@ -1697,6 +1702,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			hintOrExplanationEventId=null;
 			resourcePlayEventName=null;
 			classpageId=null;
+			classUnitId=null;
 			attemptAnswersMap.clear();
 			attemptTrySequence.clear();
 			attemptStatus.clear();
@@ -1841,12 +1847,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		String classpageEventId=AppClientFactory.getPlaceManager().getClasspageEventId();
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
-			path=classpageId+"/"+collectionDo.getGooruOid();
+			path=classpageId+"/"+classUnitId+"/"+collectionDo.getGooruOid();
 		}else{
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid();
 		}
 		String playerMode=getPlayerMode();
-		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(collectionDo.getGooruOid(), classpageId, classpageEventId, eventType, playerMode,"",null,path,null));
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(collectionDo.getGooruOid(), classUnitId, classpageEventId, eventType, playerMode,"",null,path,null));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		totalTimeSpendInMs=collectionEndTime-newCollectionStartTime;
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(collectionEndTime-newCollectionStartTime, getCollectionScore()));
@@ -1865,7 +1871,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		//String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
-			path=classpageId+"/"+collectionDo.getGooruOid()+"/"+resourceId;
+			path=classpageId+"/"+classUnitId+"/"+collectionDo.getGooruOid()+"/"+resourceId;
 		}else{
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid()+"/"+resourceId;
 		}
@@ -1887,7 +1893,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		//String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
-			path=classpageId+"/"+collectionDo.getGooruOid()+"/"+resourceId;
+			path=classpageId+"/"+classUnitId+"/"+collectionDo.getGooruOid()+"/"+resourceId;
 		}else{
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid()+"/"+resourceId;
 		}
@@ -1910,7 +1916,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		//String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
-			path=classpageId+"/"+collectionDo.getGooruOid()+"/"+resourceId;
+			path=classpageId+"/"+classUnitId+"/"+collectionDo.getGooruOid()+"/"+resourceId;
 		}else{
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid()+"/"+resourceId;
 		}
@@ -1933,15 +1939,16 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getItemLoadDataLogPayLoadObject(itemType));
 		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
+		String unitId=AppClientFactory.getPlaceManager().getDataLogUnitId();
 		String classpageEventId=AppClientFactory.getPlaceManager().getClasspageEventId();
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
-			path=classpageId+"/"+collectionId;
+			path=classpageId+"/"+unitId+"/"+collectionId;
 		}else{
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionId;
 		}
 		String playerMode=getPlayerMode();
-		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getDataLogContextObjectForItemLoad(collectionId, "", classpageEventId, classpageId, "", playerMode, path, null, PlayerDataLogEvents.COLLECTION_LOAD_URL));
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getDataLogContextObjectForItemLoad(collectionId, "", classpageEventId, unitId, "", playerMode, path, null, PlayerDataLogEvents.COLLECTION_LOAD_URL));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	
@@ -1957,11 +1964,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getItemFlagDataLogPayLoadObject(itemType,flagText,contentReportList));
-		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
+		//String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String classpageEventId=AppClientFactory.getPlaceManager().getClasspageEventId();
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
-			path=classpageId+"/"+collectionDo.getGooruOid();
+			path=classpageId+"/"+classUnitId+"/"+collectionDo.getGooruOid();
 			if(getPlaceManager().getRequestParameter("rid")!=null){
 				path=path+"/"+itemGooruOid;
 			}
@@ -1973,15 +1980,15 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		String playerMode=getPlayerMode();
 		String parentEventId=itemType.equals(PlayerDataLogEvents.COLLECTION)?classpageEventId:collectionNewDataLogEventId!=null?collectionNewDataLogEventId:"";
-		String parentGooruId=itemType.equals(PlayerDataLogEvents.COLLECTION)?classpageId:collectionDo.getGooruOid();
+		String parentGooruId=itemType.equals(PlayerDataLogEvents.COLLECTION)?classUnitId:collectionDo.getGooruOid();
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getDataLogContextObjectForItemLoad(itemGooruOid, collectionItemId, parentEventId, parentGooruId, "", playerMode, path, null, PlayerDataLogEvents.COLLECTION_FLAG_URL));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	public void triggerShareDatalogEvent(String resourceGooruOid,String collectionItemId, String itemType,String shareType, boolean confirmStatus){
-		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
+		//String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
-			path=classpageId+"/"+collectionDo.getGooruOid()+"/"+resourceGooruOid;
+			path=classpageId+"/"+classUnitId+"/"+collectionDo.getGooruOid()+"/"+resourceGooruOid;
 		}else{
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid()+"/"+resourceGooruOid;
 		}
@@ -1990,15 +1997,15 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 	
 	public void triggerCollectionShareDataEvent( String collectionId, String itemType, String shareType, boolean confirmStatus){
-		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
+		//String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String path="";
 		if(classpageId!=null&&!classpageId.equals("")){
-			path=classpageId+"/"+collectionDo.getGooruOid();
+			path=classpageId+"/"+classUnitId+"/"+collectionDo.getGooruOid();
 		}else{
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid();
 		}
 		String playerMode=getPlayerMode();
-		PlayerDataLogEvents.triggerItemShareDataLogEvent(collectionId, "", classpageId, "", sessionId, itemType, shareType, confirmStatus, playerMode, path, null);
+		PlayerDataLogEvents.triggerItemShareDataLogEvent(collectionId, "", classUnitId, "", sessionId, itemType, shareType, confirmStatus, playerMode, path, null);
 	}
 	
 	public String getPlayerMode(){

@@ -21,6 +21,7 @@
 					<div class="perTextBox">
 						<g:TextBox ui:field="txtScore" />
 					</div>
+					<g:Label ui:field="lblValidation"></g:Label>
                     <g:Label styleName="{unitStyle.scoreLabelStyle}" ui:field="lblScore"></g:Label>
 					<p>
 						<g:Button styleName="primary" ui:field="btnSetGoal"></g:Button>

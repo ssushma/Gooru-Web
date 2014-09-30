@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
+import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
@@ -215,7 +216,6 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void getAssignemntDetails(String assingmentId,AsyncCallback<ClasspageItemDo> callback);
 
-
 	void getAssignmentData(String gooruUId, String classpageId, int pageSize, int pageNum, String unitId, AsyncCallback<List<InsightsUserDataDo>> simpleAsyncCallback);
 	
 	void updateAssignmentStatus(String collectionItemId,
@@ -227,4 +227,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	void updateUnitStatus(String collectionItemId,String minimumScore, String assignementStatus, String timeStudying, AsyncCallback<ClassUnitsListDo> callback);
 	
 	void pathwayItemMoveWithReorder(String classId,String pathwaygooruOid,String collectionItemId,String newSequence,AsyncCallback<Void> callback);
+	
+	public  void getAssignmentParentDetails(String assignmentId,AsyncCallback<AssignmentParentDo> callback);
+	
 }

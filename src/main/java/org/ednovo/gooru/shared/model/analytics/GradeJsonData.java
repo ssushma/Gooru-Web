@@ -20,6 +20,8 @@ public class GradeJsonData implements Serializable{
 	private ArrayList<UserDataDo> userData;
 	private String resourceGooruOId;
 	private String minimumScore;
+	private long avgTimeSpent;
+	private long timeSpent;
 	
 	public String getEstimatedTime() {
 		return estimatedTime;
@@ -62,5 +64,17 @@ public class GradeJsonData implements Serializable{
 	}
 	public void setMinimumScore(String minimumScore) {
 		this.minimumScore = minimumScore;
+	}
+	public long getAvgTimeSpent() {
+		return avgTimeSpent;
+	}
+	public void setAvgTimeSpent(long avgTimeSpent) {
+		this.avgTimeSpent = avgTimeSpent;
+	}
+	public long getTimeSpent() {
+		return timeSpent;
+	}
+	public void setTimeSpent(long timeSpent) {
+		this.timeSpent = timeSpent;
 	}
 }

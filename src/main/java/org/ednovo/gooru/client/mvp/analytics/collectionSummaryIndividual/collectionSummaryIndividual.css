@@ -214,3 +214,21 @@
 	clear:both;
 	padding-top: 16px;
 }
+.displayMessageTextForScoredQuestions{
+	float: left;
+	border-bottom: 1px solid #eee;
+	border-left: 1px solid #eee;
+	border-right: 1px solid #eee;
+	width: 546px;
+	padding: 24px;
+	text-align: center;
+}
+.displayMessageTextForOEQuestions{
+	float: left;
+	border-bottom: 1px solid #eee;
+	border-left: 1px solid #eee;
+	border-right: 1px solid #eee;
+	width: 364px;
+	padding: 24px;
+	text-align: center;
+}

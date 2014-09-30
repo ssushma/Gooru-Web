@@ -46,6 +46,7 @@ import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
+import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
@@ -1965,6 +1966,24 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(),jsonObject.toString());
 			jsonRep =jsonResponseRep.getJsonRepresentation();
+		
+	}
+	
+	@Override
+	public AssignmentParentDo getAssignmentParentDetails(String assignmentId){
+		AssignmentParentDo assignmentParentDo=null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_ASSIGNMENT_PARENT_DETAILS,assignmentId,getLoggedInSessionToken());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
+		
+		if(jsonResponseRep!=null&&jsonResponseRep.getJsonRepresentation()!=null){
+			try {
+				assignmentParentDo=JsonDeserializer.deserialize(jsonResponseRep.getJsonRepresentation().getJsonObject().toString(),AssignmentParentDo.class);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return assignmentParentDo;
 		
 	}
 }

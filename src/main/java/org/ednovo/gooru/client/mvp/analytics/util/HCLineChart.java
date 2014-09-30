@@ -32,56 +32,92 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 		chartmetadata.setShowLegends(false);
 	
 		int size=gradeData.size();
-		Number series1[]=new Number[size];
-	    Number series2[]=new Number[size];
+		Number averageTime[]=new Number[size];
+	    Number suggestedTime[]=new Number[size];
+	    
+		Number minimumScore[]=new Number[size];
+	    Number averageScore[]=new Number[size];
 	   
 	    for(int i=0;i<size;i++){
 	    	if(gradeData.get(i).getEstimatedTime()!=null){
 	    		String estimatedTime=gradeData.get(i).getEstimatedTime().replaceAll("hrs", ":").replaceAll("mins", "").trim();
+	    		if(estimatedTime.contains(":"))
+	    		{
 	    		String[] convertMins=estimatedTime.split(":");
-	    		int convertedTime=(Integer.parseInt(convertMins[0].trim())*60)+(Integer.parseInt(convertMins[1].trim()));
-	    		series1[i]=convertedTime-(convertedTime/2);
-	    		series2[i]=convertedTime;
+	    		int convertedEstimateTime=(Integer.parseInt(convertMins[0].trim())*60)+(Integer.parseInt(convertMins[1].trim()));
+	    		if(gradeData.get(i).getAvgTimeSpent()!=0){
+	    			String avgTimeSpent=getTimeSpent(gradeData.get(i).getAvgTimeSpent()).replaceAll("min", ":").replaceAll("sec", "").trim();
+	    			String[] convertavgTimeSpentMins=avgTimeSpent.split(":");
+		    		int convertedAvgTimeSpent=(Integer.parseInt(convertavgTimeSpentMins[0].trim()))+(Integer.parseInt(convertavgTimeSpentMins[1].trim()));
+		    		averageTime[i]=convertedAvgTimeSpent;
+	    		}
+	    		suggestedTime[i]=convertedEstimateTime;
 	    	}else{
-	    		series1[i]=0;
-	    		series2[i]=0;
+	    		averageTime[i]=0;
+	    		suggestedTime[i]=0;
+	    	}
+	    	if(gradeData.get(i).getMinimumScore()!=null){
+	    		try
+	    		{
+	        	int miniscoreVal=Integer.parseInt(gradeData.get(i).getMinimumScore());
+	        	minimumScore[i]=miniscoreVal;
+		    	averageScore[i]= miniscoreVal-(miniscoreVal/2);	
+	    		}
+	    		catch(Exception ex)
+	    		{
+	    			
+	    		}
+	    		}
+	    	}else{
+	    		minimumScore[i]=0;
+	    		averageScore[i]=0;
 	    	}
 	    }
     
-	    List<Number[]> numberArrays=new ArrayList<Number[]>();
-	    numberArrays.add(series1);
-	    numberArrays.add(series2);
+	    List<Number[]> numberslineChart1=new ArrayList<Number[]>();
+	    numberslineChart1.add(averageTime);
+	    numberslineChart1.add(suggestedTime);
+	    
+	    List<Number[]> numberslineChart2=new ArrayList<Number[]>();
+	    numberslineChart2.add(minimumScore);
+	    numberslineChart2.add(averageScore);
 	    
 		List<String> contentListNew=new ArrayList<String>();
-		String subjects[]={"question1","question2"};
+		String subjects[]={"1","2"};
 		for(String subject:subjects){
 			contentListNew.add(subject);
 		}
-		
+		List<String> contentListNew1=new ArrayList<String>();
+		String subjects1[]={"3","4"};
+		for(String subject:subjects1){
+			contentListNew1.add(subject);
+		}
 		String category[]=new String[size];
 		   
 		Map<String,Number[]> data = new HashMap<String,Number[]>();
+		Map<String,Number[]> data1 = new HashMap<String,Number[]>();
 		for(int i=0;i<contentListNew.size();i++){
-			data.put(contentListNew.get(i), numberArrays.get(i));
+			data.put(contentListNew.get(i), numberslineChart1.get(i));
+			data1.put(contentListNew1.get(i), numberslineChart2.get(i));
 		}
-		chartmetadata.setShowXaxisTop(true);
 		
+		chartmetadata.setShowXaxisTop(true);
 		LineChartView lineChartView=new LineChartView();
 		lineChartView.createLineChart("Average Time", "Suggested Time", category, contentListNew, data, chartmetadata);
-		chartmetadata.setShowXaxisTop(false);
+	
 		
-		Map<String,Number[]> data1 = new HashMap<String,Number[]>();
-		List<String> contentListNew1=new ArrayList<String>();
+		chartmetadata.setShowXaxisTop(false);
 		LineChartView lineChartView1=new LineChartView();
 		lineChartView1.createLineChart("Average Score", "Minimum Score", category, contentListNew1, data1, chartmetadata);
 		
 		Map<String,Number[]> data2 = new HashMap<String,Number[]>();
 		LineChartView lineChartView2=new LineChartView();
-		lineChartView2.createLineChart("Average Reaction","", category, contentListNew1, data2, chartmetadata);
+		List<String> contentListNew2=new ArrayList<String>();
+		lineChartView2.createLineChart("Average Reaction","", category, contentListNew2, data2, chartmetadata);
 		
 		Map<String,Number[]> data3 = new HashMap<String,Number[]>();
 		LineChartView lineChartView3=new LineChartView();
-		lineChartView3.createLineChart("Student Completion","", category, contentListNew1, data3, chartmetadata);
+		lineChartView3.createLineChart("Student Completion","", category, contentListNew2, data3, chartmetadata);
 		
 		studyChartContainer.add(lineChartView);
 		studyChartContainer.add(lineChartView1);
@@ -91,7 +127,43 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 		return studyChartContainer;
 	}
 		
-	
+/**
+ * This is used to convert long time format
+ * @param commentCreatedTime
+ * @return
+ */
+private String getTimeSpent(Long commentCreatedTime) {
+	String createdTime = null;
+	int seconds = (int) (commentCreatedTime / 1000) % 60 ;
+	int minutes = (int) ((commentCreatedTime / (1000*60)) % 60);
+	int hours   = (int) ((commentCreatedTime / (1000*60*60)) % 24);
+	int days = (int) (commentCreatedTime / (1000*60*60*24));
+	if(days!=0){
+		createdTime=days+":";
+	}
+	if(hours!=0){
+		if(createdTime!=null){
+			createdTime=createdTime+hours+" ";
+		}else{
+			createdTime=hours+" ";
+		}
+	}
+	if(minutes!=0){
+		if(createdTime!=null){
+			createdTime=createdTime+((minutes<10)?"0"+minutes+"min":minutes+"min")+" ";
+		}else{
+			createdTime=((minutes<10)?"0"+minutes+"min":minutes+"min")+" ";
+		}
+	}
+	if(seconds!=0){
+		if(createdTime!=null){
+			createdTime=createdTime+((seconds<10)?"0"+seconds+"sec":seconds+"sec")+"";
+		}else{
+			createdTime="0min"+" "+((seconds<10)?"0"+seconds+"sec":seconds+"sec")+"";
+		}
+	}
+	return createdTime;
+}
 	
 	public Chart createChartLine(String[] categories, List<String> legend, Map<String, Number[]> data,ChartMetaDataOptions chartmetadata) {
 		chart.setType(Series.Type.LINE)  
@@ -102,13 +174,16 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 			.setHeight(chartmetadata.getHeight())
 			.setWidth(chartmetadata.getWidth())
 			.setCredits(new Credits().setText(""))
-			
 			.setToolTip(new ToolTip()  
 				.setFormatter(new ToolTipFormatter() {  
 					public String format(ToolTipData toolTipData) {  
-						long hours = Math.round(toolTipData.getYAsDouble()) / 60;
-						long minutes = Math.round(toolTipData.getYAsDouble()) % 60;
-						return 	hours+"hrs "+minutes+"mins";
+						if(toolTipData.getSeriesName().equalsIgnoreCase("3") || toolTipData.getSeriesName().equalsIgnoreCase("4")){
+							return ""+toolTipData.getYAsDouble();
+						}else{
+							long hours = Math.round(toolTipData.getYAsDouble()) / 60;
+							long minutes = Math.round(toolTipData.getYAsDouble()) % 60;
+							return hours+"hrs "+minutes+"mins";
+						}
 					}  
 				})  
 			);  
