@@ -467,6 +467,18 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			}
 			return classpageId;
 		}
+		
+		public String getDataLogUnitId(){
+			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
+			String pageLocation=placeRequest.getNameToken();
+			String unitId="";
+			if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
+				unitId=placeRequest.getParameter("uid", "");
+			}else if(pageLocation.equals(PlaceTokens.STUDENT)){
+				unitId=placeRequest.getParameter("uid", "");
+			}
+			return unitId;
+		}
 		public String getClasspageEventId(){
 			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
 			String pageLocation=placeRequest.getNameToken();
