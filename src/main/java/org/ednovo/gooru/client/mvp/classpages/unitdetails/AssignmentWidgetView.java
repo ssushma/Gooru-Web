@@ -9,6 +9,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.search.event.SetPersonalizeButtonEvent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
@@ -514,6 +515,7 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 			//displayPersonalizeOptions(isPersonalize);
 			//setPersonalizeState(isPersonalize);
 			String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+			AppClientFactory.fireEvent(new SetPersonalizeButtonEvent(false));
 			revealPlace("unitdetails", null, unitId, unitCricleView.getAssignementId());
 		}
 	}
