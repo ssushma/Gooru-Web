@@ -243,7 +243,9 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 		}
 	}
 	public void clearAssignmentsFromDo(){
-		classUnitsDo.getResource().setCollectionItems(new ArrayList<ClasspageItemDo>());
+		if(classUnitsDo!=null){
+			classUnitsDo.getResource().setCollectionItems(new ArrayList<ClasspageItemDo>());
+		}
 	}
 	private int getAssignmentOffsetValue(String direction) {
 		
