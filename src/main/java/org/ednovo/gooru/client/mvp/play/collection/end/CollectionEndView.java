@@ -31,26 +31,27 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.DataInsightsUrlTokens;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryView.StudentsSessionsChangeHandler;
+import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.customize.RenameCustomizePopUp;
-import org.ednovo.gooru.client.mvp.play.collection.preview.home.share.SharePlayerVc;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.CommentWidgetChildView;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
-import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
@@ -60,18 +61,17 @@ import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
-import br.com.freller.tool.client.Print;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -91,6 +91,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -118,6 +119,15 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField Image userPhoto,collectionThumbnail,nextCollectionThumbnail;
 	@UiField Button customizeCollectionBtn,shareCollectionBtn;
 	/*@UiField Frame insightsFrame;*/
+	
+	
+	@UiField ListBox sessionsDropDown;
+	@UiField Image collectionImage;
+	@UiField InlineLabel collectionTitle,collectionResourcesCount,collectionLastAccessed,lastModifiedTime;
+	@UiField VerticalPanel pnlSummary;
+	
+	Map<String, Long> sessionData=new HashMap<String, Long>();
+	
 	private String languageObjectiveValue;
 	private CollectionDo collectionDo=null;
 	
@@ -175,6 +185,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	
 	@Inject
 	public CollectionEndView(){
+		System.out.println("end page");
 		setWidget(uiBinder.createAndBindUi(this));
 		setLabelAndIds();
 		//teacherContainer.setVisible(false);
@@ -346,6 +357,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			if(content!=null){
 				metadataContainer.add(content);
 			}
+		}else if(slot==CollectionEndPresenter.COLLECTION_REPORTS_SLOT){
+			pnlSummary.clear();
+			if(content!=null){
+				pnlSummary.add(content);
+			}
 		}
 	}
 	
@@ -474,8 +490,19 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		replayCollection.getElement().setAttribute("title",i18n.GL0632());
 		collectionThumbnail.getElement().setId("imgCollectionThumbnail");
 		thumbnailContainer.getElement().setId("fpnlThumbnailContainer");
+		
+		sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
 	}
-	
+    public class StudentsSessionsChangeHandler implements ChangeHandler{
+			@Override
+			public void onChange(ChangeEvent event) {
+					int selectedIndex=sessionsDropDown.getSelectedIndex();
+					String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+	                //final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
+	                setSessionStartTime(selectedIndex);
+					getUiHandlers().setCollectionSummaryData(collectionDo.getGooruOid(), classpageId, collectionDo.getUser().getGooruUId(),sessionsDropDown.getValue(selectedIndex));
+			}
+	 }
 	@UiHandler("collectionThumbnail")
 	public void thumbnailErrorImage(ErrorEvent event){
 		collectionThumbnail.setUrl("images/default-collection-image-160x120.png");
@@ -659,7 +686,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	public void setDataInsightsUrl(){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		if(AppClientFactory.isAnonymous()){
-			frameContainer.clear();
+			//frameContainer.clear();
 			frameContainer.setVisible(false);
 			messageContainer.setVisible(true);
 //		}else if(page!=null&&page.equals("teach")){
@@ -667,11 +694,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 //			frameContainer.setVisible(false);
 //			messageContainer.setVisible(false);
 		}else{
-			frameContainer.clear();
+			//frameContainer.clear();
 			frameContainer.setVisible(true);
 			messageContainer.setVisible(false);
-			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
-					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),"",AppClientFactory.getLoginSessionToken())));
+			/*frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
+					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),"",AppClientFactory.getLoginSessionToken())));*/
 		}
 	}
 	
@@ -681,7 +708,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		}
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		if(AppClientFactory.isAnonymous()){
-			frameContainer.clear();
+			//frameContainer.clear();
 			frameContainer.setVisible(false);
 			messageContainer.setVisible(true);
 //		}else if(page!=null&&page.equals("teach")){
@@ -689,18 +716,19 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 //			frameContainer.setVisible(false);
 //			messageContainer.setVisible(false);
 		}else{
-			frameContainer.clear();
+			//frameContainer.clear();
 			frameContainer.setVisible(true);
 			messageContainer.setVisible(false);
-			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.PLAYER_CLASS_PREVIOUS_DATA,
-					classpageId,collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));
+			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
+			/*frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.PLAYER_CLASS_PREVIOUS_DATA,
+					classpageId,collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));*/
 		}
 	}
 	
 	public void setDataInsightsSummaryUrl(String sessionId){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		if(AppClientFactory.isAnonymous()){
-			frameContainer.clear();
+			//frameContainer.clear();
 			frameContainer.setVisible(false);
 			messageContainer.setVisible(true);
 //		}else if(page!=null&&page.equals("teach")){
@@ -708,12 +736,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 //			frameContainer.setVisible(false);
 //			messageContainer.setVisible(false);
 		}else{
-			frameContainer.clear();
+			//frameContainer.clear();
 			frameContainer.setVisible(true);
 			messageContainer.setVisible(false);
 			sessionId=sessionId!=null?sessionId:"";
-			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
-					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));
+			/*frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
+					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));*/
 		}
 	}
 	
@@ -1474,6 +1502,38 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		}else{
 			avgReactionImage.setText("-");
 			avgReactionImage.setStyleName(playerStyle.timeTextBig());
+		}
+	}
+
+
+	@Override
+	public void setSessionsData(
+			ArrayList<CollectionSummaryUsersDataDo> result) {
+		sessionsDropDown.clear();
+		sessionData.clear();
+		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
+			sessionData.put(collectionSummaryUsersDataDo.getSessionId(), collectionSummaryUsersDataDo.getTimeStamp());
+			int day=collectionSummaryUsersDataDo.getFrequency();
+			sessionsDropDown.addItem(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session",collectionSummaryUsersDataDo.getSessionId());
+		}
+		setSessionStartTime(result.size()-1);
+	}
+
+	public void setSessionStartTime(int selectedIndex) {
+		if(sessionData.size()!=0){
+			lastModifiedTime.setText(AnalyticsUtil.getCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
+			sessionsDropDown.setSelectedIndex(selectedIndex);
+		}
+	}
+	
+	@Override
+	public void setCollectionMetaDataByUserAndSession(
+			ArrayList<CollectionSummaryMetaDataDo> result) {
+		if(result.size()!=0){
+			collectionTitle.setText(result.get(0).getTitle());
+			collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getLastModified())));
+			if(result.get(0).getThumbnail()!=null)
+			collectionImage.setUrl(result.get(0).getThumbnail());
 		}
 	}
 }

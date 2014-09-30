@@ -12,6 +12,7 @@ import org.ednovo.gooru.client.mvp.analytics.util.HCLineChart;
 import org.ednovo.gooru.client.mvp.analytics.util.StudentScoredAboveBelowUlPanel;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitWidget;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
+import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -84,6 +85,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		setWidget(uiBinder.createAndBindUi(this));	
 		btnCollectionSummary.addClickHandler(new ViewAssignmentClickEvent("Summary"));
 		btnCollectionProgress.addClickHandler(new ViewAssignmentClickEvent("Progress"));
+		btnCollectionResponses.addClickHandler(new ViewAssignmentClickEvent(""));
 		minimumScoreBelow.setText("0");
 		minimumScoreAbove.setText("0");
 		minimumScoreBelow.addKeyUpHandler(new MiniMumScoreKeyUpHandler(BELOWSCORE));
@@ -99,6 +101,11 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			isSummayClicked=false;
 			isProgressClicked=false;
 			setMinimumScoresData();
+			String pathwayId=AppClientFactory.getPlaceManager().getRequestParameter("uid", "");
+			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			int selectedIndex=loadCollections.getSelectedIndex();
+			String collectionId=loadCollections.getValue(selectedIndex);
+			getUiHandlers().getBottomAndTopScoresData(classpageId, pathwayId, collectionId);
 		}
 	}
 	public class ViewAssignmentClickEvent implements ClickHandler{
@@ -131,7 +138,9 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 					summaryArrowlbl.addStyleName(res.unitAssignment().activeCaretup());
 				}
 			}else{
-				
+				String pathwayId=AppClientFactory.getPlaceManager().getRequestParameter("uid", "");
+				String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				getUiHandlers().exportOEPathway(classpageId, pathwayId);
 			}
 		}
 	}
@@ -274,11 +283,9 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 				originalScoredVal=originalScoredVal.replaceAll("%", "");
 				if((Integer.parseInt(originalScoredVal)<Integer.parseInt(minimumScoreAboveVal)) && scoreVal.equalsIgnoreCase(ABOVESCORE)){
 					greenProgressBar.getElement().getStyle().setWidth((100-Integer.parseInt(minimumScoreAboveVal)), Unit.PCT);
-					getUiHandlers().getMinimumAboveScoredData();
 				}
 				if((Integer.parseInt(originalScoredVal)>Integer.parseInt(minimumScoreBelowVal)) && scoreVal.equalsIgnoreCase(BELOWSCORE)){
 					orangeProgressBar.getElement().getStyle().setWidth(Integer.parseInt(minimumScoreBelowVal), Unit.PCT);
-					getUiHandlers().getMinimumBelowScoredData();
 				}
 			}
 		}
@@ -309,7 +316,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			
 			PlaceRequest placeRequest=null;
 			if(pageLocation.equals(PlaceTokens.STUDENT)){
-				placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);	
+			  placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);	
 			}
 			else{
 				placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
@@ -318,19 +325,16 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	 }
 	 
 	@Override
-	public void setMinimumAvobeScoredData() {
+	public void setBottomAndTopScoresData(ArrayList<GradeJsonData> result) {
 		scoredAbovePanel.clear();
-		for(int i=0;i<3;i++){
-			scoredAbovePanel.add(new StudentScoredAboveBelowUlPanel());
-		}
-	}
-	@Override
-	public void setMinimumBelowScoredData() {
 		scoredBelowPanel.clear();
-		for(int i=0;i<3;i++){
-			scoredBelowPanel.add(new StudentScoredAboveBelowUlPanel());
+		for(int i=0;i<result.get(0).getUserData().size();i++){
+			UserDataDo userData=result.get(0).getUserData().get(i);
+			scoredAbovePanel.add(new StudentScoredAboveBelowUlPanel(userData));
+			scoredBelowPanel.add(new StudentScoredAboveBelowUlPanel(userData));
 		}
 	}
+	
 	@Override
 	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData) {
 		loadcollectionsmap.clear();

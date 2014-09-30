@@ -33,9 +33,9 @@ public interface AnalyticsUiHandlers extends BaseUiHandlers{
 	
 	void setClickedTabPresenter(String clickedTab,String collectionId);
 	
-	void getMinimumBelowScoredData();
-	
-	void getMinimumAboveScoredData();
+	void getBottomAndTopScoresData(String classpageId, String pathwayId,String collectionId);
 	
 	void getGradeCollectionJson(String classpageId,String pathwayId);
+	
+	void exportOEPathway(String classpageId,String pathwayId);
 }

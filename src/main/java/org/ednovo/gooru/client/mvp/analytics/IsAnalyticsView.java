@@ -38,9 +38,7 @@ public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>
 	
 	public void hideMoreUnitsLink();
 	
-	public void setMinimumAvobeScoredData();
-	
-	public void setMinimumBelowScoredData();
+	public void setBottomAndTopScoresData(ArrayList<GradeJsonData> result);
 	
 	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData);
 	

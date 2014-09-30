@@ -37,6 +37,7 @@ public class UserDataDo implements Serializable{
 	private String answerObject;
 	private String options;
 	private ArrayList<MetaDataDo> metaData;
+	private String gradeInPercentage;
 	
 	//This are add for getting the resource data in the teacher summary
 	private String category;
@@ -191,5 +192,11 @@ public class UserDataDo implements Serializable{
 	}
 	public void setSkip(int skip) {
 		this.skip = skip;
+	}
+	public String getGradeInPercentage() {
+		return gradeInPercentage;
+	}
+	public void setGradeInPercentage(String gradeInPercentage) {
+		this.gradeInPercentage = gradeInPercentage;
 	}
 }

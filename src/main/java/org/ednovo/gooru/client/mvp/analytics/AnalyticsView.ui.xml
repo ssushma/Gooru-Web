@@ -84,20 +84,20 @@
 					</div>
 					</div>
 					
-					<div class="row scores">
+					<div class="row scores" style="display:none;">
 					<div class="col-xs-6">
-					Score Below: <g:TextBox ui:field="minimumScoreBelow" styleName="{unitStyle.form_control}"></g:TextBox>%
+					Bottom scores: <g:TextBox ui:field="minimumScoreBelow" styleName="{unitStyle.form_control}"></g:TextBox>%
 					</div>
 					<div class="col-xs-6 text-right">
-					Score Above: <g:TextBox ui:field="minimumScoreAbove" styleName="{unitStyle.form_control}"></g:TextBox>%
+					Top scores: <g:TextBox ui:field="minimumScoreAbove" styleName="{unitStyle.form_control}"></g:TextBox>%
 					</div>
 					<div class="clearfix"></div>
 					</div>
 					
 					<div class="row {unitStyle.scoresTable}">
 					
-					<div class="col-xs-6 {unitStyle.org}"/>
-					<div class="col-xs-6 {unitStyle.green}"/>
+					<div class="col-xs-6 {unitStyle.org}">Bottom scores</div>
+					<div class="col-xs-6 {unitStyle.green}">Top scores</div>
 					
 					<div class="clearfix"></div>
 					</div>

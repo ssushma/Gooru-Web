@@ -352,7 +352,6 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		teacherScoredData.clear();
 		
         final SortTable sortableTable = new SortTable();
-        
         sortableTable.setStyleName(res.css().tableMain());
         sortableTable.getElement().setId("results");
         sortableTable.setBorderWidth(1);

@@ -35,6 +35,7 @@ import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -73,8 +74,6 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 			public void onSuccess(UnitAssignmentsDo result) {
 				//classpageId,pathwayid
 				getGradeCollectionJson(classpageId, pathwayGooruOid);
-				getMinimumBelowScoredData();
-				getMinimumAboveScoredData();
 			}
 		});
 
@@ -123,43 +122,29 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	}
 
 	@Override
-	public void getMinimumBelowScoredData() {
-		this.analyticService.getMinimumScoredBelowData("", "", "", new AsyncCallback<Void>() {
+	public void getBottomAndTopScoresData(String classpageId, String pathwayId,String collectionId) {
+		this.analyticService.getBottomAndTopScoresData(collectionId, classpageId,pathwayId, new AsyncCallback<ArrayList<GradeJsonData>>() {
 			
 			@Override
-			public void onSuccess(Void result) {
-				getView().setMinimumBelowScoredData();
+			public void onSuccess(ArrayList<GradeJsonData> result) {
+				getView().setBottomAndTopScoresData(result);
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				
 			}
 		});
 	}
 
 	@Override
-	public void getMinimumAboveScoredData() {
-		this.analyticService.getMinimumScoredAboveData("", "", "",new AsyncCallback<Void>() {
-
-		   @Override
-		   public void onSuccess(Void result) {
-						getView().setMinimumAvobeScoredData();
-		   }
-
-		  @Override
-		  public void onFailure(Throwable caught) {
-
-		  }
-		});
-	}
-
-	@Override
-	public void getGradeCollectionJson(String classpageId, String pathwayId) {
+	public void getGradeCollectionJson(final String classpageId, final String pathwayId) {
 		this.analyticService.getAnalyticsGradeData(classpageId, pathwayId, new AsyncCallback<ArrayList<GradeJsonData>>() {
 			@Override
 			public void onSuccess(ArrayList<GradeJsonData> result) {
 				getView().setGradeCollectionData(result);
+				if(result.size()!=0){
+					getBottomAndTopScoresData(classpageId, pathwayId,result.get(0).getResourceGooruOId());
+				}
 			}
 			
 			@Override
@@ -175,5 +160,20 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		if(unitId!=null){
 			getPathwayItems(classId,unitId,"sequence",assignmentLimit,assignmentOffset);
 		}
+	}
+
+	@Override
+	public void exportOEPathway(String classpageId, String pathwayId) {
+		this.analyticService.exportPathwayOE(classpageId, pathwayId,new AsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				Window.open(result, "_blank", "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,resizable=no,width=0,height=0");
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
 	}
 }
