@@ -158,11 +158,10 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	}
 
 	@Override
-	public ArrayList<UserDataDo> getUserSessionDataByUser(String collectionId,
-			String classId, String userId,String sessionId) {
+	public ArrayList<UserDataDo> getUserSessionDataByUser(String collectionId,String classId, String userId,String sessionId,String pathwayId) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<UserDataDo> collectionResourcesList=new ArrayList<UserDataDo>();
-		String dataPassing ="{%22fields%22:%22answerObject,score,totalAttemptUserCount,timeSpent,views,avgTimeSpent,OE,collectionGooruOId,category,resourceGooruOId,metaData,title,questionType,options,description,options,skip,totalInCorrectCount,avgReaction,reaction,attempts,text,totalCorrectCount,itemSequence%22,%22filters%22:{%22userUId%22:%22"+userId+"%22,%22session%22:%22CS%22,%22sessionId%22:%22"+sessionId+"%22,%22classId%22:%22"+classId+"%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}&timestamp=1410757700537";
+		String dataPassing ="{%22fields%22:%22answerObject,score,totalAttemptUserCount,timeSpent,views,avgTimeSpent,OE,collectionGooruOId,category,resourceGooruOId,metaData,title,questionType,options,description,options,skip,totalInCorrectCount,avgReaction,reaction,attempts,text,totalCorrectCount,itemSequence%22,%22filters%22:{%22userUId%22:%22"+userId+"%22,%22session%22:%22CS%22,%22sessionId%22:%22"+sessionId+"%22,%22pathwayId%22:%22"+pathwayId+"%22,%22classId%22:%22"+classId+"%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}&timestamp=1410757700537";
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETSESSIONDATABYUSERSESSION, collectionId,getLoggedInSessionToken(),dataPassing);
 	
 		//String url="http://www.goorulearning.org/insights/api/v1/classpage/fe78faa5-f7f0-4927-9282-a58a4e3deb5d/resources.json?sessionToken=04fb9f7e-47c3-11e4-8d6c-123141016e2a&data={%22fields%22:%22feedbackText,feedbackStatus,feedbackTimestamp,feedbackProviderUId,answerObject,score,totalAttemptUserCount,timeSpent,views,avgTimeSpent,OE,collectionGooruOId,category,resourceGooruOId,metaData,title,questionType,options,description,options,skip,reaction,attempts,text,itemSequence%22,%22filters%22:{%22session%22:%22CS%22,%22sessionId%22:%22"+sessionId+"%22,%22userUId%22:%22240fb01d-5383-4bb1-ae61-df045bf5f611%22,%22classId%22:%226a4cdb36-c579-4994-8ea0-5130a9838cbd%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}&timestamp=1411986439903";
