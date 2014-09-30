@@ -377,21 +377,23 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 							answersArry=answerTextFormat.split(",");
 							userFibOption =result.get(i).getText().split(",");
 						}
-						if(answersArry!=null){
+						if(answersArry!=null && userFibOption!=null){
 							for (int k = 0; k < answersArry.length; k++) { 
 								Label answerChoice=new Label();
-								if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
-									answerChoice.setText(userFibOption[k]);
-									answerChoice.getElement().getStyle().setColor(CORRECT);
-								}else if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts > 1)) {
-									answerChoice.setText(userFibOption[k]);
-									answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-								}else{
-									answerChoice.setText(userFibOption[k]);
-									answerChoice.getElement().getStyle().setColor(INCORRECT);
+								if(answersArry[k]!=null && k<userFibOption.length){
+									if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
+										answerChoice.setText(userFibOption[k]);
+										answerChoice.getElement().getStyle().setColor(CORRECT);
+									}else if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts > 1)) {
+										answerChoice.setText(userFibOption[k]);
+										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+									}else{
+										answerChoice.setText(userFibOption[k]);
+										answerChoice.getElement().getStyle().setColor(INCORRECT);
+									}
+									answerChoice.setStyleName(res.css().alignCenterAndBackground());
+									answerspnl.add(answerChoice);
 								}
-								answerChoice.setStyleName(res.css().alignCenterAndBackground());
-								answerspnl.add(answerChoice);
 							}
 						}
 	        		}

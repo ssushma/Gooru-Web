@@ -8,6 +8,7 @@
 }
 .setMarginAuto{
 	margin: 0 auto;
+	text-align: center;
 }
 .reaction_explain1 {
 	background: url(/images/analyticsReactions.png) no-repeat scroll 0px 0px transparent;
@@ -208,4 +209,8 @@
 	color: #1076BB;
 	margin: 18px 15px;
 	width: 100px;
+}
+.collectionOverViewpnl{
+	clear:both;
+	padding-top: 16px;
 }

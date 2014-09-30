@@ -23,15 +23,19 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.analytics;
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
+import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -60,7 +64,6 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		getView().setUiHandlers(this);
 		this.collectionProgressPresenter=collectionProgressPresenter;
 		this.collectionSummaryPresenter=collectionSummaryPresenter;
-		getPathwayUnits("",limit,offSet,true);
 	}
 
 	@Override
@@ -69,13 +72,8 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 			@Override
 
 			public void onSuccess(UnitAssignmentsDo result) {
-				String aid=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
-				if(aid==null){
-					if(result!=null&&result.getSearchResults().size()>0){
-						//getAssignemntDetails(result.getSearchResults().get(0).getCollectionItemId(),classpageId,pathwayGooruOid);
-					}
-				}
-				//getView().getSequence(result);
+				//classpageId,pathwayid
+				getGradeCollectionJson(classpageId, pathwayGooruOid);
 			}
 		});
 
@@ -87,10 +85,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
 			@Override
 			public void onSuccess(ClassDo classDo) {
-				getMinimumBelowScoredData();
-				getMinimumAboveScoredData();
-				
-				//getView().showUnitNames(classDo,clearPanel);
+				getView().showUnitNames(classDo,clearPanel);
 				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 					if(unitId==null){
@@ -102,14 +97,15 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	}
 
 	@Override
-	public void setClickedTabPresenter(String clickedTab) {
+	public void setClickedTabPresenter(String clickedTab,String collectionId) {
+		String pathWayId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 		clearSlot(COLLECTION_PROGRESS_SLOT);
 		if(clickedTab!=null){
 			if(clickedTab.equalsIgnoreCase(SUMMARY)){
-				collectionSummaryPresenter.setCollectionSummaryData("fe78faa5-f7f0-4927-9282-a58a4e3deb5d");
+				collectionSummaryPresenter.setCollectionSummaryData(collectionId,pathWayId);
 				setInSlot(COLLECTION_PROGRESS_SLOT, collectionSummaryPresenter,false);
 			}else if(clickedTab.equalsIgnoreCase(PROGRESS)){
-				collectionProgressPresenter.setCollectionProgressData("fe78faa5-f7f0-4927-9282-a58a4e3deb5d");
+				collectionProgressPresenter.setCollectionProgressData(collectionId,pathWayId);
 				setInSlot(COLLECTION_PROGRESS_SLOT, collectionProgressPresenter,false);
 			}
 		}else{
@@ -126,34 +122,58 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	}
 
 	@Override
-	public void getMinimumBelowScoredData() {
-		this.analyticService.getMinimumScoredBelowData("", "", "", new AsyncCallback<Void>() {
+	public void getBottomAndTopScoresData(String classpageId, String pathwayId,String collectionId) {
+		this.analyticService.getBottomAndTopScoresData(collectionId, classpageId,pathwayId, new AsyncCallback<ArrayList<GradeJsonData>>() {
 			
 			@Override
-			public void onSuccess(Void result) {
-				getView().setMinimumBelowScoredData();
+			public void onSuccess(ArrayList<GradeJsonData> result) {
+				getView().setBottomAndTopScoresData(result);
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				
 			}
 		});
 	}
 
 	@Override
-	public void getMinimumAboveScoredData() {
-		this.analyticService.getMinimumScoredAboveData("", "", "",new AsyncCallback<Void>() {
+	public void getGradeCollectionJson(final String classpageId, final String pathwayId) {
+		this.analyticService.getAnalyticsGradeData(classpageId, pathwayId, new AsyncCallback<ArrayList<GradeJsonData>>() {
+			@Override
+			public void onSuccess(ArrayList<GradeJsonData> result) {
+				getView().setGradeCollectionData(result);
+				if(result.size()!=0){
+					getBottomAndTopScoresData(classpageId, pathwayId,result.get(0).getResourceGooruOId());
+				}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
+	}
+	public void getClassUnits(String classId){
+		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+		if(getView().getUnitPanel().getWidgetCount()>=0){
+			getPathwayUnits(classId,limit,offSet,true);
+		}
+		if(unitId!=null){
+			getPathwayItems(classId,unitId,"sequence",assignmentLimit,assignmentOffset);
+		}
+	}
 
-		   @Override
-		   public void onSuccess(Void result) {
-						getView().setMinimumAvobeScoredData();
-		   }
-
-		  @Override
-		  public void onFailure(Throwable caught) {
-
-		  }
+	@Override
+	public void exportOEPathway(String classpageId, String pathwayId) {
+		this.analyticService.exportPathwayOE(classpageId, pathwayId,new AsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				Window.open(result, "_blank", "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,resizable=no,width=0,height=0");
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+			}
 		});
 	}
 }
