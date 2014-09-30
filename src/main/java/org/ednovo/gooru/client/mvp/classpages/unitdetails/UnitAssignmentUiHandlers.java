@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 public interface UnitAssignmentUiHandlers extends BaseUiHandlers{
 
@@ -56,6 +57,6 @@ public interface UnitAssignmentUiHandlers extends BaseUiHandlers{
 
 	void getPathwayUnits(String classId,int limit, int offset,boolean clearPanel);
 	
-	void setUnitAssignmentWidget(ClassDo classDo);
+	void setUnitAssignmentWidget(UnitAssignmentsDo unitAssignmentsDo,ClassDo classDo);
 
 }

@@ -6,8 +6,6 @@ import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 
 public interface IsAssignmentWidget extends IsViewWithHandlers<AssignmentWidgetViewUiHandler>{
-	public void displayAssignments(UnitAssignmentsDo unitAssignmentsDo);
-	public void getClassUnitDoObj(ClassDo classDo);
-	
-	
+	public void displayAssignments(UnitAssignmentsDo unitAssignmentsDo,ClassDo classDo);
+		
 }

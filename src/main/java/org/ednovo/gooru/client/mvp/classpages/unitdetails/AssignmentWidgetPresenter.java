@@ -3,8 +3,6 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
@@ -16,7 +14,7 @@ public class AssignmentWidgetPresenter extends PresenterWidget<IsAssignmentWidge
 	
 	private HTMLPanel assignmentContainer;
 	private Map<String, String> getDirection = new HashMap<String, String>();
-	
+	private HTMLPanel assignmentWidgetConatiner;
 	@Inject
 	public AssignmentWidgetPresenter(EventBus eventBus,
 			IsAssignmentWidget view) {
@@ -28,39 +26,13 @@ public class AssignmentWidgetPresenter extends PresenterWidget<IsAssignmentWidge
 	protected void onBind() {
 		super.onBind();
 	}
-	@Override
-	public void getPathwayItems(String classpageId,String pathwayGooruOid,String sequence,int limit,int offSet) {
-		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
-			@Override
-			
-			public void onSuccess(UnitAssignmentsDo result) {
-				String aid=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
-				if(aid==null){
-					if(result!=null){
-						if(result.getSearchResults() != null){
-							if(result.getSearchResults().size()>0){
-							//	getAssignemntDetails(result.getSearchResults().get(0).getCollectionItemId(),classpageId,pathwayGooruOid);
-							}
-						}
-					}
-				}
-				getView().displayAssignments(result);
-
-			}
-		});
-		
-	}
 	
-	public void getUnitAssignmentData(ClassDo classDo){
-		getView().getClassUnitDoObj(classDo);
-		String classPageId;
-		classPageId= AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		
-		if(classPageId==null){
-			classPageId= AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		}
-		String unitId = AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
-		getPathwayItems(classPageId,unitId,"sequence",10,0);
+	
+	
+	public void getUnitAssignmentData(UnitAssignmentsDo unitAssignmentsDo,ClassDo classDo){
+		getView().displayAssignments(unitAssignmentsDo,classDo);
+		
 	}
 	
 	public HTMLPanel getAssignmentContainer() {
@@ -83,7 +55,19 @@ public class AssignmentWidgetPresenter extends PresenterWidget<IsAssignmentWidge
 	public void setGetDirection(Map<String, String> getDirection) {
 		this.getDirection = getDirection;
 	}
+	public HTMLPanel getAssignmentWidgetConatiner() {
+		return assignmentWidgetConatiner;
+	}
+	public void setAssignmentWidgetConatiner(HTMLPanel assignmentWidgetConatiner) {
+		this.assignmentWidgetConatiner = assignmentWidgetConatiner;
+	}
+	@Override
+	public void clearAssignmentWidgetConatiner() {
+		if(assignmentWidgetConatiner!=null){
+			assignmentWidgetConatiner.clear();
+		}
 		
+	}
 		
 			
 }

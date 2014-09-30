@@ -51,7 +51,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	private int assignmentOffset=0;
 	private int assignmentLimit=10;
 	private static final String IMAGE_URL="images/core/B-Dot.gif";
-	
+	private ClassDo classDoObj;
 	@Inject
 	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter,AssignmentWidgetPresenter assignmentWidgetPresenter) {
 		super(eventBus, view);
@@ -96,13 +96,14 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 					if(result!=null){
 						if(result.getSearchResults() != null){
 							if(result.getSearchResults().size()>0){
+								
 								getAssignemntDetails(result.getSearchResults().get(0).getCollectionItemId(),classpageId,pathwayGooruOid);
 							}
 						}
 					}
 				}
 				
-
+				setUnitAssignmentWidget(result,classDoObj);
 			}
 		});
 	}
@@ -114,7 +115,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
 			@Override
 			public void onSuccess(ClassDo classDo) {
-				setUnitAssignmentWidget(classDo);
+				classDoObj = classDo;
 				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 					getView().showUnitNames(classDo,clearPanel);
 					String seqNumber=AppClientFactory.getPlaceManager().getRequestParameter("seqnumber", "1");
@@ -166,10 +167,11 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		getView().showAssignments();
 	}
 	@Override
-	public void setUnitAssignmentWidget(ClassDo classDo) {
-		assignmentWidgetPresenter.getUnitAssignmentData(classDo);
+	public void setUnitAssignmentWidget(UnitAssignmentsDo unitAssignmentsDo,ClassDo classDo) {
+		assignmentWidgetPresenter.getUnitAssignmentData(unitAssignmentsDo,classDo);
 		assignmentWidgetPresenter.setAssignmentContainer(getView().getAssignmentContainer());
 		assignmentWidgetPresenter.setGetDirection(getView().getDirection());
+		assignmentWidgetPresenter.setAssignmentWidgetConatiner(getView().getAssignmentWidgetPanel());
 		getView().getAssignmentWidgetPanel().clear();
 		getView().getAssignmentWidgetPanel().add(assignmentWidgetPresenter.getWidget());
 		

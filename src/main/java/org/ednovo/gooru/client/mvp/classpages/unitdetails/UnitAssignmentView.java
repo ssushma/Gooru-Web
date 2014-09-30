@@ -84,6 +84,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	@UiField HTMLPanel unitPanel,containerPanel,scoreHedingContainer,htmDashBoardTabs,timeLablePanel,assignmentWidgetConatiner;
 	
+	
+
 	@UiField Label lblMoreUnits,lblTimeHours,lblTimeMin;
 	
 	@UiField Anchor unitSetupButton;
@@ -196,6 +198,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 	*/
 	public void resetCircleAndAssignmentContainer(String unitTitle){
+		assignmentWidgetConatiner.clear();
 		//circleContainerPanel.clear();
 		assignmentContainer.clear();
 		setUnitName(unitTitle);
@@ -1206,14 +1209,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		return assignmentWidgetConatiner;
 	}
 
-	public HTMLPanel getAssignmentContainer() {
-		return assignmentContainer;
-	}
-
-	public void setAssignmentContainer(HTMLPanel assignmentContainer) {
-		this.assignmentContainer = assignmentContainer;
-	}
-
+	
 	@Override
 	public HTMLPanel getCircleContainerPanel() {
 		// TODO Auto-generated method stub
@@ -1233,5 +1229,17 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		// TODO Auto-generated method stub
 		return getDescriptionDetails();
 	}
-	
+	public HTMLPanel getAssignmentWidgetConatiner() {
+		return assignmentWidgetConatiner;
+	}
+
+	public void setAssignmentWidgetConatiner(HTMLPanel assignmentWidgetConatiner) {
+		this.assignmentWidgetConatiner = assignmentWidgetConatiner;
+	}
+
+	@Override
+	public HTMLPanel getAssignmentContainer() {
+		// TODO Auto-generated method stub
+		return assignmentContainer;
+	}
 }

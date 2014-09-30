@@ -86,8 +86,19 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 	}
 
 	@Override
-	public void displayAssignments(UnitAssignmentsDo unitAssignmentsDo) {
+	public void displayAssignments(UnitAssignmentsDo unitAssignmentsDo,ClassDo classDo) {
+		
 		this.unitAssignmentsDo = unitAssignmentsDo;
+		if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+			if(unitsDo!=null){
+				unitsDo.getSearchResults().addAll(classDo.getSearchResults());
+			}else{
+				this.unitsDo=classDo;
+			}
+			
+		}
+		
+		
 		if(unitAssignmentsDo!=null){
 			setUnitName(unitAssignmentsDo.getTitle());
 		}
@@ -272,13 +283,15 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 		String aid = AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 		requiredText.setText(i18n.GL2222());
 		circleContainerPanel.clear();
+		getUiHandlers().clearAssignmentWidgetConatiner();
 		circleContainerPanel.add(requiredText);
-		if(classUnitsDo!=null){
+		if(unitAssignmentsDo!=null){
 			leftArrow.setUrl("images/leftSmallarrow.png");
 			leftArrow.getElement().setAttribute("style","margin-left: 10px");
 			circleContainerPanel.add(leftArrow);
 
 			for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
+				
 				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
 				
 				//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid()+"");
@@ -348,7 +361,11 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 		}			
 			
 	}
-/*This class is used to display tooltip on assignment for student*/
+	/**
+	 * This class is used to display tooltip on assignment for student
+	
+	 */
+
 	
 	public class StudentAssignmentMouseOverHandler implements MouseOverHandler{
 		int seqNumber;
@@ -447,8 +464,11 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 
 	@Override
 	public void onMouseOver(MouseOverEvent event) {
+		isNarrationUpdate=true;
 		if(isNarrationUpdate){
+			descriptionDetails = getUiHandlers().getGetDirection();
 			narration=descriptionDetails.get(selectedAssignmentId)!=null?descriptionDetails.get(selectedAssignmentId):narration;
+			
 		}
 			unitAssigmentReorder = new UnitAssigmentReorder(seqNo,unitsDo,title,narration,AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null),selectedUnitNumber,totalHintCount,selectedAssignmentId,AppClientFactory.getPlaceManager().getRequestParameter("uid", null)){
 			@Override
@@ -495,27 +515,7 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 			revealPlace("unitdetails", null, unitId, unitCricleView.getAssignementId());
 		}
 	}
-	@Override
-	public void getClassUnitDoObj(ClassDo classDo) {
-		if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
-			if(unitsDo!=null){
-				unitsDo.getSearchResults().addAll(classDo.getSearchResults());
-			}else{
-				this.unitsDo=classDo;
-			}
-			String tempUntiTitle=classDo.getSearchResults().get(0).getResource().getTitle();
-			if (tempUntiTitle.length() > 10){
-				tempUntiTitle = tempUntiTitle.substring(0, 11) + "...";
-			}
-		//	btnPersonalize.setText(StringUtil.generateMessage(i18n.GL2221(), tempUntiTitle));
-			
-			ArrayList<ClassUnitsListDo> classListUnitsListDo =classDo.getSearchResults();
-			for(int i=0; i<classListUnitsListDo.size(); i++){
-				classUnitsDo=classDo.getSearchResults().get(i);
-			}
-		}
-		
-	}
+	
 	public void displayPersonalizeOptions(boolean isPersonalize)
 	{
 		personalizePanel.setVisible(isPersonalize);
