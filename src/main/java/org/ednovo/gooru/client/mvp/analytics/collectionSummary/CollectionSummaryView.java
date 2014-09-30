@@ -66,7 +66,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 				getUiHandlers().setTeacherData(collectionId,classpageId,pathwayId);
 			}else{
                 //final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
-				getUiHandlers().loadUserSessions(collectionId, classpageId, studentsListDropDown.getValue(selectedIndex));
+				getUiHandlers().loadUserSessions(collectionId, classpageId, studentsListDropDown.getValue(selectedIndex),pathwayId);
 				sessionspnl.setVisible(true);
 			}
 		}
@@ -74,11 +74,12 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
     public class StudentsSessionsChangeHandler implements ChangeHandler{
 		@Override
 		public void onChange(ChangeEvent event) {
-				int selectedIndex=sessionsDropDown.getSelectedIndex();
+				int selectedSessionIndex=sessionsDropDown.getSelectedIndex();
+				int selectedStudentIndex=studentsListDropDown.getSelectedIndex();
 				String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
                 //final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
-                setSessionStartTime(selectedIndex);
-				getUiHandlers().setIndividualData(collectionId, classpageId, studentsListDropDown.getValue(selectedIndex),sessionsDropDown.getValue(selectedIndex));
+                setSessionStartTime(selectedSessionIndex);
+				getUiHandlers().setIndividualData(collectionId, classpageId, studentsListDropDown.getValue(selectedStudentIndex),sessionsDropDown.getValue(selectedSessionIndex),pathwayId);
 		}
     }
 	@Override
@@ -98,6 +99,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		if(result.size()!=0){
 			collectionId=result.get(0).getGooruOId();
 			collectionTitle.setText(result.get(0).getTitle());
+			System.out.println("last accessed:"+AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getLastModified())));
 			collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getLastModified())));
 			if(result.get(0).getThumbnail()!=null)
 			collectionImage.setUrl(result.get(0).getThumbnail());

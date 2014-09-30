@@ -94,14 +94,14 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	}
 
 	@Override
-	public void loadUserSessions(final String collectionId,final String classId,final String userId) {
+	public void loadUserSessions(final String collectionId,final String classId,final String userId,final String pathwayId) {
 		this.analyticService.getSessionsDataByUser(collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
 				getView().setUserSessionsData(result);
 				if(result.size()!=0)
-				setIndividualData(collectionId,classId,userId,result.get(0).getSessionId());
+				setIndividualData(collectionId,classId,userId,result.get(0).getSessionId(), pathwayId);
 			}
 			
 			@Override
@@ -118,9 +118,9 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	}
 
 	@Override
-	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId) {
+	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId) {
 		clearSlot(TEACHER_STUDENT_SLOT);
-		collectionSummaryIndividualPresenter.setIndividualData(collectionId,classpageId,userId,sessionId);
+		collectionSummaryIndividualPresenter.setIndividualData(collectionId,classpageId,userId,sessionId,pathwayId);
 		setInSlot(TEACHER_STUDENT_SLOT, collectionSummaryIndividualPresenter,false);	
 	}
 	
