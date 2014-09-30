@@ -31,7 +31,6 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.classpages.edit.AssignmentProgressCBundle;
 import org.ednovo.gooru.client.mvp.classpages.event.ResetPaginationEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
@@ -66,7 +65,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.visualization.client.formatters.BarFormat.Color;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresenter> implements IsClassSetupUnitView{
 
@@ -249,6 +247,8 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 				//api call to save data to be added
 				if(!unitName.getText().isEmpty())
 				{
+				if(!unitName.getText().trim().isEmpty())
+				{
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", unitName.getText());
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
@@ -261,7 +261,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 							unitNameErrorLabel.setVisible(true);
 							unitNameErrorLabel.getElement().getStyle().setBorderColor("orange");
 							unitNameErrorLabel.getElement().getStyle().setPosition(Position.ABSOLUTE);
-							unitNameErrorLabel.getElement().getStyle().setColor("red");
+							unitNameErrorLabel.getElement().getStyle().setColor("orange");
 						}else{
 							unitNameErrorLabel.setVisible(false);
 							unitNameErrorLabel.getElement().getStyle().clearBackgroundColor();
@@ -286,8 +286,18 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 					unitNameErrorLabel.setVisible(true);
 					unitNameErrorLabel.getElement().getStyle().setBorderColor("orange");
 					unitNameErrorLabel.getElement().getStyle().setPosition(Position.ABSOLUTE);
-					unitNameErrorLabel.getElement().getStyle().setColor("red");
+					unitNameErrorLabel.getElement().getStyle().setColor("orange");
 				}
+			}
+			else
+			{
+				
+				unitNameErrorLabel.setText(i18n.GL2177());
+				unitNameErrorLabel.setVisible(true);
+				unitNameErrorLabel.getElement().getStyle().setBorderColor("orange");
+				unitNameErrorLabel.getElement().getStyle().setPosition(Position.ABSOLUTE);
+				unitNameErrorLabel.getElement().getStyle().setColor("orange");
+			}
 			}
 		});
 		editBtn.addClickHandler(new ClickHandler() {
@@ -376,7 +386,7 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 					unitNameErrorLabel.setVisible(true);
 					unitNameErrorLabel.getElement().getStyle().setBorderColor("orange");
 					unitNameErrorLabel.getElement().getStyle().setPosition(Position.ABSOLUTE);
-					unitNameErrorLabel.getElement().getStyle().setColor("red");
+					unitNameErrorLabel.getElement().getStyle().setColor("orange");
 				}
 				else
 				{

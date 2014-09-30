@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
@@ -41,7 +42,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 
 	Map<String, String> sessionData=new HashMap<String, String>();
 	
-	String collectionId=null;
+	String collectionId=null,pathwayId=null;
 	
 	public CollectionSummaryView() {
 		this.res = CollectionSummaryCBundle.INSTANCE;
@@ -58,15 +59,14 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		@Override
 		public void onChange(ChangeEvent event) {
 			int selectedIndex=studentsListDropDown.getSelectedIndex();
+			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 			if(selectedIndex==0){
 				sessionspnl.setVisible(false);
-				//String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-				final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
-				getUiHandlers().setTeacherData(collectionId,classpageId);
+				//final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
+				getUiHandlers().setTeacherData(collectionId,classpageId,pathwayId);
 			}else{
-               // String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
-                final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
-				getUiHandlers().loadUserSessions(collectionId, classpageId, studentsListDropDown.getValue(selectedIndex));
+                //final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
+				getUiHandlers().loadUserSessions(collectionId, classpageId, studentsListDropDown.getValue(selectedIndex),pathwayId);
 				sessionspnl.setVisible(true);
 			}
 		}
@@ -74,11 +74,12 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
     public class StudentsSessionsChangeHandler implements ChangeHandler{
 		@Override
 		public void onChange(ChangeEvent event) {
-				int selectedIndex=sessionsDropDown.getSelectedIndex();
-				 // String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
-                final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
-                setSessionStartTime(selectedIndex);
-				getUiHandlers().setIndividualData(collectionId, classpageId, studentsListDropDown.getValue(selectedIndex),sessionsDropDown.getValue(selectedIndex));
+				int selectedSessionIndex=sessionsDropDown.getSelectedIndex();
+				int selectedStudentIndex=studentsListDropDown.getSelectedIndex();
+				String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+                //final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
+                setSessionStartTime(selectedSessionIndex);
+				getUiHandlers().setIndividualData(collectionId, classpageId, studentsListDropDown.getValue(selectedStudentIndex),sessionsDropDown.getValue(selectedSessionIndex),pathwayId);
 		}
     }
 	@Override
@@ -93,11 +94,14 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 
 	@Override
 	public void setCollectionMetaData(
-			ArrayList<CollectionSummaryMetaDataDo> result) {
+			ArrayList<CollectionSummaryMetaDataDo> result,String pathwayId) {
+		this.pathwayId=pathwayId;
 		if(result.size()!=0){
 			collectionId=result.get(0).getGooruOId();
 			collectionTitle.setText(result.get(0).getTitle());
+			System.out.println("last accessed:"+AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getLastModified())));
 			collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getLastModified())));
+			if(result.get(0).getThumbnail()!=null)
 			collectionImage.setUrl(result.get(0).getThumbnail());
 		}
 	}
@@ -110,6 +114,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	public void setUserSessionsData(
 			ArrayList<CollectionSummaryUsersDataDo> result) {
 		sessionsDropDown.clear();
+		sessionData.clear();
 		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
 			sessionData.put(collectionSummaryUsersDataDo.getSessionId(), AnalyticsUtil.getCreatedTime(Long.toString(collectionSummaryUsersDataDo.getTimeStamp())));
 			int day=collectionSummaryUsersDataDo.getFrequency();
@@ -132,6 +137,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		}
 	}
 	public void setSessionStartTime(int selectedIndex) {
+		if(sessionData.size()!=0)
 		  lastModifiedTime.setText(sessionData.get(sessionsDropDown.getValue(selectedIndex)).toString());
 	}
 }

@@ -162,7 +162,7 @@ public class ScoreHedingView extends Composite {
 				try{
 					if(Integer.parseInt(score) >100 || Integer.parseInt(score)<0){
 						lblControl.getElement().setId("controll");
-						setGoalValidation(i18n.GL2249());
+						setGoalValidation(i18n.GL2253());
 					}else{
 						txtScore.getElement().setAttribute("style", "border-color: #efefef !important;");
 						lblValidation.setVisible(false);
@@ -240,7 +240,7 @@ public class ScoreHedingView extends Composite {
 			try{
 				if(Integer.parseInt(score) >100 || Integer.parseInt(score)<0){
 					lblControl.getElement().setId("controll");
-					setGoalValidation(i18n.GL2249());
+					setGoalValidation(i18n.GL2253());
 				}else{
 					txtScore.getElement().setAttribute("style", "border-color: #efefef !important;");
 					lblValidation.setVisible(false);
@@ -272,7 +272,7 @@ public class ScoreHedingView extends Composite {
 			
 		}else{
 
-			setGoalValidation(i18n.GL2248());
+			setGoalValidation(i18n.GL2252());
 
 		}
 	}

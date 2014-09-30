@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
+import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -36,7 +37,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("gwt-service/analyticsService")
 public interface AnalyticsService extends BaseService {
 	
-	public ArrayList<CollectionProgressDataDo> getCollectionProgressData(String collectionId,String classPageId);
+	public ArrayList<CollectionProgressDataDo> getCollectionProgressData(String collectionId,String classPageId,String pathwayId);
 	
 	public ArrayList<CollectionSummaryUsersDataDo> getCollectionSummaryUsersData(String classpageId);
 	
@@ -44,15 +45,17 @@ public interface AnalyticsService extends BaseService {
 	
 	public ArrayList<CollectionSummaryMetaDataDo> getCollectionMetaDataByUserAndSession(String collectionId,String classId,String userId,String sessionId);
 	
-	public ArrayList<UserDataDo> getCollectionResourceData(String collectionId,String classpageId);
+	public ArrayList<UserDataDo> getCollectionResourceData(String collectionId,String classpageId,String pathwayId);
 	
 	public ArrayList<CollectionSummaryUsersDataDo> getSessionsDataByUser(String collectionId,String classId,String userId);
 		 
-	public ArrayList<UserDataDo> getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId);
+	public ArrayList<UserDataDo> getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId,String pathwayId);
 
-	public void getMinimumScoredBelowData(String collectionId,String classId,String score);
-	
-	public void getMinimumScoredAboveData(String collectionId,String classId,String score);
+	public ArrayList<GradeJsonData>  getBottomAndTopScoresData(String collectionId,String classId,String score);
 	
 	public void setHTMLtoPDF(String htmlString);
+	
+	public ArrayList<GradeJsonData> getAnalyticsGradeData(String classpageId,String pathwayId);
+	
+	public String exportPathwayOE(String classpageId,String pathwayId);
 }

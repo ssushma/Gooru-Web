@@ -462,7 +462,7 @@ width: 50%; */
 	border: 1px solid #ddd;
 	width: 28px;
 	height: 23px;
-	text-align: right;
+	text-align: left;
 	padding-right: 1px;
 }
 .MinuteLabel {
@@ -485,7 +485,7 @@ width: 50%; */
 	border: 1px solid #ddd;
 	width: 100px;
 	height: 23px;
-	text-align: right;
+	text-align: left;
 	padding-right: 1px;
 }
 /* .scoreErrorLabel{

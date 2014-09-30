@@ -4,9 +4,9 @@
   <ui:style field="unitStyle" src="tabContainer.css" />
   <uc:UlPanel styleName="list-unstyled {unitStyle.list_inline}">
    <g:Image ui:field="userImage" styleName="{unitStyle.defaultUserImage}"></g:Image>
-   <g:Label>name</g:Label>
-   <g:Label>score</g:Label>
-   <g:Label>time</g:Label>
-   <g:Label>reaction</g:Label>
+   <g:Label ui:field="namelbl"></g:Label>
+   <g:Label ui:field="scorelbl"></g:Label>
+   <g:Label ui:field="timelbl"></g:Label>
+   <g:HTMLPanel ui:field="reactionlbl"></g:HTMLPanel>
   </uc:UlPanel>  
 </ui:UiBinder> 
