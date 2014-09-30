@@ -38,10 +38,13 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 	    for(int i=0;i<size;i++){
 	    	if(gradeData.get(i).getEstimatedTime()!=null){
 	    		String estimatedTime=gradeData.get(i).getEstimatedTime().replaceAll("hrs", ":").replaceAll("mins", "").trim();
+	    		if(estimatedTime.contains(":"))
+	    		{
 	    		String[] convertMins=estimatedTime.split(":");
 	    		int convertedTime=(Integer.parseInt(convertMins[0].trim())*60)+(Integer.parseInt(convertMins[1].trim()));
 	    		series1[i]=convertedTime-(convertedTime/2);
 	    		series2[i]=convertedTime;
+	    		}
 	    	}else{
 	    		series1[i]=0;
 	    		series2[i]=0;
