@@ -233,7 +233,7 @@
 	padding-right: 0 !important;
 	width: 1000px;
 	margin: 0 auto;
-	
+	min-height: 297px;
 }
 
 .unitDetails .containerTeacher .leftPanel{
