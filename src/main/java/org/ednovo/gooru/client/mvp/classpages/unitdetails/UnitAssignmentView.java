@@ -321,7 +321,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					circleContainerPanel.clear();
 					circleContainerPanel.add(requiredText);
 					leftArrow.setUrl("images/leftSmallarrow.png");
-					leftArrow.getElement().setAttribute("style","margin-left: 10px");
+					leftArrow.getElement().setAttribute("style","margin-left: 10px;cursor: pointer;");
 					circleContainerPanel.add(leftArrow);
 					for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 						unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
