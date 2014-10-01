@@ -198,5 +198,9 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		});
 	}
 	
+	@Override
+	public void updateAssignmentStatus(Boolean isRequired,String collectionItemId,String readStatus,boolean isUpdateRequiredStatus){
+		assignmentWidgetPresenter.updateAssignmentDetailsStatus(isRequired, collectionItemId, readStatus, isUpdateRequiredStatus);
+	}
 
 }

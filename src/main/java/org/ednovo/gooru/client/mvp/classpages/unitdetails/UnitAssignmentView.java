@@ -182,8 +182,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		StringUtil.setAttributes(assignmentContainer.getElement(), "divAssignmentContainer", null, null);
 		StringUtil.setAttributes(personalizeContainer.getElement(), "divPersonalizeContainer", null, null);
 		StringUtil.setAttributes(btnPersonalize.getElement(), "btnPersonalize", "Personalize Units", "Personalize Units");
-
+		panelPersonalizeButtonContainer.setVisible(false);
 //		displayPersonalizeOptions(false);
+
 		setPersonalizeState(false);
 		
 		SetPersonalizeButtonHandler handler = new SetPersonalizeButtonHandler() {
@@ -623,6 +624,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	 private class UnitSetupEvents implements ClickHandler{
 			@Override
 			public void onClick(ClickEvent event) {
+				isPersonalize=false;
 				revealPlace("unitsetup","1",null,null);
 			}
 		}
@@ -981,11 +983,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		 collectionView=new CollectionsView(classpageItemDo){
 			@Override
 			public void updateAssignmentRequiredStatus(Boolean isRequired,String collectionItemId,String readStatus,boolean isUpdateRequiredStatus){
-				if(isUpdateRequiredStatus){
-				//updateCircleRequiredView(isRequired, collectionItemId);
-				}else{
-					//updateAssingmentCircleReadStatus(isRequired,collectionItemId,readStatus);
-				}
+				updateAssignmentDetailsStatus(isRequired, collectionItemId, readStatus, isUpdateRequiredStatus);
 			}
 			@Override
 			public void updateAssignmentDirection(String collectionItemId,String direction){
@@ -1347,4 +1345,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		// TODO Auto-generated method stub
 		return assignmentContainer;
 	}
+	public void updateAssignmentDetailsStatus(Boolean isRequired,String collectionItemId,String readStatus,boolean isUpdateRequiredStatus){
+		getUiHandlers().updateAssignmentStatus(isRequired, collectionItemId, readStatus, isUpdateRequiredStatus);	
+		}
 }

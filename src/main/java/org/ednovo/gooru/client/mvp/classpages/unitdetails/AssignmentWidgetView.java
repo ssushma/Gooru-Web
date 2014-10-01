@@ -587,5 +587,13 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	 }
 
-	
+	 @Override
+	public void updateAssignmentDetailsStatus(Boolean isRequired,String collectionItemId,String readStatus,boolean isUpdateRequiredStatus){
+	if(isUpdateRequiredStatus){
+		updateCircleRequiredView(isRequired, collectionItemId);
+		}else{
+			updateAssingmentCircleReadStatus(isRequired,collectionItemId,readStatus);
+		}
+}
+	 
 }
