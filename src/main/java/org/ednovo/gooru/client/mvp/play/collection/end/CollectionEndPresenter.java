@@ -401,13 +401,18 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	}
 
 	@Override
-	public void getCollectionMetaDataByUserAndSession(String collectionId, String classId, String userId, String sessionId) {
+	public void getCollectionMetaDataByUserAndSession(final String collectionId, final String classId, final String userId, final String sessionId) {
 		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-				if(result.size()!=0){
-					getView().setCollectionMetaDataByUserAndSession(result);
+				if(result.get(0).getCompletionStatus().equalsIgnoreCase("in-progress")){
+					getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId);
+				}else{
+					if(result.size()!=0){
+						getView().setCollectionMetaDataByUserAndSession(result);
+						setCollectionSummaryData(collectionId, classId, userId, sessionId);
+					}
 				}
 			}
 			
@@ -434,7 +439,6 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
 				if(result.size()!=0){
 					getCollectionMetaDataByUserAndSession(collectionId, classId, userId, result.get(result.size()-1).getSessionId());
-					setCollectionSummaryData(collectionId, classId, userId, result.get(result.size()-1).getSessionId());
 					getView().setSessionsData(result);
 				}
 			}

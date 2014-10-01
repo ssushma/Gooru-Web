@@ -22,43 +22,21 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.search.event;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
+
+import com.google.gwt.event.shared.EventHandler;
 
 /**
  * @author Search Team
  * 
  */
-public interface CollectionsCBundle extends ClientBundle {
+public interface DisplayNextSetAssignmentsHandler extends EventHandler, BaseUiHandlers {
 
-	static final CollectionsCBundle INSTANCE = GWT.create(CollectionsCBundle.class);
+	void displayNextSetFrom(int offSet, String type);
 
-	public interface CollectionsCss extends CssResource {
-		String classpageTextarea();
-		String dateText();
-		String systemMessage();
-		String dueDataIcon();
-		String openStateCollectionHeader();
-		String completeStateCollectionHeader();
-		String completedStatus();
-		String minimumScoreTextbox();
-		String enableLabelText();
-		String disableLabelText();
-		String requiredBuble();
-		String optionalBuble();
-		String assignmentCompleted();
-		String assignmentCompletedWithOptional();
-		String needHelpReaction();
-		String notUnderstandReaction();
-		String mehReaction();
-		String understandReaction();
-		String canExplainReaction();
-		String reactionText();
-	}
-
-	@Source("collectionsstyles.css")
-	CollectionsCss css();
 }

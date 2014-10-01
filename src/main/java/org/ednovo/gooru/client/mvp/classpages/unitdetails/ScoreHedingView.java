@@ -28,8 +28,8 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.event.UpdateUnitSetGoalEvent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 
 import com.google.gwt.core.client.GWT;
@@ -80,8 +80,6 @@ public class ScoreHedingView extends Composite {
 	String collectionItemId;
 
 	ClassUnitsListDo classUnitsListDo;
-
-	private ClassDo classDo;
 
 	private int redScore, finalScore;
 
@@ -317,8 +315,12 @@ public class ScoreHedingView extends Composite {
 			@Override
 			public void onSuccess(ClassUnitsListDo result) {
 				// TODO Auto-generated method stub
-				System.out.println("mini::::::"+result.getMinimumScoreByUser());
-
+				if(result!=null){
+					int minScore=(result.getMinimumScoreByUser()!=null && !result.getMinimumScoreByUser().equals("")) ? result.getMinimumScoreByUser():0;
+					int assignmentStatusValue=(result.getAssignmentCompleted()!=null && !result.getAssignmentCompleted().equals("")) ? result.getAssignmentCompleted():0;
+					AppClientFactory.fireEvent(new UpdateUnitSetGoalEvent(minScore, assignmentStatusValue, null));
+				}
+				
 			}
 		});
 	}

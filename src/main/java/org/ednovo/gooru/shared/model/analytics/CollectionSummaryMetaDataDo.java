@@ -12,6 +12,7 @@ public class CollectionSummaryMetaDataDo implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String completionStatus;
 	private int userCount;
 	private long avgTimeSpent;
 	private String title;
@@ -95,5 +96,11 @@ public class CollectionSummaryMetaDataDo implements Serializable{
 	}
 	public void setTimeSpent(long timeSpent) {
 		this.timeSpent = timeSpent;
+	}
+	public String getCompletionStatus() {
+		return completionStatus;
+	}
+	public void setCompletionStatus(String completionStatus) {
+		this.completionStatus = completionStatus;
 	}
 }

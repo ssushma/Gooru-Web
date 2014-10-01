@@ -39,7 +39,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshPathwayItemsEvent;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitAssigmentReorder;
 import org.ednovo.gooru.client.mvp.home.WaitPopupVc;
-import org.ednovo.gooru.client.mvp.search.event.SetPersonalizeButtonEvent;
+import org.ednovo.gooru.client.mvp.search.event.DisplayNextSetAssignmentsEvent;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
@@ -589,6 +589,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 		clearAssignmentsFromDo();
 		setLoadingIcon(true);
 		getUnitAssignments(getAssignmentOffsetValue(NEXT),isEditMode(),NEXT);
+		
+		AppClientFactory.fireEvent(new DisplayNextSetAssignmentsEvent(getAssignmentOffsetValue(NEXT), "next"));
 	}
 	
 
@@ -602,6 +604,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		clearAssignmentsFromDo();
 		setLoadingIcon(true);
 		getUnitAssignments(getAssignmentOffsetValue(PREVIOUS),isEditMode(),PREVIOUS);
+		AppClientFactory.fireEvent(new DisplayNextSetAssignmentsEvent(getAssignmentOffsetValue(PREVIOUS), "previous"));
 	}
 	
 	/**
