@@ -72,6 +72,8 @@ public class PersonalizeUnitView extends
 	
 	int limit = 2;
 	
+	int pageNumber = 0;
+	
 	ArrayList<CollectionItemDo> goalsList = null;
 
 	private int offSet;
@@ -112,23 +114,20 @@ public class PersonalizeUnitView extends
 	public void displayPagination(StudentsAssociatedListDo result, int offSet, int limit){
 		panelPagination.clear();
 		this.offSet = offSet;
-		int noOfItem = result.getTotalHitCount() / (limit==0 ? 1 : limit);
-		System.out.println("noOfItem : "+noOfItem);
-		System.out.println("currentPage : "+currentPage);
-		if (result.getSearchResults() != null && result.getSearchResults().size() > 0 && noOfItem > 0) {
-			if (result.getTotalHitCount() > 1) {
-				
-				if (currentPage > 0) {
-					panelPagination.add(new PaginationButtonUc(currentPage - 1, PREVIOUS, this));
+		int noOfItem = (result.getTotalHitCount() / 2) + ((result.getTotalHitCount() % 2) > 0 ? 1 : 0);
+		if (noOfItem > 1) {
+			if (currentPage > 1) {
+				panelPagination.add(new PaginationButtonUc(currentPage - 1, PREVIOUS, this));
+			}
+			int page = currentPage < 5 ? 1 : currentPage - 0;
+			for (int count = 1; count < 5 && page <= noOfItem; page++, ++count){
+				if(currentPage==0){
+					currentPage+=1;
 				}
-				
-				for (int count=0; count<noOfItem; count++){
-					panelPagination.add(new PaginationButtonUc(count+1, count == currentPage, this));
-				}
-								
-				if (currentPage < (noOfItem-1)) {
-					panelPagination.add(new PaginationButtonUc(currentPage + 1, NEXT, this));
-				}
+				panelPagination.add(new PaginationButtonUc(page, page == currentPage, this));
+			}
+			if (currentPage < noOfItem) {
+				panelPagination.add(new PaginationButtonUc(currentPage + 1, NEXT, this));
 			}
 		}
 	}
@@ -140,10 +139,7 @@ public class PersonalizeUnitView extends
 	public void onClick(ClickEvent event) {
 		if (event.getSource() instanceof PaginationButtonUc) {
 			currentPage = ((PaginationButtonUc) event.getSource()).getPage();
-			System.out.println("currentPage : "+currentPage);
-			getUiHandlers().getStudentsList((limit+offSet), limit, "active", null);
-		} else {
-			Window.alert("Event is not caught");
-		}
+			getUiHandlers().getStudentsList((currentPage-1)*limit,limit,"active", null);
+		} 
 	}	
 }
