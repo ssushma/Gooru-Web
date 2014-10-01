@@ -769,6 +769,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			if(unitAssignmentsDo.getSearchResults().size()>0&&aid==null){
 				aid=unitAssignmentsDo.getSearchResults().get(0).getCollectionItemId();
 			}
+			if(toalassignmentSize == 0)
+			{
+				assignmentContainer.clear();
+			}
 			for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
 				//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid()+"");
@@ -828,7 +832,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					}else{
 						if(aid == null)
 						{
-						aid=unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId();	
+						aid=unitAssignmentsDo.getSearchResults().get(0).getCollectionItemId();	
 						}
 						if(aid.equalsIgnoreCase(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId())){
 							String newSeqCollectionItemId = unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId();
