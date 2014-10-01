@@ -22,11 +22,40 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.search.event;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
-public interface CollectionSummaryIndividualUiHandlers extends BaseUiHandlers{
-	void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId);
-	void setHtmltopdf(String htmlString);
+import com.google.gwt.event.shared.GwtEvent;
+
+/**
+ * @author Search Team
+ * 
+ */
+public class SetPersonalizeButtonEvent extends GwtEvent<SetPersonalizeButtonHandler> {
+
+	public static final Type<SetPersonalizeButtonHandler> TYPE = new Type<SetPersonalizeButtonHandler>();
+
+	boolean isSelected=false;
+	
+	/**
+	 * Class constructor
+	 */
+	public SetPersonalizeButtonEvent(boolean isSelected) {
+		this.isSelected = isSelected;
+	}
+
+	@Override
+	public Type<SetPersonalizeButtonHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(SetPersonalizeButtonHandler handler) {
+		handler.setPersonalizeButtonEvent(isSelected);
+	}
+
+
 }

@@ -65,27 +65,10 @@ public class AnalyticsUtil {
 	 */
 	public static String getCreatedTime(String commentCreatedTime) {
 		String createdTime = null;
-		Long currentTime = System.currentTimeMillis();
 		Long commentTime = Long.parseLong(commentCreatedTime);
-		Long elapsedTime = (currentTime - commentTime);
-		int seconds = (int) (elapsedTime / 1000) % 60 ;
-		int minutes = (int) ((elapsedTime / (1000*60)) % 60);
-		int hours   = (int) ((elapsedTime / (1000*60*60)) % 24);
-		int days = (int) (elapsedTime / (1000*60*60*24));
 		Date currentDate = new Date(commentTime);
 		DateTimeFormat fmt = DateTimeFormat.getFormat (DATE_FORMAT);
-		if(days>6){
-			createdTime = fmt.format (currentDate);
-		}
-		else if(days>0&&days<=6) {
-			createdTime = days + getTimePrefix(days," "+i18n.GL0562(), i18n.GL0579(), i18n.GL0580());
-		} else if(hours>0&&hours<24) {
-			createdTime = hours + getTimePrefix(hours," "+i18n.GL0563(), i18n.GL1435(), i18n.GL1436());
-		} else if(minutes>0&&minutes<60) {
-			createdTime = minutes + getTimePrefix(minutes," "+i18n.GL0564(), i18n.GL1437(), i18n.GL1438());
-		} else if(seconds<=60) {
-			createdTime = i18n.GL0561();
-		}
+		createdTime = fmt.format (currentDate);
 		return createdTime;
 	}
 	/**

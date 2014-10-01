@@ -43,4 +43,8 @@ public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>
 	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData);
 	
 	HTMLPanel getUnitPanel();
+
+	void LoadingImageLabeltrue();
+
+	void LoadingImageLabelFalse();
 }

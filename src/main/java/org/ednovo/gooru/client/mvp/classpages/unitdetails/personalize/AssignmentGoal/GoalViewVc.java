@@ -59,12 +59,12 @@ public abstract class GoalViewVc extends Composite {
 
 	String assignmentNo;
 
-	int percentage = 85;
+	int percentage = 0;
 
-	int minGoal = 75;
+	int minGoal = 25;
 
-	boolean isOptional = false;
-
+	boolean isOptional;
+	boolean isPlayed;
 	boolean goalStatus;
 
 	interface GoalViewVcUiBinder extends UiBinder<Widget, GoalViewVc> {
@@ -76,8 +76,14 @@ public abstract class GoalViewVc extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.assignmentNo = assignmentNo;
 		this.insightsDo = insightsDo;
-
+		
+		isPlayed = insightsDo.getUserData().get(0).getGradeInPercentage() == null ? false : true;
+		minGoal = Integer.parseInt(insightsDo.getMinimumScore() !=null ? insightsDo.getMinimumScore() : "0"); 
+		percentage = Integer.parseInt(insightsDo.getUserData().get(0).getGradeInPercentage() !=null ? insightsDo.getUserData().get(0).getGradeInPercentage() : "0"); 
+		
 		goalStatus = percentage < minGoal ? false : true;
+				
+		isOptional = insightsDo.getIsRequired()==1 ? false : true;
 		
 		setData();
 	}
@@ -127,18 +133,19 @@ public abstract class GoalViewVc extends Composite {
 		
 		panelMembers.getElement().addClassName(
 				isOptional ? "optional" : "dummyOptional");
-
-		if (isOptional) {
-			if (goalStatus) {
-				panelMembers.getElement().addClassName("optionalGreen");
+		if (isPlayed){
+			if (isOptional) {
+				if (goalStatus) {
+					panelMembers.getElement().addClassName("optionalGreen");
+				} else {
+					panelMembers.getElement().addClassName("optionalRed");
+				}
 			} else {
-				panelMembers.getElement().addClassName("optionalRed");
-			}
-		} else {
-			if (goalStatus) {
-				panelMembers.getElement().addClassName("greenBubble");
-			} else {
-				panelMembers.getElement().addClassName("redBubble");
+				if (goalStatus) {
+					panelMembers.getElement().addClassName("greenBubble");
+				} else {
+					panelMembers.getElement().addClassName("redBubble");
+				}
 			}
 		}
 

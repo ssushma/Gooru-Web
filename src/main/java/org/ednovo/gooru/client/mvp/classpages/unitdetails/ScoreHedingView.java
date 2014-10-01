@@ -49,47 +49,47 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
-*
-* @description : This class used to show student score in Assignments
-*
-* @version :1.1
-*
-* @date: Sep 16 2014
-   	
-* @Author Gooru Team
-* 
-* Reviewer Gooru Team
-*
-*/
+ *
+ * @description : This class used to show student score in Assignments
+ *
+ * @version :1.1
+ *
+ * @date: Sep 16 2014
+
+ * @Author Gooru Team
+ * 
+ * Reviewer Gooru Team
+ *
+ */
 public class ScoreHedingView extends Composite {
 
 	private static ScoreHedingViewUiBinder uiBinder = GWT
 			.create(ScoreHedingViewUiBinder.class);
-	
+
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	interface ScoreHedingViewUiBinder extends UiBinder<Widget, ScoreHedingView> {
 	}
-	
-	@UiField Label lblTitle,lblControl,lblRedControl,lblScore;
-	
+
+	@UiField Label lblTitle,lblControl,lblRedControl,lblScore,lblValidation;
+
 	@UiField TextBox txtScore;
-	
+
 	@UiField Button btnSetGoal;
-	
+
 	String collectionItemId;
-	
+
 	ClassUnitsListDo classUnitsListDo;
-	
+
 	private ClassDo classDo;
-	
+
 	private int redScore, finalScore;
-	
+
 	private String SETGOAL= i18n.GL2197();
-	
+
 	private String EDITGOAL= i18n.GL2196();
-	
-	
+
+
 
 	/**
 	 * Because this class has a default constructor, it can
@@ -110,9 +110,9 @@ public class ScoreHedingView extends Composite {
 		txtScore.addKeyPressHandler(new HasNumbersOnly());
 		txtScore.setMaxLength(3);
 		lblScore.setVisible(false);
-		showUnitStatus();
+		lblValidation.setVisible(false);
 	}
-	
+
 	private void setStaticText() {
 		lblTitle.setText(i18n.GL2195());
 		lblControl.getElement().setId("controll");
@@ -122,9 +122,10 @@ public class ScoreHedingView extends Composite {
 	/**
 	 * To show unit goals values 
 	 */
-	private void showUnitStatus() {
+	public void showUnitStatus() {
 		// TODO Auto-generated method stub
 		if(classUnitsListDo!=null){
+			System.out.println("title:"+getLblTitle().getText());
 			if(getLblTitle().getText().equals(i18n.GL2195())){
 				System.out.println("minimumscore::"+classUnitsListDo.getMinimumScoreByUser());
 				if(classUnitsListDo.getMinimumScoreByUser()!=null){
@@ -136,6 +137,7 @@ public class ScoreHedingView extends Composite {
 					showingScoreReader();
 				}
 			}else{
+				System.out.println("else::::");
 				if(classUnitsListDo.getAssignmentCompleted()!=null){
 					showAndHideTextBox();
 					txtScore.setText(classUnitsListDo.getAssignmentCompleted()+"");
@@ -147,27 +149,29 @@ public class ScoreHedingView extends Composite {
 			}
 		}
 	}
-    /**
-     * To show the score reader values and validate the set goal values
-     *
-     */
+	/**
+	 * To show the score reader values and validate the set goal values
+	 *
+	 */
 	public class ScoreHandler implements BlurHandler{
-		
+
 		@Override
 		public void onBlur(BlurEvent event) {
 			String score = txtScore.getText();
-			 if(score != null || score != ""){
+			if(score != null || score != ""){
 				try{
 					if(Integer.parseInt(score) >100 || Integer.parseInt(score)<0){
 						lblControl.getElement().setId("controll");
-						txtScore.setText(getValidationScore(score));
+						setGoalValidation(i18n.GL2253());
 					}else{
+						txtScore.getElement().setAttribute("style", "border-color: #efefef !important;");
+						lblValidation.setVisible(false);
 						showingScoreReader();
 					}
 				}catch(NumberFormatException numberFormatException){
 					numberFormatException.printStackTrace();
 				}
-				
+
 			}
 		}
 
@@ -180,7 +184,7 @@ public class ScoreHedingView extends Composite {
 		int scoreValue= Integer.parseInt(txtScore.getText());
 		finalScore=((scoreValue*176)/100);
 		finalScore=finalScore-176;
-	    redScore=((50*66)/100);
+		redScore=((50*66)/100);
 		redScore=redScore-119;
 		lblControl.getElement().setId("controll");
 		lblControl.getElement().setAttribute("style", "-webkit-transform: rotate("+finalScore+"deg);");
@@ -191,82 +195,97 @@ public class ScoreHedingView extends Composite {
 	 * @param score
 	 * @return valid score
 	 */
-	
+
 	private String getValidationScore(String score) {
-		// TODO Auto-generated method stub
 		if(Integer.parseInt(score) >100){
 			return "100";
 		}
 		if(Integer.parseInt(score)<0){
-			
+
 			return "0";
 		}
 		return null;
 	}
-	
+
 	/**
 	 * This inner class used for to restrict text box values only numbers
 	 *
 	 */
-	
+
 	public class HasNumbersOnly implements KeyPressHandler {
-	      
+
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
-				if (!Character.isDigit(event.getCharCode()) 
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
-	                ((TextBox) event.getSource()).cancelKey();
-	            }
-					
+			if (!Character.isDigit(event.getCharCode()) 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
+				((TextBox) event.getSource()).cancelKey();
+			}
+
 		}
-    }
+	}
 	/**
 	 * Click event for Set Goal Button
 	 * @param clickEvent
 	 */
 	@UiHandler("btnSetGoal")
 	public void clickOnSetGoal(ClickEvent clickEvent){
-		
-		if(txtScore.getText()!=null){
-			if(btnSetGoal.getText().equals(SETGOAL)){
-				System.out.println("redScore:"+redScore);
-				showAndHideTextBox();
-				lblScore.setText(txtScore.getText());
-				btnSetGoal.setStyleName("secondary");
-				btnSetGoal.setText(EDITGOAL);
-				/*lblRedControl.getElement().setId("redControll");
-				if(Integer.parseInt(txtScore.getText())<=50){
-					lblRedControl.getElement().setAttribute("style", "-webkit-transform: rotate("+redScore+"deg); background: none repeat scroll 0 0 #a0c79a;");
-					lblScore.getElement().setAttribute("style", "color:#a0c79a");
+		String score = txtScore.getText();
+		if(score!=null && !score.equals("")){
+			try{
+				if(Integer.parseInt(score) >100 || Integer.parseInt(score)<0){
+					lblControl.getElement().setId("controll");
+					setGoalValidation(i18n.GL2253());
 				}else{
-					lblRedControl.getElement().setAttribute("style", "-webkit-transform: rotate("+redScore+"deg);");
-					lblScore.getElement().setAttribute("style", "color:#fb7c73");
-				}*/
-				collectionItemId=classUnitsListDo.getCollectionItemId();
-				if(collectionItemId!=null){
-					if(getLblTitle().getText().equals(i18n.GL2195())){
-						updateUnitstatus(collectionItemId, txtScore.getText(), "", "");
+					txtScore.getElement().setAttribute("style", "border-color: #efefef !important;");
+					lblValidation.setVisible(false);
+					if(btnSetGoal.getText().equals(SETGOAL)){
+						showAndHideTextBox();
+						lblScore.setText(txtScore.getText());
+						btnSetGoal.setStyleName("secondary");
+						btnSetGoal.setText(EDITGOAL);
+						collectionItemId=classUnitsListDo.getCollectionItemId();
+						if(collectionItemId!=null){
+							if(getLblTitle().getText().equals(i18n.GL2195())){
+								updateUnitstatus(collectionItemId, txtScore.getText(), null, null);
+							}else{
+								updateUnitstatus(collectionItemId, null, txtScore.getText(), null);
+							}
+						}
+
+
 					}else{
-						updateUnitstatus(collectionItemId, "", txtScore.getText(), "");
+						showAndHideTextBox();
+						btnSetGoal.setStyleName("primary");
+						btnSetGoal.setText(SETGOAL);
+						lblRedControl.getElement().setId("redControll");
 					}
 				}
+			}catch(Exception e){
 				
-				
-			}else{
-				showAndHideTextBox();
-				btnSetGoal.setStyleName("primary");
-				btnSetGoal.setText(SETGOAL);
-				lblRedControl.getElement().setId("redControll");
 			}
 			
+		}else{
+
+			setGoalValidation(i18n.GL2252());
+
 		}
 	}
+	/**
+	 * To set the score/goal validation messages
+	 */
+	private void setGoalValidation(String msg) {
+		txtScore.getElement().setAttribute("style", "border-color: #FBB03B !important;");
+		lblValidation.setVisible(true);
+		lblValidation.setStyleName("errorMessage");
+		lblValidation.setText(msg);
+	}
+
 	/**
 	 * show and hide text boxes
 	 */
@@ -299,10 +318,10 @@ public class ScoreHedingView extends Composite {
 			public void onSuccess(ClassUnitsListDo result) {
 				// TODO Auto-generated method stub
 				System.out.println("mini::::::"+result.getMinimumScoreByUser());
-				
+
 			}
 		});
 	}
-	
-	
+
+
 }

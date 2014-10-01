@@ -828,7 +828,7 @@
 
 .scoreLabelStyle {
 	font-size: 35px;
-	color: #fb7c73;
+	color: #ccc;
 	text-align: center;
 	padding: 0px 9px 0px 76px;
 	width: 31%;
@@ -839,7 +839,7 @@
 
 .timeLabelStyle {
 	font-size: 31px;
-	color: #a0c79a;
+	color: #ccc;
 	text-align: center;
 	/* width: 109%; */
 	display: inline-block;

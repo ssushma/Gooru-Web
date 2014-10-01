@@ -247,6 +247,8 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 				//api call to save data to be added
 				if(!unitName.getText().isEmpty())
 				{
+				if(!unitName.getText().trim().isEmpty())
+				{
 				Map<String, String> parms = new HashMap<String, String>();
 				parms.put("text", unitName.getText());
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
@@ -286,6 +288,16 @@ public abstract class ClassSetupUnitView extends ChildView<ClassSetupUnitPresent
 					unitNameErrorLabel.getElement().getStyle().setPosition(Position.ABSOLUTE);
 					unitNameErrorLabel.getElement().getStyle().setColor("orange");
 				}
+			}
+			else
+			{
+				
+				unitNameErrorLabel.setText(i18n.GL2177());
+				unitNameErrorLabel.setVisible(true);
+				unitNameErrorLabel.getElement().getStyle().setBorderColor("orange");
+				unitNameErrorLabel.getElement().getStyle().setPosition(Position.ABSOLUTE);
+				unitNameErrorLabel.getElement().getStyle().setColor("orange");
+			}
 			}
 		});
 		editBtn.addClickHandler(new ClickHandler() {
