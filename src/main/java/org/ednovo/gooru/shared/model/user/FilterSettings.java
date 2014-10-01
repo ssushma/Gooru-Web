@@ -67,6 +67,8 @@ public class FilterSettings implements Serializable {
 	
 	private String analyticsEndPoint;
 	
+	private String analyticsEndPointOld;
+	
 	public FilterSettings(){}
 	
 	public String getApiKeyPoint() {
@@ -232,5 +234,12 @@ public class FilterSettings implements Serializable {
 	public void setAnalyticsEndPoint(String analyticsEndPoint) {
 		this.analyticsEndPoint = analyticsEndPoint;
 	}
-	
+
+	public String getAnalyticsEndPointOld() {
+		return analyticsEndPointOld;
+	}
+
+	public void setAnalyticsEndPointOld(String analyticsEndPointOld) {
+		this.analyticsEndPointOld = analyticsEndPointOld;
+	}
 }

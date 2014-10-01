@@ -68,7 +68,7 @@
 				<g:HTMLPanel styleName="{res.css.tabContainerDiv}">
 					<g:Button ui:field="assignmentsTab" styleName="{res.css.selected}"></g:Button>
 					<g:Button ui:field="classListTab" styleName=""></g:Button>
-					<g:Button ui:field="reportsTab" styleName=""></g:Button>
+					<g:Button ui:field="reportsTab" styleName="" text="Coming soon"></g:Button>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 				<g:FlowPanel styleName="{res.css.assignmentsContainerHead}" ui:field="classSetupContainer">
