@@ -22,43 +22,41 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.search.event;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
+
+import com.google.gwt.event.shared.GwtEvent;
 
 /**
  * @author Search Team
  * 
  */
-public interface CollectionsCBundle extends ClientBundle {
+public class DisplayNextSetAssignmentsEvent extends GwtEvent<DisplayNextSetAssignmentsHandler> {
 
-	static final CollectionsCBundle INSTANCE = GWT.create(CollectionsCBundle.class);
+	public static final Type<DisplayNextSetAssignmentsHandler> TYPE = new Type<DisplayNextSetAssignmentsHandler>();
 
-	public interface CollectionsCss extends CssResource {
-		String classpageTextarea();
-		String dateText();
-		String systemMessage();
-		String dueDataIcon();
-		String openStateCollectionHeader();
-		String completeStateCollectionHeader();
-		String completedStatus();
-		String minimumScoreTextbox();
-		String enableLabelText();
-		String disableLabelText();
-		String requiredBuble();
-		String optionalBuble();
-		String assignmentCompleted();
-		String assignmentCompletedWithOptional();
-		String needHelpReaction();
-		String notUnderstandReaction();
-		String mehReaction();
-		String understandReaction();
-		String canExplainReaction();
-		String reactionText();
+	int offSet;
+	String type;
+	/**
+	 * Class constructor
+	 */
+	public DisplayNextSetAssignmentsEvent(int offSet, String type) {
+		this.offSet = offSet;
+		this.type = type;
 	}
 
-	@Source("collectionsstyles.css")
-	CollectionsCss css();
+	@Override
+	public Type<DisplayNextSetAssignmentsHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(DisplayNextSetAssignmentsHandler handler) {
+		handler.displayNextSetFrom(offSet, type);
+	}
+
+
 }
