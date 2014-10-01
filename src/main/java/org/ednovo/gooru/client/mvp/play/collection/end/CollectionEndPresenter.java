@@ -159,12 +159,12 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		if(classpageId==null){
 			classpageId="";
 		}
-		getSessionsDataByUser(collectionDo.getGooruOid(),classpageId,collectionDo.getUser().getGooruUId());
+		getSessionsDataByUser(collectionDo.getGooruOid(),classpageId,AppClientFactory.getLoggedInUser().getGooruUId());
 	}
 	
 	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId){
 		clearSlot(COLLECTION_REPORTS_SLOT);
-		collectionSummaryIndividualPresenter.setIndividualData(collectionId, classpageId, userId, sessionId);
+		collectionSummaryIndividualPresenter.setIndividualData(collectionId, classpageId, userId, sessionId,"");
 		setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
 	}
 	public void setViewCount(String viewCount){

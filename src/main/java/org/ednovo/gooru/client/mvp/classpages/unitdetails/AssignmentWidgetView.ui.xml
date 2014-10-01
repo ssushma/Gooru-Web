@@ -1,0 +1,60 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="unitStyle" src="unitassignment.css" />
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
+
+	<g:HTMLPanel>
+		<div class="row">
+			<div class="col-xs-12">
+				<g:Label ui:field="unitTitleDetails" styleName="col-xs-2 {unitStyle.unitHeading}" />
+				<g:HTMLPanel styleName="row {unitStyle.classOptionsMain}">
+					<g:HTMLPanel
+						styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.assignOverOptions} text-center">
+						<g:InlineLabel styleName="{unitStyle.bubbleSmall}"></g:InlineLabel>
+						<g:InlineLabel text="{i18n.GL2209}"></g:InlineLabel>
+					</g:HTMLPanel>
+					<g:HTMLPanel
+						styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions1} text-center">
+						<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.stylishBub}"></g:InlineLabel>
+						<g:InlineLabel text="{i18n.GL2201}"></g:InlineLabel>
+					</g:HTMLPanel>
+
+					<g:HTMLPanel ui:field="personalizePanel">
+						<g:HTMLPanel
+							styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions1} text-center">
+							<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.greenBubble}"></g:InlineLabel>
+							<g:InlineLabel text="{i18n.GL2239}"></g:InlineLabel>
+						</g:HTMLPanel>
+						<g:HTMLPanel
+							styleName="col-xs-2 {unitStyle.smallWidthGoalNotMet} {unitStyle.classOverOptions1} text-center">
+							<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.redBubble}"></g:InlineLabel>
+							<g:InlineLabel text="{i18n.GL2240}"></g:InlineLabel>
+						</g:HTMLPanel>
+						<g:HTMLPanel
+							styleName="col-xs-2 {unitStyle.smallWidth} {unitStyle.classOverOptions} text-center">
+							<g:InlineLabel styleName="{unitStyle.bubbleSmallrounded}"></g:InlineLabel>
+							<g:InlineLabel text="{i18n.GL2212}"></g:InlineLabel>
+						</g:HTMLPanel>
+						<g:HTMLPanel
+							styleName="col-xs-2 {unitStyle.smallWidthFDS} {unitStyle.classOverOptionsFeedback} text-center">
+							<g:InlineLabel styleName="{unitStyle.bubbleBlueFeedBack}"></g:InlineLabel>
+							<g:InlineLabel text="{i18n.GL2238}"></g:InlineLabel>
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+
+				</g:HTMLPanel>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<!-- This widget Is used to display Circle -->
+		<g:HTMLPanel styleName="row {unitStyle.generalSet}">
+			<g:HTMLPanel>
+
+				<g:HTMLPanel styleName="{unitStyle.rowInner}" ui:field="circleContainerPanel">
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+		<!-- end circle Widget -->
+	</g:HTMLPanel>
+</ui:UiBinder> 

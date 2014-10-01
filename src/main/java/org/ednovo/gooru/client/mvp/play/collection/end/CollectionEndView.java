@@ -36,7 +36,6 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryView.StudentsSessionsChangeHandler;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
@@ -498,9 +497,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			public void onChange(ChangeEvent event) {
 					int selectedIndex=sessionsDropDown.getSelectedIndex();
 					String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-	                //final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
+					if(classpageId==null){
+						classpageId="";
+					}
 	                setSessionStartTime(selectedIndex);
-					getUiHandlers().setCollectionSummaryData(collectionDo.getGooruOid(), classpageId, collectionDo.getUser().getGooruUId(),sessionsDropDown.getValue(selectedIndex));
+					getUiHandlers().setCollectionSummaryData(collectionDo.getGooruOid(), classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),sessionsDropDown.getValue(selectedIndex));
 			}
 	 }
 	@UiHandler("collectionThumbnail")
@@ -512,7 +513,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	public void nextThumbnailErrorImage(ErrorEvent event){
 		nextCollectionThumbnail.setUrl("images/default-collection-image-160x120.png");
 	}
-	
 
 	public void setReplyLink(){
 		Anchor resourceAnchor=new Anchor();
@@ -697,6 +697,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			//frameContainer.clear();
 			frameContainer.setVisible(true);
 			messageContainer.setVisible(false);
+			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
 			/*frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
 					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),"",AppClientFactory.getLoginSessionToken())));*/
 		}
@@ -740,6 +741,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			frameContainer.setVisible(true);
 			messageContainer.setVisible(false);
 			sessionId=sessionId!=null?sessionId:"";
+			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
 			/*frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
 					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));*/
 		}

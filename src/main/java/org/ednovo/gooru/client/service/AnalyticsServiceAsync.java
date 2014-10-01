@@ -42,7 +42,7 @@ public interface AnalyticsServiceAsync extends BaseServiceAsync {
 	void getCollectionMetaDataByUserAndSession(String collectionId,String classId,String userId,String sessionId,AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>> callback);
 	void getCollectionResourceData(String collectionId,String classpageId,String pathwayId,AsyncCallback<ArrayList<UserDataDo>> callback);
 	void getSessionsDataByUser(String collectionId,String classId,String userId,AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>> callback);
-	void getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId,AsyncCallback<ArrayList<UserDataDo>> callback);
+	void getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId,String pathwayId,AsyncCallback<ArrayList<UserDataDo>> callback);
     void getBottomAndTopScoresData(String collectionId,String classId,String score,AsyncCallback<ArrayList<GradeJsonData>> callback);
     void setHTMLtoPDF(String htmlString,AsyncCallback<Void> callback);
     void getAnalyticsGradeData(String classpageId,String pathwayId,AsyncCallback<ArrayList<GradeJsonData>> AsyncCallback);

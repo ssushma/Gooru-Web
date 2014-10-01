@@ -48,6 +48,9 @@ public interface CollectionSummaryTeacherCBundle extends ClientBundle{
 	        String tickMarkImgCss();
 	        String tickMarkImg();
 	        
+	        String displayMessageTextForScoredQuestions();
+	        String displayMessageTextForOEQuestions();
+	        
 	}
 	@NotStrict
 	@Source("collectionSummaryTeacher.css")

@@ -22,11 +22,22 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.search.event;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.shared.model.user.UserDo;
 
-public interface CollectionSummaryIndividualUiHandlers extends BaseUiHandlers{
-	void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId);
-	void setHtmltopdf(String htmlString);
+import com.google.gwt.event.shared.EventHandler;
+
+/**
+ * @author Search Team
+ * 
+ */
+public interface SetPersonalizeButtonHandler extends EventHandler, BaseUiHandlers {
+
+	void setPersonalizeButtonEvent(boolean isSelected);
+
 }

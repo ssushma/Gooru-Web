@@ -51,7 +51,7 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 	}
 
 	@Override
-	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId) {
+	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId) {
 		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			
 			@Override
@@ -64,7 +64,7 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 			
 			}
 		});
-		this.analyticService.getUserSessionDataByUser(collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<UserDataDo>>() {
+		this.analyticService.getUserSessionDataByUser(collectionId, classpageId,userId, sessionId, pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<UserDataDo> result) {

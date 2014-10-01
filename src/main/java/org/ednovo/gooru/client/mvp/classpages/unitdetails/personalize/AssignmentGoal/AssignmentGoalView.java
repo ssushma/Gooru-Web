@@ -78,6 +78,9 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 	int pageSize = 20;
 	int pageNum = 0;
 	
+	int displayLimit = 10;
+	int displayStartFrom = 0;
+	
 	public interface AssignmentGoalUiBinder extends UiBinder<Widget, AssignmentGoalView> {}
 	
 	public AssignmentGoalView(CollaboratorsDo collaboratorsDo){
@@ -103,7 +106,7 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 	
 	public void setStaticTexts(){
 		lblStudentsList.setText(collaboratorsDo.getFirstName() + " " + collaboratorsDo.getLastName());
-		StringUtil.setAttributes(lblStudentsList.getElement(), collaboratorsDo.getGooruOid(), null, null);
+		StringUtil.setAttributes(lblStudentsList.getElement(), collaboratorsDo.getGooruUid(), null, null);
 		
 //		setAssignments();
 	}
@@ -112,7 +115,7 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 		
 		if (list !=null && list.size() > 0){
 			lblPleaseWait.setVisible(false);
-			for (int i=0; i<list.size(); i++){
+			for (int i=displayStartFrom; i<displayLimit; i++){
 				if (list.get(i) != null && list.get(i).getTitle() != null){
 					GoalViewVc goalsVc = new GoalViewVc(""+(i+1), list.get(i)) {
 					};
