@@ -139,12 +139,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	UnitAssignentStudentPlayView UnitAssignentStudentPlayView =null;
 	private int totalAssignmentHitcount;
 	//Label requiredText =new Label();
-	CollectionsView collectionView=null;
-	private boolean isNarrationUpdate=false;
-	Map<String,String> descriptionDetails=new HashMap<String,String>();
-	
+	private CollectionsView collectionView=null;
 	
 
+	private boolean isNarrationUpdate=false;
+	Map<String,String> descriptionDetails=new HashMap<String,String>();
 	int toalassignmentSize=0;
 	
 	@Inject
