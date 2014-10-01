@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.event.UpdateUnitSetGoalEvent;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
@@ -190,7 +191,8 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			@Override
 			public void onSuccess(ClassUnitsListDo result) {
 				// TODO Auto-generated method stub
-				System.out.println("mini::::::"+result.getMinimumScoreByUser());
+				String updatedTime=(result.getTimeStudying()!=null && !result.getTimeStudying().equals("")) ? result.getTimeStudying():null;
+				AppClientFactory.fireEvent(new UpdateUnitSetGoalEvent(0, 0,updatedTime));
 				
 			}
 		});
