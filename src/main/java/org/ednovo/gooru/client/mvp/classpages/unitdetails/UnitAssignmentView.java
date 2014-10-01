@@ -732,6 +732,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			@Override
 			public void onSuccess(UnitAssignmentsDo result) {
 				classUnitsDo.getResource().setCollectionItems(result.getSearchResults());
+				classUnitsDo.getResource().setItemCount(result.getTotalHitCount());
 				if(isAssignmentEditmode){
 					//setAssignmentsEditView();
 				}else{
@@ -839,8 +840,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 						}
 					}
 				}
-				
-				
 			}
 			
 			rightArrow.setUrl("images/rightSmallarrow.png");
