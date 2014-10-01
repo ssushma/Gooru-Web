@@ -286,17 +286,14 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 		String aid = AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 		requiredText.setText(i18n.GL2222());
 		circleContainerPanel.clear();
-		getUiHandlers().clearAssignmentWidgetConatiner();
+	//	getUiHandlers().clearAssignmentWidgetConatiner();
 		circleContainerPanel.add(requiredText);
 		if(unitAssignmentsDo!=null){
 			leftArrow.setUrl("images/leftSmallarrow.png");
 			leftArrow.getElement().setAttribute("style","margin-left: 10px");
 			circleContainerPanel.add(leftArrow);
-
 			for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
-				
 				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
-				
 				//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid()+"");
 				unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());
 				circleContainerPanel.add(unitCricleViewObj);
@@ -360,9 +357,8 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 			
 			rightArrow.setUrl("images/rightSmallarrow.png");
 			circleContainerPanel.add(rightArrow);
-		
 		}			
-			
+
 	}
 	/**
 	 * This class is used to display tooltip on assignment for student
