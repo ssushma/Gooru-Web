@@ -260,6 +260,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			resetCircleAndAssignmentContainer(unitTitle);
 			setClassUnitsListDo(unitsWidget.getClassUnitDo());
 			revealPlace("unitdetails",null,unitsWidget.getUnitGooruOid(),null);
+			assignmentOffset=0;
 			scoreHederView(unitsWidget.getClassUnitDo());
 			removeAndAddUnitSelectedStyle();
 		}
@@ -719,6 +720,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		if(classPageId==null){
 			classPageId= AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 		}
+		unitId = AppClientFactory.getPlaceManager().getRequestParameter("uid",null);
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classPageId, unitId, "sequence", assignmentLimit, assignmentOffset, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 
 			@Override
@@ -757,10 +759,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			leftArrow.setUrl("images/leftSmallarrow.png");
 			leftArrow.getElement().setAttribute("style","margin-left: 10px");
 			circleContainerPanel.add(leftArrow);
-
+			if(unitAssignmentsDo.getSearchResults().size()>0&&aid==null){
+				aid=unitAssignmentsDo.getSearchResults().get(0).getCollectionItemId();
+			}
 			for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
-				
 				//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid()+"");
 				unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());
 				circleContainerPanel.add(unitCricleViewObj);
@@ -1038,7 +1041,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 	
 	public void setAssignmentToNewPosition(int selectedAssignmentpageNumber,String selectedPathId,int totalHintCount,String selectedAssignmentId,UnitCricleView UnitCricleObj,int mouseOverAssignmentSeqPos){
-				
+		unitId = AppClientFactory.getPlaceManager().getRequestParameter("uid",null);
 		if(selectedPathId.equalsIgnoreCase(unitId)){
 			assignmentOffset =(selectedAssignmentpageNumber/assignmentLimit)*assignmentLimit;
 			if(assignmentOffset==selectedAssignmentpageNumber){
