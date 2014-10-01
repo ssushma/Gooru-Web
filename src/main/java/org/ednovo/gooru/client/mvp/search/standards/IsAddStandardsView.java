@@ -66,5 +66,10 @@ public interface IsAddStandardsView extends PopupView, IsViewWithHandlers<AddSta
 	
 	String setStandardsDesc();
 
+	void setEnableStandardButtons(boolean isCCSSAvailable,
+			boolean isNGSSAvailable, boolean isTEKSAvailable,
+			boolean isCAAvailable);
+
+	void setStandardsStyles(String standardVal);
 	
 }
