@@ -83,7 +83,7 @@
 						<g:HTMLPanel styleName="col-xs-4 ">
 							<g:HTMLPanel styleName="{style.boxbg}">
 									<g:Label styleName="{style.analyticstext}" text="{i18n.GL2230}"></g:Label>
-									<g:Label styleName="{style.analyticsData}" ui:field="averageTimeLabel"></g:Label>
+									<g:FlowPanel styleName="{style.analyticsData}" ui:field="averageTimeLabel"></g:FlowPanel>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="col-xs-4">

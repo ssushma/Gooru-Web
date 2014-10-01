@@ -146,7 +146,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	UnitAssignentStudentPlayView UnitAssignentStudentPlayView =null;
 	private int totalAssignmentHitcount;
 	Label requiredText =new Label();
-	CollectionsView collectionView=null;
+	private CollectionsView collectionView=null;
 	private boolean isNarrationUpdate=false;
 	Map<String,String> descriptionDetails=new HashMap<String,String>();
 	
@@ -1204,6 +1204,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	@Override
 	public void setCollectionSummaryData(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo) {
+		if(collectionView!=null){
+			collectionView.setCollectionSummaryData(collectionSummaryMetaDataDo);
+		}
 		
 	}
 	

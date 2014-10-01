@@ -42,6 +42,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -50,6 +52,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 @Service("analyticsService")
 @ServiceURL("/analyticsService")
 public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsServiceImpl.class);
 
 	/**
 	 * 
@@ -306,6 +310,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 				JSONArray jsonArray=jsonRep.getJsonObject().getJSONArray("content");
 				if(jsonArray!=null&&jsonArray.length()>0){
 					collectionSummaryMetaDataDo=JsonDeserializer.deserialize(jsonArray.getJSONObject(0).toString(),new TypeReference<CollectionSummaryMetaDataDo>(){});
+					LOGGER.info("JSON_RESPONSE==>"+jsonArray.getJSONObject(0).toString());
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();

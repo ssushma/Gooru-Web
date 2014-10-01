@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.catalina.logger.SystemOutLogger;
 import org.ednovo.gooru.client.DataInsightsUrlTokens;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -43,7 +44,7 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -117,7 +118,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField Image collectionImage;
 	
-	@UiField Label assignmentSequenceLabel,dueDateText,dueDateButton,savingLabel,scoreErrorLabel,minutesErrorLabel,avarageReactionLabel,viewsLabel,averageTimeLabel;
+	@UiField Label assignmentSequenceLabel,dueDateText,dueDateButton,savingLabel,scoreErrorLabel,minutesErrorLabel,avarageReactionLabel,viewsLabel;
 	
 	@UiField FlowPanel frameContainer,analyticsContainer,standardsContainer;
 	
@@ -133,7 +134,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField CheckBox assignmentMarkCheckBox;
 	
-	@UiField FlowPanel clearFixPanel;
+	@UiField FlowPanel clearFixPanel,averageTimeLabel;
 	
 	private Label directionErrorLabel=new Label();
 	
@@ -147,6 +148,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	private TextBox suggestedMinTextBox;
 	
 	private boolean directionChanged; 
+	
 	EditToolBarView editToolBarView;
 
 	public ClasspageItemDo classpageItemDo=null;
@@ -244,7 +246,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	private void setMinimumScore(String score){
 		minimumScoreContentPanel.clear();
-		if(score!=null){
+		if(score!=null&&!score.equals("")){
 			HTML scorePanel=new HTML(score+"%");
 			scorePanel.setStyleName("");
 			minimumScoreContentPanel.add(scorePanel);
@@ -529,8 +531,8 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			minutesErrorLabel.setText("");
 			scoreErrorLabel.setText("");
 			directionErrorLabel.setText("");
-			minimumScore=minScore!=null?minScore.toString():null;
-			String suggestedTime=null;
+			minimumScore=minScore!=null?minScore.toString():"";
+			String suggestedTime="";
 			if(hour==null&&minutes!=null){
 				suggestedTime="0"+i18n.GL2184()+" "+minutes+i18n.GL2185();
 			}else if(hour!=null&&minutes==null){
@@ -916,8 +918,89 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 	}
 	
-	public void setCollectionSummaryData(){
+	public void setCollectionSummaryData(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo){
+		displayAverageTime(collectionSummaryMetaDataDo.getAvgTimeSpent());
+		displayViewCount(collectionSummaryMetaDataDo.getViews());
+		displayAverageReaction(collectionSummaryMetaDataDo.getAvgReaction());
 		//avarageReactionLabel,viewsLabel,averageTimeLabel
 	}
+
+	public void displayAverageTime(Long milliSeconds){
+		averageTimeLabel.clear();
+		if(milliSeconds!=null){
+			Long totalSecs = milliSeconds/1000;
+		    Long hours = (totalSecs / 3600);
+		    Long mins = (totalSecs / 60) % 60;
+		    Long secs = totalSecs % 60;
+		    String minsString = (mins == 0)? "00": ((mins < 10)? "0"+mins : ""+mins );
+		    String secsString = (secs == 0)? "00": ((secs < 10)? "0" + secs : "" + secs);
+	        if (hours > 0){
+	        	displayTime(hours.toString(),hours==1?"hr":"hrs");
+	        	displayTime(" "+minsString.toString(),minsString.equals("01")?"min":"mins");
+	        	displayTime(" "+secsString.toString(),secsString.equals("01")?"sec":"secs");
+	        }
+	        else if (mins > 0){
+	        	displayTime(minsString.toString(),minsString.equals("01")?"min":"mins");
+	        	displayTime(" "+secsString.toString(),secsString.equals("01")?"sec":"sec");
+	        }
+	        else {
+	        	displayTime(secsString.toString(),secsString.equals("01")?"sec":"sec");
+	        }
+		}else{
+			dispalyTime();
+		}
+	}
+	
+	
+	public void displayTime(String time, String timeText){
+		InlineLabel inlineTimeLabel=new InlineLabel(time);
+		//inlineTimeLabel.setStyleName(playerStyle.timeTextBig());
+		InlineLabel inlineTimeString=new InlineLabel(timeText);
+		//inlineTimeString.setStyleName(playerStyle.timeTextSmall());
+		averageTimeLabel.add(inlineTimeLabel);
+		averageTimeLabel.add(inlineTimeString);
+	}
+	public void dispalyTime(){
+		averageTimeLabel.clear();
+		InlineLabel inlineTimeLabel=new InlineLabel("-");
+		//inlineTimeLabel.setStyleName(playerStyle.timeTextBig());
+		averageTimeLabel.add(inlineTimeLabel);
+	}
+	
+	public void displayViewCount(int viewCount){
+		if(viewCount>0){
+			viewsLabel.setText(""+viewCount);
+		}else{
+			viewsLabel.setText("-");
+		}
+	}
+	
+	public void displayAverageReaction(int averageReaction){
+		if(averageReaction>0){
+			displayAvgReactionImage(averageReaction);
+		}else{
+			avarageReactionLabel.setText("-");
+		}
+	}
+	
+	public void displayAvgReactionImage(int averageReaction){
+	
+		switch(averageReaction){
+			case 1: avarageReactionLabel.setStyleName(CollectionsCBundle.INSTANCE.css().needHelpReaction());
+					break;
+			case 2: avarageReactionLabel.setStyleName(CollectionsCBundle.INSTANCE.css().notUnderstandReaction());
+					break;
+			case 3: avarageReactionLabel.setStyleName(CollectionsCBundle.INSTANCE.css().mehReaction());
+					break;
+			case 4: avarageReactionLabel.setStyleName(CollectionsCBundle.INSTANCE.css().understandReaction());
+					break;
+			case 5: avarageReactionLabel.setStyleName(CollectionsCBundle.INSTANCE.css().canExplainReaction());
+					break;
+				
+		}
+	}
+	
+	
+	
 	
 }
