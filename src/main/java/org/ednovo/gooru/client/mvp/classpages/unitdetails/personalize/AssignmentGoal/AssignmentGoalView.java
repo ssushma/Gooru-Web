@@ -28,6 +28,8 @@ import java.util.List;
 
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.event.DisplayNextSetAssignmentsEvent;
+import org.ednovo.gooru.client.mvp.search.event.DisplayNextSetAssignmentsHandler;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
@@ -71,6 +73,9 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 	
 	String unitId = null;
 	
+	List<InsightsUserDataDo> list = null;
+	
+	
 	@UiField Label lblStudentsList, lblPleaseWait;
 	
 	@UiField HTMLPanel panelAssignmentList;
@@ -102,6 +107,9 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 		
 		
 		getPresenter().getAnalyticData(collaboratorsDo.getGooruUid(), classpageId, pageSize, pageNum, unitId);
+		
+		AppClientFactory.getEventBus().addHandler(DisplayNextSetAssignmentsEvent.TYPE,
+				handler);
 	}
 	
 	public void setStaticTexts(){
@@ -112,7 +120,7 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 	}
 	@Override
 	public void setAssignments(List<InsightsUserDataDo> list){
-		
+		this.list = list;
 		if (list !=null && list.size() > 0){
 			lblPleaseWait.setVisible(false);
 			for (int i=displayStartFrom; i<displayLimit; i++){
@@ -126,5 +134,27 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 			//show messaging...
 			lblPleaseWait.setText(i18n.GL2206());
 		}
-	}	
+	}
+	
+	public void displayNextSet(int displayStartFrom, String type){
+		if (type.equalsIgnoreCase("next")){
+			displayLimit = this.displayStartFrom + displayLimit;
+		}else{
+			displayLimit = this.displayStartFrom - displayLimit;
+		}
+		this.displayStartFrom = displayStartFrom;
+		System.out.println("displayStartFrom : "+displayStartFrom);
+		System.out.println("this.displayStartFrom : "+this.displayStartFrom);
+		System.out.println("this.displayLimit : "+this.displayLimit);
+		setAssignments(this.list);
+	}
+	
+	DisplayNextSetAssignmentsHandler handler = new DisplayNextSetAssignmentsHandler() {
+		
+		@Override
+		public void displayNextSetFrom(int offSet, String type) {
+			displayNextSet(offSet, type);
+		}
+	};
+	
 }
