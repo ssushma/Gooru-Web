@@ -46,34 +46,32 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	public static final  Object _SLOT = new Object();
 	
 	private PersonalizeUnitPresenter studentPersonalizePresenter = null;
-	private AssignmentWidgetPresenter assignmentWidgetPresenter = null;
 	
 	private int limit = 5;
 	private int offSet = 0;
 	private int assignmentOffset=0;
 	private int assignmentLimit=10;
 	private static final String IMAGE_URL="images/core/B-Dot.gif";
-	private ClassDo classDoObj;
+	
 	@Inject
-	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter,AssignmentWidgetPresenter assignmentWidgetPresenter) {
+	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.studentPersonalizePresenter = studentPersonalizePresenter;
-		this.assignmentWidgetPresenter = assignmentWidgetPresenter;
 	}
 	@Override
 	protected void onHide() {
+		System.out.println("onhide method...........");
 		getView().resetUnitAssignmentView();
 	}
 	
 	public void getClassUnits(String classId){
-	
 		if(getView().getUnitPanel().getWidgetCount()==0){
 			getPathwayUnits(classId,limit,offSet,true);
 		}
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 		String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
-		if(unitId!=null){
+		if(unitId!=null&&getView().getCircleContainerPanel().getWidgetCount()==0){
 			getPathwayItems(classId,unitId,"sequence",assignmentLimit,assignmentOffset);
 		}
 		if(assignmentId!=null){
@@ -99,14 +97,13 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 					if(result!=null){
 						if(result.getSearchResults() != null){
 							if(result.getSearchResults().size()>0){
-								
 								getAssignemntDetails(result.getSearchResults().get(0).getCollectionItemId(),classpageId,pathwayGooruOid);
 							}
 						}
 					}
 				}
-				
-				setUnitAssignmentWidget(result,classDoObj);
+				getView().getSequence(result);
+
 			}
 		});
 	}
@@ -115,10 +112,10 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		if(clearPanel){
 			getView().getUnitPanel().clear();
 		}
+		System.out.println("getPathwayUnits");
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
 			@Override
 			public void onSuccess(ClassDo classDo) {
-				classDoObj = classDo;
 				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 					getView().showUnitNames(classDo,clearPanel);
 					String seqNumber=AppClientFactory.getPlaceManager().getRequestParameter("seqnumber", "1");
@@ -126,7 +123,6 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 						int number=Integer.parseInt(seqNumber);
 						number=number-1;
 						getView().scoreHederView(classDo.getSearchResults().get(number));
-						
 					}
 				}
 				
@@ -134,7 +130,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		});
 	}
 	
-	public void getAssignemntDetails(final String assignmentId,final String classpageId, final String pathwayGooruOid){
+	public void getAssignemntDetails(final String assignmentId,final String classpageId,final String pathwayGooruOid){
 		Image image=new Image();
 		image.setUrl(IMAGE_URL);
 		image.setWidth("200px");
@@ -179,16 +175,6 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	public void showAssignmentDetails() {
 		getView().showAssignments();
 	}
-	@Override
-	public void setUnitAssignmentWidget(UnitAssignmentsDo unitAssignmentsDo,ClassDo classDo) {
-		assignmentWidgetPresenter.getUnitAssignmentData(unitAssignmentsDo,classDo);
-		assignmentWidgetPresenter.setAssignmentContainer(getView().getAssignmentContainer());
-		assignmentWidgetPresenter.setGetDirection(getView().getDirection());
-		assignmentWidgetPresenter.setAssignmentWidgetConatiner(getView().getAssignmentWidgetPanel());
-		getView().getAssignmentWidgetPanel().clear();
-		getView().getAssignmentWidgetPanel().add(assignmentWidgetPresenter.getWidget());
-		
-	}
 	
 	/**
 	 * This API used for to Update the Unit status.
@@ -210,9 +196,5 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		});
 	}
 	
-	@Override
-	public void updateAssignmentStatus(Boolean isRequired,String collectionItemId,String readStatus,boolean isUpdateRequiredStatus){
-		assignmentWidgetPresenter.updateAssignmentDetailsStatus(isRequired, collectionItemId, readStatus, isUpdateRequiredStatus);
-	}
 
 }
