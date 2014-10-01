@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummary;
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualPresenter;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherPresenter;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
@@ -64,9 +65,8 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	}
 
 	@Override
-	public void setCollectionSummaryData(final String collectionId) {
-		//String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-		final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
+	public void setCollectionSummaryData(final String collectionId,final String pathwayId) {
+		final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		this.analyticService.getCollectionSummaryUsersData(classpageId,new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
 			
 			@Override
@@ -82,9 +82,9 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-				getView().setCollectionMetaData(result);
+				getView().setCollectionMetaData(result,pathwayId);
 				collectionMetadata=result;
-				setTeacherData(collectionId,classpageId);
+				setTeacherData(collectionId,classpageId,pathwayId);
 			}
 			
 			@Override
@@ -94,14 +94,14 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	}
 
 	@Override
-	public void loadUserSessions(final String collectionId,final String classId,final String userId) {
+	public void loadUserSessions(final String collectionId,final String classId,final String userId,final String pathwayId) {
 		this.analyticService.getSessionsDataByUser(collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
 				getView().setUserSessionsData(result);
 				if(result.size()!=0)
-				setIndividualData(collectionId,classId,userId,result.get(0).getSessionId());
+				setIndividualData(collectionId,classId,userId,result.get(0).getSessionId(), pathwayId);
 			}
 			
 			@Override
@@ -111,16 +111,16 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	}
 
 	@Override
-	public void setTeacherData(String collectionId,String classpageId) {
+	public void setTeacherData(String collectionId,String classpageId,String pathwayId) {
 		clearSlot(TEACHER_STUDENT_SLOT);
-		collectionSummaryTeacherPresenter.setTeacherData(collectionId,classpageId,collectionMetadata);
+		collectionSummaryTeacherPresenter.setTeacherData(collectionId,classpageId,pathwayId,collectionMetadata);
 		setInSlot(TEACHER_STUDENT_SLOT, collectionSummaryTeacherPresenter,false);		
 	}
 
 	@Override
-	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId) {
+	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId) {
 		clearSlot(TEACHER_STUDENT_SLOT);
-		collectionSummaryIndividualPresenter.setIndividualData(collectionId,classpageId,userId,sessionId);
+		collectionSummaryIndividualPresenter.setIndividualData(collectionId,classpageId,userId,sessionId,pathwayId);
 		setInSlot(TEACHER_STUDENT_SLOT, collectionSummaryIndividualPresenter,false);	
 	}
 	

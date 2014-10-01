@@ -25,6 +25,8 @@ public class UserDataDo implements Serializable{
 	private String type;
 	private long timeSpent;
 	private int totalInCorrectCount;
+	private int totalCorrectCount;
+	private int skip;
 	private long avgTimeSpent;
 	private int views;
 	private int attempts;
@@ -35,6 +37,7 @@ public class UserDataDo implements Serializable{
 	private String answerObject;
 	private String options;
 	private ArrayList<MetaDataDo> metaData;
+	private String gradeInPercentage;
 	
 	//This are add for getting the resource data in the teacher summary
 	private String category;
@@ -178,5 +181,22 @@ public class UserDataDo implements Serializable{
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+	public int getTotalCorrectCount() {
+		return totalCorrectCount;
+	}
+	public void setTotalCorrectCount(int totalCorrectCount) {
+		this.totalCorrectCount = totalCorrectCount;
+	}
+	public int getSkip() {
+		return skip;
+	}
+	public void setSkip(int skip) {
+		this.skip = skip;
+	}
+	public String getGradeInPercentage() {
+		return gradeInPercentage;
+	}
+	public void setGradeInPercentage(String gradeInPercentage) {
+		this.gradeInPercentage = gradeInPercentage;
+	}
 }

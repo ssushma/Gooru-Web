@@ -193,7 +193,10 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	        	  data.setValue(i, 0,defaultUserDataForUsers.getUserData().get(i).getUserName());
 	        	  VerticalPanel scoreWidget=new VerticalPanel();
 	        	  Label noOfQuestionAttened=new Label(score+"/"+noOfQuestions);
-	        	  int percent=((score*100)/noOfQuestions);
+	        	  int percent=0;
+	        	  if(noOfQuestions!=0){
+	        		  percent=((score*100)/noOfQuestions);
+	        	  }
 	        	  Label percentage=new Label("("+percent+"%)");
 	        	  scoreWidget.add(noOfQuestionAttened);
 	        	  scoreWidget.add(percentage);

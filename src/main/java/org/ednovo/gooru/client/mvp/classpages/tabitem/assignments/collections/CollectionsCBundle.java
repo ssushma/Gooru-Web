@@ -51,6 +51,11 @@ public interface CollectionsCBundle extends ClientBundle {
 		String optionalBuble();
 		String assignmentCompleted();
 		String assignmentCompletedWithOptional();
+		String needHelpReaction();
+		String notUnderstandReaction();
+		String mehReaction();
+		String understandReaction();
+		String canExplainReaction();
 	}
 
 	@Source("collectionsstyles.css")

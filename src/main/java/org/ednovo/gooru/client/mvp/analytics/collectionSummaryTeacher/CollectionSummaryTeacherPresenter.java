@@ -51,8 +51,8 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 	}
 
 	@Override
-	public void setTeacherData(String collectionId,String classpageId,final ArrayList<CollectionSummaryMetaDataDo> result) {
-		this.analyticService.getCollectionResourceData(collectionId,classpageId,new AsyncCallback<ArrayList<UserDataDo>>() {
+	public void setTeacherData(String collectionId,String classpageId,String pathwayId,final ArrayList<CollectionSummaryMetaDataDo> result) {
+		this.analyticService.getCollectionResourceData(collectionId,classpageId,pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<UserDataDo> userData) {

@@ -298,6 +298,12 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        options.setAllowHtml(true);
 	        final Table table = new Table(data, options);
 	        individualOpenendedData.add(table);
+	        if(result.size()==0){
+	        	Label erroeMsg=new Label();
+	        	erroeMsg.setStyleName(res.css().displayMessageTextForOEQuestions());
+	        	erroeMsg.setText("It looks like there is no open-ended question data for this collection yet.");
+	        	individualOpenendedData.add(erroeMsg);
+	        }
 	        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 	}
 	/**
@@ -322,138 +328,147 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        data.addColumn(ColumnType.STRING, "Reactions");
 	       
 	        data.addRows(result.size());
-	      
-	        for(int i=0;i<result.size();i++) {
-	            data.setCell(i, 0, i+1, null, getPropertiesCell());
-	           
-	            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
-	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
-	            data.setValue(i, 1, questionTitle.toString());
-	            int noOfAttempts=result.get(i).getAttempts();
-	           
-	            //Set Answer choices
-	            String questionType= result.get(i).getType();
-	            String correctAnser = null;
-	        	if(questionType.equalsIgnoreCase("MC") ||questionType.equalsIgnoreCase("TF")){ 
-	        		Label anserlbl=new Label();
-	        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-	        			 JSONValue value = JSONParser.parseStrict(result.get(i).getOptions());
-	        			 JSONObject authorObject = value.isObject();
-	        			 if(authorObject.keySet().size()!=0){
-	        				 String userSelectedOption=authorObject.keySet().iterator().next();
-		        			 correctAnser=getCorrectAnswer(result.get(i).getMetaData());
-		        			 if(userSelectedOption!=null && correctAnser!=null){
-		        				 anserlbl.setText(userSelectedOption);
-		        				 if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts==1){
-		        					 anserlbl.getElement().getStyle().setColor(CORRECT);
-		        				 }else if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts>1){
-		        					 anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-		        				 }else{
-		        					 anserlbl.getElement().getStyle().setColor(INCORRECT);
-		        				 }
-		        			 }
-	        			 }
-	        		}
-	        		anserlbl.setStyleName(res.css().alignCenterAndBackground());
-	        		data.setValue(i, 2, anserlbl.toString());
-	        	}else if (questionType.equalsIgnoreCase("FIB")){
-	        		VerticalPanel answerspnl=new VerticalPanel();
-	        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
-	        			String answerTextFormat = "";
-	        			String[] answersArry = null;
-	        			ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
-						for (MetaDataDo metaDataDo : questionList) {
-							String answerText = "";
-							if((metaDataDo.getAnswer_text() != null)) {
-								answerText = metaDataDo.getAnswer_text();
-							}
-							answerTextFormat += '[' + answerText +']';
-							if(questionList.size()  != metaDataDo.getSequence()){
-								  answerTextFormat += ",";
-							}
-						}
-						String[] userFibOption = null;
-						if(result.get(i).getText() != null) {
-							answersArry=answerTextFormat.split(",");
-							userFibOption =result.get(i).getText().split(",");
-						}
-						if(answersArry!=null){
-							for (int k = 0; k < answersArry.length; k++) { 
-								Label answerChoice=new Label();
-								if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
-									answerChoice.setText(userFibOption[k]);
-									answerChoice.getElement().getStyle().setColor(CORRECT);
-								}else if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts > 1)) {
-									answerChoice.setText(userFibOption[k]);
-									answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-								}else{
-									answerChoice.setText(userFibOption[k]);
-									answerChoice.getElement().getStyle().setColor(INCORRECT);
-								}
-								answerChoice.setStyleName(res.css().alignCenterAndBackground());
-								answerspnl.add(answerChoice);
-							}
-						}
-	        		}
-	        		 answerspnl.setStyleName(res.css().setMarginAuto());
-	        		 data.setValue(i, 2, answerspnl.toString());
-	        	}else  if(questionType.equalsIgnoreCase("MA")){
-	        		VerticalPanel answerspnl=new VerticalPanel();
-	        		if(result.get(i).getAnswerObject()!=null) {
-	        			 JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
-	        			 JSONObject answerObject = value.isObject();
-	        			 Set<String> keys=answerObject.keySet();
-	        			 Iterator<String> itr = keys.iterator();
-	        		      while(itr.hasNext()) {
-	        		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
-	        		         for(int j=0;j<attemptsObj.size();j++){
-	        		        	Label answerChoice=new Label();
-	        		            String showMessage = null;
-	        		            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
-	        		        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
-	        		        	String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
-	 	        		         if(skip == false)
-	 							  {
-	 	        		        	if(matext.equalsIgnoreCase("0")) {
-										  showMessage = "No";
-									} else if(matext.equalsIgnoreCase("1")) {
-										   showMessage = "Yes";
+	      if(result.size()!=0){
+				        for(int i=0;i<result.size();i++) {
+				            data.setCell(i, 0, i+1, null, getPropertiesCell());
+				           
+				            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
+				            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+				            data.setValue(i, 1, questionTitle.toString());
+				            int noOfAttempts=result.get(i).getAttempts();
+				           
+				            //Set Answer choices
+				            String questionType= result.get(i).getType();
+				            String correctAnser = null;
+				        	if(questionType.equalsIgnoreCase("MC") ||questionType.equalsIgnoreCase("TF")){ 
+				        		Label anserlbl=new Label();
+				        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
+				        			 JSONValue value = JSONParser.parseStrict(result.get(i).getOptions());
+				        			 JSONObject authorObject = value.isObject();
+				        			 if(authorObject.keySet().size()!=0){
+				        				 String userSelectedOption=authorObject.keySet().iterator().next();
+					        			 correctAnser=getCorrectAnswer(result.get(i).getMetaData());
+					        			 if(userSelectedOption!=null && correctAnser!=null){
+					        				 anserlbl.setText(userSelectedOption);
+					        				 if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts==1){
+					        					 anserlbl.getElement().getStyle().setColor(CORRECT);
+					        				 }else if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts>1){
+					        					 anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+					        				 }else{
+					        					 anserlbl.getElement().getStyle().setColor(INCORRECT);
+					        				 }
+					        			 }
+				        			 }
+				        		}
+				        		anserlbl.setStyleName(res.css().alignCenterAndBackground());
+				        		data.setValue(i, 2, anserlbl.toString());
+				        	}else if (questionType.equalsIgnoreCase("FIB")){
+				        		VerticalPanel answerspnl=new VerticalPanel();
+				        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
+				        			String answerTextFormat = "";
+				        			String[] answersArry = null;
+				        			ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
+									for (MetaDataDo metaDataDo : questionList) {
+										String answerText = "";
+										if((metaDataDo.getAnswer_text() != null)) {
+											answerText = metaDataDo.getAnswer_text();
+										}
+										answerTextFormat += '[' + answerText +']';
+										if(questionList.size()  != metaDataDo.getSequence()){
+											  answerTextFormat += ",";
+										}
 									}
-									answerChoice.setText(showMessage);
-	 									if(status.equalsIgnoreCase("0")) {
-	 										answerChoice.getElement().getStyle().setColor(INCORRECT);
-	 									} else if(status.equalsIgnoreCase("1") && (noOfAttempts == 1)) {
-	 										answerChoice.getElement().getStyle().setColor(CORRECT);
-	 									} else if(status.equalsIgnoreCase("1") && (noOfAttempts > 1)) {
-	 										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
-	 									}
-	 							  }
-	 	        		        answerChoice.setStyleName(res.css().alignCenterAndBackground());
-	 	        		        answerspnl.add(answerChoice);
-	        		         }
-	        		      }
-	        		}
-	        		 answerspnl.setStyleName(res.css().setMarginAuto());
-	        		 data.setValue(i, 2, answerspnl.toString());
-	        	}
-	           
-	            //Set attempts
-	            Label attempts=new Label(Integer.toString(noOfAttempts));
-	            attempts.setStyleName(res.css().alignCenterAndBackground());
-	            data.setValue(i, 3, attempts.toString());
-	            
-	            //Set time spent
-	            data.setValue(i, 4, getTimeStampLabel(result.get(i).getTimeSpent()).toString());
-	            
-	            //Set reactions
-	            int reaction=result.get(i).getReaction();
-	            data.setValue(i, 5, new AnalyticsReactionWidget(reaction).toString());
-	        }
+									String[] userFibOption = null;
+									if(result.get(i).getText() != null) {
+										answersArry=answerTextFormat.split(",");
+										userFibOption =result.get(i).getText().split(",");
+									}
+									if(answersArry!=null && userFibOption!=null){
+										for (int k = 0; k < answersArry.length; k++) { 
+											Label answerChoice=new Label();
+											if(answersArry[k]!=null && k<userFibOption.length){
+												if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
+													answerChoice.setText(userFibOption[k]);
+													answerChoice.getElement().getStyle().setColor(CORRECT);
+												}else if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts > 1)) {
+													answerChoice.setText(userFibOption[k]);
+													answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+												}else{
+													answerChoice.setText(userFibOption[k]);
+													answerChoice.getElement().getStyle().setColor(INCORRECT);
+												}
+												answerChoice.setStyleName(res.css().alignCenterAndBackground());
+												answerspnl.add(answerChoice);
+											}
+										}
+									}
+				        		}
+				        		 answerspnl.setStyleName(res.css().setMarginAuto());
+				        		 data.setValue(i, 2, answerspnl.toString());
+				        	}else  if(questionType.equalsIgnoreCase("MA")){
+				        		VerticalPanel answerspnl=new VerticalPanel();
+				        		if(result.get(i).getAnswerObject()!=null) {
+				        			 JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
+				        			 JSONObject answerObject = value.isObject();
+				        			 Set<String> keys=answerObject.keySet();
+				        			 Iterator<String> itr = keys.iterator();
+				        		      while(itr.hasNext()) {
+				        		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
+				        		         for(int j=0;j<attemptsObj.size();j++){
+				        		        	Label answerChoice=new Label();
+				        		            String showMessage = null;
+				        		            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
+				        		        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
+				        		        	String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+				 	        		         if(skip == false)
+				 							  {
+				 	        		        	if(matext.equalsIgnoreCase("0")) {
+													  showMessage = "No";
+												} else if(matext.equalsIgnoreCase("1")) {
+													   showMessage = "Yes";
+												}
+												answerChoice.setText(showMessage);
+				 									if(status.equalsIgnoreCase("0")) {
+				 										answerChoice.getElement().getStyle().setColor(INCORRECT);
+				 									} else if(status.equalsIgnoreCase("1") && (noOfAttempts == 1)) {
+				 										answerChoice.getElement().getStyle().setColor(CORRECT);
+				 									} else if(status.equalsIgnoreCase("1") && (noOfAttempts > 1)) {
+				 										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+				 									}
+				 							  }
+				 	        		        answerChoice.setStyleName(res.css().alignCenterAndBackground());
+				 	        		        answerspnl.add(answerChoice);
+				        		         }
+				        		      }
+				        		}
+				        		 answerspnl.setStyleName(res.css().setMarginAuto());
+				        		 data.setValue(i, 2, answerspnl.toString());
+				        	}
+				           
+				            //Set attempts
+				            Label attempts=new Label(Integer.toString(noOfAttempts));
+				            attempts.setStyleName(res.css().alignCenterAndBackground());
+				            data.setValue(i, 3, attempts.toString());
+				            
+				            //Set time spent
+				            data.setValue(i, 4, getTimeStampLabel(result.get(i).getTimeSpent()).toString());
+				            
+				            //Set reactions
+				            int reaction=result.get(i).getReaction();
+				            data.setValue(i, 5, new AnalyticsReactionWidget(reaction).toString());
+				        }
+				}
 	        Options options = Options.create();
 	        options.setAllowHtml(true);
 	        Table table = new Table(data, options);
 	        table.getElement().setId("individulaDataScored");
 	        individualScoredData.add(table);
+	        if(result.size()==0){
+	        	Label erroeMsg=new Label();
+	        	erroeMsg.setStyleName(res.css().displayMessageTextForScoredQuestions());
+	        	erroeMsg.setText("It looks like there is no scored question data for this collection yet.");
+	        	individualScoredData.add(erroeMsg);
+	        }
 	}
 	String getCorrectAnswer(ArrayList<MetaDataDo> metaDataObj){
 		for (MetaDataDo metaDataDo : metaDataObj) {

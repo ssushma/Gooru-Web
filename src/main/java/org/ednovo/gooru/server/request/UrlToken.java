@@ -626,7 +626,7 @@ public enum UrlToken {
 	V2_UPDATE_UNIT_STATUS("/v2/class/item/{0}?sessionToken={1}"),
 	
 //	GET_INSIGHTS_DATA("insights-api-dev/v1/classpage/{0}/grade.json?sessionToken={1}&data={%22fields%22:%22timeSpent,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,gooruOId,title%22,%22filters%22:{%22session%22:%22FS%22,%22userUId%22:%22{2}%22},%22collectionGooruOId%22:%22{3}%22,%22pathwayId%22:%22{3}%22,%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}"),
-	GET_INSIGHTS_DATA("insights-api-dev/v1/classpage/{0}/grade.json?sessionToken={1}&data={%22fields%22:%22timeSpent,views,avgTimeSpent,text,questionType,type,score,attemptStatus,resourceGooruOId,userName,gooruUId,timeSpent,avgReaction,reaction,views,avgTimeSpent,collectionGooruOId,,title,description,lastModified,category,thumbnail,options,metaData,userData,skip,totalAttemptUserCount,attempts,totalCorrectCount,totalInCorrectCount,yetToAnswer,status,userCount,itemSequence,gradeInPercentage,totalQuestionCount,answerObject,feedbackStatus,feedbackText,feedbackProviderUId,feedbackTimestamp,feedbackTeacherName,isRequired,minimumScore,estimatedTime%22,%22filters%22:{%22session%22:%22FS%22,%22userUId%22:%22{2}%22,%22pathwayId%22:%22{3}%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}"),
+	GET_INSIGHTS_DATA("/v1/classpage/{0}/grade.json?sessionToken={1}&data={%22fields%22:%22timeSpent,views,avgTimeSpent,text,questionType,type,score,attemptStatus,resourceGooruOId,userName,gooruUId,avgReaction,reaction,collectionGooruOId,title,description,lastModified,category,thumbnail,options,metaData,userData,skip,totalAttemptUserCount,attempts,totalCorrectCount,totalInCorrectCount,yetToAnswer,status,userCount,itemSequence,gradeInPercentage,totalQuestionCount,answerObject,feedbackStatus,feedbackText,feedbackProviderUId,feedbackTimestamp,feedbackTeacherName,isRequired,minimumScore,estimatedTime%22,%22filters%22:{%22session%22:%22CS%22,%22userUId%22:%22{2}%22,%22pathwayId%22:%22{3}%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}"),
 	
 	V1_COLLECTIONPROGRESSDATA("/v1/classpage/{0}/users/usage.json?sessionToken={1}&data={2}"),
 	
@@ -640,7 +640,13 @@ public enum UrlToken {
 	
 	V1_GETSESSIONDATABYUSERSESSION("/v1/classpage/{0}/resources.json?sessionToken={1}&data={2}"),
 	
-	V2_PATHWAY_ITEM_MOVE_WITH_REORDER("/v2/class/{0}/pathway/{1}/item/{2}/move?sessionToken={3}");
+	V2_PATHWAY_ITEM_MOVE_WITH_REORDER("/v2/class/{0}/pathway/{1}/item/{2}/move?sessionToken={3}"),
+	
+	V2_GET_ASSIGNMENT_PARENT_DETAILS("/v2/class/assignment/{0}?sessionToken={1}"),
+	
+	V1_GETGRADEJSON("/v1/classpage/{0}/grade.json?sessionToken={1}&data={2}"),
+	
+	V1_EXPORTOEPATHWAY("/v1/classpage/{0}/oe/export.xls?sessionToken={1}&data={2}&timeZone={3}");
 	
 
 	private String url;

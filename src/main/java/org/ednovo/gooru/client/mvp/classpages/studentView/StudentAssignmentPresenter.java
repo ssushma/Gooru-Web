@@ -238,7 +238,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 			unitSetupStudentPresenter.getPathwayCompleteDetails(limit, (offsetVal)*limit);
 	    	 setInSlot(STUDY_SLOT, unitSetupStudentPresenter,false);
 	     }
-	     else if(tab.equalsIgnoreCase("unitdetails")){
+	     else if(tab.equalsIgnoreCase("unitdetails") || tab.equalsIgnoreCase("dashboard")){
 	    	 unitAssignmentPresenter.showDashBoardDetails();
 	    	 unitAssignmentPresenter.getClassUnits(classpageDo.getClasspageId());
 	    	 setInSlot(STUDY_SLOT, unitAssignmentPresenter,false);

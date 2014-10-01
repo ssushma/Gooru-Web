@@ -78,7 +78,7 @@
 	float: left;
 	width: 15px;
 	height: 15px;
-	background: #FFE7C2;
+	background: #fac6c4;
 	margin: 3px;
 }
 
@@ -86,7 +86,7 @@
 	float: left;
 	width: 15px;
 	height: 15px;
-	background: #db0f0f;
+	background: #A7A9AC;
 	margin: 3px;
 }
 
@@ -354,7 +354,7 @@
 	vertical-align: middle;
 }
 .barGraphCharacter{
-margin-right: 3px;
+	margin-right: 3px;
 }
 .tickMarkImg{
 	background: url(/images/analytics/tick.png) no-repeat 0 2px;
@@ -363,4 +363,26 @@ margin-right: 3px;
 	height: 22px;
 	top: 7px;
 	width: 20px;	
+}
+.collectionOverViewpnl{
+	clear:both;
+	padding-top: 16px;
+}
+.displayMessageTextForScoredQuestions{
+	float: left;
+	border-bottom: 1px solid #eee;
+	border-left: 1px solid #eee;
+	border-right: 1px solid #eee;
+	margin-left: 2%;
+	width: 402px;
+	padding: 24px;
+}
+.displayMessageTextForOEQuestions{
+	float: left;
+	border-bottom: 1px solid #eee;
+	border-left: 1px solid #eee;
+	border-right: 1px solid #eee;
+	/* margin-left: 2%; */
+	width: 423px;
+	padding: 24px;
 }

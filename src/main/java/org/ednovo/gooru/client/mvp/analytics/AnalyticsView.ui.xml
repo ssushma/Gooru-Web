@@ -8,7 +8,7 @@
 			<div class="col-xs-2 {unitStyle.leftPanel}">
 				<hr/>
 				<uc:UlPanel styleName="list-unstyled {unitStyle.unitMenu}">
-				   <g:VerticalPanel ui:field="unitPanel"></g:VerticalPanel>
+				   <g:HTMLPanel ui:field="unitPanel"></g:HTMLPanel>
 			    </uc:UlPanel>  
 			    
 				<g:HTMLPanel styleName="{unitStyle.uniSetup}">
@@ -23,6 +23,9 @@
 				       <g:HTMLPanel styleName="{unitStyle.rowInner}" ui:field="graphWidget" >
 				          
 				        </g:HTMLPanel>
+				    <g:HTMLPanel styleName="{unitStyle.loadingImageMainDiv}" ui:field="loadingImageLabel">
+					<g:Label styleName="{unitStyle.loadingImageForSelfEdit}" />
+				</g:HTMLPanel>
 				      </g:HTMLPanel>
 				</g:HTMLPanel>
 				<!-- end Graph Widget -->
@@ -67,7 +70,7 @@
 						Student Performance <span>Heighlight students with certain score range below.</span>
 						</div>
 						<div class="{unitStyle.scoreText}">
-						Minimum score: <g:InlineLabel ui:field="minimumScorelbl">85%</g:InlineLabel>
+						Minimum score: <g:InlineLabel ui:field="minimumScorelbl"></g:InlineLabel>
 						</div>
 						<div class="clearfix"></div>
 						</div>
@@ -84,20 +87,20 @@
 					</div>
 					</div>
 					
-					<div class="row scores">
+					<div class="row scores" style="display:none;">
 					<div class="col-xs-6">
-					Score Below: <g:TextBox ui:field="minimumScoreBelow" styleName="{unitStyle.form_control}"></g:TextBox>%
+					Bottom scores: <g:TextBox ui:field="minimumScoreBelow" styleName="{unitStyle.form_control}"></g:TextBox>%
 					</div>
 					<div class="col-xs-6 text-right">
-					Score Above: <g:TextBox ui:field="minimumScoreAbove" styleName="{unitStyle.form_control}"></g:TextBox>%
+					Top scores: <g:TextBox ui:field="minimumScoreAbove" styleName="{unitStyle.form_control}"></g:TextBox>%
 					</div>
 					<div class="clearfix"></div>
 					</div>
 					
 					<div class="row {unitStyle.scoresTable}">
 					
-					<div class="col-xs-6 {unitStyle.org}"/>
-					<div class="col-xs-6 {unitStyle.green}"/>
+					<div class="col-xs-6 {unitStyle.org}">Bottom scores</div>
+					<div class="col-xs-6 {unitStyle.green}">Top scores</div>
 					
 					<div class="clearfix"></div>
 					</div>

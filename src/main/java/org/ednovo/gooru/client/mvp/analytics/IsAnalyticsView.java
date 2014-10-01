@@ -23,8 +23,13 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.analytics;
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.shared.model.content.ClassDo;
+
+import com.google.gwt.user.client.ui.HTMLPanel;
 
 
 public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>{
@@ -33,7 +38,13 @@ public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>
 	
 	public void hideMoreUnitsLink();
 	
-	public void setMinimumAvobeScoredData();
+	public void setBottomAndTopScoresData(ArrayList<GradeJsonData> result);
 	
-	public void setMinimumBelowScoredData();
+	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData);
+	
+	HTMLPanel getUnitPanel();
+
+	void LoadingImageLabeltrue();
+
+	void LoadingImageLabelFalse();
 }

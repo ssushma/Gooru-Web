@@ -30,5 +30,5 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 
 public interface CollectionSummaryTeacherUiHandlers extends BaseUiHandlers{
- void setTeacherData(String collectionId,String classpageId,ArrayList<CollectionSummaryMetaDataDo> result);
+ void setTeacherData(String collectionId,String classpageId,String pathwayId,ArrayList<CollectionSummaryMetaDataDo> result);
 }

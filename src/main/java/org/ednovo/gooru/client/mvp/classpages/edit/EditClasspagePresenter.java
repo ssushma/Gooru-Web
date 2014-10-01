@@ -443,6 +443,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	     	classlistPresenter.setClassPageDo(classpageDo);
 	     	setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
 	     }else if(tab!=null&&tab.equalsIgnoreCase("reports")){
+	    	 System.out.println("in the reports"+classpageDo.getClasspageId());
+	    	 analyticsPresenter.getClassUnits(classpageDo.getClasspageId());
 	    	 setInSlot(CLASSLIST_SLOT, analyticsPresenter,false);
 	     }else if(tab!=null&&tab.equalsIgnoreCase("unitsetup")){
 	    	 unitSetupPresenter.clearUnitAssignmentWidgetContaner();
@@ -451,7 +453,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	     }
 	     else if(tab!=null&&tab.equalsIgnoreCase("unitdetails")){
 	    	 unitAssignmentPresenter.showAssignmentDetails();
-	    	// unitAssignmentPresenter.setClasspageData(classpageDo);
+//	    	 unitAssignmentPresenter.setClasspageData(classpageDo);
 	    	 unitAssignmentPresenter.getClassUnits(classpageDo.getClasspageId());
 	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
 	     }

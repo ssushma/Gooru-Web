@@ -14,11 +14,9 @@ import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.DataView;
 import org.ednovo.gooru.client.mvp.analytics.util.Print;
 import org.ednovo.gooru.client.mvp.analytics.util.SortTable;
-
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
-import org.ednovo.gooru.shared.model.user.UserMetaDo;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
@@ -164,55 +162,64 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        data.addColumn(ColumnType.STRING, "Reaction");
 	        data.addColumn(ColumnType.STRING, "Student&nbsp;Responses");
 	        data.addRows(result.size());
-	        for(int i=0;i<result.size();i++) {
-	        	data.setCell(i, 0, i+1, null, getPropertiesCell());
-	        	
-	            //Set Question Title
-	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
-	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
-	            data.setValue(i, 1, questionTitle.toString());
-	          
-	            //Set completion
-	            HTMLPanel completionpnl=new HTMLPanel("");
-	            Label progressBar=new Label();
-	            progressBar.setStyleName(res.css().setProgressBar());
-	            completionpnl.add(progressBar);
-	            Label incompleteProgressBar=new Label();
-	            incompleteProgressBar.setStyleName(res.css().setIncorrectProgressBar());
-	            completionpnl.add(incompleteProgressBar);
-	            int attemptedCount=result.get(i).getTotalAttemptUserCount();
-	            float maxAvgVal = ((float) attemptedCount)/((float) totalUserCount);
-	            progressBar.getElement().getStyle().setWidth(maxAvgVal*100, Unit.PX);
-	            incompleteProgressBar.getElement().getStyle().setWidth((100-maxAvgVal*100), Unit.PX);
-	            Label studentTextlbl=new Label(attemptedCount+"/"+totalUserCount+" Students");
-	            studentTextlbl.setStyleName(res.css().alignCenterAndBackground());
-	            studentTextlbl.getElement().getStyle().setWidth(100, Unit.PX);
-	            completionpnl.add(studentTextlbl);
-	            data.setValue(i, 2, completionpnl.toString());
-	          
-	            //Set time spent
-	            data.setValue(i, 3, getTimeStampLabel(result.get(i).getAvgTimeSpent()).toString());
-	           
-	            //Set reactions
-	            int reaction=result.get(i).getAvgReaction();
-	            HTMLPanel reactionpnl=new HTMLPanel("");
-	            reactionpnl.add(new AnalyticsReactionWidget(reaction));
-	            Label reactioncount=new Label();
-	            reactionpnl.add(reactioncount);
-	            reactioncount.setText(reaction+"/5");
-	            reactioncount.setStyleName(res.css().alignCenterAndBackground());
-	            data.setValue(i, 4, reactionpnl.toString());
-	           
-	            //set View response label
-	            Label viewResponselbl=new Label("View Response");
-	            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
-	            data.setValue(i, 5, viewResponselbl.toString());
+	        if(result.size()!=0){
+	       
+	        	   for(int i=0;i<result.size();i++) {
+	   	        	data.setCell(i, 0, i+1, null, getPropertiesCell());
+	   	        	
+	   	            //Set Question Title
+	   	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
+	   	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	   	            data.setValue(i, 1, questionTitle.toString());
+	   	          
+	   	            //Set completion
+	   	            HTMLPanel completionpnl=new HTMLPanel("");
+	   	            Label progressBar=new Label();
+	   	            progressBar.setStyleName(res.css().setProgressBar());
+	   	            completionpnl.add(progressBar);
+	   	            Label incompleteProgressBar=new Label();
+	   	            incompleteProgressBar.setStyleName(res.css().setIncorrectProgressBar());
+	   	            completionpnl.add(incompleteProgressBar);
+	   	            int attemptedCount=result.get(i).getTotalAttemptUserCount();
+	   	            float maxAvgVal = ((float) attemptedCount)/((float) totalUserCount);
+	   	            progressBar.getElement().getStyle().setWidth(maxAvgVal*100, Unit.PX);
+	   	            incompleteProgressBar.getElement().getStyle().setWidth((100-maxAvgVal*100), Unit.PX);
+	   	            Label studentTextlbl=new Label(attemptedCount+"/"+totalUserCount+" Students");
+	   	            studentTextlbl.setStyleName(res.css().alignCenterAndBackground());
+	   	            studentTextlbl.getElement().getStyle().setWidth(100, Unit.PX);
+	   	            completionpnl.add(studentTextlbl);
+	   	            data.setValue(i, 2, completionpnl.toString());
+	   	          
+	   	            //Set time spent
+	   	            data.setValue(i, 3, getTimeStampLabel(result.get(i).getAvgTimeSpent()).toString());
+	   	           
+	   	            //Set reactions
+	   	            int reaction=result.get(i).getAvgReaction();
+	   	            HTMLPanel reactionpnl=new HTMLPanel("");
+	   	            reactionpnl.add(new AnalyticsReactionWidget(reaction));
+	   	            Label reactioncount=new Label();
+	   	            reactionpnl.add(reactioncount);
+	   	            reactioncount.setText(reaction+"/5");
+	   	            reactioncount.setStyleName(res.css().alignCenterAndBackground());
+	   	            data.setValue(i, 4, reactionpnl.toString());
+	   	           
+	   	            //set View response label
+	   	            Label viewResponselbl=new Label("View Response");
+	   	            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
+	   	            data.setValue(i, 5, viewResponselbl.toString());
+	   	        }
 	        }
 	        Options options = Options.create();
 	        options.setAllowHtml(true);
 	        final Table table = new Table(data, options);
 	        table.getElement().setId("opendedData");
 	        teacherOpenendedData.add(table);
+	        if(result.size()==0){
+	        	Label erroeMsg=new Label();
+	        	erroeMsg.setStyleName(res.css().displayMessageTextForOEQuestions());
+	        	erroeMsg.setText("It looks like there is no open-ended question data for this collection yet.");
+	        	teacherOpenendedData.add(erroeMsg);
+	        }
 	        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 	}
 	/**
@@ -354,18 +361,17 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		teacherScoredData.clear();
 		
         final SortTable sortableTable = new SortTable();
-        
         sortableTable.setStyleName(res.css().tableMain());
         sortableTable.getElement().setId("results");
         sortableTable.setBorderWidth(1);
         sortableTable.setCellPadding(4);
         sortableTable.setCellSpacing(1);
-
+        sortableTable.setWidth("800");
         sortableTable.addColumnHeader("No.",  0);
         sortableTable.addColumnHeader("Question", 1);
         sortableTable.addColumnHeader("#Correct", 2);
-        sortableTable.addColumnHeader("Answer Breakdown", 3);
-        sortableTable.addColumnHeader("Time Spent", 4);
+        sortableTable.addColumnHeader("Answer&nbsp;Breakdown", 3);
+        sortableTable.addColumnHeader("Time&nbsp;Spent", 4);
         sortableTable.addColumnHeader("Reaction", 5);
         sortableTable.getRowFormatter().addStyleName(0, res.css().tableHeader());
         sortableTable.addClickHandler(new ClickHandler() {
@@ -382,14 +388,21 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 			 setSortedData(scoredQuestionsData,sortableTable);
 			}
 		});
-        setSortedData(scoredQuestionsData,sortableTable);
-	    teacherScoredData.add(sortableTable);
+        teacherScoredData.add(sortableTable);
+        if(scoredQuestionsData.size()!=0){
+        	 setSortedData(scoredQuestionsData,sortableTable);
+        }else{
+        	Label erroeMsg=new Label();
+        	erroeMsg.setStyleName(res.css().displayMessageTextForScoredQuestions());
+        	erroeMsg.setText("It looks like there is no scored question data for this collection yet.");
+        	teacherScoredData.add(erroeMsg);
+        }
 	}
 	void setSortedData(ArrayList<UserDataDo> scoredQuestionsData,SortTable sortableTable){
 		 for(int i=1;i<=scoredQuestionsData.size();i++){
         	 sortableTable.setValue(i, 0,i);
              sortableTable.setValue(i, 1, AnalyticsUtil.html2text(scoredQuestionsData.get(i-1).getTitle()));
-             sortableTable.setWidget(i, 2, new HCBarChart().createPieChart());
+             
              VerticalPanel answerBreakDownpnl=new VerticalPanel();
              if(scoredQuestionsData.get(i-1).getType()!=null){
             	  String getQuestionType=scoredQuestionsData.get(i-1).getType();
@@ -443,11 +456,19 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
              sortableTable.setWidget(i, 3, answerBreakDownpnl);
              sortableTable.setValue(i, 4,getTimeStampLabel(scoredQuestionsData.get(i-1).getAvgTimeSpent()).getText());
              sortableTable.setWidget(i, 5,new AnalyticsReactionWidget(scoredQuestionsData.get(i-1).getAvgReaction()));
+             
+                int[] pieChatValues=new int[3];
+	            pieChatValues[0]=scoredQuestionsData.get(i-1).getTotalInCorrectCount();
+	            pieChatValues[1]=scoredQuestionsData.get(i-1).getTotalCorrectCount();
+	            pieChatValues[2]=scoredQuestionsData.get(i-1).getSkip();
+             
              //set row style
              if ( i % 2 == 0 ){
             	 sortableTable.getRowFormatter().addStyleName(i, res.css().tableRowOdd());
+            	 sortableTable.setWidget(i, 2, new HCBarChart().pieChart("#fafafa",pieChatValues));
              }else{
             	 sortableTable.getRowFormatter().addStyleName(i, res.css().tableRowEven());
+            	 sortableTable.setWidget(i, 2, new HCBarChart().pieChart("#fff",pieChatValues));
 	            }
 	        }
 		}

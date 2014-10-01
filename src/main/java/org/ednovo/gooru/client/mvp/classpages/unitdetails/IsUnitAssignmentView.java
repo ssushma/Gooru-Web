@@ -23,7 +23,10 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+import java.util.Map;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
@@ -32,7 +35,7 @@ import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentUiHandlers>{
-	void getSequence(UnitAssignmentsDo unitAssignmentsDo);
+	//void getSequence(UnitAssignmentsDo unitAssignmentsDo);
 	void getPathwayItems();
 	public void showUnitNames(ClassDo classDo,boolean clearPanel);
 	public void hideMoreUnitsLink();
@@ -44,5 +47,9 @@ public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentU
 	void scoreHederView(ClassUnitsListDo classUnitsListDo);
 	public void resetUnitAssignmentView();
 	public HTMLPanel getAssignmentPanel();
+	public void setCollectionSummaryData(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo);
+	public HTMLPanel getAssignmentWidgetPanel();
+	public HTMLPanel getAssignmentContainer();
+	public Map<String,String> getDirection();
 
 }
