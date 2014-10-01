@@ -343,7 +343,12 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 								}
 						}
 					}else{
-						
+						if(aid == null)
+						{
+							aid = selectedAssignmentId;
+						}
+						System.out.println("checkaid::"+aid);
+						System.out.println("unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId()::"+unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());
 						if(aid.equalsIgnoreCase(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId())){
 							String newSeqCollectionItemId = unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId();
 							removeAssignmentSelectedStyle();
@@ -551,7 +556,7 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 		}		
 	}
 	 public void revealPlace(String tabName,String pageNum,String unitId,String assignmentId){
-		 	
+		 	System.out.println("assignmentIdinrevealPlace::"+assignmentId);
 			Map<String,String> params = new HashMap<String,String>();
 			String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 			String classpageid="";
