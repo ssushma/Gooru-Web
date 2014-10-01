@@ -57,9 +57,16 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 	    		suggestedTime[i]=0;
 	    	}
 	    	if(gradeData.get(i).getMinimumScore()!=null){
+	    		try
+	    		{
 	        	int miniscoreVal=Integer.parseInt(gradeData.get(i).getMinimumScore());
 	        	minimumScore[i]=miniscoreVal;
 		    	averageScore[i]= miniscoreVal-(miniscoreVal/2);	
+	    		}
+	    		catch(Exception ex)
+	    		{
+	    			
+	    		}
 	    		}
 	    	}else{
 	    		minimumScore[i]=0;

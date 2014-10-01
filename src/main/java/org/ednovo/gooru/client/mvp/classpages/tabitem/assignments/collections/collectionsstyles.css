@@ -133,3 +133,45 @@
 .assignmentCompletedWithOptional label{
 	background: #b9bbca url("../images/liners.png") -37px -22px no-repeat !important;
 }
+
+.needHelpReaction{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -184px -4px;
+	width: 35px;
+	height: 35px;
+	display: inline-block;
+	margin-top: 32px;
+}
+
+.notUnderstandReaction{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -141px -4px;
+	width: 35px;
+	height: 35px;
+	display: inline-block;
+	margin-top: 32px;
+}
+.mehReaction{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -95px -4px;
+	width: 35px;
+	height: 35px;
+	display: inline-block;
+	margin-top: 32px;
+}
+.understandReaction{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -53px -4px;
+	width: 35px;
+	height: 35px;
+	display: inline-block;
+	margin-top: 32px;
+}
+.canExplainReaction{
+	background: url(/images/emotics.png) no-repeat;
+	background-position: -7px -4px;
+	width: 35px;
+	height: 35px;
+	display: inline-block;
+	margin-top: 32px;
+}

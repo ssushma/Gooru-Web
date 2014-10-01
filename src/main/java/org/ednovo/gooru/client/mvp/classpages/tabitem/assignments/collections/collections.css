@@ -253,6 +253,7 @@
 	color: #0078C0 !important;
 	font-size: 14px;
 	font-weight: bold;
+	margin-right: 5px;
 }
 .direction .form-control{
 	width:91%;
@@ -280,9 +281,8 @@
 }
 .score .rightScore{
 	text-align:right;
-}
-.score .rightScore {
 	font-weight:normal;
+	width: 48%;
 }
 .score .rightScore .form-control{
 	width:18%;
@@ -522,6 +522,7 @@ width: 30px;
 }
 .hourlabel{
 	margin-right:5px;
+	margin-left:5px;
 }
 .analyticsDetailsHeader{
 	font-size:14px;
@@ -529,4 +530,13 @@ width: 30px;
 	padding-top:6px;
 	padding-bottom:6px;
 	display:none;
-	}
+}
+.analyticstext{
+	text-align: center;
+font-size: 14px;
+}
+.analyticsData{
+	text-align: center;
+	padding-top: 40px;
+	font-size: 14px;
+}

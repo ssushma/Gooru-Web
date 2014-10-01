@@ -99,7 +99,7 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 				@Override
 				public void onSuccess(ClassDo classDo) {
 					if(classDo!=null&&classDo.getSearchResults().size()>0){
-						revealPlace("unitdetails",classDo.getSearchResults().get(0).getResource().getGooruOid());
+						revealPlace("dashboard",classDo.getSearchResults().get(0).getResource().getGooruOid());
 					}
 				}
 			});

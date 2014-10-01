@@ -22,29 +22,22 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.unitdetails;
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.shared.model.content.ClassDo;
-import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.search.event;
 
-import com.google.gwt.user.client.ui.HTMLPanel;
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.shared.model.user.UserDo;
 
-public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentUiHandlers>{
-	void getSequence(UnitAssignmentsDo unitAssignmentsDo);
-	void getPathwayItems();
-	public void showUnitNames(ClassDo classDo,boolean clearPanel);
-	public void hideMoreUnitsLink();
-	public HTMLPanel getUnitPanel(); public HTMLPanel getCircleContainerPanel();
-	public void showAssignment(ClasspageItemDo classpageItemDo);
-	void showDashBoard();
-	void showAssignments();
-	public void getUnitsPanel();
-	void scoreHederView(ClassUnitsListDo classUnitsListDo);
-	public void resetUnitAssignmentView();
-	public HTMLPanel getAssignmentPanel();
-	public void setCollectionSummaryData(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo);
+import com.google.gwt.event.shared.EventHandler;
+
+/**
+ * @author Search Team
+ * 
+ */
+public interface SetPersonalizeButtonHandler extends EventHandler, BaseUiHandlers {
+
+	void setPersonalizeButtonEvent(boolean isSelected);
 
 }
