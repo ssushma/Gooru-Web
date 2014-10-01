@@ -66,12 +66,13 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	}
 	
 	public void getClassUnits(String classId){
+	
 		if(getView().getUnitPanel().getWidgetCount()==0){
 			getPathwayUnits(classId,limit,offSet,true);
 		}
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 		String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
-		if(unitId!=null&&getView().getCircleContainerPanel().getWidgetCount()==0){
+		if(unitId!=null){
 			getPathwayItems(classId,unitId,"sequence",assignmentLimit,assignmentOffset);
 		}
 		if(assignmentId!=null){
