@@ -7,5 +7,9 @@ import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 public interface IsAssignmentWidget extends IsViewWithHandlers<AssignmentWidgetViewUiHandler>{
 	public void displayAssignments(UnitAssignmentsDo unitAssignmentsDo,ClassDo classDo);
+
+	void updateAssignmentDetailsStatus(Boolean isRequired,
+			String collectionItemId, String readStatus,
+			boolean isUpdateRequiredStatus);
 		
 }

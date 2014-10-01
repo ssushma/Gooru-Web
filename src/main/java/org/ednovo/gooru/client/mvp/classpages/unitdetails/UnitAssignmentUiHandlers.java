@@ -63,4 +63,8 @@ public interface UnitAssignmentUiHandlers extends BaseUiHandlers{
 	void updateUnitstatus(String collectionItemId, String minimumScoreByuser,
 			String assignmentStatus, String time);
 
+
+	void updateAssignmentStatus(Boolean isRequired, String collectionItemId,
+			String readStatus, boolean isUpdateRequiredStatus);
+
 }
