@@ -919,9 +919,12 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	public void setCollectionSummaryData(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo){
+		if(collectionSummaryMetaDataDo != null)
+		{
 		displayAverageTime(collectionSummaryMetaDataDo.getAvgTimeSpent());
 		displayViewCount(collectionSummaryMetaDataDo.getViews());
 		displayAverageReaction(collectionSummaryMetaDataDo.getAvgReaction());
+		}
 		//avarageReactionLabel,viewsLabel,averageTimeLabel
 	}
 
