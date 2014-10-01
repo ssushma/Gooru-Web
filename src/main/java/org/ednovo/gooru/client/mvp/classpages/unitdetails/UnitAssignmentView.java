@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
+import org.ednovo.gooru.client.mvp.search.event.DisplayNextSetAssignmentsEvent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
@@ -398,13 +399,18 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			int offsetValue = 0;
 			if(value=="right"){
 				clearAssignmentsFromDo();
-				getUnitAssignments(getAssignmentOffsetValue(NEXT),isEditMode,0,0,"");
+				offsetValue = getAssignmentOffsetValue(NEXT);
+				getUnitAssignments(offsetValue,isEditMode,0,0,"");
+				AppClientFactory.fireEvent(new DisplayNextSetAssignmentsEvent(offsetValue, NEXT));
 			}
 			else{
 				clearAssignmentsFromDo();
-				getUnitAssignments(getAssignmentOffsetValue(PREVIOUS),isEditMode,0,0,"");
+				offsetValue = getAssignmentOffsetValue(PREVIOUS);
+				getUnitAssignments(offsetValue,isEditMode,0,0,"");
+				AppClientFactory.fireEvent(new DisplayNextSetAssignmentsEvent(offsetValue, PREVIOUS));
 			}
 		}
 	}
@@ -856,7 +862,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		if (!isPersonalize){
 			isPersonalize = true;
 			
-			assignmentContainer.setVisible(true);
+			assignmentContainer.setVisible(false);
 			personalizeContainer.setVisible(true);
 		}else{
 			isPersonalize = false;

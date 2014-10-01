@@ -121,6 +121,12 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 	@Override
 	public void setAssignments(List<InsightsUserDataDo> list){
 		this.list = list;
+		panelAssignmentList.clear();
+		if (displayLimit > 10){
+			displayLimit = displayLimit > list.size()  ? list.size() : displayLimit;
+		}else{
+			displayLimit = 10;
+		}
 		if (list !=null && list.size() > 0){
 			lblPleaseWait.setVisible(false);
 			for (int i=displayStartFrom; i<displayLimit; i++){
@@ -137,15 +143,12 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 	}
 	
 	public void displayNextSet(int displayStartFrom, String type){
-		if (type.equalsIgnoreCase("next")){
-			displayLimit = this.displayStartFrom + displayLimit;
+		if (type.trim().equalsIgnoreCase("next")){
+			displayLimit=displayLimit + 10 ;
 		}else{
-			displayLimit = this.displayStartFrom - displayLimit;
+			displayLimit=displayLimit - 10;
 		}
 		this.displayStartFrom = displayStartFrom;
-		System.out.println("displayStartFrom : "+displayStartFrom);
-		System.out.println("this.displayStartFrom : "+this.displayStartFrom);
-		System.out.println("this.displayLimit : "+this.displayLimit);
 		setAssignments(this.list);
 	}
 	
