@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.Co
 import org.ednovo.gooru.client.mvp.search.event.SetPersonalizeButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetPersonalizeButtonHandler;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
@@ -138,12 +139,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	UnitAssignentStudentPlayView UnitAssignentStudentPlayView =null;
 	private int totalAssignmentHitcount;
 	//Label requiredText =new Label();
-	CollectionsView collectionView=null;
-	private boolean isNarrationUpdate=false;
-	Map<String,String> descriptionDetails=new HashMap<String,String>();
-	
+	private CollectionsView collectionView=null;
 	
 
+	private boolean isNarrationUpdate=false;
+	Map<String,String> descriptionDetails=new HashMap<String,String>();
 	int toalassignmentSize=0;
 	
 	@Inject
@@ -1302,13 +1302,18 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	@Override
 	public HTMLPanel getAssignmentPanel() {
-		// TODO Auto-generated method stub
 		return assignmentContainer;
 	}
 
 	@Override
+	public void setCollectionSummaryData(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo) {
+		if(collectionView!=null){
+			collectionView.setCollectionSummaryData(collectionSummaryMetaDataDo);
+		}
+		
+	}
+	
 	public HTMLPanel getAssignmentWidgetPanel() {
-		// TODO Auto-generated method stub
 		return assignmentWidgetConatiner;
 	}
 
