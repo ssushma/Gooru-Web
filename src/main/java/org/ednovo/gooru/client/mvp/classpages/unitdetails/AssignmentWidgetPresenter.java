@@ -68,6 +68,11 @@ public class AssignmentWidgetPresenter extends PresenterWidget<IsAssignmentWidge
 		}
 		
 	}
+	
+	public void updateAssignmentDetailsStatus(Boolean isRequired,String collectionItemId,String readStatus,boolean isUpdateRequiredStatus){
+		getView().updateAssignmentDetailsStatus(isRequired, collectionItemId, readStatus, isUpdateRequiredStatus);
+	}
+
 		
 			
 }
