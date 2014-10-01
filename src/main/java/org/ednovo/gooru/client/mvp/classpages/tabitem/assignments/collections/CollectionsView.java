@@ -383,7 +383,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	private String frameAnalyticsUrlForMonitor() {
 
 		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
-		String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.CLASS_COLLECTION_MONITOR_DATA,
+		String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPointOld()+DataInsightsUrlTokens.CLASS_COLLECTION_MONITOR_DATA,
 					classpageId,classpageItemDo.getResource().getGooruOid(),AppClientFactory.getLoginSessionToken());
 		
 		urlVal = urlVal+"&"+Math.random();			
@@ -392,7 +392,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	private String frameAnalyticsUrl() {
 		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
-		String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.CLASS_COLLECTION_SUMMARY_DATA,classpageId,classpageItemDo.getResource().getGooruOid(),AppClientFactory.getLoginSessionToken());
+		String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPointOld()+DataInsightsUrlTokens.CLASS_COLLECTION_SUMMARY_DATA,classpageId,classpageItemDo.getResource().getGooruOid(),AppClientFactory.getLoginSessionToken());
 
 		urlVal = urlVal+"&"+Math.random();			
 		return urlVal;
@@ -919,9 +919,12 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	public void setCollectionSummaryData(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo){
+		if(collectionSummaryMetaDataDo != null)
+		{
 		displayAverageTime(collectionSummaryMetaDataDo.getAvgTimeSpent());
 		displayViewCount(collectionSummaryMetaDataDo.getViews());
 		displayAverageReaction(collectionSummaryMetaDataDo.getAvgReaction());
+		}
 		//avarageReactionLabel,viewsLabel,averageTimeLabel
 	}
 

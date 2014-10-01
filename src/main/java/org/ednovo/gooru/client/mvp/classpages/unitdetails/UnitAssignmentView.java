@@ -732,6 +732,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			@Override
 			public void onSuccess(UnitAssignmentsDo result) {
 				classUnitsDo.getResource().setCollectionItems(result.getSearchResults());
+				classUnitsDo.getResource().setItemCount(result.getTotalHitCount());
 				if(isAssignmentEditmode){
 					//setAssignmentsEditView();
 				}else{
@@ -767,6 +768,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			circleContainerPanel.add(leftArrow);
 			if(unitAssignmentsDo.getSearchResults().size()>0&&aid==null){
 				aid=unitAssignmentsDo.getSearchResults().get(0).getCollectionItemId();
+			}
+			if(toalassignmentSize == 0)
+			{
+				assignmentContainer.clear();
 			}
 			for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
@@ -825,7 +830,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 								}
 						}
 					}else{
-						
+						if(aid == null)
+						{
+						aid=unitAssignmentsDo.getSearchResults().get(0).getCollectionItemId();	
+						}
 						if(aid.equalsIgnoreCase(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId())){
 							String newSeqCollectionItemId = unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId();
 							assignmentContainer.clear();
@@ -839,8 +847,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 						}
 					}
 				}
-				
-				
 			}
 			
 			rightArrow.setUrl("images/rightSmallarrow.png");
