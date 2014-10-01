@@ -104,7 +104,6 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 		chartmetadata.setShowXaxisTop(true);
 		LineChartView lineChartView=new LineChartView();
 		lineChartView.createLineChart("Average Time", "Suggested Time", category, contentListNew, data, chartmetadata);
-	
 		
 		chartmetadata.setShowXaxisTop(false);
 		LineChartView lineChartView1=new LineChartView();
