@@ -826,7 +826,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 								}
 						}
 					}else{
-						
+						if(aid == null)
+						{
+						aid=unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId();	
+						}
 						if(aid.equalsIgnoreCase(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId())){
 							String newSeqCollectionItemId = unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId();
 							assignmentContainer.clear();
