@@ -32,8 +32,12 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.classpages.event.UpdateUnitSetGoalEvent;
+import org.ednovo.gooru.client.mvp.classpages.event.UpdateUnitSetGoalHandler;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.search.event.DisplayNextSetAssignmentsEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetPersonalizeButtonEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetPersonalizeButtonHandler;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
@@ -109,6 +113,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private int limit = 5;
 	private int unitsPageNumber = 0;
 	private int unitsTotalCount = 0;
+	
+	private String MINUTES= i18n.GL1437();
+	private String HOURS= i18n.GL1435();
 	
 	private String SETGOAL= i18n.GL2197();
 	
@@ -192,6 +199,19 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		panelPersonalizeButtonContainer.setVisible(false);
 		displayPersonalizeOptions(false);
 		setPersonalizeState(false);
+		
+		SetPersonalizeButtonHandler handler = new SetPersonalizeButtonHandler() {
+
+			@Override
+			public void setPersonalizeButtonEvent(boolean isSelected) {
+				setPersonalizeState(isSelected);
+				isPersonalize = isSelected;
+			}
+		};
+		
+		AppClientFactory.getEventBus().addHandler(SetPersonalizeButtonEvent.TYPE, handler);
+		AppClientFactory.getEventBus().addHandler(UpdateUnitSetGoalEvent.TYPE, unitUpdateHandler);
+		
 	}
 	
 	public HTMLPanel getUnitPanel(){
@@ -241,6 +261,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			resetCircleAndAssignmentContainer(unitTitle);
 			setClassUnitsListDo(unitsWidget.getClassUnitDo());
 			revealPlace("unitdetails",null,unitsWidget.getUnitGooruOid(),null);
+			assignmentOffset=0;
 			scoreHederView(unitsWidget.getClassUnitDo());
 			removeAndAddUnitSelectedStyle();
 		}
@@ -705,6 +726,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		if(classPageId==null){
 			classPageId= AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 		}
+		unitId = AppClientFactory.getPlaceManager().getRequestParameter("uid",null);
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classPageId, unitId, "sequence", assignmentLimit, assignmentOffset, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 
 			@Override
@@ -743,10 +765,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			leftArrow.setUrl("images/leftSmallarrow.png");
 			leftArrow.getElement().setAttribute("style","margin-left: 10px");
 			circleContainerPanel.add(leftArrow);
-
+			if(unitAssignmentsDo.getSearchResults().size()>0&&aid==null){
+				aid=unitAssignmentsDo.getSearchResults().get(0).getCollectionItemId();
+			}
 			for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
-				
 				//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid()+"");
 				unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());
 				circleContainerPanel.add(unitCricleViewObj);
@@ -897,6 +920,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		revealPlace(ASSIGNMENTS);
 	}
 	
+	@Override
 	public void scoreHederView(ClassUnitsListDo classUnitsListDo) {
 		scoreHedingContainer.clear();
 		ScoreHedingView scoreHedingView = null;
@@ -918,14 +942,16 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			scoreHedingContainer.add(scoreHedingView);
 		}
 		showUnitsStudyingTime(classUnits);
-		//txtHours.addBlurHandler(new ScoreHandler());
 		txtHours.addKeyPressHandler(scoreHedingView.new HasNumbersOnly());
 		txtMinuts.addKeyPressHandler(scoreHedingView.new HasNumbersOnly());
 		txtHours.addBlurHandler(new TimeHandler());
 		txtMinuts.addBlurHandler(new TimeHandler());
 	}
 	
-	
+	/**
+	 * To set the Unit Study time 
+	 * @param classUnits {@link ClassUnitsListDo}
+	 */
 
 	private void showUnitsStudyingTime(ClassUnitsListDo classUnits) {
 		// TODO Auto-generated method stub
@@ -934,7 +960,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			String[] timeSplit =timeOfStudying.split(" ");
 			showAndHideTextBox();
 			if(timeSplit!=null){
-				System.out.println("timesp::"+timeSplit.length);
 				if(timeSplit.length==1){
 					if(timeSplit[0].contains("hrs")){
 						txtHours.setText(timeSplit[0]);
@@ -952,6 +977,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			timeLablePanel.setVisible(true);
 			lblTimeHours.setText(txtHours.getText().replace("hrs", "h"));
 			lblTimeMin.setText(txtMinuts.getText());
+			txtHours.setText(txtHours.getText().replace("hrs", ""));
+			txtMinuts.setText(txtMinuts.getText().replace("min", ""));
 			txtHours.setVisible(false);
 			txtMinuts.setVisible(false);
 			btnSetGoal.setStyleName("secondary");
@@ -1020,7 +1047,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 	
 	public void setAssignmentToNewPosition(int selectedAssignmentpageNumber,String selectedPathId,int totalHintCount,String selectedAssignmentId,UnitCricleView UnitCricleObj,int mouseOverAssignmentSeqPos){
-				
+		unitId = AppClientFactory.getPlaceManager().getRequestParameter("uid",null);
 		if(selectedPathId.equalsIgnoreCase(unitId)){
 			assignmentOffset =(selectedAssignmentpageNumber/assignmentLimit)*assignmentLimit;
 			if(assignmentOffset==selectedAssignmentpageNumber){
@@ -1085,29 +1112,27 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		public void onBlur(BlurEvent event) {
 			String hours = txtHours.getText();
 			String min = txtMinuts.getText();
-			/*if((hours != null || hours != "")){
+			if((hours != null ||!hours.isEmpty())){
 				try{
-					if(!hours.isEmpty()){
-					if(Integer.parseInt(hours) >24 || Integer.parseInt(hours)<0){
+					/*if(Integer.parseInt(hours) >24 || Integer.parseInt(hours)<0){
 //						txtHours.setText(getValidationTime(hours, true));
 						setTimeValidation(i18n.GL2251());
 					}else{
 						txtHours.getElement().setAttribute("style", "border-color: #efefef !important;");
 					    txtMinuts.getElement().setAttribute("style", "border-color: #efefef !important;");
 						lblTimeValidation.setVisible(false);
-					}
-				}
+					}*/
 
 				}catch(NumberFormatException numberFormatException){
 					numberFormatException.printStackTrace();
 				}
 
-			}*/
+			}
 			if(min !=null || min != ""){
 				try{
 					if(Integer.parseInt(min) >59 || Integer.parseInt(min) <0){
 //						txtMinuts.setText(getValidationTime(min, false));
-						setTimeValidation(i18n.GL2251());
+						setTimeValidation(i18n.GL2251(),MINUTES);
 					}else{
 						txtHours.getElement().setAttribute("style", "border-color: #efefef !important;");
 						txtMinuts.getElement().setAttribute("style", "border-color: #efefef !important;");
@@ -1129,31 +1154,33 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	 * @return validation time
 	 */
 
-	private String getValidationTime(String time, boolean isHours) {
+	private boolean getvalidationTime() {
 		// TODO Auto-generated method stub
-		if(isHours){
-			if(Integer.parseInt(time) >24){
-				return "24";
-			}
-		}else{
-			if(Integer.parseInt(time)>59){
-				return "59";
-			}
+		boolean valid=true;
+		if(txtMinuts.getText().isEmpty()){
+			setTimeValidation(i18n.GL2255(), MINUTES);
+			valid=false;
 		}
-		return null;
+		if(txtHours.getText().isEmpty()){
+			setTimeValidation(i18n.GL2254(), HOURS);
+			valid=false;
+		}
+		if(Integer.parseInt(txtMinuts.getText())>59){
+			setTimeValidation(i18n.GL2251(), MINUTES);
+			valid=false;
+		}
+		return valid;
 	}
 	
 	@UiHandler("btnSetGoal")
 	public void clickOnGoalBtn(ClickEvent clickEvent){
-		if((txtHours.getText()!=null && txtHours.getText()!="")|| (txtMinuts.getText()!=null && txtMinuts.getText()!="") ){
+		if((txtHours.getText()!=null && !txtHours.getText().equals(""))|| (txtMinuts.getText()!=null && !txtMinuts.getText().equals(""))){
 			try{
-				if(Integer.parseInt(txtMinuts.getText())>59){
-					setTimeValidation(i18n.GL2251());
-				}else{
-					txtHours.getElement().setAttribute("style", "border-color: #efefef !important;");
-					txtMinuts.getElement().setAttribute("style", "border-color: #efefef !important;");
-					lblTimeValidation.setVisible(false);
-					if(btnSetGoal.getText().equals(SETGOAL)){
+				if(btnSetGoal.getText().equals(SETGOAL)){
+					if(getvalidationTime()){
+						txtHours.getElement().setAttribute("style", "border-color: #efefef !important;");
+						txtMinuts.getElement().setAttribute("style", "border-color: #efefef !important;");
+						lblTimeValidation.setVisible(false);
 						if(txtHours.getText().isEmpty() && !txtMinuts.getText().isEmpty()){
 							lblTimeHours.setText(txtHours.getText());
 							lblTimeMin.setText(txtMinuts.getText()+" min");
@@ -1174,39 +1201,38 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 						showAndHideTextBox();
 						btnSetGoal.setStyleName("secondary");
 						btnSetGoal.setText(EDITGOAL);
-//						lblGreenControl.getElement().setId("greenControll");
 						if(getClassUnitsListDo().getCollectionItemId()!=null){
-							String hours = "", mintus="";
+							String hours = "", minutes="";
 							if(txtHours.getText()!=null && !txtHours.getText().equals("")){
 								hours=txtHours.getText()+ "hrs ";
 							}
 							if(txtMinuts.getText()!=null && !txtMinuts.getText().equals("")){
-								mintus=txtMinuts.getText()+ "min";
+								minutes=txtMinuts.getText()+ "min";
 							}
-							String time =hours+mintus;
+							String time =hours+minutes;
 							getUiHandlers().updateUnitstatus(getClassUnitsListDo().getCollectionItemId(), null, null,time);
 						}
 						lblControl.getElement().setAttribute("style", "-webkit-transform: rotate(-50deg);");
-					}else{
-						btnSetGoal.setStyleName("primary");
-						showAndHideTextBox();
-						btnSetGoal.setText(SETGOAL);
 					}
+				}else{
+					btnSetGoal.setStyleName("primary");
+					showAndHideTextBox();
+					btnSetGoal.setText(SETGOAL);
+					System.out.println("txtMinuts:"+txtMinuts.getText());
+					System.out.println("texthours:"+txtHours.getText());
 				}
-				
-				
+
 			}catch(Exception e){
-				
+
 			}
-			
-			
+
 		}else{
 			System.out.println("validations");
-			setTimeValidation(i18n.GL2250());
+			setTimeValidation(i18n.GL2250(),"");
 		}
 
 	}
-	
+
 	/*
 	 * show and hide text boxes
 	 */
@@ -1225,14 +1251,40 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	/**
 	 * To set the time validation msgs
 	 */
-	private void setTimeValidation(String msg) {
+	private void setTimeValidation(String msg, String type) {
 		System.out.println("enter");
-		txtHours.getElement().setAttribute("style", "border-color: #FBB03B !important;");
-		txtMinuts.getElement().setAttribute("style", "border-color: #FBB03B !important;");
+		if(!type.isEmpty()){
+			if(type.equals(MINUTES)){
+				txtMinuts.getElement().setAttribute("style", "border-color: #FBB03B !important;");
+			}else{
+				txtHours.getElement().setAttribute("style", "border-color: #FBB03B !important;");
+			}
+		}
+		
 		lblTimeValidation.setVisible(true);
 		lblTimeValidation.setStyleName("errorMessage");
 		lblTimeValidation.setText(msg);
 	}
+	
+	UpdateUnitSetGoalHandler unitUpdateHandler = new UpdateUnitSetGoalHandler() {
+		
+		@Override
+		public void updateUnitSetGoal(int minimumScoreByUser, int assignmentStatus,
+				String timeStudying) {
+			System.out.println("unithandleer");
+			if(assignmentStatus!=0){
+				classUnitsListDo.setAssignmentCompleted(assignmentStatus);
+			}
+			if(minimumScoreByUser!=0){
+				classUnitsListDo.setMinimumScoreByUser(minimumScoreByUser);
+			}
+			if(timeStudying!=null){
+				classUnitsListDo.setTimeStudying(timeStudying);
+			}
+			
+		}
+	};
+	
 
 	/**
 	 * @return the unitCollectionId

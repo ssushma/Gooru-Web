@@ -980,6 +980,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			displayAvgReactionImage(averageReaction);
 		}else{
 			avarageReactionLabel.setText("-");
+			avarageReactionLabel.setStyleName(CollectionsCBundle.INSTANCE.css().reactionText());
 		}
 	}
 	

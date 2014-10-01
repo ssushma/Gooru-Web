@@ -64,7 +64,8 @@
 			</g:FlowPanel>
             	<g:FlowPanel ui:field="metadataContainer"></g:FlowPanel>
            	    <g:FlowPanel styleName="{playerStyle.insightsFrame}" ui:field="dataInsightsPanel">
-	             	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer">
+           	    	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer"/>
+	             	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer1">
 	             	 <g:HTMLPanel styleName="{unitStyle.summary_title}">Collection Summary</g:HTMLPanel>
 					             	 <!-- Collection Summary Top -->
 					     <g:HTMLPanel>
