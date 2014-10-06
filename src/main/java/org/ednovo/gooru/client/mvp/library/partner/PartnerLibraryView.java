@@ -91,7 +91,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 
 	@Override
 	public void setUnitList(final ArrayList<PartnerFolderDo> folderList) {
-		if(folderList.size()==0 && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CCST_Cal_TAC)){
+		if(folderList.size()==0 && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.TICAL)){
 			loadingPanel(false);
 			getComingSoonText(true);
 		}else{
@@ -264,6 +264,11 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			thumbnailDo.setUrl("../images/library/partners/ccst.png");
 			libraryUserDo.setPartnerName(i18n.GL2177());
 			libraryUserDo.setPartnerUrl(i18n.GL2178());
+		}else if(partnerPlace.equals(PlaceTokens.TICAL)) {
+			courseDo.setLabel(i18n.GL2186());
+			thumbnailDo.setUrl("../images/library/partners/tical.png");
+			libraryUserDo.setPartnerName(i18n.GL2187());
+			libraryUserDo.setPartnerUrl(i18n.GL2188());
 		}
 		
 		courseDo.setThumbnails(thumbnailDo);
