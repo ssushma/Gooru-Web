@@ -63,6 +63,7 @@ import org.ednovo.gooru.client.mvp.library.partner.natgeo.NatGeoLibraryPresenter
 import org.ednovo.gooru.client.mvp.library.partner.ngc.NgcLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.tical.TicalLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
@@ -247,4 +248,6 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<CcstCalTacLibraryPresenter> getCcstCalTacLibraryPresenter();
 	
 	AsyncProvider<LusdLibraryPresenter> getLusdLibraryPresenter();
+	
+	AsyncProvider<TicalLibraryPresenter> getTicalLibraryPresenter();
 }
