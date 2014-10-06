@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateUnitSetGoalEvent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -115,6 +116,10 @@ public class ScoreHedingView extends Composite {
 		lblTitle.setText(i18n.GL2195());
 		lblControl.getElement().setId("controll");
 		btnSetGoal.setText(SETGOAL);
+		StringUtil.setAttributes(lblTitle.getElement(),"lblTitle", null, lblTitle.getText());
+		StringUtil.setAttributes(btnSetGoal.getElement(),"btnSetGoal", btnSetGoal.getText(), btnSetGoal.getText());
+		StringUtil.setAttributes(txtScore.getElement(), "txtScore",null,null);
+		StringUtil.setAttributes(lblScore.getElement(),"lblScore", null, null);
 	}
 
 	/**
@@ -130,8 +135,10 @@ public class ScoreHedingView extends Composite {
 					showAndHideTextBox();
 					txtScore.setText(classUnitsListDo.getMinimumScoreByUser()+"");
 					lblScore.setText(txtScore.getText());
+					StringUtil.setAttributes(lblScore.getElement(),"lblScore", null, lblScore.getText());
 					btnSetGoal.setStyleName("secondary");
 					btnSetGoal.setText(EDITGOAL);
+					StringUtil.setAttributes(btnSetGoal.getElement(),"btnSetGoal", btnSetGoal.getText(), btnSetGoal.getText());
 					showingScoreReader();
 				}
 			}else{
@@ -140,8 +147,10 @@ public class ScoreHedingView extends Composite {
 					showAndHideTextBox();
 					txtScore.setText(classUnitsListDo.getAssignmentCompleted()+"");
 					lblScore.setText(txtScore.getText());
+					StringUtil.setAttributes(lblScore.getElement(),"lblScore", null, lblScore.getText());
 					btnSetGoal.setStyleName("secondary");
 					btnSetGoal.setText(EDITGOAL);
+					StringUtil.setAttributes(btnSetGoal.getElement(),"btnSetGoal", btnSetGoal.getText(), btnSetGoal.getText());
 					showingScoreReader();
 				}
 			}
@@ -245,8 +254,10 @@ public class ScoreHedingView extends Composite {
 					if(btnSetGoal.getText().equals(SETGOAL)){
 						showAndHideTextBox();
 						lblScore.setText(txtScore.getText());
+						StringUtil.setAttributes(lblScore.getElement(),"lblScore", null, lblScore.getText());
 						btnSetGoal.setStyleName("secondary");
 						btnSetGoal.setText(EDITGOAL);
+						StringUtil.setAttributes(btnSetGoal.getElement(),"btnSetGoal", btnSetGoal.getText(), btnSetGoal.getText());
 						collectionItemId=classUnitsListDo.getCollectionItemId();
 						if(collectionItemId!=null){
 							if(getLblTitle().getText().equals(i18n.GL2195())){
@@ -261,6 +272,7 @@ public class ScoreHedingView extends Composite {
 						showAndHideTextBox();
 						btnSetGoal.setStyleName("primary");
 						btnSetGoal.setText(SETGOAL);
+						StringUtil.setAttributes(btnSetGoal.getElement(),"btnSetGoal", btnSetGoal.getText(), btnSetGoal.getText());
 						lblRedControl.getElement().setId("redControll");
 					}
 				}
@@ -282,6 +294,7 @@ public class ScoreHedingView extends Composite {
 		lblValidation.setVisible(true);
 		lblValidation.setStyleName("errorMessage");
 		lblValidation.setText(msg);
+		StringUtil.setAttributes(lblValidation.getElement(), "lblValidation", null, lblValidation.getText());
 	}
 
 	/**
