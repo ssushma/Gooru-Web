@@ -927,7 +927,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 
 	public void displayAverageTime(Long milliSeconds){
 		averageTimeLabel.clear();
-		if(milliSeconds!=null){
+		if(milliSeconds!=null&&milliSeconds!=0&&!milliSeconds.equals("")){
 			Long totalSecs = milliSeconds/1000;
 		    Long hours = (totalSecs / 3600);
 		    Long mins = (totalSecs / 60) % 60;
