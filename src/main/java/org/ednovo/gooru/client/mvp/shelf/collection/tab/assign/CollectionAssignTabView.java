@@ -1261,7 +1261,7 @@ public class CpuTitleLabelClick implements ClickHandler{
 	    if (!timeString.substring(2, 3).equals(":")) return false;
 	    int hour = validateNumber(timeString.substring(0, 2));
 	    int minute = validateNumber(timeString.substring(3));
-	    if (hour < 0 || hour >24 ) return false;
+	    if (hour < 0 || hour >100 ) return false;
 	    if (minute < 0 || minute >= 60) return false;
 	    return true;
 	}

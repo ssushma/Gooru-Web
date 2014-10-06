@@ -14,6 +14,8 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
+import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListView.MouseOutHideToolTip1;
+import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListView.MouseOverShowClassCodeToolTip1;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageResourceItemListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
@@ -116,6 +118,8 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	}
 
 	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
+	
+	private PopupPanel toolTipPopupPanelComingSoon = new PopupPanel();
 
 	@UiField Image imgClasspageImage;
 	
@@ -393,6 +397,8 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		//reportHandler=reportsTab.addClickHandler(new reportsTabClicked());		
+		reportsTab.addMouseOverHandler(new MouseOverShowClassCodeToolTip1());
+		reportsTab.addMouseOutHandler(new MouseOutHideToolTip1());
 		
 		ResetProgressHandler reset = new ResetProgressHandler() {
 
@@ -435,6 +441,29 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		});
 		
 	}
+	
+	public class MouseOverShowClassCodeToolTip1 implements MouseOverHandler{
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			toolTipPopupPanelComingSoon.clear();
+			toolTipPopupPanelComingSoon.setWidget(new GlobalToolTip(i18n.GL0683()));
+			toolTipPopupPanelComingSoon.setStyleName("");
+			toolTipPopupPanelComingSoon.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() + 135, event.getRelativeElement().getAbsoluteTop()+9);
+			toolTipPopupPanelComingSoon.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanelComingSoon.show();
+		}
+
+	}
+
+	public class MouseOutHideToolTip1 implements MouseOutHandler{
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			toolTipPopupPanelComingSoon.hide();
+		}
+	}
+	
 
 	
 	/**
