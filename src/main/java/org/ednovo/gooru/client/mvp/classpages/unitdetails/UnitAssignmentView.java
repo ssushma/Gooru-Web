@@ -578,10 +578,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				classUnitsDo=classListUnitsListDObj;
 				//unitTitleDetails.setText(classDo.getSearchResults().get(0).getResource().getTitle());
 				String unitTitle = classDo.getSearchResults().get(i).getResource().getTitle();
-				if(unitTitle!=null && unitTitle.length()>11){
-					unitTitle = unitTitle.substring(0,11)+"...";
-				}
-				
 				int unitNumber = classDo.getSearchResults().get(i).getItemSequence();
 				classListUnitsListDo.get(i).setItemSequence(unitPanel.getWidgetCount()+1);
 				UnitWidget unitsWidget=new UnitWidget(classListUnitsListDo.get(i));
@@ -599,11 +595,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 
 	public void setUnitName(String unitName){
-	unitName= unitName!=null?unitName:"";
-		if (unitName.length() > 10){
-			unitName = unitName.substring(0, 11) + "...";
-		}
-		unitTitleDetails.setText(unitName);
+			unitTitleDetails.setText(unitName);
 	}
 	public void getUnitsPanel(){
 		unitPanel.clear();
