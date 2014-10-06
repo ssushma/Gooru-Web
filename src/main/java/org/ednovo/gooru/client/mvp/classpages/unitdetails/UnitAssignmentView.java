@@ -321,7 +321,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					circleContainerPanel.clear();
 					circleContainerPanel.add(requiredText);
 					leftArrow.setUrl("images/leftSmallarrow.png");
-					leftArrow.getElement().setAttribute("style","margin-left: 10px");
+					leftArrow.getElement().setAttribute("style","margin-left: 10px;cursor: pointer;");
 					circleContainerPanel.add(leftArrow);
 					for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 						unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
@@ -578,10 +578,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				classUnitsDo=classListUnitsListDObj;
 				//unitTitleDetails.setText(classDo.getSearchResults().get(0).getResource().getTitle());
 				String unitTitle = classDo.getSearchResults().get(i).getResource().getTitle();
-				if(unitTitle!=null && unitTitle.length()>11){
-					unitTitle = unitTitle.substring(0,11)+"...";
-				}
-				
 				int unitNumber = classDo.getSearchResults().get(i).getItemSequence();
 				classListUnitsListDo.get(i).setItemSequence(unitPanel.getWidgetCount()+1);
 				UnitWidget unitsWidget=new UnitWidget(classListUnitsListDo.get(i));
@@ -599,11 +595,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 
 	public void setUnitName(String unitName){
-	unitName= unitName!=null?unitName:"";
-		if (unitName.length() > 10){
-			unitName = unitName.substring(0, 11) + "...";
-		}
-		unitTitleDetails.setText(unitName);
+			unitTitleDetails.setText(unitName);
 	}
 	public void getUnitsPanel(){
 		unitPanel.clear();
@@ -769,6 +761,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			if(unitAssignmentsDo.getSearchResults().size()>0&&aid==null){
 				aid=unitAssignmentsDo.getSearchResults().get(0).getCollectionItemId();
 			}
+			if(toalassignmentSize == 0)
+			{
+				assignmentContainer.clear();
+			}
 			for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
 				//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid()+"");
@@ -826,7 +822,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 								}
 						}
 					}else{
-						
+						if(aid == null)
+						{
+						aid=unitAssignmentsDo.getSearchResults().get(0).getCollectionItemId();	
+						}
 						if(aid.equalsIgnoreCase(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId())){
 							String newSeqCollectionItemId = unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId();
 							assignmentContainer.clear();

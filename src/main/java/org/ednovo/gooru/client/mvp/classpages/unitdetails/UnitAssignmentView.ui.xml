@@ -15,11 +15,8 @@
 				</g:HTMLPanel>
 				<hr />
 				<uc:UlPanel styleName="list-unstyled {unitStyle.unitMenu}">
-
 					<g:HTMLPanel ui:field="unitPanel"></g:HTMLPanel>
-
 				</uc:UlPanel>
-
 				<g:HTMLPanel styleName="{unitStyle.uniSetup}">
 					<g:Label styleName="{unitStyle.moreUnits}" ui:field="lblMoreUnits"></g:Label>
 				</g:HTMLPanel>
@@ -32,7 +29,6 @@
 				<g:HTMLPanel ui:field="containerPanel">
 				 <div class="row">
 						<div class="col-xs-12">
-							<g:Label ui:field="unitTitleDetails" styleName="col-xs-2 {unitStyle.unitHeading}" />
 							<g:HTMLPanel styleName="row {unitStyle.classOptionsMain}">
 									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.assignOverOptions} text-center">
 										<g:InlineLabel styleName="{unitStyle.bubbleSmall}"></g:InlineLabel> 
@@ -63,6 +59,7 @@
 									</g:HTMLPanel>
 									
 							</g:HTMLPanel>
+							<g:Label ui:field="unitTitleDetails" styleName="{unitStyle.unitHeading}" />
 							<div class="clearfix"></div>
 						</div>
 					</div> 
