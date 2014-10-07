@@ -170,7 +170,7 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 				unitsAssignmentWidgetView.setTotalHitCount(0);
 			}
 			
-			unitsAssignmentWidgetView.setAssignmentsForUnit();
+//			unitsAssignmentWidgetView.setAssignmentsForUnit();
 			//unitsAssignmentWidgetView.getAddAssignmentButton().addClickHandler(new AddAssignmentToUnit(classListUnitsListDo));
 			unitsAssignmentWidgetView.setPathwayId(classListUnitsListDo.getResource().getGooruOid());
 			unitAssignmentWidgetContainer.add(unitsAssignmentWidgetView);

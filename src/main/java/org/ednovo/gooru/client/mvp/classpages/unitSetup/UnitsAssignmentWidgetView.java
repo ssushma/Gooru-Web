@@ -193,7 +193,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 				for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 					ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
 					if(isStudentMode){
-						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),insightsUserList));
+						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),insightsUserList.get(i)));
 					}else{
 						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),null));
 					}
@@ -817,7 +817,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	public void getAnalyticData(){
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		String gooruUId=classUnitsDo.getResource().getUser().getGooruUId();
+		String gooruUId=AppClientFactory.getLoggedInUser().getGooruUId();
 		String pathwayId=classUnitsDo.getResource().getGooruOid();
 		
 	 	AppClientFactory.getInjector().getClasspageService().getAssignmentData(gooruUId, classpageId, 20, 0, pathwayId, new SimpleAsyncCallback<List<InsightsUserDataDo>>() {
@@ -826,7 +826,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 			public void onSuccess(List<InsightsUserDataDo> result) {
 //				getView().setAssignments(result);
 				insightsUserList=result;
-				System.out.println("sucesss:"+result.size());
 				setAssignmentsForUnit();
 			}
 		});		

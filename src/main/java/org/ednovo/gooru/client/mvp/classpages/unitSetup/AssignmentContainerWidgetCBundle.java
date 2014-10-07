@@ -39,6 +39,8 @@ import com.google.gwt.resources.client.CssResource;
 		String greenBubble();
 		String redBubble();
 		String stylishBub();
+		String redCircle();
+		String greenCircle();
 		
 	}
 
