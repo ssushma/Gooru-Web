@@ -944,7 +944,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void scoreHederView(ClassUnitsListDo classUnitsListDo) {
 		scoreHedingContainer.clear();
 		ScoreHedingView scoreHedingView = null;
-
+		
 		ClassUnitsListDo classUnits=getClassUnitsListDo();
 		
 		if(classUnits==null){
@@ -961,6 +961,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			scoreHedingView.showUnitStatus();
 			scoreHedingContainer.add(scoreHedingView);
 		}
+		clearValues();
 		showUnitsStudyingTime(classUnits);
 		txtHours.addKeyPressHandler(scoreHedingView.new HasNumbersOnly());
 		txtMinuts.addKeyPressHandler(scoreHedingView.new HasNumbersOnly());
@@ -1153,11 +1154,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					if(Integer.parseInt(min) >59 || Integer.parseInt(min) <0){
 //						txtMinuts.setText(getValidationTime(min, false));
 						setTimeValidation(i18n.GL2251(),MINUTES);
-					}else{
+					}/*else{
 						txtHours.getElement().setAttribute("style", "border-color: #efefef !important;");
 						txtMinuts.getElement().setAttribute("style", "border-color: #efefef !important;");
 						lblTimeValidation.setVisible(false);
-					}
+					}*/
 				}catch(Exception exception){
 
 				}
@@ -1380,6 +1381,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			collectionView.setCollectionSummaryData(collectionSummaryMetaDataDo);
 		}
 		
+	}
+
+	@Override
+	public void clearValues() {
+		lblTimeValidation.setVisible(false);
+		txtHours.getElement().setAttribute("style", "border-color: #efefef !important;");
+		txtMinuts.getElement().setAttribute("style", "border-color: #efefef !important;");
 	}
 	
 }

@@ -46,5 +46,6 @@ public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentU
 	public void resetUnitAssignmentView();
 	public HTMLPanel getAssignmentPanel();
 	public void setCollectionSummaryData(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo);
+	void clearValues();
 
 }

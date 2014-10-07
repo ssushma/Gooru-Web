@@ -123,6 +123,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
 						int number=Integer.parseInt(seqNumber);
 						number=number-1;
+						getView().clearValues();
 						getView().scoreHederView(classDo.getSearchResults().get(number));
 					}
 				}
