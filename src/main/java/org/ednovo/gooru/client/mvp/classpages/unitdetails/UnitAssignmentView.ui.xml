@@ -100,7 +100,7 @@
 						<div class="col-xs-12 scoreProggressMain">
 							<div class="">
 								<g:HTMLPanel ui:field="scoreHedingContainer"></g:HTMLPanel>
-								   <div class="col-xs-4"> <div class="scorMetInner"> <div class="scoreHeding">Time Studing</div> 
+								   <div class="col-xs-4"> <div class="scorMetInner"> <div class="scoreHeding">Time Studying</div> 
 										<div class="goalTracker"> <div class="circle" id="tracker"> 
 										<g:Label styleName="{unitStyle.circle}" ui:field="lblGreenControl" ></g:Label>
 									    <g:Label styleName="{unitStyle.circle}" ui:field="lblControl"></g:Label> 
