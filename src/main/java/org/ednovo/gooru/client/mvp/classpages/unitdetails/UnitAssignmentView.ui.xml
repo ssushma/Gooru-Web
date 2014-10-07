@@ -29,6 +29,8 @@
 				<g:HTMLPanel ui:field="containerPanel">
 				 <div class="row">
 						<div class="col-xs-12">
+								<g:Label ui:field="unitTitleDetails" styleName="{unitStyle.unitHeading}" />
+							<div class="clearfix"></div>
 							<g:HTMLPanel styleName="row {unitStyle.classOptionsMain}">
 									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.assignOverOptions} text-center">
 										<g:InlineLabel styleName="{unitStyle.bubbleSmall}"></g:InlineLabel> 
@@ -59,8 +61,7 @@
 									</g:HTMLPanel>
 									
 							</g:HTMLPanel>
-							<g:Label ui:field="unitTitleDetails" styleName="{unitStyle.unitHeading}" />
-							<div class="clearfix"></div>
+					
 						</div>
 					</div> 
 					<!-- This widget Is used to display Circle -->
