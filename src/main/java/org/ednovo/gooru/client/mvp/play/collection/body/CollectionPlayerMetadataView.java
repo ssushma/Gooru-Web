@@ -253,7 +253,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 				authorPanel.getElement().getStyle().setHeight(253, Unit.PX);
 			}
 			else if(collectionDo.getKeyPoints().length()>100){
-				authorPanel.getElement().getStyle().setHeight(130, Unit.PX);
+				authorPanel.getElement().getStyle().setHeight(180, Unit.PX);
 			}
 			else{
 				authorPanel.getElement().getStyle().setHeight(100, Unit.PX);
