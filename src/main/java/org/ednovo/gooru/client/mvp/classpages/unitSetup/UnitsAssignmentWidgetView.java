@@ -589,8 +589,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 		clearAssignmentsFromDo();
 		setLoadingIcon(true);
 		getUnitAssignments(getAssignmentOffsetValue(NEXT),isEditMode(),NEXT);
-		
-		AppClientFactory.fireEvent(new DisplayNextSetAssignmentsEvent(getAssignmentOffsetValue(NEXT), "next"));
 	}
 	
 
@@ -604,7 +602,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 		clearAssignmentsFromDo();
 		setLoadingIcon(true);
 		getUnitAssignments(getAssignmentOffsetValue(PREVIOUS),isEditMode(),PREVIOUS);
-		AppClientFactory.fireEvent(new DisplayNextSetAssignmentsEvent(getAssignmentOffsetValue(PREVIOUS), "previous"));
 	}
 	
 	/**
