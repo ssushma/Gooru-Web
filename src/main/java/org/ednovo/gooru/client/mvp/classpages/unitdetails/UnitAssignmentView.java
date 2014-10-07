@@ -719,12 +719,27 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			classPageId= AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 		}
 		unitId = AppClientFactory.getPlaceManager().getRequestParameter("uid",null);
+		if(assignmentOffset<0)
+		{
+			assignmentOffset = 0;
+		}
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classPageId, unitId, "sequence", assignmentLimit, assignmentOffset, new SimpleAsyncCallback<UnitAssignmentsDo>() {
 
 			@Override
 			public void onSuccess(UnitAssignmentsDo result) {
+				
+				if(result.getTotalHitCount() != null){
+					totalAssignmentHitcount = result.getTotalHitCount();
+				}else{
+					totalAssignmentHitcount = 0;
+				}
+
+				
 				classUnitsDo.getResource().setCollectionItems(result.getSearchResults());
 				classUnitsDo.getResource().setItemCount(result.getTotalHitCount());
+				
+
+				
 				if(isAssignmentEditmode){
 					//setAssignmentsEditView();
 				}else{
@@ -754,6 +769,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		requiredText.setText(i18n.GL2222());
 		circleContainerPanel.clear();
 		circleContainerPanel.add(requiredText);
+
+		if(totalAssignmentHitcount==0){
+			Label noAssignmentlabel = new Label(i18n.GL2202());
+			circleContainerPanel.clear();
+			circleContainerPanel.add(noAssignmentlabel);
+		}
+		
 		if(classUnitsDo!=null){
 			leftArrow.setUrl("images/leftSmallarrow.png");
 			leftArrow.getElement().setAttribute("style","margin-left: 10px");
@@ -971,7 +993,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					txtMinuts.setText(timeSplit[1]);
 				}
 			}
-			System.out.println("::::"+txtHours.getText().replace("hrs", "h"));
+
 			timeLablePanel.setVisible(true);
 			lblTimeHours.setText(txtHours.getText().replace("hrs", "h"));
 			lblTimeMin.setText(txtMinuts.getText());
@@ -981,10 +1003,10 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			txtMinuts.setVisible(false);
 			btnSetGoal.setStyleName("secondary");
 			btnSetGoal.setText(EDITGOAL);
-			System.out.println("showUnitsstydingtime");
+
 			lblControl.getElement().setAttribute("style", "-webkit-transform: rotate(-50deg);");
 		}else{
-			System.out.println("enter:::::::::else");
+	
 			txtHours.setVisible(true);
 			txtMinuts.setVisible(true);
 			txtHours.setText("");
@@ -1216,8 +1238,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					btnSetGoal.setStyleName("primary");
 					showAndHideTextBox();
 					btnSetGoal.setText(SETGOAL);
-					System.out.println("txtMinuts:"+txtMinuts.getText());
-					System.out.println("texthours:"+txtHours.getText());
+
 				}
 
 			}catch(Exception e){
@@ -1225,7 +1246,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			}
 
 		}else{
-			System.out.println("validations");
+
 			setTimeValidation(i18n.GL2250(),"");
 		}
 
@@ -1250,7 +1271,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	 * To set the time validation msgs
 	 */
 	private void setTimeValidation(String msg, String type) {
-		System.out.println("enter");
 		if(!type.isEmpty()){
 			if(type.equals(MINUTES)){
 				txtMinuts.getElement().setAttribute("style", "border-color: #FBB03B !important;");
@@ -1269,7 +1289,6 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		@Override
 		public void updateUnitSetGoal(int minimumScoreByUser, int assignmentStatus,
 				String timeStudying) {
-			System.out.println("unithandleer");
 			if(assignmentStatus!=0){
 				classUnitsListDo.setAssignmentCompleted(assignmentStatus);
 			}
