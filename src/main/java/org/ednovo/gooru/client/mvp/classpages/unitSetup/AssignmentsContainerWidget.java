@@ -257,15 +257,14 @@ public class AssignmentsContainerWidget extends Composite  {
 	  */
 
 	 private void setAssignmentCircleStatus(){
-		 System.out.println("setAssignmentCircleStatus");
-		 if(insightsUserDataDo.getStatus() != null && insightsUserDataDo.getStatus().equals("1"))
+
+		 if((insightsUserDataDo.getStatus() != null && insightsUserDataDo.getStatus().equals("1")) ||(classpageItemDo.getStatus() != null && classpageItemDo.getStatus().equalsIgnoreCase("completed")) )
 		 {
 			 unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.greenBubble());
 
 		 }else if(insightsUserDataDo.getUserData()!= null && insightsUserDataDo.getMinimumScore()!=null){
 
 			 if(insightsUserDataDo.getUserData().get(0).getGradeInPercentage()!=null){
-				 System.out.println("score"+insightsUserDataDo.getScore());
 				 String grade=insightsUserDataDo.getUserData().get(0).getGradeInPercentage();
 				 String minScore=insightsUserDataDo.getMinimumScore();
 				 if(grade.equals(minScore)|| Integer.parseInt(grade)>Integer.parseInt(minScore)){
@@ -276,13 +275,7 @@ public class AssignmentsContainerWidget extends Composite  {
 			 }
 
 		 }
-		 /*if(insightsUserDataDo.getIsRequired() != null)
-			{
-				if(!classpageItemDo.getIsRequired())
-				{
-					unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.stylishBub());
-				}
-			}*/
+
 	 }
 
 }
