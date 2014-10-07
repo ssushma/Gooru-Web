@@ -116,6 +116,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 	private int assignmentOffset=0;
 	private int assignmentLimit=10;
 	
+	private int insightOffset=0;
+	private int insightLimit=10;
+	
 	boolean isDeleted=false;
 	private boolean isEditMode=false;
 	private boolean isReorderPopupShowing = false;
@@ -193,7 +196,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 				for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 					ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
 					if(isStudentMode){
-						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),insightsUserList.get(i)));
+						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),insightsUserList.get(i+insightOffset)));
 					}else{
 						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),null));
 					}
@@ -587,8 +590,10 @@ public class UnitsAssignmentWidgetView extends Composite {
 	@UiHandler("htPanelNextArrow")
 	public void clickOnNextArrow(ClickEvent clickEvent){
 		clearAssignmentsFromDo();
+		insightOffset=insightOffset+insightLimit;
 		setLoadingIcon(true);
 		getUnitAssignments(getAssignmentOffsetValue(NEXT),isEditMode(),NEXT);
+//		AppClientFactory.fireEvent(new DisplayNextSetAssignmentsEvent(getAssignmentOffsetValue(NEXT), "next"));
 	}
 	
 
@@ -600,8 +605,10 @@ public class UnitsAssignmentWidgetView extends Composite {
 	@UiHandler("htPanelPreviousArrow")
 	public void clickOnPreviousArrow(ClickEvent clickEvent){
 		clearAssignmentsFromDo();
+		insightOffset=Math.abs(insightOffset-insightLimit);
 		setLoadingIcon(true);
 		getUnitAssignments(getAssignmentOffsetValue(PREVIOUS),isEditMode(),PREVIOUS);
+//		AppClientFactory.fireEvent(new DisplayNextSetAssignmentsEvent(getAssignmentOffsetValue(PREVIOUS), "previous"));
 	}
 	
 	/**
