@@ -27,7 +27,6 @@ package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -43,7 +42,6 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
@@ -96,7 +94,7 @@ public class AssignmentsContainerWidget extends Composite  {
 
 	private ClasspageItemDo classpageItemDo = null;
 	
-	private List<InsightsUserDataDo> insightsUserList;
+	private InsightsUserDataDo insightsUserDataDo;
 	
 	private String unitId = null;
 	
@@ -104,14 +102,14 @@ public class AssignmentsContainerWidget extends Composite  {
 	/**
 	 * Class constructor
 	 * @param classpageItemDo {@link ClasspageItemDo}
-	 * @param insightsUserList 
+	 * @param insightsUserDataDo 
 	 */
-		public AssignmentsContainerWidget(ClasspageItemDo classpageItemDo, String unitId, List<InsightsUserDataDo> insightsUserList){ 
+		public AssignmentsContainerWidget(ClasspageItemDo classpageItemDo, String unitId, InsightsUserDataDo insightsUserDataDo){ 
 
 		initWidget(uibinder.createAndBindUi(this));
 		this.classpageItemDo = classpageItemDo;
 		this.unitId = unitId;  
-		this.insightsUserList=insightsUserList;
+		this.insightsUserDataDo=insightsUserDataDo;
 		unitCircleView.setUnitSequenceNumber(classpageItemDo.getItemSequence());
 		unitCircleView.getElement().setId(classpageItemDo.getCollectionItemId());
 		
@@ -121,8 +119,6 @@ public class AssignmentsContainerWidget extends Composite  {
 		}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
 			
 		}
-		
-		
 		
 		assignmentThumbnail.setUrl(classpageItemDo.getResource().getThumbnails().getUrl());
 		if(classpageItemDo.getStatus() != null)
@@ -146,6 +142,10 @@ public class AssignmentsContainerWidget extends Composite  {
 	        	hidePopup(event);
 	          }
 	    });
+		
+		if(insightsUserDataDo!=null){
+			setAssignmentCircleStatus();
+		}
 		
 	}
 	
@@ -251,4 +251,38 @@ public class AssignmentsContainerWidget extends Composite  {
 			}
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	 }
+	 
+	 /**
+	  * To set the status colors for Assignment circles based on student progress
+	  */
+
+	 private void setAssignmentCircleStatus(){
+		 System.out.println("setAssignmentCircleStatus");
+		 if(insightsUserDataDo.getStatus() != null && insightsUserDataDo.getStatus().equals("1"))
+		 {
+			 unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.greenBubble());
+
+		 }else if(insightsUserDataDo.getUserData()!= null && insightsUserDataDo.getMinimumScore()!=null){
+
+			 if(insightsUserDataDo.getUserData().get(0).getGradeInPercentage()!=null){
+				 System.out.println("score"+insightsUserDataDo.getScore());
+				 String grade=insightsUserDataDo.getUserData().get(0).getGradeInPercentage();
+				 String minScore=insightsUserDataDo.getMinimumScore();
+				 if(grade.equals(minScore)|| Integer.parseInt(grade)>Integer.parseInt(minScore)){
+					 unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.greenCircle());
+				 }else{
+					 unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.redCircle());
+				 }
+			 }
+
+		 }
+		 /*if(insightsUserDataDo.getIsRequired() != null)
+			{
+				if(!classpageItemDo.getIsRequired())
+				{
+					unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.stylishBub());
+				}
+			}*/
+	 }
+
 }
