@@ -223,19 +223,18 @@ public class ScoreHedingView extends Composite {
 
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
-			if (!Character.isDigit(event.getCharCode()) 
-					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
-					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
-					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
-					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
-					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
-					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
-					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
-				((TextBox) event.getSource()).cancelKey();
+			if((event.getNativeEvent().getKeyCode() > 57 || event.getNativeEvent().getKeyCode() < 48) && (event.getNativeEvent().getKeyCode() != 45))
+			{
+				((TextBox) event.getSource()).cancelKey();	
+			}else
+			{
+				
 			}
+			
 
 		}
-	}
+	}	
+
 	/**
 	 * Click event for Set Goal Button
 	 * @param clickEvent
