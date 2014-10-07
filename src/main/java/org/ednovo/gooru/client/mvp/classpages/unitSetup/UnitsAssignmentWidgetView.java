@@ -593,7 +593,6 @@ public class UnitsAssignmentWidgetView extends Composite {
 		insightOffset=insightOffset+insightLimit;
 		setLoadingIcon(true);
 		getUnitAssignments(getAssignmentOffsetValue(NEXT),isEditMode(),NEXT);
-		
 //		AppClientFactory.fireEvent(new DisplayNextSetAssignmentsEvent(getAssignmentOffsetValue(NEXT), "next"));
 	}
 	
