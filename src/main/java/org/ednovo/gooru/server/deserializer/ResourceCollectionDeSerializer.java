@@ -185,6 +185,9 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	public static final String PUBLISHER="publisher";
 	
 	public static final String HOST="host";
+	
+	public static final String ITEMSEQUENCE="itemSequence";
+	
 
 	public static ResourceSearchResultDo deserializeRecord(JSONObject recordJsonObject) {
 		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
@@ -455,6 +458,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 					}	
 				}
 				resourceDo.setAssets(assetsList);
+				
 					
 			}
 			
@@ -468,6 +472,13 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		
 		
 		collectionItemDo.setResource(resourceDo);
+		System.out.println("ininindesc");
+		try {
+			collectionItemDo.setItemSequence(recordJsonObject.getInt(ITEMSEQUENCE));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return collectionItemDo;
 		
 	}

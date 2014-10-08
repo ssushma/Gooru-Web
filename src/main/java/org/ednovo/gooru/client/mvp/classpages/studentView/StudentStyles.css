@@ -408,7 +408,7 @@
 	width: 80px;
 }
 .classpageClasscode {
-	width: 910px;
+	width: 970px;
 	margin: 0 auto;
 	background-color: #ffffff;
 	padding-left: 30px;
@@ -421,6 +421,7 @@
 	border-top-left-radius: 0px;
 	-webkit-border-top-right-radius: 0px;
 	-moz-border-top-right-radius: 0px;
+	margin-bottom:20px;
 }
 .studentWithdrawStyle{
 	padding: 9px 12px !important;

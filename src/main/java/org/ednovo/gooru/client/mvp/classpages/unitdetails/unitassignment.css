@@ -1,0 +1,1115 @@
+.unitDetails .containerTeacher {
+	background: #ffffff;
+	border-top: 1px solid #CCCCCC;
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.unitDetails .containerTeacher .leftPanel {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 0;
+	padding-right: 0;
+	width: 13.6667% !important;
+}
+
+.unitDetails .containerTeacher .leftPanel hr {
+	margin: -1px auto -1px;
+	width: 70%;
+	z-index: 9;
+	position: relative;
+}
+
+.unitDetails .containerTeacher .rightPanel {
+	padding-top: 30px;
+	padding-bottom: 30px;
+	border-left: 1px solid #EFEFEF;
+	width: 86.3333% !important;
+	min-height: 350px;
+}
+
+.uniSetup a {
+	padding: 20px 5px;
+	display: inline-block;
+	font-size: 12px;
+	line-height: 25px;
+}
+
+.uniSetup a:hover {
+	text-decoration: none;
+}
+
+.uniSetup img {
+	margin-left: 8px;
+}
+
+.unitMenu li {
+	z-index: 97;
+	position: relative;
+}
+
+.unitMenu li a {
+	color: #666666;
+	font-size: 12px;
+	padding: 30px 15px;
+	display: block;
+	border-left: 5px solid #ffffff;
+}
+
+.unitMenu li span.number {
+	color: #0073BC;
+	font-weight: bold;
+	padding-right: 12px;
+	font-size: 14px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.unitMenu li span.name {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.unitMenu li a:hover {
+	
+}
+
+.unitMenu li.active {
+	color: #666666;
+	font-size: 12px;
+	background: #EFEFEF;
+	border-left: 5px solid #75AED7;
+}
+.unitHeading {
+	font-size: 16px;
+	font-weight: 600;
+	color: #515151;
+	margin-left:2%;
+}
+.uniRequired .bubbleStyle{
+	width:20px;
+	height:20px;
+	background:#B9BBCA url(images/liners.png) repeat;
+	border-radius:50% 50%;
+	-webkit-border-radius:50% 50%;
+	-moz-border-radius:50% 50%;
+	vertical-align:middle;
+	display:inline-block;
+}
+
+.uniRequired {
+	font-size: 10px;
+	line-height: 22px;
+}
+
+.uniRequired .bubble {
+	width: 20px;
+	height: 20px;
+	background: #B9BBCA;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.uniRequired .bubbleStyle {
+	width: 20px;
+	height: 20px;
+	background: #B9BBCA url(../images/bubble-pattren1.png) repeat;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.generalSet {
+	margin: 15px 0;
+}
+
+.generalSet .bubbleBig {
+	width: 34px;
+	height: 34px;
+	background: #B9BBCA;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	vertical-align: middle;
+	display: inline-block;
+	margin: 3px 3px;
+	text-align: center;
+	line-height: 34px;
+	color: #ffffff;
+	font-weight: bold;
+	border: 2px solid #ffffff;
+}
+
+.generalSet .bubbleOuter {
+	width: 40px;
+	height: 40px;
+	background: #ffffff;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	vertical-align: middle;
+	display: inline-block;
+	margin: 0 13px;
+}
+
+.generalSet .bubbleOuter:hover {
+	background: #87BADD;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	opacity: 1;
+}
+
+.generalSet .active {
+	background: #87BADD;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+}
+
+.generalSet .bubbleMain {
+	display: inline;
+}
+
+.generalSet .leftArrow,.generalSet .rightArrow {
+	display: inline;
+}
+
+.generalSet .genHead {
+	display: inline;
+	margin-right: 15px;
+}
+
+.rowInner {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.personalBtn p {
+	background: url(../images/blueLine.png) no-repeat center center;
+	margin: 5px 0;
+}
+
+.assignMain {
+	border: 5px solid #EEEEEE;
+	padding: 15px 15px;
+}
+
+.assignHeaderMain {
+	margin-top: 15px;
+}
+
+.assignHeader {
+	padding: 10px 20px;
+	background: #EEEEEE;
+	float: left;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.onoffbtns {
+	float: left;
+	margin-left: 15px;
+}
+
+.onoffbtns .text-muted {
+	color: #EEEEEE;
+}
+
+.assignButtons {
+	float: right;
+}
+
+.switchContainer {
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	width: 59px;
+	height: 28px;
+	padding: 3px;
+	vertical-align: middle;
+	background-color: white;
+	border-radius: 18px;
+	box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	cursor: pointer;
+	background-image: -webkit-linear-gradient(top, #eeeeee, white 25px);
+	background-image: -moz-linear-gradient(top, #eeeeee, white 25px);
+	background-image: -o-linear-gradient(top, #eeeeee, white 25px);
+	background-image: linear-gradient(to bottom, #eeeeee, white 25px)
+}
+
+.dueDate {
+	float: right;
+	padding: 12px 0 0;
+}
+
+.assignDetailsHeader {
+	font-size: 14px;
+	font-weight: bold;
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+.assignDetailsHeader span {
+	font-size: 12px;
+	font-weight: normal;
+	font-style: italic;
+	color: #cccccc;
+}
+
+.borderBox {
+	border: 1px solid #EEEEEE;
+	padding: 15px 15px;
+	margin: 15px 0;
+}
+
+.direction {
+	font-weight: bold;
+}
+
+.direction .form-control {
+	width: 91%;
+	display: inline-block;
+	font-weight: normal;
+	color: #515151 !important;
+	opacity: 1;
+	border-radius: 0 0;
+	box-shadow: none;
+	margin-left: 5px;
+	font-size: 12px;
+}
+
+.score .leftScore {
+	padding-left: 0 !important;
+}
+
+.score .leftScore .form-control {
+	width: auto;
+	color: #0078C0 !important;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.score .rightScore {
+	text-align: right;
+}
+
+.score .rightScore span {
+	font-weight: normal;
+}
+
+.score .rightScore .form-control {
+	width: 18%;
+	text-align: center;
+	color: #0078C0 !important;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.assaindetailsMain {
+	margin-top: 20px;
+}
+
+.collections .col-xs-2 {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+.collections .col-xs-2 {
+	width: 17.667%;
+}
+
+.collections .col-xs-9 {
+	width: 82%;
+	padding-right: 0 !important;
+}
+
+.collections .col-xs-9 h3 {
+	margin: 0 0 10px 0;
+	font-size: 16px;
+	font-weight: bold;
+	color: #1076BA;
+}
+
+.collections .collectionsNum {
+	text-align: right;
+}
+
+.collections .collectionsNum .number {
+	padding: 5px 5px;
+	background: #666666;
+	color: #ffffff;
+	border-radius: 3px 3px;
+	display: inline;
+}
+
+.collections .collectionsNum .plusNum {
+	display: inline;
+	color: #0078C0;
+	font-weight: bold;
+}
+
+.analytics {
+	width: 100%;
+	float: left;
+	background: #eeeeee;
+	padding: 15px 15px;
+}
+
+.analytics .anaBoxes {
+	margin-top: 20px;
+}
+
+.analytics .anaBoxes .boxbg {
+	background: #ffffff;
+	min-height: 150px;
+	width: 100%;
+	margin-right: 15px;
+	padding: 10px 10px;
+}
+
+.inputnoBorder {
+	border: none !important;
+}
+
+/* new added css */
+.unitPanelStyle {
+	color: #666666;
+	font-size: 12px;
+	padding: 30px 15px;
+	display: block;
+	border-left: 5px solid #ffffff;
+	cursor: pointer;
+}
+
+.unitPanelnumber {
+	color: #0073BC;
+	font-weight: bold;
+	padding-right: 12px;
+	font-size: 14px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.unitPanelname {
+	display: inline-block;
+	vertical-align: middle;
+	width: 69px;
+	word-wrap: break-word;
+}
+
+.unitPanelStyle:hover {
+	color: #666666;
+	font-size: 12px;
+	background: #EFEFEF;
+	border-left: 5px solid #75AED7 !important;
+}
+
+.unitMenuActive {
+	color: #666666;
+	font-size: 12px;
+	background: #EFEFEF;
+	border-left: 5px solid #75AED7 !important;
+}
+
+.unitMenuActive:hover {
+	border-left: none;
+}
+
+.bubbleBig {
+	width: 34px;
+	height: 34px;
+	background: #B9BBCA;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	vertical-align: middle;
+	display: inline-block;
+	margin: 3px 3px;
+	text-align: center;
+	line-height: 34px;
+	color: #ffffff;
+	font-weight: bold;
+	border: 2px solid #ffffff;
+}
+
+.bubbleOuter {
+	/* width:40px;
+	height:40px; */
+	background: #ffffff;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	vertical-align: middle;
+	display: inline-block;
+	margin: 0 13px;
+}
+
+.bubbleMain {
+	display: inline;
+}
+
+.active {
+	background: #87BADD !important;
+	border-radius: 50% 50% !important;
+	-webkit-border-radius: 50% 50% !important;
+	-moz-border-radius: 50% 50% !important;
+}
+
+.bubbleOuter:hover {
+	background: #87BADD;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	opacity: 1;
+	cursor: pointer;
+}
+
+.bubbleOptional {
+	background: #b9bbca url(../images/liners.png) no-repeat !important;
+}
+
+.bubbleOptional:hover {
+	background: #87BADD;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	opacity: 1;
+	cursor: pointer;
+}
+
+.popupBox {
+	background: #ffffff;
+	padding: 8px 8px;
+	border: 1px solid #e9e9e9;
+	border-radius: 6px 6px;
+	box-shadow: 0 0 10px #eaeaea;
+	width: 290px;
+}
+
+.upArrow {
+	text-align: center;
+	margin-top: -24px;
+	margin-bottom: 15px;
+}
+
+.popHeader {
+	font-weight: bold;
+}
+
+.popDescription {
+	margin: 12px 0;
+}
+
+.dropBoxes {
+	font-weight: bold;
+	margin: 12px 0;
+	display: inline-block;
+	width: 100%;
+}
+
+.dropBoxes select {
+	width: 70px;
+	display: inline;
+	margin: 0 10px 0 5px;
+	border: 1px solid #dedede;
+	padding: 7px 5px;
+}
+
+.btnGroup {
+	text-align: center;
+	margin: 12px 0;
+}
+
+.popArrowInner {
+	
+}
+
+.moreUnits {
+	padding: 20px 15px;
+	display: block;
+	font-size: 12px;
+	line-height: 25px;
+	cursor: pointer;
+	color: #0066cc;
+}
+
+.dropdownListPlaceHolder {
+	background: url("images/dropdownMenuArrow.png") no-repeat;
+	background-color: white;
+	background-position: right center;
+	color: #999;
+	padding: 5px 25px 5px 5px;
+	border-bottom: 1px solid #DDD;
+	border: 1px solid #DDD;
+	cursor: pointer;
+	display: inline-block;
+	width: 40px;
+	height: auto;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif, Calibri;
+}
+
+.dropdownListContainerScrollPanel {
+	border: 1px solid #DDD;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	z-index: 9999;
+	max-height: 86px;
+	background-color: #f9f9f9;
+	width: 70px;
+	margin-left: 0px;
+	position: absolute !important;
+	left:0px;
+
+}
+
+.dropdownListContainer {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	z-index: 9999;
+	background-color: #F9F9F9;
+}
+
+.dropdownListItemContainer {
+	padding: 5px;
+	background: white;
+	margin: 0px;
+	font-family: Arial, sans-serif;
+	color: #515151;
+	font-size: 12px;
+}
+
+.dropdownListItemContainer:hover {
+	background-color: #CFE3F1;
+	cursor: pointer;
+}
+
+.dropdownPosition {
+	display: inline;
+	margin-right: 20px;
+}
+
+.dropdownPositionAss {
+	display: inline;
+}
+
+.dropdownListPlaceHolderMain {
+	position: relative;
+	display: inline;
+}
+
+
+/* Goal css */
+
+.teachTab {
+	margin: 0px auto;
+	padding-bottom: 40px;
+	text-align: center;
+	width: 50%;
+}
+
+.teachTab button:first-child {
+	background: -moz-linear-gradient(3% 0 -90deg, #fff 0px, #ddd 100%)
+		repeat scroll 0 0 rgba(0, 0, 0, 0);
+	border: 1px solid #ccc;
+	border-radius: 5px 0 0 5px;
+	color: #515151;
+	cursor: pointer;
+	padding: 12px 60px;
+}
+
+.teachTab button:last-child {
+	background: -moz-linear-gradient(3% 0 -90deg, #fff 0px, #ddd 100%)
+		repeat scroll 0 0 rgba(0, 0, 0, 0);
+	border: 1px solid #ccc;
+	border-radius: 0 5px 5px 0;
+	color: #515151;
+	cursor: pointer;
+	margin-left: -4px;
+	padding: 12px 60px;
+}
+
+.teachTab button {
+	background: -moz-linear-gradient(3% 0 -90deg, #fff 0px, #ddd 100%)
+		repeat scroll 0 0 rgba(0, 0, 0, 0);
+	border: 1px solid #ccc;
+	color: #515151;
+	cursor: pointer;
+	margin-left: -4px;
+	padding: 12px 60px;
+}
+
+.teachTab>.selected {
+	background: -moz-linear-gradient(3% 0 -90deg, #1076bb 0px, #579ecf 100%)
+		repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+	border: 1px solid #1076bb !important;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.15) inset !important;
+	color: #fff !important;
+	background-color: #1076bb;
+}
+
+.goalMain {
+	margin: 0 0;
+	width: 100%;
+}
+
+.goalMain .mdiumHeader {
+	font-size: 18px;
+}
+
+.goalMain .mdiumHeader span {
+	font-size: 13px;
+}
+
+.scoreProggressMain {
+	margin-top: 15px;
+}
+
+.scoreProggressMain .col-xs-4 .scorMetInner {
+	border: 2px solid #cccccc;
+	min-height: 180px;
+	padding: 10px 10px;
+	overflow: hidden;
+	text-align: center;
+}
+
+.scoreHeding {
+	font-size: 16px;
+}
+
+.sectionBlockMain {
+	margin-bottom: 25px;
+}
+
+.goalMain .borderBox {
+	margin: 15px 0 0 0;
+}
+
+.personalDetails {
+	margin-top: 15px;
+}
+
+.goalTracker {
+	margin-top: 20px;
+}
+
+.setGloalBtn {
+	margin-top: -130px;
+	position: relative;
+}
+
+#tracker {
+	background: none repeat scroll 0 0 #eeeeee;
+	height: 200px;
+	position: relative;
+	width: 200px;
+	overflow: hidden;
+}
+
+#controll {
+	background: none repeat scroll 0 0 #5399cc;
+	height: 8px;
+	position: absolute;
+	top: 56px;
+	left: 105px;
+	width: 118px;
+	border-radius: 0 0;
+	-webkit-transform: rotate(-176deg);
+	transform: rotate(-30deg);
+	-webkit-transform-origin: 0 100%;
+	transform-origin: 0 100%;
+}
+
+#redControll {
+	background: none repeat scroll 0 0 #fb7c73;
+	height: 155px;
+	position: absolute;
+	top: 56px;
+	left: 86px;
+	width: 340px;
+	border-radius: 0 0;
+	-webkit-transform: rotate(-119deg);
+	transform: rotate(-80deg);
+	-webkit-transform-origin: 0 100%;
+	transform-origin: 0 100%;
+}
+
+#greenControll {
+	background: none repeat scroll 0 0 #a0c79a;
+	height: 200px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 400px;
+	border-radius: 0 0;
+	-webkit-transform: rotate(-34deg);
+	transform: rotate(-34deg);
+	-webkit-transform-origin: 0 100%;
+	transform-origin: 0 100%;
+}
+
+.circle {
+	border-radius: 50%;
+	display: inline-block;
+	margin-right: 0px;
+}
+
+#circleMiddle {
+	background: none repeat scroll 0 0 #ffffff;
+	display: block;
+	height: 160px;
+	left: 10%;
+	position: absolute;
+	top: 10%;
+	width: 160px;
+}
+
+.emptybox {
+	height: 135px;
+	background: #ffffff;
+	width: 200px;
+	position: absolute;
+	bottom: 0;
+}
+
+.perTextBox input {
+	border: 1px solid #efefef;
+	padding: 8px 18px 8px 15px;
+	font-size: 14px;
+	color: #1e7cba;
+	text-align: center;
+	margin-bottom: 12px;
+	width: 43%;
+	background: url(images/Classpage/student/persentage.png) no-repeat
+		center right;
+}
+
+.selected {
+	background: -moz-linear-gradient(3% 0 -90deg, #1076bb 0px, #579ecf 100%)
+		repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+	border: 1px solid #1076bb !important;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.15) inset !important;
+	color: #fff !important;
+	background-color: #1076bb;
+}
+
+.col-xs-4 {
+	width: 33.33333333%;
+	float: left;
+	padding-right: 15px;
+	padding-left: 15px;
+	box-sizing: border-box;
+}
+
+.scorMetInner {
+	border: 2px solid #cccccc;
+	min-height: 180px;
+	padding: 10px 10px;
+	overflow: hidden;
+	text-align: center;
+}
+
+.timeTextBox input {
+	border: 1px solid #efefef;
+	padding: 8px 0px 8px 0px;
+	font-size: 14px;
+	color: #1e7cba;
+	text-align: center;
+	margin-bottom: 12px;
+	width: 35%;
+}
+
+.scoreLabelStyle {
+	font-size: 35px;
+	color: #ccc;
+	text-align: center;
+	padding: 0px 9px 0px 76px;
+	width: 31%;
+	margin-bottom: 4px;
+	background: url(images/Classpage/student/persentage.png) no-repeat
+		center right;
+}
+
+.timeLabelStyle {
+	font-size: 31px;
+	color: #ccc;
+	text-align: center;
+	/* width: 109%; */
+	display: inline-block;
+	margin-bottom: 6px;
+}
+
+/* student view assignment */
+.classOptionsMain {
+	margin-bottom: 10px;
+	margin-top:3px;
+}
+
+.smallerWidth {
+	width: 15.6667% !important;
+}
+
+.smallWidthGoalNotMet {
+	width: 14.6667% !important;
+}
+
+.smallWidthFDS {
+	width: 15.6667% !important;
+}
+
+.classOverOptions {
+	font-size: 10px;
+	padding-left: 3px !important;
+	padding-right: 3px !important;
+	line-height: 25px;
+}
+
+.bubbleSmall {
+	width: 20px;
+	height: 20px;
+	background: #B9BBCA;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.stylishBub {
+	background: #b9bbca url(../images/liners.png) repeat-x !important;
+}
+
+.redBubble {
+	background: #ff7d71 !important;
+}
+
+.greenBubble {
+	background: #a7c9a4 !important;
+}
+
+.smallWidth {
+	width: 13.6667% !important;
+}
+
+.bubbleSmallrounded {
+	width: 18px;
+	height: 18px;
+	background: #ffffff;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	vertical-align: middle;
+	display: inline-block;
+	border: 2px solid #c8c8c8;
+}
+
+.bubbleSmallPattren {
+	width: 20px;
+	height: 20px;
+	background: #B9BBCA url(../images/bubble-pattren1.png) repeat;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.assingmentcompleted {
+	background: #b9bbca url("images/checkMarkWhite.png") 7px 9px no-repeat
+		!important;
+}
+
+.assignmentCompletedWithOptional {
+	background: #b9bbca url(../images/liners.png) -37px -22px no-repeat
+		!important;
+}
+
+.assignmentStudyPopup {
+	/* display: block; */
+	
+}
+
+.assignmentStudyPopupArrow {
+	width: 0;
+	height: 0;
+	border: 10px solid;
+	border-color: transparent transparent white transparent;
+	position: relative;
+	top: 1px;
+	margin: auto;
+	border-top: none;
+	z-index: 100000;
+}
+
+.standardsinner {
+	color: #515151;
+	background-color: #FFF;
+	border: 1px solid #DDD;
+	font-size: 12px;
+	width: 369px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
+}
+
+.standardsPopup {
+	width: 200px;
+	padding: 10px;
+	float: left;
+}
+
+.circleInside {
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+	/* margin: -8px 2px 0px 2px; */
+	/* background: #B9BBCA; */
+	border-radius: 20px;
+	/* display: inline-block; */
+	vertical-align: top;
+	float: left;
+	position: relative;
+	display: inline-block;
+	float: left;
+	vertical-align: top;
+}
+
+.assignmentNumbers {
+	text-align: center;
+	font-size: 13px;
+	color: black;
+	margin: 5px auto;
+	/* font-weight: bold; */
+}
+
+.assignmentCollectionTitle {
+	/* color: #1076bb; */
+	display: inline-block;
+	font-size: 13px;
+	width: 222px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	float: left;
+	margin: 5px 0px;
+}
+
+.studyPlay {
+	width: 90px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #fff;
+	border-radius: 4px;
+	padding: 7px 29px 8px 7px;
+	background: #1076bb;
+	background: url(images/preview-arrow-small.png) 70px center no-repeat,
+		#1076bb;
+	background: url(images/preview-arrow-small.png) 70px center no-repeat,
+		-webkit-gradient(linear, 0 0, 0 100%, from(#4c98cc), to(#1076bb));
+	background: url(images/preview-arrow-small.png) 70px center no-repeat,
+		-webkit-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(images/preview-arrow-small.png) 70px center no-repeat,
+		-moz-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(images/preview-arrow-small.png) 70px center no-repeat,
+		-ms-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(images/preview-arrow-small.png) 70px center no-repeat,
+		-o-linear-gradient(top, #4c98cc, #1076bb);
+	float: right;
+	cursor: pointer;
+	margin-right: 22px;
+}
+
+.headerLeft {
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 10px;
+	width: 154px;
+}
+
+.studyPopup {
+	width: 300px;
+	padding: 10px;
+	float: left;
+}
+
+.dueDataIcon {
+	display: inline-block;
+	vertical-align: top;
+	background: url(images/Classpage/calendar.png) no-repeat;
+	padding-left: 21px;
+	height: 18px;
+	margin-bottom: 5px;
+}
+
+.headerDueDate {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.directionHeading {
+	font-size: 12px;
+	line-height: 120%;
+	font-weight: bold;
+	color: #515151;
+}
+
+.directionDesc {
+	color: #515151;
+}
+
+.directionStyle {
+	
+}
+
+.titleContainer {
+	float: left;
+	border-bottom: 1px solid #eee;
+	margin-bottom: 10px;
+}
+
+.bubbleBlueFeedBack {
+	width: 11px;
+	height: 11px;
+	background: #1076bb;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	vertical-align: middle;
+	display: inline-block;
+	border: 2px solid #1076bb;
+}
+
+.assignOverOptions {
+	font-size: 10px;
+	padding-left: 3px !important;
+	padding-right: 3px !important;
+	line-height: 25px;
+	margin-left: 106px;
+}
+
+.classOverOptions1 {
+	font-size: 10px;
+	padding-left: 3px !important;
+	padding-right: 3px !important;
+	line-height: 25px;
+	margin-left: -30px;
+}
+
+.classOverOptionsFeedback {
+	font-size: 10px;
+	padding-left: 3px !important;
+	padding-right: 3px !important;
+	line-height: 25px;
+	margin-left: 11px;
+}

@@ -978,7 +978,7 @@ public class ShelfCollectionResourceChildView extends
 									totalTimeSec = totalTimeInseconds
 											+ "";
 								}
-								startStopTimeDisplayText.setText(i18n.GL0957()+tolTimeInmin+":"+totalTimeSec);
+								startStopTimeDisplayText.setText(i18n.GL0957()+tolTimeInmin+" "+i18n.GL0958()+totalTimeSec+" "+i18n.GL0959());
 							}
 						}
 			});

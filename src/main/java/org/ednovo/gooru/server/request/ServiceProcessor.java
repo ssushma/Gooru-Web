@@ -375,7 +375,7 @@ public class ServiceProcessor {
     * @return instance of {@link JsonRepresentation}
     */
    public static JsonResponseRepresentation put(final String url, final String username, final String password) {
-       Form form = null;
+       Form form = new Form();
        return put(url, MediaType.APPLICATION_JSON, username, password, form);
    }
 	

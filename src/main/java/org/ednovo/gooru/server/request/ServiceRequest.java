@@ -29,7 +29,6 @@ package org.ednovo.gooru.server.request;
 
 
 import org.ednovo.gooru.shared.exception.ServerDownException;
-import org.ednovo.gooru.shared.exception.ServiceUnavailableException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.representation.Representation;

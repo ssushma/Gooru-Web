@@ -41,4 +41,12 @@ public interface CollectionEndUiHandlers extends BaseUiHandlers, SetPlayerLoginS
 	public void triggerCollectionShareDataEvent(String collectionId,String itemType, String shareType, boolean confirmStatus) ;
 	
 	public void getAvgReaction();
+	
+	public void getSessionsDataByUser(String collectionId, String classId, String userId);
+	
+	public void getCollectionMetaDataByUserAndSession(String collectionId, String classId, String userId, String sessionId);
+	
+	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId);
+	
+	public void setCollectionSummaryBasedOnClasspageIdSessionId();
 }

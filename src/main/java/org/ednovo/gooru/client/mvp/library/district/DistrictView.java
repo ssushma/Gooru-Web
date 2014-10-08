@@ -71,9 +71,10 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	}
 	
 	public DistrictView() {		
+		
 		setWidget(uiBinder.createAndBindUi(this));
 		setAssets(AppClientFactory.getCurrentPlaceToken());
-		
+		scrollFlag=false;
 	}
 	
 	@Override
@@ -82,6 +83,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	
 	@Override
 	public void loadFeaturedContributors(String callBack, String placeToken,ProfileLibraryListDo profileLibraryListDo) {
+		
 		if(callBack.equalsIgnoreCase(FEATURED_COURSE)) {
 			districtMenuNav.setSubjectPanelIds(profileLibraryListDo);
 			showCourseBanner(null, false);
@@ -225,6 +227,8 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	}
 
 	public void setTopicListData(ProfileLibraryDo profileLibraryDo, String folderId) {
+		
+		scrollFlag = false;
 		contentScroll.clear();
 		try {
 			setMetaDataContent(profileLibraryDo);
@@ -237,6 +241,8 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 	}
 
 	public void setTopicListData(ArrayList<ProfileLibraryDo> folderListDo, String folderId, ProfileLibraryDo profileLibraryDo) {
+		
+		scrollFlag = false;
 		contentScroll.clear();
 		try {
 			int count = 0;
@@ -327,7 +333,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.VALVERDE)) {
 			setLandingBannerMetaData("landingValverdeBanner", "250px", i18n.GL2075() + " " + i18n.GL0587(), districtStyleUc.valverdePartnerLogo(), true);
 		}else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.LUSD)) {
-			setLandingBannerMetaData("landingLusdBanner", "250px", i18n.GL2180(), districtStyleUc.lusdPartnerLogo(), true);
+			setLandingBannerMetaData("landingLusdBanner", "250px", i18n.GL2180_1(), districtStyleUc.lusdPartnerLogo(), true);
 		} else {
 			partnerLogo.setVisible(false);
 		}
@@ -395,43 +401,46 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 				com.google.gwt.user.client.Window.ScrollEvent event) {
 			String sharing = "public";
 			if(!scrollFlag){
-			if(totalCollectionCount>collectionCount){
-				scrollFlag=true;
-			AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(unitListId, sharing, 20,collectionCount, new SimpleAsyncCallback<ProfileLibraryListDo>() {
-
-				@Override
-				public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
-					//setTopicListData(profileLibraryListDo.getSearchResult(), unitListId, ProfileLibraryDoObj);
+						
+				if(totalCollectionCount>collectionCount){
+					scrollFlag=true;
+				
+				AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(unitListId, sharing, 20,collectionCount, new SimpleAsyncCallback<ProfileLibraryListDo>() {
+	
+					@Override
+					public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
+						//setTopicListData(profileLibraryListDo.getSearchResult(), unitListId, ProfileLibraryDoObj);
 					
-					try {
-						int count = 0;
-						totalCollectionCount= profileLibraryListDo.getCount();
-						collectionCount= collectionCount+profileLibraryListDo.getSearchResult().size();
-						if(totalCollectionCount>collectionCount){
-							scrollFlag=false;	
-						}
-						setMetaDataContent(ProfileLibraryDoObj);
-						if(profileLibraryListDo.getSearchResult().size()>0) {
-							for(int i = 0; i <profileLibraryListDo.getSearchResult().size(); i++) {
-								count++;
-								if(profileLibraryListDo.getSearchResult().get(i).getType().equals("scollection")) {
-									contentScroll.add(new ProfileTopicListView(profileLibraryListDo.getSearchResult().get(i), count, AppClientFactory.getCurrentPlaceToken(), "scollection"));
-								} else {
-									contentScroll.add(new ProfileTopicListView(profileLibraryListDo.getSearchResult().get(i), count, AppClientFactory.getCurrentPlaceToken()));
-								}
+						try {
+							int count = 0;
+							totalCollectionCount= profileLibraryListDo.getCount();
+							
+							collectionCount= collectionCount+profileLibraryListDo.getSearchResult().size();
+							if(totalCollectionCount>collectionCount){
+								scrollFlag=false;	
 							}
-						} else {
-							HTMLPanel emptyContainer = new HTMLPanel("");
-							contentScroll.add(emptyContainer);
+							setMetaDataContent(ProfileLibraryDoObj);
+							if(profileLibraryListDo.getSearchResult().size()>0) {
+								for(int i = 0; i <profileLibraryListDo.getSearchResult().size(); i++) {
+									count++;
+									if(profileLibraryListDo.getSearchResult().get(i).getType().equals("scollection")) {
+										contentScroll.add(new ProfileTopicListView(profileLibraryListDo.getSearchResult().get(i), count, AppClientFactory.getCurrentPlaceToken(), "scollection"));
+									} else {
+										contentScroll.add(new ProfileTopicListView(profileLibraryListDo.getSearchResult().get(i), count, AppClientFactory.getCurrentPlaceToken()));
+									}
+								}
+							} else {
+								HTMLPanel emptyContainer = new HTMLPanel("");
+								contentScroll.add(emptyContainer);
+							}
+							loadingPanel(false);
+						} catch (Exception e) {
+							e.printStackTrace();
+							loadingPanel(false);
 						}
-						loadingPanel(false);
-					} catch (Exception e) {
-						e.printStackTrace();
-						loadingPanel(false);
 					}
+				});
 				}
-			});
-			}
 		}
 		}
 	}

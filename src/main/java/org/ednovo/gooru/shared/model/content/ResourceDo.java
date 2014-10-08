@@ -52,6 +52,7 @@ public class ResourceDo extends ContentDo {
     private LicenseDo license;
     private String grade;
     private String mediaType;
+    private String gooruOid;
     
     private String encodedUrl;
     
@@ -117,6 +118,8 @@ public class ResourceDo extends ContentDo {
 	private List<String> host;
 	
 	private customFieldValuesDO customFieldValues;
+	
+	private List<CollectionItemDo> collectionItems;
 	
 	private UserDo user;
 	
@@ -559,6 +562,24 @@ public class ResourceDo extends ContentDo {
 	}
 	public void setResourceTags(ArrayList<ResourceTagsDo> resourceTags) {
 		this.resourceTags = resourceTags;
+	}
+	public String getGooruOid() {
+		return gooruOid;
+	}
+	public void setGooruOid(String gooruOid) {
+		this.gooruOid = gooruOid;
+	}
+	/**
+	 * @return the collectionItems
+	 */
+	public List<CollectionItemDo> getCollectionItems() {
+		return collectionItems;
+	}
+	/**
+	 * @param collectionItems the collectionItems to set
+	 */
+	public void setCollectionItems(List<CollectionItemDo> collectionItems) {
+		this.collectionItems = collectionItems;
 	}
 	
 	

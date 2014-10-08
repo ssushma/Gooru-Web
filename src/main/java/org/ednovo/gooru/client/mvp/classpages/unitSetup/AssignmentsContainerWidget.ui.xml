@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.mvp.classpages.unitdetails">
+	<ui:style field="style" src="unitsetup.css"/>
+	<ui:style field="unitStyle" src="unitsetup.css" type="org.ednovo.gooru.client.mvp.classpages.unitSetup.AssignmentContainerWidgetCBundle"/>
+
+	<g:HTMLPanel styleName="{style.classPic}">
+		<g:HTMLPanel styleName="{style.pic} showitem" >
+			<g:Image ui:field="assignmentThumbnail" styleName="{style.classpageResourceImage}"></g:Image>
+		</g:HTMLPanel>
+		<g:Label ui:field="dueDays" styleName="{style.daysCount} showitem"></g:Label>
+		<uc:UnitCricleView bubbleStyleName="{style.classBubble}" bubbleContainerStyle="" ui:field="unitCircleView"></uc:UnitCricleView>
+	</g:HTMLPanel>
+
+</ui:UiBinder>

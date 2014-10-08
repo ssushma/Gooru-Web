@@ -1,6 +1,10 @@
 package org.ednovo.gooru.shared.model.content;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.ednovo.gooru.shared.model.code.CodeDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -12,7 +16,7 @@ public class ClasspageItemDo implements Serializable{
 
 	public ClasspageItemDo(){}
 	
-	private String plannedEndDate;
+	private Long plannedEndDate;
 	private Integer totalHitCount;
 	private String collectionTitle;
 	private String direction; // narration from API
@@ -25,8 +29,64 @@ public class ClasspageItemDo implements Serializable{
 	private String classpageId;
 	private String status;
 	private Integer sequenceNumber;
+	private Boolean isRequired;
+	private Integer itemSequence;
+	private String estimatedTime;
+	private String minimumScore;
+	private String narration;
+	
+	private ResourceDo resource;
+	
+	private Integer minimumScoreByUser;
+	private Integer assignmentCompleted;
+	private Integer timeStudying;
 	
 	
+	private Set<StandardFo> standards = new HashSet<StandardFo>();
+	
+	
+	public Set<StandardFo> getStandards() {
+		return standards;
+	}
+	public void setStandards(Set<StandardFo> standards) {
+		this.standards = standards;
+	}
+	/**
+	 * @return the minimumScoreByUser
+	 */
+	public Integer getMinimumScoreByUser() {
+		return minimumScoreByUser;
+	}
+	/**
+	 * @param minimumScoreByUser the minimumScoreByUser to set
+	 */
+	public void setMinimumScoreByUser(Integer minimumScoreByUser) {
+		this.minimumScoreByUser = minimumScoreByUser;
+	}
+	/**
+	 * @return the assignmentCompleted
+	 */
+	public Integer getAssignmentCompleted() {
+		return assignmentCompleted;
+	}
+	/**
+	 * @param assignmentCompleted the assignmentCompleted to set
+	 */
+	public void setAssignmentCompleted(Integer assignmentCompleted) {
+		this.assignmentCompleted = assignmentCompleted;
+	}
+	/**
+	 * @return the timeStudying
+	 */
+	public Integer getTimeStudying() {
+		return timeStudying;
+	}
+	/**
+	 * @param timeStudying the timeStudying to set
+	 */
+	public void setTimeStudying(Integer timeStudying) {
+		this.timeStudying = timeStudying;
+	}
 	public String getUserNameDispaly() {
 		return userNameDispaly;
 	}
@@ -45,13 +105,13 @@ public class ClasspageItemDo implements Serializable{
 	/**
 	 * @return the plannedEndDate
 	 */
-	public String getPlannedEndDate() {
+	public Long getPlannedEndDate() {
 		return plannedEndDate;
 	}
 	/**
 	 * @param plannedEndDate the plannedEndDate to set
 	 */
-	public void setPlannedEndDate(String plannedEndDate) {
+	public void setPlannedEndDate(Long plannedEndDate) {
 		this.plannedEndDate = plannedEndDate;
 	}
 	/**
@@ -162,6 +222,53 @@ public class ClasspageItemDo implements Serializable{
 	public void setSequenceNumber(Integer sequenceNumber) {
 		this.sequenceNumber = sequenceNumber;
 	}
-	
+	/**
+	 * @return the isRequired
+	 */
+	public Boolean getIsRequired() {
+		return isRequired;
+	}
+	/**
+	 * @param isRequired the isRequired to set
+	 */
+	public void setIsRequired(Boolean isRequired) {
+		this.isRequired = isRequired;
+	}
+	/**
+	 * @return the resource
+	 */
+	public ResourceDo getResource() {
+		return resource;
+	}
+	/**
+	 * @param resource the resource to set
+	 */
+	public void setResource(ResourceDo resource) {
+		this.resource = resource;
+	}
+	public Integer getItemSequence() {
+		return itemSequence;
+	}
+	public void setItemSequence(Integer itemSequence) {
+		this.itemSequence = itemSequence;
+	}
+	public String getEstimatedTime() {
+		return estimatedTime;
+	}
+	public void setEstimatedTime(String estimatedTime) {
+		this.estimatedTime = estimatedTime;
+	}
+	public String getMinimumScore() {
+		return minimumScore;
+	}
+	public void setMinimumScore(String minimumScore) {
+		this.minimumScore = minimumScore;
+	}
+	public String getNarration() {
+		return narration;
+	}
+	public void setNarration(String narration) {
+		this.narration = narration;
+	}
 
 }

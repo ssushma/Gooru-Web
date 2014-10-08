@@ -34,6 +34,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.uc.AssignmentEditLabelUc;
+import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
@@ -88,8 +89,6 @@ public interface IsEditClasspageView extends IsViewWithHandlers<EditClasspageUiH
 	
 	public void setClasspageData(ClasspageDo classpageDo);
 	
-	public void setSortingOrderInDropdown(String sortingOrder);
-	
 	
 	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList, String tab, String analyticsId, String monitorId,ClassListPresenter classListPresenter,int assignmentsCount);
 	
@@ -97,30 +96,7 @@ public interface IsEditClasspageView extends IsViewWithHandlers<EditClasspageUiH
 	
 	public void setClasspageItemOnTop(ClasspageItemDo classpageItemDo);
 	
-	public FlowPanel getClassListContainer();
-	
 	public AssignmentEditLabelUc getCollectionTitleUc();
-
-	/**
-	 * @function displayAssignmentPath 
-	 * 
-	 * @created_date : Jun 11, 2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @param classpageList
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
-	
-	void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageList);
 
 	/**
 	 * @function callAssignmentAPI 
@@ -167,6 +143,7 @@ public interface IsEditClasspageView extends IsViewWithHandlers<EditClasspageUiH
 	
 	ArrayList<ClasspageItemDo> getGlobalClasspageProcess();
 
+
 	/**
 	 * @function hideNoAssignmentsMessagePanel 
 	 * 
@@ -186,4 +163,6 @@ public interface IsEditClasspageView extends IsViewWithHandlers<EditClasspageUiH
 	*/
 	
 	void hideNoAssignmentsMessagePanel();
+	
+	public void highlightTab(String tabValue);
 }

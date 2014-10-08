@@ -1,0 +1,35 @@
+.collection_teacher_tab_container {
+	Width: 100%;
+	float: left;
+	position: relative;
+	top: -3px;
+	padding-left: 5px;
+}
+
+.tabs_teacher_Summary {
+	font-size: 13px;
+	float: left;
+	/* width: 93%; */
+	border-radius: 5px;
+	margin-top: 25px;
+}
+
+.viewSummaryText {
+	padding-left: 5px;
+	padding-right: 10px;
+}
+
+.list_inline {
+	padding-left: 0;
+	margin-left: -5px;
+	list-style: none;
+}
+
+.list_inline div {
+	display: inline-block;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+.defaultUserImage{
+	
+}

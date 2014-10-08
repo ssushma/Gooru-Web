@@ -59,7 +59,7 @@
 }
 
 .myClasspageWrapperTwoChapterText {
-	float: left; /*width:257px;*/
+	float: left; 
 	height: 28px;
 	margin: 17px;
 	font-size: 20px;
@@ -305,7 +305,9 @@
 .simplePencil {
 	height: 64px;
 	min-width: 50px;
+	float: left;
 }
+
 
 .collectionEditImage {
 	background: url("images/Collection-Search/icon-sprite.png") repeat
@@ -386,9 +388,8 @@
 	word-wrap: break-word;
 }
 .classPagebuttonContainer {
-	float: right;
-	margin-top: -43px;
-	margin-right: 210px;
+	float: left;
+	margin-top: 19px;
 }
 .classPageEditTitleCancelButton {
 	font-family: Arial, Helvetica, sans-serif;
@@ -702,11 +703,12 @@ margin-left:-1px;
        overflow: visible;
 }
 .teachTab {
-       text-align: center;
-       padding-bottom: 20px;
-       margin: 20px auto;
-       width: 62%;
-       /* margin-left:122px; */
+	text-align: center;
+	padding-bottom: 20px;
+	width: 100%;
+	padding-top: 20px;
+	padding-left: 10px;
+	background: #FFF;
 }
 .teachTab .select {
        color: #fff;
@@ -722,7 +724,7 @@ margin-left:-1px;
        -webkit-box-shadow: inset 0px 0px 4px rgba(0,0,0,0.15);
        box-shadow: inset 0px 0px 4px rgba(0,0,0,0.15);
 }
-/* .teachTab .selected {
+/* .tabContainerDiv .selected {
        position: relative;
        left: 7px;
        border-radius: 5px 0px 0px 5px;
@@ -780,7 +782,7 @@ margin-left:-1px;
 }
 
 
-.teachTab button:first-child{
+.tabContainerDiv button:first-child{
 	color: #515151;
 	cursor: pointer;
 	padding: 10px 60px;
@@ -794,7 +796,7 @@ margin-left:-1px;
 	border-radius: 5px 0px 0px 5px;
 }
 
-.teachTab button{
+.tabContainerDiv button{
 	margin-left: -4px;
 	color: #515151;
 	cursor: pointer;
@@ -809,7 +811,7 @@ margin-left:-1px;
 	/* border-radius: 0px 5px 5px 0px; */
 	
 }
-.teachTab button:last-child{
+.tabContainerDiv button:last-child{
 	margin-left: -4px;
 	color: #515151;
 	cursor: pointer;
@@ -824,7 +826,7 @@ margin-left:-1px;
 	border-radius: 0px 5px 5px 0px;
 	
 }
-.teachTab button:nth-last-child(2){
+.tabContainerDiv button:nth-last-child(2){
 	margin-left: -4px;
 	color: #515151;
 	cursor: pointer;
@@ -840,7 +842,7 @@ margin-left:-1px;
 	
 }
 
-.teachTab > .selected{
+.tabContainerDiv > .selected{
     color: #FFF !important;
     background: #1076BB;
     background: -moz-linear-gradient(3% 0 -90deg, #1076bb 0, #579ecf 100%) !important;
@@ -939,22 +941,38 @@ margin-bottom: -10px;
 	margin-left: 8px;
 }
 .classcodeStyles{
-	display: block;
+	display: inline-block;
 	width: 70px !important;
 	height: 30px !important;
-	border: 1px solid #ccc;
 	font-size: 12px !important;
-	/* font-weight: bold; */
 	padding: 0 5px;
-	position: absolute;
+	border: 0px;
 	left: 89%;
-	margin-top: -44px;
 	text-align: center;
+	color: #1076bb;
+	border-left: 1px solid #ccc;
 }
 
-.classcodeContainer{
+
+.classcodeLabel{
+	width: 70px !important;
+	height: 30px !important;
+	border: 0px solid #ccc;
+	font-size: 12px !important;
+	padding: 7px 5px;
+	text-align: center;
 	float: left;
-	
+}
+
+
+
+
+.classcodeContainer{
+	float: right;
+	background: #FFF;
+	height: 33px;
+	margin-right: 20px;
+	padding-top: 6px;
 }
 
 .containerProgress{
@@ -1277,4 +1295,107 @@ margin-bottom: -10px;
     position: relative;
 	width: 218px;
 	top: 29%;
+}
+
+.frameDiv{
+	width:100%;
+	overflow: hidden;
+	background-color: white;
+	text-align: center;
+}
+#pnlQuestionMark{
+	float: left;
+}
+
+.ccContainer{
+	padding-top: 17px;
+	padding-bottom: 10px;
+	float: right;
+}
+
+
+
+.arrowDropdown{
+	width: 0;
+	height: 0;
+	border: 8px solid;
+	border-color: #999 transparent transparent transparent;
+	float: right;
+	margin-top: 4px;
+	margin-left: 7px;
+	border-bottom: none;
+	cursor: pointer;
+}
+
+.studentList{
+	background: #fff;
+	height: auto;
+	min-height: 24px;
+	max-height: 97px;
+}
+
+.studentListContainer1{
+	position: relative;
+	top: -147px;
+	right: 20px;
+	float: right;
+	padding: 7px;
+	width: 154px;
+}
+
+.studentListContainer {
+	background: #FFF;
+	padding: 7px;
+	border: 1px solid #ccc;
+	height: 12px;
+}
+
+.selectedStudent{
+	float: left;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 115px;
+	cursor: pointer;
+}
+.student:hover{
+	background-color: #cfe3f1;
+	opacity: 1;
+	cursor: pointer;
+}
+
+.student{
+	width: 93% !important;
+	height: 16px !important;
+	font-size: 13px !important;
+	color: #515151 !important;
+	cursor: pointer !important;
+	float: left;
+	text-decoration: none !important;
+	padding: 4px 0;
+	padding-left: 11px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+}
+
+.scrollPanel{
+	background-color: white;
+	z-index: 9;
+	min-height: 24px;
+	max-height: 97px;
+	overflow-x: hidden !important;
+	overflow-y: auto !important;
+	position: absolute !important;
+	width: 153px;
+	border: 1px solid #ccc;
+}
+
+#pnlMainContainer{
+	width: 99%;
+}
+.tabContainerDiv{
+	margin: 0 auto;
+width: 660px;
 }

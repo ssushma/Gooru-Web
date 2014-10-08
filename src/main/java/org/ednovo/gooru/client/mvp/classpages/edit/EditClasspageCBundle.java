@@ -232,7 +232,19 @@ public interface EditClasspageCBundle extends ClientBundle{
         
         String studentStyle();
         String techerStyle();
+    
+        String frameDiv();
 
+        String classcodeLabel();
+        String ccContainer();
+        String arrowDropdown();
+        String studentListContainer();
+        String selectedStudent();
+        String studentList();
+        String studentListContainer1();
+        String student();
+        String scrollPanel();
+        String tabContainerDiv();
 	}
 	@NotStrict
 	@Source("editclasspage.css")

@@ -467,7 +467,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 				placeToken.equalsIgnoreCase(PlaceTokens.LESSONOPOLY)||
 				placeToken.equalsIgnoreCase(PlaceTokens.WSPWH)||
 				placeToken.equalsIgnoreCase(PlaceTokens.YOUTHVOICES) || placeToken.equalsIgnoreCase(PlaceTokens.ESYP)|| placeToken.equalsIgnoreCase(PlaceTokens.CCST_Cal_TAC)|| placeToken.equalsIgnoreCase(PlaceTokens.TICAL)){
-			container.getElement().getStyle().setWidth(1000, Unit.PX);
+				container.getElement().getStyle().setWidth(1000, Unit.PX);
 		}else{
 			container.getElement().getStyle().clearWidth();
 		}
