@@ -308,7 +308,6 @@ public class LibraryTopicListView extends Composite{
 		
 	}
 	
-
 	private boolean setQuizTabVisiblity(ArrayList<ConceptDo> conceptDoList) {
 		boolean isCollectionTabVisible = false;
 		if(conceptDoList!=null&&conceptDoList.size()>0){
@@ -1691,19 +1690,4 @@ public class LibraryTopicListView extends Composite{
 		}
 		
 	}
-	
-	private boolean setQuizTabVisiblity(ArrayList<ConceptDo> conceptDoList) {
-			boolean isCollectionTabVisible = false;
-			if(conceptDoList!=null&&conceptDoList.size()>0){
-			for(int i=0;i<conceptDoList.size();i++){
-			if(conceptDoList.get(i).getCollectionType().equals("quiz")){
-			isCollectionTabVisible = true;
-			break;
-			}
-			}
-			}else{
-			return false;
-			}
-			return isCollectionTabVisible; 
-			}
 }

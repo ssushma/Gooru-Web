@@ -466,6 +466,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		lblAssignCollectionPrivate.getElement().setAttribute("title",i18n.GL0112());
 		
 		lblAssignCollectionPrivate.setVisible(false);
+		errorLabel.setVisible(false);
 		
 		lblAssignCollectionTitle.setText(i18n.GL0101());
 		lblAssignCollectionTitle.getElement().setId("lblAssignCollectionTitle");

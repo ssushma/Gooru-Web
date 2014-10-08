@@ -121,21 +121,6 @@ public class AssignmentsContainerWidget extends Composite  {
 		}
 		
 		assignmentThumbnail.setUrl(classpageItemDo.getResource().getThumbnails().getUrl());
-/*		if(classpageItemDo.getStatus() != null)
-		{
-			if(classpageItemDo.getStatus().equalsIgnoreCase("completed"))
-			{
-				//unitCircleView.setUnitSequenceNumber(0);
-				unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.greenBubble());
-			}
-		}*/
-		if(classpageItemDo.getIsRequired() != null)
-		{
-			if(!classpageItemDo.getIsRequired())
-			{
-				unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.stylishBub());
-			}
-		}
 		
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
@@ -145,6 +130,22 @@ public class AssignmentsContainerWidget extends Composite  {
 		
 		if(insightsUserDataDo!=null){
 			setAssignmentCircleStatus();
+		}else{
+			if(classpageItemDo.getStatus() != null)
+			{
+				if(classpageItemDo.getStatus().equalsIgnoreCase("completed"))
+				{
+					//unitCircleView.setUnitSequenceNumber(0);
+					unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.greenBubble());
+				}
+			}
+			if(classpageItemDo.getIsRequired() != null)
+			{
+				if(!classpageItemDo.getIsRequired())
+				{
+					unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.stylishBub());
+				}
+			}
 		}
 		
 	}
@@ -258,11 +259,6 @@ public class AssignmentsContainerWidget extends Composite  {
 
 	 private void setAssignmentCircleStatus(){
 
-	/*	 if((insightsUserDataDo.getStatus() != null && insightsUserDataDo.getStatus().equals("1")) ||(classpageItemDo.getStatus() != null && classpageItemDo.getStatus().equalsIgnoreCase("completed")) )
-		 {
-			// unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.greenBubble());
-
-		 }else*/ 
 		 if(insightsUserDataDo.getUserData()!= null && insightsUserDataDo.getMinimumScore()!=null){
 
 			 if(insightsUserDataDo.getUserData().get(0).getGradeInPercentage()!=null){
@@ -273,9 +269,34 @@ public class AssignmentsContainerWidget extends Composite  {
 				 }else{
 					 unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.redCircle());
 				 }
+				 if((insightsUserDataDo.getStatus() != null && insightsUserDataDo.getStatus().equals("1")) ||(classpageItemDo.getStatus() != null && classpageItemDo.getStatus().equalsIgnoreCase("completed")) )
+				 {
+					 unitCircleView.getElement().getFirstChildElement().setAttribute("style", "background-image: url(../images/checkMark.png);");
+
+				 }
 			 }
 
-		 }
+		 }else if(insightsUserDataDo.getIsRequired() != null)
+			{
+				if(insightsUserDataDo.getIsRequired()==0)
+				{
+					unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.stylishBub());
+					if((insightsUserDataDo.getStatus() != null && insightsUserDataDo.getStatus().equals("1")) ||(classpageItemDo.getStatus() != null && classpageItemDo.getStatus().equalsIgnoreCase("completed")) )
+					 {
+						 unitCircleView.getElement().getFirstChildElement().setAttribute("style", "background: #b9bbca url(../images/liners.png) repeat-x center !important;");
+
+					 }
+				}else{
+					if((insightsUserDataDo.getStatus() != null && insightsUserDataDo.getStatus().equals("1")) ||(classpageItemDo.getStatus() != null && classpageItemDo.getStatus().equalsIgnoreCase("completed")) )
+					 {
+						 unitCircleView.getElement().getFirstChildElement().setAttribute("style", "background-image: url(../images/checkMark.png);");
+
+					 }
+				}
+				
+			}
+		 
+		 
 
 	 }
 
