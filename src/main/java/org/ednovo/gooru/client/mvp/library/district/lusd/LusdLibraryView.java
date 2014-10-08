@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,65 +23,38 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.library.district;
-/**
- * @fileName : LibraryStyleBundle.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
 
-import com.google.gwt.resources.client.CssResource;
+package org.ednovo.gooru.client.mvp.library.district.lusd;
 
+import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 
-public interface DistrictStyleBundle extends CssResource {
-	String conceptTitle();
-	String lessonTitle();
-	String conceptTitleActive();
-	String courseOption();
-	String aboutGooruAnrPadding();
-	String unitLiActive();
-	String header();
-	String course();
-	String resourceImage();
-	String blueLink();
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
 
-	String bannerSpanBlock();
-	String resourcesInsideSubStyle();
-	String collectionInfoSubStyle();
-	String collectionViewerSubStyle();
-	String tabsLi();
-	String tabsLiInactive();
-	String singleLink();
-	String active();
-	String paginationPanel();
-	String twoColumnContainer();
-	String subDropdown();
-	String unitOption();
-	String popularStarImage();
-	String math();
-	String partnerMenuPadding();
-	String lessonTitleProfile();
-	String collectionSmall();
-	String conceptTitleLeft();
+public class LusdLibraryView extends BaseViewWithHandlers<LusdLibraryUiHandlers> implements IsLusdLibraryView {
+
 	
-	String sausdPartnerLogo();
-	String gradeOption();
+	@UiField SimplePanel partnerPanel;
 	
-	String lifeboardBannerStyle();
-	String lastLifeboard();
-	String boxLifeboard();
-	String rusdPartnerLogo();
-	String susdPartnerLogo();
-	String lpsPartnerLogo();
-	String valverdePartnerLogo();
-	String lusdPartnerLogo();
+	private static LusdLibraryViewUiBinder uiBinder = GWT.create(LusdLibraryViewUiBinder.class);
+
+	interface LusdLibraryViewUiBinder extends UiBinder<Widget, LusdLibraryView> {
+	}
+	
+	public LusdLibraryView() {
+		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
+	}
+	
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		if (content != null) {
+			if (slot == LusdLibraryUiHandlers.TYPE_FOLDERS_SLOT) {
+				partnerPanel.setWidget(content);
+			}
+		}
+	}
 }

@@ -256,10 +256,8 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 				AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, Integer.toString(5),  Integer.toString(totalsize), new SimpleAsyncCallback<ClassDo>() {
 					@Override
 					public void onSuccess(ClassDo result) {
-					
 						int newseq=0;
 						for(int i=0; i<result.getSearchResults().size(); i++){
-							
 							newseq = totalsize+i+1;
 							String CollectionItemId=result.getSearchResults().get(i).getResource().getGooruOid();
 							int totalItemCount=result.getSearchResults().get(i).getResource().getItemCount();
