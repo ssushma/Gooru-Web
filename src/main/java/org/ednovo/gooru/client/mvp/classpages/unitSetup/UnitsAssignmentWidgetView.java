@@ -118,7 +118,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 	
 	private int insightOffset=0;
 	private int insightLimit=10;
-	
+	boolean flag = false;
 	boolean isDeleted=false;
 	private boolean isEditMode=false;
 	private boolean isReorderPopupShowing = false;
@@ -391,42 +391,54 @@ public class UnitsAssignmentWidgetView extends Composite {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			final String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			unitAssigmentReorder = new UnitAssigmentReorder(assignmentSeq,getClassDo(),title, narration,classPageId,Integer.parseInt(seqNumber),getTotalHitCount(),collectionItem,classUnitsDo.getResource().getGooruOid()){
+			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classPageId, "5",  "0", new SimpleAsyncCallback<ClassDo>() {
+
 				@Override
-				public void reorderAssignment(int seqPosition,String selectedPathwayId,String targetPathway,String selectedAssignmentId) {
-					boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItem);
-					if(isAssignmentDeleted){
-						setLoadingIcon(true);
-						clearAssignmentsFromDo();
-						/**
-						 * Following condition written in order to check weather assignment moved to the same pathway
-						 * or different pathway, based on this offset value will be decided and respective pathway will get refresh.
-						 */
-						if(Integer.parseInt(targetPathway)==Integer.parseInt(seqNumber)){
-							assignmentOffset =(seqPosition/assignmentLimit)*assignmentLimit;
-							if(assignmentOffset==seqPosition){
-								assignmentOffset = assignmentOffset-assignmentLimit;
-							}
-							getUnitAssignments(assignmentOffset,isEditMode(),null);
-						}else{
-							if((getTotalHitCount()-1)==assignmentOffset){
-								if((getTotalHitCount()-1)==0){
-									assignmentOffset=0;
-								}else{
-									assignmentOffset=assignmentOffset-assignmentLimit;
+				public void onSuccess(ClassDo result) {
+					flag = true;
+					setClassDo(result);
+				}
+				
+			});
+			if(flag){
+				flag=false;
+				unitAssigmentReorder = new UnitAssigmentReorder(assignmentSeq,getClassDo(),title, narration,classPageId,Integer.parseInt(seqNumber),getTotalHitCount(),collectionItem,classUnitsDo.getResource().getGooruOid()){
+					@Override
+					public void reorderAssignment(int seqPosition,String selectedPathwayId,String targetPathway,String selectedAssignmentId) {
+						boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItem);
+						if(isAssignmentDeleted){
+							setLoadingIcon(true);
+							clearAssignmentsFromDo();
+							/**
+							 * Following condition written in order to check weather assignment moved to the same pathway
+							 * or different pathway, based on this offset value will be decided and respective pathway will get refresh.
+							 */
+							if(Integer.parseInt(targetPathway)==Integer.parseInt(seqNumber)){
+								assignmentOffset =(seqPosition/assignmentLimit)*assignmentLimit;
+								if(assignmentOffset==seqPosition){
+									assignmentOffset = assignmentOffset-assignmentLimit;
 								}
+								getUnitAssignments(assignmentOffset,isEditMode(),null);
+							}else{
+								if((getTotalHitCount()-1)==assignmentOffset){
+									if((getTotalHitCount()-1)==0){
+										assignmentOffset=0;
+									}else{
+										assignmentOffset=assignmentOffset-assignmentLimit;
+									}
+								}
+								getUnitAssignments(assignmentOffset,isEditMode(),null);
+								AppClientFactory.fireEvent(new RefreshPathwayItemsEvent(selectedPathwayId, classPageId)); 
 							}
-							getUnitAssignments(assignmentOffset,isEditMode(),null);
-							AppClientFactory.fireEvent(new RefreshPathwayItemsEvent(selectedPathwayId, classPageId)); 
 						}
+
 					}
 
-				}
-
-			};
-			unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-148,event.getRelativeElement().getAbsoluteTop()+36);
-			unitAssigmentReorder.show();
-			isReorderPopupShowing = true;
+				};
+				unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-148,event.getRelativeElement().getAbsoluteTop()+36);
+				unitAssigmentReorder.show();
+				isReorderPopupShowing = true;
+			}
 		}
 	}
 	
