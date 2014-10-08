@@ -802,9 +802,9 @@
 }
 
 .col-xs-4 {
-	width: 33.33333333%;
+	width: 31.33333333%;
 	float: left;
-	padding-right: 15px;
+	padding-right: 5px;
 	padding-left: 15px;
 	box-sizing: border-box;
 }
@@ -1162,3 +1162,68 @@
      vertical-align: middle;
      width: 30px;
   }
+.greenBubbleWithCheck{
+	background:#a7c9a4 url(../images/checkMark.png) no-repeat center !important;
+	width: 34px;
+height: 34px;
+border-radius: 50% 50%;
+-webkit-border-radius: 50% 50%;
+-moz-border-radius: 50% 50%;
+vertical-align: middle;
+display: inline-block;
+margin: 3px 3px;
+text-align: center;
+line-height: 34px;
+color: #fff;
+font-weight: bold;
+border: 2px solid #fff;
+}
+.redBubbleWithCheck{
+	background:#a7c9a4 url(../images/checkMark.png) no-repeat center !important;
+	width: 34px;
+height: 34px;
+border-radius: 50% 50%;
+-webkit-border-radius: 50% 50%;
+-moz-border-radius: 50% 50%;
+vertical-align: middle;
+display: inline-block;
+margin: 3px 3px;
+text-align: center;
+line-height: 34px;
+color: #fff;
+font-weight: bold;
+border: 2px solid #fff;
+}
+.requiredBubbleWithCheck{
+	background:#b9bbca url(../images/checkMark.png) no-repeat center !important;
+	width: 34px;
+height: 34px;
+border-radius: 50% 50%;
+-webkit-border-radius: 50% 50%;
+-moz-border-radius: 50% 50%;
+vertical-align: middle;
+display: inline-block;
+margin: 3px 3px;
+text-align: center;
+line-height: 34px;
+color: #fff;
+font-weight: bold;
+border: 2px solid #fff;
+}
+.notrequiredBubbleWithCheck{
+	width: 34px;
+height: 34px;
+background: #b9bbca;
+border-radius: 50% 50%;
+-webkit-border-radius: 50% 50%;
+-moz-border-radius: 50% 50%;
+vertical-align: middle;
+display: inline-block;
+margin: 3px 3px;
+text-align: center;
+line-height: 34px;
+color: #fff;
+font-weight: bold;
+border: 2px solid #fff;
+background: #b9bbca url(../images/liners.png) -38px -22px no-repeat !important;
+}
