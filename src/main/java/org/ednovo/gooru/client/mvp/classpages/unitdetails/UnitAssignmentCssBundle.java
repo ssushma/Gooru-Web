@@ -23,7 +23,9 @@ public interface UnitAssignmentCssBundle extends ClientBundle{
 		String headerDueDate();
 		String directionHeading();
 		String directionDesc();
-		
+		String redCircle();
+		String greenCircle();
+		String stylishBub();
 		
 	}
 	

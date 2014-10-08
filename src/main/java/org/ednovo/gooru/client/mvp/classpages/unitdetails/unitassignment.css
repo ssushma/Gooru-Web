@@ -1113,3 +1113,52 @@
 	line-height: 25px;
 	margin-left: 11px;
 }
+.redCircle{
+	background:#ff7d71 no-repeat center !important;
+	 border-radius: 50%;
+     color: #ffffff;
+     display: inline-block;
+     font-size: 14px;
+     font-weight: bold;
+     height: 30px;
+     left: 27%;
+     line-height: 30px;
+     position: absolute;
+     text-align: center;
+     top: 27px;
+     vertical-align: middle;
+     width: 30px;
+}
+
+.greenCircle{
+	background:#a7c9a4 no-repeat center !important;
+	 border-radius: 50%;
+     color: #ffffff;
+     display: inline-block;
+     font-size: 14px;
+     font-weight: bold;
+     height: 30px;
+     left: 27%;
+     line-height: 30px;
+     position: absolute;
+     text-align: center;
+     top: 27px;
+     vertical-align: middle;
+     width: 30px;
+}
+.stylishBub{
+	 background:#b9bbca url(../images/liners.png) repeat-x !important;
+	 border-radius: 50%;
+     color: #ffffff;
+     display: inline-block;
+     font-size: 14px;
+     font-weight: bold;
+     height: 30px;
+     left: 27%;
+     line-height: 30px;
+     position: absolute;
+     text-align: center;
+     top: 27px;
+     vertical-align: middle;
+     width: 30px;
+  }

@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -43,6 +44,7 @@ import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -107,6 +109,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	private ClassDo unitsDo;
 	
 	ClassUnitsListDo classUnitsListDo;
+	
+	private List<InsightsUserDataDo> insightsUserList;
 	
 	String unitCollectionId;
 	
@@ -324,7 +328,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					leftArrow.getElement().setAttribute("style","margin-left: 10px;cursor: pointer;");
 					circleContainerPanel.add(leftArrow);
 					for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
-						unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
+						unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i),insightsUserList.get(i));
 						//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid());
 						unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());	
 						circleContainerPanel.add(unitCricleViewObj);
@@ -788,7 +792,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				assignmentContainer.clear();
 			}
 			for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
-				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
+				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i), insightsUserList.get(i));
 				//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid()+"");
 				unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());
 				circleContainerPanel.add(unitCricleViewObj);
@@ -1388,6 +1392,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		lblTimeValidation.setVisible(false);
 		txtHours.getElement().setAttribute("style", "border-color: #efefef !important;");
 		txtMinuts.getElement().setAttribute("style", "border-color: #efefef !important;");
+	}
+
+	@Override
+	public void setInsightUserData(List<InsightsUserDataDo> insightsUserList) {
+		this.insightsUserList=insightsUserList;
 	}
 	
 }

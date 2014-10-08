@@ -148,7 +148,7 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 					leftArrow.getElement().setAttribute("style","margin-left: 10px");
 					circleContainerPanel.add(leftArrow);
 					for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
-						unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
+						unitCricleViewObj = new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i),null);
 						//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid());
 						unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());	
 						circleContainerPanel.add(unitCricleViewObj);
@@ -293,7 +293,7 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 			leftArrow.getElement().setAttribute("style","margin-left: 10px");
 			circleContainerPanel.add(leftArrow);
 			for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
-				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
+				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i), null);
 				//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid()+"");
 				unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());
 				circleContainerPanel.add(unitCricleViewObj);
