@@ -5,7 +5,6 @@
 		field="res" />
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />
 	<g:HTMLPanel>
-		<!-- <g:HTMLPanel styleName="step fi-address-book size-72"></g:HTMLPanel> -->
 		<g:HTMLPanel ui:field="gooruPanel" />
 		<g:HTMLPanel ui:field="panelLandingPage">
 			<g:HTMLPanel styleName="{res.css.headerPanel}">

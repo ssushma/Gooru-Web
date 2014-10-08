@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.catalina.logger.SystemOutLogger;
 import org.ednovo.gooru.client.DataInsightsUrlTokens;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -313,9 +312,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	private void displayAssignmentMarkButton(){
 		if(classpageItemDo!=null){
 			Boolean isRequired=classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false;
+			boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals("completed")?true:false;
 			if(isRequired){
-				assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().requiredBuble());
-				boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals(COMPLETED)?true:false;
+				assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().requiredBuble());				
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompleted());
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
 				if(assignmentStudyStatus){
@@ -323,11 +322,11 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 				}
 			}else{
 				assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().optionalBuble());
-				boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals(COMPLETED)?true:false;
+				//Boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals(COMPLETED)?true:false;
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompleted());
-				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
+				//assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
 				if(assignmentStudyStatus){
-					assignmentMarkCheckBox.addStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
+					assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
 				}
 			}
 		}
@@ -853,12 +852,19 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	      
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
-			if((event.getNativeEvent().getKeyCode() > 57 || event.getNativeEvent().getKeyCode() < 48) && (event.getNativeEvent().getKeyCode() != 45))
+			if (!Character.isDigit(event.getCharCode()) 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
+				((TextBox) event.getSource()).cancelKey();
+			}
+			if(event.getNativeEvent().getKeyCode() == 46 &&event.getNativeEvent().getKeyCode() == 37)
 			{
-				((TextBox) event.getSource()).cancelKey();	
-			}else
-			{
-				
+				((TextBox) event.getSource()).cancelKey();
 			}
 
 		}

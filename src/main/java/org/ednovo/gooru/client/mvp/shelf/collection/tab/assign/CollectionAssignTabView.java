@@ -466,6 +466,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		lblAssignCollectionPrivate.getElement().setAttribute("title",i18n.GL0112());
 		
 		lblAssignCollectionPrivate.setVisible(false);
+		errorLabel.setVisible(false);
 		
 		lblAssignCollectionTitle.setText(i18n.GL0101());
 		lblAssignCollectionTitle.getElement().setId("lblAssignCollectionTitle");
@@ -1014,7 +1015,7 @@ public class CpuTitleLabelClick implements ClickHandler{
 			
 			unitId = unitLabel.getElement().getId();
 			
-			
+			resetText();
 			
 			btnAssign.setEnabled(true);
 			btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
@@ -1108,12 +1109,19 @@ public class CpuTitleLabelClick implements ClickHandler{
 	      
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
-			if((event.getNativeEvent().getKeyCode() > 57 || event.getNativeEvent().getKeyCode() < 48) && (event.getNativeEvent().getKeyCode() != 45))
+			if (!Character.isDigit(event.getCharCode()) 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
+				((TextBox) event.getSource()).cancelKey();
+			}
+			if(event.getNativeEvent().getKeyCode() == 46 &&event.getNativeEvent().getKeyCode() == 37)
 			{
-				((TextBox) event.getSource()).cancelKey();	
-			}else
-			{
-				
+				((TextBox) event.getSource()).cancelKey();
 			}
 
 					
