@@ -802,9 +802,9 @@
 }
 
 .col-xs-4 {
-	width: 33.33333333%;
+	width: 31.33333333%;
 	float: left;
-	padding-right: 15px;
+	padding-right: 5px;
 	padding-left: 15px;
 	box-sizing: border-box;
 }

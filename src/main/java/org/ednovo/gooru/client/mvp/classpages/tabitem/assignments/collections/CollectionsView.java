@@ -58,6 +58,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -851,12 +852,19 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	      
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
-			if((event.getNativeEvent().getKeyCode() > 57 || event.getNativeEvent().getKeyCode() < 48) && (event.getNativeEvent().getKeyCode() != 45))
+			if (!Character.isDigit(event.getCharCode()) 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
+				((TextBox) event.getSource()).cancelKey();
+			}
+			if(event.getNativeEvent().getKeyCode() == 46 &&event.getNativeEvent().getKeyCode() == 37)
 			{
-				((TextBox) event.getSource()).cancelKey();	
-			}else
-			{
-				
+				((TextBox) event.getSource()).cancelKey();
 			}
 
 		}
