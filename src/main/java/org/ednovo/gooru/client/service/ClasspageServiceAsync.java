@@ -26,21 +26,25 @@ package org.ednovo.gooru.client.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
+import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -129,7 +133,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void updateClasspageItem(String classpageItemId,String direction,String dueDate,String readStatus, AsyncCallback<String> callback);
 	
-	public void deleteClassPageItem(String collectionId, AsyncCallback<String> callback);
+	public void deleteClassPageItem(String classPageId,String pathwayId,String collectionId, AsyncCallback<String> callback);
 	
 	public void getCollectionUsedCount(String collectionId, AsyncCallback<Integer> callback);
 	
@@ -180,5 +184,50 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	public void v2GetAllClass(String limit, String offSet, AsyncCallback<ClasspageListDo> callback);
 	
 	public void v2ChangeAssignmentSequence(String classpageId, String classpageAssignmentId, int sequence, AsyncCallback<Void> callback);
+
+	public void v2GetPathwayItems(String classpageId,
+			String pathwayGooruOid,String sequence,int limit,int offSet,AsyncCallback<UnitAssignmentsDo> callback);
+	
+	public void v2ReorderPathwaySequence(String classpageId,String pathwayItemId,int sequence, AsyncCallback<Void> callback);
+
+	public void v2GetPathwaysOptimized(String classpageId, String limit,
+			String offSet, AsyncCallback<ClassDo> callback);
+	
+	public void v2GetPathwaysCompleteDetails(String classpageId, String limit,
+			String offSet, AsyncCallback<ClassDo> callback);
+	
+	public void reOrderPathwaysInaClass(String pathwayId, int newPosSequence, AsyncCallback<ClasspageListDo> callback);
+	
+	void v2CreatePathwayForAClass(String classpageId,
+			String pathwayTitle, AsyncCallback<CollectionDo> callback);
+	
+	void v2CreatePathwayForAClassWithAssignmentItem(String classpageId,
+			String pathwayTitle, String collectionId,
+			CollectionItemDo collectionItemObject,AsyncCallback<AssignmentDo> callback);
+	
+	void v2UpdatePathwayById(String classpageId, String pathwayId,
+			String pathwayTitle, AsyncCallback<CollectionDo> callback);
+	
+	public void deletePathway(String classpageId, String pathwayId, AsyncCallback<Void> simpleAsyncCallback);
+	
+	public void v2AssignCollectionTOPathway(String classpageId,String pathwayId,String collectionId,String suggestTime,String minScore,String duedate,String directions, AsyncCallback<ArrayList<ClasspageItemDo>> callback);
+	
+	void updateAssignmentDetails(String classId,String unitId,String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus, AsyncCallback<ClasspageItemDo> callback);
+	
+	public void getAssignemntDetails(String assingmentId,AsyncCallback<ClasspageItemDo> callback);
+
+	void getAssignmentData(String gooruUId, String classpageId, int pageSize, int pageNum, String unitId, AsyncCallback<List<InsightsUserDataDo>> simpleAsyncCallback);
+	
+	void updateAssignmentStatus(String collectionItemId,
+			boolean isRequiredStatus, AsyncCallback<CollectionDo> callback);
+	
+	void updateAssignmentStatusAsCompleteorOpen(String classpageId,String unitGooruOid,String collectionItemId,
+			boolean isComplete, AsyncCallback<CollectionDo> callback);
+	
+	void updateUnitStatus(String collectionItemId,String minimumScore, String assignementStatus, String timeStudying, AsyncCallback<ClassUnitsListDo> callback);
+	
+	void pathwayItemMoveWithReorder(String classId,String pathwaygooruOid,String collectionItemId,String newSequence,AsyncCallback<Void> callback);
+	
+	public  void getAssignmentParentDetails(String assignmentId,AsyncCallback<AssignmentParentDo> callback);
 	
 }

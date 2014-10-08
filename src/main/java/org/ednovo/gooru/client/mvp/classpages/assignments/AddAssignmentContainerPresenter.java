@@ -33,13 +33,18 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.classsetup.ClassSetupPresenter;
+import org.ednovo.gooru.client.mvp.classpages.classsetup.ClassSetupUnitPresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
+import org.ednovo.gooru.client.mvp.classpages.unitSetup.UnitSetupPresenter;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
+import org.ednovo.gooru.shared.model.content.ClassSetupDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -64,6 +69,15 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	
 	private String classpageId=null;
 	private EditClasspagePresenter editClasspagePresenter=null;
+	
+	private String classpageIdToAssign=null;
+	private String pathwayId=null;
+	private ClassSetupUnitPresenter classSetupUnitPresenter=null;
+	private UnitSetupPresenter unitSetupPresenter=null;
+	private String mode;
+	private String	pathwayTitle = null;
+	private static final String CLASS_SETUP="classSetUpMode";
+	private static final String UNIT_SETUP="unitSetupMode";
 	
 	@Inject
 	public AddAssignmentContainerPresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddAssignmentContainerView view) {
@@ -112,6 +126,29 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	}
 	
 	public void addCollectionToAssign(String collectionId){
+		if(mode.equals(CLASS_SETUP) || mode.equals(UNIT_SETUP)){
+			addAssignment(collectionId,pathwayId);
+		}else{		
+			AppClientFactory.getInjector().getClasspageService().assignItemToClass(this.classpageId, collectionId, null, null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+				@Override
+				public void onSuccess(ArrayList<ClasspageItemDo> classpageItemDoList) {
+					if(classpageItemDoList!=null&&classpageItemDoList.size()>0){
+						getView().hideAddCollectionPopup("");
+						//	AppClientFactory.fireEvent(new ResetProgressEvent());
+						/*					for(int i=0;i<classpageItemDoList.size();i++){
+		
+		if(isFromClassSetUpPresenter)
+		{
+			AppClientFactory.getInjector().getClasspageService().v2AssignCollectionTOPathway(this.classpageIdToAssign, this.pathwayId, collectionId,null,null,null,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+			@Override
+			public void onSuccess(ArrayList<ClasspageItemDo> result) {
+			// TODO Auto-generated method stubgetr
+			getView().hideAddCollectionPopup("");
+			}
+			});
+		}
+		else
+		{		
 		AppClientFactory.getInjector().getClasspageService().assignItemToClass(this.classpageId, collectionId, null, null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			@Override
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemDoList) {
@@ -122,11 +159,12 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 						ClasspageItemDo classpageItemDo=classpageItemDoList.get(i);
 						getEditClasspagePresenter().setClasspageItemDo(classpageItemDo);
 					}*/
-					showCollectionsAfterAddingNewCollections();
-					
+						showCollectionsAfterAddingNewCollections();
+
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 	
 	public void showCollectionsAfterAddingNewCollections(){
@@ -150,6 +188,36 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 
 	public void setEditClasspagePresenter(EditClasspagePresenter editClasspagePresenter) {
 		this.editClasspagePresenter = editClasspagePresenter;
+	}
+	
+	public void addAssignmentToPathway(String classpageId,String pathwayId,String mode,String pathwayTitle){
+		this.classpageIdToAssign = classpageId;
+		this.pathwayId = pathwayId;
+		this.mode= mode;
+		this.pathwayTitle = pathwayTitle;
+		getView().setUnitTitle(pathwayTitle);
+	}
+
+
+	private void addAssignment(String collectionId,final String pathwayId) { 
+		AppClientFactory.getInjector().getClasspageService().v2AssignCollectionTOPathway(this.classpageIdToAssign, this.pathwayId, collectionId,null,null,null,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+			@Override
+			public void onSuccess(ArrayList<ClasspageItemDo> result) {
+				if(mode.equals(CLASS_SETUP)){
+					getView().hideAddCollectionPopup("");
+				}else if(mode.equals(UNIT_SETUP)){
+					if(unitSetupPresenter !=null){
+						//getView().hideAddCollectionPopup("");
+						getView().hideAddCollectionPopup(pathwayTitle);
+						unitSetupPresenter.addAssignmentToPathway(result,pathwayId);
+					}
+				}
+			}
+		});
+	}
+
+	public void setUnitSetupPresenter(UnitSetupPresenter unitSetupPresenter) { 
+		this.unitSetupPresenter = unitSetupPresenter;
 	}
 	
 	

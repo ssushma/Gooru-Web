@@ -30,19 +30,26 @@ import java.util.List;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
+import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
+import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
+import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 //import org.ednovo.gooru.shared.model.content.ResourceItemDo;
 
@@ -296,7 +303,7 @@ public interface ClasspageService extends BaseService {
 	public ArrayList<ClasspageItemDo> assignItemToClass(String classpageId,String itemId,String dueDate,String direction)  throws GwtException, ServerDownException;
 	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit,String sortingOrder,String studyStatus) throws GwtException, ServerDownException;
 	public String updateClasspageItem(String classpageItemId,String direction,String dueDate,String readStatus) throws GwtException, ServerDownException;
-	public String deleteClassPageItem(String collectionId) throws GwtException, ServerDownException;
+	public String deleteClassPageItem(String classPageId,String pathwayId,String collectionId) throws GwtException, ServerDownException;
 	
 	/**
 	 * 
@@ -485,4 +492,140 @@ public interface ClasspageService extends BaseService {
 	
 	public void v2ChangeAssignmentSequence(String classpageId,
 			String classpageAssignmentId, int sequence) throws GwtException, ServerDownException;
+
+	/**
+	 * @function v2GetPathwayItems 
+	 * 
+	 * @created_date : Sep 10, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param classpageId
+	 * @param pathwayGooruOid
+	 * @throws GwtException,ServerDownException
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	public UnitAssignmentsDo v2GetPathwayItems(String classpageId,
+			String pathwayGooruOid,String sequence,int limit,int offSet) throws GwtException, ServerDownException;
+	/**
+	 * @function v2ReorderPathwaySequence 
+	 * 
+	 * @created_date : Sep 10, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param classpageId
+	 * @param pathwayGooruOid
+	 * @param sequence
+	 * @throws GwtException,ServerDownException
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	public void v2ReorderPathwaySequence(String classpageId,String pathwayItemId,int sequence) throws GwtException, ServerDownException;
+
+
+	public ClassDo v2GetPathwaysOptimized(String classpageId, String limit,String offSet) throws GwtException;
+
+	public ClassDo v2GetPathwaysCompleteDetails(String classpageId,String limit, String offSet) throws GwtException;
+
+	ClasspageListDo reOrderPathwaysInaClass(String pathwayId, int newPosSequence);
+
+	CollectionDo v2CreatePathwayForAClass(String classpageId,
+			String pathwayTitle) throws GwtException;
+
+	AssignmentDo v2CreatePathwayForAClassWithAssignmentItem(String classpageId,
+			String pathwayTitle, String collectionId,
+			CollectionItemDo collectionItemObject) throws GwtException;
+
+	CollectionDo v2UpdatePathwayById(String classpageId, String pathwayId,
+			String pathwayTitle) throws GwtException;
+
+	void deletePathway(String classpageId, String pathwayId)
+			throws GwtException;
+
+	public ArrayList<ClasspageItemDo> v2AssignCollectionTOPathway(String classpageId,String pathwayId,String collectionId,String suggestTime,String minScore,String duedate,String directions) throws GwtException, ServerDownException;
+
+	CollectionDo updateAssignmentStatus(String collectionItemId,
+			boolean isRequiredStatus) throws GwtException;
+	
+	/**
+	 * @function getAssignmentData 
+	 * 
+	 * @created_date : 16-Sep-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param gooruUId
+	 * @param classpageId
+	 * @param pageSize
+	 * @param pageNum
+	 * @param simpleAsyncCallback 
+	 * @return
+	 * @throws GwtException
+	 * @throws ServerDownException
+	 * 
+	 * @return : ArrayList<InsightsUserDataDo>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	List<InsightsUserDataDo> getAssignmentData(String gooruUId,
+			String classpageId, int pageSize, int pageNum,String unitId) throws GwtException,
+			ServerDownException;
+	public ClasspageItemDo updateAssignmentDetails(String classId,String unitId,String collectionItemId,String direction,String dueDate,String readStatus,String minimumScore,String suggestedTime, Boolean isRequiredStatus) throws GwtException;
+	
+	public ClasspageItemDo getAssignemntDetails(String assingmentId);
+
+	CollectionDo updateAssignmentStatusAsCompleteorOpen(
+			String classpageId,String unitGooruOid,String collectionItemId, boolean isComplete) throws GwtException;
+
+	ClassUnitsListDo updateUnitStatus(String pathWayId,String minimumScore, String assignementStatus, String timeStudying) throws GwtException;
+    /**
+	 * @function pathwayItemMoveWithReorder 
+	 * 
+	 * @created_date : Sep 23, 2014
+	 * 
+	 * @description
+	 * To reorder the pathway assignment in different unit
+	 * 
+	 * @param classpageId
+	 * @param pathwayGooruOid
+	 * @param collectionItemId
+	 * @param targetId
+	 * @param sequence
+	 * @throws GwtException,ServerDownException
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+   public void pathwayItemMoveWithReorder(String classId,String pathwaygooruOid,String collectionItemId,String newSequence)throws GwtException;
+   
+   public  AssignmentParentDo getAssignmentParentDetails(String assignmentId) throws GwtException;
+   
 }

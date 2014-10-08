@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.play.collection.body;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -37,6 +38,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.CommentWidgetChildView;
@@ -47,6 +49,7 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
@@ -69,6 +72,7 @@ import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -111,7 +115,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiField Button postCommentBtn,postCommentCancel;
 	@UiField Label userNameLabel,viewsCountLabel,lblClassInfo,classTitleValue,lblclassTitle,lblTeacher,lbldueDate,lblDirections,lblDirectionsDesc,commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit;
 	@UiField Label lblAuthor, lblCourse, lblStandards,teacherNameLabel,dueDate,/*insightsHeaderText,insightsContentText,*/lbllanguageObjectiveText,lbllanguageObjective,successPostMsg,
-				lbldepthOfKnowledgeText,lbllearningAndInnovationText,lblAudienceText,lblInstructionalmethodText;
+				lbldepthOfKnowledgeText,lbllearningAndInnovationText,lblAudienceText,lblInstructionalmethodText,lblunitTitle,unitTitleValue;
 	@UiField Image profileThumbnailImage,userPhoto;
 	@UiField HTMLPanel teacherPanel,classInfoPanel,authorPanel,courseSection,standardSection,teacherContainer,viewSection,dueDateSection,directionSection,teacherProfileContainer,languageObjectiveContainer,addComment,loginMessaging,
 						depthOfKnowledgePanel,audiencePanel,instructionalmethodPanel,learningAndInnovationSkillPanel,
@@ -263,6 +267,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			teacherTipLabel.getElement().setAttribute("title",""+collectionDo.getKeyPoints()+"");
 		}
 		setLeftPanelHeight();
+		setTeacherName(collectionDo.getUser().getUsernameDisplay(), collectionDo.getUser().getProfileImageUrl());
 	}
 	private void setLeftPanelHeight(){
 		 Scheduler.get().scheduleDeferred(new ScheduledCommand(){
@@ -634,12 +639,13 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	}
 
 	@Override
-	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
+	public void setTeacherInfo(AssignmentParentDo assignmentParentDo) {
 		hideCollectionDetails(true);
 		teacherContainer.setVisible(true);
-		classTitleValue.setText(classpageItemDo.getTitle());
-		classTitleValue.getElement().setAttribute("alt",classpageItemDo.getTitle());
-		classTitleValue.getElement().setAttribute("title",classpageItemDo.getTitle());
+		String classTitle=assignmentParentDo.getClassTitle()!=null?assignmentParentDo.getClassTitle():"";
+		classTitleValue.setText(classTitle);
+		classTitleValue.getElement().setAttribute("alt",classTitle);
+		classTitleValue.getElement().setAttribute("title",classTitle);
 		
 		lblclassTitle.setText(i18n.GL1578());
 		lblclassTitle.getElement().setAttribute("alt",i18n.GL1578());
@@ -661,19 +667,34 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		lblDirections.getElement().setAttribute("alt",i18n.GL1582());
 		lblDirections.getElement().setAttribute("title",i18n.GL1582());
 		
-		setDueDateText(classpageItemDo.getPlannedEndDate());
-		setDirectionText(classpageItemDo.getDirection());
-		teacherNameLabel.setText(classpageItemDo.getUserNameDispaly());
-		teacherNameLabel.getElement().setAttribute("alt",classpageItemDo.getUserNameDispaly());
-		teacherNameLabel.getElement().setAttribute("title",classpageItemDo.getUserNameDispaly());
-		
-		teacherProfileContainer.clear();
-		//teacherProfileThumbnailImage.setUrl(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()); 
-		teacherProfileContainer.add(new TeacherImage(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()));
+		lblunitTitle.setText(i18n.GL2249());
+		String unitTitle=assignmentParentDo.getPathwayTitle()!=null?assignmentParentDo.getPathwayTitle():"";
+		unitTitleValue.setText(unitTitle);
+		setDueDateText(assignmentParentDo.getPlannedEndDate());
+		setDirectionText(assignmentParentDo.getNarration());
+	
 	}
 	
-	public void setDueDateText(String text){
-		if(text!=null&&!text.trim().equals("")){
+	public void setTeacherName(String userNameDisplay,String profileImageUrl){
+		teacherNameLabel.setText(userNameDisplay);
+		teacherNameLabel.getElement().setAttribute("alt",userNameDisplay);
+		teacherNameLabel.getElement().setAttribute("title",userNameDisplay);
+		teacherProfileContainer.clear();
+		//teacherProfileThumbnailImage.setUrl(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()); 
+		teacherProfileContainer.add(new TeacherImage(profileImageUrl+"?p="+Math.random()));
+	}
+	
+	public static String convertMillisecondsToDate(Long milliseconds){
+		Date currentDate = new Date(milliseconds);
+		DateTimeFormat fmt = DateTimeFormat.getFormat ("MM/dd/yyyy");
+		String date=fmt.format(currentDate);
+		return date;
+	}
+	
+	public void setDueDateText(Long date){
+		
+		if(date!=null&&!date.equals("")){
+			String text=CollectionsView.convertMillisecondsToDate(date);
 			dueDate.setText(text);
 			dueDate.getElement().setAttribute("alt",text);
 			dueDate.getElement().setAttribute("title",text);

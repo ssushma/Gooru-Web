@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.util;
 
-import org.ednovo.gooru.client.uc.BrowserAgent;
 
 
 public class MixpanelUtil {

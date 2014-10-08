@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:style field="style" src="personalize.css" />
+	<g:HTMLPanel styleName="{style.personalizeContainer} unitDetailsSigngle">
+		<g:HTMLPanel styleName="col-xs-12" ui:field="panelPersonalizeContainer">
+			
+		</g:HTMLPanel>
+		<div class="clearfix"></div>
+		<g:HTMLPanel ui:field="panelPagination" styleName="{style.pagination}">
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder>

@@ -241,6 +241,8 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	
 	private void setUiElements() {
 		panelLoading.getElement().setId("pnlLoadingPanel");
+		panelLoading.getElement().getStyle().setZIndex(9999);
+		panelLoading.getElement().getStyle().setPosition(Position.RELATIVE);
 		
 		txtClasspageCodeShare.setReadOnly(true);
 		txtClasspageCodeShare.getElement().setId("txtClassPageCodeShare");
@@ -672,11 +674,9 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	@Override
 	public void setClassPageDo(ClasspageDo classpageDo) {
 		this.classpageDo = classpageDo;
-		
 		clearMembersListPanel();
 		setLoadingPanelVisibility(true);
 		txtClasspageCodeShare.setText(classpageDo.getClasspageCode().toUpperCase());
-		// call an API to get the list of students in this class.
 		activeListPageNum=0;
 		activeListTotalCount=0;
 		pendingListPageNum=0;
@@ -694,12 +694,15 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	}
 	private void addShareClass() {
 		shareDo = new SocialShareDo();
+		if(classpageDo != null)
+		{
 		shareDo.setTitle(classpageDo.getTitle());
 		shareDo.setDecodeRawUrl(txtClasspageCodeShare.getText());
 		shareDo.setBitlylink(txtClasspageLinkShare.getText());
 		shareDo.setCategoryType(AppClientFactory.getLoggedInUser().getUsername());
 		shareDo.setOnlyIcon(false);
 		shareDo.setIsSearchShare(false);
+		}
 	}
 
 	/**

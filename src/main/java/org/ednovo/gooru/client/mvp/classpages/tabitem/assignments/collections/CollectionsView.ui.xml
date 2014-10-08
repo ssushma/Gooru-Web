@@ -2,48 +2,109 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:a="urn:import:aj.org.objectweb.asm"
 	xmlns:gt="urn:import:com.tractionsoftware.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
-	xmlns:dt="urn:import:com.google.gwt.user.datepicker.client">
-	<ui:style field="style" src="collections.css" />
-	<g:FlowPanel styleName="{style.assignmentContainerHt}">
-	    <g:HTMLPanel styleName="{style.circle}" ui:field="panelCircle">
-			<g:Label ui:field="assignmentIndex" styleName="{style.assignmentNumbers}"></g:Label>
-		</g:HTMLPanel>
-		<g:FlowPanel styleName="{style.classpageContainer}" ui:field="classpageItemContainer">
-		  <g:FlowPanel styleName="{style.classpageHeader}" ui:field="editButtonsToolBar">
-		    <g:HTMLPanel styleName="{style.headerLeft}">
-		    	<g:Label styleName="{style.headerText} " ui:field="dueDateText"></g:Label>
-		    	<g:Label styleName="{style.headerDueDate}" ui:field="dueDate"></g:Label>
-		    </g:HTMLPanel>
-		    <g:FlowPanel styleName="{style.headerRight}"  ui:field="headerRightPanel">
-		      <g:Button styleName="{style.viewAnaytics}" ui:field="viewClassItemAnalyticsButton"></g:Button>
-		      	<g:FlowPanel styleName="{style.AnalyticsDropdown}" ui:field="dropdownPanelAnalyticsButton">
-		        <g:Label styleName="{style.AnalyticsDropdownLi}" ui:field="moniterProgress"></g:Label>
-		        <g:Label styleName="{style.AnalyticsDropdownLi}" ui:field="collectionSummary"></g:Label>
-	     	  </g:FlowPanel>
-		      <g:Button styleName="{style.editButton}" ui:field="editClassItemButton"></g:Button>
-		      <g:FlowPanel styleName="{style.classpageDropdown}" ui:field="dropdownPanel">
-		        <g:Label styleName="{style.classpadeDropdownLi}" ui:field="editDueDateButton"></g:Label>
-		        <g:Label styleName="{style.classpadeDropdownLi}" ui:field="editDirectionButton"></g:Label>
-		        <g:Label styleName="{style.classpadeDropdownLi}" ui:field="editCollection"></g:Label>
-		        <g:Label styleName="{style.classpadeDropdownLi}" ui:field="deleteItemButton"></g:Label>
-	     	  </g:FlowPanel>
-		    </g:FlowPanel>
-		  </g:FlowPanel>
-		  <g:FlowPanel styleName="{style.classpageContent}">
-		    <g:Label styleName="{style.classpageHeading}" ui:field="directionsLabel"></g:Label>
-		    <g:HTMLPanel styleName="{style.classpageDesc}" ui:field="directionContentPanel"></g:HTMLPanel>
-		    <g:Label styleName="{style.classpageBorder}"></g:Label>
-		    <g:FlowPanel styleName="{style.classpageContentPanel}">
-			    <g:HTMLPanel styleName="{style.classpageResourceThumbnail}" ui:field="thumbnailContainer"> 
-			    	<g:Image  ui:field="collectionImage" styleName="{style.classpageResourceImage}"/> 
-			    </g:HTMLPanel>
-			    <g:FlowPanel styleName="{style.resourceHeaderTextPanel}">
-			      <g:Anchor styleName="{style.resourceTitle}" ui:field="classpageItemTitle"></g:Anchor>
-			      <g:Label styleName="{style.classpageHeading}" ui:field="learningObjective"></g:Label>
-			      <g:HTML styleName="{style.classpageDesc}" ui:field="learningObject"></g:HTML>
-			    </g:FlowPanel>
-		  	</g:FlowPanel>
-		  </g:FlowPanel>
+	xmlns:dt="urn:import:com.google.gwt.user.datepicker.client" xmlns:cas="urn:import:org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections">
+	<ui:style field="style" src="collections.css"/>
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<g:FlowPanel styleName="row">
+		<g:FlowPanel styleName="col-md-12">
+			<g:HTMLPanel styleName="{style.rowInner}">
+				<g:HTMLPanel styleName="{style.assignHeaderMain}">
+					<g:Label styleName="{style.assignHeader}" ui:field="assignmentSequenceLabel"></g:Label>
+					<cas:ChangeAssignmentStatusView ui:field="changeAssignmentStatusView"></cas:ChangeAssignmentStatusView>
+					<g:HTMLPanel styleName="{style.dueDate}" ui:field="dueDateContentPanel">
+						<g:Label styleName="{style.dueDateText}" ui:field="dueDateText" text="{i18n.GL1581}"></g:Label> <g:Label styleName="{style.dueDateIcon}" ui:field="dueDateButton"></g:Label>
+					  	<g:CheckBox ui:field="assignmentMarkCheckBox"></g:CheckBox>
+					</g:HTMLPanel>
+					<g:Label styleName="clearfix"></g:Label>
+				 </g:HTMLPanel>
+				 <g:FlowPanel styleName="{style.assignMain}">
+					<g:HTMLPanel styleName="row {style.assaindetailsMain}">
+						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}" text="{i18n.GL2236}"></g:Label>
+						<g:HTMLPanel styleName="col-xs-6 {style.assignButtons} text-right" ui:field="editAssignmentContainer">
+							<g:Label ui:field="savingLabel"></g:Label> 
+							<g:Button styleName="secondary" ui:field="cancelAssignmentDetailsButton" text="{i18n.GL0142}"></g:Button> 
+							<g:Button styleName="primary" ui:field="saveAssignmentDetailsButton" text="{i18n.GL0141}"></g:Button>
+							<g:Button styleName="secondary" ui:field="editAssignmentDetailsButton" text="{i18n.GL0140}"></g:Button>  
+						</g:HTMLPanel>
+						<g:Label styleName="clearfix"></g:Label>
+					</g:HTMLPanel>
+					<g:FlowPanel styleName="{style.borderBox}">
+						<g:FlowPanel styleName="{style.directionContainer}">
+							<g:Label styleName="{style.direction}" text="{i18n.GL1166}"></g:Label>
+							<g:HTMLPanel styleName="{style.directionText}" ui:field="directionContentPanel"></g:HTMLPanel>
+						</g:FlowPanel>
+						<g:FlowPanel styleName="{style.score}">
+							<g:FlowPanel styleName="col-xs-6 {style.leftScore}">
+								<g:Label styleName="{style.direction}" text="{i18n.GL2237}"></g:Label>
+								<g:HTMLPanel styleName="{style.scoreText}" ui:field="minimumScoreContentPanel"></g:HTMLPanel>
+								<g:Label styleName="{style.errorstyle}" ui:field="scoreErrorLabel"></g:Label>
+							</g:FlowPanel>
+							<g:FlowPanel styleName="col-xs-6 {style.rightScore}">
+								<g:Label styleName="{style.direction}" text="{i18n.GL2223}"></g:Label>
+								<g:InlineLabel styleName="{style.scoreText}" ui:field="suggestedHourLabel"></g:InlineLabel><g:InlineLabel styleName="{style.hourlabel}" text="{i18n.GL2224}"></g:InlineLabel>
+								<g:InlineLabel styleName="{style.scoreText}" ui:field="suggestedMinutesLabel"></g:InlineLabel><g:InlineLabel text="{i18n.GL2225}"></g:InlineLabel>
+								<g:Label styleName="{style.errorstyle}" ui:field="minutesErrorLabel"></g:Label>
+							</g:FlowPanel>
+							<g:FlowPanel styleName="clearfix" ui:field="clearFixPanel"></g:FlowPanel>
+						</g:FlowPanel>
+					</g:FlowPanel>
+					<g:FlowPanel styleName="row {style.assaindetailsMain}">
+						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}" text="{i18n.GL2226}"></g:Label>
+						<g:FlowPanel styleName="col-xs-6 {style.assignButtons} text-right">
+							<g:Button styleName="secondary" ui:field="editCollectionButton" text="{i18n.GL1370}"></g:Button> 
+							<g:Button styleName="studyplay" ui:field="studyCollectionButton" text="{i18n.GL0182}"></g:Button> 
+						</g:FlowPanel>
+						<g:Label styleName="clearfix"></g:Label>
+					</g:FlowPanel>
+					<g:FlowPanel styleName="{style.borderBox}">
+					    <g:HTMLPanel styleName="{style.classpageResourceThumbnail}" ui:field="thumbnailContainer"> 
+					    	<g:Image  ui:field="collectionImage" styleName="{style.classpageResourceImage}"/> 
+					    </g:HTMLPanel>
+					    <g:FlowPanel styleName="{style.resourceHeaderTextPanel}">
+					      <g:Anchor styleName="{style.resourceTitle}" ui:field="classpageItemTitle"></g:Anchor>
+					      <g:FlowPanel ui:field="standardsContainer" styleName="{style.standardtext}"></g:FlowPanel>
+					      <g:Label styleName="{style.classpageHeading}" ui:field="learningObjective" text="{i18n.GL1373}"></g:Label>
+					      <g:HTML styleName="{style.classpageDesc}" ui:field="learningObject"></g:HTML>
+					    </g:FlowPanel>
+					    <g:Label styleName="clearfix"></g:Label>
+		  			</g:FlowPanel>
+				</g:FlowPanel>
+				<g:FlowPanel ui:field="analyticsContainer" styleName="{style.analytics}">
+					<g:FlowPanel styleName="row {style.assaindetailsMain}">
+						<g:Label styleName="col-xs-6 {style.assignDetailsHeader}" text="{i18n.GL2247}"></g:Label>
+						<g:HTMLPanel styleName="col-xs-6 {style.assignButtons} text-right">
+							<g:Label styleName="{style.bubbleMain}" text="{i18n.GL2227}"></g:Label>
+							<g:Button styleName="secondary" ui:field="btnSummary" text="{i18n.GL2228}"></g:Button>
+							<g:Button styleName="secondary" ui:field="btnProgress" text="{i18n.GL2229}"></g:Button>
+						</g:HTMLPanel>
+					    <g:Label styleName="clearfix"></g:Label>
+					</g:FlowPanel>
+					<g:FlowPanel styleName="{style.anaBoxes} row">
+						<g:HTMLPanel styleName="col-xs-4 ">
+							<g:HTMLPanel styleName="{style.boxbg}">
+									<g:Label styleName="{style.analyticstext}" text="{i18n.GL2230}"></g:Label>
+									<g:FlowPanel styleName="{style.analyticsData}" ui:field="averageTimeLabel"></g:FlowPanel>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="col-xs-4">
+							<g:HTMLPanel styleName="{style.boxbg}">
+								<g:Label styleName="{style.analyticstext}" text="{i18n.GL0934}"></g:Label>
+								<g:Label styleName="{style.analyticsData}" ui:field="viewsLabel"></g:Label>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="col-xs-4">
+							<g:HTMLPanel styleName="{style.boxbg}">
+									<g:Label styleName="{style.analyticstext}" text="{i18n.GL2086}"></g:Label>
+									<g:Label ui:field="avarageReactionLabel"></g:Label>
+							</g:HTMLPanel>
+			           </g:HTMLPanel>
+					   <g:Label styleName="clearfix"></g:Label>
+					</g:FlowPanel>		
+					<g:FlowPanel ui:field="frameContainer">
+					<g:Frame ui:field="reportsFrame"></g:Frame>
+					</g:FlowPanel>	
+				</g:FlowPanel>
+			</g:HTMLPanel>
 		</g:FlowPanel>
 	</g:FlowPanel>
 </ui:UiBinder> 

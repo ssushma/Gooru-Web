@@ -44,6 +44,19 @@ public interface CollectionsCBundle extends ClientBundle {
 		String openStateCollectionHeader();
 		String completeStateCollectionHeader();
 		String completedStatus();
+		String minimumScoreTextbox();
+		String enableLabelText();
+		String disableLabelText();
+		String requiredBuble();
+		String optionalBuble();
+		String assignmentCompleted();
+		String assignmentCompletedWithOptional();
+		String needHelpReaction();
+		String notUnderstandReaction();
+		String mehReaction();
+		String understandReaction();
+		String canExplainReaction();
+		String reactionText();
 	}
 
 	@Source("collectionsstyles.css")

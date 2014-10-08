@@ -1,0 +1,128 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:style field="unitStyle" src="analytics.css" />
+	<g:HTMLPanel styleName="{unitStyle.unitDetails}">
+		<div class="{unitStyle.containerTeacher}">
+			<div class="col-xs-2 {unitStyle.leftPanel}">
+				<hr/>
+				<uc:UlPanel styleName="list-unstyled {unitStyle.unitMenu}">
+				   <g:HTMLPanel ui:field="unitPanel"></g:HTMLPanel>
+			    </uc:UlPanel>  
+			    
+				<g:HTMLPanel styleName="{unitStyle.uniSetup}">
+					<g:Label styleName="{unitStyle.moreUnits}" ui:field="lblMoreUnits">More Units</g:Label>
+				</g:HTMLPanel>
+			</div>
+			<div class="col-xs-10 {unitStyle.rightPanel}">
+				
+				<!-- 	This widget Is used to Graph Widget-->
+				<g:HTMLPanel styleName="row {unitStyle.generalSet}">
+				   <g:HTMLPanel>
+				       <g:HTMLPanel styleName="{unitStyle.rowInner}" ui:field="graphWidget" >
+				          
+				        </g:HTMLPanel>
+				    <g:HTMLPanel styleName="{unitStyle.loadingImageMainDiv}" ui:field="loadingImageLabel">
+					<g:Label styleName="{unitStyle.loadingImageForSelfEdit}" />
+				</g:HTMLPanel>
+				      </g:HTMLPanel>
+				</g:HTMLPanel>
+				<!-- end Graph Widget -->
+				
+				<!-- load all collections start-->
+				<g:HTMLPanel styleName="row {unitStyle.generalSet}">
+				   <g:HTMLPanel>
+				   	   <div class="{unitStyle.narrowReportText}">Narrow report information by collection and student:</div>
+				       <g:ListBox styleName="{unitStyle.filterDropDown}" ui:field="loadCollections">
+				  	  </g:ListBox>
+				      </g:HTMLPanel>
+				</g:HTMLPanel>
+				<!-- load all collections end -->
+				
+				<!-- 	This widget Is used for view assignments-->
+				<g:HTMLPanel styleName="row {unitStyle.generalSet} {unitStyle.arrowStyle}">
+				   <g:HTMLPanel>
+				       <g:HorizontalPanel styleName="{unitStyle.rowInner}">
+				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Label styleName="{unitStyle.viewAssignmentText}">View Collection</g:Label>  </g:HTMLPanel>
+				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionSummary" styleName="primary">Summary</g:Button> <g:Label ui:field="summaryArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
+				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionProgress" styleName="primary">Progress</g:Button><g:Label ui:field="progressArrowlbl" styleName="{unitStyle.caretUp}"></g:Label> </g:HTMLPanel>
+				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionResponses"  styleName="primary">Responses</g:Button> <g:Label ui:field="responsesArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
+				        </g:HorizontalPanel> 
+				      </g:HTMLPanel>
+				</g:HTMLPanel>
+				<!-- end view assignments -->
+				
+				<!-- 	This widget Is used for view assignments-->
+				<g:HTMLPanel styleName="row {unitStyle.setBroder}">
+				   <g:HTMLPanel>
+				      <g:HTMLPanel styleName="{unitStyle.rowInner} {unitStyle.slotWidget}" ui:field="slotWidget" >
+				        </g:HTMLPanel>
+				      </g:HTMLPanel>
+				</g:HTMLPanel>
+				<!-- end view assignments -->
+				
+				
+				<g:HTMLPanel styleName="row {unitStyle.setBroder}">
+					<div class=" {unitStyle.studentPerformance}">
+					<div class="row">
+						<div class="{unitStyle.unitHeadingAnalytics}">
+						Student Performance <span>Heighlight students with certain score range below.</span>
+						</div>
+						<div class="{unitStyle.scoreText}">
+						Minimum score: <g:InlineLabel ui:field="minimumScorelbl"></g:InlineLabel>
+						</div>
+						<div class="clearfix"></div>
+						</div>
+					<div class="row">
+						  <div class="col-xs-12">
+					      <div class="{unitStyle.progress}">
+						  <g:HTMLPanel  styleName="{unitStyle.progress_org}" ui:field="orangeProgressBar">
+						  </g:HTMLPanel>
+					  	  <g:HTMLPanel styleName="{unitStyle.progress_green}" ui:field="greenProgressBar">
+					  	  </g:HTMLPanel>
+					      <g:HTMLPanel styleName="{unitStyle.progress_blue}" ui:field="blueProgressBar">
+					      </g:HTMLPanel>
+					</div>
+					</div>
+					</div>
+					
+					<div class="row scores" style="display:none;">
+					<div class="col-xs-6">
+					Bottom scores: <g:TextBox ui:field="minimumScoreBelow" styleName="{unitStyle.form_control}"></g:TextBox>%
+					</div>
+					<div class="col-xs-6 text-right">
+					Top scores: <g:TextBox ui:field="minimumScoreAbove" styleName="{unitStyle.form_control}"></g:TextBox>%
+					</div>
+					<div class="clearfix"></div>
+					</div>
+					
+					<div class="row {unitStyle.scoresTable}">
+					
+					<div class="col-xs-6 {unitStyle.org}">Bottom scores</div>
+					<div class="col-xs-6 {unitStyle.green}">Top scores</div>
+					
+					<div class="clearfix"></div>
+					</div>
+					<div class="row scoresTableList">
+					<g:HTMLPanel ui:field="scoredBelowPanel" styleName="col-xs-6"/>
+					<g:HTMLPanel ui:field="scoredAbovePanel" styleName="col-xs-6"/>
+					<div class="clearfix"></div>
+					</div>
+					</div>
+				</g:HTMLPanel>
+				
+				
+				<div class="row {unitStyle.personalBtn}">
+					<div class="col-xs-12">
+						<div class="{unitStyle.rowInner}">
+							<p class="text-center"><button type="button" class="primary">Personalize Unit 2 for Students</button></p>
+						</div>
+					</div>
+				</div>
+				<g:HTMLPanel ui:field="assignmentContainer"></g:HTMLPanel>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder>

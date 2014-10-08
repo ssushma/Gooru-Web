@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.edit.AssignmentProgressVc;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle;
+import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupHandler;
@@ -107,10 +108,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 	}
 	
-	@UiField Label mainTitleLbl,noAssignmentMsg,lblUserName,lblAssignmentProgress;
+	@UiField Label mainTitleLbl,lblUserName;
 	
-	@UiField HTMLPanel contentpanel,panelProgressContainer,panelAssignmentPath,assignmentOrderPanel;
-	@UiField HTMLEventPanel panelPrevious,panelNext;
+	@UiField FlowPanel studentsetupContainer;
 	
 	@UiField
 	static HTMLPanel mainContainer,lineSeparation,memberContainer;
@@ -124,7 +124,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	static
 	Button btnWithDraw;
 	
-	@UiField FlowPanel paginationFocPanel,paginationFocPanel1,panelAssignmentProgress,dropDownListContainer;
 	
 	@UiField Image studentViewImage,imgProfileImage;
 
@@ -132,7 +131,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 //	static Image userImage;
 	
 	@UiField
-	static Label lblWebHelp,dropdownPlaceHolder, lblNext, lblPrevious;
+	static Label lblWebHelp;
 
 	@UiField
 	static
@@ -198,9 +197,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		
 		AppClientFactory.getEventBus().addHandler(OpenJoinClassPopupEvent.TYPE,openJoinClassPopupHandler);
 
-		addSortingOptionsToList();
-		addSortEventToText();
-		dropdownPlaceHolder.setText(i18n.GL1946());
+		//addSortingOptionsToList();
+		//addSortEventToText();
+/*		dropdownPlaceHolder.setText(i18n.GL1946());
 		dropdownPlaceHolder.getElement().setId("lblDropdownPlaceHolder");
 		dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1946());
 		dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1946());
@@ -212,8 +211,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		lblAssignmentProgress.getElement().setAttribute("alt",i18n.GL1971());
 		lblAssignmentProgress.getElement().setAttribute("title",i18n.GL1971());
 		assignmentOrderPanel.getElement().setInnerHTML(i18n.GL2006());
-		dropdownPlaceHolder.addClickHandler(new SortDropDownEvent());
-		
+		dropdownPlaceHolder.addClickHandler(new SortDropDownEvent());*/
+/*		
 		lblNext.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -222,9 +221,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				
 				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("id"), defaultOffsetForPath.toString(), defaultLimitForPath.toString());
 			}
-		});
+		});*/
 	
-		lblPrevious.addClickHandler(new ClickHandler() {
+/*		lblPrevious.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
@@ -237,38 +236,38 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("id"), defaultOffsetForPath.toString(), defaultLimitForPath.toString());
 				
 			}
-		});
+		});*/
 		
-		lblNext.setVisible(false);
-		lblPrevious.setVisible(false);
+		//lblNext.setVisible(false);
+		//lblPrevious.setVisible(false);
 		
-		Event.addNativePreviewHandler(new NativePreviewHandler() {
+/*		Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
 	        	hideDropDown(event);
 	          }
-	    });
+	    });*/
 	}
 	
-	private void addSortEventToText(){
+/*	private void addSortEventToText(){
 		if(sortingOptionsList.size()>0){
 			for(int i=0;i < sortingOptionsList.size();i++){
 				String sortType=sortingOptionsList.get(i);
 				Label sortingLabel=new Label(sortType);
 				sortingLabel.setStyleName(EditClasspageCBundle.INSTANCE.css().dropdownTextLabel());
-				dropDownListContainer.add(sortingLabel);
+				//dropDownListContainer.add(sortingLabel);
 				sortingLabel.addClickHandler(new SortAssignmentEvents(sortType));
 			}
 		}
 		
-	}
-	public class SortDropDownEvent implements ClickHandler{
+	}*/
+/*	public class SortDropDownEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
 			new CustomAnimation(dropDownListContainer).run(300);
 		}
 	}
-	
-	public class SortAssignmentEvents implements ClickHandler{
+	*/
+	/*public class SortAssignmentEvents implements ClickHandler{
 		private String sortType=null;
 		public SortAssignmentEvents(){}
 		public SortAssignmentEvents(String sortType){
@@ -305,37 +304,37 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			}
 
 		}
-	}
+	}*/
 	
 	
-	public void hideDropDown(NativePreviewEvent event){
+	/*public void hideDropDown(NativePreviewEvent event){
     	if(event.getTypeInt()==Event.ONCLICK){
     		Event nativeEvent = Event.as(event.getNativeEvent());
         	boolean target=eventTargetsPopup(nativeEvent);
         	if(!target){
-        		dropDownListContainer.setVisible(false);
+        		//dropDownListContainer.setVisible(false);
         	}
     	}
-     }
-	private boolean eventTargetsPopup(NativeEvent event) {
+     }*/
+/*	private boolean eventTargetsPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
 			return dropDownListContainer.getElement().isOrHasChild(Element.as(target))||dropdownPlaceHolder.getElement().isOrHasChild(Element.as(target));
 		}
 		return false;
-	}
+	}*/
 
 	private void setStaticData() {
 		backToEditPanel.setText(i18n.GL1130());
 		backToEditPanel.getElement().setAttribute("alt",i18n.GL1130());
 		backToEditPanel.getElement().setAttribute("title",i18n.GL1130());
 		backToEditPanel.getElement().setId("btnBackToEdit");
-		
+/*		
 		noAssignmentMsg.setText(i18n.GL1131());
 		noAssignmentMsg.getElement().setId("lblNoAssignmentMsg");
 		noAssignmentMsg.getElement().setAttribute("alt",i18n.GL1131());
 		noAssignmentMsg.getElement().setAttribute("title",i18n.GL1131());
-		
+		*/
 		btnJoinClass.setText(i18n.GL1536());
 		btnJoinClass.getElement().setAttribute("alt",i18n.GL1536());
 		btnJoinClass.getElement().setAttribute("title",i18n.GL1536());
@@ -351,7 +350,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		LblMember.getElement().setAttribute("title",i18n.GL1549());
 		
 	
-		noAssignmentMsg.setVisible(false);
+		//noAssignmentMsg.setVisible(false);
 		btnJoinClass.setVisible(false);
 		lblWebHelp.setVisible(false);
 		lblWebHelp.getElement().setId("lblWebHelp");
@@ -365,17 +364,17 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		imgProfileImage.getElement().setId("imgProfileImage");
 		lblUserName.getElement().setId("lblUserName");
 		btnJoinClass.getElement().setId("btnJoinClass");
-		panelProgressContainer.getElement().setId("pnlProgressContainer");
+/*		panelProgressContainer.getElement().setId("pnlProgressContainer");
 		panelPrevious.getElement().setId("pnlPrevious");
 		lblPrevious.getElement().setId("lblPrevious");
 		panelAssignmentPath.getElement().setId("pnlAssignmentPath");
-		panelAssignmentProgress.getElement().setId("pnlAssignmentProgress");
-		panelNext.getElement().setId("pnlNext");
-		lblNext.getElement().setId("lblNext");
-		dropDownListContainer.getElement().setId("fpnlDropDownListContainer");
+		panelAssignmentProgress.getElement().setId("pnlAssignmentProgress");*/
+	//	panelNext.getElement().setId("pnlNext");
+		//lblNext.getElement().setId("lblNext");
+/*		dropDownListContainer.getElement().setId("fpnlDropDownListContainer");
 		paginationFocPanel.getElement().setId("fpnlPaginationFoc");
 		paginationFocPanel1.getElement().setId("fpnlPaginationFoc1");
-		contentpanel.getElement().setId("pnlContent");
+		contentpanel.getElement().setId("pnlContent");*/
 	}
 
 	@Override
@@ -678,58 +677,58 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	
 	@Override
 	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList1, String sortOrder){
-		removeLoadingPanel();
-		contentpanel.clear();
+		//removeLoadingPanel();
+		//contentpanel.clear();
 		ArrayList<ClasspageItemDo> classpageItemsList = new ArrayList<ClasspageItemDo>();
 		classpageItemsList.clear();
 		classpageItemsList.addAll(classpageItemsList1);
 		
 		if(classpageItemsList!=null&&classpageItemsList.size()>0){
-			noAssignmentMsg.setVisible(false);
+			//noAssignmentMsg.setVisible(false);
 			for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
 				ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
-				CollectionsView collectionsView = new CollectionsView(classpageItemDo,true,(itemIndex+1)){
-					public void resetPagination(){
-						setPagination();
-						contentpanel.add(setLoadingPanel());
-						getUiHandlers().getNextClasspageItems(((pageNumber*limit)-1),1);
-					}
-					public void updateAssignmentCircleColor(String collectionItemId,String readStatus){
-						updateCircleColors(collectionItemId,readStatus);
-					}
-				};
+//				CollectionsView collectionsView = new CollectionsView(classpageItemDo,true,(itemIndex+1)){
+//					public void resetPagination(){
+//						setPagination();
+//						contentpanel.add(setLoadingPanel());
+//						getUiHandlers().getNextClasspageItems(((pageNumber*limit)-1),1);
+//					}
+//					public void updateAssignmentCircleColor(String collectionItemId,String readStatus){
+//						updateCircleColors(collectionItemId,readStatus);
+//					}
+//				};
 				this.totalHitCount=classpageItemDo.getTotalHitCount();
-				contentpanel.add(collectionsView);
+			//	contentpanel.add(collectionsView);
 			}
-			setPagination();
+			//setPagination();
 		}else{
 			this.totalHitCount=0;
-			setPagination();
-			noAssignmentMsg.setVisible(true);
+			//setPagination();
+			//noAssignmentMsg.setVisible(true);
 		}
 	}
 	public void resetAll(){
-		contentpanel.clear();
-		contentpanel.add(setLoadingPanel());
+/*		contentpanel.clear();
+		contentpanel.add(setLoadingPanel());*/
 		this.totalHitCount=0;
-		setPagination();
+		//setPagination();
 		mainTitleLbl.setText("");
 		studentViewImage.setAltText("");
 		studentViewImage.setTitle("");
 		studentViewImage.setUrl("");
 		imgProfileImage.setUrl("");
 		lblUserName.setText("");
-		panelAssignmentProgress.clear();
+		//panelAssignmentProgress.clear();
 		assignmentsDotsMap.clear();
 	}
-	public void setPagination(){
+/*	public void setPagination(){
 		if(this.totalHitCount>5){
 			showPaginationButton();
 		}else{
 			clearPaginationButton();
 		}
-	}
-	public void showPaginationButton(){
+	}*/
+	/*public void showPaginationButton(){
 		paginationFocPanel.clear();
 		paginationFocPanel1.clear();
 		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", "1");
@@ -760,8 +759,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				paginationFocPanel1.add(new PaginationButtonUc(pageNumber + 1, NEXT, this));
 			}
 		}
-	}
-	public void clearPaginationButton(){
+	}*/
+/*	public void clearPaginationButton(){
 		paginationFocPanel.clear();
 		paginationFocPanel1.clear();
 	}
@@ -773,35 +772,35 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			contentpanel.add(setLoadingPanel());
 			getUiHandlers().getNextClasspageItems(((pageNumber-1)*limit),limit);
 		}
-	}
-	public void resetEditClasspageView(){
+	}*/
+	/*public void resetEditClasspageView(){
 		paginationFocPanel.clear();
 		paginationFocPanel1.clear();
 		contentpanel.clear();
 		contentpanel.add(setLoadingPanel());
 		limit=5;
 		pageNumber=1;
-	}
-	public Label setLoadingPanel(){
+	}*/
+/*	public Label setLoadingPanel(){
 		Label loadingImage=new Label();
 		loadingImage.setStyleName(EditClasspageCBundle.INSTANCE.css().loadingpanelImage());
 		return loadingImage;
-	}
-	public void removeLoadingPanel(){
+	}*/
+/*	public void removeLoadingPanel(){
 		if(contentpanel.getWidgetCount()>0){
 			Widget loadingPanel=contentpanel.getWidget(contentpanel.getWidgetCount()-1);
 			if(loadingPanel!=null&&loadingPanel instanceof Label){
 				loadingPanel.removeFromParent();
 			}
 		}
-	}
+	}*/
 	
 	@Override
 	public void showClasspageItemsForAssignmentPath(ArrayList<ClasspageItemDo> classpageItemsList) {
 		//TODO 
-		panelAssignmentProgress.clear();
+	//	panelAssignmentProgress.clear();
 		assignmentsDotsMap.clear(); // TODO dont forget to clear when panelAssignmentProgress clear
-		if(classpageItemsList!=null&&classpageItemsList.size()>0){
+/*		if(classpageItemsList!=null&&classpageItemsList.size()>0){
 			//hide/show the next and previous buttons
 			if (classpageItemsList.get(0).getTotalHitCount() > defaultLimitForPath && classpageItemsList.size() == defaultLimitForPath){
 				lblNext.setVisible(true);
@@ -824,7 +823,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				panelAssignmentProgress.add(assignmentProgressVc);
 				this.totalHitCount=classpageItemDo.getTotalHitCount();
 			}
-		}
+		}*/
 	}
 	
 	public void updateCircleColors(String collectionItemId,String readStatus){
@@ -864,9 +863,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	if (event.getSource() instanceof PaginationButtonUc) {
 			int pagenumber = ((PaginationButtonUc) event.getSource()).getPage();
 			pageNumber = pagenumber;
-			setPagination();
+/*			setPagination();
 			contentpanel.clear();
-			contentpanel.add(setLoadingPanel());
+			contentpanel.add(setLoadingPanel());*/
 			Map<String,String> params = new HashMap<String,String>();
 			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 			String order=AppClientFactory.getPlaceManager().getRequestParameter("order", null);
@@ -1002,12 +1001,24 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 	@Override
 	public void clearAll() {
-		paginationFocPanel.clear();
+		/*paginationFocPanel.clear();
 		paginationFocPanel1.clear();
 		contentpanel.clear();
 		contentpanel.add(setLoadingPanel());
 		limit=5;
-		pageNumber=1;
+		pageNumber=1;*/
+
+	}
+	
+	@Override
+	public void hidePanel() {
+		/*paginationFocPanel.clear();
+		paginationFocPanel1.clear();
+		contentpanel.clear();
+		contentpanel.add(setLoadingPanel());
+		limit=5;
+		pageNumber=1;*/
+		mainContainer.setVisible(false);
 	}
 
 	@Override
@@ -1568,25 +1579,27 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		getUiHandlers().getAssignmentsProgress(classpageId, offsetProgress.toString(), limitProgress.toString()); // this will call showClasspageItemsForAssignmentPath
 	}
 	
+
+
+	public FlowPanel getStudentsetupContainer() {
+		return studentsetupContainer;
+	}
+
+	public void setStudentsetupContainer(FlowPanel studentsetupContainer) {
+		this.studentsetupContainer = studentsetupContainer;
+	}
+	
 	@Override
-	public void setSortingOrderInDropdown(String sortingOrder) {
-		if(sortingOrder !=null && sortingOrder.equalsIgnoreCase("completed")){
-			dropdownPlaceHolder.setText(i18n.GL1952());
-			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1952());
-			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1952());
-		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("todo")){
-			dropdownPlaceHolder.setText(i18n.GL1953());
-			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1953());
-			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1953());
-		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("all")){
-			dropdownPlaceHolder.setText(i18n.GL1946());
-			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1946());
-			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1946());
-		}else{
-			dropdownPlaceHolder.setText(i18n.GL1946());
-			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1946());
-			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1946());
+	public void setInSlot(Object slot, Widget content) {
+		if (content != null) {
+			 if(slot==StudentAssignmentPresenter.STUDY_SLOT){
+				getStudentsetupContainer().clear();
+				getStudentsetupContainer().add(content);
+			}else{
+				//getClassContainer().setVisible(false);
+			}
 		}
 	}
+	
 	
 }

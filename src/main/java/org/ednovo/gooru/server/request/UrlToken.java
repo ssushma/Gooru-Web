@@ -237,7 +237,7 @@ public enum UrlToken {
 	
 	UPDATE_CLASSPAGE_ITEMS_V2("/v2/class/item/{0}?sessionToken={1}"),
 	
-	DELETE_CLASSPAGE_ITEMS_V2("/v2/classpage/item/{0}?sessionToken={1}"),
+	DELETE_CLASSPAGE_ITEMS_V2("/v2/class/{0}/pathway/{1}/item/{2}?sessionToken={3}"),
 	
 	GET_COLLECTION_PARENT_FOLDERS("/v2/collection/{0}/parents?sessionToken={1}"),
 	
@@ -305,9 +305,9 @@ public enum UrlToken {
 	
 	V2_GET_CLASSPAGE_ASSIGNMENTS("/v2/classpage/{0}/item?sessionToken={1}&data={%22limit%22:%22{2}%22,%22offset%22:%22{3}%22}"),
 	
-	V2_GET_LISTTEACHCLASSES("/v2/class/my/teach?sessionToken={0}&limit={1}&offset={2}&randomId={3}"),
+	V2_GET_LISTTEACHCLASSES("/v2/class/my/teach?sessionToken={0}&limit={1}&offset={2}&randomId={3}&itemType=pathway"),
 	
-	V2_GET_LISTSTUDYCLASSES("/v2/class/my/study?sessionToken={0}&limit={1}&offset={2}&randomId={3}"),
+	V2_GET_LISTSTUDYCLASSES("/v2/class/my/study?sessionToken={0}&limit={1}&offset={2}&randomId={3}&itemType=pathway"),
 	
 	V2_CLASSPAGE_DELETE("/v2/class/{0}?sessionToken={1}"),
 	
@@ -600,7 +600,54 @@ public enum UrlToken {
 	
 	REFRESH_TOKEN_GDC("/gooru-auth/google/refresh-token.g?partyUid={0}"),
 	
-	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?partyUid={0}");
+
+	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?partyUid={0}"),
+	
+	GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={4}&offset={5}"),
+	
+	REORDER_PATHWAY_SEQUENCE("/v2/class/{0}/pathway/{1}/reorder/{2}?sessionToken={3}"),
+
+	PATHWAYS_CLASS_OPTIMIZED("/v2/class/{0}/item?sessionToken={1}&limit={2}&offset={3}&orderBy=sequence&optimize=true&type=pathway"),
+	
+	PATHWAYS_CLASS("/v2/class/{0}/item?sessionToken={1}&limit={2}&offset={3}&orderBy=sequence&type=pathway"),
+	
+	PATHWAYS_CLASS_REORDER("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"),
+	
+	PATHWAYS_CREATE("/v2/class/{0}/pathway?sessionToken={1}"),
+	
+	V2_ASSIGN_COLLECTION_TO_PATHWAY("/v2/class/{0}/pathway/{1}/assign/{2}?sessionToken={3}"),
+	
+	ASSIGN_STATUS_UPDATE("/v2/class/{0}/pathway/{1}/item/{2}?sessionToken={3}"),
+	
+	V2_GET_ASSIGNMENT_DETAILS("/v2/collection/item/{0}?sessionToken={1}&includeAdditionalInfo=true"),
+	
+	PATHWAYS_UPDATE("/v2/class/{0}/pathway/{1}?sessionToken={2}"),
+	
+	V2_UPDATE_UNIT_STATUS("/v2/class/item/{0}?sessionToken={1}"),
+	
+//	GET_INSIGHTS_DATA("insights-api-dev/v1/classpage/{0}/grade.json?sessionToken={1}&data={%22fields%22:%22timeSpent,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,gooruOId,title%22,%22filters%22:{%22session%22:%22FS%22,%22userUId%22:%22{2}%22},%22collectionGooruOId%22:%22{3}%22,%22pathwayId%22:%22{3}%22,%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}"),
+	GET_INSIGHTS_DATA("/v1/classpage/{0}/grade.json?sessionToken={1}&data={%22fields%22:%22timeSpent,views,avgTimeSpent,text,questionType,type,score,attemptStatus,resourceGooruOId,userName,gooruUId,avgReaction,reaction,collectionGooruOId,title,description,lastModified,category,thumbnail,options,metaData,userData,skip,totalAttemptUserCount,attempts,totalCorrectCount,totalInCorrectCount,yetToAnswer,status,userCount,itemSequence,gradeInPercentage,totalQuestionCount,answerObject,feedbackStatus,feedbackText,feedbackProviderUId,feedbackTimestamp,feedbackTeacherName,isRequired,minimumScore,estimatedTime%22,%22filters%22:{%22session%22:%22FS%22,%22userUId%22:%22{2}%22,%22pathwayId%22:%22{3}%22},%22paginate%22:{%22sortBy%22:%22itemSequence%22,%22sortOrder%22:%22ASC%22}}"),
+	
+	V1_COLLECTIONPROGRESSDATA("/v1/classpage/{0}/users/usage.json?sessionToken={1}&data={2}"),
+	
+	V1_GETUSERSFORPATHWAY("/v1/classpage/{0}/users.json?sessionToken={1}&data={2}"),
+	
+	V1_GETCOLLECTIONMETADATA("/v1/classpage/{0}.json?sessionToken={1}&data={2}"),
+	
+	V1_GETCOLLECTIONRESOURCEDATA("/v1/classpage/{0}/resources.json?sessionToken={1}&data={2}"),
+	
+	V1_GETSESSIONSDATABYUSER("/v1/classpage/{0}/sessions.json?sessionToken={1}&data={2}"),
+	
+	V1_GETSESSIONDATABYUSERSESSION("/v1/classpage/{0}/resources.json?sessionToken={1}&data={2}"),
+	
+	V2_PATHWAY_ITEM_MOVE_WITH_REORDER("/v2/class/{0}/pathway/{1}/item/{2}/move?sessionToken={3}"),
+	
+	V2_GET_ASSIGNMENT_PARENT_DETAILS("/v2/class/assignment/{0}?sessionToken={1}"),
+	
+	V1_GETGRADEJSON("/v1/classpage/{0}/grade.json?sessionToken={1}&data={2}"),
+	
+	V1_EXPORTOEPATHWAY("/v1/classpage/{0}/oe/export.xls?sessionToken={1}&data={2}&timeZone={3}");
+	
 
 	private String url;
 

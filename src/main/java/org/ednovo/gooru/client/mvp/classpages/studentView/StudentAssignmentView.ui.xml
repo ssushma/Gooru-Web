@@ -2,7 +2,7 @@
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"  xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
-	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
+	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home" xmlns:unitsetup="urn:org.ednovo.gooru.client.mvp.classpages.unitSetup">
 
 	<ui:style field="StudentStyle" src="StudentStyles.css" />
 	<ui:with type="org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle" field="style" />
@@ -40,12 +40,28 @@
 			    <g:HTMLPanel styleName="{StudentStyle.lineSeaparation}" ui:field="lineSeparation"></g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
-		<g:HTMLPanel styleName="{style.css.containerProgress} {style.css.containerProgressWidth}" ui:field="panelProgressContainer">
+	<g:HTMLPanel>
+		<g:FlowPanel ui:field="studentsetupContainer">
+
+		</g:FlowPanel>   
+		
+<!-- 		<g:HTMLPanel styleName="{style.css.containerProgress} {style.css.containerProgressWidth}" ui:field="panelProgressContainer">
 		    <uc:HTMLEventPanel styleName="{style.css.next}" ui:field="panelPrevious">
 		        <g:Label styleName="{style.css.leftArrow}" ui:field="lblPrevious"></g:Label>
-		    </uc:HTMLEventPanel>
+		    </uc:HTMLEventPanel> -->
+		    
+	 
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+	<!-- 	    
 			<g:HTMLPanel styleName="{style.css.assignmentPathContainer}" ui:field="panelAssignmentPath">
-			    <!-- <g:HTMLPanel styleName="{res.css.progressStart}"></g:HTMLPanel> -->
+			    <g:HTMLPanel styleName="{res.css.progressStart}"></g:HTMLPanel>
 			    <g:HTMLPanel styleName="{style.css.assignementOrderHeader}" ui:field="assignmentOrderPanel"></g:HTMLPanel>
 			    <g:Label styleName="{style.css.assignmentProgress}" ui:field="lblAssignmentProgress" />
 			    <g:HTMLPanel styleName="{style.css.path}">
@@ -56,12 +72,12 @@
 			    <g:Label styleName="{style.css.rightArrow}" ui:field="lblNext"></g:Label>
 			</uc:HTMLEventPanel>
 		</g:HTMLPanel>
-		<!-- <g:HTMLPanel styleName="{StudentStyle.assignmentDotsContainer}" ui:field="panelAssignmentPath">
+		<g:HTMLPanel styleName="{StudentStyle.assignmentDotsContainer}" ui:field="panelAssignmentPath">
 			<g:Label styleName="{style.css.assignmentProgress}" ui:field="lblAssignmentProgress" />
 			<g:HTMLPanel styleName="{style.css.path}">
 				<g:FlowPanel styleName="{style.css.assignmentPath}" ui:field="panelAssignmentProgress" />
 			</g:HTMLPanel>
-		</g:HTMLPanel> -->
+		</g:HTMLPanel>
 		<g:FlowPanel styleName="{style.css.dropdowncontainerStudent}">
 					<g:Label styleName="{style.css.dropdownPlaceHolderStudent}" ui:field="dropdownPlaceHolder"></g:Label>
 					<g:FlowPanel styleName="{style.css.dropdownListContainerScrollPanelStudent}" ui:field="dropDownListContainer">
@@ -71,9 +87,9 @@
 				<g:FlowPanel styleName="{StudentStyle.searchResultContainer}"
 					ui:field="paginationFocPanel"></g:FlowPanel>
 
-		<g:HTMLPanel styleName="{StudentStyle.classPageContainerforAssignment}">
+		<g:HTMLPanel styleName="{StudentStyle.classPageContainerforAssignment}"> -->
 
-			<g:HTMLPanel styleName="{StudentStyle.classPageContentDiv}">
+<!-- 			<g:HTMLPanel styleName="{StudentStyle.classPageContentDiv}">
 				<g:Label styleName="{StudentStyle.classPageNoAssignment}"
 					ui:field="noAssignmentMsg" visible="false"></g:Label>
 				<g:HTMLPanel ui:field="contentpanel" />
@@ -81,9 +97,11 @@
 						<g:FlowPanel styleName="{StudentStyle.searchResultContainer}"
 					ui:field="paginationFocPanel1"></g:FlowPanel>
 
-				<!-- <g:HTMLPanel styleName="{StudentStyle.classpageTopLine}"></g:HTMLPanel> -->
-			</g:HTMLPanel>
+				<g:HTMLPanel styleName="{StudentStyle.classpageTopLine}"></g:HTMLPanel>
+			</g:HTMLPanel> -->
 		</g:HTMLPanel>
+		
+		
 		<sg:FooterUc />
-	</g:HTMLPanel>
+</g:HTMLPanel>
 </ui:UiBinder>

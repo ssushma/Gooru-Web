@@ -42,30 +42,6 @@ import org.ednovo.gooru.client.child.IsChildView;
  * @Reviewer:
  */
 public interface IsCollectionsView extends IsChildView<CollectionsPresenter> {
-	public void updateDirection(String directionText);
-	public void updateDueDate(String dueDate);
-	public void removeClasspageItemWidget();
-	public void updateCollectionStatus(String readStatus);
-	
-	/**
-	 * @function setButtonVisibility 
-	 * 
-	 * @created_date : Jun 18, 2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
-	
-	void setButtonVisibility();
 	
 }
 

@@ -71,6 +71,7 @@
 				<prop key="mos.link">${mos.link}</prop>
 				<prop key="gooru.release.version">${gooru.release.version}</prop>
 				<prop key="analytics.endpoint">${analytics.endpoint}</prop>
+				<prop key="analytics.endpointOld">${analytics.endpointOld}</prop>
 				<prop key="facebook.app_id">${facebook.app_id}</prop>
 				<prop key="facebook.dialogfeedurl">${facebook.dialogfeedurl}</prop>
 				<prop key="taxonomy.preferences">${taxonomy.preferences}</prop>

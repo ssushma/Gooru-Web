@@ -2680,20 +2680,118 @@ public interface MessageProperties extends Constants {
 	String GL2170();
 	String GL2171();
 	String GL2172();
-	String GL2173();
-	String GL2174();
+
+	
+	//New Labels for Assign Tab in Collection Edit 
 	String GL2175();
 	String GL2176();
 	String GL2177();
+	String GL2173();
+	String GL2174();
 	String GL2178();
 	String GL2179();
 	String GL2180();
 	String GL2181();
+
 	String GL2182();
 	String GL2183();
 	String GL2184();
 	String GL2185();
 	String GL2186();
 	String GL2187();
+
 	String GL2188();
+	
+	String GL2189();
+	String GL2190();
+	String GL2191();
+	
+	String GL2192();
+	String GL2193();
+	String GL2194();
+	String GL2195();
+	String GL2196();
+	String GL2197();
+	String GL2198();
+	String GL2199();
+	String GL2200();
+	String GL2201();
+	String GL2202();
+	String GL2203();
+	String GL2204();
+	String GL2205();
+	String GL2206();
+	String GL2207();
+	String GL2208();
+
+	String GL2209();
+	String GL2210();
+	String GL2211();
+	String GL2212();
+	String GL2213();
+	String GL2214();
+	String GL2215();
+	String GL2216();
+	String GL2217();
+	String GL2218();
+	String GL2219();
+	String GL2220();
+	
+	String GL2221();
+	String GL2222();
+	String GL2223();
+	String GL2224();
+
+	String GL2225();
+
+	String GL2226();
+	String GL2227();
+	String GL2228();
+	String GL2229();
+	String GL2230();
+	String GL2231();
+	String GL2232();
+	String GL2233();
+	String GL2234();
+	String GL2235();
+	String GL2236();
+	String GL2237();
+	String GL2238();
+	String GL2239();
+	String GL2240();
+	String GL2241();
+	String GL2242();
+	String GL2243();
+
+	String GL2244();
+	String GL2245();
+	String GL2246();
+	String GL2247();
+	
+	String GL2248();
+	
+	String GL2249();
+	
+	String GL2250();
+	String GL2251();
+	String GL2252();
+	String GL2253();
+	String GL2254();
+	String GL2255();
+	
+	String GL2174_1();
+	String GL2175_1();
+	String GL2176_1();
+	String GL2177_1();
+	String GL2178_1();
+	String GL2179_1();
+	String GL2180_1(); 
+	String GL2181_1();
+	String GL2182_1();
+	String GL2183_1();
+	String GL2184_1();
+	String GL2185_1();
+	String GL2186_1();
+	String GL2187_1();
+	String GL2188_1();
 }
