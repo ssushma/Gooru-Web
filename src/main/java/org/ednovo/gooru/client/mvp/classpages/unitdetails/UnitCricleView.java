@@ -46,7 +46,8 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 		UnitAssignmentCssBundle.INSTANCE.unitAssignment().ensureInjected();
 		unitNumber.setText(classpageItemDo.getItemSequence()+"");
 		boolean isRequired=classpageItemDo!=null&&classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false;
-		showCircle(isRequired);
+		boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals("completed")?true:false;
+		showCircle(isRequired, assignmentStudyStatus);
 		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if(viewToken.equals(PlaceTokens.STUDY)){
 			assignmentReadStatus(isRequired,classpageItemDo.getStatus());
@@ -71,11 +72,11 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 		}
 	}
 	
-	public void showCircle(boolean isRequired){
+	public void showCircle(boolean isRequired, boolean isChecked){
 		if(isRequired){
-			displayRequiredCircle();
+			displayRequiredCircle(isChecked);
 		}else{
-			displayOptionalCircle();
+			displayOptionalCircle(isChecked);
 		}
 	}
 	
@@ -100,17 +101,34 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 	/*
 	 * This method is used to display required Circle
 	 */
-	public void displayRequiredCircle(){
+	public void displayRequiredCircle(boolean isChecked){
+
 		unitNumber.removeStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().bubbleOptional());
 		unitNumber.addStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().bubbleBig());
+		if(isChecked){
+
+			unitNumber.addStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().assingmentcompleted());
+		
+	}
+
 	}
 	/*
 	 * This method is used to display optional Circle
 	 */
-	public void displayOptionalCircle()
+	public void displayOptionalCircle(boolean isChecked)
 	{
 		unitNumber.addStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().bubbleBig());
 		unitNumber.addStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().bubbleOptional());
+		
+		if(isChecked){
+
+			unitNumber.addStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().notrequiredBubbleWithCheck());
+		
+		}
+		else
+		{
+			unitNumber.addStyleName(UnitAssignmentCssBundle.INSTANCE.unitAssignment().bubbleOptional());
+		}
 	}
 	@Override
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
