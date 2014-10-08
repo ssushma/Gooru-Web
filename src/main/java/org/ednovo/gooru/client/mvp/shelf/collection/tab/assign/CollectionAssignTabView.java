@@ -1015,7 +1015,7 @@ public class CpuTitleLabelClick implements ClickHandler{
 			
 			unitId = unitLabel.getElement().getId();
 			
-			
+			resetText();
 			
 			btnAssign.setEnabled(true);
 			btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
