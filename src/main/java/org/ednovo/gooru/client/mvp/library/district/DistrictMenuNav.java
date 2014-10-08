@@ -93,7 +93,7 @@ public abstract class DistrictMenuNav extends Composite {
 		setPlaceToken(placeToken);
 		setAssets();
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)
-				||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)) {
+				||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD) ||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LUSD) ) {
 			sciencePanel.addStyleName(districtStyleUc.tabsLiInactive());
 		} else {
 			
@@ -123,7 +123,7 @@ public abstract class DistrictMenuNav extends Composite {
 		}
 
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)
-				||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)) {
+				||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LUSD)) {
 			socialPanel.addStyleName(districtStyleUc.tabsLiInactive());
 		} else {
 			socialPanel.addMouseOverHandler(new MouseOverHandler() {
@@ -149,7 +149,7 @@ public abstract class DistrictMenuNav extends Composite {
 
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)
 					||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)
-					||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)) {
+					||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LUSD)) {
 			
 				learnPanel.addStyleName(districtStyleUc.tabsLiInactive());
 		} else {
@@ -215,6 +215,8 @@ public abstract class DistrictMenuNav extends Composite {
 			setGooruAnrText(i18n.GL2069(), i18n.GL2070());
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)) {
 			setGooruAnrText(i18n.GL2071(), i18n.GL2072());
+		}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LUSD)) {
+			setGooruAnrText(i18n.GL2184_1(), i18n.GL2185_1());
 		}
 
 		aboutGooruAnr.setTarget("_blank");

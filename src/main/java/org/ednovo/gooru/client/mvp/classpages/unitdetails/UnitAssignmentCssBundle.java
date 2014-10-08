@@ -23,6 +23,10 @@ public interface UnitAssignmentCssBundle extends ClientBundle{
 		String headerDueDate();
 		String directionHeading();
 		String directionDesc();
+		String greenBubbleWithCheck();
+		String redBubbleWithCheck();
+		String requiredBubbleWithCheck();
+		String notrequiredBubbleWithCheck();
 		
 		
 	}

@@ -8,6 +8,14 @@
 	},
 	
 	{
+		"label": "Lammersville Unified",
+		"courseId":0,
+		"subjectId":0,
+		"link": "#lusd",
+		"extraParms": null
+	},
+	
+	{
 		"label": "Leadership Public Schools",
 		"courseId":0,
 		"subjectId":0,
@@ -15,28 +23,28 @@
 		"extraParms": null
 	},
 	{
-		"label": "Riverside USD",
+		"label": "Riverside Unified",
 		"courseId":0,
 		"subjectId":0,
 		"link": "#rusd",
 		"extraParms": null
 	},
 	{
-		"label": "Santa Ana USD",
+		"label": "Santa Ana Unified",
 		"courseId":0,
 		"subjectId":0,
 		"link": "#sausd",
 		"extraParms": null
 	},
 	{
-		"label": "Stockton USD",
+		"label": "Stockton Unified",
 		"courseId":0,
 		"subjectId":0,
 		"link": "#susd",
 		"extraParms": null
 	},
 	{
-		"label": "Val Verde USD",
+		"label": "Val Verde Unified",
 		"courseId":0,
 		"subjectId":0,
 		"link": "#valverde",
