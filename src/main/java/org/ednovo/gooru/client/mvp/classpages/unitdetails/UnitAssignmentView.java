@@ -1022,11 +1022,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	@Override
 	public void showAssignment(ClasspageItemDo classpageItemDo) {
 		assignmentContainer.clear();
+		final boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals("completed")?true:false;
 		 collectionView=new CollectionsView(classpageItemDo){
 			@Override
 			public void updateAssignmentRequiredStatus(Boolean isRequired,String collectionItemId,String readStatus,boolean isUpdateRequiredStatus){
+				
 				if(isUpdateRequiredStatus){
-				updateCircleRequiredView(isRequired, collectionItemId);
+				updateCircleRequiredView(isRequired, collectionItemId,assignmentStudyStatus);
 				}else{
 					updateAssingmentCircleReadStatus(isRequired,collectionItemId,readStatus);
 				}
@@ -1040,14 +1042,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		assignmentContainer.add(collectionView);
 	}
 	
-	public void updateCircleRequiredView(Boolean isRequired,String collectionItemId){
+	public void updateCircleRequiredView(Boolean isRequired,String collectionItemId, Boolean assignmentStatus){
 		Iterator<Widget> widgets = circleContainerPanel.iterator();
 		while (widgets.hasNext()) {
 			 Widget widget = widgets.next();
 			if (widget instanceof UnitCricleView) {
 				UnitCricleView unitCricleView=(UnitCricleView)widget;
 				if(unitCricleView.getAssignementId().equals(collectionItemId)){
-					unitCricleView.showCircle(isRequired);
+					unitCricleView.showCircle(isRequired,assignmentStatus);
 					return;
 				}
 			}
