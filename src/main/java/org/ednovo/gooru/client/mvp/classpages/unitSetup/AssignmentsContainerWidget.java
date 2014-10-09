@@ -144,12 +144,22 @@ public class AssignmentsContainerWidget extends Composite  {
 				if(!classpageItemDo.getIsRequired())
 				{
 					unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.stylishBub());
-				}
-				if(classpageItemDo.getStatus() != null && classpageItemDo.getStatus().equalsIgnoreCase("completed"))
-				 {
-					 unitCircleView.getElement().getFirstChildElement().setAttribute("style", "background: #b9bbca url(../images/liners.png) repeat-x center !important;");
+					if(classpageItemDo.getStatus() != null && classpageItemDo.getStatus().equalsIgnoreCase("completed"))
+					 {
+						 unitCircleView.getElement().getFirstChildElement().setAttribute("style", "background: #b9bbca url(../images/liners.png) repeat-x center !important;");
 
-				 }
+					 }
+				}
+				else
+				{
+					unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.classBubble());
+					if(classpageItemDo.getStatus() != null && classpageItemDo.getStatus().equalsIgnoreCase("completed"))
+					 {
+						 unitCircleView.getElement().getFirstChildElement().setAttribute("style", "background-image: url(../images/checkMark.png);");
+
+					 }
+				}
+				
 			}else{
 				if((classpageItemDo.getStatus() != null && classpageItemDo.getStatus().equalsIgnoreCase("completed")) )
 				 {

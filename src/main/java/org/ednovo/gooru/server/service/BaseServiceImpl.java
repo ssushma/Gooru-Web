@@ -91,8 +91,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	private static final String HOME_ENDPOINT = "home.endpoint";
 	
 	private static final String ANALYTICS_ENDPOINT = "analytics.endpoint";
-	
-	private static final String ANALYTICS_ENDPOINTOLD = "analytics.endpointOld";
 
 	private static final String DOMAIN_NAME = "domain.name";
 	
@@ -255,14 +253,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		return analyticsEndPoint;
 	}
 
-	public String getAnalyticsEndPointOld() {
-		String analyticsEndPoint = restConstants.getProperty(ANALYTICS_ENDPOINTOLD);
-		if(getHttpRequest().getScheme().equalsIgnoreCase(HTTPS)) {
-			analyticsEndPoint = analyticsEndPoint.replaceAll(HTTP, HTTPS);
-			ResourceImageUtil.protocol=HTTPS;
-		}
-		return analyticsEndPoint;
-	}
 	
 	public String getHomeEndPointForEmbed() {
 		return restConstants.getProperty(HOME_ENDPOINT);
@@ -362,7 +352,6 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		filterProperties.setFacebookFeedUrl(getFacebookFeedUrl());
 		filterProperties.setTaxonomyPreferences(getTaxonomyPreferences());
 		filterProperties.setAnalyticsEndPoint(getAnalyticsEndPoint());
-		filterProperties.setAnalyticsEndPointOld(getAnalyticsEndPointOld());
 		user.setSettings(filterProperties);
 	}
 
