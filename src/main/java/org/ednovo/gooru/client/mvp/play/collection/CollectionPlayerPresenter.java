@@ -684,7 +684,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			this.collectionItemDo=collectionItemDo;
 			clearSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT);
 			setNavigationResourcesView(collectionDo.getGooruOid(), collectionItemDo.getCollectionItemId(), false);
-			updateResourceViewCount(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getViews().toString(),RESOURCE,collectionItemId);
+			//updateResourceViewCount(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getViews().toString(),RESOURCE,collectionItemId);
 			createPlayerDataLogs();
 			setTotalTimeSpentOnSummaryPage();
 			PlaceRequest nextResoruceRequest=getNextButtonRequestUrl(collectionItemId);
@@ -945,12 +945,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
 	public void updatCollectionViewsCount(){
 		if(collectionDo!=null&&collectionDo.getGooruOid()!=null){
-			String viewsCount=collectionDo.getViews();
-			Integer viewsCounts=Integer.parseInt(viewsCount)+1;
-			collectionDo.setViews(viewsCounts.toString());
-			metadataPresenter.setViewCount(viewsCounts.toString());
+//			String viewsCount=collectionDo.getViews();
+//			Integer viewsCounts=Integer.parseInt(viewsCount)+1;
+//			collectionDo.setViews(viewsCounts.toString());
+//			metadataPresenter.setViewCount(viewsCounts.toString());
 			try{
-	    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(String.valueOf(viewsCounts), collectionDo.getGooruOid(), "views"));
+	    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(collectionDo.getViews(), collectionDo.getGooruOid(), "views"));
 	         }
 			catch(Exception ex){}
 		}
@@ -1256,20 +1256,20 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 
 	public void updateResourceViewCount(String gooruId,String viewsCount,String resourceType){
-		this.playerAppService.updateViewCount(gooruId, viewsCount, resourceType, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String result) {
+//		this.playerAppService.updateViewCount(gooruId, viewsCount, resourceType, new SimpleAsyncCallback<String>() {
+//			@Override
+//			public void onSuccess(String result) {
 				updatCollectionViewsCount();
-			}
-		});
+//			}
+//		});
 	}
 	public void updateResourceViewCount(String gooruId,String viewsCount,String resourceType,final String collectionItemId){
-		this.playerAppService.updateViewCount(gooruId, viewsCount, resourceType, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String result) {
+//		this.playerAppService.updateViewCount(gooruId, viewsCount, resourceType, new SimpleAsyncCallback<String>() {
+//			@Override
+//			public void onSuccess(String result) {
 				updateViewCount(collectionItemId);
-			}
-		});
+//			}
+//		});
 	}
 
 	public void startPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
