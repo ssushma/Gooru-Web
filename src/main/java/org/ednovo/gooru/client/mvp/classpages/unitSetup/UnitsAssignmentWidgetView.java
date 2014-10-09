@@ -170,7 +170,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 		addAssignmentButton.removeFromParent();
 		cancelEditButton.removeFromParent();
 //		getAnalyticData(classUnitsDo.getResource().getUser().getGooruUId(), classUnitsDo.getResource().getGooruOid());
-		getAnalyticData();
+//		getAnalyticData();
 		setUnitNameDetails();
 		unitDetailsButton.addClickHandler(new UnitChangeEvent("dashboard",classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
 		unitDetailsPanel.addClickHandler(new UnitChangeEvent("dashboard",classUnitsDo.getResource().getGooruOid(),Integer.toString(sequenceNum),PlaceTokens.STUDENT));
@@ -196,7 +196,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 				for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 					ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
 					if(isStudentMode){
-						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),insightsUserList.get(i+insightOffset)));
+//						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),insightsUserList.get(i+insightOffset)));
+						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),null));
 					}else{
 						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),null));
 					}
