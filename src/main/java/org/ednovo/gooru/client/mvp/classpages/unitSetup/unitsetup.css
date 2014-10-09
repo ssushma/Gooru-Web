@@ -633,7 +633,7 @@ margin: 6px 0;
      width: 30px;
 }
 .stylishBub{
-	 background:#b9bbca url(../images/liners.png) repeat-x !important;
+	 background:#b9bbca url(../images/liners.png) repeat-x;
 	 border-radius: 50%;
      color: #ffffff;
      display: inline-block;
