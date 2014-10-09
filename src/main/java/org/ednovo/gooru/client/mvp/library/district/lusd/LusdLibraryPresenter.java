@@ -94,6 +94,7 @@ public class LusdLibraryPresenter extends BasePlacePresenter<IsLusdLibraryView,L
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		districtPresenter.setPartnerWidget(PlaceTokens.LUSD);
+		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 		clearSlot(TYPE_FOLDERS_SLOT);
 		setInSlot(TYPE_FOLDERS_SLOT, districtPresenter);
 		
@@ -107,6 +108,7 @@ public class LusdLibraryPresenter extends BasePlacePresenter<IsLusdLibraryView,L
 		        signUpViewPresenter.displayPopup(displayScreen);
 		        addToPopupSlot(signUpViewPresenter);
 		    }
+		}
 		}
 	}
 	

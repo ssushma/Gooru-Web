@@ -80,6 +80,7 @@ public class AutodeskLibraryPresenter extends BasePlacePresenter<IsAutodeskLibra
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
+		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 		clearSlot(TYPE_FOLDERS_SLOT);
 		setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
 		partnerLibraryPresenter.setPartnerWidget();
@@ -94,6 +95,7 @@ public class AutodeskLibraryPresenter extends BasePlacePresenter<IsAutodeskLibra
 				signUpViewPresenter.displayPopup(displayScreen);
 				addToPopupSlot(signUpViewPresenter);
 			}
+		}
 		}
 	}
 	

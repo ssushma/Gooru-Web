@@ -90,6 +90,7 @@ public class SusdLibraryPresenter extends BasePlacePresenter<IsSusdLibraryView, 
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		districtPresenter.setPartnerWidget(PlaceTokens.SUSD);
+		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 		clearSlot(TYPE_FOLDERS_SLOT);
 		setInSlot(TYPE_FOLDERS_SLOT, districtPresenter);
 		
@@ -103,6 +104,7 @@ public class SusdLibraryPresenter extends BasePlacePresenter<IsSusdLibraryView, 
 		        signUpViewPresenter.displayPopup(displayScreen);
 		        addToPopupSlot(signUpViewPresenter);
 		    }
+		}
 		}
 	}
 	
