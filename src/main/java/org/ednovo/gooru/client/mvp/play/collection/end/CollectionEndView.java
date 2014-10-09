@@ -699,7 +699,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			frameContainer.setVisible(true);
 			messageContainer.setVisible(false);
 			//getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPointOld()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
+			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
 					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),"",AppClientFactory.getLoginSessionToken())));
 		}
 	}
@@ -722,7 +722,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			frameContainer.setVisible(true);
 			messageContainer.setVisible(false);
 			//getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPointOld()+DataInsightsUrlTokens.PLAYER_CLASS_PREVIOUS_DATA,
+			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.PLAYER_CLASS_PREVIOUS_DATA,
 					classpageId,collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));
 		}
 	}
@@ -743,7 +743,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			messageContainer.setVisible(false);
 			sessionId=sessionId!=null?sessionId:"";
 			//getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPointOld()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
+			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
 					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));
 		}
 	}
