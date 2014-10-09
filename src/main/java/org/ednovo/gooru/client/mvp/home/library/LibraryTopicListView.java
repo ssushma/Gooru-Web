@@ -1310,7 +1310,7 @@ public class LibraryTopicListView extends Composite{
 		if(params.containsKey(CUSTOMIZE)){
 			params.remove(CUSTOMIZE);
 		}
-		String collectionId = getConceptDo().getGooruOid();
+		String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
 		if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
 			MixpanelUtil.mixpanelEvent("standardlibrary_assign_collection");	
 		}
@@ -1390,7 +1390,7 @@ public class LibraryTopicListView extends Composite{
 		if(params.containsKey(ASSIGN)){
 			params.remove(ASSIGN);
 		}
-		String collectionId = getConceptDo().getGooruOid();
+		String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
 		MixpanelUtil.mixpanelEvent("LandingPage_customize_collection");
 		if(!isCustomizePopup){
 			isCustomizePopup=true;
