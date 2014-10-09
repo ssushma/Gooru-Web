@@ -25,7 +25,7 @@ public interface UnitAssignmentCssBundle extends ClientBundle{
 		String directionDesc();
 		String redCircle();
 		String greenCircle();
-		String stylishBub();
+		String stylishCircle();
 		String greenBubbleWithCheck();
 		String redBubbleWithCheck();
 		String requiredBubbleWithCheck();

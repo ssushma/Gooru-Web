@@ -56,8 +56,11 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 		boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals("completed")?true:false;
 		showCircle(isRequired, assignmentStudyStatus);
 		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		if(viewToken.equals(PlaceTokens.STUDY)){
+		if(insightsUserDataDo!=null){
+			System.out.println("Enter:::");
 			setAssignmentCircleStatus();
+		}
+		if(viewToken.equals(PlaceTokens.STUDY)){
 			assignmentReadStatus(isRequired,classpageItemDo.getStatus());
 		}
 		
@@ -164,6 +167,9 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 			 if(insightsUserDataDo.getUserData().get(0).getGradeInPercentage()!=null){
 				 String grade=insightsUserDataDo.getUserData().get(0).getGradeInPercentage();
 				 String minScore=insightsUserDataDo.getMinimumScore();
+				 System.out.println("minScore::"+minScore);
+				 System.out.println("grade::"+grade);
+				 System.out.println("classpageItemDo.getStatus(:"+classpageItemDo.getStatus().equalsIgnoreCase("completed"));
 				 if(grade.equals(minScore)|| Integer.parseInt(grade)>Integer.parseInt(minScore)){
 					this.getElement().getFirstChildElement().setClassName(res.unitAssignment().greenCircle());
 				 }else{
@@ -180,7 +186,7 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 			{
 				if(insightsUserDataDo.getIsRequired()==0)
 				{
-					this.getElement().getFirstChildElement().setClassName(res.unitAssignment().stylishBub());
+					this.getElement().getFirstChildElement().setClassName(res.unitAssignment().stylishCircle());
 					if((insightsUserDataDo.getStatus() != null && insightsUserDataDo.getStatus().equals("1")) ||(classpageItemDo.getStatus() != null && classpageItemDo.getStatus().equalsIgnoreCase("completed")) )
 					 {
 						 this.getElement().getFirstChildElement().setAttribute("style", "background: #b9bbca url(../images/liners.png) repeat-x center !important;");

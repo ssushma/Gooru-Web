@@ -129,9 +129,7 @@ public class ScoreHedingView extends Composite {
 	public void showUnitStatus() {
 		// TODO Auto-generated method stub
 		if(classUnitsListDo!=null){
-			System.out.println("title:"+getLblTitle().getText());
 			if(getLblTitle().getText().equals(i18n.GL2195())){
-				System.out.println("minimumscore::"+classUnitsListDo.getMinimumScoreByUser());
 				if(classUnitsListDo.getMinimumScoreByUser()!=null){
 					showAndHideTextBox();
 					txtScore.setText(classUnitsListDo.getMinimumScoreByUser()+"");
@@ -143,7 +141,6 @@ public class ScoreHedingView extends Composite {
 					showingScoreReader();
 				}
 			}else{
-				System.out.println("else::::");
 				if(classUnitsListDo.getAssignmentCompleted()!=null){
 					showAndHideTextBox();
 					txtScore.setText(classUnitsListDo.getAssignmentCompleted()+"");

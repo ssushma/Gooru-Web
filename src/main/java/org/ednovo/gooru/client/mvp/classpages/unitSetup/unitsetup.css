@@ -600,7 +600,7 @@ margin: 6px 0;
 }
 
 .redCircle{
-	background:#ff7d71 no-repeat center !important;
+	background:#ff7d71 no-repeat center;
 	 border-radius: 50%;
      color: #ffffff;
      display: inline-block;
@@ -617,7 +617,7 @@ margin: 6px 0;
 }
 
 .greenCircle{
-	background:#a7c9a4 no-repeat center !important;
+	background:#a7c9a4 no-repeat center;
 	 border-radius: 50%;
      color: #ffffff;
      display: inline-block;
@@ -633,7 +633,7 @@ margin: 6px 0;
      width: 30px;
 }
 .stylishBub{
-	 background:#b9bbca url(../images/liners.png) repeat-x !important;
+	 background:#b9bbca url(../images/liners.png) repeat-x;
 	 border-radius: 50%;
      color: #ffffff;
      display: inline-block;

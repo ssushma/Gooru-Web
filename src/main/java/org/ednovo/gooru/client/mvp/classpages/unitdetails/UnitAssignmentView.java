@@ -328,7 +328,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					leftArrow.getElement().setAttribute("style","margin-left: 10px;cursor: pointer;");
 					circleContainerPanel.add(leftArrow);
 					for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
-						unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i),insightsUserList.get(i));
+						if(insightsUserList!=null){
+							unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i),insightsUserList.get(i));
+						}else{
+							unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i), null);
+						}
 						//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid());
 						unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());	
 						circleContainerPanel.add(unitCricleViewObj);
