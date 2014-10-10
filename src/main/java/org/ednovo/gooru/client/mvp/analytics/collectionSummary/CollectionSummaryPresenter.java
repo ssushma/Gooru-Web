@@ -66,6 +66,7 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 
 	@Override
 	public void setCollectionSummaryData(final String collectionId,final String pathwayId) {
+		getView().getLoadinImage().setVisible(true);
 		final String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		this.analyticService.getCollectionSummaryUsersData(classpageId,new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
 			
@@ -112,15 +113,17 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 
 	@Override
 	public void setTeacherData(String collectionId,String classpageId,String pathwayId) {
+		getView().getLoadinImage().setVisible(true);
 		clearSlot(TEACHER_STUDENT_SLOT);
-		collectionSummaryTeacherPresenter.setTeacherData(collectionId,classpageId,pathwayId,collectionMetadata);
+		collectionSummaryTeacherPresenter.setTeacherData(collectionId,classpageId,pathwayId,collectionMetadata,getView().getLoadinImage());
 		setInSlot(TEACHER_STUDENT_SLOT, collectionSummaryTeacherPresenter,false);		
 	}
 
 	@Override
 	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId) {
+		getView().getLoadinImage().setVisible(true);
 		clearSlot(TEACHER_STUDENT_SLOT);
-		collectionSummaryIndividualPresenter.setIndividualData(collectionId,classpageId,userId,sessionId,pathwayId);
+		collectionSummaryIndividualPresenter.setIndividualData(collectionId,classpageId,userId,sessionId,pathwayId,true,getView().getLoadinImage());
 		setInSlot(TEACHER_STUDENT_SLOT, collectionSummaryIndividualPresenter,false);	
 	}
 	

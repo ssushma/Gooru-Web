@@ -14,6 +14,8 @@ import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ErrorEvent;
+import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -37,7 +39,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	@UiField ListBox studentsListDropDown,sessionsDropDown;
 	@UiField Image collectionImage;
 	@UiField InlineLabel collectionTitle,collectionResourcesCount,collectionLastAccessed,lastModifiedTime;
-	@UiField HTMLPanel sessionspnl;
+	@UiField HTMLPanel sessionspnl,loadingImageLabel1;
 	@UiField VerticalPanel pnlSummary;
 
 	Map<String, String> sessionData=new HashMap<String, String>();
@@ -99,10 +101,18 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		if(result.size()!=0){
 			collectionId=result.get(0).getGooruOId();
 			collectionTitle.setText(result.get(0).getTitle());
-			System.out.println("last accessed:"+AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getLastModified())));
 			collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getLastModified())));
-			if(result.get(0).getThumbnail()!=null)
-			collectionImage.setUrl(result.get(0).getThumbnail());
+			if(result.get(0).getThumbnail()!=null){
+				collectionImage.setUrl(result.get(0).getThumbnail());
+			}else{
+				collectionImage.setUrl("images/analytics/default-collection-image.png");
+			}
+			collectionImage.addErrorHandler(new ErrorHandler() {
+				@Override
+				public void onError(ErrorEvent event) {
+					collectionImage.setUrl("images/analytics/default-collection-image.png");
+				}
+			});
 		}
 	}
 
@@ -139,5 +149,9 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	public void setSessionStartTime(int selectedIndex) {
 		if(sessionData.size()!=0)
 		  lastModifiedTime.setText(sessionData.get(sessionsDropDown.getValue(selectedIndex)).toString());
+	}
+	@Override
+	public HTMLPanel getLoadinImage() {
+		return loadingImageLabel1;
 	}
 }

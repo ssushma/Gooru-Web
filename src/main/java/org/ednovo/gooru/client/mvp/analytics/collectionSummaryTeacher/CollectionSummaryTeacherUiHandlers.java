@@ -29,6 +29,12 @@ import java.util.ArrayList;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 
+import com.google.gwt.user.client.ui.HTMLPanel;
+
 public interface CollectionSummaryTeacherUiHandlers extends BaseUiHandlers{
- void setTeacherData(String collectionId,String classpageId,String pathwayId,ArrayList<CollectionSummaryMetaDataDo> result);
+ 
+ void setTeacherData(String collectionId,String classpageId,String pathwayId,ArrayList<CollectionSummaryMetaDataDo> result,HTMLPanel loadingImage);
+ 
+ void setOEtextData(String resourceGooruId,String questionType);
+
 }

@@ -98,8 +98,6 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			//when changing the collections drop down reset all the changes.
 			getUiHandlers().setClickedTabPresenter(null,null);
 			clearDownArrow();
-			isSummayClicked=false;
-			isProgressClicked=false;
 			setMinimumScoresData();
 			String pathwayId=AppClientFactory.getPlaceManager().getRequestParameter("uid", "");
 			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
@@ -144,10 +142,12 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			}
 		}
 	}
-	void clearDownArrow(){
+	public void clearDownArrow(){
 		summaryArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
 		progressArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
 		responsesArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
+		isSummayClicked=false;
+		isProgressClicked=false;
 	}
 	public void removeUnitSelectedStyle(){
 		Iterator<Widget> widgets = unitPanel.iterator();

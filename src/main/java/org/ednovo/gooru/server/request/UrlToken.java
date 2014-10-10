@@ -646,7 +646,11 @@ public enum UrlToken {
 	
 	V1_GETGRADEJSON("/v1/classpage/{0}/grade.json?sessionToken={1}&data={2}"),
 	
-	V1_EXPORTOEPATHWAY("/v1/classpage/{0}/oe/export.xls?sessionToken={1}&data={2}&timeZone={3}");
+	V1_EXPORTOEPATHWAY("/v1/classpage/{0}/oe/export.xls?sessionToken={1}&data={2}&timeZone={3}"),
+	
+	V1_OETEXTJSON("/v1/classpage/{0}/OEText.json?sessionToken={1}&data={2}"),
+	
+	V2_ITEMFEEDBACK("/v2/session/{0}/item/feedback?sessionToken={1}");
 	
 
 	private String url;

@@ -23,6 +23,7 @@
 	padding-top: 30px;
 	padding-bottom: 30px;
 	width: 86.3333% !important;
+	border-left: 1px solid #efefef;
 }
 
 .uniSetup a {
@@ -614,7 +615,7 @@
 }
 
 .setBroder {
-	border-left: 1px solid #eee;
+	/* border-left: 1px solid #eee; */
 }
 
 .filterDropDown {

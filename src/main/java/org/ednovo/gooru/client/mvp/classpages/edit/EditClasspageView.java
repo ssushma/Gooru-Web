@@ -14,8 +14,6 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
-import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListView.MouseOutHideToolTip1;
-import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListView.MouseOverShowClassCodeToolTip1;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageResourceItemListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
@@ -396,9 +394,10 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		//reportHandler=reportsTab.addClickHandler(new reportsTabClicked());		
-		reportsTab.addMouseOverHandler(new MouseOverShowClassCodeToolTip1());
-		reportsTab.addMouseOutHandler(new MouseOutHideToolTip1());
+		reportHandler=reportsTab.addClickHandler(new reportsTabClicked());		
+		//reportsTab.addMouseOverHandler(new MouseOverShowClassCodeToolTip1());
+		//reportsTab.addMouseOutHandler(new MouseOutHideToolTip1());
+
 		
 		ResetProgressHandler reset = new ResetProgressHandler() {
 

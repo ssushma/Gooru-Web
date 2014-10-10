@@ -200,7 +200,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 		StringUtil.setAttributes(assignmentContainer.getElement(), "divAssignmentContainer", null, null);
 		StringUtil.setAttributes(personalizeContainer.getElement(), "divPersonalizeContainer", null, null);
 		StringUtil.setAttributes(btnPersonalize.getElement(), "btnPersonalize", "Personalize Units", "Personalize Units");
-		panelPersonalizeButtonContainer.setVisible(false);
+		//panelPersonalizeButtonContainer.setVisible(false);
 		displayPersonalizeOptions(false);
 		setPersonalizeState(false);
 		

@@ -22,22 +22,43 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
-import java.util.ArrayList;
+package org.ednovo.gooru.client.mvp.search;
+
+/**
+* @fileName : IsAddResourceView.java 
+*
+* @description :This file is responsible for UI Handlers.
+*
+* @version :5.1
+*
+* @date: Apr 6 2013
+   	
+* @Author  Gooru Team
+* 
+* @Reviewer 
+*
+*/
+import java.util.HashMap;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
-import org.ednovo.gooru.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Tree;
+import com.google.gwt.user.client.ui.TreeItem;
 
+public interface IsAnalyticsInfoContainerView extends IsViewWithHandlers<AnalyticsInfoContainerUiHandlers>{
 
-public interface IsCollectionSummaryIndividualView extends IsViewWithHandlers<CollectionSummaryIndividualUiHandlers>{
-	
-	void setIndividualData(ArrayList<UserDataDo> result,HTMLPanel loadingImage);
-	
-	void setIndividualCollectionMetaData(ArrayList<CollectionSummaryMetaDataDo> result);
-	
-	void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType, boolean isSummary);
+	void setContentGraph(ContentStarRatingsDo result);
+
+	void setAverageRatingWidget(ContentStarRatingsDo result);
+
+	void setCollectionAnalyticsData(CollectionSearchResultDo searchResultDo);
+
+	void setAverageReactionWidget(int count);
+
 }
