@@ -64,8 +64,8 @@
 			</g:FlowPanel>
             	<g:FlowPanel ui:field="metadataContainer"></g:FlowPanel>
            	    <g:FlowPanel styleName="{playerStyle.insightsFrame}" ui:field="dataInsightsPanel">
-           	    	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer"/>
-	             	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer1">
+           	    	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer1"/>
+	             	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer">
 	             	 <g:HTMLPanel styleName="{unitStyle.summary_title}">Collection Summary</g:HTMLPanel>
 					             	 <!-- Collection Summary Top -->
 					     <g:HTMLPanel>
@@ -107,7 +107,7 @@
 						 </g:HTMLPanel>
 					  <!-- Sessions end-->
 	             	 <g:HTMLPanel styleName="{unitStyle.htmlpanlProgress}" ui:field="scrollForCollectionProgress">
-					 <g:VerticalPanel ui:field="pnlSummary"/>
+					 <g:VerticalPanel ui:field="pnlSummary" styleName="{unitStyle.pnlSummary}"/>
 					 </g:HTMLPanel>
 	             	</g:FlowPanel>
 	                <g:FlowPanel styleName="{playerStyle.messageContainer}" ui:field="messageContainer">

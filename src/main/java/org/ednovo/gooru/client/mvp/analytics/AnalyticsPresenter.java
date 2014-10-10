@@ -85,6 +85,8 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
 			@Override
 			public void onSuccess(ClassDo classDo) {
+				getView().clearDownArrow();
+				clearSlot(COLLECTION_PROGRESS_SLOT);
 				getView().showUnitNames(classDo,clearPanel);
 				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
@@ -100,6 +102,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	public void setClickedTabPresenter(String clickedTab,String collectionId) {
 		String pathWayId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 		clearSlot(COLLECTION_PROGRESS_SLOT);
+		System.out.println("clciked::"+clickedTab);
 		if(clickedTab!=null){
 			if(clickedTab.equalsIgnoreCase(SUMMARY)){
 				collectionSummaryPresenter.setCollectionSummaryData(collectionId,pathWayId);

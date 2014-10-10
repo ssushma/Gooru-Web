@@ -399,6 +399,7 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		//reportHandler=reportsTab.addClickHandler(new reportsTabClicked());		
 		reportsTab.addMouseOverHandler(new MouseOverShowClassCodeToolTip1());
 		reportsTab.addMouseOutHandler(new MouseOutHideToolTip1());
+
 		
 		ResetProgressHandler reset = new ResetProgressHandler() {
 

@@ -20,12 +20,11 @@
 				<!-- 	This widget Is used to Graph Widget-->
 				<g:HTMLPanel styleName="row {unitStyle.generalSet}">
 				   <g:HTMLPanel>
-				       <g:HTMLPanel styleName="{unitStyle.rowInner}" ui:field="graphWidget" >
-				          
+				        <g:HTMLPanel styleName="{unitStyle.rowInner}" ui:field="graphWidget" >
 				        </g:HTMLPanel>
-				    <g:HTMLPanel styleName="{unitStyle.loadingImageMainDiv}" ui:field="loadingImageLabel">
-					<g:Label styleName="{unitStyle.loadingImageForSelfEdit}" />
-				</g:HTMLPanel>
+					    <g:HTMLPanel styleName="{unitStyle.loadingImageMainDiv}" ui:field="loadingImageLabel">
+						<g:Label styleName="{unitStyle.loadingImageForSelfEdit}" />
+						</g:HTMLPanel>
 				      </g:HTMLPanel>
 				</g:HTMLPanel>
 				<!-- end Graph Widget -->
@@ -57,7 +56,7 @@
 				<g:HTMLPanel styleName="row {unitStyle.setBroder}">
 				   <g:HTMLPanel>
 				      <g:HTMLPanel styleName="{unitStyle.rowInner} {unitStyle.slotWidget}" ui:field="slotWidget" >
-				        </g:HTMLPanel>
+				      </g:HTMLPanel>
 				      </g:HTMLPanel>
 				</g:HTMLPanel>
 				<!-- end view assignments -->

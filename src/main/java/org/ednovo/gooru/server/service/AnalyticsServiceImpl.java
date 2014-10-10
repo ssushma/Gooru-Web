@@ -36,7 +36,9 @@ import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
+import org.ednovo.gooru.shared.model.analytics.FeedBackResponseDataDO;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
+import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -342,8 +344,147 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		}
 		return jsonDataObject.toString();
 	}
-	
-	
-	
-	
+
+	private ArrayList<OetextDataDO> deserializeOETextResponse(JSONArray jsonArray) {
+		ArrayList<OetextDataDO> oetextlistObj=new ArrayList<OetextDataDO>();
+		if(jsonArray.length()!=0){
+			for (int i=0;i<jsonArray.length();i++) {
+				try {
+					JSONObject jsonObject=(JSONObject) jsonArray.get(i);
+					OetextDataDO oetextDataDOObj=new OetextDataDO();
+					if(!jsonObject.isNull("answerObject"))
+					oetextDataDOObj.setAnswerObject(jsonObject.getString("answerObject"));
+					
+					if(!jsonObject.isNull("feedbackStatus"))
+					oetextDataDOObj.setFeedbackStatus(jsonObject.getString("feedbackStatus"));
+					
+					if(!jsonObject.isNull("feedbackText"))
+					oetextDataDOObj.setFeedbackText(jsonObject.getString("feedbackText"));
+					
+					if(!jsonObject.isNull("feedbackTimestamp"))
+					oetextDataDOObj.setFeedbackTimestamp(jsonObject.getLong("feedbackTimestamp"));
+					
+					if(!jsonObject.isNull("feedbackProviderUId"))
+					oetextDataDOObj.setFeedbackProviderUId(jsonObject.getString("feedbackProviderUId"));
+					
+					if(!jsonObject.isNull("gooruUId"))
+					oetextDataDOObj.setGooruUId(jsonObject.getString("gooruUId"));
+					
+					if(!jsonObject.isNull("OEText"))
+					oetextDataDOObj.setOEText(jsonObject.getString("OEText"));
+					
+					if(!jsonObject.isNull("organizationUId"))
+					oetextDataDOObj.setOrganizationUId(jsonObject.getString("organizationUId"));
+					
+					if(!jsonObject.isNull("status"))
+					oetextDataDOObj.setStatus(jsonObject.getInt("status"));
+					
+					if(!jsonObject.isNull("userGroupUId"))
+					oetextDataDOObj.setUserGroupUId(jsonObject.getString("userGroupUId"));
+					
+					if(!jsonObject.isNull("userName"))
+					oetextDataDOObj.setUserName(jsonObject.getString("userName"));
+					
+					oetextlistObj.add(oetextDataDOObj);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return oetextlistObj;
+	}
+
+	@Override
+	public FeedBackResponseDataDO postTeacherFeedBackToStudent(String freeText,
+			String resourceId, String collectionId, String classpageId,	String pathwayId, String userId, String session) {
+		JsonRepresentation jsonRep = null;
+		FeedBackResponseDataDO feedBackResponseDataDO=new FeedBackResponseDataDO();
+		//String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ITEMFEEDBACK, session,getLoggedInSessionToken());
+		String url ="http://www.goorulearning.org/gooruapi/rest/v2/session/AS/item/feedback?sessionToken=08a99a16-4ea5-11e4-8d6c-123141016e2a";
+		System.out.println("url:+"+url);
+		JSONObject mainObj=new JSONObject();
+		JSONObject userObj=new JSONObject();
+		JSONObject setPlayLoadObj=new JSONObject();
+		try {
+			userObj.put("partyUid", "caf10bed-e2ae-4d9e-ac4e-77689741b6bb");
+			
+			setPlayLoadObj.put("classpageGooruId", "6a4cdb36-c579-4994-8ea0-5130a9838cbd");
+			setPlayLoadObj.put("active", "true");
+			setPlayLoadObj.put("sessionId", "AS");
+			
+			mainObj.put("contentGooruOId","f58e7666-a5a0-4608-8799-cbf091883587");
+			mainObj.put("parentGooruOId","fe78faa5-f7f0-4927-9282-a58a4e3deb5d");
+			mainObj.put("freeText",freeText);
+			mainObj.put("playLoadObject",setPlayLoadObj.toString());
+			mainObj.put("user",userObj);
+			
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),mainObj.toString());
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			if(jsonResponseRep.getStatusCode()==200){
+				feedBackResponseDataDO=deserializeTeacherResponse(jsonRep.getJsonObject());
+			}else{
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return feedBackResponseDataDO;
+	}
+
+	private FeedBackResponseDataDO deserializeTeacherResponse(
+			JSONObject jsonObject) {
+		FeedBackResponseDataDO feedBackResponseDataDO=new FeedBackResponseDataDO();
+			try {
+				if(!jsonObject.isNull("contentGooruOId"))
+					feedBackResponseDataDO.setContentGooruOId(jsonObject.getString("contentGooruOId"));
+					
+				if(!jsonObject.isNull("contentItemId"))
+					feedBackResponseDataDO.setContentItemId(jsonObject.getString("contentItemId"));
+				
+				if(!jsonObject.isNull("createdOn"))
+				  feedBackResponseDataDO.setCreatedOn(jsonObject.getLong("createdOn"));
+				
+				if(!jsonObject.isNull("feedbackProvidedBy") )
+					feedBackResponseDataDO.setFeedbackProvidedByGooruId(jsonObject.getJSONObject("feedbackProvidedBy").getString("gooruUId"));
+				
+				if(!jsonObject.isNull("freeText"))
+					feedBackResponseDataDO.setFreeText(jsonObject.getString("freeText"));
+				
+				if(!jsonObject.isNull("parentGooruOId"))
+					feedBackResponseDataDO.setParentGooruOId(jsonObject.getString("parentGooruOId"));
+
+				if(!jsonObject.isNull("parentItemId"))
+					feedBackResponseDataDO.setSessionId(jsonObject.getString("parentItemId"));
+				
+				if(!jsonObject.isNull("sessionId"))
+					feedBackResponseDataDO.setSessionItemFeedbackUid(jsonObject.getString("sessionId"));
+				
+				if(!jsonObject.isNull("user"))
+					feedBackResponseDataDO.setUserGooruId(jsonObject.getJSONObject("user").getString("gooruUId"));
+					
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		return feedBackResponseDataDO;
+	}
+
+	@Override
+	public ArrayList<OetextDataDO> getOETextData(String resourceId,String collectionId, String classpageId, String pathwayId,String session, String sessionId, String userUId) {
+		JsonRepresentation jsonRep = null;
+		ArrayList<OetextDataDO> collectionResourcesList=new ArrayList<OetextDataDO>();
+		String dataPassing ="{%22fields%22:%22feedbackStatus,userName,OEText,gooru_uid,feedbackText,feedbackProviderUId,feedbackTimestamp,answerObject%22,%22filters%22:{%22resourceGooruOId%22:%22"+resourceId+"%22,%22classId%22:%22"+classpageId+"%22,%22pathwayId%22:%22"+pathwayId+"%22,%22session%22:%22"+session+"%22,%22sessionId%22:%22"+sessionId+"%22,%22userUId%22:%22"+userUId+"%22}}";
+		//String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_OETEXTJSON, collectionId,getLoggedInSessionToken(),dataPassing);
+		String url ="http://www.goorulearning.org/insights/api/v1/classpage/fe78faa5-f7f0-4927-9282-a58a4e3deb5d/OEText.json?sessionToken=6ddd5ce6-4f6e-11e4-8d6c-123141016e2a&data={%22fields%22:%22feedbackStatus,userName,OEText,gooru_uid,feedbackText,feedbackProviderUId,feedbackTimestamp,answerObject%22,%22filters%22:{%22resourceGooruOId%22:%22f58e7666-a5a0-4608-8799-cbf091883587%22,%22classId%22:%226a4cdb36-c579-4994-8ea0-5130a9838cbd%22,%22session%22:%22CS%22,%22sessionId%22:%22895F2ABB-B6AE-448B-A5C5-A349852A8C02%22,%22userUId%22:%22caf10bed-e2ae-4d9e-ac4e-77689741b6bb%22}}&timestamp=1412839167321";
+		System.out.println("url:+"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		if(jsonResponseRep.getStatusCode()==200){
+			try {
+				collectionResourcesList=deserializeOETextResponse(jsonRep.getJsonObject().getJSONArray("content"));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}else{
+		}
+		return collectionResourcesList;
+	}
 }
