@@ -118,7 +118,12 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 						}
 					}
 				}
-				getView().getSequence(result);
+				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
+					getAnalyticData(result);
+				}else{
+					getView().getSequence(result);
+				}
+				
 
 			}
 		});
@@ -187,7 +192,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 
 	public void showDashBoardDetails() {
 		getView().showDashBoard();
-		getAnalyticData();
+		
 	}
 
 	public void showAssignmentDetails() {
@@ -217,7 +222,8 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	/**
 	 * This API used for to show Assignments status.
 	 */
-	public void getAnalyticData(){
+	public void getAnalyticData(final UnitAssignmentsDo unitAssignmentsDo){
+		System.out.println("getAnalyticData");
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 		String gooruUId=AppClientFactory.getLoggedInUser().getGooruUId();
 		String pathwayId=AppClientFactory.getPlaceManager().getRequestParameter("uid",null);
@@ -226,8 +232,10 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 
 			@Override
 			public void onSuccess(List<InsightsUserDataDo> result) {
+				System.out.println("getAna--sucess");
 				if(result!=null){
 					getView().setInsightUserData(result);
+					getView().getSequence(unitAssignmentsDo);
 				}
 			}
 		});		

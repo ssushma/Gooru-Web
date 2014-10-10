@@ -1114,7 +1114,7 @@
 	margin-left: 11px;
 }
 .redCircle{
-	background:#ff7d71 no-repeat center !important;
+	background:#ff7d71 no-repeat center;
 	 width: 34px;
 	height: 34px;
 	border-radius: 50% 50%;
