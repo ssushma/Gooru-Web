@@ -56,6 +56,7 @@ public interface CollectionsCBundle extends ClientBundle {
 		String mehReaction();
 		String understandReaction();
 		String canExplainReaction();
+		String reactionText();
 	}
 
 	@Source("collectionsstyles.css")

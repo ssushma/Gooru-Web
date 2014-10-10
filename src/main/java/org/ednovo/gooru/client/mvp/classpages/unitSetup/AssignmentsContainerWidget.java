@@ -27,7 +27,6 @@ package org.ednovo.gooru.client.mvp.classpages.unitSetup;
 
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -43,7 +42,6 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
@@ -96,7 +94,7 @@ public class AssignmentsContainerWidget extends Composite  {
 
 	private ClasspageItemDo classpageItemDo = null;
 	
-	private List<InsightsUserDataDo> insightsUserList;
+	private InsightsUserDataDo insightsUserDataDo;
 	
 	private String unitId = null;
 	
@@ -104,14 +102,14 @@ public class AssignmentsContainerWidget extends Composite  {
 	/**
 	 * Class constructor
 	 * @param classpageItemDo {@link ClasspageItemDo}
-	 * @param insightsUserList 
+	 * @param insightsUserDataDo 
 	 */
-		public AssignmentsContainerWidget(ClasspageItemDo classpageItemDo, String unitId, List<InsightsUserDataDo> insightsUserList){ 
+		public AssignmentsContainerWidget(ClasspageItemDo classpageItemDo, String unitId, InsightsUserDataDo insightsUserDataDo){ 
 
 		initWidget(uibinder.createAndBindUi(this));
 		this.classpageItemDo = classpageItemDo;
 		this.unitId = unitId;  
-		this.insightsUserList=insightsUserList;
+		this.insightsUserDataDo=insightsUserDataDo;
 		unitCircleView.setUnitSequenceNumber(classpageItemDo.getItemSequence());
 		unitCircleView.getElement().setId(classpageItemDo.getCollectionItemId());
 		
@@ -122,30 +120,33 @@ public class AssignmentsContainerWidget extends Composite  {
 			
 		}
 		
-		
-		
 		assignmentThumbnail.setUrl(classpageItemDo.getResource().getThumbnails().getUrl());
-		if(classpageItemDo.getStatus() != null)
-		{
-			if(classpageItemDo.getStatus().equalsIgnoreCase("completed"))
-			{
-				//unitCircleView.setUnitSequenceNumber(0);
-				unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.greenBubble());
-			}
-		}
-		if(classpageItemDo.getIsRequired() != null)
-		{
-			if(!classpageItemDo.getIsRequired())
-			{
-				unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.stylishBub());
-			}
-		}
 		
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
 	        	hidePopup(event);
 	          }
 	    });
+		
+		if(insightsUserDataDo!=null){
+			setAssignmentCircleStatus();
+		}else{
+			if(classpageItemDo.getStatus() != null)
+			{
+				if(classpageItemDo.getStatus().equalsIgnoreCase("completed"))
+				{
+					//unitCircleView.setUnitSequenceNumber(0);
+					unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.greenBubble());
+				}
+			}
+			if(classpageItemDo.getIsRequired() != null)
+			{
+				if(!classpageItemDo.getIsRequired())
+				{
+					unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.stylishBub());
+				}
+			}
+		}
 		
 	}
 	
@@ -251,4 +252,52 @@ public class AssignmentsContainerWidget extends Composite  {
 			}
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	 }
+	 
+	 /**
+	  * To set the status colors for Assignment circles based on student progress
+	  */
+
+	 private void setAssignmentCircleStatus(){
+
+		 if(insightsUserDataDo.getUserData()!= null && insightsUserDataDo.getMinimumScore()!=null){
+
+			 if(insightsUserDataDo.getUserData().get(0).getGradeInPercentage()!=null){
+				 String grade=insightsUserDataDo.getUserData().get(0).getGradeInPercentage();
+				 String minScore=insightsUserDataDo.getMinimumScore();
+				 if(grade.equals(minScore)|| Integer.parseInt(grade)>Integer.parseInt(minScore)){
+					 unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.greenCircle());
+				 }else{
+					 unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.redCircle());
+				 }
+				 if((insightsUserDataDo.getStatus() != null && insightsUserDataDo.getStatus().equals("1")) ||(classpageItemDo.getStatus() != null && classpageItemDo.getStatus().equalsIgnoreCase("completed")) )
+				 {
+					 unitCircleView.getElement().getFirstChildElement().setAttribute("style", "background-image: url(../images/checkMark.png);");
+
+				 }
+			 }
+
+		 }else if(insightsUserDataDo.getIsRequired() != null)
+			{
+				if(insightsUserDataDo.getIsRequired()==0)
+				{
+					unitCircleView.getElement().getFirstChildElement().setClassName(unitStyle.stylishBub());
+					if((insightsUserDataDo.getStatus() != null && insightsUserDataDo.getStatus().equals("1")) ||(classpageItemDo.getStatus() != null && classpageItemDo.getStatus().equalsIgnoreCase("completed")) )
+					 {
+						 unitCircleView.getElement().getFirstChildElement().setAttribute("style", "background: #b9bbca url(../images/liners.png) repeat-x center !important;");
+
+					 }
+				}else{
+					if((insightsUserDataDo.getStatus() != null && insightsUserDataDo.getStatus().equals("1")) ||(classpageItemDo.getStatus() != null && classpageItemDo.getStatus().equalsIgnoreCase("completed")) )
+					 {
+						 unitCircleView.getElement().getFirstChildElement().setAttribute("style", "background-image: url(../images/checkMark.png);");
+
+					 }
+				}
+				
+			}
+		 
+		 
+
+	 }
+
 }

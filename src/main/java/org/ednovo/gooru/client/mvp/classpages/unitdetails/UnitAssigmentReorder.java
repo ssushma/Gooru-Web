@@ -34,6 +34,8 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -254,10 +256,8 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 				AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, Integer.toString(5),  Integer.toString(totalsize), new SimpleAsyncCallback<ClassDo>() {
 					@Override
 					public void onSuccess(ClassDo result) {
-					
 						int newseq=0;
 						for(int i=0; i<result.getSearchResults().size(); i++){
-							
 							newseq = totalsize+i+1;
 							String CollectionItemId=result.getSearchResults().get(i).getResource().getGooruOid();
 							int totalItemCount=result.getSearchResults().get(i).getResource().getItemCount();
@@ -320,11 +320,24 @@ private static UnitAssigmentReorderUiBinder uiBinder = GWT
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			dropdownListPlaceHolder.setText(seq);
-			dropdownListPlaceHolder.getElement().setAttribute("id", itemCount+"");
+			dropdownListPlaceHolder.setText(seq);			
 			selectedPathId = UnitCollectionItemId;
-			displayAssignment(Integer.parseInt(itemCount));
-			new CustomAnimation(dropdownListContainerScrollPanel).run(300);
+			
+			AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, UnitCollectionItemId, "sequence", 2, 0, new SimpleAsyncCallback<UnitAssignmentsDo>() {
+
+				@Override
+				public void onSuccess(UnitAssignmentsDo result) {
+					if(result.getTotalHitCount() != null)
+					{
+						displayAssignment(result.getTotalHitCount());
+						dropdownListPlaceHolder.getElement().setAttribute("id", result.getTotalHitCount()+"");
+					}
+					new CustomAnimation(dropdownListContainerScrollPanel).run(300);
+				}
+			}); 
+			
+
+		
 			
 			
 		}

@@ -148,7 +148,7 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 					leftArrow.getElement().setAttribute("style","margin-left: 10px");
 					circleContainerPanel.add(leftArrow);
 					for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
-						unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
+						unitCricleViewObj = new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i),null);
 						//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid());
 						unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());	
 						circleContainerPanel.add(unitCricleViewObj);
@@ -286,17 +286,14 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 		String aid = AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 		requiredText.setText(i18n.GL2222());
 		circleContainerPanel.clear();
-		getUiHandlers().clearAssignmentWidgetConatiner();
+	//	getUiHandlers().clearAssignmentWidgetConatiner();
 		circleContainerPanel.add(requiredText);
 		if(unitAssignmentsDo!=null){
 			leftArrow.setUrl("images/leftSmallarrow.png");
 			leftArrow.getElement().setAttribute("style","margin-left: 10px");
 			circleContainerPanel.add(leftArrow);
-
 			for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
-				
-				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i));
-				
+				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i), null);
 				//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid()+"");
 				unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());
 				circleContainerPanel.add(unitCricleViewObj);
@@ -360,9 +357,8 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 			
 			rightArrow.setUrl("images/rightSmallarrow.png");
 			circleContainerPanel.add(rightArrow);
-		
 		}			
-			
+
 	}
 	/**
 	 * This class is used to display tooltip on assignment for student
@@ -524,14 +520,14 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 	{
 		personalizePanel.setVisible(isPersonalize);
 	}
-	public void updateCircleRequiredView(Boolean isRequired,String collectionItemId){
+	public void updateCircleRequiredView(Boolean isRequired,String collectionItemId,Boolean readStatus){
 		Iterator<Widget> widgets = circleContainerPanel.iterator();
 		while (widgets.hasNext()) {
 			 Widget widget = widgets.next();
 			if (widget instanceof UnitCricleView) {
 				UnitCricleView unitCricleView=(UnitCricleView)widget;
 				if(unitCricleView.getAssignementId().equals(collectionItemId)){
-					unitCricleView.showCircle(isRequired);
+					unitCricleView.showCircle(isRequired,readStatus);
 					return;
 				}
 			}
@@ -589,8 +585,9 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 
 	 @Override
 	public void updateAssignmentDetailsStatus(Boolean isRequired,String collectionItemId,String readStatus,boolean isUpdateRequiredStatus){
+		 boolean assignmentStudyStatus=readStatus!=null&&readStatus.equals("completed")?true:false; 
 	if(isUpdateRequiredStatus){
-		updateCircleRequiredView(isRequired, collectionItemId);
+		updateCircleRequiredView(isRequired, collectionItemId,assignmentStudyStatus);
 		}else{
 			updateAssingmentCircleReadStatus(isRequired,collectionItemId,readStatus);
 		}

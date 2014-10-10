@@ -23,15 +23,19 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+import java.util.List;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.event.UpdateUnitSetGoalEvent;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.dom.client.Style.Unit;
@@ -122,6 +126,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
 						int number=Integer.parseInt(seqNumber);
 						number=number-1;
+						getView().clearValues();
 						getView().scoreHederView(classDo.getSearchResults().get(number));
 					}
 				}
@@ -170,6 +175,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 
 	public void showDashBoardDetails() {
 		getView().showDashBoard();
+		getAnalyticData();
 	}
 
 	public void showAssignmentDetails() {
@@ -190,11 +196,31 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			@Override
 			public void onSuccess(ClassUnitsListDo result) {
 				// TODO Auto-generated method stub
-				System.out.println("mini::::::"+result.getMinimumScoreByUser());
+				String updatedTime=(result.getTimeStudying()!=null && !result.getTimeStudying().equals("")) ? result.getTimeStudying():null;
+				AppClientFactory.fireEvent(new UpdateUnitSetGoalEvent(0, 0,updatedTime));
 				
 			}
 		});
 	}
+	/**
+	 * This API used for to show Assignments status.
+	 */
+	public void getAnalyticData(){
+		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String gooruUId=AppClientFactory.getLoggedInUser().getGooruUId();
+		String pathwayId=AppClientFactory.getPlaceManager().getRequestParameter("uid",null);
+		
+	 	AppClientFactory.getInjector().getClasspageService().getAssignmentData(gooruUId, classpageId, 0, 0, pathwayId, new SimpleAsyncCallback<List<InsightsUserDataDo>>() {
+
+			@Override
+			public void onSuccess(List<InsightsUserDataDo> result) {
+				if(result!=null){
+					getView().setInsightUserData(result);
+				}
+			}
+		});		
+	}
+
 	
 
 }

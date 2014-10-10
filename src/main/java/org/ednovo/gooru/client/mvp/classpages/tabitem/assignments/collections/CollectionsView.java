@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.catalina.logger.SystemOutLogger;
 import org.ednovo.gooru.client.DataInsightsUrlTokens;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -313,9 +312,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	private void displayAssignmentMarkButton(){
 		if(classpageItemDo!=null){
 			Boolean isRequired=classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false;
+			boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals("completed")?true:false;
 			if(isRequired){
-				assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().requiredBuble());
-				boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals(COMPLETED)?true:false;
+				assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().requiredBuble());				
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompleted());
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
 				if(assignmentStudyStatus){
@@ -323,11 +322,11 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 				}
 			}else{
 				assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().optionalBuble());
-				boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals(COMPLETED)?true:false;
+				//Boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals(COMPLETED)?true:false;
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompleted());
-				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
+				//assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
 				if(assignmentStudyStatus){
-					assignmentMarkCheckBox.addStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
+					assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
 				}
 			}
 		}
@@ -383,7 +382,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	private String frameAnalyticsUrlForMonitor() {
 
 		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
-		String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.CLASS_COLLECTION_MONITOR_DATA,
+		String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPointOld()+DataInsightsUrlTokens.CLASS_COLLECTION_MONITOR_DATA,
 					classpageId,classpageItemDo.getResource().getGooruOid(),AppClientFactory.getLoginSessionToken());
 		
 		urlVal = urlVal+"&"+Math.random();			
@@ -392,7 +391,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	private String frameAnalyticsUrl() {
 		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
-		String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.CLASS_COLLECTION_SUMMARY_DATA,classpageId,classpageItemDo.getResource().getGooruOid(),AppClientFactory.getLoginSessionToken());
+		String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPointOld()+DataInsightsUrlTokens.CLASS_COLLECTION_SUMMARY_DATA,classpageId,classpageItemDo.getResource().getGooruOid(),AppClientFactory.getLoginSessionToken());
 
 		urlVal = urlVal+"&"+Math.random();			
 		return urlVal;
@@ -853,21 +852,25 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	      
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
-			  if (!Character.isDigit(event.getCharCode()) 
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
-	                ((TextBox) event.getSource()).cancelKey();
-	            }
-					
+			if (!Character.isDigit(event.getCharCode()) 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
+				((TextBox) event.getSource()).cancelKey();
+			}
+			if(event.getNativeEvent().getKeyCode() == 46 &&event.getNativeEvent().getKeyCode() == 37)
+			{
+				((TextBox) event.getSource()).cancelKey();
+			}
+
 		}
     }
 	
-	
+
 	public List<Map<String,String>> getStandardsMap(Set<StandardFo> taxonomyset){
 		List<Map<String,String>> standardsList=new ArrayList<Map<String,String>>();
 		Iterator<StandardFo> iterator = taxonomyset.iterator();
@@ -919,15 +922,18 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 	
 	public void setCollectionSummaryData(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo){
+		if(collectionSummaryMetaDataDo != null)
+		{
 		displayAverageTime(collectionSummaryMetaDataDo.getAvgTimeSpent());
 		displayViewCount(collectionSummaryMetaDataDo.getViews());
 		displayAverageReaction(collectionSummaryMetaDataDo.getAvgReaction());
+		}
 		//avarageReactionLabel,viewsLabel,averageTimeLabel
 	}
 
 	public void displayAverageTime(Long milliSeconds){
 		averageTimeLabel.clear();
-		if(milliSeconds!=null){
+		if(milliSeconds!=null&&milliSeconds!=0&&!milliSeconds.equals("")){
 			Long totalSecs = milliSeconds/1000;
 		    Long hours = (totalSecs / 3600);
 		    Long mins = (totalSecs / 60) % 60;
@@ -980,6 +986,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			displayAvgReactionImage(averageReaction);
 		}else{
 			avarageReactionLabel.setText("-");
+			avarageReactionLabel.setStyleName(CollectionsCBundle.INSTANCE.css().reactionText());
 		}
 	}
 	
