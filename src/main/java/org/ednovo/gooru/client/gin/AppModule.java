@@ -26,7 +26,6 @@
 package org.ednovo.gooru.client.gin;
 
 import org.ednovo.gooru.client.AppPlaceKeeper;
-
 import org.ednovo.gooru.client.AppRootPresenter;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.mvp.analytics.AnalyticsPresenter;
@@ -320,7 +319,10 @@ import org.ednovo.gooru.client.mvp.register.RegisterPresenter.IsRegisterProxy;
 import org.ednovo.gooru.client.mvp.register.RegisterView;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerView;
+import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainer;
+import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsAddResourceContainerView;
+import org.ednovo.gooru.client.mvp.search.IsAnalyticsInfoContainerView;
 import org.ednovo.gooru.client.mvp.search.IsSearchRootView;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter.IsSearchRootProxy;
@@ -604,5 +606,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(EsypLibraryPresenter.class, IsEsypLibraryView.class, EsypLibraryView.class,IsEsypLibraryProxy.class);
 		bindPresenter(CcstCalTacLibraryPresenter.class, IsCcstCalTacLibraryView.class, CcstCalTacLibraryView.class,IsCcstCalTacLibraryProxy.class);
 		bindPresenterWidget(AssignmentWidgetPresenter.class, IsAssignmentWidget.class,AssignmentWidgetView.class);
+		bindPresenterWidget(AnalyticsInfoContainerPresenter.class, IsAnalyticsInfoContainerView.class, AnalyticsInfoContainer.class);
 	}
 }
