@@ -786,22 +786,22 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	
 	public void updateResourceViewCount(String gooruId,String viewsCount,String resourceType){
-		this.playerAppService.updateViewCount(gooruId, viewsCount, resourceType, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String result) {
+//		this.playerAppService.updateViewCount(gooruId, viewsCount, resourceType, new SimpleAsyncCallback<String>() {
+//			@Override
+//			public void onSuccess(String result) {
 					updateViewCount();
-			}
-		});
+//			}
+//		});
 	}
 	
 	public void updateViewCount(){
 		if(collectionItemDo!=null){
 			String viewsCount=collectionItemDo.getResource().getViews();
-			Integer viewsCounts=Integer.parseInt(viewsCount)+1;
-			collectionItemDo.getResource().setViews(viewsCounts.toString());
-			resourceInfoPresenter.updateViewsCount(viewsCounts.toString());
+//			Integer viewsCounts=Integer.parseInt(viewsCount)+1;
+//			collectionItemDo.getResource().setViews(viewsCounts.toString());
+//			resourceInfoPresenter.updateViewsCount(viewsCounts.toString());
 			      try{
-			    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(String.valueOf(viewsCounts), collectionItemDo.getResource().getGooruOid(), "views"));
+			    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(viewsCount, collectionItemDo.getResource().getGooruOid(), "views"));
 			         }
 			      catch(Exception ex){}
 		}

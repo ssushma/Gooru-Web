@@ -91,7 +91,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 
 	@Override
 	public void setUnitList(final ArrayList<PartnerFolderDo> folderList) {
-		if(folderList.size()==0 && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)){
+		if(folderList.size()==0 && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.TICAL)){
 			loadingPanel(false);
 			getComingSoonText(true);
 		}else{
@@ -254,6 +254,21 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 			libraryUserDo.setPartnerName(i18n.GL2110());
 			libraryUserDo.setPartnerUrl(i18n.GL2111());
 
+		}else if(partnerPlace.equals(PlaceTokens.ESYP)) {
+			courseDo.setLabel(i18n.GL2174());
+			thumbnailDo.setUrl("../images/library/partners/esyp.jpg");
+			libraryUserDo.setPartnerName(i18n.GL2175());
+			libraryUserDo.setPartnerUrl(i18n.GL2176());
+		}else if(partnerPlace.equals(PlaceTokens.CCST_Cal_TAC)) {
+			courseDo.setLabel(i18n.GL2179());
+			thumbnailDo.setUrl("../images/library/partners/ccst.png");
+			libraryUserDo.setPartnerName(i18n.GL2177());
+			libraryUserDo.setPartnerUrl(i18n.GL2178());
+		}else if(partnerPlace.equals(PlaceTokens.TICAL)) {
+			courseDo.setLabel(i18n.GL2186());
+			thumbnailDo.setUrl("../images/library/partners/tical.png");
+			libraryUserDo.setPartnerName(i18n.GL2187());
+			libraryUserDo.setPartnerUrl(i18n.GL2188());
 		}
 		
 		courseDo.setThumbnails(thumbnailDo);

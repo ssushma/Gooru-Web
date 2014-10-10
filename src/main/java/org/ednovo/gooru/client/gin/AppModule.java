@@ -113,6 +113,10 @@ import org.ednovo.gooru.client.mvp.library.district.lifeboard.IsLifeboardLibrary
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter.IsLifeboardLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.lusd.IsLusdLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.lusd.LusdLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.lusd.LusdLibraryPresenter.IsLusdLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.district.lusd.LusdLibraryView;
 import org.ednovo.gooru.client.mvp.library.district.rusd.IsRusdLibraryView;
 import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryPresenter.IsRusdLibraryProxy;
@@ -136,10 +140,18 @@ import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPrese
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter.IsAutodeskLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.IsAutodeskLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.ccstcaltac.CcstCalTacLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.ccstcaltac.CcstCalTacLibraryPresenter.IsCcstCalTacLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.ccstcaltac.CcstCalTacLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.ccstcaltac.IsCcstCalTacLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryPresenter.IsCoreLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.CoreLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.corelibrary.IsCoreLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.esyp.EsypLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.esyp.EsypLibraryPresenter.IsEsypLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.esyp.EsypLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.esyp.IsEsypLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter.IsCfciLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryView;
@@ -172,6 +184,10 @@ import org.ednovo.gooru.client.mvp.library.partner.psdpal.IsPsdpalView;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter.IsPsdpalLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.tical.IsTicalLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.tical.TicalLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.tical.TicalLibraryPresenter.IsTicalLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.tical.TicalLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.IsWspwhLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter.IsWspwhLibraryProxy;
@@ -547,6 +563,10 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(RusdLibraryPresenter.class, IsRusdLibraryView.class, RusdLibraryView.class,IsRusdLibraryProxy.class);
 		bindPresenter(LpsLibraryPresenter.class, IsLpsLibraryView.class, LpsLibraryView.class,IsLpsLibraryProxy.class);
 		bindPresenter(CoreLibraryPresenter.class, IsCoreLibraryView.class, CoreLibraryView.class,IsCoreLibraryProxy.class);
+		bindPresenter(EsypLibraryPresenter.class, IsEsypLibraryView.class, EsypLibraryView.class,IsEsypLibraryProxy.class);
+		bindPresenter(CcstCalTacLibraryPresenter.class, IsCcstCalTacLibraryView.class, CcstCalTacLibraryView.class,IsCcstCalTacLibraryProxy.class);
+		bindPresenter(LusdLibraryPresenter.class, IsLusdLibraryView.class, LusdLibraryView.class,IsLusdLibraryProxy.class);
+		bindPresenter(TicalLibraryPresenter.class, IsTicalLibraryView.class, TicalLibraryView.class,IsTicalLibraryProxy.class);
 		
 	}
 }
