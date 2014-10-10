@@ -47,7 +47,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	@UiField FlowPanel contentBlock,contents;
 	@UiField HTMLEventPanel folderImage;
 	@UiField Image collectionImage;
-	@UiField Label itemTitle;
+	@UiField Label itemTitle,itemNumber;
 	@UiField TextBox reorderTxtBox;
 	@UiField Button moveUpBtn,moveDownBtn;
 	
@@ -75,6 +75,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	
 	private FolderDo folderDo;
 	
+	private int itemNo;
+	
 	final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
 	
 	final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
@@ -87,11 +89,11 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 
 	interface ShelfFolderItemChildViewUiBinder extends UiBinder<Widget, ShelfFolderItemChildView> {}
 	
-	public ShelfFolderItemChildView(FolderDo folderDo) {
+	public ShelfFolderItemChildView(FolderDo folderDo, int folderNumber) { 
 		initWidget(uiBinder.createAndBindUi(this));
 		this.folderDo = folderDo;
+		setItemNo(folderNumber);
 		setFolderData(folderDo);
-		
 		contentBlock.getElement().setId("fpnlContentBlock");
 		folderImage.getElement().setId("epnlFolderImage");
 		collectionImage.getElement().setId("imgCollectionImage");
@@ -191,6 +193,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		} else {
 			contents.addStyleName(folderStyle.empty());
 		}
+		reorderTxtBox.setText(getItemNo()+""); 
+		itemNumber.setText(getItemNo()+""); 
 		itemTitle.setText(folderDo.getTitle());	
 		itemTitle.getElement().setAttribute("alt",folderDo.getTitle());
 		itemTitle.getElement().setAttribute("title",folderDo.getTitle());
@@ -343,6 +347,21 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			}
 		}
 	}
+	
+	/**
+	 * @return the itemNo
+	 */
+	public int getItemNo() {
+		return itemNo;
+	}
+
+	/**
+	 * @param itemNo the itemNo to set
+	 */
+	public void setItemNo(int itemNo) {
+		this.itemNo = itemNo;
+	}
+
 
 	/*public void reorderCollectionItem(int widgetIndex) { 
 		

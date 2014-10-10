@@ -107,6 +107,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	
 	private CollectionEditResourceCss css;
 	
+	private ShelfFolderItemChildView shelfFolderItemChildView;
+	
 //	private ShelfFolderItemChildView shelfFolderItemChildView;
 	
 	
@@ -333,63 +335,62 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		}
 		mainSection.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()-100)+"px");
 		
-		if(folderList != null)
-		{
-		if(folderList.size()==0&&!isPaginated){
-			if(AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL)==null){
-				isFolderPanelEmpty = true;
-				folderContentBlock.clear();
-				isFolderType = false;
-				
-				mainSection.addStyleName(folderStyle.mainSection());
-				mainSection.removeStyleName(folderStyle.emptyFolder());
-				loadingImage.setVisible(false);
-				
-				Element ele = Document.get().getElementById("loadingImageLabel");
-				if (ele!=null){
-					ele.removeFromParent();
-				}
-//				folderContentBlock.add(new FoldersWelcomePageToolTip());
-//				folderContentBlock.add(new FoldersWelcomePage());
-				AppClientFactory.fireEvent(new DisplayNoCollectionEvent());
-				
-			}else{
-				folderContentBlock.clear();
-				isFolderType = false;
-				mainSection.addStyleName(folderStyle.mainSection()); 
-				mainSection.addStyleName(folderStyle.emptyFolder());
-			}
+		if(folderList != null){
 			
+			if(folderList.size()==0&&!isPaginated){
+				if(AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL)==null){
+					isFolderPanelEmpty = true;
+					folderContentBlock.clear();
+					isFolderType = false;
+
+					mainSection.addStyleName(folderStyle.mainSection());
+					mainSection.removeStyleName(folderStyle.emptyFolder());
+					loadingImage.setVisible(false);
+
+					Element ele = Document.get().getElementById("loadingImageLabel");
+					if (ele!=null){
+						ele.removeFromParent();
+					}
+					//				folderContentBlock.add(new FoldersWelcomePageToolTip());
+					//				folderContentBlock.add(new FoldersWelcomePage());
+					AppClientFactory.fireEvent(new DisplayNoCollectionEvent());
+
+				}else{
+					folderContentBlock.clear();
+					isFolderType = false;
+					mainSection.addStyleName(folderStyle.mainSection()); 
+					mainSection.addStyleName(folderStyle.emptyFolder());
+				}
+
+			}
+			else{
+				mainSection.removeStyleName(folderStyle.emptyFolder());
+				if(!isPaginated) {
+					folderContentBlock.clear();
+				}
+				for(int i = 0; i<folderList.size(); i++) {
+					shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i),i+1); 
+					if(folderList.get(i).getType().equalsIgnoreCase("folder")){
+						isFolderType = false;
+					}
+//					folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
+					folderContentBlock.add(shelfFolderItemChildView);
+				}
+			}
 		}
 		else{
 			mainSection.removeStyleName(folderStyle.emptyFolder());
 			if(!isPaginated) {
-//				folderItemPanel.clear();
-				folderContentBlock.clear();
-			}
-			for(int i = 0; i<folderList.size(); i++) {
-//				shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i));
-				if(folderList.get(i).getType().equalsIgnoreCase("folder")){
-					isFolderType = false;
-				}
-				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
-//				folderContentBlock.add(shelfFolderItemChildView);
-//				folderItemPanel.addDraggable(shelfFolderItemChildView,i);
-			}
-		}
-		}
-		else{
-			mainSection.removeStyleName(folderStyle.emptyFolder());
-			if(!isPaginated) {
 				folderContentBlock.clear();
 //				folderItemPanel.clear();
 			}
 			for(int i = 0; i<folderList.size(); i++) {
-//				shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i));
+				shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i),i+1);
 				if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 					isFolderType = false;
 				}
-				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
+//				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
+				folderContentBlock.add(shelfFolderItemChildView);
 				/*folderContentBlock.add(shelfFolderItemChildView);
 				folderItemPanel.addDraggable(shelfFolderItemChildView,2);*/
 			}
@@ -608,7 +609,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	}
 	
 	private void addFolder(FolderDo folderDo) {
-		folderContentBlock.insert(new ShelfFolderItemChildView(folderDo), 0);
+		folderContentBlock.insert(new ShelfFolderItemChildView(folderDo,0), 0); 
 		mainSection.removeStyleName(folderStyle.emptyFolder());
 	}
 	
