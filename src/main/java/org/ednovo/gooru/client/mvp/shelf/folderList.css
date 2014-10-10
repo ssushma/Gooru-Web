@@ -567,7 +567,7 @@
     box-shadow: 0 0 10px #4c98cc;
 }
 
-.contentBlock .info, .contentBlock .contents {
+.contentBlock .info, .contentBlock .contents, .contentBlock .reorderPanel {
     height:100%;
     padding:20px;
     box-sizing:border-box;
@@ -912,4 +912,43 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 
 .metaContainer {
 	height: 200px;
+}
+
+
+
+.contentBlock .reorderPanel{
+	width:63px;
+    float:right;
+    border-left:1px solid #ddd;
+    text-align:center;
+    margin-top: -177px;
+}
+
+.reorderTxtBox{
+	width: 18px;
+	float: left;
+	margin-bottom: 25px;
+}
+
+
+
+.upDownBtn button.secondary{
+	padding:10px 6px;
+	display:block;
+
+}
+
+.upDownBtn input[type="text"]{
+	width:17px;
+	margin:8px 0;
+	height:25px;
+	padding:1px 6px;
+	border:1px solid #DDDDDD;
+	font-size:16px;
+	color:#515151;
+	text-align:center;
+}
+
+.upDownBtnBlock{
+	display:block;
 }
