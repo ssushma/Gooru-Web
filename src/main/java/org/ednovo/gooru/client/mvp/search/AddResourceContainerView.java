@@ -164,7 +164,7 @@ public class AddResourceContainerView extends
 				.css().addMyCollectionsStyle());
 		// selectedCollectionGooruOid =null;
 		topMostTreeItem.getElement().setInnerHTML("My Collections");
-		topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");
+		/*topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");*/
 		addingText.setText(i18n.GL0591());
 		urlparams= new HashMap<String, String>();
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
@@ -173,7 +173,7 @@ public class AddResourceContainerView extends
 					displayErrorLabel.setText("");
 					isTopMostSelected =false;
 					if(isTopMostSelected){
-						topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");
+						/*topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");*/
 						isSelectedFolder=false;
 					}else{
 						topMostTreeItem.getElement().setAttribute("style", "background-color: none;");
@@ -186,8 +186,7 @@ public class AddResourceContainerView extends
 							isTopMostSelected =true;
 							isSelectedFolder=false;
 							removePreviousSelectedItem();
-							topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");
-						}
+						/*topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");*/						}
 					};
 					topMostTreeItem.addDomHandler(handler, ClickEvent.getType());
 					getButtonVisiblity();
@@ -498,10 +497,13 @@ public class AddResourceContainerView extends
 		if (searchType.equalsIgnoreCase("collection")) {
 			isCollectionSearch = true;
 			isResourceSearch = false;
+			addResourceText.setText("Add this Collection to one of your existing Folders");
+			addResourceText.setStyleName(AddResourceContainerCBundle.INSTANCE.css().addCollectionTextStyles());
 		} else if (searchType.equalsIgnoreCase("resource")) {
 			isResourceSearch = true;
 			isCollectionSearch = false;
 			addResourceText.setText(i18n.GL2088());
+			addResourceText.setStyleName(AddResourceContainerCBundle.INSTANCE.css().addResourceTextStyles());
 			addCollectiorOrReourceText.setText(i18n.GL2089());
 			addResourceText.getElement().setAttribute("style",
 					"display: inline-block;");
@@ -870,7 +872,7 @@ public class AddResourceContainerView extends
 			topMostTreeItem.getElement().getStyle().setDisplay(Display.BLOCK);
 			isTopMostSelected =true;
 			if(isTopMostSelected){
-				topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");
+				/*topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");*/
 				isSelectedFolder=false;
 			}else{
 			//	topMostTreeItem.getElement().setAttribute("style", "background-color: none;");

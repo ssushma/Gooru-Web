@@ -19,6 +19,9 @@ xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:rating="urn:import
 				<g:FocusPanel ui:field="moreInfoLinkFocPanel">
 					<g:Label styleName="{res.css.infoLbl}" ui:field="moreInfoLbl" />
 				</g:FocusPanel>
+				<g:FocusPanel ui:field="analyticsLinkFocPanel">
+					<g:Label styleName="{res.css.infoLbl}" ui:field="analyticsInfoLbl" />
+				</g:FocusPanel>
 				<g:FocusPanel ui:field="collectionFocPanel">
 					<g:Label styleName="{res.css.moreInfo}" ui:field="collcResLbl" />
 				</g:FocusPanel> 

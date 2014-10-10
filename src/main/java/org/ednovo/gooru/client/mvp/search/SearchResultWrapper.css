@@ -93,7 +93,7 @@
     text-align: center;
     box-shadow: none;
 }
-.moreInfoActive,.infoLblActive,.shareActive, .embedActive, .addLblActive {
+.moreInfoActive,.infoLblActive,.shareActive, .embedActive, .addLblActive,.analyticsLblActive {
 	-moz-box-shadow: inset 0 5px 16px 0px rgba(0,0,0,.1);
 	-webkit-box-shadow: inset 0 5px 16px 0px rgba(0,0,0,.1);
 	box-shadow: inset 0 5px 16px 0px rgba(0,0,0,.1);
@@ -106,7 +106,7 @@
 	background: linear-gradient(to bottom, rgba(239,239,239,1) 0%,rgba(247,247,247,1) 32%,rgba(239,239,239,1) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#efefef',GradientType=0 );
 }
-.share:HOVER, .moreInfo:HOVER,.infoLbl:HOVER, .shareActive:HOVER, .moreInfoActive:HOVER, .embed:HOVER, .addLblActive:HOVER {
+.share:HOVER, .moreInfo:HOVER,.infoLbl:HOVER, .shareActive:HOVER, .moreInfoActive:HOVER, .embed:HOVER, .addLblActive:HOVER,.analyticsLblActive:HOVER {
 	background:#EFEFEF;
 	cursor:pointer;
 	box-shadow: none;

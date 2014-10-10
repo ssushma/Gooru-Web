@@ -447,7 +447,9 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 	public Label getAddButton(){
 		return wrapperVc.addLbl;
 	}
-	
+	public Label getAnalyticsButton(){
+		return wrapperVc.analyticsInfoLbl;
+	}
 	public DisclosurePanel getDisclosurePanelClose(){
 		return wrapperVc.disclosureDisPanel;
 	}
