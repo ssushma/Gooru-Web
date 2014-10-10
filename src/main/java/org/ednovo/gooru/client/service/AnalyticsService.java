@@ -29,7 +29,9 @@ import java.util.ArrayList;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
+import org.ednovo.gooru.shared.model.analytics.FeedBackResponseDataDO;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
+import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -60,4 +62,8 @@ public interface AnalyticsService extends BaseService {
 	public String exportPathwayOE(String classpageId,String pathwayId);
 	
 	public CollectionSummaryMetaDataDo getAssignmentAverageData(String classId,String unitId,String collectionId);
+
+	public ArrayList<OetextDataDO> getOETextData(String resourceId,String collectionId,String classpageId,String pathwayId,String session,String sessionId,String userUId);
+	
+	public FeedBackResponseDataDO postTeacherFeedBackToStudent(String freeText,String resourceId,String collectionId,String classpageId,String pathwayId,String userId,String session);
 }

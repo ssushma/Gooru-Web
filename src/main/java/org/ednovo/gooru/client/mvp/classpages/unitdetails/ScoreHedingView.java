@@ -43,6 +43,7 @@ import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
@@ -128,9 +129,7 @@ public class ScoreHedingView extends Composite {
 	public void showUnitStatus() {
 		// TODO Auto-generated method stub
 		if(classUnitsListDo!=null){
-			System.out.println("title:"+getLblTitle().getText());
 			if(getLblTitle().getText().equals(i18n.GL2195())){
-				System.out.println("minimumscore::"+classUnitsListDo.getMinimumScoreByUser());
 				if(classUnitsListDo.getMinimumScoreByUser()!=null){
 					showAndHideTextBox();
 					txtScore.setText(classUnitsListDo.getMinimumScoreByUser()+"");
@@ -142,7 +141,6 @@ public class ScoreHedingView extends Composite {
 					showingScoreReader();
 				}
 			}else{
-				System.out.println("else::::");
 				if(classUnitsListDo.getAssignmentCompleted()!=null){
 					showAndHideTextBox();
 					txtScore.setText(classUnitsListDo.getAssignmentCompleted()+"");
@@ -223,15 +221,20 @@ public class ScoreHedingView extends Composite {
 
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
-			if((event.getNativeEvent().getKeyCode() > 57 || event.getNativeEvent().getKeyCode() < 48) && (event.getNativeEvent().getKeyCode() != 45))
-			{
-				((TextBox) event.getSource()).cancelKey();	
-			}else
-			{
-				
+			if (!Character.isDigit(event.getCharCode()) 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
+				((TextBox) event.getSource()).cancelKey();
 			}
-			
-
+			if(event.getNativeEvent().getKeyCode() == 46 &&event.getNativeEvent().getKeyCode() == 37)
+			{
+				((TextBox) event.getSource()).cancelKey();
+			}
 		}
 	}	
 

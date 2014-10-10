@@ -98,6 +98,7 @@ public class LifeboardLibraryPresenter extends BasePlacePresenter<IsLifeboardLib
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		districtPresenter.setPartnerWidget(PlaceTokens.LIFEBOARD);
+		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 		clearSlot(TYPE_FOLDERS_SLOT);
 		setInSlot(TYPE_FOLDERS_SLOT, districtPresenter);
 		
@@ -111,6 +112,7 @@ public class LifeboardLibraryPresenter extends BasePlacePresenter<IsLifeboardLib
 		        signUpViewPresenter.displayPopup(displayScreen);
 		        addToPopupSlot(signUpViewPresenter);
 		    }
+		}
 		}
 	}
 	

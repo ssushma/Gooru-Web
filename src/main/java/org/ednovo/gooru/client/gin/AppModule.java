@@ -146,6 +146,10 @@ import org.ednovo.gooru.client.mvp.library.district.lifeboard.IsLifeboardLibrary
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter.IsLifeboardLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.lusd.IsLusdLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.lusd.LusdLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.lusd.LusdLibraryPresenter.IsLusdLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.district.lusd.LusdLibraryView;
 import org.ednovo.gooru.client.mvp.library.district.rusd.IsRusdLibraryView;
 import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryPresenter.IsRusdLibraryProxy;
@@ -213,6 +217,10 @@ import org.ednovo.gooru.client.mvp.library.partner.psdpal.IsPsdpalView;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter.IsPsdpalLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.tical.IsTicalLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.tical.TicalLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.tical.TicalLibraryPresenter.IsTicalLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.tical.TicalLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.IsWspwhLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter.IsWspwhLibraryProxy;
@@ -591,6 +599,12 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(RusdLibraryPresenter.class, IsRusdLibraryView.class, RusdLibraryView.class,IsRusdLibraryProxy.class);
 		bindPresenter(LpsLibraryPresenter.class, IsLpsLibraryView.class, LpsLibraryView.class,IsLpsLibraryProxy.class);
 		bindPresenter(CoreLibraryPresenter.class, IsCoreLibraryView.class, CoreLibraryView.class,IsCoreLibraryProxy.class);
+
+		bindPresenter(EsypLibraryPresenter.class, IsEsypLibraryView.class, EsypLibraryView.class,IsEsypLibraryProxy.class);
+		bindPresenter(CcstCalTacLibraryPresenter.class, IsCcstCalTacLibraryView.class, CcstCalTacLibraryView.class,IsCcstCalTacLibraryProxy.class);
+		bindPresenter(LusdLibraryPresenter.class, IsLusdLibraryView.class, LusdLibraryView.class,IsLusdLibraryProxy.class);
+		bindPresenter(TicalLibraryPresenter.class, IsTicalLibraryView.class, TicalLibraryView.class,IsTicalLibraryProxy.class);
+
 		bindPresenterWidget(ClassSetupPresenter.class,IsClassSetupView.class,ClassSetupView.class);
 		bindPresenterWidget(UnitSetupPresenter.class,IsUnitSetupView.class,UnitSetupView.class);
 		bindPresenterWidget(UnitSetupStudentPresenter.class,IsUnitSetupStudentView.class,UnitSetupStudentView.class);
@@ -603,8 +617,6 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(CollectionSummaryTeacherPresenter.class,IsCollectionSummaryTeacherView.class,CollectionSummaryTeacherView.class);
 		bindPresenterWidget(CollectionSummaryIndividualPresenter.class,IsCollectionSummaryIndividualView.class,CollectionSummaryIndividualView.class);
 		
-		bindPresenter(EsypLibraryPresenter.class, IsEsypLibraryView.class, EsypLibraryView.class,IsEsypLibraryProxy.class);
-		bindPresenter(CcstCalTacLibraryPresenter.class, IsCcstCalTacLibraryView.class, CcstCalTacLibraryView.class,IsCcstCalTacLibraryProxy.class);
 		bindPresenterWidget(AssignmentWidgetPresenter.class, IsAssignmentWidget.class,AssignmentWidgetView.class);
 		bindPresenterWidget(AnalyticsInfoContainerPresenter.class, IsAnalyticsInfoContainerView.class, AnalyticsInfoContainer.class);
 	}

@@ -483,7 +483,7 @@
 	-moz-border-radius: 4px;
 	position: relative;
 	width: 75%;
-	min-height: 175px;
+	min-height: 200px;
 	cursor: pointer;
 	margin-top: 73px;
 	color: #515151;
@@ -502,7 +502,7 @@
 	-moz-border-radius: 4px;
 	position: relative;
 	width: 260px;
-	height: 395px;
+	height: 425px;
 	cursor: pointer;
 	color: #515151;
 }

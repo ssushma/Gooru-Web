@@ -13,8 +13,10 @@ import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsTabContainer;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.DataView;
 import org.ednovo.gooru.client.mvp.analytics.util.Print;
+import org.ednovo.gooru.client.mvp.analytics.util.ViewResponsesPopup;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
+import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.ajaxloader.client.Properties;
@@ -32,6 +34,7 @@ import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -60,6 +63,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	DataView operationsView;
 	CollectionSummaryIndividualCBundle res;
 	private int collectionProgressCount=1;
+	ViewResponsesPopup popupPanel=null;
 	
 	final List<Integer> questionRowIndex=new ArrayList<Integer>();
 	final List<Integer> resourceRowIndex=new ArrayList<Integer>();
@@ -109,7 +113,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
         filterDropDown.addItem("Resources", "Resources");
 	}
 	@Override
-	public void setIndividualData(ArrayList<UserDataDo> result) {
+	public void setIndividualData(ArrayList<UserDataDo> result,HTMLPanel loadingImage) {
 			hideAllPanels();
 			individualScoredDatapnl.setVisible(true);
 			
@@ -138,9 +142,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			}
 			setQuestionsData(questionsData);
 			setOpenendedQuestionsData(openendedData);
-			setCollectionBreakDown(result);
+			setCollectionBreakDown(result,loadingImage);
 	}
-	void setCollectionBreakDown(ArrayList<UserDataDo> result){
+	void setCollectionBreakDown(ArrayList<UserDataDo> result,HTMLPanel loadingImage){
 		
 		final int[] primitivesQuestions = AnalyticsUtil.toIntArray(questionRowIndex);
 		final int[] primitivesResources = AnalyticsUtil.toIntArray(resourceRowIndex);
@@ -234,6 +238,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        options.setAllowHtml(true);
 	        Table table = new Table(data, options);
 	        individualResourceBreakdownData.add(table);
+	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
 	        filterDropDown.addChangeHandler(new ChangeHandler() {
 	    		
 				@Override
@@ -253,6 +258,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 				}
 			});
+	        if(loadingImage!=null)
+	        loadingImage.setVisible(false);
 	}
 	void setOpenendedQuestionsData(ArrayList<UserDataDo> result){
 		    DataTable data = DataTable.create();
@@ -292,6 +299,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	            //set View response label
 	            Label viewResponselbl=new Label("View Response");
 	            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
+	            viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
+   	            viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
 	            data.setValue(i, 5, viewResponselbl.toString());
 	        }
 	        Options options = Options.create();
@@ -305,6 +314,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	individualOpenendedData.add(erroeMsg);
 	        }
 	        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
+	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
 	}
 	/**
 	 * This class is used to handle the click event on the table cell
@@ -314,7 +324,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		public void onClick(ClickEvent event) {
 			Element ele=event.getNativeEvent().getEventTarget().cast();
 			if(ele.getInnerText().equalsIgnoreCase("View Response")){
-				//Window.alert("ele:"+ele.getAttribute("id"));
+				getUiHandlers().setOEtextData(ele.getAttribute("resourceGooruId"),ele.getAttribute("questionType"));
 			}
 		}
 	}
@@ -326,7 +336,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        data.addColumn(ColumnType.STRING, "#Attempts");
 	        data.addColumn(ColumnType.STRING, "Time&nbsp;Spent");
 	        data.addColumn(ColumnType.STRING, "Reactions");
-	       
+	        
 	        data.addRows(result.size());
 	      if(result.size()!=0){
 				        for(int i=0;i<result.size();i++) {
@@ -469,6 +479,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        	erroeMsg.setText("It looks like there is no scored question data for this collection yet.");
 	        	individualScoredData.add(erroeMsg);
 	        }
+	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
 	}
 	String getCorrectAnswer(ArrayList<MetaDataDo> metaDataObj){
 		for (MetaDataDo metaDataDo : metaDataObj) {
@@ -498,5 +509,22 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		totalAvgReactionlbl.clear();
 		totalAvgReactionlbl.add(new AnalyticsReactionWidget(result.get(0).getAvgReaction()));
 		
+	}
+	@Override
+	public void setViewResponseData(ArrayList<OetextDataDO> result,	String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType,boolean isSummary) {
+		 popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary);
+	     popupPanel.setStyleName(res.css().setOETextPopupCenter());
+	     if(popupPanel.isShowing()){
+	    	 popupPanel.hide();
+	    	 Window.enableScrolling(true);
+	     }else{
+	     	 Window.scrollTo(0, 0);
+	    	 Window.enableScrolling(false);
+	    	 popupPanel.setGlassEnabled(true);
+	    	 popupPanel.setGlassStyleName(res.css().setGlassStyleName());
+	    	 popupPanel.setAutoHideEnabled(true);
+	    	 popupPanel.show();
+	    	 popupPanel.center();
+	     }
 	}
 }

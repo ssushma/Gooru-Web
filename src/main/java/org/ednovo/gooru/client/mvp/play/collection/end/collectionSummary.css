@@ -17,10 +17,13 @@
 
 .htmlpanlProgress {
 	overflow: hidden;
-	width: 784px;
+	width: 100%;
 	margin: 2%;
 	/* border-right: 1px solid #eee;
 	border-left: 1px solid #eee; */
+}
+.pnlSummary{
+	width:98%;
 }
 
 .filterDropDown {

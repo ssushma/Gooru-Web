@@ -89,6 +89,7 @@ public class WspwhLibraryPresenter extends BasePlacePresenter<IsWspwhLibraryView
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
+		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 		clearSlot(TYPE_FOLDERS_SLOT);
 		setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
 		partnerLibraryPresenter.setPartnerWidget();
@@ -103,6 +104,7 @@ public class WspwhLibraryPresenter extends BasePlacePresenter<IsWspwhLibraryView
 		        signUpViewPresenter.displayPopup(displayScreen);
 		        addToPopupSlot(signUpViewPresenter);
 		    }
+		}
 		}
 	}
 	

@@ -47,4 +47,6 @@ public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>
 	void LoadingImageLabeltrue();
 
 	void LoadingImageLabelFalse();
+	
+	void clearDownArrow();
 }
