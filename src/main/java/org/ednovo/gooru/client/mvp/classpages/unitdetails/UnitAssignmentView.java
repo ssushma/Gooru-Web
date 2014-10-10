@@ -416,7 +416,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				 personalizeContainer.clear();
 				 personalizeContainer.add(content);
 				 personalizeContainer.setVisible(false);
-			}else{
+			}else if(slot==UnitAssignmentPresenter.ASSIGNMENTS_SLOT)
+			{
+				circleContainerPanel.clear();
+				circleContainerPanel.add(content);
+			}
+			 else{
 			}
 		}
 	}

@@ -49,7 +49,11 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	
 	public static final  Object _SLOT = new Object();
 	
+	public static final  Object ASSIGNMENTS_SLOT = new Object();
+	
 	private PersonalizeUnitPresenter studentPersonalizePresenter = null;
+	
+	private AssignmentWidgetPresenter assignmentWidgetPresenter = null;
 	
 	private int limit = 5;
 	private int offSet = 0;
@@ -58,10 +62,11 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	private static final String IMAGE_URL="images/core/B-Dot.gif";
 	
 	@Inject
-	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter) {
+	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter,AssignmentWidgetPresenter assignmentWidgetPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.studentPersonalizePresenter = studentPersonalizePresenter;
+		this.assignmentWidgetPresenter = assignmentWidgetPresenter;
 	}
 	@Override
 	protected void onHide() {
@@ -90,6 +95,13 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		setInSlot(_SLOT, studentPersonalizePresenter,false);
 	}
 
+	@Override
+	public void setAssignmentsData(){
+		//assignmentWidgetPresenter.
+		setInSlot(ASSIGNMENTS_SLOT, assignmentWidgetPresenter,false);
+	}
+
+	
 	@Override
 	public void getPathwayItems(final String classpageId, final String pathwayGooruOid,String sequence,int limit,int offSet) {
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayGooruOid, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {
@@ -157,6 +169,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 					}
 				}
 				getView().showAssignment(classpageItemDo);
+				setAssignmentsData();
 			}
 		});
 	}
