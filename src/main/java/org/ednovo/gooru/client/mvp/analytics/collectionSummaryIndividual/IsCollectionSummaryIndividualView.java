@@ -27,10 +27,17 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
+
+import com.google.gwt.user.client.ui.HTMLPanel;
 
 
 public interface IsCollectionSummaryIndividualView extends IsViewWithHandlers<CollectionSummaryIndividualUiHandlers>{
-	void setIndividualData(ArrayList<UserDataDo> result);
+	
+	void setIndividualData(ArrayList<UserDataDo> result,HTMLPanel loadingImage);
+	
 	void setIndividualCollectionMetaData(ArrayList<CollectionSummaryMetaDataDo> result);
+	
+	void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType, boolean isSummary);
 }

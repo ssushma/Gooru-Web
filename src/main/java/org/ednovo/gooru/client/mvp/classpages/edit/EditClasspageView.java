@@ -392,7 +392,7 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		//reportHandler=reportsTab.addClickHandler(new reportsTabClicked());		
+		reportHandler=reportsTab.addClickHandler(new reportsTabClicked());		
 		
 		ResetProgressHandler reset = new ResetProgressHandler() {
 

@@ -14,8 +14,10 @@ import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.DataView;
 import org.ednovo.gooru.client.mvp.analytics.util.Print;
 import org.ednovo.gooru.client.mvp.analytics.util.SortTable;
+import org.ednovo.gooru.client.mvp.analytics.util.ViewResponsesPopup;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
+import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.ajaxloader.client.Properties;
@@ -32,6 +34,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -72,6 +75,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	final List<Integer> questionRowIndex=new ArrayList<Integer>();
 	final List<Integer> resourceRowIndex=new ArrayList<Integer>();
 	DataView operationsView;
+	ViewResponsesPopup popupPanel=null;
 	
 	public CollectionSummaryTeacherView() {
 		this.res = CollectionSummaryTeacherCBundle.INSTANCE;
@@ -111,7 +115,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
         filterDropDown.addItem("Resources", "Resources");
 	}
 	@Override
-	public void setTeacherResourceData(ArrayList<UserDataDo> resourcesData,ArrayList<CollectionSummaryMetaDataDo> collectionMetaData) {
+	public void setTeacherResourceData(ArrayList<UserDataDo> resourcesData,ArrayList<CollectionSummaryMetaDataDo> collectionMetaData,HTMLPanel loadingImage) {
 		    hideAllPanels();
 		    teacherScoredDatapnl.setVisible(true);
 		    this.collectionMetaData=collectionMetaData;
@@ -149,7 +153,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        }
 	    	setScoredQuestionsData(questionsData);
 	    	setOpenendedQuestionsData(openendedData);
-	    	setCollectionBreakDown(resourcesData);
+	    	setCollectionBreakDown(resourcesData,loadingImage);
 	}
 	void setOpenendedQuestionsData(final ArrayList<UserDataDo> result){
             
@@ -206,6 +210,8 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	   	            //set View response label
 	   	            Label viewResponselbl=new Label("View Response");
 	   	            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
+	   	            viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
+	   	            viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
 	   	            data.setValue(i, 5, viewResponselbl.toString());
 	   	        }
 	        }
@@ -221,6 +227,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        	teacherOpenendedData.add(erroeMsg);
 	        }
 	        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
+	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
 	}
 	/**
 	 * This class is used to handle the click event on the table cell
@@ -230,11 +237,12 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		public void onClick(ClickEvent event) {
 			Element ele=event.getNativeEvent().getEventTarget().cast();
 			if(ele.getInnerText().equalsIgnoreCase("View Response")){
-				//Window.alert("ele:"+ele.getAttribute("id"));
+				getUiHandlers().setOEtextData(ele.getAttribute("resourceGooruId"),ele.getAttribute("questionType"));
 			}
 		}
 	}
-	void setCollectionBreakDown(ArrayList<UserDataDo> result){
+	
+	void setCollectionBreakDown(ArrayList<UserDataDo> result, HTMLPanel loadingImage){
 		
 		final int[] primitivesQuestions = AnalyticsUtil.toIntArray(questionRowIndex);
 		final int[] primitivesResources = AnalyticsUtil.toIntArray(resourceRowIndex);
@@ -335,6 +343,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        Table table = new Table(data, options);
 	        table.getElement().setId("collectionBreakDown");
 	        teacherResourceBreakdownData.add(table);
+	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
 	        filterDropDown.addChangeHandler(new ChangeHandler() {
 	    		
 				@Override
@@ -355,6 +364,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 					     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 				}
 			});
+	        loadingImage.setVisible(false);
 	}
 	void setScoredQuestionsData(final ArrayList<UserDataDo> scoredQuestionsData){
 
@@ -374,7 +384,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
         sortableTable.addColumnHeader("Time&nbsp;Spent", 4);
         sortableTable.addColumnHeader("Reaction", 5);
         sortableTable.getRowFormatter().addStyleName(0, res.css().tableHeader());
-        sortableTable.addClickHandler(new ClickHandler() {
+       /* sortableTable.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 			 Collections.sort(scoredQuestionsData, new Comparator<UserDataDo>() {
@@ -387,7 +397,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 			 sortableTable.clear();
 			 setSortedData(scoredQuestionsData,sortableTable);
 			}
-		});
+		});*/
         teacherScoredData.add(sortableTable);
         if(scoredQuestionsData.size()!=0){
         	 setSortedData(scoredQuestionsData,sortableTable);
@@ -449,7 +459,10 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
                   } 
              }else if(getQuestionType.equalsIgnoreCase("OE")|| getQuestionType.equalsIgnoreCase("fib") ||getQuestionType.equalsIgnoreCase("MA")){
             	 Label viewResponselbl=new Label("View Response");
+            	 viewResponselbl.getElement().setAttribute("resourceGooruId", scoredQuestionsData.get(i-1).getResourceGooruOId());
+	   	         viewResponselbl.getElement().setAttribute("questionType", scoredQuestionsData.get(i-1).getType());
  	             viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
+ 	             viewResponselbl.addClickHandler(new ClickOnTableCell());
             	 answerBreakDownpnl.add(viewResponselbl);
              }
            
@@ -521,4 +534,21 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		}
 		return createdTime;
 	}
+
+	@Override
+	public void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId, String collectionId, String classpageId,String pathwayId,String questionType) {
+		     popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,true);
+		     popupPanel.setStyleName(res.css().setOETextPopupCenter());
+		     if(popupPanel.isShowing()){
+		    	 popupPanel.hide();
+		    	 Window.enableScrolling(true);
+		     }else{
+		     	 Window.scrollTo(0, 0);
+		    	 Window.enableScrolling(false);
+		    	 popupPanel.setGlassEnabled(true);
+		    	 popupPanel.setAutoHideEnabled(true);
+		    	 popupPanel.show();
+		    	 popupPanel.center();
+		     }
+		}
 }

@@ -27,15 +27,20 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollectionSummaryTeacherView> implements CollectionSummaryTeacherUiHandlers{
 	@Inject
 	private  AnalyticsServiceAsync analyticService;
+	
+	private String collectionId,classpageId,pathwayId;
+	
 	@Inject
 	public CollectionSummaryTeacherPresenter(EventBus eventBus, IsCollectionSummaryTeacherView view) {
 		super(eventBus, view);
@@ -51,17 +56,31 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 	}
 
 	@Override
-	public void setTeacherData(String collectionId,String classpageId,String pathwayId,final ArrayList<CollectionSummaryMetaDataDo> result) {
+	public void setTeacherData(String collectionId,String classpageId,String pathwayId,final ArrayList<CollectionSummaryMetaDataDo> result,final HTMLPanel loadingImage) {
+		this.pathwayId=pathwayId;
+		this.classpageId=classpageId;
+		this.collectionId=collectionId;
 		this.analyticService.getCollectionResourceData(collectionId,classpageId,pathwayId,new AsyncCallback<ArrayList<UserDataDo>>() {
-			
 			@Override
 			public void onSuccess(ArrayList<UserDataDo> userData) {
-				getView().setTeacherResourceData(userData,result);
+				getView().setTeacherResourceData(userData,result,loadingImage);
 			}
-			
 			@Override
 			public void onFailure(Throwable caught) {
 			}
 		});		
+	}
+
+	@Override
+	public void setOEtextData(final String resourceGooruId,final String questionType) {
+		this.analyticService.getOETextData(resourceGooruId, collectionId, classpageId, pathwayId,"AS","","", new AsyncCallback<ArrayList<OetextDataDO>>() {
+			@Override
+			public void onSuccess(ArrayList<OetextDataDO> result) {
+				getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType);
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
 	}
 }
