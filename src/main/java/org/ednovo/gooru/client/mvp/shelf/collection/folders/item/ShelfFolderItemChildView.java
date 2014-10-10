@@ -30,11 +30,13 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPresenter> implements
@@ -46,6 +48,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	@UiField HTMLEventPanel folderImage;
 	@UiField Image collectionImage;
 	@UiField Label itemTitle;
+	@UiField TextBox reorderTxtBox;
+	@UiField Button moveUpBtn,moveDownBtn;
 	
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-collection-image-160x120.png";
 	

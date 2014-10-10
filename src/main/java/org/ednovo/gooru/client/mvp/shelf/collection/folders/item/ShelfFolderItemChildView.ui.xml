@@ -9,5 +9,14 @@
              <g:Label styleName="{folderStyle.title}" ui:field="itemTitle"></g:Label>
          </g:FlowPanel>
          <g:FlowPanel styleName="{folderStyle.contents}" ui:field="contents"/>
+         
+         <g:FlowPanel styleName="{folderStyle.reorderPanel}" ui:field="reorderPanel">
+             <g:HTMLPanel styleName="{folderStyle.upDownBtn}">
+				<g:Button ui:field="moveUpBtn" styleName="{folderStyle.upDownBtnBlock} secondary"><img src="images/uparrow.png" /></g:Button>
+				 <g:TextBox ui:field="reorderTxtBox"></g:TextBox>
+				<g:Button ui:field="moveDownBtn"  styleName="{folderStyle.upDownBtnBlock} secondary"><img src="images/downarrow.png" /></g:Button>
+			</g:HTMLPanel>
+         </g:FlowPanel>
+         
 	</g:FlowPanel>
 </ui:UiBinder>
