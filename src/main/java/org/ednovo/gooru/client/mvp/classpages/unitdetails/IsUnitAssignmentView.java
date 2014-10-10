@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
@@ -51,5 +52,5 @@ public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentU
 	public void setCollectionSummaryData(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo);
 	void clearValues();
 	void setInsightUserData(List<InsightsUserDataDo> insightsUserList);
-
+	CollectionsView getCollectionView();
 }
