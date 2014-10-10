@@ -162,21 +162,21 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 
 	 private void setAssignmentCircleStatus(){
 
-		 if(insightsUserDataDo.getUserData()!= null && insightsUserDataDo.getMinimumScore()!=null){
+		 if(insightsUserDataDo.getUserData()!= null && insightsUserDataDo.getUserData().get(0).getGradeInPercentage()!=null && insightsUserDataDo.getMinimumScore()!=null){
 
 			 if(insightsUserDataDo.getUserData().get(0).getGradeInPercentage()!=null){
 				 String grade=insightsUserDataDo.getUserData().get(0).getGradeInPercentage();
 				 String minScore=insightsUserDataDo.getMinimumScore();
 				 System.out.println("minScore::"+minScore);
 				 System.out.println("grade::"+grade);
-				 System.out.println("classpageItemDo.getStatus(:"+classpageItemDo.getStatus().equalsIgnoreCase("completed"));
 				 if(grade.equals(minScore)|| Integer.parseInt(grade)>Integer.parseInt(minScore)){
 					this.getElement().getFirstChildElement().setClassName(res.unitAssignment().greenCircle());
 				 }else{
 					 this.getElement().getFirstChildElement().setClassName(res.unitAssignment().redCircle());
 				 }
-				 if((insightsUserDataDo.getStatus() != null && insightsUserDataDo.getStatus().equals("1")) ||(classpageItemDo.getStatus() != null && classpageItemDo.getStatus().equalsIgnoreCase("completed")) )
+				 if((classpageItemDo!=null && classpageItemDo.getStatus() != null && classpageItemDo.getStatus().equalsIgnoreCase("completed")))
 				 {
+					 System.out.println("classpageitemdo");
 					 this.getElement().getFirstChildElement().setAttribute("style", "background-image: url(../images/checkMark.png);");
 
 				 }

@@ -96,14 +96,14 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 
 	@Override
 	public void setCollectionMetaData(
-			ArrayList<CollectionSummaryMetaDataDo> result,String pathwayId) {
+			CollectionSummaryMetaDataDo result,String pathwayId) {
 		this.pathwayId=pathwayId;
-		if(result.size()!=0){
-			collectionId=result.get(0).getGooruOId();
-			collectionTitle.setText(result.get(0).getTitle());
-			collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getLastModified())));
-			if(result.get(0).getThumbnail()!=null){
-				collectionImage.setUrl(result.get(0).getThumbnail());
+		if(result!=null){
+			collectionId=result.getGooruOId();
+			collectionTitle.setText(result.getTitle());
+			collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.getLastModified())));
+			if(result.getThumbnail()!=null){
+				collectionImage.setUrl(result.getThumbnail());
 			}else{
 				collectionImage.setUrl("images/analytics/default-collection-image.png");
 			}

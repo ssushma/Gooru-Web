@@ -62,6 +62,21 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	public static final String THUMBNAIL="thumbnail";
+	public static final String USERCOUNT="userCount";
+	public static final String LASTMODIFIED="lastModified";
+	public static final String COMPLETIONSTATUS="completionStatus";
+	public static final String TIMESPENT="timeSpent";
+	public static final String OE="OE";
+	public static final String TITLE="title";
+	public static final String DESCRIPTION="description";
+	public static final String OPTIONS="options";
+	public static final String SKIP="skip";
+	public static final String SCORE="score";
+	public static final String TOTALQUESTIONCOUNT="totalQuestionCount";
+	public static final String TOTALRESOURCECOUNT="totalResourceCount";
+	public static final String GRADEINPERCENTAGE="gradeInPercentage";
+	
 	
 	public static final String FIELDS="fields";
 	public static final String AVGTIMESPENT="avgTimeSpent";
@@ -120,27 +135,6 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		}else{
 		}
 		return collectionSummaryUsersDataDoList;
-	}
-
-	@Override
-	public ArrayList<CollectionSummaryMetaDataDo> getCollectionMetaData(String collectionId,String classpageId) {
-		JsonRepresentation jsonRep = null;
-		ArrayList<CollectionSummaryMetaDataDo> collectionSummaryMetaDataDoList=new ArrayList<CollectionSummaryMetaDataDo>();
-		
-		String dataPassing="{%22fields%22:%22thumbnail,userCount,lastModified,completionStatus,timeSpent,views,avgTimeSpent,OE,gooruOId,title,description,options,skip,score,avgReaction,totalQuestionCount,gradeInPercentage%22,%22filters%22:{%22userUId%22:%22%22,%22session%22:%22AS%22,%22sessionId%22:%22%22,%22classId%22:%22"+classpageId+"%22}}";
-		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA, collectionId,getLoggedInSessionToken(),dataPassing);
-		System.out.println("url:+"+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		if(jsonResponseRep.getStatusCode()==200){
-			try {
-				collectionSummaryMetaDataDoList= (ArrayList<CollectionSummaryMetaDataDo>) JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").toString(),new TypeReference<List<CollectionSummaryMetaDataDo>>() {});
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}else{
-		}
-		return collectionSummaryMetaDataDoList;
 	}
 
 	@Override
@@ -299,11 +293,12 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		
 		JsonRepresentation jsonRep = null;
 		CollectionSummaryMetaDataDo collectionSummaryMetaDataDo=null;
-		String requiredFields=AVGTIMESPENT +","+AVGREACTION+","+VIEWS;
+		String requiredFields=AVGTIMESPENT +","+AVGREACTION+","+VIEWS+","+THUMBNAIL+","+USERCOUNT+","+LASTMODIFIED+","+COMPLETIONSTATUS+","+TIMESPENT+","+OE+","+TITLE+","+DESCRIPTION+","+OPTIONS+","+SKIP+","+SCORE+","+TOTALQUESTIONCOUNT+","+TOTALRESOURCECOUNT+","+GRADEINPERCENTAGE;
 		
 		String urlDataParameterValue=createJsonPayloadObject(unitId,classId,"",requiredFields);
 		
 		String  url= UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETCOLLECTIONMETADATA, collectionId,getLoggedInSessionToken(),urlDataParameterValue);
+		LOGGER.info("url==>"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
