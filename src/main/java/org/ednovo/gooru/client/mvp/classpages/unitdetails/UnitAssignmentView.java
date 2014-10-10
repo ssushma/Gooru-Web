@@ -164,6 +164,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	int toalassignmentSize=0;
 	
+	final String SUMMARY="Summary",PROGRESS="Progress",BELOWSCORE="BelowScore",ABOVESCORE="AboveScore";
+	
 	@Inject
 	public UnitAssignmentView(){
 		setWidget(uiBinder.createAndBindUi(this));
@@ -416,7 +418,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				 personalizeContainer.clear();
 				 personalizeContainer.add(content);
 				 personalizeContainer.setVisible(false);
+			}else if(slot==UnitAssignmentPresenter.REPORT_SLOT){
+				 collectionView.getFlowPnl().clear();
+				 collectionView.getFlowPnl().add(content);
+				 collectionView.getFlowPnl().setVisible(true);
 			}else{
+				
 			}
 		}
 	}
@@ -1028,7 +1035,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	}
 
 	@Override
-	public void showAssignment(ClasspageItemDo classpageItemDo) {
+	public void showAssignment(final ClasspageItemDo classpageItemDo) {
 		assignmentContainer.clear();
 		final boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals("completed")?true:false;
 		 collectionView=new CollectionsView(classpageItemDo){
@@ -1047,6 +1054,20 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				descriptionDetails.put(collectionItemId, direction);
 			}
 		};
+		collectionView.getBtnSummary().addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().setClickedTabPresenter(SUMMARY,classpageItemDo.getResource().getGooruOid());
+			}
+		});
+		collectionView.getBtnProgress().addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().setClickedTabPresenter(PROGRESS,classpageItemDo.getResource().getGooruOid());
+			}
+		});
 		assignmentContainer.add(collectionView);
 	}
 	
@@ -1404,5 +1425,9 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void setInsightUserData(List<InsightsUserDataDo> insightsUserList) {
 		this.insightsUserList=insightsUserList;
 	}
-	
+
+	@Override
+	public CollectionsView getCollectionView() {
+		return collectionView;
+	}
 }

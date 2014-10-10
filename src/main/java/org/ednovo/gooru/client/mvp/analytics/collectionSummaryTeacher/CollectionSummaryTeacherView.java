@@ -63,7 +63,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	AnalyticsTabContainer teacherTabContainer;
 	
 	CollectionSummaryTeacherCBundle res;
-	ArrayList<CollectionSummaryMetaDataDo> collectionMetaData;
+	CollectionSummaryMetaDataDo collectionMetaData;
 	
 	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab";
 	private int collectionProgressCount=1;
@@ -115,7 +115,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
         filterDropDown.addItem("Resources", "Resources");
 	}
 	@Override
-	public void setTeacherResourceData(ArrayList<UserDataDo> resourcesData,ArrayList<CollectionSummaryMetaDataDo> collectionMetaData,HTMLPanel loadingImage) {
+	public void setTeacherResourceData(ArrayList<UserDataDo> resourcesData,CollectionSummaryMetaDataDo collectionMetaData,HTMLPanel loadingImage) {
 		    hideAllPanels();
 		    teacherScoredDatapnl.setVisible(true);
 		    this.collectionMetaData=collectionMetaData;
@@ -131,10 +131,10 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 			//Set collection meta data
 			if(collectionMetaData != null)
 			{
-			totalTimeSpentlbl.setText(getTimeSpent(collectionMetaData.get(0).getAvgTimeSpent()));
-			totalViewlbl.setText(Integer.toString(collectionMetaData.get(0).getViews()));
+			totalTimeSpentlbl.setText(getTimeSpent(collectionMetaData.getAvgTimeSpent()));
+			totalViewlbl.setText(Integer.toString(collectionMetaData.getViews()));
 			totalAvgReactionlbl.clear();
-			totalAvgReactionlbl.add(new AnalyticsReactionWidget(collectionMetaData.get(0).getAvgReaction()));
+			totalAvgReactionlbl.add(new AnalyticsReactionWidget(collectionMetaData.getAvgReaction()));
 			}
 			
 	        //This is used for segrate data based on the category
@@ -157,7 +157,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	}
 	void setOpenendedQuestionsData(final ArrayList<UserDataDo> result){
             
-		 	int totalUserCount=this.collectionMetaData.get(0).getUserCount();
+		 	int totalUserCount=this.collectionMetaData.getUserCount();
 		    DataTable data = DataTable.create();
 		    data.addColumn(ColumnType.NUMBER, "No.");
 	        data.addColumn(ColumnType.STRING, "Question");

@@ -44,7 +44,7 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	
 	private CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter;
 
-    ArrayList<CollectionSummaryMetaDataDo> collectionMetadata;
+    CollectionSummaryMetaDataDo collectionMetadata;
 	
 	@Inject
 	private  AnalyticsServiceAsync analyticService;
@@ -79,10 +79,10 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 			public void onFailure(Throwable caught) {
 			}
 		});
-		this.analyticService.getCollectionMetaData(collectionId,classpageId,new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
+		this.analyticService.getAssignmentAverageData(classpageId, pathwayId, collectionId,new AsyncCallback<CollectionSummaryMetaDataDo>() {
 			
 			@Override
-			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
+			public void onSuccess(CollectionSummaryMetaDataDo result) {
 				getView().setCollectionMetaData(result,pathwayId);
 				collectionMetadata=result;
 				setTeacherData(collectionId,classpageId,pathwayId);

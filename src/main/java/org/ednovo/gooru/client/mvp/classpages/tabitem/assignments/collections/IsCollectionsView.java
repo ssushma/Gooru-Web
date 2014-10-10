@@ -26,6 +26,8 @@ package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
 
 import org.ednovo.gooru.client.child.IsChildView;
 
+import com.google.gwt.user.client.ui.Widget;
+
 /**
  * 
  * @fileName : IsCollectionsView.java
@@ -42,6 +44,6 @@ import org.ednovo.gooru.client.child.IsChildView;
  * @Reviewer:
  */
 public interface IsCollectionsView extends IsChildView<CollectionsPresenter> {
-	
+	public void setInSlot(Object slot, Widget content);
 }
 

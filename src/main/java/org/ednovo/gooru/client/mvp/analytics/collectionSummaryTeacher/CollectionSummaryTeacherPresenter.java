@@ -56,7 +56,7 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 	}
 
 	@Override
-	public void setTeacherData(String collectionId,String classpageId,String pathwayId,final ArrayList<CollectionSummaryMetaDataDo> result,final HTMLPanel loadingImage) {
+	public void setTeacherData(String collectionId,String classpageId,String pathwayId,final CollectionSummaryMetaDataDo result,final HTMLPanel loadingImage) {
 		this.pathwayId=pathwayId;
 		this.classpageId=classpageId;
 		this.collectionId=collectionId;
