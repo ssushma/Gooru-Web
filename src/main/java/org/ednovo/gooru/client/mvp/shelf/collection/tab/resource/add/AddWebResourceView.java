@@ -961,9 +961,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 *            which to be added for the collection
 	 */
 	public void addStandard(String standard, String id) {
-		System.out.println("inside add standards method");
 		if (standardsPanel.getWidgetCount() <5) {
-			System.out.println("widget count if:::::"+standardsPanel.getWidgetCount());
 			if (standard != null && !standard.isEmpty()) {
 				CodeDo codeObj=new CodeDo();
 				codeObj.setCodeId(Integer.parseInt(getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults())));
@@ -972,7 +970,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
 			}
 		} else {
-			System.out.println("else count:::::"+standardsPanel.getWidgetCount());
 			standardMaxShow();
 			standardSgstBox.setText("");
 		}
@@ -1363,7 +1360,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //															}
 //														});
 //													}else{
-
 														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,hostName,tagList);
 
 														
@@ -2097,6 +2093,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	public void setUpdatedBrowseStandarsCode(String standardsCodeVal,int id,String desc) {
 		if (standardsPanel.getWidgetCount() <5) {
 			if (standardsCodeVal != null && !standardsCodeVal.isEmpty()) {
+				CodeDo codeObj=new CodeDo();
+				codeObj.setCodeId(id);
+				codeObj.setCode(standardsCodeVal);
+				standardsDo.add(codeObj);
 				standardsPanel.add(createStandardLabel(standardsCodeVal, Integer.toString(id), desc));
 			}
 		} else {
