@@ -576,7 +576,7 @@
 }
 
 .contentBlock .info {
-    width:215px;
+    width:192px;
     float:left;
     text-align:center;
 }
@@ -602,7 +602,7 @@
 }
 
 .contentBlock .contents {
-    width:312px;
+    width:316px;
     border-left:1px solid #ddd;
     float:left;
     background: -moz-linear-gradient(left, rgba(245,245,245,1) 0%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 61%); /* FF3.6+ */
@@ -933,7 +933,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 
 
 .upDownBtn{
-	margin-left: -6px;
+	margin-left: -3px;
 }
 
 .upDownBtn input[type="text"]{
@@ -953,7 +953,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 
 .itemNumber{
 	display: inline;
-	margin-left: 14px;
+	margin-left: 12px;
 	float: left;
 	margin-top: 18px;
 	font-size: 20px;

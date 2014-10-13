@@ -1,6 +1,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.folders;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderDeleteView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle.CollectionEditResourceCss;
+import org.ednovo.gooru.client.mvp.shelf.list.ShelfCollection;
 import org.ednovo.gooru.client.uc.EditableLabelUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -102,6 +104,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	private Integer pageNumber = 0;
 	
 	private String parentName = null;
+	
+	private int totalCount;
 	
 	private String O1_LEVEL_VALUE = null, O2_LEVEL_VALUE = null, O3_LEVEL_VALUE = null;
 	
@@ -293,9 +297,9 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	 * @throws : <Mentioned if any exceptions>
 	*/
 	@Override
-	public void setFolderData(List<FolderDo> folderList, String folderParentName, String presentFolderId) { 
+	public void setFolderData(List<FolderDo> folderList, String folderParentName, String presentFolderId,int totalCount) { 
 		setFolderUrlParams();
-		
+		setTotalCount(totalCount);
 		/*Label label = new Label("");
 		label.setStyleName(getCss().shelfFoldereDragdropSpacer());
 		folderItemPanel.superAdd(label);
@@ -365,6 +369,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 				}
 				for(int i = 0; i<folderList.size(); i++) {
 					shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i),i+1); 
+					shelfFolderItemChildView.setUpDownArrowVisibility(totalCount);
 					if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 						isFolderType = false;
 					}
@@ -604,10 +609,33 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	}
 	
 	private void addFolder(FolderDo folderDo) {
-		folderContentBlock.insert(new ShelfFolderItemChildView(folderDo,0), 0); 
+		shelfFolderItemChildView = new ShelfFolderItemChildView(folderDo,1); 
+		shelfFolderItemChildView.upButtonIsVisible(false);
+		folderContentBlock.insert(shelfFolderItemChildView, 0); 
+		setFolderCollectionItemSequence();
 		mainSection.removeStyleName(folderStyle.emptyFolder());
 	}
 	
+	
+	/**
+	 * Updates the item sequence of all folders and collection, as new folder or collection created.
+	 */
+	private void setFolderCollectionItemSequence() { 
+		Iterator<Widget> widgets = folderContentBlock.iterator();
+		int seqNum=1;
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if (widget instanceof ShelfFolderItemChildView) {
+				if(seqNum==2){
+					((ShelfFolderItemChildView) widget).upButtonIsVisible(true); 
+				}
+				((ShelfFolderItemChildView) widget).getItemNumber().setText(seqNum+"");
+				((ShelfFolderItemChildView) widget).getReorderTxtBox().setText(seqNum+"");
+			}
+			seqNum++;
+		}
+	}
+
 	@UiHandler("newCollectionBtn")
 	public void onClickNewCollectionBtn(ClickEvent clickEvent){
 		if (AppClientFactory.getLoggedInUser().getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
@@ -709,5 +737,19 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	 */
 	public void setCss(CollectionEditResourceCss css) {
 		this.css = css;
+	}
+	
+	/**
+	 * @return the totalCount
+	 */
+	public int getTotalCount() {
+		return totalCount;
+	}
+
+	/**
+	 * @param totalCount the totalCount to set
+	 */
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
 	}
 }
