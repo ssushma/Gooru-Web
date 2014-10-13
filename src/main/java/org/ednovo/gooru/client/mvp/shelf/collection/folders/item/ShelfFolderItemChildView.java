@@ -105,6 +105,12 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		itemTitle.addStyleName(folderStyle.folderTitleElipses());
 		final String folderType = folderDo.getType();
 		
+		if(getItemNo() == 1){
+			moveUpBtn.setVisible(false);
+		}else{
+			moveUpBtn.setVisible(true); 
+		}
+		
 		if(folderType.equals(FOLDER)) {
 			folderImage.setVisible(true);
 			collectionImage.setVisible(false);
