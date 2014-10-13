@@ -1361,3 +1361,10 @@ padding-top: 10px;
 margin-top: 92px;
 position: relative;
 }
+.browseContainer{
+ 	float: right;
+	right: -27%;
+	position: relative;
+	margin-top: -12%;
+
+}

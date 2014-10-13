@@ -44,6 +44,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleDocsResourceView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleWebResource;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.exists.ExistsResourceView;
@@ -73,6 +74,7 @@ import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -80,6 +82,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -107,7 +110,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	private AddQuestionResourceWidget addQuestionResourceWidget;
 	private AddSearchResourceWidget addSearchResourceWidget;
 	private AddUserOwnResourceWidget addUserOwnResourceWidget;
-
 
 	private DeleteConfirmationPopupVc deleteConfirmationPopup;
 
@@ -153,7 +155,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	Integer webResourceEnd; 
 	
 	private CollectionItemDo collectionItemDo=null;
-		
+	
+	private HandlerRegistration handlerRegistration=null;
 	
 	@Inject
 	public AddResourceView(EventBus eventBus) {
@@ -451,6 +454,24 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void checkShortenUrl(String userUrlStr) {
 			getUiHandlers().isShortenUrl(userUrlStr);
+		}
+
+
+		@Override
+		public void browseStandardsInfo() {
+			getUiHandlers().browseStandardsInfo();
+		}
+
+
+		public void setUpdatedBrowseStandardsVal(String standardsCodeVal,int id,String desc) {
+			super.setUpdatedBrowseStandarsCode(standardsCodeVal,id,desc);
+		}
+
+
+		@Override
+		public void closeStandardsPopup() {
+			// TODO Auto-generated method stub
+			getUiHandlers().closeStandardsPopup();
 		}
 		
 	}
@@ -1198,6 +1219,25 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	         tabViewContainer.add(new GoogleWebResource(result.get(m)));
 		}
 		tabViewContainer.getElement().setId("pnlTabViewContainer");
+	}
+
+	@Override
+	public void OnBrowseStandardsClickEvent(Button addStandardsBtn) {
+		if(handlerRegistration!=null){
+			handlerRegistration.removeHandler();
+		}
+		handlerRegistration=addStandardsBtn.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().addUpdatedBrowseStandards();
+			}
+		});
+	}
+
+	@Override
+	public void setUpdatedStandardsCode(String standardsCodeVal,int id,String desc) {
+		addWebResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
 	}
 	
 }
