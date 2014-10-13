@@ -109,11 +109,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	
 	private ShelfFolderItemChildView shelfFolderItemChildView;
 	
-//	private ShelfFolderItemChildView shelfFolderItemChildView;
-	
-	
-	
-	
 	private static FolderItemTabViewUiBinder uiBinder = GWT.create(FolderItemTabViewUiBinder.class);
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);

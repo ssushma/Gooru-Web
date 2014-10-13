@@ -576,7 +576,7 @@
 }
 
 .contentBlock .info {
-    width:220px;
+    width:215px;
     float:left;
     text-align:center;
 }
@@ -602,7 +602,7 @@
 }
 
 .contentBlock .contents {
-    width:315px;
+    width:312px;
     border-left:1px solid #ddd;
     float:left;
     background: -moz-linear-gradient(left, rgba(245,245,245,1) 0%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 61%); /* FF3.6+ */
@@ -917,11 +917,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 
 
 .contentBlock .reorderPanel{
-	width:63px;
-    float:right;
+	width:66px;
+    float:left;
     border-left:1px solid #ddd;
     text-align:center;
-    margin-top: -177px;
+   	margin-left: 2px;;
 }
 
 .reorderTxtBox{
