@@ -78,7 +78,14 @@ public abstract class GoalViewVc extends Composite {
 		this.insightsDo = insightsDo;
 		
 		isPlayed = insightsDo.getUserData().get(0).getGradeInPercentage() == null ? false : true;
+		try
+		{
 		minGoal = Integer.parseInt(insightsDo.getMinimumScore() !=null ? insightsDo.getMinimumScore() : "0"); 
+		}
+		catch(NumberFormatException ex)
+		{
+			minGoal=0;
+		}
 		percentage = Integer.parseInt(insightsDo.getUserData().get(0).getGradeInPercentage() !=null ? insightsDo.getUserData().get(0).getGradeInPercentage() : "0"); 
 		
 		goalStatus = percentage < minGoal ? false : true;

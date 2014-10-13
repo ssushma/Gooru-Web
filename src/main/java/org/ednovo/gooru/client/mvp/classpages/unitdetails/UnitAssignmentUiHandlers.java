@@ -61,4 +61,7 @@ public interface UnitAssignmentUiHandlers extends BaseUiHandlers{
 	
 	void setClickedTabPresenter(String clickedTab,String collectionId);
 
+
+	void setAssignmentsData();
+
 }
