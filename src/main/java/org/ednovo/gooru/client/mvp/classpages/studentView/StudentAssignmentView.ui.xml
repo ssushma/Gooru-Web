@@ -7,6 +7,25 @@
 	<ui:style field="StudentStyle" src="StudentStyles.css" />
 	<ui:with type="org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle" field="style" />
 	<g:HTMLPanel ui:field="mainContainer">
+	    <g:HTMLPanel styleName="{StudentStyle.StudentPerformanceTab}" ui:field="teacherViewPanel">
+	        <g:HTMLPanel styleName="containerMain">
+		      <g:HTMLPanel styleName="row">
+		        <panel:HTMLEventPanel styleName="col-md-6 {StudentStyle.teachBack}" ui:field="backToTeacherView" >
+		          <p><img src="images/back-arrow.png"/> Teacher View</p>
+		        </panel:HTMLEventPanel>
+		        <g:HTMLPanel styleName="col-md-6 {StudentStyle.stPer}">
+		          <p class="lead">Student Performance
+		            <select name="">
+		              <option>Anna</option>
+		              <option>Anna</option>
+		              <option>Anna</option>
+		              <option>Anna</option>
+		            </select>
+		          </p>
+		        </g:HTMLPanel>
+		      </g:HTMLPanel>
+	    	</g:HTMLPanel>
+        </g:HTMLPanel>
 		<g:HTMLPanel styleName="{StudentStyle.classpageContainer}">
 			<g:HTMLPanel styleName="{StudentStyle.classpageBannerview}">
 				<g:HTMLPanel styleName="{StudentStyle.classpageBanner}">
