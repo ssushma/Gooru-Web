@@ -158,6 +158,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	
 	private HandlerRegistration handlerRegistration=null;
 	
+	private boolean isQuestion =false;
+	
 	@Inject
 	public AddResourceView(EventBus eventBus) {
 		super(eventBus);
@@ -399,7 +401,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 					
 					@Override
 					public void addWebResource() {
-
 						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd,educationalUse,momentsOfLearning,standards,hostname,tagList);
 
 						
@@ -459,7 +460,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 		@Override
 		public void browseStandardsInfo() {
-			getUiHandlers().browseStandardsInfo();
+			isQuestion =false;
+			getUiHandlers().browseStandardsInfo(isQuestion);
 		}
 
 
@@ -539,6 +541,20 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void setEditQuestionImage(String fileName) {
 			setImageUrl(fileName, null, true, false);
+		}
+		@Override
+		public void callBrowseStandards() {
+			isQuestion =true;
+			getUiHandlers().browseStandardsInfo(isQuestion);
+		}
+		public void setUpdatedBrowseStandardsVal(String standardsCodeVal,int id, String desc) {
+			super.setUpdatedBrowseStandarsCode(standardsCodeVal,id,desc);
+			
+		}
+		@Override
+		public void closeStandardsPopup() {
+			getUiHandlers().closeStandardsPopup();
+			
 		}
 		
 	}
@@ -1236,8 +1252,12 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	}
 
 	@Override
-	public void setUpdatedStandardsCode(String standardsCodeVal,int id,String desc) {
-		addWebResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
+	public void setUpdatedStandardsCode(String standardsCodeVal,int id,String desc,boolean value) {
+		if(value == false){
+			addWebResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
+		}else{
+			addQuestionResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
+		}
 	}
 	
 }
