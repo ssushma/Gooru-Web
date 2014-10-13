@@ -43,6 +43,9 @@ import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsColle
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherPresenter;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherView;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.IsCollectionSummaryTeacherView;
+import org.ednovo.gooru.client.mvp.analytics.unitAssignments.AnalyticsUnitAssignmentsPresenter;
+import org.ednovo.gooru.client.mvp.analytics.unitAssignments.AnalyticsUnitAssignmentsView;
+import org.ednovo.gooru.client.mvp.analytics.unitAssignments.IsAnalyticsUnitAssignmentsView;
 import org.ednovo.gooru.client.mvp.authentication.IsSignUpView;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpView;
@@ -616,6 +619,8 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(CollectionSummaryPresenter.class,IsCollectionSummaryView.class,CollectionSummaryView.class);
 		bindPresenterWidget(CollectionSummaryTeacherPresenter.class,IsCollectionSummaryTeacherView.class,CollectionSummaryTeacherView.class);
 		bindPresenterWidget(CollectionSummaryIndividualPresenter.class,IsCollectionSummaryIndividualView.class,CollectionSummaryIndividualView.class);
+		bindPresenterWidget(AnalyticsUnitAssignmentsPresenter.class,IsAnalyticsUnitAssignmentsView.class,AnalyticsUnitAssignmentsView.class);
+		
 		
 		bindPresenterWidget(AssignmentWidgetPresenter.class, IsAssignmentWidget.class,AssignmentWidgetView.class);
 		bindPresenterWidget(AnalyticsInfoContainerPresenter.class, IsAnalyticsInfoContainerView.class, AnalyticsInfoContainer.class);

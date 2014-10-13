@@ -3,6 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:header="urn:import:org.ednovo.gooru.client.mvp.play.collection.header"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="unitStyle" src="analytics.css" />
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel styleName="{unitStyle.unitDetails}">
 		<div class="{unitStyle.containerTeacher}">
 			<div class="col-xs-2 {unitStyle.leftPanel}">
@@ -115,11 +116,48 @@
 				<div class="row {unitStyle.personalBtn}">
 					<div class="col-xs-12">
 						<div class="{unitStyle.rowInner}">
-							<p class="text-center"><button type="button" class="primary">Personalize Unit 2 for Students</button></p>
+							<p class="text-center"><g:Button  ui:field="personalizeBtn" styleName="primary"></g:Button></p>
 						</div>
 					</div>
 				</div>
-				<g:HTMLPanel ui:field="assignmentContainer"></g:HTMLPanel>
+				 <div class="row">
+						<div class="col-xs-12">
+								<g:Label ui:field="unitTitleDetails" styleName="{unitStyle.unitHeading}" />
+							<div class="clearfix"></div>
+							<g:HTMLPanel styleName="row {unitStyle.classOptionsMain}" ui:field="unitOptionsContainer">
+									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.assignOverOptions} text-center">
+										<g:InlineLabel styleName="{unitStyle.bubbleSmall}"></g:InlineLabel> 
+										<g:InlineLabel text="{i18n.GL2209}"></g:InlineLabel> 
+									</g:HTMLPanel>
+									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions1} text-center">
+										<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.stylishBub}"></g:InlineLabel>
+										<g:InlineLabel text="{i18n.GL2201}"></g:InlineLabel> 
+									</g:HTMLPanel>
+									
+									<g:HTMLPanel ui:field="personalizePanel">
+						 				<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.classOverOptions1} text-center">
+											<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.greenBubble}"></g:InlineLabel>
+											<g:InlineLabel text="{i18n.GL2239}"></g:InlineLabel> 
+										</g:HTMLPanel>
+										<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidthGoalNotMet} {unitStyle.classOverOptions1} text-center">
+											<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.redBubble}"></g:InlineLabel> 
+											<g:InlineLabel text="{i18n.GL2240}"></g:InlineLabel>
+										</g:HTMLPanel>
+										<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidth1} {unitStyle.classOverOptions} text-center">
+											<g:InlineLabel styleName="{unitStyle.bubbleSmallrounded}"></g:InlineLabel> 
+											<g:InlineLabel text="{i18n.GL2212}"></g:InlineLabel>
+										</g:HTMLPanel>
+										<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidthFDS} {unitStyle.classOverOptionsFeedback} text-center">
+										    <g:InlineLabel styleName="{unitStyle.bubbleBlueFeedBack}"></g:InlineLabel> 
+										   	<g:InlineLabel text="{i18n.GL2238}"></g:InlineLabel>
+										</g:HTMLPanel> 
+									</g:HTMLPanel>
+									
+							</g:HTMLPanel>
+						</div>
+					</div> 
+					<g:HTMLPanel ui:field="assignmentContainer"></g:HTMLPanel>
+					<g:HTMLPanel ui:field="personalizeContainer"></g:HTMLPanel>
 			</div>
 			<div class="clearfix"></div>
 		</div>

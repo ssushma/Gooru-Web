@@ -22,33 +22,14 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.analytics;
-import java.util.ArrayList;
+package org.ednovo.gooru.client.mvp.analytics.unitAssignments;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
-import org.ednovo.gooru.shared.model.content.ClassDo;
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
-import com.google.gwt.user.client.ui.HTMLPanel;
+public interface AnalyticsUnitAssignmentsUiHandlers extends BaseUiHandlers{
+	
+	void setAnalyticsAssignmentsPresenter(UnitAssignmentsDo result,String classpageId,String pathwayGooruOid);
 
-
-public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>{
-	
-	 public void showUnitNames(ClassDo classDo,boolean clearPanel);
-	
-	public void hideMoreUnitsLink();
-	
-	public void setBottomAndTopScoresData(ArrayList<GradeJsonData> result);
-	
-	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData);
-	
-	HTMLPanel getUnitPanel();
-
-	void LoadingImageLabeltrue();
-
-	void LoadingImageLabelFalse();
-	
-	void clearDownArrow();
-	
-	void hidePersonalizeContainers();
+	void getPathwayItems(String sequence, int limit, int offSet);
 }

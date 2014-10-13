@@ -25,9 +25,13 @@
 package org.ednovo.gooru.client.mvp.analytics;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 public interface AnalyticsUiHandlers extends BaseUiHandlers{
 	void getPathwayItems(String classpageId,String pathwayGooruOid,String sequence,int limit,int offSet);
+	
+	void getUnitAssignments(final String classpageId, final String pathwayGooruOid,String sequence,int limit,int offSet);
 	
 	void getPathwayUnits(String classId,int limit, int offset ,boolean clearPanel);
 	
@@ -38,4 +42,10 @@ public interface AnalyticsUiHandlers extends BaseUiHandlers{
 	void getGradeCollectionJson(String classpageId,String pathwayId);
 	
 	void exportOEPathway(String classpageId,String pathwayId);
+	
+	void getUnitAssignments();
+	
+	void setAnalyticsAssignmentsPresenter(UnitAssignmentsDo result,String classpageId,String pathwayId);
+	
+	void setPersonalizeData(ClasspageDo classpageDo);
 }
