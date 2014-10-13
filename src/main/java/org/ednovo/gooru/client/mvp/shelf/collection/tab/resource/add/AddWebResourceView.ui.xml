@@ -436,6 +436,9 @@
 							<g:FlowPanel styleName="{res1.css.standardsCont}">
 								<uc:AppSuggestBox ui:field="standardSgstBox"
 									width="255px" height="19px" />
+									<g:HTMLPanel styleName="{res1.css.browseContainer}">
+										<g:Button ui:field="browseStandards" styleName="secondary">Browse</g:Button>
+									</g:HTMLPanel>
 								 <g:HTMLPanel ui:field="errorContainer"></g:HTMLPanel>
 								<g:Label styleName="{res1.css.standardMaxHide}" ui:field="standardMaxMsg" />
 								<g:FlowPanel ui:field="standardsPanel"
