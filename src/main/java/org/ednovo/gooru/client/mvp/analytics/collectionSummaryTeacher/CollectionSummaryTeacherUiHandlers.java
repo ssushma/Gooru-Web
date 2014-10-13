@@ -33,7 +33,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 public interface CollectionSummaryTeacherUiHandlers extends BaseUiHandlers{
  
- void setTeacherData(String collectionId,String classpageId,String pathwayId,ArrayList<CollectionSummaryMetaDataDo> result,HTMLPanel loadingImage);
+ void setTeacherData(String collectionId,String classpageId,String pathwayId,CollectionSummaryMetaDataDo result,HTMLPanel loadingImage);
  
  void setOEtextData(String resourceGooruId,String questionType);
 

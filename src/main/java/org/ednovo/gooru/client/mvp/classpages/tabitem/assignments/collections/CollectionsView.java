@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.analytics.AnalyticsPresenter;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
@@ -194,8 +195,8 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			studyCollectionButton.removeFromParent();
 		}
 		changeAssignmentStatusView.getChangeAssignmentStatusButton().addClickHandler(new ChangeStatusEvent());
-		btnSummary.addClickHandler(new SummaryEvent());
-		btnProgress.addClickHandler(new ProgressEvent());
+		//btnSummary.addClickHandler(new SummaryEvent());
+		//btnProgress.addClickHandler(new ProgressEvent());
 		editAssignmentDetailsButton.addClickHandler(new EditAssignmentEvent());
 		saveAssignmentDetailsButton.addClickHandler(new UpdateAssignmentDetailsEvent());
 		cancelAssignmentDetailsButton.addClickHandler(new CancelEditAssignmentEvent());
@@ -379,6 +380,21 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 	}
 
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		frameContainer.clear();
+		if (content != null) {
+			 if(slot==AnalyticsPresenter.COLLECTION_PROGRESS_SLOT){
+				 frameContainer.setVisible(true);
+				 frameContainer.add(content);
+			}else{
+				frameContainer.setVisible(false);
+			}
+		}else{
+			frameContainer.setVisible(false);
+		}
+	}
+	
 	private String frameAnalyticsUrlForMonitor() {
 
 		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
@@ -408,6 +424,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			}
 		}
 	}
+	
 	
 //	public class MarkProgressEvent implements ValueChangeHandler<T>{
 //		@Override
@@ -1007,7 +1024,13 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 	}
 	
-	
-	
-	
+	public Button getBtnSummary(){
+		return btnSummary;
+	}
+	public Button getBtnProgress(){
+		return btnProgress;
+	}
+	public FlowPanel getFlowPnl(){
+		return frameContainer;
+	}
 }

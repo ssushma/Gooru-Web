@@ -43,8 +43,6 @@ public interface AnalyticsServiceAsync extends BaseServiceAsync {
 	
 	void getCollectionSummaryUsersData(String classpageId,AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>> callback);
 	
-	void getCollectionMetaData(String collectionId,String classpageId,AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>> callback);
-	
 	void getCollectionMetaDataByUserAndSession(String collectionId,String classId,String userId,String sessionId,AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>> callback);
 	
 	void getCollectionResourceData(String collectionId,String classpageId,String pathwayId,AsyncCallback<ArrayList<UserDataDo>> callback);

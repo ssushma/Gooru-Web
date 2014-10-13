@@ -28,6 +28,8 @@ import java.util.List;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateUnitSetGoalEvent;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
@@ -51,6 +53,14 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	
 	private PersonalizeUnitPresenter studentPersonalizePresenter = null;
 	
+	private CollectionProgressPresenter collectionProgressPresenter;
+	
+	private CollectionSummaryPresenter collectionSummaryPresenter;
+	
+	public static final  Object REPORT_SLOT = new Object();
+	
+	final String SUMMARY="Summary",PROGRESS="Progress",BELOWSCORE="BelowScore",ABOVESCORE="AboveScore";
+	
 	private int limit = 5;
 	private int offSet = 0;
 	private int assignmentOffset=0;
@@ -58,10 +68,12 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	private static final String IMAGE_URL="images/core/B-Dot.gif";
 	
 	@Inject
-	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter) {
+	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter,CollectionProgressPresenter collectionProgressPresenter,CollectionSummaryPresenter collectionSummaryPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.studentPersonalizePresenter = studentPersonalizePresenter;
+		this.collectionProgressPresenter=collectionProgressPresenter;
+		this.collectionSummaryPresenter=collectionSummaryPresenter;
 	}
 	@Override
 	protected void onHide() {
@@ -228,7 +240,18 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			}
 		});		
 	}
-
-	
-
+	@Override
+	public void setClickedTabPresenter(String clickedTab, String collectionId) {
+		String pathwayId=AppClientFactory.getPlaceManager().getRequestParameter("uid",null);
+		String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
+		if(clickedTab!=null){
+			if(clickedTab.equalsIgnoreCase(SUMMARY)){
+				collectionSummaryPresenter.setCollectionSummaryData(collectionId,pathwayId);
+				setInSlot(REPORT_SLOT, collectionSummaryPresenter,false);
+			}else if(clickedTab.equalsIgnoreCase(PROGRESS)){
+				collectionProgressPresenter.setCollectionProgressData(collectionId,pathwayId);
+				setInSlot(REPORT_SLOT, collectionProgressPresenter,false);
+			}
+		}
+	}
 }
