@@ -38,7 +38,9 @@ import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
+import org.ednovo.gooru.client.mvp.search.FilterLabelVc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DriveView;
@@ -180,6 +182,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	@UiField HTMLPanel htmlMediaFeatureListContainer;
 	
+	@UiField Button browseStandards;
+	
 	@UiField(provided = true)
 	AddTagesCBundle res2;
 	
@@ -221,6 +225,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	private boolean isGoogleDriveFile=false;
 	private GoogleDriveItemDo googleDriveItemDo=null;
+	
+	
+	
 	public AddWebResourceView(CollectionDo collectionDo,boolean isGoogleDriveFile,GoogleDriveItemDo googleDriveItemDo) { 
 		this.res2 = AddTagesCBundle.INSTANCE;
 		res2.css().ensureInjected();
@@ -479,6 +486,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());
 		uploadImageLbl.addClickHandler(new OnEditImageClick());
+		browseStandards.addClickHandler(new onBrowseStandarsCLick());
 		uploadImageLbl.getElement().setId("lblUploadImage");
 		addResourceBtnLbl.getElement().setId("btnAdd");
 		urlTextBox.getElement().setId("tbUrl");
@@ -922,7 +930,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 *            which to be added for the collection
 	 */
 	public void addStandard(String standard, String id) {
+		System.out.println("inside add standards method");
 		if (standardsPanel.getWidgetCount() <5) {
+			System.out.println("widget count if:::::"+standardsPanel.getWidgetCount());
 			if (standard != null && !standard.isEmpty()) {
 				CodeDo codeObj=new CodeDo();
 				codeObj.setCodeId(Integer.parseInt(getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults())));
@@ -931,6 +941,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
 			}
 		} else {
+			System.out.println("else count:::::"+standardsPanel.getWidgetCount());
 			standardMaxShow();
 			standardSgstBox.setText("");
 		}
@@ -971,6 +982,13 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		public void onClick(ClickEvent event) {
 			// getUiHandlers().resourceImageUpload();
 			resourceImageUpload();
+		}
+	}
+	
+	private class onBrowseStandarsCLick implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			browseStandardsInfo();
 		}
 	}
 	  private class rightsChecked implements ClickHandler {
@@ -1078,6 +1096,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			}
 		}	
 	public abstract void resourceImageUpload();
+	
+	public abstract void browseStandardsInfo();
+	
+	public abstract void closeStandardsPopup();
 
 	private class AddClickHandler implements ClickHandler {
 
@@ -2039,5 +2061,14 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		}
 		
 	}
-	
+	public void setUpdatedBrowseStandarsCode(String standardsCodeVal,int id,String desc) {
+		if (standardsPanel.getWidgetCount() <5) {
+			if (standardsCodeVal != null && !standardsCodeVal.isEmpty()) {
+				standardsPanel.add(createStandardLabel(standardsCodeVal, Integer.toString(id), desc));
+			}
+		} else {
+			standardMaxShow();
+		}
+		closeStandardsPopup();
+	}
 }
