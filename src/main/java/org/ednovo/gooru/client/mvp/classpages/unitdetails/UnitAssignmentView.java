@@ -110,13 +110,16 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	
 	ClassUnitsListDo classUnitsListDo;
 	
-	private List<InsightsUserDataDo> insightsUserList;
+	private List<InsightsUserDataDo> insightsUserList=null;
 	
 	String unitCollectionId;
 	
 	private int limit = 5;
 	private int unitsPageNumber = 0;
 	private int unitsTotalCount = 0;
+	
+	private int insightOffset=0;
+	private int insightLimit=10;
 	
 	private String MINUTES= i18n.GL1437();
 	private String HOURS= i18n.GL1435();
@@ -328,7 +331,8 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 					leftArrow.getElement().setAttribute("style","margin-left: 10px;cursor: pointer;");
 					circleContainerPanel.add(leftArrow);
 					for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
-						if(insightsUserList!=null){
+						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT) && insightsUserList!=null){
+							System.out.println("insightsUserList:::::");
 							unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i),insightsUserList.get(i));
 						}else{
 							unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i), null);
@@ -796,7 +800,11 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				assignmentContainer.clear();
 			}
 			for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
-				unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i), insightsUserList.get(i));
+				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
+					unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i), insightsUserList.get(i));	
+				}else{
+					unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i),null);	
+				}
 				//unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getResource().getGooruOid()+"");
 				unitCricleViewObj.getElement().setId(unitAssignmentsDo.getSearchResults().get(i).getCollectionItemId());
 				circleContainerPanel.add(unitCricleViewObj);

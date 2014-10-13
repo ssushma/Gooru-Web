@@ -113,7 +113,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	@UiField FlowPanel studentsetupContainer;
 	
 	@UiField
-	static HTMLPanel mainContainer,lineSeparation,memberContainer;
+	static HTMLPanel mainContainer,lineSeparation,memberContainer,teacherViewPanel,backToTeacherView;
 	
 	@UiField Button backToEditPanel;
 
@@ -185,6 +185,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		setWidget(uiBinder.createAndBindUi(this));
 		EditClasspageCBundle.INSTANCE.css().ensureInjected();
 		setStaticData();
+		teacherViewPanel.setVisible(false);
 		lblWebHelp.addMouseOverHandler(new OnMouseOver());
 		lblWebHelp.addMouseOutHandler(new OnMouseOut());
 		OpenJoinClassPopupHandler openJoinClassPopupHandler=new OpenJoinClassPopupHandler() {
@@ -398,6 +399,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				imgProfileImage.setUrl(defaultProfileImage);
 			}
 		});
+		
+		if(classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
+			System.out.println("teacher view");
+			teacherViewPanel.setVisible(true);
+		}
 		
 		studentViewImage.addErrorHandler(new ErrorHandler() {
 			
@@ -1599,6 +1605,21 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				//getClassContainer().setVisible(false);
 			}
 		}
+	}
+	
+	@UiHandler("backToTeacherView")
+	public void backToTeacherviewEvent(ClickEvent clickEvent){
+		Map<String,String> params = new HashMap<String,String>();
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+		String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+		String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+		params.put("pos", pos);
+		params.put("classpageid", classpageid);
+		params.put("pageNum", pageNum);
+		params.put("pageSize", pageSize);
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+		AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
 	}
 	
 	

@@ -434,7 +434,7 @@
 	font-weight: bold;
 	float:left;
 	margin-left: 10px;
-margin-top: 2px;
+	margin-top: 2px;
 }
 .userimageStyle{
 	float:left;
@@ -507,3 +507,48 @@ margin-left:-33px;
 	border-right: 2px solid #efefef;
 	margin-bottom: 5px;
 }
+
+/* Studentview by teacher Starts*/
+
+.StudentPerformanceTab{
+	background:#4d99cd;
+	padding:20px 0;
+}
+.StudentPerformanceTab p{
+	color:#ffffff;
+	margin-bottom:0;
+}
+.StudentPerformanceTab p.lead{
+	font-size:18px;
+	font-weight:normal;
+	
+}
+
+.StudentPerformanceTab select{
+	color:#515151;
+	font-size:13px;
+	width:135px;
+	height:30px;
+	line-height:30px;
+}
+
+.StudentPerformanceTab .teachBack{
+	padding-left:0;
+}
+.StudentPerformanceTab .teachBack a{
+color: #ffffff;
+    display: inline-block;
+    margin: 6px 0;
+}
+.StudentPerformanceTab .teachBack a:hover{
+	color:#ffffff;
+	text-decoration:none;
+	opacity:0.75;
+}
+
+.StudentPerformanceTab .stPer{
+		padding-right:0;
+		text-align:right;
+}
+
+/* Studentview by teacher end*/
