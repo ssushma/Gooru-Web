@@ -808,7 +808,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			}
 			for(int i=0;i<unitAssignmentsDo.getSearchResults().size();i++){
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
-					unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i), insightsUserList.get(i));	
+					unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i), insightsUserList.get(i+assignmentOffset));	
 				}else{
 					unitCricleViewObj =new UnitCricleView(unitAssignmentsDo.getSearchResults().get(i),null);	
 				}
