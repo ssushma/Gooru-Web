@@ -45,6 +45,7 @@ import java.util.List;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
@@ -122,8 +123,10 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	
 	String clickType;
 	
+	AddStandardsPresenter addStandardsPresenter = null;
+	
 	@Inject
-	public AddResourcePresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddResourceView view,ImageUploadPresenter imageUploadPresenter,DrivePresenter drivePresenter) {
+	public AddResourcePresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddResourceView view,ImageUploadPresenter imageUploadPresenter,DrivePresenter drivePresenter,AddStandardsPresenter addStandardsPresenter) {
 		super(eventBus, view);
 		this.setImageUploadPresenter(imageUploadPresenter);
 		getView().setUiHandlers(this);
@@ -131,6 +134,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		
 		this.isCollResourceTabView = isCollResourceTabView;
 		this.drivePresenter=drivePresenter;
+		this.addStandardsPresenter = addStandardsPresenter;
 
 //		,ExistsResourcePresenter alreadyExistsResourcePresenter
 //		this.alreadyExistsResourcePresenter = alreadyExistsResourcePresenter;
@@ -497,6 +501,22 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	public void showAddWebResourceWidget(boolean isGoogleDriveFile,FlowPanel googleDriveContainer,GoogleDriveItemDo googleDriveItemDo){
 		googleDriveContainer.clear();
 		getView().showAddWebResourceWidget(isGoogleDriveFile,googleDriveContainer,googleDriveItemDo);
+	}
+
+	@Override
+	public void browseStandardsInfo() {
+		addToPopupSlot(addStandardsPresenter);
+		getView().OnBrowseStandardsClickEvent(addStandardsPresenter.getAddBtn());
+	}
+
+	@Override
+	public void addUpdatedBrowseStandards() {
+		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc());
+	}
+
+	@Override
+	public void closeStandardsPopup() {
+		addStandardsPresenter.hidePopup();
 	}
 	
 
