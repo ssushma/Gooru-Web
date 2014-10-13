@@ -92,6 +92,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
@@ -194,6 +195,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private TermsOfUse termsOfUse;
 	// public TinyMCE tinyMce=null; 
 	public boolean isValidYoutubeUrlFlag = true;
+	
+	private boolean hasClickedOnDropDwn=false;
 
 	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,momentsOfLearningOpen=false;
 	
@@ -802,8 +805,36 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			}
 
 		});
+		ClickHandler rootHandler= new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				System.out.println("clickhandler::"+educationalUsePanel.isVisible());
+				System.out.println("hasClickedOnDropDwn::"+hasClickedOnDropDwn);
+				System.out.println("educationalDropDownLblOpen::"+educationalDropDownLblOpen);
+				
+				if(!hasClickedOnDropDwn){
+					System.out.println("enter");
+					educationalUsePanel.setVisible(false);
+					educationalDropDownLblOpen = false;
+					momentsOfLearningPanel.setVisible(false);
+					momentsOfLearningOpen = false;
+					spanelMediaFeaturePanel.setVisible(false);
+					
+				}else{
+					hasClickedOnDropDwn=false;
+				}
+				
+			}
+		};
+		
+		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
+		
+		
 	}
 	private void OpenMediaFeatureDropdown() {
+		hasClickedOnDropDwn=true;
 		if (spanelMediaFeaturePanel.isVisible()){
 			spanelMediaFeaturePanel.setVisible(false);
 		}else{
@@ -930,9 +961,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	 *            which to be added for the collection
 	 */
 	public void addStandard(String standard, String id) {
-		System.out.println("inside add standards method");
 		if (standardsPanel.getWidgetCount() <5) {
-			System.out.println("widget count if:::::"+standardsPanel.getWidgetCount());
 			if (standard != null && !standard.isEmpty()) {
 				CodeDo codeObj=new CodeDo();
 				codeObj.setCodeId(Integer.parseInt(getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults())));
@@ -941,7 +970,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
 			}
 		} else {
-			System.out.println("else count:::::"+standardsPanel.getWidgetCount());
 			standardMaxShow();
 			standardSgstBox.setText("");
 		}
@@ -1332,7 +1360,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //															}
 //														});
 //													}else{
-
 														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,hostName,tagList);
 
 														
@@ -1772,6 +1799,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	@UiHandler("educationalDropDownLbl")
 	public void educationalDropDownClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
 		if (educationalDropDownLblOpen == false) {
 			educationalUsePanel.setVisible(true);
 			educationalDropDownLblOpen = true;
@@ -1812,6 +1840,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 	@UiHandler("momentsOfLearningDropDownLbl")
 	public void momentsOfLearningDropDownClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
 		if (momentsOfLearningOpen == false) {
 			momentsOfLearningPanel.setVisible(true);
 			momentsOfLearningOpen = true;
@@ -2064,6 +2093,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	public void setUpdatedBrowseStandarsCode(String standardsCodeVal,int id,String desc) {
 		if (standardsPanel.getWidgetCount() <5) {
 			if (standardsCodeVal != null && !standardsCodeVal.isEmpty()) {
+				CodeDo codeObj=new CodeDo();
+				codeObj.setCodeId(id);
+				codeObj.setCode(standardsCodeVal);
+				standardsDo.add(codeObj);
 				standardsPanel.add(createStandardLabel(standardsCodeVal, Integer.toString(id), desc));
 			}
 		} else {
