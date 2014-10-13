@@ -76,6 +76,8 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	public static final String TOTALQUESTIONCOUNT="totalQuestionCount";
 	public static final String TOTALRESOURCECOUNT="totalResourceCount";
 	public static final String GRADEINPERCENTAGE="gradeInPercentage";
+	public static final String GOORUOID="gooruOId";
+	
 	
 	
 	public static final String FIELDS="fields";
@@ -293,7 +295,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		
 		JsonRepresentation jsonRep = null;
 		CollectionSummaryMetaDataDo collectionSummaryMetaDataDo=null;
-		String requiredFields=AVGTIMESPENT +","+AVGREACTION+","+VIEWS+","+THUMBNAIL+","+USERCOUNT+","+LASTMODIFIED+","+COMPLETIONSTATUS+","+TIMESPENT+","+OE+","+TITLE+","+DESCRIPTION+","+OPTIONS+","+SKIP+","+SCORE+","+TOTALQUESTIONCOUNT+","+TOTALRESOURCECOUNT+","+GRADEINPERCENTAGE;
+		String requiredFields=AVGTIMESPENT +","+AVGREACTION+","+VIEWS+","+THUMBNAIL+","+USERCOUNT+","+LASTMODIFIED+","+COMPLETIONSTATUS+","+TIMESPENT+","+OE+","+TITLE+","+DESCRIPTION+","+OPTIONS+","+SKIP+","+SCORE+","+TOTALQUESTIONCOUNT+","+TOTALRESOURCECOUNT+","+GRADEINPERCENTAGE+","+GOORUOID;
 		
 		String urlDataParameterValue=createJsonPayloadObject(unitId,classId,"",requiredFields);
 		

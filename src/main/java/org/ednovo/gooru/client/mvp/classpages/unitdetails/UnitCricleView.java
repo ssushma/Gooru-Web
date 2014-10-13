@@ -53,7 +53,7 @@ public class UnitCricleView extends Composite implements HasClickHandlers,HasMou
 		res.unitAssignment().ensureInjected();
 		unitNumber.setText(classpageItemDo.getItemSequence()+"");
 		boolean isRequired=classpageItemDo!=null&&classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false;
-		boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals("completed")?true:false;
+		boolean assignmentStudyStatus=classpageItemDo!=null&&classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals("completed")?true:false;
 		showCircle(isRequired, assignmentStudyStatus);
 		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if(insightsUserDataDo!=null){
