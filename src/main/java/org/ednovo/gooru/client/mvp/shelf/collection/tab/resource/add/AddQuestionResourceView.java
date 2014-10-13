@@ -137,7 +137,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField FlowPanel standardContainer,answerchoiceTitleContainer,explanationContainer;
 	
 	/*@UiField Button questionNameTextAreaToolBarButton;*/
-	@UiField Button cancelButton;
+	@UiField Button cancelButton,browseStandards;
 	@UiField
 	CheckBox chkLevelRecall,chkLevelSkillConcept,chkLevelStrategicThinking,chkLevelExtendedThinking,rightsChkBox;
 	
@@ -344,6 +344,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		lblContentRights.getElement().setId("epnlLblContentRights");
 		rightsContent.getElement().setId("pnlRightsContent");
 		addQuestionResourceButton.getElement().setId("epnlAddQuestionResourceButton");
+		browseStandards.addClickHandler(new onBrowseStandardsClick());
 		setTextForTheFields();
 		errorContainer.setVisible(false);
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
@@ -545,6 +546,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		setTextForTheFields();
 		errorContainer.setVisible(false);
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
+		browseStandards.addClickHandler(new onBrowseStandardsClick());
 	}
 	public void initializeAutoSuggestedBox(){
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
@@ -1244,6 +1246,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			
 		}
 	}
+    private class onBrowseStandardsClick implements ClickHandler {
+  		@Override
+  		public void onClick(ClickEvent event) {
+  			callBrowseStandards();
+  		}
+  	}
+    
     @UiHandler("addQuestionResourceButton")
 	public void clickedOnAddQuestionButton(ClickEvent event)
 	{
@@ -2712,4 +2721,23 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		     }*/
 		}
      }
+     
+     public abstract void callBrowseStandards();
+     
+     public abstract void closeStandardsPopup();
+     
+     public void setUpdatedBrowseStandarsCode(String standardsCodeVal, int id,String desc) {
+		if (standardsPanel.getWidgetCount() <5) {
+			if (standardsCodeVal != null && !standardsCodeVal.isEmpty()) {
+				CodeDo codeObj=new CodeDo();
+				codeObj.setCodeId(id);
+				codeObj.setCode(standardsCodeVal);
+				standardsDo.add(codeObj);
+				standardsPanel.add(createStandardLabel(standardsCodeVal, Integer.toString(id), desc));
+			}
+		} else {
+			standardMaxShow();
+		}
+		closeStandardsPopup();
+	}
 }

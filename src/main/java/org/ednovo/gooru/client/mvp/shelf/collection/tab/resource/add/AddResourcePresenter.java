@@ -93,6 +93,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	
 	private static final String KEY_OER = "resourceLicense";
 	private static final String VAL_OER = "OER";
+	private boolean isQuestionResource = false;
 	
 	public SimpleAsyncCallback<CollectionItemDo> getAddQuestionResourceAsyncCallback() {
 		return addQuestionResourceAsyncCallback;
@@ -504,14 +505,15 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	}
 
 	@Override
-	public void browseStandardsInfo() {
+	public void browseStandardsInfo(boolean val) {
 		addToPopupSlot(addStandardsPresenter);
+		this.isQuestionResource = val;
 		getView().OnBrowseStandardsClickEvent(addStandardsPresenter.getAddBtn());
 	}
 
 	@Override
 	public void addUpdatedBrowseStandards() {
-		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc());
+		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc(),this.isQuestionResource);
 	}
 
 	@Override
