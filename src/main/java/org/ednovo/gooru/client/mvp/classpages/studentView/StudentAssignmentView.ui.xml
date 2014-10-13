@@ -10,9 +10,9 @@
 	    <g:HTMLPanel styleName="{StudentStyle.StudentPerformanceTab}" ui:field="teacherViewPanel">
 	        <g:HTMLPanel styleName="containerMain">
 		      <g:HTMLPanel styleName="row">
-		        <g:HTMLPanel styleName="col-md-6 {StudentStyle.teachBack}" ui:field="backToTeacherView" >
+		        <panel:HTMLEventPanel styleName="col-md-6 {StudentStyle.teachBack}" ui:field="backToTeacherView" >
 		          <p><img src="images/back-arrow.png"/> Teacher View</p>
-		        </g:HTMLPanel>
+		        </panel:HTMLEventPanel>
 		        <g:HTMLPanel styleName="col-md-6 {StudentStyle.stPer}">
 		          <p class="lead">Student Performance
 		            <select name="">
