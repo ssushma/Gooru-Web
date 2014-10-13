@@ -11,11 +11,13 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.analytics.util.HCLineChart;
 import org.ednovo.gooru.client.mvp.analytics.util.StudentScoredAboveBelowUlPanel;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitWidget;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -44,6 +46,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 
 	interface AnalyticsViewUiBinder extends UiBinder<Widget, AnalyticsView> {
 	}
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	AnalyticsCssBundle res;
 	
@@ -51,9 +55,9 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	
 	@UiField Label lblMoreUnits,summaryArrowlbl,progressArrowlbl,responsesArrowlbl;
 	
-	@UiField HTMLPanel graphWidget,slotWidget,orangeProgressBar,greenProgressBar,blueProgressBar,scoredBelowPanel,scoredAbovePanel,loadingImageLabel;
+	@UiField HTMLPanel unitOptionsContainer,personalizeContainer,assignmentContainer,graphWidget,slotWidget,orangeProgressBar,greenProgressBar,blueProgressBar,scoredBelowPanel,scoredAbovePanel,loadingImageLabel;
 	
-	@UiField Button btnCollectionSummary,btnCollectionProgress,btnCollectionResponses;
+	@UiField Button btnCollectionSummary,btnCollectionProgress,btnCollectionResponses,personalizeBtn;
 	
 	@UiField ListBox loadCollections;
 	
@@ -63,7 +67,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	
 	ClasspageListDo classpageListDo;
 	
-	boolean isSummayClicked=false,isProgressClicked=false;
+	boolean isSummayClicked=false,isProgressClicked=false,isPersonalizedBtnClicked=false;
 	
 	Map<String,GradeJsonData> loadcollectionsmap=new HashMap<String, GradeJsonData>();
 	
@@ -91,6 +95,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		minimumScoreBelow.addKeyUpHandler(new MiniMumScoreKeyUpHandler(BELOWSCORE));
 		minimumScoreAbove.addKeyUpHandler(new MiniMumScoreKeyUpHandler(ABOVESCORE));
 		loadCollections.addChangeHandler(new loadCollectionsChangeHandler());
+		assignmentContainer.setVisible(false);
 	}
 	public class loadCollectionsChangeHandler implements ChangeHandler{
 		@Override
@@ -113,7 +118,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			clearDownArrow();
+			clearDownArrows();
 			String selectedCollectionId=loadCollections.getValue(loadCollections.getSelectedIndex());
 			if(clicked.equalsIgnoreCase(PROGRESS)){
 				isSummayClicked=false;
@@ -142,12 +147,24 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			}
 		}
 	}
+	@Override
 	public void clearDownArrow(){
+		clearDownArrows();
+		isSummayClicked=false;
+		isProgressClicked=false;
+	}
+	public void clearDownArrows(){
 		summaryArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
 		progressArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
 		responsesArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
-		isSummayClicked=false;
-		isProgressClicked=false;
+	}
+	
+	@Override
+	public void hidePersonalizeContainers(){
+		isPersonalizedBtnClicked=false;
+		assignmentContainer.setVisible(false);
+		personalizeContainer.setVisible(false);
+		unitOptionsContainer.setVisible(false);
 	}
 	public void removeUnitSelectedStyle(){
 		Iterator<Widget> widgets = unitPanel.iterator();
@@ -197,8 +214,15 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		slotWidget.clear();
 		if (content != null) {
 			 if(slot==AnalyticsPresenter.COLLECTION_PROGRESS_SLOT){
-				 slotWidget.setVisible(true);
-				 slotWidget.add(content);
+			    slotWidget.setVisible(true);
+				slotWidget.add(content);
+			}else  if(slot==AnalyticsPresenter.UNIT_ASSIGNMENT_SLOT){
+				assignmentContainer.setVisible(true);
+				assignmentContainer.add(content);
+			}else if(slot==AnalyticsPresenter.PERSONALIZE_SLOT){
+				personalizeContainer.clear();
+				personalizeContainer.setVisible(true);
+				personalizeContainer.add(content);
 			}else{
 				slotWidget.setVisible(false);
 			}
@@ -207,6 +231,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		}
 	}
 
+	
 	@Override
 	public void showUnitNames(ClassDo classDo, boolean clearPanel) {
 		this.classDo = classDo;
@@ -235,12 +260,12 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 				if(unitId!=null&&unitId.equals(unitsWidget.getUnitGooruOid())){
 					unitsWidget.getUnitNameContainer().removeStyleName(res.unitAssignment().unitMenuActive());
 					unitsWidget.getUnitNameContainer().addStyleName(res.unitAssignment().unitMenuActive());
+					setPersonalizeBtnText(unitTitle);
 				}else{
 					unitsWidget.getUnitNameContainer().removeStyleName(res.unitAssignment().unitMenuActive());
 				}
 				unitPanel.add(unitsWidget);
 			}
-
 		}
 	}
 	private void updatePageNumber(){
@@ -265,6 +290,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			selectedUnitNumber = unitNumber;
 			setUnitCollectionId(unitsWidget.getUnitCollectionItemId());
 			revealPlace("reports",null,unitsWidget.getUnitGooruOid(),null);
+			setPersonalizeBtnText(unitTitle);
 			removeAndAddUnitSelectedStyle();
 		}
 	}
@@ -330,14 +356,14 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		scoredBelowPanel.clear();
 		if(result.size()>0)
 		{
-		if(result.get(0).getUserData() != null)
-		{
-		for(int i=0;i<result.get(0).getUserData().size();i++){
-			UserDataDo userData=result.get(0).getUserData().get(i);
-			scoredAbovePanel.add(new StudentScoredAboveBelowUlPanel(userData));
-			scoredBelowPanel.add(new StudentScoredAboveBelowUlPanel(userData));
-		}
-		}
+			if(result.get(0).getUserData() != null)
+			{
+				for(int i=0;i<result.get(0).getUserData().size();i++){
+					UserDataDo userData=result.get(0).getUserData().get(i);
+					scoredAbovePanel.add(new StudentScoredAboveBelowUlPanel(userData));
+					scoredBelowPanel.add(new StudentScoredAboveBelowUlPanel(userData));
+				}
+			}
 		}
 	}
 	
@@ -370,17 +396,19 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	 * @param passedScoreVal
 	 */
 	void setMinimumScoresData(){
-		int selectedIndex=loadCollections.getSelectedIndex();
-		String selectedValue=loadCollections.getValue(selectedIndex);
-		int minimunScoreVal=0;
-		if(loadcollectionsmap.get(selectedValue).getMinimumScore()!=null){
-		    minimunScoreVal=Integer.parseInt(loadcollectionsmap.get(selectedValue).getMinimumScore());
+		if(loadCollections.getItemCount()!=0){
+			int selectedIndex=loadCollections.getSelectedIndex();
+			String selectedValue=loadCollections.getValue(selectedIndex);
+			int minimunScoreVal=0;
+			if(loadcollectionsmap.get(selectedValue).getMinimumScore()!=null){
+			    minimunScoreVal=Integer.parseInt(loadcollectionsmap.get(selectedValue).getMinimumScore());
+			}
+			minimumScorelbl.setText(minimunScoreVal+"%");
+			minimumScoreAbove.setText((minimunScoreVal+1)+"");
+			minimumScoreBelow.setText((minimunScoreVal==0)?0+"":(minimunScoreVal-1)+"");
+			orangeProgressBar.getElement().getStyle().setWidth((minimunScoreVal==0)?0:(minimunScoreVal-1), Unit.PCT);
+			greenProgressBar.getElement().getStyle().setWidth(100-(minimunScoreVal+1), Unit.PCT);
 		}
-		minimumScorelbl.setText(minimunScoreVal+"%");
-		minimumScoreAbove.setText((minimunScoreVal+1)+"");
-		minimumScoreBelow.setText((minimunScoreVal==0)?0+"":(minimunScoreVal-1)+"");
-		orangeProgressBar.getElement().getStyle().setWidth((minimunScoreVal==0)?0:(minimunScoreVal-1), Unit.PCT);
-		greenProgressBar.getElement().getStyle().setWidth(100-(minimunScoreVal+1), Unit.PCT);
 	}
 	@Override
 	public void LoadingImageLabeltrue() {
@@ -391,6 +419,24 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		loadingImageLabel.setVisible(false);
 	}
 
+	@UiHandler("personalizeBtn")
+	public void clickOnPersonalizeBtn(ClickEvent event){
+		if(isPersonalizedBtnClicked){
+			assignmentContainer.setVisible(false);
+			personalizeContainer.setVisible(false);
+			unitOptionsContainer.setVisible(false);
+			isPersonalizedBtnClicked=false;
+		}else{
+			getUiHandlers().getUnitAssignments();
+			unitOptionsContainer.setVisible(true);
+			isPersonalizedBtnClicked=true;
+		}
+	}
 	
-	
+	public void setPersonalizeBtnText(String unitTitle){
+		if (unitTitle.length() > 10){
+			unitTitle = unitTitle.substring(0, 11) + "...";
+		}
+		personalizeBtn.setText(StringUtil.generateMessage(i18n.GL2221(), unitTitle));
+	}
 }

@@ -22,33 +22,13 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.analytics;
-import java.util.ArrayList;
-
+package org.ednovo.gooru.client.mvp.analytics.unitAssignments;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
-import org.ednovo.gooru.shared.model.content.ClassDo;
-
-import com.google.gwt.user.client.ui.HTMLPanel;
+import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 
-public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>{
+public interface IsAnalyticsUnitAssignmentsView extends IsViewWithHandlers<AnalyticsUnitAssignmentsUiHandlers>{
 	
-	 public void showUnitNames(ClassDo classDo,boolean clearPanel);
+	void setAssignmentsData(UnitAssignmentsDo unitAssignmentsDo,boolean isNextOrPrevious);
 	
-	public void hideMoreUnitsLink();
-	
-	public void setBottomAndTopScoresData(ArrayList<GradeJsonData> result);
-	
-	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData);
-	
-	HTMLPanel getUnitPanel();
-
-	void LoadingImageLabeltrue();
-
-	void LoadingImageLabelFalse();
-	
-	void clearDownArrow();
-	
-	void hidePersonalizeContainers();
 }
