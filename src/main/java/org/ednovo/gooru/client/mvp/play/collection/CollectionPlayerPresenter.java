@@ -778,10 +778,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 	
 	public void displayCollectionSummaryData(final String collectionId,final String classpageId,final String sessionId){
+		resetSummary();
 		if(AppClientFactory.isAnonymous()){
-			convertMilliSecondsToTime(0L);
-			displayScoreCount(0,0);
-			collectionEndPresenter.showAvgReaction(0);
+			resetSummary();
 		}
 		else{
 			this.playerAppService.getInsightsCollectionSummary(collectionId, classpageId, sessionId, "", new SimpleAsyncCallback<InsightsCollectionDo>() {
@@ -804,6 +803,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				}
 			});
 		}
+	}
+	
+	public void resetSummary(){
+		collectionEndPresenter.dispalyTime();
+		displayScoreCount(0,0);
+		collectionEndPresenter.showAvgReaction(0);
 	}
 	
 	public void setClasspageInsightsUrl(boolean isHomeView){
@@ -2066,10 +2071,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 	public void convertMilliSecondsToTime(Long milliSeconds){
 		milliSeconds=milliSeconds>0&&milliSeconds<1000?1000:milliSeconds;
-		long totalSecs = milliSeconds/1000;
-	    long hours = (totalSecs / 3600);
-	    long mins = (totalSecs / 60) % 60;
-	    long secs = totalSecs % 60;
+		double totalSecs = (double)milliSeconds/1000;
+		totalSecs=Math.round(totalSecs);
+	    long hours = (long) (totalSecs / 3600);
+	    long mins = (long) ((totalSecs / 60) % 60);
+	    long secs = (long) (totalSecs % 60);
 	    collectionEndPresenter.displaySpendTime(hours,mins,secs);
     }
 	

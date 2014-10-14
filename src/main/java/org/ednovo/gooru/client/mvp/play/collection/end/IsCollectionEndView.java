@@ -89,4 +89,6 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public void hideNextCollectionContainer(boolean hide);
 	
 	public void showAvgReaction(String averageReaction);
+	
+	public void dispalyTime();
 }

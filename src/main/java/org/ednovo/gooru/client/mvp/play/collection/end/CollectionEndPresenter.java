@@ -404,5 +404,9 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		getView().showAvgReaction(reactionType);
 	}
 	
+	public void dispalyTime(){
+		getView().dispalyTime();
+	}
+	
 	
 }
