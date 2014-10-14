@@ -51,4 +51,8 @@ public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>
 	void clearDownArrow();
 	
 	void hidePersonalizeContainers();
+	
+	void revealPlace(String tab,String pageNum,String  unitId,String assignmentId);
+	 
+	void removeAndAddUnitSelectedStyle();
 }
