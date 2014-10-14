@@ -89,6 +89,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 			public void onSuccess(UnitAssignmentsDo result) {
 				//classpageId,pathwayid
 				getGradeCollectionJson(classpageId, pathwayGooruOid);
+				getView().removeAndAddUnitSelectedStyle();
 			}
 		});
 	}
@@ -99,15 +100,17 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classpageId, Integer.toString(limit),  Integer.toString(offset), new SimpleAsyncCallback<ClassDo>() {
 			@Override
 			public void onSuccess(ClassDo classDo) {
-				getView().clearDownArrow();
-				clearSlot(COLLECTION_PROGRESS_SLOT);
-				getView().hidePersonalizeContainers();
-				getView().showUnitNames(classDo,clearPanel);
 				if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
 					String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 					if(unitId==null){
                         pathwayId=classDo.getSearchResults().get(0).getResource().getGooruOid();
-						getPathwayItems(classpageId,classDo.getSearchResults().get(0).getResource().getGooruOid(),"sequence",assignmentLimit,assignmentOffset);
+						getView().revealPlace("reports",null,pathwayId,null);
+					}else{
+						getView().clearDownArrow();
+						clearSlot(COLLECTION_PROGRESS_SLOT);
+						getView().hidePersonalizeContainers();
+						getView().showUnitNames(classDo,clearPanel);
+						getPathwayItems(classpageId,unitId,"sequence",assignmentLimit,assignmentOffset);
 					}
 				}
 			}
@@ -173,11 +176,10 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	public void getClassUnits(ClasspageDo classpageDo){
 		this.classpageDo=classpageDo;
 		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
-		if(getView().getUnitPanel().getWidgetCount()>=0){
-			getPathwayUnits(classpageDo.getClasspageId(),limit,offSet,true);
-		}
-		if(unitId!=null){
+		if(unitId!=null && getView().getUnitPanel().getWidgetCount()!=0){
 			getPathwayItems(classpageDo.getClasspageId(),unitId,"sequence",assignmentLimit,assignmentOffset);
+		}else{
+			getPathwayUnits(classpageDo.getClasspageId(),limit,offSet,true);
 		}
 	}
 

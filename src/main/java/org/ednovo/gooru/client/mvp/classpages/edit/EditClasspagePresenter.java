@@ -443,6 +443,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	     	classlistPresenter.setClassPageDo(classpageDo);
 	     	setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
 	     }else if(tab!=null&&tab.equalsIgnoreCase("reports")){
+	    	 System.out.println(" first");
 	    	 analyticsPresenter.getClassUnits(classpageDo);
 	    	 setInSlot(CLASSLIST_SLOT, analyticsPresenter,false);
 	     }else if(tab!=null&&tab.equalsIgnoreCase("unitsetup")){

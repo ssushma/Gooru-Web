@@ -406,12 +406,14 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-				if(result.get(0).getCompletionStatus().equalsIgnoreCase("in-progress")){
-					getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId);
-				}else{
-					if(result.size()!=0){
-						getView().setCollectionMetaDataByUserAndSession(result);
-						setCollectionSummaryData(collectionId, classId, userId, sessionId);
+				if(result.get(0).getCompletionStatus()!=null){
+					if(result.get(0).getCompletionStatus().equalsIgnoreCase("in-progress")){
+						getCollectionMetaDataByUserAndSession(collectionId, classId, userId, sessionId);
+					}else{
+						if(result.size()!=0){
+							getView().setCollectionMetaDataByUserAndSession(result);
+							setCollectionSummaryData(collectionId, classId, userId, sessionId);
+						}
 					}
 				}
 			}

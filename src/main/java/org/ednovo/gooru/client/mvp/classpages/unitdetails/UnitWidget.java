@@ -71,6 +71,8 @@ public class UnitWidget extends Composite implements HasClickHandlers{
  	
  	private String unitCollectionItemId=null;
  	
+ 	private String unitNmae=null;
+ 	
  	ClassUnitsListDo classUnitDo;
  	
  	
@@ -94,6 +96,7 @@ public class UnitWidget extends Composite implements HasClickHandlers{
 		res.unitAssignment().ensureInjected();
 		this.unitGooruOid=classUnitDo.getResource().getGooruOid();
 		this.unitCollectionItemId=classUnitDo.getCollectionItemId();
+		this.unitNmae=classUnitDo.getResource().getTitle();
 		ilUnitNumber.setText(""+classUnitDo.getItemSequence());
 		ilUnitName.setText(classUnitDo.getResource().getTitle());
 		setElementIds();
@@ -141,7 +144,12 @@ public class UnitWidget extends Composite implements HasClickHandlers{
 	public ClassUnitsListDo getClassUnitDo() {
 		return classUnitDo;
 	}
-	
-	
 
+	public String getUnitNmae() {
+		return unitNmae;
+	}
+
+	public void setUnitNmae(String unitNmae) {
+		this.unitNmae = unitNmae;
+	}
 }

@@ -187,6 +187,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		getUiHandlers().getPathwayUnits(classpageid, limit, (limit*unitsPageNumber),false);
 		removeAndAddUnitSelectedStyle();
 	}
+	@Override
 	public void removeAndAddUnitSelectedStyle(){
 		Iterator<Widget> widgets = unitPanel.iterator();
 		while (widgets.hasNext()) {
@@ -195,6 +196,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 				UnitWidget unitsWidget=(UnitWidget)widget;
 				String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", "");
 				if(unitId.equals(unitsWidget.getUnitGooruOid())){
+					setPersonalizeBtnText(unitsWidget.getUnitNmae());
 					unitsWidget.getUnitNameContainer().removeStyleName(res.unitAssignment().unitMenuActive());
 					unitsWidget.getUnitNameContainer().addStyleName(res.unitAssignment().unitMenuActive());
 				}else{
@@ -235,16 +237,17 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	@Override
 	public void showUnitNames(ClassDo classDo, boolean clearPanel) {
 		this.classDo = classDo;
-		unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
-		if(unitId==null){
-			unitId = classDo.getSearchResults().get(0).getResource().getGooruOid();
-		}
-		if(clearPanel){
-			unitPanel.clear();
-		}
 		unitsTotalCount=classDo.getTotalHitCount();
-		updatePageNumber();
 		if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+			unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+			if(unitId==null){
+				unitId = classDo.getSearchResults().get(0).getResource().getGooruOid();
+			}
+			if(clearPanel){
+				unitPanel.clear();
+				unitsPageNumber=0;
+			}
+			updatePageNumber();
 			ArrayList<ClassUnitsListDo> classListUnitsListDo =classDo.getSearchResults();
 			for(int i=0; i<classListUnitsListDo.size(); i++){
 				ClassUnitsListDo classListUnitsListDObj=classDo.getSearchResults().get(i);
@@ -290,8 +293,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			selectedUnitNumber = unitNumber;
 			setUnitCollectionId(unitsWidget.getUnitCollectionItemId());
 			revealPlace("reports",null,unitsWidget.getUnitGooruOid(),null);
-			setPersonalizeBtnText(unitTitle);
-			removeAndAddUnitSelectedStyle();
+			//setPersonalizeBtnText(unitTitle);
+			//removeAndAddUnitSelectedStyle();
 		}
 	}
 	
@@ -316,8 +319,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			}
 		}
 	}
+	 @Override
 	 public void revealPlace(String tabName,String pageNum,String unitId,String assignmentId){
-		 	
 			Map<String,String> params = new HashMap<String,String>();
 			String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 			String classpageid="";
