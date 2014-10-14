@@ -778,21 +778,32 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 	
 	public void displayCollectionSummaryData(final String collectionId,final String classpageId,final String sessionId){
-		this.playerAppService.getInsightsCollectionSummary(collectionId, classpageId, sessionId, "", new SimpleAsyncCallback<InsightsCollectionDo>() {
-			@Override
-			public void onSuccess(InsightsCollectionDo insightsCollectionDo) {
-				if(insightsCollectionDo!=null){
-					if(insightsCollectionDo.getCompletionStatus()!=null&&insightsCollectionDo.getCompletionStatus().equalsIgnoreCase("completed")){
-						convertMilliSecondsToTime(insightsCollectionDo.getAvgTimeSpent());
-						displayScoreCount(insightsCollectionDo.getScore(),insightsCollectionDo.getTotalQuestionCount());
-						collectionEndPresenter.showAvgReaction(insightsCollectionDo.getAvgReaction());
+		if(AppClientFactory.isAnonymous()){
+			convertMilliSecondsToTime(0L);
+			displayScoreCount(0,0);
+			collectionEndPresenter.showAvgReaction(0);
+		}
+		else{
+			this.playerAppService.getInsightsCollectionSummary(collectionId, classpageId, sessionId, "", new SimpleAsyncCallback<InsightsCollectionDo>() {
+				@Override
+				public void onSuccess(InsightsCollectionDo insightsCollectionDo) {
+					if(insightsCollectionDo!=null){
+						if(insightsCollectionDo.getCompletionStatus()!=null&&insightsCollectionDo.getCompletionStatus().equalsIgnoreCase("completed")){
+							convertMilliSecondsToTime(insightsCollectionDo.getAvgTimeSpent());
+							displayScoreCount(insightsCollectionDo.getScore(),insightsCollectionDo.getTotalQuestionCount());
+							collectionEndPresenter.showAvgReaction(insightsCollectionDo.getAvgReaction());
+						}else{
+							displayCollectionSummaryData(collectionId,classpageId,sessionId);
+						}
 					}else{
-						displayCollectionSummaryData(collectionId,classpageId,sessionId);
+						convertMilliSecondsToTime(0L);
+						displayScoreCount(0,0);
+						collectionEndPresenter.showAvgReaction(0);
 					}
+					
 				}
-				
-			}
-		});
+			});
+		}
 	}
 	
 	public void setClasspageInsightsUrl(boolean isHomeView){
