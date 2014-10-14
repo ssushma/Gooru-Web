@@ -391,7 +391,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	 * @param isvisible {@link Boolean}
 	 */
 	public void downButtonIsVisible(boolean isvisible) {
-		moveDownBtn.setVisible(false);
+		moveDownBtn.setVisible(isvisible);
 	}
 
 	/**
