@@ -826,7 +826,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					}
 					reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb-1));
 				}else{
-					System.out.println("---->> "+reorderValidationMsg); 
+					shelfFolderItemChildView.showReorderValidationToolTip(reorderValidationMsg);
 				}
 			}
 			
@@ -870,7 +870,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					}
 					reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb));
 				}else{
-					System.out.println("---->> "+reorderValidationMsg); 
+					shelfFolderItemChildView.showReorderValidationToolTip(reorderValidationMsg);
 				}
 			}
 		}
