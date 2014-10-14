@@ -79,6 +79,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.shared.model.player.InsightsCollectionDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.PlayerConstants;
 
@@ -95,6 +96,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -750,8 +752,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		resetAnswerLists();
 		stopCollectionDataLog();
 		setClassCollectionDataInsightsUrl(false);
-		convertMilliSecondsToTime(totalTimeSpendInMs);
-		displayScoreCount();
+		//convertMilliSecondsToTime(totalTimeSpendInMs);
+		//displayScoreCount();
 		updateSession(sessionId);
 		setUserAttemptedQuestionTypeAndStatus(false,0);
 		setInSlot(METADATA_PRESENTER_SLOT, collectionEndPresenter,false);
@@ -769,13 +771,35 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			}
 		}else{
 			String sessionHomeId=isHomeView?null:sessionId;
+			String sessionInsightId=isHomeView?"":sessionId;
 			collectionEndPresenter.setDataInsightsSummaryUrl(sessionHomeId);
+			displayCollectionSummaryData(collectionDo.getGooruOid(), "", sessionInsightId);
 		}
+	}
+	
+	public void displayCollectionSummaryData(final String collectionId,final String classpageId,final String sessionId){
+		this.playerAppService.getInsightsCollectionSummary(collectionId, classpageId, sessionId, "", new SimpleAsyncCallback<InsightsCollectionDo>() {
+			@Override
+			public void onSuccess(InsightsCollectionDo insightsCollectionDo) {
+				if(insightsCollectionDo!=null){
+					if(insightsCollectionDo.getCompletionStatus()!=null&&insightsCollectionDo.getCompletionStatus().equalsIgnoreCase("completed")){
+						convertMilliSecondsToTime(insightsCollectionDo.getAvgTimeSpent());
+						displayScoreCount(insightsCollectionDo.getScore(),insightsCollectionDo.getTotalQuestionCount());
+						collectionEndPresenter.showAvgReaction(insightsCollectionDo.getAvgReaction());
+					}else{
+						displayCollectionSummaryData(collectionId,classpageId,sessionId);
+					}
+				}
+				
+			}
+		});
 	}
 	
 	public void setClasspageInsightsUrl(boolean isHomeView){
 		String sessionHomeId=isHomeView?null:sessionId;
 		collectionEndPresenter.setClasspageInsightsUrl(classpageId,sessionHomeId);
+		String sessionInsightId=isHomeView?"":sessionId;
+		displayCollectionSummaryData(collectionDo.getGooruOid(), classpageId, sessionInsightId);
 	}
 	private void showClasspageButton(){
 		String classpageItemId=getPlaceManager().getRequestParameter("cid", null);
@@ -2030,6 +2054,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		getView().makeFlagButtonOrange();
 	}
 	public void convertMilliSecondsToTime(Long milliSeconds){
+		milliSeconds=milliSeconds>0&&milliSeconds<1000?1000:milliSeconds;
 		long totalSecs = milliSeconds/1000;
 	    long hours = (totalSecs / 3600);
 	    long mins = (totalSecs / 60) % 60;
@@ -2037,24 +2062,24 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	    collectionEndPresenter.displaySpendTime(hours,mins,secs);
     }
 	
-	public void displayScoreCount(){
-		if(collectionDo!=null&&collectionDo.getCollectionItems()!=null){
-			int questionCount=0;
-			for(int i=0;i<collectionDo.getCollectionItems().size();i++){
-				if(collectionDo.getCollectionItems().get(i).getResource().getResourceType()!=null){
-					String resourceTypeName=collectionDo.getCollectionItems().get(i).getResource().getResourceType().getName();
-					if(resourceTypeName!=null&&resourceTypeName.equalsIgnoreCase("assessment-question")){
-						questionCount++;
-					}
-				}
-			}
+	public void displayScoreCount(Integer score,Integer questionCount){
+//		if(collectionDo!=null&&collectionDo.getCollectionItems()!=null){
+//			int questionCount=0;
+//			for(int i=0;i<collectionDo.getCollectionItems().size();i++){
+//				if(collectionDo.getCollectionItems().get(i).getResource().getResourceType()!=null){
+//					String resourceTypeName=collectionDo.getCollectionItems().get(i).getResource().getResourceType().getName();
+//					if(resourceTypeName!=null&&resourceTypeName.equalsIgnoreCase("assessment-question")){
+//						questionCount++;
+//					}
+//				}
+//			}
 			if(questionCount==0){
 				collectionEndPresenter.displayScoreCount(questionCount,questionCount);
 			}else{
-				collectionEndPresenter.displayScoreCount(getCollectionScore(),questionCount);
+				collectionEndPresenter.displayScoreCount(score,questionCount);
 			}
 			
-		}
+//		}
 	}
 
 	@Override
