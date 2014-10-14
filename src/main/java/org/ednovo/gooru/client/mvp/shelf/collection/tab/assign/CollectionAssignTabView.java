@@ -69,6 +69,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
@@ -130,7 +131,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	
 	@UiField ScrollPanel spanelClasspagesPanel;
 	
-	@UiField HTMLPanel htmlClasspagesListContainer,duedateContainer;
+	@UiField HTMLPanel htmlClasspagesListContainer,duedateContainer,hPanelAssignContainer;
 	
 	@UiField HTMLEventPanel htmlEvenPanelContainer;
 	
@@ -141,6 +142,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
     @UiField TextArea textAreaVal;
     
 	private DateBoxUc dateBoxUc;
+
+	private boolean isClickedDwnArw=false;
     
 	/**
 	 * Class constructor
@@ -257,6 +260,25 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 				}
 			}
 		});
+		
+		ClickHandler assignRootHandler= new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				if(!isClickedDwnArw && (spanelClasspagesPanel.isVisible())){
+					spanelClasspagesPanel.setVisible(false);
+				}
+				if(!isClickedDwnArw){
+					spanelClasspagesPanel.setVisible(false);
+				}else{
+					isClickedDwnArw=false;
+				}
+				
+			}
+		};
+		
+		RootPanel.get().addDomHandler(assignRootHandler, ClickEvent.getType());
+		hPanelAssignContainer.addDomHandler(assignRootHandler, ClickEvent.getType());
 
 	}
 	
@@ -402,6 +424,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		OpenClasspageContainer();
 	}
 	public void OpenClasspageContainer(){
+		isClickedDwnArw=true;
 		spanelClasspagesPanel.setVisible(!spanelClasspagesPanel.isVisible());
 	}
 	

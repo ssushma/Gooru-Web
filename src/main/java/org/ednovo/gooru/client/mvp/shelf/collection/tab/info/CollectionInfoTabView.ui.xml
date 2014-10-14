@@ -8,7 +8,7 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle"
 		field="res1" />
-	<g:HTMLPanel>
+	<g:HTMLPanel ui:field="hPanelMainInfo">
 		<g:HTMLPanel styleName="{res.css.infoContainer}">
 			<g:HTMLPanel styleName="{res.css.primaryLabelContainer}">
 				<g:HTMLPanel styleName="{res.css.primaryLabel}"
