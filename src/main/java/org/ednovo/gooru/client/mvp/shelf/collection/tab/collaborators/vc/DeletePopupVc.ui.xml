@@ -16,7 +16,8 @@
 				<g:HTML ui:field="htmlDescription" styleName="{collaborators.css.desc}"/>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{collaborators.css.deleteContainer}">
-			    <g:TextBox styleName="{collaborators.css.deleteTextBox}" ui:field="txtConfirmAction" />
+			    <g:Label styleName="{collaborators.css.deleteTextLable}" ui:field="lblDeleteText"></g:Label>
+			    <g:TextBox styleName="{collaborators.css.deleteTextBox}" ui:field="txtConfirmAction"/>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{collaborators.css.okCancel}">
 			    <g:Label styleName="pleaseWaitMessage" ui:field="lblRemoving"/>
