@@ -38,6 +38,8 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresente
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
@@ -452,7 +454,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	
 	@Override
 	public void closePreviewPlayer() {
-		AppClientFactory.fireEvent(new RefreshUserShelfCollectionsEvent());
+		//AppClientFactory.fireEvent(new RefreshUserShelfCollectionsEvent());
 		hide();
 		getUiHandlers().resetCollectionPlayer();
 	}
