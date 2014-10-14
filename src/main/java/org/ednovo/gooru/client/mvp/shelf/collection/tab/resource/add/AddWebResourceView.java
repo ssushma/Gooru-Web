@@ -38,7 +38,9 @@ import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
+import org.ednovo.gooru.client.mvp.search.FilterLabelVc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DriveView;
@@ -49,6 +51,7 @@ import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
@@ -70,7 +73,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -90,6 +95,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
@@ -180,6 +186,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	@UiField HTMLPanel htmlMediaFeatureListContainer;
 	
+	@UiField Button browseStandards;
+	
 	@UiField(provided = true)
 	AddTagesCBundle res2;
 	
@@ -190,6 +198,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private TermsOfUse termsOfUse;
 	// public TinyMCE tinyMce=null; 
 	public boolean isValidYoutubeUrlFlag = true;
+	
+	private boolean hasClickedOnDropDwn=false;
 
 	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,momentsOfLearningOpen=false;
 	
@@ -221,6 +231,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	private boolean isGoogleDriveFile=false;
 	private GoogleDriveItemDo googleDriveItemDo=null;
+	private boolean isBrowseTooltip =false;
+	
+	
+	
 	public AddWebResourceView(CollectionDo collectionDo,boolean isGoogleDriveFile,GoogleDriveItemDo googleDriveItemDo) { 
 		this.res2 = AddTagesCBundle.INSTANCE;
 		res2.css().ensureInjected();
@@ -479,6 +493,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());
 		uploadImageLbl.addClickHandler(new OnEditImageClick());
+		browseStandards.addClickHandler(new onBrowseStandarsCLick());
 		uploadImageLbl.getElement().setId("lblUploadImage");
 		addResourceBtnLbl.getElement().setId("btnAdd");
 		urlTextBox.getElement().setId("tbUrl");
@@ -777,10 +792,14 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			public void onSuccess(ProfileDo profileObj) {
 			if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
 					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
-						standardContainer.setVisible(false);
+						standardContainer.setVisible(true);
+						isBrowseTooltip = true;
+						DisableStandars();
 					}else
 					{
 						standardContainer.setVisible(true);
+						isBrowseTooltip = false;
+						enableStandards();
 						standardPreflist=new ArrayList<String>();
 						for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
 							standardPreflist.add(code);
@@ -789,13 +808,43 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 						
 					}
 				}else{
-					standardContainer.setVisible(false);
+					standardContainer.setVisible(true);
+					isBrowseTooltip = true;
+					DisableStandars();
 				}
 			}
 
 		});
+		ClickHandler rootHandler= new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				System.out.println("clickhandler::"+educationalUsePanel.isVisible());
+				System.out.println("hasClickedOnDropDwn::"+hasClickedOnDropDwn);
+				System.out.println("educationalDropDownLblOpen::"+educationalDropDownLblOpen);
+				
+				if(!hasClickedOnDropDwn){
+					System.out.println("enter");
+					educationalUsePanel.setVisible(false);
+					educationalDropDownLblOpen = false;
+					momentsOfLearningPanel.setVisible(false);
+					momentsOfLearningOpen = false;
+					spanelMediaFeaturePanel.setVisible(false);
+					
+				}else{
+					hasClickedOnDropDwn=false;
+				}
+				
+			}
+		};
+		
+		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
+		
+		
 	}
 	private void OpenMediaFeatureDropdown() {
+		hasClickedOnDropDwn=true;
 		if (spanelMediaFeaturePanel.isVisible()){
 			spanelMediaFeaturePanel.setVisible(false);
 		}else{
@@ -973,6 +1022,13 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			resourceImageUpload();
 		}
 	}
+	
+	private class onBrowseStandarsCLick implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			browseStandardsInfo();
+		}
+	}
 	  private class rightsChecked implements ClickHandler {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -1078,6 +1134,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			}
 		}	
 	public abstract void resourceImageUpload();
+	
+	public abstract void browseStandardsInfo();
+	
+	public abstract void closeStandardsPopup();
 
 	private class AddClickHandler implements ClickHandler {
 
@@ -1223,14 +1283,13 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 											if(urlStr.indexOf("youtube")!=-1){
 												if(youTubeId==null || youTubeId.equalsIgnoreCase("null") || youTubeId.equalsIgnoreCase("")){
 													if(!categoryStr.equalsIgnoreCase("Webpage")){
+														isValidate = true;									
+													}else{
 														mandatoryCategoryLbl.setText(i18n.GL0927());
 														mandatoryCategoryLbl.getElement().setAttribute("alt", i18n.GL0927());
 														mandatoryCategoryLbl.getElement().setAttribute("title", i18n.GL0927());
 														mandatoryCategoryLbl.setVisible(true);
-														isValidate = false;
-													}else{
-														isValidate = true;
-													}
+														isValidate = false;													}
 												}
 											}
 											if(categoryStr.equalsIgnoreCase("Audio") && !hasValidateResource())
@@ -1310,7 +1369,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //															}
 //														});
 //													}else{
-
 														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo,hostName,tagList);
 
 														
@@ -1750,6 +1808,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	@UiHandler("educationalDropDownLbl")
 	public void educationalDropDownClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
 		if (educationalDropDownLblOpen == false) {
 			educationalUsePanel.setVisible(true);
 			educationalDropDownLblOpen = true;
@@ -1790,6 +1849,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 	@UiHandler("momentsOfLearningDropDownLbl")
 	public void momentsOfLearningDropDownClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
 		if (momentsOfLearningOpen == false) {
 			momentsOfLearningPanel.setVisible(true);
 			momentsOfLearningOpen = true;
@@ -2039,5 +2099,48 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		}
 		
 	}
+	public void setUpdatedBrowseStandarsCode(String standardsCodeVal,int id,String desc) {
+		if (standardsPanel.getWidgetCount() <5) {
+			if (standardsCodeVal != null && !standardsCodeVal.isEmpty()) {
+				CodeDo codeObj=new CodeDo();
+				codeObj.setCodeId(id);
+				codeObj.setCode(standardsCodeVal);
+				standardsDo.add(codeObj);
+				standardsPanel.add(createStandardLabel(standardsCodeVal, Integer.toString(id), desc));
+			}
+		} else {
+			standardMaxShow();
+		}
+		closeStandardsPopup();
+	}
 	
+	public void DisableStandars(){
+		final StandardPreferenceTooltip standardPreferenceBrowseTooltip=new StandardPreferenceTooltip();
+		browseStandards.getElement().getStyle().setColor("#999");
+		browseStandards.getElement().addClassName("disabled");
+		browseStandards.addMouseOverHandler(new MouseOverHandler() {
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				// TODO Auto-generated method stub
+					if(isBrowseTooltip == true){
+					standardPreferenceBrowseTooltip.show();
+					standardPreferenceBrowseTooltip.setPopupPosition(browseStandards.getAbsoluteLeft()+3, browseStandards.getAbsoluteTop()+33);
+					standardPreferenceBrowseTooltip.getElement().getStyle().setZIndex(999999);
+					}
+				}
+		});
+		browseStandards.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				// TODO Auto-generated method stub
+				standardPreferenceBrowseTooltip.hide();
+			}
+		});
+	}
+
+	public void enableStandards(){
+		browseStandards.getElement().getStyle().clearColor();
+		browseStandards.getElement().removeClassName("disabled");
+	}
 }

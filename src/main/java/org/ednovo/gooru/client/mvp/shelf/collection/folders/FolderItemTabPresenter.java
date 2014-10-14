@@ -95,7 +95,7 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 
 				@Override
 				public void onSuccess(FolderListDo result) {
-					getView().setFolderData(result.getSearchResult(), null, null);
+					getView().setFolderData(result.getSearchResult(), null, null,result.getCount());
 				}
 			};
 		}
@@ -106,7 +106,7 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 		AppClientFactory.getInjector().getfolderService().getChildFolders((pageNumber-1)*20, 20,folderId,null, null,new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo result) {
-				getView().setFolderData(result.getSearchResult(), folderParentName, folderId);
+				getView().setFolderData(result.getSearchResult(), folderParentName, folderId,result.getCount());
 			}			
 		});
 	}

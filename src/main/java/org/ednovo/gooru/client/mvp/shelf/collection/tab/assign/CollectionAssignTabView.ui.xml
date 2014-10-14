@@ -9,7 +9,7 @@
 		<g:HTMLPanel ui:field="panelLoading">
 			<g:Label styleName="{res.css.loadingpanelImage}" />
 		</g:HTMLPanel>
-		<g:HTMLPanel styleName="{res.css.container}">
+		<g:HTMLPanel styleName="{res.css.container}" ui:field="hPanelAssignContainer" >
 			<g:HTMLPanel ui:field="panelNoClasspages" styleName="{res.css.noClasspageContianer}">
 				<g:Label styleName="{res.css.labelNoClasspageText}"
 					ui:field="lblNoClasspages"></g:Label>

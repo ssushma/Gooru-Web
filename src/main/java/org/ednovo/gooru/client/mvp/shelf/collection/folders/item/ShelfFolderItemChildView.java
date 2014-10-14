@@ -30,11 +30,13 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPresenter> implements
@@ -45,8 +47,13 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	@UiField FlowPanel contentBlock,contents;
 	@UiField HTMLEventPanel folderImage;
 	@UiField Image collectionImage;
-	@UiField Label itemTitle;
+	@UiField Label itemTitle,itemNumber;
 	
+
+	@UiField TextBox reorderTxtBox;
+	@UiField Button moveUpBtn,moveDownBtn;
+	
+
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-collection-image-160x120.png";
 	
 	private static final String SMALL = "Small";
@@ -69,7 +76,11 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	
 	private static final String ID = "id";
 	
+	private String itemGooruOId;
+	
 	private FolderDo folderDo;
+	
+	private int itemNo;
 	
 	final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
 	
@@ -83,21 +94,29 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 
 	interface ShelfFolderItemChildViewUiBinder extends UiBinder<Widget, ShelfFolderItemChildView> {}
 	
-	public ShelfFolderItemChildView(FolderDo folderDo) {
+	public ShelfFolderItemChildView(FolderDo folderDo, int folderNumber) { 
 		initWidget(uiBinder.createAndBindUi(this));
 		this.folderDo = folderDo;
+		setItemNo(folderNumber);
 		setFolderData(folderDo);
-		
 		contentBlock.getElement().setId("fpnlContentBlock");
 		folderImage.getElement().setId("epnlFolderImage");
 		collectionImage.getElement().setId("imgCollectionImage");
 		itemTitle.getElement().setId("lblItemTitle");
 		contents.getElement().setId("fpnlContents");
+		moveDownBtn.setVisible(true);
+		moveUpBtn.setVisible(true);
 	}
 	
 	public void setFolderData(final FolderDo folderDo) {
 		itemTitle.addStyleName(folderStyle.folderTitleElipses());
 		final String folderType = folderDo.getType();
+		/*
+		if(getItemNo() == 1){
+			moveUpBtn.setVisible(false);
+		}else{
+			moveUpBtn.setVisible(true); 
+		}*/
 		
 		if(folderType.equals(FOLDER)) {
 			folderImage.setVisible(true);
@@ -187,6 +206,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		} else {
 			contents.addStyleName(folderStyle.empty());
 		}
+		reorderTxtBox.setText(getItemNo()+""); 
+		itemNumber.setText(getItemNo()+""); 
 		itemTitle.setText(folderDo.getTitle());	
 		itemTitle.getElement().setAttribute("alt",folderDo.getTitle());
 		itemTitle.getElement().setAttribute("title",folderDo.getTitle());
@@ -339,6 +360,126 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			}
 		}
 	}
+	
+	
+	/**
+	 * Decides Up and Down button visibility
+	 * @param totalCount {@link Integer}
+	 */
+	public void setUpDownArrowVisibility(int totalCount) { 
+		if(getItemNo() == totalCount){
+			downButtonIsVisible(false);
+		}
+		if(getItemNo() == 1){
+			upButtonIsVisible(false);
+		}
+	}
+	
+	
+	
+	/**
+	 * Sets the re-order Up button visibility
+	 * @param isvisible {@link Boolean}
+	 */
+	public void upButtonIsVisible(boolean isvisible) {
+		moveUpBtn.setVisible(isvisible);
+	}
+
+
+	/**
+	 * Sets the re-order Down button visibility
+	 * @param isvisible {@link Boolean}
+	 */
+	public void downButtonIsVisible(boolean isvisible) {
+		moveDownBtn.setVisible(isvisible);
+	}
+
+	/**
+	 * @return the itemNo
+	 */
+	public int getItemNo() {
+		return itemNo;
+	}
+
+	/**
+	 * @param itemNo the itemNo to set
+	 */
+	public void setItemNo(int itemNo) {
+		this.itemNo = itemNo;
+	}
+
+	
+	/**
+	 * @return the itemNumber
+	 */
+	public Label getItemNumber() {
+		return itemNumber;
+	}
+
+	/**
+	 * @param itemNumber the itemNumber to set
+	 */
+	public void setItemNumber(Label itemNumber) {
+		this.itemNumber = itemNumber;
+	}
+
+	/**
+	 * @return the reorderTxtBox
+	 */
+	public TextBox getReorderTxtBox() {
+		return reorderTxtBox;
+	}
+
+	/**
+	 * @param reorderTxtBox the reorderTxtBox to set
+	 */
+	public void setReorderTxtBox(TextBox reorderTxtBox) {
+		this.reorderTxtBox = reorderTxtBox;
+	}
+	
+
+	/**
+	 * @return the moveUpBtn
+	 */
+	public Button getMoveUpBtn() {
+		return moveUpBtn;
+	}
+
+	/**
+	 * @param moveUpBtn the moveUpBtn to set
+	 */
+	public void setMoveUpBtn(Button moveUpBtn) {
+		this.moveUpBtn = moveUpBtn;
+	}
+
+	/**
+	 * @return the moveDownBtn
+	 */
+	public Button getMoveDownBtn() {
+		return moveDownBtn;
+	}
+
+	/**
+	 * @param moveDownBtn the moveDownBtn to set
+	 */
+	public void setMoveDownBtn(Button moveDownBtn) {
+		this.moveDownBtn = moveDownBtn;
+	}
+	
+	/**
+	 * @return the itemGooruOId
+	 */
+	public String getItemGooruOId() {
+		return itemGooruOId;
+	}
+
+	/**
+	 * @param itemGooruOId the itemGooruOId to set
+	 */
+	public void setItemGooruOId(String itemGooruOId) {
+		this.itemGooruOId = itemGooruOId;
+	}
+
 
 	/*public void reorderCollectionItem(int widgetIndex) { 
 		

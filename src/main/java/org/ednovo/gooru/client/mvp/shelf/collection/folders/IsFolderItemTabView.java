@@ -12,7 +12,7 @@ import org.ednovo.gooru.shared.model.folder.FolderDo;
  *
  */
 public interface IsFolderItemTabView extends IsViewWithHandlers<FolderItemTabUiHandlers> {
-	public void setFolderData(List<FolderDo> folderList, String folderParentName, String folderId);
+	public void setFolderData(List<FolderDo> folderList, String folderParentName, String folderId, int totalCount);
 	public void setParentId(String parentId);
 	public void addFolderItem(FolderDo folderDo, String parentId, HashMap<String,String> params);
 	public void setFolderTitle(String title);

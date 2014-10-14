@@ -235,6 +235,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	private static final  String  COLOR_DEPENDENT ="color dependent";
 	private static final  String  TEXT_ON_IMAGE ="text on image";
 	private static final  String  TEXTUAL ="textual";
+	
+	private boolean isBrowseTooltip =false;
 				
 	/**
 	 * Class constructor, creates new {@link AppSuggestBox} and events for StandardsSuggestionEvent
@@ -1673,12 +1675,17 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 							public void onSuccess(ProfileDo profileObj) {
 								if(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()!=null){
 									if(profileObj.getUser().getMeta().getTaxonomyPreference().getCode().size()==0){
-										standardLbl.setVisible(false);
-										standardPanelUc.setVisible(false);
+										standardLbl.setVisible(true);
+										standardPanelUc.setVisible(true);
+										isBrowseTooltip = true;
+										DisableStandars();
+										
 									}else
 									{
 										standardLbl.setVisible(true);
 										standardPanelUc.setVisible(true);
+										isBrowseTooltip = false;
+										enableStandards();
 										standardPreflist=new ArrayList<String>();
 										for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
 											standardPreflist.add(code);
@@ -1686,8 +1693,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 										 }
 									}
 								}else{
-									standardLbl.setVisible(false);
-									standardPanelUc.setVisible(false);
+									standardLbl.setVisible(true);
+									standardPanelUc.setVisible(true);
+									isBrowseTooltip = true;
+									DisableStandars();
+									
 								}
 							}
 
@@ -1698,5 +1708,36 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		standardLbl.setVisible(true);
 		standardPanelUc.setVisible(true);
 	}
+	
+	public void DisableStandars(){
+		final StandardPreferenceTooltip standardPreferenceBrowseTooltip=new StandardPreferenceTooltip();
+		browseStandards.getElement().getStyle().setColor("#999");
+		browseStandards.getElement().addClassName("disabled");
+		browseStandards.addMouseOverHandler(new MouseOverHandler() {
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				// TODO Auto-generated method stub
+					if(isBrowseTooltip == true){
+					standardPreferenceBrowseTooltip.show();
+					standardPreferenceBrowseTooltip.setPopupPosition(browseStandards.getAbsoluteLeft()+3, browseStandards.getAbsoluteTop()+33);
+					standardPreferenceBrowseTooltip.getElement().getStyle().setZIndex(999999);
+					}
+				}
+		});
+		browseStandards.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				// TODO Auto-generated method stub
+				standardPreferenceBrowseTooltip.hide();
+			}
+		});
+	}
+
+	public void enableStandards(){
+		browseStandards.getElement().getStyle().clearColor();
+		browseStandards.getElement().removeClassName("disabled");
+	}
+	
 	
 }
