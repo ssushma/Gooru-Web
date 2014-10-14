@@ -50,6 +50,7 @@ import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.RemoveToolTipUc;
+import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.TinyMCE;
@@ -210,6 +211,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	String[] anserChoiceArray=new String[]{"A","B","C","D","E"};
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
+	private boolean isBrowseTooltip =false;
 	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 	
 	public AddQuestionResourceView(){
@@ -670,10 +672,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			public void onSuccess(ProfileDo profileObj) {
 			if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
 					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
-						standardContainer.setVisible(false);
+						standardContainer.setVisible(true);
+						isBrowseTooltip = true;
+						DisableStandars();
 					}else
 					{
 						standardContainer.setVisible(true);
+						isBrowseTooltip = false;
+						enableStandards();
 						standardPreflist=new ArrayList<String>();
 						for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
 							standardPreflist.add(code);
@@ -682,7 +688,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						
 					}
 				}else{
-					standardContainer.setVisible(false);
+					standardContainer.setVisible(true);
+					isBrowseTooltip = true;
+					DisableStandars();
 				}
 			}
 
@@ -2740,4 +2748,33 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}
 		closeStandardsPopup();
 	}
+     public void DisableStandars(){
+ 		final StandardPreferenceTooltip standardPreferenceBrowseTooltip=new StandardPreferenceTooltip();
+ 		browseStandards.getElement().getStyle().setColor("#999");
+ 		browseStandards.getElement().addClassName("disabled");
+ 		browseStandards.addMouseOverHandler(new MouseOverHandler() {
+ 			@Override
+ 			public void onMouseOver(MouseOverEvent event) {
+ 				// TODO Auto-generated method stub
+ 					if(isBrowseTooltip == true){
+ 					standardPreferenceBrowseTooltip.show();
+ 					standardPreferenceBrowseTooltip.setPopupPosition(browseStandards.getAbsoluteLeft()+3, browseStandards.getAbsoluteTop()+33);
+ 					standardPreferenceBrowseTooltip.getElement().getStyle().setZIndex(999999);
+ 					}
+ 				}
+ 		});
+ 		browseStandards.addMouseOutHandler(new MouseOutHandler() {
+ 			
+ 			@Override
+ 			public void onMouseOut(MouseOutEvent event) {
+ 				// TODO Auto-generated method stub
+ 				standardPreferenceBrowseTooltip.hide();
+ 			}
+ 		});
+ 	}
+
+ 	public void enableStandards(){
+ 		browseStandards.getElement().getStyle().clearColor();
+ 		browseStandards.getElement().removeClassName("disabled");
+ 	}
 }

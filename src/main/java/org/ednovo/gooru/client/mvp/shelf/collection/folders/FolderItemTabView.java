@@ -369,7 +369,9 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 				}
 				for(int i = 0; i<folderList.size(); i++) {
 					shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i),i+1); 
+					shelfFolderItemChildView.setItemGooruOId(folderList.get(i).getGooruOid());
 					shelfFolderItemChildView.setUpDownArrowVisibility(totalCount);
+					shelfFolderItemChildView.getMoveUpBtn().addClickHandler(new OnClickReorderUpButton(folderList.get(i).getGooruOid())); 
 					if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 						isFolderType = false;
 					}
@@ -610,6 +612,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	
 	private void addFolder(FolderDo folderDo) {
 		shelfFolderItemChildView = new ShelfFolderItemChildView(folderDo,1); 
+		shelfFolderItemChildView.setItemGooruOId(folderDo.getGooruOid());
+		shelfFolderItemChildView.getMoveUpBtn().addClickHandler(new OnClickReorderUpButton(folderDo.getGooruOid())); 
 		shelfFolderItemChildView.upButtonIsVisible(false);
 		folderContentBlock.insert(shelfFolderItemChildView, 0); 
 		setFolderCollectionItemSequence();
@@ -724,12 +728,49 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		folderItemMetaDataUc.showEditableMetaData(true);
 	}
 	
+	
+	public class OnClickReorderUpButton implements ClickHandler{
+		private String itemGooruOid;
+
+		public OnClickReorderUpButton(String itemGooruOid) {
+			this.itemGooruOid = itemGooruOid;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// here re order API call shld do 
+			ShelfFolderItemChildView shelfFolderItemChildView = getFolderOrCollectionWidget(itemGooruOid);
+			reorderItemToNewPosition(shelfFolderItemChildView,shelfFolderItemChildView.getReorderTxtBox().getText().trim());
+		}
+		
+	}
+	
+	public ShelfFolderItemChildView getFolderOrCollectionWidget(String itemGooruOid) { 
+		Iterator<Widget> widgets = folderContentBlock.iterator();
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if (widget instanceof ShelfFolderItemChildView && ((ShelfFolderItemChildView) widget).getItemGooruOId().equals(itemGooruOid)) {
+				return (ShelfFolderItemChildView) widget;
+			}
+		}
+		return null;
+	}
+	
+	
+	public void reorderItemToNewPosition(ShelfFolderItemChildView shelfFolderItemChildView, String newItemPosition) { 
+		folderContentBlock.insert(shelfFolderItemChildView,  Integer.parseInt(newItemPosition)-1);
+		
+		
+		
+	}
+
 	/**
 	 * @return css instance of {@link CollectionEditResourceCss}
 	 */
 	public CollectionEditResourceCss getCss() {
 		return css;
 	}
+
 
 	/**
 	 * @param css
