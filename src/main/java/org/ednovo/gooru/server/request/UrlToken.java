@@ -600,7 +600,9 @@ public enum UrlToken {
 	
 	REFRESH_TOKEN_GDC("/gooru-auth/google/refresh-token.g?partyUid={0}"),
 	
-	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?partyUid={0}");
+	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?partyUid={0}"),
+	
+	GET_COLLECTION_SUMMARY("/insights-api/v1/classpage/{0}?sessionToken={1}&data={2}");
 
 	private String url;
 

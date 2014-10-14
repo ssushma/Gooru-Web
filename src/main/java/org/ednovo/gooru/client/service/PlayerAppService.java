@@ -42,6 +42,7 @@ import org.ednovo.gooru.shared.model.content.UserStarRatingsDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.model.player.FeaturedContentDo;
+import org.ednovo.gooru.shared.model.player.InsightsCollectionDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -183,5 +184,7 @@ public interface PlayerAppService extends BaseService {
 	public int getGoogleDriveFileStatusCode(String fileUrl) throws GwtException, ServerDownException;
 	
 	public Map<String,String> getYoutubeFeedCallback(String utubeId) throws GwtException, ServerDownException;
+	
+	public InsightsCollectionDo getInsightsCollectionSummary(String collectionId,String classpageId,String sessionId,String userId);
 	
 }
