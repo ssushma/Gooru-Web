@@ -453,7 +453,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	     }
 	     else if(tab!=null&&tab.equalsIgnoreCase("unitdetails")){
 	    	 unitAssignmentPresenter.showAssignmentDetails();
-	    	// unitAssignmentPresenter.setClasspageData(classpageDo);
+	    	 unitAssignmentPresenter.setClasspageData(classpageDo);
 	    	 unitAssignmentPresenter.getClassUnits(classpageDo.getClasspageId());
 	    	 setInSlot(CLASSLIST_SLOT, unitAssignmentPresenter,false);
 	     }

@@ -530,12 +530,11 @@ display:inline-block;
 	}
 	
 	.numaric{
-		display:inline-block;
-		
+		display:inline-block;		
 		color:#176ba7;
 		font-size:14px;
 		font-weight:bold;
-		width: 47px;
+		width: 34px;
 	}
 	
 	.unitInput{
