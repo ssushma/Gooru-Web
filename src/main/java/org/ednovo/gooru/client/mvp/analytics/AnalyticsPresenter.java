@@ -143,12 +143,27 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	}
 
 	@Override
-	public void getBottomAndTopScoresData(String classpageId, String pathwayId,String collectionId) {
-		this.analyticService.getBottomAndTopScoresData(collectionId, classpageId,pathwayId, new AsyncCallback<ArrayList<GradeJsonData>>() {
+	public void getBottomStudentsData(String classpageId, String pathwayId,String collectionId,String sortOrder) {
+		this.analyticService.getBottomAndTopScoresData(collectionId, classpageId,pathwayId,sortOrder, new AsyncCallback<ArrayList<GradeJsonData>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<GradeJsonData> result) {
-				getView().setBottomAndTopScoresData(result);
+				getView().setBottomStudentsData(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
+	}
+	
+	@Override
+	public void getTopStudentsData(String classpageId, String pathwayId,String collectionId, String sortOrder) {
+		this.analyticService.getBottomAndTopScoresData(collectionId, classpageId,pathwayId,sortOrder, new AsyncCallback<ArrayList<GradeJsonData>>() {
+			
+			@Override
+			public void onSuccess(ArrayList<GradeJsonData> result) {
+				getView().setTopStudentsData(result);
 			}
 			
 			@Override
@@ -165,7 +180,8 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 			public void onSuccess(ArrayList<GradeJsonData> result) {
 				getView().setGradeCollectionData(result);
 				if(result.size()!=0){
-					getBottomAndTopScoresData(classpageId, pathwayId,result.get(0).getResourceGooruOId());
+					getTopStudentsData(classpageId, pathwayId,result.get(0).getResourceGooruOId(),"ASC");
+					getBottomStudentsData(classpageId, pathwayId,result.get(0).getResourceGooruOId(),"DESC");
 				}
 			}
 			@Override
@@ -175,14 +191,23 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	}
 	public void getClassUnits(ClasspageDo classpageDo){
 		this.classpageDo=classpageDo;
-		String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
-		if(unitId!=null && getView().getUnitPanel().getWidgetCount()!=0){
+		//String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+		/*if(unitId!=null && getView().getUnitPanel().getWidgetCount()!=0){
 			getPathwayItems(classpageDo.getClasspageId(),unitId,"sequence",assignmentLimit,assignmentOffset);
-		}else{
+		}else{*/
 			getPathwayUnits(classpageDo.getClasspageId(),limit,offSet,true);
-		}
+		/*}*/
 	}
 
+	@Override
+	protected void onHide() {
+		super.onHide();
+		getView().resetData();
+		clearSlot(UNIT_ASSIGNMENT_SLOT);	
+		clearSlot(COLLECTION_PROGRESS_SLOT);
+		clearSlot(PERSONALIZE_SLOT);	
+	}
+	
 	@Override
 	public void exportOEPathway(String classpageId, String pathwayId) {
 		this.analyticService.exportPathwayOE(classpageId, pathwayId,new AsyncCallback<String>() {

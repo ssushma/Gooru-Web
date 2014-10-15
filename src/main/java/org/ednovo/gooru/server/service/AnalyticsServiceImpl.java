@@ -270,10 +270,10 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 
 	@Override
 	public ArrayList<GradeJsonData>  getBottomAndTopScoresData(String collectionId, String classId,
-			String pathwayId) {
+			String pathwayId,String sortOrder) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<GradeJsonData> collectionResourcesList=new ArrayList<GradeJsonData>();
-		String dataPassing ="{%22fields%22:%22timeSpent,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,gooruOId,title%22,%22filters%22:{%22session%22:%22FS%22,%22userUId%22:%22%22,%22collectionGooruOId%22:%22%22,%22pathwayId%22:%22"+pathwayId+"%22},%22paginate%22:{%22sortBy%22:%22itemSequence,gradeInPercentage%22,%22sortOrder%22:%22DESC%22,%22totalRecords%22:6}}";
+		String dataPassing ="{%22fields%22:%22timeSpent,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,gooruOId,title%22,%22filters%22:{%22session%22:%22FS%22,%22userUId%22:%22%22,%22collectionGooruOId%22:%22"+collectionId+"%22,%22pathwayId%22:%22"+pathwayId+"%22},%22paginate%22:{%22sortBy%22:%22itemSequence,gradeInPercentage%22,%22sortOrder%22:%22"+sortOrder+"%22,%22totalRecords%22:3}}";
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETGRADEJSON, classId,getLoggedInSessionToken(),dataPassing);
 		System.out.println("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -406,8 +406,8 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			userObj.put("partyUid", userId);
 			
 			setPlayLoadObj.put("classCode", classCode);
-			/*setPlayLoadObj.put("active", "true");
-			setPlayLoadObj.put("sessionId",session);*/
+			setPlayLoadObj.put("pathwayId", pathwayId);
+			setPlayLoadObj.put("classId",classpageId);
 			
 			mainObj.put("contentGooruOId",resourceId);
 			mainObj.put("contentItemId",contentItemId);

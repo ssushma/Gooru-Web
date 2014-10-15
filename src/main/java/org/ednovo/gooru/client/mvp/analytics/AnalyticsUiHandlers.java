@@ -37,7 +37,9 @@ public interface AnalyticsUiHandlers extends BaseUiHandlers{
 	
 	void setClickedTabPresenter(String clickedTab,String collectionId);
 	
-	void getBottomAndTopScoresData(String classpageId, String pathwayId,String collectionId);
+	void getBottomStudentsData(String classpageId, String pathwayId,String collectionId,String sortOrder);
+	
+	void getTopStudentsData(String classpageId, String pathwayId,String collectionId,String sortOrder);
 	
 	void getGradeCollectionJson(String classpageId,String pathwayId);
 	

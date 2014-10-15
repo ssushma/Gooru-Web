@@ -108,7 +108,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 			int selectedIndex=loadCollections.getSelectedIndex();
 			String collectionId=loadCollections.getValue(selectedIndex);
-			getUiHandlers().getBottomAndTopScoresData(classpageId, pathwayId, collectionId);
+			getUiHandlers().getTopStudentsData(classpageId, pathwayId,collectionId,"ASC");
+			getUiHandlers().getBottomStudentsData(classpageId, pathwayId,collectionId,"DESC");
 		}
 	}
 	public class ViewAssignmentClickEvent implements ClickHandler{
@@ -157,6 +158,14 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		summaryArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
 		progressArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
 		responsesArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
+	}
+
+	@Override
+	public void resetData(){
+		clearDownArrow();
+		unitPanel.clear();
+		graphWidget.clear();
+		loadCollections.clear();
 	}
 	
 	@Override
@@ -354,8 +363,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	 }
 	 
 	@Override
-	public void setBottomAndTopScoresData(ArrayList<GradeJsonData> result) {
-		scoredAbovePanel.clear();
+	public void setBottomStudentsData(ArrayList<GradeJsonData> result) {
 		scoredBelowPanel.clear();
 		if(result.size()>0)
 		{
@@ -363,13 +371,25 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			{
 				for(int i=0;i<result.get(0).getUserData().size();i++){
 					UserDataDo userData=result.get(0).getUserData().get(i);
-					scoredAbovePanel.add(new StudentScoredAboveBelowUlPanel(userData));
 					scoredBelowPanel.add(new StudentScoredAboveBelowUlPanel(userData));
 				}
 			}
 		}
 	}
-	
+	@Override
+	public void setTopStudentsData(ArrayList<GradeJsonData> result) {
+		scoredAbovePanel.clear();
+		if(result.size()>0)
+		{
+			if(result.get(0).getUserData() != null)
+			{
+				for(int i=0;i<result.get(0).getUserData().size();i++){
+					UserDataDo userData=result.get(0).getUserData().get(i);
+					scoredAbovePanel.add(new StudentScoredAboveBelowUlPanel(userData));
+				}
+			}
+		}
+	}
 	@Override
 	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData) {
 		loadcollectionsmap.clear();
