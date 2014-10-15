@@ -101,7 +101,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	public ShelfFolderItemChildView(FolderDo folderDo, int folderNumber) { 
 		initWidget(uiBinder.createAndBindUi(this));
 		this.folderDo = folderDo;
-		setItemNo(folderNumber);
+//		setItemNo(folderNumber);
 		setFolderData(folderDo);
 		contentBlock.getElement().setId("fpnlContentBlock");
 		folderImage.getElement().setId("epnlFolderImage");
@@ -211,8 +211,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		} else {
 			contents.addStyleName(folderStyle.empty());
 		}
-		reorderTxtBox.setText(getItemNo()+""); 
-		itemNumber.setText(getItemNo()+""); 
+		/*reorderTxtBox.setText(getItemNo()+""); 
+		itemNumber.setText(getItemNo()+"");*/ 
 		itemTitle.setText(folderDo.getTitle());	
 		itemTitle.getElement().setAttribute("alt",folderDo.getTitle());
 		itemTitle.getElement().setAttribute("title",folderDo.getTitle());

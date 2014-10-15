@@ -391,6 +391,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 //					folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
 					folderContentBlock.add(shelfFolderItemChildView);
 				}
+				setFolderCollectionItemSequence();
 			}
 		}
 		else{
