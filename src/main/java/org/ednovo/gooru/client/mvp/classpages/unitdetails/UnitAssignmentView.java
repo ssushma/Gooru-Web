@@ -1127,6 +1127,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	@Override
 	public void showDashBoard() {
+		panelPersonalizeButtonContainer.setVisible(false);
 		if(!isClickOnAssignment){
 			goalContainer.setVisible(true);
 			containerPanel.setVisible(false);
@@ -1135,6 +1136,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 //			scoreHederView();
 			setDashBoardIds();
 			htmDashBoardTabs.setVisible(true);
+		
 			btnDashBoard.setStyleName(res.unitAssignment().selected());
 			btnAssignment.removeStyleName(res.unitAssignment().selected());
 		}
@@ -1155,6 +1157,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void showAssignments() {
 		
 		htmDashBoardTabs.removeFromParent();
+		panelPersonalizeButtonContainer.setVisible(true);
 		containerPanel.setVisible(true);
 		goalContainer.removeFromParent();
 		assignmentContainer.setVisible(true);
