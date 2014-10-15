@@ -96,6 +96,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
@@ -179,6 +180,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	protected List<String> thumbnailImagesLink;
 	
 	private String thumbnailUrlStr = null;
+	
+	private boolean hasClickedOnDropDwn = false;
 	
 	private String mobileFeature;
 	
@@ -819,6 +822,26 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		}
 		
 		browseStandards.addClickHandler(new onBrowseStandardsClick());
+		
+		ClickHandler rootHandler= new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				if(!hasClickedOnDropDwn){
+					educationalUsePanel.setVisible(false);
+					educationalDropDownLblOpen = false;
+					momentsOfLearningPanel.setVisible(false);
+					momentsOfLearningOpen = false;
+					spanelMediaFeaturePanel.setVisible(false);
+					
+				}else{
+					hasClickedOnDropDwn=false;
+				}
+				
+			}
+		};
+		
+		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
 	}
 	public abstract void browseStandardsInfo(boolean val);
 	public abstract void closeStandardsPopup();
@@ -841,6 +864,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
         });
 	}
 	private void OpenMediaFeatureDropdown() {
+		hasClickedOnDropDwn=true;
 		if (spanelMediaFeaturePanel.isVisible()){
 			spanelMediaFeaturePanel.setVisible(false);
 		}else{
@@ -1805,6 +1829,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 	@UiHandler("educationalDropDownLbl")
 	public void educationalDropDownClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
 		if (educationalDropDownLblOpen == false) {
 			educationalUsePanel.setVisible(true);
 			educationalDropDownLblOpen = true;
@@ -1845,6 +1870,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}
 	@UiHandler("momentsOfLearningDropDownLbl")
 	public void momentsOfLearningDropDownClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
 		if (momentsOfLearningOpen == false) {
 			momentsOfLearningPanel.setVisible(true);
 			momentsOfLearningOpen = true;
