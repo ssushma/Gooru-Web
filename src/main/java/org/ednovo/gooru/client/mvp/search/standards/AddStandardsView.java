@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle;
 import org.ednovo.gooru.client.uc.AppPopUpStandards;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
+import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
@@ -39,6 +40,10 @@ import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -50,6 +55,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -108,6 +116,9 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	private boolean isTEKSAvailable =false;
 	private boolean isCAAvailable =false;
 	
+	 BrowseStandardsTooltip browseStandardsTooltip = new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
+	private boolean isBrowseStandardsToolTip = false;
+	
 	@UiTemplate("AddStandardsView.ui.xml")
 	interface AddStandardsViewUiBinder extends UiBinder<Widget, AddStandardsView> {
 	}
@@ -153,82 +164,59 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(isCCSSAvailable==false){
-				standardPreferenceTooltip.show();
-				standardPreferenceTooltip.setPopupPosition(commonStandards.getAbsoluteLeft()+3, commonStandards.getAbsoluteTop()+33);
-				standardPreferenceTooltip.getElement().getStyle().setZIndex(999999);
+					browseStandardsTooltip.show();
+					browseStandardsTooltip.setPopupPosition(commonStandards.getAbsoluteLeft()+3, commonStandards.getAbsoluteTop()+33);
+					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
+					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+					isBrowseStandardsToolTip= true;
 				}
 			}
 		});
-		commonStandards.addMouseOutHandler(new MouseOutHandler() {
-			
-			@Override
-			public void onMouseOut(MouseOutEvent event) {
-				// TODO Auto-generated method stub
-				standardPreferenceTooltip.hide();
-			}
-		});
-		
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hideBrowseStandardsPopup(event);
+	          }
+	    });
 		ngss.addMouseOverHandler(new MouseOverHandler() {
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(isNGSSAvailable==false){
-				standardPreferenceTooltip.show();
-				standardPreferenceTooltip.setPopupPosition(ngss.getAbsoluteLeft()+3, ngss.getAbsoluteTop()+33);
-				standardPreferenceTooltip.getElement().getStyle().setZIndex(999999);
+					browseStandardsTooltip.show();
+					browseStandardsTooltip.setPopupPosition(ngss.getAbsoluteLeft()+3, ngss.getAbsoluteTop()+33);
+					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
+					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+					isBrowseStandardsToolTip= true;
 				}
 			}
 		});
-		ngss.addMouseOutHandler(new MouseOutHandler() {
-			
-			@Override
-			public void onMouseOut(MouseOutEvent event) {
-				// TODO Auto-generated method stub
-				standardPreferenceTooltip.hide();
-			}
-		});
-		
 		texasKnowledge.addMouseOverHandler(new MouseOverHandler() {
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(isTEKSAvailable==false){
-				standardPreferenceTooltip.show();
-				standardPreferenceTooltip.setPopupPosition(texasKnowledge.getAbsoluteLeft()+3, texasKnowledge.getAbsoluteTop()+33);
-				standardPreferenceTooltip.getElement().getStyle().setZIndex(999999);
+					browseStandardsTooltip.show();
+					browseStandardsTooltip.setPopupPosition(texasKnowledge.getAbsoluteLeft()+3, texasKnowledge.getAbsoluteTop()+33);
+					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
+					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+					isBrowseStandardsToolTip= true;
 				}
 			}
 		});
-		texasKnowledge.addMouseOutHandler(new MouseOutHandler() {
-			
-			@Override
-			public void onMouseOut(MouseOutEvent event) {
-				// TODO Auto-generated method stub
-				standardPreferenceTooltip.hide();
-			}
-		});
-		
 		californiaStandards.addMouseOverHandler(new MouseOverHandler() {
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(isCAAvailable==false){
-				standardPreferenceTooltip.show();
-				standardPreferenceTooltip.setPopupPosition(californiaStandards.getAbsoluteLeft()+3, californiaStandards.getAbsoluteTop()+33);
-				standardPreferenceTooltip.getElement().getStyle().setZIndex(999999);
+					browseStandardsTooltip.show();
+					browseStandardsTooltip.setPopupPosition(californiaStandards.getAbsoluteLeft()+3, californiaStandards.getAbsoluteTop()+33);
+					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
+					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+					isBrowseStandardsToolTip= true;
 				}
 				
 			}
 		});
-		californiaStandards.addMouseOutHandler(new MouseOutHandler() {
-			
-			@Override
-			public void onMouseOut(MouseOutEvent event) {
-				// TODO Auto-generated method stub
-				standardPreferenceTooltip.hide();
-			}
-		});
-		
 	}
 	
 	@Override
@@ -935,6 +923,31 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		}else if(standardVal.equalsIgnoreCase("CA")){
 			setDefaultCA();
 		}
+	}
+	
+	public void hideBrowseStandardsPopup(NativePreviewEvent event){
+		try{
+			if(event.getTypeInt()==Event.ONMOUSEOVER){
+				Event nativeEvent = Event.as(event.getNativeEvent());
+				boolean target=eventTargetsPopup(nativeEvent);
+				if(!target)
+				{
+					if(isBrowseStandardsToolTip){
+						browseStandardsTooltip.hide();
+					}
+				}
+			}
+		}catch(Exception ex){ex.printStackTrace();}
+	}
+	
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			try{
+				return browseStandardsTooltip.getElement().isOrHasChild(Element.as(target));
+			}catch(Exception ex){}
+		}
+		return false;
 	}
 	
 }

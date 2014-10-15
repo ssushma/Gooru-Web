@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.child.ChildView;
+import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
@@ -14,6 +15,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMeta
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.UcCBundle;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
@@ -36,6 +38,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -49,7 +52,6 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	@UiField Image collectionImage;
 	@UiField Label itemTitle,itemNumber;
 	
-
 	@UiField TextBox reorderTxtBox;
 	@UiField Button moveUpBtn,moveDownBtn;
 	
@@ -82,6 +84,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	
 	private int itemNo;
 	
+	private PopupPanel toolTipPopupPanel=new PopupPanel(true);
+	
 	final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
 	
 	final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
@@ -97,7 +101,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	public ShelfFolderItemChildView(FolderDo folderDo, int folderNumber) { 
 		initWidget(uiBinder.createAndBindUi(this));
 		this.folderDo = folderDo;
-		setItemNo(folderNumber);
+//		setItemNo(folderNumber);
 		setFolderData(folderDo);
 		contentBlock.getElement().setId("fpnlContentBlock");
 		folderImage.getElement().setId("epnlFolderImage");
@@ -106,6 +110,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		contents.getElement().setId("fpnlContents");
 		moveDownBtn.setVisible(true);
 		moveUpBtn.setVisible(true);
+		
 	}
 	
 	public void setFolderData(final FolderDo folderDo) {
@@ -206,8 +211,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		} else {
 			contents.addStyleName(folderStyle.empty());
 		}
-		reorderTxtBox.setText(getItemNo()+""); 
-		itemNumber.setText(getItemNo()+""); 
+		/*reorderTxtBox.setText(getItemNo()+""); 
+		itemNumber.setText(getItemNo()+"");*/ 
 		itemTitle.setText(folderDo.getTitle());	
 		itemTitle.getElement().setAttribute("alt",folderDo.getTitle());
 		itemTitle.getElement().setAttribute("title",folderDo.getTitle());
@@ -361,6 +366,16 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		}
 	}
 	
+	public void showReorderValidationToolTip(String validationMsg){
+		toolTipPopupPanel.clear();
+		toolTipPopupPanel.setWidget(new GlobalToolTip(validationMsg));
+		toolTipPopupPanel.setStyleName("");
+		toolTipPopupPanel.setPopupPosition(reorderTxtBox.getElement().getAbsoluteLeft()+110, reorderTxtBox.getElement().getAbsoluteTop()-40);
+		toolTipPopupPanel.getElement().getStyle().setZIndex(9999);
+		toolTipPopupPanel.show();
+		new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
+	}
+	
 	
 	/**
 	 * Decides Up and Down button visibility
@@ -479,7 +494,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	public void setItemGooruOId(String itemGooruOId) {
 		this.itemGooruOId = itemGooruOId;
 	}
-
+	
 
 	/*public void reorderCollectionItem(int widgetIndex) { 
 		
