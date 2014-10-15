@@ -166,6 +166,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		unitPanel.clear();
 		graphWidget.clear();
 		loadCollections.clear();
+		scoredAbovePanel.clear();
+		scoredBelowPanel.clear();
 	}
 	
 	@Override

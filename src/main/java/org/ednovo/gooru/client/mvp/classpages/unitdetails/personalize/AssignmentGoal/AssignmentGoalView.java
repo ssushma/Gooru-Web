@@ -133,10 +133,12 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 		if (list !=null && list.size() > 0){
 			lblPleaseWait.setVisible(false);
 			for (int i=displayStartFrom; i<displayLimit; i++){
-				if (list.get(i) != null && list.get(i).getTitle() != null){
-					GoalViewVc goalsVc = new GoalViewVc(""+(i+1), list.get(i)) {
-					};
-					panelAssignmentList.add(goalsVc);
+				if(i<list.size()){
+					if (list.get(i) != null && list.get(i).getTitle() != null){
+						GoalViewVc goalsVc = new GoalViewVc(""+(i+1), list.get(i)) {
+						};
+						panelAssignmentList.add(goalsVc);
+					}
 				}
 			}
 		}else{

@@ -120,8 +120,8 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 		
 		studyChartContainer.add(lineChartView);
 		studyChartContainer.add(lineChartView1);
-		studyChartContainer.add(lineChartView2);
-		studyChartContainer.add(lineChartView3);
+		//studyChartContainer.add(lineChartView2);
+		//studyChartContainer.add(lineChartView3);
 		
 		return studyChartContainer;
 	}
