@@ -985,10 +985,10 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
 	public void updatCollectionViewsCount(){
 		if(collectionDo!=null&&collectionDo.getGooruOid()!=null){
-//			String viewsCount=collectionDo.getViews();
-//			Integer viewsCounts=Integer.parseInt(viewsCount)+1;
-//			collectionDo.setViews(viewsCounts.toString());
-//			metadataPresenter.setViewCount(viewsCounts.toString());
+			String viewsCount=collectionDo.getViews();
+			Integer viewsCounts=Integer.parseInt(viewsCount)+1;
+			collectionDo.setViews(viewsCounts.toString());
+			metadataPresenter.setViewCount(viewsCounts.toString());
 			try{
 	    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(collectionDo.getViews(), collectionDo.getGooruOid(), "views"));
 	         }
@@ -1179,7 +1179,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
 	@Override
 	public void updateViewsCount() {
-		updateResourceViewCount(collectionDo.getGooruOid(),collectionDo.getViews(),RESOURCE);
+		//updateResourceViewCount(collectionDo.getGooruOid(),collectionDo.getViews(),RESOURCE);
 	}
 
 	public void createPlayerDataLogs(){
@@ -1892,6 +1892,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(collectionEndTime-newCollectionStartTime, getCollectionScore()));
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,new JSONString(new JSONObject().toString()));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
+		if(eventType.equals(PlayerDataLogEvents.START_EVENT_TYPE)){
+			updateResourceViewCount(collectionDo.getGooruOid(),collectionDo.getViews(),RESOURCE);
+		}
 	}
 	public void triggerCollectionItemNewDataLogStartStopEvent(String resourceId,Long resourceStartTime,Long resourceEndTime,String eventType,Integer score,String questionType){
 		JSONObject collectionDataLog=new JSONObject(); 
@@ -1915,6 +1918,10 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(resourceEndTime-resourceStartTime, getResourceScore()));
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount(),answerObjectArray));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
+		if(eventType.equals(PlayerDataLogEvents.START_EVENT_TYPE)){
+			updateResourceViewCount(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getViews().toString(),RESOURCE,collectionItemDo.getCollectionItemId());
+		}
+		
 	}
 	public void triggerSaveOeAnswerTextDataEvent(String eventId,String resourceId,Long oeStartTime,Long oeEndTime,int score){
 		JSONObject collectionDataLog=new JSONObject(); 
