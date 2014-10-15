@@ -147,7 +147,7 @@
 
 .bubbleMain:hover .progressPopupBox {
     display: block;
-    left: -112px;
+    left: -117px;
     position: absolute;
     top: 55px;
 }
@@ -160,6 +160,7 @@
     height: 55px;
     /* margin: -53px 0 0; */
     width: 55px;
+    opacity: 0.7;
 }
 
 .progressPopupBox .topHandle {
