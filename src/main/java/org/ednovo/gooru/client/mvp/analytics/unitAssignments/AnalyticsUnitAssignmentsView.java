@@ -2,8 +2,10 @@ package org.ednovo.gooru.client.mvp.analytics.unitAssignments;
 
 import java.util.List;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitCricleView;
+import org.ednovo.gooru.client.mvp.search.event.DisplayNextSetAssignmentsEvent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
@@ -122,9 +124,12 @@ public class AnalyticsUnitAssignmentsView extends BaseViewWithHandlers<Analytics
 			if(value=="right"){
 				offsetValue = getAssignmentOffsetValue(NEXT);
 				getUiHandlers().getPathwayItems("sequence",assignmentLimit, offsetValue);
+				AppClientFactory.fireEvent(new DisplayNextSetAssignmentsEvent(offsetValue, NEXT));
 			}else{
 				offsetValue = getAssignmentOffsetValue(PREVIOUS);
 				getUiHandlers().getPathwayItems("sequence", assignmentLimit, offsetValue);
+				System.out.println("offsetValue::"+offsetValue);
+				AppClientFactory.fireEvent(new DisplayNextSetAssignmentsEvent(offsetValue, PREVIOUS));
 			}
 		}
 	}

@@ -124,6 +124,9 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 		panelAssignmentList.clear();
 		if (displayLimit > 10){
 			displayLimit = displayLimit > list.size()  ? list.size() : displayLimit;
+			if(displayLimit%10!=0){
+				displayLimit=displayLimit+(10-(displayLimit%10));
+			}
 		}else{
 			displayLimit = 10;
 		}
