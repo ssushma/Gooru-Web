@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import java_cup.internal_error;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
@@ -629,6 +631,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		shelfFolderItemChildView.getReorderTxtBox().addKeyPressHandler(new HasNumbersOnly()); 
 		shelfFolderItemChildView.upButtonIsVisible(false);
 		folderContentBlock.insert(shelfFolderItemChildView, 0); 
+		setTotalCount(getTotalCount()+1);
 		setFolderCollectionItemSequence();
 		mainSection.removeStyleName(folderStyle.emptyFolder());
 	}
@@ -877,10 +880,20 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	}
 	
 
+	/**
+	 * Before reorder will return with valid message.
+	 * @param itemToBeMovedPosSeqNumb {@link Integer}
+	 * @param itemPosSeqNumb {@link Integer}
+	 * @param arrow {@link String}
+	 * @return validationStaus {@link String} 
+	 */
 	public String reorderValidations(int itemToBeMovedPosSeqNumb,int itemPosSeqNumb,String arrow) {
 		String validationStaus=REORDER_VALIDATION_MSG; 
 		if(itemToBeMovedPosSeqNumb==0){
 			validationStaus = "Given Reorder sequence is not valid or empty.";
+		}else if(itemToBeMovedPosSeqNumb>getTotalCount()){
+//			validationStaus = "you have only "+getTotalCount()+" items, reorder sequence should be well with in this.";
+			validationStaus = "Sorry, you don't have "+itemToBeMovedPosSeqNumb+"th folder or collection to reorder";
 		}else if(itemToBeMovedPosSeqNumb>itemPosSeqNumb && arrow.equalsIgnoreCase(UP_ARROW)){
 			validationStaus = "Please click on down arrow";
 		}else if(itemToBeMovedPosSeqNumb<itemPosSeqNumb && arrow.equalsIgnoreCase(DOWN_ARROW)){
