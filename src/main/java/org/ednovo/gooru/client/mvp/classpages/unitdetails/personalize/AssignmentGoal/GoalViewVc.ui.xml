@@ -3,6 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gui="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style field="style" src="assignmentgoal.css" />
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties" />	
+	<g:HTMLPanel styleName="{style.bubblemainContainer}">
 	<gui:HTMLEventPanel styleName="bubbleMain" ui:field="panelMembers">
 		<g:Label styleName="numaric" ui:field="lblAssignmentNumber"></g:Label>
 		<div class="progressPopupBox">
@@ -29,4 +30,5 @@
 		</div>
 		 
 	</gui:HTMLEventPanel>
+	</g:HTMLPanel>
 </ui:UiBinder> 

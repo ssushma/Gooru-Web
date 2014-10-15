@@ -5,7 +5,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="style" src="personalize.css" />
 	<g:HTMLPanel styleName="{style.personalizeContainer} unitDetailsSigngle">
-		<g:HTMLPanel styleName="col-xs-12" ui:field="panelPersonalizeContainer">
+		<g:HTMLPanel styleName="" ui:field="panelPersonalizeContainer">
 			
 		</g:HTMLPanel>
 		<div class="clearfix"></div>

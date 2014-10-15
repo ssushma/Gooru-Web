@@ -32,8 +32,9 @@ public class StudentScoredAboveBelowUlPanel extends Composite {
 	void setData(UserDataDo userData){
 		userImage.setUrl("../images/analytics/score-img.png");
 		namelbl.setText(userData.getUserName());
-		scorelbl.setText(userData.getGradeInPercentage());
-		timelbl.setText(userData.getTimeSpent()+"");
+		if(userData.getGradeInPercentage()!=null)
+		scorelbl.setText(userData.getGradeInPercentage()+"");
+		timelbl.setText(AnalyticsUtil.getTimeSpent(userData.getTimeSpent()));
 		reactionlbl.add(new AnalyticsReactionWidget(userData.getReaction()));
 	}
 }
