@@ -61,7 +61,7 @@ public abstract class DeletePopupViewVc extends PopupPanel {
 	@UiField
 	Button btnNegitive, btnPositive;
 	
-	@UiField Label lblTitle, lblRemoving;
+	@UiField Label lblTitle, lblRemoving,lblDeleteText;
 	
 	@UiField HTML htmlNotes, htmlDescription;
 	
@@ -69,6 +69,7 @@ public abstract class DeletePopupViewVc extends PopupPanel {
 	
 	@UiField HTMLPanel imgDeleteIcon;
 	
+		
 	boolean isValidate=false;
 
 	private String deleteCode=null;
@@ -108,6 +109,9 @@ public abstract class DeletePopupViewVc extends PopupPanel {
 		btnPositive.setText(StringUtil.generateMessage(i18n.GL0190()));
 		btnPositive.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0190()));
 		btnPositive.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0190()));
+		
+		lblDeleteText.setText(i18n.GL2189());
+		StringUtil.setAttributes(lblDeleteText.getElement(), "lblDeleteText", null, "lblDeleteText");
 		
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));

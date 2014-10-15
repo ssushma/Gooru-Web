@@ -282,3 +282,8 @@ p {
 	z-index: 5;
 	margin-left: 31%;
 }
+.deleteTextLable{
+	text-align: left;
+	margin-left: 53px;
+	margin-bottom: -6px;
+}

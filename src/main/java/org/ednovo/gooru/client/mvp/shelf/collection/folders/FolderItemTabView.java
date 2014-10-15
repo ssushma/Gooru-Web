@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import java_cup.internal_error;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
@@ -21,7 +23,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderDeleteView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle.CollectionEditResourceCss;
-import org.ednovo.gooru.client.mvp.shelf.list.ShelfCollection;
 import org.ednovo.gooru.client.uc.EditableLabelUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -39,6 +40,9 @@ import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -53,6 +57,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -106,6 +111,12 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	private String parentName = null;
 	
 	private int totalCount;
+	
+	private static final String UP_ARROW = "MoveUp";
+	
+	private static final String DOWN_ARROW = "MoveDown";
+	
+	private static final String REORDER_VALIDATION_MSG = "Success";
 	
 	private String O1_LEVEL_VALUE = null, O2_LEVEL_VALUE = null, O3_LEVEL_VALUE = null;
 	
@@ -373,6 +384,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					shelfFolderItemChildView.setUpDownArrowVisibility(totalCount);
 					shelfFolderItemChildView.getMoveUpBtn().addClickHandler(new OnClickReorderUpButton(folderList.get(i).getGooruOid())); 
 					shelfFolderItemChildView.getMoveDownBtn().addClickHandler(new OnClickReorderDownButton(folderList.get(i).getGooruOid()));
+					shelfFolderItemChildView.getReorderTxtBox().addKeyPressHandler(new HasNumbersOnly()); 
 					if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 						isFolderType = false;
 					}
@@ -616,8 +628,10 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		shelfFolderItemChildView.setItemGooruOId(folderDo.getGooruOid());
 		shelfFolderItemChildView.getMoveUpBtn().addClickHandler(new OnClickReorderUpButton(folderDo.getGooruOid())); 
 		shelfFolderItemChildView.getMoveDownBtn().addClickHandler(new OnClickReorderDownButton(folderDo.getGooruOid()));
+		shelfFolderItemChildView.getReorderTxtBox().addKeyPressHandler(new HasNumbersOnly()); 
 		shelfFolderItemChildView.upButtonIsVisible(false);
 		folderContentBlock.insert(shelfFolderItemChildView, 0); 
+		setTotalCount(getTotalCount()+1);
 		setFolderCollectionItemSequence();
 		mainSection.removeStyleName(folderStyle.emptyFolder());
 	}
@@ -755,6 +769,33 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		}
 	}
 	
+	
+	/**
+	 * This inner class used for to restrict text box values to have only numbers
+	 *
+	 */
+
+	public class HasNumbersOnly implements KeyPressHandler {
+
+		@Override
+		public void onKeyPress(KeyPressEvent event) {
+			if (!Character.isDigit(event.getCharCode()) 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
+				((TextBox) event.getSource()).cancelKey();
+			}
+			if (event.getNativeEvent().getKeyCode() == 46
+					|| event.getNativeEvent().getKeyCode() == 37) {
+				((TextBox) event.getSource()).cancelKey();
+			}
+		}
+	}
+	
 	/**
 	 * 
 	 * Inner class for reorder Up button, which implements click handler {@link ClickHandler}
@@ -763,7 +804,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	
 	public class OnClickReorderUpButton implements ClickHandler{
 		private String itemGooruOid;
-
+		int itemPosSeqNumb,itemToBeMovedPosSeqNumb;
+		private String reorderValidationMsg;
 		/**
 		 * Class constructor
 		 * @param itemGooruOid {@link String}
@@ -776,10 +818,24 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		public void onClick(ClickEvent event) {
 			// here re order API call shld do 
 			ShelfFolderItemChildView shelfFolderItemChildView = getFolderOrCollectionWidget(itemGooruOid);
-			reorderItemToNewPosition(shelfFolderItemChildView,(Integer.parseInt(shelfFolderItemChildView.getReorderTxtBox().getText().trim())-1));
+			itemPosSeqNumb = shelfFolderItemChildView != null ?(Integer.parseInt(shelfFolderItemChildView.getItemNumber().getText().trim())):0;
+			itemToBeMovedPosSeqNumb = (shelfFolderItemChildView != null && shelfFolderItemChildView.getReorderTxtBox().getText().trim() !=null && !shelfFolderItemChildView.getReorderTxtBox().getText().trim().equals(""))?(Integer.parseInt(shelfFolderItemChildView.getReorderTxtBox().getText().trim())):0;
+			
+			if(shelfFolderItemChildView!=null){
+				reorderValidationMsg = reorderValidations(itemToBeMovedPosSeqNumb,itemPosSeqNumb,UP_ARROW);
+				if(reorderValidationMsg.equalsIgnoreCase(REORDER_VALIDATION_MSG)){
+					if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
+						itemToBeMovedPosSeqNumb-=1;
+					}
+					reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb-1));
+				}else{
+					shelfFolderItemChildView.showReorderValidationToolTip(reorderValidationMsg);
+				}
+			}
+			
 		}
-		
 	}
+	
 	/**
 	 * 
 	 * Inner class for reorder down button, which implements click handler {@link ClickHandler}
@@ -787,8 +843,12 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	 */
 	
 	public class OnClickReorderDownButton implements ClickHandler{
+		
 		private String itemGooruOid;
-
+		int itemPosSeqNumb,itemToBeMovedPosSeqNumb;
+		private String reorderValidationMsg;
+		
+		
 		/**
 		 * Class constructor
 		 * @param itemGooruOid {@link String}
@@ -801,10 +861,49 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		public void onClick(ClickEvent event) {
 			// here re order API call shld do 
 			ShelfFolderItemChildView shelfFolderItemChildView = getFolderOrCollectionWidget(itemGooruOid);
-			reorderItemToNewPosition(shelfFolderItemChildView,(Integer.parseInt(shelfFolderItemChildView.getReorderTxtBox().getText().trim())));
+			
+			itemPosSeqNumb = shelfFolderItemChildView != null ?(Integer.parseInt(shelfFolderItemChildView.getItemNumber().getText().trim())):0;
+			itemToBeMovedPosSeqNumb = shelfFolderItemChildView != null && shelfFolderItemChildView.getReorderTxtBox().getText().trim() !=null && !shelfFolderItemChildView.getReorderTxtBox().getText().trim().equals("")?(Integer.parseInt(shelfFolderItemChildView.getReorderTxtBox().getText().trim())):0;
+			
+			if(shelfFolderItemChildView!=null){
+				reorderValidationMsg = reorderValidations(itemToBeMovedPosSeqNumb,itemPosSeqNumb,DOWN_ARROW);
+				if(reorderValidationMsg.equalsIgnoreCase(REORDER_VALIDATION_MSG)){
+					if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
+						itemToBeMovedPosSeqNumb+=1;
+					}
+					reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb));
+				}else{
+					shelfFolderItemChildView.showReorderValidationToolTip(reorderValidationMsg);
+				}
+			}
 		}
-		
 	}
+	
+
+	/**
+	 * Before reorder will return with valid message.
+	 * @param itemToBeMovedPosSeqNumb {@link Integer}
+	 * @param itemPosSeqNumb {@link Integer}
+	 * @param arrow {@link String}
+	 * @return validationStaus {@link String} 
+	 */
+	public String reorderValidations(int itemToBeMovedPosSeqNumb,int itemPosSeqNumb,String arrow) {
+		String validationStaus=REORDER_VALIDATION_MSG; 
+		if(itemToBeMovedPosSeqNumb==0){
+			validationStaus = "Given Reorder sequence is not valid or empty.";
+		}else if(itemToBeMovedPosSeqNumb>getTotalCount()){
+//			validationStaus = "you have only "+getTotalCount()+" items, reorder sequence should be well with in this.";
+			validationStaus = "Sorry, you don't have "+itemToBeMovedPosSeqNumb+"th folder or collection to reorder";
+		}else if(itemToBeMovedPosSeqNumb>itemPosSeqNumb && arrow.equalsIgnoreCase(UP_ARROW)){
+			validationStaus = "Please click on down arrow";
+		}else if(itemToBeMovedPosSeqNumb<itemPosSeqNumb && arrow.equalsIgnoreCase(DOWN_ARROW)){
+			validationStaus = "Please click on Up arrow";
+		}else if(itemToBeMovedPosSeqNumb==0){
+			validationStaus = "Please specify the reorder sequence.";
+		}
+		return validationStaus;
+	}
+	
 	
 	/**
 	 * Gets the respective folder or collection widget for reorder.
@@ -823,6 +922,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		return null;
 	}
 	
+	
+
 	/**
 	 * Reorders the position of folder or collection widget to the new position.
 	 * @param shelfFolderItemChildView {@link ShelfFolderItemChildView}
@@ -832,6 +933,11 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		folderContentBlock.insert(shelfFolderItemChildView, newItemPosition);
 		setFolderCollectionItemSequence();
 	}
+	
+	
+	
+	
+	
 	/**
 	 * @return css instance of {@link CollectionEditResourceCss}
 	 */
