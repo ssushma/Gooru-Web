@@ -57,6 +57,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
@@ -1473,7 +1474,17 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 								userUrlStr1 = userUrlStr.replaceAll(
 										"feature=player_embedded&", "");
 								// getResourceInfo(userUrlStr1);
+									
 								checkShortenUrl(userUrlStr);
+								if (userUrlStr.indexOf("youtube") >0){
+									String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(userUrlStr);
+									String thumbnailUrl = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
+									System.out.println("thumbnailUrl:"+thumbnailUrl);
+									generateImageLbl.setVisible(false);
+									setThumbnailImage.getElement().setAttribute("style","width: 80px;height: 60px;");
+									setThumbnailImage.setUrl(thumbnailUrl);
+									//thumbnailUrlStr = thumbnailImages.get(activeImageIndex);
+								}
 								loadingPanel.setVisible(true);
 								contentPanel.getElement().getStyle().setOpacity(0.6);
 

@@ -597,7 +597,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 		@Override
 		public void showResourcePreview(final String filePath,String resourceMediaFileName,String resourceOriginalFileName,  String resourceTitle,  String resourceDesc, String resourceCategory) {
-			System.out.println("usercategory::"+resourceCategory);
 			title=resourceTitle;
 			desc=resourceDesc;
 			category=resourceCategory;
