@@ -380,7 +380,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					folderContentBlock.clear();
 				}
 				for(int i = 0; i<folderList.size(); i++) {
-					shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i),i+1); 
+					shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i),i+1);
+					shelfFolderItemChildView.setCollectionItemId(folderList.get(i).getCollectionItemId());
 					shelfFolderItemChildView.setItemGooruOId(folderList.get(i).getGooruOid());
 					shelfFolderItemChildView.setUpDownArrowVisibility(totalCount);
 					shelfFolderItemChildView.getMoveUpBtn().addClickHandler(new OnClickReorderUpButton(folderList.get(i).getGooruOid())); 
@@ -820,16 +821,18 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		public void onClick(ClickEvent event) {
 			// here re order API call shld do 
 			ShelfFolderItemChildView shelfFolderItemChildView = getFolderOrCollectionWidget(itemGooruOid);
+			
 			itemPosSeqNumb = shelfFolderItemChildView != null ?(Integer.parseInt(shelfFolderItemChildView.getItemNumber().getText().trim())):0;
 			itemToBeMovedPosSeqNumb = (shelfFolderItemChildView != null && shelfFolderItemChildView.getReorderTxtBox().getText().trim() !=null && !shelfFolderItemChildView.getReorderTxtBox().getText().trim().equals(""))?(Integer.parseInt(shelfFolderItemChildView.getReorderTxtBox().getText().trim())):0;
 			
 			if(shelfFolderItemChildView!=null){
 				reorderValidationMsg = reorderValidations(itemToBeMovedPosSeqNumb,itemPosSeqNumb,UP_ARROW);
 				if(reorderValidationMsg.equalsIgnoreCase(REORDER_VALIDATION_MSG)){
-					if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
+					getUiHandlers().reorderFoldersOrCollection(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,UP_ARROW,shelfFolderItemChildView.getCollectionItemId());
+					/*if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
 						itemToBeMovedPosSeqNumb-=1;
 					}
-					reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb-1),UP_ARROW);
+					reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb-1),UP_ARROW);*/
 				}else{
 					shelfFolderItemChildView.showReorderValidationToolTip(reorderValidationMsg);
 				}
@@ -863,17 +866,18 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		public void onClick(ClickEvent event) {
 			// here re order API call shld do 
 			ShelfFolderItemChildView shelfFolderItemChildView = getFolderOrCollectionWidget(itemGooruOid);
-			
+
 			itemPosSeqNumb = shelfFolderItemChildView != null ?(Integer.parseInt(shelfFolderItemChildView.getItemNumber().getText().trim())):0;
 			itemToBeMovedPosSeqNumb = shelfFolderItemChildView != null && shelfFolderItemChildView.getReorderTxtBox().getText().trim() !=null && !shelfFolderItemChildView.getReorderTxtBox().getText().trim().equals("")?(Integer.parseInt(shelfFolderItemChildView.getReorderTxtBox().getText().trim())):0;
 			
 			if(shelfFolderItemChildView!=null){
 				reorderValidationMsg = reorderValidations(itemToBeMovedPosSeqNumb,itemPosSeqNumb,DOWN_ARROW);
 				if(reorderValidationMsg.equalsIgnoreCase(REORDER_VALIDATION_MSG)){
-					if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
+					getUiHandlers().reorderFoldersOrCollection(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,DOWN_ARROW,shelfFolderItemChildView.getCollectionItemId());
+					/*if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
 						itemToBeMovedPosSeqNumb+=1;
 					}
-					reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb),DOWN_ARROW);
+					reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb),DOWN_ARROW);*/
 				}else{
 					shelfFolderItemChildView.showReorderValidationToolTip(reorderValidationMsg);
 				}
@@ -925,6 +929,23 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	}
 	
 	
+	@Override
+	public void onReorderChangeWidgetPosition(ShelfFolderItemChildView shelfFolderItemChildView,int itemToBeMovedPosSeqNumb,int itemPosSeqNumb, String direction) {
+		
+		if(direction.equalsIgnoreCase(DOWN_ARROW)){
+			if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
+				itemToBeMovedPosSeqNumb+=1;
+			}
+			reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb),DOWN_ARROW);
+		}else{
+			if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
+				itemToBeMovedPosSeqNumb-=1;
+			}
+			reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb-1),UP_ARROW);
+		}
+		
+	}
+	
 
 	/**
 	 * Reorders the position of folder or collection widget to the new position.
@@ -936,8 +957,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		setFolderCollectionItemSequence();
 		AppClientFactory.fireEvent(new ReorderShelfListItemsEvent(shelfFolderItemChildView.getItemGooruOId(), newItemPosition, direction)); 
 	}
-	
-	
 	
 	
 	
@@ -970,4 +989,5 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
 	}
+
 }

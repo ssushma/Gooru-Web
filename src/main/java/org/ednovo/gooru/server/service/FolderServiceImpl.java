@@ -43,6 +43,7 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -58,6 +59,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.itextpdf.text.log.SysoCounter;
 
 @Service("folderService")
 @ServiceURL("/folderService")
@@ -443,5 +445,20 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFolderList(jsonRep);
+	}
+
+	@Override
+	public void reorderFoldersOrCollections(int itemToBeMovedPosSeqNumb, String collectionItemId) throws GwtException, ServerDownException {
+
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_REORDER_FOLDER_COLLECTION,collectionItemId, itemToBeMovedPosSeqNumb+"", getLoggedInSessionToken());
+		getLogger().info("-- Folder Re-order API - - - - "+url);
+		try {
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword());
+		}catch (Exception e) {
+		}
+
+
 	}
 }

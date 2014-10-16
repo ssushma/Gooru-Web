@@ -135,4 +135,6 @@ public interface FolderService extends BaseService {
 	
 	public FolderListDo getCollectionResources(String parentId,String sharingType, String collectionType) throws GwtException, ServerDownException;
 	
+	public void reorderFoldersOrCollections(int itemToBeMovedPosSeqNumb, String collectionItemId) throws GwtException, ServerDownException;
+	
 }

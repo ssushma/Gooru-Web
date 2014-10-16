@@ -78,7 +78,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	
 	private static final String ID = "id";
 	
-	private String itemGooruOId;
+	private String itemGooruOId,collectionItemId;
 	
 	private FolderDo folderDo;
 	
@@ -493,6 +493,20 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	 */
 	public void setItemGooruOId(String itemGooruOId) {
 		this.itemGooruOId = itemGooruOId;
+	}
+
+	/**
+	 * @return the collectionItemId
+	 */
+	public String getCollectionItemId() {
+		return collectionItemId;
+	}
+
+	/**
+	 * @param collectionItemId the collectionItemId to set
+	 */
+	public void setCollectionItemId(String collectionItemId) {
+		this.collectionItemId = collectionItemId;
 	}
 	
 
