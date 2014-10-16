@@ -218,7 +218,7 @@ public class LoginPopupInPlay extends PopupPanel {
 
                     @Override
                     public void onFailure(Throwable caught) {
-                        new AlertContentUc(i18n.GL0061(), caught.getMessage());
+//                        new AlertContentUc(i18n.GL0061(), caught.getMessage());
                     }
                 });
             } else {
