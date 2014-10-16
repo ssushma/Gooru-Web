@@ -824,10 +824,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				System.out.println("clickhandler::"+educationalUsePanel.isVisible());
-				System.out.println("hasClickedOnDropDwn::"+hasClickedOnDropDwn);
-				System.out.println("educationalDropDownLblOpen::"+educationalDropDownLblOpen);
-				
 				if(!hasClickedOnDropDwn){
 					System.out.println("enter");
 					educationalUsePanel.setVisible(false);

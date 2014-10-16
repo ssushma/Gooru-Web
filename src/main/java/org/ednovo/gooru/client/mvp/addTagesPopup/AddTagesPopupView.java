@@ -11,7 +11,6 @@ import java.util.Set;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
@@ -42,6 +41,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
@@ -99,6 +99,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	private static final String USER_META_ACTIVE_FLAG = "0";
 
 	boolean isCancelclicked=false;
+	private boolean isClickedOnDropDwn=false;
 	String mediaFeatureStr = i18n.GL1767();
 	String resourceId=null;
 
@@ -449,6 +450,20 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 				}
 			}
 		});
+		
+		ClickHandler tagHandler= new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				if(!isClickedOnDropDwn){
+					spanelMediaFeaturePanel.setVisible(false);
+				}else{
+					isClickedOnDropDwn=false;
+				}
+				
+			}
+		};
+		RootPanel.get().addDomHandler(tagHandler, ClickEvent.getType());
 	}
 	public void initializeAutoSuggestedBox(){
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
@@ -955,6 +970,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	}
 	
 	private void OpenMediaFeatureDropdown() {
+		isClickedOnDropDwn=true;
 		if (spanelMediaFeaturePanel.isVisible()){
 			spanelMediaFeaturePanel.setVisible(false);
 		}else{
