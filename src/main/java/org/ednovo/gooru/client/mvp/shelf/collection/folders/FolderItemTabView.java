@@ -18,6 +18,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.OpenParentFolderEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ReorderShelfListItemsEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderDeleteView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
@@ -828,7 +829,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
 						itemToBeMovedPosSeqNumb-=1;
 					}
-					reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb-1));
+					reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb-1),UP_ARROW);
 				}else{
 					shelfFolderItemChildView.showReorderValidationToolTip(reorderValidationMsg);
 				}
@@ -872,7 +873,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
 						itemToBeMovedPosSeqNumb+=1;
 					}
-					reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb));
+					reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb),DOWN_ARROW);
 				}else{
 					shelfFolderItemChildView.showReorderValidationToolTip(reorderValidationMsg);
 				}
@@ -930,9 +931,10 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	 * @param shelfFolderItemChildView {@link ShelfFolderItemChildView}
 	 * @param newItemPosition {@link Integer}
 	 */
-	public void reorderItemToNewPosition(ShelfFolderItemChildView shelfFolderItemChildView, int newItemPosition) { 
+	public void reorderItemToNewPosition(ShelfFolderItemChildView shelfFolderItemChildView, int newItemPosition,String direction) { 
 		folderContentBlock.insert(shelfFolderItemChildView, newItemPosition);
 		setFolderCollectionItemSequence();
+		AppClientFactory.fireEvent(new ReorderShelfListItemsEvent(shelfFolderItemChildView.getItemGooruOId(), newItemPosition, direction)); 
 	}
 	
 	
