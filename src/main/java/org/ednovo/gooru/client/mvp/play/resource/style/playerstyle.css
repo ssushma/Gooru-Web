@@ -43,15 +43,7 @@
 
 
 .loginStatus {
-    background-color: #46873f;
-    border: 1px solid #386d32;
-    border-radius: 20px;
-    box-shadow: 0 0 6px #3c7335 inset;
-    float: right;
-    line-height: 12px;
-	margin-right:35px;
-    padding: 6px 15px;
-	color:#ffffff;
+	
 }
 
 .loginStatus .loggingIcon {
@@ -222,24 +214,7 @@
 }
 
 
-.leftPanel {
-    background: none repeat scroll 0 0 white;
-    border-right: 1px solid #ddd;
-    box-sizing: border-box;
-    float: left;
-    min-height: 650px;
-    padding:0;
-    width: 75%;
-}
 
-
-.rightPanel {
-    box-sizing: border-box;
-    float: right;
-    padding: 30px 20px 20px;
-    width: 25%;
-	position:relative;
-}
 
 .bodyContent .greybg{
 	background:#f0f0f0;
@@ -440,15 +415,13 @@ display: inline-block;
 	margin-right:10px;
 }
 
-.rightPanel aside:last-child{
+/* .rightPanel aside:last-child{
 	position:absolute;
 	bottom:15px;
 	border-top:1px solid #cccccc;
 	width:84%;
 	margin:0;
-	
-	
-}
+} */
 
 
 .flagCollection a{
@@ -965,7 +938,7 @@ font-size: 31px;
 .studyplayer-container {
 	visibility: visible;
 	width: 100%;
-	min-width: 1020px;
+/* 	min-width: 1020px; */
 	top: 0 !important;
 	left: 0 !important;
 	right: 0 !important;
@@ -974,30 +947,16 @@ font-size: 31px;
 	overflow: visible;
 	z-index: 99999;
 	background-color: #ddd;
-	min-height: 655px;
-	height: auto;
 	overflow-y: scroll !important;
 }
 .rightPanel{
-	width: 240px;
-	min-height: 650px;
-	height:auto;
-	float: right;
-	padding: 30px 20px 20px 20px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box
+	padding-top: 30px;
 }
 .leftPanel{
-	width: 700px;
-	min-height: 650px;
-	float: left;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	padding: 30px;
-	background: white;
-	border-right: 1px solid #ddd;
+	    background: none repeat scroll 0 0 white;
+	    border-right: 1px solid #ddd;
+		padding-left:0;
+		padding-right:0;
 }
 .playerBodyContainer{
 	background: #f0f0f0;
@@ -1023,4 +982,67 @@ font-size: 31px;
 	border-bottom: 1px solid #ddd;
 }
 
+.player-resource-title{
+		color: white;
+	float: left;
+	font-size: 20px;
+	max-width: 58%;
+	min-width: 10%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 
+.resourceCountStyle{
+	color: #fff;
+	font-size: 16px;
+	line-height: 1.5;
+	margin-bottom: 0px;
+	margin-left: 18px;
+}
+.fixedContainer{
+	position:fixed;
+	width:100%;
+	z-index:999;
+}
+.bodyContent{
+	padding-top:180px;
+}
+.greybackground{
+	background: #f0f0f0;
+	padding-left: 0;
+	padding-right: 0;
+	float: left;
+	width: 100%;
+}
+.collectionImageContainer{
+}
+.collectionImage{
+	border-left: 10px solid #1076bb;
+	width: 100%;
+}
+.buttonsContainer{
+	width:100%;
+	display:inline-block;
+}
+.collectionbuttons{
+	
+}
+.collectionbuttons hr{
+	margin:10px 0;
+}
+.logStatus{}
+
+.closeButton{
+	background:url("images/player/close-button.png") no-repeat;
+	/* background-position: -398px -65px; */
+	width: 22px;
+	height: 22px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+.closeButton:hover{
+	/* background-position: -398px -37px; */
+	cursor: pointer;
+}
