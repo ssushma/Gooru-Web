@@ -220,7 +220,7 @@ public class ProfileTopicListView extends Composite{
 					searchLink.setVisible(false);
 				} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)){
 					setConceptData(profileFolderDo.getCollectionItems().get(0).getCollectionItems().get(0),topicId, null, null,null);
-					searchLink.setVisible(true);
+					searchLink.setVisible(false);
 					
 				}
 				else
