@@ -42,7 +42,7 @@ import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
+//import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
@@ -393,15 +393,15 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		
 	}
 
-	@Override
-
-	public void setTeacherInfo(AssignmentParentDo assignmentParentDo) {
-		rightPanelMetadata.setTeacherInfo(assignmentParentDo);
-		if(menuMetadataWidget!=null){
-			menuMetadataWidget.setTeacherInfo(assignmentParentDo);
-		}
-	
-	}
+//	@Override
+//
+//	public void setTeacherInfo(AssignmentParentDo assignmentParentDo) {
+//		rightPanelMetadata.setTeacherInfo(assignmentParentDo);
+//		if(menuMetadataWidget!=null){
+//			menuMetadataWidget.setTeacherInfo(assignmentParentDo);
+//		}
+//	
+//	}
 	
 	
 //	@UiHandler("teacherProfileThumbnailImage")
@@ -1092,6 +1092,15 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	public Anchor getFlagButton() {
 		return rightPanelMetadata.getFlagButton();
 	}
+
+	@Override
+	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
+		rightPanelMetadata.setTeacherInfo(classpageItemDo);
+		if(menuMetadataWidget!=null){
+			menuMetadataWidget.setTeacherInfo(classpageItemDo);
+		}
+	}
+
 
 	
 }

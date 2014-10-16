@@ -44,7 +44,8 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+//import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
@@ -415,18 +416,18 @@ public class MetadataWidget extends Composite {
 		return date;
 	}
 	
-	public void setDueDateText(Long date){
-		
-		if(date!=null&&!date.equals("")){
-			String text=CollectionsView.convertMillisecondsToDate(date);
-			dueDate.setText(text);
-			dueDate.getElement().setAttribute("alt",text);
-			dueDate.getElement().setAttribute("title",text);
-			dueDateSection.setVisible(true);
-		}else{
-			dueDateSection.setVisible(false);
-		}
-	}
+//	public void setDueDateText(Long date){
+//		
+//		if(date!=null&&!date.equals("")){
+//			String text=CollectionsView.convertMillisecondsToDate(date);
+//			dueDate.setText(text);
+//			dueDate.getElement().setAttribute("alt",text);
+//			dueDate.getElement().setAttribute("title",text);
+//			dueDateSection.setVisible(true);
+//		}else{
+//			dueDateSection.setVisible(false);
+//		}
+//	}
 	public void setDirectionText(String text){
 		if(text!=null&&!text.trim().equals("")){
 			lblDirectionsDesc.setText(text);
@@ -577,13 +578,55 @@ public class MetadataWidget extends Composite {
 		return previewFlagButton;
 	}
 	
-	public void setTeacherInfo(AssignmentParentDo assignmentParentDo) {
+//	public void setTeacherInfo(AssignmentParentDo assignmentParentDo) {
+//		hideCollectionDetails(true);
+//		teacherContainer.setVisible(true);
+//		String classTitle=assignmentParentDo.getClassTitle()!=null?assignmentParentDo.getClassTitle():"";
+//		classTitleValue.setText(classTitle);
+//		classTitleValue.getElement().setAttribute("alt",classTitle);
+//		classTitleValue.getElement().setAttribute("title",classTitle);
+//		
+//		lblclassTitle.setText(i18n.GL1578());
+//		lblclassTitle.getElement().setAttribute("alt",i18n.GL1578());
+//		lblclassTitle.getElement().setAttribute("title",i18n.GL1578());
+//		
+//		lblClassInfo.setText(i18n.GL1579());
+//		lblClassInfo.getElement().setAttribute("alt",i18n.GL1579());
+//		lblClassInfo.getElement().setAttribute("title",i18n.GL1579());
+//		
+//		lblTeacher.setText(i18n.GL1580());
+//		lblTeacher.getElement().setAttribute("alt",i18n.GL1580());
+//		lblTeacher.getElement().setAttribute("title",i18n.GL1580());
+//		
+//		lbldueDate.setText(i18n.GL1581());
+//		lbldueDate.getElement().setAttribute("alt",i18n.GL1581());
+//		lbldueDate.getElement().setAttribute("title",i18n.GL1581());
+//		
+//		lblDirections.setText(i18n.GL1582());
+//		lblDirections.getElement().setAttribute("alt",i18n.GL1582());
+//		lblDirections.getElement().setAttribute("title",i18n.GL1582());
+//		
+//		lblunitTitle.setText(i18n.GL2249());
+//		String unitTitle=assignmentParentDo.getPathwayTitle()!=null?assignmentParentDo.getPathwayTitle():"";
+//		unitTitleValue.setText(unitTitle);
+//		setDueDateText(assignmentParentDo.getPlannedEndDate());
+//		setDirectionText(assignmentParentDo.getNarration());
+//	
+//	}
+	
+	public void hideCollectionDetails(boolean hide){
+		authorPanel.setVisible(!hide);
+		courseSection.setVisible(!hide);
+		standardSection.setVisible(!hide);
+		viewSection.setVisible(!hide);
+	}
+	
+	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
 		hideCollectionDetails(true);
 		teacherContainer.setVisible(true);
-		String classTitle=assignmentParentDo.getClassTitle()!=null?assignmentParentDo.getClassTitle():"";
-		classTitleValue.setText(classTitle);
-		classTitleValue.getElement().setAttribute("alt",classTitle);
-		classTitleValue.getElement().setAttribute("title",classTitle);
+		classTitleValue.setText(classpageItemDo.getTitle());
+		classTitleValue.getElement().setAttribute("alt",classpageItemDo.getTitle());
+		classTitleValue.getElement().setAttribute("title",classpageItemDo.getTitle());
 		
 		lblclassTitle.setText(i18n.GL1578());
 		lblclassTitle.getElement().setAttribute("alt",i18n.GL1578());
@@ -605,21 +648,27 @@ public class MetadataWidget extends Composite {
 		lblDirections.getElement().setAttribute("alt",i18n.GL1582());
 		lblDirections.getElement().setAttribute("title",i18n.GL1582());
 		
-		lblunitTitle.setText(i18n.GL2249());
-		String unitTitle=assignmentParentDo.getPathwayTitle()!=null?assignmentParentDo.getPathwayTitle():"";
-		unitTitleValue.setText(unitTitle);
-		setDueDateText(assignmentParentDo.getPlannedEndDate());
-		setDirectionText(assignmentParentDo.getNarration());
-	
-	}
-	
-	public void hideCollectionDetails(boolean hide){
-		authorPanel.setVisible(!hide);
-		courseSection.setVisible(!hide);
-		standardSection.setVisible(!hide);
-		viewSection.setVisible(!hide);
+		setDueDateText(classpageItemDo.getPlannedEndDate());
+		setDirectionText(classpageItemDo.getDirection());
+		teacherNameLabel.setText(classpageItemDo.getUserNameDispaly());
+		teacherNameLabel.getElement().setAttribute("alt",classpageItemDo.getUserNameDispaly());
+		teacherNameLabel.getElement().setAttribute("title",classpageItemDo.getUserNameDispaly());
+		
+		teacherProfileContainer.clear();
+		//teacherProfileThumbnailImage.setUrl(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()); 
+		teacherProfileContainer.add(new TeacherImage(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()));
 	}
 
+	public void setDueDateText(String text){
+		if(text!=null&&!text.trim().equals("")){
+			dueDate.setText(text);
+			dueDate.getElement().setAttribute("alt",text);
+			dueDate.getElement().setAttribute("title",text);
+			dueDateSection.setVisible(true);
+		}else{
+			dueDateSection.setVisible(false);
+		}
+	}
 
 
 
