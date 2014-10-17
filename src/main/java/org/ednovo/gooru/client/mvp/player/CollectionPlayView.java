@@ -222,7 +222,7 @@ public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlay
 
 													@Override
 													public void onFailure(	Throwable caught) {
-														new AlertContentUc(i18n.GL0061(),caught.getMessage());
+//														new AlertContentUc(i18n.GL0061(),caught.getMessage());
 													}
 												});
 							}
