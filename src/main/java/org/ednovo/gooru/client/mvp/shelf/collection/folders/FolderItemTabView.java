@@ -973,7 +973,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	public void reorderItemToNewPosition(ShelfFolderItemChildView shelfFolderItemChildView, int newItemPosition,String direction, HashMap<String, String> params){ 
 		folderContentBlock.insert(shelfFolderItemChildView, newItemPosition);
 		setFolderCollectionItemSequence();
-		AppClientFactory.fireEvent(new ReorderShelfListItemsEvent(shelfFolderItemChildView.getItemGooruOId(), newItemPosition, direction, params)); 
+		AppClientFactory.fireEvent(new ReorderShelfListItemsEvent(shelfFolderItemChildView.getItemGooruOId(), newItemPosition, direction, params));  
 	}
 	
 	
