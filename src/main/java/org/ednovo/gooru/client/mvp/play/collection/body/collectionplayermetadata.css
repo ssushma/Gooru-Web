@@ -231,11 +231,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', end
 
 .successPostMsg {
 	text-align: center;
-	height: 60px;
-	width: 505px;
-	margin-right: 20px;
+	height: 80px;
 	float: left;
-	padding-top: 40px;
+	padding-top: 30px;
 	border: 1px solid #dddddd;
 }
 

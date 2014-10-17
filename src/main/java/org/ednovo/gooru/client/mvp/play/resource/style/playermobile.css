@@ -74,7 +74,15 @@ header{
 .collectionPlayerContainer{
 	
 }
-.blocksmall{}
+.blocksmall{
+	
+	float: left;
+padding: 10px 10px;
+width: 100%;
+background: #ffffff;
+border-bottom: 1px solid #ddd;
+position: relative;
+}
 
 /* new responsive css*/
 
@@ -127,3 +135,7 @@ header{
 .closeButton{
 	right:50px;
 }
+.bodysection{
+	
+}
+

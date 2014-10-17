@@ -112,5 +112,7 @@ public interface PlayerStyleBundle extends ClientBundle {
 		String logStatus();
 		
 		String closeButton();
+		
+		String bodysection();
 	}
 }

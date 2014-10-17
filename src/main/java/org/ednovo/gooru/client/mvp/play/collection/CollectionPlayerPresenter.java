@@ -2160,10 +2160,10 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 	}
 	public void addFixedPositionNavArrows(){
-		resoruceMetadataPresenter.getWidget().getElement().getStyle().setPaddingTop(38+50, Unit.PX);
-		resoruceMetadataPresenter.getCollectionContainer().getElement().getStyle().setPosition(Position.FIXED);
-		int height=resoruceMetadataPresenter.getCollectionContainer().getElement().getOffsetHeight();
-		resoruceMetadataPresenter.getResourceWidgetContainer().getElement().getStyle().setPaddingTop(height, Unit.PX);
+//		resoruceMetadataPresenter.getWidget().getElement().getStyle().setPaddingTop(38+50, Unit.PX);
+//		resoruceMetadataPresenter.getCollectionContainer().getElement().getStyle().setPosition(Position.FIXED);
+//		int height=resoruceMetadataPresenter.getCollectionContainer().getElement().getOffsetHeight();
+		//resoruceMetadataPresenter.getResourceWidgetContainer().getElement().getStyle().setPaddingTop(height, Unit.PX);
 	}
 
 	public void updateReviewAndRatings(String gooruOid,Integer reviewCount) {

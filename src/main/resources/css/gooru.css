@@ -2277,7 +2277,7 @@ fieldset {
 }
 #page, #menu {
 	-webkit-backface-visibility: hidden;
-	-webkit-perspective: 1000;
+	/* -webkit-perspective: 1000; */
 }
 .animating #menu, .menu-visible #menu {
 	display: block;
@@ -2290,13 +2290,13 @@ fieldset {
 	transform: translate3d( -240px, 0, 0 );
 	-webkit-transform: translate3d( -240px, 0, 0 );
 }
-.animating.right #page {
+/* .animating.right #page {
 	transform: translate3d( 240px, 0, 0 );
 	-webkit-transform: translate3d( 240px, 0, 0 );
-}
-.menu-visible #page {
+} */
+/* .menu-visible #page {
 	right: 240px;
-}
+} */
 @media screen and (min-width: 0px) and (max-width: 1275px) {
 	.panelHeight{
 		width:100%;
