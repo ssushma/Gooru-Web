@@ -51,7 +51,9 @@ public class FolderDo implements Serializable{
 	private String ideas;
 	private String performanceTasks;
 	private String questions;
+	private String collectionItemId;
 	
+
 	public FolderDo(){}
 
 	/** 
@@ -202,6 +204,20 @@ public class FolderDo implements Serializable{
 
 	public void setQuestions(String questions) {
 		this.questions = questions;
+	}
+	
+	/**
+	 * @return the collectionItemId
+	 */
+	public String getCollectionItemId() {
+		return collectionItemId;
+	}
+
+	/**
+	 * @param collectionItemId the collectionItemId to set
+	 */
+	public void setCollectionItemId(String collectionItemId) {
+		this.collectionItemId = collectionItemId;
 	}
 	
 }
