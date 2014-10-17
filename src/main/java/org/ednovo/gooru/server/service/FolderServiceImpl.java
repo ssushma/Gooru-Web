@@ -458,7 +458,5 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword());
 		}catch (Exception e) {
 		}
-
-
 	}
 }
