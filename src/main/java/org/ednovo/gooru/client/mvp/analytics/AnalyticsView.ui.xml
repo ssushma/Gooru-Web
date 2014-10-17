@@ -13,7 +13,7 @@
 			    </uc:UlPanel>  
 			    
 				<g:HTMLPanel styleName="{unitStyle.uniSetup}">
-					<g:Label styleName="{unitStyle.moreUnits}" ui:field="lblMoreUnits">More Units</g:Label>
+					<g:Label styleName="{unitStyle.moreUnits}" ui:field="lblMoreUnits" text="{i18n.GL2256}"></g:Label>
 				</g:HTMLPanel>
 			</div>
 			<div class="col-xs-10 {unitStyle.rightPanel}">
@@ -33,8 +33,8 @@
 				<!-- load all collections start-->
 				<g:HTMLPanel styleName="row {unitStyle.generalSet}">
 				   <g:HTMLPanel>
-				   	   <div class="{unitStyle.narrowReportText}">Narrow report information by collection and student:</div>
-				       <g:ListBox styleName="{unitStyle.filterDropDown}" ui:field="loadCollections">
+				  	  <g:Label styleName="{unitStyle.narrowReportText}" text="{i18n.GL2257}"></g:Label>
+				      <g:ListBox styleName="{unitStyle.filterDropDown}" ui:field="loadCollections">
 				  	  </g:ListBox>
 				      </g:HTMLPanel>
 				</g:HTMLPanel>
@@ -44,10 +44,10 @@
 				<g:HTMLPanel styleName="row {unitStyle.generalSet} {unitStyle.arrowStyle}">
 				   <g:HTMLPanel>
 				       <g:HorizontalPanel styleName="{unitStyle.rowInner}">
-				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Label styleName="{unitStyle.viewAssignmentText}">View Collection</g:Label>  </g:HTMLPanel>
-				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionSummary" styleName="primary">Summary</g:Button> <g:Label ui:field="summaryArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
-				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionProgress" styleName="primary">Progress</g:Button><g:Label ui:field="progressArrowlbl" styleName="{unitStyle.caretUp}"></g:Label> </g:HTMLPanel>
-				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionResponses"  styleName="primary">Responses</g:Button> <g:Label ui:field="responsesArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
+				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Label styleName="{unitStyle.viewAssignmentText}" text="{i18n.GL2227}"></g:Label>  </g:HTMLPanel>
+				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionSummary" styleName="primary" text="{i18n.GL2228}"></g:Button> <g:Label ui:field="summaryArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
+				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionProgress" styleName="primary" text="{i18n.GL2229}"></g:Button><g:Label ui:field="progressArrowlbl" styleName="{unitStyle.caretUp}"></g:Label> </g:HTMLPanel>
+				          <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnCollectionResponses"  styleName="primary" text="{i18n.GL2258}"></g:Button> <g:Label ui:field="responsesArrowlbl" styleName="{unitStyle.caretUp}"></g:Label>  </g:HTMLPanel>
 				        </g:HorizontalPanel> 
 				      </g:HTMLPanel>
 				</g:HTMLPanel>
@@ -67,10 +67,10 @@
 					<div class=" {unitStyle.studentPerformance}">
 					<div class="row">
 						<div class="{unitStyle.unitHeadingAnalytics}">
-						Student Performance <span>Heighlight students with certain score range below.</span>
+						<g:Label text="{i18n.GL2259}" styleName="{unitStyle.studentsPerformance}"></g:Label> <g:InlineLabel text="{i18n.GL2260}"></g:InlineLabel>
 						</div>
 						<div class="{unitStyle.scoreText}">
-						Minimum score: <g:InlineLabel ui:field="minimumScorelbl"></g:InlineLabel>
+						<g:InlineLabel text="{i18n.GL2261}"></g:InlineLabel> <g:InlineLabel ui:field="minimumScorelbl"></g:InlineLabel>
 						</div>
 						<div class="clearfix"></div>
 						</div>
@@ -89,18 +89,18 @@
 					
 					<div class="row scores" style="display:none;">
 					<div class="col-xs-6">
-					Bottom scores: <g:TextBox ui:field="minimumScoreBelow" styleName="{unitStyle.form_control}"></g:TextBox>%
+					<g:InlineLabel text="{i18n.GL2262}"></g:InlineLabel> <g:TextBox ui:field="minimumScoreBelow" styleName="{unitStyle.form_control}"></g:TextBox>%
 					</div>
 					<div class="col-xs-6 text-right">
-					Top scores: <g:TextBox ui:field="minimumScoreAbove" styleName="{unitStyle.form_control}"></g:TextBox>%
+					<g:InlineLabel text="{i18n.GL2263}"></g:InlineLabel> <g:TextBox ui:field="minimumScoreAbove" styleName="{unitStyle.form_control}"></g:TextBox>%
 					</div>
 					<div class="clearfix"></div>
 					</div>
 					
 					<div class="row {unitStyle.scoresTable}">
 					
-					<div class="col-xs-6 {unitStyle.org}">Bottom scores</div>
-					<div class="col-xs-6 {unitStyle.green}">Top scores</div>
+					<g:Label styleName="col-xs-6 {unitStyle.org}" text="{i18n.GL2264}"/>
+					<g:Label styleName="col-xs-6 {unitStyle.green}" text="{i18n.GL2265}"/>
 					
 					<div class="clearfix"></div>
 					</div>

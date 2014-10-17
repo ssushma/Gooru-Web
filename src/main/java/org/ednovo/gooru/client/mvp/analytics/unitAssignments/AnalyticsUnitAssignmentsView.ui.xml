@@ -2,8 +2,9 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="unitStyle" src="analyticsUnitAssignments.css" />
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel styleName="{unitStyle.pnlPersonalizecontainer}">
-	<g:Label styleName="{unitStyle.generalSettingTxt}">General Setting</g:Label>
+	<g:Label styleName="{unitStyle.generalSettingTxt}"  text="{i18n.GL2281}"></g:Label>
 	<g:HTMLPanel ui:field="circleContainerPanel">
 	</g:HTMLPanel>
 	</g:HTMLPanel>

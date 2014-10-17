@@ -14,6 +14,7 @@ import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.DataView;
 import org.ednovo.gooru.client.mvp.analytics.util.Print;
 import org.ednovo.gooru.client.mvp.analytics.util.ViewResponsesPopup;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
@@ -54,6 +55,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	interface CollectionSummaryIndividualViewUiBinder extends
 			UiBinder<Widget, CollectionSummaryIndividualView> {
 	}
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	@UiField HTMLPanel totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData;
 	@UiField ListBox filterDropDown;
@@ -70,6 +72,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	
 	final String INCORRECT="#db0f0f",CORRECT="#4d9645",ONMULTIPULEATTEMPTS="#FBB03B";
 	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab",PRINT="print";
+	private static final String QUESTION = "question";
+	private static final String VIEWRESPONSE = i18n.GL2286();
 	
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
 	ArrayList<UserDataDo> openendedData=new ArrayList<UserDataDo>();
@@ -108,9 +112,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		};
 		tabContainer.add(individualTabContainer);
 		filterDropDown.clear();
-        filterDropDown.addItem("All", "All");
-        filterDropDown.addItem("Questions", "Questions");
-        filterDropDown.addItem("Resources", "Resources");
+		filterDropDown.addItem(i18n.GL2289(), i18n.GL2289());
+	    filterDropDown.addItem(i18n.GL2290(), i18n.GL2290());
+	    filterDropDown.addItem(i18n.GL2291(), i18n.GL2291());
 	}
 	@Override
 	public void setIndividualData(ArrayList<UserDataDo> result,HTMLPanel loadingImage) {
@@ -128,7 +132,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			resourceRowIndex.clear();
 			
 			for (UserDataDo userDataDo : result) {
-				if(userDataDo.getCategory().equalsIgnoreCase("question")){
+				if(userDataDo.getCategory().equalsIgnoreCase(QUESTION)){
 					if(!userDataDo.getType().equalsIgnoreCase("OE")){
 						questionsData.add(userDataDo);
 					}else{
@@ -297,7 +301,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	            data.setValue(i, 4, new AnalyticsReactionWidget(reaction).toString());
 	           
 	            //set View response label
-	            Label viewResponselbl=new Label("View Response");
+	            Label viewResponselbl=new Label(VIEWRESPONSE);
 	            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
 	            viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
    	            viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
@@ -323,7 +327,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		@Override
 		public void onClick(ClickEvent event) {
 			Element ele=event.getNativeEvent().getEventTarget().cast();
-			if(ele.getInnerText().equalsIgnoreCase("View Response")){
+			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE)){
 				getUiHandlers().setOEtextData(ele.getAttribute("resourceGooruId"),ele.getAttribute("questionType"));
 			}
 		}

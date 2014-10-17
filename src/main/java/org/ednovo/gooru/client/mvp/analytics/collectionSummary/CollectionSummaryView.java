@@ -64,10 +64,8 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 			if(selectedIndex==0){
 				sessionspnl.setVisible(false);
-				//final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
 				getUiHandlers().setTeacherData(collectionId,classpageId,pathwayId);
 			}else{
-                //final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
 				getUiHandlers().loadUserSessions(collectionId, classpageId, studentsListDropDown.getValue(selectedIndex),pathwayId);
 				sessionspnl.setVisible(true);
 			}
@@ -79,7 +77,6 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 				int selectedSessionIndex=sessionsDropDown.getSelectedIndex();
 				int selectedStudentIndex=studentsListDropDown.getSelectedIndex();
 				String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-                //final String classpageId="6a4cdb36-c579-4994-8ea0-5130a9838cbd";
                 setSessionStartTime(selectedSessionIndex);
 				getUiHandlers().setIndividualData(collectionId, classpageId, studentsListDropDown.getValue(selectedStudentIndex),sessionsDropDown.getValue(selectedSessionIndex),pathwayId);
 		}

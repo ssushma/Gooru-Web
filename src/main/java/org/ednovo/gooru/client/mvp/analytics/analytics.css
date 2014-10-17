@@ -690,6 +690,8 @@
 .unitHeadingAnalytics span {
 	font-size: 14px;
 	font-weight: normal;
+	float: left;
+	width: 62%;
 }
 
 .scoreText {
@@ -958,4 +960,8 @@
 	vertical-align: middle;
 	display: inline-block;
 	border: 2px solid #1076bb;
+}
+.studentsPerformance{
+	width: 30%;
+	float: left;
 }
