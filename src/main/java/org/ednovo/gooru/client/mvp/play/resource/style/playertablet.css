@@ -23,10 +23,12 @@
 	height: 95%;
 }
 .blocksmall{
-	width: 960px;
-	box-sizing: border-box;
-	background: #fff;
+	float: left;
+	padding: 10px 10px;
+	width: 100%;
+	background: #ffffff;
 	border-bottom: 1px solid #ddd;
+	position: relative;
 }
 .whitebg{}
 .navigationWrapper{}
@@ -121,4 +123,7 @@
 .logStatus{}
 .closeButton{
 	right:50px;
+}
+.bodysection{
+	
 }

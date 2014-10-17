@@ -233,12 +233,7 @@
     width: 100%;
 }
 
-.bodyContent .blocksmall{
-	 	float: left;
-	    padding: 10px 10px;
-	    width: 100%;
-	    background: #fff;
-}
+
 
 .ojectimg{
 	display:inline-block;
@@ -526,9 +521,6 @@ display: inline-block;
 
 .rightWrapper{
 	text-align:right;
-	width: 30%;
-	position: relative;
-	float: left;
 }
 
 .mainRightDisc{
@@ -976,10 +968,10 @@ font-size: 31px;
 .blocksmall{
 	float: left;
 	padding: 10px 10px;
-	width: 1000px;
-	box-sizing: border-box;
-	background: #fff;
+	width: 100%;
+	background: #ffffff;
 	border-bottom: 1px solid #ddd;
+	position: relative;
 }
 
 .player-resource-title{
@@ -1045,4 +1037,11 @@ font-size: 31px;
 .closeButton:hover{
 	/* background-position: -398px -37px; */
 	cursor: pointer;
+}
+.bodysection{
+	background: #FFF;
+	padding-left: 0;
+	padding-right: 0;
+	display: inline-block;
+	width: 100%;
 }
