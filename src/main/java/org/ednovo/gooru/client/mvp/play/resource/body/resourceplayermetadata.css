@@ -878,8 +878,8 @@ fieldset {
 	display: inline-block;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	min-width: 50px;
-	max-width: 350px;
+	min-width: 50%;
+	max-width: 100%;
 	max-height: 18px;
 	overflow: hidden;
 	

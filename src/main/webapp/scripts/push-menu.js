@@ -11,7 +11,7 @@ function showAuthorContianer() {
  
       /* Cross browser support for CSS "transition end" event */
       transitionEnd = 'transitionend webkitTransitionEnd otransitionend MSTransitionEnd';
- 
+  $body.removeClass( 'animating left right' );
   /* When the toggle menu link is clicked, animation starts */
   $body.addClass('animating');
  
@@ -23,8 +23,10 @@ function showAuthorContianer() {
    */
   if ( $body.hasClass( 'menu-visible' ) ) {
    $body.addClass( 'right' );
+   $body.toggleClass( 'menu-visible' );
   } else {
    $body.addClass( 'left' );
+   $body.toggleClass( 'menu-visible' );
   }
   
 //  $body.removeClass( 'animating left right' );

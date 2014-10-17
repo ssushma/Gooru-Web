@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget;
@@ -93,16 +94,16 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePlayerMetadataUiHandlers> implements IsResourcePlayerMetadataView{
 
-	@UiField FlowPanel resourceWidgetContainer,tagsButtonContainer;
-	@UiField
-	static FlowPanel wrapperContainerField,tagsContainer,resourcePublisher;
+	@UiField FlowPanel tagsButtonContainer;
+	@UiField SectionTag resourceWidgetContainer;
+	@UiField FlowPanel wrapperContainerField,tagsContainer,resourcePublisher;
 	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,
 					needHelpButton,plusAddTagsButton,narrationButton;
 	@UiField HTMLEventPanel emoticsContainer;
-	@UiField HTMLPanel singleEmoticsContainer,collectionContainer,ratingsContainer;
+	@UiField HTMLPanel singleEmoticsContainer,ratingsContainer;
+	@UiField SectionTag collectionContainer;
 	@UiField Label reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
-	@UiField
-	static ResourcePlayerMetadataBundle playerStyle;
+	@UiField ResourcePlayerMetadataBundle playerStyle;
 	@UiField HTML resourceTitleLbl;
 	
 //	@UiField(provided = true)
@@ -168,7 +169,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	int currentRating=0;
 	
-	public HTMLPanel getCollectionContainer(){
+	public SectionTag getCollectionContainer(){
 		return collectionContainer;
 	}
 	
@@ -706,7 +707,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	}
 
 	@Override
-	public FlowPanel getResourceWidgetContainer(){
+	public SectionTag getResourceWidgetContainer(){
 		return resourceWidgetContainer;
 	}
 
