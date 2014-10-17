@@ -2211,6 +2211,7 @@ fieldset {
 	overflow-x: hidden;
 	width: 63.75%;
 	padding: 0px 0px 0px 12%;
+	box-sizing:content-box;
 }
 
 .studyplay {
