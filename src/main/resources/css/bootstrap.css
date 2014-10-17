@@ -3141,6 +3141,18 @@ input[type="button"].btn-block {
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
 }
+.right-caret {
+    border-bottom: 4px solid transparent;
+    border-top: 4px solid transparent;
+    border-left: 4px solid;
+    display: inline-block;
+    height: 0;
+    vertical-align: top;
+    width: 0;
+    float:right;
+}
+
+
 .dropdown {
   position: relative;
 }
