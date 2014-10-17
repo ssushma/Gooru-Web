@@ -2188,16 +2188,29 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		}
 		
 		if(params.get(O3_LEVEL)!=null){
-			System.out.println("--- level 3 -- ");
-		}else if(params.get(O2_LEVEL)!=null){
-			System.out.println("--- level 2 -- ");
-		}else if(params.get(O1_LEVEL)!=null){
-			
 			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
-			TreeItem shelfCollection = getFirstLevelFolderWidgetToReorder(level1Item,itemId);
+			if(level1Item!=null) {
+				TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
+				if(level2Item!=null){
+					TreeItem level3Item = getSecondLevelTreeWidget(level2Item, params.get(O3_LEVEL));
+					TreeItem shelfCollection = getChildFolderWidgetToReorder(level3Item,itemId);
+					level3Item.insertItem(toBeMovedPos, shelfCollection);
+					shelfCollection.getElement().getStyle().setMarginLeft(-1, Unit.PX);
+				}
+			}
+		}else if(params.get(O2_LEVEL)!=null){
+			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			if(level1Item!=null) {
+				TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
+				TreeItem shelfCollection = getChildFolderWidgetToReorder(level2Item,itemId);
+				level2Item.insertItem(toBeMovedPos, shelfCollection);
+				shelfCollection.getElement().getStyle().setMarginLeft(-1, Unit.PX);
+			}
+		}else if(params.get(O1_LEVEL)!=null){
+			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			TreeItem shelfCollection = getChildFolderWidgetToReorder(level1Item,itemId);
 			level1Item.insertItem(toBeMovedPos, shelfCollection);
 			shelfCollection.getElement().getStyle().setMarginLeft(-8, Unit.PX);
-			
 		}else{
 			TreeItem shelfCollection = getWidgetToreorder(itemId);
 			myShelfVerPanel.insertItem(toBeMovedPos, shelfCollection);
@@ -2205,7 +2218,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		
 	}
 
-	private TreeItem getFirstLevelFolderWidgetToReorder(TreeItem level1Item,String itemId) {
+	private TreeItem getChildFolderWidgetToReorder(TreeItem level1Item,String itemId) {
 		
 		int childCount=level1Item.getChildCount();
 		for(int i=0;i<childCount;i++){

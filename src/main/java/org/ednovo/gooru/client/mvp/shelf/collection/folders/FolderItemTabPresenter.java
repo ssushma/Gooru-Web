@@ -152,13 +152,14 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 
 	@Override
 	public void reorderFoldersOrCollection(final ShelfFolderItemChildView shelfFolderItemChildView, final int itemToBeMovedPosSeqNumb,final int itemPosSeqNumb, final String downArrow, String collectionItemId) {
-		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(itemToBeMovedPosSeqNumb,collectionItemId, new SimpleAsyncCallback<Void>() {
+		/*AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(itemToBeMovedPosSeqNumb,collectionItemId, new SimpleAsyncCallback<Void>() {
 
 			@Override
 			public void onSuccess(Void result) {
-				System.out.println("-- in success --");
 				getView().onReorderChangeWidgetPosition(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,downArrow);
 			}
-		});
+		});*/
+		
+		getView().onReorderChangeWidgetPosition(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,downArrow);
 	}
 }
