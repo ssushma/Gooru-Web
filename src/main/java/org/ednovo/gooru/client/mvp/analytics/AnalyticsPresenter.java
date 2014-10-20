@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummary
 import org.ednovo.gooru.client.mvp.analytics.unitAssignments.AnalyticsUnitAssignmentsPresenter;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
+import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
@@ -71,6 +72,9 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	
 	@Inject
 	private  AnalyticsServiceAsync analyticService;
+	
+	@Inject
+	private ClasspageServiceAsync classpageService;
 	
 	@Inject
 	public AnalyticsPresenter(EventBus eventBus, IsAnalyticsView view,CollectionProgressPresenter collectionProgressPresenter,CollectionSummaryPresenter collectionSummaryPresenter,AnalyticsUnitAssignmentsPresenter analyticsUnitAssignmentsPresenter,PersonalizeUnitPresenter personalizeUnitPresenter) {
@@ -247,15 +251,22 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 			@Override
 			public void onSuccess(UnitAssignmentsDo result) {
 				setAnalyticsAssignmentsPresenter(result,classpageId, pathwayGooruOid);
-				setPersonalizeData(classpageDo);
 			}
 		});
 	}
 
 	@Override
-	public void setPersonalizeData(ClasspageDo classpageDo) {
+	public void setPersonalizeData() {
 		clearSlot(PERSONALIZE_SLOT);	
 		personalizeUnitPresenter.setClasspageData(classpageDo);
 		setInSlot(PERSONALIZE_SLOT, personalizeUnitPresenter,false);
+	}
+
+	public ClasspageServiceAsync getClasspageService() {
+		return classpageService;
+	}
+
+	public void setClasspageService(ClasspageServiceAsync classpageService) {
+		this.classpageService = classpageService;
 	}
 }

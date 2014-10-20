@@ -59,4 +59,5 @@ public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>
 	void removeAndAddUnitSelectedStyle();
 	
     void resetData();
+    
 }

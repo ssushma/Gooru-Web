@@ -295,6 +295,22 @@ public class DataLogEvents {
 		eventJsonObject.put("apiKey", new JSONString(getAPIKey()));
 		triggerDataLogCall(eventJsonObject);
 	}
+	
+	public static  void feedBackSendEvent(String eventId, String eventName, String contentGooruId, String gooruUId, Long startTime, Long endTime, String organizationUid, Long timeSpentInMs, String sessionToken, String type) {
+		JSONObject eventJsonObject=new JSONObject();
+		eventJsonObject.put("eventId", new JSONString(eventId));
+		eventJsonObject.put("eventName", new JSONString(eventName));
+		eventJsonObject.put("sessionToken", new JSONString(contentGooruId));
+		eventJsonObject.put("gooruUId", new JSONString(gooruUId));
+		eventJsonObject.put("startTime", new JSONNumber(startTime));
+		eventJsonObject.put("endTime", new JSONNumber(endTime));
+		eventJsonObject.put("organizationUid", new JSONString(organizationUid));
+		eventJsonObject.put("timeSpentInMs", new JSONNumber(timeSpentInMs));
+		eventJsonObject.put("sessionToken", new JSONString(sessionToken));
+		eventJsonObject.put("type", new JSONString(type));
+		eventJsonObject.put("apiKey", new JSONString(getAPIKey()));
+		triggerDataLogCall(eventJsonObject);
+	}
 	/**
 	 * 
 	 * @function triggerDataLogCall 
