@@ -2181,12 +2181,56 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	 */
 
 	@Override
-	public void reorderShelfItems(String itemId, int toBeMovedPos, String direction) {
-		TreeItem shelfCollection = getWidgetToreorder(itemId);
+	public void reorderShelfItems(String itemId, int toBeMovedPos, String direction, HashMap<String, String> params) {
+		
 		if(direction.equals(DOWN_ARROW)){
 			toBeMovedPos-=1;
 		}
-		myShelfVerPanel.insertItem(toBeMovedPos, shelfCollection);
+		
+		if(params.get(O3_LEVEL)!=null){
+			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			if(level1Item!=null) {
+				TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
+				if(level2Item!=null){
+					TreeItem level3Item = getSecondLevelTreeWidget(level2Item, params.get(O3_LEVEL));
+					TreeItem shelfCollection = getChildFolderWidgetToReorder(level3Item,itemId);
+					level3Item.insertItem(toBeMovedPos, shelfCollection);
+					shelfCollection.getElement().getStyle().setMarginLeft(-1, Unit.PX);
+				}
+			}
+		}else if(params.get(O2_LEVEL)!=null){
+			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			if(level1Item!=null) {
+				TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
+				TreeItem shelfCollection = getChildFolderWidgetToReorder(level2Item,itemId);
+				level2Item.insertItem(toBeMovedPos, shelfCollection);
+				shelfCollection.getElement().getStyle().setMarginLeft(-1, Unit.PX);
+			}
+		}else if(params.get(O1_LEVEL)!=null){
+			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			TreeItem shelfCollection = getChildFolderWidgetToReorder(level1Item,itemId);
+			level1Item.insertItem(toBeMovedPos, shelfCollection);
+			shelfCollection.getElement().getStyle().setMarginLeft(-8, Unit.PX);
+		}else{
+			TreeItem shelfCollection = getWidgetToreorder(itemId);
+			myShelfVerPanel.insertItem(toBeMovedPos, shelfCollection);
+		}
+		
+	}
+
+	private TreeItem getChildFolderWidgetToReorder(TreeItem level1Item,String itemId) {
+		
+		int childCount=level1Item.getChildCount();
+		for(int i=0;i<childCount;i++){
+			TreeItem item=level1Item.getChild(i); 
+			Widget widget=item.getWidget();
+			if (widget instanceof ShelfCollection && ((ShelfCollection) widget).getCollectionDo().getGooruOid().equals(itemId)) {
+				return item;
+			}
+			
+		}
+		
+		return null;
 	}
 
 	/**
