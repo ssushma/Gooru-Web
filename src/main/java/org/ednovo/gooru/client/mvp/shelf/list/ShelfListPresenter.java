@@ -42,8 +42,8 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.InsertMovedCo
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.OpenParentFolderEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemForSearchInAddResourceEvent;
-
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ReorderShelfListItemsEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetCollectionMovedStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateFolderItemEvent;
@@ -156,6 +156,7 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		addRegisteredHandler(OpenParentFolderEvent.TYPE, this); 
 		addRegisteredHandler(UpdateShelfFolderMetaDataEvent.TYPE, this);
 		addRegisteredHandler(ActivateCollectionStyleEvent.TYPE, this);
+		addRegisteredHandler(ReorderShelfListItemsEvent.TYPE, this);
 		
 	}
 
@@ -520,5 +521,10 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 			RefreshFolderType refreshFolderType, HashMap<String, String> params) {
 		getView().refreshFolderItemDataInSearchAddResource(folderDo, refreshFolderType, params);
 		
+	}
+
+	@Override
+	public void reorderShelfListItems(String itemId, int toBeMovedPos, String direction, HashMap<String, String> params) {
+		getView().reorderShelfItems(itemId,toBeMovedPos,direction,params);
 	}
 }

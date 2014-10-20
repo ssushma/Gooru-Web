@@ -51,6 +51,7 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
+import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -577,7 +578,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 		setImage(url, category);
 	}
 
-	public void setImage(String url, String category){
+	public void setImage(String url, final String category){
+		
 //		if(category.contains("lesson")||category.contains("textbook")||category.contains("handout"))
 //		{
 //			category=category.replaceAll("lesson", "text").replaceAll("textbook", "text").replaceAll("handout", "text");
@@ -594,6 +596,13 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 				thumbnailUrlStr = DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG;
 			}
 		} 
+		setThumbnailImage.addErrorHandler(new ErrorHandler() {
+			
+			@Override
+			public void onError(ErrorEvent event) {
+				setThumbnailImage.setUrl(DEFULT_IMAGE_PREFIX + category.toLowerCase() + PNG);
+			}
+		});
 		setThumbnailImage.setUrl(thumbnailUrlStr);
 	}
 	public void updateUi() {

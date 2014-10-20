@@ -49,6 +49,7 @@ import org.ednovo.gooru.client.mvp.shelf.ShelfView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AlertContentUc;
@@ -171,6 +172,8 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	private static final String NO_COLLECTION_MESSAGE = i18n.GL0995();
 	
 	private static final String LOADING_COLLECTION_MESSAGE = i18n.GL0996();
+	
+	private static final String DOWN_ARROW = "MoveDown";
 	
 	boolean isFromAddResourcePresenter=false;
 
@@ -309,7 +312,6 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				setFolderActiveStatus();
 			}
 		});
-		
 		myShelfVerPanelHolder.add(myShelfVerPanel);
 		
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
@@ -2076,8 +2078,6 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	@Override
 	public void refreshFolderItemDataInSearchAddResource(FolderDo folderDo,
 			RefreshFolderType refreshFolderType, HashMap<String, String> params) {
-		System.out.println("params::::::"+params);
-		System.out.println("refreshFolderType here::::::"+refreshFolderType);
 		if(refreshFolderType.equals(RefreshFolderType.INSERT)) {
 		if(params!=null) {
 			if(params.get(O3_LEVEL)!=null) {
@@ -2170,6 +2170,86 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		params.clear();
 		
 }
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Reorders shelf list items to the new respective position.
+	 */
+
+	@Override
+	public void reorderShelfItems(String itemId, int toBeMovedPos, String direction, HashMap<String, String> params) {
+		
+		if(direction.equals(DOWN_ARROW)){
+			toBeMovedPos-=1;
+		}
+		
+		if(params.get(O3_LEVEL)!=null){
+			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			if(level1Item!=null) {
+				TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
+				if(level2Item!=null){
+					TreeItem level3Item = getSecondLevelTreeWidget(level2Item, params.get(O3_LEVEL));
+					TreeItem shelfCollection = getChildFolderWidgetToReorder(level3Item,itemId);
+					level3Item.insertItem(toBeMovedPos, shelfCollection);
+					shelfCollection.getElement().getStyle().setMarginLeft(-1, Unit.PX);
+				}
+			}
+		}else if(params.get(O2_LEVEL)!=null){
+			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			if(level1Item!=null) {
+				TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
+				TreeItem shelfCollection = getChildFolderWidgetToReorder(level2Item,itemId);
+				level2Item.insertItem(toBeMovedPos, shelfCollection);
+				shelfCollection.getElement().getStyle().setMarginLeft(-1, Unit.PX);
+			}
+		}else if(params.get(O1_LEVEL)!=null){
+			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
+			TreeItem shelfCollection = getChildFolderWidgetToReorder(level1Item,itemId);
+			level1Item.insertItem(toBeMovedPos, shelfCollection);
+			shelfCollection.getElement().getStyle().setMarginLeft(-8, Unit.PX);
+		}else{
+			TreeItem shelfCollection = getWidgetToreorder(itemId);
+			myShelfVerPanel.insertItem(toBeMovedPos, shelfCollection);
+		}
+		
+	}
+
+	private TreeItem getChildFolderWidgetToReorder(TreeItem level1Item,String itemId) {
+		
+		int childCount=level1Item.getChildCount();
+		for(int i=0;i<childCount;i++){
+			TreeItem item=level1Item.getChild(i); 
+			Widget widget=item.getWidget();
+			if (widget instanceof ShelfCollection && ((ShelfCollection) widget).getCollectionDo().getGooruOid().equals(itemId)) {
+				return item;
+			}
+			
+		}
+		
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param itemId {@link String}
+	 * @return item {@link TreeItem}
+	 */
+	private TreeItem getWidgetToreorder(String itemId) {
+		int childCount=myShelfVerPanel.getItemCount();
+		
+		for(int i=0;i<childCount;i++){
+			TreeItem item=myShelfVerPanel.getItem(i);
+			Widget widget=item.getWidget();
+			if (widget instanceof ShelfCollection && ((ShelfCollection) widget).getCollectionDo().getGooruOid().equals(itemId)) {
+				return item;
+			}
+			
+		}
+		return null;
 	}
 
 }

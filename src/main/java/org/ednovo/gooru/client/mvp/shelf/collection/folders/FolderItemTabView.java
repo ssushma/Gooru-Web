@@ -1,8 +1,11 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.folders;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import java_cup.internal_error;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -15,6 +18,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.OpenParentFolderEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ReorderShelfListItemsEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderDeleteView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
@@ -37,6 +41,9 @@ import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -51,6 +58,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -103,14 +111,19 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	
 	private String parentName = null;
 	
+	private int totalCount;
+	
+	private static final String UP_ARROW = "MoveUp";
+	
+	private static final String DOWN_ARROW = "MoveDown";
+	
+	private static final String REORDER_VALIDATION_MSG = "Success";
+	
 	private String O1_LEVEL_VALUE = null, O2_LEVEL_VALUE = null, O3_LEVEL_VALUE = null;
 	
 	private CollectionEditResourceCss css;
 	
-//	private ShelfFolderItemChildView shelfFolderItemChildView;
-	
-	
-	
+	private ShelfFolderItemChildView shelfFolderItemChildView;
 	
 	private static FolderItemTabViewUiBinder uiBinder = GWT.create(FolderItemTabViewUiBinder.class);
 	
@@ -296,9 +309,9 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	 * @throws : <Mentioned if any exceptions>
 	*/
 	@Override
-	public void setFolderData(List<FolderDo> folderList, String folderParentName, String presentFolderId) { 
+	public void setFolderData(List<FolderDo> folderList, String folderParentName, String presentFolderId,int totalCount) { 
 		setFolderUrlParams();
-		
+		setTotalCount(totalCount);
 		/*Label label = new Label("");
 		label.setStyleName(getCss().shelfFoldereDragdropSpacer());
 		folderItemPanel.superAdd(label);
@@ -333,63 +346,69 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		}
 		mainSection.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()-100)+"px");
 		
-		if(folderList != null)
-		{
-		if(folderList.size()==0&&!isPaginated){
-			if(AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL)==null){
-				isFolderPanelEmpty = true;
-				folderContentBlock.clear();
-				isFolderType = false;
-				
-				mainSection.addStyleName(folderStyle.mainSection());
-				mainSection.removeStyleName(folderStyle.emptyFolder());
-				loadingImage.setVisible(false);
-				
-				Element ele = Document.get().getElementById("loadingImageLabel");
-				if (ele!=null){
-					ele.removeFromParent();
-				}
-//				folderContentBlock.add(new FoldersWelcomePageToolTip());
-//				folderContentBlock.add(new FoldersWelcomePage());
-				AppClientFactory.fireEvent(new DisplayNoCollectionEvent());
-				
-			}else{
-				folderContentBlock.clear();
-				isFolderType = false;
-				mainSection.addStyleName(folderStyle.mainSection()); 
-				mainSection.addStyleName(folderStyle.emptyFolder());
-			}
+		if(folderList != null){
 			
+			if(folderList.size()==0&&!isPaginated){
+				if(AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL)==null){
+					isFolderPanelEmpty = true;
+					folderContentBlock.clear();
+					isFolderType = false;
+
+					mainSection.addStyleName(folderStyle.mainSection());
+					mainSection.removeStyleName(folderStyle.emptyFolder());
+					loadingImage.setVisible(false);
+
+					Element ele = Document.get().getElementById("loadingImageLabel");
+					if (ele!=null){
+						ele.removeFromParent();
+					}
+					//				folderContentBlock.add(new FoldersWelcomePageToolTip());
+					//				folderContentBlock.add(new FoldersWelcomePage());
+					AppClientFactory.fireEvent(new DisplayNoCollectionEvent());
+
+				}else{
+					folderContentBlock.clear();
+					isFolderType = false;
+					mainSection.addStyleName(folderStyle.mainSection()); 
+					mainSection.addStyleName(folderStyle.emptyFolder());
+				}
+
+			}
+			else{
+				mainSection.removeStyleName(folderStyle.emptyFolder());
+				if(!isPaginated) {
+					folderContentBlock.clear();
+				}
+				for(int i = 0; i<folderList.size(); i++) {
+					shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i),i+1);
+					shelfFolderItemChildView.setCollectionItemId(folderList.get(i).getCollectionItemId());
+					shelfFolderItemChildView.setItemGooruOId(folderList.get(i).getGooruOid());
+					shelfFolderItemChildView.setUpDownArrowVisibility(totalCount);
+					shelfFolderItemChildView.getMoveUpBtn().addClickHandler(new OnClickReorderUpButton(folderList.get(i).getGooruOid())); 
+					shelfFolderItemChildView.getMoveDownBtn().addClickHandler(new OnClickReorderDownButton(folderList.get(i).getGooruOid()));
+					shelfFolderItemChildView.getReorderTxtBox().addKeyPressHandler(new HasNumbersOnly()); 
+					if(folderList.get(i).getType().equalsIgnoreCase("folder")){
+						isFolderType = false;
+					}
+//					folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
+					folderContentBlock.add(shelfFolderItemChildView);
+				}
+				setFolderCollectionItemSequence();
+			}
 		}
 		else{
 			mainSection.removeStyleName(folderStyle.emptyFolder());
 			if(!isPaginated) {
-//				folderItemPanel.clear();
-				folderContentBlock.clear();
-			}
-			for(int i = 0; i<folderList.size(); i++) {
-//				shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i));
-				if(folderList.get(i).getType().equalsIgnoreCase("folder")){
-					isFolderType = false;
-				}
-				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
-//				folderContentBlock.add(shelfFolderItemChildView);
-//				folderItemPanel.addDraggable(shelfFolderItemChildView,i);
-			}
-		}
-		}
-		else{
-			mainSection.removeStyleName(folderStyle.emptyFolder());
-			if(!isPaginated) {
 				folderContentBlock.clear();
 //				folderItemPanel.clear();
 			}
 			for(int i = 0; i<folderList.size(); i++) {
-//				shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i));
+				shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i),i+1);
 				if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 					isFolderType = false;
 				}
-				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
+//				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
+				folderContentBlock.add(shelfFolderItemChildView);
 				/*folderContentBlock.add(shelfFolderItemChildView);
 				folderItemPanel.addDraggable(shelfFolderItemChildView,2);*/
 			}
@@ -608,9 +627,18 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	}
 	
 	private void addFolder(FolderDo folderDo) {
-		folderContentBlock.insert(new ShelfFolderItemChildView(folderDo), 0);
+		shelfFolderItemChildView = new ShelfFolderItemChildView(folderDo,1); 
+		shelfFolderItemChildView.setItemGooruOId(folderDo.getGooruOid());
+		shelfFolderItemChildView.getMoveUpBtn().addClickHandler(new OnClickReorderUpButton(folderDo.getGooruOid())); 
+		shelfFolderItemChildView.getMoveDownBtn().addClickHandler(new OnClickReorderDownButton(folderDo.getGooruOid()));
+		shelfFolderItemChildView.getReorderTxtBox().addKeyPressHandler(new HasNumbersOnly()); 
+		shelfFolderItemChildView.upButtonIsVisible(false);
+		folderContentBlock.insert(shelfFolderItemChildView, 0); 
+		setTotalCount(getTotalCount()+1);
+		setFolderCollectionItemSequence();
 		mainSection.removeStyleName(folderStyle.emptyFolder());
 	}
+	
 	
 	@UiHandler("newCollectionBtn")
 	public void onClickNewCollectionBtn(ClickEvent clickEvent){
@@ -700,12 +728,263 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		folderItemMetaDataUc.showEditableMetaData(true);
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Updates the item sequence and reorder buttons of all folders
+	 * and collection, as new folder or collection created or reordered.
+	 */
+	private void setFolderCollectionItemSequence() { 
+		Iterator<Widget> widgets = folderContentBlock.iterator();
+		int seqNum=1;
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if (widget instanceof ShelfFolderItemChildView) {
+				if(seqNum==1){
+					((ShelfFolderItemChildView) widget).upButtonIsVisible(false); 
+					((ShelfFolderItemChildView) widget).downButtonIsVisible(true); 
+				}else{
+					/**
+					 * If user moved folder to last position, based on total count down arrow will be invisible and 
+					 * vice versa in case of reordering last folder or collection to the first position, up arrow should be in visible.
+					 */
+					if(seqNum==getTotalCount()){
+						((ShelfFolderItemChildView) widget).upButtonIsVisible(true); 
+						((ShelfFolderItemChildView) widget).downButtonIsVisible(false);  
+					}else{
+						((ShelfFolderItemChildView) widget).upButtonIsVisible(true); 
+						((ShelfFolderItemChildView) widget).downButtonIsVisible(true); 
+					}
+				}
+				
+				((ShelfFolderItemChildView) widget).getItemNumber().setText(seqNum+"");
+				((ShelfFolderItemChildView) widget).getReorderTxtBox().setText(seqNum+"");
+			}
+			seqNum++;
+		}
+	}
+	
+	
+	/**
+	 * This inner class used for to restrict text box values to have only numbers
+	 *
+	 */
+
+	public class HasNumbersOnly implements KeyPressHandler {
+
+		@Override
+		public void onKeyPress(KeyPressEvent event) {
+			if (!Character.isDigit(event.getCharCode()) 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
+				((TextBox) event.getSource()).cancelKey();
+			}
+			if (event.getNativeEvent().getKeyCode() == 46
+					|| event.getNativeEvent().getKeyCode() == 37) {
+				((TextBox) event.getSource()).cancelKey();
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * Inner class for reorder Up button, which implements click handler {@link ClickHandler}
+	 *
+	 */
+	
+	public class OnClickReorderUpButton implements ClickHandler{
+		private String itemGooruOid;
+		int itemPosSeqNumb,itemToBeMovedPosSeqNumb;
+		private String reorderValidationMsg;
+		/**
+		 * Class constructor
+		 * @param itemGooruOid {@link String}
+		 */
+		public OnClickReorderUpButton(String itemGooruOid) {
+			this.itemGooruOid = itemGooruOid;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// here re order API call shld do 
+			ShelfFolderItemChildView shelfFolderItemChildView = getFolderOrCollectionWidget(itemGooruOid);
+			
+			itemPosSeqNumb = shelfFolderItemChildView != null ?(Integer.parseInt(shelfFolderItemChildView.getItemNumber().getText().trim())):0;
+			itemToBeMovedPosSeqNumb = (shelfFolderItemChildView != null && shelfFolderItemChildView.getReorderTxtBox().getText().trim() !=null && !shelfFolderItemChildView.getReorderTxtBox().getText().trim().equals(""))?(Integer.parseInt(shelfFolderItemChildView.getReorderTxtBox().getText().trim())):0;
+			
+			if(shelfFolderItemChildView!=null){
+				reorderValidationMsg = reorderValidations(itemToBeMovedPosSeqNumb,itemPosSeqNumb,UP_ARROW);
+				if(reorderValidationMsg.equalsIgnoreCase(REORDER_VALIDATION_MSG)){
+					getUiHandlers().reorderFoldersOrCollection(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,UP_ARROW,shelfFolderItemChildView.getCollectionItemId());
+					/*if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
+						itemToBeMovedPosSeqNumb-=1;
+					}
+					reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb-1),UP_ARROW);*/
+				}else{
+					shelfFolderItemChildView.showReorderValidationToolTip(reorderValidationMsg);
+				}
+			}
+			
+		}
+	}
+	
+	/**
+	 * 
+	 * Inner class for reorder down button, which implements click handler {@link ClickHandler}
+	 *
+	 */
+	
+	public class OnClickReorderDownButton implements ClickHandler{
+		
+		private String itemGooruOid;
+		int itemPosSeqNumb,itemToBeMovedPosSeqNumb;
+		private String reorderValidationMsg;
+		
+		
+		/**
+		 * Class constructor
+		 * @param itemGooruOid {@link String}
+		 */
+		public OnClickReorderDownButton(String itemGooruOid) {
+			this.itemGooruOid = itemGooruOid;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// here re order API call shld do 
+			ShelfFolderItemChildView shelfFolderItemChildView = getFolderOrCollectionWidget(itemGooruOid);
+
+			itemPosSeqNumb = shelfFolderItemChildView != null ?(Integer.parseInt(shelfFolderItemChildView.getItemNumber().getText().trim())):0;
+			itemToBeMovedPosSeqNumb = shelfFolderItemChildView != null && shelfFolderItemChildView.getReorderTxtBox().getText().trim() !=null && !shelfFolderItemChildView.getReorderTxtBox().getText().trim().equals("")?(Integer.parseInt(shelfFolderItemChildView.getReorderTxtBox().getText().trim())):0;
+			
+			if(shelfFolderItemChildView!=null){
+				reorderValidationMsg = reorderValidations(itemToBeMovedPosSeqNumb,itemPosSeqNumb,DOWN_ARROW);
+				if(reorderValidationMsg.equalsIgnoreCase(REORDER_VALIDATION_MSG)){
+					getUiHandlers().reorderFoldersOrCollection(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,DOWN_ARROW,shelfFolderItemChildView.getCollectionItemId());
+					/*if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
+						itemToBeMovedPosSeqNumb+=1;
+					}
+					reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb),DOWN_ARROW);*/
+				}else{
+					shelfFolderItemChildView.showReorderValidationToolTip(reorderValidationMsg);
+				}
+			}
+		}
+	}
+	
+
+	/**
+	 * Before reorder will return with valid message.
+	 * @param itemToBeMovedPosSeqNumb {@link Integer}
+	 * @param itemPosSeqNumb {@link Integer}
+	 * @param arrow {@link String}
+	 * @return validationStaus {@link String} 
+	 */
+	public String reorderValidations(int itemToBeMovedPosSeqNumb,int itemPosSeqNumb,String arrow) {
+		String validationStaus=REORDER_VALIDATION_MSG; 
+		if(itemToBeMovedPosSeqNumb==0){
+			validationStaus = "Given Reorder sequence is not valid or empty.";
+		}else if(itemToBeMovedPosSeqNumb>getTotalCount()){
+			validationStaus = "Sorry, you don't have "+itemToBeMovedPosSeqNumb+"th folder or collection to reorder";
+		}else if(itemToBeMovedPosSeqNumb>itemPosSeqNumb && arrow.equalsIgnoreCase(UP_ARROW)){
+			validationStaus = "Please click on down arrow";
+		}else if(itemToBeMovedPosSeqNumb<itemPosSeqNumb && arrow.equalsIgnoreCase(DOWN_ARROW)){
+			validationStaus = "Please click on Up arrow";
+		}else if(itemToBeMovedPosSeqNumb==0){
+			validationStaus = "Please specify the reorder sequence.";
+		}
+		return validationStaus;
+	}
+	
+	
+	/**
+	 * Gets the respective folder or collection widget for reorder.
+	 * @param itemGooruOid {@link String}
+	 * 
+	 * @return widget {@link ShelfFolderItemChildView}
+	 */
+	public ShelfFolderItemChildView getFolderOrCollectionWidget(String itemGooruOid) { 
+		Iterator<Widget> widgets = folderContentBlock.iterator();
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if (widget instanceof ShelfFolderItemChildView && ((ShelfFolderItemChildView) widget).getItemGooruOId().equals(itemGooruOid)) {
+				return (ShelfFolderItemChildView) widget;
+			}
+		}
+		return null;
+	}
+	
+	
+	@Override
+	public void onReorderChangeWidgetPosition(ShelfFolderItemChildView shelfFolderItemChildView,int itemToBeMovedPosSeqNumb,int itemPosSeqNumb, String direction) {
+		
+		String id = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
+		String o1 = AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
+		String o2 = AppClientFactory.getPlaceManager().getRequestParameter("o2",null);
+		String o3 = AppClientFactory.getPlaceManager().getRequestParameter("o3",null);
+		HashMap<String,String> params = new HashMap<String,String>();
+		
+		
+		if(o3!=null&&id==null) {
+			params.put("o3",o3);
+			params.put("o2",o2);
+			params.put("o1",o1);
+		} else if(o2!=null&&id==null) {
+			params.put("o2",o2);
+			params.put("o1",o1);
+		} else if(o1!=null&&id==null) {
+			params.put("o1",o1);
+		}
+		
+		if(direction.equalsIgnoreCase(DOWN_ARROW)){
+			if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
+				itemToBeMovedPosSeqNumb+=1;
+			}
+			reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb),DOWN_ARROW,params);
+		}else{
+			if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
+				itemToBeMovedPosSeqNumb-=1;
+			}
+			reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb-1),UP_ARROW,params);
+		}
+		
+	}
+	
+
+	/**
+	 * Reorders the position of folder or collection widget to the new position.
+	 * @param shelfFolderItemChildView {@link ShelfFolderItemChildView}
+	 * @param newItemPosition {@link Integer}
+	 * @param params 
+	 */
+	public void reorderItemToNewPosition(ShelfFolderItemChildView shelfFolderItemChildView, int newItemPosition,String direction, HashMap<String, String> params){ 
+		folderContentBlock.insert(shelfFolderItemChildView, newItemPosition);
+		setFolderCollectionItemSequence();
+		AppClientFactory.fireEvent(new ReorderShelfListItemsEvent(shelfFolderItemChildView.getItemGooruOId(), newItemPosition, direction, params));  
+	}
+	
+	
+	
 	/**
 	 * @return css instance of {@link CollectionEditResourceCss}
 	 */
 	public CollectionEditResourceCss getCss() {
 		return css;
 	}
+
 
 	/**
 	 * @param css
@@ -714,4 +993,19 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	public void setCss(CollectionEditResourceCss css) {
 		this.css = css;
 	}
+	
+	/**
+	 * @return the totalCount
+	 */
+	public int getTotalCount() {
+		return totalCount;
+	}
+
+	/**
+	 * @param totalCount the totalCount to set
+	 */
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
+
 }

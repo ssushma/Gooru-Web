@@ -924,7 +924,7 @@ public class ShelfCollectionResourceChildView extends
 			resourceNarrationHtml.getElement().setAttribute("title", NO_NARRATION_ADDED);
 		}
 		String category = collectionItemDo.getResource().getResourceFormat() != null ? collectionItemDo.getResource().getResourceFormat().getDisplayName() : "text";
-		
+	
 		if(!youtube){
 			videoImage.removeStyleName(CollectionEditResourceCBundle.INSTANCE.css().videoImageContainer());
 			editVideoTimeLbl.setVisible(false);
@@ -1183,8 +1183,23 @@ public class ShelfCollectionResourceChildView extends
 			videoImage.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().pdfImageContainer());
 			String startPageNumber=collectionItemDo.getStart();
 			totalPages = collectionItemDo.getTotalPages();
+			
+			if(totalPages == null)
+			{
+				fromLblDisplayText.setVisible(false);
+				editStartPageLbl.setVisible(false);
+				videoImage.setVisible(false);
+			}
+			else
+			{
+				fromLblDisplayText.setVisible(true);
+				editSartPageText.setText(i18n.GL2039() + totalPages);
+				editStartPageLbl.setVisible(true);	
+				videoImage.setVisible(true);
+			}
+			
 			String endPageNumber=collectionItemDo.getStop();
-			editSartPageText.setText(i18n.GL2039() + totalPages);
+
 		//	String endPageNumber=collectionItemDo.getStop();
 			
 			//updatePDFLabelText.setText("0f "+endPageNumber+" pages");
