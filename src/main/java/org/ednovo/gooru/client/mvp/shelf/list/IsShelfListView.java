@@ -167,5 +167,5 @@ public interface IsShelfListView extends IsViewWithHandlers<ShelfListUiHandlers>
 	void refreshFolderItemDataInSearchAddResource(FolderDo folderDo,
 			RefreshFolderType refreshFolderType, HashMap<String, String> params);
 
-	void reorderShelfItems(String itemId, int toBeMovedPos,String direction, HashMap<String, String> params);  
+	void reorderShelfItems(String itemId, int toBeMovedPos,String direction, HashMap<String, String> params, FolderDo folderDo, String itemSeqNumb);   
 }
