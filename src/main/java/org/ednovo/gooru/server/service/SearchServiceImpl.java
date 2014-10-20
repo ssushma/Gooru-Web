@@ -423,6 +423,12 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		return gSigninUrl;
 	}
 	
+	@Override
+	public String getGooruStoriesUrl(String parms) {
+		
+		return getStoriesUrl();
+	}
+	
 	
 	@Override
 	public String getGoogleSignin(String placeToken, Map<String, String> parms) {
