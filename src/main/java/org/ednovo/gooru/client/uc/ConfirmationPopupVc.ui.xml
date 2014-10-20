@@ -7,7 +7,7 @@
 		
 		.removePopupContainer {
 			border: 1px solid #CCCCCC;
-			height: 100px !important;
+			min-height: 100px !important;
 			margin: -4px 4px 4px;
 		}
 		
