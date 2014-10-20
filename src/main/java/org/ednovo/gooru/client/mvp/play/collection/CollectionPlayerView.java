@@ -38,9 +38,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresente
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
+import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -119,7 +117,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@Inject
 	public CollectionPlayerView(EventBus eventBus){
 		super(eventBus);
@@ -554,6 +552,20 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	@Override
 	public void makeFlagButtonOrange() {
 		footerView.makeFlagButtonOrange();
+		ConfirmationPopupVc confiPopupVc = new ConfirmationPopupVc("Resource Unavailable", "Unfortunatly, this resource cannot be played on this device. Please continue to the next resource") {
+			
+			@Override
+			@UiHandler("okButton")
+			public void onDelete(ClickEvent clickEvent) {
+				hide();
+				getUiHandlers().navigateToNext();
+			}
+		};
+		confiPopupVc.setPopupZindex(99999);
+		confiPopupVc.setGlassZindex(99999);
+		confiPopupVc.setAndHideButtonInPlayer("Next Resource");
+		confiPopupVc.getCancelButton().setVisible(false);
+		
 	}
 
 	/**
@@ -683,5 +695,5 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		  viewAnchor.getElement().setAttribute("alt",i18n.GL1428());
 		  viewAnchor.getElement().setAttribute("title",i18n.GL1428());
 	}
-	
+
 }
