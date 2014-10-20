@@ -9,8 +9,9 @@
 				  <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnScoredQuestions" styleName="primary"  text="{i18n.GL2282}"></g:Button>  </g:HTMLPanel>
 				  <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button ui:field="btnOpenEndedQuestions" styleName="primary" text="{i18n.GL2283}"></g:Button>  </g:HTMLPanel>
 				  <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button styleName="primary" ui:field="btnCollectionBreakDown" text="{i18n.GL2284}"></g:Button>  </g:HTMLPanel>
-				  <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button styleName="primary" ui:field="btnPtint">Print</g:Button>  </g:HTMLPanel>
-			      <g:HTMLPanel styleName="{unitStyle.viewSummaryText}"> <g:Button styleName="primary" ui:field="btnSave">Save</g:Button>  </g:HTMLPanel>
+				  <g:HTMLPanel styleName="{unitStyle.printSaveContainer}"> <g:Button styleName="{unitStyle.print_icon_image}" ui:field="btnPtint"></g:Button>  </g:HTMLPanel>
+				  <g:HTMLPanel> <g:Button styleName="{unitStyle.mail_icon_image}" ui:field="btnEmail"></g:Button>  </g:HTMLPanel>
+			      <g:HTMLPanel> <g:Button styleName="{unitStyle.save_icon_image}" ui:field="btnSave"></g:Button>  </g:HTMLPanel>
 				</g:HorizontalPanel>
 			</div>
 	</g:HTMLPanel>

@@ -965,3 +965,17 @@
 	width: 30%;
 	float: left;
 }
+.hilightStudentsContainer{
+	border-bottom: 1px solid #8CA8BE;
+}
+.scoreAboveHilightStudentsContainer{
+	border: 1px solid #FCD999;
+}
+.scoreBelowilightStudentsContainer{
+	border: 1px solid #AAC7A8;
+	clear: both;
+}
+.viewAllStudentsBtn{
+	margin-top: 18px;
+	margin-bottom: 8px;
+}
