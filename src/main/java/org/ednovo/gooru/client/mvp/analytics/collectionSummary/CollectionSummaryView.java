@@ -7,15 +7,23 @@ import java.util.Map;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
+import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -37,12 +45,13 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	CollectionSummaryCBundle res;
 	
 	@UiField ListBox studentsListDropDown,sessionsDropDown;
-	@UiField Image collectionImage;
+	@UiField Image collectionImage,sessionsTooltip;
 	@UiField InlineLabel collectionTitle,collectionResourcesCount,collectionLastAccessed,lastModifiedTime;
 	@UiField HTMLPanel sessionspnl,loadingImageLabel1;
 	@UiField VerticalPanel pnlSummary;
 
 	Map<String, String> sessionData=new HashMap<String, String>();
+	ToolTip toolTip;
 	
 	String collectionId=null,pathwayId=null;
 	
@@ -56,6 +65,31 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		sessionspnl.setVisible(false);
 		studentsListDropDown.addChangeHandler(new StudentsListChangeHandler());
 		sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
+		sessionsTooltip.addMouseOverHandler(new MouseOverHandler() {
+			
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				toolTip = new ToolTip("Select the student session (collection attempt) to be represented below.","");
+				toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
+				toolTip.getElement().getStyle().setBackgroundColor("transparent");
+				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+				toolTip.setPopupPosition(sessionsTooltip.getAbsoluteLeft()-(50+22), sessionsTooltip.getAbsoluteTop()+22);
+				toolTip.show();
+			}
+		});
+		sessionsTooltip.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				
+				EventTarget target = event.getRelatedTarget();
+				  if (Element.is(target)) {
+					  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+						  toolTip.hide();
+					  }
+				  }
+				}
+		});
 	}
     public class StudentsListChangeHandler implements ChangeHandler{
 		@Override
