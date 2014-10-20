@@ -138,4 +138,28 @@ position: relative;
 .bodysection{
 	
 }
-
+.narrationPopup {
+	width: 90%;
+}
+.narrationPopupContainer{
+	right:0px;
+}
+.resource-info-metadata-wrapper{
+	height: 120px;
+}
+.resource-info-metadata-innerwrapper{
+	max-height: 120px;
+	height: 120px;
+}
+.resource-info-collections-wrapper{
+	max-height: 120px;
+	height: 120px;
+}
+.playerResourcesRightSection {
+       height: 90px;
+}
+.collection-thumbnail{
+	width: 100%;
+	height: auto;
+	border-left: 7px solid #1076BB;
+}

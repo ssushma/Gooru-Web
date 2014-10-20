@@ -128,7 +128,7 @@
 			  </g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:Anchor styleName="visible-sm visible-xs" ui:field="menuButton"><img class="" src="images/toggleIcon.png"/></g:Anchor>
-			<g:FlowPanel styleName="{playerHeaderStyle.getPlayerStyleResource.fixedContainer}">
+			<g:FlowPanel styleName="{playerHeaderStyle.getPlayerStyleResource.fixedContainer}" ui:field="headerFixedContainer">
 				<header:StudyPlayerHeaderView ui:field="headerView"></header:StudyPlayerHeaderView>
 				<g:FlowPanel ui:field="navigationContainer" styleName="{playerStyle.resource-container}"></g:FlowPanel>
 			</g:FlowPanel>

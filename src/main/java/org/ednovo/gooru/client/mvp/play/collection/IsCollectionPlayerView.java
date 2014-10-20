@@ -57,4 +57,6 @@ public interface IsCollectionPlayerView extends PopupView, IsViewWithHandlers<Co
 	public void setNarrationButton(Button narrationButton);
 	public void addClonedMenuContent(FlowPanel rightPanelElement);
 	public FlowPanel menuContent();
+	public FlowPanel getHeaderFixedContainer();
+	public FlowPanel getNavigationContainer();
 }

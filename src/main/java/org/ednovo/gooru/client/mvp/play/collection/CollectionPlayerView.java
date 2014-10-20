@@ -74,7 +74,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPlayerUiHandlers> implements IsCollectionPlayerView{
 	
 	
-	@UiField FlowPanel playerBodyContainer,navigationContainer,playerContent,menuContent;
+	@UiField FlowPanel playerBodyContainer,navigationContainer,playerContent,menuContent,headerFixedContainer;
 	
 	@UiField StudyPlayerHeaderView headerView;
 	
@@ -228,6 +228,14 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	@Override
 	public FlowPanel getPlayerBodyContainer() {
 		return playerBodyContainer;
+	}
+	
+	public FlowPanel getHeaderFixedContainer(){
+		return headerFixedContainer;
+	}
+	
+	public FlowPanel getNavigationContainer(){
+		return navigationContainer;
 	}
 
 	public FlowPanel getResourceAnimationContainer() {

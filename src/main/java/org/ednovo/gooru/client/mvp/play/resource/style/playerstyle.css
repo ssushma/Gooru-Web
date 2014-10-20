@@ -998,7 +998,7 @@ font-size: 31px;
 	z-index:999;
 }
 .bodyContent{
-	padding-top:180px;
+	
 }
 .greybackground{
 	background: #f0f0f0;
@@ -1044,4 +1044,59 @@ font-size: 31px;
 	padding-right: 0;
 	display: inline-block;
 	width: 100%;
+}
+
+.narrationPopup {
+	max-width: 550px;
+	color: #333333;
+	margin: 30px auto;
+	position: relative;
+	font-family: arial;
+	font-size: 12px;
+	background: #f0f0f0;
+	border-radius: 4px 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border: 1px solid #999;
+}
+.narrationPopupContainer{
+	right:0px;
+}
+.resource-info-metadata-wrapper{
+	/* width: 448px;
+	min-height: 223px;
+	height: auto;
+	margin-top: 12px;
+	margin-left: 17px;
+	float: left; */
+	height: 270px;
+	margin: 20px 0;
+	border-right: 1px solid #AAA;
+}
+.resource-info-metadata-innerwrapper{
+	max-height: 270px;
+	height: 270px;
+	/* padding-top: 5px;
+	float: left; */
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+.resource-info-collections-wrapper{
+	max-height: 270px;
+	height: 270px;
+	margin-top: 20px;
+}
+.playerResourcesRightSection {
+       width: 100%;
+       height: 204px;
+       overflow-x: hidden !important;
+       margin-top: 10px;
+       margin-bottom: 50px;
+
+}
+
+.collection-thumbnail{
+	width: 100%;
+	height: 90px;
+	border-left: 7px solid #1076BB;
 }

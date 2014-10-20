@@ -83,12 +83,15 @@ import org.ednovo.gooru.shared.model.player.InsightsCollectionDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.PlayerConstants;
 
+import com.gargoylesoftware.htmlunit.Page;
+import com.gargoylesoftware.htmlunit.attachment.AttachmentHandler;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -440,6 +443,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		getView().hideFlagButton(false);
 		addRegisteredHandler(UpdateFlagIconColorEvent.TYPE,this);
 		addRegisteredHandler(RefreshDisclosurePanelEvent.TYPE, this);
+		//collectionPlayerTocPresenter.getWidget().addAttachHandler(new TocAttachEvent());
+		Window.addResizeHandler(new PlayerResizeEvent());
 	}
 
 	@ProxyCodeSplit
@@ -480,7 +485,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		super.prepareFromRequest(request);
 		getCollectionDetails();
 	}
-
 	private void getClassPageDetails(String classItemId) {
 		AppClientFactory.getInjector().getClasspageService().getClassPageItem(classItemId, new SimpleAsyncCallback<ClasspageItemDo>() {
 			@Override
@@ -764,7 +768,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	public void clearDashBoardIframe(){
 		metadataPresenter.clearDashBoardIframe();
 	}
-	
 	
 	public void setClassCollectionDataInsightsUrl(boolean isHomeView){
 		if(!AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){
@@ -1139,6 +1142,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			
 		}
 		addToPopupSlot(resourceNarrationPresenter);
+	}
+	
+	public void showNarrationPopupInCenterOnWindowRezize(){
+		if(resourceNarrationPresenter.getView().isShowingPopup()){
+			resourceNarrationPresenter.getView().center();
+		}
 	}
 	
 	public void setResourceInfoView(String resourceId){
@@ -2153,10 +2162,15 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		//collectionPlayerTocPresenter.getWidget().getElement().getStyle().setPosition(Position.FIXED);
 	}
 	public void adjustCollectionMetadaBody(boolean isHome){
-		if(isHome){
-			//metadataPresenter.getWidget().getElement().getStyle().setPaddingTop(122+50, Unit.PX);
+		int windowWidth=Window.getClientWidth();
+		if(windowWidth>991){
+			if(isHome){
+				getView().getPlayerBodyContainer().getElement().getStyle().setPaddingTop(134+50, Unit.PX);
+			}else{
+				addFixedPositionNavArrows();
+			}
 		}else{
-			addFixedPositionNavArrows();
+			getView().getPlayerBodyContainer().getElement().removeAttribute("style");
 		}
 	}
 	public void addFixedPositionNavArrows(){
@@ -2164,6 +2178,16 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 //		resoruceMetadataPresenter.getCollectionContainer().getElement().getStyle().setPosition(Position.FIXED);
 //		int height=resoruceMetadataPresenter.getCollectionContainer().getElement().getOffsetHeight();
 		//resoruceMetadataPresenter.getResourceWidgetContainer().getElement().getStyle().setPaddingTop(height, Unit.PX);
+		getView().getPlayerBodyContainer().getElement().getStyle().setPaddingTop(50+50, Unit.PX);
+	}
+	
+	public class PlayerResizeEvent implements ResizeHandler{
+		@Override
+		public void onResize(ResizeEvent event) {
+			boolean isHome=getPlaceManager().getRequestParameter("rid",null)==null?true:false;
+			adjustCollectionMetadaBody(isHome);
+			showNarrationPopupInCenterOnWindowRezize();
+		}
 	}
 
 	public void updateReviewAndRatings(String gooruOid,Integer reviewCount) {

@@ -66,6 +66,14 @@ public class CollectionPlayerTocPresenter extends PresenterWidget<IsCollectionPl
 		getView().clearNavigationPanel();
 	}
 	
+	@Override
+	public void setPaddingTopForPlayerBody(){
+//		if(collectionPlayerPresenter!=null){
+//			System.out.println("inside player container");
+//			collectionPlayerPresenter.setPaddingTopForBodyContainer();
+//		}
+	}
+	
 	public void setCollectionPlayerPresnter(CollectionPlayerPresenter collectionPlayerPresenter){
 		this.collectionPlayerPresenter=collectionPlayerPresenter;
 		this.isCollectionPlayer=true;
