@@ -552,7 +552,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	@Override
 	public void makeFlagButtonOrange() {
 		footerView.makeFlagButtonOrange();
-		ConfirmationPopupVc confiPopupVc = new ConfirmationPopupVc("Resource Unavailable", "Unfortunatly, this resource cannot be played on this device. Please continue to the next resource") {
+		ConfirmationPopupVc confiPopupVc = new ConfirmationPopupVc(i18n.GL2190(), i18n.GL2191()) {
 			
 			@Override
 			@UiHandler("okButton")
@@ -563,7 +563,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		};
 		confiPopupVc.setPopupZindex(99999);
 		confiPopupVc.setGlassZindex(99999);
-		confiPopupVc.setAndHideButtonInPlayer("Next Resource");
+		confiPopupVc.setAndHideButtonInPlayer(i18n.GL2192());
 		confiPopupVc.getCancelButton().setVisible(false);
 		
 	}
