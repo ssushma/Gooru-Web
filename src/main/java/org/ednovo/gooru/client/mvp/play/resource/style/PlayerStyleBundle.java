@@ -114,5 +114,22 @@ public interface PlayerStyleBundle extends ClientBundle {
 		String closeButton();
 		
 		String bodysection();
+		
+		String narrationPopup();
+		
+		String narrationPopupContainer();
+		
+		@ClassName("resource-info-metadata-wrapper")
+		public String infoMetadataWrapper();
+		@ClassName("resource-info-metadata-innerwrapper")
+		public String infoMetadataInnerWrapper();
+		@ClassName("resource-info-collections-wrapper")
+		public String infoCollectionsWrapper();
+		
+		public String playerResourcesRightSection();
+		
+		@ClassName("collection-thumbnail")
+		public String infoCollectionThumbnail();
+		
 	}
 }

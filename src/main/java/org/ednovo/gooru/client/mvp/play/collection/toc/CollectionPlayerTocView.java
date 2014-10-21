@@ -104,7 +104,12 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				previousButton.setVisible(true);
 				List<CollectionItemDo> collectionItems=collectionDo.getCollectionItems();
 			
-				TocCollectionHomeView tocCollectionHomeView=new TocCollectionHomeView(collectionDo.getThumbnails().getUrl());
+				TocCollectionHomeView tocCollectionHomeView=new TocCollectionHomeView(collectionDo.getThumbnails().getUrl()){
+					@Override
+					public void setPaddingTopForPlayerBody(){
+						getUiHandlers().setPaddingTopForPlayerBody();
+					}
+				};
 				if(!isCollectionHome){
 					tocCollectionHomeView.hideResourceThumbnailContainer(true);
 				}

@@ -30,6 +30,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -77,6 +78,8 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 		super(eventsBus);
 		appPopUp=new NarrationPopupPanel(true);
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
+		PlayerStyleBundle.INSTANCE.getPlayerStyleResource().ensureInjected();
+		appPopUp.setStyleName(PlayerStyleBundle.INSTANCE.getPlayerStyleResource().narrationPopupContainer());
 		narrationCloseButton.addClickHandler(new CloseNarrationPopupEvent());
 		okButton.addClickHandler(new CloseNarrationPopupEvent());
 		authorName.setText(i18n.GL0423());
@@ -93,6 +96,9 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 		narrationCloseButton.getElement().setId("lblNarrationCloseButton");
 		authorImage.getElement().setId("imgAuthorImage");
 		narrationText.getElement().setId("htmlNarrationText");
+	}
+	public boolean isShowingPopup(){
+		return appPopUp.isShowing();
 	}
 	@Override
 	public void setNarrationMetadata(CollectionItemDo collectionItemDo,String userName,String gooruUid){

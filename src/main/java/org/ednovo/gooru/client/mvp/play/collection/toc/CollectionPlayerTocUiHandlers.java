@@ -28,4 +28,5 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 public interface CollectionPlayerTocUiHandlers extends BaseUiHandlers{
  public boolean isOpenEndedAnswerSubmited();
+ public void setPaddingTopForPlayerBody();
 }
