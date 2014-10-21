@@ -70,6 +70,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -102,7 +103,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	@UiField FlowPanel studentsetupContainer;
 	
 	@UiField
-	static HTMLPanel mainContainer,lineSeparation,memberContainer,teacherViewPanel;
+	static HTMLPanel mainContainer,lineSeparation,memberContainer;
 	
 	@UiField Button backToEditPanel;
 
@@ -113,7 +114,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	static
 	Button btnWithDraw;
 	
-	@UiField HTMLEventPanel backToTeacherView;
+//	@UiField HTMLEventPanel backToTeacherView;
 	
 	@UiField Image studentViewImage,imgProfileImage;
 
@@ -122,6 +123,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	
 	@UiField
 	static Label lblWebHelp;
+	
+//	@UiField ScrollPanel spanelSutdentsList;
+	
+//	@UiField HTMLPanel panelSutdentsList,teacherViewPanel;
 
 	@UiField
 	static
@@ -175,7 +180,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		setWidget(uiBinder.createAndBindUi(this));
 		EditClasspageCBundle.INSTANCE.css().ensureInjected();
 		setStaticData();
-		teacherViewPanel.setVisible(false);
+//		teacherViewPanel.setVisible(false);
 		lblWebHelp.addMouseOverHandler(new OnMouseOver());
 		lblWebHelp.addMouseOutHandler(new OnMouseOut());
 		OpenJoinClassPopupHandler openJoinClassPopupHandler=new OpenJoinClassPopupHandler() {
@@ -392,7 +397,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		
 		if(classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
 			System.out.println("teacher view");
-			teacherViewPanel.setVisible(true);
+//			teacherViewPanel.setVisible(true);
 		}
 		
 		studentViewImage.addErrorHandler(new ErrorHandler() {
@@ -1597,7 +1602,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		}
 	}
 	
-	@UiHandler("backToTeacherView")
+	/*@UiHandler("backToTeacherView")
 	public void backToTeacherviewEvent(ClickEvent clickEvent){
 		Map<String,String> params = new HashMap<String,String>();
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
@@ -1610,7 +1615,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		params.put("pageSize", pageSize);
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 		AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
-	}
+	}*/
 	
 	
 }
