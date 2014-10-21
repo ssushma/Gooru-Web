@@ -143,14 +143,14 @@
 											<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.redBubble}"></g:InlineLabel> 
 											<g:InlineLabel text="{i18n.GL2240}"></g:InlineLabel>
 										</g:HTMLPanel>
-										<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidth1} {unitStyle.classOverOptions} text-center">
+										<!-- <g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidth1} {unitStyle.classOverOptions} text-center">
 											<g:InlineLabel styleName="{unitStyle.bubbleSmallrounded}"></g:InlineLabel> 
 											<g:InlineLabel text="{i18n.GL2212}"></g:InlineLabel>
 										</g:HTMLPanel>
 										<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidthFDS} {unitStyle.classOverOptionsFeedback} text-center">
 										    <g:InlineLabel styleName="{unitStyle.bubbleBlueFeedBack}"></g:InlineLabel> 
 										   	<g:InlineLabel text="{i18n.GL2238}"></g:InlineLabel>
-										</g:HTMLPanel> 
+										</g:HTMLPanel>  -->
 									</g:HTMLPanel>
 									
 							</g:HTMLPanel>
