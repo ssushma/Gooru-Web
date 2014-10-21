@@ -600,7 +600,9 @@ public enum UrlToken {
 	
 	REFRESH_TOKEN_GDC("/gooru-auth/google/refresh-token.g?partyUid={0}"),
 	
-	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?partyUid={0}");
+	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?partyUid={0}"),
+	
+	V2_UPDATE_QUESTION_ITEM("/v2/collection/question/{0}?sessionToken={1}");
 
 	private String url;
 
