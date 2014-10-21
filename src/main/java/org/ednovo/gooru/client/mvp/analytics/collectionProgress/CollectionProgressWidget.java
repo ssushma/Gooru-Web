@@ -67,7 +67,12 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		scrollForCollectionProgress.getElement().setId("scrollForCollectionProgress");
 	}
 	@Override
-	public void setData(ArrayList<CollectionProgressDataDo> collectionProgressData){
+	public void setData(ArrayList<CollectionProgressDataDo> collectionProgressData,boolean isCollectionView){
+		if(!isCollectionView){
+			scrollForCollectionProgress.setStyleName(res.css().htmlpanlProgress());
+		}else{
+			scrollForCollectionProgress.setStyleName(res.css().htmlpanlProgressCollectionView());
+		}
 		final List<Integer> questionColumnIndex=new ArrayList<Integer>();
 		final List<Integer> resourceColumnIndex=new ArrayList<Integer>();
 		collectionProgressCount=1;

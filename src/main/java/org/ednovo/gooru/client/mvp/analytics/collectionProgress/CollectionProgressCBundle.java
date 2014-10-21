@@ -19,6 +19,7 @@ public interface CollectionProgressCBundle extends ClientBundle{
 	        String reaction_redneedhelp();
 	        String reaction_reddontunderstand();
 	        String htmlpanlProgress();
+	        String htmlpanlProgressCollectionView();
 	        String summary_title();
 	        String maincontainer();
 	        String narrowreportText();

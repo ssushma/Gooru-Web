@@ -30,5 +30,5 @@ import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 
 
 public interface IsCollectionProgressView extends IsViewWithHandlers<CollectionProgressUiHandlers>{
-	void setData(ArrayList<CollectionProgressDataDo> collectionProgressData);
+	void setData(ArrayList<CollectionProgressDataDo> collectionProgressData,boolean isCollectionView);
 }

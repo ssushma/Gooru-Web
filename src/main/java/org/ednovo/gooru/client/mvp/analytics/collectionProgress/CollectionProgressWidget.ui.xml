@@ -18,7 +18,7 @@
  	 <g:Label styleName="{res.css.narrowreportText}" text="{i18n.GL2266}"></g:Label>
 	 <g:ListBox ui:field="filterDropDown" styleName="{res.css.filterDropDown}">
 	 </g:ListBox>
-	 <g:HTMLPanel styleName="{res.css.htmlpanlProgress}" ui:field="scrollForCollectionProgress">
+	 <g:HTMLPanel ui:field="scrollForCollectionProgress">
 	 <g:VerticalPanel ui:field="htmlpnlProgress"/>
 	 </g:HTMLPanel>
 	 </g:HTMLPanel>
