@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.service;
 
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -36,7 +37,7 @@ public interface MediaUploadServiceAsync extends BaseServiceAsync {
 
 	void imageWebUpload(String imageURL, AsyncCallback<MediaUploadDo> callback);
 
-	void saveImage(String gooruOid, String fileName, AsyncCallback<String> callback);
+	void saveImage(String gooruOid, String resourceId, String fileName, AsyncCallback<CollectionItemDo> callback);
 	
 	void cropImage(String fileName, String height, String width, String xPostion, String yPostion,String imageUrl, AsyncCallback<String> callback);
 	

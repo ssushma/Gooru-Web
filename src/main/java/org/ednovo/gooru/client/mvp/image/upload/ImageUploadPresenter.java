@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageEvent;
 import org.ednovo.gooru.client.service.MediaUploadServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
 import com.google.gwt.event.shared.EventBus;
@@ -75,7 +76,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	
 	private SimpleAsyncCallback<String> cropImageAsyncCallback;
 	
-	private SimpleAsyncCallback<String> saveImageAsyncCallback;
+	private SimpleAsyncCallback<CollectionItemDo> saveImageAsyncCallback;
 	
 	private SimpleAsyncCallback<MediaUploadDo> imageFileUploadAsyncCallback;
 	
@@ -136,9 +137,9 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			public void onSuccess(String filename) {
 				
 				if(isCollectionImage){
-					saveImage(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_OID), filename);
+					saveImage(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_OID), filename,getCollectionItemId());
 				}else if(isClassPageImage){
-					saveImage(getClasspageId(), filename);
+					saveImage(getClasspageId(), filename,getCollectionItemId());
 				}
 				else if(isQuestionImage){
 					AppClientFactory.fireEvent(new AddResouceImageEvent(filename,fileNameWithoutRepository,isQuestionImage,isuserOwnResourceImage));
@@ -182,18 +183,18 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 				getView().glasspanelLoadingImage(false);
 			}
 		});
-		setSaveImageAsyncCallback(new SimpleAsyncCallback<String>() {
+		setSaveImageAsyncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
 			@Override
-			public void onSuccess(String url) {
+			public void onSuccess(CollectionItemDo collDo) {
 				if(isClassPageImage){
-					AppClientFactory.fireEvent(new UpdateClasspageImageEvent(url));
+					AppClientFactory.fireEvent(new UpdateClasspageImageEvent(collDo.getUrl()));
 				}else{
 					if(isImageUploadedFromUrl){
 						MixpanelUtil.AddImageByUrlOntheWeb();
 					}else{
 						MixpanelUtil.AddImageFromMyComputer();
 					}
-					getShelfView().onPostCollectionImageUpload(url);
+					getShelfView().onPostCollectionImageUpload(collDo.getUrl());
 				}
 				getView().closeImageUploadWidget();
 				getView().resetImageUploadWidget();
@@ -276,8 +277,8 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 	
 	@Override
-	public void saveImage(String gooruOid, String fileName) {
-		this.getMediaUploadService().saveImage(gooruOid, fileName, getSaveImageAsyncCallback());
+	public void saveImage(String gooruOid, String fileName, String resourceId) {
+		this.getMediaUploadService().saveImage(gooruOid, resourceId, fileName, getSaveImageAsyncCallback());
 	}
 	
 	public void saveQuestionImage(String fileName){
@@ -331,11 +332,11 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		return mediaUploadService;
 	}
 
-	public void setSaveImageAsyncCallback(SimpleAsyncCallback<String> saveImageAsyncCallback) {
+	public void setSaveImageAsyncCallback(SimpleAsyncCallback<CollectionItemDo> saveImageAsyncCallback) {
 		this.saveImageAsyncCallback = saveImageAsyncCallback;
 	}
 
-	public SimpleAsyncCallback<String> getSaveImageAsyncCallback() {
+	public SimpleAsyncCallback<CollectionItemDo> getSaveImageAsyncCallback() {
 		return saveImageAsyncCallback;
 	}
 
