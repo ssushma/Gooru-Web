@@ -204,6 +204,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			createCollectionJsonObject.put("resourceId", resourceId);
 		}
 		
+		System.out.println("collitemcreate:::"+url);
+		System.out.println("collitemcreatedata:::"+createCollectionJsonObject.toString());
+		
 //		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_COLLLECTION_ITEM, resourceId,getLoggedInSessionToken(), collectionId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createCollectionJsonObject.toString());		
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -831,7 +834,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		//collectionItemDo.setItemType(ADDED);
 		String url = null;		
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_COPY_COLLLECTION_ITEM, resourceId, collectionId,getLoggedInSessionToken());
+		System.out.println("copyCollectionItem:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),new Form());
+		System.out.println("copyCollectionItemresp:::"+jsonResponseRep.getJsonRepresentation());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
 	}
