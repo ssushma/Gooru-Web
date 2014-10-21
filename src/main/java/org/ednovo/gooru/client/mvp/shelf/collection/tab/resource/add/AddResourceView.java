@@ -528,7 +528,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 					AddQuestionImg addQuestionImage=(AddQuestionImg)addQuestionResourceWidget.addQuestImgContainer.getWidget(0);
 					thumbnailUrl=addQuestionImage.getFileName();
 				}
-				getUiHandlers().updateQuestionResource(collectionItemDo,collectionQuestionItemDo,thumbnailUrl==null?null:"asset-question_"+thumbnailUrl);
+				//getUiHandlers().updateQuestionResource(collectionItemDo,collectionQuestionItemDo,thumbnailUrl==null?null:"asset-question_"+thumbnailUrl);
+				getUiHandlers().v2UpdateQuestionResource(collectionItemDo,collectionQuestionItemDo,thumbnailUrl==null?null:"asset-question_"+thumbnailUrl);
 			}else{
 				getUiHandlers().addQeustionResource(mediaFileName,collectionQuestionItemDo);
 			}
