@@ -39,7 +39,6 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 */
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -58,7 +57,6 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
-import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
@@ -90,6 +88,8 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	private SimpleAsyncCallback<CollectionItemDo> addQuestionResourceAsyncCallback;
 	
 	private SimpleAsyncCallback<CollectionItemDo> updateQuestionResourceAsyncCallback;
+	
+	private SimpleAsyncCallback<CollectionItemDo> v2UpdateQuestionResourceAsyncCallback;
 	
 	private SimpleAsyncCallback<Void> removeQuestionImageAsyncCallback; 
 	
@@ -290,12 +290,21 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             @Override
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
-            		redirect(Window.Location.getHref());
-                  //  isCollResourceTabView.updateCollectionItem(result);
-                    //MixpanelUtil.AddQuestion();
+            		//redirect(Window.Location.getHref());
+                  isCollResourceTabView.updateCollectionItem(result);
+                    MixpanelUtil.AddQuestion();
             }
 		});
 		
+		setV2UpdateQuestionResourceAsyncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
+            @Override
+            public void onSuccess(CollectionItemDo result) {
+            		getView().hide();
+            		//redirect(Window.Location.getHref());
+                    isCollResourceTabView.updateCollectionItem(result);
+                    MixpanelUtil.AddQuestion();
+            }
+		});
 	}
 	
 	/**
@@ -490,11 +499,20 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		return updateQuestionResourceAsyncCallback;
 	}
 
+	private SimpleAsyncCallback<CollectionItemDo> getV2UpdateQuestionResourceAsyncCallback() {
+		return v2UpdateQuestionResourceAsyncCallback;
+	}
+	
 	public void setUpdateQuestionResourceAsyncCallback(
 			SimpleAsyncCallback<CollectionItemDo> updateQuestionResourceAsyncCallback) {
 		this.updateQuestionResourceAsyncCallback = updateQuestionResourceAsyncCallback;
 	}
 
+	public void setV2UpdateQuestionResourceAsyncCallback(
+			SimpleAsyncCallback<CollectionItemDo> v2UpdateQuestionResourceAsyncCallback) {
+		this.v2UpdateQuestionResourceAsyncCallback = v2UpdateQuestionResourceAsyncCallback;
+	}
+	
 	@Override
 	public void showDriveResoureView(HTMLPanel tabContainer) {
 		//if(AppClientFactory.getLoggedInUser().getAccessToken()!=null){
@@ -567,6 +585,11 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	@Override
 	public void closeStandardsPopup() {
 		addStandardsPresenter.hidePopup();
+	}
+
+	@Override
+	public void v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo, String thumbnailUrl) {
+		getResourceService().v2UpdateQuestionResource(collectionItemDo, collectionQuestionItemDo,thumbnailUrl, getV2UpdateQuestionResourceAsyncCallback());
 	}
 	
 

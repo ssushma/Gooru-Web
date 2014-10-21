@@ -77,6 +77,7 @@
 				<prop key="redirect.url">${redirect.url}</prop>
 				<prop key="drive.api">${drive.api}</prop>
 				<prop key="google.restendpoint">${google.restendpoint}</prop>
+				<prop key="stories.url">${stories.url}</prop>
 			</props>
 		</property>
 	</bean>

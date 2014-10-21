@@ -175,7 +175,11 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	
 	private static final String DOWN_ARROW = "MoveDown";
 	
+	private static final String UP_ARROW = "MoveUp";
+	
 	boolean isFromAddResourcePresenter=false;
+	
+	int count;
 
 	@Inject
 	ShelfView shelfView;
@@ -498,6 +502,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				}
 				collectionCount++;
 			}
+			count = myShelfVerPanel.getItemCount();
 		}
 		if(collectionItemDoSize==0){
 			noCollectionMsgLbl.setText(NO_COLLECTION_MESSAGE);
@@ -2181,8 +2186,8 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	 */
 
 	@Override
-	public void reorderShelfItems(String itemId, int toBeMovedPos, String direction, HashMap<String, String> params) {
-		
+	public void reorderShelfItems(String itemId, int toBeMovedPos, String direction, HashMap<String, String> params, FolderDo folderDo, String itemSeqNumb){
+		int toBeMovedPosTemp = toBeMovedPos;
 		if(direction.equals(DOWN_ARROW)){
 			toBeMovedPos-=1;
 		}
@@ -2213,7 +2218,16 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			shelfCollection.getElement().getStyle().setMarginLeft(-8, Unit.PX);
 		}else{
 			TreeItem shelfCollection = getWidgetToreorder(itemId);
-			myShelfVerPanel.insertItem(toBeMovedPos, shelfCollection);
+			if(toBeMovedPosTemp>count && direction.equals(DOWN_ARROW)){ 
+				myShelfVerPanel.removeItem(shelfCollection);
+			}else if (Integer.parseInt( itemSeqNumb)>count&& direction.equals(UP_ARROW)){ 
+				ShelfCollection shelfCollectionWidget = new ShelfCollection(folderDo, 1);
+				shelfCollectionWidget.setWidgetPositions(1, (toBeMovedPos-1), null);
+				TreeItem treeItem = new TreeItem(shelfCollectionWidget);
+				myShelfVerPanel.insertItem(toBeMovedPos, treeItem);
+			}else{
+					myShelfVerPanel.insertItem(toBeMovedPos, shelfCollection);
+			}
 		}
 		
 	}
@@ -2227,9 +2241,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			if (widget instanceof ShelfCollection && ((ShelfCollection) widget).getCollectionDo().getGooruOid().equals(itemId)) {
 				return item;
 			}
-			
 		}
-		
 		return null;
 	}
 
@@ -2247,7 +2259,6 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			if (widget instanceof ShelfCollection && ((ShelfCollection) widget).getCollectionDo().getGooruOid().equals(itemId)) {
 				return item;
 			}
-			
 		}
 		return null;
 	}

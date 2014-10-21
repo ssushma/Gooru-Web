@@ -154,6 +154,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	private static final String GOOGLE_RESTENDPOINT="google.restendpoint";
 	
+	private static final String STORIES_URL = "stories.url";
+	
 	private static final String HTTPS = "https";
 	
 	private static final String HTTP = "http";
@@ -310,6 +312,10 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	public String getGoogleRestEndPoint(){
 		return restConstants.getProperty(GOOGLE_RESTENDPOINT);
+	}
+	
+	public String getStoriesUrl(){
+		return restConstants.getProperty(STORIES_URL);
 	}
 
 	protected static Integer stringtoInteger(JSONObject jsonObject, String key) {	

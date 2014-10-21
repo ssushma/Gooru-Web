@@ -524,7 +524,7 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 	}
 
 	@Override
-	public void reorderShelfListItems(String itemId, int toBeMovedPos, String direction, HashMap<String, String> params) {
-		getView().reorderShelfItems(itemId,toBeMovedPos,direction,params);
+	public void reorderShelfListItems(String itemId, int toBeMovedPos, String direction, HashMap<String, String> params, FolderDo folderDo, String itemSeqNumb) {
+		getView().reorderShelfItems(itemId,toBeMovedPos,direction,params,folderDo, itemSeqNumb);
 	}
 }

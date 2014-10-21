@@ -850,6 +850,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	public ArrayList<LibraryUserDo> getPartners() throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_PARTNERS, getLoggedInSessionToken());
+		getLogger().info("Partners API --- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeCollaborators(jsonRepresentation);
