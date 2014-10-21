@@ -130,7 +130,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 				collectionSummaryPresenter.setCollectionSummaryData(collectionId,pathWayId);
 				setInSlot(COLLECTION_PROGRESS_SLOT, collectionSummaryPresenter,false);
 			}else if(clickedTab.equalsIgnoreCase(PROGRESS)){
-				collectionProgressPresenter.setCollectionProgressData(collectionId,pathWayId);
+				collectionProgressPresenter.setCollectionProgressData(collectionId,pathWayId,false);
 				setInSlot(COLLECTION_PROGRESS_SLOT, collectionProgressPresenter,false);
 			}
 		}else{
@@ -184,8 +184,8 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 			public void onSuccess(ArrayList<GradeJsonData> result) {
 				getView().setGradeCollectionData(result);
 				if(result.size()!=0){
-					getTopStudentsData(classpageId, pathwayId,result.get(0).getResourceGooruOId(),"ASC");
-					getBottomStudentsData(classpageId, pathwayId,result.get(0).getResourceGooruOId(),"DESC");
+					getTopStudentsData(classpageId, pathwayId,result.get(0).getResourceGooruOId(),"DESC");
+					getBottomStudentsData(classpageId, pathwayId,result.get(0).getResourceGooruOId(),"ASC");
 				}
 			}
 			@Override

@@ -112,8 +112,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 			int selectedIndex=loadCollections.getSelectedIndex();
 			String collectionId=loadCollections.getValue(selectedIndex);
-			getUiHandlers().getTopStudentsData(classpageId, pathwayId,collectionId,"ASC");
-			getUiHandlers().getBottomStudentsData(classpageId, pathwayId,collectionId,"DESC");
+			getUiHandlers().getTopStudentsData(classpageId, pathwayId,collectionId,"DESC");
+			getUiHandlers().getBottomStudentsData(classpageId, pathwayId,collectionId,"ASC");
 		}
 	}
 	public class ViewAssignmentClickEvent implements ClickHandler{

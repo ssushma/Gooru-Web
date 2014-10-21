@@ -65,6 +65,14 @@
 	width: 784px;
 	margin: 2%;
 	border-left: 1px solid #eee;
+	clear:both;
+}
+.htmlpanlProgressCollectionView{
+	overflow-x: auto;
+	width: 731px;
+	margin: 2%;
+	border-left: 1px solid #eee;
+	clear:both;
 }
 .maincontainer{
 	background-color: white;
