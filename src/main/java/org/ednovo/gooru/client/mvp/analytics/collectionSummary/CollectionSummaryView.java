@@ -144,6 +144,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 					collectionImage.setUrl("images/analytics/default-collection-image.png");
 				}
 			});
+			collectionResourcesCount.setText((result.getResourceCount()-result.getTotalQuestionCount())+" Resources | "+result.getTotalQuestionCount()+" Questions");
 		}
 	}
 

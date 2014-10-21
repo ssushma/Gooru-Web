@@ -243,13 +243,12 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	@Override
 	public void setClickedTabPresenter(String clickedTab, String collectionId) {
 		String pathwayId=AppClientFactory.getPlaceManager().getRequestParameter("uid",null);
-		String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
 		if(clickedTab!=null){
 			if(clickedTab.equalsIgnoreCase(SUMMARY)){
 				collectionSummaryPresenter.setCollectionSummaryData(collectionId,pathwayId);
 				setInSlot(REPORT_SLOT, collectionSummaryPresenter,false);
 			}else if(clickedTab.equalsIgnoreCase(PROGRESS)){
-				collectionProgressPresenter.setCollectionProgressData(collectionId,pathwayId);
+				collectionProgressPresenter.setCollectionProgressData(collectionId,pathwayId,true);
 				setInSlot(REPORT_SLOT, collectionProgressPresenter,false);
 			}
 		}

@@ -19,6 +19,7 @@
 	overflow: hidden;
 	width: 100%;
 	margin: 2%;
+	clear:both;
 	/* border-right: 1px solid #eee;
 	border-left: 1px solid #eee; */
 }
