@@ -113,7 +113,13 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 	}
 	
 	public void setStaticTexts(){
-		lblStudentsList.setText(collaboratorsDo.getFirstName() + " " + collaboratorsDo.getLastName());
+		if(collaboratorsDo.getFirstName()!=null && collaboratorsDo.getLastName()!=null){
+			lblStudentsList.setText(collaboratorsDo.getFirstName() + " " + collaboratorsDo.getLastName());
+		}else if(collaboratorsDo.getFirstName()!=null){
+			lblStudentsList.setText(collaboratorsDo.getFirstName());
+		}else if(collaboratorsDo.getLastName()!=null){
+			lblStudentsList.setText(collaboratorsDo.getLastName());
+		}
 		StringUtil.setAttributes(lblStudentsList.getElement(), collaboratorsDo.getGooruUid(), null, null);
 		
 //		setAssignments();
