@@ -88,7 +88,7 @@
 			    <g:Label styleName="h2" text="{i18n.GL2130}"/>
 			    <g:Label styleName="h4" text="{i18n.GL2131}"/>
 			    <!-- Gooru Stories -->
-			    <div class="gooruStories">
+			   <!-- <div class="gooruStories">
 					<div class="row">
 						<div class="col-md-3 col-xs-12 col-sm-3 storiesImg">
 							<img class="img-responsive" src="images/gooru-stories.png" />
@@ -96,12 +96,12 @@
 						<g:HTMLPanel styleName="col-md-7  col-sm-6 col-xs-12 goorustoriesIntro" ui:field="panelText">
 							
 						</g:HTMLPanel>
-						<!-- <g:HTMLPanel styleName="col-md-2 col-sm-3 col-xs-12 browseStoriesBtn" ui:field="panelText">
-							<g:Anchor styleName="gooruStoriesLink btn-block" text="{i18n.GL2188_1}" ui:field="achGooruStories"></g:Anchor>
-						</g:HTMLPanel> -->
+						 <g:HTMLPanel styleName="col-md-2 col-sm-3 col-xs-12 browseStoriesBtn"s>
+							<g:Anchor styleName="gooruStoriesLink btn-block" text="{i18n.GL2188_4}" ui:field="achGooruStories"></g:Anchor>
+						</g:HTMLPanel>
 					</div>
 					<div class="clearfix"></div>
-				</div>
+				</div>-->
 				<p>
 					<g:HTMLPanel ui:field="contributorsContainer" />
 				</p>
