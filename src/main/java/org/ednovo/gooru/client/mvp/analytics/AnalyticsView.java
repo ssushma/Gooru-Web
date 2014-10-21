@@ -93,6 +93,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		btnCollectionSummary.addClickHandler(new ViewAssignmentClickEvent("Summary"));
 		btnCollectionProgress.addClickHandler(new ViewAssignmentClickEvent("Progress"));
 		btnCollectionResponses.addClickHandler(new ViewAssignmentClickEvent(""));
+		btnCollectionResponses.setVisible(false);
 		minimumScoreBelow.setText("0");
 		minimumScoreAbove.setText("0");
 		minimumScoreBelow.addKeyUpHandler(new MiniMumScoreKeyUpHandler(BELOWSCORE));
