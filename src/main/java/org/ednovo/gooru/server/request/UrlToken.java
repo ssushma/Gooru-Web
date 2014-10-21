@@ -602,6 +602,9 @@ public enum UrlToken {
 	
 	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?partyUid={0}"),
 	
+
+	V2_UPDATE_QUESTION_ITEM("/v2/collection/question/{0}?sessionToken={1}"),
+
 	V2_REORDER_FOLDER_COLLECTION("/v2/folder/item/{0}/reorder/{1}?sessionToken={2}");
 
 	private String url;

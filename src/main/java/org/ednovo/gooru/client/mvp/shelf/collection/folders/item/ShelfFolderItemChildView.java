@@ -101,6 +101,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	public ShelfFolderItemChildView(FolderDo folderDo, int folderNumber) { 
 		initWidget(uiBinder.createAndBindUi(this));
 		this.folderDo = folderDo;
+		setFolderDo(folderDo);
 //		setItemNo(folderNumber);
 		setFolderData(folderDo);
 		contentBlock.getElement().setId("fpnlContentBlock");
@@ -507,6 +508,20 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	 */
 	public void setCollectionItemId(String collectionItemId) {
 		this.collectionItemId = collectionItemId;
+	}
+
+	/**
+	 * @return the folderDo
+	 */
+	public FolderDo getFolderDo() {
+		return folderDo;
+	}
+
+	/**
+	 * @param folderDo the folderDo to set
+	 */
+	public void setFolderDo(FolderDo folderDo) {
+		this.folderDo = folderDo;
 	}
 	
 

@@ -278,10 +278,10 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 		cancelResourcePopupBtnLbl.getElement().setAttribute("alt", i18n.GL0142());
 		cancelResourcePopupBtnLbl.getElement().setAttribute("title", i18n.GL0142());
 		cancelResourcePopupBtnLbl.getElement().setAttribute("style","margin-left:10px");
-		lblAdding.setText(i18n.GL0591().toLowerCase());
+		lblAdding.setText(i18n.GL0808().toLowerCase());
 		lblAdding.getElement().setId("lblLblAdding");
-		lblAdding.getElement().setAttribute("alt", i18n.GL0591());
-		lblAdding.getElement().setAttribute("title", i18n.GL0591());
+		lblAdding.getElement().setAttribute("alt", i18n.GL0808());
+		lblAdding.getElement().setAttribute("title", i18n.GL0808());
 		clipImage.getElement().setId("imgClipImage");
 		clipImage.setUrl("images/paperclip.png");
 		addResourceBtn.addClickHandler(new AddClickHandler());

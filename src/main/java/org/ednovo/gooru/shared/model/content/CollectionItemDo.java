@@ -57,7 +57,8 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 	private List<String> course;
 	private Integer totalHitCount;
 	private Integer statusCode;
-	
+	private ResourceDo questionInfo;
+
 	private List<Map<String, String>> standards;
 	
 	private RatingDo rating;
@@ -248,6 +249,12 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 	public void setTotalPages(Integer totalPages) {
 		this.totalPages = totalPages;
 	}
+	public ResourceDo getQuestionInfo() {
+		return questionInfo;
+	}
 
+	public void setQuestionInfo(ResourceDo questionInfo) {
+		this.questionInfo = questionInfo;
+	}
 	
 }
