@@ -404,8 +404,11 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 					CollaboratorsDo collaboratorsDo2=new CollaboratorsDo();
 					collaboratorsDo2.setGooruUid(userData.getGooruUId());
 					collaboratorsDo2.setUsername(userData.getUserName());
-					if(userData.getFirstName()!=null)
-					collaboratorsDo2.setFirstName(userData.getFirstName());
+					if(userData.getFirstName()!=null){
+						collaboratorsDo2.setFirstName(userData.getFirstName());
+					}else{
+						collaboratorsDo2.setFirstName(userData.getUserName());
+					}
 					if(userData.getLastName()!=null)
 					collaboratorsDo2.setLastName(userData.getLastName());
 					if(userData.getEmailId()!=null)
@@ -430,8 +433,11 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 					CollaboratorsDo collaboratorsDo2=new CollaboratorsDo();
 					collaboratorsDo2.setGooruUid(userData.getGooruUId());
 					collaboratorsDo2.setUsername(userData.getUserName());
-					if(userData.getFirstName()!=null)
-					collaboratorsDo2.setFirstName(userData.getFirstName());
+					if(userData.getFirstName()!=null){
+						collaboratorsDo2.setFirstName(userData.getFirstName());
+					}else{
+						collaboratorsDo2.setFirstName(userData.getUserName());
+					}
 					if(userData.getLastName()!=null)
 					collaboratorsDo2.setLastName(userData.getLastName());
 					if(userData.getEmailId()!=null)
