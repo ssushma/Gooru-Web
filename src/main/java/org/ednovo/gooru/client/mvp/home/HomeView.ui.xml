@@ -95,7 +95,7 @@
 						<g:HTMLPanel styleName="col-md-7  col-sm-6 col-xs-12 goorustoriesIntro" ui:field="panelText">
 							
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="col-md-2 col-sm-3 col-xs-12 browseStoriesBtn" ui:field="panelText">
+						<g:HTMLPanel styleName="col-md-2 col-sm-3 col-xs-12 browseStoriesBtn">
 							<g:Anchor styleName="gooruStoriesLink btn-block" text="{i18n.GL2188_3}" ui:field="achGooruStories"></g:Anchor>
 						</g:HMTLPanel>
 					</div>
