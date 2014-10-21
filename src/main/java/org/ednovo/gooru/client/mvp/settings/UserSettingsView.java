@@ -741,12 +741,12 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		btnViewAdmin.getElement().setId("btnBtnViewAdmin");
 		btnViewAdmin.getElement().setAttribute("alt", i18n.GL1993() );
 		btnViewAdmin.getElement().setAttribute("title", i18n.GL1993() );
-//		if(AppClientFactory.getLoggedInUser().getUserRoleSetString().contains("Content_Admin")){
-//			btnViewAdmin.setVisible(true);
-//		}else{
-//			btnViewAdmin.setVisible(false);
-//			
-//		}
+		if(AppClientFactory.getLoggedInUser().getUserRoleSetString().contains("Content_Admin")){
+			btnViewAdmin.setVisible(true);
+		}else{
+			btnViewAdmin.setVisible(false);
+			
+		}
 
 		
 		standardSavingTextLabel.setText("");
