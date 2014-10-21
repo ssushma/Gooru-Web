@@ -96,7 +96,7 @@
 								</g:HTMLPanel>
 					       		<g:HTMLPanel styleName="{unitStyle.right_session}">
 					       		<g:HTMLPanel>
-								<g:HTMLPanel styleName="{unitStyle.d_filter_session_text}"><span>Session</span><span class="tooltip-icon"><img class="report-info" style="background:none;float: right; margin-top: 12px;margin-left: 4px;" src="images/question_blue.png" data-text="Select the student session (collection attempt) to be represented below." original-title=""></img>:</span></g:HTMLPanel>
+								<g:HTMLPanel styleName="{unitStyle.d_filter_session_text}"><span>Session</span><span class="tooltip-icon"><g:Image url="/images/mos/questionmark.png" ui:field="sessionsTooltip"></g:Image>:</span></g:HTMLPanel>
 								<g:HTMLPanel styleName="{unitStyle.session_data}">
 								 <g:ListBox ui:field="sessionsDropDown" styleName="{unitStyle.filterDropDownSessions}">
 								 </g:ListBox>

@@ -49,5 +49,5 @@ public interface AnalyticsUiHandlers extends BaseUiHandlers{
 	
 	void setAnalyticsAssignmentsPresenter(UnitAssignmentsDo result,String classpageId,String pathwayId);
 	
-	void setPersonalizeData(ClasspageDo classpageDo);
+	void setPersonalizeData();
 }

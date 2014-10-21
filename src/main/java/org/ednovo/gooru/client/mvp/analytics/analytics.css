@@ -690,6 +690,8 @@
 .unitHeadingAnalytics span {
 	font-size: 14px;
 	font-weight: normal;
+	float: left;
+	width: 62%;
 }
 
 .scoreText {
@@ -958,4 +960,22 @@
 	vertical-align: middle;
 	display: inline-block;
 	border: 2px solid #1076bb;
+}
+.studentsPerformance{
+	width: 30%;
+	float: left;
+}
+.hilightStudentsContainer{
+	border-bottom: 1px solid #8CA8BE;
+}
+.scoreAboveHilightStudentsContainer{
+	border: 1px solid #FCD999;
+}
+.scoreBelowilightStudentsContainer{
+	border: 1px solid #AAC7A8;
+	clear: both;
+}
+.viewAllStudentsBtn{
+	margin-top: 18px;
+	margin-bottom: 8px;
 }
