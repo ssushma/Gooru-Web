@@ -50,6 +50,7 @@ import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCollectionViewCou
 import org.ednovo.gooru.client.mvp.play.collection.flag.CollectionFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.collection.share.CollectionSharePresenter;
 import org.ednovo.gooru.client.mvp.play.collection.toc.CollectionPlayerTocPresenter;
 import org.ednovo.gooru.client.mvp.play.error.CollectionNonExistView;
@@ -59,11 +60,8 @@ import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPres
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.resource.flag.ResourceFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.narration.ResourceNarrationPresenter;
-
-import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
-
 import org.ednovo.gooru.client.mvp.rating.events.UpdateFlagIconColorEvent;
-
+import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateViewCountInSearchEvent;
@@ -224,6 +222,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	private int userAttemptedQuestionType=0;
 	
 	private String questionType="RES";
+	
+	PlaceRequest nextResoruceRequest;
 	
 	private boolean isOpenEndedAnswerSubmited=false;
 	
@@ -687,7 +687,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			//updateResourceViewCount(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getViews().toString(),RESOURCE,collectionItemId);
 			createPlayerDataLogs();
 			setTotalTimeSpentOnSummaryPage();
-			PlaceRequest nextResoruceRequest=getNextButtonRequestUrl(collectionItemId);
+		    nextResoruceRequest=getNextButtonRequestUrl(collectionItemId);
 			PlaceRequest previousResoruceRequest=getPreviousButtonRequestUrl(collectionItemId);
 			if(!AppClientFactory.isAnonymous()){
 				getReportData(collectionItemDo.getResource().getGooruOid());
@@ -2135,5 +2135,21 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				}
 			}
 		}
+	}
+
+	@Override
+	public void navigateToNext() {
+		if(!resoruceMetadataPresenter.isOeAnswerSubmited()){
+			NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
+				@Override
+				public void navigateToNextResource() {
+					super.hide();
+					AppClientFactory.getPlaceManager().revealPlace(false, nextResoruceRequest,true);
+				}
+			};
+		}else{
+			AppClientFactory.getPlaceManager().revealPlace(false, nextResoruceRequest,true);
+		}
+		
 	}
 }

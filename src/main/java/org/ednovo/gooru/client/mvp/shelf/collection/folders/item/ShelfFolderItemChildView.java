@@ -78,7 +78,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	
 	private static final String ID = "id";
 	
-	private String itemGooruOId;
+	private String itemGooruOId,collectionItemId;
 	
 	private FolderDo folderDo;
 	
@@ -101,6 +101,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	public ShelfFolderItemChildView(FolderDo folderDo, int folderNumber) { 
 		initWidget(uiBinder.createAndBindUi(this));
 		this.folderDo = folderDo;
+		setFolderDo(folderDo);
 //		setItemNo(folderNumber);
 		setFolderData(folderDo);
 		contentBlock.getElement().setId("fpnlContentBlock");
@@ -493,6 +494,34 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	 */
 	public void setItemGooruOId(String itemGooruOId) {
 		this.itemGooruOId = itemGooruOId;
+	}
+
+	/**
+	 * @return the collectionItemId
+	 */
+	public String getCollectionItemId() {
+		return collectionItemId;
+	}
+
+	/**
+	 * @param collectionItemId the collectionItemId to set
+	 */
+	public void setCollectionItemId(String collectionItemId) {
+		this.collectionItemId = collectionItemId;
+	}
+
+	/**
+	 * @return the folderDo
+	 */
+	public FolderDo getFolderDo() {
+		return folderDo;
+	}
+
+	/**
+	 * @param folderDo the folderDo to set
+	 */
+	public void setFolderDo(FolderDo folderDo) {
+		this.folderDo = folderDo;
 	}
 	
 

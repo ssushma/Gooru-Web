@@ -145,7 +145,7 @@ public class UserRegistrationPresenter extends PresenterWidget<IsUserRegistratio
 			@Override
 			public void onFailure(Throwable caught) {
 				UcCBundle.INSTANCE.css().ensureInjected();
-				new AlertContentUc((i18n.GL1415()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()), caught.getMessage()).getAlertBox().addStyleName(UcCBundle.INSTANCE.css().increaseZindex());
+//				new AlertContentUc((i18n.GL1415()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()), caught.getMessage()).getAlertBox().addStyleName(UcCBundle.INSTANCE.css().increaseZindex());
 			}
 
 		});

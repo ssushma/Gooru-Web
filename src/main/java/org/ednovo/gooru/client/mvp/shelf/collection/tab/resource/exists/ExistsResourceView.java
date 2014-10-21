@@ -243,6 +243,9 @@ public class ExistsResourceView extends AppPopUp {
 				thumbnailUrl = DEFULT_IMAGE_PREFIX+category+PNG;
 				
 			}
+		}else if(thumbnailUrl.indexOf("youtube") > 0){
+			String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(url);
+			thumbnailUrl = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
 		}
 		}else{
 			thumbnailUrl = DEFULT_IMAGE_PREFIX+category+PNG;

@@ -751,7 +751,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 									public void onFailure(Throwable caught) {
 										loginButton.setVisible(true);
 										lblPleaseWait.setVisible(false);
-										new AlertContentUc(i18n.GL0061(), i18n.GL0347());
+//										new AlertContentUc(i18n.GL0061(), i18n.GL0347());
 									}
 								});
 			} else {
