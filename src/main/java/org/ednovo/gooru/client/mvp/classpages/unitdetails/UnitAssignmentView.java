@@ -376,7 +376,13 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			Label noAssignmentlabel = new Label(i18n.GL2202());
 			circleContainerPanel.clear();
 			circleContainerPanel.add(noAssignmentlabel);
+			panelPersonalizeButtonContainer.setVisible(false);
 		}
+		else
+		{
+			panelPersonalizeButtonContainer.setVisible(true);
+		}
+		
 		showAndHideAssignmentArrows(unitAssignmentsDo);
 		showAndHidePaginationArrows();
 	}
@@ -422,19 +428,12 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				 personalizeContainer.clear();
 				 personalizeContainer.add(content);
 				 personalizeContainer.setVisible(false);
-
-			}else if(slot==UnitAssignmentPresenter.ASSIGNMENTS_SLOT)
-			{
-				circleContainerPanel.clear();
-				circleContainerPanel.add(content);
-			
 			}else if(slot==UnitAssignmentPresenter.REPORT_SLOT){
 				 collectionView.getFlowPnl().clear();
 				 collectionView.getFlowPnl().add(content);
 				 collectionView.getFlowPnl().setVisible(true);
 			}else{
 				
-
 			}
 		}
 	}
@@ -1134,6 +1133,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 
 	@Override
 	public void showDashBoard() {
+		panelPersonalizeButtonContainer.setVisible(false);
 		if(!isClickOnAssignment){
 			goalContainer.setVisible(true);
 			containerPanel.setVisible(false);
@@ -1142,6 +1142,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 //			scoreHederView();
 			setDashBoardIds();
 			htmDashBoardTabs.setVisible(true);
+		
 			btnDashBoard.setStyleName(res.unitAssignment().selected());
 			btnAssignment.removeStyleName(res.unitAssignment().selected());
 		}
@@ -1162,6 +1163,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 	public void showAssignments() {
 		
 		htmDashBoardTabs.removeFromParent();
+		panelPersonalizeButtonContainer.setVisible(true);
 		containerPanel.setVisible(true);
 		goalContainer.removeFromParent();
 		assignmentContainer.setVisible(true);

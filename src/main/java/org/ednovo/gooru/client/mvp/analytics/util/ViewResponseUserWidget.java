@@ -62,7 +62,6 @@ public class ViewResponseUserWidget extends Composite {
 		}
 	}
 	void setData(final OetextDataDO oetextDataDO,final String resourceGooruId,final String collectionId, final String classpageId,final String pathwayId,String questionType,boolean isSummary){
-		System.out.println("question type:"+questionType);
 		this.oetextDataDO=oetextDataDO;
 		giveFeedBackpnl.setVisible(false);
 		editFeedBackpnl.setVisible(false);
@@ -75,7 +74,6 @@ public class ViewResponseUserWidget extends Composite {
 			spnEdit.setVisible(false);
 			spnDelete.setVisible(false);
 		}
-		System.out.println("AppClientFactory.getLoggedInUser().getProfileImageUrl()::"+AppClientFactory.getLoggedInUser().getProfileImageUrl());
 	
 		if(AppClientFactory.getLoggedInUser().getProfileImageUrl()!=null){
 			userProfileImage.setUrl(AppClientFactory.getLoggedInUser().getProfileImageUrl());
@@ -147,7 +145,8 @@ public class ViewResponseUserWidget extends Composite {
 			}else{
 				userResponselbl.setText(oetextDataDO.getOEText());
 			}
-			if((feedBackStatus!=null && feedBackStatus.equalsIgnoreCase("false")) && (oeText!=null && !oeText.trim().isEmpty())){
+			System.out.println("isSummary::"+isSummary);
+			if((isSummary && feedBackStatus!=null && feedBackStatus.equalsIgnoreCase("false")) && (oeText!=null && !oeText.trim().isEmpty())){
 				giveFeedBackpnl.setVisible(true);
 			}
 			if((feedBackStatus!=null && feedBackStatus.equalsIgnoreCase("true")) && (oeText!=null && !oeText.trim().isEmpty())){
@@ -159,7 +158,7 @@ public class ViewResponseUserWidget extends Composite {
 			btnSubmit.addClickHandler(new  ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					AppClientFactory.getInjector().getAnalyticsService().postTeacherFeedBackToStudent(feedBacktxt.getText(), resourceGooruId, collectionId, classpageId, pathwayId, oetextDataDO.getGooruUId(), "AS", new AsyncCallback<FeedBackResponseDataDO>() {
+					AppClientFactory.getInjector().getAnalyticsService().postTeacherFeedBackToStudent(feedBacktxt.getText(), resourceGooruId, collectionId, classpageId, pathwayId, oetextDataDO.getGooruUId(), "AS","","","IZBPNRE", new AsyncCallback<FeedBackResponseDataDO>() {
 						@Override
 						public void onSuccess(FeedBackResponseDataDO result) {
 							if(result!=null){

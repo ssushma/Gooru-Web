@@ -83,7 +83,7 @@
 	vertical-align: middle;
 	width: 20px;
 	border-radius: 50px;
-	margin: 7px 24px;
+	margin: 9px 13px;
 }
 
 .detailsMenuBlock:hover .bubbleMain .numaric {
@@ -107,7 +107,7 @@
 }
 
 .optional {
-    background: url('../images/optional.png') no-repeat !important;
+    background: #b9bbca url('../images/liners.png') no-repeat !important;
 }
 
 .optionalRed {
@@ -147,7 +147,7 @@
 
 .bubbleMain:hover .progressPopupBox {
     display: block;
-    left: -112px;
+    left: -117px;
     position: absolute;
     top: 55px;
 }
@@ -160,6 +160,7 @@
     height: 55px;
     /* margin: -53px 0 0; */
     width: 55px;
+    opacity: 0.7;
 }
 
 .progressPopupBox .topHandle {
@@ -293,7 +294,7 @@
 .studentNameContainer:hover .bubbleMain{
 	width: 34px !important;
 	height: 34px !important;
-	margin: 0px 10px !important;
+	margin: 0px 10px !important;	
 }
 
 .personalizeBorder{

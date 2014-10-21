@@ -2,6 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="unitStyle" src="tabContainer.css" />
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel>
 	<div class="{unitStyle.q_oer_content}">
 			<g:Label ui:field="usernamelbl" styleName="{unitStyle.q_oer_user_header}"/>
@@ -14,7 +15,7 @@
 					<g:Image ui:field="userProfileImage" styleName="{unitStyle.profileImage}"/>
 				</div>
 				<g:TextBox maxLength="500" styleName="{unitStyle.input_teacher_feedback_content}" ui:field="feedBacktxt"/>
-				<g:Button  ui:field="btnSubmit" styleName="primary">Submit</g:Button>
+				<g:Button  ui:field="btnSubmit" styleName="primary" text="{i18n.GL0486}"></g:Button>
 	</g:HTMLPanel>
 	<g:HTMLPanel ui:field="editFeedBackpnl">
 	<div class="{unitStyle.dashboard_view_teacher_feedback}">
@@ -25,8 +26,8 @@
 				<div class="{unitStyle.feedback_bottom_content_details}">
 					<g:Label styleName="{unitStyle.feedback_date_and_time_details}" ui:field="createOn"/>
 					<div class="{unitStyle.feedback_content_edit_handler}">
-						<g:InlineLabel ui:field="spnEdit">Edit</g:InlineLabel> 
-						<g:InlineLabel ui:field="spnDelete">Delete</g:InlineLabel>
+						<g:InlineLabel ui:field="spnEdit" text="{i18n.GL2285}"></g:InlineLabel> 
+						<g:InlineLabel ui:field="spnDelete" text="{i18n.GL0558}"></g:InlineLabel>
 					</div>
 				</div>
 	</div>

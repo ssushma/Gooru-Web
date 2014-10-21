@@ -38,7 +38,9 @@ public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>
 	
 	public void hideMoreUnitsLink();
 	
-	public void setBottomAndTopScoresData(ArrayList<GradeJsonData> result);
+	public void setBottomStudentsData(ArrayList<GradeJsonData> result);
+	
+	public void setTopStudentsData(ArrayList<GradeJsonData> result);
 	
 	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData);
 	
@@ -49,4 +51,13 @@ public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>
 	void LoadingImageLabelFalse();
 	
 	void clearDownArrow();
+	
+	void hidePersonalizeContainers();
+	
+	void revealPlace(String tab,String pageNum,String  unitId,String assignmentId);
+	 
+	void removeAndAddUnitSelectedStyle();
+	
+    void resetData();
+    
 }

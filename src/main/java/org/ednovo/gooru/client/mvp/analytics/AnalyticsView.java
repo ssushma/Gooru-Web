@@ -11,12 +11,17 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.analytics.util.HCLineChart;
 import org.ednovo.gooru.client.mvp.analytics.util.StudentScoredAboveBelowUlPanel;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitWidget;
+import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.AssignmentGoal.AssignmentGoalView;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -44,16 +49,18 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 
 	interface AnalyticsViewUiBinder extends UiBinder<Widget, AnalyticsView> {
 	}
+	
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	AnalyticsCssBundle res;
 	
-	@UiField HTMLPanel unitPanel;
+	@UiField HTMLPanel highlightedStudentsContainer,scoreAboveHighlightedStudentsContainer,scoreBelowHighlightedStudentsContainer,unitPanel;
 	
 	@UiField Label lblMoreUnits,summaryArrowlbl,progressArrowlbl,responsesArrowlbl;
 	
-	@UiField HTMLPanel graphWidget,slotWidget,orangeProgressBar,greenProgressBar,blueProgressBar,scoredBelowPanel,scoredAbovePanel,loadingImageLabel;
+	@UiField HTMLPanel personalizeMainContainer,unitOptionsContainer,personalizeContainer,assignmentContainer,graphWidget,slotWidget,orangeProgressBar,greenProgressBar,blueProgressBar,scoredBelowPanel,scoredAbovePanel,loadingImageLabel;
 	
-	@UiField Button btnCollectionSummary,btnCollectionProgress,btnCollectionResponses;
+	@UiField Button btnViewHighlightedStudents,btnViewAllStudents,btnCollectionSummary,btnCollectionProgress,btnCollectionResponses,personalizeBtn;
 	
 	@UiField ListBox loadCollections;
 	
@@ -63,7 +70,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	
 	ClasspageListDo classpageListDo;
 	
-	boolean isSummayClicked=false,isProgressClicked=false;
+	boolean isSummayClicked=false,isProgressClicked=false,isPersonalizedBtnClicked=false;
 	
 	Map<String,GradeJsonData> loadcollectionsmap=new HashMap<String, GradeJsonData>();
 	
@@ -91,6 +98,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		minimumScoreBelow.addKeyUpHandler(new MiniMumScoreKeyUpHandler(BELOWSCORE));
 		minimumScoreAbove.addKeyUpHandler(new MiniMumScoreKeyUpHandler(ABOVESCORE));
 		loadCollections.addChangeHandler(new loadCollectionsChangeHandler());
+		assignmentContainer.setVisible(false);
+		highlightedStudentsContainer.setVisible(false);
 	}
 	public class loadCollectionsChangeHandler implements ChangeHandler{
 		@Override
@@ -103,7 +112,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 			int selectedIndex=loadCollections.getSelectedIndex();
 			String collectionId=loadCollections.getValue(selectedIndex);
-			getUiHandlers().getBottomAndTopScoresData(classpageId, pathwayId, collectionId);
+			getUiHandlers().getTopStudentsData(classpageId, pathwayId,collectionId,"ASC");
+			getUiHandlers().getBottomStudentsData(classpageId, pathwayId,collectionId,"DESC");
 		}
 	}
 	public class ViewAssignmentClickEvent implements ClickHandler{
@@ -113,7 +123,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			clearDownArrow();
+			clearDownArrows();
 			String selectedCollectionId=loadCollections.getValue(loadCollections.getSelectedIndex());
 			if(clicked.equalsIgnoreCase(PROGRESS)){
 				isSummayClicked=false;
@@ -142,12 +152,35 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			}
 		}
 	}
+	@Override
 	public void clearDownArrow(){
+		clearDownArrows();
+		isSummayClicked=false;
+		isProgressClicked=false;
+	}
+	public void clearDownArrows(){
 		summaryArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
 		progressArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
 		responsesArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
-		isSummayClicked=false;
-		isProgressClicked=false;
+	}
+
+	@Override
+	public void resetData(){
+		clearDownArrow();
+		unitPanel.clear();
+		graphWidget.clear();
+		loadCollections.clear();
+		scoredAbovePanel.clear();
+		scoredBelowPanel.clear();
+	}
+	
+	@Override
+	public void hidePersonalizeContainers(){
+		isPersonalizedBtnClicked=false;
+		assignmentContainer.setVisible(false);
+		highlightedStudentsContainer.setVisible(false);
+		personalizeMainContainer.setVisible(false);
+		unitOptionsContainer.setVisible(false);
 	}
 	public void removeUnitSelectedStyle(){
 		Iterator<Widget> widgets = unitPanel.iterator();
@@ -170,6 +203,25 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		getUiHandlers().getPathwayUnits(classpageid, limit, (limit*unitsPageNumber),false);
 		removeAndAddUnitSelectedStyle();
 	}
+	/*@UiHandler("printTest")
+	public void clickOnPrintTest(ClickEvent event){
+		String style="<link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'><link rel='styleSheet' type='text/css' href='https://www.google.com/uds/api/visualization/1.0/8c95b72e5c145d5b3d7bb8b4ea74fd63/ui+en,table+en.css'>";
+		Print.it(style,graphWidget);
+		System.out.println("in");
+	}*/
+	
+	@UiHandler("btnViewAllStudents")
+	public void clickOnViewAllStudents(ClickEvent event){
+		getUiHandlers().setPersonalizeData();
+		personalizeMainContainer.setVisible(true);
+		highlightedStudentsContainer.setVisible(false);
+	}
+	@UiHandler("btnViewHighlightedStudents")
+	public void clickOnViewHignlightStudents(ClickEvent event){
+		personalizeMainContainer.setVisible(false);
+		highlightedStudentsContainer.setVisible(true);
+	}
+	@Override
 	public void removeAndAddUnitSelectedStyle(){
 		Iterator<Widget> widgets = unitPanel.iterator();
 		while (widgets.hasNext()) {
@@ -178,6 +230,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 				UnitWidget unitsWidget=(UnitWidget)widget;
 				String unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", "");
 				if(unitId.equals(unitsWidget.getUnitGooruOid())){
+					setPersonalizeBtnText(unitsWidget.getUnitNmae());
 					unitsWidget.getUnitNameContainer().removeStyleName(res.unitAssignment().unitMenuActive());
 					unitsWidget.getUnitNameContainer().addStyleName(res.unitAssignment().unitMenuActive());
 				}else{
@@ -197,8 +250,15 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		slotWidget.clear();
 		if (content != null) {
 			 if(slot==AnalyticsPresenter.COLLECTION_PROGRESS_SLOT){
-				 slotWidget.setVisible(true);
-				 slotWidget.add(content);
+			    slotWidget.setVisible(true);
+				slotWidget.add(content);
+			}else  if(slot==AnalyticsPresenter.UNIT_ASSIGNMENT_SLOT){
+				assignmentContainer.setVisible(true);
+				assignmentContainer.add(content);
+			}else if(slot==AnalyticsPresenter.PERSONALIZE_SLOT){
+				personalizeContainer.clear();
+				highlightedStudentsContainer.setVisible(true);
+				personalizeContainer.add(content);
 			}else{
 				slotWidget.setVisible(false);
 			}
@@ -207,19 +267,21 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		}
 	}
 
+	
 	@Override
 	public void showUnitNames(ClassDo classDo, boolean clearPanel) {
 		this.classDo = classDo;
-		unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
-		if(unitId==null){
-			unitId = classDo.getSearchResults().get(0).getResource().getGooruOid();
-		}
-		if(clearPanel){
-			unitPanel.clear();
-		}
 		unitsTotalCount=classDo.getTotalHitCount();
-		updatePageNumber();
 		if(classDo!=null&&classDo.getSearchResults()!=null&&classDo.getSearchResults().size()>0){
+			unitId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
+			if(unitId==null){
+				unitId = classDo.getSearchResults().get(0).getResource().getGooruOid();
+			}
+			if(clearPanel){
+				unitPanel.clear();
+				unitsPageNumber=0;
+			}
+			updatePageNumber();
 			ArrayList<ClassUnitsListDo> classListUnitsListDo =classDo.getSearchResults();
 			for(int i=0; i<classListUnitsListDo.size(); i++){
 				ClassUnitsListDo classListUnitsListDObj=classDo.getSearchResults().get(i);
@@ -235,12 +297,12 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 				if(unitId!=null&&unitId.equals(unitsWidget.getUnitGooruOid())){
 					unitsWidget.getUnitNameContainer().removeStyleName(res.unitAssignment().unitMenuActive());
 					unitsWidget.getUnitNameContainer().addStyleName(res.unitAssignment().unitMenuActive());
+					setPersonalizeBtnText(unitTitle);
 				}else{
 					unitsWidget.getUnitNameContainer().removeStyleName(res.unitAssignment().unitMenuActive());
 				}
 				unitPanel.add(unitsWidget);
 			}
-
 		}
 	}
 	private void updatePageNumber(){
@@ -265,7 +327,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			selectedUnitNumber = unitNumber;
 			setUnitCollectionId(unitsWidget.getUnitCollectionItemId());
 			revealPlace("reports",null,unitsWidget.getUnitGooruOid(),null);
-			removeAndAddUnitSelectedStyle();
+			//setPersonalizeBtnText(unitTitle);
+			//removeAndAddUnitSelectedStyle();
 		}
 	}
 	
@@ -290,8 +353,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			}
 		}
 	}
+	 @Override
 	 public void revealPlace(String tabName,String pageNum,String unitId,String assignmentId){
-		 	
 			Map<String,String> params = new HashMap<String,String>();
 			String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 			String classpageid="";
@@ -325,22 +388,58 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	 }
 	 
 	@Override
-	public void setBottomAndTopScoresData(ArrayList<GradeJsonData> result) {
-		scoredAbovePanel.clear();
+	public void setBottomStudentsData(ArrayList<GradeJsonData> result) {
 		scoredBelowPanel.clear();
+		scoreBelowHighlightedStudentsContainer.clear();
 		if(result.size()>0)
 		{
-		if(result.get(0).getUserData() != null)
-		{
-		for(int i=0;i<result.get(0).getUserData().size();i++){
-			UserDataDo userData=result.get(0).getUserData().get(i);
-			scoredAbovePanel.add(new StudentScoredAboveBelowUlPanel(userData));
-			scoredBelowPanel.add(new StudentScoredAboveBelowUlPanel(userData));
-		}
-		}
+			if(result.get(0).getUserData() != null)
+			{
+				for(int i=0;i<result.get(0).getUserData().size();i++){
+					UserDataDo userData=result.get(0).getUserData().get(i);
+					scoredBelowPanel.add(new StudentScoredAboveBelowUlPanel(userData));
+					
+					//This is used to set the bottom 3 studetns assignment data
+					CollaboratorsDo collaboratorsDo2=new CollaboratorsDo();
+					collaboratorsDo2.setGooruUid(userData.getGooruUId());
+					collaboratorsDo2.setUsername(userData.getUserName());
+					if(userData.getFirstName()!=null)
+					collaboratorsDo2.setFirstName(userData.getFirstName());
+					if(userData.getLastName()!=null)
+					collaboratorsDo2.setLastName(userData.getLastName());
+					if(userData.getEmailId()!=null)
+					collaboratorsDo2.setEmailId(userData.getEmailId());
+					scoreBelowHighlightedStudentsContainer.add(new AssignmentGoalView(collaboratorsDo2));
+				}
+			}
 		}
 	}
-	
+	@Override
+	public void setTopStudentsData(ArrayList<GradeJsonData> result) {
+		scoredAbovePanel.clear();
+		scoreAboveHighlightedStudentsContainer.clear();
+		if(result.size()>0)
+		{
+			if(result.get(0).getUserData() != null)
+			{
+				for(int i=0;i<result.get(0).getUserData().size();i++){
+					UserDataDo userData=result.get(0).getUserData().get(i);
+					scoredAbovePanel.add(new StudentScoredAboveBelowUlPanel(userData));
+					//This is used to set the top 3 studetns assignment data
+					CollaboratorsDo collaboratorsDo2=new CollaboratorsDo();
+					collaboratorsDo2.setGooruUid(userData.getGooruUId());
+					collaboratorsDo2.setUsername(userData.getUserName());
+					if(userData.getFirstName()!=null)
+					collaboratorsDo2.setFirstName(userData.getFirstName());
+					if(userData.getLastName()!=null)
+					collaboratorsDo2.setLastName(userData.getLastName());
+					if(userData.getEmailId()!=null)
+					collaboratorsDo2.setEmailId(userData.getEmailId());
+					scoreAboveHighlightedStudentsContainer.add(new AssignmentGoalView(collaboratorsDo2));
+				}
+			}
+		}
+	}
 	@Override
 	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData) {
 		loadcollectionsmap.clear();
@@ -370,17 +469,19 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	 * @param passedScoreVal
 	 */
 	void setMinimumScoresData(){
-		int selectedIndex=loadCollections.getSelectedIndex();
-		String selectedValue=loadCollections.getValue(selectedIndex);
-		int minimunScoreVal=0;
-		if(loadcollectionsmap.get(selectedValue).getMinimumScore()!=null){
-		    minimunScoreVal=Integer.parseInt(loadcollectionsmap.get(selectedValue).getMinimumScore());
+		if(loadCollections.getItemCount()!=0){
+			int selectedIndex=loadCollections.getSelectedIndex();
+			String selectedValue=loadCollections.getValue(selectedIndex);
+			int minimunScoreVal=0;
+			if(loadcollectionsmap.get(selectedValue).getMinimumScore()!=null){
+			    minimunScoreVal=Integer.parseInt(loadcollectionsmap.get(selectedValue).getMinimumScore());
+			}
+			minimumScorelbl.setText(minimunScoreVal+"%");
+			minimumScoreAbove.setText((minimunScoreVal+1)+"");
+			minimumScoreBelow.setText((minimunScoreVal==0)?0+"":(minimunScoreVal-1)+"");
+			orangeProgressBar.getElement().getStyle().setWidth((minimunScoreVal==0)?0:(minimunScoreVal-1), Unit.PCT);
+			greenProgressBar.getElement().getStyle().setWidth(100-(minimunScoreVal+1), Unit.PCT);
 		}
-		minimumScorelbl.setText(minimunScoreVal+"%");
-		minimumScoreAbove.setText((minimunScoreVal+1)+"");
-		minimumScoreBelow.setText((minimunScoreVal==0)?0+"":(minimunScoreVal-1)+"");
-		orangeProgressBar.getElement().getStyle().setWidth((minimunScoreVal==0)?0:(minimunScoreVal-1), Unit.PCT);
-		greenProgressBar.getElement().getStyle().setWidth(100-(minimunScoreVal+1), Unit.PCT);
 	}
 	@Override
 	public void LoadingImageLabeltrue() {
@@ -391,6 +492,33 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		loadingImageLabel.setVisible(false);
 	}
 
+	@UiHandler("personalizeBtn")
+	public void clickOnPersonalizeBtn(ClickEvent event){
+		if(isPersonalizedBtnClicked){
+			assignmentContainer.setVisible(false);
+			personalizeMainContainer.setVisible(false);
+			highlightedStudentsContainer.setVisible(false);
+			unitOptionsContainer.setVisible(false);
+			isPersonalizedBtnClicked=false;
+		}else{
+			getUiHandlers().getUnitAssignments();
+			highlightedStudentsContainer.setVisible(true);
+			unitOptionsContainer.setVisible(true);
+			isPersonalizedBtnClicked=true;
+		}
+	}
 	
+	public void setPersonalizeBtnText(String unitTitle){
+		if (unitTitle.length() > 10){
+			unitTitle = unitTitle.substring(0, 11) + "...";
+		}
+		personalizeBtn.setText(StringUtil.generateMessage(i18n.GL2221(), unitTitle));
+	}
 	
+	com.google.gwt.visualization.client.Properties getPropertiesCell(){
+			  Properties properties=Properties.create();
+			  properties.set("style", "text-align:center;font-weight:bold;background-color: red;");
+			  com.google.gwt.visualization.client.Properties p=properties.cast();
+			  return p;
+	}
 }

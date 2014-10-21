@@ -51,7 +51,7 @@ public interface AnalyticsServiceAsync extends BaseServiceAsync {
 	
 	void getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId,String pathwayId,AsyncCallback<ArrayList<UserDataDo>> callback);
    
-	void getBottomAndTopScoresData(String collectionId,String classId,String score,AsyncCallback<ArrayList<GradeJsonData>> callback);
+	void getBottomAndTopScoresData(String collectionId,String classId,String score,String sortOrder,AsyncCallback<ArrayList<GradeJsonData>> callback);
    
     void setHTMLtoPDF(String htmlString,AsyncCallback<Void> callback);
    
@@ -63,5 +63,5 @@ public interface AnalyticsServiceAsync extends BaseServiceAsync {
     
     void getOETextData(String resourceId,String collectionId,String classpageId,String pathwayId,String session,String sessionId,String userUId,AsyncCallback<ArrayList<OetextDataDO>> callback);
     
-    void postTeacherFeedBackToStudent(String freeText,String resourceId,String collectionId,String classpageId,String pathwayId,String userId,String session,AsyncCallback<FeedBackResponseDataDO> callback);
+    void postTeacherFeedBackToStudent(String freeText,String resourceId,String collectionId,String classpageId,String pathwayId,String userId,String session,String contentItemId,String parentItemId,String classCode,AsyncCallback<FeedBackResponseDataDO> callback);
 }

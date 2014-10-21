@@ -51,7 +51,7 @@ public interface AnalyticsService extends BaseService {
 		 
 	public ArrayList<UserDataDo> getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId,String pathwayId);
 
-	public ArrayList<GradeJsonData>  getBottomAndTopScoresData(String collectionId,String classId,String score);
+	public ArrayList<GradeJsonData>  getBottomAndTopScoresData(String collectionId,String classId,String score,String sortOrder);
 	
 	public void setHTMLtoPDF(String htmlString);
 	
@@ -63,5 +63,5 @@ public interface AnalyticsService extends BaseService {
 
 	public ArrayList<OetextDataDO> getOETextData(String resourceId,String collectionId,String classpageId,String pathwayId,String session,String sessionId,String userUId);
 	
-	public FeedBackResponseDataDO postTeacherFeedBackToStudent(String freeText,String resourceId,String collectionId,String classpageId,String pathwayId,String userId,String session);
+	public FeedBackResponseDataDO postTeacherFeedBackToStudent(String freeText,String resourceId,String collectionId,String classpageId,String pathwayId,String userId,String session,String contentItemId,String parentItemId,String classCode);
 }

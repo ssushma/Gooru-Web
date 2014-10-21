@@ -22,32 +22,13 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.analytics;
-
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.shared.model.content.ClasspageDo;
+package org.ednovo.gooru.client.mvp.analytics.unitAssignments;
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
-public interface AnalyticsUiHandlers extends BaseUiHandlers{
-	void getPathwayItems(String classpageId,String pathwayGooruOid,String sequence,int limit,int offSet);
+
+public interface IsAnalyticsUnitAssignmentsView extends IsViewWithHandlers<AnalyticsUnitAssignmentsUiHandlers>{
 	
-	void getUnitAssignments(final String classpageId, final String pathwayGooruOid,String sequence,int limit,int offSet);
+	void setAssignmentsData(UnitAssignmentsDo unitAssignmentsDo,boolean isNextOrPrevious);
 	
-	void getPathwayUnits(String classId,int limit, int offset ,boolean clearPanel);
-	
-	void setClickedTabPresenter(String clickedTab,String collectionId);
-	
-	void getBottomStudentsData(String classpageId, String pathwayId,String collectionId,String sortOrder);
-	
-	void getTopStudentsData(String classpageId, String pathwayId,String collectionId,String sortOrder);
-	
-	void getGradeCollectionJson(String classpageId,String pathwayId);
-	
-	void exportOEPathway(String classpageId,String pathwayId);
-	
-	void getUnitAssignments();
-	
-	void setAnalyticsAssignmentsPresenter(UnitAssignmentsDo result,String classpageId,String pathwayId);
-	
-	void setPersonalizeData();
 }

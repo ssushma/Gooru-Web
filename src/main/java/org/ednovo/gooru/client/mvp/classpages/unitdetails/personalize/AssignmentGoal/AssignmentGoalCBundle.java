@@ -55,6 +55,8 @@ public interface AssignmentGoalCBundle extends ClientBundle {
 		String container();
 		
 		String pleaseWait();		
+		
+		String bubblemainContainer();	
 	}
 
 	@Source("assignmentgoal.css")

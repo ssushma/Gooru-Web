@@ -270,10 +270,10 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 
 	@Override
 	public ArrayList<GradeJsonData>  getBottomAndTopScoresData(String collectionId, String classId,
-			String pathwayId) {
+			String pathwayId,String sortOrder) {
 		JsonRepresentation jsonRep = null;
 		ArrayList<GradeJsonData> collectionResourcesList=new ArrayList<GradeJsonData>();
-		String dataPassing ="{%22fields%22:%22timeSpent,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,gooruOId,title%22,%22filters%22:{%22session%22:%22FS%22,%22userUId%22:%22%22,%22collectionGooruOId%22:%22%22,%22pathwayId%22:%22"+pathwayId+"%22},%22paginate%22:{%22sortBy%22:%22itemSequence,gradeInPercentage%22,%22sortOrder%22:%22DESC%22,%22totalRecords%22:6}}";
+		String dataPassing ="{%22fields%22:%22timeSpent,score,gradeInPercentage,totalQuestionCount,avgTimeSpent,resourceGooruOId,gooruUId,userName,userData,gooruOId,title%22,%22filters%22:{%22session%22:%22FS%22,%22userUId%22:%22%22,%22collectionGooruOId%22:%22"+collectionId+"%22,%22pathwayId%22:%22"+pathwayId+"%22},%22paginate%22:{%22sortBy%22:%22itemSequence,gradeInPercentage%22,%22sortOrder%22:%22"+sortOrder+"%22,%22totalRecords%22:3}}";
 		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_GETGRADEJSON, classId,getLoggedInSessionToken(),dataPassing);
 		System.out.println("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -393,28 +393,30 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 
 	@Override
 	public FeedBackResponseDataDO postTeacherFeedBackToStudent(String freeText,
-			String resourceId, String collectionId, String classpageId,	String pathwayId, String userId, String session) {
+			String resourceId, String collectionId, String classpageId,	String pathwayId, String userId, String session,String contentItemId,String parentItemId,String classCode) {
 		JsonRepresentation jsonRep = null;
 		FeedBackResponseDataDO feedBackResponseDataDO=new FeedBackResponseDataDO();
-		//String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ITEMFEEDBACK, session,getLoggedInSessionToken());
-		String url ="http://www.goorulearning.org/gooruapi/rest/v2/session/AS/item/feedback?sessionToken=08a99a16-4ea5-11e4-8d6c-123141016e2a";
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ITEMFEEDBACK, session,getLoggedInSessionToken());
+		//String url ="http://www.goorulearning.org/gooruapi/rest/v2/session/AS/item/feedback?sessionToken=08a99a16-4ea5-11e4-8d6c-123141016e2a";
 		System.out.println("url:+"+url);
 		JSONObject mainObj=new JSONObject();
 		JSONObject userObj=new JSONObject();
 		JSONObject setPlayLoadObj=new JSONObject();
 		try {
-			userObj.put("partyUid", "caf10bed-e2ae-4d9e-ac4e-77689741b6bb");
+			userObj.put("partyUid", userId);
 			
-			setPlayLoadObj.put("classpageGooruId", "6a4cdb36-c579-4994-8ea0-5130a9838cbd");
-			setPlayLoadObj.put("active", "true");
-			setPlayLoadObj.put("sessionId", "AS");
+			setPlayLoadObj.put("classCode", classCode);
+			setPlayLoadObj.put("pathwayId", pathwayId);
+			setPlayLoadObj.put("classId",classpageId);
 			
-			mainObj.put("contentGooruOId","f58e7666-a5a0-4608-8799-cbf091883587");
-			mainObj.put("parentGooruOId","fe78faa5-f7f0-4927-9282-a58a4e3deb5d");
+			mainObj.put("contentGooruOId",resourceId);
+			mainObj.put("contentItemId",contentItemId);
+			mainObj.put("parentItemId",parentItemId);
+			mainObj.put("parentGooruOId",collectionId);
 			mainObj.put("freeText",freeText);
 			mainObj.put("playLoadObject",setPlayLoadObj.toString());
 			mainObj.put("user",userObj);
-			
+			System.out.println("mainObj.toString()::"+mainObj.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),mainObj.toString());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			if(jsonResponseRep.getStatusCode()==200){
@@ -469,8 +471,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 		JsonRepresentation jsonRep = null;
 		ArrayList<OetextDataDO> collectionResourcesList=new ArrayList<OetextDataDO>();
 		String dataPassing ="{%22fields%22:%22feedbackStatus,userName,OEText,gooru_uid,feedbackText,feedbackProviderUId,feedbackTimestamp,answerObject%22,%22filters%22:{%22resourceGooruOId%22:%22"+resourceId+"%22,%22classId%22:%22"+classpageId+"%22,%22pathwayId%22:%22"+pathwayId+"%22,%22session%22:%22"+session+"%22,%22sessionId%22:%22"+sessionId+"%22,%22userUId%22:%22"+userUId+"%22}}";
-		//String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_OETEXTJSON, collectionId,getLoggedInSessionToken(),dataPassing);
-		String url ="http://www.goorulearning.org/insights/api/v1/classpage/fe78faa5-f7f0-4927-9282-a58a4e3deb5d/OEText.json?sessionToken=6ddd5ce6-4f6e-11e4-8d6c-123141016e2a&data={%22fields%22:%22feedbackStatus,userName,OEText,gooru_uid,feedbackText,feedbackProviderUId,feedbackTimestamp,answerObject%22,%22filters%22:{%22resourceGooruOId%22:%22f58e7666-a5a0-4608-8799-cbf091883587%22,%22classId%22:%226a4cdb36-c579-4994-8ea0-5130a9838cbd%22,%22session%22:%22CS%22,%22sessionId%22:%22895F2ABB-B6AE-448B-A5C5-A349852A8C02%22,%22userUId%22:%22caf10bed-e2ae-4d9e-ac4e-77689741b6bb%22}}&timestamp=1412839167321";
+		String url = UrlGenerator.generateUrl(getAnalyticsEndPoint(), UrlToken.V1_OETEXTJSON, collectionId,getLoggedInSessionToken(),dataPassing);
 		System.out.println("url:+"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();

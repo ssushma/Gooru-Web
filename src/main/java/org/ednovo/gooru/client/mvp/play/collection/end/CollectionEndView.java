@@ -49,6 +49,7 @@ import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
+import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
@@ -62,6 +63,9 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -116,7 +120,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField Button postCommentBtn,postCommentCancel;
 	@UiField Anchor loginUrl, signupUrl;
 	@UiField CollectionPlayerStyleBundle playerStyle;
-	@UiField Image userPhoto,collectionThumbnail,nextCollectionThumbnail;
+	@UiField Image sessionsTooltip,userPhoto,collectionThumbnail,nextCollectionThumbnail;
 	@UiField Button customizeCollectionBtn,shareCollectionBtn;
 	/*@UiField Frame insightsFrame;*/
 	
@@ -125,7 +129,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField Image collectionImage;
 	@UiField InlineLabel collectionTitle,collectionResourcesCount,collectionLastAccessed,lastModifiedTime;
 	@UiField VerticalPanel pnlSummary;
-	
+	ToolTip toolTip;
 	Map<String, Long> sessionData=new HashMap<String, Long>();
 	
 	private String languageObjectiveValue;
@@ -252,6 +256,31 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			  //studyMainContianer.getElement().setAttribute("style", "margin-top:50px;");
 			  
 		  }
+		  sessionsTooltip.addMouseOverHandler(new MouseOverHandler() {
+				
+				@Override
+				public void onMouseOver(MouseOverEvent event) {
+					toolTip = new ToolTip("Select the student session (collection attempt) to be represented below.","");
+					toolTip.getTootltipContent().getElement().setAttribute("style", "width: 258px;");
+					toolTip.getElement().getStyle().setBackgroundColor("transparent");
+					toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+					toolTip.setPopupPosition(sessionsTooltip.getAbsoluteLeft()-(50+22), sessionsTooltip.getAbsoluteTop()+22);
+					toolTip.show();
+				}
+			});
+		  sessionsTooltip.addMouseOutHandler(new MouseOutHandler() {
+				
+				@Override
+				public void onMouseOut(MouseOutEvent event) {
+					
+					EventTarget target = event.getRelatedTarget();
+					  if (Element.is(target)) {
+						  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+							  toolTip.hide();
+						  }
+					  }
+				}
+			});
 	}
 	public class OncustomizeCollectionBtnMouseOver implements MouseOverHandler{
 
@@ -1535,8 +1564,17 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		if(result.size()!=0){
 			collectionTitle.setText(result.get(0).getTitle());
 			collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getLastModified())));
-			if(result.get(0).getThumbnail()!=null)
-			collectionImage.setUrl(result.get(0).getThumbnail());
+			if(result.get(0).getThumbnail()!=null){
+				collectionImage.setUrl(result.get(0).getThumbnail());
+			}else{
+				collectionImage.setUrl("images/analytics/default-collection-image.png");
+			}
+			collectionImage.addErrorHandler(new ErrorHandler() {
+				@Override
+				public void onError(ErrorEvent event) {
+					collectionImage.setUrl("images/analytics/default-collection-image.png");
+				}
+			});
 		}
 	}
 }
