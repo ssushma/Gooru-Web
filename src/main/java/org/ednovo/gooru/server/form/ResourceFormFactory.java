@@ -59,6 +59,14 @@ public class ResourceFormFactory {
 		return form;
 	}
 
+	public static Form generateDataForm1(Object object, String objectName) {
+		Form form = new Form();
+		
+		String data = "{\""+objectName+"\" : " + JsonSerializer.serialize(object) +"}";
+		form.add("data",JsonSerializer.serialize(object));
+		return form;
+	}
+
 	/**
 	 * Generate form object, respect to individual object 
 	 * @param object instance of the {@link Object} 

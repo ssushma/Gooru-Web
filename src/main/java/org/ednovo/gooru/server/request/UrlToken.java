@@ -195,7 +195,7 @@ public enum UrlToken {
 			"/user/reset/credential.json?sessionToken={0}&password={1}&token={2}"),
 
 	MEDIA_FILE_UPLOAD(
-			"/media?uploadFileName=&sessionToken={0}&imageURL={1}&resize=true&width=850&height=500"),
+			"/v2/media?sessionToken={0}"),
 
 	MEDIA_FILE_SAVE("/resource/{0}/media?sessionToken={1}&mediaFileName={2}"),
 

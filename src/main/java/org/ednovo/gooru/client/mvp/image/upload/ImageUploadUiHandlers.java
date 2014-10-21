@@ -40,13 +40,7 @@ public interface ImageUploadUiHandlers extends BaseUiHandlers, EventHandler {
 	 * </p> 
 	 */
 	void imageWebUpload(String imageUrl);
-	/**
-	 * @param gooruOid 
-	 * <p>it's unique id for resource saving/updating the image</p>
-	 * @param fileName 
-	 * <p>This is filename of the  image which will get after image upload completes. </p>
-	 */
-	void saveImage(String gooruOid, String fileName);
+
 	/**
 	 * 
 	 * @param fileName
@@ -71,4 +65,5 @@ public interface ImageUploadUiHandlers extends BaseUiHandlers, EventHandler {
 	void imageFileUpload(String response);
 	
 	public void uploadGooruDefaultImage(String imageURL);
+	void saveImage(String gooruOid, String fileName, String resourceId);
 }
