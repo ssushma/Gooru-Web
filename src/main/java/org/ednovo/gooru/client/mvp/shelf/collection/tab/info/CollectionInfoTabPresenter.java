@@ -29,17 +29,27 @@ import java.util.List;
 import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.service.TaxonomyServiceAsync;
+import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -61,8 +71,15 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	private SearchAsyncCallback<SearchDo<CodeDo>> standardSuggestionByFilterAsyncCallback;
 	
 	private static final String USER_META_ACTIVE_FLAG = "0";
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
 	
 	AddStandardsPresenter addStandardsPresenter = null;
+	BrowseStandardsTooltip browseStandardsTooltip;
+	private boolean isBrowseStandardsToolTip = false;
+	private boolean isBrowseTooltip =false;
 
 	/**
 	 * Class constructor
@@ -103,14 +120,20 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 				public void onSuccess(ProfileDo profileObj) {
 				if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
 						if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
-							getView().getStandardContainer().setVisible(false);
+							getView().getStandardContainer().setVisible(true);
+							isBrowseTooltip = true;
+							DisableStandars();
 						}else
 						{
 							getView().getUserStandardPrefCodeId(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
 							getView().getStandardContainer().setVisible(true);
+							isBrowseTooltip = false;
+							enableStandards();
 						}
 					}else{
-						getView().getStandardContainer().setVisible(false);
+						getView().getStandardContainer().setVisible(true);
+						isBrowseTooltip = true;
+						DisableStandars();
 					}
 				}
 
@@ -312,11 +335,49 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 
 	@Override
 	public void getAddStandards() {
-
-	addToPopupSlot(addStandardsPresenter);
-	getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
-
 		
+
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
+				USER_META_ACTIVE_FLAG,
+				new SimpleAsyncCallback<ProfileDo>() {
+					@Override
+					public void onSuccess(final ProfileDo profileObj) {
+					AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					}
+					public void checkStandarsList(List<String> standarsPreferencesList) {
+						
+					if(standarsPreferencesList!=null){
+							if(standarsPreferencesList.contains("CCSS")){
+								isCCSSAvailable = true;
+							}else{
+								isCCSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("NGSS")){
+								isNGSSAvailable = true;
+							}else{
+								isNGSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("TEKS")){
+								isTEKSAvailable = true;
+							}else{
+								isTEKSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("CA")){
+								isCAAvailable = true;
+							}else{
+								isCAAvailable = false;
+							}
+								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
+									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+									addToPopupSlot(addStandardsPresenter);
+									getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
+								}
+					}
+						
+					}
+
+				});
 	}
 	
 	@Override
@@ -327,6 +388,59 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	@Override
 	public void closeStandardsPopup() {
 		addStandardsPresenter.hidePopup();
+	}
+	
+    public void DisableStandars(){
+   	 browseStandardsTooltip=new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
+		getView().getBrowseBtn().getElement().getStyle().setColor("#999");
+		getView().getBrowseBtn().getElement().addClassName("disabled");
+		getView().getBrowseBtn().addMouseOverHandler(new MouseOverHandler() {
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+					if(isBrowseTooltip == true){
+						browseStandardsTooltip.show();
+						browseStandardsTooltip.setPopupPosition(getView().getBrowseBtn().getAbsoluteLeft()+3, getView().getBrowseBtn().getAbsoluteTop()+33);
+						browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+						isBrowseStandardsToolTip= true;
+					}
+				}
+		});
+		
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hideBrowseStandardsPopup(event);
+	          }
+	    });
+	}
+	
+	public void hideBrowseStandardsPopup(NativePreviewEvent event){
+		try{
+			if(event.getTypeInt()==Event.ONMOUSEOVER){
+				Event nativeEvent = Event.as(event.getNativeEvent());
+				boolean target=eventTargetsPopup(nativeEvent);
+				if(!target)
+				{
+					if(isBrowseStandardsToolTip){
+						browseStandardsTooltip.hide();
+					}
+				}
+			}
+		}catch(Exception ex){ex.printStackTrace();}
+	}
+	
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			try{
+				return browseStandardsTooltip.getElement().isOrHasChild(Element.as(target));
+			}catch(Exception ex){}
+		}
+		return false;
+	}
+
+	public void enableStandards(){
+		getView().getBrowseBtn().getElement().getStyle().clearColor();
+		getView().getBrowseBtn().getElement().removeClassName("disabled");
 	}
 
 }
