@@ -50,7 +50,10 @@ import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.RemoveToolTipUc;
+import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
+import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -70,6 +73,7 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.dom.client.Style.Position;
@@ -88,7 +92,10 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -99,6 +106,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
@@ -137,7 +145,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField FlowPanel standardContainer,answerchoiceTitleContainer,explanationContainer;
 	
 	/*@UiField Button questionNameTextAreaToolBarButton;*/
-	@UiField Button cancelButton;
+	@UiField Button cancelButton,browseStandards;
 	@UiField
 	CheckBox chkLevelRecall,chkLevelSkillConcept,chkLevelStrategicThinking,chkLevelExtendedThinking,rightsChkBox;
 	
@@ -210,6 +218,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	String[] anserChoiceArray=new String[]{"A","B","C","D","E"};
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
+	private boolean isBrowseTooltip =false;
+	
+	BrowseStandardsTooltip browseStandardsTooltip;
+	private boolean isBrowseStandardsToolTip = false;
+	
 	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 	
 	public AddQuestionResourceView(){
@@ -344,6 +357,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		lblContentRights.getElement().setId("epnlLblContentRights");
 		rightsContent.getElement().setId("pnlRightsContent");
 		addQuestionResourceButton.getElement().setId("epnlAddQuestionResourceButton");
+		browseStandards.addClickHandler(new onBrowseStandardsClick());
 		setTextForTheFields();
 		errorContainer.setVisible(false);
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
@@ -545,6 +559,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		setTextForTheFields();
 		errorContainer.setVisible(false);
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
+		browseStandards.addClickHandler(new onBrowseStandardsClick());
 	}
 	public void initializeAutoSuggestedBox(){
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
@@ -668,10 +683,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			public void onSuccess(ProfileDo profileObj) {
 			if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
 					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
-						standardContainer.setVisible(false);
+						standardContainer.setVisible(true);
+						isBrowseTooltip = true;
+						DisableStandars();
 					}else
 					{
 						standardContainer.setVisible(true);
+						isBrowseTooltip = false;
+						enableStandards();
 						standardPreflist=new ArrayList<String>();
 						for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
 							standardPreflist.add(code);
@@ -680,7 +699,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						
 					}
 				}else{
-					standardContainer.setVisible(false);
+					standardContainer.setVisible(true);
+					isBrowseTooltip = true;
+					DisableStandars();
 				}
 			}
 
@@ -1244,6 +1265,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			
 		}
 	}
+    private class onBrowseStandardsClick implements ClickHandler {
+  		@Override
+  		public void onClick(ClickEvent event) {
+  			callBrowseStandards();
+  		}
+  	}
+    
     @UiHandler("addQuestionResourceButton")
 	public void clickedOnAddQuestionButton(ClickEvent event)
 	{
@@ -2712,4 +2740,75 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		     }*/
 		}
      }
+     
+     public abstract void callBrowseStandards();
+     
+     public abstract void closeStandardsPopup();
+     
+     public void setUpdatedBrowseStandarsCode(String standardsCodeVal, int id,String desc) {
+		if (standardsPanel.getWidgetCount() <5) {
+			if (standardsCodeVal != null && !standardsCodeVal.isEmpty()) {
+				CodeDo codeObj=new CodeDo();
+				codeObj.setCodeId(id);
+				codeObj.setCode(standardsCodeVal);
+				standardsDo.add(codeObj);
+				standardsPanel.add(createStandardLabel(standardsCodeVal, Integer.toString(id), desc));
+			}
+		} else {
+			standardMaxShow();
+		}
+		closeStandardsPopup();
+	}
+     public void DisableStandars(){
+    	 browseStandardsTooltip=new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
+ 		browseStandards.getElement().getStyle().setColor("#999");
+ 		browseStandards.getElement().addClassName("disabled");
+ 		browseStandards.addMouseOverHandler(new MouseOverHandler() {
+ 			@Override
+ 			public void onMouseOver(MouseOverEvent event) {
+ 					if(isBrowseTooltip == true){
+ 						browseStandardsTooltip.show();
+ 						browseStandardsTooltip.setPopupPosition(browseStandards.getAbsoluteLeft()+3, browseStandards.getAbsoluteTop()+33);
+ 						browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+ 						isBrowseStandardsToolTip= true;
+ 					}
+ 				}
+ 		});
+ 		
+ 		Event.addNativePreviewHandler(new NativePreviewHandler() {
+ 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+ 	        	hideBrowseStandardsPopup(event);
+ 	          }
+ 	    });
+ 	}
+ 	
+ 	public void hideBrowseStandardsPopup(NativePreviewEvent event){
+ 		try{
+ 			if(event.getTypeInt()==Event.ONMOUSEOVER){
+ 				Event nativeEvent = Event.as(event.getNativeEvent());
+ 				boolean target=eventTargetsPopup(nativeEvent);
+ 				if(!target)
+ 				{
+ 					if(isBrowseStandardsToolTip){
+ 						browseStandardsTooltip.hide();
+ 					}
+ 				}
+ 			}
+ 		}catch(Exception ex){ex.printStackTrace();}
+ 	}
+ 	
+ 	private boolean eventTargetsPopup(NativeEvent event) {
+ 		EventTarget target = event.getEventTarget();
+ 		if (Element.is(target)) {
+ 			try{
+ 				return browseStandardsTooltip.getElement().isOrHasChild(Element.as(target));
+ 			}catch(Exception ex){}
+ 		}
+ 		return false;
+ 	}
+
+ 	public void enableStandards(){
+ 		browseStandards.getElement().getStyle().clearColor();
+ 		browseStandards.getElement().removeClassName("disabled");
+ 	}
 }

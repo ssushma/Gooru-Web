@@ -31,7 +31,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class LineChartView extends Composite {
 
-	@UiField Label option1,option2;
+	/*@UiField Label option1,option2;*/
 	@UiField HTMLPanel chartContainer;
 	private static LineChartViewUiBinder uiBinder = GWT	.create(LineChartViewUiBinder.class);
 	public MessageProperties msgProperties = GWT.create(MessageProperties.class);
@@ -43,9 +43,9 @@ public class LineChartView extends Composite {
 	public LineChartView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
-	public void createLineChart(String title1,String title2,String []categories,List<String> contentList,Map<String,Number[]> data,ChartMetaDataOptions chartmetadata){
-		option1.setText(title1);
-		option2.setText(title2);
-		chartContainer.add(new HCLineChart().createChartLine(categories,contentList,data,chartmetadata));
+	public void createLineChart(String title1,String title2,String []categories,List<String> contentList,Map<String,Number[]> data,ChartMetaDataOptions chartmetadata,boolean isFirst){
+	/*	option1.setText(title1);
+		option2.setText(title2);*/
+		chartContainer.add(new HCLineChart().createChartLine(categories,contentList,data,chartmetadata,isFirst));
 	}
 }

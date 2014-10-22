@@ -67,7 +67,7 @@
 					<div class=" {unitStyle.studentPerformance}">
 					<div class="row">
 						<div class="{unitStyle.unitHeadingAnalytics}">
-						<g:Label text="{i18n.GL2259}" styleName="{unitStyle.studentsPerformance}"></g:Label> <g:InlineLabel text="{i18n.GL2260}"></g:InlineLabel>
+						<g:Label text="{i18n.GL2259}" styleName="{unitStyle.studentsPerformance}"></g:Label> <!-- <g:InlineLabel text="{i18n.GL2260}"></g:InlineLabel> -->
 						</div>
 						<div class="{unitStyle.scoreText}">
 						<g:InlineLabel text="{i18n.GL2261}"></g:InlineLabel> <g:InlineLabel ui:field="minimumScorelbl"></g:InlineLabel>

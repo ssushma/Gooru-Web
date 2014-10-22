@@ -396,16 +396,20 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		{
 			if(result.get(0).getUserData() != null)
 			{
+				scoredBelowPanel.add(new StudentScoredAboveBelowUlPanel(null,true));
 				for(int i=0;i<result.get(0).getUserData().size();i++){
 					UserDataDo userData=result.get(0).getUserData().get(i);
-					scoredBelowPanel.add(new StudentScoredAboveBelowUlPanel(userData));
+					scoredBelowPanel.add(new StudentScoredAboveBelowUlPanel(userData,false));
 					
 					//This is used to set the bottom 3 studetns assignment data
 					CollaboratorsDo collaboratorsDo2=new CollaboratorsDo();
 					collaboratorsDo2.setGooruUid(userData.getGooruUId());
 					collaboratorsDo2.setUsername(userData.getUserName());
-					if(userData.getFirstName()!=null)
-					collaboratorsDo2.setFirstName(userData.getFirstName());
+					if(userData.getFirstName()!=null){
+						collaboratorsDo2.setFirstName(userData.getFirstName());
+					}else{
+						collaboratorsDo2.setFirstName(userData.getUserName());
+					}
 					if(userData.getLastName()!=null)
 					collaboratorsDo2.setLastName(userData.getLastName());
 					if(userData.getEmailId()!=null)
@@ -423,15 +427,19 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		{
 			if(result.get(0).getUserData() != null)
 			{
+				scoredAbovePanel.add(new StudentScoredAboveBelowUlPanel(null,true));
 				for(int i=0;i<result.get(0).getUserData().size();i++){
 					UserDataDo userData=result.get(0).getUserData().get(i);
-					scoredAbovePanel.add(new StudentScoredAboveBelowUlPanel(userData));
+					scoredAbovePanel.add(new StudentScoredAboveBelowUlPanel(userData,false));
 					//This is used to set the top 3 studetns assignment data
 					CollaboratorsDo collaboratorsDo2=new CollaboratorsDo();
 					collaboratorsDo2.setGooruUid(userData.getGooruUId());
 					collaboratorsDo2.setUsername(userData.getUserName());
-					if(userData.getFirstName()!=null)
-					collaboratorsDo2.setFirstName(userData.getFirstName());
+					if(userData.getFirstName()!=null){
+						collaboratorsDo2.setFirstName(userData.getFirstName());
+					}else{
+						collaboratorsDo2.setFirstName(userData.getUserName());
+					}
 					if(userData.getLastName()!=null)
 					collaboratorsDo2.setLastName(userData.getLastName());
 					if(userData.getEmailId()!=null)
@@ -480,7 +488,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			minimumScorelbl.setText(minimunScoreVal+"%");
 			minimumScoreAbove.setText((minimunScoreVal+1)+"");
 			minimumScoreBelow.setText((minimunScoreVal==0)?0+"":(minimunScoreVal-1)+"");
-			orangeProgressBar.getElement().getStyle().setWidth((minimunScoreVal==0)?0:(minimunScoreVal-1), Unit.PCT);
+			orangeProgressBar.getElement().getStyle().setWidth((minimunScoreVal==0)?0:minimunScoreVal, Unit.PCT);
 			greenProgressBar.getElement().getStyle().setWidth(100-(minimunScoreVal+1), Unit.PCT);
 		}
 	}
