@@ -677,7 +677,7 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 							lblSelected.setText(student.getText());
 							spanelSutdentsList.setVisible(false);
 							// Need to write logic to navigate to student page.
-							revealStudentView();
+							revealStudentView(selectedStudentId);
 						}
 					});
 					
@@ -1439,7 +1439,7 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		delete.center();
 	}
 	
-	public void revealStudentView(){
+	public void revealStudentView(String studentUid){
 		Map<String,String> params = new HashMap<String,String>();
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
@@ -1453,8 +1453,12 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		if(backButtonStatus!=null){
 			params.put("b", "true");
 		}*/
+		if(studentUid!=null){
+			params.put("sid", studentUid);
+		}
 		params.put("pageNum", pageNum);
 		params.put("pageSize", pageSize);
+		
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);
 		AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
 	}

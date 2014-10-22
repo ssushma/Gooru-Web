@@ -223,16 +223,19 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	 * This API used for to show Assignments status.
 	 */
 	public void getAnalyticData(final UnitAssignmentsDo unitAssignmentsDo){
-		System.out.println("getAnalyticData");
+		String gooruUId;
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		String gooruUId=AppClientFactory.getLoggedInUser().getGooruUId();
+		if(AppClientFactory.getPlaceManager().getRequestParameter("sid")!=null){
+			gooruUId=AppClientFactory.getPlaceManager().getRequestParameter("sid");
+		}else{
+			gooruUId=AppClientFactory.getLoggedInUser().getGooruUId();
+		}
 		String pathwayId=AppClientFactory.getPlaceManager().getRequestParameter("uid",null);
 		
 	 	AppClientFactory.getInjector().getClasspageService().getAssignmentData(gooruUId, classpageId, 0, 0, pathwayId, new SimpleAsyncCallback<List<InsightsUserDataDo>>() {
 
 			@Override
 			public void onSuccess(List<InsightsUserDataDo> result) {
-				System.out.println("getAna--sucess");
 				if(result!=null){
 					getView().setInsightUserData(result);
 					getView().getSequence(unitAssignmentsDo);

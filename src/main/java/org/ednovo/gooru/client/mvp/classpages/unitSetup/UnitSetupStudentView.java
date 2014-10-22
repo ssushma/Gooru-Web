@@ -113,10 +113,14 @@ public class UnitSetupStudentView extends BaseViewWithHandlers<UnitSetupStudentU
 			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 			String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+			String stuUid=AppClientFactory.getPlaceManager().getRequestParameter("sid", null);
 			params.put("pageSize", pageSize);
 			params.put("id", classpageid);
 			if(unitId!=null){
 				params.put("uid", unitId);
+			}
+			if(stuUid!=null){
+				params.put("sid", stuUid);
 			}
 			params.put("pageNum", pageNum);
 			params.put("pos", pos);

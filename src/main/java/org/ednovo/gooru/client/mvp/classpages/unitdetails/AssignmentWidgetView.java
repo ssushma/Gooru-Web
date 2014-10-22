@@ -383,7 +383,7 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 		public void onMouseOver(MouseOverEvent event) {
 			UnitAssignentStudentPlayView = new UnitAssignentStudentPlayView(seqNumber,title,dueDate,direction,collectionId,collectionItemId);
 			
-			UnitAssignentStudentPlayView.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop()+40);
+			UnitAssignentStudentPlayView.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-120,event.getRelativeElement().getAbsoluteTop()+48);
 			UnitAssignentStudentPlayView.show();
 			isShowingPopUpforStudent = true;
 		}
@@ -475,7 +475,7 @@ public class AssignmentWidgetView extends BaseViewWithHandlers<AssignmentWidgetV
 				setAssignmentToNewPosition(seqPosition,selectedPathId,totalHintCount,selectedAssignmentId,UnitCriclevieObj,seqNo);
 			}
 		};
-		unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-128,event.getRelativeElement().getAbsoluteTop()+40);
+		unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-135,event.getRelativeElement().getAbsoluteTop()+45);
 		unitAssigmentReorder.show();
 		isShowingPopUp = true;
 		}
