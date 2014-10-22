@@ -651,7 +651,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		setCollectionScore(0);
 		reactionTreeMap.clear();
 		setInSlot(METADATA_PRESENTER_SLOT, metadataPresenter,false);
-		adjustCollectionMetadaBody(true);
+		adjustCollectionMetadaBody(true,false);
 		addFixedPostionForNavigation();
 	}
 	
@@ -721,7 +721,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			}
 			setOpenEndedAnswerSubmited(true);
 			setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
-			adjustCollectionMetadaBody(false);
+			adjustCollectionMetadaBody(false,false);
 			addFixedPostionForNavigation();
 		}
 		else{
@@ -763,6 +763,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		//displayScoreCount();
 		updateSession(sessionId);
 		setUserAttemptedQuestionTypeAndStatus(false,0);
+		adjustCollectionMetadaBody(false,true);
 		setInSlot(METADATA_PRESENTER_SLOT, collectionEndPresenter,false);
 	}
 	public void clearDashBoardIframe(){
@@ -2161,11 +2162,13 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	public void addFixedPostionForNavigation(){
 		//collectionPlayerTocPresenter.getWidget().getElement().getStyle().setPosition(Position.FIXED);
 	}
-	public void adjustCollectionMetadaBody(boolean isHome){
+	public void adjustCollectionMetadaBody(boolean isHome,boolean isEnd){
 		int windowWidth=Window.getClientWidth();
 		if(windowWidth>991){
 			if(isHome){
 				getView().getPlayerBodyContainer().getElement().getStyle().setPaddingTop(134+50, Unit.PX);
+			}else if(isEnd){
+				getView().getPlayerBodyContainer().getElement().getStyle().setPaddingTop(50, Unit.PX);
 			}else{
 				addFixedPositionNavArrows();
 			}
@@ -2185,7 +2188,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		@Override
 		public void onResize(ResizeEvent event) {
 			boolean isHome=getPlaceManager().getRequestParameter("rid",null)==null?true:false;
-			adjustCollectionMetadaBody(isHome);
+			boolean isEnd=getPlaceManager().getRequestParameter("view",null)!=null?true:false;
+			if(isEnd){
+				adjustCollectionMetadaBody(false,isEnd);
+			}else{
+				adjustCollectionMetadaBody(isHome,false);	
+			}
 			showNarrationPopupInCenterOnWindowRezize();
 		}
 	}

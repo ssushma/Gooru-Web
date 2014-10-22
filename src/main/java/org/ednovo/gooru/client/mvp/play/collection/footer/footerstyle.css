@@ -173,3 +173,7 @@ display:inline-block;
 .text-right{
 	text-align:right;
 }
+.endPageIframe iframe{
+	width: 100% !important;
+	height: 422px !important;
+}

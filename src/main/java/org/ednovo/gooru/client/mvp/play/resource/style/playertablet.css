@@ -146,3 +146,41 @@
 }
 .collection-thumbnail{
 }
+.timespend{
+	margin-bottom:0;
+	display:block;
+}
+.collectionEndImageContainer{
+	display: block;
+    float: none;
+    height: 160px;
+    margin: 0 auto 25px;
+    position: relative;
+    width: 220px;
+}
+.playRight{
+	 display: block;
+    float: none;
+}
+.playBlockTop{
+	text-align:center;
+}
+.endButtonsContainer{
+	text-align:center;
+}
+.endButtonsContainer buttons{
+	float:none;
+}
+.whatsnext .smallTxt{
+	text-align:left;
+}
+.whatsnext{
+}
+
+.whatsnext .bigTxt{
+}
+
+.whatsnext .smallerTxt{
+}
+.endPageIframe{
+}

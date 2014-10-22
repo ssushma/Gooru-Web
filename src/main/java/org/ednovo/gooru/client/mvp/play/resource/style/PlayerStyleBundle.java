@@ -131,5 +131,21 @@ public interface PlayerStyleBundle extends ClientBundle {
 		@ClassName("collection-thumbnail")
 		public String infoCollectionThumbnail();
 		
+		public String timespend();
+		
+		public String collectionEndImageContainer();
+		
+		public String playRight();
+		
+		public String playBlockTop();
+	
+		public String endButtonsContainer();
+		
+		public String whatsnext();
+		public String smallTxt();
+		public String bigTxt(); 
+		public String smallerTxt();
+		public String endPageIframe();
+		
 	}
 }
