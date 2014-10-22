@@ -1014,6 +1014,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	 */
 	public void reorderItemToNewPosition(ShelfFolderItemChildView shelfFolderItemChildView, int newItemPosition,String direction, HashMap<String, String> params){
 		folderContentBlock.insert(shelfFolderItemChildView, newItemPosition);
+		Document.get().getElementById("pnlEditPanel").setScrollTop(0 + (newItemPosition)*(shelfFolderItemChildView.getOffsetHeight()-23));
+		new BackgroundColorEffect(shelfFolderItemChildView.getElement(),"#E7F1F8" ,"white", 4000);
 		AppClientFactory.fireEvent(new ReorderShelfListItemsEvent(shelfFolderItemChildView.getItemGooruOId(), newItemPosition, direction, params, shelfFolderItemChildView.getFolderDo(),shelfFolderItemChildView.getItemNumber().getText()));
 		setFolderCollectionItemSequence();
 	}
