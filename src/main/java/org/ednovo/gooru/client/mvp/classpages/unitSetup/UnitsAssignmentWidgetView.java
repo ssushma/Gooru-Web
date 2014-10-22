@@ -522,10 +522,15 @@ public class UnitsAssignmentWidgetView extends Composite {
 	 public void revealPlace(String tabName,String pageNum,String unitId,String viewToken,String sequenceNumber){
 			Map<String,String> params = new HashMap<String,String>();
 			String classpageid= "";
+			String stuUid= "";
 			if(viewToken.equals(PlaceTokens.STUDENT))
 			{
 				classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+				stuUid = AppClientFactory.getPlaceManager().getRequestParameter("sid", null);
 				params.put("id", classpageid);
+				if(stuUid!=null){
+					params.put("sid", stuUid);
+				}
 			}
 			else
 			{
@@ -832,8 +837,15 @@ public class UnitsAssignmentWidgetView extends Composite {
 	}
 	
 	public void getAnalyticData(){
+		System.out.println("getanlyticdata");
+		String gooruUId;
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		String gooruUId=AppClientFactory.getLoggedInUser().getGooruUId();
+		if(AppClientFactory.getPlaceManager().getRequestParameter("sid")!=null){
+			gooruUId=AppClientFactory.getPlaceManager().getRequestParameter("sid");
+		}else{
+			gooruUId=AppClientFactory.getLoggedInUser().getGooruUId();
+		}
+		 
 		String pathwayId=classUnitsDo.getResource().getGooruOid();
 		
 	 	AppClientFactory.getInjector().getClasspageService().getAssignmentData(gooruUId, classpageId, 20, 0, pathwayId, new SimpleAsyncCallback<List<InsightsUserDataDo>>() {
@@ -841,6 +853,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 			@Override
 			public void onSuccess(List<InsightsUserDataDo> result) {
 //				getView().setAssignments(result);
+				System.out.println("sucesss:::");
 				insightsUserList=result;
 				setAssignmentsForUnit();
 			}
