@@ -20,21 +20,34 @@ public class StudentScoredAboveBelowUlPanel extends Composite {
 			UiBinder<Widget, StudentScoredAboveBelowUlPanel> {
 	}
 	
-	@UiField Image userImage;
+	/*@UiField Image userImage;*/
 	@UiField Label namelbl,scorelbl,timelbl;
-	@UiField HTMLPanel reactionlbl;
+	/*@UiField HTMLPanel reactionlbl;*/
 	
-	public StudentScoredAboveBelowUlPanel(UserDataDo userData) {
+	public StudentScoredAboveBelowUlPanel(UserDataDo userData,boolean isHeading) {
 		initWidget(uiBinder.createAndBindUi(this));
-		setData(userData);
+		setData(userData,isHeading);
 	}
 
-	void setData(UserDataDo userData){
-		userImage.setUrl("../images/analytics/score-img.png");
-		namelbl.setText(userData.getUserName());
-		if(userData.getGradeInPercentage()!=null)
-		scorelbl.setText(userData.getGradeInPercentage()+"");
-		timelbl.setText(AnalyticsUtil.getTimeSpent(userData.getTimeSpent()));
-		reactionlbl.add(new AnalyticsReactionWidget(userData.getReaction()));
+	void setData(UserDataDo userData,boolean isHeading){
+		if(isHeading){
+			namelbl.setText("Username");
+			scorelbl.setText("Score");
+			timelbl.setText("Time");
+		}else{
+			/*userImage.setUrl("../images/analytics/score-img.png");*/
+			namelbl.setText(userData.getUserName());
+			if(userData.getGradeInPercentage()!=null){
+				scorelbl.setText(userData.getGradeInPercentage()+"");
+			}else{
+				scorelbl.setText("--");
+			}
+			if(userData.getTimeSpent()!=0){
+				timelbl.setText(AnalyticsUtil.getTimeSpent(userData.getTimeSpent()));
+			}else{
+				timelbl.setText("--");
+			}
+			/*reactionlbl.add(new AnalyticsReactionWidget(userData.getReaction()));*/
+		}
 	}
 }
