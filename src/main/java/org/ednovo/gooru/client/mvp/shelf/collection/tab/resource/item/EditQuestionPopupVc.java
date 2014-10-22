@@ -110,7 +110,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 			curriculumPlanText,lessonPlanText,unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText;
 
 	@UiField
-	Button btnSave, btnCancel;
+	Button btnSave, btnCancel,browseStandards;
 	
 	@UiField
 	Label mandatoryEducationalLbl,resourceEducationalLabel,standardMaxMsg,depthOfKnowledgeHeader,lblEditQuestionTitle, lblQuestion, lblPleaseWait,depthOfKnowledgeTitle,educationalDropDownLbl,
@@ -212,6 +212,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	private static final String PNG = ".png";
 
 	private List<Widget> answerChoicesList = new ArrayList<Widget>();
+	
+	private boolean isQuestion = false;
 
 	private static EditQuestionPopupVcUiBinder uiBinder = GWT
 			.create(EditQuestionPopupVcUiBinder.class);
@@ -432,9 +434,21 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 					   }
 					}
 			}*/
-		 
+		 browseStandards.addClickHandler(new callBrowseStandards());
 	}
 
+	public abstract void callBrowseStandardsInfo(boolean val);
+	
+	private class callBrowseStandards implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			isQuestion = true;
+			callBrowseStandardsInfo(isQuestion);
+		}
+		
+	}
+	
 	@Override
 	public void onLoad() {
 		super.onLoad();
@@ -1464,5 +1478,18 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 			educationalUsePanel.setVisible(false);
 			educationalDropDownLblOpen = false;
 		}
+	}
+	public abstract void closeBrowseStandardsPopup();
+	
+	public void setUpdatedBrowseStandards(String setStandardsVal,Integer codeId, String setStandardDesc) {
+		if (standardsPanel.getWidgetCount() <5) {
+			if (setStandardsVal != null && !setStandardsVal.isEmpty()) {
+				standardsPanel.add(createStandardLabel(setStandardsVal, Integer.toString(codeId), setStandardDesc));
+			}
+		} else {
+			standardMaxShow();
+			standardSgstBox.setText("");
+		}
+		closeBrowseStandardsPopup();
 	}
 }

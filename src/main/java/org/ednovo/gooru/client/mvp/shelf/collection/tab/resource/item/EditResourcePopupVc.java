@@ -49,7 +49,9 @@ import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
+import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -65,6 +67,9 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -74,7 +79,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -83,7 +90,10 @@ import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -107,7 +117,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 
 	@UiField
-	public Button addResourceBtn,cancelResourcePopupBtnLbl,mobileYes,mobileNo;
+	public Button addResourceBtn,cancelResourcePopupBtnLbl,mobileYes,mobileNo,browseStandards;
 	
 	@UiField
 	public Label generateImageLbl,resoureDropDownLbl;
@@ -198,6 +208,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	private static final String DEFAULT_COMBO_BOX_TEXT ="Please choose one of the following...";
 	StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+	private boolean isBrowseTooltip =false;
+	
+	 BrowseStandardsTooltip browseStandardsTooltip;
+	 private boolean isBrowseStandardsToolTip = false;
+	 
 	final List<String> tagList = new ArrayList<String>();
 	
 	List<String> tagListGlobal = new ArrayList<String>();
@@ -212,6 +227,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	String mediaFeatureStr = i18n.GL1767();
 	public abstract void updateResource(CollectionItemDo collectionItemDo,List<String> tagList);
+	private boolean isQuestionResource=false;
 
 	public EditResourcePopupVc(CollectionItemDo collectionItemDo) {
 		super();
@@ -698,10 +714,14 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			public void onSuccess(ProfileDo profileObj) {
 			if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
 					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
-						standardContainer.setVisible(false);
+						standardContainer.setVisible(true);
+						isBrowseTooltip = true;
+						DisableStandars();
 					}else
 					{
 						standardContainer.setVisible(true);
+						isBrowseTooltip = false;
+						enableStandards();
 						standardPreflist=new ArrayList<String>();
 						for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
 							standardPreflist.add(code);
@@ -710,7 +730,9 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 						
 					}
 				}else{
-					standardContainer.setVisible(false);
+					standardContainer.setVisible(true);
+					isBrowseTooltip = true;
+					DisableStandars();
 				}
 			}
 
@@ -805,6 +827,18 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 					}
 				});
 				htmlMediaFeatureListContainer.add(titleLabel);
+		}
+		
+		browseStandards.addClickHandler(new onBrowseStandardsClick());
+	}
+	public abstract void browseStandardsInfo(boolean val);
+	public abstract void closeStandardsPopup();
+	
+	private class onBrowseStandardsClick implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			isQuestionResource= false;
+			browseStandardsInfo(isQuestionResource);
 		}
 	}
 	public void onLoad(){
@@ -2041,5 +2075,72 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 			}
 		}
+	}
+	public void setUpdatedBrowseStandardsVal(String setStandardsVal,Integer codeId, String setStandardDesc) {
+		if (standardsPanel.getWidgetCount() <5) {
+			if (setStandardsVal != null && !setStandardsVal.isEmpty()) {
+				CodeDo codeObj=new CodeDo();
+				codeObj.setCodeId(codeId);
+				codeObj.setCode(setStandardsVal);
+				standardsDo.add(codeObj);
+				standardsPanel.add(createStandardLabel(setStandardsVal, Integer.toString(codeId), setStandardDesc));
+			}
+		} else {
+			standardMaxShow();
+			standardSgstBox.setText("");
+		}
+		closeStandardsPopup();
+	}
+	public void DisableStandars(){
+		browseStandardsTooltip=new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
+		browseStandards.getElement().getStyle().setColor("#999");
+		browseStandards.getElement().addClassName("disabled");
+		browseStandards.addMouseOverHandler(new MouseOverHandler() {
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+					if(isBrowseTooltip == true){
+						browseStandardsTooltip.show();
+						browseStandardsTooltip.setPopupPosition(browseStandards.getAbsoluteLeft()+3, browseStandards.getAbsoluteTop()+33);
+						browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+						isBrowseStandardsToolTip= true;
+					}
+				}
+		});
+		
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hideBrowseStandardsPopup(event);
+	          }
+	    });
+	}
+	
+	public void hideBrowseStandardsPopup(NativePreviewEvent event){
+		try{
+			if(event.getTypeInt()==Event.ONMOUSEOVER){
+				Event nativeEvent = Event.as(event.getNativeEvent());
+				boolean target=eventTargetsPopup(nativeEvent);
+				if(!target)
+				{
+					if(isBrowseStandardsToolTip){
+						browseStandardsTooltip.hide();
+					}
+				}
+			}
+		}catch(Exception ex){ex.printStackTrace();}
+	}
+	
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			try{
+				return browseStandardsTooltip.getElement().isOrHasChild(Element.as(target));
+			}catch(Exception ex){}
+		}
+		return false;
+	}
+
+	public void enableStandards(){
+		browseStandards.getElement().getStyle().clearColor();
+		browseStandards.getElement().removeClassName("disabled");
 	}
 }
