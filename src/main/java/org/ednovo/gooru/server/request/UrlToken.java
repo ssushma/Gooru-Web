@@ -195,7 +195,7 @@ public enum UrlToken {
 			"/user/reset/credential.json?sessionToken={0}&password={1}&token={2}"),
 
 	MEDIA_FILE_UPLOAD(
-			"/media?uploadFileName=&sessionToken={0}&imageURL={1}&resize=true&width=850&height=500"),
+			"/v2/media?sessionToken={0}"),
 
 	MEDIA_FILE_SAVE("/resource/{0}/media?sessionToken={1}&mediaFileName={2}"),
 
@@ -602,6 +602,9 @@ public enum UrlToken {
 	
 	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?partyUid={0}"),
 	
+
+	V2_UPDATE_QUESTION_ITEM("/v2/collection/question/{0}?sessionToken={1}"),
+
 	V2_REORDER_FOLDER_COLLECTION("/v2/folder/item/{0}/reorder/{1}?sessionToken={2}");
 
 	private String url;

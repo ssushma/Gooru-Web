@@ -455,7 +455,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_REORDER_FOLDER_COLLECTION,collectionItemId, itemToBeMovedPosSeqNumb+"", getLoggedInSessionToken());
 		getLogger().info("-- Folder Re-order API - - - - "+url);
 		try {
-			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword());
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),new Form());
 		}catch (Exception e) {
 		}
 	}

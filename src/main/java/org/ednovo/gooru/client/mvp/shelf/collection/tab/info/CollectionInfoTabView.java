@@ -128,7 +128,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	ToolTip toolTip=null;
 	
-	@UiField Button browseBtn;
+	@UiField public Button browseBtn;
 	
 	String courseCode="";
 	
@@ -1670,6 +1670,10 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 		}
 		return builder.toString();
 	}
-	
+
+	@Override
+	public Button getBrowseBtn() {
+		return browseBtn;
+	}
 
 }

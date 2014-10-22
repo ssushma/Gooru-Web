@@ -45,6 +45,7 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -203,6 +204,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			createCollectionJsonObject.put("resourceId", resourceId);
 		}
 		
+		System.out.println("collitemcreate:::"+url);
+		System.out.println("collitemcreatedata:::"+createCollectionJsonObject.toString());
+		
 //		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_COLLLECTION_ITEM, resourceId,getLoggedInSessionToken(), collectionId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createCollectionJsonObject.toString());		
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -221,7 +225,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	@Override
 	public void deleteCollectionItem(String collectionItemId) {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_COLLECTION_ITEM, collectionItemId, getLoggedInSessionToken());
-		System.out.println("delete resource==+"+url);
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 
@@ -359,7 +362,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionItemDo deserializeCollectionItem(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
-				
 				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), CollectionItemDo.class);
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -725,12 +727,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ADD_QUESTION_ITEM, collectionId, getLoggedInSessionToken());
-
 		CollectionAddQuestionItemDo collectionAddQuestionItemDo=new CollectionAddQuestionItemDo();
 		collectionAddQuestionItemDo.setQuestion(collectionQuestionItemDo);
 		collectionAddQuestionItemDo.setMediaFileName(mediafileName);
 		String collectionQuestionData=ResourceFormFactory.generateStringDataForm(collectionAddQuestionItemDo, null);
-				
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), collectionQuestionData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
@@ -765,8 +765,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}else{
 	*/		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_RESOURCE_INFO, collectionItemDo.getResource().getGooruOid(), getLoggedInSessionToken());
 		//}
-		
-	
 		NewResourceDo newResourceDo = new NewResourceDo();
 			
 		String urlStr=collectionItemDo.getResource().getUrl();
@@ -803,7 +801,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 		
 		String form = ResourceFormFactory.generateStringDataForm(resourceMap, null);
-		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),form);
 		//JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -837,7 +834,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		//collectionItemDo.setItemType(ADDED);
 		String url = null;		
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_COPY_COLLLECTION_ITEM, resourceId, collectionId,getLoggedInSessionToken());
+		System.out.println("copyCollectionItem:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),new Form());
+		System.out.println("copyCollectionItemresp:::"+jsonResponseRep.getJsonRepresentation());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
 	}
@@ -1624,5 +1623,21 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
         }
         return new GoogleToken();
 	}
-	
+
+	@Override
+	public CollectionItemDo v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) throws GwtException, ServerDownException {
+		CollectionItemDo collectionItemDoNew=new CollectionItemDo();
+		
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_QUESTION_ITEM, collectionItemDo.getCollectionItemId(), getLoggedInSessionToken());
+		if(thumbnailUrl!=null){
+			updateQuestionImage(collectionItemDo.getResource().getGooruOid(),thumbnailUrl);
+		}
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.generateStringDataForm(collectionQuestionItemDo,"question"));
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		collectionItemDoNew=deserializeCollectionItem(jsonRep);
+		collectionItemDo.setResource(collectionItemDoNew.getQuestionInfo());
+		collectionItemDo.setStandards(collectionItemDoNew.getStandards());
+		return collectionItemDo;
+	}
 }
