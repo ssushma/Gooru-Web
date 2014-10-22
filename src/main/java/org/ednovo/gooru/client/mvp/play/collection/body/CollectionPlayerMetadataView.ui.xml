@@ -18,17 +18,17 @@
 								   <g:Label ui:field="seeMoreButton" styleName="{playerStyle.seeMore}" />
 								   <g:Label ui:field="noCommentsLbl"/>
 								   <g:HTMLPanel styleName="{playerStyle.avatarblock}" ui:field="addComment">
-								      <g:HTMLPanel styleName="{playerStyle.loginMessaging}" ui:field="loginMessaging">
-									      	<g:Label ui:field="loginMessagingText"></g:Label>
-									      	<g:Anchor ui:field="loginUrl"/> 
-									      	<g:Label ui:field="orText"></g:Label> 
-									      	<g:Anchor ui:field="signupUrl" />
-									      	<g:Label ui:field="toCommentText"></g:Label>
-								      </g:HTMLPanel>
 								      <g:HTMLPanel styleName="col-md-1 col-xs-3 col-sm-2">
 								     		<g:Image styleName="{playerStyle.userPhoto}" ui:field="userPhoto"></g:Image>
 								      </g:HTMLPanel>
 								      <g:HTMLPanel styleName="col-md-10 col-xs-6 col-sm-8">
+								      		<g:HTMLPanel styleName="{playerStyle.loginMessaging}" ui:field="loginMessaging">
+										      	<g:Label ui:field="loginMessagingText"></g:Label>
+										      	<g:Anchor ui:field="loginUrl"/> 
+										      	<g:Label ui:field="orText"></g:Label> 
+										      	<g:Anchor ui:field="signupUrl" />
+										      	<g:Label ui:field="toCommentText"></g:Label>
+								      		</g:HTMLPanel>
 								      		<g:TextArea styleName="{playerStyle.commentField} form-control" ui:field="commentField"></g:TextArea>
 								      </g:HTMLPanel>
 									  <g:Label styleName="col-md-10 col-xs-6 col-sm-8 {playerStyle.successPostMsg}" ui:field="successPostMsg" />

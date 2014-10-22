@@ -163,3 +163,53 @@ position: relative;
 	height: auto;
 	border-left: 7px solid #1076BB;
 }
+.timespend{
+	margin-bottom:0;
+	display:block;
+}
+.collectionEndImageContainer{
+	display: block;
+    float: none;
+    height: 160px;
+    margin: 0 auto;
+    position: relative;
+    width: 220px;
+}
+.playRight{
+	 display: block;
+    float: none;
+}
+.playBlockTop{
+	padding-top: 30px;
+	text-align: center;
+}
+.endButtonsContainer{
+	margin-top: 25px;
+	text-align:center;
+}
+.endButtonsContainer buttons{
+	float:none;
+}
+.whatsnext{
+	width:100%;
+	background:#444444;
+	border-top:2px solid #222222;
+	border-bottom:2px solid #222222;
+	padding:10px 15px;
+}
+
+
+.whatsnext .smallTxt{
+	text-align:left;
+}
+
+.whatsnext .bigTxt{
+	text-align:left;
+}
+
+.whatsnext .smallerTxt{
+	text-align:left;
+}
+.endPageIframe{
+	margin:30px 30px ;
+}

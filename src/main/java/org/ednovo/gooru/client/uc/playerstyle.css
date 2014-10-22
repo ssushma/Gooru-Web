@@ -945,7 +945,7 @@ float: left;
 	opacity:0.6;	
 }
 .toCommentTextPreviewPlayer{
-	float:left;margin-left:1%;
+	display:inline-block;
 }
 .collectionreplay {
 	width: 170px;
@@ -960,7 +960,7 @@ float: left;
 	cursor: pointer;
 }
 .collectionreplayContainer{
-	width: 230px;
+	width: 220px;
 	height: 160px;
 	box-sizing: border-box;
 	text-indent: -228px;
