@@ -31,7 +31,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.DataInsightsUrlTokens;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
@@ -1575,6 +1574,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					collectionImage.setUrl("images/analytics/default-collection-image.png");
 				}
 			});
+			collectionResourcesCount.setText((result.get(0).getResourceCount()-result.get(0).getTotalQuestionCount())+" Resources | "+result.get(0).getTotalQuestionCount()+" Questions");
 		}
 	}
 }
