@@ -181,7 +181,7 @@ private String getTimeSpent(Long commentCreatedTime) {
 			.setToolTip(new ToolTip()  
 				.setFormatter(new ToolTipFormatter() {  
 					public String format(ToolTipData toolTipData) {  
-						if(toolTipData.getSeriesName().equalsIgnoreCase("3") || toolTipData.getSeriesName().equalsIgnoreCase("4")){
+						if(toolTipData.getSeriesName().equalsIgnoreCase("Average Score") || toolTipData.getSeriesName().equalsIgnoreCase("Minimum Score")){
 							return ""+toolTipData.getYAsDouble();
 						}else{
 							long hours = Math.round(toolTipData.getYAsDouble()) / 60;
