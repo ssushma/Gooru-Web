@@ -43,9 +43,9 @@ public class LineChartView extends Composite {
 	public LineChartView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
-	public void createLineChart(String title1,String title2,String []categories,List<String> contentList,Map<String,Number[]> data,ChartMetaDataOptions chartmetadata){
+	public void createLineChart(String title1,String title2,String []categories,List<String> contentList,Map<String,Number[]> data,ChartMetaDataOptions chartmetadata,boolean isFirst){
 	/*	option1.setText(title1);
 		option2.setText(title2);*/
-		chartContainer.add(new HCLineChart().createChartLine(categories,contentList,data,chartmetadata));
+		chartContainer.add(new HCLineChart().createChartLine(categories,contentList,data,chartmetadata,isFirst));
 	}
 }

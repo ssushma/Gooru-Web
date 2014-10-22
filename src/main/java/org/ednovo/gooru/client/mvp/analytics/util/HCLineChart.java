@@ -15,6 +15,8 @@ import org.moxieapps.gwt.highcharts.client.Style;
 import org.moxieapps.gwt.highcharts.client.ToolTip;
 import org.moxieapps.gwt.highcharts.client.ToolTipData;
 import org.moxieapps.gwt.highcharts.client.ToolTipFormatter;
+import org.moxieapps.gwt.highcharts.client.labels.AxisLabelsData;
+import org.moxieapps.gwt.highcharts.client.labels.AxisLabelsFormatter;
 import org.moxieapps.gwt.highcharts.client.labels.Labels;
 import org.moxieapps.gwt.highcharts.client.labels.XAxisLabels;
 import org.moxieapps.gwt.highcharts.client.labels.YAxisLabels;
@@ -106,20 +108,20 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 		
 		chartmetadata.setShowXaxisTop(true);
 		LineChartView lineChartView=new LineChartView();
-		lineChartView.createLineChart("", "", category, contentListNew, data, chartmetadata);
+		lineChartView.createLineChart("", "", category, contentListNew, data, chartmetadata,true);
 		
 		chartmetadata.setShowXaxisTop(false);
 		LineChartView lineChartView1=new LineChartView();
-		lineChartView1.createLineChart("", "", category, contentListNew1, data1, chartmetadata);
+		lineChartView1.createLineChart("", "", category, contentListNew1, data1, chartmetadata,false);
 		
 		Map<String,Number[]> data2 = new HashMap<String,Number[]>();
 		LineChartView lineChartView2=new LineChartView();
 		List<String> contentListNew2=new ArrayList<String>();
-		lineChartView2.createLineChart("Average Reaction","", category, contentListNew2, data2, chartmetadata);
+		lineChartView2.createLineChart("Average Reaction","", category, contentListNew2, data2, chartmetadata,false);
 		
 		Map<String,Number[]> data3 = new HashMap<String,Number[]>();
 		LineChartView lineChartView3=new LineChartView();
-		lineChartView3.createLineChart("Student Completion","", category, contentListNew2, data3, chartmetadata);
+		lineChartView3.createLineChart("Student Completion","", category, contentListNew2, data3, chartmetadata,false);
 		
 		studyChartContainer.add(lineChartView);
 		studyChartContainer.add(lineChartView1);
@@ -167,7 +169,7 @@ private String getTimeSpent(Long commentCreatedTime) {
 	return createdTime;
 }
 	
-	public Chart createChartLine(String[] categories, List<String> legend, Map<String, Number[]> data,ChartMetaDataOptions chartmetadata) {
+	public Chart createChartLine(String[] categories, List<String> legend, Map<String, Number[]> data,ChartMetaDataOptions chartmetadata,boolean isFirst) {
 		chart.setType(Series.Type.LINE)  
 	        .setZoomType(Chart.ZoomType.X_AND_Y)
 			.setChartTitle(new ChartTitle()  
@@ -190,7 +192,7 @@ private String getTimeSpent(Long commentCreatedTime) {
 				})  
 			);  
 		chart.getXAxis().setCategories(categories);
-
+		
 		/*if(chartmetadata.isShowXaxisTop()){
 				chart.getXAxis().setOpposite(true);
 		 } else {
@@ -206,8 +208,26 @@ private String getTimeSpent(Long commentCreatedTime) {
 		} else {
 			chart.getYAxis().setAxisTitleText("");
 		}
-		chart.getYAxis().setLabels(new YAxisLabels().setEnabled(true));
-		
+		if(isFirst){
+			chart.getYAxis()  
+	        .setAxisTitleText("")  
+	        .setLineWidth(1)  
+	        .setLabels(new YAxisLabels()  
+	            .setFormatter(  
+	                new AxisLabelsFormatter() {  
+	                    public String format(AxisLabelsData axisLabelsData) {  
+	                    	long hours = Math.round( axisLabelsData.getValueAsLong()) / 60;
+							long minutes = Math.round( axisLabelsData.getValueAsLong()) % 60;
+							return hours+"hrs "+minutes+"mins";
+	                    }  
+	                }  
+	            )  
+	        ); 
+		}else{
+			chart.getYAxis()
+			.setLineWidth(1)  
+			.setLabels(new YAxisLabels().setEnabled(true));
+		}
 		//chart.getYAxis().setGridLineWidth(0);
 		//chart.getYAxis().setGridLineColor("transparent");
 		
