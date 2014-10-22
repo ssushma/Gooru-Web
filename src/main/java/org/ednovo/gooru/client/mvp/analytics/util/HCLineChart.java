@@ -28,8 +28,8 @@ public class HCLineChart {
 public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 		HTMLPanel studyChartContainer=new HTMLPanel("");
 		ChartMetaDataOptions chartmetadata=new ChartMetaDataOptions();
-		chartmetadata.setHeight(100);
-		chartmetadata.setShowLegends(false);
+		chartmetadata.setHeight(200);
+		chartmetadata.setShowLegends(true);
 	
 		int size=gradeData.size();
 		Number averageTime[]=new Number[size];
@@ -73,6 +73,11 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 	    		suggestedTime[i]=0;
 	    	}
 	    }
+		
+	    String category[]=new String[size];
+	    for(int i=0;i<size;i++) {
+	    	category[i] = String.valueOf(i+1);
+	    }		   
     
 	    List<Number[]> numberslineChart1=new ArrayList<Number[]>();
 	    numberslineChart1.add(averageTime);
@@ -83,17 +88,15 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 	    numberslineChart2.add(averageScore);
 	    
 		List<String> contentListNew=new ArrayList<String>();
-		String subjects[]={"1","2"};
+		String subjects[]={"Average Time","Suggested Time"};
 		for(String subject:subjects){
 			contentListNew.add(subject);
 		}
 		List<String> contentListNew1=new ArrayList<String>();
-		String subjects1[]={"3","4"};
+		String subjects1[]={"Average Score","Minimum Score"};
 		for(String subject:subjects1){
 			contentListNew1.add(subject);
 		}
-		String category[]=new String[size];
-		   
 		Map<String,Number[]> data = new HashMap<String,Number[]>();
 		Map<String,Number[]> data1 = new HashMap<String,Number[]>();
 		for(int i=0;i<contentListNew.size();i++){
@@ -103,11 +106,11 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 		
 		chartmetadata.setShowXaxisTop(true);
 		LineChartView lineChartView=new LineChartView();
-		lineChartView.createLineChart("Average Time", "Suggested Time", category, contentListNew, data, chartmetadata);
+		lineChartView.createLineChart("", "", category, contentListNew, data, chartmetadata);
 		
 		chartmetadata.setShowXaxisTop(false);
 		LineChartView lineChartView1=new LineChartView();
-		lineChartView1.createLineChart("Average Score", "Minimum Score", category, contentListNew1, data1, chartmetadata);
+		lineChartView1.createLineChart("", "", category, contentListNew1, data1, chartmetadata);
 		
 		Map<String,Number[]> data2 = new HashMap<String,Number[]>();
 		LineChartView lineChartView2=new LineChartView();
@@ -186,30 +189,28 @@ private String getTimeSpent(Long commentCreatedTime) {
 					}  
 				})  
 			);  
-		
 		chart.getXAxis().setCategories(categories);
 
-		if(chartmetadata.isShowXaxisTop()){
+		/*if(chartmetadata.isShowXaxisTop()){
 				chart.getXAxis().setOpposite(true);
 		 } else {
-			 	chart.getXAxis().setLabels(new XAxisLabels().setEnabled(false));
+			 	chart.getXAxis().setLabels(new XAxisLabels().setEnabled(true));
 				chart.getXAxis().setLineColor("transparent");
 				chart.getXAxis().setLineWidth(0);
 				chart.getXAxis().setTickWidth(0);
 				chart.getXAxis().setTickLength(0);
-		 }
-		
+		 }*/
+		chart.getXAxis().setAxisTitleText("Assignments");
 		if(chartmetadata.getyAxisTitle()!=null&&!chartmetadata.getyAxisTitle().isEmpty()) {
 			chart.getYAxis().setAxisTitleText(chartmetadata.getyAxisTitle());
 		} else {
 			chart.getYAxis().setAxisTitleText("");
 		}
-		chart.getYAxis().setLabels(new YAxisLabels().setEnabled(false));
+		chart.getYAxis().setLabels(new YAxisLabels().setEnabled(true));
 		
-		chart.getYAxis().setGridLineWidth(0);
-		chart.getYAxis().setGridLineColor("transparent");
+		//chart.getYAxis().setGridLineWidth(0);
+		//chart.getYAxis().setGridLineColor("transparent");
 		
-
 		chart.getYAxis().setMin(0);
 		if(categories.length>15) {
 			chart.getXAxis()
@@ -230,8 +231,8 @@ private String getTimeSpent(Long commentCreatedTime) {
 		if(chartmetadata.getyMaxValue()!=0){
 			chart.getYAxis().setMax(chartmetadata.getyMaxValue());
 		}
-		if(!chartmetadata.isShowLegends()){
-			chart.setLegend(new Legend().setEnabled(false));
+		if(chartmetadata.isShowLegends()){
+			chart.setLegend(new Legend().setEnabled(true));
 		}
 		
 		return chart;

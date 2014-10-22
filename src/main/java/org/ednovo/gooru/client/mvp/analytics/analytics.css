@@ -720,7 +720,7 @@
 }
 
 .progress_org {
-	background-color: #fadaa1;
+	background-color: #ff7d71;
 	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15) inset;
 	color: #fff;
 	float: left;
@@ -755,7 +755,7 @@
 	line-height: 20px;
 	text-align: center;
 	transition: width 0.6s ease 0s;
-	width: 5px;
+	width: 1%;
 }
 
 .form_control {
@@ -777,7 +777,7 @@
 }
 
 .org {
-	background-color: #fadaa1;
+	background-color: #ff7d71;
 	min-height: 18px;
 	width:49%;
 	text-align: center;
