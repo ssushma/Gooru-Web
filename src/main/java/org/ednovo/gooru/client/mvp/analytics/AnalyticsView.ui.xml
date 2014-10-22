@@ -158,8 +158,8 @@
 					</div> 
 					<g:HTMLPanel ui:field="assignmentContainer"></g:HTMLPanel>
 					<g:HTMLPanel ui:field="highlightedStudentsContainer" styleName="{unitStyle.hilightStudentsContainer}">
-					<g:HTMLPanel ui:field="scoreAboveHighlightedStudentsContainer" styleName="{unitStyle.scoreAboveHilightStudentsContainer}"></g:HTMLPanel>
-					<g:HTMLPanel ui:field="scoreBelowHighlightedStudentsContainer" styleName="{unitStyle.scoreBelowilightStudentsContainer}"></g:HTMLPanel>
+					<g:HTMLPanel ui:field="scoreAboveHighlightedStudentsContainer" styleName="{unitStyle.scoreAboveHilightStudentsContainer} unitDetailsSigngle"></g:HTMLPanel>
+					<g:HTMLPanel ui:field="scoreBelowHighlightedStudentsContainer" styleName="{unitStyle.scoreBelowilightStudentsContainer} unitDetailsSigngle"></g:HTMLPanel>
 					<g:Button ui:field="btnViewAllStudents" styleName="primary {unitStyle.viewAllStudentsBtn}" text="{i18n.GL2292}"/>
 					</g:HTMLPanel>
 					<g:HTMLPanel ui:field="personalizeMainContainer">

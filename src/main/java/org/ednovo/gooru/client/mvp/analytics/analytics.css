@@ -979,3 +979,9 @@
 	margin-top: 18px;
 	margin-bottom: 8px;
 }
+.unitDetailsSigngle{
+	background: #fff;
+	padding-left: 0;
+	padding-right: 0;
+	width: 100% !important;
+}
