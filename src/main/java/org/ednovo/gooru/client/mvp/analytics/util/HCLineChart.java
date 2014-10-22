@@ -15,6 +15,8 @@ import org.moxieapps.gwt.highcharts.client.Style;
 import org.moxieapps.gwt.highcharts.client.ToolTip;
 import org.moxieapps.gwt.highcharts.client.ToolTipData;
 import org.moxieapps.gwt.highcharts.client.ToolTipFormatter;
+import org.moxieapps.gwt.highcharts.client.labels.AxisLabelsData;
+import org.moxieapps.gwt.highcharts.client.labels.AxisLabelsFormatter;
 import org.moxieapps.gwt.highcharts.client.labels.Labels;
 import org.moxieapps.gwt.highcharts.client.labels.XAxisLabels;
 import org.moxieapps.gwt.highcharts.client.labels.YAxisLabels;
@@ -28,8 +30,8 @@ public class HCLineChart {
 public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 		HTMLPanel studyChartContainer=new HTMLPanel("");
 		ChartMetaDataOptions chartmetadata=new ChartMetaDataOptions();
-		chartmetadata.setHeight(100);
-		chartmetadata.setShowLegends(false);
+		chartmetadata.setHeight(200);
+		chartmetadata.setShowLegends(true);
 	
 		int size=gradeData.size();
 		Number averageTime[]=new Number[size];
@@ -73,6 +75,11 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 	    		suggestedTime[i]=0;
 	    	}
 	    }
+		
+	    String category[]=new String[size];
+	    for(int i=0;i<size;i++) {
+	    	category[i] = String.valueOf(i+1);
+	    }		   
     
 	    List<Number[]> numberslineChart1=new ArrayList<Number[]>();
 	    numberslineChart1.add(averageTime);
@@ -83,17 +90,15 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 	    numberslineChart2.add(averageScore);
 	    
 		List<String> contentListNew=new ArrayList<String>();
-		String subjects[]={"1","2"};
+		String subjects[]={"Average Time","Suggested Time"};
 		for(String subject:subjects){
 			contentListNew.add(subject);
 		}
 		List<String> contentListNew1=new ArrayList<String>();
-		String subjects1[]={"3","4"};
+		String subjects1[]={"Average Score","Minimum Score"};
 		for(String subject:subjects1){
 			contentListNew1.add(subject);
 		}
-		String category[]=new String[size];
-		   
 		Map<String,Number[]> data = new HashMap<String,Number[]>();
 		Map<String,Number[]> data1 = new HashMap<String,Number[]>();
 		for(int i=0;i<contentListNew.size();i++){
@@ -103,20 +108,20 @@ public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 		
 		chartmetadata.setShowXaxisTop(true);
 		LineChartView lineChartView=new LineChartView();
-		lineChartView.createLineChart("Average Time", "Suggested Time", category, contentListNew, data, chartmetadata);
+		lineChartView.createLineChart("", "", category, contentListNew, data, chartmetadata,true);
 		
 		chartmetadata.setShowXaxisTop(false);
 		LineChartView lineChartView1=new LineChartView();
-		lineChartView1.createLineChart("Average Score", "Minimum Score", category, contentListNew1, data1, chartmetadata);
+		lineChartView1.createLineChart("", "", category, contentListNew1, data1, chartmetadata,false);
 		
 		Map<String,Number[]> data2 = new HashMap<String,Number[]>();
 		LineChartView lineChartView2=new LineChartView();
 		List<String> contentListNew2=new ArrayList<String>();
-		lineChartView2.createLineChart("Average Reaction","", category, contentListNew2, data2, chartmetadata);
+		lineChartView2.createLineChart("Average Reaction","", category, contentListNew2, data2, chartmetadata,false);
 		
 		Map<String,Number[]> data3 = new HashMap<String,Number[]>();
 		LineChartView lineChartView3=new LineChartView();
-		lineChartView3.createLineChart("Student Completion","", category, contentListNew2, data3, chartmetadata);
+		lineChartView3.createLineChart("Student Completion","", category, contentListNew2, data3, chartmetadata,false);
 		
 		studyChartContainer.add(lineChartView);
 		studyChartContainer.add(lineChartView1);
@@ -164,7 +169,7 @@ private String getTimeSpent(Long commentCreatedTime) {
 	return createdTime;
 }
 	
-	public Chart createChartLine(String[] categories, List<String> legend, Map<String, Number[]> data,ChartMetaDataOptions chartmetadata) {
+	public Chart createChartLine(String[] categories, List<String> legend, Map<String, Number[]> data,ChartMetaDataOptions chartmetadata,boolean isFirst) {
 		chart.setType(Series.Type.LINE)  
 	        .setZoomType(Chart.ZoomType.X_AND_Y)
 			.setChartTitle(new ChartTitle()  
@@ -186,30 +191,46 @@ private String getTimeSpent(Long commentCreatedTime) {
 					}  
 				})  
 			);  
-		
 		chart.getXAxis().setCategories(categories);
-
-		if(chartmetadata.isShowXaxisTop()){
+		
+		/*if(chartmetadata.isShowXaxisTop()){
 				chart.getXAxis().setOpposite(true);
 		 } else {
-			 	chart.getXAxis().setLabels(new XAxisLabels().setEnabled(false));
+			 	chart.getXAxis().setLabels(new XAxisLabels().setEnabled(true));
 				chart.getXAxis().setLineColor("transparent");
 				chart.getXAxis().setLineWidth(0);
 				chart.getXAxis().setTickWidth(0);
 				chart.getXAxis().setTickLength(0);
-		 }
-		
+		 }*/
+		chart.getXAxis().setAxisTitleText("Assignments");
 		if(chartmetadata.getyAxisTitle()!=null&&!chartmetadata.getyAxisTitle().isEmpty()) {
 			chart.getYAxis().setAxisTitleText(chartmetadata.getyAxisTitle());
 		} else {
 			chart.getYAxis().setAxisTitleText("");
 		}
-		chart.getYAxis().setLabels(new YAxisLabels().setEnabled(false));
+		if(isFirst){
+			chart.getYAxis()  
+	        .setAxisTitleText("")  
+	        .setLineWidth(1)  
+	        .setLabels(new YAxisLabels()  
+	            .setFormatter(  
+	                new AxisLabelsFormatter() {  
+	                    public String format(AxisLabelsData axisLabelsData) {  
+	                    	long hours = Math.round( axisLabelsData.getValueAsLong()) / 60;
+							long minutes = Math.round( axisLabelsData.getValueAsLong()) % 60;
+							return hours+"hrs "+minutes+"mins";
+	                    }  
+	                }  
+	            )  
+	        ); 
+		}else{
+			chart.getYAxis()
+			.setLineWidth(1)  
+			.setLabels(new YAxisLabels().setEnabled(true));
+		}
+		//chart.getYAxis().setGridLineWidth(0);
+		//chart.getYAxis().setGridLineColor("transparent");
 		
-		chart.getYAxis().setGridLineWidth(0);
-		chart.getYAxis().setGridLineColor("transparent");
-		
-
 		chart.getYAxis().setMin(0);
 		if(categories.length>15) {
 			chart.getXAxis()
@@ -230,8 +251,8 @@ private String getTimeSpent(Long commentCreatedTime) {
 		if(chartmetadata.getyMaxValue()!=0){
 			chart.getYAxis().setMax(chartmetadata.getyMaxValue());
 		}
-		if(!chartmetadata.isShowLegends()){
-			chart.setLegend(new Legend().setEnabled(false));
+		if(chartmetadata.isShowLegends()){
+			chart.setLegend(new Legend().setEnabled(true));
 		}
 		
 		return chart;
