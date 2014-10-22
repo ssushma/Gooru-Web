@@ -64,5 +64,11 @@ public interface CollectionResourceTabUiHandlers extends BaseUiHandlers,UpdateQu
 
 	void editUserOwnResource(String string, String gooruOid);
 
+	void getBrowseStandardsInfo(boolean val);
+
+	void addUpdatedBrowseStandards();
+
+	void closeBrowseStandardsPopup();
+
 
 }

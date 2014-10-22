@@ -1100,7 +1100,7 @@ public class CollectionShareTabVc extends Composite {
 								}
 							}
 						};
-						success.setPopupTitle(i18n.GL1921());
+						success.setPopupTitle(i18n.GL0501());
 	                    success.setDescText(i18n.GL1917()+"<br>"+i18n.GL1918());
 	                    success.setPositiveButtonText(i18n.GL0190());
 						

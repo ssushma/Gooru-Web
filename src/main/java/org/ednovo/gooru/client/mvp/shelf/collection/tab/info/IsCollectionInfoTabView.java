@@ -81,7 +81,7 @@ public interface IsCollectionInfoTabView extends IsViewWithHandlers<CollectionIn
 
 	void setUpdatedStandards(String standardsCode, Integer codeId,String description);
 
-	
+	Button getBrowseBtn();
 /*	void displayErrorMsgTeacherTip();
 
 	void setExistingTeacherTip(CollectionDo collectionDo);*/
