@@ -51,6 +51,7 @@ public class GoogleToken extends ResponseStatusDo implements Serializable {
 	private String token_type;
 	private String id_token;
 	private String access_token;
+	private String emailId;
 
 	/** 
 	 * This method is to get the expires_in
@@ -109,4 +110,12 @@ public class GoogleToken extends ResponseStatusDo implements Serializable {
 	}
 
 	public GoogleToken(){}
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
 }

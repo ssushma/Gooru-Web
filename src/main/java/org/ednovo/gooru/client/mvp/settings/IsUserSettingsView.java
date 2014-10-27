@@ -235,6 +235,26 @@ public interface IsUserSettingsView extends IsViewWithHandlers<UserSettingsUiHan
 	 *
 	 * 
 	*/
-	
 	void googleDirveStatus(boolean isConnected);
+	
+	/**
+	 * @function setConnectedAs 
+	 * 
+	 * @created_date : Oct 27, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param	:	connectedEmailId
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	public void setConnectedAs(String connectedEmailId);
 }
