@@ -24,6 +24,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -109,8 +110,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		collectionImage.getElement().setId("imgCollectionImage");
 		itemTitle.getElement().setId("lblItemTitle");
 		contents.getElement().setId("fpnlContents");
-		moveDownBtn.setVisible(true);
-		moveUpBtn.setVisible(true);
+		moveDownBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		moveUpBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 		
 	}
 	
@@ -398,7 +399,12 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	 * @param isvisible {@link Boolean}
 	 */
 	public void upButtonIsVisible(boolean isvisible) {
-		moveUpBtn.setVisible(isvisible);
+//		moveUpBtn.setVisible(isvisible);
+		if(isvisible){
+			moveUpBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		}else{
+			moveUpBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		}
 	}
 
 
@@ -407,7 +413,11 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	 * @param isvisible {@link Boolean}
 	 */
 	public void downButtonIsVisible(boolean isvisible) {
-		moveDownBtn.setVisible(isvisible);
+		if(isvisible){
+			moveDownBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		}else{
+			moveDownBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		}
 	}
 
 	/**

@@ -2200,7 +2200,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 					TreeItem level3Item = getSecondLevelTreeWidget(level2Item, params.get(O3_LEVEL));
 					TreeItem shelfCollection = getChildFolderWidgetToReorder(level3Item,itemId);
 					level3Item.insertItem(toBeMovedPos, shelfCollection);
-					shelfCollection.getElement().getStyle().setMarginLeft(-1, Unit.PX);
+					correctStyle(shelfCollection);
 				}
 			}
 		}else if(params.get(O2_LEVEL)!=null){
@@ -2209,13 +2209,13 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				TreeItem level2Item = getSecondLevelTreeWidget(level1Item, params.get(O2_LEVEL));
 				TreeItem shelfCollection = getChildFolderWidgetToReorder(level2Item,itemId);
 				level2Item.insertItem(toBeMovedPos, shelfCollection);
-				shelfCollection.getElement().getStyle().setMarginLeft(-1, Unit.PX);
+				correctStyle(shelfCollection);
 			}
 		}else if(params.get(O1_LEVEL)!=null){
 			TreeItem level1Item = getFirstLevelTreeWidget(params.get(O1_LEVEL));
 			TreeItem shelfCollection = getChildFolderWidgetToReorder(level1Item,itemId);
 			level1Item.insertItem(toBeMovedPos, shelfCollection);
-			shelfCollection.getElement().getStyle().setMarginLeft(-8, Unit.PX);
+			correctStyle(shelfCollection);
 		}else{
 			TreeItem shelfCollection = getWidgetToreorder(itemId);
 			if(toBeMovedPosTemp>count && direction.equals(DOWN_ARROW)){ 
@@ -2227,6 +2227,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				myShelfVerPanel.insertItem(toBeMovedPos, treeItem);
 			}else{
 					myShelfVerPanel.insertItem(toBeMovedPos, shelfCollection);
+					adjustTreeItemElementsStyle(myShelfVerPanel);
 			}
 		}
 		

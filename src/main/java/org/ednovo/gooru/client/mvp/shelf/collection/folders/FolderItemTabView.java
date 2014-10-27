@@ -5,10 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import java_cup.internal_error;
-
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.effects.BackgroundColorEffect;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -44,6 +43,8 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -387,6 +388,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					shelfFolderItemChildView.getMoveUpBtn().addClickHandler(new OnClickReorderUpButton(folderList.get(i).getGooruOid())); 
 					shelfFolderItemChildView.getMoveDownBtn().addClickHandler(new OnClickReorderDownButton(folderList.get(i).getGooruOid()));
 					shelfFolderItemChildView.getReorderTxtBox().addKeyPressHandler(new HasNumbersOnly()); 
+					shelfFolderItemChildView.getReorderTxtBox().addKeyUpHandler(new ReorderText(folderList.get(i).getGooruOid())); 
 					if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 						isFolderType = false;
 					}
@@ -628,10 +630,12 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	
 	private void addFolder(FolderDo folderDo) {
 		shelfFolderItemChildView = new ShelfFolderItemChildView(folderDo,1); 
+		shelfFolderItemChildView.setCollectionItemId(folderDo.getCollectionItemId());
 		shelfFolderItemChildView.setItemGooruOId(folderDo.getGooruOid());
 		shelfFolderItemChildView.getMoveUpBtn().addClickHandler(new OnClickReorderUpButton(folderDo.getGooruOid())); 
 		shelfFolderItemChildView.getMoveDownBtn().addClickHandler(new OnClickReorderDownButton(folderDo.getGooruOid()));
 		shelfFolderItemChildView.getReorderTxtBox().addKeyPressHandler(new HasNumbersOnly()); 
+		shelfFolderItemChildView.getReorderTxtBox().addKeyUpHandler(new ReorderText(folderDo.getGooruOid())); 
 		shelfFolderItemChildView.upButtonIsVisible(false);
 		folderContentBlock.insert(shelfFolderItemChildView, 0); 
 		setTotalCount(getTotalCount()+1);
@@ -774,6 +778,43 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	
 	
 	/**
+	 * This inner class used for disabling up and down arrow based on user entered reorder value.
+	 *
+	 */
+
+	public class ReorderText implements KeyUpHandler {
+		String itemGooruOid;
+		int itemPosSeqNumb,itemToBeMovedPosSeqNumb;
+		
+		public ReorderText(String itemGooruOid) {
+			this.itemGooruOid=itemGooruOid;
+		}
+
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+
+			ShelfFolderItemChildView shelfFolderItemChildView = getFolderOrCollectionWidget(itemGooruOid);
+
+			itemPosSeqNumb = shelfFolderItemChildView != null ?(Integer.parseInt(shelfFolderItemChildView.getItemNumber().getText().trim())):0;
+			itemToBeMovedPosSeqNumb = (shelfFolderItemChildView != null && shelfFolderItemChildView.getReorderTxtBox().getText().trim() !=null && !shelfFolderItemChildView.getReorderTxtBox().getText().trim().equals(""))?(Integer.parseInt(shelfFolderItemChildView.getReorderTxtBox().getText().trim())):0;
+
+			if(itemToBeMovedPosSeqNumb==0 && itemPosSeqNumb!=1 && itemPosSeqNumb!=getTotalCount()){
+				shelfFolderItemChildView.downButtonIsVisible(true);
+				shelfFolderItemChildView.upButtonIsVisible(true);
+			}else if(itemToBeMovedPosSeqNumb>itemPosSeqNumb && itemPosSeqNumb!=getTotalCount()){
+				//disable up arrow
+				shelfFolderItemChildView.upButtonIsVisible(false); 
+				shelfFolderItemChildView.downButtonIsVisible(true); 
+			}else if(itemToBeMovedPosSeqNumb<itemPosSeqNumb && itemPosSeqNumb!=1){
+				//disable down arrow
+				shelfFolderItemChildView.downButtonIsVisible(false);
+				shelfFolderItemChildView.upButtonIsVisible(true);
+			}
+		}
+	}
+	
+	
+	/**
 	 * This inner class used for to restrict text box values to have only numbers
 	 *
 	 */
@@ -782,6 +823,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
+
 			if (!Character.isDigit(event.getCharCode()) 
 					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
 					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
@@ -972,6 +1014,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	 */
 	public void reorderItemToNewPosition(ShelfFolderItemChildView shelfFolderItemChildView, int newItemPosition,String direction, HashMap<String, String> params){
 		folderContentBlock.insert(shelfFolderItemChildView, newItemPosition);
+		Document.get().getElementById("pnlEditPanel").setScrollTop(0 + (newItemPosition)*(shelfFolderItemChildView.getOffsetHeight()-23));
+		new BackgroundColorEffect(shelfFolderItemChildView.getElement(),"#E7F1F8" ,"white", 4000);
 		AppClientFactory.fireEvent(new ReorderShelfListItemsEvent(shelfFolderItemChildView.getItemGooruOId(), newItemPosition, direction, params, shelfFolderItemChildView.getFolderDo(),shelfFolderItemChildView.getItemNumber().getText()));
 		setFolderCollectionItemSequence();
 	}

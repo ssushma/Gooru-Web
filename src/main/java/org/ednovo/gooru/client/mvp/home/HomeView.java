@@ -106,7 +106,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	@UiField Label lblHeading, lblSubHeading; 
 //	@UiField TextBoxWithPlaceholder txtSearch;
 	@UiField Button btnSearch;
-	@UiField Anchor achLearn, achTerms, achPrivacy,achCopyright, achGooruStories;//achDataPolicy
+	@UiField Anchor achLearn, achTerms, achPrivacy,achCopyright;//, achGooruStories;//achDataPolicy
 	@UiField TextBox txtEmbedLink;
 	@UiField HTML htmlDescription;
 	
@@ -216,19 +216,20 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			});
 		}
 	
-		PeListPanel p = new PeListPanel();
-		p.setTitle(i18n.GL2188_2());
-		p.getElement().setInnerHTML(i18n.GL2188_2());
-		panelText.add(p);
+
+//		PeListPanel p = new PeListPanel();
+//		p.setTitle(i18n.GL2188_3());
+//		p.getElement().setInnerHTML(i18n.GL2188_3());
+//		panelText.add(p);
 		
-		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl("", new SimpleAsyncCallback<String>() {
-			
-			@Override
-			public void onSuccess(String result) {
-				achGooruStories.setHref(result);
-				achGooruStories.setTarget("_blank");
-			}
-		});
+//		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl("", new SimpleAsyncCallback<String>() {
+//			
+//			@Override
+//			public void onSuccess(String result) {
+//				achGooruStories.setHref(result);
+//				achGooruStories.setTarget("_blank");
+//			}
+//		});
 		
 		
 //		InternalServerErrorPopupViewVc error = new InternalServerErrorPopupViewVc() {
