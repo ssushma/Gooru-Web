@@ -17,6 +17,7 @@
         <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormContent}">
           <g:HTMLPanel  styleName="{addWebResourceStyle.questionTextContainerStyle}">
          	 <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormTitle}" ui:field="questionText"></g:HTMLPanel>
+         	 <g:Label styleName="{addWebResourceStyle.charLimitStyle}" ui:field="charLimitLbl"></g:Label>
          	  <!-- <g:Anchor styleName="{addWebResourceStyle.markAsBlankLabel}" ui:field="makeBlank" >Mark as a blank</g:Anchor>  -->
          	<!--  <g:Button styleName="{addWebResourceStyle.tinyMceToolBarButton}" ui:field="questionNameTextAreaToolBarButton">A</g:Button> -->
           </g:HTMLPanel>
