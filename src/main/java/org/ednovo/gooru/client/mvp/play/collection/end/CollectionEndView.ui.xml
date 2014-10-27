@@ -75,7 +75,7 @@
 							<g:HTMLPanel styleName="{unitStyle.collection_details_teacher}">
 							<g:InlineLabel ui:field="collectionTitle"></g:InlineLabel>
 							<br/>
-							<g:InlineLabel ui:field="collectionResourcesCount" styleName="{unitStyle.question_resource_details}">6 Resources | 11 Questions</g:InlineLabel>
+							<g:InlineLabel ui:field="collectionResourcesCount" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
 							</g:HTMLPanel>
 							<g:HTMLPanel styleName="{unitStyle.resource_in_collection_teacher_summary}">
 							<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}">Collection Last Accessed</g:InlineLabel> 

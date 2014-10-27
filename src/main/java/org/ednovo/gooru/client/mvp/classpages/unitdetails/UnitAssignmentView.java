@@ -663,10 +663,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			Map<String,String> params = new HashMap<String,String>();
 			String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 			String classpageid="";
+			String stuUid="";
 			if(pageLocation.equals(PlaceTokens.STUDENT)){
 				classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 				params.put("id", classpageid);
-				
+				stuUid=AppClientFactory.getPlaceManager().getRequestParameter("sid", null);
+				if(stuUid!=null){
+					params.put("sid", stuUid);
+				}
 			}
 			else{
 				classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
