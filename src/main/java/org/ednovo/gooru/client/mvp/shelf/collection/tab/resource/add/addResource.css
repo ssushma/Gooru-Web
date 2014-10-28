@@ -1029,6 +1029,7 @@ width: 114px;
 	background: #EEE;
 }
 .questionTextContainerStyle{
+	display: inline-flex;
 	width:80%;
 }
 
@@ -1104,4 +1105,8 @@ text-align: center;
 position: static;
 float: left;
 margin-left: 41px;
+}
+.charLimitStyle{
+	float: right;
+	margin-left: 122px;
 }

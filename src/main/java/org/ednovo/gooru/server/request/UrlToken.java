@@ -473,9 +473,9 @@ public enum UrlToken {
 	
 	V2_SUGGEST_COLLAB("/v2/collaborator/suggest?query={0}&sessionToken={1}"),
 	 	
-	V2_WORKSPACE_FOLDER_LIST("/v2/folder/my/workspace?sessionToken={0}&offset={1}&limit={2}"),
+	V2_WORKSPACE_FOLDER_LIST("/v2/folder/my/workspace?sessionToken={0}&offset={1}&limit={2}&orderBy=sequence"),
 	
-	V2_GET_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}&offset={2}&limit={3}"),
+	V2_GET_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}&offset={2}&limit={3}&orderBy=sequence"),
 	
 	V2_GET_CHILD_FOLDER_LIST_PUBLIC("/v2/folder/{0}/item?sessionToken={1}&offset={2}&limit={3}&sharing=public"),
 	

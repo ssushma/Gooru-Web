@@ -489,18 +489,20 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		int collectionCount = 0;
 		if(collections != null) {
 			for (FolderDo collection : collections) {
-				ShelfCollection shelfCollection = new ShelfCollection(collection, 1);
-				shelfCollection.setWidgetPositions(1, collectionCount, null);
-				TreeItem treeItem = new TreeItem(shelfCollection);
-				myShelfVerPanel.addItem(treeItem);
-				//When page is refreshed, the folderItem previously selected will be highlighted.
-				if(gooruOid!=null&&gooruOid.equalsIgnoreCase(collection.getGooruOid())) {
-					checkShelfRefreshStatus(treeItem, gooruOid);
-					AppClientFactory.fireEvent(new SetFolderParentNameEvent(collection.getTitle()));
-					AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaData(collection)));
-					shelfCollection.setFolderOpenedStatus(true);
+				if(!getShelffCollection(collection.getGooruOid())){
+					ShelfCollection shelfCollection = new ShelfCollection(collection, 1);
+					shelfCollection.setWidgetPositions(1, collectionCount, null);
+					TreeItem treeItem = new TreeItem(shelfCollection);
+					myShelfVerPanel.addItem(treeItem);
+					//When page is refreshed, the folderItem previously selected will be highlighted.
+					if(gooruOid!=null&&gooruOid.equalsIgnoreCase(collection.getGooruOid())) {
+						checkShelfRefreshStatus(treeItem, gooruOid);
+						AppClientFactory.fireEvent(new SetFolderParentNameEvent(collection.getTitle()));
+						AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaData(collection)));
+						shelfCollection.setFolderOpenedStatus(true);
+					}
+					collectionCount++;
 				}
-				collectionCount++;
 			}
 			count = myShelfVerPanel.getItemCount();
 		}
@@ -513,6 +515,20 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		fireConsumeShelfCollectionEvent = true;
 		getUiHandlers().requestShelfCollections();
 	}
+	
+	private boolean getShelffCollection(String collectionId) {
+		boolean flag = false;
+		Iterator<Widget> widgets = myShelfVerPanel.iterator();
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if (widget instanceof ShelfCollection && ((ShelfCollection) widget).getCollectionDo().getGooruOid().equals(collectionId)) {
+				flag = true;
+			}
+		}
+		return flag;
+	}
+	
+	
 
 	/**
 	 * @function checkShelfRefreshStatus 
@@ -2220,6 +2236,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			TreeItem shelfCollection = getWidgetToreorder(itemId);
 			if(toBeMovedPosTemp>count && direction.equals(DOWN_ARROW)){ 
 				myShelfVerPanel.removeItem(shelfCollection);
+				getUiHandlers().refreshUserShelfCollections();
 			}else if (Integer.parseInt( itemSeqNumb)>count&& direction.equals(UP_ARROW)){ 
 				ShelfCollection shelfCollectionWidget = new ShelfCollection(folderDo, 1);
 				shelfCollectionWidget.setWidgetPositions(1, (toBeMovedPos-1), null);

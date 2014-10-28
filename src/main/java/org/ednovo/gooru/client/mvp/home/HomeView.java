@@ -216,8 +216,9 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			});
 		}
 	
+
 //		PeListPanel p = new PeListPanel();
-//		p.setTitle(i18n.GL2188_2());
+//		p.setTitle(i18n.GL2188_3());
 //		p.getElement().setInnerHTML(i18n.GL2188_3());
 //		panelText.add(p);
 		
