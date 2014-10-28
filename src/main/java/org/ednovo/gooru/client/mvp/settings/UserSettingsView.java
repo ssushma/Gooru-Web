@@ -324,8 +324,6 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		
 		
 		htmlConnectedAs.setVisible(false);
-		setConnectedAs("anil@goorulearning.org");
-		
 		
 		editButtonContainerEdu.getElement().setId("pnlEditButtonContainerEdu");
 		lblDisconnect.setText(i18n.GL2011());
