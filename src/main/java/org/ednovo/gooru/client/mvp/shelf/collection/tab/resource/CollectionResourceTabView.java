@@ -611,7 +611,7 @@ public class CollectionResourceTabView extends
 							editQuestionPopupWidget.getUpdateQuestionImageView().getUploadImage().addClickHandler(new ClickHandler() {
 										@Override
 										public void onClick(ClickEvent event) {
-											getUiHandlers().updateQustionImage(collectionItemDo.getResource().getGooruOid());
+											getUiHandlers().updateQustionImage(collectionItemDo.getCollectionItemId());
 										}
 									});
 							editQuestionPopupWidget
@@ -659,8 +659,7 @@ public class CollectionResourceTabView extends
 										public void onClick(ClickEvent event) {
 											getUiHandlers().updateQustionImage(
 													collectionItemDo
-															.getResource()
-															.getGooruOid());
+															.getCollectionItemId());
 										}
 									});
 //						} else if(collectionItemDo.getResource().getResourceType().getDescription().equals("web resource") || collectionItemDo.getResource().getResourceType().getDescription().equals("video")){
@@ -727,8 +726,7 @@ public class CollectionResourceTabView extends
 
 		public EditQuestionPopupWidget(CollectionItemDo collectionItemDo) {
 			super(collectionItemDo);
-			this.collectionItemId = collectionItemDo.getResource()
-					.getGooruOid();
+			this.collectionItemId = collectionItemDo.getCollectionItemId();
 			AppClientFactory.fireEvent(new GetEditPageHeightEvent(this, false));
 		}
 

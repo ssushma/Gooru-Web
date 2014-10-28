@@ -169,6 +169,9 @@ public enum UrlToken {
 
 	UPDATE_COLLLECTION_ITEM_METADATA(
 			"/scollection/item/{0}/metadata?sessionToken={1}"),
+			
+	GET_COLLLECTION_ITEM(
+			"/v2/collection/item/{0}?sessionToken={1}&includeAdditionalInfo=true"),
 
 	UPDATE_REGISTER_USER("/user/{0}?sessionToken={1}"),
 
