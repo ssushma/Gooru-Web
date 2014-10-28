@@ -87,6 +87,13 @@ public class LpsLibraryPresenter extends BasePlacePresenter<IsLpsLibraryView, Lp
 	}
 	
 	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.LPS);
+	}
+	
+	
+	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		clearSlot(TYPE_FOLDERS_SLOT);

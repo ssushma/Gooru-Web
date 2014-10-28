@@ -45,16 +45,18 @@ public class SetConceptQuizDataEvent extends GwtEvent<SetConceptQuizDataHandler>
 	String lessonLabel;
 	String lessonCode;
 	String conceptId;
+	String libraryGooruOid;
 	
 	public static final Type<SetConceptQuizDataHandler> TYPE = new Type<SetConceptQuizDataHandler>();
 	
-	public SetConceptQuizDataEvent(ArrayList<ConceptDo> conceptDoList, Integer topicId, String lessonId, String lessonLabel, String lessonCode, String conceptId) {
+	public SetConceptQuizDataEvent(ArrayList<ConceptDo> conceptDoList, Integer topicId, String lessonId, String lessonLabel, String lessonCode, String conceptId,String libraryGooruOid) {
 		this.conceptDoList = conceptDoList;
 		this.topicId = topicId;
 		this.lessonId = lessonId;
 		this.lessonLabel = lessonLabel;
 		this.lessonCode = lessonCode;
 		this.conceptId = conceptId;
+		this.libraryGooruOid=libraryGooruOid;
 	}
 	
 	@Override
@@ -64,6 +66,6 @@ public class SetConceptQuizDataEvent extends GwtEvent<SetConceptQuizDataHandler>
 
 	@Override
 	protected void dispatch(SetConceptQuizDataHandler handler) {
-		handler.setConceptQuizDataHandler(conceptDoList,topicId,lessonId,lessonLabel,lessonCode,conceptId);
+		handler.setConceptQuizDataHandler(conceptDoList,topicId,lessonId,lessonLabel,lessonCode,conceptId,libraryGooruOid);
 	}
 }

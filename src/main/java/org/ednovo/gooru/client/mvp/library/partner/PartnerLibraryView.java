@@ -34,6 +34,8 @@ import org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle;
 import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
 import org.ednovo.gooru.client.mvp.home.library.LibraryUnitMenuView;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.player.collection.client.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.library.CourseDo;
@@ -88,6 +90,16 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	public void loadPartnersPage(String callBack, String placeToken) {
 		libraryView.loadContributorsPage(callBack,placeToken);
 	}
+	
+	public void triggerLibraryViewEvent(String libraryGooruOid){
+		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(!AppClientFactory.getPlaceManager().isLibaryEventTriggered(viewToken)){
+			String eventId=GwtUUIDGenerator.uuid();
+			AppClientFactory.getPlaceManager().setLibaryEventTriggered(viewToken);
+			AppClientFactory.getPlaceManager().setLibraryEventId(eventId);
+			PlayerDataLogEvents.triggerLibarayViewEvent(libraryGooruOid, eventId, "library");
+		}
+	}
 
 	@Override
 	public void setUnitList(final ArrayList<PartnerFolderDo> folderList) {
@@ -104,6 +116,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		int j = 0;
 		for(int i = 0; i<folderList.size(); i++) {
 			if(folderList.get(i).getType().equalsIgnoreCase("folder")) {
+				triggerLibraryViewEvent(folderList.get(i).getParentGooruOid());
 				LibraryUnitMenuView libraryUnitMenuView = new LibraryUnitMenuView(folderList.get(i));
 				libraryView.getLeftNav().add(libraryUnitMenuView);
 				if(j==0&&folderId==null) {
@@ -111,7 +124,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 					loadingPanel(true);
 					libraryUnitMenuView.addStyleName(libraryStyleUc.unitLiActive());
 					unitListId = folderList.get(i).getGooruOid();
-					setTopicListData(folderList.get(i).getFolderItems(), unitListId);
+					setTopicListData(folderList.get(i).getFolderItems(), unitListId,folderList.get(i).getParentGooruOid());
 					//getUiHandlers().getPartnerChildFolderItems(unitListId, 1);
 				}
 			}
@@ -135,9 +148,9 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 					widget.addStyleName(libraryStyleUc.unitLiActive());
 					unitListId = libraryUnitMenuView.getUnitId();
 					if(finalWidgetCount==0) {
-						setTopicListData(folderList.get(finalWidgetCount).getFolderItems(), unitListId);
+						setTopicListData(folderList.get(finalWidgetCount).getFolderItems(), unitListId,libraryUnitMenuView.getLibraryGooruOid());
 					} else {
-						getUiHandlers().getPartnerChildFolderItems(unitListId, 1);
+						getUiHandlers().getPartnerChildFolderItems(unitListId, 1,libraryUnitMenuView.getLibraryGooruOid());
 					}
 				}
 			});
@@ -146,13 +159,13 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	}
 
 	@Override
-	public void setTopicListData(ArrayList<PartnerFolderDo> folderListDo, String folderId) {
+	public void setTopicListData(ArrayList<PartnerFolderDo> folderListDo, String folderId,String libraryGooruOid) {
 		libraryView.getContentScroll().clear();
 		try {
 			int count = 0;
 			for(int i = 0; i <folderListDo.size(); i++) {
 				count++;
-				libraryView.getContentScroll().add(new LibraryTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken()));
+				libraryView.getContentScroll().add(new LibraryTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(),libraryGooruOid));
 			}
 			libraryView.getContentScroll().setVisible(true);
 			loadingPanel(false);
