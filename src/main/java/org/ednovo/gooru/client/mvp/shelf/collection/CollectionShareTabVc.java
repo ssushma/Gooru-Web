@@ -512,6 +512,7 @@ public class CollectionShareTabVc extends Composite {
 				public void onSuccess(SettingDo result) {
 					if(result.getUser().getAccountTypeId()!=null) {
 						if(result.getUser().getAccountTypeId()==2) {
+							rbPublicPanel.getElement().getStyle().setDisplay(Display.NONE);
 							publicShareFloPanel.getElement().getStyle().setDisplay(Display.NONE);
 							linkShareFloPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 							privateShareFloPanel.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -525,6 +526,7 @@ public class CollectionShareTabVc extends Composite {
 	}
 
 	private void displayAllVisiblePanels() {
+		rbPublicPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 		publicShareFloPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 		linkShareFloPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 		privateShareFloPanel.getElement().getStyle().setDisplay(Display.BLOCK);
