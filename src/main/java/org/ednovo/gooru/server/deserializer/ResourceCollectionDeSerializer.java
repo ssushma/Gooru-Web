@@ -326,8 +326,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 						codeDo.setDepth(DEPTH);
 						codeDo.setLabel(courseArray.getJSONObject(j).getString("label"));
 						taxonomySet.add(codeDo);
-					}
-					
+						}
 				}
 				resourceDo.setTaxonomySet(taxonomySet);
 			}
