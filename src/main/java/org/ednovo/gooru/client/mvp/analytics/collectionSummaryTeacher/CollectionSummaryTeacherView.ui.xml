@@ -8,9 +8,9 @@
 		<g:HTMLPanel ui:field="hiddenChartPnl" />
 		 <g:HTMLPanel ui:field="teacherScoredDatapnl">
 		 <g:HTMLPanel styleName="{unitStyle.resource_monitor_header_title}">
-		      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.correct_legend_one}" ></g:InlineLabel><g:InlineLabel styleName="correct-one"  text="{i18n.GL2278}"></g:InlineLabel></g:HTMLPanel>
-		      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.correct_legend_other}"></g:InlineLabel><g:InlineLabel styleName="correct-other"  text="{i18n.GL2279}"></g:InlineLabel></g:HTMLPanel>
-		      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.incorrect_legend}"></g:InlineLabel><g:InlineLabel styleName="incorrect-ans"  text="{i18n.GL2280}"></g:InlineLabel></g:HTMLPanel>
+		      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.correct_legend_one}" ></g:InlineLabel><g:InlineLabel styleName="correct-one {unitStyle.correct_incorrect_text}"  text="{i18n.GL2278}"></g:InlineLabel></g:HTMLPanel>
+		      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.correct_legend_other}"></g:InlineLabel><g:InlineLabel styleName="correct-other {unitStyle.correct_incorrect_text}"  text="{i18n.GL2279}"></g:InlineLabel></g:HTMLPanel>
+		      <g:HTMLPanel styleName="{unitStyle.floatLeft}"><g:InlineLabel styleName="{unitStyle.incorrect_legend}"></g:InlineLabel><g:InlineLabel styleName="incorrect-ans {unitStyle.correct_incorrect_text}"  text="{i18n.GL2280}"></g:InlineLabel></g:HTMLPanel>
 		 </g:HTMLPanel>
 		<g:HTMLPanel ui:field="teacherScoredData" styleName="{unitStyle.individualScore}"/>
 		</g:HTMLPanel>

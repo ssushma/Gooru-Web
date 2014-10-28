@@ -118,21 +118,22 @@
 	width: 15px;
 	height: 15px;
 	background: #BCD1B9;
-	margin: 3px;
 }
 .correct_legend_other {
 	float: left;
 	width: 15px;
 	height: 15px;
 	background: #FFE7C2;
-	margin: 3px;
 }
 .incorrect_legend {
 	float: left;
 	width: 15px;
 	height: 15px;
 	background: #EAB4B3;
-	margin: 3px;
+}
+.correct_incorrect_text{
+	padding-left: 6px;
+	padding-right: 6px;
 }
 .floatLeft{
 	float: left;
