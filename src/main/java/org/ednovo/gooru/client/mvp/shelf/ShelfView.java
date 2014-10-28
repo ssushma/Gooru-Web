@@ -69,6 +69,7 @@ import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
+import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
@@ -265,6 +266,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	private static final String ID = "id";
 	
 	List<ClassPageCollectionDo> classpageTitles=null;
+	
+	private static final String GOORU_UID = "gooruuid";
 
 	private static ShelfViewUiBinder uiBinder = GWT
 			.create(ShelfViewUiBinder.class);
@@ -309,7 +312,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		 */
 			@Override
 			public void checkCharacterLimit(String text) {
-				if (text.length() >= 415) {
+				if (text.length() >= 500) {
 					descriptionAlertMessageLbl
 							.addStyleName("titleAlertMessageActive");
 					descriptionAlertMessageLbl
@@ -430,7 +433,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		collectionDescriptionTitle.getElement().setAttribute("alt",i18n.GL0618());
 		collectionDescriptionTitle.getElement().setAttribute("title",i18n.GL0618());
 		
-		String value = StringUtil.generateMessage(i18n.GL2103(), "415");
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
 		
 		StringUtil.setAttributes(lblCharLimit.getElement(), "lblCharLimit", value, value);
 		lblCharLimit.setText(value);
@@ -827,22 +830,34 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			editPanel.getElement().getStyle().clearMarginTop();
 		}
 		if(collectionDo.getSharing()!=null){
-			String share=collectionDo.getSharing();
-			if(share.equalsIgnoreCase("private")||share.equalsIgnoreCase("anyonewithlink")){
-				if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().getValue().equals("pending")){
-					rbPublic.setVisible(false);
-					lblPublishPending.setVisible(true);
-					publishedPanel.setVisible(false);
-				}else{
-					rbPublic.setVisible(true);
-					lblPublishPending.setVisible(false);
-					publishedPanel.setVisible(false);
+			final String share=collectionDo.getSharing();
+			AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
+
+				@Override
+				public void onSuccess(SettingDo result) {
+					if(result.getUser().getAccountTypeId()==2){
+						rbPublicPanel.setVisible(false);
+						publishedPanel.setVisible(false);
+					}else{
+						rbPublicPanel.setVisible(true);
+						if(share.equalsIgnoreCase("private")||share.equalsIgnoreCase("anyonewithlink")){
+							if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().getValue().equals("pending")){
+								rbPublic.setVisible(false);
+								lblPublishPending.setVisible(true);
+								publishedPanel.setVisible(false);
+							}else{
+								rbPublic.setVisible(true);
+								lblPublishPending.setVisible(false);
+								publishedPanel.setVisible(false);
+							}
+						}else{
+							rbPublic.setVisible(false);
+							lblPublishPending.setVisible(false);
+							publishedPanel.setVisible(true);
+						}
+					}
 				}
-			}else{
-				rbPublic.setVisible(false);
-				lblPublishPending.setVisible(false);
-				publishedPanel.setVisible(true);
-			}
+			});
 		}
 		
 		//getCollectionShareTabVc();

@@ -179,15 +179,19 @@ public class ThanksPopupUc extends PopupPanel{
 		lblLoginHeading.getElement().setAttribute("alt",i18n.GL0186());
 		lblLoginHeading.getElement().setAttribute("title",i18n.GL0186());
 		
-		lblCongratsHeader.setText(i18n.GL0429());
+		String congrats = AppClientFactory.getLoggedInUser().getLoginType().equalsIgnoreCase("apps") ? i18n.GL2195() : i18n.GL0429();
+		
+		lblCongratsHeader.setText(congrats);
 		lblCongratsHeader.getElement().setId("lblCongratsHeader");
-		lblCongratsHeader.getElement().setAttribute("alt",i18n.GL0429());
-		lblCongratsHeader.getElement().setAttribute("title",i18n.GL0429());
+		lblCongratsHeader.getElement().setAttribute("alt",congrats);
+		lblCongratsHeader.getElement().setAttribute("title",congrats);
 		
 		lblCheckYourEmail.setText(i18n.GL0430());
 		lblCheckYourEmail.getElement().setId("lblCheckYourEmail");
 		lblCheckYourEmail.getElement().setAttribute("alt",i18n.GL0430());
 		lblCheckYourEmail.getElement().setAttribute("title",i18n.GL0430());
+		
+		lblCheckYourEmail.setVisible( AppClientFactory.getLoggedInUser().getLoginType().equalsIgnoreCase("apps") ? false : true);
 		
 		lblWhatsNext.setText(i18n.GL0432());
 		lblWhatsNext.getElement().setId("lblWhatsNext");
@@ -203,25 +207,11 @@ public class ThanksPopupUc extends PopupPanel{
 		lblLearnHowTo.getElement().setAttribute("title",i18n.GL0433());
 		lblLearnHowTo.setVisible(false);
 		lblWhatsNext.setVisible(false);
-		//This is not required when registered as parent.
-//		lblDiscover.setText(MessageProperties.i18n.GL0179);
-		//This is not required when registered as parent.
-//		lblOrganize.setText(MessageProperties.i18n.GL0180);
-		//This is not required when registered as parent.
-//		lblTeach.setText(MessageProperties.i18n.GL0181);
 		
 		//This is not required for Regular user.
 		btnStartCreatingStudent.setText(i18n.GL0472());
 				
 		btnStartUsingGooru.setVisible(account.equalsIgnoreCase("regular") ? true : false);			
-//		lblWhatsNext.setVisible(account.equalsIgnoreCase("regular") ? true : false);
-//		lblLearnHowTo.setVisible(account.equalsIgnoreCase("regular") ? true : false);
-//		lblDiscover.setVisible(account.equalsIgnoreCase("regular") ? true : false);
-//		btnDiscover.setVisible(account.equalsIgnoreCase("regular") ? true : false);
-//		lblOrganize.setVisible(account.equalsIgnoreCase("regular") ? true : false);
-//		btnOrganize.setVisible(account.equalsIgnoreCase("regular") ? true : false);
-//		lblTeach.setVisible(account.equalsIgnoreCase("regular") ? true : false);
-//		btnTeach.setVisible(account.equalsIgnoreCase("regular") ? true : false);
 		
 		btnStartCreatingStudent.setVisible(account.equalsIgnoreCase("parent") ? true : false);
 		
