@@ -120,7 +120,7 @@ public class CollectionShareTabVc extends Composite {
 	
 	@UiField Button rbPublic;
 	
-	@UiField Label lblPublishPending,lblPublish;
+	@UiField Label lblPublishPending,lblPublish,charLimitLbl;
 
 	private FlowPanel publicFocPanel;
 
@@ -341,6 +341,11 @@ public class CollectionShareTabVc extends Composite {
 		rbPublic.getElement().setId("btnRbPublic");
 		rbPublic.getElement().setAttribute("alt",i18n.GL1921());
 		rbPublic.getElement().setAttribute("title",i18n.GL1921());
+		
+		charLimitLbl.setVisible(false);
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		StringUtil.setAttributes(charLimitLbl.getElement(), "charLimitLbl", value, value);
+		charLimitLbl.setText(value);
 
 		privateFocPanel = new FlowPanel();
 		shareViewPrivateUc = new ShareViewUc(i18n.GL0333(), i18n.GL0334()); 
@@ -670,6 +675,7 @@ public class CollectionShareTabVc extends Composite {
 			collectionDescriptionUc.setText(collectionDo.getGoals());*/
 
 			finalTeacherTipLabelContainer.setVisible(false);
+			charLimitLbl.setVisible(true);
 			textAreaContianer.setVisible(true);
 			teacherTipTextarea.setFocus(true);
 			
@@ -800,6 +806,7 @@ public class CollectionShareTabVc extends Composite {
 		
 		textAreaContianer.setVisible(false);
 		finalTeacherTipLabelContainer.setVisible(true);
+		charLimitLbl.setVisible(false);
 		if(teacherTipLatest != null && !teacherTipLatest.isEmpty())
 		{
 		userTeacherTipText.setText(teacherTipLatest);
@@ -823,6 +830,7 @@ public class CollectionShareTabVc extends Composite {
 	{
 		textAreaContianer.setVisible(false);
 		finalTeacherTipLabelContainer.setVisible(true);
+		charLimitLbl.setVisible(false);
 		textAreaContianer.setVisible(false);
 		finalTeacherTipLabelContainer.setVisible(true);
 		if(teacherTipLatest != null && !teacherTipLatest.isEmpty())

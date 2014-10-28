@@ -52,6 +52,7 @@ import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -125,7 +126,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	//Labels
 	@UiField Label lblAssignCollectionTitle,lblClasspages,lblClasspagePlaceHolder, lblClasspagesArrow,lblDirections,directionsErrorLbl,directionsErrorLength;
 	
-	@UiField Label lblAssignCollectionPrivate,lblDuedate,remainderLbl;
+	@UiField Label lblAssignCollectionPrivate,lblDuedate,remainderLbl,charLimitLbl;
 	
 	@UiField BlueButtonUc btnAssign;
 	
@@ -167,6 +168,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		lblDirections.getElement().setAttribute("alt",i18n.GL1166()+" "+i18n.GL1167());
 		lblDirections.getElement().setAttribute("title",i18n.GL1166()+" "+i18n.GL1167());
 		
+		lblDirections.getElement().getStyle().setDisplay(Display.INLINE);
+		
 		lblDuedate.setText(i18n.GL1168()+" "+i18n.GL1167());
 		lblDuedate.getElement().setId("lblDuedate");
 		lblDuedate.getElement().setAttribute("alt",i18n.GL1168()+" "+i18n.GL1167());
@@ -181,8 +184,13 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		textAreaVal.getElement().setAttribute("title",i18n.GL1389());
 		StringUtil.setAttributes(textAreaVal, true);
 		
+		
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		charLimitLbl.setText(value);
+		StringUtil.setAttributes(charLimitLbl.getElement(), "charLimitLbl", value, value);
+		
 		textAreaVal.getElement().getStyle().setColor("#999");
-		textAreaVal.getElement().setAttribute("maxlength", "400");
+		textAreaVal.getElement().setAttribute("maxlength", "500");
 		directionsErrorLength.setVisible(false);
 		textAreaVal.addFocusHandler(new FocusHandler() {
 			@Override
@@ -211,7 +219,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 			
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
-				if(textAreaVal.getText().length() >=400){
+				if(textAreaVal.getText().length() >=500){
 					directionsErrorLength.setText(i18n.GL0143());
 					directionsErrorLength.getElement().setAttribute("alt",i18n.GL0143());
 					directionsErrorLength.getElement().setAttribute("title",i18n.GL0143());
