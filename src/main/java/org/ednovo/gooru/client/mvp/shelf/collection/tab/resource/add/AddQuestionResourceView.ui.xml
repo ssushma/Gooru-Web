@@ -54,8 +54,9 @@
         </g:HTMLPanel>
         <g:FlowPanel styleName="{addWebResourceStyle.addResourceFormContent}" ui:field="explanationContainer">
           <g:Label styleName="{addWebResourceStyle.addResourceFormTitle}" ui:field="explanationLabel"></g:Label>
+          <g:Label styleName="{addWebResourceStyle.charLimitExplanationStyle}" ui:field="charLimitExplanation"></g:Label>
           <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputControl} questionTextcontainer">
-          <tinyMce:TinyMCE ui:field="explainationTextArea" characterLimit="400"></tinyMce:TinyMCE>
+          <tinyMce:TinyMCE ui:field="explainationTextArea" characterLimit="500"></tinyMce:TinyMCE>
           <g:Label ui:field="explainationErrorLbl"></g:Label>
            <!--  <g:TextArea ui:field="explainationTextArea" styleName="{addWebResourceStyle.addResourceFormTextarea}"></g:TextArea> -->
           </g:HTMLPanel>

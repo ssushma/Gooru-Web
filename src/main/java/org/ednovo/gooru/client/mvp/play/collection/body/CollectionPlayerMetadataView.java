@@ -119,6 +119,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiField Anchor previewFlagButton,seeMoreAnchor,loginUrl, signupUrl;
 	@UiField CollectionPlayerStyleBundle playerStyle;
 	@UiField HTML teacherTipLabel;
+	@UiField Label lblCharLimitComments;
 	//@UiField Frame insightsFrame;
 //	@UiField Button collectionSummaryPrintBtn;
 	private String languageObjectiveValue;
@@ -202,6 +203,11 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		commentField.addClickHandler(new OnCommentsFieldClicked());
 		commentField.addKeyUpHandler(new ValidateConfirmText());
 		commentField.addBlurHandler(new OnCommentsFieldBlur());
+		
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		lblCharLimitComments.setText(value);
+		StringUtil.setAttributes(lblCharLimitComments.getElement(), "lblCharLimitComments", value, value);
+		
 		seeMoreButton.setVisible(false);
 		depthOfKnowledgeContainer.getElement().setId("pnlDepthOfKnowledgeContainer");
 		depthOfKnowledgePanel.getElement().setId("pnlDepthOfKnowledgePanel");
@@ -1433,10 +1439,10 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	private class ValidateConfirmText implements KeyUpHandler {
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
-			if(commentField.getText().length()>415) {
-				commentField.setText(commentField.getText().substring(0,415));
-				commentField.getElement().setAttribute("alt",commentField.getText().substring(0,415));
-				commentField.getElement().setAttribute("title",commentField.getText().substring(0,415));
+			if(commentField.getText().length()>500) {
+				commentField.setText(commentField.getText().substring(0,500));
+				commentField.getElement().setAttribute("alt",commentField.getText().substring(0,500));
+				commentField.getElement().setAttribute("title",commentField.getText().substring(0,500));
 				characterLimit.setText(i18n.GL0143());
 				characterLimit.getElement().setAttribute("alt",i18n.GL0143());
 				characterLimit.getElement().setAttribute("title",i18n.GL0143());
