@@ -250,7 +250,10 @@ public class SignUpGradeCourseView extends PopupPanel{
 //			OpenThanksPopup();
 //		}else{
 			AppClientFactory.fireEvent(new SetHeaderEvent(userDo));
-			senEmail();
+			final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
+			if(!AppClientFactory.isAnonymous() &&  loginType.equalsIgnoreCase("Credential")) {
+				senEmail();
+			}
 			OpenThanksPopup();
 //		}
 		
