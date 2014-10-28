@@ -345,6 +345,7 @@ public interface CollectionCBundle extends ClientBundle{
 		String btnOuterContainer();
 		String gradeInfoLabel();
 		String browseContainer();
+		String charLimit();
 	}
 	@Source("Collection.css")
 	CollectionCss css();
