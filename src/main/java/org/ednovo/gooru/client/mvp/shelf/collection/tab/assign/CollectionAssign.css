@@ -426,6 +426,9 @@ width: 50%;
 	margin-left: 100px;
 	position: absolute;
 }
+.charLimitStyle{
+	float:right;
+}
 
 /*End Success popup */
 

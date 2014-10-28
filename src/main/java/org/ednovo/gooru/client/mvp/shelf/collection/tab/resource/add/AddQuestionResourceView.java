@@ -68,6 +68,7 @@ import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Document;
@@ -155,6 +156,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField Image depthOfKnoweldgeToolTip;
 	
 	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr;
+	
+	@UiField Label charLimitLbl;
 	
 	ToolTip toolTip=null;
 	private TermsAndPolicyVc termsAndPolicyVc;
@@ -676,6 +679,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		depthOfKnoweldgeToolTip.getElement().setAttribute("alt", "Question Mark");
 		depthOfKnoweldgeToolTip.getElement().setAttribute("title", "Question Mark");
 		addQuestionResourceButton.getElement().setId("epnlAddQuestionResourceButton");
+		
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		charLimitLbl.setText(value);
+		StringUtil.setAttributes(charLimitLbl.getElement(), "charLimitLbl", value, value);
+		
 		addClickEventsForCheckBox();
 		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
 
