@@ -109,6 +109,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	public static final String CURRICULUM_CODE = "curriculumCode";
 	public static final String CURRICULUM_DESCRIPTION = "curriculumDesc";
 	public static final String TAXONOMY_DATA_SET = "taxonomyDataSet";
+	public static final String TAXONOMY_SET = "taxonomySet";
 	public static final String RESOURCE_TAXONOMY_DATA_SET = "resourceTaxonomyData";
 	public static final String GRADE = "grade";
 	public static final String TAGS = "tags";
@@ -317,12 +318,15 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 				}
 				collectionItemDo.setStandards(standards);
 				Set<CodeDo> taxonomySet = new HashSet<CodeDo>();
-				JSONArray courseArray=taxonomyDataSet.getJSONArray(TAXONOMY_COURSE);
+				//JSONArray courseArray=taxonomyDataSet.getJSONArray(TAXONOMY_COURSE);
+				JSONArray courseArray = new JSONArray(getJsonString(recordJsonObject, TAXONOMY_SET));
 				for(int j=0;j<courseArray.length();j++){
-					CodeDo codeDo=new CodeDo();
-					codeDo.setDepth(DEPTH);
-					codeDo.setLabel(courseArray.getString(j));
-					taxonomySet.add(codeDo);
+					if(courseArray.getJSONObject(j).getInt("depth")==DEPTH){
+						CodeDo codeDo=new CodeDo();
+						codeDo.setDepth(DEPTH);
+						codeDo.setLabel(courseArray.getJSONObject(j).getString("label"));
+						taxonomySet.add(codeDo);
+						}
 				}
 				resourceDo.setTaxonomySet(taxonomySet);
 			}
