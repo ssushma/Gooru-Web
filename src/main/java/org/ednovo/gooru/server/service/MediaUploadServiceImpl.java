@@ -25,6 +25,7 @@
 package org.ednovo.gooru.server.service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.TreeSet;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -44,7 +45,11 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.ServiceRequest;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
+import org.ednovo.gooru.server.serializer.JsonSerializer;
+import org.ednovo.gooru.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -120,6 +125,12 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		if (resourceId != null) {
 			createCollectionJsonObject.put("resourceId", resourceId);
 		}
+		if (fileName != null) {
+			createCollectionJsonObject.put("mediaFileName", fileName);
+		}
+		
+		System.out.println("saveImage::"+url);
+		System.out.println("saveImagedata::"+createCollectionJsonObject.toString());
 		
 //		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_COLLLECTION_ITEM, resourceId,getLoggedInSessionToken(), collectionId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createCollectionJsonObject.toString());		
@@ -182,20 +193,98 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 
 	// Request
 	// URL:http://www.goorulearning.org/gooruapi/rest/quiz-question/newQuestion/media?sessionToken=f6ded446-a9a9-11e2-ba82-123141016e2a&mediaFileName=bbda9546-cb15-453e-a107-f073b09eccdc.jpg&assetKey=asset-question
-	public String saveQuestionImage(String collectionItemId, String fileName) {
-		String filePath = null;
-		JsonRepresentation jsonRep = null;
+	public CollectionItemDo saveQuestionImage(String collectionItemId, String fileName) {
+	
+		CollectionItemDo collItemDo = getCollectionItem(collectionItemId);
 
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_QUESTION_IMAGE, collectionItemId, getLoggedInSessionToken(), fileName);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		try {
-			filePath = jsonRep.getText();
-		} catch (Exception e) {
+		JsonRepresentation jsonRep = null;
+		CollectionAddQuestionItemDo collectionAddQuestionItemDo=new CollectionAddQuestionItemDo();
+		collectionAddQuestionItemDo.setQuestion(collItemDo.getCollectionQuestionItemDo());
+		collectionAddQuestionItemDo.setMediaFileName(fileName);
+	
+		CollectionItemDo collectionItemDoNew=new CollectionItemDo();
+		
+
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_QUESTION_ITEM, collItemDo.getCollectionItemId(), getLoggedInSessionToken());
+		
+		collItemDo.getQuestionInfo().setLicense(null);
+		collItemDo.getQuestionInfo().setResourceFormat(null);
+		collItemDo.getQuestionInfo().setTaxonomySet(null);
+		collItemDo.getQuestionInfo().setThumbnails(null);
+		collItemDo.getQuestionInfo().setResourceType(null);
+		collItemDo.getQuestionInfo().setCreator(null);
+		collItemDo.getQuestionInfo().setUser(null);
+		collItemDo.getQuestionInfo().setCreatedOn(null);
+		collItemDo.getQuestionInfo().setUrl(null);
+		
+		TreeSet<QuestionAnswerDo> treeSet = new TreeSet<QuestionAnswerDo>();
+		treeSet.addAll(collItemDo.getQuestionInfo().getAnswers());
+		
+		 Object[] objArray = treeSet.toArray();
+		 JSONArray jArr = new JSONArray();
+		 
+		 for(int i=0; i < objArray.length ; i++)
+		 {
+			 jArr.put(ResourceFormFactory.generateStringDataForm(objArray[i],null));
+		 }
+
+
+
+		collItemDo.getQuestionInfo().setAnswers(null);
+
+		  JSONObject mainQuestionTempObj = new JSONObject();
+		  JSONObject mainAnswerTempObj = new JSONObject();
+		  try {
+			  mainQuestionTempObj.put("question", ResourceFormFactory.generateStringDataForm(collItemDo.getQuestionInfo(), null));
+			  JSONObject mainQuestionTempObj1 = new JSONObject(mainQuestionTempObj.get("question").toString());
+			  mainAnswerTempObj.put("answer", jArr);
+			  mainQuestionTempObj1.put("answers", mainAnswerTempObj);
+			  mainQuestionTempObj.put("question", mainQuestionTempObj1);
+			  mainQuestionTempObj.put("mediaFileName", fileName);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return filePath;
+
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), mainQuestionTempObj.toString());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		collectionItemDoNew=deserializeCollectionItem(jsonRep);
+		collItemDo.setResource(collectionItemDoNew.getQuestionInfo());
+		collItemDo.setStandards(collectionItemDoNew.getStandards());
+		return collItemDo;
 	}
+	
+	
+	public CollectionItemDo convertResourceToCollectionItemDo(ResourceDo resourceDo,CollectionItemDo collectionItemDo){	
+		
+		collectionItemDo.setResource(resourceDo);// replacing the update question details Do
+		collectionItemDo.setCollectionQuestionItemDo(null);// removing existing collection item object details.
+		
+		return collectionItemDo;
+	}
+	
+	public ResourceDo deserializeResourceDoItem(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ResourceDo.class);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	public CollectionItemDo getCollectionItem(String collectionItemId) {
+		
+		JsonRepresentation jsonRep = null;		
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_COLLLECTION_ITEM, collectionItemId, getLoggedInSessionToken());
+		System.out.println("getCollectionItem::"+url);
+		
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeCollectionItem(jsonRep);
+	}
+
 
 	/*@Override
 	public String saveResourceImage(String gooruOid, String fileName) {

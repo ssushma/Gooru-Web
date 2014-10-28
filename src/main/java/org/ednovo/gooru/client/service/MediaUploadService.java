@@ -71,7 +71,7 @@ public interface MediaUploadService extends BaseService {
 	MediaUploadDo imageFileUpload(String response) throws GwtException, ServerDownException;
 	
 	
-	String saveQuestionImage(String colletionItemId, String fileName)  throws GwtException, ServerDownException;
+	CollectionItemDo saveQuestionImage(String colletionItemId, String fileName)  throws GwtException, ServerDownException;
 	
 
 	/**
