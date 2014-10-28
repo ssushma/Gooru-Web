@@ -80,7 +80,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	
 	private SimpleAsyncCallback<MediaUploadDo> imageFileUploadAsyncCallback;
 	
-	private SimpleAsyncCallback<String> saveQuestionImageAysncCallback;
+	private SimpleAsyncCallback<CollectionItemDo> saveQuestionImageAysncCallback;
 	
 	private SimpleAsyncCallback<String> editResourceImageAysncCallback;
 	
@@ -206,11 +206,12 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 				getView().glasspanelLoadingImage(false);
 			}
 		});
-		setSaveQuestionImageAysncCallback(new SimpleAsyncCallback<String>() {
+		setSaveQuestionImageAysncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
 			@Override
-			public void onSuccess(String url) {
+			public void onSuccess(CollectionItemDo collItem) {
+				System.out.println("i am here in success::"+collItem.getUrl());
 				//AppClientFactory.fireEvent(new UpdateQuestionImageEvent(url,fileNameWithoutRepository));
-				AppClientFactory.fireEvent(new AddResouceImageEvent(url,fileNameWithoutRepository,isUpdateQuestionImage,isuserOwnResourceImage));
+				AppClientFactory.fireEvent(new AddResouceImageEvent(collItem.getUrl(),fileNameWithoutRepository,isUpdateQuestionImage,isuserOwnResourceImage));
 				getView().closeImageUploadWidget();
 				getView().resetImageUploadWidget();
 			}
@@ -397,12 +398,12 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	}
 
 	
-	public SimpleAsyncCallback<String> getSaveQuestionImageAysncCallback() {
+	public SimpleAsyncCallback<CollectionItemDo> getSaveQuestionImageAysncCallback() {
 		return saveQuestionImageAysncCallback;
 	}
 
 	public void setSaveQuestionImageAysncCallback(
-			SimpleAsyncCallback<String> saveQuestionImageAysncCallback) {
+			SimpleAsyncCallback<CollectionItemDo> saveQuestionImageAysncCallback) {
 		this.saveQuestionImageAysncCallback = saveQuestionImageAysncCallback;
 	}
 

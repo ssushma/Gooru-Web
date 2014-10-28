@@ -43,7 +43,7 @@ public interface MediaUploadServiceAsync extends BaseServiceAsync {
 	
 	void imageFileUpload(String response, AsyncCallback<MediaUploadDo> callback);
 	
-	void saveQuestionImage(String collectionItemId, String fileName, AsyncCallback<String> callback);
+	void saveQuestionImage(String collectionItemId, String fileName, AsyncCallback<CollectionItemDo> callback);
 //	Below service method not used.
 //	void saveResourceImage(String gooruOid, String fileName, AsyncCallback<String> callback);
 	

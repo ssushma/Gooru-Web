@@ -762,7 +762,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				@Override
 				public void onClick(ClickEvent event) {
 					if(addQuestionResourceWidget.getQuestionEditMode()){
-						getUiHandlers().questionImageUpload(collectionItemDo.getResource().getGooruOid());
+						getUiHandlers().questionImageUpload(collectionItemDo.getCollectionItemId());
 					}else{
 						getUiHandlers().questionImageUpload();
 					}
@@ -1130,7 +1130,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}
 		@Override
 		public void onDelete(ClickEvent clickEvent) {
-			getUiHandlers().removeQuestionImage(collectionItemDo.getResource().getGooruOid());
+			getUiHandlers().removeQuestionImage(collectionItemDo.getCollectionItemId());
 		}
 		public void hide() {
 			 super.hide();
