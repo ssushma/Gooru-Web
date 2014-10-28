@@ -12,11 +12,11 @@
 				</g:HTMLPanel>
 				<g:HTML styleName="{unitStyle.assignmentCollectionTitle}"
 					ui:field="assignmentCollectiontitle"></g:HTML>
+				<g:Button styleName="{unitStyle.studyPlay}" ui:field="studyButtonText"></g:Button>
 			</g:HTMLPanel>
 		
 			<g:HTMLPanel styleName="{unitStyle.headerLeft}" ui:field="dueDateContainer">
 			</g:HTMLPanel>
-			<g:Button styleName="{unitStyle.studyPlay}" ui:field="studyButtonText"></g:Button>
 			<g:HTMLPanel styleName="{unitStyle.directionStyle}"
 				ui:field="directionContainer" />
 
