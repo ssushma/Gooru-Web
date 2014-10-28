@@ -234,7 +234,7 @@
 	margin-right: 23px;
 	height: 68px;
 	resize:none;
-	margin-top: -15px;
+	/* margin-top: -15px; */
 }
 
 .shelfGradeSelectResources {
@@ -1367,4 +1367,9 @@ position: relative;
 	position: relative;
 	margin-top: -12%;
 
+}
+.charLimit{
+	float: right;
+	color: #999;
+	margin-right: 66px;
 }
