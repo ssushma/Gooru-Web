@@ -997,7 +997,7 @@
 	/* color: #1076bb; */
 	display: inline-block;
 	font-size: 13px;
-	width: 222px;
+	width: 156px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -1027,7 +1027,7 @@
 		-o-linear-gradient(top, #4c98cc, #1076bb);
 	float: right;
 	cursor: pointer;
-	margin-right: 22px;
+	margin: -4px 0;
 }
 
 .headerLeft {
@@ -1038,7 +1038,7 @@
 }
 
 .studyPopup {
-	width: 300px;
+	width: 306px;
 	padding: 10px;
 	float: left;
 }
