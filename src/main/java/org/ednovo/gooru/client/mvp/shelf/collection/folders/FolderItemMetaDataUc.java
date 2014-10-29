@@ -163,9 +163,9 @@ public class FolderItemMetaDataUc extends Composite {
 	}
 	
 	private void restrictKeyLimit(KeyDownEvent event, TextArea textArea, String text, Label errorLabelToDisplay) {
-		if(text.trim().length()<=599) {
+		if(text.trim().length()<=999) {
 			errorLabelToDisplay.setVisible(false);	 
-		} else if(text.trim().length()>598) {
+		} else if(text.trim().length()>998) {
 			if(event==null) {
 				textArea.cancelKey();
 				errorLabelToDisplay.setVisible(true);

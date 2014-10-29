@@ -31,6 +31,7 @@
 		  </g:FlowPanel>
 		  <g:FlowPanel styleName="{style.classpageContent}">
 		    <g:Label styleName="{style.classpageHeading}" ui:field="directionsLabel"></g:Label>
+		    <g:Label styleName="{style.directionsCharLimit}" ui:field="lblDirectionCharLimit"></g:Label>
 		    <g:HTMLPanel styleName="{style.classpageDesc}" ui:field="directionContentPanel"></g:HTMLPanel>
 		    <g:Label styleName="{style.classpageBorder}"></g:Label>
 		    <g:FlowPanel styleName="{style.classpageContentPanel}">

@@ -157,7 +157,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr;
 	
-	@UiField Label charLimitLbl;
+	@UiField Label charLimitLbl,charLimitExplanation;
 	
 	ToolTip toolTip=null;
 	private TermsAndPolicyVc termsAndPolicyVc;
@@ -268,6 +268,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		explanationLabel.getElement().setId("lblExplanationLabel");
 		explanationLabel.getElement().setAttribute("alt", i18n.GL0867());
 		explanationLabel.getElement().setAttribute("title", i18n.GL0867());
+		explanationLabel.getElement().getStyle().setDisplay(Display.INLINE);
 		addHintsLabel.setText(i18n.GL0868());
 		addHintsLabel.getElement().setAttribute("alt", i18n.GL0868());
 		addHintsLabel.getElement().setAttribute("title", i18n.GL0868());
@@ -515,6 +516,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		explanationLabel.getElement().setId("lblExplanationLabel");
 		explanationLabel.getElement().setAttribute("alt", i18n.GL0867());
 		explanationLabel.getElement().setAttribute("title", i18n.GL0867());
+		explanationLabel.getElement().getStyle().setDisplay(Display.INLINE);
 		addAnswerChoice.setText(i18n.GL0866());
 		addAnswerChoice.getElement().setAttribute("alt", i18n.GL0866());
 		addAnswerChoice.getElement().setAttribute("title", i18n.GL0866());
@@ -683,6 +685,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
 		charLimitLbl.setText(value);
 		StringUtil.setAttributes(charLimitLbl.getElement(), "charLimitLbl", value, value);
+		
+		charLimitExplanation.setText(value);
+		StringUtil.setAttributes(charLimitExplanation.getElement(), "charLimitExplanation", value, value);
 		
 		addClickEventsForCheckBox();
 		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
@@ -2029,6 +2034,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0350());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0350());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 108px;");
 		}else if(tabType.equals("MA")){
 			questionTypeHeader.setText(i18n.GL0351());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0351());
@@ -2037,6 +2043,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0352());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0352());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 108px;");
 		}else if(tabType.equals("T/F")){
 			questionTypeHeader.setText(i18n.GL0353());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0353());
@@ -2045,6 +2052,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0354());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0354());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 108px;");
 		}else if(tabType.equals("FIB")){
 			questionTypeHeader.setText(i18n.GL0355());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0355());
@@ -2052,6 +2060,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.setText(i18n.GL0356());
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0356());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0356());
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 14px;");
 		}else if(tabType.equals("OE")){
 			questionTypeHeader.setText(i18n.GL0357());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0357());
@@ -2060,6 +2069,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0358());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0358());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 108px;");
 		}
 	}
 	public boolean getQuestionEditMode(){

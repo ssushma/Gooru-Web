@@ -106,6 +106,8 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField FlowPanel headerRightPanel;
 	
+	@UiField Label lblDirectionCharLimit;
+	
 	private  Button changeStatusButton;
 	
 	private EditToolBarView editToolBarView=null;
@@ -252,6 +254,10 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 		classpageItemTitle.getElement().setId("lnkClasspageItemTitle");
 		learningObject.getElement().setId("htmlLearningObject");
+		
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		lblDirectionCharLimit.setText(value);
+		StringUtil.setAttributes(lblDirectionCharLimit.getElement(), "lblDirectionCharLimit", value, value);
 	}
 	public CollectionsView(ClasspageItemDo classpageItemDo,boolean isStudentView,int sequenceNum){
 		initWidget(uiBinder.createAndBindUi(this));
@@ -516,7 +522,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		public void onClick(ClickEvent event) {
 			if(directionTextArea!=null){
 				final String directionTextAreaText=directionTextArea.getText().trim().equals(i18n.GL1389())?"":directionTextArea.getText().trim();
-				if(directionTextAreaText.length()>=400){
+				if(directionTextAreaText.length()>=500){
 					directionErrorLabel.setText(i18n.GL0143());
 				}else{
 					hideButtons(true);
@@ -567,7 +573,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	public void editDirection(){
 		directionContentPanel.clear();
 		directionTextArea =new TextArea();
-		directionTextArea.getElement().setAttribute("maxlength", "400");
+		directionTextArea.getElement().setAttribute("maxlength", "500");
 		directionTextArea.setStyleName(CollectionsCBundle.INSTANCE.css().classpageTextarea());
 		if(directionText!=null&&!directionText.equals("")&&!directionText.equals("null")){
 			directionTextArea.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
@@ -691,7 +697,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		public void onBlur(BlurEvent event) {
 			String directionText=directionTextArea.getText().trim();
 			if(!directionText.equalsIgnoreCase(i18n.GL1389())&&directionText.length()>0){
-				if(directionText.length()>=400){
+				if(directionText.length()>=500){
 					directionErrorLabel.setText(i18n.GL0143());
 					
 				}else{
@@ -708,7 +714,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			String directionText=directionTextArea.getText().trim();
-			if(directionText.length()>=400){
+			if(directionText.length()>=500){
 				directionErrorLabel.setText(i18n.GL0143());
 				//event.preventDefault();
 				}else{

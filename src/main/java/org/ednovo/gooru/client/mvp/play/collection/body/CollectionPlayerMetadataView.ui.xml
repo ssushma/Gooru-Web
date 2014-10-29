@@ -21,6 +21,7 @@
 					   <g:VerticalPanel ui:field="commentsContainer"/>
 					   <g:Label ui:field="seeMoreButton" styleName="{playerStyle.seeMore}" />
 					   <g:Label ui:field="noCommentsLbl"/>
+					   <g:Label ui:field="lblCharLimitComments" styleName="{playerStyle.commentsCharLimit}"/>
 					   <g:HTMLPanel styleName="{playerStyle.addComment}" ui:field="addComment">
 					      <g:HTMLPanel styleName="{playerStyle.loginMessaging}" ui:field="loginMessaging"><g:Label ui:field="loginMessagingText"></g:Label><g:Anchor ui:field="loginUrl"/> <g:Label ui:field="orText"></g:Label> <g:Anchor ui:field="signupUrl" /><g:Label ui:field="toCommentText"></g:Label></g:HTMLPanel>
 					      <g:Image styleName="{playerStyle.userPhoto}" ui:field="userPhoto"></g:Image>
