@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresente
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
@@ -202,8 +203,10 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	            @Override
 	            public void onNavigation(NavigationEvent navigationEvent) {
 	              if(!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
-	            	  closePreviewPlayer();
-	            	  hideFromPopup(false);
+	            	 if(!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SHELF)){
+	            		 closePreviewPlayer();
+	            		 hideFromPopup(false);
+	            	 }
 	              } 
 	            }
 	          });
@@ -452,7 +455,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	
 	@Override
 	public void closePreviewPlayer() {
-		//AppClientFactory.fireEvent(new RefreshUserShelfCollectionsEvent());
+		AppClientFactory.fireEvent(new RefreshUserShelfCollectionsEvent());
 		hide();
 		getUiHandlers().resetCollectionPlayer();
 	}

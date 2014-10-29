@@ -875,6 +875,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 						itemToBeMovedPosSeqNumb-=1;
 					}
 					
+					itemSeqToAPI= getMoveUpItemSeq(itemPosSeqNumb,itemToBeMovedPosSeqNumb);
 					getUiHandlers().reorderFoldersOrCollection(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,UP_ARROW,shelfFolderItemChildView.getCollectionItemId(),itemSeqToAPI);
 					/*reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb-1),UP_ARROW);*/
 				}else{
@@ -956,6 +957,25 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		return validationStaus;
 	}
 	
+	
+	/**
+	 * Calculation of an item sequence to pass for an API, while moving up the order.
+	 * @param itemPosSeqNumb {@link Integer}
+	 * @param itemToBeMovedPosSeqNumb {@link Integer}
+	 * @return moveUpItemSeq
+	 */
+	public int getMoveUpItemSeq(int itemPosSeqNumb,int itemToBeMovedPosSeqNumb) {
+		int moveUpItemSeq=0;
+		/**
+		 * itemSeq = totcount - ((currentPosition+givenNewPosition) - (1 + currentPosition))
+		 */
+		moveUpItemSeq = getTotalCount() - (Math.abs((itemPosSeqNumb + itemToBeMovedPosSeqNumb))-(Math.abs((1+itemPosSeqNumb)))); 
+		
+		return Math.abs(moveUpItemSeq);
+	}
+	
+	
+	
 	/**
 	 * Calculation of an item sequence to pass for an API, while moving down the order.
 	 * @param itemPosSeqNumb {@link Integer}
@@ -970,6 +990,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		moveDownItemSeq = getTotalCount() -(Math.abs((itemPosSeqNumb - itemToBeMovedPosSeqNumb))+(Math.abs((1-itemPosSeqNumb)))); 
 		return Math.abs(moveDownItemSeq);
 	}
+	
+	
 
 	/**
 	 * Gets the respective folder or collection widget for reorder.
@@ -988,9 +1010,19 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		return null;
 	}
 	
+	/**
+	 * On reorder API call success, following method will trigger to change the widget position accordingly.
+	 * 
+	 * @param shelfFolderItemChildView {@link ShelfFolderItemChildView}
+	 * @param itemToBeMovedPosSeqNumb {@link Integer}
+	 * @param itemPosSeqNumb {@link Integer}
+	 * @param direction {@link String}
+	 */
 	
 	@Override
 	public void onReorderChangeWidgetPosition(ShelfFolderItemChildView shelfFolderItemChildView,int itemToBeMovedPosSeqNumb,int itemPosSeqNumb, String direction) {
+		
+		
 		
 		String id = AppClientFactory.getPlaceManager().getRequestParameter("id",null);
 		String o1 = AppClientFactory.getPlaceManager().getRequestParameter("o1",null);
