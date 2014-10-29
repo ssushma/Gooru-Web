@@ -23,6 +23,7 @@ import org.ednovo.gooru.shared.util.InfoUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -55,7 +56,7 @@ public class CollectionInfo extends Composite {
     Label lblStandardsText;
 
 	@UiField
-	Label lblLanguage,lblLearningSkills,lblAudience,lblAudienceValue;
+	Label lblLanguage,lblLearningSkills,lblAudience,lblAudienceValue,noInfoAvailable;
 
 	@UiField
 	Label lblLanguageText;
@@ -86,6 +87,16 @@ public class CollectionInfo extends Composite {
 
 	public static final String STANDARD_CODE = "code";
 	public static final String STANDARD_DESCRIPTION = "description";
+	
+	private boolean isGradesInfo = false;
+	private boolean isStandardsInfo = false;
+	private boolean isDepthOfKnlzeInfo = false;
+	private boolean isLearningSkillsInfo = false;
+	private boolean	isAudienceInfo= false;
+	private boolean isInstructionalInfo= false;
+	private boolean isLanguageObjectiveInfo = false;
+	private boolean isOerInfo = false;
+	
 
 	/**
 	 * Because this class has a default constructor, it can
@@ -184,7 +195,17 @@ public class CollectionInfo extends Composite {
 				setInstructionalInfo();
 				setLanguageObjectiveText();
 				setOerInfo();
-
+					if(isGradesInfo==false && isStandardsInfo==false
+						&& isDepthOfKnlzeInfo==false && isLearningSkillsInfo==false
+						&& isAudienceInfo==false && isInstructionalInfo==false
+						&& isLanguageObjectiveInfo==false && isOerInfo==false){
+						noInfoAvailable.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().noresourcesAvailable());
+						noInfoAvailable.setText("No information available for this Collection.");
+						noInfoAvailable.setVisible(true);
+						noInfoAvailable.getElement().getStyle().setPaddingTop(10, Unit.PX);
+					}else{
+						noInfoAvailable.setVisible(false);
+					}
 			}
 
 		});
@@ -196,11 +217,14 @@ public class CollectionInfo extends Composite {
 			lblLanguageText.setText(collectionDo.getLanguageObjective());
 			lblLanguageText.getElement().setAttribute("alt",collectionDo.getLanguageObjective());
 			lblLanguageText.getElement().setAttribute("title",collectionDo.getLanguageObjective());
+			isLanguageObjectiveInfo = true;
 		}else{
 			panelDesc.setVisible(false);
+			isLanguageObjectiveInfo = false;
 		}
 		if(lblLanguageText.getText().equals("")){
 			panelDesc.setVisible(false);
+			isLanguageObjectiveInfo = false;
 		}
 	}
 
@@ -212,8 +236,10 @@ public class CollectionInfo extends Composite {
 			this.gradesText.getElement().setAttribute("alt",InfoUtil.getGrades(gradesText));
 			this.gradesText.getElement().setAttribute("title",InfoUtil.getGrades(gradesText));
 			gradesPanel.setVisible(true);
+			isGradesInfo =true;
 		}else{
 			gradesPanel.setVisible(false);
+			isGradesInfo =false;
 			//this.gradesText.setText(i18n.GL0977());
 		}
 	}
@@ -227,15 +253,18 @@ public class CollectionInfo extends Composite {
 					if(collectionDo.getDepthOfKnowledges().get(i).isSelected())
 					{
 						depthofknowledgedetails.add(collectionDo.getDepthOfKnowledges().get(i).getValue());
+						isDepthOfKnlzeInfo = true;
 					}
 				}
 				InfoUtil.setDepthofknowledgeDetails(depthofknowledgedetails, dKnowledgeType, lblDepthKnowledge, dKnowledgePanel);
 				//dKnowledgePanel.setVisible(true);
 			}else{
 				dKnowledgePanel.setVisible(false);
+				isDepthOfKnlzeInfo = false;
 			}
 		}else{
 			dKnowledgePanel.setVisible(false);
+			isDepthOfKnlzeInfo = false;
 		}
 
 	}
@@ -259,6 +288,7 @@ public class CollectionInfo extends Composite {
 			lblStandrads.setVisible(true);
 //			lblStandardsText.setVisible(false);
 			panelStandrads.setVisible(true);
+			isStandardsInfo = true;
 			//List<Map<String, String>> standards = searchResultDo.getStandards();
 			Iterator<Map<String, String>> iterator = standardsList.iterator();
 			int count = 0;
@@ -272,10 +302,12 @@ public class CollectionInfo extends Composite {
 						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
 						toolTipwidgets.add(standardItem);
 					}
+					isStandardsInfo = true;
 				} else {
 					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standardsList);
 					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
 					standardsContainer.add(toolTipUc);
+					isStandardsInfo = true;
 				}
 				count++;
 			}
@@ -283,6 +315,7 @@ public class CollectionInfo extends Composite {
 				final Label left = new Label("+"+(standardsList.size() - 18));
 				toolTipwidgets.add(left);
 				panelStandrads.setVisible(true);
+				isStandardsInfo = true;
 			}
 			if (standardsList.size() > 2) {
 				Integer moreStandardsCount = standardsList.size() - 3;
@@ -291,17 +324,20 @@ public class CollectionInfo extends Composite {
 					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreLink());
 					standardsContainer.add(toolTipUc);
 					panelStandrads.setVisible(true);
+					isStandardsInfo = true;
 				}
 			}
 			if(standardsList.isEmpty())
 			{
 				panelStandrads.getElement().getStyle().setDisplay(Display.NONE);
 				lblStandrads.setVisible(false);
+				isStandardsInfo = false;
 			}
 		}
 		else{
 			panelStandrads.getElement().getStyle().setDisplay(Display.NONE);
 			lblStandrads.setVisible(false);
+			isStandardsInfo = false;
 		}
 	}
 
@@ -315,15 +351,18 @@ public class CollectionInfo extends Composite {
 					if(collectionDo.getLearningSkills().get(i).isSelected())
 					{
 						learningSkillsDetails.add(collectionDo.getLearningSkills().get(i).getValue());
+						isLearningSkillsInfo = true;
 					}
 				}
 				InfoUtil.setDepthofknowledgeDetails(learningSkillsDetails, learningSkillsPanel, lblLearningSkills, learningSkillsMainPanel);
 				//dKnowledgePanel.setVisible(true);
 			}else{
 				learningSkillsMainPanel.setVisible(false);
+				isLearningSkillsInfo = false;
 			}
 		}else{
 			learningSkillsMainPanel.setVisible(false);
+			isLearningSkillsInfo = false;
 		}
 
 	}
@@ -338,18 +377,22 @@ public class CollectionInfo extends Composite {
 						lblAudienceValue.setText(collectionDo.getAudience().get(i).getValue());
 						lblAudienceValue.getElement().setAttribute("alt",collectionDo.getAudience().get(i).getValue());
 						lblAudienceValue.getElement().setAttribute("title",collectionDo.getAudience().get(i).getValue());
+						isAudienceInfo= true;
 					}
 				}
 				if(lblAudienceValue.getText().equalsIgnoreCase("")){
 					panelAudience.setVisible(false);
+					isAudienceInfo= false;
 				}
 			}else{
 				panelAudience.setVisible(false);
 				lblAudience.setVisible(false);
+				isAudienceInfo= false;
 			}
 		}else{
 			panelAudience.setVisible(false);
 			lblAudience.setVisible(false);
+			isAudienceInfo= false;
 		}
 	}
 	
@@ -363,18 +406,22 @@ public class CollectionInfo extends Composite {
 						lblInstructionalValue.setText(collectionDo.getInstructionalMethod().get(i).getValue());
 						lblInstructionalValue.getElement().setAttribute("alt",collectionDo.getInstructionalMethod().get(i).getValue());
 						lblInstructionalValue.getElement().setAttribute("title",collectionDo.getInstructionalMethod().get(i).getValue());
+						isInstructionalInfo= true;
 					}
 				}
 				if(lblInstructionalValue.getText().equalsIgnoreCase("")){
 					panelInstructional.setVisible(false);
+					isInstructionalInfo= false;
 				}
 				
 			}else{
 				
 				panelInstructional.setVisible(false);
+				isInstructionalInfo= false;
 			}
 		}else{
 			panelInstructional.setVisible(false);
+			isInstructionalInfo= false;
 		}
 	}
 	
@@ -385,8 +432,10 @@ public class CollectionInfo extends Composite {
 			lblOerValue.getElement().setAttribute("alt",collectionDo.getCustomFieldValues().getCfOER());
 			lblOerValue.getElement().setAttribute("title",collectionDo.getCustomFieldValues().getCfOER());
 			panelOer.setVisible(true);
+			isOerInfo = true;
 		}else{
 			panelOer.setVisible(false);
+			isOerInfo = false;
 		}
 		
 	}
