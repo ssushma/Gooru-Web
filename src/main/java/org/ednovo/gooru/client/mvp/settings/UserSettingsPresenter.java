@@ -1150,6 +1150,7 @@ public class UserSettingsPresenter
 			public void onSuccess(GoogleToken result) {
 				final String access_token = result.getAccess_token() !=null && !result.getAccess_token().equalsIgnoreCase("") ? result.getAccess_token() : null;
 				final String connectedEmailId = result.getEmailId() !=null && !result.getEmailId().equalsIgnoreCase("") ? result.getEmailId() : null;
+				StringUtil.consoleLog("connectedEmailId : "+connectedEmailId);
 				if (access_token !=null ){
 					UserDo user = AppClientFactory.getLoggedInUser();
 					user.setAccessToken(access_token);
