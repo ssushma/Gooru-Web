@@ -1759,6 +1759,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		String library = AppClientFactory.getPlaceManager().getRequestParameter("library", null);
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		String rootNodeId=AppClientFactory.getPlaceManager().getRequestParameter("rootNodeId", null);
+		String libraryGooruOid=AppClientFactory.getPlaceManager().getRequestParameter("lid", null);
 		if(classpageItemId!=null){
 			params.put("cid", classpageItemId);
 		}
@@ -1777,6 +1778,9 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		if(rootNodeId!=null) {
 			params.put("rootNodeId", rootNodeId);
 		}
+		if(libraryGooruOid!=null) {
+			params.put("lid", libraryGooruOid);
+		}
 		return params;
 	}
 
@@ -1788,6 +1792,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		String library = AppClientFactory.getPlaceManager().getRequestParameter("library", null);
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		String rootNodeId=AppClientFactory.getPlaceManager().getRequestParameter("rootNodeId", null);
+		String libraryGooruOid=AppClientFactory.getPlaceManager().getRequestParameter("lid", null);
 		if(classpageItemId!=null){
 			anchorLink += "&cid="+classpageItemId;
 		}
@@ -1805,6 +1810,9 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		}
 		if(rootNodeId!=null) {
 			anchorLink += "&rootNodeId="+rootNodeId;
+		}
+		if(libraryGooruOid!=null) {
+			anchorLink += "&lid="+libraryGooruOid;
 		}
 		return anchorLink;
 	}
@@ -2004,7 +2012,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid()+"/"+resourceGooruOid;
 		}
 		String playerMode=AppClientFactory.getPlaceManager().getPlayerMode();
-		PlayerDataLogEvents.triggerItemShareDataLogEvent(resourceGooruOid, collectionItemId, collectionDo.getGooruOid(), "", sessionId, itemType, shareType, confirmStatus, playerMode, path, null);
+		PlayerDataLogEvents.triggerItemShareDataLogEvent(resourceGooruOid, collectionItemId, null,collectionDo.getGooruOid(), "", sessionId, itemType, shareType, confirmStatus, playerMode, path, null);
 	}
 	
 	public void triggerCollectionShareDataEvent( String collectionId, String itemType, String shareType, boolean confirmStatus){
@@ -2016,7 +2024,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid();
 		}
 		String playerMode=AppClientFactory.getPlaceManager().getPlayerMode();
-		PlayerDataLogEvents.triggerItemShareDataLogEvent(collectionId, "", classpageId, "", sessionId, itemType, shareType, confirmStatus, playerMode, path, null);
+		PlayerDataLogEvents.triggerItemShareDataLogEvent(collectionId, "",null, classpageId, "", sessionId, itemType, shareType, confirmStatus, playerMode, path, null);
 	}
 	
 	public void setTotalTimeSpentOnSummaryPage(){
