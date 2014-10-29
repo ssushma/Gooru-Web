@@ -1108,5 +1108,12 @@ margin-left: 41px;
 }
 .charLimitStyle{
 	float: right;
-	margin-left: 122px;
+	margin-left: 108px;
+	color: #999;
+}
+.charLimitExplanationStyle{
+	display: inline-flex;	
+	float: right;
+	color: #999;
+	margin-right: 90px;
 }

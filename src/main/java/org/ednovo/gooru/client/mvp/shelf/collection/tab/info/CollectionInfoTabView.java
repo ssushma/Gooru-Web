@@ -130,6 +130,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	@UiField public Button browseBtn;
 	
+	@UiField Label lblCharLimit;
+	
 	String courseCode="";
 	
 	private static final List<String> gradeList = new ArrayList<String>();
@@ -425,6 +427,11 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		secondaryHeaderLabel.getElement().setAttribute("alt",i18n.GL1657());
 		secondaryHeaderLabel.getElement().setAttribute("title",i18n.GL1657());
 		
+		lblCharLimit.getElement().getStyle().setMarginRight(0, Unit.PX);
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		lblCharLimit.setText(value);
+		StringUtil.setAttributes(lblCharLimit.getElement(), "charLimitLbl", value, value);
+		
 		ClickHandler infoRootHandler= new ClickHandler() {
 			
 			@Override
@@ -450,7 +457,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 
 		languageObjectiveerrLabel.setVisible(false);
 
-		textAreaVal.getElement().setAttribute("maxlength", "415");
+		textAreaVal.getElement().setAttribute("maxlength", "500");
 		
 		textAreaVal.addFocusHandler(new FocusHandler() {
 			@Override
@@ -468,7 +475,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		textAreaVal.addKeyPressHandler(new KeyPressHandler() {
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
-				if(textAreaVal.getText().length() >= 415)
+				if(textAreaVal.getText().length() >= 500)
 				{
 					/*textAreaVal.cancelKey();*/
 				}			

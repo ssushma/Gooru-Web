@@ -111,6 +111,8 @@
 					</g:FlowPanel>
 					<g:Label styleName="{res.css.shelfGradeInfoBottom}"
 						ui:field="languageObjectiveTitle" />
+					<g:Label styleName="{res.css.charLimit}"
+						ui:field="lblCharLimit" />
 					<g:FlowPanel styleName="{res.css.languageObjectiveInfoContainer}">
 						<g:TextArea ui:field="textAreaVal"
 							styleName="{res.css.languageObjectiveTextArea}"></g:TextArea>
