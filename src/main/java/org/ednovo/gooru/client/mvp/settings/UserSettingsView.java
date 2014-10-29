@@ -2311,7 +2311,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	@Override
 	public void setConnectedAs(String connectedEmailId){
 		String connectedAs = StringUtil.generateMessage(i18n.GL2193(), connectedEmailId);
-		StringUtil.setAttributes(htmlConnectedAs.getElement(), "htmlConnectedAs", connectedAs, connectedAs);
+		StringUtil.setAttributes(htmlConnectedAs.getElement(), "htmlConnectedAs", StringUtil.removeHtml(connectedAs), StringUtil.removeHtml(connectedAs));
 		htmlConnectedAs.setHTML(connectedAs);
 		htmlConnectedAs.setVisible(true);
 		htmlConnectedAs.getElement().getStyle().setLineHeight(3, Unit.EM);
