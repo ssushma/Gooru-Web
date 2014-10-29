@@ -76,6 +76,7 @@
 					   <g:Label ui:field="seeMoreButton" styleName="{playerStyle.seeMore}" />
 					   <g:Label ui:field="noCommentsLbl"/>
 					   <g:HTMLPanel styleName="{playerStyle.addComment}" ui:field="addComment">
+					       <g:Label ui:field="lblCharLimitComments" styleName="{playerStyle.commentsCharLimit}"/>
 					      <g:HTMLPanel styleName="{playerStyle.loginMessaging}" ui:field="loginMessaging">
 						      	<g:Label ui:field="loginMessagingText"></g:Label>
 						      	<g:Anchor ui:field="loginUrl"/> 

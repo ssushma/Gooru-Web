@@ -669,3 +669,7 @@
 	width: 35px;
 	height: 35px;
 }
+.commentsCharLimit{
+	text-align: center;
+	color: #999;
+}
