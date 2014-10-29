@@ -1087,28 +1087,28 @@ public class ProfileTopicListView extends Composite{
 		String collectionId = getProfileLibraryDo().getGooruOid();
 		if(!isCustomizePopup){
 			isCustomizePopup=true;
-		Boolean loginFlag = false;
-		if (AppClientFactory.isAnonymous()){
-			loginFlag = true;
-		} else {
-			loginFlag = false;
-		}
-		final Map<String, String> params = StringUtil.splitQuery(Window.Location
-				.getHref());
-		if(params.containsKey(ASSIGN)){
-			params.remove(ASSIGN);
-		}
-		RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
-			@Override
-			public void closePoup() {
-				Window.enableScrolling(true);
-				this.hide();	
-				isCustomizePopup = false;
+			Boolean loginFlag = false;
+			if (AppClientFactory.isAnonymous()){
+				loginFlag = true;
+			} else {
+				loginFlag = false;
 			}
-		};
-		Window.scrollTo(0, 0);
-		successPopupVc.setWidth("500px");
-		successPopupVc.setHeight("475px");
+			final Map<String, String> params = StringUtil.splitQuery(Window.Location
+					.getHref());
+			if(params.containsKey(ASSIGN)){
+				params.remove(ASSIGN);
+			}
+			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
+				@Override
+				public void closePoup() {
+					Window.enableScrolling(true);
+					this.hide();	
+					isCustomizePopup = false;
+				}
+			};
+			Window.scrollTo(0, 0);
+			successPopupVc.setWidth("500px");
+			successPopupVc.setHeight("475px");
 			successPopupVc.show();
 			successPopupVc.center();
 			
