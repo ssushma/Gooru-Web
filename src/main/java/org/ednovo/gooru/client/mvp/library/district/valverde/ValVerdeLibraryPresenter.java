@@ -87,6 +87,12 @@ public class ValVerdeLibraryPresenter extends BasePlacePresenter<IsValVerdeLibra
 	}
 	
 	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.VALVERDE);
+	}
+	
+	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		districtPresenter.setPartnerWidget(PlaceTokens.VALVERDE);

@@ -89,7 +89,6 @@ public class CoreLibraryPresenter extends BasePlacePresenter<IsCoreLibraryView, 
 	@Override
 	public void onHide() {
 		super.onHide();
-		System.out.println("reset trigger event...CORE LIBRARY");
 		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.CORE_LIBRARY);
 	}
 	

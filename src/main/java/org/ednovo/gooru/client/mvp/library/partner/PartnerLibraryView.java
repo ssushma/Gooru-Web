@@ -91,15 +91,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		libraryView.loadContributorsPage(callBack,placeToken);
 	}
 	
-	public void triggerLibraryViewEvent(String libraryGooruOid){
-		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		if(!AppClientFactory.getPlaceManager().isLibaryEventTriggered(viewToken)){
-			String eventId=GwtUUIDGenerator.uuid();
-			AppClientFactory.getPlaceManager().setLibaryEventTriggered(viewToken);
-			AppClientFactory.getPlaceManager().setLibraryEventId(eventId);
-			PlayerDataLogEvents.triggerLibarayViewEvent(libraryGooruOid, eventId, "library");
-		}
-	}
 
 	@Override
 	public void setUnitList(final ArrayList<PartnerFolderDo> folderList) {
@@ -116,7 +107,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		int j = 0;
 		for(int i = 0; i<folderList.size(); i++) {
 			if(folderList.get(i).getType().equalsIgnoreCase("folder")) {
-				triggerLibraryViewEvent(folderList.get(i).getParentGooruOid());
+				PlayerDataLogEvents.triggerLibraryViewEvent(folderList.get(i).getParentGooruOid());
 				LibraryUnitMenuView libraryUnitMenuView = new LibraryUnitMenuView(folderList.get(i));
 				libraryView.getLeftNav().add(libraryUnitMenuView);
 				if(j==0&&folderId==null) {

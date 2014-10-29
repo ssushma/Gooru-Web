@@ -76,7 +76,11 @@ public class AutodeskLibraryPresenter extends BasePlacePresenter<IsAutodeskLibra
 	public void onReset() {
 		super.onReset();
 	}
-	
+	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.AUTODESK);
+	}
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);

@@ -138,7 +138,6 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 	 * @param searchDragController instance of {@link ResourceDragController}
 	 */
 	public CollectionSearchResultVc(CollectionSearchResultDo collectionResultDo, ResourceDragController searchDragController) {
-		long startTime = System.currentTimeMillis();
 		wrapperVc = new CollectionSearchResultWrapperVc(searchDragController,collectionResultDo.getGooruOid());
 		this.res = CollectionSearchResultCBundle.INSTANCE;
 		res.css().ensureInjected();

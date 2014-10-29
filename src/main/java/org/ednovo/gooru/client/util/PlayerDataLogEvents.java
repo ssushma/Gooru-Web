@@ -535,7 +535,7 @@ public class PlayerDataLogEvents {
 	public static void triggerItemShareDataLogEvent(String itemGooruOid, String itemContentItemId,String parentGooruOid,String parentContItemId,String sessionId,
 			String itemType,String shareType,boolean confirmStatus,String playerMode,String path,String pageLocation){
 		JSONObject collectionDataLog=new JSONObject(); 
-		Long startTime=System.currentTimeMillis();
+		Long startTime=PlayerDataLogEvents.getUnixTime();
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.ITEM_SHARE));
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
@@ -551,7 +551,7 @@ public class PlayerDataLogEvents {
 	public static void triggerItemShareDataLogEventForProfile(String itemGooruOid, String itemContentItemId,String parentGooruOid,String parentContItemId,String sessionId,
 			String itemType,String shareType,boolean confirmStatus,String playerMode,String path,String pageLocation){
 		JSONObject collectionDataLog=new JSONObject(); 
-		Long startTime=System.currentTimeMillis();
+		Long startTime=PlayerDataLogEvents.getUnixTime();
 		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
 		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.ITEM_SHARE));
 		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
@@ -565,9 +565,20 @@ public class PlayerDataLogEvents {
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	
+	public static void triggerLibraryViewEvent(String libraryGooruOid){
+		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(!AppClientFactory.getPlaceManager().isLibaryEventTriggered(viewToken)){
+			System.out.println("viewToken==>>>> =========>"+viewToken);
+			String eventId=GwtUUIDGenerator.uuid();
+			AppClientFactory.getPlaceManager().setLibaryEventTriggered(viewToken);
+			AppClientFactory.getPlaceManager().setLibraryEventId(eventId);
+			PlayerDataLogEvents.triggerLibarayViewEvent(libraryGooruOid, eventId, "library");
+		}
+	}
+	
 	public static void triggerLibarayViewEvent(String libararyGooruOid,String libraryEventId,String pageLocation){
 		JSONObject libarayViewData=new JSONObject();
-		Long startTime=Long.valueOf(PlayerDataLogEvents.getUnixTimeStamp().toString());
+		Long startTime=PlayerDataLogEvents.getUnixTime();
 		libarayViewData.put(PlayerDataLogEvents.EVENTID, new JSONString(libraryEventId));
 		libarayViewData.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.LIBRARY_VIEW));
 		libarayViewData.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(null));
@@ -580,7 +591,9 @@ public class PlayerDataLogEvents {
 		libarayViewData.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getLibraryDataLogContext(libararyGooruOid, pageLocation));
 		PlayerDataLogEvents.collectionStartStopEvent(libarayViewData);
 	}
-	
+	public static Long getUnixTime(){
+		return Long.valueOf(PlayerDataLogEvents.getUnixTimeStamp().toString());
+	}
 	public static native String getUnixTimeStamp() /*-{
 		var currentDate=new Date();
 		var unixTimeStamp=Date.UTC(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate(),currentDate.getHours(),

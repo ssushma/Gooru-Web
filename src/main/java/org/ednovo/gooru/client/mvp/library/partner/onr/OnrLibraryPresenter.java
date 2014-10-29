@@ -87,6 +87,12 @@ public class OnrLibraryPresenter extends BasePlacePresenter<IsOnrLibraryView, On
 	}
 	
 	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.ONR);
+	}
+	
+	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		clearSlot(TYPE_FOLDERS_SLOT);

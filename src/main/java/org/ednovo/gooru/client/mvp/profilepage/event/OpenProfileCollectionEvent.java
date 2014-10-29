@@ -50,18 +50,20 @@ public class OpenProfileCollectionEvent extends GwtEvent<OpenProfileCollectionHa
 	private String lessonId;
 	private String lessonLabel;
 	private String lessonCode;
+	private String libraryGooruOid;
 	
 	public static final Type<OpenProfileCollectionHandler> TYPE = new Type<OpenProfileCollectionHandler>();
 	
 	/**
 	 * 
 	 */
-	public OpenProfileCollectionEvent(ProfileLibraryDo profileLibraryDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode) {
+	public OpenProfileCollectionEvent(ProfileLibraryDo profileLibraryDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode,String libraryGooruOid) {
 		setProfileLibraryDo(profileLibraryDo);
 		setTopicId(topicId);
 		setLessonId(lessonId);
 		setLessonLabel(lessonLabel);
 		setLessonCode(lessonCode);
+		this.libraryGooruOid=libraryGooruOid;
 	}
 
 	@Override
@@ -71,7 +73,7 @@ public class OpenProfileCollectionEvent extends GwtEvent<OpenProfileCollectionHa
 
 	@Override
 	protected void dispatch(OpenProfileCollectionHandler handler) {
-		handler.openProfileCollection(getProfileLibraryDo(),getTopicId(),getLessonId(),getLessonLabel(),getLessonCode());
+		handler.openProfileCollection(getProfileLibraryDo(),getTopicId(),getLessonId(),getLessonLabel(),getLessonCode(),libraryGooruOid);
 	}
 
 

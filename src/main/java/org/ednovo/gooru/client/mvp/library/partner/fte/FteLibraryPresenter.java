@@ -87,6 +87,12 @@ public class FteLibraryPresenter extends BasePlacePresenter<IsFteLibraryView, Ft
 	}
 	
 	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.FTE);
+	}
+	
+	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		clearSlot(TYPE_FOLDERS_SLOT);

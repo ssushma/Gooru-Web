@@ -56,7 +56,11 @@ public class CcstCalTacLibraryPresenter extends BasePlacePresenter<IsCcstCalTacL
 	public void onReset() {
 		super.onReset();
 	}
-	
+	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.CCST_Cal_TAC);
+	}
 	
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {

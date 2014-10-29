@@ -85,12 +85,13 @@ public class LibraryUnitMenuView extends Composite {
 		setIds();
 	}
 
-	public LibraryUnitMenuView(ProfileLibraryDo folderDo) {
+	public LibraryUnitMenuView(ProfileLibraryDo folderDo,String libraryGooruOid) {
 		initWidget(uiBinder.createAndBindUi(this));
 		unitMenuItem.setText(folderDo.getTitle());
 		unitMenuItem.getElement().setAttribute("alt",folderDo.getTitle());
 		unitMenuItem.getElement().setAttribute("title",folderDo.getTitle());
 		setUnitId(folderDo.getGooruOid());
+		setLibraryGooruOid(folderDo.getParentGooruOid());
 		setIds();
 	}
 	public void setIds(){
