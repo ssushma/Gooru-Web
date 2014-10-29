@@ -16,6 +16,7 @@ import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpAfterThirt
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompleteProfilePresenter;
 import org.ednovo.gooru.client.mvp.authentication.uc.StudentSignUpUc;
 import org.ednovo.gooru.client.mvp.authentication.uc.ThanksEmailConfirmPopupUc;
+import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.ImprovedGooruPopUpView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.SearchHomeFilterVc;
@@ -530,23 +531,11 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 		int flag = userDo.getViewFlag();
 		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
 		
-		if(!AppClientFactory.isAnonymous() && loginType.equalsIgnoreCase("apps")) {
-			
-//			AppClientFactory.getInjector().getUserService().getUserProfileDetails(userDo.getGooruUId(), new SimpleAsyncCallback<SettingDo>(){
-//
-//				@Override
-//				public void onSuccess(SettingDo result) {
-////					MixpanelUtil.Arrive_AlmostDone_Popup();
-////					String email = result.getExternalId();
-////					AppClientFactory.getLoggedInUser().setEmailId(result.getExternalId());
-////					SignUpRoleView signUpRoleView = new SignUpRoleView(email, userDo);
-////					AlmostDoneUc popup = new AlmostDoneUc(email,userDo);  
-////					popup.setGlassEnabled(true);
-////					popup.show();
-////					popup.center();
-//				}				
-//			});
-			
+		if(!AppClientFactory.isAnonymous() && flag==0 &&  loginType.equalsIgnoreCase("apps")) {
+			AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
+			update.setGlassEnabled(true);
+			update.show();
+			update.center();
 		}
 		else if(flag<=10 && !AppClientFactory.isAnonymous()){
 			showMarketingPopup(userDo);
