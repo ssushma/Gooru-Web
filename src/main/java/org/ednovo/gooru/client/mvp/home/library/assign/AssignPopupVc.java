@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.mvp.home.event.SetTexasAccountEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUserDetailsInCollectionPlayEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUserDetailsInPlayEvent;
+import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoginStatusEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoginStatusHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
@@ -816,12 +817,13 @@ public abstract class AssignPopupVc extends PopupPanel {
 		}
 		params.put("callback", "signup");
 		params.put("type", "1");
-		System.out.println("checkassignvalue::"+params.containsKey("assign"));
+		
+		LibraryTopicListView.isAssignPopup=false;
 		if(params.containsKey("assign"))
 		{
 			params.remove("assign");
 		}
-/*		AppClientFactory.getPlaceManager().revealPlace(
+		/*		AppClientFactory.getPlaceManager().revealPlace(
 				AppClientFactory.getCurrentPlaceToken(), params);*/
 		
 
@@ -848,7 +850,6 @@ public abstract class AssignPopupVc extends PopupPanel {
 //				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
 				MixpanelUtil.mixpanelEvent("Assign_library_signin_google");
 				Window.Location.replace(result);
-			
 			}
 		});
 	}

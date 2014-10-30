@@ -81,13 +81,9 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
-import com.gargoylesoftware.htmlunit.OnbeforeunloadHandler;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.FontWeight;
-import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -143,9 +139,9 @@ public class LibraryTopicListView extends Composite{
 	
 	private boolean isScrollable = true;
 	
-	private boolean isAssignPopup = false;
+	public static boolean isAssignPopup = false;
 	
-	private boolean isCustomizePopup = false;
+	public static boolean isCustomizePopup = false;
 	
 	private static boolean isVisible=true;
 	
@@ -1301,7 +1297,7 @@ public class LibraryTopicListView extends Composite{
 			MixpanelUtil.mixpanelEvent("standardlibrary_assign_collection");	
 		}
 		MixpanelUtil.mixpanelEvent("LandingPage_Assign_Collection");
-
+		
 				if(!isAssignPopup){
 					isAssignPopup=true;
 				//	Window.enableScrolling(false);
@@ -1342,9 +1338,6 @@ public class LibraryTopicListView extends Composite{
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 				
 			}
-			
-		
-		
 				
 	}
 	
