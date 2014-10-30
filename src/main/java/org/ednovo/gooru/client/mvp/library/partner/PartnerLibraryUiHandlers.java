@@ -31,7 +31,7 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
  * 
  */
 public interface PartnerLibraryUiHandlers extends BaseUiHandlers {
-	public void getPartnerChildFolderItems(String folderId, int pageNumber);
+	public void getPartnerChildFolderItems(String folderId, int pageNumber,String libraryGooruOid);
 	public void getPartnerWorkspaceFolders();
 	void getIntoPartnerLibrarypage();
 }

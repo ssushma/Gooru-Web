@@ -189,7 +189,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	public void setTopicListData(ProfileLibraryDo profileLibraryDo, String folderId) {
 		contentScroll.clear();
 		try {
-			contentScroll.add(new ProfileTopicListView(profileLibraryDo, 0, AppClientFactory.getCurrentPlaceToken(), "scollection"));
+			contentScroll.add(new ProfileTopicListView(profileLibraryDo, 0, AppClientFactory.getCurrentPlaceToken(), "scollection",null));
 			loadingPanel(false);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -206,9 +206,9 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 				for(int i = 0; i <folderListDo.size(); i++) {
 					count++;
 					if(folderListDo.get(i).getType().equals("scollection")) {
-						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(), "scollection"));
+						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(), "scollection",null));
 					} else {
-						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken()));
+						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(),null));
 					}
 				}
 			} else {

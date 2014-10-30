@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -410,7 +411,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	 */
 	@UiHandler("gmailButton")
 	public void onGmailButtonClicked(ClickEvent clickEvent){
-		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",System.currentTimeMillis(),System.currentTimeMillis(), "", AppClientFactory.getLoggedInUser().getToken());
+		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.getUnixTime(), "", AppClientFactory.getLoggedInUser().getToken());
 		String callBack = Window.Location.getHref();
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
 			MixpanelUtil.mixpanelEvent("Customize_player_signin_google");

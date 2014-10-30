@@ -88,6 +88,12 @@ public class NatGeoLibraryPresenter extends BasePlacePresenter<IsNatGeoLibraryVi
 	}
 	
 	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.GEOEDUCATION);
+	}
+	
+	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		clearSlot(TYPE_FOLDERS_SLOT);

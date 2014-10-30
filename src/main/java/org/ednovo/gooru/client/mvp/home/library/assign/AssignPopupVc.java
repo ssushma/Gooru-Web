@@ -50,6 +50,7 @@ import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.ShareViewUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -841,7 +842,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 	 */
 	@UiHandler("gmailButton")
 	public void onGmailButtonClicked(ClickEvent clickEvent){
-		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",System.currentTimeMillis(),System.currentTimeMillis(), "", AppClientFactory.getLoggedInUser().getToken());
+		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.getUnixTime(), "", AppClientFactory.getLoggedInUser().getToken());
 		String callBack = Window.Location.getHref();
 		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
 		

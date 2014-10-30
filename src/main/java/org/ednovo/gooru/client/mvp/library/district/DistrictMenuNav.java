@@ -81,6 +81,8 @@ public abstract class DistrictMenuNav extends Composite {
 	
 	private String placeToken = null;
 	
+	private String libraryGooruOid;
+	
     private static DistrictMenuNavUiBinder uiBinder = GWT.create(DistrictMenuNavUiBinder.class);
 
     private MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -412,4 +414,12 @@ public abstract class DistrictMenuNav extends Composite {
 	}
 	
 	public abstract void clickOnCourse(ArrayList<ProfileLibraryDo> unitList, String courseId, ProfileLibraryDo profileLibraryDo);
+
+	public String getLibraryGooruOid() {
+		return libraryGooruOid;
+	}
+
+	public void setLibraryGooruOid(String libraryGooruOid) {
+		this.libraryGooruOid = libraryGooruOid;
+	}
 }

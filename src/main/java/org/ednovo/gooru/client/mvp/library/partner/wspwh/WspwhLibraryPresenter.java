@@ -86,7 +86,11 @@ public class WspwhLibraryPresenter extends BasePlacePresenter<IsWspwhLibraryView
 	public void onReset() {
 		super.onReset();
 	}
-	
+	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.WSPWH);
+	}
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);

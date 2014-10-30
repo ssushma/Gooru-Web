@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -171,7 +172,7 @@ public class AssignmentsView extends
 		if (isOpen){
 				descPanel.getElement().getStyle().setDisplay(Display.INLINE);
 				this.description= true;
-				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), System.currentTimeMillis(), System.currentTimeMillis(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
+				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.getUnixTime(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
 		}else{
 				descPanel.getElement().getStyle().setDisplay(Display.NONE);
 				this.description= false;
@@ -206,12 +207,12 @@ public class AssignmentsView extends
 			if((description == null || !description)){
 				descPanel.getElement().getStyle().setDisplay(Display.INLINE);
 				description= true;
-				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), System.currentTimeMillis(), System.currentTimeMillis(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
+				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.getUnixTime(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
 			}
 			else{
 				descPanel.getElement().getStyle().setDisplay(Display.NONE);
 				description= false;
-//				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), System.currentTimeMillis(), System.currentTimeMillis(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
+//				DataLogEvents.assignmentView(GwtUUIDGenerator.uuid(), "assignment-view", assignmentId, AppClientFactory.getLoggedInUser().getGooruUId(), PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.getUnixTime(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
 			}
 			
 		}
