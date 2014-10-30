@@ -7,10 +7,8 @@
 		field="res" />
 	<g:HTMLPanel styleName="{res.css.popup} {res.css.imgBG}">
 		<g:HTMLPanel styleName="{res.css.popupInner}">
-			<g:Label styleName="{res.css.popupHeader}" ui:field="lblHeader">
-				Sign Up!
-			</g:Label>
-			<g:HTMLPanel styleName="{res.css.closeButton}"></g:HTMLPanel>
+			<g:Label styleName="{res.css.popupHeader}" ui:field="lblHeader"/>
+			<g:Label styleName="{res.css.closeButton}" ui:field="lblClose"/>
 			<g:HTMLPanel styleName="{res.css.popupContent}">
 				<g:Label styleName="{res.css.h1}" ui:field="lblJoin" />
 				<g:Label styleName="{res.css.subheader}" ui:field="lblSubHeader"/>
@@ -73,6 +71,13 @@
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.chooseUsername}">
 						<gg:TextBoxWithPlaceholder ui:field="txtChooseUsername" styleName="{res.css.textUserName} {res.css.submitRegistration}" />
+						<g:HTMLPanel styleName="{res.css.usernameToolTipContainer}" ui:field="panelUsernameTooltip">
+							<div class="arrowBorder"></div>
+							<div class="arrow"></div>
+							<div class="tooltipContent">
+								<g:Label ui:field="lblPickWisely"></g:Label>
+							</div>
+						</g:HTMLPanel>
 						<gg:ErrorLabelUc ui:field="userNameValidUc" styleName="errorMessage {res.css.userRegErrorStyle}" />
 						<g:Button styleName="primary {res.css.submitRegistration}" ui:field="btnSubmit"/>
 					</g:HTMLPanel>
