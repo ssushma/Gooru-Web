@@ -257,6 +257,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		
 		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
 		lblDirectionCharLimit.setText(value);
+		lblDirectionCharLimit.setVisible(false);
 		StringUtil.setAttributes(lblDirectionCharLimit.getElement(), "lblDirectionCharLimit", value, value);
 	}
 	public CollectionsView(ClasspageItemDo classpageItemDo,boolean isStudentView,int sequenceNum){
@@ -395,6 +396,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			dropdownPanel.setVisible(false);
 			editDirection();
 			editButtonsToolBar.setVisible(false);
+			lblDirectionCharLimit.setVisible(true);
 			editToolBarView=new EditToolBarView(false);
 			if(classpageItemDo.getPlannedEndDate()!=null&&!classpageItemDo.getPlannedEndDate().toString().equals("")){
 				editToolBarView.dueDatePanel.add(new Label(classpageItemDo.getPlannedEndDate()!=null?classpageItemDo.getPlannedEndDate().toString():"")); // TODO need to set date.
@@ -600,6 +602,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			classpageItemContainer.remove(0);
 		}
 		editButtonsToolBar.setVisible(true);
+		lblDirectionCharLimit.setVisible(false);
 	}
 	private void setDirection(String directionText){
 		directionContentPanel.clear();
