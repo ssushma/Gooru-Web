@@ -25,6 +25,8 @@
 package org.ednovo.gooru.server.service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.TreeSet;
 
 import org.apache.http.HttpResponse;
@@ -216,6 +218,9 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		collItemDo.getQuestionInfo().setUser(null);
 		collItemDo.getQuestionInfo().setCreatedOn(null);
 		collItemDo.getQuestionInfo().setUrl(null);
+		collItemDo.getQuestionInfo().setViews(null);
+		collItemDo.getQuestionInfo().setGooruOid(null);
+		collItemDo.getQuestionInfo().setAssets(null);
 		
 		TreeSet<QuestionAnswerDo> treeSet = new TreeSet<QuestionAnswerDo>();
 		treeSet.addAll(collItemDo.getQuestionInfo().getAnswers());
@@ -225,7 +230,16 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		 
 		 for(int i=0; i < objArray.length ; i++)
 		 {
-			 jArr.put(ResourceFormFactory.generateStringDataForm(objArray[i],null));
+			 System.out.println("objectarray::"+objArray[i]);
+			 try {
+				JSONObject jsonObjVal = new JSONObject(ResourceFormFactory.generateStringDataForm(objArray[i],null));
+				jArr.put(jsonObjVal);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 System.out.println("objectarrayformatted::"+jArr);
+		
 		 }
 
 
@@ -234,19 +248,35 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 
 		  JSONObject mainQuestionTempObj = new JSONObject();
 		  JSONObject mainAnswerTempObj = new JSONObject();
+		  JSONObject mainQTempObj = new JSONObject();
+		  String data = "";
+		 // mainQTempObj. = new LinkedHashMap();
 		  try {
+			  
 			  mainQuestionTempObj.put("question", ResourceFormFactory.generateStringDataForm(collItemDo.getQuestionInfo(), null));
 			  JSONObject mainQuestionTempObj1 = new JSONObject(mainQuestionTempObj.get("question").toString());
 			  mainAnswerTempObj.put("answer", jArr);
 			  mainQuestionTempObj1.put("answers", mainAnswerTempObj);
-			  mainQuestionTempObj.put("question", mainQuestionTempObj1);
-			  mainQuestionTempObj.put("mediaFileName", fileName);
+
+		
+			  
+ 	data = "{\""+"question"+"\" : " + mainQuestionTempObj1.toString() +", \""+"mediaFileName"+"\" : " +fileName+"}";
+			  
+			
+			  mainQTempObj.put("question", mainQuestionTempObj1).put("mediaFileName", fileName);
+			  //mainQTempObj.put("mediaFileName", fileName);
+			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		  
 
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), mainQuestionTempObj.toString());
+		  
+		  System.out.println("data passed::"+data);
+		  System.out.println("url::"+url);
+
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), data);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		collectionItemDoNew=deserializeCollectionItem(jsonRep);
 		collItemDo.setResource(collectionItemDoNew.getQuestionInfo());

@@ -1022,7 +1022,14 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				folderItemDo.setTitle(collectionItemDo.getResourceTitle());
 				folderItemDo.setType(collectionItemDo.getItemType());
 				ResourceFormatDo resourceFormatDo = new ResourceFormatDo();
+				if(collectionItemDo.getResource().getResourceFormat().getValue() != null)
+				{
 				resourceFormatDo.setValue(collectionItemDo.getResource().getResourceFormat().getValue());
+				}
+				else
+				{
+				resourceFormatDo.setValue(collectionItemDo.getResource().getCategory());
+				}
 				folderItems.add(folderItemDo);
 			}
 			folderDo.setCollectionItems(folderItems);
