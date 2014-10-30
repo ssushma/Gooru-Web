@@ -1,3 +1,5 @@
+@external .reportsTableContainer,.setMarginAuto,.alignCenterAndBackground,.reaction_explain1,.reaction_understand1,.reaction_mean1,.reaction_dontunderstand1,.reaction_needhelp1,.reaction_redneedhelp,.reaction_reddontunderstand;
+
 .reportsTableContainer{
 	padding-top: 15px;
 }
@@ -15,7 +17,7 @@
 	height: 35px;
 	width: 35px
 }
-.reaction_understand1 {
+.reaction_understand1{
 	background: url(/images/analyticsReactions.png) no-repeat scroll -78px 1px transparent;
 	height: 35px;
 	width: 35px
@@ -40,7 +42,7 @@
 	height: 35px;
 	width: 35px
 }
-.reaction_reddontunderstand {
+.reaction_reddontunderstand{
 	background:url(/images/analyticsReactions.png) no-repeat scroll -1px -45px transparent;
 	height: 35px;
 	width: 35px

@@ -103,8 +103,8 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 					hideAllPanels();
 					teacherResourceBreakdownDatapnl.setVisible(true);
 				}else{
-					 Element element = DOM.getElementById("collectionBreakDown");
-					 Print.it(teacherScoredDatapnl.getElement());
+					String style="<link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'><link rel='styleSheet' type='text/css' href='https://www.google.com/uds/api/visualization/1.0/8c95b72e5c145d5b3d7bb8b4ea74fd63/ui+en,table+en.css'>";
+					Print.it(style,teacherScoredDatapnl.getElement());
 				}
 			}
 		};

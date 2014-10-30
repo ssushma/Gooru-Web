@@ -104,7 +104,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					individualResourceBreakdownDatapnl.setVisible(true);
 				}else if(tabClicked.equalsIgnoreCase(PRINT)){
 					com.google.gwt.user.client.Element element = DOM.getElementById("individulaDataScored");
-				    Print.it(element);
+					String style="<link rel='styleSheet' type='text/css' href='https://www.google.com/uds/api/visualization/1.0/8c95b72e5c145d5b3d7bb8b4ea74fd63/ui+en,table+en.css'><link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'>";
+				    Print.it(style,element);
 				}else{
 					getUiHandlers().setHtmltopdf(individualScoredData.toString());
 				}
