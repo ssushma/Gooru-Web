@@ -380,7 +380,7 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 	}
 	
 	public Long getUnixTimeStamp(){
-		Long currentTime=System.currentTimeMillis();
+		Long currentTime=PlayerDataLogEvents.getUnixTime();
 		return currentTime;
 	}
 

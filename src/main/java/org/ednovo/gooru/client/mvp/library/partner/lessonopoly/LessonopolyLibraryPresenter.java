@@ -86,6 +86,11 @@ public class LessonopolyLibraryPresenter extends BasePlacePresenter<IsLessonopol
 	public void onReset() {
 		super.onReset();
 	}
+	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.LESSONOPOLY);
+	}
 	
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
