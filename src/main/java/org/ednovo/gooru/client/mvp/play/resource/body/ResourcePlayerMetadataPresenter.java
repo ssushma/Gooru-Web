@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
@@ -180,7 +181,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		return isOeAnswerSubmited;
 	}
 	public void  triggerCreateReactionEvent(String resourceId,String reactionType,String eventName){
-		Long startTime=System.currentTimeMillis();
+		Long startTime=PlayerDataLogEvents.getUnixTime();
 		if(isCollectionPlayer){
 			collectionPlayerPresenter.triggerReactiontDataLogEvent(resourceId, startTime, startTime, reactionType,eventName);
 		}else if(isResourcePlayer){

@@ -55,6 +55,12 @@ public class EsypLibraryPresenter extends BasePlacePresenter<IsEsypLibraryView, 
 	}
 	
 	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.ESYP);
+	}
+	
+	@Override
 	public void prepareFromRequest(PlaceRequest request){
 		super.prepareFromRequest(request);
 		clearSlot(TYPE_FOLDERS_SLOT);

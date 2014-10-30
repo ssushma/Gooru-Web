@@ -88,6 +88,12 @@ public class NgcLibraryPresenter extends BasePlacePresenter<IsNgcLibraryView, Ng
 	}
 	
 	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.NGC);
+	}
+	
+	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		clearSlot(TYPE_FOLDERS_SLOT);

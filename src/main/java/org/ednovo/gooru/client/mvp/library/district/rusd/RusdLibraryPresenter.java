@@ -91,6 +91,12 @@ public class RusdLibraryPresenter extends BasePlacePresenter<IsRusdLibraryView, 
 	}
 	
 	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.RUSD_LIBRARY);
+	}
+	
+	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		districtPresenter.setPartnerWidget(PlaceTokens.RUSD_LIBRARY);

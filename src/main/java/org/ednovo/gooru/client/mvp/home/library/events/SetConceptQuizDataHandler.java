@@ -63,7 +63,7 @@ public interface SetConceptQuizDataHandler extends EventHandler {
 	 * @return : void
 	 * @throws : <Mentioned if any exceptions>
 	 */
-	void setConceptQuizDataHandler(ArrayList<ConceptDo> conceptDoList, Integer topicId, String lessonId, String lessonLabel, String lessonCode, String conceptId);
+	void setConceptQuizDataHandler(ArrayList<ConceptDo> conceptDoList, Integer topicId, String lessonId, String lessonLabel, String lessonCode, String conceptId,String libraryGooruOid);
 }
 
 

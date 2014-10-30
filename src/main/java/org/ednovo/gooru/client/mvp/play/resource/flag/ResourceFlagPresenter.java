@@ -121,11 +121,11 @@ public class ResourceFlagPresenter extends PresenterWidget<IsResourceFlag> imple
 	
 	public void ItemFlagDataLogEvent(String associatedGooruOid,String freeText,ArrayList<String> contentReportList,String collectionItemId){
 	   if(isPreviewPlayer){
-		   previewPlayerPresenter.triggerItemFlagDataLogEvent(System.currentTimeMillis(),PlayerDataLogEvents.RESOURCE,freeText,contentReportList,associatedGooruOid, collectionItemId);
+		   previewPlayerPresenter.triggerItemFlagDataLogEvent(PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.RESOURCE,freeText,contentReportList,associatedGooruOid, collectionItemId);
 	   }else if(isCollectionPlayer){
-		   collectionPlayerPresenter.triggerItemFlagDataLogEvent(System.currentTimeMillis(),PlayerDataLogEvents.RESOURCE,freeText,contentReportList,associatedGooruOid, collectionItemId);
+		   collectionPlayerPresenter.triggerItemFlagDataLogEvent(PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.RESOURCE,freeText,contentReportList,associatedGooruOid, collectionItemId);
 	   }else if(isResourcePlayer){
-		   resourcePlayerPresenter.triggerItemFlagDataLogEvent(System.currentTimeMillis(),PlayerDataLogEvents.RESOURCE,freeText,contentReportList,associatedGooruOid, ""); 
+		   resourcePlayerPresenter.triggerItemFlagDataLogEvent(PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.RESOURCE,freeText,contentReportList,associatedGooruOid, ""); 
 	   }
 	}
 	public HTMLEventPanel getResourceFlagCloseButton()

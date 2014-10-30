@@ -89,6 +89,13 @@ public class SusdLibraryPresenter extends BasePlacePresenter<IsSusdLibraryView, 
 	}
 	
 	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.SUSD);
+	}
+	
+	
+	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		districtPresenter.setPartnerWidget(PlaceTokens.SUSD);

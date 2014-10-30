@@ -78,7 +78,11 @@ public class PsdpalLibraryPresenter extends BasePlacePresenter<IsPsdpalView, Psd
 	public void onReset() {
 		super.onReset();
 	}
-	
+	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.PSDPAL);
+	}
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);

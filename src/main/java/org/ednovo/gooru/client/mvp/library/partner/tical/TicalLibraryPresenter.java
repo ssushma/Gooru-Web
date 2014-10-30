@@ -68,6 +68,11 @@ public class TicalLibraryPresenter extends BasePlacePresenter<IsTicalLibraryView
 	public void onReset() {
 		super.onReset();
 	}
+	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.TICAL);
+	}
 	
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {

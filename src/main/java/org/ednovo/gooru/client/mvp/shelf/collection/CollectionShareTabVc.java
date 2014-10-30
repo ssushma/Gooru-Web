@@ -891,7 +891,7 @@ public class CollectionShareTabVc extends Composite {
 			public void triggerShareDataEvent(String shareType,boolean confirmStaus){
 				String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id");
 				String path=AppClientFactory.getPlaceManager().getFolderIdsInString();
-				PlayerDataLogEvents.triggerItemShareDataLogEvent(collectionId, "", "", "", "", PlayerDataLogEvents.COLLECTION, shareType, confirmStaus, "", path+collectionId, "shelf");
+				PlayerDataLogEvents.triggerItemShareDataLogEvent(collectionId, "", null,"", "", "", PlayerDataLogEvents.COLLECTION, shareType, confirmStaus, "", path+collectionId, "shelf");
 			}
 		};
 		contentpanel.add(socialView);

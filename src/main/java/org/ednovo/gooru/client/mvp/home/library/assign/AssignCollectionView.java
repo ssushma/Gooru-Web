@@ -104,7 +104,8 @@ IsCollectionAssign {
 	@UiField Label lblAssignCollectionTitle,lblClasspages,lblClasspagePlaceHolder, lblClasspagesArrow,lblDirections,lblDirectionsOptional;
 	
 
-	@UiField Label lblAssignCollectionPrivate, lblNoClassPageMsg,lblNoClassPage,lblDuedate,lblDuedateOptional,directionsErrorLbl;
+	@UiField Label lblAssignCollectionPrivate, lblNoClassPageMsg,lblNoClassPage,lblDuedate,lblDuedateOptional,directionsErrorLbl,
+	               lblDirectionCharLimit;
 	
 	@UiField BlueButtonUc btnAssign;
 	
@@ -206,6 +207,10 @@ IsCollectionAssign {
 		textAreaVal.addKeyUpHandler(new DirectionsKeyUpHandler());
 		textAreaVal.getElement().setAttribute("maxlength", "400");
 		StringUtil.setAttributes(textAreaVal, true);
+		
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		lblDirectionCharLimit.setText(value);
+		StringUtil.setAttributes(lblDirectionCharLimit.getElement(), "lblDirectionCharLimit", value, value);
 		
 		textAreaVal.addFocusHandler(new FocusHandler() {
 			@Override

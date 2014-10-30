@@ -168,7 +168,7 @@
 .assignmentsContainer{
 	float : left;
 	width:100%;
-	margin-top:10px;
+	/* margin-top:10px; */
 }
 
 .duedateContainer{
@@ -973,4 +973,12 @@ button.LoginText {
 .loginWithGooru{
 	font-size: 12px;
 	font-weight: normal;
+}
+.directionsChrLimit{
+	font-size: 12px;
+	float: right;
+	margin-right: 40px;
+	font-weight: normal;
+	color: #999;
+	margin-top: 10px;
 }

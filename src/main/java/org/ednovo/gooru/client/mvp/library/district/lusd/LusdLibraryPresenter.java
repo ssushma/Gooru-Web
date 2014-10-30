@@ -91,6 +91,13 @@ public class LusdLibraryPresenter extends BasePlacePresenter<IsLusdLibraryView,L
 	public void onReset() {
 		super.onReset();
 	}
+	
+	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.LUSD);
+	}
+	
 
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {

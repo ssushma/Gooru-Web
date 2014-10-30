@@ -89,6 +89,12 @@ public class CoreLibraryPresenter extends BasePlacePresenter<IsCoreLibraryView, 
 	}
 	
 	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.CORE_LIBRARY);
+	}
+	
+	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		clearSlot(TYPE_FOLDERS_SLOT);
