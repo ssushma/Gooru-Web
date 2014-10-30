@@ -80,6 +80,7 @@ public class LessonopolyLibraryPresenter extends BasePlacePresenter<IsLessonopol
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override

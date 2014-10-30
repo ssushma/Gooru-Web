@@ -80,6 +80,7 @@ public class ValVerdeLibraryPresenter extends BasePlacePresenter<IsValVerdeLibra
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override

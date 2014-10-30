@@ -80,6 +80,7 @@ public class FteLibraryPresenter extends BasePlacePresenter<IsFteLibraryView, Ft
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override

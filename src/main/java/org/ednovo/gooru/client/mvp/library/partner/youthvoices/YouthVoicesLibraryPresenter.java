@@ -80,6 +80,7 @@ public class YouthVoicesLibraryPresenter extends BasePlacePresenter<IsYouthVoice
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override

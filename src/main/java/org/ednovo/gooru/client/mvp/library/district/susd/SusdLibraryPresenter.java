@@ -80,6 +80,7 @@ public class SusdLibraryPresenter extends BasePlacePresenter<IsSusdLibraryView, 
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override

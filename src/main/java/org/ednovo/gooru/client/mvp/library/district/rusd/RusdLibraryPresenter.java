@@ -75,16 +75,19 @@ public class RusdLibraryPresenter extends BasePlacePresenter<IsRusdLibraryView, 
 	@Override
 	public void onBind() {
 		super.onBind();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override
 	public void onReset() {
 		super.onReset();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override

@@ -71,6 +71,7 @@ public class PsdpalLibraryPresenter extends BasePlacePresenter<IsPsdpalView, Psd
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override

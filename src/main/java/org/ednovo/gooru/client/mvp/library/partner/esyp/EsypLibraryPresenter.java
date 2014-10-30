@@ -46,6 +46,7 @@ public class EsypLibraryPresenter extends BasePlacePresenter<IsEsypLibraryView, 
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override

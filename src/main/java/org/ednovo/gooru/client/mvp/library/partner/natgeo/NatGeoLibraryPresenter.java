@@ -80,6 +80,7 @@ public class NatGeoLibraryPresenter extends BasePlacePresenter<IsNatGeoLibraryVi
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override
