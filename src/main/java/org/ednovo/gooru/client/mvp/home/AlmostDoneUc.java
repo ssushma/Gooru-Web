@@ -47,6 +47,10 @@ import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -73,7 +77,7 @@ public class AlmostDoneUc extends PopupPanel{
 	private UserDo user=null;
 	
 	@UiField
-	HTMLPanel rdTeacher, rdStudent, rdParent, rdOther, panelOther, panelTeacher, panelStudent,panelParent;
+	HTMLPanel rdTeacher, rdStudent, rdParent, rdOther, panelOther, panelTeacher, panelStudent,panelParent,panelUsernameTooltip;
 	
 	@UiField
 	ErrorLabelUc lblSelectRole, userNameValidUc;
@@ -82,7 +86,7 @@ public class AlmostDoneUc extends PopupPanel{
 	TextBoxWithPlaceholder txtChooseUsername;
 	
 	@UiField
-	Label lblHeader,lblTeacher, lblStudent, lblParent, lblOther, lblUserEmail, lblToolTipOther,lblOtherDesc, lblJoin, lblSubHeader, lblTeacherContainer, lblTeacherDesc, lblTooltipStudent, lblStudentDesc, lblTooltipParent, lblParentDesc;
+	Label lblHeader,lblTeacher, lblStudent, lblParent, lblOther, lblUserEmail, lblToolTipOther,lblOtherDesc, lblJoin, lblSubHeader, lblTeacherContainer, lblTeacherDesc, lblTooltipStudent, lblStudentDesc, lblTooltipParent, lblParentDesc, lblPickWisely, lblClose;
 	
 	@UiField
 	Button btnSubmit;
@@ -131,6 +135,8 @@ public class AlmostDoneUc extends PopupPanel{
 		this.user = user;
 		
 		txtChooseUsername.addBlurHandler(new CheckProfanityInOnBlur(txtChooseUsername,null, userNameValidUc, isHavingBadWordsUserName));
+		txtChooseUsername.addMouseOverHandler(new OnMouseOver());
+		txtChooseUsername.addMouseOutHandler(new OnMouseOut());
 		
 		lblTeacher.setText(i18n.GL0416());
 		StringUtil.setAttributes(lblTeacher.getElement(), "lblTeacher", i18n.GL0416(), i18n.GL0416());
@@ -268,12 +274,79 @@ public class AlmostDoneUc extends PopupPanel{
 		lblHeader.setText(i18n.GL0186());
 		StringUtil.setAttributes(lblHeader.getElement(), "lblHeader", i18n.GL0186(), i18n.GL0186());
 		
+		lblPickWisely.setText(i18n.GL0410());
+		StringUtil.setAttributes(lblPickWisely.getElement(), "lblPickWisely", i18n.GL0410(), i18n.GL0410());
+		
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+		
+		panelUsernameTooltip.setVisible(false);
 		this.center();
 	}
+	/**
+	 * 
+	 * @fileName : AlmostDoneUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 30-Oct-2014
+	 *
+	 * @Author tumbalam
+	 *
+	 * @Reviewer:
+	 */
+	private class OnMouseOver implements MouseOverHandler {
 
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			System.out.println("on mouse over...");
+			if (event.getSource() == txtChooseUsername) {
+				panelUsernameTooltip.setVisible(true);
+			}
+		}
+	}
+	/**
+	 * 
+	 * @fileName : AlmostDoneUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 30-Oct-2014
+	 *
+	 * @Author tumbalam
+	 *
+	 * @Reviewer:
+	 */
+	private class OnMouseOut implements MouseOutHandler {
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			panelUsernameTooltip.setVisible(false);
+		}
+
+	}
 	
+	/**
+	 * 
+	 * @fileName : AlmostDoneUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 30-Oct-2014
+	 *
+	 * @Author tumbalam
+	 *
+	 * @Reviewer:
+	 */
 	public class CheckProfanityInOnBlur implements BlurHandler{
 		private TextBox textBox;
 		private Label label;
@@ -288,67 +361,74 @@ public class AlmostDoneUc extends PopupPanel{
 		}
 		@Override
 		public void onBlur(BlurEvent event) {
-			btnSubmit.setEnabled(false);
-			btnSubmit.getElement().addClassName("disabled");
-			boolean fieldValidationStaus=true;
-			final Boolean userNameValidate = txtChooseUsername.getText().matches(USER_NAME_REGEX);
-			if(!userNameValidate){
-				 if(!txtChooseUsername.getText().contains(" ")){
-					if (txtChooseUsername.isVisible()){
-						userNameValidUc.setText(i18n.GL0475());
+			if (txtChooseUsername.getText().trim() != null && txtChooseUsername.getText().trim().length()>0){
+				btnSubmit.setEnabled(false);
+				btnSubmit.getElement().addClassName("disabled");
+				boolean fieldValidationStaus=true;
+				final Boolean userNameValidate = txtChooseUsername.getText().matches(USER_NAME_REGEX);
+				if(!userNameValidate){
+					 if(!txtChooseUsername.getText().contains(" ")){
+						if (txtChooseUsername.isVisible()){
+							userNameValidUc.setText(i18n.GL0475());
+						}
+					}else if(txtChooseUsername.getText().contains(" ")){
+						userNameValidUc.setText(i18n.GL1635());
 					}
-				}else if(txtChooseUsername.getText().contains(" ")){
-					userNameValidUc.setText(i18n.GL1635());
+					userNameValidUc.setVisible(true);
+					fieldValidationStaus = false;	
+				} 
+				if (txtChooseUsername.getText().length()>0 && txtChooseUsername.getText().length()<5) 
+				{
+					userNameValidUc.setText(i18n.GL0473()+i18n.GL_SPL_FULLSTOP());
+					userNameValidUc.getElement().setAttribute("alt",i18n.GL0473()+i18n.GL_SPL_FULLSTOP());
+					userNameValidUc.getElement().setAttribute("title",i18n.GL0473()+i18n.GL_SPL_FULLSTOP());
+					
+					userNameValidUc.setVisible(true);
+					fieldValidationStaus = false;
 				}
-				userNameValidUc.setVisible(true);
-				fieldValidationStaus = false;	
-			} 
-			if (txtChooseUsername.getText().length()>0 && txtChooseUsername.getText().length()<5) 
-			{
-				userNameValidUc.setText(i18n.GL0473()+i18n.GL_SPL_FULLSTOP());
-				userNameValidUc.getElement().setAttribute("alt",i18n.GL0473()+i18n.GL_SPL_FULLSTOP());
-				userNameValidUc.getElement().setAttribute("title",i18n.GL0473()+i18n.GL_SPL_FULLSTOP());
 				
-				userNameValidUc.setVisible(true);
-				fieldValidationStaus = false;
-			}
-			
-			if(txtChooseUsername.getText()==null||txtChooseUsername.getText().trim().equals(""))
-			{
-				userNameValidUc.setText(i18n.GL1284()+i18n.GL_SPL_FULLSTOP());
-				userNameValidUc.getElement().setAttribute("alt",i18n.GL1284()+i18n.GL_SPL_FULLSTOP());
-				userNameValidUc.getElement().setAttribute("title",i18n.GL1284()+i18n.GL_SPL_FULLSTOP());
-				userNameValidUc.setVisible(true);
-				fieldValidationStaus=false;
-			}
-			
-			
-			if (fieldValidationStaus && textBox.getValue() !=null && textBox.getValue().length() > 0){
-				Map<String, String> parms = new HashMap<String, String>();
-				parms.put("text", textBox.getValue());
+				if(txtChooseUsername.getText()==null||txtChooseUsername.getText().trim().equals(""))
+				{
+					userNameValidUc.setText(i18n.GL1284()+i18n.GL_SPL_FULLSTOP());
+					userNameValidUc.getElement().setAttribute("alt",i18n.GL1284()+i18n.GL_SPL_FULLSTOP());
+					userNameValidUc.getElement().setAttribute("title",i18n.GL1284()+i18n.GL_SPL_FULLSTOP());
+					userNameValidUc.setVisible(true);
+					fieldValidationStaus=false;
+				}
 				
 				
-				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-	
-					@Override
-					public void onSuccess(Boolean value) {
-						if (!value && userNameValidate){
-							btnSubmit.setEnabled(true);
-							btnSubmit.getElement().removeClassName("disabled");
+				if (fieldValidationStaus && textBox.getValue() !=null && textBox.getValue().length() > 0){
+					Map<String, String> parms = new HashMap<String, String>();
+					parms.put("text", textBox.getValue());
+					
+					
+					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+		
+						@Override
+						public void onSuccess(Boolean value) {
+							if (!value && userNameValidate){
+								btnSubmit.setEnabled(true);
+								btnSubmit.getElement().removeClassName("disabled");
+							}
+							
+							SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
+							if(textBox!=null){
+								label.getElement().getStyle().setWidth(92, Unit.PCT);
+							}
 						}
-						
-						SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
-						if(textBox!=null){
-							label.getElement().getStyle().setWidth(92, Unit.PCT);
-						}
-					}
-				});
+					});
+				}
 			}
 		}
 		
 	}
 	
 
+	@UiHandler("lblClose")
+	public void closePopup(ClickEvent event){
+		hide();
+	}
+	
 	/**
 	 * Added click handler for Textfield to perform basic validations.
 	 * @param event instance of {@link KeyUpEvent} 
