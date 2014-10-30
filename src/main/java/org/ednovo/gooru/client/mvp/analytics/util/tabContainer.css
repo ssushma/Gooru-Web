@@ -166,3 +166,6 @@
 	cursor: pointer;
 	background-color: inherit;
 }
+.questionCountlbl{
+	padding-bottom: 12px;
+}

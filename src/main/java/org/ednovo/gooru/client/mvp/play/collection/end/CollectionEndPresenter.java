@@ -119,6 +119,9 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	}
 	
 	public void setCollectionMetadata(final CollectionDo collectionDo){
+		clearSlot(COLLECTION_REPORTS_SLOT);
+		getView().resetCollectionMetaData();
+		getView().getLoadingImageLabel().setVisible(true);
 		this.collectionDo=collectionDo;
 		getView().setCollectionMetadata(collectionDo);
 		if(AppClientFactory.isAnonymous()) {
@@ -163,8 +166,9 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	}
 	
 	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId){
+		getView().getLoadingImageLabel().setVisible(true);
 		clearSlot(COLLECTION_REPORTS_SLOT);
-		collectionSummaryIndividualPresenter.setIndividualData(collectionId, classpageId, userId, sessionId,"",false,null);
+		collectionSummaryIndividualPresenter.setIndividualData(collectionId, classpageId, userId, sessionId,"",false,getView().getLoadingImageLabel());
 		setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
 	}
 	public void setViewCount(String viewCount){

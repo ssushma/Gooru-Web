@@ -122,7 +122,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 	}
 
 	@Override
-	public void setClickedTabPresenter(String clickedTab,String collectionId) {
+	public void setClickedTabPresenter(String clickedTab,String collectionId,String selectedCollectionTitle) {
 		String pathWayId=AppClientFactory.getPlaceManager().getRequestParameter("uid", null);
 		clearSlot(COLLECTION_PROGRESS_SLOT);
 		if(clickedTab!=null){
@@ -130,7 +130,7 @@ public class AnalyticsPresenter extends PresenterWidget<IsAnalyticsView> impleme
 				collectionSummaryPresenter.setCollectionSummaryData(collectionId,pathWayId);
 				setInSlot(COLLECTION_PROGRESS_SLOT, collectionSummaryPresenter,false);
 			}else if(clickedTab.equalsIgnoreCase(PROGRESS)){
-				collectionProgressPresenter.setCollectionProgressData(collectionId,pathWayId,false);
+				collectionProgressPresenter.setCollectionProgressData(collectionId,pathWayId,false,selectedCollectionTitle);
 				setInSlot(COLLECTION_PROGRESS_SLOT, collectionProgressPresenter,false);
 			}
 		}else{

@@ -59,6 +59,6 @@ public interface UnitAssignmentUiHandlers extends BaseUiHandlers{
 	void updateUnitstatus(String collectionItemId, String minimumScoreByuser,
 			String assignmentStatus, String time);
 	
-	void setClickedTabPresenter(String clickedTab,String collectionId);
+	void setClickedTabPresenter(String clickedTab,String collectionId,String collectionTitle);
 
 }

@@ -77,7 +77,6 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	}
 	@Override
 	protected void onHide() {
-		System.out.println("onhide method...........");
 		getView().resetUnitAssignmentView();
 	}
 	
@@ -94,7 +93,6 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			getAssignemntDetails(assignmentId,classId,unitId);
 		}
 	}
-	
 	
 	@Override
 	public void setClasspageData(ClasspageDo classpageDo){
@@ -178,7 +176,6 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		});
 	}
 	
-	
 	public ClasspageItemDo getClasspateItemDo(UnitAssignmentsDo unitAssignmentDo,String assignmentId){
 		for(int i=0;i<unitAssignmentDo.getSearchResults().size();i++){
 			ClasspageItemDo classpageItemDo1=unitAssignmentDo.getSearchResults().get(i);
@@ -187,12 +184,10 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			}
 		}
 		return null;
-		
 	}
 
 	public void showDashBoardDetails() {
 		getView().showDashBoard();
-		
 	}
 
 	public void showAssignmentDetails() {
@@ -212,7 +207,6 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 
 			@Override
 			public void onSuccess(ClassUnitsListDo result) {
-				// TODO Auto-generated method stub
 				String updatedTime=(result.getTimeStudying()!=null && !result.getTimeStudying().equals("")) ? result.getTimeStudying():null;
 				AppClientFactory.fireEvent(new UpdateUnitSetGoalEvent(0, 0,updatedTime));
 				
@@ -243,15 +237,19 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			}
 		});		
 	}
+	/**
+	 * This will set the related presenter in the slot
+	 */
 	@Override
-	public void setClickedTabPresenter(String clickedTab, String collectionId) {
+	public void setClickedTabPresenter(String clickedTab, String collectionId,String collectionTitle) {
 		String pathwayId=AppClientFactory.getPlaceManager().getRequestParameter("uid",null);
+		clearSlot(REPORT_SLOT);
 		if(clickedTab!=null){
 			if(clickedTab.equalsIgnoreCase(SUMMARY)){
 				collectionSummaryPresenter.setCollectionSummaryData(collectionId,pathwayId);
 				setInSlot(REPORT_SLOT, collectionSummaryPresenter,false);
 			}else if(clickedTab.equalsIgnoreCase(PROGRESS)){
-				collectionProgressPresenter.setCollectionProgressData(collectionId,pathwayId,true);
+				collectionProgressPresenter.setCollectionProgressData(collectionId,pathwayId,true,collectionTitle);
 				setInSlot(REPORT_SLOT, collectionProgressPresenter,false);
 			}
 		}

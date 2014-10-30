@@ -35,7 +35,7 @@ public interface AnalyticsUiHandlers extends BaseUiHandlers{
 	
 	void getPathwayUnits(String classId,int limit, int offset ,boolean clearPanel);
 	
-	void setClickedTabPresenter(String clickedTab,String collectionId);
+	void setClickedTabPresenter(String clickedTab,String collectionId,String selectedCollectionTitle);
 	
 	void getBottomStudentsData(String classpageId, String pathwayId,String collectionId,String sortOrder);
 	

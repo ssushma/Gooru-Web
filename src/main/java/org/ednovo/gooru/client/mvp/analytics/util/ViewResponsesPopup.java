@@ -24,13 +24,24 @@ public class ViewResponsesPopup extends PopupPanel {
 	
 	@UiField HTMLPanel viewResponsepnl;
 	@UiField Label totalResponselbl;
-
+	public ViewResponsesPopup(String questionCount,String questionText,String questionAnswers) {
+		setWidget(uiBinder.createAndBindUi(this));
+		setCollectionProgressData(questionCount, questionText, questionAnswers);
+	}
+	
 	public ViewResponsesPopup(ArrayList<OetextDataDO> result,String resourceGooruId,String collectionId, String classpageId,String pathwayId,String questionType,boolean isSummary) {
 		setWidget(uiBinder.createAndBindUi(this));
 		setPopUpData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary);
 	}
+	void setCollectionProgressData(String questionCount,String questionText,String questionAnswers){
+		viewResponsepnl.clear();
+		totalResponselbl.setVisible(false);
+		ViewResponseUserWidget responseUserWidget=new ViewResponseUserWidget(questionCount, questionText, questionAnswers);
+		viewResponsepnl.add(responseUserWidget);
+	}
 	void setPopUpData(ArrayList<OetextDataDO> result,String resourceGooruId,String collectionId, String classpageId,String pathwayId,String questionType,boolean isSummary){
 		viewResponsepnl.clear();
+		totalResponselbl.setVisible(true);
 		totalResponselbl.setText(result.size()+" Responses");
 		for (OetextDataDO oetextDataDO : result) {
 			ViewResponseUserWidget responseUserWidget=new ViewResponseUserWidget(oetextDataDO,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary);

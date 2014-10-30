@@ -65,6 +65,9 @@
             	<g:FlowPanel ui:field="metadataContainer"></g:FlowPanel>
            	    <g:FlowPanel styleName="{playerStyle.insightsFrame}" ui:field="dataInsightsPanel">
            	    	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer1"/>
+           	    	<g:HTMLPanel styleName="{unitStyle.loadingImageMainDiv}" ui:field="loadingImageLabel">
+						<g:Label styleName="{unitStyle.loadingImageForSelfEdit}" />
+					</g:HTMLPanel>
 	             	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer">
 	             	 <g:HTMLPanel styleName="{unitStyle.summary_title}">Collection Summary</g:HTMLPanel>
 					             	 <!-- Collection Summary Top -->
