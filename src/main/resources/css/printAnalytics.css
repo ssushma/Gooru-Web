@@ -1,0 +1,44 @@
+.setMarginAuto {
+	margin: 0 auto;
+	text-align: center;
+}
+.alignCenterAndBackground{
+	background-color: inherit !important;
+	text-align: center;
+	width: auto;
+}
+.reaction_explain1 {
+	background: url(../images/analyticsReactions.png) no-repeat scroll 0px 0px transparent;
+	height: 35px;
+	width: 35px
+}
+.reaction_understand1{
+	background: url(../images/analyticsReactions.png) no-repeat scroll -78px 1px transparent;
+	height: 35px;
+	width: 35px
+}
+.reaction_mean1 {
+	background: url(../images/analyticsReactions.png) no-repeat scroll -148px 1px transparent;
+	height: 35px;
+	width: 35px
+}
+.reaction_dontunderstand1 {
+	background: url(../images/analyticsReactions.png) no-repeat scroll -217px 2px transparent;
+	height: 35px;
+	width: 35px
+}
+.reaction_needhelp1 {
+	background: url(../images/analyticsReactions.png) no-repeat scroll -285px 0px transparent;
+	height: 35px;
+	width: 35px
+}
+.reaction_redneedhelp {
+	background: url(../images/analyticsReactions.png) no-repeat scroll -81px -45px transparent;
+	height: 35px;
+	width: 35px
+}
+.reaction_reddontunderstand{
+	background:url(../images/analyticsReactions.png) no-repeat scroll -1px -45px transparent;
+	height: 35px;
+	width: 35px
+}
