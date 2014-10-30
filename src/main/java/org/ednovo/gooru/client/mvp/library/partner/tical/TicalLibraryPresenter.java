@@ -61,6 +61,7 @@ public class TicalLibraryPresenter extends BasePlacePresenter<IsTicalLibraryView
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override

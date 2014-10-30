@@ -71,6 +71,7 @@ public class CfciLibraryPresenter extends BasePlacePresenter<IsCfciView, CfciLib
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override

@@ -166,6 +166,7 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 		if(AppClientFactory.isAnonymous()) {
 			AppClientFactory.setBrowserWindowTitle(SeoTokens.DISCOVER_TITLE_ANONYMOUS);
 		} else {

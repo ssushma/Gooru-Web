@@ -88,6 +88,7 @@ public class LifeboardLibraryPresenter extends BasePlacePresenter<IsLifeboardLib
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override

@@ -80,6 +80,7 @@ public class LpsLibraryPresenter extends BasePlacePresenter<IsLpsLibraryView, Lp
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override
