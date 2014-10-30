@@ -543,7 +543,6 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		    	 popupPanel.hide();
 		    	 Window.enableScrolling(true);
 		     }else{
-		     	 Window.scrollTo(0, 0);
 		    	 Window.enableScrolling(false);
 		    	 popupPanel.setGlassEnabled(true);
 		    	 popupPanel.setAutoHideEnabled(true);

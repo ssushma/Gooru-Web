@@ -394,6 +394,7 @@
 	right: 0 !important;
 	top: 180px !important;
 	bottom: 0 !important;
+	position: fixed !important;
 	margin: auto;
 	width: 941px;
 	min-height: 148px;

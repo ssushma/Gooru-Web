@@ -39,7 +39,7 @@ public class ViewResponseUserWidget extends Composite {
 	interface ViewResponseUserWidgetUiBinder extends
 			UiBinder<Widget, ViewResponseUserWidget> {
 	}
-	@UiField Label usernamelbl,userResponselbl,editedText,createOn;
+	@UiField Label questionCountlbl,usernamelbl,userResponselbl,editedText,createOn;
 	@UiField HTMLPanel giveFeedBackpnl,editFeedBackpnl,userAnswerspnl;
 	@UiField TextBox feedBacktxt;
 	@UiField InlineLabel spnEdit,spnDelete;
@@ -53,6 +53,18 @@ public class ViewResponseUserWidget extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		setData(oetextDataDO,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary);
 		feedBacktxt.getElement().setAttribute("placeholder", "Leave feedback for this answer");
+		questionCountlbl.setVisible(false);
+	}
+	public ViewResponseUserWidget(String questionCount,String questionText,String questionAnswers) {
+		initWidget(uiBinder.createAndBindUi(this));
+		questionCountlbl.setVisible(true);
+		questionCountlbl.setText("Question "+questionCount);
+		usernamelbl.setText(questionText);
+		userResponselbl.setText(questionAnswers);
+		giveFeedBackpnl.setVisible(false);
+		editFeedBackpnl.setVisible(false);
+		spnEdit.setVisible(false);
+		spnDelete.setVisible(false);
 	}
 	class OnErrorProfileImage implements ErrorHandler{
 		@Override

@@ -522,7 +522,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	    	 popupPanel.hide();
 	    	 Window.enableScrolling(true);
 	     }else{
-	     	 Window.scrollTo(0, 0);
 	    	 Window.enableScrolling(false);
 	    	 popupPanel.setGlassEnabled(true);
 	    	 popupPanel.setGlassStyleName(res.css().setGlassStyleName());

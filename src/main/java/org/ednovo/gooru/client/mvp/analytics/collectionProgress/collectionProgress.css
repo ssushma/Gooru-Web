@@ -159,3 +159,20 @@
 	background-color: #bdbebd;
 	-webkit-border-radius: 1ex;
 }
+.setOETextPopupCenter {
+	left: 0 !important;
+	right: 0 !important;
+	top: 180px !important;
+	bottom: 0 !important;
+	position: fixed !important;
+	margin: auto;
+	width: 941px;
+	min-height: 148px;
+	height:auto;
+	z-index: 99999;
+}
+.setGlassStyleName{
+	background-color: #000;
+	opacity: 0.3;
+	z-index: 99999;
+}

@@ -79,9 +79,8 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	private int limit = 5;
 	private int unitsPageNumber = 0;
 	private int unitsTotalCount = 0;
-	private int selectedUnitNumber;
 	String unitCollectionId;
-	
+	int selectedUnitNumber;
 	String unitId; 
 	ClassDo classDo;
 	private ClassUnitsListDo classUnitsDo;
@@ -106,7 +105,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		@Override
 		public void onChange(ChangeEvent event) {
 			//when changing the collections drop down reset all the changes.
-			getUiHandlers().setClickedTabPresenter(null,null);
+			getUiHandlers().setClickedTabPresenter(null,null,null);
 			clearDownArrow();
 			setMinimumScoresData();
 			String pathwayId=AppClientFactory.getPlaceManager().getRequestParameter("uid", "");
@@ -126,24 +125,25 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		public void onClick(ClickEvent event) {
 			clearDownArrows();
 			String selectedCollectionId=loadCollections.getValue(loadCollections.getSelectedIndex());
+			String selectedCollectionTitle=loadCollections.getItemText(loadCollections.getSelectedIndex());
 			if(clicked.equalsIgnoreCase(PROGRESS)){
 				isSummayClicked=false;
 				if(isProgressClicked){
 					isProgressClicked=false;
-					getUiHandlers().setClickedTabPresenter(null,selectedCollectionId);
+					getUiHandlers().setClickedTabPresenter(null,selectedCollectionId,selectedCollectionTitle);
 				}else{
 					isProgressClicked=true;
-					getUiHandlers().setClickedTabPresenter(PROGRESS,selectedCollectionId);
+					getUiHandlers().setClickedTabPresenter(PROGRESS,selectedCollectionId,selectedCollectionTitle);
 					progressArrowlbl.addStyleName(res.unitAssignment().activeCaretup());
 				}
 			}else if(clicked.equalsIgnoreCase(SUMMARY)){
 				isProgressClicked=false;
 				if(isSummayClicked){
 					isSummayClicked=false;
-					getUiHandlers().setClickedTabPresenter(null,selectedCollectionId);
+					getUiHandlers().setClickedTabPresenter(null,selectedCollectionId,selectedCollectionTitle);
 				}else{
 					isSummayClicked=true;
-					getUiHandlers().setClickedTabPresenter(SUMMARY,selectedCollectionId);
+					getUiHandlers().setClickedTabPresenter(SUMMARY,selectedCollectionId,selectedCollectionTitle);
 					summaryArrowlbl.addStyleName(res.unitAssignment().activeCaretup());
 				}
 			}else{

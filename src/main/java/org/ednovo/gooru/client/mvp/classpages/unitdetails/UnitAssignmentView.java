@@ -1076,14 +1076,14 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				getUiHandlers().setClickedTabPresenter(SUMMARY,classpageItemDo.getResource().getGooruOid());
+				getUiHandlers().setClickedTabPresenter(SUMMARY,classpageItemDo.getResource().getGooruOid(),null);
 			}
 		});
 		collectionView.getBtnProgress().addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				getUiHandlers().setClickedTabPresenter(PROGRESS,classpageItemDo.getResource().getGooruOid());
+				getUiHandlers().setClickedTabPresenter(PROGRESS,classpageItemDo.getResource().getGooruOid(),classpageItemDo.getResource().getTitle());
 			}
 		});
 		assignmentContainer.add(collectionView);

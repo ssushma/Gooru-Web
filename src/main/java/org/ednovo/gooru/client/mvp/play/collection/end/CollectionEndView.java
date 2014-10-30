@@ -114,7 +114,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField VerticalPanel commentsContainer;
 	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,
 					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText;
-	@UiField HTMLPanel addComment,loginMessaging;
+	@UiField HTMLPanel loadingImageLabel,addComment,loginMessaging;
 	@UiField TextArea commentField;
 	@UiField Button postCommentBtn,postCommentCancel;
 	@UiField Anchor loginUrl, signupUrl;
@@ -191,6 +191,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		setWidget(uiBinder.createAndBindUi(this));
 		setLabelAndIds();
 		frameContainer1.setVisible(false);
+		loadingImageLabel.setVisible(false);
 		//teacherContainer.setVisible(false);
 		messageContainer.setVisible(false);
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
@@ -1576,5 +1577,17 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			});
 			collectionResourcesCount.setText((result.get(0).getResourceCount()-result.get(0).getTotalQuestionCount())+" Resources | "+result.get(0).getTotalQuestionCount()+" Questions");
 		}
+	}
+	@Override
+	public void resetCollectionMetaData(){
+		collectionTitle.setText("");
+		collectionLastAccessed.setText("");
+		collectionImage.setUrl("");
+		collectionResourcesCount.setText("");
+	}
+
+	@Override
+	public HTMLPanel getLoadingImageLabel() {
+		return loadingImageLabel;
 	}
 }

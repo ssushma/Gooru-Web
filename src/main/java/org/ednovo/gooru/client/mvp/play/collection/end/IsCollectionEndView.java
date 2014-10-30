@@ -38,6 +38,7 @@ import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 
 
@@ -95,4 +96,9 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public void setSessionsData(ArrayList<CollectionSummaryUsersDataDo> sessionData);
 	
 	public void setCollectionMetaDataByUserAndSession(ArrayList<CollectionSummaryMetaDataDo> collectionMetadata);
+	
+	public void resetCollectionMetaData();
+	
+	public HTMLPanel getLoadingImageLabel();
+	
 }
