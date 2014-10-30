@@ -94,6 +94,11 @@ public class LifeboardLibraryPresenter extends BasePlacePresenter<IsLifeboardLib
 	public void onReset() {
 		super.onReset();
 	}
+	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.LIFEBOARD);
+	}
 	
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {

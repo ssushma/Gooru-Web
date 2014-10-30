@@ -216,6 +216,10 @@ public class LibraryTopicListView extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicDo.getCodeId();
 		setPlaceToken(placeToken);
+		String libraryGooruOid="";
+		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COMMUNITY)){
+			libraryGooruOid=AppClientFactory.getLoggedInUser().getSettings().getCommunityLibraryGooruOid();
+		}
 		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
 		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
 		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
@@ -240,25 +244,25 @@ public class LibraryTopicListView extends Composite{
 		toolTipPopupPanelCustomize.hide();
 		toolTipPopupPanelNew.hide();
 		if(topicDo.getLesson()!=null) {
-			setLessonData(topicDo.getLesson());
+			setLessonData(topicDo.getLesson(),libraryGooruOid);
 		} else {
-			setOnlyConceptData(topicDo.getCollection(), true, null, 0);
+			setOnlyConceptData(topicDo.getCollection(), true, null, 0,libraryGooruOid);
 		}
 		try {
 			this.topicDo = topicDo;
 			if(topicDo.getLesson()!=null) {
 				if(topicDo.getLesson().get(0).getConcept()!=null&&topicDo.getLesson().get(0).getConcept().size()>0) {
 					setConceptDoList(topicDo.getLesson().get(0).getConcept().get(0).getCollection());
-					setConceptData(conceptDoList.get(0),topicDo.getCodeId(), topicDo.getLesson().get(0).getCodeId()+"", topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
+					setConceptData(conceptDoList.get(0),topicDo.getCodeId(), topicDo.getLesson().get(0).getCodeId()+"", topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode(),libraryGooruOid);
 				} else {
-					setConceptData(topicDo.getLesson().get(0).getCollection().get(0),topicDo.getCodeId(), topicDo.getLesson().get(0).getCodeId()+"", topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
+					setConceptData(topicDo.getLesson().get(0).getCollection().get(0),topicDo.getCodeId(), topicDo.getLesson().get(0).getCodeId()+"", topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode(),libraryGooruOid);
 				}
 			} else if (topicDo.getCollection()!=null) {
 				if(topicDo.getLesson().get(0).getConcept()!=null&&topicDo.getLesson().get(0).getConcept().size()>0) {
 					setConceptDoList(topicDo.getLesson().get(0).getConcept().get(0).getCollection());
-					setConceptData(conceptDoList.get(0),topicDo.getCodeId(),null, topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
+					setConceptData(conceptDoList.get(0),topicDo.getCodeId(),null, topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode(),libraryGooruOid);
 				} else {
-					setConceptData(topicDo.getCollection().get(0),topicDo.getCodeId(),null, topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
+					setConceptData(topicDo.getCollection().get(0),topicDo.getCodeId(),null, topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode(),libraryGooruOid);
 				}
 			} else {
 				setDefaultCollectionLbl();
@@ -413,7 +417,7 @@ public class LibraryTopicListView extends Composite{
 		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
 		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
 		try {
-			setConceptData(conceptDo,conceptNumber,null, null,null);
+			setConceptData(conceptDo,conceptNumber,null, null,null,null);
 		} catch(Exception e) {
 			collectionInfo.setVisible(false);
 			resourcesInside.setVisible(false);
@@ -455,7 +459,7 @@ public class LibraryTopicListView extends Composite{
 		}
 	}
 
-	public LibraryTopicListView(PartnerFolderDo partnerFolderDo, int topicNumber, String placeToken) {
+	public LibraryTopicListView(PartnerFolderDo partnerFolderDo, int topicNumber, String placeToken,String libraryGooruOid) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicNumber;
 		setPlaceToken(placeToken);
@@ -484,16 +488,16 @@ public class LibraryTopicListView extends Composite{
 		setAssets();
 		addCollectionQuizTitleData("partner");
 		if(partnerFolderDo.getCollections()!=null) {
-			setOnlyConceptData(partnerFolderDo.getCollections(), false, partnerFolderDo.getGooruOid(), partnerFolderDo.getItemCount());
+			setOnlyConceptData(partnerFolderDo.getCollections(), false, partnerFolderDo.getGooruOid(), partnerFolderDo.getItemCount(),libraryGooruOid);
 			try {
-				setConceptData(partnerFolderDo.getCollections().get(0),topicId, null, null,null);
+				setConceptData(partnerFolderDo.getCollections().get(0),topicId, null, null,null,libraryGooruOid);
 			} catch(Exception e) {
 				setDefaultCollectionLbl();
 			}
 		} else {
 			setPartnerLibraryLessonData(partnerFolderDo.getFolderItems());
 			try {
-				setConceptData(partnerFolderDo.getFolderItems().get(0).getCollections().get(0),topicId, null, null,null);
+				setConceptData(partnerFolderDo.getFolderItems().get(0).getCollections().get(0),topicId, null, null,null,libraryGooruOid);
 			} catch(Exception e) {
 				setDefaultCollectionLbl();
 			}
@@ -596,7 +600,7 @@ public class LibraryTopicListView extends Composite{
 	 * @throws : <Mentioned if any exceptions>
 	 *
 	 */
-	private void setLessonData(final List<LessonDo> lessonDoList) {
+	private void setLessonData(final List<LessonDo> lessonDoList,final String libraryGooruOid) {
 		boolean isLessonHighlighted = true;
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
 		final String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject","featured");
@@ -616,7 +620,7 @@ public class LibraryTopicListView extends Composite{
 				} else {
 					overallCount = ++overallCount + lessonDoList.get(i).getCollection().size();
 				}
-				conceptList.add(new LibraryLessonUc(lessonDoList.get(i),topicId,isLessonHighlighted, (i+1)));
+				conceptList.add(new LibraryLessonUc(lessonDoList.get(i),topicId,isLessonHighlighted, (i+1),libraryGooruOid));
 			}
 
 			lessonScrollPanel.addScrollHandler(new ScrollHandler() {
@@ -628,7 +632,7 @@ public class LibraryTopicListView extends Composite{
 							@Override
 							public void onSuccess(ArrayList<LessonDo> result) {
 								for(int i=0;i<result.size();i++) {
-									conceptList.add(new LibraryLessonUc(result.get(i),topicId,false,((LESSON_PAGE_INITIAL_LIMIT+1)+i)));
+									conceptList.add(new LibraryLessonUc(result.get(i),topicId,false,((LESSON_PAGE_INITIAL_LIMIT+1)+i),libraryGooruOid));
 								}
 							}
 						});
@@ -642,7 +646,7 @@ public class LibraryTopicListView extends Composite{
 				} else {
 					isLessonHighlighted = false;
 				}
-				conceptList.add(new LibraryLessonUc(lessonDoList.get(i),topicId,isLessonHighlighted,(i+1)));
+				conceptList.add(new LibraryLessonUc(lessonDoList.get(i),topicId,isLessonHighlighted,(i+1),libraryGooruOid));
 			}
 		}
 		if(overallCount<15) {
@@ -651,7 +655,7 @@ public class LibraryTopicListView extends Composite{
 				@Override
 				public void onSuccess(ArrayList<LessonDo> result) {
 					for(int i=0;i<result.size();i++) {
-						conceptList.add(new LibraryLessonUc(result.get(i),topicId,false,((LESSON_PAGE_INITIAL_LIMIT+1)+i)));
+						conceptList.add(new LibraryLessonUc(result.get(i),topicId,false,((LESSON_PAGE_INITIAL_LIMIT+1)+i),libraryGooruOid));
 					}
 				}
 			});
@@ -673,7 +677,7 @@ public class LibraryTopicListView extends Composite{
 	 * @throws : <Mentioned if any exceptions>
 	 *
 	 */
-	private void setOnlyConceptData(ArrayList<ConceptDo> conceptDoList, boolean isTopicCalled, final String parentId, final int partnerItemCount) {
+	private void setOnlyConceptData(ArrayList<ConceptDo> conceptDoList, boolean isTopicCalled, final String parentId, final int partnerItemCount,final String libraryGooruOid) {
 		boolean isLessonHighlighted = true;
 		int pageCount = 0;
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
@@ -687,7 +691,7 @@ public class LibraryTopicListView extends Composite{
 			pageCount = conceptDoList.size();
 		}
 		if(pageCount>=LESSON_PAGE_INITIAL_LIMIT) {
-			conceptList.add(new LibraryLessonUc(conceptDoList,topicId,isLessonHighlighted, 0));
+			conceptList.add(new LibraryLessonUc(conceptDoList,topicId,isLessonHighlighted, 0,libraryGooruOid));
 			final String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject","featured");
 			lessonScrollPanel.addScrollHandler(new ScrollHandler() {
 				@Override
@@ -705,7 +709,7 @@ public class LibraryTopicListView extends Composite{
 										if(LESSON_PAGE_INITIAL_LIMIT < partnerItemCount) {
 											isScrollable = true;
 										}
-										conceptList.add(new LibraryLessonUc(result.getSearchResult(),topicId,false, 0));
+										conceptList.add(new LibraryLessonUc(result.getSearchResult(),topicId,false, 0,libraryGooruOid));
 									}
 								});
 							}
@@ -716,7 +720,7 @@ public class LibraryTopicListView extends Composite{
 								public void onSuccess(ArrayList<LessonDo> lessonDoList) {
 									for(int i=0;i<lessonDoList.size();i++) {
 										isScrollable = false;
-										conceptList.add(new LibraryLessonUc(lessonDoList.get(i).getCollection(),topicId,false, 0));
+										conceptList.add(new LibraryLessonUc(lessonDoList.get(i).getCollection(),topicId,false, 0,libraryGooruOid));
 									}
 								}
 							});
@@ -735,7 +739,7 @@ public class LibraryTopicListView extends Composite{
 				} else {
 					isLessonHighlighted = false;
 				}
-				conceptList.add(new LibraryLessonUc(conceptDoList,topicId,isLessonHighlighted,(i+1)));
+				conceptList.add(new LibraryLessonUc(conceptDoList,topicId,isLessonHighlighted,(i+1),libraryGooruOid));
 			}
 		}
 	}
@@ -813,7 +817,7 @@ public class LibraryTopicListView extends Composite{
 	 * @throws : <Mentioned if any exceptions>
 	 *
 	 */
-	public void setConceptData(final ConceptDo conceptDo, Integer topicId, final String lessonId, String lessonLabel,String lessonCode) {
+	public void setConceptData(final ConceptDo conceptDo, Integer topicId, final String lessonId, String lessonLabel,String lessonCode,final String libraryGooruOid) {
 		setConceptDo(conceptDo);
 		this.lessonCode=lessonCode;
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
@@ -870,8 +874,8 @@ public class LibraryTopicListView extends Composite{
 					if(titleHandler!=null) {
 						titleHandler.removeHandler();
 					}
-					imageHandler=collectionImage.addClickHandler(new CollectionOpenClickHandler(lessonId));
-					titleHandler=collectionTitleLbl.addClickHandler(new CollectionOpenClickHandler(lessonId));
+					imageHandler=collectionImage.addClickHandler(new CollectionOpenClickHandler(lessonId,libraryGooruOid));
+					titleHandler=collectionTitleLbl.addClickHandler(new CollectionOpenClickHandler(lessonId,libraryGooruOid));
 				} catch (Exception e) {
 					collectionImage.setUrl(DEFAULT_COLLECTION_IMAGE);
 				}
@@ -1006,6 +1010,9 @@ public class LibraryTopicListView extends Composite{
 									params.put("rid", resourceId);
 									params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 									params.put("lessonId", lessonId);
+									if(libraryGooruOid!=null){
+										params.put("lid", libraryGooruOid);
+									}
 									if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY) || getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 										params.put("library", getPlaceToken());
 									}
@@ -1088,6 +1095,9 @@ public class LibraryTopicListView extends Composite{
 									params.put("rid", resourceId);
 									params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 									params.put("lessonId", lessonId);
+									if(libraryGooruOid!=null){
+										params.put("lid", libraryGooruOid);
+									}
 									if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY) || getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 										params.put("library", getPlaceToken());
 									}
@@ -1221,9 +1231,10 @@ public class LibraryTopicListView extends Composite{
 	
 	public class CollectionOpenClickHandler implements ClickHandler {
 			private String lessonId;
-			
-			public CollectionOpenClickHandler(String lessonId) {
+			private String libraryId;
+			public CollectionOpenClickHandler(String lessonId,String libraryId) {
 				this.lessonId = lessonId;
+				this.libraryId=libraryId;
 			}
 			@Override
 			public void onClick(ClickEvent event) {
@@ -1240,6 +1251,9 @@ public class LibraryTopicListView extends Composite{
 				params.put("id", conceptDo.getGooruOid());
 				params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 				params.put("lessonId", lessonId);
+				if(libraryId!=null){
+					params.put("lid", libraryId);
+				}
 				if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY) || getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 					params.put("library", getPlaceToken());
 				}
@@ -1253,8 +1267,8 @@ public class LibraryTopicListView extends Composite{
 	
 	OpenLessonConceptHandler openLessonConceptHandler = new OpenLessonConceptHandler() {
 		@Override
-		public void openLessonConcept(ConceptDo conceptDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode) {
-			setConceptData(conceptDo, topicId, lessonId, lessonLabel,lessonCode);
+		public void openLessonConcept(ConceptDo conceptDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode,String libraryGooruOid) {
+			setConceptData(conceptDo, topicId, lessonId, lessonLabel,lessonCode,libraryGooruOid);
 			setConceptDoList(null);
 			addCollectionQuizTitleData("lesson");
 		}
@@ -1627,11 +1641,11 @@ public class LibraryTopicListView extends Composite{
 	SetConceptQuizDataHandler setConceptQuizDataHandler = new SetConceptQuizDataHandler() {
 		@Override
 		public void setConceptQuizDataHandler(ArrayList<ConceptDo> conceptDoList, Integer topicId,
-				String lessonId, String lessonLabel, String lessonCode, String conceptId) {
+				String lessonId, String lessonLabel, String lessonCode, String conceptId,String libraryGooruOid) {
 			setConceptDoList(conceptDoList);
 			for(int i = 0; i<conceptDoList.size();i++) {
 				if(conceptDoList.get(i).getGooruOid().equalsIgnoreCase(conceptId)) {
-					setConceptData(conceptDoList.get(i),topicId,lessonId,lessonLabel,lessonCode);
+					setConceptData(conceptDoList.get(i),topicId,lessonId,lessonLabel,lessonCode,libraryGooruOid);
 				}
 			}
 			addCollectionQuizTitleData("lesson");
@@ -1670,7 +1684,7 @@ public class LibraryTopicListView extends Composite{
 	private void setConceptDoData(String collectionType) {
 		for(int i = 0; i<conceptDoList.size();i++) {
 			if(conceptDoList.get(i).getCollectionType().equalsIgnoreCase(collectionType)) {
-				setConceptData(conceptDoList.get(i),topicDo.getCodeId(),null, topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode());
+				setConceptData(conceptDoList.get(i),topicDo.getCodeId(),null, topicDo.getLesson().get(0).getLabel(),topicDo.getLesson().get(0).getCode(),null);
 			}
 		}
 	}

@@ -86,6 +86,11 @@ public class SausdLibraryPresenter extends BasePlacePresenter<IsSausdLibraryView
 	public void onReset() {
 		super.onReset();
 	}
+	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.SAUSD_LIBRARY);
+	}
 	
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
