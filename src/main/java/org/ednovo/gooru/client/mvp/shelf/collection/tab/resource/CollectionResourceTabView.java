@@ -1039,8 +1039,11 @@ public class CollectionResourceTabView extends
 	}
 	@Override
 	public void updateCollectionItem(CollectionItemDo collectionItem) {
+		if(collectionItem != null)
+		{
 		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(collectionItem, RefreshType.UPDATE));
 		AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(collectionItem, RefreshType.UPDATE));
+		}
 	}
 	
 
