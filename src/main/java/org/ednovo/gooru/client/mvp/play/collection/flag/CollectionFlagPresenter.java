@@ -131,9 +131,9 @@ public class CollectionFlagPresenter extends PresenterWidget<IsCollectionFlagVie
 	public void ItemFlagDataLogEvent(String associatedGooruOid,String freeText,ArrayList<String> contentReportList,boolean isResourceFlag,String collectionItemId){
 		String itemType=isResourceFlag?PlayerDataLogEvents.RESOURCE:PlayerDataLogEvents.COLLECTION;
 	   if(isPreviewPlayer){
-		   previewPlayerPresenter.triggerItemFlagDataLogEvent(System.currentTimeMillis(),itemType,freeText,contentReportList,associatedGooruOid, collectionItemId);
+		   previewPlayerPresenter.triggerItemFlagDataLogEvent(PlayerDataLogEvents.getUnixTime(),itemType,freeText,contentReportList,associatedGooruOid, collectionItemId);
 	   }else if(isCollectionPlayer){
-		   collectionPlayerPresenter.triggerItemFlagDataLogEvent(System.currentTimeMillis(),itemType,freeText,contentReportList,associatedGooruOid, collectionItemId);
+		   collectionPlayerPresenter.triggerItemFlagDataLogEvent(PlayerDataLogEvents.getUnixTime(),itemType,freeText,contentReportList,associatedGooruOid, collectionItemId);
 	   }
 	}
 	public Image getCloseButtonImage()

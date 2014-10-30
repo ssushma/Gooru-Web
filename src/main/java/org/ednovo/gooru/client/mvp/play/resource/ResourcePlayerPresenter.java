@@ -568,7 +568,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	public void startResourceInsightDataLog(){
 		resourceDataLogEventId=GwtUUIDGenerator.uuid();
-		resourceStartTime=System.currentTimeMillis();
+		resourceStartTime=PlayerDataLogEvents.getUnixTime();
 		resourceNewDataLogEventId=GwtUUIDGenerator.uuid();
 		if(collectionItemDo!=null){
 			if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("assessment-question")){
@@ -589,7 +589,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	
 	public void stopResourceInsightDataLog(){
 		stopHintOrExplanationEvent();
-		Long resourceEndTime=System.currentTimeMillis();
+		Long resourceEndTime=PlayerDataLogEvents.getUnixTime();
 		PlayerDataLogEvents.resourcePlayStartStopEvent(resourceDataLogEventId, resourcePlayEventName, "",collectionItemDo.getResource().getGooruOid(),"", PlayerDataLogEvents.STOP_EVENT_TYPE, resourceStartTime,
 				resourceEndTime,resourceEndTime-resourceStartTime,AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid(),attemptTrySequence,attemptStatus, answerIds,oeQuestionAnswerText,oeQuestionAnswerText.length());
 		triggerCollectionItemNewDataLogStartStopEvent(collectionItemDo.getResource().getGooruOid(), resourceStartTime, resourceEndTime, PlayerDataLogEvents.STOP_EVENT_TYPE, getResourceScore(), questionType);
@@ -716,7 +716,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	public void startHintDataLogEvent(int hintId){
 		stopHintOrExplanationEvent();
 		this.hintId=hintId;
-		hintOrExplanationStartTime=System.currentTimeMillis();
+		hintOrExplanationStartTime=PlayerDataLogEvents.getUnixTime();
 		hintOrExplanationEventId=GwtUUIDGenerator.uuid();
 		if(collectionItemDo!=null){
 			if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("assessment-question")){
@@ -754,7 +754,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		stopHintOrExplanationEvent();
 		hintOrExplanationEventName=null;
 		String submitEventId=GwtUUIDGenerator.uuid();
-		Long answerEndTime=System.currentTimeMillis();
+		Long answerEndTime=PlayerDataLogEvents.getUnixTime();
 		PlayerDataLogEvents.submitOeAnswerDataLogEvent(submitEventId, PlayerDataLogEvents.QUESTION_OE_SAVE_EVENT_NAME, resourceDataLogEventId,
 				collectionItemDo.getResource().getGooruOid(),resourceStartTime,answerEndTime, answerEndTime-resourceStartTime,
 				 AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid(),attemptTrySequence,attemptStatus, answerIds,oeQuestionAnswerText,oeQuestionAnswerText.length(),"");
@@ -762,7 +762,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	
 	public void stopHintOrExplanationEvent(){
 		if(hintOrExplanationEventName!=null){
-			Long endTime=System.currentTimeMillis();
+			Long endTime=PlayerDataLogEvents.getUnixTime();
 			Long spendTime=endTime-hintOrExplanationStartTime;
 			if(hintOrExplanationEventName.equals(PlayerDataLogEvents.QUESTION_RESOURCE_EXPLANATION_EVENT_NAME)){
 				PlayerDataLogEvents.explanationButtonDataLogEvent(hintOrExplanationEventId, PlayerDataLogEvents.COLLECTION_RESOURCE_EXPLANATION_EVENT_NAME, resourceDataLogEventId, collectionItemDo.getResource().getGooruOid(), 
@@ -985,7 +985,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	public void triggerSaveOeAnswerTextDataEvent(){
 		String oeDataLogEventId=GwtUUIDGenerator.uuid();
-		Long oeStartTime=System.currentTimeMillis();
+		Long oeStartTime=PlayerDataLogEvents.getUnixTime();
 		triggerSaveOeAnswerTextDataEvent(oeDataLogEventId,collectionItemDo.getResource().getGooruOid(),oeStartTime,oeStartTime,0);
 	}
 	
@@ -1036,7 +1036,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	public void triggerShareDataLogEvent(String resourceGooruOid, String itemType, String shareType, boolean confirmStatus){
-		PlayerDataLogEvents.triggerItemShareDataLogEvent(resourceGooruOid, "", "", "", sessionId, itemType, shareType, confirmStatus, PlayerDataLogEvents.STUDY, "", null);
+		PlayerDataLogEvents.triggerItemShareDataLogEvent(resourceGooruOid, "", null,"", "", sessionId, itemType, shareType, confirmStatus, PlayerDataLogEvents.STUDY, "", null);
 	}
 	/**
 	 * Gets the respective resource ratings rated by the user.

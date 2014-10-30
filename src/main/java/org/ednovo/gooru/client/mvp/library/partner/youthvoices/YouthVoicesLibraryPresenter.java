@@ -80,6 +80,7 @@ public class YouthVoicesLibraryPresenter extends BasePlacePresenter<IsYouthVoice
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override
@@ -87,6 +88,11 @@ public class YouthVoicesLibraryPresenter extends BasePlacePresenter<IsYouthVoice
 		super.onReset();
 	}
 	
+	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.YOUTHVOICES);
+	}
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);

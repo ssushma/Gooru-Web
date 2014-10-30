@@ -80,11 +80,18 @@ public class OnrLibraryPresenter extends BasePlacePresenter<IsOnrLibraryView, On
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override
 	public void onReset() {
 		super.onReset();
+	}
+	
+	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.ONR);
 	}
 	
 	@Override

@@ -33,6 +33,8 @@ import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.player.collection.client.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
@@ -166,6 +168,7 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 		if(AppClientFactory.isAnonymous()) {
 			AppClientFactory.setBrowserWindowTitle(SeoTokens.DISCOVER_TITLE_ANONYMOUS);
 		} else {
@@ -188,11 +191,29 @@ public class CommunityPresenter extends BasePlacePresenter<IsCommunityView, Comm
 	}
 	
 	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.DISCOVER);
+	}
+	
+	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		request.getParameter("", "register");
 		callBackMethods();
 		getIntoLibrarypage();
+		tiggerCommnutiyLibraryEvent();
+		
+	}
+	
+	public void tiggerCommnutiyLibraryEvent(){
+		if(!AppClientFactory.getPlaceManager().isLibaryEventTriggered(PlaceTokens.DISCOVER)){
+			String eventId=GwtUUIDGenerator.uuid();
+			String libraryGooryOid=AppClientFactory.getLoggedInUser().getSettings().getCommunityLibraryGooruOid();
+			AppClientFactory.getPlaceManager().setLibaryEventTriggered(PlaceTokens.DISCOVER);
+			AppClientFactory.getPlaceManager().setLibraryEventId(eventId);
+			PlayerDataLogEvents.triggerLibarayViewEvent(libraryGooryOid, eventId, "library");
+		}
 	}
 	
 	/**

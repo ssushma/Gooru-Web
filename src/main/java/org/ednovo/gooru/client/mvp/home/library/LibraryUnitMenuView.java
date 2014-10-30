@@ -47,6 +47,8 @@ public class LibraryUnitMenuView extends Composite {
 	
 	private Integer widgetCount;
 	
+	private String libraryGooruOid;
+	
 	private String type;
 	
 	private static LibraryUnitMenuViewUiBinder uiBinder = GWT
@@ -79,15 +81,17 @@ public class LibraryUnitMenuView extends Composite {
 		unitMenuItem.getElement().setAttribute("alt",folderDo.getTitle());
 		unitMenuItem.getElement().setAttribute("title",folderDo.getTitle());
 		setUnitId(folderDo.getGooruOid());
+		setLibraryGooruOid(folderDo.getParentGooruOid());
 		setIds();
 	}
 
-	public LibraryUnitMenuView(ProfileLibraryDo folderDo) {
+	public LibraryUnitMenuView(ProfileLibraryDo folderDo,String libraryGooruOid) {
 		initWidget(uiBinder.createAndBindUi(this));
 		unitMenuItem.setText(folderDo.getTitle());
 		unitMenuItem.getElement().setAttribute("alt",folderDo.getTitle());
 		unitMenuItem.getElement().setAttribute("title",folderDo.getTitle());
 		setUnitId(folderDo.getGooruOid());
+		setLibraryGooruOid(folderDo.getParentGooruOid());
 		setIds();
 	}
 	public void setIds(){
@@ -126,6 +130,14 @@ public class LibraryUnitMenuView extends Composite {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getLibraryGooruOid() {
+		return libraryGooruOid;
+	}
+
+	public void setLibraryGooruOid(String libraryGooruOid) {
+		this.libraryGooruOid = libraryGooruOid;
 	}
 	
 	

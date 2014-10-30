@@ -67,6 +67,8 @@ public class DistrictFeaturedView extends Composite {
 	
 	private String parentId;
 	
+	private String libraryGooruOid;
+	
 	private static FeaturedCourseListViewUiBinder uiBinder = GWT
 			.create(FeaturedCourseListViewUiBinder.class);
 
@@ -74,8 +76,9 @@ public class DistrictFeaturedView extends Composite {
 			UiBinder<Widget, DistrictFeaturedView> {
 	}
 
-	public DistrictFeaturedView(ProfileLibraryDo profileLibraryDo) {
+	public DistrictFeaturedView(ProfileLibraryDo profileLibraryDo,String libraryGooruOid) {
 		initWidget(uiBinder.createAndBindUi(this));
+		setLibraryGooruOid(libraryGooruOid);
 		setData(profileLibraryDo);
 	}
 	
@@ -185,5 +188,13 @@ public class DistrictFeaturedView extends Composite {
 
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
+	}
+
+	public String getLibraryGooruOid() {
+		return libraryGooruOid;
+	}
+
+	public void setLibraryGooruOid(String libraryGooruOid) {
+		this.libraryGooruOid = libraryGooruOid;
 	}
 }

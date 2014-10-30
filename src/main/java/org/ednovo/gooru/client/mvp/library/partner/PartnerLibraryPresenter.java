@@ -71,11 +71,11 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	}
 	
 	@Override
-	public void getPartnerChildFolderItems(final String folderId, final int pageNumber) {
+	public void getPartnerChildFolderItems(final String folderId, final int pageNumber,final String libraryGooruOid) {
 		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 14,new SimpleAsyncCallback<PartnerFolderListDo>() {
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
-				getView().setTopicListData(result.getSearchResult(), folderId);
+				getView().setTopicListData(result.getSearchResult(), folderId,libraryGooruOid);
 			}
 		});
 	}
