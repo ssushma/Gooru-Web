@@ -1627,130 +1627,20 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	@Override
 	public CollectionItemDo v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) throws GwtException, ServerDownException {
 		CollectionItemDo collItemDo = collectionItemDo;
-
 		JsonRepresentation jsonRep = null;
-		CollectionAddQuestionItemDo collectionAddQuestionItemDo=new CollectionAddQuestionItemDo();
-		collectionAddQuestionItemDo.setQuestion(collItemDo.getCollectionQuestionItemDo());
-		//collectionAddQuestionItemDo.setMediaFileName(fileName);
+
 	
 		CollectionItemDo collectionItemDoNew=new CollectionItemDo();
 		
 
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_QUESTION_ITEM, collItemDo.getCollectionItemId(), getLoggedInSessionToken());
-		
-		collItemDo.getQuestionInfo().setLicense(null);
-		collItemDo.getQuestionInfo().setResourceFormat(null);
-		collItemDo.getQuestionInfo().setTaxonomySet(null);
-		collItemDo.getQuestionInfo().setThumbnails(null);
-		collItemDo.getQuestionInfo().setResourceType(null);
-		collItemDo.getQuestionInfo().setCreator(null);
-		collItemDo.getQuestionInfo().setUser(null);
-		collItemDo.getQuestionInfo().setCreatedOn(null);
-		collItemDo.getQuestionInfo().setUrl(null);
-		collItemDo.getQuestionInfo().setViews(null);
-		collItemDo.getQuestionInfo().setGooruOid(null);
-		collItemDo.getQuestionInfo().setAssets(null);
-		
-		TreeSet<QuestionAnswerDo> treeSet = new TreeSet<QuestionAnswerDo>();
-		treeSet.addAll(collItemDo.getQuestionInfo().getAnswers());
-		
-		 Object[] objArray = treeSet.toArray();
-		 JSONArray jArr = new JSONArray();
 		 
-		 for(int i=0; i < objArray.length ; i++)
-		 {
-			 try {
-				JSONObject jsonObjVal = new JSONObject(ResourceFormFactory.generateStringDataForm(objArray[i],null));
-				jArr.put(jsonObjVal);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
-		 }
-		 
-		 ArrayList<checkboxSelectedDo> treeSet1 = new ArrayList<checkboxSelectedDo>();
-			treeSet1.addAll(collItemDo.getQuestionInfo().getDepthOfKnowledges());
-			
-			 Object[] objArray1 = treeSet1.toArray();
-			 JSONArray jArr1 = new JSONArray();
-			 
-			 for(int j=0; j < objArray1.length ; j++)
-			 {
-				 try {
-					JSONObject jsonObjVal = new JSONObject(ResourceFormFactory.generateStringDataForm(objArray1[j],null));
-					jArr1.put(jsonObjVal);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			
-			 }
-			 
-			 ArrayList<checkboxSelectedDo> treeSet2 = new ArrayList<checkboxSelectedDo>();
-				treeSet2.addAll(collItemDo.getQuestionInfo().getEducationalUse());
-				
-				 Object[] objArray2 = treeSet1.toArray();
-				 JSONArray jArr2 = new JSONArray();
-				 
-				 for(int k=0; k < objArray2.length ; k++)
-				 {
-					 try {
-						JSONObject jsonObjVal = new JSONObject(ResourceFormFactory.generateStringDataForm(objArray2[k],null));
-						jArr2.put(jsonObjVal);
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				
-				 }
-
-
-
-		collItemDo.getQuestionInfo().setAnswers(null);
-		collItemDo.getQuestionInfo().setDepthOfKnowledges(null);
-		collItemDo.getQuestionInfo().setEducationalUse(null);
-		collItemDo.getQuestionInfo().setRatings(null);
-
-		  JSONObject mainQuestionTempObj = new JSONObject();
-		  JSONObject mainAnswerTempObj = new JSONObject();
-		  JSONObject mainAnswerTempObj11 = new JSONObject();
-		  JSONObject mainAnswerTempObj22 = new JSONObject();
-		  JSONObject mainQTempObj = new JSONObject();
-		  String data = "";
-		 // mainQTempObj. = new LinkedHashMap();
-		  try {
-			  
-			  mainQuestionTempObj.put("question", ResourceFormFactory.generateStringDataForm(collItemDo.getQuestionInfo(), null));
-			  JSONObject mainQuestionTempObj1 = new JSONObject(mainQuestionTempObj.get("question").toString());
-			  mainAnswerTempObj.put("answer", jArr);
-			  mainQuestionTempObj1.put("answers", mainAnswerTempObj);
-			  
-			  mainAnswerTempObj11.put("depthOfKnowledge", jArr1);
-			  mainQuestionTempObj1.put("depthOfKnowledges", mainAnswerTempObj11);
-			  
-			  mainAnswerTempObj22.put("educationalUse", jArr2);
-			  mainQuestionTempObj1.put("educationalUse", mainAnswerTempObj22);
-
-		
-			  
- 	data = "{\""+"question"+"\" : " + mainQuestionTempObj1.toString() +"}";
-			  
-			
-			//  mainQTempObj.put("question", mainQuestionTempObj1);
-			  //mainQTempObj.put("mediaFileName", fileName);
-			
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		  
 
 		  
-		  System.out.println("data passed11::"+data);
+		  System.out.println("data passed11::"+ResourceFormFactory.generateStringDataForm(collectionQuestionItemDo, "question"));
 		  System.out.println("url11::"+url);
 
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), data);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.generateStringDataForm(collectionQuestionItemDo, "question"));
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		collectionItemDoNew=deserializeCollectionItem(jsonRep);
 		collItemDo.setResource(collectionItemDoNew.getQuestionInfo());
