@@ -2081,7 +2081,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		//totalSecs=Math.round(totalSecs);
 	    long hours = (long) (totalSecs / 3600);
 	    long mins = (long) ((totalSecs / 60) % 60);
-	    double secs = (double) (totalSecs / 60);
+	    double secs = (double) (totalSecs % 60);
 	    String formattedResult=roundToTwo(secs);
 	    collectionEndPresenter.displaySpendTime(hours,mins,Double.valueOf(formattedResult));
     }
