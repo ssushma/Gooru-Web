@@ -17,6 +17,7 @@ public class customFieldValuesDO implements Serializable {
 	 private String cfHost;
 	 private String cfAge;
 	 private String cfSchoolLevel;
+	 private String cfGooruCourse;
 	 private String cfCountryCode;
 	 private String cfLanguageCode;
 	 private String cfDataType;
@@ -27,7 +28,7 @@ public class customFieldValuesDO implements Serializable {
 	 private String cfAccessMode;
 	 private String cfMediaFeature;
 	 private String cfControlFlexibility;
-	 private String	 cfReadingLevel;
+	 private String	cfReadingLevel;
 	 private String cfEducationalAlignment;
 	 private String cfOER;
 	 private String cfAds;
@@ -224,6 +225,20 @@ public class customFieldValuesDO implements Serializable {
 		this.cfMediaFeature = cfMediaFeature;
 	}
 
+	/**
+	 * @return the cfGooruCourse
+	 */
+	public String getCfGooruCourse() {
+		return cfGooruCourse;
+	}
 
+	/**
+	 * @param cfGooruCourse the cfGooruCourse to set
+	 */
+	public void setCfGooruCourse(String cfGooruCourse) {
+		this.cfGooruCourse = cfGooruCourse;
+	}
+
+    
 	
 }

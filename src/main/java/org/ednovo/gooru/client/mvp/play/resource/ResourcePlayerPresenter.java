@@ -372,7 +372,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			  }
 		  }else{
 		      if(resourceId!=null && !resourceId.equalsIgnoreCase("")){
-		    	  this.playerAppService.getResourceCollectionItem(apiKey,resourceId,tabView, new SimpleAsyncCallback<CollectionItemDo>() {
+		    	  this.playerAppService.getResourceInfoDetails(apiKey,resourceId,tabView, new SimpleAsyncCallback<CollectionItemDo>() {
 		    			@Override
 		    			public void onSuccess(CollectionItemDo collectionItemDo) {
 		    				if(collectionItemDo.getStatusCode() != 200){
@@ -853,7 +853,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			}
 	}
 	public void  getResource(String resourceId){
-		this.playerAppService.getResourceCollectionItem(null,resourceId,null, new SimpleAsyncCallback<CollectionItemDo>() {
+		this.playerAppService.getResourceInfoDetails(null,resourceId,null, new SimpleAsyncCallback<CollectionItemDo>() {
 			@Override
 			public void onSuccess(CollectionItemDo collectionItemDo) {
 				if(collectionItemDo.getStatusCode()!=200){
