@@ -130,9 +130,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		if (fileName != null) {
 			createCollectionJsonObject.put("mediaFileName", fileName);
 		}
-		
-		System.out.println("saveImage::"+url);
-		System.out.println("saveImagedata::"+createCollectionJsonObject.toString());
+
 		
 //		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_COLLLECTION_ITEM, resourceId,getLoggedInSessionToken(), collectionId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createCollectionJsonObject.toString());		
@@ -230,7 +228,6 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		 
 		 for(int i=0; i < objArray.length ; i++)
 		 {
-			 System.out.println("objectarray::"+objArray[i]);
 			 try {
 				JSONObject jsonObjVal = new JSONObject(ResourceFormFactory.generateStringDataForm(objArray[i],null));
 				jArr.put(jsonObjVal);
@@ -238,7 +235,6 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			 System.out.println("objectarrayformatted::"+jArr);
 		
 		 }
 
@@ -271,11 +267,6 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 			e.printStackTrace();
 		}
 		  
-
-		  
-		  System.out.println("data passed::"+data);
-		  System.out.println("url::"+url);
-
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), data);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		collectionItemDoNew=deserializeCollectionItem(jsonRep);
@@ -308,8 +299,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		
 		JsonRepresentation jsonRep = null;		
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_COLLLECTION_ITEM, collectionItemId, getLoggedInSessionToken());
-		System.out.println("getCollectionItem::"+url);
-		
+	
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
