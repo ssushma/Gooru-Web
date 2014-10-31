@@ -138,6 +138,10 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 				user = new UserDo();
 				user.setStatusCode(jsonResponseRep.getStatusCode());
 				return user;
+			}else if(jsonResponseRep.getStatusCode()==400){
+				user = new UserDo();
+				user.setStatusCode(jsonResponseRep.getStatusCode());
+				return user;
 			}else{
 				content = jsonRep.getText();
 				if (content.contains("{")) {

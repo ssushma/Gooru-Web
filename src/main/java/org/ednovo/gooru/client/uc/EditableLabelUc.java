@@ -33,6 +33,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -222,6 +223,7 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 		editTextBox.addStyleName("shelfEditTitle");
 		editTextBox.setMaxLength(50);
 		editTextBox.getElement().getStyle().setBorderColor("#ccc");
+		editTextBox.getElement().getStyle().setHeight(20, Unit.PX);
 	}
 
 	/**

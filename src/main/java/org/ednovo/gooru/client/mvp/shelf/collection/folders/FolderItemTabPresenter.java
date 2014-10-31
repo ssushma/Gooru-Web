@@ -96,7 +96,13 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 
 				@Override
 				public void onSuccess(FolderListDo result) {
-					getView().setFolderData(result.getSearchResult(), null, null,result.getCount());
+					if(result != null)
+					{
+						if(result.getSearchResult()!=null && result.getCount()!=null)
+						{
+							getView().setFolderData(result.getSearchResult(), null, null,result.getCount());
+						}
+					}
 				}
 			};
 		}

@@ -530,6 +530,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		editCollectionTitle.getElement().setId("epnlEditCollectionTitle");
 		collectionEditImageLbl.getElement().setId("lblCollectionEditImageLbl");
 		panelActionItems.getElement().setId("pnlPanelActionItems");
+		panelActionItems.getElement().getStyle().setMarginTop(8, Unit.PX);
 		collectionDescriptionTitleContainer.getElement().setId("epnlCollectionDescriptionTitleContainer");
 		editCollectionDescTitle.getElement().setId("epnlEditCollectionDescTitle");
 		simplePencilPanel.getElement().setId("lblSimplePencilPanel");
@@ -860,6 +861,12 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			});
 		}
 		
+		Integer resourcesCount = 0;
+		if (collectionDo.getCollectionItems() != null && collectionDo.getCollectionItems().size() != 0) {
+			resourcesCount = collectionDo.getCollectionItems().size();
+		}
+		resourceTabVc.setLabel(""+i18n.GL0829()+" (" + resourcesCount + ")");
+		
 		//getCollectionShareTabVc();
 	}
 	public void setCollabCount(int count){
@@ -1066,10 +1073,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				MixpanelUtil.Click_Info_CollectionEdit();
 				setPersistantTabFlag("infoTab");
 				infoTabVc.setSelected(true);
-				getUiHandlers().revealTab(ShelfUiHandlers.TYPE_COLLECTION_INFO_TAB,
-						collectionDo);
+				getUiHandlers().revealTab(ShelfUiHandlers.TYPE_COLLECTION_INFO_TAB,collectionDo);
 				collectionMetaDataSimPanel.getElement().removeAttribute("style");
-				
 			} else if (tab.equals(resourceTabVc)) {
 				MixpanelUtil.Click_Resource_CollectionEdit();
 				setPersistantTabFlag("resourceTab");
@@ -1087,9 +1092,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				collectionMetaDataSimPanel.getElement().removeAttribute("style");
 				
 //				collectionMetaDataSimPanel.setWidget(getCollectionCollaboratorTabVc());
-				getUiHandlers().revealTab(
-						ShelfUiHandlers.TYPE_COLLABORATOR_TAB, collectionDo);
-				
+				getUiHandlers().revealTab(ShelfUiHandlers.TYPE_COLLABORATOR_TAB, collectionDo);
 			}
 			else if (tab.equals(assignTabVc)) {
 				MixpanelUtil.Click_Assign_CollectionEdit();
@@ -1097,8 +1100,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				setPersistantTabFlag("assignTab");
 				assignTabVc.setSelected(true);
 				collectionMetaDataSimPanel.clear();
-				getUiHandlers().revealTab(
-							ShelfUiHandlers.TYPE_ASSIGN_INFO_TAB, collectionDo);
+				getUiHandlers().revealTab(ShelfUiHandlers.TYPE_ASSIGN_INFO_TAB, collectionDo);
 			}
 			else if (tab.equals(shareTabVc)) {
 				MixpanelUtil.Click_Share_CollectionEdit();

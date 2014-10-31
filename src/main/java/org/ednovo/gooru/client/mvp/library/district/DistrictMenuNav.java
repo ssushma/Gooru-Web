@@ -151,7 +151,7 @@ public abstract class DistrictMenuNav extends Composite {
 
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)
 					||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)
-					||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LUSD)) {
+					|| AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LUSD)) {
 			
 				learnPanel.addStyleName(districtStyleUc.tabsLiInactive());
 		} else {
@@ -214,6 +214,7 @@ public abstract class DistrictMenuNav extends Composite {
 			learnText.setText(i18n.GL2076());
 			setGooruAnrText(i18n.GL1827(), i18n.GL1828());
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)) {
+			learnText.setText(i18n.GL2077());
 			setGooruAnrText(i18n.GL2069(), i18n.GL2070());
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)) {
 			setGooruAnrText(i18n.GL2071(), i18n.GL2072());
@@ -329,6 +330,7 @@ public abstract class DistrictMenuNav extends Composite {
 	}
 	
 	public void setSubjectPanelIds(ProfileLibraryListDo profileLibraryListDo) {
+
 		for (ProfileLibraryDo profileListDo : profileLibraryListDo.getSearchResult()) {
 			if(profileListDo.getTitle().toLowerCase().contains("social")) {
 				subjectIdList.put(SOCIAL, profileListDo.getGooruOid());

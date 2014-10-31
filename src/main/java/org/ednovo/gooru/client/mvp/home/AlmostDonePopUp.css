@@ -39,7 +39,7 @@
 .popup .closeButton {
 	width:17px;
 	height:17px;
-	background: url("_images/close-button.png") no-repeat;
+	background: url(./images/signup/close-button.png) no-repeat;
 	position:absolute;
 	top:10px;
 	right:10px;
@@ -55,7 +55,7 @@
 }
 
 
-.tooltipContainer {
+.tooltipContainer, .usernameToolTipContainer {
 	width: 150px;
 	position: absolute;
 	z-index:9999;
@@ -63,6 +63,11 @@
 	margin-left:-41px;
 }
 
+.usernameToolTipContainer{
+	width: 213px;
+	margin-top: -16px;
+	margin-left: 29px !important;
+}
 .arrowBorder {
  	width: 0px;
 	height: 0px;
@@ -179,7 +184,7 @@
 	background: url("./images/signup/other.png") center bottom no-repeat;
 }
 
-.roleOption:hover .tooltipContainer, .questionHoverContainer:hover .tooltipContainer  {
+.roleOption:hover .tooltipContainer, .questionHoverContainer:hover .tooltipContainer {
 	display:block;
 }
 
@@ -201,10 +206,6 @@
 }
 
 .inputRow:hover .horizontalTooltipContainer {
-	display:block;
-}
-
-.roleOption:hover .tooltipContainer, .questionHoverContainer:hover .tooltipContainer  {
 	display:block;
 }
 

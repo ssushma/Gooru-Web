@@ -71,6 +71,7 @@ public class AutodeskLibraryPresenter extends BasePlacePresenter<IsAutodeskLibra
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override
@@ -85,21 +86,24 @@ public class AutodeskLibraryPresenter extends BasePlacePresenter<IsAutodeskLibra
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
-		clearSlot(TYPE_FOLDERS_SLOT);
-		setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
-		partnerLibraryPresenter.setPartnerWidget();
-		
-		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
-			//To show SignUp (Registration popup)
-			if (AppClientFactory.isAnonymous()){
-				Window.enableScrolling(false);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-				String type = getPlaceManager().getRequestParameter("type") ;
-				int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
-				signUpViewPresenter.displayPopup(displayScreen);
-				addToPopupSlot(signUpViewPresenter);
+		if (AppClientFactory.getPlaceManager().refreshPlace()) {
+			clearSlot(TYPE_FOLDERS_SLOT);
+			setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
+			partnerLibraryPresenter.setPartnerWidget();
+			
+			if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
+				//To show SignUp (Registration popup)
+				if (AppClientFactory.isAnonymous()){
+					Window.enableScrolling(false);
+					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+					String type = getPlaceManager().getRequestParameter("type") ;
+					int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
+					signUpViewPresenter.displayPopup(displayScreen);
+					addToPopupSlot(signUpViewPresenter);
+				}
 			}
 		}
+		
 		int flag = AppClientFactory.getLoggedInUser().getViewFlag();
 		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
 		if(!AppClientFactory.isAnonymous() && flag==0 &&  loginType.equalsIgnoreCase("apps")) {
