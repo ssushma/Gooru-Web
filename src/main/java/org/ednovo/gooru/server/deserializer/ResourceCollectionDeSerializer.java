@@ -455,10 +455,8 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		try{
 			RatingDo ratindDo=new RatingDo();
 			JSONObject ratingObject=recordJsonObject.isNull(SCOCIAL)?null:recordJsonObject.getJSONObject(SCOCIAL);
-			if(ratingObject!=null){
 				ratindDo.setVotesUp(ratingObject.isNull(CONTENT_RATING)?null:ratingObject.getJSONObject(CONTENT_RATING).getInt(VOTES_UP));
 				resourceDo.setUserRating(ratingObject.isNull(CONTENT_USER_RATING)?0:ratingObject.getInt(CONTENT_USER_RATING));
-			}
 			collectionItemDo.setRating(ratindDo);
 		}catch(Exception e){
 			e.printStackTrace();
