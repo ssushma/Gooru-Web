@@ -248,23 +248,24 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 				public void onSuccess(CollectionItemDo result) {
 					getView().hideUpdateResourcePopup();
 					//redirect(Window.Location.getHref());
-					PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-        			//String pageLocation=placeRequest.getNameToken();
-            		
-                	Map<String,String> params = new HashMap<String,String>();
-                	if(placeRequest.getParameter(O1_LEVEL, "")!= null) {
-            			params.put(O1_LEVEL, placeRequest.getParameter(O1_LEVEL, ""));
-            		} else if(placeRequest.getParameter(O2_LEVEL, "")!=null) {
-            			params.put(O1_LEVEL, placeRequest.getParameter(O1_LEVEL, ""));
-            			params.put(O2_LEVEL, placeRequest.getParameter(O2_LEVEL, ""));
-            		} else if(placeRequest.getParameter(O3_LEVEL, "")!=null){
-            			params.put(O1_LEVEL, placeRequest.getParameter(O1_LEVEL, ""));
-            			params.put(O2_LEVEL, placeRequest.getParameter(O2_LEVEL, ""));
-            			params.put(O3_LEVEL, placeRequest.getParameter(O3_LEVEL, ""));
+					Map<String,String> params = new HashMap<String,String>();
+                	
+                	if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!= null){
+            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+            			params.put(O3_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o3"));
             		}
-                	if(placeRequest.getParameter(ID, "") != null)
+                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!= null) {
+            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+            		}
+                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!= null) {
+            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+            		}
+              
+                	if(AppClientFactory.getPlaceManager().getRequestParameter("id")!= null)
                 	{
-                	params.put(ID, placeRequest.getParameter(ID, ""));
+                	params.put(ID, AppClientFactory.getPlaceManager().getRequestParameter("id"));
                 	}
             		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
 				}
