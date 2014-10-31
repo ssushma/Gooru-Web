@@ -351,8 +351,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 			collectionPlayerPresenter.triggerCollectionShareDataEvent( collectionId, itemType,  shareType,  confirmStatus);
 		}
 	}
-	public void displaySpendTime(Long hours,Long mins, Long secs){
-		getView().displaySpendTime( hours,mins,secs);
+	public void displaySpendTime(Long hours,Long mins, Double secs){
+		getView().displaySpendTime( hours,mins, secs);
 	}
 	public void displayScoreCount(Integer collectionScore,Integer noOfQuestions){
 		getView().displayScoreCount(collectionScore,noOfQuestions);
