@@ -1634,11 +1634,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		
 
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_QUESTION_ITEM, collItemDo.getCollectionItemId(), getLoggedInSessionToken());
-		 
-
-		  
-		  System.out.println("data passed11::"+ResourceFormFactory.generateStringDataForm(collectionQuestionItemDo, "question"));
-		  System.out.println("url11::"+url);
 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.generateStringDataForm(collectionQuestionItemDo, "question"));
 		jsonRep = jsonResponseRep.getJsonRepresentation();
