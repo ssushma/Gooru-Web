@@ -96,7 +96,6 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -2077,14 +2076,21 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		getView().makeFlagButtonOrange();
 	}
 	public void convertMilliSecondsToTime(Long milliSeconds){
-		milliSeconds=milliSeconds>0&&milliSeconds<1000?1000:milliSeconds;
+		//milliSeconds=milliSeconds>0&&milliSeconds<1000?1000:milliSeconds;
 		double totalSecs = (double)milliSeconds/1000;
-		totalSecs=Math.round(totalSecs);
+		//totalSecs=Math.round(totalSecs);
 	    long hours = (long) (totalSecs / 3600);
 	    long mins = (long) ((totalSecs / 60) % 60);
-	    long secs = (long) (totalSecs % 60);
-	    collectionEndPresenter.displaySpendTime(hours,mins,secs);
+	    double secs = (double) (totalSecs / 60);
+	    String formattedResult=roundToTwo(secs);
+	    collectionEndPresenter.displaySpendTime(hours,mins,Double.valueOf(formattedResult));
     }
+	
+	
+	
+	public static native String roundToTwo(double number) /*-{
+		return ""+(Math.round(number + "e+2")  + "e-2");
+	}-*/;
 	
 	public void displayScoreCount(Integer score,Integer questionCount){
 //		if(collectionDo!=null&&collectionDo.getCollectionItems()!=null){

@@ -80,7 +80,7 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	
 	public void setPlayerLoginStatus(boolean isLoggedIn);
 	
-	public void displaySpendTime(Long hours,Long mins, Long secs);
+	public void displaySpendTime(Long hours,Long mins, Double secs);
 	
 	public void displayScoreCount(Integer collectionScore,Integer noOfQuestions);
 	
