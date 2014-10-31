@@ -301,9 +301,9 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             @Override
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
-            		//redirect(Window.Location.getHref());
                     isCollResourceTabView.updateCollectionItem(result);
                     MixpanelUtil.AddQuestion();
+                    redirect(Window.Location.getHref());
             }
 		});
 	}

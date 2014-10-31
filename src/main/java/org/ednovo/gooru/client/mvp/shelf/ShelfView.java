@@ -530,6 +530,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		editCollectionTitle.getElement().setId("epnlEditCollectionTitle");
 		collectionEditImageLbl.getElement().setId("lblCollectionEditImageLbl");
 		panelActionItems.getElement().setId("pnlPanelActionItems");
+		panelActionItems.getElement().getStyle().setMarginTop(8, Unit.PX);
 		collectionDescriptionTitleContainer.getElement().setId("epnlCollectionDescriptionTitleContainer");
 		editCollectionDescTitle.getElement().setId("epnlEditCollectionDescTitle");
 		simplePencilPanel.getElement().setId("lblSimplePencilPanel");
