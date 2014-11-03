@@ -46,6 +46,7 @@ import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.lusd.LusdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.sausd.SausdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.susd.SusdLibraryPresenter;
@@ -62,6 +63,7 @@ import org.ednovo.gooru.client.mvp.library.partner.natgeo.NatGeoLibraryPresenter
 import org.ednovo.gooru.client.mvp.library.partner.ngc.NgcLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.tical.TicalLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.youthvoices.YouthVoicesLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
@@ -244,4 +246,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<EsypLibraryPresenter> getEsypLibraryPresenter();
 	
 	AsyncProvider<CcstCalTacLibraryPresenter> getCcstCalTacLibraryPresenter();
+	
+	AsyncProvider<LusdLibraryPresenter> getLusdLibraryPresenter();
+	
+	AsyncProvider<TicalLibraryPresenter> getTicalLibraryPresenter();
 }
