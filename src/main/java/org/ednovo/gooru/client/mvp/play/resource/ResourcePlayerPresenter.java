@@ -372,7 +372,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			  }
 		  }else{
 		      if(resourceId!=null && !resourceId.equalsIgnoreCase("")){
-		    	  this.playerAppService.getResourceCollectionItem(apiKey,resourceId,tabView, new SimpleAsyncCallback<CollectionItemDo>() {
+		    	  this.playerAppService.getResourceInfoDetails(apiKey,resourceId,tabView, new SimpleAsyncCallback<CollectionItemDo>() {
 		    			@Override
 		    			public void onSuccess(CollectionItemDo collectionItemDo) {
 		    				if(collectionItemDo.getStatusCode() != 200){
@@ -439,7 +439,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		gooruOid=this.collectionItemDo.getResource().getGooruOid();
 		updateResourceViewCount(gooruOid,collectionItemDo.getViews().toString(),null);
 		getView().setResourceTitle(collectionItemDo.getResource().getTitle());
-		updateThumbsRatingView(collectionItemDo.getResource().getUserRating());
+		updateThumbsRatingView(collectionItemDo.getResource().getUserRating()!=null?collectionItemDo.getResource().getUserRating():0);
 		resoruceMetadataPresenter.showResourceWidget(collectionItemDo);
 		if(!AppClientFactory.isAnonymous()){
 			resoruceMetadataPresenter.setReaction(collectionItemDo);
@@ -853,7 +853,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			}
 	}
 	public void  getResource(String resourceId){
-		this.playerAppService.getResourceCollectionItem(null,resourceId,null, new SimpleAsyncCallback<CollectionItemDo>() {
+		this.playerAppService.getResourceInfoDetails(null,resourceId,null, new SimpleAsyncCallback<CollectionItemDo>() {
 			@Override
 			public void onSuccess(CollectionItemDo collectionItemDo) {
 				if(collectionItemDo.getStatusCode()!=200){
@@ -914,17 +914,20 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	
 	public void updateResourceLikes(int userThumbsRataing){
-		int resourceLikes=collectionItemDo.getRating().getVotesUp();
-		int userRating=collectionItemDo.getResource().getUserRating();
-		if(userThumbsRataing==1){
-			resourceLikes=resourceLikes+1;
-		}else if((userThumbsRataing==0||userThumbsRataing==-1)&&userRating==1){
-			resourceLikes=resourceLikes-1;
+		if(collectionItemDo.getRating()!=null){
+			int resourceLikes=collectionItemDo.getRating().getVotesUp()!=null?collectionItemDo.getRating().getVotesUp():0;
+			int userRating=collectionItemDo.getResource().getUserRating()!=null?collectionItemDo.getResource().getUserRating():0;
+			if(userThumbsRataing==1){
+				resourceLikes=resourceLikes+1;
+			}else if((userThumbsRataing==0||userThumbsRataing==-1)&&userRating==1){
+				resourceLikes=resourceLikes-1;
+			}
+			resourceLikes=resourceLikes<0?0:resourceLikes;
+			resourceInfoPresenter.updateLikesCount(resourceLikes);
+			collectionItemDo.getResource().setUserRating(userThumbsRataing);
+			collectionItemDo.getRating().setVotesUp(resourceLikes);
 		}
-		resourceLikes=resourceLikes<0?0:resourceLikes;
-		resourceInfoPresenter.updateLikesCount(resourceLikes);
-		collectionItemDo.getResource().setUserRating(userThumbsRataing);
-		collectionItemDo.getRating().setVotesUp(resourceLikes);
+		
 	}
 
 	@Override
