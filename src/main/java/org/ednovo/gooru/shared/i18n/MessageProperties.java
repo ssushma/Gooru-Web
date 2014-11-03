@@ -1724,6 +1724,7 @@ public interface MessageProperties extends Constants {
 	String GL1381(); 
 	String GL1382(); 
 	String GL1383(); 
+	String GL1377_1();
 
 	//Success popup
 	String GL1384(); 
@@ -2696,4 +2697,21 @@ public interface MessageProperties extends Constants {
 	String GL2186();
 	String GL2187();
 	String GL2188();
+
+	String GL2188_4();
+	String GL2188_3();
+
+	
+	String GL2189();
+	String GL2190();
+	String GL2191();
+	String GL2192();
+	String GL2193();
+	String GL2194();
+	String GL2195();
+	String GL2196();
+	String GL2197();
+	String GL2198();
+	String GL2199();
+	String GL2200();
 }

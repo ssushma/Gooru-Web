@@ -55,6 +55,7 @@ import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -324,7 +325,7 @@ public class LoginPopupUc extends PopupPanel{
 	 */
 	@UiHandler("gmailButton")
 	public void onGmailButtonClicked(ClickEvent clickEvent){
-		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",System.currentTimeMillis(),System.currentTimeMillis(), "", AppClientFactory.getLoggedInUser().getToken());
+		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.getUnixTime(), "", AppClientFactory.getLoggedInUser().getToken());
 		String callBack = Window.Location.getHref();
 	
 		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
@@ -536,7 +537,7 @@ public class LoginPopupUc extends PopupPanel{
 						caught.printStackTrace(); 
 						loginButton.setVisible(true);
 						lblPleaseWait.setVisible(false);
-						new AlertContentUc(i18n.GL0061(), i18n.GL0347());
+//						new AlertContentUc(i18n.GL0061(), i18n.GL0347());
 					}
 				});
 			} else {
@@ -626,7 +627,7 @@ public class LoginPopupUc extends PopupPanel{
 	@UiHandler("ancRegisterHere")
 	public void onRegisterClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Arrive_Register_popup();
-		DataLogEvents.signUp(GwtUUIDGenerator.uuid(),"login",System.currentTimeMillis(),System.currentTimeMillis(), "");
+		DataLogEvents.signUp(GwtUUIDGenerator.uuid(),"login",PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.getUnixTime(), "");
 		
 //		Map<String, String> params = new HashMap<String, String>();
 //		params.put("callback", "signup");

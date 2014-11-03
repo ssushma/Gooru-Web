@@ -29,6 +29,7 @@ package org.ednovo.gooru.client.service;
 
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -48,14 +49,6 @@ public interface MediaUploadService extends BaseService {
 	 */
 	MediaUploadDo imageWebUpload(String imageURL) throws GwtException, ServerDownException;
 
-	/**
-	 * Save uploaded image after crop for collection/resource
-	 * @param gooruOid of collection/resource 
-	 * @param fileName image file name or url
-	 * @return image file path which is uploaded
-	 * @throws GwtException
-	 */
-	String saveImage(String gooruOid, String fileName) throws GwtException, ServerDownException;
 
 	/**
 	 * Crop uploaded image 
@@ -78,7 +71,7 @@ public interface MediaUploadService extends BaseService {
 	MediaUploadDo imageFileUpload(String response) throws GwtException, ServerDownException;
 	
 	
-	String saveQuestionImage(String colletionItemId, String fileName)  throws GwtException, ServerDownException;
+	CollectionItemDo saveQuestionImage(String colletionItemId, String fileName)  throws GwtException, ServerDownException;
 	
 
 	/**
@@ -91,4 +84,7 @@ public interface MediaUploadService extends BaseService {
 	
 	
 	String uploadProfileImage(String fileNameWithOutRepository,String fileName)  throws GwtException, ServerDownException;
+
+	CollectionItemDo saveImage(String gooruOid, String resourceId,
+			String fileName);
 }

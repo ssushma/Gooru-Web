@@ -485,7 +485,7 @@ public class ShelfCollectionResourceChildView extends
 		// resourceNarrationHtml.addMouseOverHandler(new showNarationPencil());
 		// resourceNarrationHtml.addMouseOutHandler(new hideNarationPencil());
 		resourceNarrationHtml.getElement().setId("htmlResourceNarrationHtml");
-		narrationTxtArea.getElement().setAttribute("maxlength", "600");
+		narrationTxtArea.getElement().setAttribute("maxlength", "500");
 		narrationTxtArea.getElement().setId("tatNarrationTxtArea");
 		StringUtil.setAttributes(narrationTxtArea, true);
 	//	narrationTxtArea.addKeyUpHandler(new narationValidation());
@@ -569,7 +569,7 @@ public class ShelfCollectionResourceChildView extends
 			public void onKeyPress(KeyPressEvent event) {
 				narrationTxtArea.getElement().getStyle().clearBackgroundColor();
 				narrationTxtArea.getElement().getStyle().setBorderColor("#ccc");
-				if(narrationTxtArea.getText().toString().trim().length() >= 600){ 
+				if(narrationTxtArea.getText().toString().trim().length() >= 500){ 
 					narrationAlertMessageLbl
                     .removeStyleName("titleAlertMessageDeActive");
 					narrationAlertMessageLbl
@@ -595,7 +595,7 @@ public class ShelfCollectionResourceChildView extends
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
 				narrationAlertMessageLbl.setVisible(false);
-				if(narrationTxtArea.getText().toString().trim().length() >= 600){ 
+				if(narrationTxtArea.getText().toString().trim().length() >= 500){ 
 					narrationAlertMessageLbl
                     .removeStyleName("titleAlertMessageDeActive");
 					narrationAlertMessageLbl
@@ -647,7 +647,7 @@ public class ShelfCollectionResourceChildView extends
 			}
 		});
 		resourceNarrationHtml.getElement().getStyle().clearWidth();
-		String value = StringUtil.generateMessage(i18n.GL2103(), "415");
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
 		
 		StringUtil.setAttributes(lblCharLimit.getElement(), "lblCharLimit", value, value);
 		lblCharLimit.setText(value);
@@ -740,7 +740,7 @@ public class ShelfCollectionResourceChildView extends
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			narrationDataLength=narrationTxtArea.getText().toString().trim().length();
-			 if (trim(narrationTxtArea.getText()).length() > 0 && trim(narrationTxtArea.getText()).length() <= 600){
+			 if (trim(narrationTxtArea.getText()).length() > 0 && trim(narrationTxtArea.getText()).length() <= 500){
 				
 				updateNarrationBtn.setEnabled(true);
                 updateNarrationBtn.getElement().removeClassName("disabled");
@@ -924,7 +924,7 @@ public class ShelfCollectionResourceChildView extends
 			resourceNarrationHtml.getElement().setAttribute("title", NO_NARRATION_ADDED);
 		}
 		String category = collectionItemDo.getResource().getResourceFormat() != null ? collectionItemDo.getResource().getResourceFormat().getDisplayName() : "text";
-		
+	
 		if(!youtube){
 			videoImage.removeStyleName(CollectionEditResourceCBundle.INSTANCE.css().videoImageContainer());
 			editVideoTimeLbl.setVisible(false);
@@ -1183,8 +1183,23 @@ public class ShelfCollectionResourceChildView extends
 			videoImage.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().pdfImageContainer());
 			String startPageNumber=collectionItemDo.getStart();
 			totalPages = collectionItemDo.getTotalPages();
+			
+			if(totalPages == null)
+			{
+				fromLblDisplayText.setVisible(false);
+				editStartPageLbl.setVisible(false);
+				videoImage.setVisible(false);
+			}
+			else
+			{
+				fromLblDisplayText.setVisible(true);
+				editSartPageText.setText(i18n.GL2039() + totalPages);
+				editStartPageLbl.setVisible(true);	
+				videoImage.setVisible(true);
+			}
+			
 			String endPageNumber=collectionItemDo.getStop();
-			editSartPageText.setText(i18n.GL2039() + totalPages);
+
 		//	String endPageNumber=collectionItemDo.getStop();
 			
 			//updatePDFLabelText.setText("0f "+endPageNumber+" pages");

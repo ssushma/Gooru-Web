@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 /**
@@ -12,10 +13,11 @@ import org.ednovo.gooru.shared.model.folder.FolderDo;
  *
  */
 public interface IsFolderItemTabView extends IsViewWithHandlers<FolderItemTabUiHandlers> {
-	public void setFolderData(List<FolderDo> folderList, String folderParentName, String folderId);
+	public void setFolderData(List<FolderDo> folderList, String folderParentName, String folderId, int totalCount);
 	public void setParentId(String parentId);
 	public void addFolderItem(FolderDo folderDo, String parentId, HashMap<String,String> params);
 	public void setFolderTitle(String title);
 	public void setPageDetails(Integer pageNumber, String parentId, String parentName);
 	public void setFolderMetaData(Map<String, String> folderMetaData);
+	public void onReorderChangeWidgetPosition(ShelfFolderItemChildView shelfFolderItemChildView, int itemToBeMovedPosSeqNumb,int itemPosSeqNumb, String downArrow);
 }

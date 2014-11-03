@@ -286,3 +286,9 @@ a.AnalyticsDropdownAnchor{
 .completedStatus{
 	background: #A3CBA0;
 }
+.directionsCharLimit{
+	display: inline;
+	float: right;
+	margin-right: 165px;
+	color: #999;
+}

@@ -8,7 +8,7 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle"
 		field="res1" />
-	<g:HTMLPanel>
+	<g:HTMLPanel ui:field="hPanelMainInfo">
 		<g:HTMLPanel styleName="{res.css.infoContainer}">
 			<g:HTMLPanel styleName="{res.css.primaryLabelContainer}">
 				<g:HTMLPanel styleName="{res.css.primaryLabel}"
@@ -111,6 +111,8 @@
 					</g:FlowPanel>
 					<g:Label styleName="{res.css.shelfGradeInfoBottom}"
 						ui:field="languageObjectiveTitle" />
+					<g:Label styleName="{res.css.charLimit}"
+						ui:field="lblCharLimit" />
 					<g:FlowPanel styleName="{res.css.languageObjectiveInfoContainer}">
 						<g:TextArea ui:field="textAreaVal"
 							styleName="{res.css.languageObjectiveTextArea}"></g:TextArea>

@@ -24,32 +24,44 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
-import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
+import org.ednovo.gooru.client.mvp.authentication.uc.SignUpGradeCourseView;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.client.uc.ErrorLabelUc;
+import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -63,32 +75,36 @@ public class AlmostDoneUc extends PopupPanel{
 	
 
 	private UserDo user=null;
-	@UiField TextBox emailTxtBox,userNameTxtBox;
-	@UiField ListBox roleListBox;
-	@UiField HTMLEventPanel cancelButton,okButton;
-	@UiField Label errorMessageForUserNameLbl,errorMessageForRoleLbl,uNameLbl,agreeText,andText,gooruText;
-	@UiField HTMLPanel buttonContainer,almostDoneText,fillOutText,emailText,roleText;
-	/*@UiField Button okButton;*/
-	@UiField
-	Anchor termsAndPolicyAnr;
-
-	@UiField
-	Anchor copyRightAnr;
-
-	private TermsAndPolicyVc termsAndPolicyVc;
 	
-	private CopyRightPolicyVc copyRightPolicy;
+	@UiField
+	HTMLPanel rdTeacher, rdStudent, rdParent, rdOther, panelOther, panelTeacher, panelStudent,panelParent,panelUsernameTooltip;
+	
+	@UiField
+	ErrorLabelUc lblSelectRole, userNameValidUc;
+	
+	@UiField
+	TextBoxWithPlaceholder txtChooseUsername;
+	
+	@UiField
+	Label lblHeader,lblTeacher, lblStudent, lblParent, lblOther, lblUserEmail, lblToolTipOther,lblOtherDesc, lblJoin, lblSubHeader, lblTeacherContainer, lblTeacherDesc, lblTooltipStudent, lblStudentDesc, lblTooltipParent, lblParentDesc, lblPickWisely, lblClose;
+	
+	@UiField
+	Button btnSubmit;
+
+	
+	RadioButton rbTeacher;
+	RadioButton rbStudent;
+	RadioButton rbParent;
+	RadioButton rbOther;
+	
+	boolean isHavingBadWordsUserName=false;
+	
+	private String selectedRole = null;
+	String USER_NAME_REGEX = "[A-Za-z0-9^]*";
 
 	@UiField(provided = true)
 	AlmostDoneUcCBundle res;
 	
-//	private static final String errorMessageForUserName=i18n.GL1284+i18n.GL_SPL_FULLSTOP;
-//	private static final String errorMessageForUserNameTxt=i18n.GL1285+i18n.GL_SPL_FULLSTOP;
-//	private static final String errorMessageForUserRole=i18n.GL1146;
-
-//	private static final String IS_ALREADY_AVAILABLE = ""+i18n.GL1286+i18n.GL_SPL_FULLSTOP;
-	
-
 	@UiTemplate("AlmostDoneUc.ui.xml")
 	interface Binder extends UiBinder<Widget,AlmostDoneUc>
 	{
@@ -105,141 +121,312 @@ public class AlmostDoneUc extends PopupPanel{
 	
 	public AlmostDoneUc(String userEmail, UserDo user) { 
 		super(false);
-		this.user = user;
+		
 		this.res = AlmostDoneUcCBundle.INSTANCE;
 		res.css().ensureInjected();
 		add(binder.createAndBindUi(this));
 		this.setGlassEnabled(true);
+		
+		this.getElement().getStyle().setWidth(512, Unit.PX);
+		this.getElement().getStyle().setHeight(500, Unit.PX);
+		this.getElement().getStyle().setBackgroundColor("transparent");
+		
 		this.center();
-		almostDoneText.getElement().setInnerText(i18n.GL1279()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP());
-		almostDoneText.getElement().setId("pnlAlmostDoneText");
-		almostDoneText.getElement().setAttribute("alt",i18n.GL1279()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP());
-		almostDoneText.getElement().setAttribute("title",i18n.GL1279()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP());
+		this.user = user;
 		
-		fillOutText.getElement().setInnerText(i18n.GL1280()+i18n.GL_SPL_SEMICOLON()+" ");
-		fillOutText.getElement().setId("pnlFillOutText");
-		fillOutText.getElement().setAttribute("alt",i18n.GL1280()+i18n.GL_SPL_SEMICOLON()+" ");
-		fillOutText.getElement().setAttribute("title",i18n.GL1280()+i18n.GL_SPL_SEMICOLON()+" ");
+		txtChooseUsername.addBlurHandler(new CheckProfanityInOnBlur(txtChooseUsername,null, userNameValidUc, isHavingBadWordsUserName));
+		txtChooseUsername.addMouseOverHandler(new OnMouseOver());
+		txtChooseUsername.addMouseOutHandler(new OnMouseOut());
 		
-		emailTxtBox.getElement().setId("txtEmail");
-		StringUtil.setAttributes(emailTxtBox, true);
-		cancelButton.getElement().setId("epnlCancelButton");
+		lblTeacher.setText(i18n.GL0416());
+		StringUtil.setAttributes(lblTeacher.getElement(), "lblTeacher", i18n.GL0416(), i18n.GL0416());
 		
-		emailText.getElement().setInnerText(i18n.GL0212());
-		emailText.getElement().setId("pnlEmailText");
-		emailText.getElement().setAttribute("alt",i18n.GL0212());
-		emailText.getElement().setAttribute("title",i18n.GL0212());
+		lblStudent.setText(i18n.GL0417());
+		StringUtil.setAttributes(lblStudent.getElement(), "lblStudent", i18n.GL0417(), i18n.GL0417());
 		
-		uNameLbl.getElement().setInnerText(i18n.GL0423());
-		uNameLbl.getElement().setId("lblUName");
-		uNameLbl.getElement().setAttribute("alt",i18n.GL0423());
-		uNameLbl.getElement().setAttribute("title",i18n.GL0423());
+		lblParent.setText(i18n.GL0418());
+		StringUtil.setAttributes(lblParent.getElement(), "lblParent", i18n.GL0418(), i18n.GL0418());
 		
-		roleText.getElement().setInnerText(i18n.GL1281());
-		roleText.getElement().setId("pnlRoleText");
-		roleText.getElement().setAttribute("alt",i18n.GL1281());
-		roleText.getElement().setAttribute("title",i18n.GL1281());
+		lblOther.setText(i18n.GL0419());
+		StringUtil.setAttributes(lblOther.getElement(), "lblOther", i18n.GL0419(), i18n.GL0419());
+	
+		lblUserEmail.setText(StringUtil.generateMessage(i18n.GL2194(), AppClientFactory.getLoggedInUser().getEmailId()));
 		
-		roleListBox.getElement().setId("lbRoleListBox");
-		roleListBox.setItemText(0, i18n.GL1282()+i18n.GL_SPL_QUESTION());
-		roleListBox.setItemText(1, i18n.GL0417());
-		roleListBox.setItemText(2, i18n.GL0416());
-		roleListBox.setItemText(3, i18n.GL0418());
-		roleListBox.setItemText(4, i18n.GL0419());
-		agreeText.setText(i18n.GL1283());
-		agreeText.getElement().setId("lblAgreeText");
-		agreeText.getElement().setAttribute("alt",i18n.GL1283());
-		agreeText.getElement().setAttribute("title",i18n.GL1283());
+		txtChooseUsername.setPlaceholder(i18n.GL0423());
+		txtChooseUsername.getElement().setId("txtChooseUsername");
+		txtChooseUsername.setMaxLength(20);
+		txtChooseUsername.setText(user.getUsername());
 		
-		termsAndPolicyAnr.setText(i18n.GL0297()+" "+i18n.GL_GRR_AND()+" "+i18n.GL0452());
-		termsAndPolicyAnr.getElement().setAttribute("alt",i18n.GL0297()+" "+i18n.GL_GRR_AND()+" "+i18n.GL0452());
-		termsAndPolicyAnr.getElement().setAttribute("title",i18n.GL0297()+" "+i18n.GL_GRR_AND()+" "+i18n.GL0452());
+		rbTeacher = new RadioButton("roleOption", "");
+		rbStudent = new RadioButton("roleOption", "");
+		rbParent = new RadioButton("roleOption", "");
+		rbOther = new RadioButton("roleOption", "");
 		
-		andText.setText(i18n.GL_GRR_AND()+" "+i18n.GL_GRR_THE());
-		copyRightAnr.setText(i18n.GL0421());
-		copyRightAnr.getElement().setAttribute("alt",i18n.GL0421());
-		copyRightAnr.getElement().setAttribute("title",i18n.GL0421());
+		lblSelectRole.getElement().setId("lblSelectRole");
 		
-		gooruText.setText(i18n.GL_GRR_OF()+" "+i18n.GL0733()+i18n.GL_SPL_FULLSTOP());
-		okButton.getElement().setInnerText(i18n.GL0190());
-		userNameTxtBox.getElement().setId("txtUserName");
-		StringUtil.setAttributes(userNameTxtBox, true);
-		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicy");
-		buttonContainer.getElement().setId("pnlButtonContainer");
-		copyRightAnr.getElement().setId("lnkCopyRight");
-		errorMessageForUserNameLbl.getElement().setId("errlblForUserName");
-		errorMessageForRoleLbl.getElement().setId("errlblForRole");
-		emailTxtBox.setText(userEmail);
-		emailTxtBox.setReadOnly(true);	
-		errorMessageForUserNameLbl.setVisible(false);
+		lblToolTipOther.setText(i18n.GL0419());
+		lblOtherDesc.setText(i18n.GL2196());
+		
+		rbTeacher.addClickHandler(new ClickHandler() {
 
-		
-		copyRightPolicy = new CopyRightPolicyVc() {
-			
-			@Override
-			public void openParentPopup() {
-				//No need to set any thing.
-			}
-		};
-		
-
-		/**
-		 * Added click handler for showing Terms and Policy popup in footer 
-		 * @param clickEvent instance of {@link ClickEvent} 
-		 **/
-		termsAndPolicyAnr.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.enableScrolling(false);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
-				termsAndPolicyVc = new TermsAndPolicyVc(false) {
-					
-					@Override
-					public void openParentPopup() {
-//						this.show();
-					}
-				};
-				
-				termsAndPolicyVc.show();
-				termsAndPolicyVc.setSize("600px", "300px");
-				termsAndPolicyVc.center();
+				MixpanelUtil.select_teacher();
+				selectedRole = "teacher";
+				lblSelectRole.setVisible(false);
+				if (rbTeacher.getValue()){
+					//Remove normal and Set Selected Image
+					panelTeacher.getElement().addClassName(res.css().teacherRoleSelected());
+				}
+				//Remove selected image and set normal
+				panelOther.getElement().removeClassName(res.css().otherRoleSelected());
+//				panelTeacher.getElement().removeClassName(res.css().teacherRoleSelected());
+				panelStudent.getElement().removeClassName(res.css().studentRoleSelected());
+				panelParent.getElement().removeClassName(res.css().parentRoleSelected());
 			}
 		});
-		
-		/**
-		 * Added click handler for showing copy right popup in footer 
-		 * @param clickEvent instance of {@link ClickEvent} 
-		 * 
-		 **/
-		
-		copyRightAnr.addClickHandler(new ClickHandler() {
-			
+		rbStudent.addClickHandler(new ClickHandler() {
+
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.enableScrolling(false);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));	
-				copyRightPolicy.show();
-				copyRightPolicy.setSize("600px", "300px");
-				copyRightPolicy.center();				
+				MixpanelUtil.select_student();
+				selectedRole = "student";
+				lblSelectRole.setVisible(false);
+				if (rbStudent.getValue()){
+					//Remove normal and Set Selected Image
+					panelStudent.getElement().addClassName(res.css().studentRoleSelected());
+				}
+				//Remove selected image and set normal
+				panelOther.getElement().removeClassName(res.css().otherRoleSelected());
+				panelTeacher.getElement().removeClassName(res.css().teacherRoleSelected());
+//				panelStudent.getElement().removeClassName(res.css().studentRoleSelected());
+				panelParent.getElement().removeClassName(res.css().parentRoleSelected());
+			}
+		});
+		rbParent.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				MixpanelUtil.select_parent();
+				selectedRole = "parent";
+				lblSelectRole.setVisible(false);
+				if (rbParent.getValue()){
+					//Remove normal and Set Selected Image
+					panelParent.getElement().addClassName(res.css().parentRoleSelected());
+				}
+				//Remove selected image and set normal
+				panelOther.getElement().removeClassName(res.css().otherRoleSelected());
+				panelTeacher.getElement().removeClassName(res.css().teacherRoleSelected());
+				panelStudent.getElement().removeClassName(res.css().studentRoleSelected());
+				//panelParent.getElement().removeClassName(res.css().parentRoleSelected());
+			}
+		});
+		rbOther.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				MixpanelUtil.select_other();
+				selectedRole = "other";
+				lblSelectRole.setVisible(false);
+				if (rbOther.getValue()){
+					//Remove normal and Set Selected Image
+					panelOther.getElement().addClassName(res.css().otherRoleSelected());
+				}
+				//Remove selected image and set normal
+				//panelOther.getElement().removeClassName(res.css().otherRoleSelected());
+				panelTeacher.getElement().removeClassName(res.css().teacherRoleSelected());
+				panelStudent.getElement().removeClassName(res.css().studentRoleSelected());
+				panelParent.getElement().removeClassName(res.css().parentRoleSelected());
 			}
 		});
 
-		userNameTxtBox.getElement().setAttribute("maxlength","20");
+		rdTeacher.add(rbTeacher);
+		rdTeacher.getElement().setId("rdTeacher");
+		rdStudent.add(rbStudent);
+		rdStudent.getElement().setId("rdStudent");
+		rdParent.add(rbParent);
+		rdParent.getElement().setId("rdParent");
+		rdOther.add(rbOther);
+		rdOther.getElement().setId("rdOther");
+		
+		btnSubmit.setEnabled(false);
+		btnSubmit.getElement().addClassName("disabled");
+		
+		
+		lblJoin.setText(i18n.GL0400());
+		StringUtil.setAttributes(lblJoin.getElement(), "lblJoin", i18n.GL0400(), i18n.GL0400());
+		lblSubHeader.setText(i18n.GL2197());
+		StringUtil.setAttributes(lblSubHeader.getElement(), "lblSubHeader", i18n.GL2197(), i18n.GL2197());
+		lblTeacherContainer.setText(i18n.GL0416());
+		StringUtil.setAttributes(lblTeacherContainer.getElement(), "lblTeacherContainer", i18n.GL0416(), i18n.GL0416());
+		lblTeacherDesc.setText(i18n.GL2198());
+		StringUtil.setAttributes(lblTeacherDesc.getElement(), "lblTeacherDesc", i18n.GL2198(), i18n.GL2198());
+		lblTooltipStudent.setText(i18n.GL0417());
+		StringUtil.setAttributes(lblTooltipStudent.getElement(), "lblTooltipStudent", i18n.GL0417(), i18n.GL0417());
+		lblStudentDesc.setText(i18n.GL2199());
+		StringUtil.setAttributes(lblStudentDesc.getElement(), "lblStudentDesc", i18n.GL2199(), i18n.GL2199());
+		lblTooltipParent.setText(i18n.GL0418());
+		StringUtil.setAttributes(lblTooltipParent.getElement(), "lblTooltipParent", i18n.GL0418(), i18n.GL0418());
+		lblParentDesc.setText(i18n.GL2200());
+		StringUtil.setAttributes(lblParentDesc.getElement(), "lblParentDesc", i18n.GL2200(), i18n.GL2200());
+		btnSubmit.setText(i18n.GL0486());
+		StringUtil.setAttributes(btnSubmit.getElement(), "btnSubmit", i18n.GL0486(), i18n.GL0486());
+
+		lblHeader.setText(i18n.GL0186());
+		StringUtil.setAttributes(lblHeader.getElement(), "lblHeader", i18n.GL0186(), i18n.GL0186());
+		
+		lblPickWisely.setText(i18n.GL0410());
+		StringUtil.setAttributes(lblPickWisely.getElement(), "lblPickWisely", i18n.GL0410(), i18n.GL0410());
+		
 		Window.enableScrolling(false);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+		
+		panelUsernameTooltip.setVisible(false);
+		this.center();
+	}
+	/**
+	 * 
+	 * @fileName : AlmostDoneUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 30-Oct-2014
+	 *
+	 * @Author tumbalam
+	 *
+	 * @Reviewer:
+	 */
+	private class OnMouseOver implements MouseOverHandler {
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			if (event.getSource() == txtChooseUsername) {
+				panelUsernameTooltip.setVisible(true);
+			}
+		}
+	}
+	/**
+	 * 
+	 * @fileName : AlmostDoneUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 30-Oct-2014
+	 *
+	 * @Author tumbalam
+	 *
+	 * @Reviewer:
+	 */
+	private class OnMouseOut implements MouseOutHandler {
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			panelUsernameTooltip.setVisible(false);
+		}
 
 	}
 	
 	/**
-	 * Added click handler to hide Almost done Popup
-	 * @param clickEvent instance of {@link ClickEvent} 
+	 * 
+	 * @fileName : AlmostDoneUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 30-Oct-2014
+	 *
+	 * @Author tumbalam
+	 *
+	 * @Reviewer:
 	 */
+	public class CheckProfanityInOnBlur implements BlurHandler{
+		private TextBox textBox;
+		private Label label;
+		private RichTextArea richTextArea;
+		private boolean isHavingBadWords;
+		public CheckProfanityInOnBlur(TextBox textBox,RichTextArea richTextArea,Label label,boolean isHavingBadWords){
+			this.textBox=textBox;
+			this.label=label;
+			this.richTextArea=richTextArea;
+			this.isHavingBadWords=isHavingBadWords;
+		
+		}
+		@Override
+		public void onBlur(BlurEvent event) {
+			if (txtChooseUsername.getText().trim() != null && txtChooseUsername.getText().trim().length()>0){
+				btnSubmit.setEnabled(false);
+				btnSubmit.getElement().addClassName("disabled");
+				boolean fieldValidationStaus=true;
+				final Boolean userNameValidate = txtChooseUsername.getText().matches(USER_NAME_REGEX);
+				if(!userNameValidate){
+					 if(!txtChooseUsername.getText().contains(" ")){
+						if (txtChooseUsername.isVisible()){
+							userNameValidUc.setText(i18n.GL0475());
+						}
+					}else if(txtChooseUsername.getText().contains(" ")){
+						userNameValidUc.setText(i18n.GL1635());
+					}
+					userNameValidUc.setVisible(true);
+					fieldValidationStaus = false;	
+				} 
+				if (txtChooseUsername.getText().length()>0 && txtChooseUsername.getText().length()<5) 
+				{
+					userNameValidUc.setText(i18n.GL0473()+i18n.GL_SPL_FULLSTOP());
+					userNameValidUc.getElement().setAttribute("alt",i18n.GL0473()+i18n.GL_SPL_FULLSTOP());
+					userNameValidUc.getElement().setAttribute("title",i18n.GL0473()+i18n.GL_SPL_FULLSTOP());
+					
+					userNameValidUc.setVisible(true);
+					fieldValidationStaus = false;
+				}
+				
+				if(txtChooseUsername.getText()==null||txtChooseUsername.getText().trim().equals(""))
+				{
+					userNameValidUc.setText(i18n.GL1284()+i18n.GL_SPL_FULLSTOP());
+					userNameValidUc.getElement().setAttribute("alt",i18n.GL1284()+i18n.GL_SPL_FULLSTOP());
+					userNameValidUc.getElement().setAttribute("title",i18n.GL1284()+i18n.GL_SPL_FULLSTOP());
+					userNameValidUc.setVisible(true);
+					fieldValidationStaus=false;
+				}
+				
+				
+				if (fieldValidationStaus && textBox.getValue() !=null && textBox.getValue().length() > 0){
+					Map<String, String> parms = new HashMap<String, String>();
+					parms.put("text", textBox.getValue());
+					
+					
+					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+		
+						@Override
+						public void onSuccess(Boolean value) {
+							if (!value && userNameValidate){
+								btnSubmit.setEnabled(true);
+								btnSubmit.getElement().removeClassName("disabled");
+							}
+							
+							SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
+							if(textBox!=null){
+								label.getElement().getStyle().setWidth(92, Unit.PCT);
+							}
+						}
+					});
+				}
+			}
+		}
+		
+	}
+	
 
-	@UiHandler("cancelButton")
-	public void onCancelClicked(ClickEvent clickEvent) {
+	@UiHandler("lblClose")
+	public void closePopup(ClickEvent event){
 		hide();
-		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
 	
 	/**
@@ -247,91 +434,55 @@ public class AlmostDoneUc extends PopupPanel{
 	 * @param event instance of {@link KeyUpEvent} 
 	 */
 
-	@UiHandler("userNameTxtBox")
+	@UiHandler("txtChooseUsername")
 	public void keyUserNameTextBox(KeyUpEvent event){
-		String userName=userNameTxtBox.getText();
-		errorMessageForUserNameLbl.setText("");
+		String userName=txtChooseUsername.getText();
+		userNameValidUc.setText("");
+		userNameValidUc.setVisible(false);
 		if(userName.length()>0){
-			errorMessageForUserNameLbl.setText("");
+			userNameValidUc.setText("");
 		}
 		if(userName.length()==20){
-			errorMessageForUserNameLbl.setText(i18n.GL1097()+" "+i18n.GL0143());
-			errorMessageForUserNameLbl.getElement().setAttribute("alt",i18n.GL1097()+" "+i18n.GL0143());
-			errorMessageForUserNameLbl.getElement().setAttribute("title",i18n.GL1097()+" "+i18n.GL0143());
-			errorMessageForUserNameLbl.setVisible(true);
+			userNameValidUc.setText(i18n.GL1097()+" "+i18n.GL0143());
+			userNameValidUc.getElement().setAttribute("alt",i18n.GL1097()+" "+i18n.GL0143());
+			userNameValidUc.getElement().setAttribute("title",i18n.GL1097()+" "+i18n.GL0143());
+			userNameValidUc.setVisible(true);
 		//	fieldValidationStaus=false;
 		}else{
-			errorMessageForUserNameLbl.setVisible(false);
+			userNameValidUc.setVisible(false);
 		}
 
 		
 	}
-	
-	/**
-	 * Added click handler to perform basic validations.
-	 * @param event instance of {@link ClickEvent} 
-	 */
-	
-	@UiHandler("roleListBox")
-	public void onClickRoleListBox(ClickEvent event){
-		String userRole=roleListBox.getItemText(roleListBox.getSelectedIndex());
-		errorMessageForRoleLbl.setText("");
-		if(!(userRole.trim().equalsIgnoreCase("what is your role?"))){
-			errorMessageForRoleLbl.setText("");
-		}
-		
-	}
-	
+
 	
 	/**
 	 * Added click handler for checking availability of username and to set userName and role.
 	 * @param event instance of {@link ClickEvent} 
 	 */
 	
-	@UiHandler("okButton")
+	@UiHandler("btnSubmit")
 	public void onOkButtonClicked(ClickEvent clickEvent)
 	{
 		boolean fieldValidationStaus=true;
 		
-		if(buttonContainer.getStyleName().equals(AlmostDoneUcCBundle.INSTANCE.css().registrationPopupBlueButton()))
-		{
-			
-			String userRole=roleListBox.getItemText(roleListBox.getSelectedIndex());
-			
-			if(userNameTxtBox.getText()==null||userNameTxtBox.getText().trim().equals(""))
-			{
-				errorMessageForUserNameLbl.setText(i18n.GL1284()+i18n.GL_SPL_FULLSTOP());
-				errorMessageForUserNameLbl.getElement().setAttribute("alt",i18n.GL1284()+i18n.GL_SPL_FULLSTOP());
-				errorMessageForUserNameLbl.getElement().setAttribute("title",i18n.GL1284()+i18n.GL_SPL_FULLSTOP());
-				errorMessageForUserNameLbl.setVisible(true);
-				fieldValidationStaus=false;
-			}
-			if(userNameTxtBox.getText().length()>0 && userNameTxtBox.getText().length()<5) 
-			{
-				errorMessageForUserNameLbl.setText(i18n.GL1285()+i18n.GL_SPL_FULLSTOP());
-				errorMessageForUserNameLbl.getElement().setAttribute("alt",i18n.GL1285()+i18n.GL_SPL_FULLSTOP());
-				errorMessageForUserNameLbl.getElement().setAttribute("title",i18n.GL1285()+i18n.GL_SPL_FULLSTOP());
-				
-				errorMessageForUserNameLbl.setVisible(true);
-				fieldValidationStaus=false;
-			}
+		if(btnSubmit.isEnabled()){
 
-			if(userRole.trim().equalsIgnoreCase("what is your role?"))
+			if(selectedRole == null || selectedRole.trim().equalsIgnoreCase(""))
 			{
-				errorMessageForRoleLbl.setText(i18n.GL1146());
-				errorMessageForRoleLbl.getElement().setAttribute("alt",i18n.GL1146());
-				errorMessageForRoleLbl.getElement().setAttribute("title",i18n.GL1146());
+				lblSelectRole.setText(i18n.GL1146());
+				lblSelectRole.getElement().setAttribute("alt",i18n.GL1146());
+				lblSelectRole.getElement().setAttribute("title",i18n.GL1146());
+				lblSelectRole.setVisible(true);
 				fieldValidationStaus=false;
 			}
-			if(userNameTxtBox.getText().length()==21){
-					//errorMessageForUserNameLbl.setText("Your Character Limit Reached");
-				//errorMessageForUserNameLbl.setVisible(true);
+			if(txtChooseUsername.getText().length()==21){
 				fieldValidationStaus=false;
 				
 			}
-			if(userNameTxtBox.getText().length()>4 && fieldValidationStaus)
+			if(txtChooseUsername.getText().length()>4 && fieldValidationStaus)
 			{
-				checkUserAvailability(userNameTxtBox.getText(), "username");
+				checkUserAvailability(txtChooseUsername.getText(), "username");
 			}
 		}
 	
@@ -362,36 +513,39 @@ public class AlmostDoneUc extends PopupPanel{
 	 */
 
 	public void checkUserNameAvailability(UserDo result) {
-		if (result != null && result.isAvailability() && userNameTxtBox.getText() != null) {
-			errorMessageForUserNameLbl.setText(i18n.GL0061() + userNameTxtBox.getText() + ""+i18n.GL1286()+i18n.GL_SPL_FULLSTOP());
-			errorMessageForUserNameLbl.getElement().setAttribute("alt",i18n.GL0061() + userNameTxtBox.getText() + ""+i18n.GL1286()+i18n.GL_SPL_FULLSTOP());
-			errorMessageForUserNameLbl.getElement().setAttribute("title",i18n.GL0061() + userNameTxtBox.getText() + ""+i18n.GL1286()+i18n.GL_SPL_FULLSTOP());
-			errorMessageForUserNameLbl.setVisible(true);
+		if (result != null && result.isAvailability() && txtChooseUsername.getText() != null) {
+			userNameValidUc.setText(i18n.GL0061() +" "+ txtChooseUsername.getText() + " "+i18n.GL1286()+i18n.GL_SPL_FULLSTOP());
+			userNameValidUc.getElement().setAttribute("alt",i18n.GL0061() +" "+ txtChooseUsername.getText() + " "+i18n.GL1286()+i18n.GL_SPL_FULLSTOP());
+			userNameValidUc.getElement().setAttribute("title",i18n.GL0061() +" "+ txtChooseUsername.getText() + " "+i18n.GL1286()+i18n.GL_SPL_FULLSTOP());
+			userNameValidUc.setVisible(true);
 			
 		}
 		else
 		{
-			String userName = userNameTxtBox.getText();
-			String userRole=roleListBox.getItemText(roleListBox.getSelectedIndex());
+			String userName = txtChooseUsername.getText();
+			String userRole=selectedRole;
 			
 			AppClientFactory.getInjector().getHomeService().updateUserDetails(userName, userRole,new SimpleAsyncCallback<Void>(){
 				@Override
 				public void onSuccess(Void result) {
-					hide();
-//					Window.enableScrolling(true);
-//					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-					MixpanelUtil.Click_OK_AlmostDone();
+					
+//					MixpanelUtil.Click_OK_AlmostDone();
 					AppClientFactory.getInjector().getUserService().updateUserViewFlag(user.getGooruUId(), 1, new SimpleAsyncCallback<UserDo>() {
 						@Override
 						public void onSuccess(UserDo newUser) {
-							UserDo userDo = AppClientFactory.getLoggedInUser();
-							userDo.setViewFlag(newUser.getViewFlag());
-							AppClientFactory.setLoggedInUser(userDo);
+							AppClientFactory.setLoggedInUser(newUser);
 							AppClientFactory.fireEvent(new SetHeaderEvent(newUser));  
+//							Window.enableScrolling(true);
+//							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+							hide();
+							
+							
+							SignUpGradeCourseView setCourseView = new SignUpGradeCourseView(AppClientFactory.getLoggedInUser());
+							setCourseView.show();
+							setCourseView.center();
 						}
 					});
-					Window.enableScrolling(false);
-					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
+					
 				}				
 			});
 		}
@@ -399,3 +553,5 @@ public class AlmostDoneUc extends PopupPanel{
 	}
 
 }
+
+

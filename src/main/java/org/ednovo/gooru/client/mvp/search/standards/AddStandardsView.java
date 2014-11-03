@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle;
 import org.ednovo.gooru.client.uc.AppPopUpStandards;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
+import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
@@ -38,13 +40,24 @@ import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -96,6 +109,16 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	
 	boolean isHavingBadWords;
 	
+	final StandardPreferenceTooltip standardPreferenceTooltip=new StandardPreferenceTooltip();
+	
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
+	
+	 BrowseStandardsTooltip browseStandardsTooltip = new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
+	private boolean isBrowseStandardsToolTip = false;
+	
 	@UiTemplate("AddStandardsView.ui.xml")
 	interface AddStandardsViewUiBinder extends UiBinder<Widget, AddStandardsView> {
 	}
@@ -137,6 +160,63 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		commonStandards.setStyleName("primary");
 		commonStandards.addStyleName(AddStandardsBundle.INSTANCE.css().btnStandardsStyle());
 	
+		commonStandards.addMouseOverHandler(new MouseOverHandler() {
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				if(isCCSSAvailable==false){
+					browseStandardsTooltip.show();
+					browseStandardsTooltip.setPopupPosition(commonStandards.getAbsoluteLeft()+3, commonStandards.getAbsoluteTop()+33);
+					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
+					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+					isBrowseStandardsToolTip= true;
+				}
+			}
+		});
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hideBrowseStandardsPopup(event);
+	          }
+	    });
+		ngss.addMouseOverHandler(new MouseOverHandler() {
+			
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				if(isNGSSAvailable==false){
+					browseStandardsTooltip.show();
+					browseStandardsTooltip.setPopupPosition(ngss.getAbsoluteLeft()+3, ngss.getAbsoluteTop()+33);
+					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
+					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+					isBrowseStandardsToolTip= true;
+				}
+			}
+		});
+		texasKnowledge.addMouseOverHandler(new MouseOverHandler() {
+			
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				if(isTEKSAvailable==false){
+					browseStandardsTooltip.show();
+					browseStandardsTooltip.setPopupPosition(texasKnowledge.getAbsoluteLeft()+3, texasKnowledge.getAbsoluteTop()+33);
+					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
+					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+					isBrowseStandardsToolTip= true;
+				}
+			}
+		});
+		californiaStandards.addMouseOverHandler(new MouseOverHandler() {
+			
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				if(isCAAvailable==false){
+					browseStandardsTooltip.show();
+					browseStandardsTooltip.setPopupPosition(californiaStandards.getAbsoluteLeft()+3, californiaStandards.getAbsoluteTop()+33);
+					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
+					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+					isBrowseStandardsToolTip= true;
+				}
+				
+			}
+		});
 	}
 	
 	@Override
@@ -659,6 +739,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	
 	@UiHandler("texasKnowledge")
 	public void ontexasKnowledgeClick(ClickEvent click){
+		if(isTEKSAvailable){
 		selectedCodeVal = "";
 		selectedCodeId = 0;
 		addBtn.setEnabled(false);
@@ -674,33 +755,37 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		californiaStandards.addStyleName("secondary");
 		texasKnowledge.removeStyleName("secondary");
 		texasKnowledge.addStyleName("primary");
-
-	getUiHandlers().loadStateStandards("TEKS");
+		getUiHandlers().loadStateStandards("TEKS");
+		}else{
+		}
 	}
 	
 	@UiHandler("commonStandards")
 	public void oncommonStandardsClick(ClickEvent click){
-		selectedCodeVal = "";
-		selectedCodeId = 0;
-		addBtn.setEnabled(false);
-		addBtn.removeStyleName("primary");
-		addBtn.addStyleName("secondary");
-		scienceCodeVal = false;
-		instantVal = false;
-		texasKnowledge.removeStyleName("primary");
-		texasKnowledge.addStyleName("secondary");
-		ngss.removeStyleName("primary");
-		ngss.addStyleName("secondary");
-		californiaStandards.removeStyleName("primary");
-		californiaStandards.addStyleName("secondary");
-		commonStandards.removeStyleName("secondary");
-		commonStandards.addStyleName("primary");
-
-	getUiHandlers().loadStateStandards("CCSS");
+		if(isCCSSAvailable){
+			selectedCodeVal = "";
+			selectedCodeId = 0;
+			addBtn.setEnabled(false);
+			addBtn.removeStyleName("primary");
+			addBtn.addStyleName("secondary");
+			scienceCodeVal = false;
+			instantVal = false;
+			texasKnowledge.removeStyleName("primary");
+			texasKnowledge.addStyleName("secondary");
+			ngss.removeStyleName("primary");
+			ngss.addStyleName("secondary");
+			californiaStandards.removeStyleName("primary");
+			californiaStandards.addStyleName("secondary");
+			commonStandards.removeStyleName("secondary");
+			commonStandards.addStyleName("primary");
+			getUiHandlers().loadStateStandards("CCSS");
+		}else{
+		}
 	}
 	
 	@UiHandler("ngss")
 	public void onngssClick(ClickEvent click){
+		if(isNGSSAvailable){
 		selectedCodeVal = "";
 		selectedCodeId = 0;
 		addBtn.setEnabled(false);
@@ -716,12 +801,15 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		californiaStandards.addStyleName("secondary");
 		ngss.removeStyleName("secondary");
 		ngss.addStyleName("primary");
-
-	getUiHandlers().loadStateStandards("NGSS");
+		getUiHandlers().loadStateStandards("NGSS");
+		}else{
+			
+		}
 	}
 	
 	@UiHandler("californiaStandards")
 	public void oncaliforniaStandardsClick(ClickEvent click){
+		if(isCAAvailable){
 		selectedCodeVal = "";
 		selectedCodeId = 0;
 		addBtn.setEnabled(false);
@@ -737,13 +825,129 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		ngss.addStyleName("secondary");
 		californiaStandards.removeStyleName("secondary");
 		californiaStandards.addStyleName("primary");
-
-	getUiHandlers().loadStateStandards("CA");
+		getUiHandlers().loadStateStandards("CA");
+		}else{
+			
+		}
 	}
 
 	@Override
 	public String setStandardsDesc() {
 			return selectedCodeDesc;
+	}
+
+	public void setDefaultTEKS() {
+		commonStandards.removeStyleName("primary");
+		commonStandards.addStyleName("secondary");
+		ngss.removeStyleName("primary");
+		ngss.addStyleName("secondary");
+		californiaStandards.removeStyleName("primary");
+		californiaStandards.addStyleName("secondary");
+		texasKnowledge.removeStyleName("secondary");
+		texasKnowledge.addStyleName("primary");
+	}
+	
+	public void setDefaultNGSS() {
+		texasKnowledge.removeStyleName("primary");
+		texasKnowledge.addStyleName("secondary");
+		commonStandards.removeStyleName("primary");
+		commonStandards.addStyleName("secondary");
+		californiaStandards.removeStyleName("primary");
+		californiaStandards.addStyleName("secondary");
+		ngss.removeStyleName("secondary");
+		ngss.addStyleName("primary");
+	}
+	
+	public void setDefaultCA() {
+		texasKnowledge.removeStyleName("primary");
+		texasKnowledge.addStyleName("secondary");
+		commonStandards.removeStyleName("primary");
+		commonStandards.addStyleName("secondary");
+		ngss.removeStyleName("primary");
+		ngss.addStyleName("secondary");
+		californiaStandards.removeStyleName("secondary");
+		californiaStandards.addStyleName("primary");
+	}
+	
+	@Override
+	public void setEnableStandardButtons(boolean isCCSSAvailable,
+			boolean isNGSSAvailable, boolean isTEKSAvailable,
+			boolean isCAAvailable) {
+		this.isCCSSAvailable = isCCSSAvailable;
+		this.isNGSSAvailable = isNGSSAvailable;
+		this.isTEKSAvailable = isTEKSAvailable;
+		this.isCAAvailable = isCAAvailable;
+		
+		if(isCCSSAvailable == true){
+			commonStandards.getElement().getStyle().clearColor();
+			commonStandards.getElement().removeClassName("disabled");
+		}else{
+			commonStandards.getElement().getStyle().setColor("#999");
+			commonStandards.getElement().addClassName("disabled");
+		}
+		if(isNGSSAvailable == true){
+			ngss.getElement().getStyle().clearColor();
+			ngss.getElement().removeClassName("disabled");
+		}else{
+			ngss.getElement().getStyle().setColor("#999");
+			ngss.getElement().addClassName("disabled");
+		}
+		
+		if(isTEKSAvailable == true){
+			texasKnowledge.getElement().getStyle().clearColor();
+			texasKnowledge.getElement().removeClassName("disabled");
+		}else{
+			texasKnowledge.getElement().getStyle().setColor("#999");
+			texasKnowledge.getElement().addClassName("disabled");
+		}
+		
+		if(isCAAvailable == true){
+			californiaStandards.getElement().getStyle().clearColor();
+			californiaStandards.getElement().removeClassName("disabled");
+		}else{
+			californiaStandards.getElement().getStyle().setColor("#999");
+			californiaStandards.getElement().addClassName("disabled");
+		}
+		
+	}
+
+	@Override
+	public void setStandardsStyles(String standardVal) {
+		// TODO Auto-generated method stub
+		if(standardVal.equalsIgnoreCase("CCSS")){
+			setDefaultCCSS();
+		}else if(standardVal.equalsIgnoreCase("TEKS")){
+			setDefaultTEKS();
+		}else if(standardVal.equalsIgnoreCase("NGSS")){
+			setDefaultNGSS();
+		}else if(standardVal.equalsIgnoreCase("CA")){
+			setDefaultCA();
+		}
+	}
+	
+	public void hideBrowseStandardsPopup(NativePreviewEvent event){
+		try{
+			if(event.getTypeInt()==Event.ONMOUSEOVER){
+				Event nativeEvent = Event.as(event.getNativeEvent());
+				boolean target=eventTargetsPopup(nativeEvent);
+				if(!target)
+				{
+					if(isBrowseStandardsToolTip){
+						browseStandardsTooltip.hide();
+					}
+				}
+			}
+		}catch(Exception ex){ex.printStackTrace();}
+	}
+	
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			try{
+				return browseStandardsTooltip.getElement().isOrHasChild(Element.as(target));
+			}catch(Exception ex){}
+		}
+		return false;
 	}
 	
 }

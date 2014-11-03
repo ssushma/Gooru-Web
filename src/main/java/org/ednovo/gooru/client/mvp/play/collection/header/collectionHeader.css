@@ -238,7 +238,7 @@
 	float:left;
 }
 .loginStatus .loggingIcon {
-    width:20px;
+    /* width:20px; */
     height:20px;
     display:inline-block;
     position:relative;
@@ -259,6 +259,7 @@
     left: 0;
     bottom: 0;
     right: 0;
+    dispaly:none;
 }
 
 .loginStatus .loggingIcon .remainingTrack {
@@ -290,7 +291,7 @@
 .loginStatus .loggingIcon .innerDot {
     border:5px solid #46873F;
     background-color:white;
-    width:6px;
+   /*  width:6px; */
     height:6px;
     position:absolute;
     top:2px;

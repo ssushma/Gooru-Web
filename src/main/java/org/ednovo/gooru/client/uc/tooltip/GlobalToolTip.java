@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
@@ -107,7 +108,9 @@ public class GlobalToolTip extends Composite {
 		}else{
 			panelArrow.getElement().getStyle().clearPosition();
 		}*/
-    	
+    	if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)){
+    		panelArrow.getElement().getStyle().setDisplay(Display.NONE);
+    	}
     	if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
     		confirmationPanel.getElement().getStyle().setLeft(-136, Unit.PX);
 			panelArrow.getElement().getStyle().setLeft(141, Unit.PX);

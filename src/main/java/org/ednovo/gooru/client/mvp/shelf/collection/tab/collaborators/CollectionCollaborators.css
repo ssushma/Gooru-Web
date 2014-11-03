@@ -405,3 +405,8 @@ button[disable]:hover, .buttonTooltip:hover .tooltipContainer{
 .privacyAlignStyle{
 	margin-right: 2px;
 }
+.deleteTextLable{
+	text-align: left;
+	margin-left: 72px;
+	margin-bottom: -6px;
+}

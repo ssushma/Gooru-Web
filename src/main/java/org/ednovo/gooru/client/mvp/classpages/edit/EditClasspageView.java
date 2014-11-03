@@ -996,7 +996,7 @@ public class EditClasspageView extends
 		delete.setPositiveButtonText(i18n.GL0190());						
 		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.setDeleteValidate("delete");
-		delete.setPixelSize(450, 345);	
+		delete.setPixelSize(450, 352);	
 		delete.show();
 		delete.center();
 	}

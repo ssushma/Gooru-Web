@@ -324,9 +324,11 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		final UserDo userDo = AppClientFactory.getLoggedInUser(); 
 		int flag = userDo.getViewFlag();
 		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
-		
-		if(!AppClientFactory.isAnonymous() && loginType.equalsIgnoreCase("apps")) {
-						
+		if(!AppClientFactory.isAnonymous() && flag==0 &&  loginType.equalsIgnoreCase("apps")) {
+			AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
+			update.setGlassEnabled(true);
+			update.show();
+			update.center();
 		}
 		else if(flag<=11 && !AppClientFactory.isAnonymous()){
 			showMarketingPopup(userDo);

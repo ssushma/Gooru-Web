@@ -69,6 +69,7 @@ import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -112,7 +113,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiField
 	Label userName, userBio, aboutUsCharacterValidation, courseMaxMsg,profilePageViewMsg, roleTxt, userLibraryMessage, libraryMessage;
 	
-	@UiField Label cancelBtn,gradeText,courseLabel,profilePageText, courseGradeLbl;
+	@UiField Label cancelBtn,gradeText,courseLabel,profilePageText, courseGradeLbl,lblDescCharLimit;
 
 	@UiField
 	Image userProfilePic,errorImage;
@@ -274,6 +275,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				aboutUsCharacterValidation.setVisible(false);
 				btnSave.setVisible(false);
 				biographyCancelButton.setVisible(false);
+				lblDescCharLimit.setVisible(false);
 				if (text.isEmpty()) {
 					enableAddBioBtn("addBioBtn");
 				}else{
@@ -302,6 +304,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 		};
 		profileTextArea.getElement().getStyle().setWidth(795, Unit.PX);
+		
+		profileTextArea.getElement().setAttribute("maxlength", "500");
 
 		setWidget(uiBinder.createAndBindUi(this));
 		addCourseGradeBtn.setText(i18n.GL1075());
@@ -536,6 +540,10 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followingContainer.getElement().setId("pnlFollowingContainer");
 		tagResourceContainer.getElement().setId("pnlTagResourceContainer");
 		profileOffContainerPanel.getElement().setId("pnlProfileOffContainerPanel");
+		
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		lblDescCharLimit.setText(value);
+		StringUtil.setAttributes(lblDescCharLimit.getElement(), "lblDescCharLimit", value, value);
 	}
 
 	public class ProfileOnClickEvent implements ClickHandler  {
@@ -664,6 +672,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		profileTextArea.cancel();
 		btnSave.setVisible(false);
 		biographyCancelButton.setVisible(false);
+		lblDescCharLimit.setVisible(false);
 		moreGradeCourseLbl.clear();
 		moreCourseLbl.clear();
 		noCollectionMsgPanel.setText(profileDo.getUser().getUsernameDisplay()+" "+i18n.GL1083());
@@ -1078,6 +1087,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		profileTextArea.getBiographyEditImage().getElement().setAttribute("style", "none");
 		btnSave.setVisible(false);
 		biographyCancelButton.setVisible(false);
+		lblDescCharLimit.setVisible(false);
 		pencilTextAreaImage.setVisible(false);
 		noAboutUsContainer.addMouseOverHandler(new MouseOverHandler() {
 			@Override
@@ -1120,6 +1130,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			if (enableEdit){
 				btnSave.setVisible(true);
 				biographyCancelButton.setVisible(true);
+				lblDescCharLimit.setVisible(true);
 				profileTextArea.switchToEdit();
 			}
 		}
@@ -1133,6 +1144,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				noAboutUsContainer.setVisible(false);
 				btnSave.setVisible(true);
 				biographyCancelButton.setVisible(true);
+				lblDescCharLimit.setVisible(true);
 			}
 		}
 	}
@@ -1192,6 +1204,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			enableAddBioBtn("other");
 			btnSave.setVisible(true);
 			biographyCancelButton.setVisible(true);
+			lblDescCharLimit.setVisible(true);
 			profileTextArea.switchToEdit();
 		}
 	}
@@ -1257,6 +1270,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		aboutUsCharacterValidation.setVisible(false);
 		btnSave.setVisible(false);
 		biographyCancelButton.setVisible(false);
+		lblDescCharLimit.setVisible(false);
 		profileTextArea.cancel();
 		Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text", profileTextArea.geteditTextBox().getText());

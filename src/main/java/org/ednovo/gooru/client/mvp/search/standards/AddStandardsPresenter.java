@@ -81,6 +81,13 @@ public class AddStandardsPresenter extends PresenterWidget<IsAddStandardsView> i
 	private String resourceOid;
 	
 	private String playerType=null;
+	
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
+	
+	private String standardVal="";
 
 	public String getResourceUid() {
 		return resourceOid;
@@ -113,10 +120,23 @@ public class AddStandardsPresenter extends PresenterWidget<IsAddStandardsView> i
 	
 	public void callDefaultStandardsLoad()
 	{
+		getView().setEnableStandardButtons(isCCSSAvailable,isNGSSAvailable,isTEKSAvailable,isCAAvailable);
+		if(isCCSSAvailable){
+			standardVal = "CCSS";
+			getView().setStandardsStyles(standardVal);
+		}else if(isTEKSAvailable){
+			standardVal = "TEKS";
+			getView().setStandardsStyles(standardVal);
+		}else if(isNGSSAvailable){
+			standardVal = "NGSS";
+			getView().setStandardsStyles(standardVal);
+		}else if(isCAAvailable){
+			standardVal = "CA";
+			getView().setStandardsStyles(standardVal);
+		}
 		getView().loadData();
-		getView().setDefaultCCSS();
 		getView().reset();
-		AppClientFactory.getInjector().getSearchService().getFirstLevelStandards("0", "CCSS", new SimpleAsyncCallback<ArrayList<StandardsLevel1DO>>() {
+		AppClientFactory.getInjector().getSearchService().getFirstLevelStandards("0", standardVal, new SimpleAsyncCallback<ArrayList<StandardsLevel1DO>>() {
 			@Override
 			public void onSuccess(ArrayList<StandardsLevel1DO> result) {
 				for(int i=0;i<result.size();i++) {
@@ -208,9 +228,15 @@ public class AddStandardsPresenter extends PresenterWidget<IsAddStandardsView> i
 		});
 		
 	}
-	
 
-	
-
+	public void enableStandardsData(boolean isCCSSAvailable,
+			boolean isTEKSAvailable, boolean isNGSSAvailable,
+			boolean isCAAvailable) {
+		// TODO Auto-generated method stub
+		this.isCCSSAvailable= isCCSSAvailable;
+		this.isNGSSAvailable= isNGSSAvailable;
+		this.isTEKSAvailable= isTEKSAvailable;
+		this.isCAAvailable= isCAAvailable;
+	}
 
 }

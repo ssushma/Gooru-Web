@@ -71,33 +71,33 @@ public class LibraryLessonUc extends Composite{
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	public LibraryLessonUc(LessonDo lessonDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
+	public LibraryLessonUc(LessonDo lessonDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber,String libraryGooruOid) {
 		initWidget(uiBinder.createAndBindUi(this));
 		AppClientFactory.getEventBus().addHandler(SetConceptTitleStyleEvent.TYPE, setConceptTitleStyleHandler);
 		this.topicId = topicId;
 		if(lessonDo.getConcept()!=null&&lessonDo.getConcept().size()>0) {
 			String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
 			if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
-			setLessonData(lessonDo,null,lessonDo.getCollection(),null,isLessonHighlighted,lessonNumber);
+			setLessonData(lessonDo,null,lessonDo.getCollection(),null,isLessonHighlighted,lessonNumber,libraryGooruOid);
 			}
-			setLessonData(lessonDo,null,null,lessonDo.getConcept(),isLessonHighlighted,lessonNumber);
+			setLessonData(lessonDo,null,null,lessonDo.getConcept(),isLessonHighlighted,lessonNumber,libraryGooruOid);
 		} else {
-			setLessonData(lessonDo,null,lessonDo.getCollection(),null,isLessonHighlighted,lessonNumber);
+			setLessonData(lessonDo,null,lessonDo.getCollection(),null,isLessonHighlighted,lessonNumber,libraryGooruOid);
 		}
 	}
 	
-	public LibraryLessonUc(ArrayList<ConceptDo> conceptDoList, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
+	public LibraryLessonUc(ArrayList<ConceptDo> conceptDoList, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber,String libraryGooruOid) {
 		initWidget(uiBinder.createAndBindUi(this));
 		AppClientFactory.getEventBus().addHandler(SetConceptTitleStyleEvent.TYPE, setConceptTitleStyleHandler);
 		this.topicId = topicId;
-		setLessonData(null, null, conceptDoList, null, isLessonHighlighted,lessonNumber);
+		setLessonData(null, null, conceptDoList, null, isLessonHighlighted,lessonNumber,libraryGooruOid);
 	}
 	
 	public LibraryLessonUc(PartnerFolderDo partnerFolderDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
 		initWidget(uiBinder.createAndBindUi(this));
 		AppClientFactory.getEventBus().addHandler(SetConceptTitleStyleEvent.TYPE, setConceptTitleStyleHandler);
 		this.topicId = topicId;
-		setLessonData(null, partnerFolderDo,partnerFolderDo.getCollections(),null, isLessonHighlighted,lessonNumber);
+		setLessonData(null, partnerFolderDo,partnerFolderDo.getCollections(),null, isLessonHighlighted,lessonNumber,null);
 	}
 	/**
 	 * 
@@ -122,7 +122,7 @@ public class LibraryLessonUc extends Composite{
 	 *
 	 *
 	 */
-	private void setLessonData(final LessonDo lessonDo, final PartnerFolderDo partnerFolderDo, ArrayList<ConceptDo> conceptDoList, ArrayList<ConceptDo> conceptQuizList, boolean isLessonHighlighted, Integer lessonNumber) {
+	private void setLessonData(final LessonDo lessonDo, final PartnerFolderDo partnerFolderDo, ArrayList<ConceptDo> conceptDoList, ArrayList<ConceptDo> conceptQuizList, boolean isLessonHighlighted, Integer lessonNumber,final String libraryGooruOid) {
 		lessonList.getElement().setId("pnlLessonList");
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
 		if(lessonDo!=null) {
@@ -173,7 +173,7 @@ public class LibraryLessonUc extends Composite{
 						conceptId = conceptDo.getCollection().get(0).getGooruOid();
 						AppClientFactory.fireEvent(new SetConceptTitleStyleEvent(conceptId,topicId,lessonId));
 						AppClientFactory.fireEvent(new SetLoadingIconEvent(true,topicId));
-						AppClientFactory.fireEvent(new SetConceptQuizDataEvent(conceptDo.getCollection(),topicId,lessonId+"",lessonLabel,lessonCode,conceptId));
+						AppClientFactory.fireEvent(new SetConceptQuizDataEvent(conceptDo.getCollection(),topicId,lessonId+"",lessonLabel,lessonCode,conceptId,libraryGooruOid));
 						//getConceptDetails(conceptId);
 					}
 				});
@@ -206,7 +206,7 @@ public class LibraryLessonUc extends Composite{
 						conceptId = conceptDo.getGooruOid();
 						AppClientFactory.fireEvent(new SetConceptTitleStyleEvent(conceptId,topicId,lessonId));
 						AppClientFactory.fireEvent(new SetLoadingIconEvent(true,topicId));
-						getConceptDetails(conceptId);
+						getConceptDetails(conceptId,libraryGooruOid);
 					}
 				});
 			}
@@ -228,20 +228,20 @@ public class LibraryLessonUc extends Composite{
 	 * @throws : <Mentioned if any exceptions>
 	 *
 	 */
-	private void getConceptDetails(String gooruOid) {
+	private void getConceptDetails(String gooruOid,final String libraryGooruOid) {
 		if(AppClientFactory.getPlaceManager().getRequestParameter("standardId")!=null){
 			String standardsId = AppClientFactory.getPlaceManager().getRequestParameter("standardId");
 			AppClientFactory.getInjector().getLibraryService().getConceptForStandards(gooruOid,standardsId, false, new SimpleAsyncCallback<ConceptDo>() {
 				@Override
 				public void onSuccess(ConceptDo conceptDo) {
-					AppClientFactory.fireEvent(new OpenLessonConceptEvent(conceptDo,topicId,lessonId+"",lessonLabel,lessonCode));
+					AppClientFactory.fireEvent(new OpenLessonConceptEvent(conceptDo,topicId,lessonId+"",lessonLabel,lessonCode,libraryGooruOid));
 				}			
 			});
 		} else {
 			AppClientFactory.getInjector().getLibraryService().getConcept(gooruOid, false, new SimpleAsyncCallback<ConceptDo>() {
 				@Override
 				public void onSuccess(ConceptDo conceptDo) {
-					AppClientFactory.fireEvent(new OpenLessonConceptEvent(conceptDo,topicId,lessonId+"",lessonLabel,lessonCode));
+					AppClientFactory.fireEvent(new OpenLessonConceptEvent(conceptDo,topicId,lessonId+"",lessonLabel,lessonCode,libraryGooruOid));
 				}
 			});
 		}

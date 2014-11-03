@@ -180,4 +180,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 
 	//void updatePermissions(DriveDo driveObject,AsyncCallback<DriveDo> simpleAsyncCallback);
     void refreshGoogleAccessToken(String refreshToken, AsyncCallback<GoogleToken> callback);
+    
+    void v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl, AsyncCallback<CollectionItemDo> updateQuestionItemResourceAsyncCallback);
 }

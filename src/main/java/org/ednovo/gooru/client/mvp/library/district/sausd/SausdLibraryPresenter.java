@@ -29,6 +29,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
+import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -74,35 +75,54 @@ public class SausdLibraryPresenter extends BasePlacePresenter<IsSausdLibraryView
 	@Override
 	public void onBind() {
 		super.onBind();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 	}
 	
 	@Override
 	public void onReset() {
 		super.onReset();
+		Window.scrollTo(0, 0);
+	}
+	@Override
+	public void onHide() {
+		super.onHide();
+		AppClientFactory.getPlaceManager().resetLibraryEventData(PlaceTokens.SAUSD_LIBRARY);
 	}
 	
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		districtPresenter.setPartnerWidget(PlaceTokens.SAUSD_LIBRARY);
-		clearSlot(TYPE_FOLDERS_SLOT);
-		setInSlot(TYPE_FOLDERS_SLOT, districtPresenter);
+		if (AppClientFactory.getPlaceManager().refreshPlace()) {
+			clearSlot(TYPE_FOLDERS_SLOT);
+			setInSlot(TYPE_FOLDERS_SLOT, districtPresenter);
+			
+			if (getPlaceManager().getRequestParameter(CALLBACK) != null && !getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
+			    //To show SignUp (Registration popup)
+			    if (AppClientFactory.isAnonymous()){
+			        Window.enableScrolling(false);
+			        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+			        String type = getPlaceManager().getRequestParameter("type") ;
+			        int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
+			        signUpViewPresenter.displayPopup(displayScreen);
+			        addToPopupSlot(signUpViewPresenter);
+			    }
+			}
+		}
 		
-		if (getPlaceManager().getRequestParameter(CALLBACK) != null && !getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
-		    //To show SignUp (Registration popup)
-		    if (AppClientFactory.isAnonymous()){
-		        Window.enableScrolling(false);
-		        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		        String type = getPlaceManager().getRequestParameter("type") ;
-		        int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
-		        signUpViewPresenter.displayPopup(displayScreen);
-		        addToPopupSlot(signUpViewPresenter);
-		    }
+		int flag = AppClientFactory.getLoggedInUser().getViewFlag();
+		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
+		if(!AppClientFactory.isAnonymous() && flag==0 &&  loginType.equalsIgnoreCase("apps")) {
+			AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
+			update.setGlassEnabled(true);
+			update.show();
+			update.center();
 		}
 	}
 	
