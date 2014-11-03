@@ -61,6 +61,7 @@ import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
@@ -147,11 +148,11 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	// Drop down for Resource Type//
 	@UiField
 	HTMLPanel extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,homeworkText,	gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
-		unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,contentPanel,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText,
+		unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText,
 		educationalpanel;
 
 	@UiField
-	public HTMLPanel addResourceBtnPanel,loadingPanel,urlTitle,descriptionLabel,videoLabel,interactiveText,websiteText,imagesText,textsText,audioText,urlContianer;//otherText
+	public HTMLPanel addResourceBtnPanel,loadingPanel,urlTitle,descriptionLabel,videoLabel,interactiveText,websiteText,imagesText,contentPanel,textsText,audioText,urlContianer;//otherText
 
 	@UiField
 	HTMLPanel categorypanel, video, interactive, website,thumbnailText,audio,texts,image,rightsContent,errorContainer;//other
@@ -184,7 +185,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	@UiField Label mediaLabel,lblMediaPlaceHolder,lblMediaFeatureArrow;
 	
-	@UiField ScrollPanel spanelMediaFeaturePanel;
+	@UiField ScrollPanel spanelMediaFeaturePanel,scrollPanel;
 	
 	@UiField HTMLPanel htmlMediaFeatureListContainer;
 	
@@ -1260,6 +1261,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												mandatoryCategoryLbl.getElement().setAttribute("alt", i18n.GL0917());
 												mandatoryCategoryLbl.getElement().setAttribute("title", i18n.GL0917());
 												mandatoryCategoryLbl.setVisible(true);
+												scrollPanel.setVerticalScrollPosition(0);
 												isValidate = false;
 											}
 
@@ -1269,6 +1271,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												mandatoryCategoryLbl.getElement().setAttribute("alt", i18n.GL0925());
 												mandatoryCategoryLbl.getElement().setAttribute("title", i18n.GL0925());
 												mandatoryCategoryLbl.setVisible(true);
+												scrollPanel.setVerticalScrollPosition(0);
 												isValidate = false;
 
 											}
@@ -1289,6 +1292,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 														mandatoryCategoryLbl.getElement().setAttribute("alt", i18n.GL0927());
 														mandatoryCategoryLbl.getElement().setAttribute("title", i18n.GL0927());
 														mandatoryCategoryLbl.setVisible(true);
+														scrollPanel.setVerticalScrollPosition(0);
 														isValidate = false;													}
 												}
 											}
