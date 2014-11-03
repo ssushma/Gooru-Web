@@ -155,6 +155,7 @@ public class AlmostDoneUc extends PopupPanel{
 		txtChooseUsername.setPlaceholder(i18n.GL0423());
 		txtChooseUsername.getElement().setId("txtChooseUsername");
 		txtChooseUsername.setMaxLength(20);
+		txtChooseUsername.setText(user.getUsername());
 		
 		rbTeacher = new RadioButton("roleOption", "");
 		rbStudent = new RadioButton("roleOption", "");
@@ -302,7 +303,6 @@ public class AlmostDoneUc extends PopupPanel{
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			System.out.println("on mouse over...");
 			if (event.getSource() == txtChooseUsername) {
 				panelUsernameTooltip.setVisible(true);
 			}
