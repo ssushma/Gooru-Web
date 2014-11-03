@@ -251,6 +251,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				}
 			copyCollectionJsonObject.put("collection", itemTypeJsonObject);
 			copyCollectionJsonObject.put("addToShelf", "true");
+			getLogger().info("--- Copy collection URl -- "+url);
+			getLogger().info("-- Copy coll payload (Put method) -- "+copyCollectionJsonObject.toString());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), copyCollectionJsonObject.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
