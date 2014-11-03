@@ -34,6 +34,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
@@ -52,6 +53,7 @@ import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
 import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.content.customFieldValuesDO;
+import org.ednovo.gooru.shared.model.search.ResourceInfoObjectDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.user.CreatorDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -274,6 +276,50 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		return resourceSearchResultDo;
 	}
 	
+	public static CollectionItemDo deserializeCollectionItemDoV2API(ResourceInfoObjectDo recordJsonObject){
+		CollectionItemDo collectionItemDo=new CollectionItemDo();
+		ResourceDo resourceDo=new ResourceDo();
+		List<Map<String, String>> standards = new ArrayList<Map<String, String>>();
+		Set<CodeDo> taxonomySet = new HashSet<CodeDo>();
+		int size = 0;
+		StringTokenizer courses = null;
+		try{
+			resourceDo = recordJsonObject.getResource();
+			if(recordJsonObject.getCourse().size()==0){
+				if(resourceDo.getCustomFieldValues()!=null){
+					courses = new StringTokenizer(resourceDo.getCustomFieldValues().getCfGooruCourse(), ",");
+					size=courses.countTokens();
+				}
+				
+			}else{
+				size=recordJsonObject.getCourse().size();
+			}
+			
+			for(int j=0;j<size;j++){
+				
+				CodeDo codeDo=new CodeDo();
+				codeDo.setDepth(DEPTH);
+				if(recordJsonObject.getCourse().size()==0){
+					codeDo.setLabel(courses.nextToken());
+				}else{
+					codeDo.setLabel(recordJsonObject.getCourse().get(j));
+				}
+				
+				taxonomySet.add(codeDo);
+				
+			}
+			
+			resourceDo.setTaxonomySet(taxonomySet);
+			
+			collectionItemDo.setStandards(recordJsonObject.getStandards());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		collectionItemDo.setResource(resourceDo);
+		return collectionItemDo;
+		
+	}
+	
 	public static CollectionItemDo deserializeCollectionItemDo(JSONObject recordJsonObject){
 		CollectionItemDo collectionItemDo=new CollectionItemDo();
 		ResourceDo resourceDo=new ResourceDo();
@@ -409,8 +455,8 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		try{
 			RatingDo ratindDo=new RatingDo();
 			JSONObject ratingObject=recordJsonObject.isNull(SCOCIAL)?null:recordJsonObject.getJSONObject(SCOCIAL);
-			ratindDo.setVotesUp(ratingObject.isNull(CONTENT_RATING)?null:ratingObject.getJSONObject(CONTENT_RATING).getInt(VOTES_UP));
-			resourceDo.setUserRating(ratingObject.isNull(CONTENT_USER_RATING)?0:ratingObject.getInt(CONTENT_USER_RATING));
+				ratindDo.setVotesUp(ratingObject.isNull(CONTENT_RATING)?null:ratingObject.getJSONObject(CONTENT_RATING).getInt(VOTES_UP));
+				resourceDo.setUserRating(ratingObject.isNull(CONTENT_USER_RATING)?0:ratingObject.getInt(CONTENT_USER_RATING));
 			collectionItemDo.setRating(ratindDo);
 		}catch(Exception e){
 			e.printStackTrace();

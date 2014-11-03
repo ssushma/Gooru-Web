@@ -162,6 +162,8 @@ public class ProfileTopicListView extends Composite{
 	private static boolean isVisible=true;
 
 	private static final String STANDARD_ID = "standardId";
+	
+	private static final String COLLECTION_TITLE = "collectionTitle";
 
 	private static ProfileTopicListViewUiBinder uiBinder = GWT
 			.create(ProfileTopicListViewUiBinder.class);
@@ -275,6 +277,9 @@ public class ProfileTopicListView extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
 		setPlaceToken(placeToken);
+		collectionImage.getElement().setAttribute("collid", profileFolderDo.getGooruOid());
+		collectionTitleLbl.getElement().setAttribute("collid", profileFolderDo.getGooruOid());
+		collectionTitleLbl.getElement().setAttribute(COLLECTION_TITLE,profileFolderDo.getTitle());
 		assignCollectionBtn.setText(i18n.GL0526());
 		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
 		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
@@ -886,6 +891,9 @@ public class ProfileTopicListView extends Composite{
 	}
 
 	private void setMetaDataInfo(ProfileLibraryDo profileLibraryDo) {
+		collectionImage.getElement().setAttribute("collid", profileLibraryDo.getGooruOid());
+		collectionTitleLbl.getElement().setAttribute("collid", profileLibraryDo.getGooruOid());
+		collectionTitleLbl.getElement().setAttribute(COLLECTION_TITLE,profileLibraryDo.getTitle());
 		if(AppClientFactory.isAnonymous()){
 			standardsFloPanel.clear();
 			standardsFloPanel.setVisible(true);
@@ -1029,6 +1037,13 @@ public class ProfileTopicListView extends Composite{
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			String collectionIdVal = "";
+			try{
+				collectionIdVal = ((Image)event.getSource()).getElement().getAttribute("collid");
+			}
+			catch(Exception ex){
+				collectionIdVal = ((HTML)event.getSource()).getElement().getAttribute("collid");
+			}
 			String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
 			if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
 				MixpanelUtil.mixpanelEvent("standardlibrary_play_collection");	
@@ -1039,7 +1054,7 @@ public class ProfileTopicListView extends Composite{
 				MixpanelUtil.mixpanelEvent("LandingPage_Plays_Collection");
 			}
 			Map<String, String> params = new HashMap<String, String>();
-			params.put("id", oId);
+			params.put("id", collectionIdVal);
 			params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 			params.put("lessonId", lessonId);
 			if(libraryGooruOid!=null){
@@ -1058,7 +1073,7 @@ public class ProfileTopicListView extends Composite{
 
 	@UiHandler("assignCollectionBtn")
 	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
-		String collectionId = getProfileLibraryDo().getGooruOid();
+		String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
 		if(!isAssignPopup){
 			isAssignPopup=true;
 			final Map<String, String> params = StringUtil.splitQuery(Window.Location
@@ -1095,7 +1110,8 @@ public class ProfileTopicListView extends Composite{
 	
 	@UiHandler("customizeCollectionBtn")
 	public void oncustomizeCollectionBtnClicked(ClickEvent clickEvent) {
-		String collectionId = getProfileLibraryDo().getGooruOid();
+		String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
+		String collectionTitle = collectionTitleLbl.getElement().getAttribute(COLLECTION_TITLE);
 		if(!isCustomizePopup){
 			isCustomizePopup=true;
 			Boolean loginFlag = false;
@@ -1109,7 +1125,7 @@ public class ProfileTopicListView extends Composite{
 			if(params.containsKey(ASSIGN)){
 				params.remove(ASSIGN);
 			}
-			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
+			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, collectionTitle) {
 				@Override
 				public void closePoup() {
 					Window.enableScrolling(true);

@@ -394,6 +394,8 @@ public enum UrlToken {
     GET_USER_PROFILE("/v2/party/{0}/custom-field/show_profile_page?sessionToken={1}"),
     
     GET_RESOURCE_DETAILS("/resource/{0}/play.json?sessionToken={1}"),
+    
+    V2_GET_RESOURCE_DETAILS("/v2/resource/{0}?sessionToken={1}"),
 	
 	COLLECTION_PLAY_EMBEDED_URL("embed/collection.htm?id={0}"),
 	

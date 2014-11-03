@@ -135,6 +135,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 				@Override
 				public void onClick(ClickEvent event) {
 					leftNav.clear();
+					scrollFlag = false;
 					MixpanelUtil.mixpanelEvent("FeaturedCourse_SelectsCourse");
 					final Iterator<Widget> widgetsPanel = featuredCourses.iterator();
 					while (widgetsPanel.hasNext()) {
@@ -186,6 +187,7 @@ public class DistrictView extends BaseViewWithHandlers<DistrictUiHandlers> imple
 					if(libraryUnitMenuView.getWidgetCount()>10) {
 						Window.scrollTo(0, 0);
 					}
+					scrollFlag = false;
 					loadingPanel(true);
 					final Iterator<Widget> widgetsPanel = leftNav.iterator();
 					while (widgetsPanel.hasNext()) {

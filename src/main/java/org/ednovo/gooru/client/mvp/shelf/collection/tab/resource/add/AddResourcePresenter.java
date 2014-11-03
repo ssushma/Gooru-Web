@@ -39,8 +39,11 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 */
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
@@ -68,6 +71,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> implements AddResourceUiHandlers{
 	
@@ -103,6 +107,15 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	private boolean isNGSSAvailable =false;
 	private boolean isTEKSAvailable =false;
 	private boolean isCAAvailable =false;
+	
+	
+	private static final String O1_LEVEL = "o1";
+	
+	private static final String O2_LEVEL = "o2";
+	
+	private static final String O3_LEVEL = "o3";
+	
+	private static final String ID = "id";
 	
 	public SimpleAsyncCallback<CollectionItemDo> getAddQuestionResourceAsyncCallback() {
 		return addQuestionResourceAsyncCallback;
@@ -301,9 +314,32 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             @Override
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
-            		//redirect(Window.Location.getHref());
-                    isCollResourceTabView.updateCollectionItem(result);
+                    //isCollResourceTabView.updateCollectionItem(result);
+            		
+                	Map<String,String> params = new HashMap<String,String>();
+                	
+                	if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!= null){
+            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+            			params.put(O3_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o3"));
+            		}
+                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!= null) {
+            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+            		}
+                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!= null) {
+            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+            		}
+                	
+              
+                	if(AppClientFactory.getPlaceManager().getRequestParameter("id")!= null)
+                	{
+                	params.put(ID, AppClientFactory.getPlaceManager().getRequestParameter("id"));
+                	}
+            		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
+            		
                     MixpanelUtil.AddQuestion();
+                   // redirect(Window.Location.getHref());
             }
 		});
 	}
