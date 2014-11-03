@@ -175,6 +175,8 @@ public class LibraryTopicListView extends Composite{
 	
 	private static final String ASSIGN = "assign";
 	
+	private static final String COLLECTION_TITLE = "collectionTitle";
+	
 	private static LibraryTopicViewUiBinder uiBinder = GWT.create(LibraryTopicViewUiBinder.class);
 	
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
@@ -401,6 +403,7 @@ public class LibraryTopicListView extends Composite{
 		setPlaceToken(placeToken);
 		collectionImage.getElement().setAttribute("collid", conceptDo.getGooruOid());
 		collectionTitleLbl.getElement().setAttribute("collid", conceptDo.getGooruOid());
+		collectionTitleLbl.getElement().setAttribute(COLLECTION_TITLE,conceptDo.getTitle());
 		assignCollectionBtn.setText(i18n.GL0526());
 		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
 		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
@@ -1133,6 +1136,7 @@ public class LibraryTopicListView extends Composite{
 	private void setMetaDataInfo(ConceptDo conceptDo) {
 		collectionImage.getElement().setAttribute("collid", conceptDo.getGooruOid());
 		collectionTitleLbl.getElement().setAttribute("collid", conceptDo.getGooruOid());
+		collectionTitleLbl.getElement().setAttribute(COLLECTION_TITLE,conceptDo.getTitle());
 		if(AppClientFactory.isAnonymous()){
 			standardsFloPanel.clear();
 			standardsFloPanel.setVisible(true);
@@ -1397,6 +1401,7 @@ public class LibraryTopicListView extends Composite{
 			params.remove(ASSIGN);
 		}
 		String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
+		String collectionTitle = collectionTitleLbl.getElement().getAttribute(COLLECTION_TITLE);
 		MixpanelUtil.mixpanelEvent("LandingPage_customize_collection");
 		if(!isCustomizePopup){
 			isCustomizePopup=true;
@@ -1409,7 +1414,7 @@ public class LibraryTopicListView extends Composite{
 				loginFlag = false;
 			}
 		//	final Map<String,String> params = new HashMap<String,String>();
-			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getConceptDo().getTitle()) {
+			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, collectionTitle) {
 
 				@Override
 				public void closePoup() {
