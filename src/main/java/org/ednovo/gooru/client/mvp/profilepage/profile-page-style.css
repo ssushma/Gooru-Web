@@ -1552,3 +1552,8 @@ text-align: center;
 	float:left;
 		margin-top:-5px;
 }
+.profileDescCharLimit{
+	float: right;
+	margin-right: 141px;
+	color: #999;
+}

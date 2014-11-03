@@ -228,6 +228,28 @@ public interface SearchService extends BaseService {
 	ArrayList<StandardsLevel4DO> getFourthLevelStandards(String levelOrder,
 			String standardLabel);
 	
-	public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(SearchDo<CodeDo> searchDo)  throws GwtException, ServerDownException; 
+	public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(SearchDo<CodeDo> searchDo)  throws GwtException, ServerDownException;
+
+	/**
+	 * @function getGooruStoriesUrl 
+	 * 
+	 * @created_date : 20-Oct-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param parms
+	 * @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	String getGooruStoriesUrl(String parms); 
 
 }

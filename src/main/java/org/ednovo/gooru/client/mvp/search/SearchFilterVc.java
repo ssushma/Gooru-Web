@@ -38,17 +38,17 @@ import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
-import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionInfoEvent;
-import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.DisclosurePanelUc;
 import org.ednovo.gooru.client.uc.DownToolTipUc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
+import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -63,6 +63,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
@@ -87,8 +88,9 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
@@ -98,6 +100,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
@@ -189,6 +192,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	Style style;
 	
 		ToolTip toolTip = null;
+		
+		GlobalToolTip globalToolTip=null;
 	
 	private AppMultiWordSuggestOracle sourceSuggestOracle;
 
@@ -235,6 +240,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	private static final  String  COLOR_DEPENDENT ="color dependent";
 	private static final  String  TEXT_ON_IMAGE ="text on image";
 	private static final  String  TEXTUAL ="textual";
+	
+	private boolean isBrowseTooltip =false;
+	
+	 BrowseStandardsTooltip browseStandardsTooltip;
+	private boolean isBrowseStandardsToolTip = false;
 				
 	/**
 	 * Class constructor, creates new {@link AppSuggestBox} and events for StandardsSuggestionEvent
@@ -1673,12 +1683,17 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 							public void onSuccess(ProfileDo profileObj) {
 								if(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()!=null){
 									if(profileObj.getUser().getMeta().getTaxonomyPreference().getCode().size()==0){
-										standardLbl.setVisible(false);
-										standardPanelUc.setVisible(false);
+										standardLbl.setVisible(true);
+										standardPanelUc.setVisible(true);
+										isBrowseTooltip = true;
+										DisableStandars();
+										
 									}else
 									{
 										standardLbl.setVisible(true);
 										standardPanelUc.setVisible(true);
+										isBrowseTooltip = false;
+										enableStandards();
 										standardPreflist=new ArrayList<String>();
 										for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
 											standardPreflist.add(code);
@@ -1686,8 +1701,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 										 }
 									}
 								}else{
-									standardLbl.setVisible(false);
-									standardPanelUc.setVisible(false);
+									standardLbl.setVisible(true);
+									standardPanelUc.setVisible(true);
+									isBrowseTooltip = true;
+									DisableStandars();
+									
 								}
 							}
 
@@ -1699,4 +1717,56 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		standardPanelUc.setVisible(true);
 	}
 	
+	public void DisableStandars(){
+		browseStandardsTooltip=new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
+		browseStandards.getElement().getStyle().setColor("#999");
+		browseStandards.getElement().addClassName("disabled");
+		browseStandards.addMouseOverHandler(new MouseOverHandler() {
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+					if(isBrowseTooltip == true){
+						browseStandardsTooltip.show();
+						browseStandardsTooltip.setPopupPosition(browseStandards.getAbsoluteLeft()+3, browseStandards.getAbsoluteTop()+33);
+						browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+						isBrowseStandardsToolTip= true;
+					}
+				}
+		});
+		
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hideBrowseStandardsPopup(event);
+	          }
+	    });
+	}
+	
+	public void hideBrowseStandardsPopup(NativePreviewEvent event){
+		try{
+			if(event.getTypeInt()==Event.ONMOUSEOVER){
+				Event nativeEvent = Event.as(event.getNativeEvent());
+				boolean target=eventTargetsPopup(nativeEvent);
+				if(!target)
+				{
+					if(isBrowseStandardsToolTip){
+						browseStandardsTooltip.hide();
+					}
+				}
+			}
+		}catch(Exception ex){ex.printStackTrace();}
+	}
+	
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			try{
+				return browseStandardsTooltip.getElement().isOrHasChild(Element.as(target));
+			}catch(Exception ex){}
+		}
+		return false;
+	}
+	
+	public void enableStandards(){
+		browseStandards.getElement().getStyle().clearColor();
+		browseStandards.getElement().removeClassName("disabled");
+	}
 }

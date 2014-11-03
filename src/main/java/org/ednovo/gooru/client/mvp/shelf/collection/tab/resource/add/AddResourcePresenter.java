@@ -39,12 +39,16 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 */
 
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
@@ -56,9 +60,9 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
-import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
@@ -67,6 +71,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> implements AddResourceUiHandlers{
 	
@@ -88,10 +93,29 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	
 	private SimpleAsyncCallback<CollectionItemDo> updateQuestionResourceAsyncCallback;
 	
+	private SimpleAsyncCallback<CollectionItemDo> v2UpdateQuestionResourceAsyncCallback;
+	
 	private SimpleAsyncCallback<Void> removeQuestionImageAsyncCallback; 
 	
 	private static final String KEY_OER = "resourceLicense";
 	private static final String VAL_OER = "OER";
+	private boolean isQuestionResource = false;
+	
+	private static final String USER_META_ACTIVE_FLAG = "0";
+	
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
+	
+	
+	private static final String O1_LEVEL = "o1";
+	
+	private static final String O2_LEVEL = "o2";
+	
+	private static final String O3_LEVEL = "o3";
+	
+	private static final String ID = "id";
 	
 	public SimpleAsyncCallback<CollectionItemDo> getAddQuestionResourceAsyncCallback() {
 		return addQuestionResourceAsyncCallback;
@@ -122,8 +146,10 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	
 	String clickType;
 	
+	AddStandardsPresenter addStandardsPresenter = null;
+	
 	@Inject
-	public AddResourcePresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddResourceView view,ImageUploadPresenter imageUploadPresenter,DrivePresenter drivePresenter) {
+	public AddResourcePresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddResourceView view,ImageUploadPresenter imageUploadPresenter,DrivePresenter drivePresenter,AddStandardsPresenter addStandardsPresenter) {
 		super(eventBus, view);
 		this.setImageUploadPresenter(imageUploadPresenter);
 		getView().setUiHandlers(this);
@@ -131,6 +157,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		
 		this.isCollResourceTabView = isCollResourceTabView;
 		this.drivePresenter=drivePresenter;
+		this.addStandardsPresenter = addStandardsPresenter;
 
 //		,ExistsResourcePresenter alreadyExistsResourcePresenter
 //		this.alreadyExistsResourcePresenter = alreadyExistsResourcePresenter;
@@ -172,6 +199,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	
 	@Override
 	public void questionImageUpload(String collectionItemId) {
+		System.out.println("iam here collitemId::"+collectionItemId);
 		addToPopupSlot(imageUploadPresenter);
 		imageUploadPresenter.setCollectionImage(false);
 		imageUploadPresenter.setUpdateQuestionImage(true);
@@ -276,12 +304,44 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
             @Override
             public void onSuccess(CollectionItemDo result) {
             		getView().hide();
-            		redirect(Window.Location.getHref());
-                  //  isCollResourceTabView.updateCollectionItem(result);
-                    //MixpanelUtil.AddQuestion();
+            		//redirect(Window.Location.getHref());
+                  isCollResourceTabView.updateCollectionItem(result);
+                    MixpanelUtil.AddQuestion();
             }
 		});
 		
+		setV2UpdateQuestionResourceAsyncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
+            @Override
+            public void onSuccess(CollectionItemDo result) {
+            		getView().hide();
+                    //isCollResourceTabView.updateCollectionItem(result);
+            		
+                	Map<String,String> params = new HashMap<String,String>();
+                	
+                	if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!= null){
+            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+            			params.put(O3_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o3"));
+            		}
+                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!= null) {
+            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+            			params.put(O2_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+            		}
+                	else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!= null) {
+            			params.put(O1_LEVEL, AppClientFactory.getPlaceManager().getRequestParameter("o1"));
+            		}
+                	
+              
+                	if(AppClientFactory.getPlaceManager().getRequestParameter("id")!= null)
+                	{
+                	params.put(ID, AppClientFactory.getPlaceManager().getRequestParameter("id"));
+                	}
+            		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
+            		
+                    MixpanelUtil.AddQuestion();
+                   // redirect(Window.Location.getHref());
+            }
+		});
 	}
 	
 	/**
@@ -476,11 +536,20 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		return updateQuestionResourceAsyncCallback;
 	}
 
+	private SimpleAsyncCallback<CollectionItemDo> getV2UpdateQuestionResourceAsyncCallback() {
+		return v2UpdateQuestionResourceAsyncCallback;
+	}
+	
 	public void setUpdateQuestionResourceAsyncCallback(
 			SimpleAsyncCallback<CollectionItemDo> updateQuestionResourceAsyncCallback) {
 		this.updateQuestionResourceAsyncCallback = updateQuestionResourceAsyncCallback;
 	}
 
+	public void setV2UpdateQuestionResourceAsyncCallback(
+			SimpleAsyncCallback<CollectionItemDo> v2UpdateQuestionResourceAsyncCallback) {
+		this.v2UpdateQuestionResourceAsyncCallback = v2UpdateQuestionResourceAsyncCallback;
+	}
+	
 	@Override
 	public void showDriveResoureView(HTMLPanel tabContainer) {
 		//if(AppClientFactory.getLoggedInUser().getAccessToken()!=null){
@@ -497,6 +566,67 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	public void showAddWebResourceWidget(boolean isGoogleDriveFile,FlowPanel googleDriveContainer,GoogleDriveItemDo googleDriveItemDo){
 		googleDriveContainer.clear();
 		getView().showAddWebResourceWidget(isGoogleDriveFile,googleDriveContainer,googleDriveItemDo);
+	}
+
+	@Override
+	public void browseStandardsInfo(final boolean val) {
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
+				USER_META_ACTIVE_FLAG,
+				new SimpleAsyncCallback<ProfileDo>() {
+					@Override
+					public void onSuccess(final ProfileDo profileObj) {
+					AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					}
+					public void checkStandarsList(List<String> standarsPreferencesList) {
+						
+					if(standarsPreferencesList!=null){
+							if(standarsPreferencesList.contains("CCSS")){
+								isCCSSAvailable = true;
+							}else{
+								isCCSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("NGSS")){
+								isNGSSAvailable = true;
+							}else{
+								isNGSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("TEKS")){
+								isTEKSAvailable = true;
+							}else{
+								isTEKSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("CA")){
+								isCAAvailable = true;
+							}else{
+								isCAAvailable = false;
+							}
+								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
+									isQuestionResource = val;
+									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+									addToPopupSlot(addStandardsPresenter);
+									getView().OnBrowseStandardsClickEvent(addStandardsPresenter.getAddBtn());
+								}
+					}
+						
+					}
+
+				});
+	}
+
+	@Override
+	public void addUpdatedBrowseStandards() {
+		getView().setUpdatedStandardsCode(addStandardsPresenter.setStandardsVal(),addStandardsPresenter.setStandardsIdVal(),addStandardsPresenter.setStandardDesc(),this.isQuestionResource);
+	}
+
+	@Override
+	public void closeStandardsPopup() {
+		addStandardsPresenter.hidePopup();
+	}
+
+	@Override
+	public void v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo, String thumbnailUrl) {
+		getResourceService().v2UpdateQuestionResource(collectionItemDo, collectionQuestionItemDo,thumbnailUrl, getV2UpdateQuestionResourceAsyncCallback());
 	}
 	
 

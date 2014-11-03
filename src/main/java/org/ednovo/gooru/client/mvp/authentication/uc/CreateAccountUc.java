@@ -342,29 +342,29 @@ public abstract class CreateAccountUc extends PopupPanel{
 	
 	@UiHandler("ancParentRegister")
 	public void onClickParentRegister(ClickEvent event) {
-		MixpanelUtil.register_as_a_parent();
-		closePoup();
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("callback", "signup");
-		params.put("type", "3");
-		params.put("account", "parent");
-
-		// String dob =
-		// AppClientFactory.getPlaceManager().getRequestParameter("dob");
-		// String userName =
-		// AppClientFactory.getPlaceManager().getRequestParameter("userName");
-		String dob = dateBoxUc.getDateBox().getText().toString().trim()
-				.replaceAll("\\/", "D");
 		String userName = txtChooseUsername.getText();
-
-		if (dob != null) {
-			params.put("dob", dob);
+		if (userName.equalsIgnoreCase("") || userName == null) {
+			txtChooseUsername.addStyleName(res.css().errorMsgDisplay());
+		}else{
+			MixpanelUtil.register_as_a_parent();
+			closePoup();
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("callback", "signup");
+			params.put("type", "3");
+			params.put("account", "parent");
+	
+			String dob = dateBoxUc.getDateBox().getText().toString().trim()
+					.replaceAll("\\/", "D");
+						
+			if (dob != null) {
+				params.put("dob", dob);
+			}
+			if (userName != null) {
+				params.put("userName", userName);
+			}
+			AppClientFactory.getPlaceManager()
+					.revealPlace(PlaceTokens.HOME, params);
 		}
-		if (userName != null) {
-			params.put("userName", userName);
-		}
-		AppClientFactory.getPlaceManager()
-				.revealPlace(PlaceTokens.HOME, params);
 	}
 
 	/**

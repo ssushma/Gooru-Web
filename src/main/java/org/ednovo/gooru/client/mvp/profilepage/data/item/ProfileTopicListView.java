@@ -162,6 +162,8 @@ public class ProfileTopicListView extends Composite{
 	private static boolean isVisible=true;
 
 	private static final String STANDARD_ID = "standardId";
+	
+	private static final String COLLECTION_TITLE = "collectionTitle";
 
 	private static ProfileTopicListViewUiBinder uiBinder = GWT
 			.create(ProfileTopicListViewUiBinder.class);
@@ -176,7 +178,7 @@ public class ProfileTopicListView extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	public ProfileTopicListView(ProfileLibraryDo profileFolderDo, int topicNumber, String placeToken) {
+	public ProfileTopicListView(ProfileLibraryDo profileFolderDo, int topicNumber, String placeToken,String libraryGooruOid) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicNumber;
 		setPlaceToken(placeToken);
@@ -203,24 +205,24 @@ public class ProfileTopicListView extends Composite{
 		searchTitle=profileFolderDo.getTitle();
 		collectionInfo.setVisible(false);
 		if(profileFolderDo.getCollections()!=null) {
-			setOnlyConceptData(profileFolderDo.getCollectionItems(), false, profileFolderDo.getGooruOid(), profileFolderDo.getItemCount());
+			setOnlyConceptData(profileFolderDo.getCollectionItems(), false, profileFolderDo.getGooruOid(), profileFolderDo.getItemCount(), libraryGooruOid);
 			try {
-				setConceptData(profileFolderDo.getCollectionItems().get(0),topicId, null, null,null);
+				setConceptData(profileFolderDo.getCollectionItems().get(0),topicId, null, null,null,libraryGooruOid);
 			} catch(Exception e) {
 				setDefaultCollectionLbl();
 			}
 		} else {
-			setPartnerLibraryLessonData(profileFolderDo.getCollectionItems(), profileFolderDo.getGooruOid());
+			setPartnerLibraryLessonData(profileFolderDo.getCollectionItems(), profileFolderDo.getGooruOid(),libraryGooruOid);
 			try {
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY) || 
 						AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE) || 
 						AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD) || 
 						AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
-					setConceptData(profileFolderDo.getCollectionItems().get(0).getCollectionItems().get(0).getCollectionItems().get(0),topicId, null, null,null);
+					setConceptData(profileFolderDo.getCollectionItems().get(0).getCollectionItems().get(0).getCollectionItems().get(0),topicId, null, null,null,libraryGooruOid);
 					searchLink.setVisible(false);
 				} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)){
-					setConceptData(profileFolderDo.getCollectionItems().get(0).getCollectionItems().get(0),topicId, null, null,null);
-					searchLink.setVisible(true);
+					setConceptData(profileFolderDo.getCollectionItems().get(0).getCollectionItems().get(0),topicId, null, null,null,libraryGooruOid);
+					searchLink.setVisible(false);
 					
 				}
 				else
@@ -271,10 +273,13 @@ public class ProfileTopicListView extends Composite{
 		moreOnTopicText.getElement().setId("pnlMoreOnTopicText");
 	}
 
-	public ProfileTopicListView(ProfileLibraryDo profileFolderDo, Integer conceptNumber, String placeToken, String collectionType) {
+	public ProfileTopicListView(ProfileLibraryDo profileFolderDo, Integer conceptNumber, String placeToken, String collectionType,String libraryGooruOid) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
 		setPlaceToken(placeToken);
+		collectionImage.getElement().setAttribute("collid", profileFolderDo.getGooruOid());
+		collectionTitleLbl.getElement().setAttribute("collid", profileFolderDo.getGooruOid());
+		collectionTitleLbl.getElement().setAttribute(COLLECTION_TITLE,profileFolderDo.getTitle());
 		assignCollectionBtn.setText(i18n.GL0526());
 		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
 		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0526());
@@ -295,7 +300,7 @@ public class ProfileTopicListView extends Composite{
 		
 		
 		try {
-			setConceptData(profileFolderDo,conceptNumber,null, null,null);
+			setConceptData(profileFolderDo,conceptNumber,null, null,null,libraryGooruOid);
 		} catch(Exception e) {
 			collectionInfo.setVisible(false);
 			resourcesInside.setVisible(false);
@@ -335,7 +340,7 @@ public class ProfileTopicListView extends Composite{
 
 	}
 	
-	private void setOnlyConceptData(ArrayList<ProfileLibraryDo> profileFolderDoList, boolean isTopicCalled, final String parentId, final int partnerItemCount) {
+	private void setOnlyConceptData(ArrayList<ProfileLibraryDo> profileFolderDoList, boolean isTopicCalled, final String parentId, final int partnerItemCount,String libraryGooruOid) {
 		boolean isLessonHighlighted = true;
 		int pageCount = 0;
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
@@ -349,7 +354,7 @@ public class ProfileTopicListView extends Composite{
 			pageCount = profileFolderDoList.size();
 		}
 		if(pageCount>=LESSON_PAGE_INITIAL_LIMIT) {
-			conceptList.add(new PartnerLessonUc(profileFolderDoList,topicId,isLessonHighlighted, 0, false));
+			conceptList.add(new PartnerLessonUc(profileFolderDoList,topicId,isLessonHighlighted, 0, false,libraryGooruOid));
 			final String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject","featured");
 			lessonScrollPanel.addScrollHandler(new ScrollHandler() {
 				@Override
@@ -397,12 +402,12 @@ public class ProfileTopicListView extends Composite{
 				} else {
 					isLessonHighlighted = false;
 				}
-				conceptList.add(new PartnerLessonUc(profileFolderDoList,topicId,isLessonHighlighted,(i+1), false));
+				conceptList.add(new PartnerLessonUc(profileFolderDoList,topicId,isLessonHighlighted,(i+1), false,libraryGooruOid));
 			}
 		}
 	}
 	
-	public void setConceptData(final ProfileLibraryDo conceptDo, Integer topicId, final String lessonId, String lessonLabel,String lessonCode) {
+	public void setConceptData(final ProfileLibraryDo conceptDo, Integer topicId, final String lessonId, String lessonLabel,String lessonCode,final String libraryGooruOid) {
 		setConceptDo(conceptDo);
 			
 			this.lessonCode=lessonCode;
@@ -433,8 +438,8 @@ public class ProfileTopicListView extends Composite{
 						if(titleHandler!=null) {
 							titleHandler.removeHandler();
 						}
-						imageHandler=collectionImage.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid()));
-						titleHandler=collectionTitleLbl.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid()));
+						imageHandler=collectionImage.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid(),libraryGooruOid));
+						titleHandler=collectionTitleLbl.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid(),libraryGooruOid));
 					} catch (Exception e) {
 						collectionImage.setUrl(DEFAULT_COLLECTION_IMAGE);
 					}
@@ -616,6 +621,9 @@ public class ProfileTopicListView extends Composite{
 										params.put("rid", resourceId);
 										params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 										params.put("lessonId", lessonId);
+										if(libraryGooruOid!=null){
+											params.put("lid", libraryGooruOid);
+										}
 										if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 											params.put("library", getPlaceToken());
 										}
@@ -647,6 +655,9 @@ public class ProfileTopicListView extends Composite{
 										params.put("rid", resourceId);
 										params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 										params.put("lessonId", lessonId);
+										if(libraryGooruOid!=null){
+											params.put("lid", libraryGooruOid);
+										}
 										if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 											params.put("library", getPlaceToken());
 										}
@@ -697,7 +708,7 @@ public class ProfileTopicListView extends Composite{
 		noCollectionLbl.setVisible(true);
 	}
 
-	private void setPartnerLibraryLessonData(final ArrayList<ProfileLibraryDo> profileLibraryDoList, final String gooruOid) {
+	private void setPartnerLibraryLessonData(final ArrayList<ProfileLibraryDo> profileLibraryDoList, final String gooruOid,final String libraryGooruOid) {
 		boolean isLessonHighlighted = true;
 		final int count = profileLibraryDoList.size();
 		if(profileLibraryDoList.size()>=LESSON_PAGE_INITIAL_LIMIT) {
@@ -707,7 +718,7 @@ public class ProfileTopicListView extends Composite{
 				} else {
 					isLessonHighlighted = false;
 				}
-				conceptList.add(new PartnerLessonUc(profileLibraryDoList.get(i),topicId,isLessonHighlighted, (i+1), false));
+				conceptList.add(new PartnerLessonUc(profileLibraryDoList.get(i),topicId,isLessonHighlighted, (i+1), false,libraryGooruOid));
 			}
 			final String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject","featured");
 			lessonScrollPanel.addScrollHandler(new ScrollHandler() {
@@ -720,7 +731,7 @@ public class ProfileTopicListView extends Composite{
 							public void onSuccess(ProfileLibraryListDo profileLibraryList) {
 								int count = LESSON_PAGE_INITIAL_LIMIT;
 								for(int j = 0; j<profileLibraryList.getSearchResult().size();j++) {
-									conceptList.add(new PartnerLessonUc(profileLibraryList.getSearchResult().get(j),topicId,false, (j+count+1), true));
+									conceptList.add(new PartnerLessonUc(profileLibraryList.getSearchResult().get(j),topicId,false, (j+count+1), true,libraryGooruOid));
 								}
 								LESSON_PAGE_INITIAL_LIMIT = LESSON_PAGE_INITIAL_LIMIT + profileLibraryList.getSearchResult().size();
 								if(!(profileLibraryList.getCount()>LESSON_PAGE_INITIAL_LIMIT)) {
@@ -741,7 +752,7 @@ public class ProfileTopicListView extends Composite{
 				} else {
 					isLessonHighlighted = false;
 				}
-				conceptList.add(new PartnerLessonUc(profileLibraryDoList.get(i),topicId,isLessonHighlighted,(i+1), false));
+				conceptList.add(new PartnerLessonUc(profileLibraryDoList.get(i),topicId,isLessonHighlighted,(i+1), false,libraryGooruOid));
 			}
 		}
 	}
@@ -779,8 +790,8 @@ public class ProfileTopicListView extends Composite{
 
 	OpenProfileCollectionHandler openProfileCollectionHandler = new OpenProfileCollectionHandler() {
 		@Override
-		public void openProfileCollection(ProfileLibraryDo profileLibraryDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode) {
-			setConceptData(profileLibraryDo, topicId, lessonId, lessonLabel,lessonCode);
+		public void openProfileCollection(ProfileLibraryDo profileLibraryDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode, String libraryGooruOid) {
+			setConceptData(profileLibraryDo, topicId, lessonId, lessonLabel,lessonCode,libraryGooruOid);
 			Map<String, String> maps = StringUtil.splitQuery(Window.Location
 					.getHref());
 			String colId= profileLibraryDo.getGooruOid();
@@ -880,6 +891,9 @@ public class ProfileTopicListView extends Composite{
 	}
 
 	private void setMetaDataInfo(ProfileLibraryDo profileLibraryDo) {
+		collectionImage.getElement().setAttribute("collid", profileLibraryDo.getGooruOid());
+		collectionTitleLbl.getElement().setAttribute("collid", profileLibraryDo.getGooruOid());
+		collectionTitleLbl.getElement().setAttribute(COLLECTION_TITLE,profileLibraryDo.getTitle());
 		if(AppClientFactory.isAnonymous()){
 			standardsFloPanel.clear();
 			standardsFloPanel.setVisible(true);
@@ -1014,13 +1028,22 @@ public class ProfileTopicListView extends Composite{
 	public class CollectionOpenClickHandler implements ClickHandler {
 		private String lessonId;
 		private String oId;
+		private String libraryGooruOid;
 		
-		public CollectionOpenClickHandler(String lessonId, String oId) {
+		public CollectionOpenClickHandler(String lessonId, String oId,String libraryGooruOid) {
 			this.lessonId = lessonId;
 			this.oId = oId;
+			this.libraryGooruOid=libraryGooruOid;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			String collectionIdVal = "";
+			try{
+				collectionIdVal = ((Image)event.getSource()).getElement().getAttribute("collid");
+			}
+			catch(Exception ex){
+				collectionIdVal = ((HTML)event.getSource()).getElement().getAttribute("collid");
+			}
 			String page = AppClientFactory.getPlaceManager().getRequestParameter(PAGE,"landing");
 			if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
 				MixpanelUtil.mixpanelEvent("standardlibrary_play_collection");	
@@ -1031,9 +1054,12 @@ public class ProfileTopicListView extends Composite{
 				MixpanelUtil.mixpanelEvent("LandingPage_Plays_Collection");
 			}
 			Map<String, String> params = new HashMap<String, String>();
-			params.put("id", oId);
+			params.put("id", collectionIdVal);
 			params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 			params.put("lessonId", lessonId);
+			if(libraryGooruOid!=null){
+				params.put("lid", libraryGooruOid);
+			}
 			if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 				params.put("library", getPlaceToken());
 			}
@@ -1047,7 +1073,7 @@ public class ProfileTopicListView extends Composite{
 
 	@UiHandler("assignCollectionBtn")
 	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
-		String collectionId = getProfileLibraryDo().getGooruOid();
+		String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
 		if(!isAssignPopup){
 			isAssignPopup=true;
 			final Map<String, String> params = StringUtil.splitQuery(Window.Location
@@ -1084,31 +1110,32 @@ public class ProfileTopicListView extends Composite{
 	
 	@UiHandler("customizeCollectionBtn")
 	public void oncustomizeCollectionBtnClicked(ClickEvent clickEvent) {
-		String collectionId = getProfileLibraryDo().getGooruOid();
+		String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
+		String collectionTitle = collectionTitleLbl.getElement().getAttribute(COLLECTION_TITLE);
 		if(!isCustomizePopup){
 			isCustomizePopup=true;
-		Boolean loginFlag = false;
-		if (AppClientFactory.isAnonymous()){
-			loginFlag = true;
-		} else {
-			loginFlag = false;
-		}
-		final Map<String, String> params = StringUtil.splitQuery(Window.Location
-				.getHref());
-		if(params.containsKey(ASSIGN)){
-			params.remove(ASSIGN);
-		}
-		RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
-			@Override
-			public void closePoup() {
-				Window.enableScrolling(true);
-				this.hide();	
-				isCustomizePopup = false;
+			Boolean loginFlag = false;
+			if (AppClientFactory.isAnonymous()){
+				loginFlag = true;
+			} else {
+				loginFlag = false;
 			}
-		};
-		Window.scrollTo(0, 0);
-		successPopupVc.setWidth("500px");
-		successPopupVc.setHeight("475px");
+			final Map<String, String> params = StringUtil.splitQuery(Window.Location
+					.getHref());
+			if(params.containsKey(ASSIGN)){
+				params.remove(ASSIGN);
+			}
+			RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, collectionTitle) {
+				@Override
+				public void closePoup() {
+					Window.enableScrolling(true);
+					this.hide();	
+					isCustomizePopup = false;
+				}
+			};
+			Window.scrollTo(0, 0);
+			successPopupVc.setWidth("500px");
+			successPopupVc.setHeight("475px");
 			successPopupVc.show();
 			successPopupVc.center();
 			

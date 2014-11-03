@@ -1477,7 +1477,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			int count = 0;
 			for(int i = 0; i <folderListDo.size(); i++) {
 				count++;
-				getContentScroll().add(new LibraryTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken()));
+				getContentScroll().add(new LibraryTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(),null));
 			}
 			getContentScroll().setVisible(true);
 		} catch (Exception e) {

@@ -556,3 +556,9 @@ a.flaggedCollection {
 	width: 35px;
 	height: 35px;
 }
+.commentsCharLimit{
+	float: right;
+	margin-right: 116px;
+	margin-top: 13px;
+	color:#999;
+}

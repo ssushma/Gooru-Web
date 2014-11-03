@@ -157,7 +157,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	
 	@UiField Label panelHeading, lblPleaseWait,lblCommonCore,lblCaliforniaScience,description,standardSavingTextLabel,lblTexas,lblUserMessage,lblNgss,lblImageSubHeading, lblHeading, lblSubHeading,lblDisconnect;
 	
-	@UiField HTML htmlToolTipDesc;
+	@UiField HTML htmlToolTipDesc, htmlConnectedAs;
 	@UiField TextBox txtUserName;
 	@UiField ErrorLabelUc userNameValidationUc;
 	@UiField HTMLPanel emailPanel;
@@ -321,6 +321,10 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		lblSubHeading.getElement().setId("lblLblSubHeading");
 		lblSubHeading.getElement().setAttribute("alt", i18n.GL2010());
 		lblSubHeading.getElement().setAttribute("title", i18n.GL2010());
+		
+		
+		htmlConnectedAs.setVisible(false);
+		
 		editButtonContainerEdu.getElement().setId("pnlEditButtonContainerEdu");
 		lblDisconnect.setText(i18n.GL2011());
 		lblDisconnect.getElement().setId("lblLblDisconnect");
@@ -2301,6 +2305,15 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			btnConnect.setText(i18n.GL2008());
 			btnConnect.getElement().setAttribute("alt", i18n.GL2008());
 			btnConnect.getElement().setAttribute("title", i18n.GL2008());
+			htmlConnectedAs.setVisible(false);
 		}
+	}
+	@Override
+	public void setConnectedAs(String connectedEmailId){
+		String connectedAs = StringUtil.generateMessage(i18n.GL2193(), connectedEmailId);
+		StringUtil.setAttributes(htmlConnectedAs.getElement(), "htmlConnectedAs", StringUtil.removeHtml(connectedAs), StringUtil.removeHtml(connectedAs));
+		htmlConnectedAs.setHTML(connectedAs);
+		htmlConnectedAs.setVisible(true);
+		htmlConnectedAs.getElement().getStyle().setLineHeight(3, Unit.EM);
 	}
 }

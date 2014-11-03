@@ -947,7 +947,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 					delete.setPositiveButtonText(i18n.GL0190());						
 					delete.setNegitiveButtonText(i18n.GL0142());
 					delete.setDeleteValidate("delete");
-					delete.setPixelSize(450, 344);		
+					delete.setPixelSize(450, 353);		
 					delete.show();
 					delete.center();
 				}
@@ -1069,7 +1069,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 				delete.setPositiveButtonText(i18n.GL0190());						
 				delete.setNegitiveButtonText(i18n.GL0142());
 				delete.setDeleteValidate("delete");
-				delete.setPixelSize(450, 344);		
+				delete.setPixelSize(450, 353);	
 				delete.show();
 				delete.center();
 			}

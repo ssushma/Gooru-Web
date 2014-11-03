@@ -99,6 +99,7 @@
 				                <g:Label styleName="{ProfilePageStyle.userBio}" ui:field="userBio"></g:Label>
 				                <!-- Profile page user Bio TextArea Edit start -->
 				                <g:HTMLPanel ui:field="profilePageEditBioPanel" styleName="{ProfilePageStyle.profilePageEditBioPanel}">
+				                    <g:Label styleName="{ProfilePageStyle.profileDescCharLimit}" ui:field="lblDescCharLimit"></g:Label>
 					                <panel:HTMLEventPanel ui:field="profileDescriptionlabel" styleName="{ProfilePageStyle.bioTextAreaContainer}">
 										<uc:ProfilePageDescriptionEditUc styleName="{settingsStyle.profileDescription}" ui:field="profileTextArea" />
 									</panel:HTMLEventPanel>

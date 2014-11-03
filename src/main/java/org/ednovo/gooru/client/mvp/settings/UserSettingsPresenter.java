@@ -1193,6 +1193,7 @@ public class UserSettingsPresenter
 			@Override
 			public void onSuccess(GoogleToken result) {
 				final String access_token = result.getAccess_token() !=null && !result.getAccess_token().equalsIgnoreCase("") ? result.getAccess_token() : null;
+				final String connectedEmailId = result.getEmailId() !=null && !result.getEmailId().equalsIgnoreCase("") ? result.getEmailId() : null;
 				if (access_token !=null ){
 					UserDo user = AppClientFactory.getLoggedInUser();
 					user.setAccessToken(access_token);
@@ -1210,6 +1211,7 @@ public class UserSettingsPresenter
 									user.setAccessToken(access_token);
 									AppClientFactory.setLoggedInUser(user);
 									getView().googleDirveStatus(true);
+									getView().setConnectedAs(connectedEmailId);
 								}
 							}else{
 								getView().googleDirveStatus(false);

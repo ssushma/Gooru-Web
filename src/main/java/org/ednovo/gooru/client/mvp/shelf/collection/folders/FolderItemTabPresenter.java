@@ -7,6 +7,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateFolderItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
 import org.ednovo.gooru.client.service.FolderServiceAsync;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
@@ -95,7 +96,13 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 
 				@Override
 				public void onSuccess(FolderListDo result) {
-					getView().setFolderData(result.getSearchResult(), null, null);
+					if(result != null)
+					{
+						if(result.getSearchResult()!=null && result.getCount()!=null)
+						{
+							getView().setFolderData(result.getSearchResult(), null, null,result.getCount());
+						}
+					}
 				}
 			};
 		}
@@ -106,7 +113,7 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 		AppClientFactory.getInjector().getfolderService().getChildFolders((pageNumber-1)*20, 20,folderId,null, null,new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo result) {
-				getView().setFolderData(result.getSearchResult(), folderParentName, folderId);
+				getView().setFolderData(result.getSearchResult(), folderParentName, folderId,result.getCount());
 			}			
 		});
 	}
@@ -147,5 +154,18 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 
 	public void setFolderMetaData(Map<String, String> folderMetaData) {
 		getView().setFolderMetaData(folderMetaData);
+	}
+
+	@Override
+	public void reorderFoldersOrCollection(final ShelfFolderItemChildView shelfFolderItemChildView, final int itemToBeMovedPosSeqNumb,final int itemPosSeqNumb, final String downArrow, String collectionItemId,int itemSeqToAPI) {
+		AppClientFactory.getInjector().getfolderService().reorderFoldersOrCollections(itemSeqToAPI,collectionItemId, new SimpleAsyncCallback<Void>() {
+
+			@Override
+			public void onSuccess(Void result) {
+				getView().onReorderChangeWidgetPosition(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,downArrow);
+			}
+		});
+		
+//		getView().onReorderChangeWidgetPosition(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,downArrow);
 	}
 }

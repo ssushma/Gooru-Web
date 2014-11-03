@@ -49,7 +49,7 @@
 		<g:HTMLPanel ui:field="duedateContainer" styleName="{res.css.directionsTextAreaContainer}">
 			</g:HTMLPanel>
 	</g:HTMLPanel>
-	
+	<g:Label ui:field="lblDirectionCharLimit" styleName="{res.css.directionsChrLimit}"></g:Label>
 	<g:HTMLPanel styleName="{res.css.assignmentsContainer}">
 		<g:HTMLPanel styleName="{res.css.directionsDiv}">
 		<g:Label ui:field="lblDirections" styleName="{res.css.directionsDivLabel}"></g:Label>

@@ -567,7 +567,7 @@
     box-shadow: 0 0 10px #4c98cc;
 }
 
-.contentBlock .info, .contentBlock .contents {
+.contentBlock .info, .contentBlock .contents, .contentBlock .reorderPanel {
     height:100%;
     padding:20px;
     box-sizing:border-box;
@@ -576,7 +576,7 @@
 }
 
 .contentBlock .info {
-    width:227px;
+    width:192px;
     float:left;
     text-align:center;
 }
@@ -602,7 +602,7 @@
 }
 
 .contentBlock .contents {
-    width:390px;
+    width:316px;
     border-left:1px solid #ddd;
     float:left;
     background: -moz-linear-gradient(left, rgba(245,245,245,1) 0%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 61%); /* FF3.6+ */
@@ -912,4 +912,49 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 
 .metaContainer {
 	height: 200px;
+}
+
+
+
+.contentBlock .reorderPanel{
+	width:66px;
+    float:left;
+    border-left:1px solid #ddd;
+    text-align:center;
+   	margin-left: 2px;;
+}
+
+.reorderTxtBox{
+	width: 18px;
+	float: left;
+	margin-bottom: 25px;
+}
+
+
+
+.upDownBtn{
+	margin-left: -3px;
+}
+
+.upDownBtn input[type="text"]{
+	width:17px;
+	margin:8px 0;
+	height:25px;
+	padding:1px 6px;
+	border:1px solid #DDDDDD;
+	font-size:16px;
+	color:#515151;
+	text-align:center;
+}
+
+.upDownBtnBlock{
+	display:block;
+}
+
+.itemNumber{
+	display: inline;
+	margin-left: 12px;
+	float: left;
+	margin-top: 18px;
+	font-size: 20px;
 }

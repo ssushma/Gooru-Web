@@ -59,6 +59,8 @@ public interface PlayerAppService extends BaseService {
 	
 	public CollectionItemDo getResourceCollectionItem(String apiKey,String resourceId,String tabView) throws GwtException, ServerDownException;
 	
+	public CollectionItemDo getResourceInfoDetails(String apiKey,String resourceId,String tabView) throws GwtException, ServerDownException;
+	
 	public CollectionItemDo getResourceObj(String resourceId) throws GwtException, ServerDownException;
 	
 	

@@ -80,6 +80,7 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
@@ -110,7 +111,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	@UiField ScrollPanel spanelAudiencePanel,spanelInstructionalPanel;	
 
 	@UiField
-	HTMLPanel panelLoading,mainInfoPanel,secondaryContentsContainer,htmlAudienceListContainer,htmlInstructionalListContainer,primaryLabelTag,secondaryHeaderLabel;
+	HTMLPanel panelLoading,mainInfoPanel,secondaryContentsContainer,htmlAudienceListContainer,htmlInstructionalListContainer,primaryLabelTag,secondaryHeaderLabel,hPanelMainInfo;
 	
 	@UiField TextArea textAreaVal;
 	
@@ -127,7 +128,9 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	ToolTip toolTip=null;
 	
-	@UiField Button browseBtn;
+	@UiField public Button browseBtn;
+	
+	@UiField Label lblCharLimit;
 	
 	String courseCode="";
 	
@@ -146,6 +149,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	private GroupedListBox collectionCourseLst;
 
 	private AlertContentUc alertContentUc;
+	
+	private boolean isClickedOnDropDwn=false;
 	
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
@@ -422,11 +427,37 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		secondaryHeaderLabel.getElement().setAttribute("alt",i18n.GL1657());
 		secondaryHeaderLabel.getElement().setAttribute("title",i18n.GL1657());
 		
+		lblCharLimit.getElement().getStyle().setMarginRight(0, Unit.PX);
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		lblCharLimit.setText(value);
+		StringUtil.setAttributes(lblCharLimit.getElement(), "charLimitLbl", value, value);
+		
+		ClickHandler infoRootHandler= new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				if(!isClickedOnDropDwn && (spanelInstructionalPanel.isVisible() || spanelAudiencePanel.isVisible())){
+					spanelInstructionalPanel.setVisible(false);
+					spanelAudiencePanel.setVisible(false);
+				}else if(!isClickedOnDropDwn){
+					spanelInstructionalPanel.setVisible(false);
+					spanelAudiencePanel.setVisible(false);
+				}else{
+					isClickedOnDropDwn=false;
+				}
+				
+			}
+		};
+		
+		hPanelMainInfo.addDomHandler(infoRootHandler, ClickEvent.getType());
+		
+		RootPanel.get().addDomHandler(infoRootHandler, ClickEvent.getType());
+		
 		textAreaVal.getElement().removeAttribute("style");
 
 		languageObjectiveerrLabel.setVisible(false);
 
-		textAreaVal.getElement().setAttribute("maxlength", "415");
+		textAreaVal.getElement().setAttribute("maxlength", "500");
 		
 		textAreaVal.addFocusHandler(new FocusHandler() {
 			@Override
@@ -444,7 +475,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		textAreaVal.addKeyPressHandler(new KeyPressHandler() {
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
-				if(textAreaVal.getText().length() >= 415)
+				if(textAreaVal.getText().length() >= 500)
 				{
 					/*textAreaVal.cancelKey();*/
 				}			
@@ -705,6 +736,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		
 		spanelInstructionalPanel.setVisible(false);
 		spanelAudiencePanel.setVisible(false);
+		
 	}
 	
 	public void configureClickEvents()
@@ -831,6 +863,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	}
 
 	private void OpenAudienceDropdown() {
+		isClickedOnDropDwn=true;
 		if (spanelInstructionalPanel.isVisible()){
 			spanelInstructionalPanel.setVisible(false);
 		}
@@ -843,6 +876,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	}
 	
 	private void OpenInstructionalDropdown() {
+		isClickedOnDropDwn=true;
 		if (spanelAudiencePanel.isVisible()){
 			spanelAudiencePanel.setVisible(false);
 		}
@@ -1643,6 +1677,10 @@ public void deleteCourse(String collectionId, String courseCode, String action) 
 		}
 		return builder.toString();
 	}
-	
+
+	@Override
+	public Button getBrowseBtn() {
+		return browseBtn;
+	}
 
 }

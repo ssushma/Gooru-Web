@@ -30,6 +30,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
@@ -97,6 +98,7 @@ public class CollectionFlagView extends
 	String getDeleteContentGooruOid="";
 	String getDeleteContentResourceGooruOid="";
 	private PopupPanel appPopUp;
+	private boolean isClickedOnDropDwn=false;
 	CollectionItemDo collectionItemDo;
 	String collectionTitle="";
 	ArrayList<String> resourcesList = new ArrayList<String>();
@@ -235,6 +237,23 @@ public class CollectionFlagView extends
 		collectionCheckBox1.getElement().setId("chkCollectionCheckBox1");
 		collectionDescTextArea.getElement().setId("tatCollectionDescTextArea");
 		StringUtil.setAttributes(collectionDescTextArea, true);
+		
+		ClickHandler flagHandler= new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				if(!isClickedOnDropDwn){
+					if(!dropdownListContainerScrollPanel.getElement().getStyle().getProperty("display").equals("none")){
+						System.out.println("LLK:::LKLLK::::::");
+						new CustomAnimation(dropdownListContainerScrollPanel).run(400);
+					}
+				}else{
+					isClickedOnDropDwn=false;
+				}
+				
+			}
+		};
+		RootPanel.get().addDomHandler(flagHandler, ClickEvent.getType());
 	}
 
 	public void displayView(String collectionTitle,ArrayList<String> resourcesList,ArrayList<String> resourcesListId) {
@@ -294,6 +313,7 @@ public class CollectionFlagView extends
 	private class OnDropdownListPlaceHolderClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
+			isClickedOnDropDwn=true;
 			new CustomAnimation(dropdownListContainerScrollPanel).run(400);
 
 		}

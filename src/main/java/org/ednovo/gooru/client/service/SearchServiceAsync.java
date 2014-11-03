@@ -102,4 +102,6 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 
 	 public void getSuggestStandardByFilterCourseIdsource(SearchDo<CodeDo> searchDo,
 			 AsyncCallback<SearchDo<CodeDo>> callback);
+	 
+	 void getGooruStoriesUrl(String parms, AsyncCallback<String> callback);
 }

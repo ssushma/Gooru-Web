@@ -347,7 +347,7 @@ public class SearchInfoWidget extends Composite {
 	}
 
 	public void setData(){
-		AppClientFactory.getInjector().getPlayerAppService().getResourceCollectionItem(null, searchResultDo.getGooruOid(), null, new SimpleAsyncCallback<CollectionItemDo>() {
+		AppClientFactory.getInjector().getPlayerAppService().getResourceInfoDetails(null, searchResultDo.getGooruOid(), null, new SimpleAsyncCallback<CollectionItemDo>() {
 
 			@Override
 			public void onSuccess(CollectionItemDo collectionItemDo) {

@@ -76,6 +76,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
@@ -103,7 +104,8 @@ IsCollectionAssign {
 	@UiField Label lblAssignCollectionTitle,lblClasspages,lblClasspagePlaceHolder, lblClasspagesArrow,lblDirections,lblDirectionsOptional;
 	
 
-	@UiField Label lblAssignCollectionPrivate, lblNoClassPageMsg,lblNoClassPage,lblDuedate,lblDuedateOptional,directionsErrorLbl;
+	@UiField Label lblAssignCollectionPrivate, lblNoClassPageMsg,lblNoClassPage,lblDuedate,lblDuedateOptional,directionsErrorLbl,
+	               lblDirectionCharLimit;
 	
 	@UiField BlueButtonUc btnAssign;
 	
@@ -159,6 +161,8 @@ IsCollectionAssign {
 	}
 
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
+
+	private boolean isClickedOnDropDwn=true;
 	
 	/**
 	 * Class constructor
@@ -204,6 +208,10 @@ IsCollectionAssign {
 		textAreaVal.getElement().setAttribute("maxlength", "400");
 		StringUtil.setAttributes(textAreaVal, true);
 		
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		lblDirectionCharLimit.setText(value);
+		StringUtil.setAttributes(lblDirectionCharLimit.getElement(), "lblDirectionCharLimit", value, value);
+		
 		textAreaVal.addFocusHandler(new FocusHandler() {
 			@Override
 			public void onFocus(FocusEvent event) {
@@ -244,6 +252,19 @@ IsCollectionAssign {
 				});
 			}
 		});
+		ClickHandler assignHandler= new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				if(!isClickedOnDropDwn){
+					spanelClasspagesPanel.setVisible(false);
+				}else{
+					isClickedOnDropDwn=false;
+				}
+				
+			}
+		};
+		RootPanel.get().addDomHandler(assignHandler, ClickEvent.getType());
 		
 		//dateValidationUc.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().registerErrorLabel());
 
@@ -800,6 +821,7 @@ IsCollectionAssign {
 	}
 	
 	public void OpenClasspageContainer(){
+		isClickedOnDropDwn=true;
 		spanelClasspagesPanel.setVisible(!spanelClasspagesPanel.isVisible());
 
 		

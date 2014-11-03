@@ -9,7 +9,7 @@
 		<g:HTMLPanel ui:field="panelLoading">
 			<g:Label styleName="{res.css.loadingpanelImage}" />
 		</g:HTMLPanel>
-		<g:HTMLPanel styleName="{res.css.container}">
+		<g:HTMLPanel styleName="{res.css.container}" ui:field="hPanelAssignContainer" >
 			<g:HTMLPanel ui:field="panelNoClasspages" styleName="{res.css.noClasspageContianer}">
 				<g:Label styleName="{res.css.labelNoClasspageText}"
 					ui:field="lblNoClasspages"></g:Label>
@@ -67,6 +67,7 @@
 						<g:HTMLPanel styleName="{res.css.assignmentsContainer}">
 						<g:HTMLPanel>
 						<g:Label ui:field="lblDirections" styleName="{res.css.labelText}"></g:Label>
+						<g:Label ui:field="charLimitLbl" styleName="{res.css.charLimitStyle}"></g:Label>
 						</g:HTMLPanel>
 							<g:HTMLPanel>
 							<g:TextArea ui:field="textAreaVal" styleName="{res.css.directionsTextArea}"></g:TextArea>

@@ -31,6 +31,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -126,4 +127,8 @@ public interface IsCollectionResourceTabView extends IsViewWithHandlers<Collecti
 	void uploadResource(MediaUploadDo result);
 
 	void hideUpdateOwnResourcePopup();
+
+	void OnBrowseStandardsClickEvent(Button addBtn);
+
+	void setUpdatedStandardsCode(String setStandardsVal,Integer codeId, String setStandardDesc,boolean isQuestionResource);
 }

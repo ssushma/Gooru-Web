@@ -63,6 +63,7 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -142,6 +143,7 @@ public class CollectionResourceTabView extends
 
 	private static final String MESSAGE_HEADER = i18n.GL0748();
 	private static final String MESSAGE_CONTENT = i18n.GL0891();
+	private HandlerRegistration handlerRegistration=null;
 
 	/**
 	 * Class constructor
@@ -505,6 +507,16 @@ public class CollectionResourceTabView extends
 										SelectionEvent<Suggestion> event) {
 									super.onSelection(event);		
 								}
+
+								@Override
+								public void browseStandardsInfo(boolean val) {
+									getUiHandlers().getBrowseStandardsInfo(val);
+								}
+
+								@Override
+								public void closeStandardsPopup() {
+									getUiHandlers().closeBrowseStandardsPopup();
+								}
 								};
 							}
 							else {
@@ -599,7 +611,7 @@ public class CollectionResourceTabView extends
 							editQuestionPopupWidget.getUpdateQuestionImageView().getUploadImage().addClickHandler(new ClickHandler() {
 										@Override
 										public void onClick(ClickEvent event) {
-											getUiHandlers().updateQustionImage(collectionItemDo.getResource().getGooruOid());
+											getUiHandlers().updateQustionImage(collectionItemDo.getCollectionItemId());
 										}
 									});
 							editQuestionPopupWidget
@@ -647,8 +659,7 @@ public class CollectionResourceTabView extends
 										public void onClick(ClickEvent event) {
 											getUiHandlers().updateQustionImage(
 													collectionItemDo
-															.getResource()
-															.getGooruOid());
+															.getCollectionItemId());
 										}
 									});
 //						} else if(collectionItemDo.getResource().getResourceType().getDescription().equals("web resource") || collectionItemDo.getResource().getResourceType().getDescription().equals("video")){
@@ -670,6 +681,16 @@ public class CollectionResourceTabView extends
 									SelectionEvent<Suggestion> event) {
 								super.onSelection(event);
 								
+							}
+
+							@Override
+							public void browseStandardsInfo(boolean val) {
+								getUiHandlers().getBrowseStandardsInfo(val);
+							}
+
+							@Override
+							public void closeStandardsPopup() {
+								getUiHandlers().closeBrowseStandardsPopup();
 							}
 							};
 						}
@@ -705,8 +726,7 @@ public class CollectionResourceTabView extends
 
 		public EditQuestionPopupWidget(CollectionItemDo collectionItemDo) {
 			super(collectionItemDo);
-			this.collectionItemId = collectionItemDo.getResource()
-					.getGooruOid();
+			this.collectionItemId = collectionItemDo.getCollectionItemId();
 			AppClientFactory.fireEvent(new GetEditPageHeightEvent(this, false));
 		}
 
@@ -744,6 +764,21 @@ public class CollectionResourceTabView extends
 						collectionQuestionItemDo, null);
 			}
 
+		}
+
+		@Override
+		public void callBrowseStandardsInfo(boolean val) {
+			getUiHandlers().getBrowseStandardsInfo(val);
+		}
+
+		public void setUpdatedBrowseStandardsVal(String setStandardsVal,Integer codeId, String setStandardDesc) {
+			super.setUpdatedBrowseStandards(setStandardsVal,codeId,setStandardDesc);
+			
+		}
+
+		@Override
+		public void closeBrowseStandardsPopup() {
+		getUiHandlers().closeBrowseStandardsPopup();
 		}
 
 	}
@@ -1004,8 +1039,11 @@ public class CollectionResourceTabView extends
 	}
 	@Override
 	public void updateCollectionItem(CollectionItemDo collectionItem) {
+		if(collectionItem != null)
+		{
 		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(collectionItem, RefreshType.UPDATE));
 		AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(collectionItem, RefreshType.UPDATE));
+		}
 	}
 	
 
@@ -1217,5 +1255,30 @@ public class CollectionResourceTabView extends
         resource.put("resource", attach);
         
 		return resource;
+	}
+
+	@Override
+	public void OnBrowseStandardsClickEvent(Button addStandardsBtn) {
+		// TODO Auto-generated method stub
+		if(handlerRegistration!=null){
+			handlerRegistration.removeHandler();
+		}
+		handlerRegistration=addStandardsBtn.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().addUpdatedBrowseStandards();
+			}
+		});
+	}
+
+	@Override
+	public void setUpdatedStandardsCode(String setStandardsVal, Integer codeId,String setStandardDesc, boolean value) {
+		if(value == false){
+			editResoruce.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
+		}else{
+			editQuestionPopupWidget.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
+		}
+		
 	}
 }

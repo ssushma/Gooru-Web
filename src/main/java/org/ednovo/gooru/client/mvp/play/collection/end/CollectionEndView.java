@@ -109,7 +109,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	FlowPanel frameContainer,dataInsightsPanel;
 	@UiField VerticalPanel commentsContainer;
 	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,
-					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText;
+					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText,lblCharLimitComments;
 	@UiField HTMLPanel addComment,loginMessaging;
 	@UiField TextArea commentField;
 	@UiField Button postCommentBtn,postCommentCancel;
@@ -216,6 +216,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		commentField.addKeyUpHandler(new ValidateConfirmText());
 		commentField.addBlurHandler(new OnCommentsFieldBlur());
 		seeMoreButton.setVisible(false);
+		
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		lblCharLimitComments.setText(value);
+		StringUtil.setAttributes(lblCharLimitComments.getElement(), "lblCharLimitComments", value, value);
+		
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
 		customizeCollectionBtn.addBlurHandler(new customizeCollectionBtnOnBlur());

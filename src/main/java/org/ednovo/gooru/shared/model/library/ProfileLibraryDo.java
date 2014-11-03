@@ -71,6 +71,8 @@ public class ProfileLibraryDo implements Serializable{
 	private String questions;
 	private ArrayList<String> publisher;
 	
+	private String parentGooruOid;
+	
 	public ProfileLibraryDo(){}
 
 	/**
@@ -395,6 +397,14 @@ public class ProfileLibraryDo implements Serializable{
 
 	public void setPublisher(ArrayList<String> publisher) {
 		this.publisher = publisher;
+	}
+
+	public String getParentGooruOid() {
+		return parentGooruOid;
+	}
+
+	public void setParentGooruOid(String parentGooruOid) {
+		this.parentGooruOid = parentGooruOid;
 	}
 	
 	

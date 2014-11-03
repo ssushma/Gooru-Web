@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.uc.DateBoxUc;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.DataLogEvents;
@@ -259,7 +260,7 @@ public class RegisterVc extends PopupPanel {
 	
 	@UiHandler("gmailButton")
 	public void onGmailButtonClicked(ClickEvent clickEvent){
-		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"home",System.currentTimeMillis(),System.currentTimeMillis(), "",AppClientFactory.getLoggedInUser().getToken());
+		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"home",PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.getUnixTime(), "",AppClientFactory.getLoggedInUser().getToken());
 
 		String callBack = Window.Location.getHref();
 		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
