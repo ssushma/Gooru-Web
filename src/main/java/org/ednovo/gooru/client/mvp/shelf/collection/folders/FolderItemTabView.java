@@ -270,7 +270,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					public void onClickPositiveButton(ClickEvent event, String folderName, String parentId, HashMap<String,String> params) {
 						if(!folderName.isEmpty()) {
 							getUiHandlers().createFolderInParent(folderName, parentId);
-							Window.enableScrolling(true);
+//							Window.enableScrolling(true);
 							this.hide();
 						}
 					}
