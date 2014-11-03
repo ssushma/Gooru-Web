@@ -33,5 +33,6 @@
 			 <g:ListBox ui:field="filterDropDown" styleName="{unitStyle.filterDropDown}"/>
 			 <g:HTMLPanel ui:field="individualResourceBreakdownData"  styleName="{unitStyle.individualScore}"/>
 	 </g:HTMLPanel>
+	 <g:HTMLPanel ui:field="printWidget"></g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

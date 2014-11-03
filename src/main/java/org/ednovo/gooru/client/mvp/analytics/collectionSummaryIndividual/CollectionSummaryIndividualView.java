@@ -34,10 +34,10 @@ import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -57,7 +57,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	}
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField HTMLPanel totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData;
+	@UiField HTMLPanel printWidget,totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData;
 	@UiField ListBox filterDropDown;
 	@UiField Label totalTimeSpentlbl,totalViewlbl;
 	
@@ -77,6 +77,11 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
 	ArrayList<UserDataDo> openendedData=new ArrayList<UserDataDo>();
+	
+	//Used for print
+	HTMLPanel printScoredData=new HTMLPanel("");
+	HTMLPanel printOpendedData=new HTMLPanel("");
+	HTMLPanel printResourceData=new HTMLPanel("");
 	
 	public CollectionSummaryIndividualView() {
 		this.res = CollectionSummaryIndividualCBundle.INSTANCE;
@@ -103,9 +108,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					hideAllPanels();
 					individualResourceBreakdownDatapnl.setVisible(true);
 				}else if(tabClicked.equalsIgnoreCase(PRINT)){
-					com.google.gwt.user.client.Element element = DOM.getElementById("individulaDataScored");
-					String style="<link rel='styleSheet' type='text/css' href='https://www.google.com/uds/api/visualization/1.0/8c95b72e5c145d5b3d7bb8b4ea74fd63/ui+en,table+en.css'><link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'>";
-				    Print.it(style,element);
+					setPrintIndividualSummayData();
 				}else{
 					getUiHandlers().setHtmltopdf(individualScoredData.toString());
 				}
@@ -146,6 +149,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				collectionProgressCount++;
 			}
 			setQuestionsData(questionsData);
+			setQuestionsPrintData(questionsData);
 			setOpenendedQuestionsData(openendedData);
 			setCollectionBreakDown(result,loadingImage);
 	}
@@ -333,6 +337,165 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			}
 		}
 	}
+	void setQuestionsPrintData(ArrayList<UserDataDo> result){
+		try{
+		    DataTable data = DataTable.create();
+		    data.addColumn(ColumnType.NUMBER, "No.");
+	        data.addColumn(ColumnType.STRING, "Question");
+	        data.addColumn(ColumnType.STRING, "Score");
+	        data.addColumn(ColumnType.STRING, "Student&nbsp;Answer");
+	        data.addColumn(ColumnType.STRING, "#Attempts");
+	        data.addColumn(ColumnType.STRING, "Time&nbsp;Spent");
+	        data.addColumn(ColumnType.STRING, "Reactions");
+	      
+	        data.addRows(result.size());
+	        if(result.size()!=0){
+				        for(int i=0;i<result.size();i++) {
+				            data.setCell(i, 0, i+1, null, getPropertiesCell());
+				           
+				            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
+				            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+				            data.setValue(i, 1, questionTitle.toString());
+				            int noOfAttempts=result.get(i).getAttempts();
+				           
+				            Image correctImg=new Image();
+				            correctImg.setUrl("/images/analytics/tick.png");
+				            data.setCell(i, 2, correctImg.toString(), null, getPropertiesCell());
+				            //Set Answer choices
+				            String questionType= result.get(i).getType();
+				            String correctAnser = null;
+				        	if(questionType.equalsIgnoreCase("MC") ||questionType.equalsIgnoreCase("TF")){ 
+				        		Label anserlbl=new Label();
+				        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
+				        			 JSONValue value = JSONParser.parseStrict(result.get(i).getOptions());
+				        			 JSONObject authorObject = value.isObject();
+				        			 if(authorObject.keySet().size()!=0){
+				        				 String userSelectedOption=authorObject.keySet().iterator().next();
+					        			 correctAnser=getCorrectAnswer(result.get(i).getMetaData());
+					        			 if(userSelectedOption!=null && correctAnser!=null){
+					        				 anserlbl.setText(userSelectedOption);
+					        				 if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts==1){
+					        					 anserlbl.getElement().getStyle().setColor(CORRECT);
+					        				 }else if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts>1){
+					        					 anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+					        				 }else{
+					        					 anserlbl.getElement().getStyle().setColor(INCORRECT);
+					        				 }
+					        			 }
+				        			 }
+				        		}
+				        		anserlbl.setStyleName(res.css().alignCenterAndBackground());
+				        		data.setValue(i, 3, anserlbl.toString());
+				        	}else if (questionType.equalsIgnoreCase("FIB")){
+				        		VerticalPanel answerspnl=new VerticalPanel();
+				        		if(result.get(i).getMetaData()!=null && result.get(i).getOptions()!=null){
+				        			String answerTextFormat = "";
+				        			String[] answersArry = null;
+				        			ArrayList<MetaDataDo> questionList=result.get(i).getMetaData();
+									for (MetaDataDo metaDataDo : questionList) {
+										String answerText = "";
+										if((metaDataDo.getAnswer_text() != null)) {
+											answerText = metaDataDo.getAnswer_text();
+										}
+										answerTextFormat += '[' + answerText +']';
+										if(questionList.size()  != metaDataDo.getSequence()){
+											  answerTextFormat += ",";
+										}
+									}
+									String[] userFibOption = null;
+									if(result.get(i).getText() != null) {
+										answersArry=answerTextFormat.split(",");
+										userFibOption =result.get(i).getText().split(",");
+									}
+									if(answersArry!=null && userFibOption!=null){
+										for (int k = 0; k < answersArry.length; k++) { 
+											Label answerChoice=new Label();
+											if(answersArry[k]!=null && k<userFibOption.length){
+												if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts == 1)){
+													answerChoice.setText(userFibOption[k]);
+													answerChoice.getElement().getStyle().setColor(CORRECT);
+												}else if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts > 1)) {
+													answerChoice.setText(userFibOption[k]);
+													answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+												}else{
+													answerChoice.setText(userFibOption[k]);
+													answerChoice.getElement().getStyle().setColor(INCORRECT);
+												}
+												answerChoice.setStyleName(res.css().alignCenterAndBackground());
+												answerspnl.add(answerChoice);
+											}
+										}
+									}
+				        		}
+				        		 answerspnl.setStyleName(res.css().setMarginAuto());
+				        		 data.setValue(i, 3, answerspnl.toString());
+				        	}else  if(questionType.equalsIgnoreCase("MA")){
+				        		VerticalPanel answerspnl=new VerticalPanel();
+				        		if(result.get(i).getAnswerObject()!=null) {
+				        			 JSONValue value = JSONParser.parseStrict(result.get(i).getAnswerObject());
+				        			 JSONObject answerObject = value.isObject();
+				        			 Set<String> keys=answerObject.keySet();
+				        			 Iterator<String> itr = keys.iterator();
+				        		      while(itr.hasNext()) {
+				        		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
+				        		         for(int j=0;j<attemptsObj.size();j++){
+				        		        	Label answerChoice=new Label();
+				        		            String showMessage = null;
+				        		            boolean skip = attemptsObj.get(j).isObject().get("skip").isBoolean().booleanValue();
+				        		        	String status =attemptsObj.get(j).isObject().get("status").isString().stringValue();
+				        		        	String matext =attemptsObj.get(j).isObject().get("text").isString().stringValue();
+				 	        		         if(skip == false)
+				 							  {
+				 	        		        	if(matext.equalsIgnoreCase("0")) {
+													  showMessage = "No";
+												} else if(matext.equalsIgnoreCase("1")) {
+													   showMessage = "Yes";
+												}
+												answerChoice.setText(showMessage);
+				 									if(status.equalsIgnoreCase("0")) {
+				 										answerChoice.getElement().getStyle().setColor(INCORRECT);
+				 									} else if(status.equalsIgnoreCase("1") && (noOfAttempts == 1)) {
+				 										answerChoice.getElement().getStyle().setColor(CORRECT);
+				 									} else if(status.equalsIgnoreCase("1") && (noOfAttempts > 1)) {
+				 										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+				 									}
+				 							  }
+				 	        		        answerChoice.setStyleName(res.css().alignCenterAndBackground());
+				 	        		        answerspnl.add(answerChoice);
+				        		         }
+				        		      }
+				        		}
+				        		 answerspnl.setStyleName(res.css().setMarginAuto());
+				        		 data.setValue(i, 3, answerspnl.toString());
+				        	}
+				           
+				            //Set attempts
+				            Label attempts=new Label(Integer.toString(noOfAttempts));
+				            attempts.setStyleName(res.css().alignCenterAndBackground());
+				            data.setValue(i, 4, attempts.toString());
+				            
+				            //Set time spent
+				            data.setValue(i, 5, getTimeStampLabel(result.get(i).getTimeSpent()).toString());
+				            
+				            //Set reactions
+				            int reaction=result.get(i).getReaction();
+				            data.setValue(i, 6, new AnalyticsReactionWidget(reaction).toString());
+				        }
+				}
+	        Options options = Options.create();
+	        options.setAllowHtml(true);
+	        Table table = new Table(data, options);
+	        printScoredData.add(table);
+	        if(result.size()==0){
+	        	Label erroeMsg=new Label();
+	        	erroeMsg.setStyleName(res.css().displayMessageTextForScoredQuestions());
+	        	erroeMsg.setText("It looks like there is no scored question data for this collection yet.");
+	        	printScoredData.add(erroeMsg);
+	        }
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 	void setQuestionsData(ArrayList<UserDataDo> result){
 		    DataTable data = DataTable.create();
 		    data.addColumn(ColumnType.NUMBER, "No.");
@@ -341,7 +504,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        data.addColumn(ColumnType.STRING, "#Attempts");
 	        data.addColumn(ColumnType.STRING, "Time&nbsp;Spent");
 	        data.addColumn(ColumnType.STRING, "Reactions");
-	        
+	      
 	        data.addRows(result.size());
 	      if(result.size()!=0){
 				        for(int i=0;i<result.size();i++) {
@@ -530,5 +693,14 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	    	 popupPanel.show();
 	    	 popupPanel.center();
 	     }
+	}
+	public void setPrintIndividualSummayData(){
+		printWidget.clear();
+		printWidget.add(printScoredData);
+		printWidget.add(printOpendedData);
+		printWidget.add(printResourceData);
+		String style="<link rel='styleSheet' type='text/css' href='https://www.google.com/uds/api/visualization/1.0/8c95b72e5c145d5b3d7bb8b4ea74fd63/ui+en,table+en.css'><link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'>";
+	    Print.it(style,printWidget);
+	    printWidget.clear();
 	}
 }
