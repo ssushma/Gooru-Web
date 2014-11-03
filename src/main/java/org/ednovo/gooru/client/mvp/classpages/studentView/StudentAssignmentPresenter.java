@@ -102,12 +102,14 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	@Override
 	public void onBind() {
 		super.onBind();
+		Window.scrollTo(0, 0);
 	}	
 	
 	
 	@Override
 	protected void onReveal() {
 		super.onReveal();
+		Window.scrollTo(0, 0);
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
