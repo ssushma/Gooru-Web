@@ -216,7 +216,7 @@ public class FolderDeleteView extends AppPopUp {
 				DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView() {
 					@Override
 					public void onClickPositiveButton(ClickEvent event) {
-						Window.enableScrolling(true);
+//						Window.enableScrolling(true);
 						appPopUp.hide();
 					}
 				};
