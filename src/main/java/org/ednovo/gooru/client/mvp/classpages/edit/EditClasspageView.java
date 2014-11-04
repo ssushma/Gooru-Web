@@ -1573,25 +1573,37 @@ public class EditClasspageView extends
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		restingPagination();
-//		Map<String, String> params = new HashMap<String, String>();
-//		params.put("classpageid",classpageDo.getClasspageId());
-//		params.put("pageSize", pageSize + "");
-//		if (assignmentsContainerPanel.getWidgetCount() == 1
-//					&& isPostDeleteAssignment) {
-//				pageNum = pageNum == 0 ? 0 : pageNum - 5;
-//				params.put("pageNum", pageNum + "");
-//				params.put("pos", pos + "");
-//		}else {
-//			pageNum = isPostDeleteAssignment ? pageNum : 0;
-//			params.put("pageNum", pageNum + "");
-//			if(pageNum==0){
-//			    params.put("pos", START_PAGE);
-//			}else{
-//				params.put("pos", pos + "");
-//			}
-//		}
-//		AppClientFactory.getPlaceManager().revealPlace(
-//				PlaceTokens.EDIT_CLASSPAGE, params, true);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("classpageid",classpageDo.getClasspageId());
+		params.put("pageSize", pageSize + "");
+		if(AppClientFactory.getPlaceManager().getRequestParameter("pageNum")!=null)
+		{
+			params.put("pageNum", AppClientFactory.getPlaceManager().getRequestParameter("pageNum"));
+		}
+/*		if(isPostDeleteAssignment)
+		{
+		if (assignmentsContainerPanel.getWidgetCount() == 1
+					&& isPostDeleteAssignment) {
+				pageNum = pageNum == 0 ? 0 : pageNum - 5;
+				params.put("pageNum", pageNum + "");
+				params.put("pos", pos + "");
+		}else {
+			pageNum = isPostDeleteAssignment ? pageNum : 0;
+			params.put("pageNum", pageNum + "");
+			if(pageNum==0){
+			    params.put("pos", START_PAGE);
+			}else{
+				params.put("pos", pos + "");
+			}
+		}
+		}
+		else
+		{
+		
+			
+		}*/
+		AppClientFactory.getPlaceManager().revealPlace(
+			PlaceTokens.EDIT_CLASSPAGE, params, true);
 	}
 /**
  * This method is used to get the assignment by classpageId
