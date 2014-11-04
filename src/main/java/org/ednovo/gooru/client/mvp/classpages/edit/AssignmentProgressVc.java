@@ -169,6 +169,7 @@ public class AssignmentProgressVc extends Composite{
 		resourceCategoryLabel.getElement().setId("lblResourceCategory");
 		resoureDropDownLbl.getElement().setId("lblResourceDropDown");
 		resourceTypePanel.getElement().setId("pnlResourceType");
+		resourceTypePanel.getElement().getStyle().setBackgroundColor("#FFF");
 		assignmentInfoPopup.getElement().setId("pnlAssignmentInfoPopup");
 		lblCircle1.getElement().setId("lblCircle1");
 		assignmentCollectiontitle.getElement().setId("htmlAssignmentCollectionTitle");
