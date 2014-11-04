@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.deserializer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -165,14 +166,20 @@ public class ResourceDeserializer extends DeSerializer {
 	 */
 	public Map<String, Object> resetPassword(JsonRepresentation jsonRep,int code) {
 		JSONObject jsonObject;
+		try {
+			System.out.println("jsonRep : "+jsonRep.getText());
+		} catch (IOException e1) {
+			throw new RuntimeException("message", e1); 
+		}
 		Map<String, Object> resetPassword = new HashMap();
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
 				if(code==400){
 					resetPassword.put("statusCode", 400);
+					jsonObject = jsonRep.getJsonObject();
+					resetPassword.put(TOKEN_EXPIRED, (getJsonString(jsonObject, "Status")));
 				}else{
 					jsonObject = jsonRep.getJsonObject();
-					resetPassword.put(TOKEN_EXPIRED, (getJsonString(jsonObject, TOKEN_EXPIRED)));
 					JSONObject userJsonObject = jsonObject.getJSONObject(USER);
 					resetPassword.put(USER_NAME, (getJsonString(userJsonObject, USER_NAME)));
 				}

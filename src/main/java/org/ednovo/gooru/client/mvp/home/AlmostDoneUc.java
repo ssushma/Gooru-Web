@@ -282,6 +282,7 @@ public class AlmostDoneUc extends PopupPanel{
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		
 		panelUsernameTooltip.setVisible(false);
+		txtChooseUsername.setFocus(true);
 		this.center();
 	}
 	/**
@@ -513,7 +514,8 @@ public class AlmostDoneUc extends PopupPanel{
 	 */
 
 	public void checkUserNameAvailability(UserDo result) {
-		if (result != null && result.isAvailability() && txtChooseUsername.getText() != null) {
+
+		if (result != null && result.isAvailability() && txtChooseUsername.getText() != null && !txtChooseUsername.getText().trim().equalsIgnoreCase(AppClientFactory.getLoggedInUser().getUsername())) {
 			userNameValidUc.setText(i18n.GL0061() +" "+ txtChooseUsername.getText() + " "+i18n.GL1286()+i18n.GL_SPL_FULLSTOP());
 			userNameValidUc.getElement().setAttribute("alt",i18n.GL0061() +" "+ txtChooseUsername.getText() + " "+i18n.GL1286()+i18n.GL_SPL_FULLSTOP());
 			userNameValidUc.getElement().setAttribute("title",i18n.GL0061() +" "+ txtChooseUsername.getText() + " "+i18n.GL1286()+i18n.GL_SPL_FULLSTOP());
