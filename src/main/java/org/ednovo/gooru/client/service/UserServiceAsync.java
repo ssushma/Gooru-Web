@@ -66,7 +66,7 @@ public interface UserServiceAsync extends BaseServiceAsync {
     
     void forgotPassword(String emailId, AsyncCallback<Map<String, Object>> callback );
     
-    void resetCredential(String password, String token, AsyncCallback<Map<String, Object>> callback );
+    void resetCredential(String formData, AsyncCallback<Map<String, Object>> callback );
     
     void updateUserViewFlag(String gooruUid, Integer viewFlag, AsyncCallback<UserDo> callback);
 
