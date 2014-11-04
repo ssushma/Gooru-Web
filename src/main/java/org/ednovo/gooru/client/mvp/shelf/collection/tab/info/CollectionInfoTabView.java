@@ -1100,9 +1100,9 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					addCourseBtn.getElement().setAttribute("alt",ADD_COURSE);
 					addCourseBtn.getElement().setAttribute("title",ADD_COURSE);
 					removeCourseBtn.setVisible(false);
-					if(courseCode!=null&&!courseCode.equals("")){
-						getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
-					}
+//					if(courseCode!=null&&!courseCode.equals("")){
+//						getUiHandlers().deleteCourseOrStandard(collectionDo.getGooruOid(), courseCode);
+//					}
 					courseCode="";
 				}else{
 					for (CodeDo code : collectionDoVal.getTaxonomySet()) {

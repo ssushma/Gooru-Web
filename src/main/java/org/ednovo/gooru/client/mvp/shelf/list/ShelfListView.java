@@ -1520,7 +1520,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				public void onClickPositiveButton(ClickEvent event, String folderName, String parentId, HashMap<String,String> params) {
 					if(!folderName.isEmpty()) {
 						getUiHandlers().createFolderInParent(folderName, parentId, params); 
-						Window.enableScrolling(true);
+//						Window.enableScrolling(true);
 						this.hide();
 					}
 				}
