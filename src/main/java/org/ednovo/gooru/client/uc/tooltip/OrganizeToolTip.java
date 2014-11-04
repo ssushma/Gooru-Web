@@ -134,7 +134,7 @@ public class OrganizeToolTip extends PopupPanel implements HasMouseOutHandlers{
 						public void onClickPositiveButton(ClickEvent event, String folderName, String parentId, HashMap<String,String> params) {
 							if(!folderName.isEmpty()) {
 								createFolderInParent(folderName, parentId, params); 
-								Window.enableScrolling(true);
+//								Window.enableScrolling(true);
 								this.hide();
 							}
 						}

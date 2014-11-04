@@ -1171,10 +1171,10 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		@Override
 		public void onClick(ClickEvent event) {
 			if (enableEdit)
-				if(!isGradeCourseBtnClick) {
+			//	if(!isGradeCourseBtnClick) {
 					clickGradeCourseEditBtn();
 					isGradeCourseBtnClick = true;
-				}
+			//	}
 				userCoursePopup.setVisible(true);
 	        	isShowing=true;
 		}

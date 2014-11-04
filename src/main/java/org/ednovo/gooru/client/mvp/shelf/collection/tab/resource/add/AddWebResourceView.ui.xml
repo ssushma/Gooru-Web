@@ -10,7 +10,9 @@
 		<ui:with
 		type="org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle"
 		field="res2" />
-	<g:HTMLPanel styleName="{res.css.myFolderCollectionFormContainer}" ui:field="contentPanel">
+  <g:ScrollPanel styleName="{res.css.myFolderCollectionFormContainer}" ui:field="scrollPanel">
+	<g:HTMLPanel  ui:field="contentPanel">
+	   
         <g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}" ui:field="urlContianer">
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="urlTitle"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormInputControl}">
@@ -514,5 +516,7 @@
        <!--    <g:Label styleName="{res.css.myFolderCollectionCancel}" ui:field="cancelResourcePopupBtnLbl"/> -->
         </g:HTMLPanel>
          <g:Label styleName="{res.css.myFolderCollectionButtonContainer}" ui:field="loadingTextLbl"></g:Label>
+         
       </g:HTMLPanel>
+      </g:ScrollPanel>
 </ui:UiBinder>
