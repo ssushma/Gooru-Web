@@ -119,12 +119,11 @@ public interface UserService extends BaseService {
 
 	/**
 	 * Reset the user password  
-	 * @param password to be updated
-	 * @param token reset token
+	 * @JSON Object with token and password
 	 * @return user  credential
 	 * @throws GwtException
 	 */
-	Map<String, Object> resetCredential(String password, String token) throws GwtException, ServerDownException;
+	Map<String, Object> resetCredential(String formData) throws GwtException, ServerDownException;
 	
 	/**
 	 * Update user view flag when user logIn in first time
@@ -234,4 +233,5 @@ public interface UserService extends BaseService {
 	String getRefershToken(String gooruUid)throws GwtException,ServerDownException;
 	
 	String revokeToken(String gooruUid)throws GwtException,ServerDownException;
+
 }
