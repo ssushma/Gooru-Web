@@ -1367,13 +1367,17 @@ public abstract class CreateAccountUc extends PopupPanel{
 				if (age < 13) {
 					MixpanelUtil.create_Child_account();
 					dob = dateBoxUc.getDate();
-					// TODO set the parent user details.
 					underThirtheen = true;
 					panelBelowThirteen.setVisible(true);
 					if (panelAboveThirteen.isVisible()) {
 						btnSignUp.setText(i18n.GL0460());
 					}
 					panelAboveThirteen.setVisible(false);
+				}else{
+					underThirtheen = false;
+					panelBelowThirteen.setVisible(false);
+					panelAboveThirteen.setVisible(true);
+					btnSignUp.setText(i18n.GL0186());
 				}
 			} else {
 //				dateBoxUc.getDatePickerUc().hide();

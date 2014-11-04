@@ -127,13 +127,13 @@ public class ShelfCollectionResourceChildView extends
 	VerticalPanel actionVerPanel;
 */
 	@UiField
-	Button EditBtn,updateNarrationBtn,cancelNarrationBtn,updateVideoTimeBtn,cancelVideoTimeBtn,updatePdfBtn,cancelpdfBtn;
+	Button EditBtn,updateNarrationBtn,cancelNarrationBtn,updateVideoTimeBtn,cancelVideoTimeBtn,updatePdfBtn,cancelpdfBtn,resourceMoveUpBtn,resourceMoveDownBtn;
 
 	@UiField
 	FlowPanel editFloPanel, editFieldsFloPanel,actionVerPanel,actionVerPanelForUpdateTime;
 
 	@UiField
-	TextBox fromTxt, toTxt,EndTimeTxt1,EndTimeTxt2,startpdfPageNumber,stoppdfPageNumber;
+	TextBox fromTxt, toTxt,EndTimeTxt1,EndTimeTxt2,startpdfPageNumber,stoppdfPageNumber,reorderTxtBox;
 
 	@UiField
 	TextArea narrationTxtArea;
@@ -151,6 +151,8 @@ public class ShelfCollectionResourceChildView extends
 	Label narrationAlertMessageLbl,videoTimeField,fromLblDisplayText,ToLbl,UpdateTextMessage,editStartPageLbl,editVideoTimeLbl,errorMsgLabel, lblCharLimit;
 
 	@UiField Image imgNotFriendly;
+	
+	@UiField HTMLPanel reorderContainer;
 	
 	ToolTip toolTip = null;
 	
@@ -425,6 +427,11 @@ public class ShelfCollectionResourceChildView extends
 		cancelpdfBtn.getElement().setAttribute("title", i18n.GL0142());
 		resourceFlowPanel.getElement().setId("fpnlResourceFlowPanel");
 		narrationConatainer.getElement().setId("fpnlNarrationConatainer");
+		
+		reorderContainer.getElement().setId("reorderContainer");
+		resourceMoveUpBtn.getElement().setId("resourceMoveUpBtn");
+		resourceMoveDownBtn.getElement().setId("resourceMoveDownBtn");
+		reorderTxtBox.getElement().setId("reorderTxtBox");
 		setData(collectionItem);
 		
 		onResourceNarrationOut();
@@ -444,6 +451,7 @@ public class ShelfCollectionResourceChildView extends
 		ResourceEditButtonContainer.getElement().setId("fpnlResourceEditButtonContainer");
 		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		EditBtn.setVisible(false);
+		reorderContainer.setVisible(false);
 		editPdfFlowPanel.getElement().setId("fpnlEditPdfFlowPanel");
 		editPdfFlowPanel.setVisible(false);
 		actionVerPanelForUpdatePDF.getElement().setId("fpnlActionVerPanelForUpdatePDF");
@@ -782,6 +790,7 @@ public class ShelfCollectionResourceChildView extends
 		public void onMouseOver(MouseOverEvent event) {
 			if ((actionVerPanel.isVisible()==false) && (actionVerPanelForUpdateTime.isVisible()==false) && (actionVerPanelForUpdatePDF.isVisible()==false)) {
 				EditBtn.setVisible(true);
+				reorderContainer.setVisible(true);
 				//ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 				//actionVerPanel.setVisible(true);
 				// onResourceNarrationHover();
@@ -800,6 +809,7 @@ public class ShelfCollectionResourceChildView extends
 		public void onMouseOut(MouseOutEvent event) {
 			//if (updateResourceBtn.getText().equalsIgnoreCase("Edit Narration")) {
 				EditBtn.setVisible(false);
+				reorderContainer.setVisible(false);
 				ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 				//actionVerPanel.setVisible(false);
 				//actionVerPanelForUpdateTime.setVisible(false);
@@ -1295,6 +1305,7 @@ public class ShelfCollectionResourceChildView extends
 	public void onEditClick(ClickEvent clickEvent) {
 		MixpanelUtil.Organize_Click_Edit_Narration();
 		EditBtn.setVisible(false);
+		reorderContainer.setVisible(false);
 		ResourceEditButtonContainer.getElement().getStyle()
 		.setVisibility(Visibility.HIDDEN);
 		actionVerPanel.setVisible(true);
@@ -1362,6 +1373,7 @@ public class ShelfCollectionResourceChildView extends
 		ResourceEditButtonContainer.getElement().getStyle()
 		.setVisibility(Visibility.HIDDEN);
 		EditBtn.setVisible(false);
+		reorderContainer.setVisible(false);
 		fromLblDisplayText.setVisible(false);
 		videoDisplay.setVisible(false);
 		narrationConatainer.setVisible(false);
@@ -1424,6 +1436,7 @@ public class ShelfCollectionResourceChildView extends
 	public void copyResource(ClickEvent clickEvent) {
 		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		EditBtn.setVisible(false);
+		reorderContainer.setVisible(false);
 		if (isEdited) {
 				if (previousCollectionResourceChildView != null	&& previousCollectionResourceChildView.isAttached()) {
 				if (!isConfirmationPopup) {
@@ -1491,6 +1504,7 @@ public class ShelfCollectionResourceChildView extends
 	public void deleteCollectionItem(ClickEvent clickEvent) {
 		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		EditBtn.setVisible(false);
+		reorderContainer.setVisible(false);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(88, false));
 
@@ -1756,6 +1770,7 @@ public class ShelfCollectionResourceChildView extends
 			resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);
 			MixpanelUtil.Organize_Click_Edit_Start_Time();
 			EditBtn.setVisible(false);
+			reorderContainer.setVisible(false);
 			actionVerPanelForUpdateTime.setVisible(true);
 			videoDisplay.setVisible(false);
 			narrationConatainer.setVisible(false);
@@ -1918,7 +1933,7 @@ public class ShelfCollectionResourceChildView extends
 		collectionResourceTabView.removeCollectionItem(collectionItemDo, this);
 		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(
 				collectionItemDo, RefreshType.DELETE));
-		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 			Window.enableScrolling(false);
 		}else{
 			Window.enableScrolling(true);
