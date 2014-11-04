@@ -57,7 +57,7 @@ public class RatingsConfirmationPopup extends PopupPanel{
 			btnOk.getElement().setAttribute("alt",i18n.GL0190());
 			btnOk.getElement().setAttribute("title",i18n.GL0190());
 			setAvgRatingWidget(assocGooruOId,score,count,average,createrName);
-			
+			setGlassEnabled(true);
 			imgSuccessIcon.getElement().setId("btnOk");
 			ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 			buttonsContainer.getElement().setId("pnlButtonsContainer");
