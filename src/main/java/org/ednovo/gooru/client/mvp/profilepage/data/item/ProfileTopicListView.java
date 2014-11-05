@@ -50,6 +50,7 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
@@ -164,6 +165,8 @@ public class ProfileTopicListView extends Composite{
 	private static final String STANDARD_ID = "standardId";
 	
 	private static final String COLLECTION_TITLE = "collectionTitle";
+	
+	private String libraryGooruOid=null;
 
 	private static ProfileTopicListViewUiBinder uiBinder = GWT
 			.create(ProfileTopicListViewUiBinder.class);
@@ -181,6 +184,7 @@ public class ProfileTopicListView extends Composite{
 	public ProfileTopicListView(ProfileLibraryDo profileFolderDo, int topicNumber, String placeToken,String libraryGooruOid) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicNumber;
+		this.libraryGooruOid=libraryGooruOid;
 		setPlaceToken(placeToken);
 		assignCollectionBtn.setText(i18n.GL0526());
 		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0526());
@@ -276,6 +280,7 @@ public class ProfileTopicListView extends Composite{
 	public ProfileTopicListView(ProfileLibraryDo profileFolderDo, Integer conceptNumber, String placeToken, String collectionType,String libraryGooruOid) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
+		this.libraryGooruOid=libraryGooruOid;
 		setPlaceToken(placeToken);
 		collectionImage.getElement().setAttribute("collid", profileFolderDo.getGooruOid());
 		collectionTitleLbl.getElement().setAttribute("collid", profileFolderDo.getGooruOid());
@@ -1074,6 +1079,11 @@ public class ProfileTopicListView extends Composite{
 	@UiHandler("assignCollectionBtn")
 	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
 		String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
+		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PROFILE_PAGE)){
+			PlayerDataLogEvents.triggerProfileCollectionShareDataEvent(collectionId);
+		}else{
+			PlayerDataLogEvents.triggerLibraryShareDataEvent(collectionId, libraryGooruOid);
+		}
 		if(!isAssignPopup){
 			isAssignPopup=true;
 			final Map<String, String> params = StringUtil.splitQuery(Window.Location
