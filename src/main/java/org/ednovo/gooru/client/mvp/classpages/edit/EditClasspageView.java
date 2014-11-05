@@ -376,6 +376,8 @@ public class EditClasspageView extends
 			@Override
 			public void onError(ErrorEvent event) {
 				imgClasspageImage.setUrl(DEFAULT_CLASSPAGE_IMAGE);
+				btnEditImage.setText(i18n.GL1087());
+				StringUtil.setAttributes(btnEditImage.getElement(), "btnEditImage", i18n.GL1087(), i18n.GL1087());
 			}
 		});
 		
@@ -1080,6 +1082,14 @@ public class EditClasspageView extends
 		imgClasspageImage.setTitle(classpageDo.getTitle());
 		btnCollectionEditImage.setVisible(false);
 		imgClasspageImage.setUrl(classpageDo.getThumbnailUrl().isEmpty() ? DEFAULT_CLASSPAGE_IMAGE : classpageDo.getThumbnailUrl());
+		if(classpageDo.getThumbnailUrl().isEmpty()){
+			btnEditImage.setText(i18n.GL1087());
+			StringUtil.setAttributes(btnEditImage.getElement(), "btnEditImage", i18n.GL1087(), i18n.GL1087());
+		}else{
+			btnEditImage.setText(i18n.GL0138());
+			StringUtil.setAttributes(btnEditImage.getElement(), "btnEditImage", i18n.GL0138(), i18n.GL0138());
+		}
+		
 		//txtClasspageCodeShare.setText(classpageDo.getClasspageCode().toUpperCase());
 	}
 	
@@ -1425,6 +1435,8 @@ public class EditClasspageView extends
 						pageSize + "", pageNum + "");
 				getUiHandlers().generateShareLink(classpageId);
 				imgClasspageImage.setUrl(collectionDo.getThumbnails().getUrl());
+				btnEditImage.setText(i18n.GL0138());
+				StringUtil.setAttributes(btnEditImage.getElement(), "btnEditImage", i18n.GL0138(), i18n.GL0138());
            
 		    }
 		}
@@ -1823,6 +1835,8 @@ public class EditClasspageView extends
 	public void setUploadedImageToClassPage(String url) {
 		MixpanelUtil.SuccessfullyAddtheImageFromClasspage();
 		imgClasspageImage.setUrl(url+"?p="+Math.random());
+		btnEditImage.setText(i18n.GL0138());
+		StringUtil.setAttributes(btnEditImage.getElement(), "btnEditImage", i18n.GL0138(), i18n.GL0138());
 	}
 
 	@Override
