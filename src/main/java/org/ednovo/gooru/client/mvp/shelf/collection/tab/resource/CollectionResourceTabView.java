@@ -31,7 +31,6 @@ import java.util.List;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle.CollectionEditResourceCss;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.EditQuestionPopupVc;
@@ -54,10 +53,8 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
-import com.google.gwt.aria.client.TextboxRole;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -75,7 +72,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -149,6 +145,12 @@ public class CollectionResourceTabView extends
 	private HandlerRegistration handlerRegistration=null;
 	
 	private int totalCount;
+	
+	private static final String UP_ARROW = "MoveUp";
+	
+	private static final String DOWN_ARROW = "MoveDown";
+	
+	private static final String REORDER_VALIDATION_MSG = "Success";
 
 	/**
 	 * Class constructor
@@ -457,6 +459,9 @@ public class CollectionResourceTabView extends
 			sequenceVerPanel.insert(sequenceLbl, sequencePostion);
 			shelfCollectionResourceVc = new ShelfCollectionResourceChildView(this, collectionItemDo);
 			resetSequence();
+			System.out.println("--->>> "+shelfCollectionResourceVc.getCollectionItemDo().getItemSequence()); 
+			shelfCollectionResourceVc.getResourceMoveUpBtn().addClickHandler(new OnClickReorderUpButton(collectionItemDo.getGooruOid())); 
+//			shelfCollectionResourceVc.getResourceMoveDownBtn().addClickHandler(new OnClickReorderDownButton(collectionItemDo.getGooruOid()));
 			if(isFlag){
 				isFlag=false;
 //				Window.scrollTo(0, (0 + (sequencePostion-1)*113));
@@ -1292,6 +1297,97 @@ public class CollectionResourceTabView extends
 			}
 			seqNum++;
 		}
+	}
+	
+	/**
+	 * 
+	 * Inner class for reorder Up button, which implements click handler {@link ClickHandler}
+	 *
+	 */
+	
+	public class OnClickReorderUpButton implements ClickHandler{
+		private String itemGooruOid;
+		int itemPosSeqNumb,itemToBeMovedPosSeqNumb,itemSeqToAPI;
+		private String reorderValidationMsg;
+		/**
+		 * Class constructor
+		 * @param itemGooruOid {@link String}
+		 */
+		public OnClickReorderUpButton(String itemGooruOid) {
+			this.itemGooruOid = itemGooruOid;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			ShelfCollectionResourceChildView shelfCollectionResourceChildView = getFolderOrCollectionWidget(itemGooruOid);
+			
+			itemPosSeqNumb = shelfCollectionResourceChildView != null ?shelfCollectionResourceChildView.getCollectionItemDo().getItemSequence():0;
+			itemToBeMovedPosSeqNumb = (shelfCollectionResourceChildView != null && shelfCollectionResourceChildView.getReorderTxtBox().getText().trim() !=null && !shelfCollectionResourceChildView.getReorderTxtBox().getText().trim().equals(""))?(Integer.parseInt(shelfCollectionResourceChildView.getReorderTxtBox().getText().trim())):0;
+			if(shelfCollectionResourceChildView!=null){
+				reorderValidationMsg = reorderValidations(itemToBeMovedPosSeqNumb,itemPosSeqNumb,UP_ARROW);
+				if(reorderValidationMsg.equalsIgnoreCase(REORDER_VALIDATION_MSG)){
+					
+					if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
+						itemToBeMovedPosSeqNumb-=1;
+					}
+					
+//					getUiHandlers().reorderFoldersOrCollection(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,UP_ARROW,shelfFolderItemChildView.getCollectionItemId(),itemSeqToAPI);
+					reorderItemToNewPosition(shelfCollectionResourceChildView,(itemToBeMovedPosSeqNumb-1),UP_ARROW);
+				}else{
+					shelfCollectionResourceChildView.showReorderValidationToolTip(reorderValidationMsg);
+				}
+			}
+			
+		}
+	}
+	
+	/**
+	 * Before reorder will return with valid message.
+	 * @param itemToBeMovedPosSeqNumb {@link Integer}
+	 * @param itemPosSeqNumb {@link Integer}
+	 * @param arrow {@link String}
+	 * @return validationStaus {@link String} 
+	 */
+	public String reorderValidations(int itemToBeMovedPosSeqNumb,int itemPosSeqNumb,String arrow) {
+		String validationStaus=REORDER_VALIDATION_MSG; 
+		if(itemToBeMovedPosSeqNumb==0){
+			validationStaus = "Given Reorder sequence is not valid or empty.";
+		}else if(itemToBeMovedPosSeqNumb>getTotalCount()){
+			validationStaus = "Sorry, you don't have "+itemToBeMovedPosSeqNumb+"th folder or collection to reorder";
+		}else if(itemToBeMovedPosSeqNumb>itemPosSeqNumb && arrow.equalsIgnoreCase(UP_ARROW)){
+			validationStaus = "Please click on down arrow";
+		}else if(itemToBeMovedPosSeqNumb<itemPosSeqNumb && arrow.equalsIgnoreCase(DOWN_ARROW)){
+			validationStaus = "Please click on Up arrow";
+		}else if(itemToBeMovedPosSeqNumb==0){
+			validationStaus = "Please specify the reorder sequence.";
+		}
+		return validationStaus;
+	}
+	
+
+	/**
+	 * Gets the respective folder or collection widget for reorder.
+	 * @param itemGooruOid {@link String}
+	 * 
+	 * @return widget {@link ShelfCollectionResourceChildView}
+	 */
+	public ShelfCollectionResourceChildView getFolderOrCollectionWidget(String itemGooruOid) { 
+		Iterator<Widget> widgets = collectionResourcePanelVc.iterator();
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if (widget instanceof ShelfCollectionResourceChildView && ((ShelfCollectionResourceChildView) widget).getCollectionItemDo().getGooruOid().equals(itemGooruOid)) {
+				return (ShelfCollectionResourceChildView) widget;
+			}
+		}
+		return null;
+	}
+	
+	
+	public void reorderItemToNewPosition(ShelfCollectionResourceChildView shelfCollectionResourceChildView,int newItemPosition, String upArrow) {
+		collectionResourcePanelVc.insert(shelfCollectionResourceChildView, newItemPosition);
+		resetSequence();
+		setResourceSequence();
 	}
 
 	/**
