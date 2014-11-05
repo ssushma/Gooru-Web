@@ -43,6 +43,7 @@ import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.WhiteSpace;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -165,7 +166,8 @@ public class StudentSignUpUc extends PopupPanel{
 	
 		//this.getElement().getStyle().setBackgroundColor("transparent");
 		lblTitle.getElement().setAttribute("style", "height: 17px");
-		lblParentEmailId.setText(emailId != null && !emailId.equalsIgnoreCase("") ? emailId : AppClientFactory.getPlaceManager().getRequestParameter("emailId"));
+		lblParentEmailId.setText(emailId != null && !emailId.equalsIgnoreCase("") ?" "+ emailId :" "+ AppClientFactory.getPlaceManager().getRequestParameter("emailId"));
+		lblParentEmailId.getElement().getStyle().setWhiteSpace(WhiteSpace.PRE);
 		lblParentEmailId.getElement().setId("lblParentEmailId");
 		lblParentEmailId.getElement().setAttribute("alt",emailId != null && !emailId.equalsIgnoreCase("") ? emailId : AppClientFactory.getPlaceManager().getRequestParameter("emailId"));
 		lblParentEmailId.getElement().setAttribute("title",emailId != null && !emailId.equalsIgnoreCase("") ? emailId : AppClientFactory.getPlaceManager().getRequestParameter("emailId"));
@@ -225,7 +227,7 @@ public class StudentSignUpUc extends PopupPanel{
 		lblCancel.getElement().setId("lblCancel");
 		panelSignUp.getElement().setId("pnlSignUp");
 		
-		lblTxtParent.setText(i18n.GL0468()+ " ");
+		lblTxtParent.setText(i18n.GL0468());
 		lblTxtParent.getElement().setId("lblTxtParent");
 		lblTxtParent.getElement().setAttribute("alt",i18n.GL0468());
 		lblTxtParent.getElement().setAttribute("title",i18n.GL0468());

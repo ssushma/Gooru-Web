@@ -115,7 +115,8 @@ public abstract class WebResourcePreview extends PopupPanel {
 		lblConfirmAdding.getElement().setAttribute("alt", i18n.GL0591().toLowerCase());
 		lblConfirmAdding.getElement().setAttribute("title", i18n.GL0591().toLowerCase());
 		setWidth("508px");
-		setHeight("481px");
+		/*setHeight("481px");*/
+		this.getElement().setAttribute("style", "min-height:420px;");
 		center();
 	}
 	
