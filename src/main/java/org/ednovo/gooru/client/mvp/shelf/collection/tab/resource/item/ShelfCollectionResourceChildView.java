@@ -177,6 +177,8 @@ public class ShelfCollectionResourceChildView extends
 	
 	
 	
+	
+	
 	//private static final String REG_EXP = "^(?:[01]\\d|2[0-3]):(?:[0-9]\\d):(?:[0-5]\\d)$";
 	
 	private static final String REG_EXP = "^(?:[01]\\d|2[0-3]):(?:[0-9]{0,6}):(?:[0-5]\\d)$";
@@ -693,8 +695,6 @@ public class ShelfCollectionResourceChildView extends
 			narrationTxtArea.getElement().getStyle().clearBackgroundColor();
 			narrationTxtArea.getElement().getStyle().setBorderColor("#ccc");
 			narrationAlertMessageLbl.setVisible(false);
-			
-
 //			ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			ResourceEditButtonContainer.setVisible(true);
 			}	
@@ -2267,6 +2267,40 @@ public class ShelfCollectionResourceChildView extends
         html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("<p class=\"p1\">", "");
         return html;
 	}
+	
+	public void setUpDownArrowVisibility(int totalCount) { 
+		
+	}
+	
+	
+	/**
+	 * Sets the re-order Up button visibility
+	 * @param isvisible {@link Boolean}
+	 */
+	public void upButtonIsVisible(boolean isvisible) {
+		
+		if(isvisible){
+			resourceMoveUpBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		}else{
+			resourceMoveUpBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		}
+	}
+
+
+	/**
+	 * Sets the re-order Down button visibility
+	 * @param isvisible {@link Boolean}
+	 */
+	public void downButtonIsVisible(boolean isvisible) {
+		if(isvisible){
+			resourceMoveDownBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		}else{
+			resourceMoveDownBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		}
+	}
+	
+	
+	
 	/**
 	 * @return the reorderTxtBox
 	 */
