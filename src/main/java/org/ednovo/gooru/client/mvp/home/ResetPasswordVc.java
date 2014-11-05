@@ -86,7 +86,7 @@ public class ResetPasswordVc extends Composite{
 	ErrorLabelUc newPwdValidationUc;
 	
 	@UiField
-	Label newPasswordText,newPwdLbl,confirmPwdLbl;
+	Label newPasswordText,newPwdLbl,confirmPwdLbl,tokenExpireErrorLabel;
 
 	private String resetToken;
 
@@ -177,7 +177,7 @@ public class ResetPasswordVc extends Composite{
 	@UiHandler("sendMailBtnUc")
 	public void onCancelClick(ClickEvent clickEvent) {
 		if (validatePassword()) {
-			
+			tokenExpireErrorLabel.setText("");
 			JSONObject obj = new JSONObject();
 			obj.put("token", new JSONString(resetToken));
 			obj.put("password", new JSONString(this.getresetConfirmPwd()));
@@ -187,22 +187,46 @@ public class ResetPasswordVc extends Composite{
 
 				@Override
 				public void onSuccess(Map<String, Object> result) {
-					if(result != null && result.containsKey("statusCode")&& Integer.parseInt(result.get("statusCode").toString())==400){ 
-						resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css().resetPwdTextError());
-						newPwdValidationUc.setText(StringUtil.generateMessage(i18n.GL0078(),"Password"));
-						newPwdValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0078(),"Password"));
-						newPwdValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0078(),"Password"));
-						newPwdValidationUc.setVisible(true);
-					}else if (result != null && result.containsKey("tokenExpired") && result.get("tokenExpired") != null && result.get("tokenExpired").toString().length() > 0) {
-						appPopUp.hide();
-						new AlertContentUc(i18n.GL1089(), StringUtil.generateMessage(i18n.GL0100(), ""));
-					}else if (result != null && result.containsKey("username") && result.get("username").toString().length() > 0) {
-						appPopUp.hide();
-						new ResetPwdSuccessVc(result.get("username").toString());
+					if(result!=null){
+						if(result.get("statusCode")!=null&&Integer.parseInt(result.get("statusCode").toString())==400){
+							if(result.get("statusMessage")!=null&&result.get("statusMessage").toString().contains("tokenExpired")){
+								tokenExpireErrorLabel.setText(i18n.GL0100());
+							}else{
+								resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css().resetPwdTextError());
+								newPwdValidationUc.setVisible(true);
+								newPwdValidationUc.setText(i18n.GL0078());
+							}
+						}else{
+							Window.enableScrolling(true);
+							AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(0, true));
+							tokenExpireErrorLabel.setText("");
+							appPopUp.hide();
+							new ResetPwdSuccessVc(result.get("username").toString());
+						}
 						
 					}else{
+						Window.enableScrolling(true);
+						AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(0, true));
+						tokenExpireErrorLabel.setText("");
 						appPopUp.hide();
 					}
+					
+//					if(result != null && result.containsKey("statusCode")&& Integer.parseInt(result.get("statusCode").toString())==400){ 
+//						resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css().resetPwdTextError());
+//						newPwdValidationUc.setText(StringUtil.generateMessage(i18n.GL0078(),"Password"));
+//						newPwdValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0078(),"Password"));
+//						newPwdValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0078(),"Password"));
+//						newPwdValidationUc.setVisible(true);
+//					}else if (result != null && result.containsKey("tokenExpired") && result.get("tokenExpired") != null && result.get("tokenExpired").toString().length() > 0) {
+//						appPopUp.hide();
+//						new AlertContentUc(i18n.GL1089(), StringUtil.generateMessage(i18n.GL0100(), ""));
+//					}else if (result != null && result.containsKey("username") && result.get("username").toString().length() > 0) {
+//						appPopUp.hide();
+//						new ResetPwdSuccessVc(result.get("username").toString());
+//						
+//					}else{
+//						appPopUp.hide();
+//					}
 					/*if (result != null && result.containsKey("username") && result.get("username").toString().length() > 0) {
 						new ResetPwdSuccessVc(result.get("username").toString());
 						
@@ -211,8 +235,6 @@ public class ResetPasswordVc extends Composite{
 						new AlertContentUc(i18n.GL1089, StringUtil.generateMessage(i18n.GL0100, ""));
 					}*/
 //					appPopUp.hide();
-					Window.enableScrolling(true);
-					AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(0, true));
 				}
 			});
 		}
@@ -225,6 +247,7 @@ public class ResetPasswordVc extends Composite{
 	@UiHandler("resetPwdCancelAnr")
 	public void onFormSubmit(ClickEvent clickEvent) {
 		Window.enableScrolling(true);
+		tokenExpireErrorLabel.setText("");
 		AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(0, true));
 		appPopUp.hide();
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);

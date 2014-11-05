@@ -164,29 +164,26 @@ public class ResourceDeserializer extends DeSerializer {
 	 * @param jsonRep instance of {@link JsonRepresentation}
 	 * @return forgotPassword
 	 */
-	public Map<String, Object> resetPassword(JsonRepresentation jsonRep,int code) {
+	public Map<String, Object> resetPassword(JsonRepresentation jsonRep,int code,String errorMessage) {
 		JSONObject jsonObject;
-		try {
-			System.out.println("jsonRep : "+jsonRep.getText());
-		} catch (IOException e1) {
-			throw new RuntimeException("message", e1); 
-		}
-		Map<String, Object> resetPassword = new HashMap();
-		if (jsonRep != null && jsonRep.getSize() != -1) {
+		Map<String, Object> resetPassword = new HashMap<String, Object>();
 			try {
 				if(code==400){
+					System.out.println("inside if");
 					resetPassword.put("statusCode", 400);
-					jsonObject = jsonRep.getJsonObject();
-					resetPassword.put(TOKEN_EXPIRED, (getJsonString(jsonObject, "Status")));
+					resetPassword.put("statusMessage", errorMessage);
 				}else{
-					jsonObject = jsonRep.getJsonObject();
-					JSONObject userJsonObject = jsonObject.getJSONObject(USER);
-					resetPassword.put(USER_NAME, (getJsonString(userJsonObject, USER_NAME)));
+					if (jsonRep != null ) {
+						System.out.println("inside else");
+						jsonObject = jsonRep.getJsonObject();
+						JSONObject userJsonObject = jsonObject.getJSONObject(USER);
+						resetPassword.put("statusCode", 200);
+						resetPassword.put(USER_NAME, (getJsonString(userJsonObject, USER_NAME)));
+					}
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-		}
 		return resetPassword;
 	}
 }

@@ -177,6 +177,8 @@ public class ShelfCollectionResourceChildView extends
 	
 	
 	
+	
+	
 	//private static final String REG_EXP = "^(?:[01]\\d|2[0-3]):(?:[0-9]\\d):(?:[0-5]\\d)$";
 	
 	private static final String REG_EXP = "^(?:[01]\\d|2[0-3]):(?:[0-9]{0,6}):(?:[0-5]\\d)$";
@@ -449,7 +451,8 @@ public class ShelfCollectionResourceChildView extends
 		actionVerPanelForUpdateTime.setVisible(false);
 		UpdateTextMessage.setVisible(false);
 		ResourceEditButtonContainer.getElement().setId("fpnlResourceEditButtonContainer");
-		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+//		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		ResourceEditButtonContainer.setVisible(false);
 		EditBtn.setVisible(false);
 		reorderContainer.setVisible(false);
 		editPdfFlowPanel.getElement().setId("fpnlEditPdfFlowPanel");
@@ -679,10 +682,10 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("EditBtn")
 	public void onClickEdit(ClickEvent clickEvent)
 	{
-		if (ResourceEditButtonContainer.getElement().getStyle()
-				.getVisibility().equalsIgnoreCase("VISIBLE")) {
-			ResourceEditButtonContainer.getElement().getStyle()
-					.setVisibility(Visibility.HIDDEN);
+		if (/*ResourceEditButtonContainer.getElement().getStyle().getVisibility().equalsIgnoreCase("VISIBLE")*/ResourceEditButtonContainer.isVisible()) {
+//			ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			ResourceEditButtonContainer.setVisible(false);
+			
 		} else {
 			narrationAlertMessageLbl
 				.addStyleName("titleAlertMessageDeActive");
@@ -692,11 +695,9 @@ public class ShelfCollectionResourceChildView extends
 			narrationTxtArea.getElement().getStyle().clearBackgroundColor();
 			narrationTxtArea.getElement().getStyle().setBorderColor("#ccc");
 			narrationAlertMessageLbl.setVisible(false);
-			
-
-			ResourceEditButtonContainer.getElement().getStyle()
-					.setVisibility(Visibility.VISIBLE);
-		}	
+//			ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+			ResourceEditButtonContainer.setVisible(true);
+			}	
 	}
 	private class toTxtKeyUpHandler implements KeyUpHandler {
 
@@ -810,7 +811,8 @@ public class ShelfCollectionResourceChildView extends
 			//if (updateResourceBtn.getText().equalsIgnoreCase("Edit Narration")) {
 				EditBtn.setVisible(false);
 				reorderContainer.setVisible(false);
-				ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+				ResourceEditButtonContainer.setVisible(false);
+//				ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 				//actionVerPanel.setVisible(false);
 				//actionVerPanelForUpdateTime.setVisible(false);
 				// onResourceNarrationOut();
@@ -1306,8 +1308,9 @@ public class ShelfCollectionResourceChildView extends
 		MixpanelUtil.Organize_Click_Edit_Narration();
 		EditBtn.setVisible(false);
 		reorderContainer.setVisible(false);
-		ResourceEditButtonContainer.getElement().getStyle()
-		.setVisibility(Visibility.HIDDEN);
+		ResourceEditButtonContainer.setVisible(false);
+		/*ResourceEditButtonContainer.getElement().getStyle()
+		.setVisibility(Visibility.HIDDEN);*/
 		actionVerPanel.setVisible(true);
 			editAndUpdateResource();
 		
@@ -1370,8 +1373,9 @@ public class ShelfCollectionResourceChildView extends
 		actionVerPanelForUpdatePDF.setVisible(true);
 		//endPageLbl.setVisible(true);
 		editPdfFlowPanel.setVisible(true);
-		ResourceEditButtonContainer.getElement().getStyle()
-		.setVisibility(Visibility.HIDDEN);
+		ResourceEditButtonContainer.setVisible(false);
+		/*ResourceEditButtonContainer.getElement().getStyle()
+		.setVisibility(Visibility.HIDDEN);*/
 		EditBtn.setVisible(false);
 		reorderContainer.setVisible(false);
 		fromLblDisplayText.setVisible(false);
@@ -1434,7 +1438,8 @@ public class ShelfCollectionResourceChildView extends
 	 */
 	@UiHandler("copyResource")
 	public void copyResource(ClickEvent clickEvent) {
-		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		ResourceEditButtonContainer.setVisible(false);
+//		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		EditBtn.setVisible(false);
 		reorderContainer.setVisible(false);
 		if (isEdited) {
@@ -1502,7 +1507,8 @@ public class ShelfCollectionResourceChildView extends
 	 */
 	@UiHandler("confirmDeleteLbl")
 	public void deleteCollectionItem(ClickEvent clickEvent) {
-		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		ResourceEditButtonContainer.setVisible(false);
+//		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		EditBtn.setVisible(false);
 		reorderContainer.setVisible(false);
 		Window.enableScrolling(false);
@@ -1653,7 +1659,8 @@ public class ShelfCollectionResourceChildView extends
 			videoDisplay.setVisible(false);
 			narrationConatainer.setVisible(false);
 			editFieldsFloPanel.setVisible(true);
-			ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			ResourceEditButtonContainer.setVisible(false);
+//			ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			fromTxt.setFocus(true);
 			UpdateTextMessage.setVisible(false);		
 			errorMsgLabel.setText("");
@@ -1775,8 +1782,9 @@ public class ShelfCollectionResourceChildView extends
 			videoDisplay.setVisible(false);
 			narrationConatainer.setVisible(false);
 			editFieldsFloPanel.setVisible(true);
-			ResourceEditButtonContainer.getElement().getStyle()
-					.setVisibility(Visibility.HIDDEN);
+			ResourceEditButtonContainer.setVisible(false);
+			/*ResourceEditButtonContainer.getElement().getStyle()
+					.setVisibility(Visibility.HIDDEN);*/
 			fromTxt.setFocus(true);
 			setEditMode(true);
 
@@ -2050,7 +2058,8 @@ public class ShelfCollectionResourceChildView extends
 										videoDisplay.setVisible(false);
 										narrationConatainer.setVisible(false);
 										editFieldsFloPanel.setVisible(true);
-										ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+										ResourceEditButtonContainer.setVisible(false);
+//										ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 										fromTxt.setFocus(true);
 										UpdateTextMessage.setVisible(false);		
 										errorMsgLabel.setText("");
@@ -2257,6 +2266,88 @@ public class ShelfCollectionResourceChildView extends
 		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
         html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("<p class=\"p1\">", "");
         return html;
+	}
+	
+	public void setUpDownArrowVisibility(int totalCount) { 
+		
+	}
+	
+	
+	/**
+	 * Sets the re-order Up button visibility
+	 * @param isvisible {@link Boolean}
+	 */
+	public void upButtonIsVisible(boolean isvisible) {
+		
+		if(isvisible){
+			resourceMoveUpBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		}else{
+			resourceMoveUpBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		}
+	}
+
+
+	/**
+	 * Sets the re-order Down button visibility
+	 * @param isvisible {@link Boolean}
+	 */
+	public void downButtonIsVisible(boolean isvisible) {
+		if(isvisible){
+			resourceMoveDownBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		}else{
+			resourceMoveDownBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		}
+	}
+	
+	
+	
+	/**
+	 * @return the reorderTxtBox
+	 */
+	public TextBox getReorderTxtBox() {
+		return reorderTxtBox;
+	}
+	/**
+	 * @param reorderTxtBox the reorderTxtBox to set
+	 */
+	public void setReorderTxtBox(TextBox reorderTxtBox) {
+		this.reorderTxtBox = reorderTxtBox;
+	}
+	/**
+	 * @return the resourceMoveUpBtn
+	 */
+	public Button getResourceMoveUpBtn() {
+		return resourceMoveUpBtn;
+	}
+	/**
+	 * @param resourceMoveUpBtn the resourceMoveUpBtn to set
+	 */
+	public void setResourceMoveUpBtn(Button resourceMoveUpBtn) {
+		this.resourceMoveUpBtn = resourceMoveUpBtn;
+	}
+	/**
+	 * @return the resourceMoveDownBtn
+	 */
+	public Button getResourceMoveDownBtn() {
+		return resourceMoveDownBtn;
+	}
+	/**
+	 * @param resourceMoveDownBtn the resourceMoveDownBtn to set
+	 */
+	public void setResourceMoveDownBtn(Button resourceMoveDownBtn) {
+		this.resourceMoveDownBtn = resourceMoveDownBtn;
+	}
+	/**
+	 * @return the reorderContainer
+	 */
+	public HTMLPanel getReorderContainer() {
+		return reorderContainer;
+	}
+	/**
+	 * @param reorderContainer the reorderContainer to set
+	 */
+	public void setReorderContainer(HTMLPanel reorderContainer) {
+		this.reorderContainer = reorderContainer;
 	}
 	
 }
