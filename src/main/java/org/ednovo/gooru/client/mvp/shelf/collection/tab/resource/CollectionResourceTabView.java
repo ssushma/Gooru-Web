@@ -31,6 +31,7 @@ import java.util.List;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle.CollectionEditResourceCss;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.EditQuestionPopupVc;
@@ -146,6 +147,8 @@ public class CollectionResourceTabView extends
 	private static final String MESSAGE_HEADER = i18n.GL0748();
 	private static final String MESSAGE_CONTENT = i18n.GL0891();
 	private HandlerRegistration handlerRegistration=null;
+	
+	private int totalCount;
 
 	/**
 	 * Class constructor
@@ -249,6 +252,7 @@ public class CollectionResourceTabView extends
 	public void setData(CollectionDo collectionDo) {
 		if (this.collectionDo == null) {
 			this.collectionDo = collectionDo;
+			setTotalCount(collectionDo.getCollectionItems().size());
 			Label label = new Label("");
 			label.setStyleName(getCss().shelfResourceDragdropSpacer());
 //			collectionResourcePanelVc.superAdd(label);
@@ -272,6 +276,7 @@ public class CollectionResourceTabView extends
 			for (CollectionItemDo collectionItem : collectionDo.getCollectionItems()) {
 				insertColectionItem(collectionItem, false);
 			}
+//			setResourceSequence();
 			hideNoResourceMsg();
 
 			if (collectionDo.getCollectionItems().size() >= 25) {
@@ -451,8 +456,7 @@ public class CollectionResourceTabView extends
 			sequencePostion = sequencePostion >= sequenceVerPanel.getWidgetCount() ? sequenceVerPanel.getWidgetCount() - 1 : sequencePostion;
 			sequenceVerPanel.insert(sequenceLbl, sequencePostion);
 			shelfCollectionResourceVc = new ShelfCollectionResourceChildView(this, collectionItemDo);
-			TextBox reorderTextBox = shelfCollectionResourceVc.getReorderTxtBox();
-			resetSequence(reorderTextBox);
+			resetSequence();
 			if(isFlag){
 				isFlag=false;
 //				Window.scrollTo(0, (0 + (sequencePostion-1)*113));
@@ -531,6 +535,7 @@ public class CollectionResourceTabView extends
 			});
 //			collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());
 			collectionResourcePanelVc.add(shelfCollectionResourceVc);
+			setResourceSequence();
 			AppClientFactory.fireEvent(new UpdateResourceCountEvent(collectionDo.getCollectionItems().size()));
 		}
 		hideNoResourceMsg();
@@ -575,8 +580,7 @@ public class CollectionResourceTabView extends
 		sequencePostion = sequencePostion >= sequenceVerPanel.getWidgetCount() ? sequenceVerPanel.getWidgetCount() - 1 : sequencePostion;
 		sequenceVerPanel.insert(sequenceLbl, sequencePostion);
 		final ShelfCollectionResourceChildView shelfCollectionResourceVc = new ShelfCollectionResourceChildView(this, collectionItemDo);
-		TextBox reorderTextBox = shelfCollectionResourceVc.getReorderTxtBox();
-		resetSequence(reorderTextBox);
+		resetSequence();
 		Window.Location.reload();
 		shelfCollectionResourceVc.getEditInfoLbl().addClickHandler(	new ClickHandler() {
 					@Override
@@ -767,13 +771,13 @@ public class CollectionResourceTabView extends
 
 	@Override
 	public void removeCollectionItem(CollectionItemDo collectionItemDo,	ShelfCollectionResourceChildView resourceChildView) {
-		int sequence = collectionResourcePanelVc.getWidgetIndex(resourceChildView.getParent());
+		int sequence = collectionItemDo.getItemSequence()-1;
+		collectionDo.getCollectionItems().remove(collectionItemDo);
+		setTotalCount(collectionDo.getCollectionItems().size());
 		collectionResourcePanelVc.remove(sequence);
 		sequenceVerPanel.remove(sequence);
-		TextBox reorderTextBox = resourceChildView.getReorderTxtBox();
-		resetSequence(reorderTextBox);
-		collectionDo.getCollectionItems().remove(collectionItemDo);
-
+		resetSequence();
+		setResourceSequence();
 		if (collectionDo.getCollectionItems().size() >= 25) {
 			// newResourceLabel.setVisible(false);
 
@@ -870,7 +874,7 @@ public class CollectionResourceTabView extends
 	/**
 	 * Reorder the collection item , and change collection item order view
 	 */
-	private void resetSequence(TextBox reorderTextBox) {
+	private void resetSequence() {
 		Iterator<Widget> widgets = sequenceVerPanel.iterator();
 		int sequence = 1;
 		while (widgets.hasNext()) {
@@ -879,7 +883,6 @@ public class CollectionResourceTabView extends
 				((Label) widget).setText(sequence++ + "");
 			}
 		}
-		reorderTextBox.setText((sequence-1)+"");
 	}
 
 	@Override
@@ -1179,6 +1182,7 @@ public class CollectionResourceTabView extends
 		this.refreshType = refreshType.toString();
 		if (this.refreshType.equalsIgnoreCase("insert")) {
 			collectionDo.getCollectionItems().add(collectionItem);
+			setTotalCount(collectionDo.getCollectionItems().size());
 			isFlag=true;
 			insertColectionItem(collectionItem, false);
 		} else if(refreshType.toString().equalsIgnoreCase("update")){
@@ -1259,5 +1263,48 @@ public class CollectionResourceTabView extends
 			editQuestionPopupWidget.setUpdatedBrowseStandardsVal(setStandardsVal,codeId,setStandardDesc);
 		}
 		
+	}
+	
+	private void setResourceSequence() { 
+		Iterator<Widget> widgets = collectionResourcePanelVc.iterator(); 
+		int seqNum=1;
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if (widget instanceof ShelfCollectionResourceChildView) {
+				if(seqNum==1){
+					((ShelfCollectionResourceChildView) widget).upButtonIsVisible(false); 
+					((ShelfCollectionResourceChildView) widget).downButtonIsVisible(true); 
+				}else{
+					/**
+					 * If user moved folder to last position, based on total count down arrow will be invisible and 
+					 * vice versa in case of reordering last folder or collection to the first position, up arrow should be in visible.
+					 */
+					if(seqNum==getTotalCount()){
+						((ShelfCollectionResourceChildView) widget).upButtonIsVisible(true); 
+						((ShelfCollectionResourceChildView) widget).downButtonIsVisible(false);  
+					}else{
+						((ShelfCollectionResourceChildView) widget).upButtonIsVisible(true); 
+						((ShelfCollectionResourceChildView) widget).downButtonIsVisible(true); 
+					}
+				}
+				
+				((ShelfCollectionResourceChildView) widget).getReorderTxtBox().setText(seqNum+"");
+			}
+			seqNum++;
+		}
+	}
+
+	/**
+	 * @return the totalCount
+	 */
+	public int getTotalCount() {
+		return totalCount;
+	}
+
+	/**
+	 * @param totalCount the totalCount to set
+	 */
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
 	}
 }
