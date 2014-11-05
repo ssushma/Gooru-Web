@@ -96,6 +96,7 @@ public abstract class DeletePopupViewVc extends PopupPanel {
 		lblRemoving.setVisible(false);
 		lblRemoving.getElement().getStyle().setMargin(26, Unit.PX);
 		txtConfirmAction.setVisible(false);
+		lblDeleteText.setVisible(false);
 		setButtonVisibility(true);
 		setElementId();
 		
@@ -345,6 +346,7 @@ public abstract class DeletePopupViewVc extends PopupPanel {
 		this.deleteCode = deleteCode;
 		
 		txtConfirmAction.setVisible(true);
+		lblDeleteText.setVisible(true);
 		
 		btnPositive.setEnabled(false);
 		btnPositive.getElement().addClassName("disabled");

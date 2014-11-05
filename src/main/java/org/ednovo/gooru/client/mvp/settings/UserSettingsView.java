@@ -1574,6 +1574,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		@Override
 		public void onError(ErrorEvent event) {
 			uploadProfileImage.setUrl(PROFILE_DEFAULT_IMAGE);
+			uploadProfilImageButton.setText(i18n.GL1087());
 			try{
 				uploadProfileImage.getElement().setAttribute("alt", v2userDo.getUser().getUsername());
 				uploadProfileImage.getElement().setAttribute("title", v2userDo.getUser().getUsername());
@@ -1589,6 +1590,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	public void setUserProfileImageUrl(String imageUrl) {
 		double randomNumber=Math.random();
 		uploadProfileImage.setUrl(imageUrl+"?p="+randomNumber);
+		uploadProfilImageButton.setText(i18n.GL0800());
 		try{
 			uploadProfileImage.getElement().setAttribute("alt", v2userDo.getUser().getUsername());
 			uploadProfileImage.getElement().setAttribute("title", v2userDo.getUser().getUsername());
@@ -1619,10 +1621,11 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	@Override
 	public void setProfileData(ProfileDo profileDo) {
 		uploadProfileImage.setUrl(profileDo.getUser().getProfileImageUrl() + "?p="+ Math.random());
+		uploadProfilImageButton.setText(i18n.GL0800());
+		StringUtil.setAttributes(uploadProfilImageButton.getElement(), "uploadProfilImageButton", i18n.GL0800(), i18n.GL0800());
 		setGradeList(profileDo.getGrade(), profileDo);
 		Set<ProfileCodeDo> codeDo = profileDo.getCourses();
 		coursesPanel.clear();
-		
 		
 		collectionCourseDefaultLstPanel.clear();
 		for (ProfileCodeDo code : codeDo) {
