@@ -1661,14 +1661,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		isFromThanksPopup=false;
 		ratingsConfirmationPopup=new RatingsConfirmationPopup(assocGooruOId,score,count,average,collectionItemDo.getResource().getUser().getUsername());
 		ratingsConfirmationPopup.show();
+		ratingsConfirmationPopup.setAutoHideEnabled(true);
 		ratingsConfirmationPopup.getElement().getStyle().setZIndex(99999);
+		ratingsConfirmationPopup.getElement().getPreviousSiblingElement().getStyle().setZIndex(999999);
+		ratingsConfirmationPopup.getElement().getPreviousSiblingElement().getStyle().setOpacity(0);
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			ratingsConfirmationPopup.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-150),three_star.getElement().getAbsoluteTop()+40);
 		}else{
 			ratingsConfirmationPopup.setPopupPosition(800,Window.getScrollTop()+153);
 		}
 		
-		ratingsConfirmationPopup.setAutoHideEnabled(true);
+
 	}
 
 	@Override

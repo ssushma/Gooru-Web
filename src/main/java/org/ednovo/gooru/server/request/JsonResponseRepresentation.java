@@ -26,6 +26,8 @@ public class JsonResponseRepresentation implements Serializable{
 	
 	private Integer statusCode=200;
 	
+	private String errorMessage;
+	
 	private JsonRepresentation jsonRepresentation;
 
 	/**
@@ -51,6 +53,12 @@ public class JsonResponseRepresentation implements Serializable{
 	 */
 	public void setJsonRepresentation(JsonRepresentation jsonRepresentation) {
 		this.jsonRepresentation = jsonRepresentation;
+	}
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
 
 }

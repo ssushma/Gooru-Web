@@ -231,22 +231,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public Map<String, Object> resetCredential(String formData) {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_RESET_CREDENTIAL, getLoggedInSessionToken());
-		System.out.println("resetCredential : "+url);
-		System.out.println("formData : "+formData);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		try {
-			System.out.println("jsonRep : "+jsonRep.getText());
-		} catch (IOException e) {
-			throw new RuntimeException("message", e); 
-		}
-		System.out.println("jsonResponseRep.getStatusCode() : "+jsonResponseRep.getStatusCode());
-		if(jsonResponseRep.getStatusCode()==400){
-			return resourceDeserializer.resetPassword(jsonRep,400); 
-		}else{
-			return resourceDeserializer.resetPassword(jsonRep,0);
-		}
-		
+		return resourceDeserializer.resetPassword(jsonRep,jsonResponseRep.getStatusCode(),jsonResponseRep.getErrorMessage()); 
 	}
 
 	@Override

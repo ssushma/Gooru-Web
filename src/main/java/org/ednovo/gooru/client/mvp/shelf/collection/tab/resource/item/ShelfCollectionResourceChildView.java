@@ -1933,7 +1933,7 @@ public class ShelfCollectionResourceChildView extends
 		collectionResourceTabView.removeCollectionItem(collectionItemDo, this);
 		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(
 				collectionItemDo, RefreshType.DELETE));
-		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 			Window.enableScrolling(false);
 		}else{
 			Window.enableScrolling(true);
