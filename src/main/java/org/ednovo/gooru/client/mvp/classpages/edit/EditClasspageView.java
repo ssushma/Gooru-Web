@@ -376,6 +376,8 @@ public class EditClasspageView extends
 			@Override
 			public void onError(ErrorEvent event) {
 				imgClasspageImage.setUrl(DEFAULT_CLASSPAGE_IMAGE);
+				btnEditImage.setText(i18n.GL1087());
+				StringUtil.setAttributes(btnEditImage.getElement(), "btnEditImage", i18n.GL1087(), i18n.GL1087());
 			}
 		});
 		
@@ -1080,6 +1082,14 @@ public class EditClasspageView extends
 		imgClasspageImage.setTitle(classpageDo.getTitle());
 		btnCollectionEditImage.setVisible(false);
 		imgClasspageImage.setUrl(classpageDo.getThumbnailUrl().isEmpty() ? DEFAULT_CLASSPAGE_IMAGE : classpageDo.getThumbnailUrl());
+		if(classpageDo.getThumbnailUrl().isEmpty()){
+			btnEditImage.setText(i18n.GL1087());
+			StringUtil.setAttributes(btnEditImage.getElement(), "btnEditImage", i18n.GL1087(), i18n.GL1087());
+		}else{
+			btnEditImage.setText(i18n.GL0138());
+			StringUtil.setAttributes(btnEditImage.getElement(), "btnEditImage", i18n.GL0138(), i18n.GL0138());
+		}
+		
 		//txtClasspageCodeShare.setText(classpageDo.getClasspageCode().toUpperCase());
 	}
 	
@@ -1425,6 +1435,8 @@ public class EditClasspageView extends
 						pageSize + "", pageNum + "");
 				getUiHandlers().generateShareLink(classpageId);
 				imgClasspageImage.setUrl(collectionDo.getThumbnails().getUrl());
+				btnEditImage.setText(i18n.GL0138());
+				StringUtil.setAttributes(btnEditImage.getElement(), "btnEditImage", i18n.GL0138(), i18n.GL0138());
            
 		    }
 		}
@@ -1573,25 +1585,37 @@ public class EditClasspageView extends
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		restingPagination();
-//		Map<String, String> params = new HashMap<String, String>();
-//		params.put("classpageid",classpageDo.getClasspageId());
-//		params.put("pageSize", pageSize + "");
-//		if (assignmentsContainerPanel.getWidgetCount() == 1
-//					&& isPostDeleteAssignment) {
-//				pageNum = pageNum == 0 ? 0 : pageNum - 5;
-//				params.put("pageNum", pageNum + "");
-//				params.put("pos", pos + "");
-//		}else {
-//			pageNum = isPostDeleteAssignment ? pageNum : 0;
-//			params.put("pageNum", pageNum + "");
-//			if(pageNum==0){
-//			    params.put("pos", START_PAGE);
-//			}else{
-//				params.put("pos", pos + "");
-//			}
-//		}
-//		AppClientFactory.getPlaceManager().revealPlace(
-//				PlaceTokens.EDIT_CLASSPAGE, params, true);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("classpageid",classpageDo.getClasspageId());
+		params.put("pageSize", pageSize + "");
+		if(AppClientFactory.getPlaceManager().getRequestParameter("pageNum")!=null)
+		{
+			params.put("pageNum", AppClientFactory.getPlaceManager().getRequestParameter("pageNum"));
+		}
+/*		if(isPostDeleteAssignment)
+		{
+		if (assignmentsContainerPanel.getWidgetCount() == 1
+					&& isPostDeleteAssignment) {
+				pageNum = pageNum == 0 ? 0 : pageNum - 5;
+				params.put("pageNum", pageNum + "");
+				params.put("pos", pos + "");
+		}else {
+			pageNum = isPostDeleteAssignment ? pageNum : 0;
+			params.put("pageNum", pageNum + "");
+			if(pageNum==0){
+			    params.put("pos", START_PAGE);
+			}else{
+				params.put("pos", pos + "");
+			}
+		}
+		}
+		else
+		{
+		
+			
+		}*/
+		AppClientFactory.getPlaceManager().revealPlace(
+			PlaceTokens.EDIT_CLASSPAGE, params, true);
 	}
 /**
  * This method is used to get the assignment by classpageId
@@ -1811,6 +1835,8 @@ public class EditClasspageView extends
 	public void setUploadedImageToClassPage(String url) {
 		MixpanelUtil.SuccessfullyAddtheImageFromClasspage();
 		imgClasspageImage.setUrl(url+"?p="+Math.random());
+		btnEditImage.setText(i18n.GL0138());
+		StringUtil.setAttributes(btnEditImage.getElement(), "btnEditImage", i18n.GL0138(), i18n.GL0138());
 	}
 
 	@Override

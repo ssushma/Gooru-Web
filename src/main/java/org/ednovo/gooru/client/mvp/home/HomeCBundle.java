@@ -538,7 +538,8 @@ public interface HomeCBundle extends ClientBundle{
 
 		String description();
 		String setMarketingPopUpCenter();
-
+		String errorMessageStyle();
+		String errorMessageContainer();
 	}
      @Source("Home.css")
      HomeCss css();
