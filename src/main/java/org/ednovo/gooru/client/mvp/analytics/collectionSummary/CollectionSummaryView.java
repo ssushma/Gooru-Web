@@ -10,6 +10,7 @@ import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
+import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.core.client.GWT;
@@ -45,16 +46,17 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	CollectionSummaryCBundle res;
 	
 	@UiField ListBox studentsListDropDown,sessionsDropDown;
-	@UiField Image collectionImage,sessionsTooltip;
-	@UiField InlineLabel collectionTitle,collectionResourcesCount,collectionLastAccessed,lastModifiedTime;
-	@UiField HTMLPanel sessionspnl,loadingImageLabel1;
+	@UiField Image sessionsTooltip;
+	@UiField InlineLabel lastModifiedTime;
+	@UiField HTMLPanel collectionSummaryDetails,sessionspnl,loadingImageLabel1;
 	@UiField VerticalPanel pnlSummary;
 
 	Map<String, String> sessionData=new HashMap<String, String>();
 	ToolTip toolTip;
 	
 	String collectionId=null,pathwayId=null;
-	
+	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
+	PrintUserDataDO printUserDataDO=new PrintUserDataDO();
 	public CollectionSummaryView() {
 		this.res = CollectionSummaryCBundle.INSTANCE;
 		res.css().ensureInjected();
@@ -100,7 +102,8 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 				sessionspnl.setVisible(false);
 				getUiHandlers().setTeacherData(collectionId,classpageId,pathwayId);
 			}else{
-				getUiHandlers().loadUserSessions(collectionId, classpageId, studentsListDropDown.getValue(selectedIndex),pathwayId);
+				printUserDataDO.setUserName(studentsListDropDown.getItemText(studentsListDropDown.getSelectedIndex()));
+				getUiHandlers().loadUserSessions(collectionId, classpageId, studentsListDropDown.getValue(selectedIndex),pathwayId,printUserDataDO);
 				sessionspnl.setVisible(true);
 			}
 		}
@@ -112,7 +115,9 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 				int selectedStudentIndex=studentsListDropDown.getSelectedIndex();
 				String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
                 setSessionStartTime(selectedSessionIndex);
-				getUiHandlers().setIndividualData(collectionId, classpageId, studentsListDropDown.getValue(selectedStudentIndex),sessionsDropDown.getValue(selectedSessionIndex),pathwayId);
+                printUserDataDO.setUserName(studentsListDropDown.getItemText(selectedStudentIndex));
+                printUserDataDO.setSession(sessionsDropDown.getItemText(selectedSessionIndex));
+				getUiHandlers().setIndividualData(collectionId, classpageId, studentsListDropDown.getValue(selectedStudentIndex),sessionsDropDown.getValue(selectedSessionIndex),pathwayId,printUserDataDO);
 		}
     }
 	@Override
@@ -131,20 +136,8 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		this.pathwayId=pathwayId;
 		if(result!=null){
 			collectionId=result.getGooruOId();
-			collectionTitle.setText(result.getTitle());
-			collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.getLastModified())));
-			if(result.getThumbnail()!=null){
-				collectionImage.setUrl(result.getThumbnail());
-			}else{
-				collectionImage.setUrl("images/analytics/default-collection-image.png");
-			}
-			collectionImage.addErrorHandler(new ErrorHandler() {
-				@Override
-				public void onError(ErrorEvent event) {
-					collectionImage.setUrl("images/analytics/default-collection-image.png");
-				}
-			});
-			collectionResourcesCount.setText((result.getResourceCount()-result.getTotalQuestionCount())+" Resources | "+result.getTotalQuestionCount()+" Questions");
+			collectionSummaryWidget.setData(result);
+			collectionSummaryDetails.add(collectionSummaryWidget);
 		}
 	}
 
@@ -179,8 +172,10 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		}
 	}
 	public void setSessionStartTime(int selectedIndex) {
-		if(sessionData.size()!=0)
-		  lastModifiedTime.setText(sessionData.get(sessionsDropDown.getValue(selectedIndex)).toString());
+		if(sessionData.size()!=0){
+			  lastModifiedTime.setText(sessionData.get(sessionsDropDown.getValue(selectedIndex)).toString());
+			  printUserDataDO.setSessionStartTime(sessionData.get(sessionsDropDown.getValue(selectedIndex)).toString());
+		}
 	}
 	@Override
 	public HTMLPanel getLoadinImage() {

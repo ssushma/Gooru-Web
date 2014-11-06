@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="unitStyle" src="collectionSummaryIndividual.css" />
-		<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel>
 		<g:HTMLPanel ui:field="tabContainer"/>
 		 <g:HTMLPanel ui:field="individualScoredDatapnl">
@@ -15,7 +15,7 @@
 		</g:HTMLPanel>
 		<g:HTMLPanel ui:field="individualOpenendedData"  styleName="{unitStyle.individualScore}" />
 		<g:HTMLPanel ui:field="individualResourceBreakdownDatapnl">
-			 <div class="{unitStyle.collectionOverViewpnl}">
+			 <g:HTMLPanel styleName="{unitStyle.collectionOverViewpnl}">
 			 	   <g:Label styleName="{unitStyle.collectionOverviewText}"  text="{i18n.GL2274}"></g:Label>
 				   <div class="{unitStyle.collectionBreakDown_infobox}">
 				   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles}" text="{i18n.GL2275}"></g:Label>
@@ -29,9 +29,10 @@
 				   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles}"  text="{i18n.GL2277}"></g:Label>
 				  <g:HTMLPanel styleName="{unitStyle.collectionBreakDown_infobox_titles}" ui:field="totalAvgReactionlbl"></g:HTMLPanel> 
 				  </div>
-			 </div>
+			 </g:HTMLPanel>
 			 <g:ListBox ui:field="filterDropDown" styleName="{unitStyle.filterDropDown}"/>
 			 <g:HTMLPanel ui:field="individualResourceBreakdownData"  styleName="{unitStyle.individualScore}"/>
 	 </g:HTMLPanel>
+	 <g:HTMLPanel ui:field="printWidget" styleName="{unitStyle.printWidget}"></g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

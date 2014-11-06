@@ -25,11 +25,12 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 public interface CollectionSummaryIndividualUiHandlers extends BaseUiHandlers{
-	void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,boolean isSummary,HTMLPanel loadingImage);
+	void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,boolean isSummary,HTMLPanel loadingImage,PrintUserDataDO printUserDataDO);
 	void setHtmltopdf(String htmlString);
 	void setOEtextData(String resourceGooruId,String questionType);
 }

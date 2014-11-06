@@ -28,9 +28,11 @@ import java.util.ArrayList;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualPresenter;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherPresenter;
+import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
+import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -45,7 +47,7 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	private CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter;
 
     CollectionSummaryMetaDataDo collectionMetadata;
-	
+    
 	@Inject
 	private  AnalyticsServiceAsync analyticService;
 	@Inject
@@ -95,14 +97,17 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	}
 
 	@Override
-	public void loadUserSessions(final String collectionId,final String classId,final String userId,final String pathwayId) {
+	public void loadUserSessions(final String collectionId,final String classId,final String userId,final String pathwayId,final PrintUserDataDO printUserDataDO) {
 		this.analyticService.getSessionsDataByUser(collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryUsersDataDo> result) {
 				getView().setUserSessionsData(result);
-				if(result.size()!=0)
-				setIndividualData(collectionId,classId,userId,result.get(0).getSessionId(), pathwayId);
+				if(result.size()!=0){
+					printUserDataDO.setSession("1st Session");
+					printUserDataDO.setSessionStartTime(AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getTimeStamp())));
+					setIndividualData(collectionId,classId,userId,result.get(0).getSessionId(), pathwayId,printUserDataDO);
+				}
 			}
 			
 			@Override
@@ -120,10 +125,10 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 	}
 
 	@Override
-	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId) {
+	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,PrintUserDataDO printUserDataDO) {
 		getView().getLoadinImage().setVisible(true);
 		clearSlot(TEACHER_STUDENT_SLOT);
-		collectionSummaryIndividualPresenter.setIndividualData(collectionId,classpageId,userId,sessionId,pathwayId,true,getView().getLoadinImage());
+		collectionSummaryIndividualPresenter.setIndividualData(collectionId,classpageId,userId,sessionId,pathwayId,true,getView().getLoadinImage(),printUserDataDO);
 		setInSlot(TEACHER_STUDENT_SLOT, collectionSummaryIndividualPresenter,false);	
 	}
 	

@@ -1,0 +1,69 @@
+package org.ednovo.gooru.client.mvp.analytics.collectionSummary;
+
+import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ErrorEvent;
+import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.Widget;
+
+public class CollectionSummaryWidget extends Composite {
+
+	private static CollectionSummaryWidgetUiBinder uiBinder = GWT
+			.create(CollectionSummaryWidgetUiBinder.class);
+
+	interface CollectionSummaryWidgetUiBinder extends
+			UiBinder<Widget, CollectionSummaryWidget> {
+	}
+	@UiField Image collectionImage;
+	@UiField HTMLPanel sessionsPnl;
+	@UiField InlineLabel sessionValue,sessionText,sessionAccessedTime,collectionLastAccessedlbl,collectionTitle,collectionResourcesCount,collectionLastAccessed;
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
+	public CollectionSummaryWidget() {
+		initWidget(uiBinder.createAndBindUi(this));
+	}
+	public void setData(CollectionSummaryMetaDataDo result){
+		collectionImage.setVisible(true);
+		sessionsPnl.setVisible(false);
+		collectionLastAccessedlbl.setText(i18n.GL2271());
+		collectionTitle.setText(result.getTitle());
+		collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.getLastModified())));
+		if(result.getThumbnail()!=null){
+			collectionImage.setUrl(result.getThumbnail());
+		}else{
+			collectionImage.setUrl("../images/analytics/default-collection-image.png");
+		}
+		collectionImage.addErrorHandler(new ErrorHandler() {
+			@Override
+			public void onError(ErrorEvent event) {
+				collectionImage.setUrl("../images/analytics/default-collection-image.png");
+			}
+		});
+		collectionResourcesCount.setText((result.getResourceCount()-result.getTotalQuestionCount())+" Resources | "+result.getTotalQuestionCount()+" Questions");
+	}
+	/*
+	 * This method is used to set the data at the time of printing.
+	 */
+	public void setDataAnalyticsData(CollectionSummaryMetaDataDo result,PrintUserDataDO printUserDataDO){
+		collectionImage.setVisible(false);
+		sessionsPnl.setVisible(true);
+		
+		collectionTitle.setText(i18n.GL0645()+" "+i18n.GL_SPL_SEMICOLON()+" "+result.getTitle());
+		collectionLastAccessedlbl.setText("Sort BY:");
+		collectionLastAccessed.setText(printUserDataDO.getUserName());
+		collectionResourcesCount.setText("Resource in this Collection :"+(result.getResourceCount()-result.getTotalQuestionCount())+" Resources | "+result.getTotalQuestionCount()+" Questions");
+		sessionAccessedTime.setText(i18n.GL2272()+" "+printUserDataDO.getSessionStartTime());
+		sessionText.setText(i18n.GL2273()+" "+i18n.GL_SPL_SEMICOLON());
+		sessionValue.setText(printUserDataDO.getSession());
+	}
+}

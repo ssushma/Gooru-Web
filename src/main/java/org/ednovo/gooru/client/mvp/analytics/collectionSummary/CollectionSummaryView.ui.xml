@@ -18,21 +18,7 @@
 	 </g:ListBox>
 	 </g:HTMLPanel>
 	 <!-- Collection Summary Top -->
-	     <g:HTMLPanel>
-		    <g:HTMLPanel styleName="{unitStyle.collectionSummaryDetailsWrapper}">
-			<g:HTMLPanel styleName="{unitStyle.left_container}">
-			<g:Image ui:field="collectionImage" styleName="{unitStyle.collection_teacher_img}"></g:Image>
-			<g:HTMLPanel styleName="{unitStyle.collection_details_teacher}">
-			<g:InlineLabel ui:field="collectionTitle"></g:InlineLabel>
-			<br/>
-			<g:InlineLabel ui:field="collectionResourcesCount" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
-			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{unitStyle.resource_in_collection_teacher_summary}">
-			<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}"  text="{i18n.GL2271}"></g:InlineLabel> 
-			<g:InlineLabel ui:field="collectionLastAccessed" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
-			</g:HTMLPanel>
-			</g:HTMLPanel>
-			</g:HTMLPanel>
+	     <g:HTMLPanel ui:field="collectionSummaryDetails">
 		 </g:HTMLPanel>
 	  <!-- Collection Summary Top  End-->
 	  <!-- Sessions start-->
@@ -57,7 +43,6 @@
 		 </g:HTMLPanel>
 	  <!-- Sessions end-->
  	 </g:HTMLPanel>
- 	  
  	 <g:HTMLPanel>
 	 <g:HTMLPanel styleName="{unitStyle.htmlpanlProgress}" ui:field="scrollForCollectionProgress">
 	 <g:VerticalPanel ui:field="pnlSummary" styleName="{unitStyle.pnlSummary}"/>
