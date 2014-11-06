@@ -166,16 +166,23 @@ public class TocResourceToolTip extends PopupPanel{
 	}
 
 	private void displayPublisher(){
-		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getResourceFormat()!=null){
-			if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getResourceFormat()!=null || collectionItemDo.getResource()!=null &&  collectionItemDo.getResource().getPublisher()!=null){
+			if(collectionItemDo.getResource().getPublisher()!=null){
+				if(!collectionItemDo.getResource().getPublisher().isEmpty()){
+					List<String> publishersList=collectionItemDo.getResource().getPublisher()!=null?collectionItemDo.getResource().getPublisher():null;
+					if(publishersList!=null&&publishersList.size()>0){
+						SearchUiUtil.renderMetaData(resourceSourceName, publishersList, 0);
+					}
+				}
+				else if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+					if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
+						resourceSourceName.getElement().setInnerHTML(collectionItemDo.getResource().getCreator().getUsername());
+					}
+				}
+			}
+			else if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
 				if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
 					resourceSourceName.getElement().setInnerHTML(collectionItemDo.getResource().getCreator().getUsername());
-				}
-			}else{
-				List<String> publishersList=collectionItemDo.getResource().getPublisher()!=null?collectionItemDo.getResource().getPublisher():null;
-				publishersList=new ArrayList<String>();
-				if(publishersList!=null&&publishersList.size()>0){
-					SearchUiUtil.renderMetaData(resourceSourceName, publishersList, 0);
 				}
 			}
 		}

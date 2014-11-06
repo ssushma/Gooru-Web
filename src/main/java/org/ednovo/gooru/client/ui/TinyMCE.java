@@ -49,6 +49,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -378,7 +379,9 @@ public class TinyMCE extends Composite{
       				var content=this.getContent({format : 'raw'});
       				var noOfCharacters=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::countCharcters(Ljava/lang/String;Ljava/lang/String;)(content,ed.id);
       				var charLim=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::getHiddenValue(Ljava/lang/String;)(ed.id);
-      				if(noOfCharacters>=parseInt(charLim)){
+      				  if(event.keyCode==8 || event.keyCode==46) {
+								
+					  }else if(noOfCharacters>=parseInt(charLim)){
       				 	 event.preventDefault();
 					}		
       				});
@@ -389,10 +392,12 @@ public class TinyMCE extends Composite{
       				var content=this.getContent({format : 'raw'});
       				var noOfCharacters=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::countCharcters(Ljava/lang/String;Ljava/lang/String;)(content,ed.id);
       				var charLim=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::getHiddenValue(Ljava/lang/String;)(ed.id);
-      				if(noOfCharacters>parseInt(charLim)){
-					 	 event.preventDefault();
-					 						
-					}
+	      				
+	      				if(event.keyCode==8 || event.keyCode==46) {
+								
+					  	   }else if(noOfCharacters>parseInt(charLim)){
+						 	 event.preventDefault();
+						}
       				});
       				ed.onKeyDown.add(function(ed, event) {
 	      				var keystroke = String.fromCharCode(event.keyCode).toLowerCase();
@@ -400,11 +405,14 @@ public class TinyMCE extends Composite{
 	      				var noOfCharacters=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::countCharcters(Ljava/lang/String;Ljava/lang/String;)(content,ed.id);
 	      				var charLim=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::getHiddenValue(Ljava/lang/String;)(ed.id);
 		      				if(noOfCharacters>parseInt(charLim)){
-								if (event.ctrlKey && (keystroke == 'c' || keystroke == 'v')) {
-								event.preventDefault();
-								event.returnValue = false; // disable Ctrl+C
+			      				if(event.keyCode==8 || event.keyCode==46) {
+									event.returnValue = true; // enable backspace and delete Key
+					  	     	}else if (event.ctrlKey && (keystroke == 'c' || keystroke == 'v')) {
+									event.preventDefault();
+									event.returnValue = false; // disable Ctrl+C
 								}
 							}
+							
 							if(event.keyCode==13) {
 				  	     		event.preventDefault();
 								event.returnValue = false; // disable Enter Key
@@ -480,8 +488,13 @@ public class TinyMCE extends Composite{
 		AddQuestionResourceView.errorMessageForQuestion.setText("");
 		//This regex is used to get text count with out html tags
 		String noHTMLString = content.replaceAll("\\<.*?>","");
-		if(noHTMLString.length()>Integer.parseInt(getHiddenValue(tinyMceId))){
+		System.out.println();
+		if(noHTMLString.length()>=Integer.parseInt(getHiddenValue(tinyMceId))){
 			setErrorMessage(ERROR_MESSAGE,tinyMceId);
+			if(noHTMLString.length()>=503)
+			{
+			setContent(tinyMceId,content.substring(0, 503));
+			}
 		}else{
 			clearErrorMessage(tinyMceId);
 		}

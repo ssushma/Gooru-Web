@@ -293,6 +293,7 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 
 	public void setCollectionPlayerPresenter(CollectionPlayerPresenter collectionPlayerPresenter) {
 		this.collectionPlayerPresenter = collectionPlayerPresenter;
+		collectionHomeMetadataPresenter.setCollectionPlayerPresenter(collectionPlayerPresenter);
 		previewHomePresenter.setCollectionPlayerPresenter(collectionPlayerPresenter);
 	}
 
