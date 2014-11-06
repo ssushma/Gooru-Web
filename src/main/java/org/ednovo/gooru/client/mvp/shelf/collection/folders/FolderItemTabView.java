@@ -392,7 +392,13 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 						isFolderType = false;
 					}
-//					folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
+					if(getTotalCount()==1){
+						shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
+						shelfFolderItemChildView.getMoveDownBtn().setEnabled(false);
+					}else{
+						shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
+						shelfFolderItemChildView.getMoveDownBtn().setEnabled(true);
+					}
 					folderContentBlock.add(shelfFolderItemChildView);
 				}
 				setFolderCollectionItemSequence();
@@ -641,6 +647,13 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		setTotalCount(getTotalCount()+1);
 		setFolderCollectionItemSequence();
 		mainSection.removeStyleName(folderStyle.emptyFolder());
+		if(getTotalCount()==1){
+			shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
+			shelfFolderItemChildView.getMoveDownBtn().setEnabled(false);
+		}else{
+			shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
+			shelfFolderItemChildView.getMoveDownBtn().setEnabled(true);
+		}
 	}
 	
 	
