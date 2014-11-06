@@ -236,7 +236,9 @@ public class PlayerDataLogEvents {
 			}else{
 				contextMap.put(PAGELOCATION, new JSONString(AppClientFactory.getPlaceManager().getPageLocation()));
 			}
-			contextMap.put(MODE, new JSONString(mode));
+			if(mode!=null){
+				contextMap.put(MODE, new JSONString(mode));
+			}
 			contextMap.put(URL, new JSONString(url));
 		}catch(Exception e){
 			
@@ -531,6 +533,19 @@ public class PlayerDataLogEvents {
 			
 		}
 		return new JSONString(payLoadMap.toString());
+	}
+	
+	public static void triggerLibraryShareDataEvent( String collectionId, String libraryGooruOid){
+		libraryGooruOid=libraryGooruOid!=null?libraryGooruOid:"";
+		String path=libraryGooruOid+"/"+collectionId;
+		String parentEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+		triggerItemShareDataLogEvent(collectionId,"",parentEventId,libraryGooruOid,"","","collection","gooru",false,null,path,"library");
+	}
+	
+	public static void triggerProfileCollectionShareDataEvent(String collectionId){
+		String path=collectionId;
+		triggerItemShareDataLogEvent(collectionId,"","","","","","collection","gooru",false,null,path,"profile");
+		
 	}
 
 	public static void triggerItemShareDataLogEvent(String itemGooruOid, String itemContentItemId,String parentEventId,String parentGooruOid,String parentContItemId,String sessionId,
