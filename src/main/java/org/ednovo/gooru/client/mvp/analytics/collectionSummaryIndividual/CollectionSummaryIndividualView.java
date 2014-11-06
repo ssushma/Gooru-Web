@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryWidget;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsReactionWidget;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsTabContainer;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
@@ -18,11 +19,13 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
+import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Clear;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -82,6 +85,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	HTMLPanel printScoredData=new HTMLPanel("");
 	HTMLPanel printOpendedData=new HTMLPanel("");
 	HTMLPanel printResourceData=new HTMLPanel("");
+	CollectionOverViewWidget collectionOverViewWidget=new CollectionOverViewWidget();
+	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
 	
 	public CollectionSummaryIndividualView() {
 		this.res = CollectionSummaryIndividualCBundle.INSTANCE;
@@ -108,9 +113,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					hideAllPanels();
 					individualResourceBreakdownDatapnl.setVisible(true);
 				}else if(tabClicked.equalsIgnoreCase(PRINT)){
-					setPrintIndividualSummayData();
+					setPrintIndividualSummayData(false);
 				}else{
-					getUiHandlers().setHtmltopdf(individualScoredData.toString());
+					setPrintIndividualSummayData(true);
 				}
 			}
 		};
@@ -151,7 +156,105 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			setQuestionsData(questionsData);
 			setQuestionsPrintData(questionsData);
 			setOpenendedQuestionsData(openendedData);
+			setOpenendedQuestionsPrintData(openendedData);
 			setCollectionBreakDown(result,loadingImage);
+			setCollectionBreakDownPrintData(result);
+	}
+	void setCollectionBreakDownPrintData(ArrayList<UserDataDo> result){
+		try{
+				printResourceData.clear();			
+				UserDataDo maxAvgValue=Collections.max(result,new Comparator<UserDataDo>() {
+		        	public int compare(UserDataDo o1, UserDataDo o2) {
+		        		 Long obj1 = new Long(o1.getTimeSpent());
+		        	     Long obj2 = new Long(o2.getTimeSpent());
+		        	     return obj1.compareTo(obj2);
+		        	}
+		        });
+		        UserDataDo maxViews=Collections.max(result,new Comparator<UserDataDo>() {
+		        	public int compare(UserDataDo o1, UserDataDo o2) {
+		        		 Integer obj1 = new Integer(o1.getViews());
+		        		 Integer obj2 = new Integer(o2.getViews());
+		        	     return obj1.compareTo(obj2);
+		        	}
+		        });
+			    final DataTable data = DataTable.create();
+			    data.addColumn(ColumnType.NUMBER, "No.");
+		        data.addColumn(ColumnType.STRING, "Format");
+		        data.addColumn(ColumnType.STRING, "Title");
+		        data.addColumn(ColumnType.STRING, "Avg.Time&nbsp;Spent");
+		        data.addColumn(ColumnType.STRING, "Views");
+		        data.addColumn(ColumnType.STRING, "Reaction");
+		        data.addRows(result.size());
+		        
+		        for(int i=0;i<result.size();i++) {
+		        	data.setCell(i, 0, i+1, null, getPropertiesCell());
+		            //set Format
+		              String  resourceCategory =result.get(i).getCategory();
+		              String categoryStyle="";
+					  if(resourceCategory.equalsIgnoreCase("website")){
+					      resourceCategory = "webpage";
+					      categoryStyle=res.css().category_new_type_webpage();
+					  } else if(resourceCategory.equalsIgnoreCase("slide")){
+					      resourceCategory = "image";
+					      categoryStyle=res.css().category_new_type_image();
+					  } else if(resourceCategory.equalsIgnoreCase("handout") || resourceCategory.equalsIgnoreCase("lesson") || resourceCategory.equalsIgnoreCase("textbook")) {
+					      resourceCategory = "text";
+					      categoryStyle=res.css().category_new_type_text();
+					  }  else if(resourceCategory.equalsIgnoreCase("exam")) {
+					      resourceCategory = "webpage";
+					      categoryStyle=res.css().category_new_type_webpage();
+					  } else if(resourceCategory.equalsIgnoreCase("video")) {
+					      resourceCategory = "webpage";
+					      categoryStyle=res.css().category_new_type_video();
+					  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
+					      resourceCategory = "webpage";
+					      categoryStyle=res.css().category_new_type_interactive();
+					  } else{
+						  categoryStyle=res.css().category_new_type_other();
+					  }
+		            Label categorylbl=new Label();
+		            categorylbl.addStyleName(categoryStyle);
+		            categorylbl.addStyleName(res.css().setMarginAuto());
+		            data.setValue(i, 1,categorylbl.toString());
+		            
+		            //Set Question Title
+		            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
+		            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+		            data.setValue(i, 2, questionTitle.toString());
+		          
+		           //Set time spent
+		            HorizontalPanel timeSpentpnl=new HorizontalPanel();
+		            timeSpentpnl.add(getTimeStampLabel(result.get(i).getTimeSpent()));
+		            Label progressBar=new Label();
+		            progressBar.setStyleName(res.css().setProgressBar());
+		            timeSpentpnl.add(progressBar);
+		            double maxAvgVal = ((double) result.get(i).getTimeSpent())/((double) maxAvgValue.getTimeSpent());
+		            progressBar.getElement().getStyle().setWidth(maxAvgVal*100, Unit.PX);
+		            data.setValue(i, 3, timeSpentpnl.toString());
+		           
+		            //set Views label
+		            HorizontalPanel viewpnl=new HorizontalPanel();
+		            Label viewlbl=new Label(Integer.toString(result.get(i).getViews()));
+		            viewlbl.setStyleName(res.css().alignCenterAndBackground());
+		            viewpnl.add(viewlbl);
+		            Label viewProgressBar=new Label();
+		            viewProgressBar.setStyleName(res.css().setProgressBar());
+		            viewpnl.add(viewProgressBar);
+		            float maxViewVal = ((float) result.get(i).getViews())/((float) maxViews.getViews());
+		            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);
+		            data.setValue(i, 4, viewpnl.toString());
+		            
+		            //Set reactions
+		            int reaction=result.get(i).getReaction();
+		            data.setValue(i, 5, new AnalyticsReactionWidget(reaction).toString());
+		        }
+		        final Options options = Options.create();
+		        options.setAllowHtml(true);
+		        Table table = new Table(data, options);
+		        printResourceData.add(table);
+		}catch(Exception e){
+			
+		}
 	}
 	void setCollectionBreakDown(ArrayList<UserDataDo> result,HTMLPanel loadingImage){
 		
@@ -270,6 +373,62 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        if(loadingImage!=null)
 	        loadingImage.setVisible(false);
 	}
+	void setOpenendedQuestionsPrintData(ArrayList<UserDataDo> result){
+		try{
+			printOpendedData.clear();		
+		    DataTable data = DataTable.create();
+		    data.addColumn(ColumnType.NUMBER, "No.");
+	        data.addColumn(ColumnType.STRING, "Question");
+	        data.addColumn(ColumnType.STRING, "Completion");
+	        data.addColumn(ColumnType.STRING, "Time&nbsp;Spent");
+	        data.addColumn(ColumnType.STRING, "Reaction");
+	        data.addColumn(ColumnType.STRING, "Response");
+	        data.addRows(result.size());
+	        for(int i=0;i<result.size();i++) {
+	        	data.setCell(i, 0, i+1, null, getPropertiesCell());
+	        	
+	            //Set Question Title
+	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
+	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	            data.setValue(i, 1, questionTitle.toString());
+	          
+	            //Set completion
+	            int noOfAttempts=result.get(i).getAttempts();
+	            Label completion=new Label();
+	            completion.setStyleName(res.css().alignCenterAndBackground());
+	            if(noOfAttempts>0){
+	            	completion.setText("Completed");
+	            }else{
+	            	completion.setText("In Progress");
+	            }
+	            data.setValue(i, 2, completion.toString());
+	          
+	            //Set time spent
+	            data.setValue(i, 3, getTimeStampLabel(result.get(i).getTimeSpent()).toString());
+	           
+	            //Set reactions
+	            int reaction=result.get(i).getReaction();
+	            data.setValue(i, 4, new AnalyticsReactionWidget(reaction).toString());
+	           
+	            //set View response label
+	            Label viewResponselbl=new Label(result.get(i).getText());
+	            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
+	            data.setValue(i, 5, viewResponselbl.toString());
+	        }
+	        Options options = Options.create();
+	        options.setAllowHtml(true);
+	        final Table table = new Table(data, options);
+	        printOpendedData.add(table);
+	        if(result.size()==0){
+	        	Label erroeMsg=new Label();
+	        	erroeMsg.setStyleName(res.css().displayMessageTextForOEQuestions());
+	        	erroeMsg.setText("It looks like there is no open-ended question data for this collection yet.");
+	        	printOpendedData.add(erroeMsg);
+	        }
+		}catch(Exception e){
+			
+		}
+	}
 	void setOpenendedQuestionsData(ArrayList<UserDataDo> result){
 		    DataTable data = DataTable.create();
 		    data.addColumn(ColumnType.NUMBER, "No.");
@@ -339,6 +498,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	}
 	void setQuestionsPrintData(ArrayList<UserDataDo> result){
 		try{
+			printScoredData.clear();
+			boolean isTickdisplay=false;
 		    DataTable data = DataTable.create();
 		    data.addColumn(ColumnType.NUMBER, "No.");
 	        data.addColumn(ColumnType.STRING, "Question");
@@ -347,10 +508,11 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        data.addColumn(ColumnType.STRING, "#Attempts");
 	        data.addColumn(ColumnType.STRING, "Time&nbsp;Spent");
 	        data.addColumn(ColumnType.STRING, "Reactions");
-	      
+	        
 	        data.addRows(result.size());
 	        if(result.size()!=0){
 				        for(int i=0;i<result.size();i++) {
+				        	isTickdisplay=false;
 				            data.setCell(i, 0, i+1, null, getPropertiesCell());
 				           
 				            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
@@ -358,9 +520,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				            data.setValue(i, 1, questionTitle.toString());
 				            int noOfAttempts=result.get(i).getAttempts();
 				           
-				            Image correctImg=new Image();
-				            correctImg.setUrl("/images/analytics/tick.png");
-				            data.setCell(i, 2, correctImg.toString(), null, getPropertiesCell());
+				            
 				            //Set Answer choices
 				            String questionType= result.get(i).getType();
 				            String correctAnser = null;
@@ -376,6 +536,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					        				 anserlbl.setText(userSelectedOption);
 					        				 if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts==1){
 					        					 anserlbl.getElement().getStyle().setColor(CORRECT);
+					        					 isTickdisplay=true;
 					        				 }else if(userSelectedOption.equalsIgnoreCase(correctAnser) && noOfAttempts>1){
 					        					 anserlbl.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
 					        				 }else{
@@ -408,6 +569,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 										userFibOption =result.get(i).getText().split(",");
 									}
 									if(answersArry!=null && userFibOption!=null){
+										boolean isCorrect=false;
 										for (int k = 0; k < answersArry.length; k++) { 
 											Label answerChoice=new Label();
 											if(answersArry[k]!=null && k<userFibOption.length){
@@ -417,13 +579,18 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 												}else if((answersArry[k].toLowerCase().trim().equalsIgnoreCase(userFibOption[k].toLowerCase().trim())) && (noOfAttempts > 1)) {
 													answerChoice.setText(userFibOption[k]);
 													answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
+													isCorrect=true;
 												}else{
 													answerChoice.setText(userFibOption[k]);
 													answerChoice.getElement().getStyle().setColor(INCORRECT);
+													isCorrect=true;
 												}
 												answerChoice.setStyleName(res.css().alignCenterAndBackground());
 												answerspnl.add(answerChoice);
 											}
+										}
+										if(!isCorrect){
+											 isTickdisplay=true;
 										}
 									}
 				        		}
@@ -436,6 +603,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				        			 JSONObject answerObject = value.isObject();
 				        			 Set<String> keys=answerObject.keySet();
 				        			 Iterator<String> itr = keys.iterator();
+				        			 boolean isCorrect=false;
 				        		      while(itr.hasNext()) {
 				        		         JSONArray attemptsObj=(JSONArray) answerObject.get(itr.next().toString());
 				        		         for(int j=0;j<attemptsObj.size();j++){
@@ -454,21 +622,34 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 												answerChoice.setText(showMessage);
 				 									if(status.equalsIgnoreCase("0")) {
 				 										answerChoice.getElement().getStyle().setColor(INCORRECT);
+				 										 isCorrect=true;
 				 									} else if(status.equalsIgnoreCase("1") && (noOfAttempts == 1)) {
 				 										answerChoice.getElement().getStyle().setColor(CORRECT);
 				 									} else if(status.equalsIgnoreCase("1") && (noOfAttempts > 1)) {
 				 										answerChoice.getElement().getStyle().setColor(ONMULTIPULEATTEMPTS);
 				 									}
+				 							  }else{
+				 								 isCorrect=true;
 				 							  }
 				 	        		        answerChoice.setStyleName(res.css().alignCenterAndBackground());
 				 	        		        answerspnl.add(answerChoice);
 				        		         }
 				        		      }
+				        		      if(!isCorrect){
+											 isTickdisplay=true;
+										}
 				        		}
 				        		 answerspnl.setStyleName(res.css().setMarginAuto());
 				        		 data.setValue(i, 3, answerspnl.toString());
 				        	}
-				           
+				        	
+				        	Image correctImg=new Image();
+				        	if(isTickdisplay){
+				        		 correctImg.setUrl("/images/analytics/tick.png");
+				        	}else{ 
+				        		correctImg.setUrl("/images/analytics/wrong.png");				        		
+				        	}
+				            data.setCell(i, 2, correctImg.toString(), null, getPropertiesCell());
 				            //Set attempts
 				            Label attempts=new Label(Integer.toString(noOfAttempts));
 				            attempts.setStyleName(res.css().alignCenterAndBackground());
@@ -670,13 +851,14 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	}
 	@Override
 	public void setIndividualCollectionMetaData(
-			ArrayList<CollectionSummaryMetaDataDo> result) {
+			ArrayList<CollectionSummaryMetaDataDo> result,PrintUserDataDO printUserDataDO) {
 		//Set collection meta data
 		totalTimeSpentlbl.setText(AnalyticsUtil.getTimeSpent(result.get(0).getAvgTimeSpent()));
 		totalViewlbl.setText(Integer.toString(result.get(0).getViews()));
 		totalAvgReactionlbl.clear();
 		totalAvgReactionlbl.add(new AnalyticsReactionWidget(result.get(0).getAvgReaction()));
-		
+		collectionOverViewWidget.setData(result);
+		collectionSummaryWidget.setDataAnalyticsData(result.get(0),printUserDataDO);
 	}
 	@Override
 	public void setViewResponseData(ArrayList<OetextDataDO> result,	String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType,boolean isSummary) {
@@ -694,13 +876,41 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	    	 popupPanel.center();
 	     }
 	}
-	public void setPrintIndividualSummayData(){
+	public void setPrintIndividualSummayData(boolean isClickedOnSave){
 		printWidget.clear();
+		Label collectionSummaryText=new Label();
+		collectionSummaryText.setText(i18n.GL1587());
+		collectionSummaryText.getElement().getStyle().setPaddingBottom(15, Unit.PX);
+		collectionSummaryText.addStyleName("collectionSummaryText");
+		printWidget.add(collectionSummaryText);
+		printWidget.add(collectionSummaryWidget);
+		
+		//To add scored questions
+		Label scoredQuestionHeading=new Label();
+		scoredQuestionHeading.setText("Scored Questions");
+		scoredQuestionHeading.getElement().getStyle().setClear(Clear.BOTH);
+		scoredQuestionHeading.getElement().getStyle().setPaddingTop(15, Unit.PX);
+		scoredQuestionHeading.getElement().getStyle().setPaddingBottom(20, Unit.PX);
+		printWidget.add(scoredQuestionHeading);
 		printWidget.add(printScoredData);
+		printScoredData.getElement().getStyle().setPaddingBottom(20, Unit.PX);
+		//To add OE questions
+		Label opendedQuestionHeading=new Label();
+		opendedQuestionHeading.setText("OE Questions");
+		opendedQuestionHeading.getElement().getStyle().setPaddingBottom(20, Unit.PX);
+		printWidget.add(opendedQuestionHeading);
 		printWidget.add(printOpendedData);
+		printOpendedData.getElement().getStyle().setPaddingBottom(20, Unit.PX);
+		//To add resource breakdown
+		printWidget.add(collectionOverViewWidget);
 		printWidget.add(printResourceData);
 		String style="<link rel='styleSheet' type='text/css' href='https://www.google.com/uds/api/visualization/1.0/8c95b72e5c145d5b3d7bb8b4ea74fd63/ui+en,table+en.css'><link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'>";
-	    Print.it(style,printWidget);
-	    printWidget.clear();
+		if(isClickedOnSave){
+			getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.toString().replaceAll("\"", "\\\\\""));
+			 printWidget.clear();
+		}else{
+			Print.it(style,printWidget);
+		    printWidget.clear();
+		}
 	}
 }

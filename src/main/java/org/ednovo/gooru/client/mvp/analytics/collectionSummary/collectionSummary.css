@@ -1,8 +1,8 @@
+@external .collectionSummaryDetailsWrapper,.left_container,.collection_teacher_img,.collection_details_teacher,.question_resource_details,.resource_in_collection_teacher_summary,.collectionLastAccessed,.question_resource_details;
 .maincontainer {
 	background-color: white;
 	text-align: center;
 }
-
 .summary_title {
 	float: left;
 	text-align: center;

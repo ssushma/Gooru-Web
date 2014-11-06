@@ -168,7 +168,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId){
 		getView().getLoadingImageLabel().setVisible(true);
 		clearSlot(COLLECTION_REPORTS_SLOT);
-		collectionSummaryIndividualPresenter.setIndividualData(collectionId, classpageId, userId, sessionId,"",false,getView().getLoadingImageLabel());
+		collectionSummaryIndividualPresenter.setIndividualData(collectionId, classpageId, userId, sessionId,"",false,getView().getLoadingImageLabel(),null);
 		setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
 	}
 	public void setViewCount(String viewCount){

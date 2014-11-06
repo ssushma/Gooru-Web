@@ -25,10 +25,11 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummary;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 
 public interface CollectionSummaryUiHandlers extends BaseUiHandlers{
   void setCollectionSummaryData(String collectionId,String pathwayId);
-  void loadUserSessions(String collectionId,String classId,String userId,String pathwayId);
+  void loadUserSessions(String collectionId,String classId,String userId,String pathwayId,PrintUserDataDO printUserDataDO);
   void setTeacherData(String collectionId,String classpageId,String pathwayId);
-  void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId);
+  void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,PrintUserDataDO printUserDataDO);
 }

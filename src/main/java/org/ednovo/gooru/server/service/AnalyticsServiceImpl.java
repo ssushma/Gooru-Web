@@ -227,18 +227,24 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 
 	@Override
 	public void setHTMLtoPDF(String htmlString) {
-		String url = "http://www.goorulearning.org/gooruapi/rest/v2/media/htmltopdf?sessionToken=aec96f9c-42df-11e4-8d6c-123141016e2a";
-		JsonRepresentation jsonRep = null;
-		String dataPassing="{%22fileName%22:%22Mymedia%22,%22html%22:%22"+htmlString+"%22}";
-		System.out.println(dataPassing);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), dataPassing);
-		jsonRep = jsonResponseRep.getJsonRepresentation(); 
-		System.out.println(jsonResponseRep.getStatusCode());
-		if(jsonResponseRep.getStatusCode()==200){
+	try{
+			//String url = "http://www.goorulearning.org/gooruapi/rest/v2/media/htmltopdf?sessionToken=aec96f9c-42df-11e4-8d6c-123141016e2a";
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GENERATE_PDF,getLoggedInSessionToken());
+			JsonRepresentation jsonRep = null;
+			String dataPassing="{\"fileName\":\"Mymedia\",\"html\":\""+htmlString+"\"}";
+			System.out.println("html to pdf url"+url);
+			System.out.println(dataPassing);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),dataPassing);
+			jsonRep = jsonResponseRep.getJsonRepresentation(); 
+			System.out.println(jsonResponseRep.getStatusCode());
+			if(jsonResponseRep.getStatusCode()==200){
+				
+			}else{
+				
+			}		
+		}catch(Exception e){
 			
-		}else{
-			
-		}		
+		}
 	}
 
 	@Override

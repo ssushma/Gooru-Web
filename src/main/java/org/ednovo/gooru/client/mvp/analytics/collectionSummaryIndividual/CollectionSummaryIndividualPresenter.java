@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
+import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.event.shared.EventBus;
@@ -57,7 +58,7 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 	}
 
 	@Override
-	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,boolean isSummary,final HTMLPanel loadingImage) {
+	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,boolean isSummary,final HTMLPanel loadingImage,final PrintUserDataDO printUserDataDO) {
 		this.pathwayId=pathwayId;
 		this.classpageId=classpageId;
 		this.collectionId=collectionId;
@@ -68,7 +69,7 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-				getView().setIndividualCollectionMetaData(result);
+				getView().setIndividualCollectionMetaData(result,printUserDataDO);
 			}
 			
 			@Override

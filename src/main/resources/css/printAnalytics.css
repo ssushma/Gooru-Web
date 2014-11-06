@@ -1,6 +1,17 @@
+ thead {
+    display:table-header-group;
+}
+tbody {
+    display:table-row-group;
+}
 .setMarginAuto {
 	margin: 0 auto;
 	text-align: center;
+}
+.collectionSummaryText{
+	margin: 0 auto;
+	text-align: center;
+	font-weight: bold;
 }
 .alignCenterAndBackground{
 	background-color: inherit !important;
@@ -42,3 +53,181 @@
 	height: 35px;
 	width: 35px
 }
+.category_new_type_audio {
+ 	background:  url(/images/analytics/categoryAnalytics.png) no-repeat 0px -277px;
+	height: 22px;
+	position: relative;
+	top: 7px;
+	width: 32px;
+}
+.category_new_type_image {
+    background:  url(/images/analytics/categoryAnalytics.png) no-repeat 0 -251px;
+    height: 22px;
+	position: relative;
+	top: 7px;
+	width: 32px;
+}
+.category_new_type_other {
+	background:  url(/images/analytics/categoryAnalytics.png) no-repeat 0 -140px;
+	height: 22px;
+	position: relative;
+	top: 7px;
+	width: 32px;
+}
+.category_new_type_interactive {
+	background:  url(/images/analytics/categoryAnalytics.png) no-repeat 0 -27px;
+	height: 22px;
+	position: relative;
+	top: 7px;
+	width: 32px;
+}
+.category_new_type_question {
+	background:  url(/images/analytics/categoryAnalytics.png) no-repeat 0 -139px;
+	height: 22px;
+	margin-left: 8px;
+	margin-right: auto;
+	position: relative;
+	top: 7px;
+	width: 32px;
+}
+.category_new_type_text {
+	background:  url(/images/analytics/categoryAnalytics.png) no-repeat 0 -55px;
+	height: 22px;
+	position: relative;
+	top: 7px;
+	width: 32px;
+}
+.category_new_type_video {
+	background:  url(/images/analytics/categoryAnalytics.png) no-repeat 0 2px;
+	height: 22px;
+	position: relative;
+	top: 7px;
+	width: 32px;
+}
+.category_new_type_webpage {
+	background:  url(/images/analytics/categoryAnalytics.png) no-repeat 0 -222px;
+	height: 22px;
+	position: relative;
+	top: 7px;
+	width: 32px;
+}
+.setProgressBar{
+	float: left;
+	height: 25px;
+	background-color: rgb(16, 118, 187);
+}
+.collectionOverViewpnl{
+	clear:both;
+	padding-top: 16px;
+}
+.collectionOverviewText{
+	padding: 5px 5px 5px 5px;
+	border-bottom: 1px solid #DDDDDD;
+	font-size: 16px;
+	font-weight: bold;
+	color: #515151;
+}
+.collectionBreakDown_infobox_print{
+	display: inline-block;
+	width: 33%;
+	white-space: pre;
+}
+.collectionBreakDown_infobox_titles_print{
+	clear: both;
+	color: #515151;
+	float: left;
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 50px;
+	text-align: center;
+	width: 100%;
+}
+.collectionBreakDown_infobox_titles_print1{
+	clear: both;
+	color: #515151;
+	float: left;
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 50px;
+	text-align: center;
+	width: 100%;
+	border-bottom: 1px solid #ccc;
+	padding-left: 5px;
+}
+.maincontainer_collectionOverView_print{
+	clear: both;
+	border:1px solid #ccc;
+	margin-top: 2%;
+	margin-bottom: 2%;
+	overflow: hidden;
+}
+.printWidget{
+	width: 100%;
+}
+.google-visualization-table-table{
+	font-family: arial,helvetica;
+	font-size: 10pt;
+	cursor: default;
+	margin: 0;
+	background: white;
+	border-spacing: 0;
+	width: 100% !important;
+}
+/*Collection summary */
+.collectionSummaryDetailsWrapper {
+	float: left;
+	/* width: 91%; */
+	width: 100%;
+	border-top: 1px solid #DDDDDD;
+	padding: 15px 0px;
+	border-bottom: 1px solid #DDDDDD;
+	color: #515151;
+	font-size: 13px;
+	margin-top: 15px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: rgb(221, 221, 221);
+}
+.sessionsPnl {
+	border-bottom: 1px solid #ddd;
+	clear: both;
+	color: #515151;
+	float: left;
+	font-size: 14px;
+	width: 100%;
+}
+.left_container {
+	width: 100%;
+	float: left;
+}
+.collection_teacher_img {
+	float: left;
+	width: 70px;
+}
+
+.collection_details_teacher {
+	width: 718px;
+	float: left;
+	margin-left: 12px;
+	text-align: left;
+}
+.session_details{
+	width: 718px;
+	float: left;
+	margin-left: 12px;
+	text-align: left;
+	line-height: 40px;
+}
+.question_resource_details {
+	line-height: 30px;
+	display: inline-block;
+}
+.resource_in_collection_teacher_summary {
+	width: 200px;
+	float: left;
+}
+.collectionLastAccessed {
+	font-weight: bold;
+}
+
+/*Collection summary end */
