@@ -94,10 +94,10 @@ public class CollectionResourceTabView extends
 	}
 
 	@UiField
-	VerticalPanel sequenceVerPanel,collectionResourcePanelVc;
+	VerticalPanel sequenceVerPanel/*,collectionResourcePanelVc*/;
 
-	/*@UiField
-	CollectionResourcePanelVc collectionResourcePanelVc; */
+	@UiField
+	CollectionResourcePanelVc collectionResourcePanelVc; 
 
 	@UiField
 	Label dragAndDropLabel;
@@ -257,10 +257,10 @@ public class CollectionResourceTabView extends
 			setTotalCount(collectionDo.getCollectionItems().size());
 			Label label = new Label("");
 			label.setStyleName(getCss().shelfResourceDragdropSpacer());
-//			collectionResourcePanelVc.superAdd(label);
+			collectionResourcePanelVc.superAdd(label);
 			Label toplabel = new Label("");
 			toplabel.setStyleName(getCss().shelfResourceDragdropSpacer());
-//			collectionResourcePanelVc.add(toplabel);
+			collectionResourcePanelVc.add(toplabel);
 			Label prelabel = new Label("");
 			prelabel.setStyleName(getCss().shelfResourceSequenceSpacer());
 			sequenceVerPanel.add(prelabel);
@@ -450,7 +450,6 @@ public class CollectionResourceTabView extends
 			dragAndDropLabel.setVisible(true);
 
 		} else {
-			System.out.println("-- in else --");
 			collectionItemDo.setCollection(collectionDo);
 			Label sequenceLbl = new Label(collectionItemDo.getItemSequence()+ "");
 			sequenceLbl.setStyleName(getCss().shelfResourceSequenceNumber());
@@ -459,7 +458,6 @@ public class CollectionResourceTabView extends
 			sequenceVerPanel.insert(sequenceLbl, sequencePostion);
 			shelfCollectionResourceVc = new ShelfCollectionResourceChildView(this, collectionItemDo);
 			resetSequence();
-			System.out.println("--->>> "+shelfCollectionResourceVc.getCollectionItemDo().getItemSequence()); 
 			shelfCollectionResourceVc.getResourceMoveUpBtn().addClickHandler(new OnClickReorderUpButton(collectionItemDo.getGooruOid())); 
 //			shelfCollectionResourceVc.getResourceMoveDownBtn().addClickHandler(new OnClickReorderDownButton(collectionItemDo.getGooruOid()));
 			if(isFlag){
@@ -538,9 +536,9 @@ public class CollectionResourceTabView extends
 
 				}
 			});
-//			collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());
-			collectionResourcePanelVc.add(shelfCollectionResourceVc);
-			setResourceSequence();
+			collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());
+			/*collectionResourcePanelVc.add(shelfCollectionResourceVc);
+			setResourceSequence();*/
 			AppClientFactory.fireEvent(new UpdateResourceCountEvent(collectionDo.getCollectionItems().size()));
 		}
 		hideNoResourceMsg();
@@ -708,8 +706,8 @@ public class CollectionResourceTabView extends
 
 					}
 				});
-//		collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());
-		collectionResourcePanelVc.add(shelfCollectionResourceVc);
+		collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());
+//		collectionResourcePanelVc.add(shelfCollectionResourceVc);
 	}
 
 	public class EditQuestionPopupWidget extends EditQuestionPopupVc {
@@ -893,7 +891,7 @@ public class CollectionResourceTabView extends
 	@Override
 	public void setEditMode(boolean editMode, Widget resourceWidget) {
 		Widget sequenceWidget = sequenceVerPanel.getWidget(collectionResourcePanelVc.getWidgetIndex(resourceWidget.getParent()));
-//		collectionResourcePanelVc.makeChildrenDraggable(!editMode);
+		collectionResourcePanelVc.makeChildrenDraggable(!editMode);
 		sequenceWidget.setHeight((resourceWidget.getOffsetHeight() - 7) + "px");
 	}
 
