@@ -519,15 +519,26 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		loadResourceReleatedCollections(collectionItemDo.getResource().getGooruOid());
 		
 		if(collectionItemDo.getResource().getPublisher()!=null || collectionItemDo.getResource().getResourceFormat()!=null){
-			
 			if(collectionItemDo.getResource().getPublisher()!=null){
-				setPublisherDetails(collectionItemDo.getResource().getPublisher());
+				if(!collectionItemDo.getResource().getPublisher().isEmpty()){
+					setPublisherDetails(collectionItemDo.getResource().getPublisher());
+				}else if(collectionItemDo.getResource().getResourceFormat()!=null){
+					if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+						List<String> publisherQuestionUserName = new ArrayList<String>();
+						if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
+						publisherQuestionUserName.add(collectionItemDo.getResource().getCreator().getUsername());
+						setPublisherDetails(publisherQuestionUserName);
+						}
+					}
+				}
 			}
-			if(collectionItemDo.getResource().getResourceFormat()!=null){
+			else if(collectionItemDo.getResource().getResourceFormat()!=null){
 				if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
 					List<String> publisherQuestionUserName = new ArrayList<String>();
+					if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
 					publisherQuestionUserName.add(collectionItemDo.getResource().getCreator().getUsername());
 					setPublisherDetails(publisherQuestionUserName);
+					}
 				}
 			}
 		}
