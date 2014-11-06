@@ -427,6 +427,8 @@ public class AlmostDoneUc extends PopupPanel{
 
 	@UiHandler("lblClose")
 	public void closePopup(ClickEvent event){
+		Window.enableScrolling(true);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		hide();
 	}
 	
