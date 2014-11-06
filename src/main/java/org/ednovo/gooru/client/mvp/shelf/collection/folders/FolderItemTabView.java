@@ -924,8 +924,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					
 					itemSeqToAPI= getMoveDownItemSeq(itemPosSeqNumb,itemToBeMovedPosSeqNumb);
 					getUiHandlers().reorderFoldersOrCollection(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,DOWN_ARROW,shelfFolderItemChildView.getCollectionItemId(),itemSeqToAPI);
-					
-					/*reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb),DOWN_ARROW);*/
 				}else{
 					shelfFolderItemChildView.showReorderValidationToolTip(reorderValidationMsg);
 				}
