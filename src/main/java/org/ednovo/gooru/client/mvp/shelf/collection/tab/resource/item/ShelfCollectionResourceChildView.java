@@ -354,7 +354,7 @@ public class ShelfCollectionResourceChildView extends
 		initWidget(uiBinder.createAndBindUi(this));
 		this.collectionItemDo = collectionItem;
 		
-		
+		reorderContainer.setVisible(false);
 		editFloPanel.setVisible(false);
 		editFloPanel.getElement().setId("fpnlEditFloPanel");
 		
@@ -796,7 +796,7 @@ public class ShelfCollectionResourceChildView extends
 		public void onMouseOver(MouseOverEvent event) {
 			if ((actionVerPanel.isVisible()==false) && (actionVerPanelForUpdateTime.isVisible()==false) && (actionVerPanelForUpdatePDF.isVisible()==false)) {
 				EditBtn.setVisible(true);
-				reorderContainer.setVisible(true);
+//				reorderContainer.setVisible(true);
 				//ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 				//actionVerPanel.setVisible(true);
 				// onResourceNarrationHover();
