@@ -30,9 +30,13 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.Collection
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.anotherbigidea.flash.structs.Color;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -96,10 +100,40 @@ public abstract class DeletePopupViewVc extends PopupPanel {
 		lblRemoving.setVisible(false);
 		lblRemoving.getElement().getStyle().setMargin(26, Unit.PX);
 		txtConfirmAction.setVisible(false);
+		lblDeleteText.setVisible(false);
 		setButtonVisibility(true);
 		setElementId();
 		
 		txtConfirmAction.addKeyUpHandler(new ValidateConfirmText());
+		txtConfirmAction.setText(i18n.GL1175());
+		txtConfirmAction.getElement().getStyle().setColor("#515151");
+		txtConfirmAction.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				if(!txtConfirmAction.getText().isEmpty())
+				{
+				if(txtConfirmAction.getText().toLowerCase().equalsIgnoreCase(i18n.GL1175().toLowerCase()))
+				{
+					txtConfirmAction.setText("");
+					txtConfirmAction.getElement().getStyle().setColor("#000000");
+				}
+				}
+				
+			}
+		});
+		txtConfirmAction.addBlurHandler(new BlurHandler() {
+			
+			@Override
+			public void onBlur(BlurEvent event) {
+				if(txtConfirmAction.getText().isEmpty())
+				{
+					txtConfirmAction.setText(i18n.GL1175());
+					txtConfirmAction.getElement().getStyle().setColor("#515151");
+				}
+				
+			}
+		});
 		txtConfirmAction.getElement().setAttribute("placeholder", i18n.GL1175());
 		StringUtil.setAttributes(txtConfirmAction, true);
 		btnNegitive.setText(StringUtil.generateMessage(i18n.GL0142()));
@@ -345,6 +379,7 @@ public abstract class DeletePopupViewVc extends PopupPanel {
 		this.deleteCode = deleteCode;
 		
 		txtConfirmAction.setVisible(true);
+		lblDeleteText.setVisible(true);
 		
 		btnPositive.setEnabled(false);
 		btnPositive.getElement().addClassName("disabled");

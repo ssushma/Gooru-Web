@@ -68,6 +68,7 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
@@ -132,6 +133,8 @@ public class LibraryTopicListView extends Composite{
 	private HandlerRegistration imageHandler;
 
 	private HandlerRegistration titleHandler;
+	
+	private String libraryGooruOid=null;
 	
 	@UiField FlowPanel standardsFloPanel;
 
@@ -214,7 +217,7 @@ public class LibraryTopicListView extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicDo.getCodeId();
 		setPlaceToken(placeToken);
-		String libraryGooruOid="";
+		libraryGooruOid="";
 		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COMMUNITY)){
 			libraryGooruOid=AppClientFactory.getLoggedInUser().getSettings().getCommunityLibraryGooruOid();
 		}
@@ -463,6 +466,7 @@ public class LibraryTopicListView extends Composite{
 	public LibraryTopicListView(PartnerFolderDo partnerFolderDo, int topicNumber, String placeToken,String libraryGooruOid) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicNumber;
+		this.libraryGooruOid=libraryGooruOid;
 		setPlaceToken(placeToken);
 		searchLink.getElement().getStyle().setDisplay(Display.NONE);
 		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
@@ -1316,6 +1320,8 @@ public class LibraryTopicListView extends Composite{
 	 */
 	@UiHandler("assignCollectionBtn")
 	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
+		String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
+		PlayerDataLogEvents.triggerLibraryShareDataEvent(collectionId, libraryGooruOid);
 		toolTipPopupPanelNew.clear();
 		toolTipPopupPanelNew.hide();
 		final Map<String, String> params = StringUtil.splitQuery(Window.Location
@@ -1323,7 +1329,6 @@ public class LibraryTopicListView extends Composite{
 		if(params.containsKey(CUSTOMIZE)){
 			params.remove(CUSTOMIZE);
 		}
-		String collectionId = collectionTitleLbl.getElement().getAttribute("collid");
 		if(AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID)!=null){
 			MixpanelUtil.mixpanelEvent("standardlibrary_assign_collection");	
 		}
