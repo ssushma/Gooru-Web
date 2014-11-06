@@ -462,21 +462,33 @@ public class SearchInfoWidget extends Composite {
 					CollectiongenealInfo.getResource().getUrl(),CollectiongenealInfo.getResource().getResourceType().getName());
 
 			if(resourceDo.getPublisher()!=null || CollectiongenealInfo.getResource().getResourceFormat()!=null){
-
 			if(resourceDo.getPublisher()!=null){
 				if(resourceDo.getPublisher().size()>0){
 					InfoUtil.setDepthofknowledgeDetails(CollectiongenealInfo.getResource().getPublisher(), publisherType, publisherText, publisherPanel);
 				isGeneralInfo=true;
 				}
 				else{
-					publisherPanel.setVisible(false);
+					 if(CollectiongenealInfo.getResource().getResourceFormat()!=null){
+						if(CollectiongenealInfo.getResource().getResourceFormat()!=null && CollectiongenealInfo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+							List<String> publisherQuestionUserName = new ArrayList<String>();
+							if (CollectiongenealInfo.getResource().getCreator() != null && CollectiongenealInfo.getResource().getCreator().getUsername()!=null){
+							publisherQuestionUserName.add(CollectiongenealInfo.getResource().getCreator().getUsername());
+							InfoUtil.setDepthofknowledgeDetails(publisherQuestionUserName, publisherType, publisherText, publisherPanel);
+							}
+							isGeneralInfo=true;
+						}else{
+							publisherPanel.setVisible(false);
+						}
+					}
 				}
 			}
-			if(CollectiongenealInfo.getResource().getResourceFormat()!=null){
+			else if(CollectiongenealInfo.getResource().getResourceFormat()!=null){
 				if(CollectiongenealInfo.getResource().getResourceFormat()!=null && CollectiongenealInfo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
 					List<String> publisherQuestionUserName = new ArrayList<String>();
+					if (CollectiongenealInfo.getResource().getCreator() != null && CollectiongenealInfo.getResource().getCreator().getUsername()!=null){
 					publisherQuestionUserName.add(CollectiongenealInfo.getResource().getCreator().getUsername());
 					InfoUtil.setDepthofknowledgeDetails(publisherQuestionUserName, publisherType, publisherText, publisherPanel);
+					}
 				}
 			}
 		}
