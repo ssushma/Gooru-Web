@@ -233,5 +233,7 @@ public interface UserService extends BaseService {
 	String getRefershToken(String gooruUid)throws GwtException,ServerDownException;
 	
 	String revokeToken(String gooruUid)throws GwtException,ServerDownException;
+	
+	String isValidResetPasswordLink(String resetToken)throws GwtException,ServerDownException;
 
 }

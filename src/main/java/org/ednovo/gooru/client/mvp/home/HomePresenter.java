@@ -153,6 +153,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	
 	private static final String ERROR = "error";
 	
+	
 	private String parentGooruUID;
 	
 	private boolean isLandingPageLoaded = false;
@@ -234,7 +235,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			this.getUserService().getRegistredUserDetails(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID), getRegisterdUserAsyncCallback());
 			parentGooruUID=AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID);
 		}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("changePassword")) {
-			getView().resetPassword(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
+			validateResetLink(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
 		}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("register")) {
 			getView().registerPopup();
 		}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
@@ -336,6 +337,21 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));	
 	}
 	
+	private void validateResetLink(String resetToken) {
+		// TODO Auto-generated method stub
+		AppClientFactory.getInjector().getUserService().isValidResetPasswordLink(resetToken, new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				if(result.equals("true")){
+					getView().resetPassword(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
+				}else{
+					new AlertContentUc("Oops", i18n.GL0100());
+				}
+			}
+		});
+	}
+
 	@Override
 	public void onReset() {
 		super.onReset();
