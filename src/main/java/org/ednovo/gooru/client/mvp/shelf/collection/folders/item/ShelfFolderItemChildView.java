@@ -110,6 +110,9 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		collectionImage.getElement().setId("imgCollectionImage");
 		itemTitle.getElement().setId("lblItemTitle");
 		contents.getElement().setId("fpnlContents");
+		moveUpBtn.getElement().setId("moveUpBtn");
+		moveDownBtn.getElement().setId("moveDownBtn");
+		reorderTxtBox.getElement().setId("reorderTxtBox");
 		moveDownBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 		moveUpBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 		

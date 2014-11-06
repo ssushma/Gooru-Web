@@ -2058,12 +2058,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			classpageEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
 			String libraryId=AppClientFactory.getPlaceManager().getRequestParameter("lid");
 			classpageId=libraryId;
-			path=classpageId+"/"+collectionId;
+			path=classpageId+"/"+collectionDo.getGooruOid();
 		}else{
 			path=AppClientFactory.getPlaceManager().getFolderIds()+collectionDo.getGooruOid();
 		}
 		String playerMode=getPlayerMode();
-		PlayerDataLogEvents.triggerItemShareDataLogEvent(collectionId, "", classpageEventId,classpageId, "", sessionId, itemType, shareType, confirmStatus, playerMode, path, null);
+		PlayerDataLogEvents.triggerItemShareDataLogEvent(collectionDo.getGooruOid(), "", classpageEventId,classpageId, "", sessionId, itemType, shareType, confirmStatus, playerMode, path, null);
 	}
 	
 	public String getPlayerMode(){

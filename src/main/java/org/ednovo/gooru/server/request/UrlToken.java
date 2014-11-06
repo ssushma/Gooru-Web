@@ -194,8 +194,10 @@ public enum UrlToken {
 					"/v2/collection/item/{0}/copy/{1}?sessionToken={2}"),
 	FORGOT_PASSWORD("/user/password/reset.json?sessionToken={0}&emailId={1}"),
 
-	RESET_CREDENTIAL(
-			"/user/reset/credential.json?sessionToken={0}&password={1}&token={2}"),
+//	RESET_CREDENTIAL(
+//			"/user/reset/credential.json?sessionToken={0}&password={1}&token={2}"),
+	V2_RESET_CREDENTIAL(
+					"/v2/user/reset-password?sessionToken={0}"),
 
 	MEDIA_FILE_UPLOAD(
 			"/v2/media?sessionToken={0}"),

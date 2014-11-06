@@ -236,7 +236,9 @@ public class PlayerDataLogEvents {
 			}else{
 				contextMap.put(PAGELOCATION, new JSONString(AppClientFactory.getPlaceManager().getPageLocation()));
 			}
-			contextMap.put(MODE, new JSONString(mode));
+			if(mode!=null){
+				contextMap.put(MODE, new JSONString(mode));
+			}
 			contextMap.put(URL, new JSONString(url));
 		}catch(Exception e){
 			
@@ -247,6 +249,7 @@ public class PlayerDataLogEvents {
 	public static JSONString getLibraryDataLogContext(String libaryGooruOid,String pageLocation){
 		JSONObject contextMap=new JSONObject();
 		try{
+			libaryGooruOid=libaryGooruOid!=null?libaryGooruOid:"";
 			contextMap.put(CONTENTGOORUID, new JSONString(libaryGooruOid));
 			contextMap.put(CLIENTSOURCE, new JSONString(WEB));
 			contextMap.put(PATH, new JSONString(libaryGooruOid));
@@ -531,6 +534,19 @@ public class PlayerDataLogEvents {
 		}
 		return new JSONString(payLoadMap.toString());
 	}
+	
+	public static void triggerLibraryShareDataEvent( String collectionId, String libraryGooruOid){
+		libraryGooruOid=libraryGooruOid!=null?libraryGooruOid:"";
+		String path=libraryGooruOid+"/"+collectionId;
+		String parentEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+		triggerItemShareDataLogEvent(collectionId,"",parentEventId,libraryGooruOid,"","","collection","gooru",false,null,path,"library");
+	}
+	
+	public static void triggerProfileCollectionShareDataEvent(String collectionId){
+		String path=collectionId;
+		triggerItemShareDataLogEvent(collectionId,"","","","","","collection","gooru",false,null,path,"profile");
+		
+	}
 
 	public static void triggerItemShareDataLogEvent(String itemGooruOid, String itemContentItemId,String parentEventId,String parentGooruOid,String parentContItemId,String sessionId,
 			String itemType,String shareType,boolean confirmStatus,String playerMode,String path,String pageLocation){
@@ -568,7 +584,6 @@ public class PlayerDataLogEvents {
 	public static void triggerLibraryViewEvent(String libraryGooruOid){
 		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if(!AppClientFactory.getPlaceManager().isLibaryEventTriggered(viewToken)){
-			System.out.println("viewToken==>>>> =========>"+viewToken);
 			String eventId=GwtUUIDGenerator.uuid();
 			AppClientFactory.getPlaceManager().setLibaryEventTriggered(viewToken);
 			AppClientFactory.getPlaceManager().setLibraryEventId(eventId);
@@ -592,12 +607,11 @@ public class PlayerDataLogEvents {
 		PlayerDataLogEvents.collectionStartStopEvent(libarayViewData);
 	}
 	public static Long getUnixTime(){
-		return Long.valueOf(PlayerDataLogEvents.getUnixTimeStamp().toString());
+		return System.currentTimeMillis();
 	}
 	public static native String getUnixTimeStamp() /*-{
 		var currentDate=new Date();
-		var unixTimeStamp=Date.UTC(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate(),currentDate.getHours(),
-		                                currentDate.getMinutes(),currentDate.getSeconds(),currentDate.getMilliseconds());
+		var unixTimeStamp=currentDate.getTime();
 		return ""+unixTimeStamp;
 	}-*/;
 

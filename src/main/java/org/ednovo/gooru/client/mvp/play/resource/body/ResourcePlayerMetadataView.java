@@ -402,8 +402,31 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	}
 	
 	private void displayPublisher(){
-		if(collectionItemDo.getResource()!=null&&collectionItemDo.getResource().getResourceFormat()!=null){
-			if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+		if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getResourceFormat()!=null ||collectionItemDo.getResource()!=null && collectionItemDo.getResource().getPublisher()!=null){
+			if(collectionItemDo.getResource().getPublisher()!=null){
+				if(!collectionItemDo.getResource().getPublisher().isEmpty()){
+					List<String> publishersList=collectionItemDo.getResource().getPublisher()!=null?collectionItemDo.getResource().getPublisher():null;
+					if(publishersList!=null&&publishersList.size()>0){
+						//publishersList.set(0,i18n.GL0566()+publishersList.get(0));
+						SearchUiUtil.renderMetaData(resourcePublisher, publishersList);
+					}else{
+						resourcePublisher.getElement().setInnerHTML("");
+						resourcePublisher.getElement().getStyle().setPaddingTop(0, Unit.PX);
+					}
+				}
+				else if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+					if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
+						if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+							resourcePublisher.setVisible(true);
+							resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
+							resourcePublisher.getElement().getStyle().clearPaddingTop();
+						}else{
+							resourcePublisher.setVisible(false);
+						}
+					}
+				}
+			}
+			else if(collectionItemDo.getResource().getResourceFormat()!=null && collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
 				if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
 					if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 						resourcePublisher.setVisible(true);
@@ -412,15 +435,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					}else{
 						resourcePublisher.setVisible(false);
 					}
-				}
-			}else{
-				List<String> publishersList=collectionItemDo.getResource().getPublisher()!=null?collectionItemDo.getResource().getPublisher():null;
-				if(publishersList!=null&&publishersList.size()>0){
-					//publishersList.set(0,i18n.GL0566()+publishersList.get(0));
-					SearchUiUtil.renderMetaData(resourcePublisher, publishersList);
-				}else{
-					resourcePublisher.getElement().setInnerHTML("");
-					resourcePublisher.getElement().getStyle().setPaddingTop(0, Unit.PX);
 				}
 			}
 		}
@@ -1661,14 +1675,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		isFromThanksPopup=false;
 		ratingsConfirmationPopup=new RatingsConfirmationPopup(assocGooruOId,score,count,average,collectionItemDo.getResource().getUser().getUsername());
 		ratingsConfirmationPopup.show();
+		ratingsConfirmationPopup.setAutoHideEnabled(true);
 		ratingsConfirmationPopup.getElement().getStyle().setZIndex(99999);
+		ratingsConfirmationPopup.getElement().getPreviousSiblingElement().getStyle().setZIndex(999999);
+		ratingsConfirmationPopup.getElement().getPreviousSiblingElement().getStyle().setOpacity(0);
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			ratingsConfirmationPopup.setPopupPosition(three_star.getElement().getAbsoluteLeft()+(-150),three_star.getElement().getAbsoluteTop()+40);
 		}else{
 			ratingsConfirmationPopup.setPopupPosition(800,Window.getScrollTop()+153);
 		}
 		
-		ratingsConfirmationPopup.setAutoHideEnabled(true);
+
 	}
 
 	@Override

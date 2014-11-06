@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.effects.BackgroundColorEffect;
+import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
@@ -49,6 +50,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -93,6 +95,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -127,13 +130,13 @@ public class ShelfCollectionResourceChildView extends
 	VerticalPanel actionVerPanel;
 */
 	@UiField
-	Button EditBtn,updateNarrationBtn,cancelNarrationBtn,updateVideoTimeBtn,cancelVideoTimeBtn,updatePdfBtn,cancelpdfBtn;
+	Button EditBtn,updateNarrationBtn,cancelNarrationBtn,updateVideoTimeBtn,cancelVideoTimeBtn,updatePdfBtn,cancelpdfBtn,resourceMoveUpBtn,resourceMoveDownBtn;
 
 	@UiField
 	FlowPanel editFloPanel, editFieldsFloPanel,actionVerPanel,actionVerPanelForUpdateTime;
 
 	@UiField
-	TextBox fromTxt, toTxt,EndTimeTxt1,EndTimeTxt2,startpdfPageNumber,stoppdfPageNumber;
+	TextBox fromTxt, toTxt,EndTimeTxt1,EndTimeTxt2,startpdfPageNumber,stoppdfPageNumber,reorderTxtBox;
 
 	@UiField
 	TextArea narrationTxtArea;
@@ -151,6 +154,8 @@ public class ShelfCollectionResourceChildView extends
 	Label narrationAlertMessageLbl,videoTimeField,fromLblDisplayText,ToLbl,UpdateTextMessage,editStartPageLbl,editVideoTimeLbl,errorMsgLabel, lblCharLimit;
 
 	@UiField Image imgNotFriendly;
+	
+	@UiField HTMLPanel reorderContainer;
 	
 	ToolTip toolTip = null;
 	
@@ -172,6 +177,10 @@ public class ShelfCollectionResourceChildView extends
 	private Integer pageNumber=1;
 	
 	private Integer pageSize=20;
+	
+	private PopupPanel toolTipPopupPanel=new PopupPanel(true);
+	
+	
 	
 	
 	
@@ -345,7 +354,7 @@ public class ShelfCollectionResourceChildView extends
 		initWidget(uiBinder.createAndBindUi(this));
 		this.collectionItemDo = collectionItem;
 		
-		
+		reorderContainer.setVisible(false);
 		editFloPanel.setVisible(false);
 		editFloPanel.getElement().setId("fpnlEditFloPanel");
 		
@@ -425,6 +434,11 @@ public class ShelfCollectionResourceChildView extends
 		cancelpdfBtn.getElement().setAttribute("title", i18n.GL0142());
 		resourceFlowPanel.getElement().setId("fpnlResourceFlowPanel");
 		narrationConatainer.getElement().setId("fpnlNarrationConatainer");
+		
+		reorderContainer.getElement().setId("reorderContainer");
+		resourceMoveUpBtn.getElement().setId("resourceMoveUpBtn");
+		resourceMoveDownBtn.getElement().setId("resourceMoveDownBtn");
+		reorderTxtBox.getElement().setId("reorderTxtBox");
 		setData(collectionItem);
 		
 		onResourceNarrationOut();
@@ -442,8 +456,10 @@ public class ShelfCollectionResourceChildView extends
 		actionVerPanelForUpdateTime.setVisible(false);
 		UpdateTextMessage.setVisible(false);
 		ResourceEditButtonContainer.getElement().setId("fpnlResourceEditButtonContainer");
-		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+//		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		ResourceEditButtonContainer.setVisible(false);
 		EditBtn.setVisible(false);
+		reorderContainer.setVisible(false);
 		editPdfFlowPanel.getElement().setId("fpnlEditPdfFlowPanel");
 		editPdfFlowPanel.setVisible(false);
 		actionVerPanelForUpdatePDF.getElement().setId("fpnlActionVerPanelForUpdatePDF");
@@ -671,10 +687,10 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("EditBtn")
 	public void onClickEdit(ClickEvent clickEvent)
 	{
-		if (ResourceEditButtonContainer.getElement().getStyle()
-				.getVisibility().equalsIgnoreCase("VISIBLE")) {
-			ResourceEditButtonContainer.getElement().getStyle()
-					.setVisibility(Visibility.HIDDEN);
+		if (/*ResourceEditButtonContainer.getElement().getStyle().getVisibility().equalsIgnoreCase("VISIBLE")*/ResourceEditButtonContainer.isVisible()) {
+//			ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			ResourceEditButtonContainer.setVisible(false);
+			
 		} else {
 			narrationAlertMessageLbl
 				.addStyleName("titleAlertMessageDeActive");
@@ -684,11 +700,9 @@ public class ShelfCollectionResourceChildView extends
 			narrationTxtArea.getElement().getStyle().clearBackgroundColor();
 			narrationTxtArea.getElement().getStyle().setBorderColor("#ccc");
 			narrationAlertMessageLbl.setVisible(false);
-			
-
-			ResourceEditButtonContainer.getElement().getStyle()
-					.setVisibility(Visibility.VISIBLE);
-		}	
+//			ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+			ResourceEditButtonContainer.setVisible(true);
+			}	
 	}
 	private class toTxtKeyUpHandler implements KeyUpHandler {
 
@@ -782,6 +796,7 @@ public class ShelfCollectionResourceChildView extends
 		public void onMouseOver(MouseOverEvent event) {
 			if ((actionVerPanel.isVisible()==false) && (actionVerPanelForUpdateTime.isVisible()==false) && (actionVerPanelForUpdatePDF.isVisible()==false)) {
 				EditBtn.setVisible(true);
+//				reorderContainer.setVisible(true);
 				//ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 				//actionVerPanel.setVisible(true);
 				// onResourceNarrationHover();
@@ -800,7 +815,9 @@ public class ShelfCollectionResourceChildView extends
 		public void onMouseOut(MouseOutEvent event) {
 			//if (updateResourceBtn.getText().equalsIgnoreCase("Edit Narration")) {
 				EditBtn.setVisible(false);
-				ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+				reorderContainer.setVisible(false);
+				ResourceEditButtonContainer.setVisible(false);
+//				ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 				//actionVerPanel.setVisible(false);
 				//actionVerPanelForUpdateTime.setVisible(false);
 				// onResourceNarrationOut();
@@ -1295,8 +1312,10 @@ public class ShelfCollectionResourceChildView extends
 	public void onEditClick(ClickEvent clickEvent) {
 		MixpanelUtil.Organize_Click_Edit_Narration();
 		EditBtn.setVisible(false);
-		ResourceEditButtonContainer.getElement().getStyle()
-		.setVisibility(Visibility.HIDDEN);
+		reorderContainer.setVisible(false);
+		ResourceEditButtonContainer.setVisible(false);
+		/*ResourceEditButtonContainer.getElement().getStyle()
+		.setVisibility(Visibility.HIDDEN);*/
 		actionVerPanel.setVisible(true);
 			editAndUpdateResource();
 		
@@ -1359,9 +1378,11 @@ public class ShelfCollectionResourceChildView extends
 		actionVerPanelForUpdatePDF.setVisible(true);
 		//endPageLbl.setVisible(true);
 		editPdfFlowPanel.setVisible(true);
-		ResourceEditButtonContainer.getElement().getStyle()
-		.setVisibility(Visibility.HIDDEN);
+		ResourceEditButtonContainer.setVisible(false);
+		/*ResourceEditButtonContainer.getElement().getStyle()
+		.setVisibility(Visibility.HIDDEN);*/
 		EditBtn.setVisible(false);
+		reorderContainer.setVisible(false);
 		fromLblDisplayText.setVisible(false);
 		videoDisplay.setVisible(false);
 		narrationConatainer.setVisible(false);
@@ -1422,8 +1443,10 @@ public class ShelfCollectionResourceChildView extends
 	 */
 	@UiHandler("copyResource")
 	public void copyResource(ClickEvent clickEvent) {
-		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		ResourceEditButtonContainer.setVisible(false);
+//		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		EditBtn.setVisible(false);
+		reorderContainer.setVisible(false);
 		if (isEdited) {
 				if (previousCollectionResourceChildView != null	&& previousCollectionResourceChildView.isAttached()) {
 				if (!isConfirmationPopup) {
@@ -1489,8 +1512,10 @@ public class ShelfCollectionResourceChildView extends
 	 */
 	@UiHandler("confirmDeleteLbl")
 	public void deleteCollectionItem(ClickEvent clickEvent) {
-		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		ResourceEditButtonContainer.setVisible(false);
+//		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		EditBtn.setVisible(false);
+		reorderContainer.setVisible(false);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(88, false));
 
@@ -1639,7 +1664,8 @@ public class ShelfCollectionResourceChildView extends
 			videoDisplay.setVisible(false);
 			narrationConatainer.setVisible(false);
 			editFieldsFloPanel.setVisible(true);
-			ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			ResourceEditButtonContainer.setVisible(false);
+//			ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			fromTxt.setFocus(true);
 			UpdateTextMessage.setVisible(false);		
 			errorMsgLabel.setText("");
@@ -1756,12 +1782,14 @@ public class ShelfCollectionResourceChildView extends
 			resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);
 			MixpanelUtil.Organize_Click_Edit_Start_Time();
 			EditBtn.setVisible(false);
+			reorderContainer.setVisible(false);
 			actionVerPanelForUpdateTime.setVisible(true);
 			videoDisplay.setVisible(false);
 			narrationConatainer.setVisible(false);
 			editFieldsFloPanel.setVisible(true);
-			ResourceEditButtonContainer.getElement().getStyle()
-					.setVisibility(Visibility.HIDDEN);
+			ResourceEditButtonContainer.setVisible(false);
+			/*ResourceEditButtonContainer.getElement().getStyle()
+					.setVisibility(Visibility.HIDDEN);*/
 			fromTxt.setFocus(true);
 			setEditMode(true);
 
@@ -1918,7 +1946,7 @@ public class ShelfCollectionResourceChildView extends
 		collectionResourceTabView.removeCollectionItem(collectionItemDo, this);
 		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(
 				collectionItemDo, RefreshType.DELETE));
-		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 			Window.enableScrolling(false);
 		}else{
 			Window.enableScrolling(true);
@@ -2035,7 +2063,8 @@ public class ShelfCollectionResourceChildView extends
 										videoDisplay.setVisible(false);
 										narrationConatainer.setVisible(false);
 										editFieldsFloPanel.setVisible(true);
-										ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+										ResourceEditButtonContainer.setVisible(false);
+//										ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 										fromTxt.setFocus(true);
 										UpdateTextMessage.setVisible(false);		
 										errorMsgLabel.setText("");
@@ -2242,6 +2271,99 @@ public class ShelfCollectionResourceChildView extends
 		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
         html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("<p class=\"p1\">", "");
         return html;
+	}
+	
+	public void setUpDownArrowVisibility(int totalCount) { 
+		
+	}
+	
+	
+	/**
+	 * Sets the re-order Up button visibility
+	 * @param isvisible {@link Boolean}
+	 */
+	public void upButtonIsVisible(boolean isvisible) {
+		
+		if(isvisible){
+			resourceMoveUpBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		}else{
+			resourceMoveUpBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		}
+	}
+
+
+	/**
+	 * Sets the re-order Down button visibility
+	 * @param isvisible {@link Boolean}
+	 */
+	public void downButtonIsVisible(boolean isvisible) {
+		if(isvisible){
+			resourceMoveDownBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		}else{
+			resourceMoveDownBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		}
+	}
+	
+	
+	public void showReorderValidationToolTip(String validationMsg){
+		toolTipPopupPanel.clear();
+		toolTipPopupPanel.setWidget(new GlobalToolTip(validationMsg));
+		toolTipPopupPanel.setStyleName("");
+		toolTipPopupPanel.setPopupPosition(reorderTxtBox.getElement().getAbsoluteLeft()+110, reorderTxtBox.getElement().getAbsoluteTop()-40);
+		toolTipPopupPanel.getElement().getStyle().setZIndex(9999);
+		toolTipPopupPanel.show();
+		new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
+	}
+	
+	
+	
+	/**
+	 * @return the reorderTxtBox
+	 */
+	public TextBox getReorderTxtBox() {
+		return reorderTxtBox;
+	}
+	/**
+	 * @param reorderTxtBox the reorderTxtBox to set
+	 */
+	public void setReorderTxtBox(TextBox reorderTxtBox) {
+		this.reorderTxtBox = reorderTxtBox;
+	}
+	/**
+	 * @return the resourceMoveUpBtn
+	 */
+	public Button getResourceMoveUpBtn() {
+		return resourceMoveUpBtn;
+	}
+	/**
+	 * @param resourceMoveUpBtn the resourceMoveUpBtn to set
+	 */
+	public void setResourceMoveUpBtn(Button resourceMoveUpBtn) {
+		this.resourceMoveUpBtn = resourceMoveUpBtn;
+	}
+	/**
+	 * @return the resourceMoveDownBtn
+	 */
+	public Button getResourceMoveDownBtn() {
+		return resourceMoveDownBtn;
+	}
+	/**
+	 * @param resourceMoveDownBtn the resourceMoveDownBtn to set
+	 */
+	public void setResourceMoveDownBtn(Button resourceMoveDownBtn) {
+		this.resourceMoveDownBtn = resourceMoveDownBtn;
+	}
+	/**
+	 * @return the reorderContainer
+	 */
+	public HTMLPanel getReorderContainer() {
+		return reorderContainer;
+	}
+	/**
+	 * @param reorderContainer the reorderContainer to set
+	 */
+	public void setReorderContainer(HTMLPanel reorderContainer) {
+		this.reorderContainer = reorderContainer;
 	}
 	
 }

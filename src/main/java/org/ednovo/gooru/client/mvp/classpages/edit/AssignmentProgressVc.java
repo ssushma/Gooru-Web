@@ -30,6 +30,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.event.RefreshAssignmentsListEvent;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
@@ -169,6 +170,7 @@ public class AssignmentProgressVc extends Composite{
 		resourceCategoryLabel.getElement().setId("lblResourceCategory");
 		resoureDropDownLbl.getElement().setId("lblResourceDropDown");
 		resourceTypePanel.getElement().setId("pnlResourceType");
+		resourceTypePanel.getElement().getStyle().setBackgroundColor("#FFF");
 		assignmentInfoPopup.getElement().setId("pnlAssignmentInfoPopup");
 		lblCircle1.getElement().setId("lblCircle1");
 		assignmentCollectiontitle.getElement().setId("htmlAssignmentCollectionTitle");
@@ -282,6 +284,7 @@ public class AssignmentProgressVc extends Composite{
 					public void onSuccess(Void result) {
 						resourceTypePanel.setVisible(resourceTypePanel.isVisible() ? false : true);
 						AppClientFactory.fireEvent(new ResetProgressEvent());
+						AppClientFactory.fireEvent(new RefreshAssignmentsListEvent());
 					}
 				});
 			}
