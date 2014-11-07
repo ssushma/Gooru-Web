@@ -29,6 +29,10 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -77,6 +81,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	
 	private static final String O3_LEVEL = "o3";
 	
+	private static final String RIGHT="right";
+	
 	private static final String ID = "id";
 	
 	private String itemGooruOId,collectionItemId;
@@ -86,6 +92,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	private int itemNo;
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel(true);
+	
+	private PopupPanel toolTipPosPopupPanel=new PopupPanel();
 	
 	final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
 	
@@ -105,6 +113,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		setFolderDo(folderDo);
 //		setItemNo(folderNumber);
 		setFolderData(folderDo);
+		reorderTxtBox.addMouseOverHandler(new OnMouseOver());
+		reorderTxtBox.addMouseOutHandler(new OnMouseOut());
 		contentBlock.getElement().setId("fpnlContentBlock");
 		folderImage.getElement().setId("epnlFolderImage");
 		collectionImage.getElement().setId("imgCollectionImage");
@@ -421,6 +431,31 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		}else{
 			moveDownBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		}
+	}
+	
+	
+	private class OnMouseOver implements MouseOverHandler {
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			if (event.getSource() == reorderTxtBox){
+				toolTipPosPopupPanel.clear();
+				toolTipPosPopupPanel.setWidget(new GlobalToolTip("Enter in the position you would like to move this",RIGHT));
+				toolTipPosPopupPanel.setStyleName("");
+				toolTipPosPopupPanel.setPopupPosition(reorderTxtBox.getElement().getAbsoluteLeft()-110, reorderTxtBox.getElement().getAbsoluteTop()-40);
+				toolTipPosPopupPanel.getElement().getStyle().setZIndex(9999);
+				toolTipPosPopupPanel.show();
+			} 
+		}
+	}
+	
+	private class OnMouseOut implements MouseOutHandler {
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			toolTipPosPopupPanel.hide();
+		}
+
 	}
 
 	/**
