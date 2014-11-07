@@ -44,6 +44,7 @@ import org.ednovo.gooru.shared.model.content.UserStarRatingsDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.model.player.FeaturedContentDo;
+import org.ednovo.gooru.shared.model.player.InsightsCollectionDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -179,6 +180,8 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	public void getGoogleDriveFileStatusCode(String fileUrl,AsyncCallback<Integer> callback);
 	
 	public void getYoutubeFeedCallback(String utubeId, AsyncCallback<Map<String,String>> callback);
+	
+	public void getInsightsCollectionSummary(String collectionId,String classpageId,String sessionId,String userId,AsyncCallback<InsightsCollectionDo> callback);
 	
 	
 }

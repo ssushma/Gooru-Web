@@ -1343,7 +1343,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 
 
 	@Override
-	public void displaySpendTime(Long hours, Long mins, Long secs) {
+	public void displaySpendTime(Long hours, Long mins, Double secs) {
 		spendTimeContainer.clear();
 		if(AppClientFactory.isAnonymous()){
 			dispalyTime();
