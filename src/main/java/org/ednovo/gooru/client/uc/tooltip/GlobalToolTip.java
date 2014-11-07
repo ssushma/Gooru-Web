@@ -61,8 +61,9 @@ public class GlobalToolTip extends Composite {
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class); 
 	
-	private static final String LEFT="left";
+	private static final String TOP="top";
 	private static final String RIGHT="right";
+	private static final String BOTTOM="bottom";
 	
 	public GlobalToolTip(){
 		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
@@ -102,9 +103,9 @@ public class GlobalToolTip extends Composite {
 		desLbl.getElement().setId("lblDesLbl");
 		desLbl.getElement().setAttribute("alt", description);
 		desLbl.getElement().setAttribute("title", description);
-		if(value.equals(RIGHT)){
+		if(value.equals(RIGHT) || value.equals(TOP) || value.equals(BOTTOM) ){
 			arrowVisibility(value);
-			setArrowRight();
+			setArrowRight(value);
 		}else{
 			setArrowDirections();
 		}
@@ -150,9 +151,18 @@ public class GlobalToolTip extends Composite {
      	panelArrow.getElement().setAttribute("style", "left: -158px;top: 22px;-webkit-transform: rotate(265deg);position:absolute;");
     }
     
-    public void setArrowRight(){
-     	confirmationPanel.getElement().setAttribute("style", "width: 165px;");
-     	panelArrow.getElement().setAttribute("style", "left: 159px;top: 26px;-webkit-transform: rotate(90deg);position:absolute;");
+    public void setArrowRight(String direction){
+    	if(direction.equals(TOP)){
+    		confirmationPanel.getElement().setAttribute("style", "width: 110px;");
+         	panelArrow.getElement().setAttribute("style", "left: 104px;top: 17px;-webkit-transform: rotate(90deg);position:absolute;");
+    	}else if(direction.equals(BOTTOM)){
+    		confirmationPanel.getElement().setAttribute("style", "width: 124px;");
+         	panelArrow.getElement().setAttribute("style", "left: 118px;top: 18px;-webkit-transform: rotate(90deg);position:absolute;");
+    	}else if(direction.equals(RIGHT)){
+    		confirmationPanel.getElement().setAttribute("style", "width: 165px;");
+         	panelArrow.getElement().setAttribute("style", "left: 159px;top: 26px;-webkit-transform: rotate(90deg);position:absolute;");
+    	}
+     
     }
     
     public HTMLPanel getPanelArrow(){

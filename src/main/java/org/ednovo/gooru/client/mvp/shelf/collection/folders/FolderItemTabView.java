@@ -393,11 +393,20 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 						isFolderType = false;
 					}
 					if(getTotalCount()==1){
-						shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
+						isReorderButtonEnabled(false,shelfFolderItemChildView);
+						/*shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
 						shelfFolderItemChildView.getMoveDownBtn().setEnabled(false);
+						
+						shelfFolderItemChildView.getMoveBottomBtn().getElement().addClassName("disabled");
+						shelfFolderItemChildView.getMoveBottomBtn().setEnabled(false);*/
+						
 					}else{
-						shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
+						isReorderButtonEnabled(true,shelfFolderItemChildView);
+						/*shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
 						shelfFolderItemChildView.getMoveDownBtn().setEnabled(true);
+						
+						shelfFolderItemChildView.getMoveBottomBtn().getElement().removeClassName("disabled");
+						shelfFolderItemChildView.getMoveBottomBtn().setEnabled(true);*/
 					}
 					folderContentBlock.add(shelfFolderItemChildView);
 				}
@@ -436,6 +445,23 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		setPaginatedResults();
 	}
 	
+	private void isReorderButtonEnabled(boolean isEnable, ShelfFolderItemChildView shelfFolderItemChildView) { 
+		if(isEnable){
+			shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
+			shelfFolderItemChildView.getMoveDownBtn().setEnabled(isEnable);
+			
+			shelfFolderItemChildView.getMoveBottomBtn().getElement().removeClassName("disabled");
+			shelfFolderItemChildView.getMoveBottomBtn().setEnabled(isEnable);
+			
+		}else{
+			shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
+			shelfFolderItemChildView.getMoveDownBtn().setEnabled(isEnable);
+			
+			shelfFolderItemChildView.getMoveBottomBtn().getElement().addClassName("disabled");
+			shelfFolderItemChildView.getMoveBottomBtn().setEnabled(isEnable);
+		}
+	}
+
 	public class NewFolderMouseOver implements MouseOverHandler{
 
 		@Override
@@ -648,11 +674,25 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		setFolderCollectionItemSequence();
 		mainSection.removeStyleName(folderStyle.emptyFolder());
 		if(getTotalCount()==1){
-			shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
+			
+			isReorderButtonEnabled(false,shelfFolderItemChildView);
+			
+			/*shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
 			shelfFolderItemChildView.getMoveDownBtn().setEnabled(false);
+			
+			shelfFolderItemChildView.getMoveBottomBtn().getElement().addClassName("disabled");
+			shelfFolderItemChildView.getMoveBottomBtn().setEnabled(false);*/
+			
+			
 		}else{
-			shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
+			
+			isReorderButtonEnabled(true,shelfFolderItemChildView);
+			
+			/*shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
 			shelfFolderItemChildView.getMoveDownBtn().setEnabled(true);
+			
+			shelfFolderItemChildView.getMoveBottomBtn().getElement().removeClassName("disabled");
+			shelfFolderItemChildView.getMoveBottomBtn().setEnabled(true);*/
 		}
 	}
 	
