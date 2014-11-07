@@ -61,6 +61,9 @@ public class GlobalToolTip extends Composite {
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class); 
 	
+	private static final String LEFT="left";
+	private static final String RIGHT="right";
+	
 	public GlobalToolTip(){
 		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
 		desLbl.setText(i18n.GL1060());
@@ -99,9 +102,22 @@ public class GlobalToolTip extends Composite {
 		desLbl.getElement().setId("lblDesLbl");
 		desLbl.getElement().setAttribute("alt", description);
 		desLbl.getElement().setAttribute("title", description);
-		setArrowDirections();
+		if(value.equals(RIGHT)){
+			arrowVisibility(value);
+			setArrowRight();
+		}else{
+			setArrowDirections();
+		}
 	}
-    public void setPanelPosition(){
+    
+    
+    private void arrowVisibility(String value) {
+    	panelArrow.getElement().getStyle().setPosition(Position.ABSOLUTE);
+    	panelArrow.getElement().getStyle().setDisplay(Display.BLOCK);
+	}
+
+
+	public void setPanelPosition(){
     	panelArrow.getElement().getStyle().setPosition(Position.ABSOLUTE);
     	/*if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)){
 			panelArrow.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -132,6 +148,11 @@ public class GlobalToolTip extends Composite {
     public void setArrowDirections(){
      	confirmationPanel.getElement().setAttribute("style", "width: 149px;");
      	panelArrow.getElement().setAttribute("style", "left: -158px;top: 22px;-webkit-transform: rotate(265deg);position:absolute;");
+    }
+    
+    public void setArrowRight(){
+     	confirmationPanel.getElement().setAttribute("style", "width: 165px;");
+     	panelArrow.getElement().setAttribute("style", "left: 159px;top: 26px;-webkit-transform: rotate(90deg);position:absolute;");
     }
     
     public HTMLPanel getPanelArrow(){
