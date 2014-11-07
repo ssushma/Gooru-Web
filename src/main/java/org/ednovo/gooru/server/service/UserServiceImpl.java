@@ -775,4 +775,30 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 		return refreshToken;
 	}
+
+	@Override
+	public String isValidResetPasswordLink(String resetToken)
+			throws GwtException, ServerDownException {
+		// TODO Auto-generated method stub
+		JsonRepresentation jsonRep = null;
+		String url =UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.RESET_TOKEN_EXPIRE,getLoggedInSessionToken(),resetToken);
+		System.out.println("isValidResetPasswordLink:::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeResetToken(jsonRep);
+	}
+	
+	public String deserializeResetToken(JsonRepresentation jsonRep) {
+		String resetToken = null;
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try{
+			JSONObject jsonObject=jsonRep.getJsonObject();
+			resetToken = jsonObject.getString("isValidToken");
+			}catch(JSONException e){}
+				
+		}
+		return resetToken;
+	}
+	
+	
 }
