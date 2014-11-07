@@ -933,7 +933,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 
 
 .upDownBtn{
-	margin-left: -3px;
+	margin-left: 3px;
+	margin-top: -14px;
 }
 
 .upDownBtn input[type="text"]{
@@ -949,6 +950,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 
 .upDownBtnBlock{
 	display:block;
+	margin-bottom: 4px;
+	padding: 5px 8px;
 }
 
 .itemNumber{

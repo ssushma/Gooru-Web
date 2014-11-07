@@ -112,4 +112,6 @@ public interface UserServiceAsync extends BaseServiceAsync {
    void getRefershToken(String gooruUid,AsyncCallback<String> callback);
    
    void revokeToken(String gooruUid,AsyncCallback<String> callback);
+   
+   void isValidResetPasswordLink(String resetToken,AsyncCallback<String> callback);
 }
