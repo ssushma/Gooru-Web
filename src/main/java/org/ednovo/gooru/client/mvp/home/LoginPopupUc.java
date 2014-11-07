@@ -140,6 +140,7 @@ public class LoginPopupUc extends PopupPanel{
 
 	private static final String LOGINEVENT = "loginEvent";
 	private static final int UNAUTHORISED_STATUS_CODE = 401;
+	private static final int PASSWORDERROR_STATUS_CODE = 400;
 	private static final String GOOGLE_REFRESH_TOKEN = "google-refresh-token";
 	
 	@UiTemplate("LoginPopupUc.ui.xml")
@@ -365,7 +366,7 @@ public class LoginPopupUc extends PopupPanel{
 					@Override
 					public void onSuccess(UserDo result) {
 						
-						if(result.getStatusCode()!=UNAUTHORISED_STATUS_CODE){
+						if(result.getStatusCode()!=UNAUTHORISED_STATUS_CODE && result.getStatusCode()!=PASSWORDERROR_STATUS_CODE){
 							MixpanelUtil.Regular_User_Logged_In();
 							if(result.getDateOfBirth()!=null && result.getAccountTypeId()==2){
 								MixpanelUtil.Registration_turns13(); 
@@ -499,7 +500,13 @@ public class LoginPopupUc extends PopupPanel{
 									AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
 								}
 						    }*/
-						}else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE){
+						}
+						else if(result.getStatusCode()==PASSWORDERROR_STATUS_CODE){
+							loginButton.setVisible(true);
+							lblPleaseWait.setVisible(false);
+							new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+						}
+						else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE){
 							loginButton.setVisible(true);
 							lblPleaseWait.setVisible(false);
 							new AlertContentUc(i18n.GL1966(), i18n.GL1938());
