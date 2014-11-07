@@ -705,6 +705,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		profileImageUrl=profileDo.getUser().getProfileImageUrl() + "?p="+ Math.random();
 		userProfilePic.setUrl(profileImageUrl);
+		editImageButton.setText(i18n.GL0800());
+		StringUtil.setAttributes(editImageButton.getElement(), "editImageButton", i18n.GL0800(), i18n.GL0800());
 		userProfilePic.setAltText(profileDo.getUser().getUsername());
 		userProfilePic.setTitle(profileDo.getUser().getUsername());
 		userProfilePic.getElement().getStyle().setHeight(174, Unit.PX);
@@ -713,6 +715,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			@Override
 			public void onError(ErrorEvent event) {
 				userProfilePic.setUrl("images/profilepage/user-profile-pic.png");
+				editImageButton.setText(i18n.GL1087());
+				StringUtil.setAttributes(editImageButton.getElement(), "editImageButton", i18n.GL1087(), i18n.GL1087());
 				userProfilePic.setAltText(profileDo.getUser().getUsername());
 				userProfilePic.setTitle(profileDo.getUser().getUsername());
 			}
@@ -1032,6 +1036,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	public void setUserProfileImage(String imageUrl) {
 		profileImageUrl=imageUrl + "?" + Math.random();
 		userProfilePic.setUrl(profileImageUrl);
+		editImageButton.setText(i18n.GL0800());
+		StringUtil.setAttributes(editImageButton.getElement(), "editImageButton", i18n.GL0800(), i18n.GL0800());
 		shareDo.setThumbnailurl(profileImageUrl);
 		if(socialView!=null){
 			socialView.setShareDo(shareDo);
