@@ -483,7 +483,7 @@ public class AlmostDoneUc extends PopupPanel{
 				fieldValidationStaus=false;
 				
 			}
-			if(txtChooseUsername.getText().length()>4 && fieldValidationStaus)
+			if(txtChooseUsername.getText().length()>=4 && fieldValidationStaus)
 			{
 				checkUserAvailability(txtChooseUsername.getText(), "username");
 			}

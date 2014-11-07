@@ -1605,6 +1605,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 				UrlToken.REFRESH_TOKEN, refreshToken);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
+
 		String str = null;
 		try {
 			str = jsonRep.getJsonObject().toString();
@@ -1613,9 +1614,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		} catch (JSONException eJson) {
 			eJson.printStackTrace(); 
 		}
-		
-		
-		
 		return token;
 	}
 	

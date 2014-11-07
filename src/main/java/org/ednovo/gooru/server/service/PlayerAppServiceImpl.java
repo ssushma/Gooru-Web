@@ -41,7 +41,6 @@ import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsList;
@@ -56,6 +55,7 @@ import org.ednovo.gooru.shared.model.content.UserStarRatingsDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.model.player.FeaturedContentDo;
+import org.ednovo.gooru.shared.model.player.InsightsCollectionDo;
 import org.ednovo.gooru.shared.model.search.ResourceInfoObjectDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.user.CreatorDo;
@@ -1474,6 +1474,49 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			
 		}
 		return youtubeValues;
+	}
+	
+	
+	public InsightsCollectionDo getInsightsCollectionSummary(String collectionId,String classpageId,String sessionId,String userId){
+		String formdata=insightsJsonPayload(collectionId,classpageId,sessionId,getLoggedInUserUid());
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.GET_COLLECTION_SUMMARY,collectionId, getLoggedInSessionToken(),formdata);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
+		JsonRepresentation jsonRep = jsonResponseRep.getJsonRepresentation();
+		InsightsCollectionDo insightCollectionDo=null;
+		if(jsonRep!=null){
+			try {
+				JSONObject jsonObject=jsonRep.getJsonObject();
+				JSONArray contentJsonArrayjsonObject=jsonObject.getJSONArray("content");
+				if(contentJsonArrayjsonObject!=null){
+					if(contentJsonArrayjsonObject.length()>0){
+						JSONObject contentJsonObject=contentJsonArrayjsonObject.getJSONObject(0);
+						insightCollectionDo=JsonDeserializer.deserialize(contentJsonObject.toString(), InsightsCollectionDo.class);
+							
+					}
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return insightCollectionDo;
+		
+	}
+	
+	public String insightsJsonPayload(String collectionId,String classpageId,String sessionId,String userId){
+		JSONObject jsonObject=new JSONObject();
+		JSONObject filterJsonObject=new JSONObject();
+		
+		try {
+			jsonObject.put("fields", "completionStatus,userCount,lastModified,timeSpent,views,avgTimeSpent,gooruOId,title,description,avgReaction,score,totalQuestionCount");
+			filterJsonObject.put("userUId", userId);
+			filterJsonObject.put("session", "CS");
+			filterJsonObject.put("sessionId", sessionId);
+			filterJsonObject.put("classId", classpageId);
+			jsonObject.put("filters", filterJsonObject);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonObject.toString();
 	}
 	
 	

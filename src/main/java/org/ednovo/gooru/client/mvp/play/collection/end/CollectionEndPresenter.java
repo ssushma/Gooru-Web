@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewE
 import org.ednovo.gooru.client.mvp.play.collection.preview.end.PreviewEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomePresenter;
 import org.ednovo.gooru.client.mvp.play.collection.share.email.SummaryPageEmailShareUc;
+import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.service.LibraryServiceAsync;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -350,8 +351,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 			collectionPlayerPresenter.triggerCollectionShareDataEvent( collectionId, itemType,  shareType,  confirmStatus);
 		}
 	}
-	public void displaySpendTime(Long hours,Long mins, Long secs){
-		getView().displaySpendTime( hours,mins,secs);
+	public void displaySpendTime(Long hours,Long mins, Double secs){
+		getView().displaySpendTime( hours,mins, secs);
 	}
 	public void displayScoreCount(Integer collectionScore,Integer noOfQuestions){
 		getView().displayScoreCount(collectionScore,noOfQuestions);
@@ -359,24 +360,53 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 
 	@Override
 	public void getAvgReaction() {
-		if(collectionPlayerPresenter!=null){
-			Map<String, Integer> reactionTree=collectionPlayerPresenter.getReactionTreeMap();
-			Integer maxValue=0;
-			String reactiontype=null;
-			if(reactionTree.size()>0){
-				for(Map.Entry<String,Integer> entry : reactionTree.entrySet()){
-					Integer reactionValue=entry.getValue();
-					if(reactionValue>maxValue){
-						maxValue=reactionValue;
-						reactiontype=entry.getKey();
-					}
-				}
-			}
-			getView().showAvgReaction(reactiontype);
-		}else{
-			getView().showAvgReaction(null);
-		}
+//		if(collectionPlayerPresenter!=null){
+//			Map<String, Integer> reactionTree=collectionPlayerPresenter.getReactionTreeMap();
+//			Integer maxValue=0;
+//			String reactiontype=null;
+//			if(reactionTree.size()>0){
+//				for(Map.Entry<String,Integer> entry : reactionTree.entrySet()){
+//					Integer reactionValue=entry.getValue();
+//					if(reactionValue>maxValue){
+//						maxValue=reactionValue;
+//						reactiontype=entry.getKey();
+//					}
+//				}
+//			}
+//			getView().showAvgReaction(reactiontype);
+//		}else{
+//			getView().showAvgReaction(null);
+//		}
 		
 	}
+	
+	public void showAvgReaction(Integer averageReaction){
+		averageReaction=averageReaction!=null?averageReaction:0;
+		String reactionType=null;
+		
+		switch (averageReaction) {
+		case 5:
+			reactionType=ResourcePlayerMetadataView.REACTION_CAN_EXPLAIN;
+			break;
+		case 4:
+			reactionType=ResourcePlayerMetadataView.REACTION_CAN_UNDERSTAND;
+			break;
+		case 2:
+			reactionType=ResourcePlayerMetadataView.REACTION_DONOT_UNDERSTAND;
+			break;
+		case 3:
+			reactionType=ResourcePlayerMetadataView.REACTION_MEH;
+			break;
+		case 1:
+			reactionType=ResourcePlayerMetadataView.REACTION_NEED_HELP;
+			break;
+		}
+		getView().showAvgReaction(reactionType);
+	}
+	
+	public void dispalyTime(){
+		getView().dispalyTime();
+	}
+	
 	
 }

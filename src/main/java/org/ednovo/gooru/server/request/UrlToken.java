@@ -609,8 +609,9 @@ public enum UrlToken {
 	
 	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?partyUid={0}"),
 	
+	GET_COLLECTION_SUMMARY("/insights-api/v1/classpage/{0}?sessionToken={1}&data={2}"),
+
 	RESET_TOKEN_EXPIRE("/v2/user/check-reset-token?sessionToken={0}&resetToken={1}"),
-	
 
 	V2_UPDATE_QUESTION_ITEM("/v2/collection/question/{0}?sessionToken={1}"),
 
