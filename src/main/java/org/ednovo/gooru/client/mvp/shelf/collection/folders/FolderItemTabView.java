@@ -665,7 +665,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	}
 	
 	private void addFolder(FolderDo folderDo) {
-		shelfFolderItemChildView = new ShelfFolderItemChildView(folderDo,1); 
+		shelfFolderItemChildView = new ShelfFolderItemChildView(folderDo,1);
 		shelfFolderItemChildView.setCollectionItemId(folderDo.getCollectionItemId());
 		shelfFolderItemChildView.setItemGooruOId(folderDo.getGooruOid());
 		shelfFolderItemChildView.getMoveUpBtn().addClickHandler(new OnClickReorderUpButton(folderDo.getGooruOid())); 
@@ -924,7 +924,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 			itemToBeMovedPosSeqNumb = EXTREME_TOP;
 			
 			if(shelfFolderItemChildView!=null){
-				
 				itemSeqToAPI= getMoveUpItemSeq(itemPosSeqNumb,itemToBeMovedPosSeqNumb);
 				getUiHandlers().reorderFoldersOrCollection(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,UP_ARROW,shelfFolderItemChildView.getCollectionItemId(),itemSeqToAPI);
 			}
@@ -1191,8 +1190,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		folderContentBlock.insert(shelfFolderItemChildView, newItemPosition);
 		Document.get().getElementById("pnlEditPanel").setScrollTop(0 + (newItemPosition)*(shelfFolderItemChildView.getOffsetHeight()-23));
 		new BackgroundColorEffect(shelfFolderItemChildView.getElement(),"#E7F1F8" ,"white", 4000);
-		AppClientFactory.fireEvent(new ReorderShelfListItemsEvent(shelfFolderItemChildView.getItemGooruOId(), newItemPosition, direction, params, shelfFolderItemChildView.getFolderDo(),shelfFolderItemChildView.getItemNumber().getText()));
 		setFolderCollectionItemSequence();
+		AppClientFactory.fireEvent(new ReorderShelfListItemsEvent(shelfFolderItemChildView.getItemGooruOId(), newItemPosition, direction, params, shelfFolderItemChildView.getFolderDo(),shelfFolderItemChildView.getItemNumber().getText()));
 	}
 	
 	
