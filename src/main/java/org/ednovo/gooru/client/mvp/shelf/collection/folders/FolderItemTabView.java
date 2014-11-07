@@ -118,6 +118,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	
 	private static final String DOWN_ARROW = "MoveDown";
 	
+	private static final int EXTREME_TOP = 1;
+	
 	private static final String REORDER_VALIDATION_MSG = "Success";
 	
 	private String O1_LEVEL_VALUE = null, O2_LEVEL_VALUE = null, O3_LEVEL_VALUE = null;
@@ -387,17 +389,28 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					shelfFolderItemChildView.setUpDownArrowVisibility(totalCount);
 					shelfFolderItemChildView.getMoveUpBtn().addClickHandler(new OnClickReorderUpButton(folderList.get(i).getGooruOid())); 
 					shelfFolderItemChildView.getMoveDownBtn().addClickHandler(new OnClickReorderDownButton(folderList.get(i).getGooruOid()));
+					shelfFolderItemChildView.getMoveTopBtn().addClickHandler(new OnClickReorderTopButton(folderList.get(i).getGooruOid())); 
+					shelfFolderItemChildView.getMoveBottomBtn().addClickHandler(new OnClickReorderBottomButton(folderList.get(i).getGooruOid()));
 					shelfFolderItemChildView.getReorderTxtBox().addKeyPressHandler(new HasNumbersOnly()); 
 					shelfFolderItemChildView.getReorderTxtBox().addKeyUpHandler(new ReorderText(folderList.get(i).getGooruOid())); 
 					if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 						isFolderType = false;
 					}
 					if(getTotalCount()==1){
-						shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
+						isReorderButtonEnabled(false,shelfFolderItemChildView);
+						/*shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
 						shelfFolderItemChildView.getMoveDownBtn().setEnabled(false);
+						
+						shelfFolderItemChildView.getMoveBottomBtn().getElement().addClassName("disabled");
+						shelfFolderItemChildView.getMoveBottomBtn().setEnabled(false);*/
+						
 					}else{
-						shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
+						isReorderButtonEnabled(true,shelfFolderItemChildView);
+						/*shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
 						shelfFolderItemChildView.getMoveDownBtn().setEnabled(true);
+						
+						shelfFolderItemChildView.getMoveBottomBtn().getElement().removeClassName("disabled");
+						shelfFolderItemChildView.getMoveBottomBtn().setEnabled(true);*/
 					}
 					folderContentBlock.add(shelfFolderItemChildView);
 				}
@@ -436,6 +449,23 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		setPaginatedResults();
 	}
 	
+	private void isReorderButtonEnabled(boolean isEnable, ShelfFolderItemChildView shelfFolderItemChildView) { 
+		if(isEnable){
+			shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
+			shelfFolderItemChildView.getMoveDownBtn().setEnabled(isEnable);
+			
+			shelfFolderItemChildView.getMoveBottomBtn().getElement().removeClassName("disabled");
+			shelfFolderItemChildView.getMoveBottomBtn().setEnabled(isEnable);
+			
+		}else{
+			shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
+			shelfFolderItemChildView.getMoveDownBtn().setEnabled(isEnable);
+			
+			shelfFolderItemChildView.getMoveBottomBtn().getElement().addClassName("disabled");
+			shelfFolderItemChildView.getMoveBottomBtn().setEnabled(isEnable);
+		}
+	}
+
 	public class NewFolderMouseOver implements MouseOverHandler{
 
 		@Override
@@ -640,6 +670,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		shelfFolderItemChildView.setItemGooruOId(folderDo.getGooruOid());
 		shelfFolderItemChildView.getMoveUpBtn().addClickHandler(new OnClickReorderUpButton(folderDo.getGooruOid())); 
 		shelfFolderItemChildView.getMoveDownBtn().addClickHandler(new OnClickReorderDownButton(folderDo.getGooruOid()));
+		shelfFolderItemChildView.getMoveTopBtn().addClickHandler(new OnClickReorderTopButton(folderDo.getGooruOid())); 
+		shelfFolderItemChildView.getMoveBottomBtn().addClickHandler(new OnClickReorderBottomButton(folderDo.getGooruOid()));
 		shelfFolderItemChildView.getReorderTxtBox().addKeyPressHandler(new HasNumbersOnly()); 
 		shelfFolderItemChildView.getReorderTxtBox().addKeyUpHandler(new ReorderText(folderDo.getGooruOid())); 
 		shelfFolderItemChildView.upButtonIsVisible(false);
@@ -648,11 +680,22 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		setFolderCollectionItemSequence();
 		mainSection.removeStyleName(folderStyle.emptyFolder());
 		if(getTotalCount()==1){
-			shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
+			isReorderButtonEnabled(false,shelfFolderItemChildView);
+			
+			/*shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
 			shelfFolderItemChildView.getMoveDownBtn().setEnabled(false);
+			
+			shelfFolderItemChildView.getMoveBottomBtn().getElement().addClassName("disabled");
+			shelfFolderItemChildView.getMoveBottomBtn().setEnabled(false);*/
+			
+			
 		}else{
-			shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
+			isReorderButtonEnabled(true,shelfFolderItemChildView);
+			/*shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
 			shelfFolderItemChildView.getMoveDownBtn().setEnabled(true);
+			
+			shelfFolderItemChildView.getMoveBottomBtn().getElement().removeClassName("disabled");
+			shelfFolderItemChildView.getMoveBottomBtn().setEnabled(true);*/
 		}
 	}
 	
@@ -856,6 +899,41 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	
 	/**
 	 * 
+	 * Inner class for reorder Extreme top button, which implements click handler {@link ClickHandler}
+	 *
+	 */
+	
+	public class OnClickReorderTopButton implements ClickHandler{
+		private String itemGooruOid;
+		int itemPosSeqNumb,itemToBeMovedPosSeqNumb,itemSeqToAPI;
+
+		/**
+		 * Class constructor
+		 * @param itemGooruOid {@link String}
+		 */
+		public OnClickReorderTopButton(String itemGooruOid) {
+			this.itemGooruOid = itemGooruOid;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			ShelfFolderItemChildView shelfFolderItemChildView = getFolderOrCollectionWidget(itemGooruOid);
+			
+			itemPosSeqNumb = shelfFolderItemChildView != null ?(Integer.parseInt(shelfFolderItemChildView.getItemNumber().getText().trim())):0;
+			itemToBeMovedPosSeqNumb = EXTREME_TOP;
+			
+			if(shelfFolderItemChildView!=null){
+				
+				itemSeqToAPI= getMoveUpItemSeq(itemPosSeqNumb,itemToBeMovedPosSeqNumb);
+				getUiHandlers().reorderFoldersOrCollection(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,UP_ARROW,shelfFolderItemChildView.getCollectionItemId(),itemSeqToAPI);
+			}
+			
+		}
+	}
+	
+	/**
+	 * 
 	 * Inner class for reorder Up button, which implements click handler {@link ClickHandler}
 	 *
 	 */
@@ -940,6 +1018,41 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 				}else{
 					shelfFolderItemChildView.showReorderValidationToolTip(reorderValidationMsg);
 				}
+			}
+		}
+	}
+	
+	
+	/**
+	 * 
+	 * Inner class for reorder extreme bottom button, which implements click handler {@link ClickHandler}
+	 *
+	 */
+	
+	public class OnClickReorderBottomButton implements ClickHandler{
+		
+		private String itemGooruOid;
+		int itemPosSeqNumb,itemToBeMovedPosSeqNumb,itemSeqToAPI;
+		
+		
+		/**
+		 * Class constructor
+		 * @param itemGooruOid {@link String}
+		 */
+		public OnClickReorderBottomButton(String itemGooruOid) {
+			this.itemGooruOid = itemGooruOid;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			ShelfFolderItemChildView shelfFolderItemChildView = getFolderOrCollectionWidget(itemGooruOid);
+
+			itemPosSeqNumb = shelfFolderItemChildView != null ?(Integer.parseInt(shelfFolderItemChildView.getItemNumber().getText().trim())):0;
+			itemToBeMovedPosSeqNumb = getTotalCount();
+			if(shelfFolderItemChildView!=null){
+				itemSeqToAPI= getMoveDownItemSeq(itemPosSeqNumb,itemToBeMovedPosSeqNumb);
+				getUiHandlers().reorderFoldersOrCollection(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,DOWN_ARROW,shelfFolderItemChildView.getCollectionItemId(),itemSeqToAPI);
 			}
 		}
 	}

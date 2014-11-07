@@ -24,6 +24,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -58,7 +59,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	@UiField Label itemTitle,itemNumber;
 	
 	@UiField TextBox reorderTxtBox;
-	@UiField Button moveUpBtn,moveDownBtn;
+	@UiField Button moveUpBtn,moveDownBtn,moveTopBtn,moveBottomBtn;
 	
 
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-collection-image-160x120.png";
@@ -82,6 +83,10 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	private static final String O3_LEVEL = "o3";
 	
 	private static final String RIGHT="right";
+	
+	private static final String TOP="top";
+	
+	private static final String BOTTOM="bottom";
 	
 	private static final String ID = "id";
 	
@@ -115,6 +120,11 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		setFolderData(folderDo);
 		reorderTxtBox.addMouseOverHandler(new OnMouseOver());
 		reorderTxtBox.addMouseOutHandler(new OnMouseOut());
+		moveTopBtn.addMouseOverHandler(new OnMouseOver());
+		moveTopBtn.addMouseOutHandler(new OnMouseOut());
+		moveBottomBtn.addMouseOverHandler(new OnMouseOver());
+		moveBottomBtn.addMouseOutHandler(new OnMouseOut());
+		
 		contentBlock.getElement().setId("fpnlContentBlock");
 		folderImage.getElement().setId("epnlFolderImage");
 		collectionImage.getElement().setId("imgCollectionImage");
@@ -122,9 +132,18 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		contents.getElement().setId("fpnlContents");
 		moveUpBtn.getElement().setId("moveUpBtn");
 		moveDownBtn.getElement().setId("moveDownBtn");
+		moveTopBtn.getElement().setId("moveTopBtn");
+		moveBottomBtn.getElement().setId("moveBottomBtn");
 		reorderTxtBox.getElement().setId("reorderTxtBox");
 		moveDownBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 		moveUpBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		moveBottomBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		moveTopBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+		
+		moveUpBtn.getElement().setAttribute("style", "padding: 5px 8px;");
+		moveDownBtn.getElement().setAttribute("style", "padding: 5px 8px;");
+		moveTopBtn.getElement().setAttribute("style", "padding: 5px 8px;");
+		moveBottomBtn.getElement().setAttribute("style", "padding: 5px 8px;");
 		
 	}
 	
@@ -412,11 +431,12 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	 * @param isvisible {@link Boolean}
 	 */
 	public void upButtonIsVisible(boolean isvisible) {
-//		moveUpBtn.setVisible(isvisible);
 		if(isvisible){
 			moveUpBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+			moveTopBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 		}else{
 			moveUpBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			moveTopBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		}
 	}
 
@@ -428,8 +448,10 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	public void downButtonIsVisible(boolean isvisible) {
 		if(isvisible){
 			moveDownBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+			moveBottomBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 		}else{
 			moveDownBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+			moveBottomBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		}
 	}
 	
@@ -445,7 +467,21 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 				toolTipPosPopupPanel.setPopupPosition(reorderTxtBox.getElement().getAbsoluteLeft()-110, reorderTxtBox.getElement().getAbsoluteTop()-40);
 				toolTipPosPopupPanel.getElement().getStyle().setZIndex(9999);
 				toolTipPosPopupPanel.show();
-			} 
+			}else if(event.getSource() == moveTopBtn){
+				toolTipPosPopupPanel.clear();
+				toolTipPosPopupPanel.setWidget(new GlobalToolTip("Move to top",TOP));
+				toolTipPosPopupPanel.setStyleName("");
+				toolTipPosPopupPanel.setPopupPosition(moveTopBtn.getElement().getAbsoluteLeft()-59, moveTopBtn.getElement().getAbsoluteTop()-34);
+				toolTipPosPopupPanel.getElement().getStyle().setZIndex(9999);
+				toolTipPosPopupPanel.show();
+			}else if(event.getSource() == moveBottomBtn){
+				toolTipPosPopupPanel.clear();
+				toolTipPosPopupPanel.setWidget(new GlobalToolTip("Move to bottom",BOTTOM));
+				toolTipPosPopupPanel.setStyleName("");
+				toolTipPosPopupPanel.setPopupPosition(moveBottomBtn.getElement().getAbsoluteLeft()-70, moveBottomBtn.getElement().getAbsoluteTop()-40);
+				toolTipPosPopupPanel.getElement().getStyle().setZIndex(9999);
+				toolTipPosPopupPanel.show();
+			}
 		}
 	}
 	
@@ -570,6 +606,34 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	 */
 	public void setFolderDo(FolderDo folderDo) {
 		this.folderDo = folderDo;
+	}
+
+	/**
+	 * @return the moveTopBtn
+	 */
+	public Button getMoveTopBtn() {
+		return moveTopBtn;
+	}
+
+	/**
+	 * @param moveTopBtn the moveTopBtn to set
+	 */
+	public void setMoveTopBtn(Button moveTopBtn) {
+		this.moveTopBtn = moveTopBtn;
+	}
+
+	/**
+	 * @return the moveBottomBtn
+	 */
+	public Button getMoveBottomBtn() {
+		return moveBottomBtn;
+	}
+
+	/**
+	 * @param moveBottomBtn the moveBottomBtn to set
+	 */
+	public void setMoveBottomBtn(Button moveBottomBtn) {
+		this.moveBottomBtn = moveBottomBtn;
 	}
 	
 
