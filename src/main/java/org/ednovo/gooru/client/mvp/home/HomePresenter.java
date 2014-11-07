@@ -56,6 +56,7 @@ import org.ednovo.gooru.client.service.HomeServiceAsync;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
+import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
@@ -73,6 +74,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -346,7 +348,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				if(result.equals("true")){
 					getView().resetPassword(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
 				}else{
-					new AlertContentUc("Oops", i18n.GL0100());
+					new AlertMessageUc(i18n.GL1089(), new HTML(i18n.GL0100()));
 				}
 			}
 		});
