@@ -231,3 +231,109 @@ tbody {
 }
 
 /*Collection summary end */
+/*collection teacher summary*/
+
+.tableMain {
+	width: 98%;;
+	/* height: 100px; */
+	float: left;
+	padding: 2px;
+	/* margin-bottom: 35px; */
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin-left: 2%;
+	margin-bottom: 3px;
+}
+
+.tableHeader {
+	font-weight: bold;
+	text-align: center;
+	background: #fff
+		url("//ssl.gstatic.com/charts/static/table-title-bg.gif") repeat-x
+		left bottom;
+	background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%,
+		rgba(249, 250, 253, 1) 30%, rgba(238, 242, 247, 1) 60%,
+		rgba(228, 233, 244, 1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255,
+		255, 255, 1)), color-stop(30%, rgba(249, 250, 253, 1)),
+		color-stop(60%, rgba(238, 242, 247, 1)),
+		color-stop(100%, rgba(228, 233, 244, 1)));
+	background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%,
+		rgba(249, 250, 253, 1) 30%, rgba(238, 242, 247, 1) 60%,
+		rgba(228, 233, 244, 1) 100%);
+	background: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%,
+		rgba(249, 250, 253, 1) 30%, rgba(238, 242, 247, 1) 60%,
+		rgba(228, 233, 244, 1) 100%);
+	background: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%,
+		rgba(249, 250, 253, 1) 30%, rgba(238, 242, 247, 1) 60%,
+		rgba(228, 233, 244, 1) 100%);
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%,
+		rgba(249, 250, 253, 1) 30%, rgba(238, 242, 247, 1) 60%,
+		rgba(228, 233, 244, 1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',
+		endColorstr='#e4e9f4', GradientType=0);
+}
+
+.tableHeader td {
+	vertical-align: middle;
+	border-right: 1px solid black;
+	text-align: center;
+	width: auto;
+	border: 1px solid #eee;
+	font-weight: bold;
+	padding: 6px;
+}
+
+.tableRowEven >td {
+	background-color: #fff;
+	border: 1px solid #eee;
+	text-align: center;
+	vertical-align: middle;
+	padding: 6px;
+}
+
+.tableRowOdd >td {
+	background-color: #fafafa;
+	text-align: center;
+	vertical-align: middle;
+	border: 1px solid #eee;
+	padding: 6px;
+}
+
+.assignment_quesiton_ans_bar {
+	background-color: #A6CAA2 !important;
+	float: left;
+	height: 20px;
+	line-height: 20px;
+	/* margin-top: 3px; */
+	width: 100px;
+	border-left: 1px solid #E9E8E8;
+	margin-bottom: 2px;
+	padding-left: -22px;
+	vertical-align: middle;
+}
+
+.wrongSelectStyle {
+	background-color: #FAC6C4 !important;
+	float: left;
+	height: 20px;
+	line-height: 20px;
+	/* margin-top: 3px; */
+	width: 100px;
+	border-left: 1px solid #E9E8E8;
+	margin-bottom: 2px;
+	padding-left: -22px;
+	vertical-align: middle;
+}
+.barGraphCharacter{
+	margin-right: 3px;
+}
+.tickMarkImg{
+	background: url(/images/analytics/tick.png) no-repeat 0 2px;
+}
+.tickMarkImgCss{
+	height: 22px;
+	top: 7px;
+	width: 20px;	
+}
+/*End */

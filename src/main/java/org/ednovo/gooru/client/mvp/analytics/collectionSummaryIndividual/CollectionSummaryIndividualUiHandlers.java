@@ -31,6 +31,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 public interface CollectionSummaryIndividualUiHandlers extends BaseUiHandlers{
 	void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,boolean isSummary,HTMLPanel loadingImage,PrintUserDataDO printUserDataDO);
-	void setHtmltopdf(String htmlString);
+	void setHtmltopdf(String htmlString,boolean isClickedOnEmail);
 	void setOEtextData(String resourceGooruId,String questionType);
 }

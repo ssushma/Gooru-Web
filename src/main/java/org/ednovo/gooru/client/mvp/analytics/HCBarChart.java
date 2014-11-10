@@ -50,7 +50,6 @@ public class HCBarChart {
 		PiePlotOptions options = new PiePlotOptions();
 		options.setSize(1.0);
 		options.setInnerSize(0.20);
-		
 		chart.addSeries(chart.createSeries()
 				.setPoints(pointArr)
 			);

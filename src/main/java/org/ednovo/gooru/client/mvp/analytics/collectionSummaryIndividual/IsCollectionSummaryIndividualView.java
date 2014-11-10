@@ -41,4 +41,8 @@ public interface IsCollectionSummaryIndividualView extends IsViewWithHandlers<Co
 	void setIndividualCollectionMetaData(ArrayList<CollectionSummaryMetaDataDo> result,PrintUserDataDO printUserDataDO);
 	
 	void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType, boolean isSummary);
+
+    void enableAndDisableEmailButton(boolean isSummary);
+
+	void setPdfForEmail(String path);
 }

@@ -74,12 +74,14 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	final List<Integer> resourceRowIndex=new ArrayList<Integer>();
 	
 	final String INCORRECT="#db0f0f",CORRECT="#4d9645",ONMULTIPULEATTEMPTS="#FBB03B";
-	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab",PRINT="print";
+	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab",PRINT="print",EMAIL="email";
 	private static final String QUESTION = "question";
 	private static final String VIEWRESPONSE = i18n.GL2286();
 	
 	ArrayList<UserDataDo> questionsData=new ArrayList<UserDataDo>();
 	ArrayList<UserDataDo> openendedData=new ArrayList<UserDataDo>();
+	EmailPopup emailPopup=new EmailPopup();
+	String collectionTitle=null;
 	
 	//Used for print
 	HTMLPanel printScoredData=new HTMLPanel("");
@@ -113,9 +115,13 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 					hideAllPanels();
 					individualResourceBreakdownDatapnl.setVisible(true);
 				}else if(tabClicked.equalsIgnoreCase(PRINT)){
-					setPrintIndividualSummayData(false);
+					setPrintIndividualSummayData(false,false);
+				}else if(tabClicked.equalsIgnoreCase(EMAIL)){
+					setPrintIndividualSummayData(true,true);
+					emailPopup.setData();
+					emailPopup.show();
 				}else{
-					setPrintIndividualSummayData(true);
+					setPrintIndividualSummayData(true,false);
 				}
 			}
 		};
@@ -853,11 +859,12 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	public void setIndividualCollectionMetaData(
 			ArrayList<CollectionSummaryMetaDataDo> result,PrintUserDataDO printUserDataDO) {
 		//Set collection meta data
+		collectionTitle=result.get(0).getTitle();
 		totalTimeSpentlbl.setText(AnalyticsUtil.getTimeSpent(result.get(0).getAvgTimeSpent()));
 		totalViewlbl.setText(Integer.toString(result.get(0).getViews()));
 		totalAvgReactionlbl.clear();
 		totalAvgReactionlbl.add(new AnalyticsReactionWidget(result.get(0).getAvgReaction()));
-		collectionOverViewWidget.setData(result);
+		collectionOverViewWidget.setData(result.get(0),false);
 		collectionSummaryWidget.setDataAnalyticsData(result.get(0),printUserDataDO);
 	}
 	@Override
@@ -876,7 +883,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	    	 popupPanel.center();
 	     }
 	}
-	public void setPrintIndividualSummayData(boolean isClickedOnSave){
+	public void setPrintIndividualSummayData(boolean isClickedOnSave,boolean isClickedOnEmail){
 		printWidget.clear();
 		Label collectionSummaryText=new Label();
 		collectionSummaryText.setText(i18n.GL1587());
@@ -906,11 +913,19 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		printWidget.add(printResourceData);
 		String style="<link rel='styleSheet' type='text/css' href='https://www.google.com/uds/api/visualization/1.0/8c95b72e5c145d5b3d7bb8b4ea74fd63/ui+en,table+en.css'><link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'>";
 		if(isClickedOnSave){
-			getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.toString().replaceAll("\"", "\\\\\""));
-			 printWidget.clear();
+				 getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.toString().replaceAll("\"", "\\\\\""),isClickedOnEmail);
+				 printWidget.clear();
 		}else{
 			Print.it(style,printWidget);
 		    printWidget.clear();
 		}
+	}
+	@Override 
+	public void setPdfForEmail(String path){
+		emailPopup.setEmailData(collectionTitle,path);
+	}
+	@Override
+	public void enableAndDisableEmailButton(boolean isSummary){
+		individualTabContainer.getEmailButton().setVisible(!isSummary);
 	}
 }
