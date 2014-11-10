@@ -1,8 +1,5 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
@@ -12,8 +9,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -28,11 +27,13 @@ public class EmailPopup extends PopupPanel {
 	}
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
-	@UiField Button sendBtn,cancelBtn;
-	@UiField Label emailErrorlbl,userNamelbl,displayPdfPathlbl;
+	@UiField HTMLPanel successMesageContainer,mainBodycontainer;
+	@UiField Button okBtn,sendBtn,cancelBtn;
+	@UiField Label emailIdsText,headerTitlelbl,emailErrorlbl,userNamelbl,displayPdfPathlbl;
 	@UiField TextArea messageTextArea;
 	@UiField TextBox subjectTxt,emailTextbox;
 	@UiField CheckBox sendmecopy;
+	@UiField Anchor privacylbl;
 	boolean isValidate=true;
 	String fileName,filePath;
 	
@@ -53,14 +54,19 @@ public class EmailPopup extends PopupPanel {
 		sendBtn.setEnabled(false);
 		emailTextbox.getElement().setAttribute("placeholder","Separate email addresses with a comma or semicolon");
 		emailErrorlbl.setVisible(false);
+		successMesageContainer.setVisible(false);
+		mainBodycontainer.setVisible(true);
 	}
 	public void setEmailData(String pdfName,String path){
+		successMesageContainer.setVisible(false);
+		mainBodycontainer.setVisible(true);
 		pdfName=pdfName.replaceAll(" ", "_");
 		pdfName = pdfName + "_Collection_Summary.pdf";
 		displayPdfPathlbl.setText(pdfName);
 		fileName=pdfName;
 		filePath=path;
 		sendBtn.setEnabled(true);
+		headerTitlelbl.setText(i18n.GL1449());
 	}
 	public void setData(){
 		userNamelbl.setText(AppClientFactory.getLoggedInUser().getUsernameDisplay());
@@ -69,6 +75,16 @@ public class EmailPopup extends PopupPanel {
 	public void onClickOfCancelButton(ClickEvent e){
 		this.hide();
 	}
+	@UiHandler("okBtn")
+	public void onClickOfOKButton(ClickEvent e){
+		this.hide();
+	}
+	
+	@UiHandler("privacylbl")
+	public void onClickOfprivacylblButton(ClickEvent e){
+	
+	}
+	
 	@UiHandler("sendBtn")
 	public void onClickOfSendButton(ClickEvent e){
 		isValidate=true;
@@ -78,9 +94,13 @@ public class EmailPopup extends PopupPanel {
 			if(sendmecopy.isChecked()){
 				emailIds=emailIds+","+AppClientFactory.getLoggedInUser().getEmailId();
 			}
+			emailIdsText.setText(emailIds);
 			AppClientFactory.getInjector().getAnalyticsService().sendEmail(emailIds, subjectTxt.getText(), messageTextArea.getText(), userNamelbl.getText(), fileName, filePath, new AsyncCallback<Void>() {
 				@Override
 				public void onSuccess(Void result) {
+					headerTitlelbl.setText("Email sent!");
+					successMesageContainer.setVisible(true);
+					mainBodycontainer.setVisible(false);
 				}
 				@Override
 				public void onFailure(Throwable caught) {
@@ -96,19 +116,19 @@ public class EmailPopup extends PopupPanel {
 			emailErrorlbl.setVisible(true);
 		}
 		String[] getAllEmailAddress = emailIds.split(",");
-		System.out.println(emailIds+"::"+getAllEmailAddress.length);
 		for ( int i = 0; i < getAllEmailAddress.length; i++) {
 			String getMailId = getAllEmailAddress[i].trim();
 			boolean isEmail = validateEmail(getMailId);
 			if (!isEmail) {
-				
+				isValidate=false;
+				emailErrorlbl.setText(i18n.GL1027());
+				emailErrorlbl.setVisible(true);
 			}
 		}
 		return isValidate;
 	}
 	boolean validateEmail(String email) {
 		 boolean result = email.matches(EMAIL_PATTERN);
-		 System.out.println("result::"+result);
 		 return result;
 	}
 }

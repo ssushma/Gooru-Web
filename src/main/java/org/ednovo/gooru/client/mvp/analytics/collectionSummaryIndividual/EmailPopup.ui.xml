@@ -5,10 +5,19 @@
 	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel styleName="{email.emailContent}">
 	<div class="emailContainer">
-	<div class="emailHeaderContent">
-		Email your Collection Results
-	</div>
-		<div class="emailBodyContent">
+	<g:Label styleName="{email.emailHeaderContent}" ui:field="headerTitlelbl" >
+	</g:Label>
+		<g:HTMLPanel styleName="{email.emailBodyContent}" ui:field="successMesageContainer">
+			<div class="labelRowDiv" style="padding:0px">
+				<div class="emailLeftContent leftLabel"></div>
+				<g:Label styleName="{email.emailRightContent} {email.emailSuccessMessage}" text="{i18n.GL0648}"/>
+				<g:Label styleName="{email.emailRightContent} {email.successEmailAddress}" ui:field="emailIdsText"/>
+			</div>
+			<div class="labelRowDiv buttonContainer">
+				<g:Button styleName="primary" ui:field="okBtn" text="{i18n.GL0190}"></g:Button>
+			</div>
+		</g:HTMLPanel>
+		<g:HTMLPanel styleName="{email.emailBodyContent}" ui:field="mainBodycontainer">
 			<div class="labelRowDiv">
 				<g:Label styleName="{email.emailLeftContent}" text="{i18n.GL0223} {i18n.GL_SPL_SEMICOLON}"/>
 				<g:Label styleName="{email.emailRightContent}" ui:field="userNamelbl"/>
@@ -20,8 +29,9 @@
 				<br/>
 					<g:Label styleName="{email.emailErrorMessage}" ui:field="emailErrorlbl"/>
 				<div>
-				<span>We will never share or sell your email address, your</span>
-				<br/> <a class="pop">privacy is important</a> <span class="gwt-InlineLabel">to us.</span></div>
+				<g:InlineLabel text="{i18n.GL1892}"/>
+				<br/> 
+				<g:Anchor text="{i18n.GL1893}" styleName="pop" ui:field="privacylbl"></g:Anchor> <g:InlineLabel text="{i18n.GL1894}"/></div>
 				</div>
 			</div>
 			<div class="labelRowDiv" style="padding:0px">
@@ -36,15 +46,13 @@
 			<div class="labelRowDiv">
 				<g:Label styleName="{email.emailLeftContent} {email.leftLabel}" text="{i18n.GL0226} {i18n.GL_SPL_SEMICOLON}"/>
 				<div class="emailRightContent">
-					<g:TextBox  styleName="{email.emailTextbox}" ui:field="subjectTxt">I've shared my Gooru collection summary with you</g:TextBox>
+					<g:TextBox  styleName="{email.emailTextbox}" ui:field="subjectTxt" text="{i18n.GL1443}"></g:TextBox>
 				</div>
 			</div>
 			<div class="labelRowDiv">
-				<div class="emailLeftContent leftLabel">
-					Message:
-				</div>
+				<g:Label styleName="{email.emailLeftContent} {email.leftLabel}" text="{i18n.GL0227} {i18n.GL_SPL_SEMICOLON}"/>
 				<div class="emailRightContent">
-					<g:TextArea styleName="{email.emailMessage}" ui:field="messageTextArea">I am sharing my collection summary with you.(PDF attached) Thank you!></g:TextArea> 
+					<g:TextArea styleName="{email.emailMessage}" ui:field="messageTextArea">I am sharing my collection summary with you.(PDF attached) Thank you!</g:TextArea> 
 				</div>
 			</div>
 			<div class="labelRowDiv" style="padding:0px">
@@ -55,7 +63,7 @@
 				<g:Button styleName="primary" ui:field="sendBtn" text="{i18n.GL0228}"></g:Button>
 				<g:Button styleName="secondary" ui:field="cancelBtn" text="{i18n.GL0142}"></g:Button>
 			</div>
-		</div>
+		</g:HTMLPanel>
 </div>
 	</g:HTMLPanel>
 </ui:UiBinder> 
