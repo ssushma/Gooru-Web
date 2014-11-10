@@ -463,4 +463,21 @@ div.buttonContainer {
 	margin: 0 0 0 40%;
 	width: 70%;
 }
+div.emailSuccessMessage{
+	color: #1076BB;
+	float: left;
+	font-size: 19px;
+	font-weight: normal;
+	text-align: center;
+	width: 100%;
+}
+.successEmailAddress {
+	clear: both;
+	float: left;
+	font-size: 14px;
+	text-align: center;
+	width: 100%;
+	padding-top: 14px;
+	padding-bottom: 7px;
+}
 /*Email popup css end*/
