@@ -10,7 +10,6 @@
 			background-color: white;
 			overflow-y: auto !important;
 			overflow-x: hidden !important;
-			max-height: 446px;
 			min-height: 370px;
 		}
 		
@@ -29,7 +28,7 @@
 			margin-right: 14px;
 		}
 		.myFolderCollectionPopupOuterdiv { 
-	        width: 531px; 
+	        width: 548px;
 	        margin: 0 auto;
 			position: relative;
 			padding: 3px 7px 3px 5px;
@@ -58,11 +57,11 @@
 	<g:FlowPanel>
 		<g:HTMLPanel styleName="{style.myFolderCollectionPopupOuterdiv}">
 			<g:HTMLPanel styleName="{res.css.myFolderCollectionPopupContainer}">
-				<g:HTMLPanel styleName="{res.css.myFolderCollectionPopup}">
-					<g:HTMLPanel styleName="{res.css.myFolderCollectionBlackBg}">
+			    <g:HTMLPanel styleName="{res.css.myFolderCollectionBlackBg}">
 						<g:Label styleName="{res.css.myFolderCollectionTitle}"
 							ui:field="titleLbl"></g:Label>
 					</g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.coursePopupStyle}">
 					<g:HTMLPanel styleName="{res.css.loadingImageMainDiv}"
 						ui:field="loadingPanel">
 						<g:Label styleName="{res.css.loadingImageForResource}" />
