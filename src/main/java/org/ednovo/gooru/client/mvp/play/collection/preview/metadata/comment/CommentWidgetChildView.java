@@ -320,7 +320,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	public void clickOnPostCommentBtn(ClickEvent event) {
 		if (commentField.getText().length() > 0){
 			Map<String, String> parms = new HashMap<String, String>();
-			parms.put("text", commentField.getText());
+			parms.put("text", removeHtmlTags(commentField.getText()));
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
 				@Override
@@ -334,13 +334,13 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 						commentField.getElement().getStyle().clearBackgroundColor();
 						commentField.getElement().getStyle().setBorderColor("#ccc");
 						
-						AppClientFactory.fireEvent(new EditCommentChildViewEvent(getCommentUid(),commentField.getText(),EDIT));
+						AppClientFactory.fireEvent(new EditCommentChildViewEvent(getCommentUid(),removeHtmlTags(commentField.getText()),EDIT));
 				    	displaySuccessMsg(true);
 						Timer timer = new Timer(){
 				            @Override
 				            public void run()
 				            {
-				            	commentsDo.setComment(commentField.getText());
+				            	commentsDo.setComment(removeHtmlTags(commentField.getText()));
 				            	commentHtml.setHTML(commentsDo.getComment());
 				            	String commentTime = getCreatedTime(commentsDo.getCreatedOn());
 				    			commentTime = commentTime+ " "+i18n.GL_GRR_Hyphen()+" "+i18n.GL1434();
@@ -573,5 +573,25 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		} else {
 			MixpanelUtil.mixpanelEvent("Preview_User_Comments");
 		}
+	}
+	
+	/**
+	 * @function removeHtmlTags 
+	 * 
+	 * @created_date : 10-Nov-2014
+	 * 
+	 * @description this method is used to remove the html tags in comment input box
+	 * 
+	 * @parm(s) : @param String 
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 */
+	private String removeHtmlTags(String html){
+		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
+		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("</a>", "").replaceAll("<a>", "");
+        return html;
 	}
 }
