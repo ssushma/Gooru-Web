@@ -607,6 +607,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	 */
 	@UiHandler("shareCollectionBtn")
 	public void onshareCollectionBtnClicked(ClickEvent clickEvent) {
+		getUiHandlers().triggerCollectionShareDataEvent(null,PlayerDataLogEvents.COLLECTION,"gooru",false);
 		final Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
 		String collectionId = collectionDo.getGooruOid();
 		AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, collectionDo.getTitle(), collectionDo.getGoals()) {
