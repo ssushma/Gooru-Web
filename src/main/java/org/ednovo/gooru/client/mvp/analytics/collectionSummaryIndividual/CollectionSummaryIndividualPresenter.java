@@ -32,6 +32,7 @@ import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
@@ -65,6 +66,7 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 		this.userId=userId;
 		this.sessionId=sessionId;
 		this.isSummary=isSummary;
+		getView().enableAndDisableEmailButton(isSummary);
 		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			
 			@Override
@@ -92,17 +94,19 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 	}
 
 	@Override
-	public void setHtmltopdf(String htmlString) {
-		this.analyticService.setHTMLtoPDF(htmlString, new AsyncCallback<Void>() {
-			
+	public void setHtmltopdf(String htmlString,final boolean isClickedOnEmail) {
+		this.analyticService.setHTMLtoPDF(htmlString, new AsyncCallback<String>() {
 			@Override
-			public void onSuccess(Void result) {
-				
+			public void onSuccess(String result) {
+				if(isClickedOnEmail){
+					getView().setPdfForEmail(result);
+				}else{
+					Window.open(result, "_blank", "status=0,toolbar=0,menubar=0,location=0");
+				}
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				
 			}
 		});
 	}

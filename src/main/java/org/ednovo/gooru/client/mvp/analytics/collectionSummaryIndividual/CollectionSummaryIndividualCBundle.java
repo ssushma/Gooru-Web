@@ -40,6 +40,8 @@ public interface CollectionSummaryIndividualCBundle extends ClientBundle{
 	        
 	        String setOETextPopupCenter();
 	        String setGlassStyleName();
+	        String setEmailGlassStyleName();
+	        String setEmailPopupCenter();
 	        
 	}
 	@NotStrict
