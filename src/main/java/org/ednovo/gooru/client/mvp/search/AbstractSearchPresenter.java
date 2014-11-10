@@ -594,6 +594,8 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 	
 	@Override
 	public void getAddStandards() {
+		
+		if(!AppClientFactory.isAnonymous()){
 		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
 				USER_META_ACTIVE_FLAG,
 				new SimpleAsyncCallback<ProfileDo>() {
@@ -636,7 +638,16 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 					}
 
 				});
-		
+		}else{
+			isCCSSAvailable = true;
+			isNGSSAvailable = true;
+			isCAAvailable = true;
+			if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
+				addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+				addToPopupSlot(addStandardsPresenter);
+				getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
+			}
+		}
 	}
 	
 	@Override
