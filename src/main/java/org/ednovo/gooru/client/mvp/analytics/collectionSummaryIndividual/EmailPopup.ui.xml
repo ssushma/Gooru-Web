@@ -1,0 +1,61 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="email" src="collectionSummaryIndividual.css" />
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
+	<g:HTMLPanel styleName="{email.emailContent}">
+	<div class="emailContainer">
+	<div class="emailHeaderContent">
+		Email your Collection Results
+	</div>
+		<div class="emailBodyContent">
+			<div class="labelRowDiv">
+				<g:Label styleName="{email.emailLeftContent}" text="{i18n.GL0223} {i18n.GL_SPL_SEMICOLON}"/>
+				<g:Label styleName="{email.emailRightContent}" ui:field="userNamelbl"/>
+			</div>
+			<div class="labelRowDiv">
+				<g:Label styleName="{email.emailLeftContent} {email.leftLabel}" text="{i18n.GL0224} {i18n.GL_SPL_SEMICOLON}"/>
+				<div class="emailRightContent">
+					<g:TextBox styleName="{email.emailTextbox}" ui:field="emailTextbox"/>
+				<br/>
+					<g:Label styleName="{email.emailErrorMessage}" ui:field="emailErrorlbl"/>
+				<div>
+				<span>We will never share or sell your email address, your</span>
+				<br/> <a class="pop">privacy is important</a> <span class="gwt-InlineLabel">to us.</span></div>
+				</div>
+			</div>
+			<div class="labelRowDiv" style="padding:0px">
+				<div class="emailLeftContent leftLabel"></div>
+				<div class="emailRightContent">
+					<g:Label styleName="{email.sendMeCopyMessage}" text="{i18n.GL0225}"/>
+					<g:CheckBox styleName="{email.sendMeCopyBox}"  ui:field="sendmecopy"/>
+					<div>
+					</div>
+				</div>
+			</div>
+			<div class="labelRowDiv">
+				<g:Label styleName="{email.emailLeftContent} {email.leftLabel}" text="{i18n.GL0226} {i18n.GL_SPL_SEMICOLON}"/>
+				<div class="emailRightContent">
+					<g:TextBox  styleName="{email.emailTextbox}" ui:field="subjectTxt">I've shared my Gooru collection summary with you</g:TextBox>
+				</div>
+			</div>
+			<div class="labelRowDiv">
+				<div class="emailLeftContent leftLabel">
+					Message:
+				</div>
+				<div class="emailRightContent">
+					<g:TextArea styleName="{email.emailMessage}" ui:field="messageTextArea">I am sharing my collection summary with you.(PDF attached) Thank you!></g:TextArea> 
+				</div>
+			</div>
+			<div class="labelRowDiv" style="padding:0px">
+				<div class="emailLeftContent leftLabel"></div>
+				<g:Label styleName="{email.emailRightContent}" ui:field="displayPdfPathlbl"/>
+			</div>
+			<div class="labelRowDiv buttonContainer">
+				<g:Button styleName="primary" ui:field="sendBtn" text="{i18n.GL0228}"></g:Button>
+				<g:Button styleName="secondary" ui:field="cancelBtn" text="{i18n.GL0142}"></g:Button>
+			</div>
+		</div>
+</div>
+	</g:HTMLPanel>
+</ui:UiBinder> 
