@@ -101,7 +101,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements IsHomeView, SelectionHandler<SuggestOracle.Suggestion> {
 
-	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries, panelPartnerLibraries, panelText;
+	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries, panelPartnerLibraries, panelText, panelGooruStories;
 	@UiField Button btnSignUp, btnMoreOnCollections,viewSampleResportsBtn;
 	@UiField Label lblHeading, lblSubHeading; 
 //	@UiField TextBoxWithPlaceholder txtSearch;
@@ -217,20 +217,33 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		}
 	
 
-		PeListPanel p = new PeListPanel();
-		p.setTitle(i18n.GL2188_3());
-		p.getElement().setInnerHTML(i18n.GL2188_3());
-		panelText.add(p);
 		
-		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl("", new SimpleAsyncCallback<String>() {
+		
+		panelGooruStories.setVisible(false);
+		
+		AppClientFactory.getInjector().getSearchService().showGooruStoriesSection( new SimpleAsyncCallback<String>() {
 			
 			@Override
 			public void onSuccess(String result) {
-				achGooruStories.setHref(result);
-				achGooruStories.setTarget("_blank");
+				if (result.equalsIgnoreCase("true")){
+					
+					PeListPanel p = new PeListPanel();
+					p.setTitle(i18n.GL2188_3());
+					p.getElement().setInnerHTML(i18n.GL2188_3());
+					panelText.add(p);
+					
+					AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl("", new SimpleAsyncCallback<String>() {
+						
+						@Override
+						public void onSuccess(String result) {
+							achGooruStories.setHref(result);
+							achGooruStories.setTarget("_blank");
+						}
+					});
+					panelGooruStories.setVisible(true);
+				}
 			}
 		});
-		
 		
 //		InternalServerErrorPopupViewVc error = new InternalServerErrorPopupViewVc() {
 //		};
