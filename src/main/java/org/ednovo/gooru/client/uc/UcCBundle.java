@@ -89,6 +89,8 @@ public interface UcCBundle extends ClientBundle {
 		
 		String collectionThumbnail();
 		
+		String collectionThumbnail1();
+		
 		String collectionNotify();
 		
 		String collectionThumbnails();
