@@ -117,6 +117,7 @@
 						<g:TextArea ui:field="textAreaVal"
 							styleName="{res.css.languageObjectiveTextArea}"></g:TextArea>
 							<g:Label ui:field="languageObjectiveerrLabel" styleName="{res.css.errorLabelColor}"></g:Label>
+							<g:Label ui:field="charLimitErrLbl" styleName="{res.css.learningObjErrStyle}"></g:Label>
 					</g:FlowPanel>
 					<g:FlowPanel styleName="{res.css.gradeListCont}">
 						<g:FlowPanel />
