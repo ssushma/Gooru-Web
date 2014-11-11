@@ -403,13 +403,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	private void displayPublisher(){
 		if(collectionItemDo.getResource()!=null && collectionItemDo.getResource().getResourceFormat()!=null ||collectionItemDo.getResource()!=null && collectionItemDo.getResource().getPublisher()!=null){
+			List<String> publishersList=null;
+			resourcePublisher.clear();
 			if(collectionItemDo.getResource().getPublisher()!=null){
 				if(!collectionItemDo.getResource().getPublisher().isEmpty()){
-					List<String> publishersList=collectionItemDo.getResource().getPublisher()!=null?collectionItemDo.getResource().getPublisher():null;
+					publishersList=collectionItemDo.getResource().getPublisher()!=null?collectionItemDo.getResource().getPublisher():null;
 					if(publishersList!=null&&publishersList.size()>0){
 						//publishersList.set(0,i18n.GL0566()+publishersList.get(0));
+						resourcePublisher.clear();
 						SearchUiUtil.renderMetaData(resourcePublisher, publishersList);
 					}else{
+						resourcePublisher.clear();
 						resourcePublisher.getElement().setInnerHTML("");
 						resourcePublisher.getElement().getStyle().setPaddingTop(0, Unit.PX);
 					}
@@ -418,6 +422,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
 						if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 							resourcePublisher.setVisible(true);
+							resourcePublisher.clear();
 							resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
 							resourcePublisher.getElement().getStyle().clearPaddingTop();
 						}else{
@@ -430,6 +435,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				if (collectionItemDo.getResource().getCreator() != null && collectionItemDo.getResource().getCreator().getUsername()!=null){
 					if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 						resourcePublisher.setVisible(true);
+						resourcePublisher.clear();
 						resourcePublisher.getElement().setInnerHTML(i18n.GL0566()+collectionItemDo.getResource().getCreator().getUsername());
 						resourcePublisher.getElement().getStyle().clearPaddingTop();
 					}else{
