@@ -1030,7 +1030,7 @@ width: 114px;
 }
 .questionTextContainerStyle{
 	display: inline-flex;
-	width:80%;
+	/* width:80%; */
 }
 
 .addSearchTitleText {
