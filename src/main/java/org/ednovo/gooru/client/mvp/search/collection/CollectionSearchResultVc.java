@@ -60,6 +60,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -444,7 +445,7 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 	public SimpleAsyncCallback<ProfileDo> getUserprofileAsyncCallback() {
 		return userProfileAsyncCallback;
 	}
-	public Label getAddButton(){
+	public Anchor getAddButton(){
 		return wrapperVc.addLbl;
 	}
 	

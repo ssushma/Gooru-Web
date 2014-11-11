@@ -59,6 +59,8 @@ public interface ResourceSearchResultCBundle extends ClientBundle {
 		String resourceDescription();
 
 		String imgHeight();
+		
+	
 	}
 
 	@Source("ResourceSearchResult.css")

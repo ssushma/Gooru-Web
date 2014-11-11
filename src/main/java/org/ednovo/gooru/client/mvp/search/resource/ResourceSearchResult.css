@@ -15,15 +15,16 @@
 }
 
 .resourceTitle {
+	float:left;
 	color: #1076BB;
 	font-size: 16px;
 	font-weight: bold;
-	overflow: hidden;
+/* 	overflow: hidden;
 	text-overflow: ellipsis;
-	white-space: nowrap;
+	white-space: nowrap; */
 	/* width: 364px; */
 	cursor: pointer;
-	height: 19px;
+/* 	height: 19px; */
 	/* float: left; */
 }
 .resourceTitle:HOVER {
