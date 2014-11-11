@@ -79,6 +79,8 @@ public interface AlmostDoneUcCBundle  extends ClientBundle {
 		String userRegErrorStyle();
 		String errorLbl();
 		String usernameToolTipContainer();
+		String roleStep1();
+		String unameStep2();
 	}
 	@Source("AlmostDonePopUp.css")
 	AlmostDoneUcCss css();

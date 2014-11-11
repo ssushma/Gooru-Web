@@ -268,3 +268,16 @@
 	width: 62%;
 	margin-bottom: 10px;
 }
+.roleStep1{
+	font-weight: bold;
+margin-top: 8px;
+margin-left: 19px;
+position: absolute;
+}
+.unameStep2{
+	font-weight: bold;
+margin-top: 8px;
+margin-left: 19px;
+position: relative;
+margin-bottom: 13px;
+}
