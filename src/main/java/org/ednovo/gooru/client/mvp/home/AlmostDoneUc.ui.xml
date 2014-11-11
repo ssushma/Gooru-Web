@@ -5,6 +5,7 @@
 	xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:with type="org.ednovo.gooru.client.mvp.home.AlmostDoneUcCBundle"
 		field="res" />
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<g:HTMLPanel styleName="{res.css.popup} {res.css.imgBG}">
 		<g:HTMLPanel styleName="{res.css.popupInner}">
 			<g:Label styleName="{res.css.popupHeader}" ui:field="lblHeader"/>
@@ -14,6 +15,7 @@
 				<g:Label styleName="{res.css.subheader}" ui:field="lblSubHeader"/>
 				<g:HTMLPanel styleName="{res.css.userInfoContainer}">
 					<g:Label styleName="{res.css.ssoEmail}" ui:field="lblUserEmail" />
+						<g:Label styleName="{res.css.roleStep1}" text="{i18n.GL2202}" />
 					<g:HTMLPanel styleName="{res.css.role}">
 						<g:HTMLPanel styleName="{res.css.roleOption} {res.css.teacherRole}" ui:field="panelTeacher">
 							<g:HTMLPanel styleName="{res.css.roleOptionImage}"></g:HTMLPanel>
@@ -69,6 +71,7 @@
 						</g:HTMLPanel>
 						<gg:ErrorLabelUc ui:field="lblSelectRole" styleName="errorMessage {res.css.userRegErrorStyle}"></gg:ErrorLabelUc>
 					</g:HTMLPanel>
+						<g:Label styleName="{res.css.unameStep2}" text="{i18n.GL2203}" />
 					<g:HTMLPanel styleName="{res.css.chooseUsername}">
 						<gg:TextBoxWithPlaceholder ui:field="txtChooseUsername" styleName="{res.css.textUserName} {res.css.submitRegistration}" />
 						<g:HTMLPanel styleName="{res.css.usernameToolTipContainer}" ui:field="panelUsernameTooltip">
