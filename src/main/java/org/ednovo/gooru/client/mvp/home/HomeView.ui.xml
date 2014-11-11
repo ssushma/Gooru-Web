@@ -88,7 +88,7 @@
 			    <g:Label styleName="h2" text="{i18n.GL2130}"/>
 			    <g:Label styleName="h4" text="{i18n.GL2131}"/>
 			    <!-- Gooru Stories -->
-			   <div class="gooruStories">
+			   <!-- <div class="gooruStories">
 					<div class="row">
 						<div class="col-md-3 col-xs-12 col-sm-3 storiesImg">
 							<img class="img-responsive" src="images/gooru-stories.png" />
@@ -101,7 +101,7 @@
 						</g:HTMLPanel>
 					</div>
 					<div class="clearfix"></div>
-				</div>
+				</div> -->
 				<p>
 					<g:HTMLPanel ui:field="contributorsContainer" />
 				</p>
