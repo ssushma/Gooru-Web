@@ -201,7 +201,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	private static final int ANSWER_CHOICE_HINTS_TEXT_LENGTH =150;
 	private static final int QUESTION_TEXT_LENGTH =500;
-	private static final int EXPLAINATION_TEXT_LENGTH =400;
+	private static final int EXPLAINATION_TEXT_LENGTH =500;
 	
 	private List<Widget> answerChoicesList=new ArrayList<Widget>();
 	
