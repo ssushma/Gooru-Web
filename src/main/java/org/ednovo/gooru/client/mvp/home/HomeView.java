@@ -221,7 +221,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 //		p.setTitle(i18n.GL2188_3());
 //		p.getElement().setInnerHTML(i18n.GL2188_3());
 //		panelText.add(p);
-		
+//		
 //		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl("", new SimpleAsyncCallback<String>() {
 //			
 //			@Override
@@ -277,6 +277,25 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			}
 		});
 	}
+	/**
+	 * 
+	 * @function generateDistrictLibraries 
+	 * 
+	 * @created_date : 11-Nov-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void generateDistrictLibraries() {
 		
 		
