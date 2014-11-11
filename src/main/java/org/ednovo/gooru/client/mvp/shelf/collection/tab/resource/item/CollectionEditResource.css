@@ -787,8 +787,8 @@ user agent stylesheetdiv {
 	border-width: 1px;
 	border-style: solid;
 	width: 100%;
-	margin-bottom: 6px;
 	/* height: 556px; */
+	margin-bottom: 6px;
 	background: url("../images/core/background-image.png");
 }
 
@@ -2886,3 +2886,20 @@ margin-top: 18px; */
 	color:#515151;
 	text-align:center;
 }
+
+.coursePopupStyle {
+	float: left;
+	background-color: #FFF;
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	border-style: solid;
+	width: 546px;
+	margin-bottom: 6px;
+	max-height: 530px;
+	min-height: 400px;
+	/* background: url("../images/core/background-image.png"); */
+	overflow-x: hidden;
+    overflow-y: auto;
+}
+
+

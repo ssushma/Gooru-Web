@@ -486,6 +486,8 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
         String accessHazard();
         String charLimit();
         String upDownBtn();
+        
+        String coursePopupStyle();
        
            
 	}

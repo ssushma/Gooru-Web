@@ -130,7 +130,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	@UiField public Button browseBtn;
 	
-	@UiField Label lblCharLimit;
+	@UiField Label lblCharLimit,charLimitErrLbl;
 	
 	String courseCode="";
 	
@@ -432,6 +432,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		lblCharLimit.setText(value);
 		StringUtil.setAttributes(lblCharLimit.getElement(), "charLimitLbl", value, value);
 		
+		charLimitErrLbl.setVisible(false);
+		charLimitErrLbl.setText(i18n.GL0143());
+		StringUtil.setAttributes(charLimitErrLbl.getElement(), "charLimitErrLbl", i18n.GL0143(), i18n.GL0143());
+		
 		ClickHandler infoRootHandler= new ClickHandler() {
 			
 			@Override
@@ -477,14 +481,23 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			public void onKeyPress(KeyPressEvent event) {
 				if(textAreaVal.getText().length() >= 500)
 				{
-					/*textAreaVal.cancelKey();*/
-				}			
+					charLimitErrLbl.setVisible(true);
+				}else{
+					charLimitErrLbl.setVisible(false);
+				}
 			}
 		});
 		
 		textAreaVal.addBlurHandler(new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
+				
+				if(textAreaVal.getText().length() >= 500)
+				{
+					charLimitErrLbl.setVisible(true);
+				}else{
+					charLimitErrLbl.setVisible(false);
+				}
 				
 				if(textAreaVal.getText().length() == 0){
 					textAreaVal.setText(i18n.GL1641());

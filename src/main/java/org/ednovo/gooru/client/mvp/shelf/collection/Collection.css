@@ -1373,3 +1373,10 @@ position: relative;
 	color: #999;
 	margin-right: 66px;
 }
+.learningObjErrStyle{
+	float: right;
+	color: #fbb03b;
+	font-size: 12px;
+   font-style: italic;
+   margin-right: -9px;
+}
