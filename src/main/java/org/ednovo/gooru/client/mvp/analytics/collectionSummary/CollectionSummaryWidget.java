@@ -29,9 +29,16 @@ public class CollectionSummaryWidget extends Composite {
 	@UiField InlineLabel sessionValue,sessionText,sessionAccessedTime,collectionLastAccessedlbl,collectionTitle,collectionResourcesCount,collectionLastAccessed;
 	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 	
+	/**
+	 * Constructor
+	 */
 	public CollectionSummaryWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
+	/**
+	 * This method is used to set the data.
+	 * @param result
+	 */
 	public void setData(CollectionSummaryMetaDataDo result){
 		collectionImage.setVisible(true);
 		sessionsPnl.setVisible(false);
@@ -51,16 +58,28 @@ public class CollectionSummaryWidget extends Composite {
 		});
 		collectionResourcesCount.setText((result.getResourceCount()-result.getTotalQuestionCount())+" Resources | "+result.getTotalQuestionCount()+" Questions");
 	}
-	/*
-	 * This method is used to set the data at the time of printing.
+	
+	/**
+	 * This method is used to set analytics data.
+	 * @param result
+	 * @param printUserDataDO
 	 */
 	public void setDataAnalyticsData(CollectionSummaryMetaDataDo result,PrintUserDataDO printUserDataDO){
 		collectionImage.setVisible(false);
-		if(printUserDataDO!=null){
+		if(printUserDataDO!=null && printUserDataDO.getUserName()!=null){
 			sessionsPnl.setVisible(true);
 			collectionTitle.setText(i18n.GL0645()+" "+i18n.GL_SPL_SEMICOLON()+" "+result.getTitle());
 			collectionLastAccessedlbl.setText("Sort BY:");
 			collectionLastAccessed.setText(printUserDataDO.getUserName());
+			collectionResourcesCount.setText("Resource in this Collection :"+(result.getResourceCount()-result.getTotalQuestionCount())+" Resources | "+result.getTotalQuestionCount()+" Questions");
+			sessionAccessedTime.setText(i18n.GL2272()+" "+printUserDataDO.getSessionStartTime());
+			sessionText.setText(i18n.GL2273()+" "+i18n.GL_SPL_SEMICOLON());
+			sessionValue.setText(printUserDataDO.getSession());
+		}else if(printUserDataDO!=null &&  printUserDataDO.getUserName()==null){
+			sessionsPnl.setVisible(true);
+			collectionTitle.setText(i18n.GL0645()+" "+i18n.GL_SPL_SEMICOLON()+" "+result.getTitle());
+			collectionLastAccessedlbl.setText("");
+			collectionLastAccessed.setText("");
 			collectionResourcesCount.setText("Resource in this Collection :"+(result.getResourceCount()-result.getTotalQuestionCount())+" Resources | "+result.getTotalQuestionCount()+" Questions");
 			sessionAccessedTime.setText(i18n.GL2272()+" "+printUserDataDO.getSessionStartTime());
 			sessionText.setText(i18n.GL2273()+" "+i18n.GL_SPL_SEMICOLON());

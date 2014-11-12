@@ -52,6 +52,7 @@ import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
+import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
@@ -185,7 +186,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+	PrintUserDataDO printData=new PrintUserDataDO();
 	@Inject
 	public CollectionEndView(){
 		setWidget(uiBinder.createAndBindUi(this));
@@ -531,7 +532,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 						classpageId="";
 					}
 	                setSessionStartTime(selectedIndex);
-					getUiHandlers().setCollectionSummaryData(collectionDo.getGooruOid(), classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),sessionsDropDown.getValue(selectedIndex));
+					getUiHandlers().setCollectionSummaryData(collectionDo.getGooruOid(), classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),sessionsDropDown.getValue(selectedIndex),printData);
 			}
 	 }
 	@UiHandler("collectionThumbnail")
@@ -1555,6 +1556,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		if(sessionData.size()!=0){
 			lastModifiedTime.setText(AnalyticsUtil.getCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
 			sessionsDropDown.setSelectedIndex(selectedIndex);
+			printData.setUserName(null);
+			printData.setSession(sessionsDropDown.getItemText(selectedIndex));
+			printData.setSessionStartTime(AnalyticsUtil.getCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
 		}
 	}
 	

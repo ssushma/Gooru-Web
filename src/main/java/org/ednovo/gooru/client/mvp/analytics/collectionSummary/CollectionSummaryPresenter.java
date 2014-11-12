@@ -50,6 +50,14 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
     
 	@Inject
 	private  AnalyticsServiceAsync analyticService;
+	
+	/**
+	 * Constructor
+	 * @param eventBus
+	 * @param view
+	 * @param collectionSummaryTeacherPresenter
+	 * @param collectionSummaryIndividualPresenter
+	 */
 	@Inject
 	public CollectionSummaryPresenter(EventBus eventBus, IsCollectionSummaryView view,CollectionSummaryTeacherPresenter collectionSummaryTeacherPresenter,CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter) {
 		super(eventBus, view);
@@ -58,14 +66,25 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 		getView().setUiHandlers(this);
 	}
 
+	/**
+	 * This method will return the analytics service
+	 * @return
+	 */
 	public AnalyticsServiceAsync getAnalyticService() {
 		return analyticService;
 	}
 
+	/**
+	 * This method will set the analytics serivice
+	 * @param analyticService
+	 */
 	public void setAnalyticService(AnalyticsServiceAsync analyticService) {
 		this.analyticService = analyticService;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryUiHandlers#setCollectionSummaryData(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public void setCollectionSummaryData(final String collectionId,final String pathwayId) {
 		getView().getLoadinImage().setVisible(true);
@@ -96,6 +115,9 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 		});
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryUiHandlers#loadUserSessions(java.lang.String, java.lang.String, java.lang.String, java.lang.String, org.ednovo.gooru.shared.model.analytics.PrintUserDataDO)
+	 */
 	@Override
 	public void loadUserSessions(final String collectionId,final String classId,final String userId,final String pathwayId,final PrintUserDataDO printUserDataDO) {
 		this.analyticService.getSessionsDataByUser(collectionId, classId, userId, new AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>>() {
@@ -116,6 +138,9 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 		});
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryUiHandlers#setTeacherData(java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public void setTeacherData(String collectionId,String classpageId,String pathwayId) {
 		getView().getLoadinImage().setVisible(true);
@@ -124,6 +149,9 @@ public class CollectionSummaryPresenter extends PresenterWidget<IsCollectionSumm
 		setInSlot(TEACHER_STUDENT_SLOT, collectionSummaryTeacherPresenter,false);		
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryUiHandlers#setIndividualData(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, org.ednovo.gooru.shared.model.analytics.PrintUserDataDO)
+	 */
 	@Override
 	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,PrintUserDataDO printUserDataDO) {
 		getView().getLoadinImage().setVisible(true);

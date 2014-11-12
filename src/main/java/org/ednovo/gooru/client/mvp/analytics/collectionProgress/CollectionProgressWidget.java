@@ -65,12 +65,18 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	private int collectionProgressCount=1;
 	ViewResponsesPopup showResponsesPopup=null;
 	
+	/**
+	 * Constructor
+	 */
 	public CollectionProgressWidget() {
 		this.res=CollectionProgressCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));	
 		scrollForCollectionProgress.getElement().setId("scrollForCollectionProgress");
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionProgress.IsCollectionProgressView#setData(java.util.ArrayList, boolean, java.lang.String)
+	 */
 	@Override
 	public void setData(ArrayList<CollectionProgressDataDo> collectionProgressData,boolean isCollectionView,String collectionTitle){
 		if(!isCollectionView){

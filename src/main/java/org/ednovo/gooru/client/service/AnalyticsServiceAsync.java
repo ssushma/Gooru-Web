@@ -57,7 +57,7 @@ public interface AnalyticsServiceAsync extends BaseServiceAsync {
    
     void getAnalyticsGradeData(String classpageId,String pathwayId,AsyncCallback<ArrayList<GradeJsonData>> AsyncCallback);
    
-    void exportPathwayOE(String classpageId,String pathwayId,AsyncCallback<String> AsyncCallback);
+    void exportPathwayOE(String classpageId,String pathwayId,String timeZone,AsyncCallback<String> AsyncCallback);
    
     void getAssignmentAverageData(String classId,String unitId,String collectionId,AsyncCallback<CollectionSummaryMetaDataDo> callback);
     
@@ -66,4 +66,6 @@ public interface AnalyticsServiceAsync extends BaseServiceAsync {
     void postTeacherFeedBackToStudent(String freeText,String resourceId,String collectionId,String classpageId,String pathwayId,String userId,String session,String contentItemId,String parentItemId,String classCode,AsyncCallback<FeedBackResponseDataDO> callback);
 	
     void sendEmail(String to,String subject,String message,String displayName,String fileName,String path,AsyncCallback<Void> callback);
+
+    void exportTeacherSummary(String collectionGooruOId,String pathwayId, String classId,String timeZone,AsyncCallback<String> callback) ;
 }

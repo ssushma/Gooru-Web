@@ -19,8 +19,6 @@ import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.dom.client.ErrorEvent;
-import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -57,12 +55,19 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	String collectionId=null,pathwayId=null;
 	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
 	PrintUserDataDO printUserDataDO=new PrintUserDataDO();
+	
+	/**
+	 * Constructor
+	 */
 	public CollectionSummaryView() {
 		this.res = CollectionSummaryCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		setData();
 	}
+	/**
+	 * This method is used to set default data.
+	 */
 	void setData(){
 		sessionspnl.setVisible(false);
 		studentsListDropDown.addChangeHandler(new StudentsListChangeHandler());
@@ -120,6 +125,9 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 				getUiHandlers().setIndividualData(collectionId, classpageId, studentsListDropDown.getValue(selectedStudentIndex),sessionsDropDown.getValue(selectedSessionIndex),pathwayId,printUserDataDO);
 		}
     }
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.IsCollectionSummaryView#setUsersData(java.util.ArrayList)
+	 */
 	@Override
 	public void setUsersData(ArrayList<CollectionSummaryUsersDataDo> result) {
 		studentsListDropDown.clear();
@@ -130,6 +138,9 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		sessionspnl.setVisible(false);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.IsCollectionSummaryView#setCollectionMetaData(org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo, java.lang.String)
+	 */
 	@Override
 	public void setCollectionMetaData(
 			CollectionSummaryMetaDataDo result,String pathwayId) {
@@ -141,10 +152,16 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.IsCollectionSummaryView#setCollectionResourcesData(java.util.ArrayList)
+	 */
 	@Override
 	public void setCollectionResourcesData(ArrayList<UserDataDo> result) {
 		
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.IsCollectionSummaryView#setUserSessionsData(java.util.ArrayList)
+	 */
 	@Override
 	public void setUserSessionsData(
 			ArrayList<CollectionSummaryUsersDataDo> result) {
@@ -157,6 +174,9 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		}
 		setSessionStartTime(0);
 	}
+	/* (non-Javadoc)
+	 * @see com.gwtplatform.mvp.client.ViewImpl#setInSlot(java.lang.Object, com.google.gwt.user.client.ui.Widget)
+	 */
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		pnlSummary.clear();
@@ -171,12 +191,19 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 			pnlSummary.setVisible(false);
 		}
 	}
+	/**
+	 * This method is used to set session start time.
+	 * @param selectedIndex
+	 */
 	public void setSessionStartTime(int selectedIndex) {
 		if(sessionData.size()!=0){
 			  lastModifiedTime.setText(sessionData.get(sessionsDropDown.getValue(selectedIndex)).toString());
 			  printUserDataDO.setSessionStartTime(sessionData.get(sessionsDropDown.getValue(selectedIndex)).toString());
 		}
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.IsCollectionSummaryView#getLoadinImage()
+	 */
 	@Override
 	public HTMLPanel getLoadinImage() {
 		return loadingImageLabel1;
