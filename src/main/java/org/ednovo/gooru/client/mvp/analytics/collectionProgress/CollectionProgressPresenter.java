@@ -36,12 +36,21 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class CollectionProgressPresenter extends PresenterWidget<IsCollectionProgressView> implements CollectionProgressUiHandlers{
 	@Inject
 	private  AnalyticsServiceAsync analyticService;
+	
+	/**
+	 * Constructor
+	 * @param eventBus
+	 * @param view
+	 */
 	@Inject
 	public CollectionProgressPresenter(EventBus eventBus, IsCollectionProgressView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressUiHandlers#setCollectionProgressData(java.lang.String, java.lang.String, boolean, java.lang.String)
+	 */
 	@Override
 	public void setCollectionProgressData(String collectionId,String pathwayId,final boolean isCollectionView,final String collectionTitle) {
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
@@ -59,10 +68,18 @@ public class CollectionProgressPresenter extends PresenterWidget<IsCollectionPro
 				});
 	}
 
+	/**
+	 * This method will return the analytics service.
+	 * @return
+	 */
 	public AnalyticsServiceAsync getAnalyticService() {
 		return analyticService;
 	}
 
+	/**
+	 * This method will set the analytics service.
+	 * @param analyticService
+	 */
 	public void setAnalyticService(AnalyticsServiceAsync analyticService) {
 		this.analyticService = analyticService;
 	}

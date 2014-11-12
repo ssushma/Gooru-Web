@@ -12,6 +12,7 @@
  	 <g:HTMLPanel>
  	 <g:Label styleName="{unitStyle.summary_title}"  text="{i18n.GL1587}"></g:Label>
  	 <g:Label text="{i18n.GL2270}"></g:Label>
+ 	 <g:Image styleName="{unitStyle.exportImage}" url="images/analytics/export.png"></g:Image>
  	 </g:HTMLPanel>
  	 <g:HTMLPanel>
  	 <g:ListBox ui:field="studentsListDropDown" styleName="{unitStyle.filterDropDown}">

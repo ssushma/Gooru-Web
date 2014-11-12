@@ -3,17 +3,17 @@ package org.ednovo.gooru.client.mvp.analytics.util;
 import java.util.Date;
 import java.util.List;
 
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 
 public class AnalyticsUtil {
-	
-	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	private static final String DATE_FORMAT="MM/dd/yyyy hh:mm:ss aaa";
 	
+	/**
+	 * This method will return the suffix for the numbers while displaying the seesions
+	 * @param value
+	 * @return
+	 */
 	public static String getOrdinalSuffix(int value) {
 		int hunRem = value % 100;
 		int tenRem = value % 10;

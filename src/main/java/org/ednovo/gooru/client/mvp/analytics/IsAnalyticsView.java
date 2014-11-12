@@ -34,30 +34,80 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 public interface IsAnalyticsView extends IsViewWithHandlers<AnalyticsUiHandlers>{
 	
-	 public void showUnitNames(ClassDo classDo,boolean clearPanel);
+	 /**
+	  * This method is used to show unit names
+	 * @param classDo
+	 * @param clearPanel
+	 */
+	public void showUnitNames(ClassDo classDo,boolean clearPanel);
 	
+	/**
+	 * This method is used to hide more units link
+	 */
 	public void hideMoreUnitsLink();
 	
+	/**
+	 * This method is used to set bottom scored students
+	 * @param result
+	 */
 	public void setBottomStudentsData(ArrayList<GradeJsonData> result);
 	
+	/**
+	 * This method is used to set top scored students
+	 * @param result
+	 */
 	public void setTopStudentsData(ArrayList<GradeJsonData> result);
 	
+	/**
+	 * This method is used to set the collections
+	 * @param gradeData
+	 */
 	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData);
 	
+	/**
+	 * This method is used to get the unit panel
+	 * @return
+	 */
 	HTMLPanel getUnitPanel();
 
+	/**
+	 * This method is used to display loading image
+	 */
 	void LoadingImageLabeltrue();
 
+	/**
+	 * 
+	 * This method is used to hide the loading image
+	 */
 	void LoadingImageLabelFalse();
 	
+	/**
+	 * This method is used to clear the arrows
+	 */
 	void clearDownArrow();
 	
+	/**
+	 * This method is used to hide the presonalize container
+	 */
 	void hidePersonalizeContainers();
 	
+	/**
+	 * This method is used to handle the unit clicks 
+	 * @param tab
+	 * @param pageNum
+	 * @param unitId
+	 * @param assignmentId
+	 */
 	void revealPlace(String tab,String pageNum,String  unitId,String assignmentId);
 	 
+	/**
+	 * This method is used to remove and add the unit selected styles
+	 */
 	void removeAndAddUnitSelectedStyle();
 	
+    /**
+     * This method is used to reset data.
+     */
     void resetData();
     
 }

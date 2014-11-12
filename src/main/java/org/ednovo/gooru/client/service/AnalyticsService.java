@@ -57,7 +57,7 @@ public interface AnalyticsService extends BaseService {
 	
 	public ArrayList<GradeJsonData> getAnalyticsGradeData(String classpageId,String pathwayId);
 	
-	public String exportPathwayOE(String classpageId,String pathwayId);
+	public String exportPathwayOE(String classpageId,String pathwayId,String timeZone);
 	
 	public CollectionSummaryMetaDataDo getAssignmentAverageData(String classId,String unitId,String collectionId);
 
@@ -66,4 +66,6 @@ public interface AnalyticsService extends BaseService {
 	public FeedBackResponseDataDO postTeacherFeedBackToStudent(String freeText,String resourceId,String collectionId,String classpageId,String pathwayId,String userId,String session,String contentItemId,String parentItemId,String classCode);
 
 	public void sendEmail(String to,String subject,String message,String displayName,String fileName,String path);
+
+	public String exportTeacherSummary(String collectionGooruOId,String pathwayId,String classId,String timeZone); 
 }
