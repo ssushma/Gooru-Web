@@ -1791,14 +1791,21 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			@Override
 			public void onSuccess(ArrayList<ContentReportDo> result) {
 				String gooruFlagId="";
+				String flagType="";
 				if(result!=null&&result.size()>0){
 					for(int i =0;i<result.size();i++){
 						gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
 						if(result.size()!=(i+1)){
 							gooruFlagId=gooruFlagId+",";
 						}
+						if(result.get(i).getContentReportList()!=null){
+							flagType=result.get(i).getContentReportList().get(i);
+							if(flagType.equals("not-loading")){
+								getView().makeFlagButtonOrange();
+							}
+						}
+						
 					}
-					getView().makeFlagButtonOrange();
 					resourceFlagPresenter.setContentDeleteIds(gooruFlagId);
 				 }
 			}
