@@ -733,7 +733,8 @@
 		position: relative;
 	 }
  .addCollectionTextStyles{
-	float: left;
+	/* float: left; */
 	left: 43px;
 	position: relative;
+	top:10px;
 	 }
