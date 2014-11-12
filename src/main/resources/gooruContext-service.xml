@@ -79,6 +79,7 @@
 				<prop key="google.restendpoint">${google.restendpoint}</prop>
 				<prop key="stories.url">${stories.url}</prop>
 				<prop key="community.library.gooruOid">${community.library.gooruOid}</prop>
+				<prop key="show.stories">${show.stories}</prop>
 			</props>
 		</property>
 	</bean>

@@ -286,9 +286,11 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		try{
 			resourceDo = recordJsonObject.getResource();
 			if(recordJsonObject.getCourse().size()==0){
-				if(resourceDo.getCustomFieldValues()!=null){
+				if(resourceDo.getCustomFieldValues()!=null && !resourceDo.getCustomFieldValues().equals("")){
+					if(resourceDo.getCustomFieldValues().getCfGooruCourse()!=null && !resourceDo.getCustomFieldValues().getCfGooruCourse().equalsIgnoreCase("")&&!resourceDo.getCustomFieldValues().getCfGooruCourse().equalsIgnoreCase("null")){
 					courses = new StringTokenizer(resourceDo.getCustomFieldValues().getCfGooruCourse(), ",");
 					size=courses.countTokens();
+					}
 				}
 				
 			}else{
