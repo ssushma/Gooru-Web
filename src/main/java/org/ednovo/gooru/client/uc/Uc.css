@@ -1787,3 +1787,7 @@ button.emailSecondary:hover {
 .privacyAlignStyle{
 	margin-right: 2px;
 }
+
+.paddingClear{
+	padding:0;
+}

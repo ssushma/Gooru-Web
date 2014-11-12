@@ -60,6 +60,7 @@ public interface ResourceSearchResultCBundle extends ClientBundle {
 
 		String imgHeight();
 		
+		String paddingClear();
 	
 	}
 
