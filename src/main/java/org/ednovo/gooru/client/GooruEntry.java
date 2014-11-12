@@ -32,6 +32,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.AppInjector;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
+import org.ednovo.gooru.client.mvp.play.resource.style.PlayerSmallMobileBundle;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.search.SearchCBundle;
 import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionEvent;
