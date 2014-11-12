@@ -57,6 +57,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -156,11 +157,12 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable,
 	public ResourceSearchResultVc(
 			ResourceSearchResultDo resourceSearchResultDo,
 			ResourceDragController searchDragController) {
+		
 		wrapperVcr = new ResourceSearchResultWrapperVc(searchDragController);
 		this.res = ResourceSearchResultCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
-
+		resourceDescriptionHtml.getElement().getStyle().setTextAlign(TextAlign.JUSTIFY);
 		// wrapperVcr.addStyleName("resourceSearchResultBox");
 		AppClientFactory.getEventBus().addHandler(
 				UpdateSearchResultMetaDataEvent.TYPE, setUpdateMetaData);
