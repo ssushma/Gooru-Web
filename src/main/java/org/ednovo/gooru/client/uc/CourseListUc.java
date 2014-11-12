@@ -57,6 +57,18 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+* @description : This class used for  Add a course to the collection.
+*
+* @version :1.0
+*
+* @date: APR 19 2014
+   	
+* @Author Gooru Team
+* 
+* Reviewer Gooru Team
+ */
+
 public class CourseListUc extends PopupPanel {
 
 	private static CourseListUcUiBinder uiBinder = GWT
@@ -67,10 +79,10 @@ public class CourseListUc extends PopupPanel {
 	interface CourseListUcUiBinder extends UiBinder<Widget, CourseListUc> {
 	}
 
-/*	@UiField Anchor fromweb;
-*/	
-/*	@UiField HTMLEventPanel urlTabButton;
-*/	
+	/*@UiField Anchor fromweb;
+	
+	@UiField HTMLEventPanel urlTabButton;*/
+	
 	@UiField static FlowPanel contentPanel;
 	
 	@UiField HTMLPanel buttonsPanel,addCourseBtnPanel,loadingPanel;
@@ -137,8 +149,10 @@ public class CourseListUc extends PopupPanel {
 		Window.enableScrolling(false);
 	}
 	
-	
-	
+ 
+	/**
+	 * This method used to call getCourse api.
+	 */
 	private void setCourseData() {
 		AppClientFactory.getInjector().getTaxonomyService().getCourse(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
 
@@ -152,6 +166,10 @@ public class CourseListUc extends PopupPanel {
 
 
 
+	/**
+	 * This method used to set the subjects and courses data from api.
+	 * @param libraryCode instance of {@link LibraryCodeDo}
+	 */
 	public void setCourseList(final List<LibraryCodeDo> libraryCode) {
 		this.libraryCode=libraryCode;
 		Map<String,Integer> subjectList = new HashMap<String, Integer>();
@@ -195,6 +213,10 @@ public class CourseListUc extends PopupPanel {
 		}
 	}
 	
+	/**
+	 * This method used to set Course List.
+	 * @param libraryCodeDo instance of {@link LibraryCodeDo}
+	 */
 	private void setCourseData(final List<LibraryCodeDo> libraryCodeDo) {
 		final HTMLPanel panel=new HTMLPanel("");
 		panel.clear();
@@ -236,6 +258,9 @@ public class CourseListUc extends PopupPanel {
 		}
 
 	}
+	/**
+	 * To set the Default Course data.
+	 */
 	
 	public void setDefaultCourseData(){
 		collectionId=collectionDo.getGooruOid();
@@ -254,6 +279,10 @@ public class CourseListUc extends PopupPanel {
 			}
 	}
 	
+	/**
+	 * To close the courseList popup.
+	 * @param clickEvent instance of {@link ClickEvent}
+	 */
 	
 	@UiHandler("cancelCourseBtn")
 	public void onClickClose(ClickEvent clickEvent){
@@ -261,6 +290,9 @@ public class CourseListUc extends PopupPanel {
 		Window.enableScrolling(true);
 	}
 	
+	/**
+	 * @param clickEvent
+	 */
 	@UiHandler("addCourseBtnLbl")
 	public void onAddCourseBtnClick(ClickEvent clickEvent){
 		MixpanelUtil.mixpanelEvent("Organize_Add_Course");
@@ -293,6 +325,12 @@ public class CourseListUc extends PopupPanel {
 		
 	}
 	
+	/**
+	 * This method used modify/update the course of collection
+	 * @param collectionId {@link String}
+	 * @param courseCode {@link String}
+	 * @param action {@link String}
+	 */
 	public void updateCourse(String collectionId, final String courseCode, String action) {
 	  	
 		AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionId, null, null, null, null, null, courseCode, null, null, action, new SimpleAsyncCallback<CollectionDo>() {
@@ -312,6 +350,11 @@ public class CourseListUc extends PopupPanel {
 			}
 		});
 	}
+	/**
+	 * This method used to delete the old course.
+	 * @param collectionId {@link String}
+	 * @param courseCode {@link String}
+	 */
 	public void deleteCourse(String collectionId, int courseCode) {
 		AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionId, courseCode, new SimpleAsyncCallback<Void>() {
 			@Override

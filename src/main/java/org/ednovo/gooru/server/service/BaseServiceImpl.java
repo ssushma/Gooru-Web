@@ -156,6 +156,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	private static final String STORIES_URL = "stories.url";
 	
+	private static final String SHOW_STORIES = "show.stories";
+	
 	private static final String COMMUNITY_LIBRARY_ID = "community.library.gooruOid";
 	
 	private static final String HTTPS = "https";
@@ -318,6 +320,10 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	public String getStoriesUrl(){
 		return restConstants.getProperty(STORIES_URL);
+	}
+	
+	public String showStoriesSection(){
+		return restConstants.getProperty(SHOW_STORIES);
 	}
 
 	public String getCommunityLibaryGooruOid(){
