@@ -1897,8 +1897,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
   	            		  hintsAdded=true;
   	            		  isAddBtnClicked=true;
   	        		  }else{
- 	            		  hintsAdded=false;
- 	            		  isAddBtnClicked=false;
+  	        			  hintsAdded=false;
+  	        			  isAddBtnClicked=true;
  	            		  addHints.errorMessageforHints.setText("");
  	            		  profanitymodel.setQuestionText(addHints.hintTextBox.getContent());
   	        		  }
@@ -1911,7 +1911,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
   	        	  hintsListForProfanity.add(profanitymodel);
   	        }
     	}
-    	
         return hintsAdded;
 }
      /*public void resetAllErrorFields(){
