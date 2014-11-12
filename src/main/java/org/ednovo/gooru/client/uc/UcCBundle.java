@@ -458,6 +458,7 @@ public interface UcCBundle extends ClientBundle {
 		
 		String privacyAlignStyle();
 		
+		String paddingClear();
 	}
 
 	@Source("Uc.css")

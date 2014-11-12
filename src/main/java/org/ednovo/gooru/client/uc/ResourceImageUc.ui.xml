@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
 <ui:with type="org.ednovo.gooru.client.uc.UcCBundle" field="res" />
 	<ui:with type="org.ednovo.gooru.client.mvp.search.SearchCBundle" field="res1" />
-	<g:FlowPanel styleName="{res1.css.resourceThumbnail}" ui:field="resourceThumbnail">
+	<g:FlowPanel styleName="{res1.css.resourceThumbnail} col-md-4 {res.css.paddingClear}" ui:field="resourceThumbnail">
 		<g:Image  ui:field="image" />
 		<g:Label styleName="{res.css.resourceName}" ui:field="resourceType" />
 		<!-- <g:FlowPanel styleName="{res.css.resourceHover}">
