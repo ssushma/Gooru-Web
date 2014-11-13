@@ -100,6 +100,7 @@ public class StudyPlayerHeaderView extends Composite{
 		wishLabel.getElement().setId("spnWishLabel");
 		loginUserName.getElement().setId("spnLoginUserName");
 		wishingText.getElement().setId("spnWishingText");
+		wishingText.getElement().getStyle().setMarginLeft(-2, Unit.PX);
 		loginMessageText.getElement().setId("lblLoginMessageText");
 	}
 	
