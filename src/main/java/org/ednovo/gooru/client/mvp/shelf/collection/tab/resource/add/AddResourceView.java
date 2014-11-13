@@ -120,8 +120,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	}
 	protected AppPopUp appPopUp;
 	
-	String filepattern;
-	
 	public UserOwnResourcePreview userOwnResourcePreview;
 	
 	public WebResourcePreview webResourcePreview;
@@ -530,8 +528,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 					AddQuestionImg addQuestionImage=(AddQuestionImg)addQuestionResourceWidget.addQuestImgContainer.getWidget(0);
 					thumbnailUrl=addQuestionImage.getFileName();
 				}
-				System.out.println("thumbna"+thumbnailUrl);
-				getUiHandlers().updateQuestionResource(collectionItemDo,collectionQuestionItemDo,thumbnailUrl==null?null:thumbnailUrl);
+				//getUiHandlers().updateQuestionResource(collectionItemDo,collectionQuestionItemDo,thumbnailUrl==null?null:"asset-question_"+thumbnailUrl);
+				getUiHandlers().v2UpdateQuestionResource(collectionItemDo,collectionQuestionItemDo,thumbnailUrl==null?null:"asset-question_"+thumbnailUrl);
 			}else{
 				getUiHandlers().addQeustionResource(mediaFileName,collectionQuestionItemDo);
 			}
@@ -764,7 +762,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				@Override
 				public void onClick(ClickEvent event) {
 					if(addQuestionResourceWidget.getQuestionEditMode()){
-						getUiHandlers().questionImageUpload(collectionItemDo.getResource().getGooruOid());
+						getUiHandlers().questionImageUpload(collectionItemDo.getCollectionItemId());
 					}else{
 						getUiHandlers().questionImageUpload();
 					}
@@ -1132,7 +1130,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}
 		@Override
 		public void onDelete(ClickEvent clickEvent) {
-			getUiHandlers().removeQuestionImage(collectionItemDo.getResource().getGooruOid());
+			getUiHandlers().removeQuestionImage(collectionItemDo.getCollectionItemId());
 		}
 		public void hide() {
 			 super.hide();

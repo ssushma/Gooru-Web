@@ -87,7 +87,12 @@
 		</g:FlowPanel>
 		<!-- end pdf -->
 		<g:FlowPanel styleName="{res.css.panelAlignRight}">
-		 <g:Button styleName="{res.css.gEditButton}" ui:field="EditBtn"></g:Button>
+			 <g:Button styleName="{res.css.gEditButton}" ui:field="EditBtn"></g:Button>
+			 <g:HTMLPanel ui:field="reorderContainer" styleName="{res.css.upDownBtn}">  
+				<g:Button ui:field="resourceMoveUpBtn" styleName="secondary"><img src="images/uparrow.png"/></g:Button>
+				<g:TextBox ui:field="reorderTxtBox"></g:TextBox>
+				<g:Button ui:field="resourceMoveDownBtn" styleName="secondary"><img src="images/downarrow.png" /></g:Button>
+			 </g:HTMLPanel>
 		 </g:FlowPanel>
 		 <g:FlowPanel styleName="{res.css.editButtonContainer}" ui:field="ResourceEditButtonContainer">
 		      <g:Label styleName="{res.css.editButtonText}" ui:field="updateResourceBtn"/>

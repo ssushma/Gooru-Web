@@ -91,5 +91,7 @@ public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageH
 
 	void closeStandardsPopup();
 
+	void v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo, String thumbnailUrl);
+
 
 }

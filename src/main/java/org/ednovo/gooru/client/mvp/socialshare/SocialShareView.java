@@ -1,4 +1,5 @@
-/*******************************************************************************
+/**
+ * *****************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  * 
  *  http://www.goorulearning.org/
@@ -288,8 +289,9 @@ IsSocialShareView {
 	}
 
 	/**
+	 * To Set the Image Url.
 	 * @param url
-	 *            of the image
+	 *            of the image {@link String}
 	 */
 	public void setUrl(String url) {
 		categoryImage.setUrl(StringUtil.formThumbnailName(url, "."));

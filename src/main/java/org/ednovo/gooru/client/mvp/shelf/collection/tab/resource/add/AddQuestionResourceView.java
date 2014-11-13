@@ -50,10 +50,8 @@ import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.RemoveToolTipUc;
-import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
-import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -68,6 +66,7 @@ import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Document;
@@ -93,9 +92,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -106,7 +105,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
@@ -156,6 +154,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr;
 	
+	@UiField Label charLimitLbl,charLimitExplanation;
+	
 	ToolTip toolTip=null;
 	private TermsAndPolicyVc termsAndPolicyVc;
 	private TermsOfUse termsOfUse;
@@ -190,6 +190,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private static final String ERROR_MSG_EXPLAINATION_LENGTH =i18n.GL0879();
 	private static final String ERROR_MSG_QUESTION_LENGTH =i18n.GL0880();
 	private static final String ERROR_MSG_CHAR_LIMIT=i18n.GL0143();
+	private static final String ERROR_MSG_HINTS = i18n.GL2201();
 	
 	private static final String ERROR_MSG_FIB_BALANCED=i18n.GL0881();
 	private static final String ERROR_MSG_FIB_BLANKS=i18n.GL0882();
@@ -200,7 +201,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	private static final int ANSWER_CHOICE_HINTS_TEXT_LENGTH =150;
 	private static final int QUESTION_TEXT_LENGTH =500;
-	private static final int EXPLAINATION_TEXT_LENGTH =400;
+	private static final int EXPLAINATION_TEXT_LENGTH =500;
 	
 	private List<Widget> answerChoicesList=new ArrayList<Widget>();
 	
@@ -265,6 +266,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		explanationLabel.getElement().setId("lblExplanationLabel");
 		explanationLabel.getElement().setAttribute("alt", i18n.GL0867());
 		explanationLabel.getElement().setAttribute("title", i18n.GL0867());
+		explanationLabel.getElement().getStyle().setDisplay(Display.INLINE);
 		addHintsLabel.setText(i18n.GL0868());
 		addHintsLabel.getElement().setAttribute("alt", i18n.GL0868());
 		addHintsLabel.getElement().setAttribute("title", i18n.GL0868());
@@ -512,6 +514,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		explanationLabel.getElement().setId("lblExplanationLabel");
 		explanationLabel.getElement().setAttribute("alt", i18n.GL0867());
 		explanationLabel.getElement().setAttribute("title", i18n.GL0867());
+		explanationLabel.getElement().getStyle().setDisplay(Display.INLINE);
 		addAnswerChoice.setText(i18n.GL0866());
 		addAnswerChoice.getElement().setAttribute("alt", i18n.GL0866());
 		addAnswerChoice.getElement().setAttribute("title", i18n.GL0866());
@@ -676,6 +679,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		depthOfKnoweldgeToolTip.getElement().setAttribute("alt", "Question Mark");
 		depthOfKnoweldgeToolTip.getElement().setAttribute("title", "Question Mark");
 		addQuestionResourceButton.getElement().setId("epnlAddQuestionResourceButton");
+		
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		charLimitLbl.setText(value);
+		StringUtil.setAttributes(charLimitLbl.getElement(), "charLimitLbl", value, value);
+		
+		charLimitExplanation.setText(value);
+		StringUtil.setAttributes(charLimitExplanation.getElement(), "charLimitExplanation", value, value);
+		
 		addClickEventsForCheckBox();
 		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
 
@@ -1875,15 +1886,27 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
   	        	final AddHintsView addHints = (AddHintsView) hintsContainer.getWidget(i);
   	        	  ProfanityCheckDo profanitymodel=new ProfanityCheckDo();
   	        	  profanitymodel.setQuestionID(Integer.toString(i));
-  	        	  if(addHints.hintTextBox.getContent()!=null|| !addHints.hintTextBox.getContent().trim().equals("")){
-  	        			String hintsText=addHints.hintTextBox.getContent().replaceAll("\\<.*?>","");
+  	        	 
+  	        	 String hintText=addHints.hintTextBox.getContent().toString().trim().replaceAll("&nbsp;", " ");
+  	        	 hintText=hintText.replaceAll("\\<.*?>","");
+  	        	  if(hintText!=null && !hintText.trim().equals("")){
+  	        		 String hintsText=addHints.hintTextBox.getContent().replaceAll("\\<.*?>","");	
   	        		  if(hintsText.trim().length()>ANSWER_CHOICE_HINTS_TEXT_LENGTH){
   	        			  Document.get().getElementById(addHints.hintTextBox.getID()+"_message").setInnerText("");
   	            		  addHints.errorMessageforHints.setText(ERROR_MSG_HINTS_LENGTH);
   	            		  hintsAdded=true;
   	            		  isAddBtnClicked=true;
+  	        		  }else{
+ 	            		  hintsAdded=false;
+ 	            		  isAddBtnClicked=false;
+ 	            		  addHints.errorMessageforHints.setText("");
+ 	            		  profanitymodel.setQuestionText(addHints.hintTextBox.getContent());
   	        		  }
-  	        		  profanitymodel.setQuestionText(addHints.hintTextBox.getContent());
+  	        		 
+  	        	  }else{
+  	        		  addHints.errorMessageforHints.setText(ERROR_MSG_HINTS);
+	        		  hintsAdded=true;
+            	      isAddBtnClicked=true;
   	        	  }
   	        	  hintsListForProfanity.add(profanitymodel);
   	        }
@@ -2021,6 +2044,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0350());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0350());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 108px;");
 		}else if(tabType.equals("MA")){
 			questionTypeHeader.setText(i18n.GL0351());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0351());
@@ -2029,6 +2053,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0352());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0352());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 108px;");
 		}else if(tabType.equals("T/F")){
 			questionTypeHeader.setText(i18n.GL0353());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0353());
@@ -2037,6 +2062,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0354());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0354());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 108px;");
 		}else if(tabType.equals("FIB")){
 			questionTypeHeader.setText(i18n.GL0355());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0355());
@@ -2044,6 +2070,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.setText(i18n.GL0356());
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0356());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0356());
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 14px;");
 		}else if(tabType.equals("OE")){
 			questionTypeHeader.setText(i18n.GL0357());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0357());
@@ -2052,6 +2079,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0358());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0358());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 108px;");
 		}
 	}
 	public boolean getQuestionEditMode(){
