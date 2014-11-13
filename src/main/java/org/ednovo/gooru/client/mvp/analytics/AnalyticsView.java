@@ -8,6 +8,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.HCLineChart;
 import org.ednovo.gooru.client.mvp.analytics.util.StudentScoredAboveBelowUlPanel;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitWidget;
@@ -151,7 +152,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			}else{
 				String pathwayId=AppClientFactory.getPlaceManager().getRequestParameter("uid", "");
 				String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-				getUiHandlers().exportOEPathway(classpageId, pathwayId,getTimeZone());
+				getUiHandlers().exportOEPathway(classpageId, pathwayId,AnalyticsUtil.getTimeZone());
 			}
 		}
 	}
@@ -611,21 +612,4 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			  com.google.gwt.visualization.client.Properties p=properties.cast();
 			  return p;
 	}
-	/**
-	 * This native method is used to get the timezone
-	 * @return
-	 */
-    protected native String getTimeZone() /*-{
-    	var symbol = '';
-		var u = new Date().toString().match(/([-\+][0-9]+)\s/)[1];
-		var timeZone = u.substring(0, 3) + ':' + u.substring(3, u.length);
-		symbol = timeZone;
-		var replace = symbol.substring(2);
-		if (timeZone.indexOf('+') >= 0) {
-			symbol = 'plus' + replace;
-		} else if (timeZone.indexOf('-') >= 0) {
-			symbol = 'minus' + replace;
-		}
-    return symbol;
-	}-*/;
 }

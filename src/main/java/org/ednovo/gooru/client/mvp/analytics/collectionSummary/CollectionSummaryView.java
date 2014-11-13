@@ -19,12 +19,14 @@ import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -44,7 +46,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	CollectionSummaryCBundle res;
 	
 	@UiField ListBox studentsListDropDown,sessionsDropDown;
-	@UiField Image sessionsTooltip;
+	@UiField Image exportImage,sessionsTooltip;
 	@UiField InlineLabel lastModifiedTime;
 	@UiField HTMLPanel collectionSummaryDetails,sessionspnl,loadingImageLabel1;
 	@UiField VerticalPanel pnlSummary;
@@ -52,7 +54,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	Map<String, String> sessionData=new HashMap<String, String>();
 	ToolTip toolTip;
 	
-	String collectionId=null,pathwayId=null;
+	String collectionId=null,pathwayId=null,classpageId=null;
 	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
 	PrintUserDataDO printUserDataDO=new PrintUserDataDO();
 	
@@ -73,7 +75,6 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		studentsListDropDown.addChangeHandler(new StudentsListChangeHandler());
 		sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
 		sessionsTooltip.addMouseOverHandler(new MouseOverHandler() {
-			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				toolTip = new ToolTip("Select the student session (collection attempt) to be represented below.","");
@@ -85,10 +86,8 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 			}
 		});
 		sessionsTooltip.addMouseOutHandler(new MouseOutHandler() {
-			
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
-				
 				EventTarget target = event.getRelatedTarget();
 				  if (Element.is(target)) {
 					  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
@@ -143,7 +142,8 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	 */
 	@Override
 	public void setCollectionMetaData(
-			CollectionSummaryMetaDataDo result,String pathwayId) {
+			CollectionSummaryMetaDataDo result,String pathwayId,String classpageId) {
+		this.classpageId=classpageId;
 		this.pathwayId=pathwayId;
 		if(result!=null){
 			collectionId=result.getGooruOId();
@@ -207,5 +207,10 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	@Override
 	public HTMLPanel getLoadinImage() {
 		return loadingImageLabel1;
+	}
+	
+	@UiHandler("exportImage")
+	public void clickedOnExport(ClickEvent e){
+		getUiHandlers().exportCollectionSummary(collectionId, classpageId, "", "", pathwayId, AnalyticsUtil.getTimeZone());
 	}
 }
