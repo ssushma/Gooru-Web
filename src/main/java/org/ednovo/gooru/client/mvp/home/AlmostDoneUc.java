@@ -41,6 +41,8 @@ import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -333,6 +335,17 @@ public class AlmostDoneUc extends PopupPanel{
 
 	}
 	
+	@Override
+	public void onLoad(){
+		super.onLoad();
+        Scheduler.get().scheduleDeferred(new ScheduledCommand(){
+			@Override
+			public void execute() {
+				new CheckProfanityInOnBlur(txtChooseUsername,null, userNameValidUc, isHavingBadWordsUserName).onBlur(null);
+			}
+        });
+	}
+	
 	/**
 	 * 
 	 * @fileName : AlmostDoneUc.java
@@ -378,7 +391,7 @@ public class AlmostDoneUc extends PopupPanel{
 					userNameValidUc.setVisible(true);
 					fieldValidationStaus = false;	
 				} 
-				if (txtChooseUsername.getText().length()>0 && txtChooseUsername.getText().length()<5) 
+				if (txtChooseUsername.getText().length()>0 && txtChooseUsername.getText().length()<4) 
 				{
 					userNameValidUc.setText(i18n.GL0473()+i18n.GL_SPL_FULLSTOP());
 					userNameValidUc.getElement().setAttribute("alt",i18n.GL0473()+i18n.GL_SPL_FULLSTOP());
