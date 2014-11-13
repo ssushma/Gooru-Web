@@ -53,7 +53,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 
 	@UiField FolderStyleBundle folderStyle;
 
-	@UiField FlowPanel contentBlock,contents;
+	@UiField FlowPanel contentBlock,contents,reorderPanel;
 	@UiField HTMLEventPanel folderImage;
 	@UiField Image collectionImage;
 	@UiField Label itemTitle,itemNumber;
@@ -634,6 +634,20 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	 */
 	public void setMoveBottomBtn(Button moveBottomBtn) {
 		this.moveBottomBtn = moveBottomBtn;
+	}
+
+	/**
+	 * @return the reorderPanel
+	 */
+	public FlowPanel getReorderPanel() {
+		return reorderPanel;
+	}
+
+	/**
+	 * @param reorderPanel the reorderPanel to set
+	 */
+	public void setReorderPanel(FlowPanel reorderPanel) {
+		this.reorderPanel = reorderPanel;
 	}
 	
 
