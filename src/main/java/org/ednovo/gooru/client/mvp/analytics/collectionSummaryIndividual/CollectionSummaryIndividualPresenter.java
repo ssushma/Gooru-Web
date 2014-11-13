@@ -44,20 +44,35 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 	private String collectionId,classpageId,pathwayId,userId,sessionId;
 	private boolean isSummary;
 	
+	/**
+	 * Constructor
+	 * @param eventBus
+	 * @param view
+	 */
 	@Inject
 	public CollectionSummaryIndividualPresenter(EventBus eventBus, IsCollectionSummaryIndividualView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}
 
+	/**
+	 * Get analytics service
+	 * @return
+	 */
 	public AnalyticsServiceAsync getAnalyticService() {
 		return analyticService;
 	}
 
+	/**
+	 * @param analyticService
+	 */
 	public void setAnalyticService(AnalyticsServiceAsync analyticService) {
 		this.analyticService = analyticService;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualUiHandlers#setIndividualData(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, com.google.gwt.user.client.ui.HTMLPanel, org.ednovo.gooru.shared.model.analytics.PrintUserDataDO)
+	 */
 	@Override
 	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,boolean isSummary,final HTMLPanel loadingImage,final PrintUserDataDO printUserDataDO) {
 		this.pathwayId=pathwayId;
@@ -93,6 +108,9 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 		});
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualUiHandlers#setHtmltopdf(java.lang.String, boolean)
+	 */
 	@Override
 	public void setHtmltopdf(String htmlString,final boolean isClickedOnEmail) {
 		this.analyticService.setHTMLtoPDF(htmlString, new AsyncCallback<String>() {
@@ -111,6 +129,9 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 		});
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualUiHandlers#setOEtextData(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public void setOEtextData(final String resourceGooruId, final String questionType) {
 		this.analyticService.getOETextData(resourceGooruId, collectionId, classpageId, pathwayId,"CS",sessionId,userId, new AsyncCallback<ArrayList<OetextDataDO>>() {

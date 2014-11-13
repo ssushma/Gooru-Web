@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerMetadataPresenter;
@@ -49,8 +50,12 @@ import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
+import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
+import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
@@ -65,6 +70,8 @@ import br.com.freller.tool.client.Print;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -91,6 +98,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -110,13 +118,20 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField VerticalPanel commentsContainer;
 	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,
 					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText,lblCharLimitComments;
-	@UiField HTMLPanel addComment,loginMessaging;
+	@UiField HTMLPanel loadingImageLabel,addComment,loginMessaging;
 	@UiField TextArea commentField;
 	@UiField Button postCommentBtn,postCommentCancel;
 	@UiField Anchor loginUrl, signupUrl;
 	@UiField CollectionPlayerStyleBundle playerStyle;
 	@UiField Image userPhoto,collectionThumbnail,nextCollectionThumbnail;
 	@UiField Button customizeCollectionBtn,shareCollectionBtn;
+	@UiField ListBox sessionsDropDown;
+	@UiField Image collectionImage;
+	@UiField InlineLabel collectionTitle,collectionResourcesCount,collectionLastAccessed,lastModifiedTime;
+	ToolTip toolTip;
+	Map<String, Long> sessionData=new HashMap<String, Long>();
+	
+	@UiField VerticalPanel pnlSummary;
 	/*@UiField Frame insightsFrame;*/
 	private String languageObjectiveValue;
 	private CollectionDo collectionDo=null;
@@ -172,7 +187,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+	PrintUserDataDO printData=new PrintUserDataDO();
 	@Inject
 	public CollectionEndView(){
 		setWidget(uiBinder.createAndBindUi(this));
@@ -480,7 +495,19 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		collectionThumbnail.getElement().setId("imgCollectionThumbnail");
 		thumbnailContainer.getElement().setId("fpnlThumbnailContainer");
 	}
-	
+    public class StudentsSessionsChangeHandler implements ChangeHandler{
+			@Override
+			public void onChange(ChangeEvent event) {
+					int selectedIndex=sessionsDropDown.getSelectedIndex();
+					String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+					if(classpageId==null){
+						classpageId="";
+					}
+	                setSessionStartTime(selectedIndex);
+					getUiHandlers().setCollectionSummaryData(collectionDo.getGooruOid(), classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),sessionsDropDown.getValue(selectedIndex),printData);
+			}
+	 }
+
 	@UiHandler("collectionThumbnail")
 	public void thumbnailErrorImage(ErrorEvent event){
 		collectionThumbnail.setUrl("images/default-collection-image-160x120.png");
@@ -1482,4 +1509,60 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			avgReactionImage.setStyleName(playerStyle.timeTextBig());
 		}
 	}
+	@Override
+	public void setSessionsData(
+			ArrayList<CollectionSummaryUsersDataDo> result) {
+		sessionsDropDown.clear();
+		sessionData.clear();
+		for (CollectionSummaryUsersDataDo collectionSummaryUsersDataDo : result) {
+			sessionData.put(collectionSummaryUsersDataDo.getSessionId(), collectionSummaryUsersDataDo.getTimeStamp());
+			int day=collectionSummaryUsersDataDo.getFrequency();
+			sessionsDropDown.addItem(day+AnalyticsUtil.getOrdinalSuffix(day)+" Session",collectionSummaryUsersDataDo.getSessionId());
+		}
+		setSessionStartTime(result.size()-1);
+	}
+
+	public void setSessionStartTime(int selectedIndex) {
+		if(sessionData.size()!=0){
+			lastModifiedTime.setText(AnalyticsUtil.getCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
+			sessionsDropDown.setSelectedIndex(selectedIndex);
+			printData.setUserName(null);
+			printData.setSession(sessionsDropDown.getItemText(selectedIndex));
+			printData.setSessionStartTime(AnalyticsUtil.getCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
+		}
+	}
+	
+	@Override
+	public void setCollectionMetaDataByUserAndSession(
+			ArrayList<CollectionSummaryMetaDataDo> result) {
+		if(result.size()!=0){
+			collectionTitle.setText(result.get(0).getTitle());
+			collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getLastModified())));
+			if(result.get(0).getThumbnail()!=null){
+				collectionImage.setUrl(result.get(0).getThumbnail());
+			}else{
+				collectionImage.setUrl("images/analytics/default-collection-image.png");
+			}
+			collectionImage.addErrorHandler(new ErrorHandler() {
+				@Override
+				public void onError(ErrorEvent event) {
+					collectionImage.setUrl("images/analytics/default-collection-image.png");
+				}
+			});
+			collectionResourcesCount.setText((result.get(0).getResourceCount()-result.get(0).getTotalQuestionCount())+" Resources | "+result.get(0).getTotalQuestionCount()+" Questions");
+		}
+	}
+	@Override
+	public void resetCollectionMetaData(){
+		collectionTitle.setText("");
+		collectionLastAccessed.setText("");
+		collectionImage.setUrl("");
+		collectionResourcesCount.setText("");
+	}
+
+	@Override
+	public HTMLPanel getLoadingImageLabel() {
+		return loadingImageLabel;
+	}
+
 }

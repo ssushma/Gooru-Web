@@ -3,6 +3,10 @@
 	background-color: white;
 	text-align: center;
 }
+.exportImage{
+	float: right;
+	margin-top: -4%;
+}
 .summary_title {
 	float: left;
 	text-align: center;

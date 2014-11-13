@@ -8,6 +8,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.HCLineChart;
 import org.ednovo.gooru.client.mvp.analytics.util.StudentScoredAboveBelowUlPanel;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.UnitWidget;
@@ -85,6 +86,9 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	ClassDo classDo;
 	private ClassUnitsListDo classUnitsDo;
 	
+	/**
+	 * Default constructor
+	 */
 	public AnalyticsView() {
 		this.res = AnalyticsCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
@@ -92,7 +96,6 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		btnCollectionSummary.addClickHandler(new ViewAssignmentClickEvent("Summary"));
 		btnCollectionProgress.addClickHandler(new ViewAssignmentClickEvent("Progress"));
 		btnCollectionResponses.addClickHandler(new ViewAssignmentClickEvent(""));
-		btnCollectionResponses.setVisible(false);
 		minimumScoreBelow.setText("0");
 		minimumScoreAbove.setText("0");
 		minimumScoreBelow.addKeyUpHandler(new MiniMumScoreKeyUpHandler(BELOWSCORE));
@@ -149,22 +152,31 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			}else{
 				String pathwayId=AppClientFactory.getPlaceManager().getRequestParameter("uid", "");
 				String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-				getUiHandlers().exportOEPathway(classpageId, pathwayId);
+				getUiHandlers().exportOEPathway(classpageId, pathwayId,AnalyticsUtil.getTimeZone());
 			}
 		}
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView#clearDownArrow()
+	 */
 	@Override
 	public void clearDownArrow(){
 		clearDownArrows();
 		isSummayClicked=false;
 		isProgressClicked=false;
 	}
+	/**
+	 * This method is used to clear the arrow styles
+	 */
 	public void clearDownArrows(){
 		summaryArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
 		progressArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
 		responsesArrowlbl.removeStyleName(res.unitAssignment().activeCaretup());
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView#resetData()
+	 */
 	@Override
 	public void resetData(){
 		clearDownArrow();
@@ -175,6 +187,9 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		scoredBelowPanel.clear();
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView#hidePersonalizeContainers()
+	 */
 	@Override
 	public void hidePersonalizeContainers(){
 		isPersonalizedBtnClicked=false;
@@ -183,6 +198,9 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		personalizeMainContainer.setVisible(false);
 		unitOptionsContainer.setVisible(false);
 	}
+	/**
+	 * This method is used to remove the unit selected style
+	 */
 	public void removeUnitSelectedStyle(){
 		Iterator<Widget> widgets = unitPanel.iterator();
 		while (widgets.hasNext()) {
@@ -194,9 +212,17 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		}		
 	}
 	
+	/**
+	 * This method is used to add unit select style 
+	 * @param unitsWidget
+	 */
 	public void addUnitSelectStyle(UnitWidget unitsWidget){
 		unitsWidget.getUnitNameContainer().addStyleName(res.unitAssignment().unitMenuActive());
 	}
+	/**
+	 * This will handle the click event on the more units.
+	 * @param event
+	 */
 	@UiHandler("lblMoreUnits")
 	public void clickOnMoreUnits(ClickEvent event){
 		String currentPlaceToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
@@ -211,17 +237,28 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		System.out.println("in");
 	}*/
 	
+	/**
+	 * This will handle the click event on the view all studetns
+	 * @param event
+	 */
 	@UiHandler("btnViewAllStudents")
 	public void clickOnViewAllStudents(ClickEvent event){
 		getUiHandlers().setPersonalizeData();
 		personalizeMainContainer.setVisible(true);
 		highlightedStudentsContainer.setVisible(false);
 	}
+	/**
+	 * This will handle the click event on the view highlighted students
+	 * @param event
+	 */
 	@UiHandler("btnViewHighlightedStudents")
 	public void clickOnViewHignlightStudents(ClickEvent event){
 		personalizeMainContainer.setVisible(false);
 		highlightedStudentsContainer.setVisible(true);
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView#removeAndAddUnitSelectedStyle()
+	 */
 	@Override
 	public void removeAndAddUnitSelectedStyle(){
 		Iterator<Widget> widgets = unitPanel.iterator();
@@ -241,11 +278,17 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		}		
 		
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView#hideMoreUnitsLink()
+	 */
 	@Override
 	public void hideMoreUnitsLink() {
 		
 		
 	}
+	/* (non-Javadoc)
+	 * @see com.gwtplatform.mvp.client.ViewImpl#setInSlot(java.lang.Object, com.google.gwt.user.client.ui.Widget)
+	 */
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		slotWidget.clear();
@@ -269,6 +312,9 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView#showUnitNames(org.ednovo.gooru.shared.model.content.ClassDo, boolean)
+	 */
 	@Override
 	public void showUnitNames(ClassDo classDo, boolean clearPanel) {
 		this.classDo = classDo;
@@ -306,6 +352,9 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			}
 		}
 	}
+	/**
+	 * This method is used to update the page number
+	 */
 	private void updatePageNumber(){
 		unitsPageNumber++;
 		if((limit*unitsPageNumber)<unitsTotalCount){
@@ -354,7 +403,10 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			}
 		}
 	}
-	 @Override
+	 /* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView#revealPlace(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
 	 public void revealPlace(String tabName,String pageNum,String unitId,String assignmentId){
 			Map<String,String> params = new HashMap<String,String>();
 			String pageLocation=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
@@ -388,6 +440,9 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	 }
 	 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView#setBottomStudentsData(java.util.ArrayList)
+	 */
 	@Override
 	public void setBottomStudentsData(ArrayList<GradeJsonData> result) {
 		scoredBelowPanel.clear();
@@ -419,6 +474,9 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			}
 		}
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView#setTopStudentsData(java.util.ArrayList)
+	 */
 	@Override
 	public void setTopStudentsData(ArrayList<GradeJsonData> result) {
 		scoredAbovePanel.clear();
@@ -449,6 +507,9 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			}
 		}
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView#setGradeCollectionData(java.util.ArrayList)
+	 */
 	@Override
 	public void setGradeCollectionData(ArrayList<GradeJsonData> gradeData) {
 		loadcollectionsmap.clear();
@@ -465,17 +526,20 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		loadingImageLabel.setVisible(false);
 	}
 	/**
-	 * @param unitCollectionId the unitCollectionId to set
+	 * This will set the unit collection id
+	 * @param unitCollectionId
 	 */
 	public void setUnitCollectionId(String unitCollectionId) {
 		this.unitCollectionId = unitCollectionId;
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView#getUnitPanel()
+	 */
 	public HTMLPanel getUnitPanel(){
 		return unitPanel;
 	}
 	/**
-	 * This method is used to set minimum scored data
-	 * @param passedScoreVal
+	 * This method is used to set the minimum scored data.
 	 */
 	void setMinimumScoresData(){
 		if(loadCollections.getItemCount()!=0){
@@ -492,15 +556,25 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			greenProgressBar.getElement().getStyle().setWidth(100-(minimunScoreVal+1), Unit.PCT);
 		}
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView#LoadingImageLabeltrue()
+	 */
 	@Override
 	public void LoadingImageLabeltrue() {
 		loadingImageLabel.setVisible(true);
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.IsAnalyticsView#LoadingImageLabelFalse()
+	 */
 	@Override
 	public void LoadingImageLabelFalse() {
 		loadingImageLabel.setVisible(false);
 	}
 
+	/**
+	 * This is used to handle the click event on the personalize button.
+	 * @param event
+	 */
 	@UiHandler("personalizeBtn")
 	public void clickOnPersonalizeBtn(ClickEvent event){
 		if(isPersonalizedBtnClicked){
@@ -517,6 +591,10 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		}
 	}
 	
+	/**
+	 * This is used to set the text for personalized button.
+	 * @param unitTitle
+	 */
 	public void setPersonalizeBtnText(String unitTitle){
 		if (unitTitle.length() > 10){
 			unitTitle = unitTitle.substring(0, 11) + "...";
@@ -524,6 +602,10 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		personalizeBtn.setText(StringUtil.generateMessage(i18n.GL2221(), unitTitle));
 	}
 	
+	/**
+	 * This will set the styles for the data table cells.
+	 * @return
+	 */
 	com.google.gwt.visualization.client.Properties getPropertiesCell(){
 			  Properties properties=Properties.create();
 			  properties.set("style", "text-align:center;font-weight:bold;background-color: red;");

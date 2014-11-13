@@ -34,9 +34,31 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 
 public interface IsCollectionSummaryView extends IsViewWithHandlers<CollectionSummaryUiHandlers>{
+	/**
+	 * This method is used to set the users data.
+	 * @param result
+	 */
 	void setUsersData(ArrayList<CollectionSummaryUsersDataDo> result);
-	void setCollectionMetaData(CollectionSummaryMetaDataDo result,String pathwayId);
+	/**
+	 * This method is used to set collection meta data.
+	 * @param result
+	 * @param pathwayId
+	 * @param classpageId
+	 */
+	void setCollectionMetaData(CollectionSummaryMetaDataDo result,String pathwayId,String classpageId);
+	/**
+	 * This method is used to set collection resource data.
+	 * @param result
+	 */
 	void setCollectionResourcesData(ArrayList<UserDataDo> result);
+	/**
+	 * This method is used to set users session data.
+	 * @param result
+	 */
 	void setUserSessionsData(ArrayList<CollectionSummaryUsersDataDo> result);
+	/**
+	 * This method is used to get the loading image.
+	 * @return
+	 */
 	HTMLPanel getLoadinImage();
 }

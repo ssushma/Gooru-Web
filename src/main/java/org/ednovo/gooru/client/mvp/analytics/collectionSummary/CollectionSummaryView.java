@@ -19,14 +19,14 @@ import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.dom.client.ErrorEvent;
-import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -46,7 +46,7 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	CollectionSummaryCBundle res;
 	
 	@UiField ListBox studentsListDropDown,sessionsDropDown;
-	@UiField Image sessionsTooltip;
+	@UiField Image exportImage,sessionsTooltip;
 	@UiField InlineLabel lastModifiedTime;
 	@UiField HTMLPanel collectionSummaryDetails,sessionspnl,loadingImageLabel1;
 	@UiField VerticalPanel pnlSummary;
@@ -54,21 +54,27 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 	Map<String, String> sessionData=new HashMap<String, String>();
 	ToolTip toolTip;
 	
-	String collectionId=null,pathwayId=null;
+	String collectionId=null,pathwayId=null,classpageId=null;
 	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
 	PrintUserDataDO printUserDataDO=new PrintUserDataDO();
+	
+	/**
+	 * Constructor
+	 */
 	public CollectionSummaryView() {
 		this.res = CollectionSummaryCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		setData();
 	}
+	/**
+	 * This method is used to set default data.
+	 */
 	void setData(){
 		sessionspnl.setVisible(false);
 		studentsListDropDown.addChangeHandler(new StudentsListChangeHandler());
 		sessionsDropDown.addChangeHandler(new StudentsSessionsChangeHandler());
 		sessionsTooltip.addMouseOverHandler(new MouseOverHandler() {
-			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				toolTip = new ToolTip("Select the student session (collection attempt) to be represented below.","");
@@ -80,10 +86,8 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 			}
 		});
 		sessionsTooltip.addMouseOutHandler(new MouseOutHandler() {
-			
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
-				
 				EventTarget target = event.getRelatedTarget();
 				  if (Element.is(target)) {
 					  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
@@ -120,6 +124,9 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 				getUiHandlers().setIndividualData(collectionId, classpageId, studentsListDropDown.getValue(selectedStudentIndex),sessionsDropDown.getValue(selectedSessionIndex),pathwayId,printUserDataDO);
 		}
     }
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.IsCollectionSummaryView#setUsersData(java.util.ArrayList)
+	 */
 	@Override
 	public void setUsersData(ArrayList<CollectionSummaryUsersDataDo> result) {
 		studentsListDropDown.clear();
@@ -130,9 +137,13 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		sessionspnl.setVisible(false);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.IsCollectionSummaryView#setCollectionMetaData(org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo, java.lang.String)
+	 */
 	@Override
 	public void setCollectionMetaData(
-			CollectionSummaryMetaDataDo result,String pathwayId) {
+			CollectionSummaryMetaDataDo result,String pathwayId,String classpageId) {
+		this.classpageId=classpageId;
 		this.pathwayId=pathwayId;
 		if(result!=null){
 			collectionId=result.getGooruOId();
@@ -141,10 +152,16 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.IsCollectionSummaryView#setCollectionResourcesData(java.util.ArrayList)
+	 */
 	@Override
 	public void setCollectionResourcesData(ArrayList<UserDataDo> result) {
 		
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.IsCollectionSummaryView#setUserSessionsData(java.util.ArrayList)
+	 */
 	@Override
 	public void setUserSessionsData(
 			ArrayList<CollectionSummaryUsersDataDo> result) {
@@ -157,6 +174,9 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		}
 		setSessionStartTime(0);
 	}
+	/* (non-Javadoc)
+	 * @see com.gwtplatform.mvp.client.ViewImpl#setInSlot(java.lang.Object, com.google.gwt.user.client.ui.Widget)
+	 */
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		pnlSummary.clear();
@@ -171,14 +191,26 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 			pnlSummary.setVisible(false);
 		}
 	}
+	/**
+	 * This method is used to set session start time.
+	 * @param selectedIndex
+	 */
 	public void setSessionStartTime(int selectedIndex) {
 		if(sessionData.size()!=0){
 			  lastModifiedTime.setText(sessionData.get(sessionsDropDown.getValue(selectedIndex)).toString());
 			  printUserDataDO.setSessionStartTime(sessionData.get(sessionsDropDown.getValue(selectedIndex)).toString());
 		}
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummary.IsCollectionSummaryView#getLoadinImage()
+	 */
 	@Override
 	public HTMLPanel getLoadinImage() {
 		return loadingImageLabel1;
+	}
+	
+	@UiHandler("exportImage")
+	public void clickedOnExport(ClickEvent e){
+		getUiHandlers().exportCollectionSummary(collectionId, classpageId, "", "", pathwayId, AnalyticsUtil.getTimeZone());
 	}
 }

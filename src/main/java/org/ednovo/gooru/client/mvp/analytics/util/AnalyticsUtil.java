@@ -3,17 +3,17 @@ package org.ednovo.gooru.client.mvp.analytics.util;
 import java.util.Date;
 import java.util.List;
 
-import org.ednovo.gooru.shared.i18n.MessageProperties;
-
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 
 public class AnalyticsUtil {
-	
-	private static MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	private static final String DATE_FORMAT="MM/dd/yyyy hh:mm:ss aaa";
 	
+	/**
+	 * This method will return the suffix for the numbers while displaying the seesions
+	 * @param value
+	 * @return
+	 */
 	public static String getOrdinalSuffix(int value) {
 		int hunRem = value % 100;
 		int tenRem = value % 10;
@@ -141,6 +141,22 @@ public class AnalyticsUtil {
 	    }
 	    return Character.toString(alphabet[i]);
 	}
-
+	/**
+	 * This native method is used to get the timezone
+	 * @return
+	 */
+    public native static String getTimeZone() /*-{
+    	var symbol = '';
+		var u = new Date().toString().match(/([-\+][0-9]+)\s/)[1];
+		var timeZone = u.substring(0, 3) + ':' + u.substring(3, u.length);
+		symbol = timeZone;
+		var replace = symbol.substring(2);
+		if (timeZone.indexOf('+') >= 0) {
+			symbol = 'plus' + replace;
+		} else if (timeZone.indexOf('-') >= 0) {
+			symbol = 'minus' + replace;
+		}
+    return symbol;
+	}-*/;
 	
 }

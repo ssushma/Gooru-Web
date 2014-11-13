@@ -31,10 +31,24 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 public interface CollectionSummaryTeacherUiHandlers extends BaseUiHandlers{
  
- void setTeacherData(String collectionId,String classpageId,String pathwayId,CollectionSummaryMetaDataDo result,HTMLPanel loadingImage);
+ /**
+ * @param collectionId
+ * @param classpageId
+ * @param pathwayId
+ * @param result
+ * @param loadingImage
+ */
+void setTeacherData(String collectionId,String classpageId,String pathwayId,CollectionSummaryMetaDataDo result,HTMLPanel loadingImage);
  
- void setOEtextData(String resourceGooruId,String questionType);
+ /**
+ * @param resourceGooruId
+ * @param questionType
+ */
+void setOEtextData(String resourceGooruId,String questionType);
 
+/**
+ * @param string
+ */
 void setHtmltopdf(String string);
 
 }
