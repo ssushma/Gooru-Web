@@ -47,7 +47,21 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-
+/**
+ * 
+ * @fileName : DrivePresenter.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 28-Oct-2014
+ *
+ * @Author tumbalam
+ *
+ * @Reviewer:
+ */
 public class DrivePresenter extends
 		BasePlacePresenter<IsDriveView, DrivePresenter.IsDriveyProxy> implements
 		DriveUiHandlers {
@@ -102,14 +116,40 @@ public class DrivePresenter extends
 		getView().getPanelFileList().clear();
 		getView().showDriveNotConnectedErrorMessage();
 	}
+	
 	public void getGoogleDriveFiles(final String folderId,final String nextPageToken,final boolean isPanelClear) {
 		if(isPanelClear){
 			getView().getPanelFileList().clear();
 			getView().getPanelFileList().add(setLoadingPanel());
 		}
-		final String refresh_token = AppClientFactory.getLoggedInUser().getRefreshToken();
+		String refresh_token = AppClientFactory.getLoggedInUser().getRefreshToken();
+		System.out.println("refresh_token : "+refresh_token);
+		
+		if (refresh_token == null){
+			AppClientFactory.getInjector().getUserService().getRefershToken(AppClientFactory.getLoggedInUser().getGooruUId(),new SimpleAsyncCallback<String>() {
+				@Override
+				public void onSuccess(String result) {
+					
+					if(result!=null&&!result.equals("")&&!result.equals("null")){
+						UserDo user = AppClientFactory.getLoggedInUser();
+						user.setRefreshToken(result);
+						AppClientFactory.setLoggedInUser(user);
+						getAccessToken(result, folderId, nextPageToken, isPanelClear);
+					}
+				}
+			});
+		}else{
+			getAccessToken(refresh_token, folderId, nextPageToken, isPanelClear);
+		}
+		
+			
+	}
+	
+	public void getAccessToken(String refresh_token,final String folderId,final String nextPageToken,final boolean isPanelClear){
+
 		if (refresh_token != null&&!refresh_token.equals("")&&!refresh_token.equals("null")){
-			AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(refresh_token, new SimpleAsyncCallback<GoogleToken>() {
+			String tmpRefreshToken = refresh_token;
+			AppClientFactory.getInjector().getResourceService().refreshGoogleAccessToken(tmpRefreshToken, new SimpleAsyncCallback<GoogleToken>() {
 
 				@Override
 				public void onSuccess(GoogleToken result) {
@@ -151,8 +191,8 @@ public class DrivePresenter extends
 			getView().showNoDriveAccess(401);
 		}
 		
-		
 	}
+	
 	
 	public Label setLoadingPanel(){
 		Label loadingImage=new Label();

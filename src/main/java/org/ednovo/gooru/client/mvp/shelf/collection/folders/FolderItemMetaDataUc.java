@@ -41,6 +41,8 @@ public class FolderItemMetaDataUc extends Composite {
 	
 	@UiField Label ideasStaticLbl, questionsStaticLbl, tasksStaticLbl,errorLabelbigIdeasHTML,errorLabelperformanceTaskHTML,errorLabelessentialQuestionsHTML;
 	
+	@UiField Label charLimitLblForBigIdeas,charLimitLblForEssential,charLimitLblForPerformance;
+	
 	private String folderId = null, title = null, bigIdeas = "", essentialQuestions = "", performanceTask = "";
 	
 	private static FolderItemMetaDataUcUiBinder uiBinder = GWT
@@ -57,9 +59,9 @@ public class FolderItemMetaDataUc extends Composite {
 		setDebugIds();
 		showEditableMetaData(true);
 		
-		bigIdeasHTML.getElement().setAttribute("maxlength", "600");
-		essentialQuestionsHTML.getElement().setAttribute("maxlength", "600");
-		performanceTaskHTML.getElement().setAttribute("maxlength", "600");
+		bigIdeasHTML.getElement().setAttribute("maxlength", "1000");
+		essentialQuestionsHTML.getElement().setAttribute("maxlength", "1000");
+		performanceTaskHTML.getElement().setAttribute("maxlength", "1000");
 		
 		bigIdeasHTML.addKeyDownHandler(new KeyDownHandler() {
 			
@@ -103,6 +105,15 @@ public class FolderItemMetaDataUc extends Composite {
 				restrictKeyLimit(null, performanceTaskHTML, performanceTaskHTML.getText(), errorLabelperformanceTaskHTML);
 			}
 		});
+		String value = StringUtil.generateMessage(i18n.GL2103(), "1000");
+		charLimitLblForBigIdeas.setText(value);
+		charLimitLblForEssential.setText(value);
+		charLimitLblForPerformance.setText(value);
+		
+		StringUtil.setAttributes(charLimitLblForBigIdeas.getElement(), "charLimitLblForBigIdeas", value, value);
+		StringUtil.setAttributes(charLimitLblForEssential.getElement(), "charLimitLblForEssential", value, value);
+		StringUtil.setAttributes(charLimitLblForPerformance.getElement(), "charLimitLblForPerformance", value, value);
+		
 
 	}
 	
@@ -152,9 +163,9 @@ public class FolderItemMetaDataUc extends Composite {
 	}
 	
 	private void restrictKeyLimit(KeyDownEvent event, TextArea textArea, String text, Label errorLabelToDisplay) {
-		if(text.trim().length()<=599) {
+		if(text.trim().length()<=999) {
 			errorLabelToDisplay.setVisible(false);	 
-		} else if(text.trim().length()>598) {
+		} else if(text.trim().length()>998) {
 			if(event==null) {
 				textArea.cancelKey();
 				errorLabelToDisplay.setVisible(true);
@@ -169,7 +180,7 @@ public class FolderItemMetaDataUc extends Composite {
 						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_RIGHT)) || 
 						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_BACKSPACE)) || 
 						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_DELETE))) {
-					if(text.trim().length()<=600) {
+					if(text.trim().length()<=1000) {
 						errorLabelToDisplay.setVisible(false);	 
 					}
 				} else {
@@ -234,6 +245,10 @@ public class FolderItemMetaDataUc extends Composite {
 		essentialQuestionsHTML.setVisible(!isVisible);
 		performanceTaskHTML.setVisible(!isVisible);
 		formButtons.setVisible(!isVisible);
+		
+		charLimitLblForBigIdeas.setVisible(!isVisible);
+		charLimitLblForEssential.setVisible(!isVisible);
+		charLimitLblForPerformance.setVisible(!isVisible);
 		
 		if(!bigIdeas.isEmpty()) {
 			bigIdeasHTML.setText(bigIdeasLbl.getText());

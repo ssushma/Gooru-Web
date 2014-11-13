@@ -523,9 +523,9 @@ public abstract class CopyConfirmPopupVc{
 				copyResourceToCollection(cureentcollectionTreeItem.getGooruOid());
 			}
 		}else{
-			chooseCollectionErrorLabel.setText(i18n.GL1377());
-			chooseCollectionErrorLabel.getElement().setAttribute("alt", i18n.GL1377());
-			chooseCollectionErrorLabel.getElement().setAttribute("title", i18n.GL1377());
+			chooseCollectionErrorLabel.setText(i18n.GL1377_1());
+			chooseCollectionErrorLabel.getElement().setAttribute("alt", i18n.GL1377_1());
+			chooseCollectionErrorLabel.getElement().setAttribute("title", i18n.GL1377_1());
 		}
 	}
 	public void hideButton(boolean hideButtons){

@@ -57,9 +57,11 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
@@ -146,11 +148,11 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	// Drop down for Resource Type//
 	@UiField
 	HTMLPanel extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,homeworkText,	gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
-		unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,contentPanel,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText,
+		unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText,
 		educationalpanel;
 
 	@UiField
-	public HTMLPanel addResourceBtnPanel,loadingPanel,urlTitle,descriptionLabel,videoLabel,interactiveText,websiteText,imagesText,textsText,audioText,urlContianer;//otherText
+	public HTMLPanel addResourceBtnPanel,loadingPanel,urlTitle,descriptionLabel,videoLabel,interactiveText,websiteText,imagesText,contentPanel,textsText,audioText,urlContianer;//otherText
 
 	@UiField
 	HTMLPanel categorypanel, video, interactive, website,thumbnailText,audio,texts,image,rightsContent,errorContainer;//other
@@ -183,7 +185,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	@UiField Label mediaLabel,lblMediaPlaceHolder,lblMediaFeatureArrow;
 	
-	@UiField ScrollPanel spanelMediaFeaturePanel;
+	@UiField ScrollPanel spanelMediaFeaturePanel,scrollPanel;
 	
 	@UiField HTMLPanel htmlMediaFeatureListContainer;
 	
@@ -199,6 +201,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private TermsOfUse termsOfUse;
 	// public TinyMCE tinyMce=null; 
 	public boolean isValidYoutubeUrlFlag = true;
+	
+	private boolean hasClickedOnDropDwn=false;
 
 	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,momentsOfLearningOpen=false;
 	
@@ -816,8 +820,32 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			}
 
 		});
+		ClickHandler rootHandler= new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				if(!hasClickedOnDropDwn){
+					System.out.println("enter");
+					educationalUsePanel.setVisible(false);
+					educationalDropDownLblOpen = false;
+					momentsOfLearningPanel.setVisible(false);
+					momentsOfLearningOpen = false;
+					spanelMediaFeaturePanel.setVisible(false);
+					
+				}else{
+					hasClickedOnDropDwn=false;
+				}
+				
+			}
+		};
+		
+		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
+		
+		
 	}
 	private void OpenMediaFeatureDropdown() {
+		hasClickedOnDropDwn=true;
 		if (spanelMediaFeaturePanel.isVisible()){
 			spanelMediaFeaturePanel.setVisible(false);
 		}else{
@@ -1233,6 +1261,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												mandatoryCategoryLbl.getElement().setAttribute("alt", i18n.GL0917());
 												mandatoryCategoryLbl.getElement().setAttribute("title", i18n.GL0917());
 												mandatoryCategoryLbl.setVisible(true);
+												scrollPanel.setVerticalScrollPosition(0);
 												isValidate = false;
 											}
 
@@ -1242,6 +1271,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												mandatoryCategoryLbl.getElement().setAttribute("alt", i18n.GL0925());
 												mandatoryCategoryLbl.getElement().setAttribute("title", i18n.GL0925());
 												mandatoryCategoryLbl.setVisible(true);
+												scrollPanel.setVerticalScrollPosition(0);
 												isValidate = false;
 
 											}
@@ -1256,14 +1286,14 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 											if(urlStr.indexOf("youtube")!=-1){
 												if(youTubeId==null || youTubeId.equalsIgnoreCase("null") || youTubeId.equalsIgnoreCase("")){
 													if(!categoryStr.equalsIgnoreCase("Webpage")){
+														isValidate = true;									
+													}else{
 														mandatoryCategoryLbl.setText(i18n.GL0927());
 														mandatoryCategoryLbl.getElement().setAttribute("alt", i18n.GL0927());
 														mandatoryCategoryLbl.getElement().setAttribute("title", i18n.GL0927());
 														mandatoryCategoryLbl.setVisible(true);
-														isValidate = false;
-													}else{
-														isValidate = true;
-													}
+														scrollPanel.setVerticalScrollPosition(0);
+														isValidate = false;													}
 												}
 											}
 											if(categoryStr.equalsIgnoreCase("Audio") && !hasValidateResource())
@@ -1444,7 +1474,17 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 								userUrlStr1 = userUrlStr.replaceAll(
 										"feature=player_embedded&", "");
 								// getResourceInfo(userUrlStr1);
+									
 								checkShortenUrl(userUrlStr);
+								if (userUrlStr.indexOf("youtube") >0){
+									String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(userUrlStr);
+									String thumbnailUrl = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
+									System.out.println("thumbnailUrl:"+thumbnailUrl);
+									generateImageLbl.setVisible(false);
+									setThumbnailImage.getElement().setAttribute("style","width: 80px;height: 60px;");
+									setThumbnailImage.setUrl(thumbnailUrl);
+									//thumbnailUrlStr = thumbnailImages.get(activeImageIndex);
+								}
 								loadingPanel.setVisible(true);
 								contentPanel.getElement().getStyle().setOpacity(0.6);
 
@@ -1782,6 +1822,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	@UiHandler("educationalDropDownLbl")
 	public void educationalDropDownClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
 		if (educationalDropDownLblOpen == false) {
 			educationalUsePanel.setVisible(true);
 			educationalDropDownLblOpen = true;
@@ -1822,6 +1863,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	}
 	@UiHandler("momentsOfLearningDropDownLbl")
 	public void momentsOfLearningDropDownClick(ClickEvent event) {
+		hasClickedOnDropDwn=true;
 		if (momentsOfLearningOpen == false) {
 			momentsOfLearningPanel.setVisible(true);
 			momentsOfLearningOpen = true;

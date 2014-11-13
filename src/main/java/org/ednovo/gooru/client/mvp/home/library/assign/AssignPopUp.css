@@ -17,24 +17,6 @@
 	font-weight:normal;
 	
 }
-
-.labelUnitText{
-	 font-family:Arial, Helvetica, sans-serif;
-	font-size:12px;
-	line-height:120%;
-	color:rgb(81,81,81);
-	text-align:left;
-	padding-bottom: 20px;
-	padding-top: 6px;	
-	width: 50%;
-	float: left;  
-	font-weight:normal;
-	
-}
-.containerMainDiv{
-	position: relative;
-}
-
 .directionsDiv{
 	width: 20%;
 	float: left;
@@ -124,23 +106,6 @@
 	position: absolute;
 	margin-left: 98px;
 }
-
-.dropdownUnitContainer{
-	background-color:rgb(255,255,255);
-	width:310px;
-	height:28px;
-	border-color:rgb(221,221,221);
-	border-width:1px;
-	/* Firefox v1.0+ */
-	-moz-border-radius:1px;
-	/* Safari v3.0+ and by Chrome v0.2+ */
-	-webkit-border-radius:1px;
-	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
-	border-radius:1px;
-	border-style:solid;
-	position: absolute;
-	margin-left: 98px;
-}
 .classpageContainerFont{
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:10px;
@@ -203,7 +168,7 @@
 .assignmentsContainer{
 	float : left;
 	width:100%;
-	margin-top:10px;
+	/* margin-top:10px; */
 }
 
 .duedateContainer{
@@ -1009,11 +974,11 @@ button.LoginText {
 	font-size: 12px;
 	font-weight: normal;
 }
-.errorLabelUnit{
-	font-family: Arial, Helvetica, sans-serif;
+.directionsChrLimit{
 	font-size: 12px;
-	color: rgb(250,176,58);
-	text-align: right;
-	margin-right: 7%;
-	margin-left: 22%;
+	float: right;
+	margin-right: 40px;
+	font-weight: normal;
+	color: #999;
+	margin-top: 10px;
 }

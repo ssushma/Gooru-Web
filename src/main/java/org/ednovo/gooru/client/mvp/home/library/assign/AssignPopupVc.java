@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.mvp.home.event.SetTexasAccountEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUserDetailsInCollectionPlayEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUserDetailsInPlayEvent;
+import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoginStatusEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoginStatusHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
@@ -49,6 +50,7 @@ import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.ShareViewUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -751,7 +753,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 									public void onFailure(Throwable caught) {
 										loginButton.setVisible(true);
 										lblPleaseWait.setVisible(false);
-										new AlertContentUc(i18n.GL0061(), i18n.GL0347());
+//										new AlertContentUc(i18n.GL0061(), i18n.GL0347());
 									}
 								});
 			} else {
@@ -816,12 +818,13 @@ public abstract class AssignPopupVc extends PopupPanel {
 		}
 		params.put("callback", "signup");
 		params.put("type", "1");
-		System.out.println("checkassignvalue::"+params.containsKey("assign"));
+		
+		LibraryTopicListView.isAssignPopup=false;
 		if(params.containsKey("assign"))
 		{
 			params.remove("assign");
 		}
-/*		AppClientFactory.getPlaceManager().revealPlace(
+		/*		AppClientFactory.getPlaceManager().revealPlace(
 				AppClientFactory.getCurrentPlaceToken(), params);*/
 		
 
@@ -839,7 +842,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 	 */
 	@UiHandler("gmailButton")
 	public void onGmailButtonClicked(ClickEvent clickEvent){
-		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",System.currentTimeMillis(),System.currentTimeMillis(), "", AppClientFactory.getLoggedInUser().getToken());
+		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.getUnixTime(), "", AppClientFactory.getLoggedInUser().getToken());
 		String callBack = Window.Location.getHref();
 		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
 		
@@ -848,7 +851,6 @@ public abstract class AssignPopupVc extends PopupPanel {
 //				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
 				MixpanelUtil.mixpanelEvent("Assign_library_signin_google");
 				Window.Location.replace(result);
-			
 			}
 		});
 	}
