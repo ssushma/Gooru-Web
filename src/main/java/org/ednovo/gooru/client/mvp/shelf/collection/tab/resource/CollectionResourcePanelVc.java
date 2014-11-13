@@ -54,48 +54,78 @@ public class CollectionResourcePanelVc extends AppRepositionDragContainer {
 		setDragController(dragController);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.dnd.DropBox#onDrop(org.ednovo.gooru.client.mvp.dnd.Draggable)
+	 */
 	@Override
 	public void onDrop(Draggable draggable) {
-		ShelfCollectionResourceChildView resourceVc = (ShelfCollectionResourceChildView) draggable.getDraggableUc();
-		resourceVc.reorderCollectionItem(getWidgetIndex(draggable));
+		/**
+		 * Removing drag and drop in 1.1 release for resources at m\My collections.
+		 */
+		/*ShelfCollectionResourceChildView resourceVc = (ShelfCollectionResourceChildView) draggable.getDraggableUc();
+		resourceVc.reorderCollectionItem(getWidgetIndex(draggable));*/
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.dnd.DropBox#onDragOver(org.ednovo.gooru.client.mvp.dnd.Draggable)
+	 */
 	@Override
 	public void onDragOver(Draggable draggable) {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.dnd.DropBox#onDragOut(org.ednovo.gooru.client.mvp.dnd.Draggable)
+	 */
 	@Override
 	public void onDragOut(Draggable draggable) {
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.dnd.DropBox#getDropTarget()
+	 */
 	@Override
 	public Widget getDropTarget() {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.dnd.DropBox#registerDropController()
+	 */
 	@Override
 	public void registerDropController() {
 		dragController.registerDropController(widgetDropController);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.dnd.DropBox#unregisterDropController()
+	 */
 	@Override
 	public void unregisterDropController() {
 		dragController.unregisterDropController(widgetDropController);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.Widget#onLoad()
+	 */
 	@Override
 	public void onLoad() {
 		super.onLoad();
 		registerDropController();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.Widget#onUnload()
+	 */
 	@Override
 	public void onUnload() {
 		super.onUnload();
 		unregisterDropController();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.dnd.DropBox#reregisterDropController()
+	 */
 	@Override
 	public void reregisterDropController() {
 		// Not necessary
