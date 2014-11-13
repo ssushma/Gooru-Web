@@ -384,15 +384,16 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			Window.enableScrolling(true);
 		}
 		String idParm = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
-//		if (idParm == null){
+		if (idParm == null){
 			int windowHeight=Window.getClientHeight();
 			getView().getEditPanel().getElement().getStyle().setHeight(windowHeight, Unit.PX);
 			getView().getEditPanel().getElement().getStyle().setOverflowY(Overflow.AUTO);
 			getView().getEditPanel().getElement().getStyle().setMarginTop(38, Unit.PX);
-//		}else{
-//			getView().getEditPanel().getElement().getStyle().clearHeight();
-//			getView().getEditPanel().getElement().getStyle().clearOverflowY();
-//		}
+		}else{
+			/*getView().getEditPanel().getElement().getStyle().clearHeight();
+			getView().getEditPanel().getElement().getStyle().clearOverflowY();*/
+			getView().getEditPanel().getElement().getStyle().clearMarginTop();
+		}
 	}
 	
 	@Override
