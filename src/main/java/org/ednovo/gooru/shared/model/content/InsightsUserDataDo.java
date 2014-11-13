@@ -41,15 +41,15 @@ public class InsightsUserDataDo implements Serializable{
 	private static final long serialVersionUID = -1909303124373795643L;
 
 	private String title;
-	private Long avgTimeSpent=null;
-	private Integer status=null;
-	private String gooruUId=null;
-	private Integer views=null;
-	private Integer score=null;
-	private String userName=null;
-	private Long timeSpent=0L;
-	private String resourceGooruOId=null;
-	private Integer isRequired=0;
+	private Long avgTimeSpent;
+	private Integer status;
+	private String gooruUId;
+	private Integer views;
+	private Integer score;
+	private String userName;
+	private Long timeSpent;
+	private String resourceGooruOId;
+	private Integer isRequired;
 	
 	private String text;
 	private String questionType;

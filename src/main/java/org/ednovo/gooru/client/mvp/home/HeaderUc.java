@@ -56,6 +56,7 @@ import org.ednovo.gooru.client.uc.tooltip.OrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyNowToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
@@ -904,7 +905,7 @@ public class HeaderUc extends Composite implements
 		MixpanelUtil.Arrive_Register_popup();
 		
 		DataLogEvents.signUp(GwtUUIDGenerator.uuid(), "home",
-				System.currentTimeMillis(), System.currentTimeMillis(), "");
+				PlayerDataLogEvents.getUnixTime(), PlayerDataLogEvents.getUnixTime(), "");
 
 		// RegisterVc registerVc = new RegisterVc();
 		// registerVc.show();

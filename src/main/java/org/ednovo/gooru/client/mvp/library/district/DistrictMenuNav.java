@@ -81,6 +81,8 @@ public abstract class DistrictMenuNav extends Composite {
 	
 	private String placeToken = null;
 	
+	private String libraryGooruOid;
+	
     private static DistrictMenuNavUiBinder uiBinder = GWT.create(DistrictMenuNavUiBinder.class);
 
     private MessageProperties i18n = GWT.create(MessageProperties.class);
@@ -149,7 +151,7 @@ public abstract class DistrictMenuNav extends Composite {
 
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LIFEBOARD)
 					||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)
-					||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LUSD)) {
+					|| AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LUSD)) {
 			
 				learnPanel.addStyleName(districtStyleUc.tabsLiInactive());
 		} else {
@@ -212,11 +214,12 @@ public abstract class DistrictMenuNav extends Composite {
 			learnText.setText(i18n.GL2076());
 			setGooruAnrText(i18n.GL1827(), i18n.GL1828());
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SUSD)) {
+			learnText.setText(i18n.GL2077());
 			setGooruAnrText(i18n.GL2069(), i18n.GL2070());
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.VALVERDE)) {
 			setGooruAnrText(i18n.GL2071(), i18n.GL2072());
 		}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.LUSD)) {
-			setGooruAnrText(i18n.GL2184_1(), i18n.GL2185_1());
+			setGooruAnrText(i18n.GL2184(), i18n.GL2185());
 		}
 
 		aboutGooruAnr.setTarget("_blank");
@@ -327,6 +330,7 @@ public abstract class DistrictMenuNav extends Composite {
 	}
 	
 	public void setSubjectPanelIds(ProfileLibraryListDo profileLibraryListDo) {
+
 		for (ProfileLibraryDo profileListDo : profileLibraryListDo.getSearchResult()) {
 			if(profileListDo.getTitle().toLowerCase().contains("social")) {
 				subjectIdList.put(SOCIAL, profileListDo.getGooruOid());
@@ -412,4 +416,12 @@ public abstract class DistrictMenuNav extends Composite {
 	}
 	
 	public abstract void clickOnCourse(ArrayList<ProfileLibraryDo> unitList, String courseId, ProfileLibraryDo profileLibraryDo);
+
+	public String getLibraryGooruOid() {
+		return libraryGooruOid;
+	}
+
+	public void setLibraryGooruOid(String libraryGooruOid) {
+		this.libraryGooruOid = libraryGooruOid;
+	}
 }

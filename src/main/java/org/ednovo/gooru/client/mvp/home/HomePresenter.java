@@ -56,6 +56,7 @@ import org.ednovo.gooru.client.service.HomeServiceAsync;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
+import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
@@ -73,6 +74,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -152,6 +154,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	private static final String LOGINEVENT = "loginEvent";
 	
 	private static final String ERROR = "error";
+	
 	
 	private String parentGooruUID;
 	
@@ -234,7 +237,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			this.getUserService().getRegistredUserDetails(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID), getRegisterdUserAsyncCallback());
 			parentGooruUID=AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID);
 		}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("changePassword")) {
-			getView().resetPassword(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
+			validateResetLink(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
 		}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("register")) {
 			getView().registerPopup();
 		}else if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
@@ -324,9 +327,11 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		final UserDo userDo = AppClientFactory.getLoggedInUser(); 
 		int flag = userDo.getViewFlag();
 		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
-		
-		if(!AppClientFactory.isAnonymous() && loginType.equalsIgnoreCase("apps")) {
-						
+		if(!AppClientFactory.isAnonymous() && flag==0 &&  loginType.equalsIgnoreCase("apps")) {
+			AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
+			update.setGlassEnabled(true);
+			update.show();
+			update.center();
 		}
 		else if(flag<=11 && !AppClientFactory.isAnonymous()){
 			showMarketingPopup(userDo);
@@ -334,6 +339,21 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));	
 	}
 	
+	private void validateResetLink(String resetToken) {
+		// TODO Auto-generated method stub
+		AppClientFactory.getInjector().getUserService().isValidResetPasswordLink(resetToken, new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+				if(result.equals("true")){
+					getView().resetPassword(AppClientFactory.getPlaceManager().getRequestParameter("resetToken"));
+				}else{
+					new AlertMessageUc(i18n.GL1089(), new HTML(i18n.GL0100()));
+				}
+			}
+		});
+	}
+
 	@Override
 	public void onReset() {
 		super.onReset();

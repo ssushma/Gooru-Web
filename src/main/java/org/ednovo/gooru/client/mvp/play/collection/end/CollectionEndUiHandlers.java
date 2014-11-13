@@ -50,4 +50,6 @@ public interface CollectionEndUiHandlers extends BaseUiHandlers, SetPlayerLoginS
 	public void setCollectionSummaryData(String collectionId,String classpageId,String userId,String sessionId,PrintUserDataDO printData);
 	
 	public void setCollectionSummaryBasedOnClasspageIdSessionId();
+	
+
 }

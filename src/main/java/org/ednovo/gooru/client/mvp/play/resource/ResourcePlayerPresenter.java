@@ -372,7 +372,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			  }
 		  }else{
 		      if(resourceId!=null && !resourceId.equalsIgnoreCase("")){
-		    	  this.playerAppService.getResourceCollectionItem(apiKey,resourceId,tabView, new SimpleAsyncCallback<CollectionItemDo>() {
+		    	  this.playerAppService.getResourceInfoDetails(apiKey,resourceId,tabView, new SimpleAsyncCallback<CollectionItemDo>() {
 		    			@Override
 		    			public void onSuccess(CollectionItemDo collectionItemDo) {
 		    				if(collectionItemDo.getStatusCode() != 200){
@@ -439,7 +439,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		gooruOid=this.collectionItemDo.getResource().getGooruOid();
 		updateResourceViewCount(gooruOid,collectionItemDo.getViews().toString(),null);
 		getView().setResourceTitle(collectionItemDo.getResource().getTitle());
-		updateThumbsRatingView(collectionItemDo.getResource().getUserRating());
+		updateThumbsRatingView(collectionItemDo.getResource().getUserRating()!=null?collectionItemDo.getResource().getUserRating():0);
 		resoruceMetadataPresenter.showResourceWidget(collectionItemDo);
 		if(!AppClientFactory.isAnonymous()){
 			resoruceMetadataPresenter.setReaction(collectionItemDo);
@@ -568,7 +568,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	public void startResourceInsightDataLog(){
 		resourceDataLogEventId=GwtUUIDGenerator.uuid();
-		resourceStartTime=System.currentTimeMillis();
+		resourceStartTime=PlayerDataLogEvents.getUnixTime();
 		resourceNewDataLogEventId=GwtUUIDGenerator.uuid();
 		if(collectionItemDo!=null){
 			if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("assessment-question")){
@@ -589,7 +589,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	
 	public void stopResourceInsightDataLog(){
 		stopHintOrExplanationEvent();
-		Long resourceEndTime=System.currentTimeMillis();
+		Long resourceEndTime=PlayerDataLogEvents.getUnixTime();
 		PlayerDataLogEvents.resourcePlayStartStopEvent(resourceDataLogEventId, resourcePlayEventName, "",collectionItemDo.getResource().getGooruOid(),"", PlayerDataLogEvents.STOP_EVENT_TYPE, resourceStartTime,
 				resourceEndTime,resourceEndTime-resourceStartTime,AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid(),attemptTrySequence,attemptStatus, answerIds,oeQuestionAnswerText,oeQuestionAnswerText.length());
 		triggerCollectionItemNewDataLogStartStopEvent(collectionItemDo.getResource().getGooruOid(), resourceStartTime, resourceEndTime, PlayerDataLogEvents.STOP_EVENT_TYPE, getResourceScore(), questionType);
@@ -716,7 +716,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	public void startHintDataLogEvent(int hintId){
 		stopHintOrExplanationEvent();
 		this.hintId=hintId;
-		hintOrExplanationStartTime=System.currentTimeMillis();
+		hintOrExplanationStartTime=PlayerDataLogEvents.getUnixTime();
 		hintOrExplanationEventId=GwtUUIDGenerator.uuid();
 		if(collectionItemDo!=null){
 			if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("assessment-question")){
@@ -754,7 +754,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		stopHintOrExplanationEvent();
 		hintOrExplanationEventName=null;
 		String submitEventId=GwtUUIDGenerator.uuid();
-		Long answerEndTime=System.currentTimeMillis();
+		Long answerEndTime=PlayerDataLogEvents.getUnixTime();
 		PlayerDataLogEvents.submitOeAnswerDataLogEvent(submitEventId, PlayerDataLogEvents.QUESTION_OE_SAVE_EVENT_NAME, resourceDataLogEventId,
 				collectionItemDo.getResource().getGooruOid(),resourceStartTime,answerEndTime, answerEndTime-resourceStartTime,
 				 AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid(),attemptTrySequence,attemptStatus, answerIds,oeQuestionAnswerText,oeQuestionAnswerText.length(),"");
@@ -762,7 +762,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	
 	public void stopHintOrExplanationEvent(){
 		if(hintOrExplanationEventName!=null){
-			Long endTime=System.currentTimeMillis();
+			Long endTime=PlayerDataLogEvents.getUnixTime();
 			Long spendTime=endTime-hintOrExplanationStartTime;
 			if(hintOrExplanationEventName.equals(PlayerDataLogEvents.QUESTION_RESOURCE_EXPLANATION_EVENT_NAME)){
 				PlayerDataLogEvents.explanationButtonDataLogEvent(hintOrExplanationEventId, PlayerDataLogEvents.COLLECTION_RESOURCE_EXPLANATION_EVENT_NAME, resourceDataLogEventId, collectionItemDo.getResource().getGooruOid(), 
@@ -786,12 +786,12 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	
 	public void updateResourceViewCount(String gooruId,String viewsCount,String resourceType){
-		this.playerAppService.updateViewCount(gooruId, viewsCount, resourceType, new SimpleAsyncCallback<String>() {
-			@Override
-			public void onSuccess(String result) {
+//		this.playerAppService.updateViewCount(gooruId, viewsCount, resourceType, new SimpleAsyncCallback<String>() {
+//			@Override
+//			public void onSuccess(String result) {
 					updateViewCount();
-			}
-		});
+//			}
+//		});
 	}
 	
 	public void updateViewCount(){
@@ -800,10 +800,10 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			Integer viewsCounts=Integer.parseInt(viewsCount)+1;
 			collectionItemDo.getResource().setViews(viewsCounts.toString());
 			resourceInfoPresenter.updateViewsCount(viewsCounts.toString());
-			      try{
-			    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(String.valueOf(viewsCounts), collectionItemDo.getResource().getGooruOid(), "views"));
-			         }
-			      catch(Exception ex){}
+		      try{
+		    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(viewsCounts.toString(), collectionItemDo.getResource().getGooruOid(), "views"));
+		         }
+		      catch(Exception ex){}
 		}
 	}
 
@@ -853,7 +853,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			}
 	}
 	public void  getResource(String resourceId){
-		this.playerAppService.getResourceCollectionItem(null,resourceId,null, new SimpleAsyncCallback<CollectionItemDo>() {
+		this.playerAppService.getResourceInfoDetails(null,resourceId,null, new SimpleAsyncCallback<CollectionItemDo>() {
 			@Override
 			public void onSuccess(CollectionItemDo collectionItemDo) {
 				if(collectionItemDo.getStatusCode()!=200){
@@ -914,17 +914,20 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	
 	public void updateResourceLikes(int userThumbsRataing){
-		int resourceLikes=collectionItemDo.getRating().getVotesUp();
-		int userRating=collectionItemDo.getResource().getUserRating();
-		if(userThumbsRataing==1){
-			resourceLikes=resourceLikes+1;
-		}else if((userThumbsRataing==0||userThumbsRataing==-1)&&userRating==1){
-			resourceLikes=resourceLikes-1;
+		if(collectionItemDo.getRating()!=null){
+			int resourceLikes=collectionItemDo.getRating().getVotesUp()!=null?collectionItemDo.getRating().getVotesUp():0;
+			int userRating=collectionItemDo.getResource().getUserRating()!=null?collectionItemDo.getResource().getUserRating():0;
+			if(userThumbsRataing==1){
+				resourceLikes=resourceLikes+1;
+			}else if((userThumbsRataing==0||userThumbsRataing==-1)&&userRating==1){
+				resourceLikes=resourceLikes-1;
+			}
+			resourceLikes=resourceLikes<0?0:resourceLikes;
+			resourceInfoPresenter.updateLikesCount(resourceLikes);
+			collectionItemDo.getResource().setUserRating(userThumbsRataing);
+			collectionItemDo.getRating().setVotesUp(resourceLikes);
 		}
-		resourceLikes=resourceLikes<0?0:resourceLikes;
-		resourceInfoPresenter.updateLikesCount(resourceLikes);
-		collectionItemDo.getResource().setUserRating(userThumbsRataing);
-		collectionItemDo.getRating().setVotesUp(resourceLikes);
+		
 	}
 
 	@Override
@@ -985,7 +988,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	}
 	public void triggerSaveOeAnswerTextDataEvent(){
 		String oeDataLogEventId=GwtUUIDGenerator.uuid();
-		Long oeStartTime=System.currentTimeMillis();
+		Long oeStartTime=PlayerDataLogEvents.getUnixTime();
 		triggerSaveOeAnswerTextDataEvent(oeDataLogEventId,collectionItemDo.getResource().getGooruOid(),oeStartTime,oeStartTime,0);
 	}
 	
@@ -1036,7 +1039,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	public void triggerShareDataLogEvent(String resourceGooruOid, String itemType, String shareType, boolean confirmStatus){
-		PlayerDataLogEvents.triggerItemShareDataLogEvent(resourceGooruOid, "", "", "", sessionId, itemType, shareType, confirmStatus, PlayerDataLogEvents.STUDY, "", null);
+		PlayerDataLogEvents.triggerItemShareDataLogEvent(resourceGooruOid, "", null,"", "", sessionId, itemType, shareType, confirmStatus, PlayerDataLogEvents.STUDY, "", null);
 	}
 	/**
 	 * Gets the respective resource ratings rated by the user.

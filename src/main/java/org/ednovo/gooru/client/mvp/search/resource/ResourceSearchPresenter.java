@@ -38,7 +38,6 @@ import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInSearchEvent;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
-import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
@@ -77,8 +76,6 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	
 	CollectionFormInPlayPresenter collectionFormInPlayPresenter;
 	
-	private	AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter;
-	
 	AddStandardsPresenter addStandardsPresenter = null;
 	
 	@ProxyCodeSplit
@@ -95,13 +92,12 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	 */
 	@Inject
 	public ResourceSearchPresenter(IsResourceSearchView view, IsResourceSearchProxy proxy,SignUpPresenter signUpViewPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup,
-			AddResourceContainerPresenter addResourceContainerPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter, AddStandardsPresenter addStandardsPresenter,AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter) {
+			AddResourceContainerPresenter addResourceContainerPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter, AddStandardsPresenter addStandardsPresenter) {
 		super(view, proxy, signUpViewPresenter,addStandardsPresenter);
 		this.ratingAndReviewPopup=ratingAndReviewPopup;
 		this.addStandardsPresenter = addStandardsPresenter;
 		this.addResourceContainerPresenter=addResourceContainerPresenter;
 		this.collectionFormInPlayPresenter= collectionFormInPlayPresenter;
-		this.analyticsInfoContainerPresenter = analyticsInfoContainerPresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(UpdateRatingsInSearchEvent.TYPE,this);
 		addRegisteredHandler(RefreshDisclosurePanelEvent.TYPE, this);
@@ -223,20 +219,5 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 				DisclosurePanelClose.setOpen(false);
 			}
 		});
-	}
-
-	@Override
-	public void setAnalyticsTabData(SimplePanel addResourceContainerPanel,
-			ResourceSearchResultDo searchResultDo, String type) {
-			addResourceContainerPanel.clear();
-			analyticsInfoContainerPresenter.setAnalyticsResourcesData(searchResultDo);
-			addResourceContainerPanel.setWidget(analyticsInfoContainerPresenter.getWidget());
-	}
-
-	@Override
-	public void setAnalyticsTabDataForCollections(
-			SimplePanel addResourceContainerPanel,
-			CollectionSearchResultDo searchResultDo, String type) {
-		// TODO Auto-generated method stub
 	}
 }

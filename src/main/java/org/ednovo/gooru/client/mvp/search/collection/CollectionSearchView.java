@@ -70,19 +70,6 @@ public class CollectionSearchView extends AbstractSearchView<CollectionSearchRes
 				}
 				}
 		});
-		
-		collectionSearchResultVc.getAnalyticsButton().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-				if(AppClientFactory.isAnonymous()){
-					LoginPopupUc loginPopupUc=new LoginPopupUc();
-				}else{
-					getUiHandlers().setAnalyticsTabDataForCollections(collectionSearchResultVc.getAddResourceContainerPanel(),searchResultDo,"collection");
-				}
-			}
-		});
-		
 		return collectionSearchResultVc;
 	}
 

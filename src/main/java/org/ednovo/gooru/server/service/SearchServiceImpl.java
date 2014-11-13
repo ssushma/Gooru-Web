@@ -29,7 +29,6 @@ package org.ednovo.gooru.server.service;
 
 
 import java.net.URLEncoder;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -468,240 +467,245 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		return  getHomeEndPoint();
 	}
 
-@Override
-public SearchDo<ResourceSearchResultDo> getSuggestSearchResultForResourceNoResult(SearchDo<ResourceSearchResultDo> searchDo){
-	    JsonRepresentation jsonRep=null;
-		SearchDo<ResourceSearchResultDo> searchDOEmpty = new SearchDo<ResourceSearchResultDo>();
-		try{
-		String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.SEARCH_SUGGEST_NO_RESULT, searchDo.getFilters(), getLoggedInSessionToken(), query);
+	@Override
+	public SearchDo<ResourceSearchResultDo> getSuggestSearchResultForResourceNoResult(SearchDo<ResourceSearchResultDo> searchDo){
+		    JsonRepresentation jsonRep=null;
+			SearchDo<ResourceSearchResultDo> searchDOEmpty = new SearchDo<ResourceSearchResultDo>();
+			try{
+			String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.SEARCH_SUGGEST_NO_RESULT, searchDo.getFilters(), getLoggedInSessionToken(), query);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			resourceSearchResultDeSerializer.deserialize(jsonRep, searchDo);
+			return searchDo;
+			}catch(Exception e){
+			}
+			return searchDOEmpty;
+		}
+	
+	@Override
+	public SearchDo<AutoSuggestKeywordSearchDo> getSuggestedAutokeyword(
+			SearchDo<AutoSuggestKeywordSearchDo> searchDo) throws GwtException {
+		String pageSize="5";
+		String pageNumber="1";
+		JsonRepresentation jsonRep=null;
+		String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.SEARCH_AUTO_SUGGEST_KEYWORD, getLoggedInSessionToken(),searchDo.getSearchQuery(),pageSize,searchDo.getType(),pageNumber);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
-		resourceSearchResultDeSerializer.deserialize(jsonRep, searchDo);
+		searchDo.setSearchResults(autoSearchKeyWordDeSerializer.deserializeAutoKeyword(jsonRep));
+		return searchDo;
+	
+	}
+	
+	@Override
+	public SearchDo<String> getSuggestedAggregator(SearchDo<String> searchDo)
+			throws GwtException {
+		JsonRepresentation jsonRep=null;
+		String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.SEARCH_SUGGEST_AGGREGATOR, getLoggedInSessionToken(), URLEncoder.encode(searchDo.getSearchQuery()), searchDo.getPageSize() + "", searchDo.getPageNum() + "");
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+		jsonRep=jsonResponseRep.getJsonRepresentation();
+		searchDo.setSearchResults(autoCompleteDeSerializer.deserializeAggregator(jsonRep));
+		return searchDo;
+	}
+	
+	@Override
+	public SearchDo<ResourceSearchResultDo> getCollectionSuggestedResourceSearchResults(
+			SearchDo<ResourceSearchResultDo> searchDo, String contentGorruOid)
+			throws GwtException {
+		// TODO Auto-generated method stub
+	
+		SearchDo<ResourceSearchResultDo> searchDOEmpty = new SearchDo<ResourceSearchResultDo>();
+		String query1=searchDo.getSearchQuery();
+		 query= query1;
+		try{
+			if(searchDo.getFilters()!=null){
+				for (String key : searchDo.getFilters().keySet()) {
+				  String value = searchDo.getFilters().get(key);
+				  value = value.replaceAll("&", "%26");
+				  searchDo.getFilters().put(key, value);
+				 }
+			}
+				
+		JsonRepresentation jsonRep=null;
+		Map<String,String> filtersMap=searchDo.getFilters();
+		if(filtersMap!=null){
+	        String category=filtersMap.get("category");
+	        if(category!=null&&category.equalsIgnoreCase("All")){
+	                filtersMap.remove("category");
+	        }
+	        else if(category!=null){
+	        	if(category.equalsIgnoreCase("Website")){
+	               	category=category.replaceAll("Website", "webpage");
+	                filtersMap.remove("category");
+	                filtersMap.put("flt.resourceFormat",category);
+	        	}
+	        	else {
+	        		 filtersMap.remove("category");
+	                 filtersMap.put("flt.resourceFormat",category);
+	        	}
+	        }
+		}
+		//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.SEARCH_SUGGEST_RESOURCES, getLoggedInSessionToken(), URLEncoder.encode(searchDo.getSearchQuery()), COLLECTION_EDIT_EVENT ,"8c20a619-8aba-4b10-ae2c-6cf71d469a80");
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.SEARCH_SUGGEST_RESOURCES, getLoggedInSessionToken(), URLEncoder.encode(searchDo.getSearchQuery()), COLLECTION_EDIT_EVENT ,contentGorruOid);
+	
+		if(getSearchEndPoint().contains(HTTPS)){
+			url = appendHttpsURL(url);
+		}
+		System.out.println("search end point url::::::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+		jsonRep=jsonResponseRep.getJsonRepresentation();
+		try{
+			resourceSearchResultDeSerializer.deserializeSuggestedResources(jsonRep, searchDo);	
+		}
+		catch(Exception e)
+		{
+			
+		}
 		return searchDo;
 		}catch(Exception e){
 		}
 		return searchDOEmpty;
-	}
-
-@Override
-public SearchDo<AutoSuggestKeywordSearchDo> getSuggestedAutokeyword(
-		SearchDo<AutoSuggestKeywordSearchDo> searchDo) throws GwtException {
-	String pageSize="5";
-	String pageNumber="1";
-	JsonRepresentation jsonRep=null;
-	String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.SEARCH_AUTO_SUGGEST_KEYWORD, getLoggedInSessionToken(),searchDo.getSearchQuery(),pageSize,searchDo.getType(),pageNumber);
 	
-	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
-	jsonRep=jsonResponseRep.getJsonRepresentation();
-	searchDo.setSearchResults(autoSearchKeyWordDeSerializer.deserializeAutoKeyword(jsonRep));
-	return searchDo;
-
-}
-
-@Override
-public SearchDo<String> getSuggestedAggregator(SearchDo<String> searchDo)
-		throws GwtException {
-	JsonRepresentation jsonRep=null;
-	String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.SEARCH_SUGGEST_AGGREGATOR, getLoggedInSessionToken(), URLEncoder.encode(searchDo.getSearchQuery()), searchDo.getPageSize() + "", searchDo.getPageNum() + "");
-	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
-	jsonRep=jsonResponseRep.getJsonRepresentation();
-	searchDo.setSearchResults(autoCompleteDeSerializer.deserializeAggregator(jsonRep));
-	return searchDo;
-}
-
-@Override
-public SearchDo<ResourceSearchResultDo> getCollectionSuggestedResourceSearchResults(
-		SearchDo<ResourceSearchResultDo> searchDo, String contentGorruOid)
-		throws GwtException {
-	// TODO Auto-generated method stub
-
-	SearchDo<ResourceSearchResultDo> searchDOEmpty = new SearchDo<ResourceSearchResultDo>();
-	String query1=searchDo.getSearchQuery();
-	 query= query1;
-	try{
-		if(searchDo.getFilters()!=null){
-			for (String key : searchDo.getFilters().keySet()) {
-			  String value = searchDo.getFilters().get(key);
-			  value = value.replaceAll("&", "%26");
-			  searchDo.getFilters().put(key, value);
-			 }
+	
+	}
+	
+	@Override
+	public ArrayList<StandardsLevel1DO> getFirstLevelStandards(String levelOrder, String standardLabel) {
+		JsonRepresentation jsonRep=null;
+		ArrayList<StandardsLevel1DO> standardLevelArry = new ArrayList<StandardsLevel1DO>();
+		
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_LevelWiseStandards,levelOrder,standardLabel, getLoggedInSessionToken());
+	
+		if(getSearchEndPoint().contains(HTTPS)){
+			url = appendHttpsURL(url);
 		}
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+		jsonRep=jsonResponseRep.getJsonRepresentation();
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				standardLevelArry = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<StandardsLevel1DO>>() {});
+				return standardLevelArry;
+			}
+		} catch (Exception e) {
 			
-	JsonRepresentation jsonRep=null;
-	Map<String,String> filtersMap=searchDo.getFilters();
-	if(filtersMap!=null){
-        String category=filtersMap.get("category");
-        if(category!=null&&category.equalsIgnoreCase("All")){
-                filtersMap.remove("category");
-        }
-        else if(category!=null){
-        	if(category.equalsIgnoreCase("Website")){
-               	category=category.replaceAll("Website", "webpage");
-                filtersMap.remove("category");
-                filtersMap.put("flt.resourceFormat",category);
-        	}
-        	else {
-        		 filtersMap.remove("category");
-                 filtersMap.put("flt.resourceFormat",category);
-        	}
-        }
-	}
-	//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.SEARCH_SUGGEST_RESOURCES, getLoggedInSessionToken(), URLEncoder.encode(searchDo.getSearchQuery()), COLLECTION_EDIT_EVENT ,"8c20a619-8aba-4b10-ae2c-6cf71d469a80");
-	String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.SEARCH_SUGGEST_RESOURCES, getLoggedInSessionToken(), URLEncoder.encode(searchDo.getSearchQuery()), COLLECTION_EDIT_EVENT ,contentGorruOid);
-
-	if(getSearchEndPoint().contains(HTTPS)){
-		url = appendHttpsURL(url);
-	}
-	System.out.println("search end point url::::::"+url);
-	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
-	jsonRep=jsonResponseRep.getJsonRepresentation();
-	try{
-		resourceSearchResultDeSerializer.deserializeSuggestedResources(jsonRep, searchDo);	
-	}
-	catch(Exception e)
-	{
-		
-	}
-	return searchDo;
-	}catch(Exception e){
-	}
-	return searchDOEmpty;
-
-
-}
-
-@Override
-public ArrayList<StandardsLevel1DO> getFirstLevelStandards(String levelOrder, String standardLabel) {
-	JsonRepresentation jsonRep=null;
-	ArrayList<StandardsLevel1DO> standardLevelArry = new ArrayList<StandardsLevel1DO>();
-	
-	String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_LevelWiseStandards,levelOrder,standardLabel, getLoggedInSessionToken());
-
-	if(getSearchEndPoint().contains(HTTPS)){
-		url = appendHttpsURL(url);
-	}
-	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
-	jsonRep=jsonResponseRep.getJsonRepresentation();
-	try {
-		if (jsonRep != null && jsonRep.getSize() != -1) {
-			standardLevelArry = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<StandardsLevel1DO>>() {});
-			return standardLevelArry;
+			e.printStackTrace();
 		}
-	} catch (Exception e) {
-		
-		e.printStackTrace();
+		return standardLevelArry;
 	}
-	return standardLevelArry;
-}
-
-@Override
-public ArrayList<StandardsLevel2DO> getSecondLevelStandards(String levelOrder, String standardLabel) {
-	JsonRepresentation jsonRep=null;
-	ArrayList<StandardsLevel2DO> standardLevelArry = new ArrayList<StandardsLevel2DO>();
 	
-	String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_LevelWiseStandards,levelOrder,standardLabel, getLoggedInSessionToken());
-
-	if(getSearchEndPoint().contains(HTTPS)){
-		url = appendHttpsURL(url);
-	}
-	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
-	jsonRep=jsonResponseRep.getJsonRepresentation();
-	try {
-		if (jsonRep != null && jsonRep.getSize() != -1) {
-
-			standardLevelArry = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<StandardsLevel2DO>>() {});
-
-			return standardLevelArry;
-		}
-	} catch (Exception e) {
+	@Override
+	public ArrayList<StandardsLevel2DO> getSecondLevelStandards(String levelOrder, String standardLabel) {
+		JsonRepresentation jsonRep=null;
+		ArrayList<StandardsLevel2DO> standardLevelArry = new ArrayList<StandardsLevel2DO>();
 		
-		e.printStackTrace();
-	}
-	return standardLevelArry;
-}
-
-@Override
-public ArrayList<StandardsLevel3DO> getThirdLevelStandards(String levelOrder, String standardLabel) {
-	JsonRepresentation jsonRep=null;
-	ArrayList<StandardsLevel3DO> standardLevelArry = new ArrayList<StandardsLevel3DO>();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_LevelWiseStandards,levelOrder,standardLabel, getLoggedInSessionToken());
 	
-	String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_LevelWiseStandards,levelOrder,standardLabel, getLoggedInSessionToken());
-
-	if(getSearchEndPoint().contains(HTTPS)){
-		url = appendHttpsURL(url);
-	}
-	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
-	jsonRep=jsonResponseRep.getJsonRepresentation();
-	try {
-		if (jsonRep != null && jsonRep.getSize() != -1) {
-
-			standardLevelArry = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<StandardsLevel3DO>>() {});
-
-			return standardLevelArry;
+		if(getSearchEndPoint().contains(HTTPS)){
+			url = appendHttpsURL(url);
 		}
-	} catch (Exception e) {
-		
-		e.printStackTrace();
-	}
-	return standardLevelArry;
-}
-@Override
-public ArrayList<StandardsLevel4DO> getFourthLevelStandards(String levelOrder, String standardLabel) {
-	JsonRepresentation jsonRep=null;
-	ArrayList<StandardsLevel4DO> standardLevelArry = new ArrayList<StandardsLevel4DO>();
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+		jsonRep=jsonResponseRep.getJsonRepresentation();
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
 	
-	String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_LevelWiseStandards,levelOrder,standardLabel, getLoggedInSessionToken());
-
-	if(getSearchEndPoint().contains(HTTPS)){
-		url = appendHttpsURL(url);
-	}
-	System.out.println("getFourthLevelStandards:::"+url);
-	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
-	jsonRep=jsonResponseRep.getJsonRepresentation();
-	try {
-		if (jsonRep != null && jsonRep.getSize() != -1) {
-
-			standardLevelArry = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<StandardsLevel4DO>>() {});
-
-			return standardLevelArry;
+				standardLevelArry = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<StandardsLevel2DO>>() {});
+	
+				return standardLevelArry;
+			}
+		} catch (Exception e) {
+			
+			e.printStackTrace();
 		}
-	} catch (Exception e) {
+		return standardLevelArry;
+	}
+	
+	@Override
+	public ArrayList<StandardsLevel3DO> getThirdLevelStandards(String levelOrder, String standardLabel) {
+		JsonRepresentation jsonRep=null;
+		ArrayList<StandardsLevel3DO> standardLevelArry = new ArrayList<StandardsLevel3DO>();
 		
-		e.printStackTrace();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_LevelWiseStandards,levelOrder,standardLabel, getLoggedInSessionToken());
+	
+		if(getSearchEndPoint().contains(HTTPS)){
+			url = appendHttpsURL(url);
+		}
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+		jsonRep=jsonResponseRep.getJsonRepresentation();
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+	
+				standardLevelArry = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<StandardsLevel3DO>>() {});
+	
+				return standardLevelArry;
+			}
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return standardLevelArry;
 	}
-	return standardLevelArry;
-}
-
-
-@Override
-public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(
-		SearchDo<CodeDo> searchDo) throws GwtException, ServerDownException {
-	// TODO Auto-generated method stub
-	JsonRepresentation jsonRep=null;
-	String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SUGGEST_STANDARD_BY_FILTER_Source_CodeId, getLoggedInSessionToken(), searchDo.getSearchQuery());
-	System.out.println("searchDo.getFilters():::::::"+searchDo.getFilters());
-	if(searchDo.getFilters()!=null && searchDo.getFilters().size()>0) {
-		url = url + "&"+FLT_SOURCE_CODE_ID+"="+searchDo.getFilters().get(FLT_SOURCE_CODE_ID);
+	@Override
+	public ArrayList<StandardsLevel4DO> getFourthLevelStandards(String levelOrder, String standardLabel) {
+		JsonRepresentation jsonRep=null;
+		ArrayList<StandardsLevel4DO> standardLevelArry = new ArrayList<StandardsLevel4DO>();
+		
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_LevelWiseStandards,levelOrder,standardLabel, getLoggedInSessionToken());
+	
+		if(getSearchEndPoint().contains(HTTPS)){
+			url = appendHttpsURL(url);
+		}
+		System.out.println("getFourthLevelStandards:::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+		jsonRep=jsonResponseRep.getJsonRepresentation();
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+	
+				standardLevelArry = JsonDeserializer.deserialize(jsonRep.getJsonArray().toString(), new TypeReference<ArrayList<StandardsLevel4DO>>() {});
+	
+				return standardLevelArry;
+			}
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return standardLevelArry;
 	}
-	System.out.println("getSuggestStandardByFiltersource course id 1 CourseId api new:::::::"+url);
-	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
-	jsonRep=jsonResponseRep.getJsonRepresentation();
-	searchDo.setSearchResults(autoCompleteDeSerializer.deserializeStandards(jsonRep));
-	return searchDo;
-}
-
-/*@Override
-public SearchDo<CollectionSearchResultDo> getSuggestedSearchResultForCollectionNoResult(
-		SearchDo<CollectionSearchResultDo> searchDo) throws GwtException {
-	SearchDo<CollectionSearchResultDo> searchDOEmpty = new SearchDo<CollectionSearchResultDo>();
-	try{
-	String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.SEARCH_SUGGEST_COLLECTION_NO_RESULT, searchDo.getFilters(), getLoggedInSessionToken(), collectionQuery);
-	JsonRepresentation jsonRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
-	collectionSearchResultDeSerializer.deserialize(jsonRep, searchDo);
-	return searchDo;
-	}catch(Exception e){
+	
+	
+	@Override
+	public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(
+			SearchDo<CodeDo> searchDo) throws GwtException, ServerDownException {
+		// TODO Auto-generated method stub
+		JsonRepresentation jsonRep=null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SUGGEST_STANDARD_BY_FILTER_Source_CodeId, getLoggedInSessionToken(), searchDo.getSearchQuery());
+		System.out.println("searchDo.getFilters():::::::"+searchDo.getFilters());
+		if(searchDo.getFilters()!=null && searchDo.getFilters().size()>0) {
+			url = url + "&"+FLT_SOURCE_CODE_ID+"="+searchDo.getFilters().get(FLT_SOURCE_CODE_ID);
+		}
+		System.out.println("getSuggestStandardByFiltersource course id 1 CourseId api new:::::::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+		jsonRep=jsonResponseRep.getJsonRepresentation();
+		searchDo.setSearchResults(autoCompleteDeSerializer.deserializeStandards(jsonRep));
+		return searchDo;
 	}
-	return searchDOEmpty;
-}*/
+	
+	@Override
+	public String showGooruStoriesSection() throws GwtException, ServerDownException {
+		return showStoriesSection();
+	}
+	
+	/*@Override
+	public SearchDo<CollectionSearchResultDo> getSuggestedSearchResultForCollectionNoResult(
+			SearchDo<CollectionSearchResultDo> searchDo) throws GwtException {
+		SearchDo<CollectionSearchResultDo> searchDOEmpty = new SearchDo<CollectionSearchResultDo>();
+		try{
+		String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.SEARCH_SUGGEST_COLLECTION_NO_RESULT, searchDo.getFilters(), getLoggedInSessionToken(), collectionQuery);
+		JsonRepresentation jsonRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+		collectionSearchResultDeSerializer.deserialize(jsonRep, searchDo);
+		return searchDo;
+		}catch(Exception e){
+		}
+		return searchDOEmpty;
+	}*/
 	
 }

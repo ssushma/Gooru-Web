@@ -591,8 +591,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.SIMPLE_COLL_GETAPI, classpageId,
 				getLoggedInSessionToken());
-		System.out.println("getSCollIdClasspageById::"+url);
-		System.out.println("classpageId::"+classpageId);
 		
 		try{
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),

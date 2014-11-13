@@ -58,6 +58,6 @@ public interface OpenProfileCollectionHandler extends EventHandler {
 	 * @throws : <Mentioned if any exceptions>
 	*/
 	
-	void openProfileCollection(ProfileLibraryDo profileLibraryDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode);
+	void openProfileCollection(ProfileLibraryDo profileLibraryDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode,String libraryGooruOid);
 
 }

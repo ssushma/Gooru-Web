@@ -83,7 +83,7 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	
 	public void setPlayerLoginStatus(boolean isLoggedIn);
 	
-	public void displaySpendTime(Long hours,Long mins, Long secs);
+	public void displaySpendTime(Long hours,Long mins, Double secs);
 	
 	public void displayScoreCount(Integer collectionScore,Integer noOfQuestions);
 	
@@ -93,12 +93,14 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	
 	public void showAvgReaction(String averageReaction);
 	
-	public void setSessionsData(ArrayList<CollectionSummaryUsersDataDo> sessionData);
-	
-	public void setCollectionMetaDataByUserAndSession(ArrayList<CollectionSummaryMetaDataDo> collectionMetadata);
-	
-	public void resetCollectionMetaData();
-	
-	public HTMLPanel getLoadingImageLabel();
-	
+	public void dispalyTime();
+
+	void setSessionsData(ArrayList<CollectionSummaryUsersDataDo> result);
+
+	void setCollectionMetaDataByUserAndSession(
+			ArrayList<CollectionSummaryMetaDataDo> result);
+
+	void resetCollectionMetaData();
+
+	HTMLPanel getLoadingImageLabel();
 }

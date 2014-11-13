@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
+import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
@@ -241,6 +242,14 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 				addToPopupSlot(signUpViewPresenter);
 			}
 		}
+		int flag = AppClientFactory.getLoggedInUser().getViewFlag();
+		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
+		if(!AppClientFactory.isAnonymous() && flag==0 &&  loginType.equalsIgnoreCase("apps")) {
+			AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
+			update.setGlassEnabled(true);
+			update.show();
+			update.center();
+		}
 	}
 	
 	
@@ -399,6 +408,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			int windowHeight=Window.getClientHeight();
 			getView().getEditPanel().getElement().getStyle().setHeight(windowHeight, Unit.PX);
 			getView().getEditPanel().getElement().getStyle().setOverflowY(Overflow.AUTO);
+			getView().getEditPanel().getElement().getStyle().setMarginTop(38, Unit.PX);
 //		}else{
 //			getView().getEditPanel().getElement().getStyle().clearHeight();
 //			getView().getEditPanel().getElement().getStyle().clearOverflowY();

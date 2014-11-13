@@ -54,6 +54,7 @@ public class ServiceProcessor {
                setRepresentation(getClientResource().get(type));
                // Get the representation as an JsonRepresentation
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
+               jsonResponseRepresentation.setErrorMessage("error text");
                jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation(getRepresentation().getText()));
                return jsonResponseRepresentation;
            }
@@ -375,7 +376,7 @@ public class ServiceProcessor {
     * @return instance of {@link JsonRepresentation}
     */
    public static JsonResponseRepresentation put(final String url, final String username, final String password) {
-       Form form = new Form();
+       Form form = null;
        return put(url, MediaType.APPLICATION_JSON, username, password, form);
    }
 	

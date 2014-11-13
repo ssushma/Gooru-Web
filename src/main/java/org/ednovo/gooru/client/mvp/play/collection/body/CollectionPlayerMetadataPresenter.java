@@ -41,7 +41,6 @@ import org.ednovo.gooru.client.service.LibraryServiceAsync;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
@@ -294,11 +293,12 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 
 	public void setCollectionPlayerPresenter(CollectionPlayerPresenter collectionPlayerPresenter) {
 		this.collectionPlayerPresenter = collectionPlayerPresenter;
+		collectionHomeMetadataPresenter.setCollectionPlayerPresenter(collectionPlayerPresenter);
 		previewHomePresenter.setCollectionPlayerPresenter(collectionPlayerPresenter);
 	}
 
-	public void setTeacherInfo(AssignmentParentDo assignmentParentDo) { 
-		getView().setTeacherInfo(assignmentParentDo);
+	public void setTeacherInfo(ClasspageItemDo classpageItemDo) { 
+		getView().setTeacherInfo(classpageItemDo);
 	}
 
 	public void setDataInsightsSummaryUrl(String sessionId){

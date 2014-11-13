@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.play.collection.end;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -35,12 +36,15 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualPresenter;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
+import org.ednovo.gooru.client.mvp.play.collection.body.IsCollectionPlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.collection.end.study.CollectionHomeMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.event.EditCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCommentChildViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.preview.end.PreviewEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomePresenter;
+import org.ednovo.gooru.client.mvp.play.collection.share.email.SummaryPageEmailShareUc;
+import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.client.service.LibraryServiceAsync;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
@@ -55,6 +59,7 @@ import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
+import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
@@ -69,10 +74,10 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	private PlayerAppServiceAsync playerAppService;
 	
 	@Inject
-	private AnalyticsServiceAsync analyticService;
+	private LibraryServiceAsync libraryService;
 	
 	@Inject
-	private LibraryServiceAsync libraryService;
+	private AnalyticsServiceAsync analyticService;
 
     private SimpleAsyncCallback<CommentsListDo> commentsListDoAsync;
     
@@ -86,11 +91,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	
 	private CollectionHomeMetadataPresenter collectionHomeMetadataPresenter;
 	
-	private CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter;
-	
 	public static final  Object METADATA_PRESENTER_SLOT = new Object();
-	
-	public static final  Object COLLECTION_REPORTS_SLOT=new Object();
 	
 	private static final String PAGE = "course-page";
 	
@@ -104,28 +105,30 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	
 	private static final String INITIAL_OFFSET = "0";
 	
+	private CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter;
+	
+	public static final  Object COLLECTION_REPORTS_SLOT=new Object();
+	
+	
+	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	PrintUserDataDO printData=new PrintUserDataDO();
 	
 	@Inject
 	public CollectionEndPresenter(EventBus eventBus, IsCollectionEndView view,PreviewHomePresenter previewHomePresenter,
-			PreviewEndPresenter previewEndPresenter,CollectionHomeMetadataPresenter collectionHomeMetadataPresenter,CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter) {
+			PreviewEndPresenter previewEndPresenter,CollectionHomeMetadataPresenter collectionHomeMetadataPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.previewHomePresenter=previewHomePresenter;
 		this.previewEndPresenter=previewEndPresenter;
 		this.collectionHomeMetadataPresenter=collectionHomeMetadataPresenter;
-		this.collectionSummaryIndividualPresenter=collectionSummaryIndividualPresenter;
 		addRegisteredHandler(SetPlayerLoginStatusEvent.TYPE, this);
 		addRegisteredHandler(UpdateCommentChildViewEvent.TYPE, this);
 		addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
 	}
 	
 	public void setCollectionMetadata(final CollectionDo collectionDo){
-		clearSlot(COLLECTION_REPORTS_SLOT);
-		getView().resetCollectionMetaData();
-		getView().getLoadingImageLabel().setVisible(true);
 		this.collectionDo=collectionDo;
 		getView().setCollectionMetadata(collectionDo);
 		if(AppClientFactory.isAnonymous()) {
@@ -160,7 +163,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		collectionHomeMetadataPresenter.setCollectionMetadata(collectionDo);
 		setInSlot(METADATA_PRESENTER_SLOT, collectionHomeMetadataPresenter,false);
 	}
-	
+
 	public void setCollectionSummaryBasedOnClasspageIdSessionId(){
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 		if(classpageId==null){
@@ -175,6 +178,7 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 		collectionSummaryIndividualPresenter.setIndividualData(collectionId, classpageId, userId, sessionId,"",false,getView().getLoadingImageLabel(),printData);
 		setInSlot(COLLECTION_REPORTS_SLOT,collectionSummaryIndividualPresenter,false);
 	}
+
 	public void setViewCount(String viewCount){
 		getView().setViewCount(viewCount);
 	}
@@ -379,8 +383,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 			collectionPlayerPresenter.triggerCollectionShareDataEvent( collectionId, itemType,  shareType,  confirmStatus);
 		}
 	}
-	public void displaySpendTime(Long hours,Long mins, Long secs){
-		getView().displaySpendTime( hours,mins,secs);
+	public void displaySpendTime(Long hours,Long mins, Double secs){
+		getView().displaySpendTime( hours,mins, secs);
 	}
 	public void displayScoreCount(Integer collectionScore,Integer noOfQuestions){
 		getView().displayScoreCount(collectionScore,noOfQuestions);
@@ -388,24 +392,53 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 
 	@Override
 	public void getAvgReaction() {
-		if(collectionPlayerPresenter!=null){
-			Map<String, Integer> reactionTree=collectionPlayerPresenter.getReactionTreeMap();
-			Integer maxValue=0;
-			String reactiontype=null;
-			if(reactionTree.size()>0){
-				for(Map.Entry<String,Integer> entry : reactionTree.entrySet()){
-					Integer reactionValue=entry.getValue();
-					if(reactionValue>maxValue){
-						maxValue=reactionValue;
-						reactiontype=entry.getKey();
-					}
-				}
-			}
-			getView().showAvgReaction(reactiontype);
-		}else{
-			getView().showAvgReaction(null);
-		}
+//		if(collectionPlayerPresenter!=null){
+//			Map<String, Integer> reactionTree=collectionPlayerPresenter.getReactionTreeMap();
+//			Integer maxValue=0;
+//			String reactiontype=null;
+//			if(reactionTree.size()>0){
+//				for(Map.Entry<String,Integer> entry : reactionTree.entrySet()){
+//					Integer reactionValue=entry.getValue();
+//					if(reactionValue>maxValue){
+//						maxValue=reactionValue;
+//						reactiontype=entry.getKey();
+//					}
+//				}
+//			}
+//			getView().showAvgReaction(reactiontype);
+//		}else{
+//			getView().showAvgReaction(null);
+//		}
 		
+	}
+
+	
+	public void showAvgReaction(Integer averageReaction){
+		averageReaction=averageReaction!=null?averageReaction:0;
+		String reactionType=null;
+		
+		switch (averageReaction) {
+		case 5:
+			reactionType=ResourcePlayerMetadataView.REACTION_CAN_EXPLAIN;
+			break;
+		case 4:
+			reactionType=ResourcePlayerMetadataView.REACTION_CAN_UNDERSTAND;
+			break;
+		case 2:
+			reactionType=ResourcePlayerMetadataView.REACTION_DONOT_UNDERSTAND;
+			break;
+		case 3:
+			reactionType=ResourcePlayerMetadataView.REACTION_MEH;
+			break;
+		case 1:
+			reactionType=ResourcePlayerMetadataView.REACTION_NEED_HELP;
+			break;
+		}
+		getView().showAvgReaction(reactionType);
+	}
+	
+	public void dispalyTime(){
+		getView().dispalyTime();
 	}
 
 	@Override
@@ -462,5 +495,8 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 				
 			}
 		});
+
 	}
+	
+	
 }

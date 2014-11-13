@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.play.collection.end.study;
 
 
 
+import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
@@ -36,6 +37,8 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class CollectionHomeMetadataPresenter extends PresenterWidget<IsCollectionHomeMetadataView> implements CollectionHomeMetadataUiHandlers{
 
 	private PreviewPlayerPresenter previewPlayerPresenter=null;
+	
+	private CollectionPlayerPresenter collectionPlayerPresenter=null;
 	@Inject
 	public CollectionHomeMetadataPresenter(EventBus eventBus, IsCollectionHomeMetadataView view) {
 		super(eventBus, view);
@@ -60,10 +63,16 @@ public class CollectionHomeMetadataPresenter extends PresenterWidget<IsCollectio
 	@Override
 	public void triggerCollectionShareDataEvent(String collectionId,
 			String itemType, String shareType, boolean confirmStatus) {
-		if(previewPlayerPresenter!=null){
-			previewPlayerPresenter.triggerCollectionShareDataEvent( collectionId, itemType,  shareType,  confirmStatus);
+		if(collectionPlayerPresenter!=null){
+			collectionPlayerPresenter.triggerCollectionShareDataEvent( collectionId, itemType,  shareType,  confirmStatus);
 		}
 		
+	}
+	public CollectionPlayerPresenter getCollectionPlayerPresenter() {
+		return collectionPlayerPresenter;
+	}
+	public void setCollectionPlayerPresenter(CollectionPlayerPresenter collectionPlayerPresenter) {
+		this.collectionPlayerPresenter = collectionPlayerPresenter;
 	}
 
 }

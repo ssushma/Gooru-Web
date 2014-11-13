@@ -157,7 +157,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	
 	@UiField Label panelHeading, lblPleaseWait,lblCommonCore,lblCaliforniaScience,description,standardSavingTextLabel,lblTexas,lblUserMessage,lblNgss,lblImageSubHeading, lblHeading, lblSubHeading,lblDisconnect;
 	
-	@UiField HTML htmlToolTipDesc;
+	@UiField HTML htmlToolTipDesc, htmlConnectedAs;
 	@UiField TextBox txtUserName;
 	@UiField ErrorLabelUc userNameValidationUc;
 	@UiField HTMLPanel emailPanel;
@@ -321,6 +321,10 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		lblSubHeading.getElement().setId("lblLblSubHeading");
 		lblSubHeading.getElement().setAttribute("alt", i18n.GL2010());
 		lblSubHeading.getElement().setAttribute("title", i18n.GL2010());
+		
+		
+		htmlConnectedAs.setVisible(false);
+		
 		editButtonContainerEdu.getElement().setId("pnlEditButtonContainerEdu");
 		lblDisconnect.setText(i18n.GL2011());
 		lblDisconnect.getElement().setId("lblLblDisconnect");
@@ -741,12 +745,12 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		btnViewAdmin.getElement().setId("btnBtnViewAdmin");
 		btnViewAdmin.getElement().setAttribute("alt", i18n.GL1993() );
 		btnViewAdmin.getElement().setAttribute("title", i18n.GL1993() );
-//		if(AppClientFactory.getLoggedInUser().getUserRoleSetString().contains("Content_Admin")){
-//			btnViewAdmin.setVisible(true);
-//		}else{
-//			btnViewAdmin.setVisible(false);
-//			
-//		}
+		if(AppClientFactory.getLoggedInUser().getUserRoleSetString().contains("Content_Admin")){
+			btnViewAdmin.setVisible(true);
+		}else{
+			btnViewAdmin.setVisible(false);
+			
+		}
 
 		
 		standardSavingTextLabel.setText("");
@@ -1570,6 +1574,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		@Override
 		public void onError(ErrorEvent event) {
 			uploadProfileImage.setUrl(PROFILE_DEFAULT_IMAGE);
+			uploadProfilImageButton.setText(i18n.GL1087());
 			try{
 				uploadProfileImage.getElement().setAttribute("alt", v2userDo.getUser().getUsername());
 				uploadProfileImage.getElement().setAttribute("title", v2userDo.getUser().getUsername());
@@ -1585,6 +1590,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	public void setUserProfileImageUrl(String imageUrl) {
 		double randomNumber=Math.random();
 		uploadProfileImage.setUrl(imageUrl+"?p="+randomNumber);
+		uploadProfilImageButton.setText(i18n.GL0800());
 		try{
 			uploadProfileImage.getElement().setAttribute("alt", v2userDo.getUser().getUsername());
 			uploadProfileImage.getElement().setAttribute("title", v2userDo.getUser().getUsername());
@@ -1615,10 +1621,11 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	@Override
 	public void setProfileData(ProfileDo profileDo) {
 		uploadProfileImage.setUrl(profileDo.getUser().getProfileImageUrl() + "?p="+ Math.random());
+		uploadProfilImageButton.setText(i18n.GL0800());
+		StringUtil.setAttributes(uploadProfilImageButton.getElement(), "uploadProfilImageButton", i18n.GL0800(), i18n.GL0800());
 		setGradeList(profileDo.getGrade(), profileDo);
 		Set<ProfileCodeDo> codeDo = profileDo.getCourses();
 		coursesPanel.clear();
-		
 		
 		collectionCourseDefaultLstPanel.clear();
 		for (ProfileCodeDo code : codeDo) {
@@ -2301,6 +2308,15 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			btnConnect.setText(i18n.GL2008());
 			btnConnect.getElement().setAttribute("alt", i18n.GL2008());
 			btnConnect.getElement().setAttribute("title", i18n.GL2008());
+			htmlConnectedAs.setVisible(false);
 		}
+	}
+	@Override
+	public void setConnectedAs(String connectedEmailId){
+		String connectedAs = StringUtil.generateMessage(i18n.GL2193(), connectedEmailId);
+		StringUtil.setAttributes(htmlConnectedAs.getElement(), "htmlConnectedAs", StringUtil.removeHtml(connectedAs), StringUtil.removeHtml(connectedAs));
+		htmlConnectedAs.setHTML(connectedAs);
+		htmlConnectedAs.setVisible(true);
+		htmlConnectedAs.getElement().getStyle().setLineHeight(3, Unit.EM);
 	}
 }
