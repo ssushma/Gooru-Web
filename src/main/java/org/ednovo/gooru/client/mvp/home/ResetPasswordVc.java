@@ -41,6 +41,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -84,11 +86,13 @@ public class ResetPasswordVc extends Composite{
 	ErrorLabelUc newPwdValidationUc;
 	
 	@UiField
-	Label newPasswordText,newPwdLbl,confirmPwdLbl;
+	Label newPasswordText,newPwdLbl,confirmPwdLbl,tokenExpireErrorLabel;
 
 	private String resetToken;
 
 	private AppPopUp appPopUp;
+	
+	private String homeEndPoint=null;
 	
 	private boolean isDigiSpclChars=false;
 	
@@ -101,57 +105,68 @@ public class ResetPasswordVc extends Composite{
 	public ResetPasswordVc(String resetToken) {
 		appPopUp = new AppPopUp();
 		
-		if(!appPopUp.isShowing())
-		{
-		this.resetToken = resetToken;
-		appPopUp.setContent(i18n.GL0062(), uiBinder.createAndBindUi(this));
-		//appPopUp.addStyleName(HomeCBundle.INSTANCE.css().resetPasswordPopup());
-		appPopUp.show();
-		appPopUp.center();
-		newPasswordText.setText(i18n.GL1254());
-		newPasswordText.getElement().setId("lblNewPasswordText");
-		newPasswordText.getElement().setAttribute("alt",i18n.GL1254());
-		newPasswordText.getElement().setAttribute("title",i18n.GL1254());
 		
-		newPwdLbl.setText(i18n.GL1255());
-		newPwdLbl.getElement().setId("lblNewPwdLbl");
-		newPwdLbl.getElement().setAttribute("alt",i18n.GL1255());
-		newPwdLbl.getElement().setAttribute("title",i18n.GL1255());
+		AppClientFactory.getInjector().getSearchService()
+		.getHomeEndPointUrl(new SimpleAsyncCallback<String>() {
+
+			
+
+			@Override
+			public void onSuccess(String result) {
+				homeEndPoint = result;
+			}
+		});
 		
-		confirmPwdLbl.setText(i18n.GL0427());
-		confirmPwdLbl.getElement().setId("lblConfirmPwdLbl");
-		confirmPwdLbl.getElement().setAttribute("alt",i18n.GL0427());
-		confirmPwdLbl.getElement().setAttribute("title",i18n.GL0427());
-		
-		sendMailBtnUc.setText(i18n.GL0141());
-		sendMailBtnUc.getElement().setAttribute("alt",i18n.GL0141());
-		sendMailBtnUc.getElement().setAttribute("title",i18n.GL0141());
-		
-		resetPwdCancelAnr.setText(i18n.GL0142());
-		resetPwdCancelAnr.getElement().setAttribute("alt",i18n.GL0142());
-		resetPwdCancelAnr.getElement().setAttribute("title",i18n.GL0142());
-		
-		newPwdValidationUc.getElement().setId("errlblNewPwdValidationUc");
-		
-		resetConfirmPwdTxtBox.getElement().setPropertyString("type", "password");
-		resetNewPwdTxtBox.getElement().setPropertyString("type", "password");
-		resetConfirmPwdTxtBox.getElement().setId("txtConfirmPwd");
-		resetNewPwdTxtBox.getElement().setId("txtNewPwd");
-		newPwdValidationUc.setStyleName(HomeCBundle.INSTANCE.css()
-				.passwordErrorLabel());
-		newPwdValidationUc.setVisible(false);
-		confirmPwdValidationUc.getElement().setId("errlblConfirmPwdValidationUc");
-		confirmPwdValidationUc.setStyleName(HomeCBundle.INSTANCE.css()
-				.passwordErrorLabel());
-		confirmPwdValidationUc.setVisible(false);
-		sendMailBtnUc.getElement().setId("btnSave");
-		resetPwdCancelAnr.getElement().setId("lnkCancel");
-		//resetNewPwd.addBlurHandler(new OnPasswordBlur());
-		//resetConfirmPwd.addBlurHandler(new OnPasswordBlur());
-		resetNewPwdTxtBox.addFocusHandler(new OnNewPasswordFocus());
-		resetConfirmPwdTxtBox.addFocusHandler(new OnConfirmPasswordFocus());
-		Window.enableScrolling(false);
-		AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(99, false));
+		if(!appPopUp.isShowing()){
+			this.resetToken = resetToken;
+			appPopUp.setContent(i18n.GL0062(), uiBinder.createAndBindUi(this));
+			//appPopUp.addStyleName(HomeCBundle.INSTANCE.css().resetPasswordPopup());
+			appPopUp.show();
+			appPopUp.center();
+			newPasswordText.setText(i18n.GL1254());
+			newPasswordText.getElement().setId("lblNewPasswordText");
+			newPasswordText.getElement().setAttribute("alt",i18n.GL1254());
+			newPasswordText.getElement().setAttribute("title",i18n.GL1254());
+			
+			newPwdLbl.setText(i18n.GL1255());
+			newPwdLbl.getElement().setId("lblNewPwdLbl");
+			newPwdLbl.getElement().setAttribute("alt",i18n.GL1255());
+			newPwdLbl.getElement().setAttribute("title",i18n.GL1255());
+			
+			confirmPwdLbl.setText(i18n.GL0427());
+			confirmPwdLbl.getElement().setId("lblConfirmPwdLbl");
+			confirmPwdLbl.getElement().setAttribute("alt",i18n.GL0427());
+			confirmPwdLbl.getElement().setAttribute("title",i18n.GL0427());
+			
+			sendMailBtnUc.setText(i18n.GL0141());
+			sendMailBtnUc.getElement().setAttribute("alt",i18n.GL0141());
+			sendMailBtnUc.getElement().setAttribute("title",i18n.GL0141());
+			
+			resetPwdCancelAnr.setText(i18n.GL0142());
+			resetPwdCancelAnr.getElement().setAttribute("alt",i18n.GL0142());
+			resetPwdCancelAnr.getElement().setAttribute("title",i18n.GL0142());
+			
+			newPwdValidationUc.getElement().setId("errlblNewPwdValidationUc");
+			
+			resetConfirmPwdTxtBox.getElement().setPropertyString("type", "password");
+			resetNewPwdTxtBox.getElement().setPropertyString("type", "password");
+			resetConfirmPwdTxtBox.getElement().setId("txtConfirmPwd");
+			resetNewPwdTxtBox.getElement().setId("txtNewPwd");
+			newPwdValidationUc.setStyleName(HomeCBundle.INSTANCE.css()
+					.passwordErrorLabel());
+			newPwdValidationUc.setVisible(false);
+			confirmPwdValidationUc.getElement().setId("errlblConfirmPwdValidationUc");
+			confirmPwdValidationUc.setStyleName(HomeCBundle.INSTANCE.css()
+					.passwordErrorLabel());
+			confirmPwdValidationUc.setVisible(false);
+			sendMailBtnUc.getElement().setId("btnSave");
+			resetPwdCancelAnr.getElement().setId("lnkCancel");
+			//resetNewPwd.addBlurHandler(new OnPasswordBlur());
+			//resetConfirmPwd.addBlurHandler(new OnPasswordBlur());
+			resetNewPwdTxtBox.addFocusHandler(new OnNewPasswordFocus());
+			resetConfirmPwdTxtBox.addFocusHandler(new OnConfirmPasswordFocus());
+			Window.enableScrolling(false);
+			AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(99, false));
 		}
 	}
 
@@ -162,26 +177,56 @@ public class ResetPasswordVc extends Composite{
 	@UiHandler("sendMailBtnUc")
 	public void onCancelClick(ClickEvent clickEvent) {
 		if (validatePassword()) {
-			AppClientFactory.getInjector().getUserService().resetCredential(this.getresetConfirmPwd(), resetToken,new SimpleAsyncCallback<Map<String, Object>>() {
+			tokenExpireErrorLabel.setText("");
+			JSONObject obj = new JSONObject();
+			obj.put("token", new JSONString(resetToken));
+			obj.put("password", new JSONString(this.getresetConfirmPwd()));
+			obj.put("mailConfirmationUrl", new JSONString(homeEndPoint));
+			
+			AppClientFactory.getInjector().getUserService().resetCredential(obj.toString(),new SimpleAsyncCallback<Map<String, Object>>() {
 
 				@Override
 				public void onSuccess(Map<String, Object> result) {
-					if(result != null && result.containsKey("statusCode")&& Integer.parseInt(result.get("statusCode").toString())==400){ 
-						resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css().resetPwdTextError());
-						newPwdValidationUc.setText(StringUtil.generateMessage(i18n.GL0078(),"Password"));
-						newPwdValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0078(),"Password"));
-						newPwdValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0078(),"Password"));
-						newPwdValidationUc.setVisible(true);
-					}else if (result != null && result.containsKey("tokenExpired") && result.get("tokenExpired") != null && result.get("tokenExpired").toString().length() > 0) {
-						appPopUp.hide();
-						new AlertContentUc(i18n.GL1089(), StringUtil.generateMessage(i18n.GL0100(), ""));
-					}else if (result != null && result.containsKey("username") && result.get("username").toString().length() > 0) {
-						appPopUp.hide();
-						new ResetPwdSuccessVc(result.get("username").toString());
+					if(result!=null){
+						if(result.get("statusCode")!=null&&Integer.parseInt(result.get("statusCode").toString())==400){
+							if(result.get("statusMessage")!=null&&result.get("statusMessage").toString().contains("tokenExpired")){
+								tokenExpireErrorLabel.setText(i18n.GL0100());
+							}else{
+								resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css().resetPwdTextError());
+								newPwdValidationUc.setVisible(true);
+								newPwdValidationUc.setText(i18n.GL0078());
+							}
+						}else{
+							Window.enableScrolling(true);
+							AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(0, true));
+							tokenExpireErrorLabel.setText("");
+							appPopUp.hide();
+							new ResetPwdSuccessVc(result.get("username").toString());
+						}
 						
 					}else{
+						Window.enableScrolling(true);
+						AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(0, true));
+						tokenExpireErrorLabel.setText("");
 						appPopUp.hide();
 					}
+					
+//					if(result != null && result.containsKey("statusCode")&& Integer.parseInt(result.get("statusCode").toString())==400){ 
+//						resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css().resetPwdTextError());
+//						newPwdValidationUc.setText(StringUtil.generateMessage(i18n.GL0078(),"Password"));
+//						newPwdValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0078(),"Password"));
+//						newPwdValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0078(),"Password"));
+//						newPwdValidationUc.setVisible(true);
+//					}else if (result != null && result.containsKey("tokenExpired") && result.get("tokenExpired") != null && result.get("tokenExpired").toString().length() > 0) {
+//						appPopUp.hide();
+//						new AlertContentUc(i18n.GL1089(), StringUtil.generateMessage(i18n.GL0100(), ""));
+//					}else if (result != null && result.containsKey("username") && result.get("username").toString().length() > 0) {
+//						appPopUp.hide();
+//						new ResetPwdSuccessVc(result.get("username").toString());
+//						
+//					}else{
+//						appPopUp.hide();
+//					}
 					/*if (result != null && result.containsKey("username") && result.get("username").toString().length() > 0) {
 						new ResetPwdSuccessVc(result.get("username").toString());
 						
@@ -190,8 +235,6 @@ public class ResetPasswordVc extends Composite{
 						new AlertContentUc(i18n.GL1089, StringUtil.generateMessage(i18n.GL0100, ""));
 					}*/
 //					appPopUp.hide();
-					Window.enableScrolling(true);
-					AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(0, true));
 				}
 			});
 		}
@@ -204,6 +247,7 @@ public class ResetPasswordVc extends Composite{
 	@UiHandler("resetPwdCancelAnr")
 	public void onFormSubmit(ClickEvent clickEvent) {
 		Window.enableScrolling(true);
+		tokenExpireErrorLabel.setText("");
 		AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(0, true));
 		appPopUp.hide();
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);

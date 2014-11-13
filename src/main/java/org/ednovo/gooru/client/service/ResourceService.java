@@ -421,5 +421,7 @@ public interface ResourceService extends BaseService {
 	//List<DriveDo> getfolderList(String id)throws GwtException, ServerDownException;
 
 	//DriveDo updatePermissions(DriveDo driveObject)throws GwtException, ServerDownException;
+	
+	public CollectionItemDo v2UpdateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) throws GwtException, ServerDownException;
 		 
 }

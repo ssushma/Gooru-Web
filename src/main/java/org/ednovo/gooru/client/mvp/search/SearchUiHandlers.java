@@ -72,8 +72,4 @@ public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandle
 	void closeStandardsPopup();
 
 	void showAndHideDisclosurePanelOnCLick(DisclosurePanel DisclosurePanelClose);
-
-	void setAnalyticsTabData(SimplePanel addResourceContainerPanel,ResourceSearchResultDo searchResultDo, String type);
-
-	void setAnalyticsTabDataForCollections(SimplePanel addResourceContainerPanel,CollectionSearchResultDo searchResultDo, String type);
 }

@@ -55,6 +55,7 @@ import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -139,6 +140,7 @@ public class LoginPopupUc extends PopupPanel{
 
 	private static final String LOGINEVENT = "loginEvent";
 	private static final int UNAUTHORISED_STATUS_CODE = 401;
+	private static final int PASSWORDERROR_STATUS_CODE = 400;
 	private static final String GOOGLE_REFRESH_TOKEN = "google-refresh-token";
 	
 	@UiTemplate("LoginPopupUc.ui.xml")
@@ -324,7 +326,7 @@ public class LoginPopupUc extends PopupPanel{
 	 */
 	@UiHandler("gmailButton")
 	public void onGmailButtonClicked(ClickEvent clickEvent){
-		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",System.currentTimeMillis(),System.currentTimeMillis(), "", AppClientFactory.getLoggedInUser().getToken());
+		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.getUnixTime(), "", AppClientFactory.getLoggedInUser().getToken());
 		String callBack = Window.Location.getHref();
 	
 		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
@@ -364,7 +366,7 @@ public class LoginPopupUc extends PopupPanel{
 					@Override
 					public void onSuccess(UserDo result) {
 						
-						if(result.getStatusCode()!=UNAUTHORISED_STATUS_CODE){
+						if(result.getStatusCode()!=UNAUTHORISED_STATUS_CODE && result.getStatusCode()!=PASSWORDERROR_STATUS_CODE){
 							MixpanelUtil.Regular_User_Logged_In();
 							if(result.getDateOfBirth()!=null && result.getAccountTypeId()==2){
 								MixpanelUtil.Registration_turns13(); 
@@ -498,7 +500,13 @@ public class LoginPopupUc extends PopupPanel{
 									AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
 								}
 						    }*/
-						}else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE){
+						}
+						else if(result.getStatusCode()==PASSWORDERROR_STATUS_CODE){
+							loginButton.setVisible(true);
+							lblPleaseWait.setVisible(false);
+							new AlertContentUc(i18n.GL1966(), i18n.GL0347());
+						}
+						else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE){
 							loginButton.setVisible(true);
 							lblPleaseWait.setVisible(false);
 							new AlertContentUc(i18n.GL1966(), i18n.GL1938());
@@ -536,7 +544,7 @@ public class LoginPopupUc extends PopupPanel{
 						caught.printStackTrace(); 
 						loginButton.setVisible(true);
 						lblPleaseWait.setVisible(false);
-						new AlertContentUc(i18n.GL0061(), i18n.GL0347());
+//						new AlertContentUc(i18n.GL0061(), i18n.GL0347());
 					}
 				});
 			} else {
@@ -626,7 +634,7 @@ public class LoginPopupUc extends PopupPanel{
 	@UiHandler("ancRegisterHere")
 	public void onRegisterClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Arrive_Register_popup();
-		DataLogEvents.signUp(GwtUUIDGenerator.uuid(),"login",System.currentTimeMillis(),System.currentTimeMillis(), "");
+		DataLogEvents.signUp(GwtUUIDGenerator.uuid(),"login",PlayerDataLogEvents.getUnixTime(),PlayerDataLogEvents.getUnixTime(), "");
 		
 //		Map<String, String> params = new HashMap<String, String>();
 //		params.put("callback", "signup");

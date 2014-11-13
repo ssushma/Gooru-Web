@@ -413,4 +413,11 @@ public class StringUtil {
 		if (titleValue !=null)
 			object.setAttribute("title",titleValue);
 	}
+	
+	public static native String removeHtml(String htmText) /*-{
+		var regex = /(<([^>]+)>)/ig;
+		result = htmText.replace(regex, "");
+		return result;
+	}-*/;
+
 }

@@ -155,7 +155,11 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	private static final String GOOGLE_RESTENDPOINT="google.restendpoint";
 	
 	private static final String STORIES_URL = "stories.url";
+
+	private static final String SHOW_STORIES = "show.stories";
 	
+	private static final String COMMUNITY_LIBRARY_ID = "community.library.gooruOid";
+
 	private static final String HTTPS = "https";
 	
 	private static final String HTTP = "http";
@@ -327,6 +331,14 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		return restConstants.getProperty(STORIES_URL);
 	}
 
+	public String showStoriesSection(){
+		return restConstants.getProperty(SHOW_STORIES);
+	}
+
+	public String getCommunityLibaryGooruOid(){
+		return restConstants.getProperty(COMMUNITY_LIBRARY_ID);
+		
+	}
 	protected static Integer stringtoInteger(JSONObject jsonObject, String key) {	
 		if (jsonObject != null && jsonObject.has(key)) {
 			String value = null;
@@ -369,6 +381,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		filterProperties.setTaxonomyPreferences(getTaxonomyPreferences());
 		filterProperties.setAnalyticsEndPoint(getAnalyticsEndPoint());
 		filterProperties.setAnalyticsEndPointOld(getAnalyticsEndPointOld());
+		filterProperties.setCommunityLibraryGooruOid(getCommunityLibaryGooruOid());
+
 		user.setSettings(filterProperties);
 	}
 

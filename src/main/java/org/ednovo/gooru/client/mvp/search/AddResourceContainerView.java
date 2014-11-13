@@ -186,7 +186,8 @@ public class AddResourceContainerView extends
 							isTopMostSelected =true;
 							isSelectedFolder=false;
 							removePreviousSelectedItem();
-						/*topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");*/						}
+							/*topMostTreeItem.getElement().setAttribute("style", "background-color: #cfe3f1;");*/
+						}
 					};
 					topMostTreeItem.addDomHandler(handler, ClickEvent.getType());
 					getButtonVisiblity();

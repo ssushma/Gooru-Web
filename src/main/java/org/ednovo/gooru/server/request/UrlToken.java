@@ -169,6 +169,9 @@ public enum UrlToken {
 
 	UPDATE_COLLLECTION_ITEM_METADATA(
 			"/scollection/item/{0}/metadata?sessionToken={1}"),
+			
+	GET_COLLLECTION_ITEM(
+			"/v2/collection/item/{0}?sessionToken={1}&includeAdditionalInfo=true"),
 
 	UPDATE_REGISTER_USER("/user/{0}?sessionToken={1}"),
 
@@ -191,11 +194,13 @@ public enum UrlToken {
 					"/v2/collection/item/{0}/copy/{1}?sessionToken={2}"),
 	FORGOT_PASSWORD("/user/password/reset.json?sessionToken={0}&emailId={1}"),
 
-	RESET_CREDENTIAL(
-			"/user/reset/credential.json?sessionToken={0}&password={1}&token={2}"),
+//	RESET_CREDENTIAL(
+//			"/user/reset/credential.json?sessionToken={0}&password={1}&token={2}"),
+	V2_RESET_CREDENTIAL(
+					"/v2/user/reset-password?sessionToken={0}"),
 
 	MEDIA_FILE_UPLOAD(
-			"/media?uploadFileName=&sessionToken={0}&imageURL={1}&resize=true&width=850&height=500"),
+			"/v2/media?sessionToken={0}"),
 
 	MEDIA_FILE_SAVE("/resource/{0}/media?sessionToken={1}&mediaFileName={2}"),
 
@@ -391,6 +396,8 @@ public enum UrlToken {
     GET_USER_PROFILE("/v2/party/{0}/custom-field/show_profile_page?sessionToken={1}"),
     
     GET_RESOURCE_DETAILS("/resource/{0}/play.json?sessionToken={1}"),
+    
+    V2_GET_RESOURCE_DETAILS("/v2/resource/{0}?sessionToken={1}"),
 	
 	COLLECTION_PLAY_EMBEDED_URL("embed/collection.htm?id={0}"),
 	
@@ -470,9 +477,9 @@ public enum UrlToken {
 	
 	V2_SUGGEST_COLLAB("/v2/collaborator/suggest?query={0}&sessionToken={1}"),
 	 	
-	V2_WORKSPACE_FOLDER_LIST("/v2/folder/my/workspace?sessionToken={0}&offset={1}&limit={2}"),
+	V2_WORKSPACE_FOLDER_LIST("/v2/folder/my/workspace?sessionToken={0}&offset={1}&limit={2}&orderBy=sequence"),
 	
-	V2_GET_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}&offset={2}&limit={3}"),
+	V2_GET_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}&offset={2}&limit={3}&orderBy=sequence"),
 	
 	V2_GET_CHILD_FOLDER_LIST_PUBLIC("/v2/folder/{0}/item?sessionToken={1}&offset={2}&limit={3}&sharing=public"),
 	
@@ -600,9 +607,6 @@ public enum UrlToken {
 	
 	REFRESH_TOKEN_GDC("/gooru-auth/google/refresh-token.g?partyUid={0}"),
 	
-
-	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?partyUid={0}"),
-	
 	GET_PATHWAY_ITEM("/v2/class/{0}/pathway/{1}?sessionToken={2}&orderBy={3}&limit={4}&offset={5}"),
 	
 	REORDER_PATHWAY_SEQUENCE("/v2/class/{0}/pathway/{1}/reorder/{2}?sessionToken={3}"),
@@ -650,8 +654,17 @@ public enum UrlToken {
 	
 	V1_OETEXTJSON("/v1/classpage/{0}/OEText.json?sessionToken={1}&data={2}"),
 	
-	V2_ITEMFEEDBACK("/v2/session/{0}/item/feedback?sessionToken={1}");
+	V2_ITEMFEEDBACK("/v2/session/{0}/item/feedback?sessionToken={1}"),
+
+	REVOKE_TOKEN_GD("/gooru-auth/google/revoke-token.g?partyUid={0}"),
 	
+	GET_COLLECTION_SUMMARY("/insights-api/v1/classpage/{0}?sessionToken={1}&data={2}"),
+
+	RESET_TOKEN_EXPIRE("/v2/user/check-reset-token?sessionToken={0}&resetToken={1}"),
+
+	V2_UPDATE_QUESTION_ITEM("/v2/collection/question/{0}?sessionToken={1}"),
+
+	V2_REORDER_FOLDER_COLLECTION("/v2/folder/item/{0}/reorder/{1}?sessionToken={2}");
 
 	private String url;
 

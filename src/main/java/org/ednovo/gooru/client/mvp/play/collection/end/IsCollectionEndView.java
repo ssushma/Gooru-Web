@@ -28,8 +28,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
-import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
@@ -38,7 +36,6 @@ import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 
 
@@ -83,7 +80,7 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	
 	public void setPlayerLoginStatus(boolean isLoggedIn);
 	
-	public void displaySpendTime(Long hours,Long mins, Long secs);
+	public void displaySpendTime(Long hours,Long mins, Double secs);
 	
 	public void displayScoreCount(Integer collectionScore,Integer noOfQuestions);
 	
@@ -93,12 +90,5 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	
 	public void showAvgReaction(String averageReaction);
 	
-	public void setSessionsData(ArrayList<CollectionSummaryUsersDataDo> sessionData);
-	
-	public void setCollectionMetaDataByUserAndSession(ArrayList<CollectionSummaryMetaDataDo> collectionMetadata);
-	
-	public void resetCollectionMetaData();
-	
-	public HTMLPanel getLoadingImageLabel();
-	
+	public void dispalyTime();
 }

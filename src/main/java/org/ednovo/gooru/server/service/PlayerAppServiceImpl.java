@@ -41,7 +41,6 @@ import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsList;
@@ -56,6 +55,8 @@ import org.ednovo.gooru.shared.model.content.UserStarRatingsDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.model.player.FeaturedContentDo;
+import org.ednovo.gooru.shared.model.player.InsightsCollectionDo;
+import org.ednovo.gooru.shared.model.search.ResourceInfoObjectDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.user.CreatorDo;
 import org.json.JSONArray;
@@ -227,6 +228,53 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			//collectionItemDo.getResource().setEncodedUrl(URLEncoder.encode(collectionItemDo.getResource().getUrl()));
 			
 		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return collectionItemDo;
+	}
+	public ResourceInfoObjectDo deserializeResourceInfoObj(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ResourceInfoObjectDo.class);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return new ResourceInfoObjectDo();
+	}
+	
+	@Override
+	public CollectionItemDo getResourceInfoDetails(String apiKey,String resourceId, String tabView) {
+		JsonRepresentation jsonRepresentation = null;
+		CollectionItemDo collectionItemDo=null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_RESOURCE_DETAILS,resourceId, getLoggedInSessionToken());
+		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+		try {
+			if(jsonResponseRep.getStatusCode()==200){
+				collectionItemDo=ResourceCollectionDeSerializer.deserializeCollectionItemDoV2API(deserializeResourceInfoObj(jsonRepresentation));
+				collectionItemDo.setStatusCode(jsonResponseRep.getStatusCode());
+				String decodeUrl=collectionItemDo.getResource().getUrl();
+				if(decodeUrl!=null&&!decodeUrl.equals("")&&!decodeUrl.equals("null")){
+					if(decodeUrl.substring(0, 4).equalsIgnoreCase("http")){
+					}else{
+						String encodeUrl;
+						try {
+							encodeUrl = URLEncoder.encode(collectionItemDo.getResource().getUrl(),"UTF-8").replaceAll("\\+", "%20");
+							collectionItemDo.getResource().setUrl(encodeUrl);
+						} catch (UnsupportedEncodingException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}else{
+				collectionItemDo=new CollectionItemDo();
+				collectionItemDo.setStatusCode(jsonResponseRep.getStatusCode());
+			}
+			//Added this line because of URL encoding is not supported in Shared and View packages.
+			//collectionItemDo.getResource().setEncodedUrl(URLEncoder.encode(collectionItemDo.getResource().getUrl()));
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return collectionItemDo;
@@ -1427,6 +1475,49 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			
 		}
 		return youtubeValues;
+	}
+	
+	
+	public InsightsCollectionDo getInsightsCollectionSummary(String collectionId,String classpageId,String sessionId,String userId){
+		String formdata=insightsJsonPayload(collectionId,classpageId,sessionId,getLoggedInUserUid());
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.GET_COLLECTION_SUMMARY,collectionId, getLoggedInSessionToken(),formdata);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
+		JsonRepresentation jsonRep = jsonResponseRep.getJsonRepresentation();
+		InsightsCollectionDo insightCollectionDo=null;
+		if(jsonRep!=null){
+			try {
+				JSONObject jsonObject=jsonRep.getJsonObject();
+				JSONArray contentJsonArrayjsonObject=jsonObject.getJSONArray("content");
+				if(contentJsonArrayjsonObject!=null){
+					if(contentJsonArrayjsonObject.length()>0){
+						JSONObject contentJsonObject=contentJsonArrayjsonObject.getJSONObject(0);
+						insightCollectionDo=JsonDeserializer.deserialize(contentJsonObject.toString(), InsightsCollectionDo.class);
+							
+					}
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return insightCollectionDo;
+		
+	}
+	
+	public String insightsJsonPayload(String collectionId,String classpageId,String sessionId,String userId){
+		JSONObject jsonObject=new JSONObject();
+		JSONObject filterJsonObject=new JSONObject();
+		
+		try {
+			jsonObject.put("fields", "completionStatus,userCount,lastModified,timeSpent,views,avgTimeSpent,gooruOId,title,description,avgReaction,score,totalQuestionCount");
+			filterJsonObject.put("userUId", userId);
+			filterJsonObject.put("session", "CS");
+			filterJsonObject.put("sessionId", sessionId);
+			filterJsonObject.put("classId", classpageId);
+			jsonObject.put("filters", filterJsonObject);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonObject.toString();
 	}
 	
 	

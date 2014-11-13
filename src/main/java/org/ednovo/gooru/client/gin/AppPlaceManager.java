@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.gin;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -67,6 +68,12 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 	private String beforePlayerOpenSeoToken="";
 	
 	private String classpageEventId="";
+	
+	private boolean isLibraryEventTriggered=false;
+	
+	private Map<String,Boolean> libraryEventMap=new HashMap<String, Boolean>();
+	
+	private String isLibraryEventId=null;
 
 	@Inject
 	public AppPlaceManager(EventBus eventBus, TokenFormatter tokenFormatter, @AppDefaultPlace String place) {
@@ -526,5 +533,35 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			this.searchMovedPlaceRequest = searchMovedPlaceRequest;
 		}
 
+		@Override
+		public boolean isLibaryEventTriggered(String libraryName) {
+			Boolean isLibraryEvent=libraryEventMap.get(libraryName);
+			return isLibraryEvent!=null?isLibraryEvent:false;
+		}
+
+		@Override
+		public String getLibaryEventId() {
+			return this.isLibraryEventId;
+		}
+		
+		@Override
+		public void setLibraryEventId(String libraryEventId){
+			this.isLibraryEventId=libraryEventId;
+		}
+		
+		@Override
+		public void setLibaryEventTriggered(String libraryName){
+			libraryEventMap.put(libraryName, true);
+			isLibraryEventTriggered=true;
+		}
+		
+		@Override
+		public void resetLibraryEventData(String libraryName){
+			//isLibraryEventTriggered=false;
+			libraryEventMap.remove(libraryName);
+			isLibraryEventId=null;
+		}
+		
+		
 
 }

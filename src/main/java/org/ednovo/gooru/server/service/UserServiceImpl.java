@@ -59,9 +59,11 @@ import org.ednovo.gooru.shared.model.user.UserSummaryDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -226,17 +228,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, Object> resetCredential(String password, String token) {
+	public Map<String, Object> resetCredential(String formData) {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.RESET_CREDENTIAL, getLoggedInSessionToken(), password, token);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_RESET_CREDENTIAL, getLoggedInSessionToken());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		if(jsonResponseRep.getStatusCode()==400){
-			return resourceDeserializer.resetPassword(jsonRep,400); 
-		}else{
-			return resourceDeserializer.resetPassword(jsonRep,0);
-		}
-		
+		return resourceDeserializer.resetPassword(jsonRep,jsonResponseRep.getStatusCode(),jsonResponseRep.getErrorMessage()); 
 	}
 
 	@Override
@@ -778,4 +775,30 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 		return refreshToken;
 	}
+
+	@Override
+	public String isValidResetPasswordLink(String resetToken)
+			throws GwtException, ServerDownException {
+		// TODO Auto-generated method stub
+		JsonRepresentation jsonRep = null;
+		String url =UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.RESET_TOKEN_EXPIRE,getLoggedInSessionToken(),resetToken);
+		System.out.println("isValidResetPasswordLink:::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeResetToken(jsonRep);
+	}
+	
+	public String deserializeResetToken(JsonRepresentation jsonRep) {
+		String resetToken = null;
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try{
+			JSONObject jsonObject=jsonRep.getJsonObject();
+			resetToken = jsonObject.getString("isValidToken");
+			}catch(JSONException e){}
+				
+		}
+		return resetToken;
+	}
+	
+	
 }

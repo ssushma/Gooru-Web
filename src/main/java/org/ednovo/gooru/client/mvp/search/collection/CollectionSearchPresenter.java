@@ -37,7 +37,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
-import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
@@ -69,7 +68,6 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 public class CollectionSearchPresenter extends AbstractSearchPresenter<CollectionSearchResultDo, ResourceSearchResultDo, IsCollectionSearchView, CollectionSearchPresenter.IsCollectionSearchProxy> implements SearchUiHandlers,RefreshDisclosurePanelForFoldersEventHandler {
 
 	private AddResourceContainerPresenter addResourceContainerPresenter;
-	private	AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter;
 	
 	AddStandardsPresenter addStandardsPresenter = null;
 	
@@ -90,11 +88,10 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 	 *            {@link Proxy}
 	 */
 	@Inject
-	public CollectionSearchPresenter(IsCollectionSearchView view, IsCollectionSearchProxy proxy, SignUpPresenter signUpViewPresenter,AddResourceContainerPresenter addResourceContainerPresenter, AddStandardsPresenter addStandardsPresenter,AnalyticsInfoContainerPresenter analyticsInfoContainerPresenter) {
+	public CollectionSearchPresenter(IsCollectionSearchView view, IsCollectionSearchProxy proxy, SignUpPresenter signUpViewPresenter,AddResourceContainerPresenter addResourceContainerPresenter, AddStandardsPresenter addStandardsPresenter) {
 		super(view, proxy, signUpViewPresenter,addStandardsPresenter);
 		this.addResourceContainerPresenter = addResourceContainerPresenter;
 		this.addStandardsPresenter = addStandardsPresenter;
-		this.analyticsInfoContainerPresenter=analyticsInfoContainerPresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(RefreshDisclosurePanelForFoldersEvent.TYPE, this);
 	}
@@ -228,22 +225,6 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 				DisclosurePanelClose.setOpen(false);
 			}
 		});
-	}
-
-	@Override
-	public void setAnalyticsTabData(SimplePanel addResourceContainerPanel,
-			ResourceSearchResultDo searchResultDo, String type) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setAnalyticsTabDataForCollections(SimplePanel addResourceContainerPanel,CollectionSearchResultDo searchResultDo, String type) {
-		// TODO Auto-generated method stub
-		addResourceContainerPanel.clear();
-		analyticsInfoContainerPresenter.setAnalyticsDataForCollections(searchResultDo);
-		addResourceContainerPanel.setWidget(analyticsInfoContainerPresenter.getWidget());
-		
 	}
 
 	

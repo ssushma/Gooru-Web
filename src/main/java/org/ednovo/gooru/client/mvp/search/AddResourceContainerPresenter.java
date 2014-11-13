@@ -40,7 +40,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolder
 import org.ednovo.gooru.client.mvp.shelf.event.CopyCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CopyDraggedCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
@@ -297,26 +296,8 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 		final CollectionDo collection = new CollectionDo();
 		if(currentsearchType.equalsIgnoreCase("collection")){
 			collection.setGooruOid(searchResultDo.getGooruOid());
-			collection.setTitle(searchResultDo.getResourceTitle());
-			//collectionFormPresenter.copyCollection(this.searchResultDo.getResourceTitle(), searchResultDo.getGooruOid());
-			AppClientFactory.getInjector().getResourceService().copyCollection(collection, "true", null, new AsyncCallback<CollectionDo>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					
-				}
-				@Override
-				public void onSuccess(CollectionDo result) {
-					// TODO Auto-generated method stub
-					getView().getButtonVisiblity();
-					successparams.clear();
-					successparams.put("id", result.getGooruOid());
-					AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
-					getView().enableSuccessView("MyCollections", result.getGooruOid(), successparams);
-				}
-			 
-			});
+			collectionFormPresenter.copyCollection(this.searchResultDo.getResourceTitle(), searchResultDo.getGooruOid());
+			getView().getButtonVisiblity();
 	}
 }
 
@@ -334,7 +315,6 @@ public class AddResourceContainerPresenter extends PresenterWidget<IsAddResource
 		collection.setGooruOid(searchResultDo.getGooruOid());
 		collection.setSharing("anyonewithlink");
 		if(selectedFolderOrCollectionid!=null){
-			successparams.clear();
 			successparams.put("o1", selectedFolderOrCollectionid);
 			O1_LEVEL_VALUE = urlparams.get("o1");
 			O2_LEVEL_VALUE = urlparams.get("o2");
