@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -33,6 +34,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildPresenter;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResourceTabPresenter;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -60,6 +62,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	private SimpleAsyncCallback<Void> deleteCollectionItemAsyncCallback;
 	
 	private SimpleAsyncCallback<List<CollectionDo>> getMyUserCollectionsAsyncCallback;
+	
 	
 	@Inject private ImageUploadPresenter imageUploadPresenter;
 
@@ -278,6 +281,16 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	public ResourceServiceAsync getResourceService() {
 		
 		return AppClientFactory.getInjector().getResourceService();
+	}
+
+	public void reorderMyCollectionItem(CollectionItemDo collectionItemDo, final ShelfCollectionResourceChildView shelfCollectionResourceChildView,final String arrow, final Integer newSequence) {
+		AppClientFactory.getInjector().getResourceService().reorderCollectionItem(collectionItemDo, new SimpleAsyncCallback<CollectionItemDo>() {
+
+			@Override
+			public void onSuccess(CollectionItemDo result) {
+				getView().onPostResourceReorder(result,shelfCollectionResourceChildView,arrow,newSequence);  
+			}
+		});
 	}
 
 }

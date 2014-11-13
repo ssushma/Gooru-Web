@@ -31,6 +31,7 @@ import java.util.List;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle.CollectionEditResourceCss;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.EditQuestionPopupVc;
@@ -57,6 +58,11 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -73,6 +79,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -94,10 +101,10 @@ public class CollectionResourceTabView extends
 	}
 
 	@UiField
-	VerticalPanel sequenceVerPanel/*,collectionResourcePanelVc*/;
+	VerticalPanel sequenceVerPanel,collectionResourcePanelVc;
 
-	@UiField
-	CollectionResourcePanelVc collectionResourcePanelVc; 
+	/*@UiField
+	CollectionResourcePanelVc collectionResourcePanelVc;*/ 
 
 	@UiField
 	Label dragAndDropLabel;
@@ -177,7 +184,7 @@ public class CollectionResourceTabView extends
 		buttonContainerForQuestionGreay.getElement().setAttribute("alt",i18n.GL0852());
 		buttonContainerForQuestionGreay.getElement().setAttribute("title",i18n.GL0852());
 		
-		dragAndDropLabel.setText(i18n.GL0853());
+		dragAndDropLabel.setText("Enter in the position you would like to move resources.");
 		dragAndDropLabel.getElement().setId("lblDragAndDropLabel");
 		dragAndDropLabel.getElement().setAttribute("alt",i18n.GL0853());
 		dragAndDropLabel.getElement().setAttribute("title",i18n.GL0853());
@@ -257,10 +264,10 @@ public class CollectionResourceTabView extends
 			setTotalCount(collectionDo.getCollectionItems().size());
 			Label label = new Label("");
 			label.setStyleName(getCss().shelfResourceDragdropSpacer());
-			collectionResourcePanelVc.superAdd(label);
+//			collectionResourcePanelVc.superAdd(label);
 			Label toplabel = new Label("");
 			toplabel.setStyleName(getCss().shelfResourceDragdropSpacer());
-			collectionResourcePanelVc.add(toplabel);
+//			collectionResourcePanelVc.add(toplabel);
 			Label prelabel = new Label("");
 			prelabel.setStyleName(getCss().shelfResourceSequenceSpacer());
 			sequenceVerPanel.add(prelabel);
@@ -278,7 +285,7 @@ public class CollectionResourceTabView extends
 			for (CollectionItemDo collectionItem : collectionDo.getCollectionItems()) {
 				insertColectionItem(collectionItem, false);
 			}
-//			setResourceSequence();
+			setResourceSequence();
 			hideNoResourceMsg();
 
 			if (collectionDo.getCollectionItems().size() >= 25) {
@@ -370,7 +377,7 @@ public class CollectionResourceTabView extends
 						} 
 					}
 				});
-		collectionResourcePanelVc.remove(collectionItemDo.getItemSequence());
+//		collectionResourcePanelVc.remove(collectionItemDo.getItemSequence());
 		//sequenceVerPanel.remove(collectionItemDo.getItemSequence()-1);
 //		collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());	
 		collectionResourcePanelVc.add(shelfCollectionResourceVc);	
@@ -459,7 +466,17 @@ public class CollectionResourceTabView extends
 			shelfCollectionResourceVc = new ShelfCollectionResourceChildView(this, collectionItemDo);
 			resetSequence();
 			shelfCollectionResourceVc.getResourceMoveUpBtn().addClickHandler(new OnClickReorderUpButton(collectionItemDo.getGooruOid())); 
-//			shelfCollectionResourceVc.getResourceMoveDownBtn().addClickHandler(new OnClickReorderDownButton(collectionItemDo.getGooruOid()));
+			shelfCollectionResourceVc.getResourceMoveDownBtn().addClickHandler(new OnClickReorderDownButton(collectionItemDo.getGooruOid()));
+			shelfCollectionResourceVc.getReorderTxtBox().addKeyPressHandler(new HasNumbersOnly()); 
+			shelfCollectionResourceVc.getReorderTxtBox().addKeyUpHandler(new ReorderText(collectionItemDo.getGooruOid()));
+			
+			/*if(getTotalCount()==1){
+				isReorderButtonEnabled(false,shelfCollectionResourceVc);
+			}else{
+				isReorderButtonEnabled(true,shelfCollectionResourceVc);
+			}*/
+			
+			
 			if(isFlag){
 				isFlag=false;
 //				Window.scrollTo(0, (0 + (sequencePostion-1)*113));
@@ -536,9 +553,9 @@ public class CollectionResourceTabView extends
 
 				}
 			});
-			collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());
-			/*collectionResourcePanelVc.add(shelfCollectionResourceVc);
-			setResourceSequence();*/
+			/*collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());*/
+			collectionResourcePanelVc.add(shelfCollectionResourceVc);
+			setResourceSequence();
 			AppClientFactory.fireEvent(new UpdateResourceCountEvent(collectionDo.getCollectionItems().size()));
 		}
 		hideNoResourceMsg();
@@ -706,8 +723,8 @@ public class CollectionResourceTabView extends
 
 					}
 				});
-		collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());
-//		collectionResourcePanelVc.add(shelfCollectionResourceVc);
+		/*collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());*/
+		collectionResourcePanelVc.add(shelfCollectionResourceVc);
 	}
 
 	public class EditQuestionPopupWidget extends EditQuestionPopupVc {
@@ -774,7 +791,8 @@ public class CollectionResourceTabView extends
 
 	@Override
 	public void removeCollectionItem(CollectionItemDo collectionItemDo,	ShelfCollectionResourceChildView resourceChildView) {
-		int sequence = collectionItemDo.getItemSequence()-1;
+		
+		int sequence = Integer.parseInt(resourceChildView.getElement().getAttribute("widgetNumb"))-1;
 		collectionDo.getCollectionItems().remove(collectionItemDo);
 		setTotalCount(collectionDo.getCollectionItems().size());
 		collectionResourcePanelVc.remove(sequence);
@@ -891,7 +909,7 @@ public class CollectionResourceTabView extends
 	@Override
 	public void setEditMode(boolean editMode, Widget resourceWidget) {
 		Widget sequenceWidget = sequenceVerPanel.getWidget(collectionResourcePanelVc.getWidgetIndex(resourceWidget.getParent()));
-		collectionResourcePanelVc.makeChildrenDraggable(!editMode);
+//		collectionResourcePanelVc.makeChildrenDraggable(!editMode);
 		sequenceWidget.setHeight((resourceWidget.getOffsetHeight() - 7) + "px");
 	}
 
@@ -1274,6 +1292,11 @@ public class CollectionResourceTabView extends
 		while (widgets.hasNext()) {
 			Widget widget = widgets.next();
 			if (widget instanceof ShelfCollectionResourceChildView) {
+				if(getTotalCount()==1){
+					((ShelfCollectionResourceChildView) widget).setReorderContainerVisibility(false);
+				}else{
+					((ShelfCollectionResourceChildView) widget).setReorderContainerVisibility(true);
+				}
 				if(seqNum==1){
 					((ShelfCollectionResourceChildView) widget).upButtonIsVisible(false); 
 					((ShelfCollectionResourceChildView) widget).downButtonIsVisible(true); 
@@ -1292,10 +1315,77 @@ public class CollectionResourceTabView extends
 				}
 				
 				((ShelfCollectionResourceChildView) widget).getReorderTxtBox().setText(seqNum+"");
+				((ShelfCollectionResourceChildView) widget).getElement().setAttribute("widgetNumb",seqNum+"");
 			}
 			seqNum++;
 		}
 	}
+	
+	
+	/**
+	 * This inner class used for to restrict text box values to have only numbers
+	 *
+	 */
+
+	public class HasNumbersOnly implements KeyPressHandler {
+
+		@Override
+		public void onKeyPress(KeyPressEvent event) {
+
+			if (!Character.isDigit(event.getCharCode()) 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
+				((TextBox) event.getSource()).cancelKey();
+			}
+			if (event.getNativeEvent().getKeyCode() == 46
+					|| event.getNativeEvent().getKeyCode() == 37) {
+				((TextBox) event.getSource()).cancelKey();
+			}
+		}
+	}
+	
+	
+	/**
+	 * This inner class used for disabling up and down arrow based on user entered reorder value.
+	 *
+	 */
+
+	public class ReorderText implements KeyUpHandler {
+		String itemGooruOid;
+		int itemPosSeqNumb,itemToBeMovedPosSeqNumb;
+		
+		public ReorderText(String itemGooruOid) {
+			this.itemGooruOid=itemGooruOid;
+		}
+
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+
+			ShelfCollectionResourceChildView shelfCollectionResourceChildView = getFolderOrCollectionWidget(itemGooruOid);
+
+			itemPosSeqNumb = shelfCollectionResourceChildView != null ?(shelfCollectionResourceChildView.getCollectionItemDo().getItemSequence()):0;
+			itemToBeMovedPosSeqNumb = (shelfCollectionResourceChildView != null && shelfCollectionResourceChildView.getReorderTxtBox().getText().trim() !=null && !shelfCollectionResourceChildView.getReorderTxtBox().getText().trim().equals(""))?(Integer.parseInt(shelfCollectionResourceChildView.getReorderTxtBox().getText().trim())):0;
+
+			if(itemToBeMovedPosSeqNumb==0 && itemPosSeqNumb!=1 && itemPosSeqNumb!=getTotalCount()){
+				shelfCollectionResourceChildView.downButtonIsVisible(true);
+				shelfCollectionResourceChildView.upButtonIsVisible(true);
+			}else if(itemToBeMovedPosSeqNumb>itemPosSeqNumb && itemPosSeqNumb!=getTotalCount()){
+				//disable up arrow
+				shelfCollectionResourceChildView.upButtonIsVisible(false); 
+				shelfCollectionResourceChildView.downButtonIsVisible(true); 
+			}else if(itemToBeMovedPosSeqNumb<itemPosSeqNumb && itemPosSeqNumb!=1){
+				//disable down arrow
+				shelfCollectionResourceChildView.downButtonIsVisible(false);
+				shelfCollectionResourceChildView.upButtonIsVisible(true);
+			}
+		}
+	}
+	
 	
 	/**
 	 * 
@@ -1330,8 +1420,8 @@ public class CollectionResourceTabView extends
 						itemToBeMovedPosSeqNumb-=1;
 					}
 					
-//					getUiHandlers().reorderFoldersOrCollection(shelfFolderItemChildView,itemToBeMovedPosSeqNumb,itemPosSeqNumb,UP_ARROW,shelfFolderItemChildView.getCollectionItemId(),itemSeqToAPI);
-					reorderItemToNewPosition(shelfCollectionResourceChildView,(itemToBeMovedPosSeqNumb-1),UP_ARROW);
+					shelfCollectionResourceChildView.reorderCollectionResources(shelfCollectionResourceChildView,itemToBeMovedPosSeqNumb,UP_ARROW);
+//					reorderItemToNewPosition(shelfCollectionResourceChildView,(itemToBeMovedPosSeqNumb-1),UP_ARROW);
 				}else{
 					shelfCollectionResourceChildView.showReorderValidationToolTip(reorderValidationMsg);
 				}
@@ -1339,6 +1429,53 @@ public class CollectionResourceTabView extends
 			
 		}
 	}
+	
+	
+	
+	/**
+	 * 
+	 * Inner class for reorder down button, which implements click handler {@link ClickHandler}
+	 *
+	 */
+	
+	public class OnClickReorderDownButton implements ClickHandler{
+		
+		private String itemGooruOid;
+		int itemPosSeqNumb,itemToBeMovedPosSeqNumb,itemSeqToAPI;
+		private String reorderValidationMsg;
+		
+		
+		/**
+		 * Class constructor
+		 * @param itemGooruOid {@link String}
+		 */
+		public OnClickReorderDownButton(String itemGooruOid) {
+			this.itemGooruOid = itemGooruOid;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			ShelfCollectionResourceChildView shelfCollectionResourceChildView = getFolderOrCollectionWidget(itemGooruOid);
+
+			itemPosSeqNumb = shelfCollectionResourceChildView != null ?(shelfCollectionResourceChildView.getCollectionItemDo().getItemSequence()):0;
+			itemToBeMovedPosSeqNumb = shelfCollectionResourceChildView != null && shelfCollectionResourceChildView.getReorderTxtBox().getText().trim() !=null && !shelfCollectionResourceChildView.getReorderTxtBox().getText().trim().equals("")?(Integer.parseInt(shelfCollectionResourceChildView.getReorderTxtBox().getText().trim())):0;
+			if(shelfCollectionResourceChildView!=null){
+				reorderValidationMsg = reorderValidations(itemToBeMovedPosSeqNumb,itemPosSeqNumb,DOWN_ARROW);
+				
+				if(reorderValidationMsg.equalsIgnoreCase(REORDER_VALIDATION_MSG)){
+					if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
+						itemToBeMovedPosSeqNumb+=1;
+					}
+					shelfCollectionResourceChildView.reorderCollectionResources(shelfCollectionResourceChildView,itemToBeMovedPosSeqNumb,DOWN_ARROW);
+				}else{
+					shelfCollectionResourceChildView.showReorderValidationToolTip(reorderValidationMsg);
+				}
+			}
+		}
+	}
+	
+	
 	
 	/**
 	 * Before reorder will return with valid message.
@@ -1352,11 +1489,7 @@ public class CollectionResourceTabView extends
 		if(itemToBeMovedPosSeqNumb==0){
 			validationStaus = "Given Reorder sequence is not valid or empty.";
 		}else if(itemToBeMovedPosSeqNumb>getTotalCount()){
-			validationStaus = "Sorry, you don't have "+itemToBeMovedPosSeqNumb+"th folder or collection to reorder";
-		}else if(itemToBeMovedPosSeqNumb>itemPosSeqNumb && arrow.equalsIgnoreCase(UP_ARROW)){
-			validationStaus = "Please click on down arrow";
-		}else if(itemToBeMovedPosSeqNumb<itemPosSeqNumb && arrow.equalsIgnoreCase(DOWN_ARROW)){
-			validationStaus = "Please click on Up arrow";
+			validationStaus = "Sorry, you don't have "+itemToBeMovedPosSeqNumb+"th resource to reorder";
 		}else if(itemToBeMovedPosSeqNumb==0){
 			validationStaus = "Please specify the reorder sequence.";
 		}
@@ -1382,11 +1515,26 @@ public class CollectionResourceTabView extends
 	}
 	
 	
-	public void reorderItemToNewPosition(ShelfCollectionResourceChildView shelfCollectionResourceChildView,int newItemPosition, String upArrow) {
-		collectionResourcePanelVc.insert(shelfCollectionResourceChildView, newItemPosition);
+	
+	@Override
+	public void reorderItemToNewPosition(ShelfCollectionResourceChildView shelfCollectionResourceChildView,Integer newSequence, String arrow) {
+		if(arrow.equals(UP_ARROW)){
+			collectionResourcePanelVc.insert(shelfCollectionResourceChildView, (newSequence-1));
+		}else{
+			collectionResourcePanelVc.insert(shelfCollectionResourceChildView, newSequence);
+		}
 		resetSequence();
 		setResourceSequence();
 	}
+	
+	/*private void isReorderButtonEnabled(boolean isEnable, ShelfCollectionResourceChildView shelfCollectionResourceChildView) { 
+		if(isEnable){
+			shelfCollectionResourceChildView.setReorderContainerVisibility(isEnable); 
+		}else{
+			shelfCollectionResourceChildView.setReorderContainerVisibility(isEnable);
+		}
+	}*/
+	
 
 	/**
 	 * @return the totalCount
@@ -1401,4 +1549,5 @@ public class CollectionResourceTabView extends
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
 	}
+
 }
