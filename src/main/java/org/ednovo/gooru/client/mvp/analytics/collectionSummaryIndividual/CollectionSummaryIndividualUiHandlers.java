@@ -30,7 +30,28 @@ import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 public interface CollectionSummaryIndividualUiHandlers extends BaseUiHandlers{
+	/**
+	 * This method is used to set the individual(Student) data.
+	 * @param collectionId
+	 * @param classpageId
+	 * @param userId
+	 * @param sessionId
+	 * @param pathwayId
+	 * @param isSummary
+	 * @param loadingImage
+	 * @param printUserDataDO
+	 */
 	void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,boolean isSummary,HTMLPanel loadingImage,PrintUserDataDO printUserDataDO);
+	/**
+	 * This method is used to generate pdf with given html
+	 * @param htmlString
+	 * @param isClickedOnEmail
+	 */
 	void setHtmltopdf(String htmlString,boolean isClickedOnEmail);
+	/**
+	 * This method is used to set Open-ended response data
+	 * @param resourceGooruId
+	 * @param questionType
+	 */
 	void setOEtextData(String resourceGooruId,String questionType);
 }

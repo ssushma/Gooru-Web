@@ -61,4 +61,14 @@ void setTeacherData(String collectionId,String classpageId,String pathwayId);
  * @param printUserDataDO
  */
 void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,PrintUserDataDO printUserDataDO);
+/**
+ * This method is used to export the collection summary data.
+ * @param collectionId
+ * @param classpageId
+ * @param userId
+ * @param sessionId
+ * @param pathwayId
+ * @param timeZone
+ */
+void exportCollectionSummary(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,String timeZone);
 }

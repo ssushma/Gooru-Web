@@ -90,17 +90,26 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	CollectionOverViewWidget collectionOverViewWidget=new CollectionOverViewWidget();
 	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
 	
+	/**
+	 * Constructor
+	 */
 	public CollectionSummaryIndividualView() {
 		this.res = CollectionSummaryIndividualCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		setData();
 	}
+	/**
+	 * This method is used to hide the panels
+	 */
 	void hideAllPanels(){
 		individualScoredDatapnl.setVisible(false);
 		individualOpenendedData.setVisible(false);
 		individualResourceBreakdownDatapnl.setVisible(false);
 	}
+	/**
+	 * Default method for initialization
+	 */
 	void setData(){
 		individualTabContainer=new AnalyticsTabContainer() {
 			@Override
@@ -131,6 +140,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	    filterDropDown.addItem(i18n.GL2290(), i18n.GL2290());
 	    filterDropDown.addItem(i18n.GL2291(), i18n.GL2291());
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsCollectionSummaryIndividualView#setIndividualData(java.util.ArrayList, com.google.gwt.user.client.ui.HTMLPanel)
+	 */
 	@Override
 	public void setIndividualData(ArrayList<UserDataDo> result,HTMLPanel loadingImage) {
 			hideAllPanels();
@@ -166,6 +178,10 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			setCollectionBreakDown(result,loadingImage);
 			setCollectionBreakDownPrintData(result);
 	}
+	/**
+	 * This will set the collections break down print data.
+	 * @param result
+	 */
 	void setCollectionBreakDownPrintData(ArrayList<UserDataDo> result){
 		try{
 				printResourceData.clear();			
@@ -262,6 +278,11 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			
 		}
 	}
+	/**
+	 * This will set the collections break down data
+	 * @param result
+	 * @param loadingImage
+	 */
 	void setCollectionBreakDown(ArrayList<UserDataDo> result,HTMLPanel loadingImage){
 		
 		final int[] primitivesQuestions = AnalyticsUtil.toIntArray(questionRowIndex);
@@ -379,6 +400,10 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        if(loadingImage!=null)
 	        loadingImage.setVisible(false);
 	}
+	/**
+	 * This will set the openended questions data for printing purpose
+	 * @param result
+	 */
 	void setOpenendedQuestionsPrintData(ArrayList<UserDataDo> result){
 		try{
 			printOpendedData.clear();		
@@ -435,6 +460,10 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			
 		}
 	}
+	/**
+	 * This will set the openended questions data
+	 * @param result
+	 */
 	void setOpenendedQuestionsData(ArrayList<UserDataDo> result){
 		    DataTable data = DataTable.create();
 		    data.addColumn(ColumnType.NUMBER, "No.");
@@ -502,6 +531,10 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			}
 		}
 	}
+	/**
+	 * This will set the question data for printing purpose
+	 * @param result
+	 */
 	void setQuestionsPrintData(ArrayList<UserDataDo> result){
 		try{
 			printScoredData.clear();
@@ -683,6 +716,10 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * This will set the question data
+	 * @param result
+	 */
 	void setQuestionsData(ArrayList<UserDataDo> result){
 		    DataTable data = DataTable.create();
 		    data.addColumn(ColumnType.NUMBER, "No.");
@@ -836,6 +873,11 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        }
 	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
 	}
+	/**
+	 * This will return the correct answers
+	 * @param metaDataObj
+	 * @return
+	 */
 	String getCorrectAnswer(ArrayList<MetaDataDo> metaDataObj){
 		for (MetaDataDo metaDataDo : metaDataObj) {
 			if(metaDataDo.getIs_correct()==1){
@@ -844,17 +886,29 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		}
 		return null;
 	}
+	/**
+	 * This will set the cell properties
+	 * @return
+	 */
 	com.google.gwt.visualization.client.Properties getPropertiesCell(){
 		  Properties properties=Properties.create();
 		  properties.set("style", "text-align:center;");
 		  com.google.gwt.visualization.client.Properties p=properties.cast();
 		  return p;
 	}
+	/**
+	 * This method is used to set timestamp label
+	 * @param timeSpent
+	 * @return
+	 */
 	Label getTimeStampLabel(long timeSpent){
 		 Label timeStamplbl=new Label(AnalyticsUtil.getTimeSpent(timeSpent));
          timeStamplbl.setStyleName(res.css().alignCenterAndBackground());
          return timeStamplbl;
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsCollectionSummaryIndividualView#setIndividualCollectionMetaData(java.util.ArrayList, org.ednovo.gooru.shared.model.analytics.PrintUserDataDO)
+	 */
 	@Override
 	public void setIndividualCollectionMetaData(
 			ArrayList<CollectionSummaryMetaDataDo> result,PrintUserDataDO printUserDataDO) {
@@ -867,6 +921,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		collectionOverViewWidget.setData(result.get(0),false);
 		collectionSummaryWidget.setDataAnalyticsData(result.get(0),printUserDataDO);
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsCollectionSummaryIndividualView#setViewResponseData(java.util.ArrayList, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean)
+	 */
 	@Override
 	public void setViewResponseData(ArrayList<OetextDataDO> result,	String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType,boolean isSummary) {
 		 popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary);
@@ -883,6 +940,11 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	    	 popupPanel.center();
 	     }
 	}
+	/**
+	 * This method is used for printing purpose
+	 * @param isClickedOnSave
+	 * @param isClickedOnEmail
+	 */
 	public void setPrintIndividualSummayData(boolean isClickedOnSave,boolean isClickedOnEmail){
 		printWidget.clear();
 		Label collectionSummaryText=new Label();
@@ -920,10 +982,16 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		    printWidget.clear();
 		}
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsCollectionSummaryIndividualView#setPdfForEmail(java.lang.String)
+	 */
 	@Override 
 	public void setPdfForEmail(String path){
 		emailPopup.setEmailData(collectionTitle,path);
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsCollectionSummaryIndividualView#enableAndDisableEmailButton(boolean)
+	 */
 	@Override
 	public void enableAndDisableEmailButton(boolean isSummary){
 		individualTabContainer.getEmailButton().setVisible(!isSummary);

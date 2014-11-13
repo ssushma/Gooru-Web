@@ -41,6 +41,9 @@ public class EmailPopup extends PopupPanel {
 	
 	CollectionSummaryIndividualCBundle res;
 	
+	/**
+	 * Constructor
+	 */
 	public EmailPopup() {
 		this.res = CollectionSummaryIndividualCBundle.INSTANCE;
 		res.css().ensureInjected();
@@ -57,6 +60,11 @@ public class EmailPopup extends PopupPanel {
 		successMesageContainer.setVisible(false);
 		mainBodycontainer.setVisible(true);
 	}
+	/**
+	 * This method will set the eamilpopup data
+	 * @param pdfName
+	 * @param path
+	 */
 	public void setEmailData(String pdfName,String path){
 		successMesageContainer.setVisible(false);
 		mainBodycontainer.setVisible(true);
@@ -68,23 +76,42 @@ public class EmailPopup extends PopupPanel {
 		sendBtn.setEnabled(true);
 		headerTitlelbl.setText(i18n.GL1449());
 	}
+	/**
+	 * This method will set the user name
+	 */
 	public void setData(){
 		userNamelbl.setText(AppClientFactory.getLoggedInUser().getUsernameDisplay());
 	}
+	/**
+	 * This will handle the cancel event
+	 * @param e
+	 */
 	@UiHandler("cancelBtn")
 	public void onClickOfCancelButton(ClickEvent e){
 		this.hide();
 	}
+	/**
+	 * This will handle the click event on ok button
+	 * @param e
+	 */
 	@UiHandler("okBtn")
 	public void onClickOfOKButton(ClickEvent e){
 		this.hide();
 	}
 	
+	/**
+	 * This will handle the click event on privacy text
+	 * @param e
+	 */
 	@UiHandler("privacylbl")
 	public void onClickOfprivacylblButton(ClickEvent e){
 	
 	}
 	
+	/**
+	 * This will handle the click event on the send button
+	 * @param e
+	 */
 	@UiHandler("sendBtn")
 	public void onClickOfSendButton(ClickEvent e){
 		isValidate=true;
@@ -108,6 +135,10 @@ public class EmailPopup extends PopupPanel {
 			});
 		}
 	}
+	/**
+	 * This method will check the validations
+	 * @return
+	 */
 	boolean checkValidataions(){
 		String emailIds=emailTextbox.getText().trim();
 		if(emailIds.isEmpty()){
@@ -127,6 +158,11 @@ public class EmailPopup extends PopupPanel {
 		}
 		return isValidate;
 	}
+	/**
+	 * This method will check the email validation
+	 * @param email
+	 * @return
+	 */
 	boolean validateEmail(String email) {
 		 boolean result = email.matches(EMAIL_PATTERN);
 		 return result;

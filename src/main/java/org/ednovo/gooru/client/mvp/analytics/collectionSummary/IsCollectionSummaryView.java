@@ -43,8 +43,9 @@ public interface IsCollectionSummaryView extends IsViewWithHandlers<CollectionSu
 	 * This method is used to set collection meta data.
 	 * @param result
 	 * @param pathwayId
+	 * @param classpageId
 	 */
-	void setCollectionMetaData(CollectionSummaryMetaDataDo result,String pathwayId);
+	void setCollectionMetaData(CollectionSummaryMetaDataDo result,String pathwayId,String classpageId);
 	/**
 	 * This method is used to set collection resource data.
 	 * @param result

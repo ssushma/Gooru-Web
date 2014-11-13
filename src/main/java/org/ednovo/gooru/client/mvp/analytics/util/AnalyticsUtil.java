@@ -141,6 +141,22 @@ public class AnalyticsUtil {
 	    }
 	    return Character.toString(alphabet[i]);
 	}
-
+	/**
+	 * This native method is used to get the timezone
+	 * @return
+	 */
+    public native static String getTimeZone() /*-{
+    	var symbol = '';
+		var u = new Date().toString().match(/([-\+][0-9]+)\s/)[1];
+		var timeZone = u.substring(0, 3) + ':' + u.substring(3, u.length);
+		symbol = timeZone;
+		var replace = symbol.substring(2);
+		if (timeZone.indexOf('+') >= 0) {
+			symbol = 'plus' + replace;
+		} else if (timeZone.indexOf('-') >= 0) {
+			symbol = 'minus' + replace;
+		}
+    return symbol;
+	}-*/;
 	
 }
