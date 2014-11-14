@@ -246,7 +246,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		          
 		           //Set time spent
 		            HorizontalPanel timeSpentpnl=new HorizontalPanel();
-		            timeSpentpnl.add(getTimeStampLabel(result.get(i).getTimeSpent()));
+		            timeSpentpnl.add(AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()));
 		            Label progressBar=new Label();
 		            progressBar.setStyleName(res.css().setProgressBar());
 		            timeSpentpnl.add(progressBar);
@@ -349,7 +349,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	          
 	           //Set time spent
 	            HorizontalPanel timeSpentpnl=new HorizontalPanel();
-	            timeSpentpnl.add(getTimeStampLabel(result.get(i).getTimeSpent()));
+	            timeSpentpnl.add(AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()));
 	            Label progressBar=new Label();
 	            progressBar.setStyleName(res.css().setProgressBar());
 	            timeSpentpnl.add(progressBar);
@@ -435,7 +435,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	            data.setValue(i, 2, completion.toString());
 	          
 	            //Set time spent
-	            data.setValue(i, 3, getTimeStampLabel(result.get(i).getTimeSpent()).toString());
+	            data.setValue(i, 3, AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()).toString());
 	           
 	            //Set reactions
 	            int reaction=result.get(i).getReaction();
@@ -493,7 +493,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	            data.setValue(i, 2, completion.toString());
 	          
 	            //Set time spent
-	            data.setValue(i, 3, getTimeStampLabel(result.get(i).getTimeSpent()).toString());
+	            data.setValue(i, 3, AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()).toString());
 	           
 	            //Set reactions
 	            int reaction=result.get(i).getReaction();
@@ -695,7 +695,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				            data.setValue(i, 4, attempts.toString());
 				            
 				            //Set time spent
-				            data.setValue(i, 5, getTimeStampLabel(result.get(i).getTimeSpent()).toString());
+				            data.setValue(i, 5,AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()).toString());
 				            
 				            //Set reactions
 				            int reaction=result.get(i).getReaction();
@@ -853,7 +853,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 				            data.setValue(i, 3, attempts.toString());
 				            
 				            //Set time spent
-				            data.setValue(i, 4, getTimeStampLabel(result.get(i).getTimeSpent()).toString());
+				            data.setValue(i, 4, AnalyticsUtil.getTimeStampLabel(result.get(i).getTimeSpent()).toString());
 				            
 				            //Set reactions
 				            int reaction=result.get(i).getReaction();
@@ -895,16 +895,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		  properties.set("style", "text-align:center;");
 		  com.google.gwt.visualization.client.Properties p=properties.cast();
 		  return p;
-	}
-	/**
-	 * This method is used to set timestamp label
-	 * @param timeSpent
-	 * @return
-	 */
-	Label getTimeStampLabel(long timeSpent){
-		 Label timeStamplbl=new Label(AnalyticsUtil.getTimeSpent(timeSpent));
-         timeStamplbl.setStyleName(res.css().alignCenterAndBackground());
-         return timeStamplbl;
 	}
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsCollectionSummaryIndividualView#setIndividualCollectionMetaData(java.util.ArrayList, org.ednovo.gooru.shared.model.analytics.PrintUserDataDO)

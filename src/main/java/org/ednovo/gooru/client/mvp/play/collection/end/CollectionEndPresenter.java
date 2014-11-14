@@ -117,12 +117,13 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	
 	@Inject
 	public CollectionEndPresenter(EventBus eventBus, IsCollectionEndView view,PreviewHomePresenter previewHomePresenter,
-			PreviewEndPresenter previewEndPresenter,CollectionHomeMetadataPresenter collectionHomeMetadataPresenter) {
+			PreviewEndPresenter previewEndPresenter,CollectionHomeMetadataPresenter collectionHomeMetadataPresenter,CollectionSummaryIndividualPresenter collectionSummaryIndividualPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.previewHomePresenter=previewHomePresenter;
 		this.previewEndPresenter=previewEndPresenter;
 		this.collectionHomeMetadataPresenter=collectionHomeMetadataPresenter;
+		this.collectionSummaryIndividualPresenter=collectionSummaryIndividualPresenter;
 		addRegisteredHandler(SetPlayerLoginStatusEvent.TYPE, this);
 		addRegisteredHandler(UpdateCommentChildViewEvent.TYPE, this);
 		addRegisteredHandler(EditCommentChildViewEvent.TYPE, this);
