@@ -226,6 +226,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	
 	PlaceRequest nextResoruceRequest;
 	
+	PlaceRequest previousResoruceRequest;
+	
 	private boolean isOpenEndedAnswerSubmited=false;
 	
 	private int sessionIdCreationCount=0;
@@ -689,7 +691,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			createPlayerDataLogs();
 			setTotalTimeSpentOnSummaryPage();
 		    nextResoruceRequest=getNextButtonRequestUrl(collectionItemId);
-			PlaceRequest previousResoruceRequest=getPreviousButtonRequestUrl(collectionItemId);
+		    previousResoruceRequest=getPreviousButtonRequestUrl(collectionItemId);
 			if(!AppClientFactory.isAnonymous()){
 				getReportData(collectionItemDo.getResource().getGooruOid());
 			}
@@ -1798,13 +1800,16 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 						if(result.size()!=(i+1)){
 							gooruFlagId=gooruFlagId+",";
 						}
+						/*getting reasons of flagging resource */
 						if(result.get(i).getContentReportList()!=null){
-							flagType=result.get(i).getContentReportList().get(i);
-							if(flagType.equals("not-loading")){
-								getView().makeFlagButtonOrange();
+							for(int j=0; j<result.get(i).getContentReportList().size(); j++){
+								flagType=result.get(i).getContentReportList().get(j);
+								if(flagType.equals("not-loading")){
+									getView().makeFlagButtonOrange();
+									getView().showFlaggedResourcePopup(previousResoruceRequest,nextResoruceRequest);
+								}
 							}
 						}
-						
 					}
 					resourceFlagPresenter.setContentDeleteIds(gooruFlagId);
 				 }
@@ -2236,17 +2241,26 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	}
 
 	@Override
-	public void navigateToNext() {
+	public void navigateToNext(final String direction) {
 		if(!resoruceMetadataPresenter.isOeAnswerSubmited()){
 			NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
 				@Override
 				public void navigateToNextResource() {
 					super.hide();
-					AppClientFactory.getPlaceManager().revealPlace(false, nextResoruceRequest,true);
+					if(direction.equals("next")){
+						AppClientFactory.getPlaceManager().revealPlace(false, nextResoruceRequest,true);
+					}else{
+						AppClientFactory.getPlaceManager().revealPlace(false, previousResoruceRequest,true);
+					}
 				}
 			};
 		}else{
-			AppClientFactory.getPlaceManager().revealPlace(false, nextResoruceRequest,true);
+			if(direction.equals("next")){
+				AppClientFactory.getPlaceManager().revealPlace(false, nextResoruceRequest,true);
+			}else{
+				AppClientFactory.getPlaceManager().revealPlace(false, previousResoruceRequest,true);
+			}
+			
 		}
 		
 	}

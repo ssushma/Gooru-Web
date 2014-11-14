@@ -555,20 +555,42 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	@Override
 	public void makeFlagButtonOrange() {
 		footerView.makeFlagButtonOrange();
+	}
+	
+	/**
+	 * To show the Flagged resource info
+	 */
+	@Override
+	public void showFlaggedResourcePopup(PlaceRequest previous, PlaceRequest next) {
+		// TODO Auto-generated method stub
 		ConfirmationPopupVc confiPopupVc = new ConfirmationPopupVc(i18n.GL2190(), i18n.GL2191()) {
 			
 			@Override
 			@UiHandler("okButton")
 			public void onDelete(ClickEvent clickEvent) {
 				hide();
-				getUiHandlers().navigateToNext();
+				getUiHandlers().navigateToNext("next");
+			}
+			@Override
+			@UiHandler("cancelButton")
+			public void onCancelClick(ClickEvent clickEvent){
+				hide();
+				getUiHandlers().navigateToNext("previous");
 			}
 		};
+		String hasPrevious=previous.getParameter("rid", null);
+		String hasNext=next.getParameter("view", null);
+		if(hasPrevious==null){
+			confiPopupVc.getCancelButton().setVisible(false);
+		}else{
+			confiPopupVc.getCancelButton().setVisible(true);
+		}
 		confiPopupVc.setPopupZindex(99999);
 		confiPopupVc.setGlassZindex(99999);
-		confiPopupVc.setAndHideButtonInPlayer(i18n.GL2192());
-		confiPopupVc.getCancelButton().setVisible(false);
-		
+		confiPopupVc.setAndHideButtonInPlayer(i18n.GL2192(),i18n.GL2204());
+		if(hasNext!=null){
+			confiPopupVc.getOkButton().setText(i18n.GL2205());
+		}
 	}
 
 	/**
