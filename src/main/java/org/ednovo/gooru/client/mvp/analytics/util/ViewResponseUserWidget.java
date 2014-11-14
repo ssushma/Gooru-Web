@@ -49,12 +49,28 @@ public class ViewResponseUserWidget extends Composite {
 	OetextDataDO oetextDataDO;
 	
 	
+	/**
+	 * Constructor
+	 * @param oetextDataDO
+	 * @param resourceGooruId
+	 * @param collectionId
+	 * @param classpageId
+	 * @param pathwayId
+	 * @param questionType
+	 * @param isSummary
+	 */
 	public ViewResponseUserWidget(OetextDataDO oetextDataDO,String resourceGooruId,String collectionId, String classpageId,String pathwayId,String questionType,boolean isSummary) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setData(oetextDataDO,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary);
 		feedBacktxt.getElement().setAttribute("placeholder", "Leave feedback for this answer");
 		questionCountlbl.setVisible(false);
 	}
+	/**
+	 * Constructor
+	 * @param questionCount
+	 * @param questionText
+	 * @param questionAnswers
+	 */
 	public ViewResponseUserWidget(String questionCount,String questionText,String questionAnswers) {
 		initWidget(uiBinder.createAndBindUi(this));
 		questionCountlbl.setVisible(true);
@@ -73,6 +89,16 @@ public class ViewResponseUserWidget extends Composite {
 			userProfileImage1.setUrl("../images/settings/setting-user-image.png");
 		}
 	}
+	/**
+	 * This method is used to set the data.
+	 * @param oetextDataDO
+	 * @param resourceGooruId
+	 * @param collectionId
+	 * @param classpageId
+	 * @param pathwayId
+	 * @param questionType
+	 * @param isSummary
+	 */
 	void setData(final OetextDataDO oetextDataDO,final String resourceGooruId,final String collectionId, final String classpageId,final String pathwayId,String questionType,boolean isSummary){
 		this.oetextDataDO=oetextDataDO;
 		giveFeedBackpnl.setVisible(false);

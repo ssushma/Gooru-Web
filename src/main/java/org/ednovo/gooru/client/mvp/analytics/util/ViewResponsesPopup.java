@@ -24,21 +24,53 @@ public class ViewResponsesPopup extends PopupPanel {
 	
 	@UiField HTMLPanel viewResponsepnl;
 	@UiField Label totalResponselbl;
+	/**
+	 * Constructor
+	 * @param questionCount
+	 * @param questionText
+	 * @param questionAnswers
+	 */
 	public ViewResponsesPopup(String questionCount,String questionText,String questionAnswers) {
 		setWidget(uiBinder.createAndBindUi(this));
 		setCollectionProgressData(questionCount, questionText, questionAnswers);
 	}
 	
+	/**
+	 * This method is used to display the view responses
+	 * @param result
+	 * @param resourceGooruId
+	 * @param collectionId
+	 * @param classpageId
+	 * @param pathwayId
+	 * @param questionType
+	 * @param isSummary
+	 */
 	public ViewResponsesPopup(ArrayList<OetextDataDO> result,String resourceGooruId,String collectionId, String classpageId,String pathwayId,String questionType,boolean isSummary) {
 		setWidget(uiBinder.createAndBindUi(this));
 		setPopUpData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary);
 	}
+	/**
+	 * This method is used to set collection progress data.
+	 * @param questionCount
+	 * @param questionText
+	 * @param questionAnswers
+	 */
 	void setCollectionProgressData(String questionCount,String questionText,String questionAnswers){
 		viewResponsepnl.clear();
 		totalResponselbl.setVisible(false);
 		ViewResponseUserWidget responseUserWidget=new ViewResponseUserWidget(questionCount, questionText, questionAnswers);
 		viewResponsepnl.add(responseUserWidget);
 	}
+	/**
+	 * This method will set the popup data.
+	 * @param result
+	 * @param resourceGooruId
+	 * @param collectionId
+	 * @param classpageId
+	 * @param pathwayId
+	 * @param questionType
+	 * @param isSummary
+	 */
 	void setPopUpData(ArrayList<OetextDataDO> result,String resourceGooruId,String collectionId, String classpageId,String pathwayId,String questionType,boolean isSummary){
 		viewResponsepnl.clear();
 		totalResponselbl.setVisible(true);

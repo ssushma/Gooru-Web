@@ -12,6 +12,7 @@ import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -66,6 +67,24 @@ public class CollectionSummaryView  extends BaseViewWithHandlers<CollectionSumma
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		setData();
+		setStaticData();
+	}
+	/**
+	 * This method is used to set static data.
+	 */
+	void setStaticData(){
+		StringUtil.setAttributes(collectionSummaryDetails.getElement(), "pnlCollectionSummaryDetails", null, null);
+		StringUtil.setAttributes(sessionspnl.getElement(), "pnlSessionspnl", null, null);
+		StringUtil.setAttributes(loadingImageLabel1.getElement(), "pnlLoadingImage", null, null);
+		StringUtil.setAttributes(pnlSummary.getElement(), "pnlSummary", null, null);
+		
+		StringUtil.setAttributes(studentsListDropDown.getElement(), "ddlStudentsListDropDown", null, null);
+		StringUtil.setAttributes(sessionsDropDown.getElement(), "ddlSessionsDropDown", null, null);
+		
+		StringUtil.setAttributes(exportImage.getElement(), "imgExportImage", null, null);
+		StringUtil.setAttributes(sessionsTooltip.getElement(), "imgSessionsTooltip", null, null);
+		
+		StringUtil.setAttributes(lastModifiedTime.getElement(), "lblLastModifiedTime", null, null);
 	}
 	/**
 	 * This method is used to set default data.
