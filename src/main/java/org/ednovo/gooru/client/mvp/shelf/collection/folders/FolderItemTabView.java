@@ -406,17 +406,13 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 			mainSection.removeStyleName(folderStyle.emptyFolder());
 			if(!isPaginated) {
 				folderContentBlock.clear();
-//				folderItemPanel.clear();
 			}
 			for(int i = 0; i<folderList.size(); i++) {
 				shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i),i+1);
 				if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 					isFolderType = false;
 				}
-//				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
 				folderContentBlock.add(shelfFolderItemChildView);
-				/*folderContentBlock.add(shelfFolderItemChildView);
-				folderItemPanel.addDraggable(shelfFolderItemChildView,2);*/
 			}
 		}
 		loadingImage.setVisible(false);
@@ -753,15 +749,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Updates the item sequence and reorder buttons of all folders
 	 * and collection, as new folder or collection created or reordered.
@@ -780,7 +767,9 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					isReorderButtonEnabled(true,(ShelfFolderItemChildView) widget);
 				}
 				
-				
+				/**
+				 * For a first folder/collection hiding the up and top most arrow.
+				 */
 				if(seqNum==1){
 					((ShelfFolderItemChildView) widget).upButtonIsVisible(false); 
 					((ShelfFolderItemChildView) widget).downButtonIsVisible(true); 
@@ -1139,14 +1128,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		}
 		
 		if(direction.equalsIgnoreCase(DOWN_ARROW)){
-			/*if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
-				itemToBeMovedPosSeqNumb+=1;
-			}*/
 			reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb),DOWN_ARROW,params);
 		}else{
-			/*if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
-				itemToBeMovedPosSeqNumb-=1;
-			}*/
 			reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb-1),UP_ARROW,params);
 		}
 		

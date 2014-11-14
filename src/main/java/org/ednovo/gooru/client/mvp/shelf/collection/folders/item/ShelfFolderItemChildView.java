@@ -400,6 +400,11 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		}
 	}
 	
+	
+	/**
+	 * Shows alert tool tip message while doing reorder.
+	 * @param validationMsg {@link String}
+	 */
 	public void showReorderValidationToolTip(String validationMsg){
 		toolTipPopupPanel.clear();
 		toolTipPopupPanel.setWidget(new GlobalToolTip(validationMsg));
@@ -455,6 +460,11 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		}
 	}
 	
+	/**
+	 * Inner class to implement mouse over functionality for a text field, top most button and bottom most button.
+	 * On mouse over shows alert tool tip.
+	 *
+	 */
 	
 	private class OnMouseOver implements MouseOverHandler {
 
@@ -484,6 +494,12 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			}
 		}
 	}
+	
+	/**
+	 * Inner class to implement mouse out functionality for a text field, top most button and bottom most button.
+	 * On mouse out hides alert tool tip.
+	 *
+	 */
 	
 	private class OnMouseOut implements MouseOutHandler {
 
