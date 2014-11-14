@@ -10,6 +10,7 @@ import org.ednovo.gooru.client.mvp.analytics.util.DataView;
 import org.ednovo.gooru.client.mvp.analytics.util.ViewResponsesPopup;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
@@ -73,6 +74,20 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));	
 		scrollForCollectionProgress.getElement().setId("scrollForCollectionProgress");
+		setStaticData();
+	}
+	/**
+	 * This method is used to set static data.
+	 */
+	void setStaticData(){
+		StringUtil.setAttributes(htmlpnlProgress.getElement(), "pnlHtmlpnlProgress", null, null);
+		StringUtil.setAttributes(scrollForCollectionProgress.getElement(), "pnlScrollForCollectionProgress", null, null);
+		
+		StringUtil.setAttributes(filterDropDown.getElement(), "ddlFilterDropDown", null, null);
+		
+		StringUtil.setAttributes(collectionTitlelbl.getElement(), "spnCollectionTitlelbl", null, null);
+		StringUtil.setAttributes(resourceCountlbl.getElement(), "spnResourceCountlbl", null, null);
+		StringUtil.setAttributes(questionCountlbl.getElement(), "spnQuestionCountlbl", null, null);
 	}
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionProgress.IsCollectionProgressView#setData(java.util.ArrayList, boolean, java.lang.String)
@@ -97,7 +112,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 
 		for (CollectionProgressDataDo collectionProgressDataDo : collectionProgressData) {
 			defaultUserDataForUsers=collectionProgressDataDo;
-			if(collectionProgressDataDo.getCategory().equalsIgnoreCase(QUESTION)){
+			if(collectionProgressDataDo.getCategory()!=null && collectionProgressDataDo.getCategory().equalsIgnoreCase(QUESTION)){
 				 data.addColumn(ColumnType.STRING, "Question&nbsp;"+collectionProgressCount,QUESTION);
 				 noOfQuestions++;
 				 questionColumnIndex.add(collectionProgressCount+1);
@@ -124,7 +139,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	        	  for(int j=0;j<columnsSize;j++) {
 	        		  	  String color=WHITE;
 	        		  	  VerticalPanel mainDataVpnl=new VerticalPanel();
-		        		  if(!collectionProgressData.get(j).getCategory().equalsIgnoreCase(QUESTION)){
+		        		  if(collectionProgressData.get(j).getCategory()!=null && !collectionProgressData.get(j).getCategory().equalsIgnoreCase(QUESTION)){
 		        			  int reaction=collectionProgressData.get(j).getUserData().get(i).getReaction();
 		        			  Label reactionlbl=new Label();
 				        		 if(reaction == 0){
@@ -151,7 +166,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		        			  String answerOption=collectionProgressData.get(j).getUserData().get(i).getOptions();
 		        			  String answer="";
 		        			  int attemptCount=collectionProgressData.get(j).getUserData().get(i).getAttempts();
-		        			  if(typeOfQuestion.equalsIgnoreCase("MA") || typeOfQuestion.equalsIgnoreCase("FIB") || typeOfQuestion.equalsIgnoreCase("OE")){
+		        			  if((typeOfQuestion!=null) && (typeOfQuestion.equalsIgnoreCase("MA") || typeOfQuestion.equalsIgnoreCase("FIB") || typeOfQuestion.equalsIgnoreCase("OE"))){
 		        				  Label viewResponselbl=new Label();
 				        		  mainDataVpnl.add(viewResponselbl);
 		        				  String answerText="--";

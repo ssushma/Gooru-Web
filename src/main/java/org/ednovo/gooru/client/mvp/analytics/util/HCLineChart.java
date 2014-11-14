@@ -27,6 +27,11 @@ public class HCLineChart {
 	final Chart chart = new Chart();
 	
 	
+/**
+ * This method is used to create a line chart
+ * @param gradeData
+ * @return
+ */
 public HTMLPanel chart(ArrayList<GradeJsonData> gradeData){
 		HTMLPanel studyChartContainer=new HTMLPanel("");
 		ChartMetaDataOptions chartmetadata=new ChartMetaDataOptions();
@@ -169,6 +174,15 @@ private String getTimeSpent(Long commentCreatedTime) {
 	return createdTime;
 }
 	
+	/**
+	 * This method is used to create chart line
+	 * @param categories
+	 * @param legend
+	 * @param data
+	 * @param chartmetadata
+	 * @param isFirst
+	 * @return
+	 */
 	public Chart createChartLine(String[] categories, List<String> legend, Map<String, Number[]> data,ChartMetaDataOptions chartmetadata,boolean isFirst) {
 	
 		String[] colors={"red","green","blue","gray"};

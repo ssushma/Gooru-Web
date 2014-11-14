@@ -4,6 +4,7 @@ import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -34,6 +35,23 @@ public class CollectionSummaryWidget extends Composite {
 	 */
 	public CollectionSummaryWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
+		setStaticData();
+	}
+	/**
+	 * This method is used to set static data.
+	 */
+	void setStaticData(){
+		StringUtil.setAttributes(collectionImage.getElement(), "imgCollectionImage", null, null);
+		
+		StringUtil.setAttributes(sessionsPnl.getElement(), "pnlSessionsPnl", null, null);
+		
+		StringUtil.setAttributes(sessionValue.getElement(), "spnSessionValue", null, null);
+		StringUtil.setAttributes(sessionText.getElement(), "spnSessionText", null, null);
+		StringUtil.setAttributes(sessionAccessedTime.getElement(), "spnSessionAccessedTime", null, null);
+		StringUtil.setAttributes(collectionLastAccessedlbl.getElement(), "spnCollectionLastAccessedlbl", null, null);
+		StringUtil.setAttributes(collectionTitle.getElement(), "spnCollectionTitle", null, null);
+		StringUtil.setAttributes(collectionResourcesCount.getElement(), "spnCollectionResourcesCount", null, null);
+		StringUtil.setAttributes(collectionLastAccessed.getElement(), "spnCollectionLastAccessed", null, null);
 	}
 	/**
 	 * This method is used to set the data.

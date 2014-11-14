@@ -21,6 +21,9 @@ public abstract class AnalyticsTabContainer extends Composite {
 	@UiField Button btnScoredQuestions,btnOpenEndedQuestions,btnCollectionBreakDown,btnPtint,btnSave,btnEmail;
 	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab",PRINT="print",SAVEBTN="save",EMAIL="email";
 	
+	/**
+	 * Constructor
+	 */
 	public AnalyticsTabContainer() {
 		initWidget(uiBinder.createAndBindUi(this));
 		btnScoredQuestions.addClickHandler(new ClickImplemntation(SCORED));
@@ -41,8 +44,16 @@ public abstract class AnalyticsTabContainer extends Composite {
 			onTabClick(tabClicked);
 		}
 	}
+	/**
+	 * This will return the email Button
+	 * @return
+	 */
 	public Button getEmailButton(){
 		return btnEmail;
 	}
+	/**
+	 * This abastact method is used to handle the click event on clicked button
+	 * @param tabClicked
+	 */
 	public abstract void onTabClick(String tabClicked);
 }

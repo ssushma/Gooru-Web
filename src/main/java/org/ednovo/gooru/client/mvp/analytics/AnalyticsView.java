@@ -103,6 +103,47 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 		loadCollections.addChangeHandler(new loadCollectionsChangeHandler());
 		assignmentContainer.setVisible(false);
 		highlightedStudentsContainer.setVisible(false);
+		setStaticData();
+	}
+	/**
+	 * This method is used to set static text.
+	 */
+	void setStaticData(){
+		StringUtil.setAttributes(highlightedStudentsContainer.getElement(), "pnlHighlightedStudentsContainer", null, null);
+		StringUtil.setAttributes(scoreAboveHighlightedStudentsContainer.getElement(), "pnlScoreAboveHighlightedStudentsContainer", null, null);
+		StringUtil.setAttributes(scoreBelowHighlightedStudentsContainer.getElement(), "pnlScoreBelowHighlightedStudentsContainer", null, null);
+		StringUtil.setAttributes(unitPanel.getElement(), "pnlUnitPanel", null, null);
+		StringUtil.setAttributes(personalizeMainContainer.getElement(), "pnlPersonalizeMainContainer", null, null);
+		StringUtil.setAttributes(unitOptionsContainer.getElement(), "pnlUnitOptionsContainer", null, null);
+		StringUtil.setAttributes(personalizeContainer.getElement(), "pnlPersonalizeContainer", null, null);
+		StringUtil.setAttributes(assignmentContainer.getElement(), "pnlAssignmentContainer", null, null);
+		StringUtil.setAttributes(graphWidget.getElement(), "pnlGraphWidget", null, null);
+		StringUtil.setAttributes(slotWidget.getElement(), "pnlSlotWidget", null, null);
+		StringUtil.setAttributes(orangeProgressBar.getElement(), "pnlOrangeProgressBar", null, null);
+		StringUtil.setAttributes(greenProgressBar.getElement(), "pnlGreenProgressBar", null, null);
+		StringUtil.setAttributes(blueProgressBar.getElement(), "pnlBlueProgressBar", null, null);
+		StringUtil.setAttributes(scoredBelowPanel.getElement(), "pnlScoredBelowPanel", null, null);
+		StringUtil.setAttributes(scoredAbovePanel.getElement(), "pnlScoredAbovePanel", null, null);
+		StringUtil.setAttributes(loadingImageLabel.getElement(), "pnLoadingImage", null, null);
+		
+		StringUtil.setAttributes(loadCollections.getElement(), "ddlLoadCollections", null, null);
+		
+		StringUtil.setAttributes(lblMoreUnits.getElement(), "lblMoreUnits", i18n.GL2256(), i18n.GL2256());
+		StringUtil.setAttributes(summaryArrowlbl.getElement(), "lblSummaryArrowlbl", null, null);
+		StringUtil.setAttributes(progressArrowlbl.getElement(), "lblProgressArrow", null, null);
+		StringUtil.setAttributes(responsesArrowlbl.getElement(), "lblResponsesArrow", null, null);
+		
+		StringUtil.setAttributes(btnViewHighlightedStudents.getElement(), "btnViewHighlightedStudents", i18n.GL2293(), i18n.GL2293());
+		StringUtil.setAttributes(btnViewAllStudents.getElement(), "btnViewAllStudents", i18n.GL2292(), i18n.GL2292());
+		StringUtil.setAttributes(btnCollectionSummary.getElement(), "btnCollectionSummary", i18n.GL2228(), i18n.GL2228());
+		StringUtil.setAttributes(btnCollectionProgress.getElement(), "btnCollectionProgress", i18n.GL2229(), i18n.GL2229());
+		StringUtil.setAttributes(btnCollectionResponses.getElement(), "btnCollectionResponses", i18n.GL2258(),i18n.GL2258());
+		StringUtil.setAttributes(personalizeBtn.getElement(), "btnPersonalize", null, null);
+		
+		StringUtil.setAttributes(minimumScorelbl.getElement(), "spnMinimumScorelbl", null, null);
+			
+		StringUtil.setAttributes(minimumScoreBelow.getElement(), "txtMinimumScoreBelow", null, null);
+		StringUtil.setAttributes(minimumScoreAbove.getElement(), "txtMinimumScoreAbove", null, null);	
 	}
 	public class loadCollectionsChangeHandler implements ChangeHandler{
 		@Override
@@ -600,6 +641,7 @@ public class AnalyticsView extends BaseViewWithHandlers<AnalyticsUiHandlers> imp
 			unitTitle = unitTitle.substring(0, 11) + "...";
 		}
 		personalizeBtn.setText(StringUtil.generateMessage(i18n.GL2221(), unitTitle));
+		StringUtil.setAttributes(personalizeBtn.getElement(), "btnPersonalize", StringUtil.generateMessage(i18n.GL2221(), unitTitle), StringUtil.generateMessage(i18n.GL2221(), unitTitle));
 	}
 	
 	/**
