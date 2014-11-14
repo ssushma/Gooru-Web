@@ -396,22 +396,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 						isFolderType = false;
 					}
-					if(getTotalCount()==1){
-						isReorderButtonEnabled(false,shelfFolderItemChildView);
-						/*shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
-						shelfFolderItemChildView.getMoveDownBtn().setEnabled(false);
-						
-						shelfFolderItemChildView.getMoveBottomBtn().getElement().addClassName("disabled");
-						shelfFolderItemChildView.getMoveBottomBtn().setEnabled(false);*/
-						
-					}else{
-						isReorderButtonEnabled(true,shelfFolderItemChildView);
-						/*shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
-						shelfFolderItemChildView.getMoveDownBtn().setEnabled(true);
-						
-						shelfFolderItemChildView.getMoveBottomBtn().getElement().removeClassName("disabled");
-						shelfFolderItemChildView.getMoveBottomBtn().setEnabled(true);*/
-					}
+					
 					folderContentBlock.add(shelfFolderItemChildView);
 				}
 				setFolderCollectionItemSequence();
@@ -449,20 +434,17 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		setPaginatedResults();
 	}
 	
+	/**
+	 * Based on number of folders/collections, will be making visible reorder panel.
+	 * 
+	 * @param isEnable {@link Boolean}
+	 * @param shelfFolderItemChildView {@link ShelfFolderItemChildView}
+	 */
 	private void isReorderButtonEnabled(boolean isEnable, ShelfFolderItemChildView shelfFolderItemChildView) { 
 		if(isEnable){
-			shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
-			shelfFolderItemChildView.getMoveDownBtn().setEnabled(isEnable);
-			
-			shelfFolderItemChildView.getMoveBottomBtn().getElement().removeClassName("disabled");
-			shelfFolderItemChildView.getMoveBottomBtn().setEnabled(isEnable);
-			
+			shelfFolderItemChildView.getReorderPanel().setVisible(isEnable);
 		}else{
-			shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
-			shelfFolderItemChildView.getMoveDownBtn().setEnabled(isEnable);
-			
-			shelfFolderItemChildView.getMoveBottomBtn().getElement().addClassName("disabled");
-			shelfFolderItemChildView.getMoveBottomBtn().setEnabled(isEnable);
+			shelfFolderItemChildView.getReorderPanel().setVisible(isEnable);
 		}
 	}
 
@@ -679,24 +661,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		setTotalCount(getTotalCount()+1);
 		setFolderCollectionItemSequence();
 		mainSection.removeStyleName(folderStyle.emptyFolder());
-		if(getTotalCount()==1){
-			isReorderButtonEnabled(false,shelfFolderItemChildView);
-			
-			/*shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
-			shelfFolderItemChildView.getMoveDownBtn().setEnabled(false);
-			
-			shelfFolderItemChildView.getMoveBottomBtn().getElement().addClassName("disabled");
-			shelfFolderItemChildView.getMoveBottomBtn().setEnabled(false);*/
-			
-			
-		}else{
-			isReorderButtonEnabled(true,shelfFolderItemChildView);
-			/*shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
-			shelfFolderItemChildView.getMoveDownBtn().setEnabled(true);
-			
-			shelfFolderItemChildView.getMoveBottomBtn().getElement().removeClassName("disabled");
-			shelfFolderItemChildView.getMoveBottomBtn().setEnabled(true);*/
-		}
 	}
 	
 	
@@ -808,6 +772,15 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		while (widgets.hasNext()) {
 			Widget widget = widgets.next();
 			if (widget instanceof ShelfFolderItemChildView) {
+				
+				if(getTotalCount()==1){
+					isReorderButtonEnabled(false,(ShelfFolderItemChildView) widget);
+					
+				}else{
+					isReorderButtonEnabled(true,(ShelfFolderItemChildView) widget);
+				}
+				
+				
 				if(seqNum==1){
 					((ShelfFolderItemChildView) widget).upButtonIsVisible(false); 
 					((ShelfFolderItemChildView) widget).downButtonIsVisible(true); 
