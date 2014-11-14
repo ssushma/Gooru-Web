@@ -41,21 +41,37 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 	private  AnalyticsServiceAsync analyticService;
 	
 	private String collectionId,classpageId,pathwayId;
-	
+	 
+	/**
+	 * Constructor
+	 * @param eventBus
+	 * @param view
+	 */
 	@Inject
 	public CollectionSummaryTeacherPresenter(EventBus eventBus, IsCollectionSummaryTeacherView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}
 
+	/**
+	 * Get the analytics service
+	 * @return
+	 */
 	public AnalyticsServiceAsync getAnalyticService() {
 		return analyticService;
 	}
 
+	/**
+	 * Set the analytics service
+	 * @param analyticService
+	 */
 	public void setAnalyticService(AnalyticsServiceAsync analyticService) {
 		this.analyticService = analyticService;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherUiHandlers#setTeacherData(java.lang.String, java.lang.String, java.lang.String, org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo, com.google.gwt.user.client.ui.HTMLPanel)
+	 */
 	@Override
 	public void setTeacherData(String collectionId,String classpageId,String pathwayId,final CollectionSummaryMetaDataDo result,final HTMLPanel loadingImage) {
 		this.pathwayId=pathwayId;
@@ -72,6 +88,9 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 		});		
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherUiHandlers#setOEtextData(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public void setOEtextData(final String resourceGooruId,final String questionType) {
 		this.analyticService.getOETextData(resourceGooruId, collectionId, classpageId, pathwayId,"AS","","", new AsyncCallback<ArrayList<OetextDataDO>>() {
@@ -85,6 +104,9 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 		});
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherUiHandlers#setHtmltopdf(java.lang.String)
+	 */
 	@Override
 	public void setHtmltopdf(String htmlString) {
 		this.analyticService.setHTMLtoPDF(htmlString, new AsyncCallback<String>() {

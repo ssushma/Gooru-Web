@@ -93,6 +93,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	CollectionOverViewWidget collectionOverViewWidget=new CollectionOverViewWidget();
 	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
 	
+	/**
+	 * Costructor
+	 */
 	public CollectionSummaryTeacherView() {
 		this.res = CollectionSummaryTeacherCBundle.INSTANCE;
 		res.css().ensureInjected();
@@ -101,11 +104,17 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		printWidget.setVisible(false);
 	}
 	
+	/**
+	 * This method is used to hide all the panels
+	 */
 	void hideAllPanels(){
 		teacherScoredDatapnl.setVisible(false);
 		teacherOpenendedData.setVisible(false);
 		teacherResourceBreakdownDatapnl.setVisible(false);
 	}
+	/**
+	 * This method is used to set default data.
+	 */
 	void setData(){
 		collectionSummaryText.setText(i18n.GL1587());
 		collectionSummaryText.getElement().getStyle().setPaddingBottom(15, Unit.PX);
@@ -125,7 +134,6 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 					hideAllPanels();
 					teacherResourceBreakdownDatapnl.setVisible(true);
 				}else if(tabClicked.equalsIgnoreCase(PRINT)){
-					//setPrintIndividualSummayData(false);
 					Element printElement=collectionSummaryText.getElement();
 					printElement.appendChild(collectionSummaryWidget.getElement());
 					printElement.appendChild(scoredQuestionHeading.getElement());
@@ -159,6 +167,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
         filterDropDown.addItem("Questions", "Questions");
         filterDropDown.addItem("Resources", "Resources");
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.IsCollectionSummaryTeacherView#setTeacherResourceData(java.util.ArrayList, org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo, com.google.gwt.user.client.ui.HTMLPanel)
+	 */
 	@Override
 	public void setTeacherResourceData(ArrayList<UserDataDo> resourcesData,CollectionSummaryMetaDataDo collectionMetaData,HTMLPanel loadingImage) {
 		    hideAllPanels();
@@ -188,7 +199,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 			
 	        //This is used for segrate data based on the category
 	        for (UserDataDo userDataDo : resourcesData) {
-				if(userDataDo.getCategory().equalsIgnoreCase("question")){
+				if(userDataDo.getCategory()!=null && userDataDo.getCategory().equalsIgnoreCase("question")){
 					if(userDataDo.getType().equalsIgnoreCase("OE")){
 							openendedData.add(userDataDo);
 					}else{
@@ -250,7 +261,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	   	            data.setValue(i, 2, completionpnl.toString());
 	   	          
 	   	            //Set time spent
-	   	            data.setValue(i, 3, getTimeStampLabel(result.get(i).getAvgTimeSpent()).toString());
+	   	            data.setValue(i, 3,AnalyticsUtil.getTimeStampLabel(result.get(i).getAvgTimeSpent()).toString());
 	   	           
 	   	            //Set reactions
 	   	            int reaction=result.get(i).getAvgReaction();
@@ -291,6 +302,10 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
         	
         }
 	}
+	/**
+	 * This method is used to set opended question data.
+	 * @param result
+	 */
 	void setOpenendedQuestionsData(final ArrayList<UserDataDo> result){
             
 		 	int totalUserCount=this.collectionMetaData.getUserCount();
@@ -331,7 +346,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	   	            data.setValue(i, 2, completionpnl.toString());
 	   	          
 	   	            //Set time spent
-	   	            data.setValue(i, 3, getTimeStampLabel(result.get(i).getAvgTimeSpent()).toString());
+	   	            data.setValue(i, 3, AnalyticsUtil.getTimeStampLabel(result.get(i).getAvgTimeSpent()).toString());
 	   	           
 	   	            //Set reactions
 	   	            int reaction=result.get(i).getAvgReaction();
@@ -444,7 +459,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	          
 	           //Set time spent
 	            HorizontalPanel timeSpentpnl=new HorizontalPanel();
-	            timeSpentpnl.add(getTimeStampLabel(result.get(i).getAvgTimeSpent()));
+	            timeSpentpnl.add(AnalyticsUtil.getTimeStampLabel(result.get(i).getAvgTimeSpent()));
 	            Label progressBar=new Label();
 	            progressBar.setStyleName(res.css().setProgressBar());
 	            timeSpentpnl.add(progressBar);
@@ -518,9 +533,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        for(int i=0;i<result.size();i++) {
 	        	data.setCell(i, 0, i+1, null, getPropertiesCell());
 	            //set Format
-	              String  resourceCategory =result.get(i).getCategory();
+	              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
 	              String categoryStyle="";
-				  if(resourceCategory.equalsIgnoreCase("website")){
+				  if(resourceCategory.equalsIgnoreCase("website")){ 
 				      resourceCategory = "webpage";
 				      categoryStyle=res.css().category_new_type_webpage();
 				  } else if(resourceCategory.equalsIgnoreCase("slide")){
@@ -553,7 +568,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	          
 	           //Set time spent
 	            HorizontalPanel timeSpentpnl=new HorizontalPanel();
-	            timeSpentpnl.add(getTimeStampLabel(result.get(i).getAvgTimeSpent()));
+	            timeSpentpnl.add(AnalyticsUtil.getTimeStampLabel(result.get(i).getAvgTimeSpent()));
 	            Label progressBar=new Label();
 	            progressBar.setStyleName(res.css().setProgressBar());
 	            timeSpentpnl.add(progressBar);
@@ -679,6 +694,12 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
         	teacherScoredData.add(erroeMsg);
         }
 	}
+	/**
+	 * This method is used to set scored questions data.
+	 * @param scoredQuestionsData
+	 * @param sortableTable
+	 * @param isPrint
+	 */
 	void setSortedData(ArrayList<UserDataDo> scoredQuestionsData,SortTable sortableTable,boolean isPrint){
 		 for(int i=1;i<=scoredQuestionsData.size();i++){
         	 sortableTable.setValue(i, 0,i);
@@ -736,7 +757,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
              }
            
              sortableTable.setWidget(i, 3, answerBreakDownpnl);
-             sortableTable.setValue(i, 4,getTimeStampLabel(scoredQuestionsData.get(i-1).getAvgTimeSpent()).getText());
+             sortableTable.setValue(i, 4,AnalyticsUtil.getTimeStampLabel(scoredQuestionsData.get(i-1).getAvgTimeSpent()).getText());
              sortableTable.setWidget(i, 5,new AnalyticsReactionWidget(scoredQuestionsData.get(i-1).getAvgReaction()));
              
                 int[] pieChatValues=new int[3];
@@ -755,16 +776,15 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        }
 		}
 	}
+	/**
+	 * This method is used to set the cell properties 
+	 * @return
+	 */
 	com.google.gwt.visualization.client.Properties getPropertiesCell(){
 		  Properties properties=Properties.create();
 		  properties.set("style", "text-align:center;");
 		  com.google.gwt.visualization.client.Properties p=properties.cast();
 		  return p;
-	}
-	Label getTimeStampLabel(long timeSpent){
-		 Label timeStamplbl=new Label(getTimeSpent(timeSpent));
-         timeStamplbl.setStyleName(res.css().alignCenterAndBackground());
-         return timeStamplbl;
 	}
 	/**
 	 * This is used to convert long time format
@@ -804,6 +824,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		return createdTime;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.IsCollectionSummaryTeacherView#setViewResponseData(java.util.ArrayList, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId, String collectionId, String classpageId,String pathwayId,String questionType) {
 		     popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,true);
@@ -819,28 +842,4 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		    	 popupPanel.center();
 		     }
 		}
-	public void setPrintIndividualSummayData(boolean isClickedOnSave){
-		printWidget.clear();
-		Label collectionSummaryText=new Label();
-		collectionSummaryText.setText(i18n.GL1587());
-		collectionSummaryText.getElement().getStyle().setPaddingBottom(15, Unit.PX);
-		collectionSummaryText.addStyleName("collectionSummaryText");
-		printWidget.add(collectionSummaryText);
-		printWidget.add(collectionSummaryWidget);
-		
-		
-		printWidget.add(teacherScoredDatapnl);
-		
-	
-		//To add resource breakdown
-		printWidget.add(collectionOverViewWidget);
-		String style="<link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'><link rel='styleSheet' type='text/css' href='https://www.google.com/uds/api/visualization/1.0/8c95b72e5c145d5b3d7bb8b4ea74fd63/ui+en,table+en.css'>";
-		if(isClickedOnSave){
-		   // printWidget.clear();
-		}else{
-			System.out.println("out");
-			Print.it(style,printWidget);
-		   // printWidget.clear();
-		}
-	}
 }

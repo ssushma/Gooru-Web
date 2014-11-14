@@ -38,21 +38,37 @@ public class AnalyticsUnitAssignmentsPresenter extends PresenterWidget<IsAnalyti
 	
 	private String classpageId,pathwayId;
 	
+	/**
+	 * Constructor
+	 * @param eventBus
+	 * @param view
+	 */
 	@Inject
 	public AnalyticsUnitAssignmentsPresenter(EventBus eventBus, IsAnalyticsUnitAssignmentsView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}
 
+	/**
+	 * Get the analytics service
+	 * @return
+	 */
 	public AnalyticsServiceAsync getAnalyticService() {
 		return analyticService;
 	}
 
+	/**
+	 * This will set the analytics service
+	 * @param analyticService
+	 */
 	public void setAnalyticService(AnalyticsServiceAsync analyticService) {
 		this.analyticService = analyticService;
 	}
 
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.unitAssignments.AnalyticsUnitAssignmentsUiHandlers#setAnalyticsAssignmentsPresenter(org.ednovo.gooru.shared.model.content.UnitAssignmentsDo, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public void setAnalyticsAssignmentsPresenter(UnitAssignmentsDo result,String classpageId,String pathwayGooruOid) {
 		this.classpageId=classpageId;
@@ -60,6 +76,9 @@ public class AnalyticsUnitAssignmentsPresenter extends PresenterWidget<IsAnalyti
 		getView().setAssignmentsData(result,false);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.unitAssignments.AnalyticsUnitAssignmentsUiHandlers#getPathwayItems(java.lang.String, int, int)
+	 */
 	@Override
 	public void getPathwayItems(String sequence,int limit,int offSet) {
 		AppClientFactory.getInjector().getClasspageService().v2GetPathwayItems(classpageId, pathwayId, sequence, limit, offSet, new SimpleAsyncCallback<UnitAssignmentsDo>() {

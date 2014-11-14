@@ -29,7 +29,19 @@ import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 public interface AnalyticsUnitAssignmentsUiHandlers extends BaseUiHandlers{
 	
+	/**
+	 * This method is used to set assignments in the reports tab
+	 * @param result
+	 * @param classpageId
+	 * @param pathwayGooruOid
+	 */
 	void setAnalyticsAssignmentsPresenter(UnitAssignmentsDo result,String classpageId,String pathwayGooruOid);
 
+	/**
+	 * This method is used to get the pathway items
+	 * @param sequence
+	 * @param limit
+	 * @param offSet
+	 */
 	void getPathwayItems(String sequence, int limit, int offSet);
 }

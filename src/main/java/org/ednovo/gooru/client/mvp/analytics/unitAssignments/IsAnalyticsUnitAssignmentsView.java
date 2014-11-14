@@ -29,6 +29,10 @@ import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 public interface IsAnalyticsUnitAssignmentsView extends IsViewWithHandlers<AnalyticsUnitAssignmentsUiHandlers>{
 	
+	/**
+	 * This method is used to set assignment data.
+	 * @param unitAssignmentsDo
+	 * @param isNextOrPrevious
+	 */
 	void setAssignmentsData(UnitAssignmentsDo unitAssignmentsDo,boolean isNextOrPrevious);
-	
 }

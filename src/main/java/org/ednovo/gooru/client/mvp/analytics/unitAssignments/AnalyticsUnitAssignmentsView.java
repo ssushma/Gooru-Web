@@ -55,12 +55,18 @@ public class AnalyticsUnitAssignmentsView extends BaseViewWithHandlers<Analytics
 	
 	private List<InsightsUserDataDo> insightsUserList;
 	
+	/**
+	 * Constructor
+	 */
 	public AnalyticsUnitAssignmentsView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.res = AnalyticsUnitAssignmentsCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.unitAssignments.IsAnalyticsUnitAssignmentsView#setAssignmentsData(org.ednovo.gooru.shared.model.content.UnitAssignmentsDo, boolean)
+	 */
 	@Override
 	public void setAssignmentsData(UnitAssignmentsDo unitAssignmentsDo,boolean isNextOrPrevious) {
 		if(!isNextOrPrevious){
@@ -133,6 +139,11 @@ public class AnalyticsUnitAssignmentsView extends BaseViewWithHandlers<Analytics
 			}
 		}
 	}
+	/**
+	 * This method is used to get assignments offset value
+	 * @param direction
+	 * @return
+	 */
 	private int getAssignmentOffsetValue(String direction) {
 		if(direction.equals(NEXT)){
 				assignmentOffset = assignmentOffset+assignmentLimit;
@@ -142,6 +153,10 @@ public class AnalyticsUnitAssignmentsView extends BaseViewWithHandlers<Analytics
 		
 		return assignmentOffset;
 	}
+	/**
+	 * This method is used to hide and show the assignments arrows
+	 * @param unitAssignmentsDo
+	 */
 	private void showAndHideAssignmentArrows(UnitAssignmentsDo unitAssignmentsDo) {
 		int totalAssignments=0;
 		if(unitAssignmentsDo.getTotalHitCount() != null){
