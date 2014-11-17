@@ -22,67 +22,42 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.shared.exception;
+package org.ednovo.gooru.client.uc.error;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author Search Team
- * 
+ *
  */
-public class GwtException extends RuntimeException {
+public class ErrorPopupUc extends Composite{
 
+	public PopupPanel appPopUp;
+
+	private static ErrorPopupUcUiBinder uiBinder = GWT.create(ErrorPopupUcUiBinder.class);
+
+	interface ErrorPopupUcUiBinder extends UiBinder<Widget, ErrorPopupUc> {
+		
+	}
+
+	 private MessageProperties i18n = GWT.create(MessageProperties.class);
+	 
 	/**
-	 * 
+	 * Class constructor , get confirm logout popup
 	 */
-	private static final long serialVersionUID = -8131503840164251388L;
-
-	private List<String> errors;
-	
-	private int statusCode;
-	
-	private String errorMessage;
-
-	public GwtException() {
-		errors = new ArrayList<String>();
-	}
-
-	public GwtException(String message) {
-		super(message);
+	public ErrorPopupUc() {
+		appPopUp = new PopupPanel();
+		appPopUp.setWidget(uiBinder.createAndBindUi(this));
+		appPopUp.setGlassEnabled(true);
 	}
 	
-	public GwtException(int statusCode, String errorMessage) {
-		this.statusCode=statusCode;
-		this.errorMessage=errorMessage;
-	}
-
-	public void addError(String error) {
-		errors.add(error);
-	}
-
-	public void addErrors(List<String> errors) {
-		this.errors.addAll(errors);
-	}
-
-	public List<String> getErrors() {
-		return errors;
-	}
-
-	public void setErrors(List<String> errors) {
-		this.errors = errors;
-	}
-
-	public void clearErrors() {
-		errors.clear();
-	}
-
-	@Override
-	public String getMessage() {
-		if (errors != null && errors.size() > 0) {
-			return errors.get(0);
-		} else {
-			return super.getMessage();
-		}
+	public void show(){
+		appPopUp.show();
+		appPopUp.center();
 	}
 }

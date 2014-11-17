@@ -28,6 +28,7 @@
 package org.ednovo.gooru.server.request;
 
 
+import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.exception.ServiceUnavailableException;
 import org.json.JSONException;
@@ -78,8 +79,6 @@ public abstract class ServiceRequest {
 			JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
 			int statusCode=exception.getStatus().getCode();
 			jsonResponseRepresentation.setStatusCode(exception.getStatus().getCode());
-			String serverStatusCode=String.valueOf(statusCode);
-			Character firstCharcter=serverStatusCode.charAt(0);
 			if(statusCode==504 || statusCode==502){
 				String serverStatus=getApiServerStatus();
 				if(serverStatus!=null && serverStatus.equalsIgnoreCase(DOWN)){
@@ -90,6 +89,7 @@ public abstract class ServiceRequest {
 			}else{
 				String message=parseJsonErrorResponse(getClientResource().getResponse().getEntity());
 				jsonResponseRepresentation.setErrorMessage(message);
+				throw new GwtException(exception.getStatus().getCode(),message);
 			}
 			
 			return jsonResponseRepresentation;
