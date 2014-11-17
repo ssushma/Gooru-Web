@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
@@ -59,6 +60,10 @@ public class GlobalToolTip extends Composite {
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class); 
+	
+	private static final String TOP="top";
+	private static final String RIGHT="right";
+	private static final String BOTTOM="bottom";
 	
 	public GlobalToolTip(){
 		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
@@ -92,14 +97,28 @@ public class GlobalToolTip extends Composite {
 		setArrowLeft();
 	}
     public GlobalToolTip(String description, String value){
-		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
-		desLbl.setText(description);
-		confirmationPanel.getElement().setId("epnlConfirmationPanel");
-		desLbl.getElement().setId("lblDesLbl");
-		desLbl.getElement().setAttribute("alt", description);
-		desLbl.getElement().setAttribute("title", description);
-		setArrowDirections();
+    	initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
+    	desLbl.setText(description);
+    	confirmationPanel.getElement().setId("epnlConfirmationPanel");
+    	desLbl.getElement().setId("lblDesLbl");
+    	desLbl.getElement().setAttribute("alt", description);
+    	desLbl.getElement().setAttribute("title", description);
+    	if(value.equals(RIGHT) || value.equals(TOP) || value.equals(BOTTOM) ){
+    		arrowVisibility(value);
+    		setArrowRight(value);
+    	}else{
+    		setArrowDirections();
+    	}
+    }
+    
+    private void arrowVisibility(String value) {
+    	panelArrow.getElement().getStyle().setPosition(Position.ABSOLUTE);
+    	panelArrow.getElement().getStyle().setDisplay(Display.BLOCK); 
 	}
+    
+    
+    
+    
     public void setPanelPosition(){
     	panelArrow.getElement().getStyle().setPosition(Position.ABSOLUTE);
     	/*if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)){
@@ -146,6 +165,20 @@ public class GlobalToolTip extends Composite {
     public void setArrowDirections(){
      	confirmationPanel.getElement().setAttribute("style", "width: 149px;");
      	panelArrow.getElement().setAttribute("style", "left: -158px;top: 22px;-webkit-transform: rotate(265deg);position:absolute;");
+    }
+    
+    public void setArrowRight(String direction){
+    	if(direction.equals(TOP)){
+    		confirmationPanel.getElement().setAttribute("style", "width: 110px;");
+         	panelArrow.getElement().setAttribute("style", "left: 104px;top: 17px;-webkit-transform: rotate(90deg);position:absolute;");
+    	}else if(direction.equals(BOTTOM)){
+    		confirmationPanel.getElement().setAttribute("style", "width: 124px;");
+         	panelArrow.getElement().setAttribute("style", "left: 118px;top: 18px;-webkit-transform: rotate(90deg);position:absolute;");
+    	}else if(direction.equals(RIGHT)){
+    		confirmationPanel.getElement().setAttribute("style", "width: 165px;");
+         	panelArrow.getElement().setAttribute("style", "left: 159px;top: 26px;-webkit-transform: rotate(90deg);position:absolute;");
+    	}
+     
     }
     
     public HTMLPanel getPanelArrow(){
