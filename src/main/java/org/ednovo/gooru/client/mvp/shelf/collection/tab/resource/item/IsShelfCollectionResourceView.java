@@ -85,6 +85,8 @@ public interface IsShelfCollectionResourceView extends IsChildView<ShelfCollecti
 	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel);
 	
 	public void setFolderItems(TreeItem item, FolderListDo folderListDo);
+
+	void onPostResourceReorder(CollectionItemDo collectionItemDo,ShelfCollectionResourceChildView shelfCollectionResourceChildView,String arrow, Integer newSequence);
 	
 	
 	
