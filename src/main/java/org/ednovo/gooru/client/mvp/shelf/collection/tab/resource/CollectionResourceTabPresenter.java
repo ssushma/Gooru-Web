@@ -35,8 +35,10 @@ import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSetting
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.ShelfCollectionResourceChildView;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
+import org.ednovo.gooru.client.mvp.shelf.event.ReorderCollectionResourcesEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateQuestionImageEvent;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
@@ -47,7 +49,6 @@ import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -144,7 +145,8 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 		this.addStandardsPresenter = addStandardsPresenter;
 		addRegisteredHandler(UpdateQuestionImageEvent.TYPE, this);
 		addRegisteredHandler(UpdateEditResourceImageEvent.TYPE, this);
-		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, this);
+		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, this); 
+		addRegisteredHandler(ReorderCollectionResourcesEvent.TYPE,this);
 	}
 
 	@Override
@@ -412,6 +414,11 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 	@Override
 	public void closeBrowseStandardsPopup() {
 		addStandardsPresenter.hidePopup();
+	}
+
+	@Override
+	public void reorderResources(ShelfCollectionResourceChildView shelfCollectionResourceChildView,String arrow, Integer newSequence) {
+		getView().reorderItemToNewPosition(shelfCollectionResourceChildView,newSequence,arrow);
 	}
 
 	
