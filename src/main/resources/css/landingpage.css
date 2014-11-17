@@ -1276,6 +1276,7 @@ footer .col-xs-2:last-child{
 .gooruStories .browseStoriesBtn a {
 	font-size: 14px;
 	margin: 9px 0;
+	color: white;
 }
 
 /* Gooru Stories Responsive Css */
@@ -1329,4 +1330,3 @@ footer .col-xs-2:last-child{
 	cursor:pointer;
 	opacity: 1.0 !important;
 }
-
