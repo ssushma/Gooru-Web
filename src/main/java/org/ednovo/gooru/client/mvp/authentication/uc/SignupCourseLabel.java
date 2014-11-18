@@ -80,7 +80,6 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 		addDomHandler(this, ClickEvent.getType());
 		this.profileDo = profileDo;
 		this.addStyleName(SignUpCBundle.INSTANCE.css().courseOption());
-				
 		final Image courseImage = new Image(imageUrl);
 		courseImage.setAltText(codeName);
 		courseImage.setTitle(codeName);
@@ -89,13 +88,17 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 			@Override
 			public void onError(ErrorEvent event) {
 				if (subjectName.equalsIgnoreCase(SCIENCE_LBL)){
-					courseImage.setUrl("images/course/"+SCIENCE_LBL.replaceAll(" ", "_")+"-default-course.gif");
+					//courseImage.setUrl("images/course/"+SCIENCE_LBL.replaceAll(" ", "_")+"-default-course.gif");
+					courseImage.setUrl("images/course/"+SCIENCE_LBL.replaceAll(" ", "_")+"-default-course.png");
 				}else if (subjectName.equalsIgnoreCase(MATH_LBL)){
-					courseImage.setUrl("images/course/"+MATH_LBL.replaceAll(" ", "_")+"-default-course.gif");
+					//courseImage.setUrl("images/course/"+MATH_LBL.replaceAll(" ", "_")+"-default-course.gif");
+					courseImage.setUrl("images/course/"+MATH_LBL.replaceAll(" ", "_")+"-default-course.png");
 				}else if (subjectName.equalsIgnoreCase(SOCIAL_LBL)){
-					courseImage.setUrl("images/course/"+SOCIAL_LBL.replaceAll(" ", "_")+"-default-course.gif");
+					//courseImage.setUrl("images/course/"+SOCIAL_LBL.replaceAll(" ", "_")+"-default-course.gif");
+					courseImage.setUrl("images/course/"+SOCIAL_LBL.replaceAll(" ", "_")+"-default-course.png");
 				}else if (subjectName.equalsIgnoreCase(ELA_LBL)){
-					courseImage.setUrl("images/course/"+ELA_LBL.replaceAll(" ", "_")+"-default-course.gif");
+					//courseImage.setUrl("images/course/"+ELA_LBL.replaceAll(" ", "_")+"-default-course.gif");
+					courseImage.setUrl("images/course/"+ELA_LBL.replaceAll(" ", "_")+"-default-course.png");
 				}else{
 					courseImage.setUrl("images/course/default-course.png");
 				}
