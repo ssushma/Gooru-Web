@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.client.mvp.search.SearchCBundle;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ActivateCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
@@ -230,6 +231,8 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 			folderContainer.add(arrowLabel);
 			floderName=new Label();
 			floderName.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().title());
+			floderName.addStyleName(SearchCBundle.INSTANCE.css().addResource());
+
 			folderContainer.add(floderName);
 		}
 		public FolderTreeItem(String levelStyleName,String folderTitle,String gooruOid){
@@ -274,6 +277,8 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 			folderContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().foldercollection());
 			folderName=new Label();
 			folderName.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().title());
+			folderName.addStyleName(SearchCBundle.INSTANCE.css().addResource());
+
 			folderContainer.add(folderName);
 		}
 		public CollectionTreeItem(String levelStyleName){

@@ -13,14 +13,13 @@
 				  ui:field="loadingImagePanel">
 				  <g:Label styleName="{playerStyle.loadingImageForShare}" ui:field="lblloadingImage"/>
 		    </g:HTMLPanel>
-		    
 			<g:HTMLPanel styleName="col-md-12 col-xs-12">
 			<g:HTMLPanel styleName="col-md-8">
-			    <g:HTMLPanel styleName="col-md-2 col-xs-2 hidden-sm hidden-xs ">
+			    <g:HTMLPanel styleName="{playerStyle.floatLeft} hidden-sm hidden-xs ">
 			    	<g:Label styleName="{playerStyle.resource-image}" ui:field="resourceTypeImage" />    
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 			    </g:HTMLPanel>
-				<g:HTMLPanel styleName="col-md-10 col-xs-10 {playerStyle.paddingClear} ">
+				<g:HTMLPanel>
 					<g:HTML ui:field="lblcollectionName" styleName="{playerStyle.labelTitle}"></g:HTML>    
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>

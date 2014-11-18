@@ -79,7 +79,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 	@UiField
 	HTML resourceTitleLbl;
 	
-	@UiField HTMLPanel resourceTitleContainer;
+	@UiField HTMLPanel resourceTitleContainer,mainContainer;
 
 	@UiField
 	ResourceImageUc resourceImageUc;
@@ -113,7 +113,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 		positionLbl.getElement().setId("lblPositionLbl");
 		positionLbl.getElement().setAttribute("alt",position + "");
 		positionLbl.getElement().setAttribute("title",position + "");
-		
+		mainContainer.getElement().getStyle().setPaddingBottom(10, Unit.PX);
 			
 		
 		imgOER.setUrl("images/oer_icon.png");

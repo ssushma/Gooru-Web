@@ -7,13 +7,6 @@
 			height: 94px;
 			position: relative;
 			width: 357px;/*modification :430*/
-			
-			
-			/*padding-top: 10px;
-			padding-bottom: 10px;
-			border-bottom: 1px solid #515151;
-			width: 497px;*//
-			
 		}
 		/***/
 		/*need to change for collection*/
@@ -111,13 +104,12 @@
 			padding:0;	
 		}
 </ui:style>
-	<g:HTMLPanel>
+	<g:HTMLPanel ui:field="mainContainer">
 		<g:FlowPanel styleName="{style.collectionThumbnailPanel}" ui:field="internalPanel1">
-		    <g:HTMLPanel styleName=" col-md-4  hidden-sm hidden-xs">
+		    <g:HTMLPanel styleName=" col-md-3  {style.paddingClear} hidden-sm hidden-xs">
 					<uc:CollectionImageUc ui:field="collectionImageUc"  />        
 		    </g:HTMLPanel>
-		
-			<g:FlowPanel styleName=" col-md-4  col-xs-12 {style.paddingClear}" ui:field="collectionTitlePanel">
+			<g:FlowPanel styleName=" col-md-5  col-xs-12 {style.paddingClear}" ui:field="collectionTitlePanel">
 				<g:HTML styleName="{style.collectionTitle}" ui:field="collectionTitleLbl" />
 				<g:Label styleName="{style.author}" ui:field="creatorNameLbl" />
 				<g:Label styleName="{style.authorName}" ui:field="creatorNameLblValue" />
@@ -127,9 +119,7 @@
 				<g:Label styleName="{style.resourceCountImg}" />	
 				<g:Label styleName="{style.resourceCount}" ui:field="resourceCountLbl" />
 				<g:Label styleName="{style.resourceCount}" ui:field="questionCountLbl" />
-				
 			</g:FlowPanel>
-			
 			<g:FlowPanel styleName="col-md-4  {style.paddingClear}" ui:field="collectionGradePanel">
 				<g:Label styleName="{style.grades}" ui:field="gradesLblValue" />
 			</g:FlowPanel>

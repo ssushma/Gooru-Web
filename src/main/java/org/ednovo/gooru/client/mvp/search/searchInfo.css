@@ -480,6 +480,7 @@
 	font-weight: bold;
 	color: black;
 	width:100%;
+	margin-bottom:3px;
 /* 	overflow: hidden;
 text-overflow: ellipsis;
 white-space: nowrap; */
@@ -515,4 +516,7 @@ white-space: nowrap; */
 }
 .paddingClear{
 	padding:0;
+}
+.floatLeft{
+	float:left;
 }
