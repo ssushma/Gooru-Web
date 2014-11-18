@@ -66,8 +66,11 @@ public class FilterSettings implements Serializable {
 	private String taxonomyPreferences;
 	
 	private String analyticsEndPoint;
-	
+
 	private String analyticsEndPointOld;
+
+	private String communityLibraryGooruOid;
+
 	
 	public FilterSettings(){}
 	
@@ -242,4 +245,12 @@ public class FilterSettings implements Serializable {
 	public void setAnalyticsEndPointOld(String analyticsEndPointOld) {
 		this.analyticsEndPointOld = analyticsEndPointOld;
 	}
+	public String getCommunityLibraryGooruOid() {
+		return communityLibraryGooruOid;
+	}
+
+	public void setCommunityLibraryGooruOid(String communityLibraryGooruOid) {
+		this.communityLibraryGooruOid = communityLibraryGooruOid;
+	}
+
 }

@@ -187,11 +187,75 @@ public interface SearchService extends BaseService {
 	 *
 	 */
 	String getGoogleSignin(String placeToken, Map<String, String> parms) throws GwtException, ServerDownException;
-	
+	/**
+	 * 
+	 * @function getSuggestStandardByFilterCourseId 
+	 * 
+	 * @created_date : 
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param searchDo
+	 * @parm(s) : @return
+	 * @parm(s) : @throws GwtException
+	 * @parm(s) : @throws ServerDownException
+	 * 
+	 * @return : SearchDo<CodeDo>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public SearchDo<CodeDo> getSuggestStandardByFilterCourseId(SearchDo<CodeDo> searchDo)  throws GwtException, ServerDownException; 
-	
+	/**
+	 * 
+	 * @function getSuggestedAggregator 
+	 * 
+	 * @created_date : 
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param searchDo
+	 * @parm(s) : @return
+	 * @parm(s) : @throws GwtException
+	 * @parm(s) : @throws ServerDownException
+	 * 
+	 * @return : SearchDo<String>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	SearchDo<String> getSuggestedAggregator(SearchDo<String> searchDo) throws GwtException, ServerDownException;
-	
+	/**
+	 * 
+	 * @function getCollectionSuggestedResourceSearchResults 
+	 * 
+	 * @created_date : 
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param searchInput
+	 * @parm(s) : @param contentGorruOid
+	 * @parm(s) : @return
+	 * @parm(s) : @throws GwtException
+	 * @parm(s) : @throws ServerDownException
+	 * 
+	 * @return : SearchDo<ResourceSearchResultDo>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public SearchDo<ResourceSearchResultDo> getCollectionSuggestedResourceSearchResults(SearchDo<ResourceSearchResultDo> searchInput,String contentGorruOid) throws GwtException, ServerDownException;
 
 	/**
@@ -216,18 +280,162 @@ public interface SearchService extends BaseService {
 	*/
 	
 	public String getGoogleDrive(String url, Map<String, String> parms) throws GwtException, ServerDownException;
-
+	/**
+	 * 
+	 * @function getFirstLevelStandards 
+	 * 
+	 * @created_date : 
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param levelOrder
+	 * @parm(s) : @param standardLabel
+	 * @parm(s) : @return
+	 * 
+	 * @return : ArrayList<StandardsLevel1DO>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	ArrayList<StandardsLevel1DO> getFirstLevelStandards(String levelOrder, String standardLabel);
-
+	/**
+	 * 
+	 * @function getSecondLevelStandards 
+	 * 
+	 * @created_date :
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param levelOrder
+	 * @parm(s) : @param standardLabel
+	 * @parm(s) : @return
+	 * 
+	 * @return : ArrayList<StandardsLevel2DO>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	ArrayList<StandardsLevel2DO> getSecondLevelStandards(String levelOrder,
 			String standardLabel);
-
+	/**
+	 * 
+	 * @function getThirdLevelStandards 
+	 * 
+	 * @created_date : 
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param levelOrder
+	 * @parm(s) : @param standardLabel
+	 * @parm(s) : @return
+	 * 
+	 * @return : ArrayList<StandardsLevel3DO>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	ArrayList<StandardsLevel3DO> getThirdLevelStandards(String levelOrder,
 			String standardLabel);
-
+	/**
+	 * 
+	 * @function getFourthLevelStandards 
+	 * 
+	 * @created_date : 
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param levelOrder
+	 * @parm(s) : @param standardLabel
+	 * @parm(s) : @return
+	 * 
+	 * @return : ArrayList<StandardsLevel4DO>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	ArrayList<StandardsLevel4DO> getFourthLevelStandards(String levelOrder,
 			String standardLabel);
+	/**
+	 * 
+	 * @function getSuggestStandardByFilterCourseIdsource 
+	 * 
+	 * @created_date : 
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param searchDo
+	 * @parm(s) : @return
+	 * @parm(s) : @throws GwtException
+	 * @parm(s) : @throws ServerDownException
+	 * 
+	 * @return : SearchDo<CodeDo>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(SearchDo<CodeDo> searchDo)  throws GwtException, ServerDownException;
+
+	/**
+	 * @function getGooruStoriesUrl 
+	 * 
+	 * @created_date : 20-Oct-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param parms
+	 * @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
 	
-	public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(SearchDo<CodeDo> searchDo)  throws GwtException, ServerDownException; 
+	String getGooruStoriesUrl(String parms)  throws GwtException, ServerDownException;
+	
+	/**
+	 * 
+	 * @function showGooruStoriesSection 
+	 * 
+	 * @created_date : 11-Nov-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	String showGooruStoriesSection()  throws GwtException, ServerDownException; 
 
 }

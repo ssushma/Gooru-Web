@@ -32,12 +32,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.catalina.logger.SystemOutLogger;
 import org.ednovo.gooru.client.DataInsightsUrlTokens;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.analytics.AnalyticsPresenter;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
@@ -195,8 +195,8 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			studyCollectionButton.removeFromParent();
 		}
 		changeAssignmentStatusView.getChangeAssignmentStatusButton().addClickHandler(new ChangeStatusEvent());
-		btnSummary.addClickHandler(new SummaryEvent());
-		btnProgress.addClickHandler(new ProgressEvent());
+		//btnSummary.addClickHandler(new SummaryEvent());
+		//btnProgress.addClickHandler(new ProgressEvent());
 		editAssignmentDetailsButton.addClickHandler(new EditAssignmentEvent());
 		saveAssignmentDetailsButton.addClickHandler(new UpdateAssignmentDetailsEvent());
 		cancelAssignmentDetailsButton.addClickHandler(new CancelEditAssignmentEvent());
@@ -313,9 +313,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	private void displayAssignmentMarkButton(){
 		if(classpageItemDo!=null){
 			Boolean isRequired=classpageItemDo.getIsRequired()!=null?classpageItemDo.getIsRequired():false;
+			boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals("completed")?true:false;
 			if(isRequired){
-				assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().requiredBuble());
-				boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals(COMPLETED)?true:false;
+				assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().requiredBuble());				
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompleted());
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
 				if(assignmentStudyStatus){
@@ -323,11 +323,11 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 				}
 			}else{
 				assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().optionalBuble());
-				boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals(COMPLETED)?true:false;
+				//Boolean assignmentStudyStatus=classpageItemDo.getStatus()!=null&&classpageItemDo.getStatus().equals(COMPLETED)?true:false;
 				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompleted());
-				assignmentMarkCheckBox.removeStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
+				//assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
 				if(assignmentStudyStatus){
-					assignmentMarkCheckBox.addStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
+					assignmentMarkCheckBox.setStyleName(CollectionsCBundle.INSTANCE.css().assignmentCompletedWithOptional());
 				}
 			}
 		}
@@ -380,6 +380,21 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 	}
 
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		frameContainer.clear();
+		if (content != null) {
+			 if(slot==AnalyticsPresenter.COLLECTION_PROGRESS_SLOT){
+				 frameContainer.setVisible(true);
+				 frameContainer.add(content);
+			}else{
+				frameContainer.setVisible(false);
+			}
+		}else{
+			frameContainer.setVisible(false);
+		}
+	}
+	
 	private String frameAnalyticsUrlForMonitor() {
 
 		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
@@ -409,6 +424,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			}
 		}
 	}
+	
 	
 //	public class MarkProgressEvent implements ValueChangeHandler<T>{
 //		@Override
@@ -853,21 +869,25 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	      
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
-			  if (!Character.isDigit(event.getCharCode()) 
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
-	                    && event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
-	                ((TextBox) event.getSource()).cancelKey();
-	            }
-					
+			if (!Character.isDigit(event.getCharCode()) 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_TAB 
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_BACKSPACE
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_SHIFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_ENTER
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_LEFT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_RIGHT
+					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
+				((TextBox) event.getSource()).cancelKey();
+			}
+			if(event.getNativeEvent().getKeyCode() == 46 &&event.getNativeEvent().getKeyCode() == 37)
+			{
+				((TextBox) event.getSource()).cancelKey();
+			}
+
 		}
     }
 	
-	
+
 	public List<Map<String,String>> getStandardsMap(Set<StandardFo> taxonomyset){
 		List<Map<String,String>> standardsList=new ArrayList<Map<String,String>>();
 		Iterator<StandardFo> iterator = taxonomyset.iterator();
@@ -1004,7 +1024,13 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		}
 	}
 	
-	
-	
-	
+	public Button getBtnSummary(){
+		return btnSummary;
+	}
+	public Button getBtnProgress(){
+		return btnProgress;
+	}
+	public FlowPanel getFlowPnl(){
+		return frameContainer;
+	}
 }

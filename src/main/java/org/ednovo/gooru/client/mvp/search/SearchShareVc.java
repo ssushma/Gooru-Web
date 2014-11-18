@@ -216,9 +216,9 @@ public class SearchShareVc extends Composite {
 		SocialShareView socialView = new SocialShareView(shareDo){
 			public void triggerShareDataEvent(String shareType,boolean confirmStaus){
 				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_SEARCH)){
-					PlayerDataLogEvents.triggerItemShareDataLogEvent(searchResultDo.getGooruOid(), "", "", "", "", PlayerDataLogEvents.RESOURCE, shareType, confirmStaus, "", searchResultDo.getGooruOid(), AppClientFactory.getPlaceManager().getSeachEventPageLocation());
+					PlayerDataLogEvents.triggerItemShareDataLogEvent(searchResultDo.getGooruOid(), "", null,"", "", "", PlayerDataLogEvents.RESOURCE, shareType, confirmStaus, "", searchResultDo.getGooruOid(), AppClientFactory.getPlaceManager().getSeachEventPageLocation());
 				}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_SEARCH)){
-					PlayerDataLogEvents.triggerItemShareDataLogEvent(searchResultDo.getGooruOid(), "", "", "", "", PlayerDataLogEvents.COLLECTION, shareType, confirmStaus, "", searchResultDo.getGooruOid(), AppClientFactory.getPlaceManager().getSeachEventPageLocation());
+					PlayerDataLogEvents.triggerItemShareDataLogEvent(searchResultDo.getGooruOid(), "", null,"", "", "", PlayerDataLogEvents.COLLECTION, shareType, confirmStaus, "", searchResultDo.getGooruOid(), AppClientFactory.getPlaceManager().getSeachEventPageLocation());
 				}
 			}
 		};

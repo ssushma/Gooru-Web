@@ -5,12 +5,12 @@
 		type="org.ednovo.gooru.client.mvp.analytics.util.CollectionChartCBundle"
 		field="res" />
 	<g:HTMLPanel styleName="col-md-12">
-	    <g:HTMLPanel styleName="col-md-2 text-right {res.paddingClear}">
+	 <!--    <g:HTMLPanel styleName="col-md-2 text-right {res.paddingClear}">
 	        <g:Label styleName="col-md-12 {res.titleNew}" ui:field="option1"></g:Label>
 	        <g:Label styleName="col-md-12 {res.titleNew}" ui:field="option2"></g:Label>
 	        <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
-	   </g:HTMLPanel>
-	    <g:HTMLPanel styleName="col-md-10 {res.chartBorder} {res.paddingClear}" ui:field="chartContainer"></g:HTMLPanel>
+	   </g:HTMLPanel> -->
+	    <g:HTMLPanel styleName="col-md-12 {res.chartBorder} {res.paddingClear}" ui:field="chartContainer"></g:HTMLPanel>
 	    <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 	 </g:HTMLPanel>
 

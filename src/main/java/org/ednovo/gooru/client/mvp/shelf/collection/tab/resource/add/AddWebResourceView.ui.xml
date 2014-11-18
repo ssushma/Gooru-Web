@@ -10,7 +10,9 @@
 		<ui:with
 		type="org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle"
 		field="res2" />
-	<g:HTMLPanel styleName="{res.css.myFolderCollectionFormContainer}" ui:field="contentPanel">
+  <g:ScrollPanel styleName="{res.css.myFolderCollectionFormContainer}" ui:field="scrollPanel">
+	<g:HTMLPanel  ui:field="contentPanel">
+	   
         <g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}" ui:field="urlContianer">
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="urlTitle"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormInputControl}">
@@ -436,6 +438,9 @@
 							<g:FlowPanel styleName="{res1.css.standardsCont}">
 								<uc:AppSuggestBox ui:field="standardSgstBox"
 									width="255px" height="19px" />
+									<g:HTMLPanel styleName="{res1.css.browseContainer}">
+										<g:Button ui:field="browseStandards" styleName="secondary">Browse</g:Button>
+									</g:HTMLPanel>
 								 <g:HTMLPanel ui:field="errorContainer"></g:HTMLPanel>
 								<g:Label styleName="{res1.css.standardMaxHide}" ui:field="standardMaxMsg" />
 								<g:FlowPanel ui:field="standardsPanel"
@@ -511,5 +516,7 @@
        <!--    <g:Label styleName="{res.css.myFolderCollectionCancel}" ui:field="cancelResourcePopupBtnLbl"/> -->
         </g:HTMLPanel>
          <g:Label styleName="{res.css.myFolderCollectionButtonContainer}" ui:field="loadingTextLbl"></g:Label>
+         
       </g:HTMLPanel>
+      </g:ScrollPanel>
 </ui:UiBinder>

@@ -26,7 +26,6 @@
 package org.ednovo.gooru.client.gin;
 
 import org.ednovo.gooru.client.AppPlaceKeeper;
-
 import org.ednovo.gooru.client.AppRootPresenter;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.mvp.analytics.AnalyticsPresenter;
@@ -44,6 +43,9 @@ import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsColle
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherPresenter;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.CollectionSummaryTeacherView;
 import org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.IsCollectionSummaryTeacherView;
+import org.ednovo.gooru.client.mvp.analytics.unitAssignments.AnalyticsUnitAssignmentsPresenter;
+import org.ednovo.gooru.client.mvp.analytics.unitAssignments.AnalyticsUnitAssignmentsView;
+import org.ednovo.gooru.client.mvp.analytics.unitAssignments.IsAnalyticsUnitAssignmentsView;
 import org.ednovo.gooru.client.mvp.authentication.IsSignUpView;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpView;
@@ -147,6 +149,10 @@ import org.ednovo.gooru.client.mvp.library.district.lifeboard.IsLifeboardLibrary
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryPresenter.IsLifeboardLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.district.lifeboard.LifeboardLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.lusd.IsLusdLibraryView;
+import org.ednovo.gooru.client.mvp.library.district.lusd.LusdLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.district.lusd.LusdLibraryPresenter.IsLusdLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.district.lusd.LusdLibraryView;
 import org.ednovo.gooru.client.mvp.library.district.rusd.IsRusdLibraryView;
 import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.district.rusd.RusdLibraryPresenter.IsRusdLibraryProxy;
@@ -214,6 +220,10 @@ import org.ednovo.gooru.client.mvp.library.partner.psdpal.IsPsdpalView;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter.IsPsdpalLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.tical.IsTicalLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.tical.TicalLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.tical.TicalLibraryPresenter.IsTicalLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.tical.TicalLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.IsWspwhLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter.IsWspwhLibraryProxy;
@@ -320,7 +330,10 @@ import org.ednovo.gooru.client.mvp.register.RegisterPresenter.IsRegisterProxy;
 import org.ednovo.gooru.client.mvp.register.RegisterView;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerView;
+import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainer;
+import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsAddResourceContainerView;
+import org.ednovo.gooru.client.mvp.search.IsAnalyticsInfoContainerView;
 import org.ednovo.gooru.client.mvp.search.IsSearchRootView;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter.IsSearchRootProxy;
@@ -589,6 +602,12 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(RusdLibraryPresenter.class, IsRusdLibraryView.class, RusdLibraryView.class,IsRusdLibraryProxy.class);
 		bindPresenter(LpsLibraryPresenter.class, IsLpsLibraryView.class, LpsLibraryView.class,IsLpsLibraryProxy.class);
 		bindPresenter(CoreLibraryPresenter.class, IsCoreLibraryView.class, CoreLibraryView.class,IsCoreLibraryProxy.class);
+
+		bindPresenter(EsypLibraryPresenter.class, IsEsypLibraryView.class, EsypLibraryView.class,IsEsypLibraryProxy.class);
+		bindPresenter(CcstCalTacLibraryPresenter.class, IsCcstCalTacLibraryView.class, CcstCalTacLibraryView.class,IsCcstCalTacLibraryProxy.class);
+		bindPresenter(LusdLibraryPresenter.class, IsLusdLibraryView.class, LusdLibraryView.class,IsLusdLibraryProxy.class);
+		bindPresenter(TicalLibraryPresenter.class, IsTicalLibraryView.class, TicalLibraryView.class,IsTicalLibraryProxy.class);
+
 		bindPresenterWidget(ClassSetupPresenter.class,IsClassSetupView.class,ClassSetupView.class);
 		bindPresenterWidget(UnitSetupPresenter.class,IsUnitSetupView.class,UnitSetupView.class);
 		bindPresenterWidget(UnitSetupStudentPresenter.class,IsUnitSetupStudentView.class,UnitSetupStudentView.class);
@@ -600,9 +619,10 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(CollectionSummaryPresenter.class,IsCollectionSummaryView.class,CollectionSummaryView.class);
 		bindPresenterWidget(CollectionSummaryTeacherPresenter.class,IsCollectionSummaryTeacherView.class,CollectionSummaryTeacherView.class);
 		bindPresenterWidget(CollectionSummaryIndividualPresenter.class,IsCollectionSummaryIndividualView.class,CollectionSummaryIndividualView.class);
+		bindPresenterWidget(AnalyticsUnitAssignmentsPresenter.class,IsAnalyticsUnitAssignmentsView.class,AnalyticsUnitAssignmentsView.class);
 		
-		bindPresenter(EsypLibraryPresenter.class, IsEsypLibraryView.class, EsypLibraryView.class,IsEsypLibraryProxy.class);
-		bindPresenter(CcstCalTacLibraryPresenter.class, IsCcstCalTacLibraryView.class, CcstCalTacLibraryView.class,IsCcstCalTacLibraryProxy.class);
+		
 		bindPresenterWidget(AssignmentWidgetPresenter.class, IsAssignmentWidget.class,AssignmentWidgetView.class);
+		bindPresenterWidget(AnalyticsInfoContainerPresenter.class, IsAnalyticsInfoContainerView.class, AnalyticsInfoContainer.class);
 	}
 }

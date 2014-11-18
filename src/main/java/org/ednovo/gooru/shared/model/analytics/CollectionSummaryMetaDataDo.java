@@ -25,6 +25,7 @@ public class CollectionSummaryMetaDataDo implements Serializable{
 	private int gradeInPercentage;
 	private int totalQuestionCount;
 	private long timeSpent;
+	private int resourceCount;
 	public int getUserCount() {
 		return userCount;
 	}
@@ -102,5 +103,11 @@ public class CollectionSummaryMetaDataDo implements Serializable{
 	}
 	public void setCompletionStatus(String completionStatus) {
 		this.completionStatus = completionStatus;
+	}
+	public int getResourceCount() {
+		return resourceCount;
+	}
+	public void setResourceCount(int resourceCount) {
+		this.resourceCount = resourceCount;
 	}
 }

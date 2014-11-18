@@ -329,6 +329,7 @@ margin-top: -2px;
 .reorderLabelContainer { /* top: -19px; */
 	position: relative;
 	float: left;
+	margin-top: 40px;
 }
 
 .newResourceLabelNoHover {
@@ -786,8 +787,8 @@ user agent stylesheetdiv {
 	border-width: 1px;
 	border-style: solid;
 	width: 100%;
-	margin-bottom: 6px;
 	/* height: 556px; */
+	margin-bottom: 6px;
 	background: url("../images/core/background-image.png");
 }
 
@@ -2504,6 +2505,7 @@ margin-top: 18px; */
 
 .gEditButton {
 	margin-top: 2px;
+	margin-left: 16px;
 	padding: 8px 65px 8px 10px;
 	color: white;
 	background: #1076bb url(images/g.png) 55px -9px no-repeat;
@@ -2868,3 +2870,36 @@ margin-top: 18px; */
 	margin-right: 122px;
 	font-size: 12px;
 }
+
+
+.upDownBtn{
+	padding:10px 6px;
+}
+
+.upDownBtn input[type="text"]{
+	width:17px;
+	margin:8px 7px 0px 8px;
+	height:25px;
+	padding:1px 6px;
+	border:1px solid #DDDDDD;
+	font-size:16px;
+	color:#515151;
+	text-align:center;
+}
+
+.coursePopupStyle {
+	float: left;
+	background-color: #FFF;
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	border-style: solid;
+	width: 546px;
+	margin-bottom: 6px;
+	max-height: 530px;
+	min-height: 400px;
+	/* background: url("../images/core/background-image.png"); */
+	overflow-x: hidden;
+    overflow-y: auto;
+}
+
+

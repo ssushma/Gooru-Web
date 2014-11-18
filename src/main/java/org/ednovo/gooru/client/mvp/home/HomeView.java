@@ -101,12 +101,12 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements IsHomeView, SelectionHandler<SuggestOracle.Suggestion> {
 
-	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries, panelPartnerLibraries;
+	@UiField HTMLPanel gooruPanel, panelLandingPage, contributorsContainer, panelStandardLibraries, panelDistrictLibraries, panelPartnerLibraries, panelText, panelGooruStories;
 	@UiField Button btnSignUp, btnMoreOnCollections,viewSampleResportsBtn;
 	@UiField Label lblHeading, lblSubHeading; 
 //	@UiField TextBoxWithPlaceholder txtSearch;
 	@UiField Button btnSearch;
-	@UiField Anchor achLearn, achTerms, achPrivacy,achCopyright;//achDataPolicy
+	@UiField Anchor achLearn, achTerms, achPrivacy,achCopyright, achGooruStories;//achDataPolicy
 	@UiField TextBox txtEmbedLink;
 	@UiField HTML htmlDescription;
 	
@@ -216,13 +216,43 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			});
 		}
 	
+
 		
+		
+		panelGooruStories.setVisible(false);
+		
+		AppClientFactory.getInjector().getSearchService().showGooruStoriesSection( new SimpleAsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				if (result.equalsIgnoreCase("true")){
+					
+					PeListPanel p = new PeListPanel();
+					p.setTitle(i18n.GL2188_3());
+					p.getElement().setInnerHTML(i18n.GL2188_3());
+					panelText.add(p);
+					
+					AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl("", new SimpleAsyncCallback<String>() {
+						
+						@Override
+						public void onSuccess(String result) {
+							achGooruStories.setHref(result);
+							achGooruStories.setTarget("_blank");
+						}
+					});
+					panelGooruStories.setVisible(true);
+				}
+			}
+		});
 		
 //		InternalServerErrorPopupViewVc error = new InternalServerErrorPopupViewVc() {
 //		};
 //		error.show();
-
+		
 	}
+	
+	
+	
 	/**
 	 * @function generatePartnerLibraries 
 	 * 
@@ -260,6 +290,25 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			}
 		});
 	}
+	/**
+	 * 
+	 * @function generateDistrictLibraries 
+	 * 
+	 * @created_date : 11-Nov-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void generateDistrictLibraries() {
 		
 		
@@ -894,8 +943,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	public void setBtnSignUp(Button btnSignUp) {
 		this.btnSignUp = btnSignUp;
 	}
-	
-	
 }
 
 

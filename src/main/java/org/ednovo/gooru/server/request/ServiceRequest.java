@@ -31,6 +31,7 @@ package org.ednovo.gooru.server.request;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.ClientResource;
@@ -85,7 +86,11 @@ public abstract class ServiceRequest {
 				}else if(serverStatus!=null&&serverStatus.equalsIgnoreCase(WARNING)){
 					//throw new ServerDownException(statusCode,"");
 				}
+			}else{
+				String message=parseJsonErrorResponse(getClientResource().getResponse().getEntity());
+				jsonResponseRepresentation.setErrorMessage(message);
 			}
+			
 			return jsonResponseRepresentation;
 		} catch (Exception exception) {
 			logger.error(ERROR, exception);
@@ -93,6 +98,22 @@ public abstract class ServiceRequest {
 		} finally {
 			releaseClientResources();
 		}
+	}
+	
+	public String parseJsonErrorResponse(Representation errorRepresentation){
+		String messageString=null;
+		try{
+			JsonRepresentation jsonRepresentation=new JsonRepresentation(errorRepresentation.getText());
+			JSONObject errorObject=jsonRepresentation.getJsonObject();
+			if(errorObject!=null){
+				messageString=errorObject.isNull("status")?null:errorObject.getString("status");
+			}
+			return messageString;
+		}catch(Exception exception){
+			logger.error(ERROR, exception);
+			return messageString;
+		}
+		
 	}
 	
 	protected String getApiServerStatus(){

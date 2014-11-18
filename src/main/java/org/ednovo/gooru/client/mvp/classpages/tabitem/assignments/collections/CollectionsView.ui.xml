@@ -100,7 +100,7 @@
 			           </g:HTMLPanel>
 					   <g:Label styleName="clearfix"></g:Label>
 					</g:FlowPanel>		
-					<g:FlowPanel ui:field="frameContainer">
+					<g:FlowPanel ui:field="frameContainer" styleName="{style.frameContainer}">
 					<g:Frame ui:field="reportsFrame"></g:Frame>
 					</g:FlowPanel>	
 				</g:FlowPanel>

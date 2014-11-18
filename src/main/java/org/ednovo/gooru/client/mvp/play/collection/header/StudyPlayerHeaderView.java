@@ -33,6 +33,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -100,6 +101,8 @@ public class StudyPlayerHeaderView extends Composite{
 		wishLabel.getElement().setId("spnWishLabel");
 		loginUserName.getElement().setId("spnLoginUserName");
 		wishingText.getElement().setId("spnWishingText");
+		wishLabel.getElement().getStyle().setFloat(Float.LEFT);
+		wishingText.getElement().getStyle().setFloat(Float.LEFT);
 		loginMessageText.getElement().setId("lblLoginMessageText");
 	}
 	

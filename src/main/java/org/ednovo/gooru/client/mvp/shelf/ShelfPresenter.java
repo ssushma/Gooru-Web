@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
+import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
@@ -61,7 +62,6 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEvent;
-import org.ednovo.gooru.client.mvp.shelf.event.HighlightAssignmentToEditEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.service.ShelfServiceAsync;
@@ -241,6 +241,14 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 				addToPopupSlot(signUpViewPresenter);
 			}
 		}
+		int flag = AppClientFactory.getLoggedInUser().getViewFlag();
+		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
+		if(!AppClientFactory.isAnonymous() && flag==0 &&  loginType.equalsIgnoreCase("apps")) {
+			AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
+			update.setGlassEnabled(true);
+			update.show();
+			update.center();
+		}
 	}
 	
 	
@@ -257,7 +265,6 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 						if (collection.getMeta().getPermissions().toString().contains("edit")){
 							getView().setCollection(collection);
 							fireEvent(new RefreshCollectionInShelfListEvent(collection, RefreshType.OPEN));
-							highlightAssignmnet();
 							getView().getLoadingImageInvisible();
 						}else{
 							getView().getLoadingImageLabel().setVisible(false);
@@ -280,25 +287,6 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 		});
 	}
 	
-	protected void highlightAssignmnet() {
-		String id = getPlaceManager().getRequestParameter("id");
-		String o1 = getPlaceManager().getRequestParameter("o1");
-		String o2 = getPlaceManager().getRequestParameter("o2");
-		String o3 = getPlaceManager().getRequestParameter("o3");
-		String assignmentEdit = getPlaceManager().getRequestParameter("edit");
-		if(assignmentEdit!=null){
-			if(o3!=null) {
-				fireEvent(new HighlightAssignmentToEditEvent(o1,o2,o3,id));
-			} else if(o2!=null) {
-				fireEvent(new HighlightAssignmentToEditEvent(o1,o2,null,id));
-			} else if(o1!=null) {
-				fireEvent(new HighlightAssignmentToEditEvent(o1,null,null,id));
-			}else{
-				fireEvent(new HighlightAssignmentToEditEvent(null,null,null,id));
-			}
-		}
-	}
-
 	@Override
 	public void onUnbind(){
 		super.onUnbind();
@@ -355,6 +343,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			String o1 = getPlaceManager().getRequestParameter("o1");
 			String o2 = getPlaceManager().getRequestParameter("o2");
 			String o3 = getPlaceManager().getRequestParameter("o3");
+			
 			if(o3!=null&&id==null) {
 				setFoldersSlot(o3);
 			} else if(o2!=null&&id==null) {
@@ -395,14 +384,16 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			Window.enableScrolling(true);
 		}
 		String idParm = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
-//		if (idParm == null){
+		if (idParm == null){
 			int windowHeight=Window.getClientHeight();
 			getView().getEditPanel().getElement().getStyle().setHeight(windowHeight, Unit.PX);
 			getView().getEditPanel().getElement().getStyle().setOverflowY(Overflow.AUTO);
-//		}else{
-//			getView().getEditPanel().getElement().getStyle().clearHeight();
-//			getView().getEditPanel().getElement().getStyle().clearOverflowY();
-//		}
+			getView().getEditPanel().getElement().getStyle().setMarginTop(38, Unit.PX);
+		}else{
+			/*getView().getEditPanel().getElement().getStyle().clearHeight();
+			getView().getEditPanel().getElement().getStyle().clearOverflowY();*/
+			getView().getEditPanel().getElement().getStyle().clearMarginTop();
+		}
 	}
 	
 	@Override

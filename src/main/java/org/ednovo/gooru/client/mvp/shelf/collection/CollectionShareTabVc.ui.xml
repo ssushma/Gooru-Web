@@ -45,6 +45,7 @@
 				<g:Label styleName="{res.css.collectionVisibilityMain}" ui:field="visibilityTextTeacherTip"/>
 				<g:FlowPanel styleName="{res.css.collectionVisibleShareLineSeparator}"></g:FlowPanel>
 				<g:Label styleName="{res.css.collectionVisibility}" ui:field="visibilityOptiontextTeacherTip"/>
+				<g:Label styleName="{res1.css.charLimit}" ui:field="charLimitLbl"/>
 			</g:FlowPanel>
 			
 			<uc:HTMLEventPanel ui:field="finalTeacherTipLabelContainer">

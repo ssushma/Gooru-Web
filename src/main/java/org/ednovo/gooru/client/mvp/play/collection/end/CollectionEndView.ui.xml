@@ -64,8 +64,12 @@
 			</g:FlowPanel>
             	<g:FlowPanel ui:field="metadataContainer"></g:FlowPanel>
            	    <g:FlowPanel styleName="{playerStyle.insightsFrame}" ui:field="dataInsightsPanel">
-           	    	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer"/>
-	             	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer1">
+	             	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer1"/>
+	             	<g:HTMLPanel styleName="{unitStyle.loadingImageMainDiv}" ui:field="loadingImageLabel">
+						<g:Label styleName="{unitStyle.loadingImageForSelfEdit}" />
+					</g:HTMLPanel>
+					
+					<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer">
 	             	 <g:HTMLPanel styleName="{unitStyle.summary_title}">Collection Summary</g:HTMLPanel>
 					             	 <!-- Collection Summary Top -->
 					     <g:HTMLPanel>
@@ -75,7 +79,7 @@
 							<g:HTMLPanel styleName="{unitStyle.collection_details_teacher}">
 							<g:InlineLabel ui:field="collectionTitle"></g:InlineLabel>
 							<br/>
-							<g:InlineLabel ui:field="collectionResourcesCount" styleName="{unitStyle.question_resource_details}">6 Resources | 11 Questions</g:InlineLabel>
+							<g:InlineLabel ui:field="collectionResourcesCount" styleName="{unitStyle.question_resource_details}"></g:InlineLabel>
 							</g:HTMLPanel>
 							<g:HTMLPanel styleName="{unitStyle.resource_in_collection_teacher_summary}">
 							<g:InlineLabel styleName="{unitStyle.collectionLastAccessed}">Collection Last Accessed</g:InlineLabel> 
@@ -96,7 +100,7 @@
 								</g:HTMLPanel>
 					       		<g:HTMLPanel styleName="{unitStyle.right_session}">
 					       		<g:HTMLPanel>
-								<g:HTMLPanel styleName="{unitStyle.d_filter_session_text}"><span>Session</span><span class="tooltip-icon"><img class="report-info" style="background:none;float: right; margin-top: 12px;margin-left: 4px;" src="images/question_blue.png" data-text="Select the student session (collection attempt) to be represented below." original-title=""></img>:</span></g:HTMLPanel>
+								<g:HTMLPanel styleName="{unitStyle.d_filter_session_text}"><span>Session</span><span class="tooltip-icon"><g:Image url="/images/mos/questionmark.png" ui:field="sessionsTooltip"></g:Image>:</span></g:HTMLPanel>
 								<g:HTMLPanel styleName="{unitStyle.session_data}">
 								 <g:ListBox ui:field="sessionsDropDown" styleName="{unitStyle.filterDropDownSessions}">
 								 </g:ListBox>
@@ -107,9 +111,10 @@
 						 </g:HTMLPanel>
 					  <!-- Sessions end-->
 	             	 <g:HTMLPanel styleName="{unitStyle.htmlpanlProgress}" ui:field="scrollForCollectionProgress">
-					 <g:VerticalPanel ui:field="pnlSummary"/>
+					 <g:VerticalPanel ui:field="pnlSummary" styleName="{unitStyle.pnlSummary}"/>
 					 </g:HTMLPanel>
 	             	</g:FlowPanel>
+					
 	                <g:FlowPanel styleName="{playerStyle.messageContainer}" ui:field="messageContainer">
 	                	<g:Label styleName="{playerStyle.messageTextHeader}" ui:field="insightsHeaderText"></g:Label>
 	                	<g:Label styleName="{playerStyle.messagecontentText}" ui:field="insightsContentText"></g:Label>
@@ -122,6 +127,7 @@
 					   <g:Label ui:field="seeMoreButton" styleName="{playerStyle.seeMore}" />
 					   <g:Label ui:field="noCommentsLbl"/>
 					   <g:HTMLPanel styleName="{playerStyle.addComment}" ui:field="addComment">
+					       <g:Label ui:field="lblCharLimitComments" styleName="{playerStyle.commentsCharLimit}"/>
 					      <g:HTMLPanel styleName="{playerStyle.loginMessaging}" ui:field="loginMessaging">
 						      	<g:Label ui:field="loginMessagingText"></g:Label>
 						      	<g:Anchor ui:field="loginUrl"/> 

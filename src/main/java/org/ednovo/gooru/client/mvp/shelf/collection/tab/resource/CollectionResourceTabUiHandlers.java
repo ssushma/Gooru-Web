@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceHandler;
+import org.ednovo.gooru.client.mvp.shelf.event.ReorderCollectionResourcesEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateEditResourceImageHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateQuestionImageHandler;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -38,31 +39,78 @@ import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
  * @author Search Team
  *
  */
-public interface CollectionResourceTabUiHandlers extends BaseUiHandlers,UpdateQuestionImageHandler,UpdateEditResourceImageHandler, InsertCollectionItemInAddResourceHandler {
+public interface CollectionResourceTabUiHandlers extends BaseUiHandlers,UpdateQuestionImageHandler,UpdateEditResourceImageHandler, InsertCollectionItemInAddResourceHandler,ReorderCollectionResourcesEventHandler {
 	
 	//void imageUpload();
 	
+	/**
+	 * @param collectionDo
+	 * @param clickType
+	 */
 	void addResourcePopup(CollectionDo collectionDo, String clickType);
 	
+	/**
+	 * @param questionItemId
+	 * @param collectionQuestionItemDo
+	 * @param thumbnailUrl
+	 */
 	void updateQuestionResource(String questionItemId,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl);
 	
+	/**
+	 * @param collectionItemId
+	 */
 	void updateQustionImage(String collectionItemId);
 	
+	/**
+	 * @param collectionItemDo
+	 * @param tagList
+	 */
 	void updateResourceInfo(CollectionItemDo collectionItemDo,List<String> tagList);
 	
+	/**
+	 * @param collectionQuestionId
+	 */
 	void removeQuestionImage(String collectionQuestionId);
 	
+	/**
+	 * 
+	 */
 	void imageEditResourceUpload();
 	
 //	void updateQuestionImage(String collectionItemId,String fileName);
 	
+	/**
+	 * @param collectionItemDo
+	 */
 	void showEditQuestionResourcePopup(CollectionItemDo collectionItemDo);
 
+	/**
+	 * 
+	 */
 	void imageEditUserOwnResourceUpload();
 
 //	void getUserResourceMediaFileName(String resourceFilePath);
 
+	/**
+	 * @param string
+	 * @param gooruOid
+	 */
 	void editUserOwnResource(String string, String gooruOid);
+
+	/**
+	 * @param val
+	 */
+	void getBrowseStandardsInfo(boolean val);
+
+	/**
+	 * 
+	 */
+	void addUpdatedBrowseStandards();
+
+	/**
+	 * 
+	 */
+	void closeBrowseStandardsPopup();
 
 
 }

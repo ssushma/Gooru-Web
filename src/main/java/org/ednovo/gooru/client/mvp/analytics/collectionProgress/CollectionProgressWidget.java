@@ -7,7 +7,10 @@ import java.util.Set;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.DataView;
+import org.ednovo.gooru.client.mvp.analytics.util.ViewResponsesPopup;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
@@ -21,7 +24,9 @@ import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -39,29 +44,61 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	interface CollectionProgressWidgetUiBinder extends
 			UiBinder<Widget, CollectionProgressWidget> {
 	}
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
+	
 	@UiField(provided = true)
 	CollectionProgressCBundle res;
 	
 	@UiField VerticalPanel htmlpnlProgress;
 	@UiField ListBox filterDropDown;
 	@UiField HTMLPanel scrollForCollectionProgress;
+	@UiField InlineLabel collectionTitlelbl,resourceCountlbl,questionCountlbl;
 	
 	DataView operationsView;
 	private final String GREEN = "#BCD1B9 !important";
 	private final String RED = "#EAB4B3 !important";
 	private final String ORANGE = "#FFE7C2 !important";
 	private final String WHITE = "#FFF";
+	private static final String VIEWRESPONSE = i18n.GL2286();
+	private static final String QUESTION = "question";
+	private static final String RESOURCE="resource";
 	
 	private int collectionProgressCount=1;
+	ViewResponsesPopup showResponsesPopup=null;
 	
+	/**
+	 * Constructor
+	 */
 	public CollectionProgressWidget() {
 		this.res=CollectionProgressCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));	
 		scrollForCollectionProgress.getElement().setId("scrollForCollectionProgress");
+		setStaticData();
 	}
+	/**
+	 * This method is used to set static data.
+	 */
+	void setStaticData(){
+		StringUtil.setAttributes(htmlpnlProgress.getElement(), "pnlHtmlpnlProgress", null, null);
+		StringUtil.setAttributes(scrollForCollectionProgress.getElement(), "pnlScrollForCollectionProgress", null, null);
+		
+		StringUtil.setAttributes(filterDropDown.getElement(), "ddlFilterDropDown", null, null);
+		
+		StringUtil.setAttributes(collectionTitlelbl.getElement(), "spnCollectionTitlelbl", null, null);
+		StringUtil.setAttributes(resourceCountlbl.getElement(), "spnResourceCountlbl", null, null);
+		StringUtil.setAttributes(questionCountlbl.getElement(), "spnQuestionCountlbl", null, null);
+	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionProgress.IsCollectionProgressView#setData(java.util.ArrayList, boolean, java.lang.String)
+	 */
 	@Override
-	public void setData(ArrayList<CollectionProgressDataDo> collectionProgressData){
+	public void setData(ArrayList<CollectionProgressDataDo> collectionProgressData,boolean isCollectionView,String collectionTitle){
+		if(!isCollectionView){
+			scrollForCollectionProgress.setStyleName(res.css().htmlpanlProgress());
+		}else{
+			scrollForCollectionProgress.setStyleName(res.css().htmlpanlProgressCollectionView());
+		}
 		final List<Integer> questionColumnIndex=new ArrayList<Integer>();
 		final List<Integer> resourceColumnIndex=new ArrayList<Integer>();
 		collectionProgressCount=1;
@@ -70,20 +107,24 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		filterDropDown.clear();
 		CollectionProgressDataDo defaultUserDataForUsers=null;
 		final DataTable data = DataTable.create();
-		data.addColumn(ColumnType.STRING, "Name");
-		data.addColumn(ColumnType.STRING, "Score");
+		data.addColumn(ColumnType.STRING, i18n.GL2287());
+		data.addColumn(ColumnType.STRING, i18n.GL2288());
+
 		for (CollectionProgressDataDo collectionProgressDataDo : collectionProgressData) {
 			defaultUserDataForUsers=collectionProgressDataDo;
-			if(collectionProgressDataDo.getCategory().equalsIgnoreCase("question")){
-				 data.addColumn(ColumnType.STRING, "Question&nbsp;"+collectionProgressCount,"question");
+			if(collectionProgressDataDo.getCategory()!=null && collectionProgressDataDo.getCategory().equalsIgnoreCase(QUESTION)){
+				 data.addColumn(ColumnType.STRING, "Question&nbsp;"+collectionProgressCount,QUESTION);
 				 noOfQuestions++;
 				 questionColumnIndex.add(collectionProgressCount+1);
 			}else{
-				 data.addColumn(ColumnType.STRING, "Resource&nbsp;"+collectionProgressCount,"resource");
+				 data.addColumn(ColumnType.STRING, "Resource&nbsp;"+collectionProgressCount,RESOURCE);
 				 resourceColumnIndex.add(collectionProgressCount+1);
 			}
 			collectionProgressCount++;
 		}
+		collectionTitlelbl.setText(collectionTitle);
+		resourceCountlbl.setText(resourceColumnIndex.size()+"");
+		questionCountlbl.setText(questionColumnIndex.size()+"");
 		final int[] primitivesQuestions = AnalyticsUtil.toIntArray(questionColumnIndex);
 		final int[] primitivesResources = AnalyticsUtil.toIntArray(resourceColumnIndex);
 		
@@ -98,7 +139,7 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 	        	  for(int j=0;j<columnsSize;j++) {
 	        		  	  String color=WHITE;
 	        		  	  VerticalPanel mainDataVpnl=new VerticalPanel();
-		        		  if(!collectionProgressData.get(j).getCategory().equalsIgnoreCase("question")){
+		        		  if(collectionProgressData.get(j).getCategory()!=null && !collectionProgressData.get(j).getCategory().equalsIgnoreCase(QUESTION)){
 		        			  int reaction=collectionProgressData.get(j).getUserData().get(i).getReaction();
 		        			  Label reactionlbl=new Label();
 				        		 if(reaction == 0){
@@ -125,19 +166,21 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		        			  String answerOption=collectionProgressData.get(j).getUserData().get(i).getOptions();
 		        			  String answer="";
 		        			  int attemptCount=collectionProgressData.get(j).getUserData().get(i).getAttempts();
-		        			  if(typeOfQuestion.equalsIgnoreCase("MA") || typeOfQuestion.equalsIgnoreCase("FIB") || typeOfQuestion.equalsIgnoreCase("OE")){
+		        			  if((typeOfQuestion!=null) && (typeOfQuestion.equalsIgnoreCase("MA") || typeOfQuestion.equalsIgnoreCase("FIB") || typeOfQuestion.equalsIgnoreCase("OE"))){
 		        				  Label viewResponselbl=new Label();
 				        		  mainDataVpnl.add(viewResponselbl);
 		        				  String answerText="--";
 		        				  if(answerOption!=null){
-					        		  answerText="View Response";
+					        		  answerText=VIEWRESPONSE;
 					        		  viewResponselbl.getElement().getParentElement().addClassName(res.css().viewResponseInCollectionProgress());
 		        				  }else{
 		        					  answerText="--";
 		        					  viewResponselbl.getElement().getParentElement().getStyle().setBackgroundColor(WHITE);
 		        				  }
-		        				  viewResponselbl.getElement().setPropertyString("id", "name of the response");
 		        				  viewResponselbl.setText(answerText);
+		        				  viewResponselbl.getElement().setAttribute("questionCount", (j+1)+"");
+		        				  viewResponselbl.getElement().setAttribute("question", collectionProgressData.get(j).getTitle());
+		        				  viewResponselbl.getElement().setAttribute("questionAnswer", collectionProgressData.get(j).getUserData().get(i).getText());
 		        			  }else{
 		        				  String answerText="";
 				        		  if(answerOption!=null){
@@ -212,9 +255,9 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
         final Table table = new Table(view, options);
         table.setStyleName("collectionProgressTable");
      
-        filterDropDown.addItem("All", "All");
-        filterDropDown.addItem("Questions", "Questions");
-        filterDropDown.addItem("Resources", "Resources");
+        filterDropDown.addItem(i18n.GL2289(), i18n.GL2289());
+        filterDropDown.addItem(i18n.GL2290(), i18n.GL2290());
+        filterDropDown.addItem(i18n.GL2291(), i18n.GL2291());
         filterDropDown.addChangeHandler(new ChangeHandler() {
 		
 			@Override
@@ -245,7 +288,20 @@ public class CollectionProgressWidget extends BaseViewWithHandlers<CollectionPro
 		@Override
 		public void onClick(ClickEvent event) {
 			Element ele=event.getNativeEvent().getEventTarget().cast();
-			if(ele.getInnerText().equalsIgnoreCase("View Response")){
+			if(ele.getInnerText().equalsIgnoreCase(VIEWRESPONSE)){
+				showResponsesPopup=new ViewResponsesPopup(ele.getAttribute("questionCount"),ele.getAttribute("question"),ele.getAttribute("questionAnswer"));
+				showResponsesPopup.setStyleName(res.css().setOETextPopupCenter());
+				if(showResponsesPopup.isShowing()){
+					showResponsesPopup.hide();
+			    	 Window.enableScrolling(true);
+			     }else{
+			    	 Window.enableScrolling(false);
+			    	 showResponsesPopup.setGlassEnabled(true);
+			    	 showResponsesPopup.setGlassStyleName(res.css().setGlassStyleName());
+			    	 showResponsesPopup.setAutoHideEnabled(true);
+			    	 showResponsesPopup.show();
+			    	 showResponsesPopup.center();
+			     }
 				//Window.alert("ele:"+ele.getAttribute("id"));
 			}
 		}

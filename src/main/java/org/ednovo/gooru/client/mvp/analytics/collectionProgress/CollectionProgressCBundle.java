@@ -19,6 +19,7 @@ public interface CollectionProgressCBundle extends ClientBundle{
 	        String reaction_redneedhelp();
 	        String reaction_reddontunderstand();
 	        String htmlpanlProgress();
+	        String htmlpanlProgressCollectionView();
 	        String summary_title();
 	        String maincontainer();
 	        String narrowreportText();
@@ -28,6 +29,10 @@ public interface CollectionProgressCBundle extends ClientBundle{
 	        String incorrect_legend();
 	        String floatLeft();
 	        String resource_monitor_header_title();
+	        String correct_incorrect_text();
+			
+	        String setOETextPopupCenter();
+			String setGlassStyleName();
 	}
 	@NotStrict
 	@Source("collectionProgress.css")

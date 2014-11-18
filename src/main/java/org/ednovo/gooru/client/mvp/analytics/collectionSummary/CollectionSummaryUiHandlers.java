@@ -25,10 +25,50 @@
 package org.ednovo.gooru.client.mvp.analytics.collectionSummary;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 
 public interface CollectionSummaryUiHandlers extends BaseUiHandlers{
-  void setCollectionSummaryData(String collectionId,String pathwayId);
-  void loadUserSessions(String collectionId,String classId,String userId,String pathwayId);
-  void setTeacherData(String collectionId,String classpageId,String pathwayId);
-  void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId);
+ 
+/**
+ * This method is sued to set collection summary data.
+ * @param collectionId
+ * @param pathwayId
+ */
+void setCollectionSummaryData(String collectionId,String pathwayId);
+  /**
+   * This method is used to load user sessions.
+ * @param collectionId
+ * @param classId
+ * @param userId
+ * @param pathwayId
+ * @param printUserDataDO
+ */
+void loadUserSessions(String collectionId,String classId,String userId,String pathwayId,PrintUserDataDO printUserDataDO);
+  /**
+   * This method is used to set teacher data.
+ * @param collectionId
+ * @param classpageId
+ * @param pathwayId
+ */
+void setTeacherData(String collectionId,String classpageId,String pathwayId);
+  /**
+   * This method is used to set individual student data.
+ * @param collectionId
+ * @param classpageId
+ * @param userId
+ * @param sessionId
+ * @param pathwayId
+ * @param printUserDataDO
+ */
+void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,PrintUserDataDO printUserDataDO);
+/**
+ * This method is used to export the collection summary data.
+ * @param collectionId
+ * @param classpageId
+ * @param userId
+ * @param sessionId
+ * @param pathwayId
+ * @param timeZone
+ */
+void exportCollectionSummary(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,String timeZone);
 }

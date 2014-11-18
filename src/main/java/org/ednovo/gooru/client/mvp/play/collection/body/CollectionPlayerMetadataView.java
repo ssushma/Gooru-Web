@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.play.collection.body;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -38,7 +37,6 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.CommentWidgetChildView;
@@ -49,7 +47,6 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.AssignmentParentDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
@@ -72,7 +69,6 @@ import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -115,7 +111,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiField Button postCommentBtn,postCommentCancel;
 	@UiField Label userNameLabel,viewsCountLabel,lblClassInfo,classTitleValue,lblclassTitle,lblTeacher,lbldueDate,lblDirections,lblDirectionsDesc,commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit;
 	@UiField Label lblAuthor, lblCourse, lblStandards,teacherNameLabel,dueDate,/*insightsHeaderText,insightsContentText,*/lbllanguageObjectiveText,lbllanguageObjective,successPostMsg,
-				lbldepthOfKnowledgeText,lbllearningAndInnovationText,lblAudienceText,lblInstructionalmethodText,lblunitTitle,unitTitleValue;
+				lbldepthOfKnowledgeText,lbllearningAndInnovationText,lblAudienceText,lblInstructionalmethodText;
 	@UiField Image profileThumbnailImage,userPhoto;
 	@UiField HTMLPanel teacherPanel,classInfoPanel,authorPanel,courseSection,standardSection,teacherContainer,viewSection,dueDateSection,directionSection,teacherProfileContainer,languageObjectiveContainer,addComment,loginMessaging,
 						depthOfKnowledgePanel,audiencePanel,instructionalmethodPanel,learningAndInnovationSkillPanel,
@@ -123,6 +119,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiField Anchor previewFlagButton,seeMoreAnchor,loginUrl, signupUrl;
 	@UiField CollectionPlayerStyleBundle playerStyle;
 	@UiField HTML teacherTipLabel;
+	@UiField Label lblCharLimitComments;
 	//@UiField Frame insightsFrame;
 //	@UiField Button collectionSummaryPrintBtn;
 	private String languageObjectiveValue;
@@ -206,6 +203,11 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		commentField.addClickHandler(new OnCommentsFieldClicked());
 		commentField.addKeyUpHandler(new ValidateConfirmText());
 		commentField.addBlurHandler(new OnCommentsFieldBlur());
+		
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		lblCharLimitComments.setText(value);
+		StringUtil.setAttributes(lblCharLimitComments.getElement(), "lblCharLimitComments", value, value);
+		
 		seeMoreButton.setVisible(false);
 		depthOfKnowledgeContainer.getElement().setId("pnlDepthOfKnowledgeContainer");
 		depthOfKnowledgePanel.getElement().setId("pnlDepthOfKnowledgePanel");
@@ -257,7 +259,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 				authorPanel.getElement().getStyle().setHeight(253, Unit.PX);
 			}
 			else if(collectionDo.getKeyPoints().length()>100){
-				authorPanel.getElement().getStyle().setHeight(130, Unit.PX);
+				authorPanel.getElement().getStyle().setHeight(180, Unit.PX);
 			}
 			else{
 				authorPanel.getElement().getStyle().setHeight(100, Unit.PX);
@@ -267,7 +269,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			teacherTipLabel.getElement().setAttribute("title",""+collectionDo.getKeyPoints()+"");
 		}
 		setLeftPanelHeight();
-		setTeacherName(collectionDo.getUser().getUsernameDisplay(), collectionDo.getUser().getProfileImageUrl());
 	}
 	private void setLeftPanelHeight(){
 		 Scheduler.get().scheduleDeferred(new ScheduledCommand(){
@@ -639,13 +640,12 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	}
 
 	@Override
-	public void setTeacherInfo(AssignmentParentDo assignmentParentDo) {
+	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
 		hideCollectionDetails(true);
 		teacherContainer.setVisible(true);
-		String classTitle=assignmentParentDo.getClassTitle()!=null?assignmentParentDo.getClassTitle():"";
-		classTitleValue.setText(classTitle);
-		classTitleValue.getElement().setAttribute("alt",classTitle);
-		classTitleValue.getElement().setAttribute("title",classTitle);
+		classTitleValue.setText(classpageItemDo.getTitle());
+		classTitleValue.getElement().setAttribute("alt",classpageItemDo.getTitle());
+		classTitleValue.getElement().setAttribute("title",classpageItemDo.getTitle());
 		
 		lblclassTitle.setText(i18n.GL1578());
 		lblclassTitle.getElement().setAttribute("alt",i18n.GL1578());
@@ -667,34 +667,19 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		lblDirections.getElement().setAttribute("alt",i18n.GL1582());
 		lblDirections.getElement().setAttribute("title",i18n.GL1582());
 		
-		lblunitTitle.setText(i18n.GL2249());
-		String unitTitle=assignmentParentDo.getPathwayTitle()!=null?assignmentParentDo.getPathwayTitle():"";
-		unitTitleValue.setText(unitTitle);
-		setDueDateText(assignmentParentDo.getPlannedEndDate());
-		setDirectionText(assignmentParentDo.getNarration());
-	
-	}
-	
-	public void setTeacherName(String userNameDisplay,String profileImageUrl){
-		teacherNameLabel.setText(userNameDisplay);
-		teacherNameLabel.getElement().setAttribute("alt",userNameDisplay);
-		teacherNameLabel.getElement().setAttribute("title",userNameDisplay);
+		setDueDateText(classpageItemDo.getPlannedEndDate().toString());
+		setDirectionText(classpageItemDo.getDirection());
+		teacherNameLabel.setText(classpageItemDo.getUserNameDispaly());
+		teacherNameLabel.getElement().setAttribute("alt",classpageItemDo.getUserNameDispaly());
+		teacherNameLabel.getElement().setAttribute("title",classpageItemDo.getUserNameDispaly());
+		
 		teacherProfileContainer.clear();
 		//teacherProfileThumbnailImage.setUrl(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()); 
-		teacherProfileContainer.add(new TeacherImage(profileImageUrl+"?p="+Math.random()));
+		teacherProfileContainer.add(new TeacherImage(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()));
 	}
 	
-	public static String convertMillisecondsToDate(Long milliseconds){
-		Date currentDate = new Date(milliseconds);
-		DateTimeFormat fmt = DateTimeFormat.getFormat ("MM/dd/yyyy");
-		String date=fmt.format(currentDate);
-		return date;
-	}
-	
-	public void setDueDateText(Long date){
-		
-		if(date!=null&&!date.equals("")){
-			String text=CollectionsView.convertMillisecondsToDate(date);
+	public void setDueDateText(String text){
+		if(text!=null&&!text.trim().equals("")){
 			dueDate.setText(text);
 			dueDate.getElement().setAttribute("alt",text);
 			dueDate.getElement().setAttribute("title",text);
@@ -1296,7 +1281,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			if(postCommentBtn.getStyleName().contains(PRIMARY_STYLE)) {
 				//check for bad words first.
 				Map<String, String> parms = new HashMap<String, String>();
-				parms.put("text", commentField.getText());
+				parms.put("text", removeHtmlTags(commentField.getText()));
 				postCommentBtn.setEnabled(false);
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 	
@@ -1315,7 +1300,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 							commentField.getElement().getStyle().setBorderColor("#ccc");
 							characterLimit.setVisible(false);
 							
-							getUiHandlers().createCommentForCollection(collectionDo.getGooruOid(), commentField.getText());
+							getUiHandlers().createCommentForCollection(collectionDo.getGooruOid(), removeHtmlTags(commentField.getText()));
 							
 							commentField.setText("");
 							commentField.getElement().setAttribute("alt","");
@@ -1454,10 +1439,10 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	private class ValidateConfirmText implements KeyUpHandler {
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
-			if(commentField.getText().length()>415) {
-				commentField.setText(commentField.getText().substring(0,415));
-				commentField.getElement().setAttribute("alt",commentField.getText().substring(0,415));
-				commentField.getElement().setAttribute("title",commentField.getText().substring(0,415));
+			if(commentField.getText().length()>500) {
+				commentField.setText(commentField.getText().substring(0,500));
+				commentField.getElement().setAttribute("alt",commentField.getText().substring(0,500));
+				commentField.getElement().setAttribute("title",commentField.getText().substring(0,500));
 				characterLimit.setText(i18n.GL0143());
 				characterLimit.getElement().setAttribute("alt",i18n.GL0143());
 				characterLimit.getElement().setAttribute("title",i18n.GL0143());
@@ -1522,5 +1507,30 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	public static void onClosingAndriodorIpaddiv()
 	{
 		//studyMainContianer.getElement().setAttribute("style", "margin-top:50px;");
+	}
+	/**
+	 * @function removeHtmlTags 
+	 * 
+	 * @created_date : 16-Oct-2014
+	 * 
+	 * @description this method is used to remove the html tags in comment input box
+	 * 
+	 * @parm(s) : @param String 
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 */
+	private String removeHtmlTags(String html){
+		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
+		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("</a>", "").replaceAll("<a>", "");
+        return html;
+	}
+
+	@Override
+	public void hideTeachPanelDetails(boolean isDisplayDetails) {
+		teacherContainer.setVisible(isDisplayDetails);
+		hideCollectionDetails(false);
 	}
 }

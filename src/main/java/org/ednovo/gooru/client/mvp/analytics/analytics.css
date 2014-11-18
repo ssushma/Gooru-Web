@@ -4,7 +4,7 @@
 }
 
 .unitDetails .containerTeacher .leftPanel {
-	border-right: 1px solid #EFEFEF;
+/* 	border-right: 1px solid #EFEFEF; */
 	padding-top: 100px;
 	padding-bottom: 15px;
 	padding-left: 0;
@@ -23,6 +23,7 @@
 	padding-top: 30px;
 	padding-bottom: 30px;
 	width: 86.3333% !important;
+	border-left: 1px solid #efefef;
 }
 
 .uniSetup a {
@@ -177,8 +178,8 @@
 }
 
 .rowInner {
-	padding-left: 15px;
-	padding-right: 15px;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 .personalBtn p {
@@ -614,7 +615,7 @@
 }
 
 .setBroder {
-	border-left: 1px solid #eee;
+	/* border-left: 1px solid #eee; */
 }
 
 .filterDropDown {
@@ -634,7 +635,10 @@
 
 .narrowReportText {
 	float: left;
-	padding-right: 76px;
+	padding-top: 6px;
+	text-align: center;
+	width: 40%;
+	margin-left: 50px;
 }
 
 .arrowStyle {
@@ -679,11 +683,15 @@
 	font-weight: 600;
 	color: #515151;
 	float: left;
+	margin-left: 14px;
+	padding-bottom: 10px;
 }
 
 .unitHeadingAnalytics span {
 	font-size: 14px;
 	font-weight: normal;
+	float: left;
+	width: 62%;
 }
 
 .scoreText {
@@ -712,7 +720,7 @@
 }
 
 .progress_org {
-	background-color: #fadaa1;
+	background-color: #ff7d71;
 	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15) inset;
 	color: #fff;
 	float: left;
@@ -747,7 +755,7 @@
 	line-height: 20px;
 	text-align: center;
 	transition: width 0.6s ease 0s;
-	width: 5px;
+	width: 1%;
 }
 
 .form_control {
@@ -769,7 +777,7 @@
 }
 
 .org {
-	background-color: #fadaa1;
+	background-color: #ff7d71;
 	min-height: 18px;
 	width:49%;
 	text-align: center;
@@ -813,4 +821,167 @@
 	position: absolute;
 	z-index: 5;
 	margin-left: 375px;
+}
+
+/* student view assignment */
+.classOptionsMain {
+	margin-bottom: 10px;
+	margin-top:3px;
+	margin-left: 5px;
+	margin-right: 5px;
+	border-top: 2px solid #efefef;
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+.smallerWidth {
+	width: 15.6667% !important;
+}
+
+.smallWidthGoalNotMet {
+	width: 14.6667% !important;
+}
+
+.smallWidthFDS {
+	width: 15.6667% !important;
+}
+.smallWidth1{
+ 	width:14.6667% !important;
+}
+
+.classOverOptions {
+	font-size: 10px;
+	padding-left: 3px !important;
+	padding-right: 3px !important;
+	line-height: 25px;
+}
+
+.bubbleSmall {
+	width: 20px;
+	height: 20px;
+	background: #B9BBCA;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.stylishBub {
+	background: #b9bbca url(../images/liners.png) repeat-x !important;
+}
+
+.redBubble {
+	background: #ff7d71 !important;
+}
+
+.greenBubble {
+	background: #a7c9a4 !important;
+}
+
+.smallWidth {
+	width: 13.6667% !important;
+}
+.assignOverOptions {
+	font-size: 10px;
+	padding-left: 3px !important;
+	padding-right: 3px !important;
+	line-height: 25px;
+	margin-left: 106px;
+}
+
+.classOverOptions1 {
+	font-size: 10px;
+	padding-left: 3px !important;
+	padding-right: 3px !important;
+	line-height: 25px;
+	margin-left: -30px;
+}
+
+.classOverOptionsFeedback {
+	font-size: 10px;
+	padding-left: 3px !important;
+	padding-right: 3px !important;
+	line-height: 25px;
+	margin-left: 11px;
+}
+.redCircle{
+	background:#ff7d71 no-repeat center;
+	 width: 34px;
+	height: 34px;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	vertical-align: middle;
+	display: inline-block;
+	margin: 3px 3px;
+	text-align: center;
+	line-height: 34px;
+	color: #fff;
+	font-weight: bold;
+	border: 2px solid #fff;
+}
+
+.greenCircle{
+	background:#a7c9a4 no-repeat center ;
+	width: 34px;
+	height: 34px;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	vertical-align: middle;
+	display: inline-block;
+	margin: 3px 3px;
+	text-align: center;
+	line-height: 34px;
+	color: #fff;
+	font-weight: bold;
+	border: 2px solid #fff;
+}
+
+.bubbleSmallrounded {
+	width: 18px;
+	height: 18px;
+	background: #ffffff;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	vertical-align: middle;
+	display: inline-block;
+	border: 2px solid #c8c8c8;
+}
+.bubbleBlueFeedBack {
+	width: 11px;
+	height: 11px;
+	background: #1076bb;
+	border-radius: 50% 50%;
+	-webkit-border-radius: 50% 50%;
+	-moz-border-radius: 50% 50%;
+	vertical-align: middle;
+	display: inline-block;
+	border: 2px solid #1076bb;
+}
+.studentsPerformance{
+	width: 30%;
+	float: left;
+}
+.hilightStudentsContainer{
+	border-bottom: 1px solid #8CA8BE;
+}
+.scoreAboveHilightStudentsContainer{
+	border: 1px solid #FCD999;
+}
+.scoreBelowilightStudentsContainer{
+	border: 1px solid #AAC7A8;
+	clear: both;
+}
+.viewAllStudentsBtn{
+	margin-top: 18px;
+	margin-bottom: 8px;
+}
+.unitDetailsSigngle{
+	background: #fff;
+	padding-left: 0;
+	padding-right: 0;
+	width: 100% !important;
 }

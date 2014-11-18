@@ -103,4 +103,13 @@ public interface IsPlaceManager extends PlaceManager {
 	
 	public String getFolderIdsInString();
 	
+	public boolean isLibaryEventTriggered(String libraryName);
+	
+	public String getLibaryEventId();
+	
+	public void setLibraryEventId(String libraryEventId);
+	
+	public void resetLibraryEventData(String libraryName);
+	
+	public void setLibaryEventTriggered(String libraryName);
 }

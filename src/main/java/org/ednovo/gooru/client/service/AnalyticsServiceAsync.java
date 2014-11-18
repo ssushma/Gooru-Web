@@ -29,23 +29,43 @@ import java.util.ArrayList;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
+import org.ednovo.gooru.shared.model.analytics.FeedBackResponseDataDO;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
+import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 
 public interface AnalyticsServiceAsync extends BaseServiceAsync {
+	
 	void getCollectionProgressData(String collectionId,String classPageId,String pathwayId,AsyncCallback<ArrayList<CollectionProgressDataDo>> callback);
+	
 	void getCollectionSummaryUsersData(String classpageId,AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>> callback);
-	void getCollectionMetaData(String collectionId,String classpageId,AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>> callback);
+	
 	void getCollectionMetaDataByUserAndSession(String collectionId,String classId,String userId,String sessionId,AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>> callback);
+	
 	void getCollectionResourceData(String collectionId,String classpageId,String pathwayId,AsyncCallback<ArrayList<UserDataDo>> callback);
+	
 	void getSessionsDataByUser(String collectionId,String classId,String userId,AsyncCallback<ArrayList<CollectionSummaryUsersDataDo>> callback);
+	
 	void getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId,String pathwayId,AsyncCallback<ArrayList<UserDataDo>> callback);
-    void getBottomAndTopScoresData(String collectionId,String classId,String score,AsyncCallback<ArrayList<GradeJsonData>> callback);
-    void setHTMLtoPDF(String htmlString,AsyncCallback<Void> callback);
+   
+	void getBottomAndTopScoresData(String collectionId,String classId,String score,String sortOrder,AsyncCallback<ArrayList<GradeJsonData>> callback);
+   
+    void setHTMLtoPDF(String htmlString,AsyncCallback<String> asyncCallback);
+   
     void getAnalyticsGradeData(String classpageId,String pathwayId,AsyncCallback<ArrayList<GradeJsonData>> AsyncCallback);
-    void exportPathwayOE(String classpageId,String pathwayId,AsyncCallback<String> AsyncCallback);
-    public void getAssignmentAverageData(String classId,String unitId,String collectionId,AsyncCallback<CollectionSummaryMetaDataDo> callback);
+   
+    void exportPathwayOE(String classpageId,String pathwayId,String timeZone,AsyncCallback<String> AsyncCallback);
+   
+    void getAssignmentAverageData(String classId,String unitId,String collectionId,AsyncCallback<CollectionSummaryMetaDataDo> callback);
+    
+    void getOETextData(String resourceId,String collectionId,String classpageId,String pathwayId,String session,String sessionId,String userUId,AsyncCallback<ArrayList<OetextDataDO>> callback);
+    
+    void postTeacherFeedBackToStudent(String freeText,String resourceId,String collectionId,String classpageId,String pathwayId,String userId,String session,String contentItemId,String parentItemId,String classCode,AsyncCallback<FeedBackResponseDataDO> callback);
+	
+    void sendEmail(String to,String subject,String message,String displayName,String fileName,String path,AsyncCallback<Void> callback);
+
+    void exportTeacherSummary(String collectionGooruOId,String pathwayId, String classId,String timeZone,AsyncCallback<String> callback) ;
 }

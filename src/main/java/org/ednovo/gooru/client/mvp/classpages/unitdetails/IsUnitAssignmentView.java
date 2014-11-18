@@ -23,11 +23,15 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+import java.util.List;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -46,5 +50,7 @@ public interface IsUnitAssignmentView extends IsViewWithHandlers<UnitAssignmentU
 	public void resetUnitAssignmentView();
 	public HTMLPanel getAssignmentPanel();
 	public void setCollectionSummaryData(CollectionSummaryMetaDataDo collectionSummaryMetaDataDo);
-
+	void clearValues();
+	void setInsightUserData(List<InsightsUserDataDo> insightsUserList);
+	CollectionsView getCollectionView();
 }

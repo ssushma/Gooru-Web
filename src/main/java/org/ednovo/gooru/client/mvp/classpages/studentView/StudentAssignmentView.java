@@ -35,30 +35,22 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.edit.AssignmentProgressVc;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle;
-import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
-import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
-import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.EventTarget;
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -71,9 +63,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
-import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -81,6 +70,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -124,6 +114,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	static
 	Button btnWithDraw;
 	
+//	@UiField HTMLEventPanel backToTeacherView;
 	
 	@UiField Image studentViewImage,imgProfileImage;
 
@@ -132,6 +123,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	
 	@UiField
 	static Label lblWebHelp;
+	
+//	@UiField ScrollPanel spanelSutdentsList;
+	
+//	@UiField HTMLPanel panelSutdentsList,teacherViewPanel;
 
 	@UiField
 	static
@@ -185,6 +180,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		setWidget(uiBinder.createAndBindUi(this));
 		EditClasspageCBundle.INSTANCE.css().ensureInjected();
 		setStaticData();
+//		teacherViewPanel.setVisible(false);
 		lblWebHelp.addMouseOverHandler(new OnMouseOver());
 		lblWebHelp.addMouseOutHandler(new OnMouseOut());
 		OpenJoinClassPopupHandler openJoinClassPopupHandler=new OpenJoinClassPopupHandler() {
@@ -398,6 +394,11 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				imgProfileImage.setUrl(defaultProfileImage);
 			}
 		});
+		
+		if(classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid())){
+			System.out.println("teacher view");
+//			teacherViewPanel.setVisible(true);
+		}
 		
 		studentViewImage.addErrorHandler(new ErrorHandler() {
 			
@@ -1600,6 +1601,21 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			}
 		}
 	}
+	
+	/*@UiHandler("backToTeacherView")
+	public void backToTeacherviewEvent(ClickEvent clickEvent){
+		Map<String,String> params = new HashMap<String,String>();
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+		String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+		String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+		params.put("pos", pos);
+		params.put("classpageid", classpageid);
+		params.put("pageNum", pageNum);
+		params.put("pageSize", pageSize);
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+		AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
+	}*/
 	
 	
 }

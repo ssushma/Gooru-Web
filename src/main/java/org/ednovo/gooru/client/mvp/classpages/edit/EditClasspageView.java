@@ -116,6 +116,8 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 	}
 
 	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
+	
+	private PopupPanel toolTipPopupPanelComingSoon = new PopupPanel();
 
 	@UiField Image imgClasspageImage;
 	
@@ -392,7 +394,10 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		//reportHandler=reportsTab.addClickHandler(new reportsTabClicked());		
+		reportHandler=reportsTab.addClickHandler(new reportsTabClicked());		
+		//reportsTab.addMouseOverHandler(new MouseOverShowClassCodeToolTip1());
+		//reportsTab.addMouseOutHandler(new MouseOutHideToolTip1());
+
 		
 		ResetProgressHandler reset = new ResetProgressHandler() {
 
@@ -435,6 +440,29 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		});
 		
 	}
+	
+	public class MouseOverShowClassCodeToolTip1 implements MouseOverHandler{
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			toolTipPopupPanelComingSoon.clear();
+			toolTipPopupPanelComingSoon.setWidget(new GlobalToolTip(i18n.GL0683()));
+			toolTipPopupPanelComingSoon.setStyleName("");
+			toolTipPopupPanelComingSoon.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() + 135, event.getRelativeElement().getAbsoluteTop()+9);
+			toolTipPopupPanelComingSoon.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanelComingSoon.show();
+		}
+
+	}
+
+	public class MouseOutHideToolTip1 implements MouseOutHandler{
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			toolTipPopupPanelComingSoon.hide();
+		}
+	}
+	
 
 	
 	/**
@@ -649,6 +677,7 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 							lblSelected.setText(student.getText());
 							spanelSutdentsList.setVisible(false);
 							// Need to write logic to navigate to student page.
+							revealStudentView(selectedStudentId);
 						}
 					});
 					
@@ -1408,6 +1437,30 @@ public class EditClasspageView extends BaseViewWithHandlers<EditClasspageUiHandl
 		delete.setPixelSize(450, 345);
 		delete.show();
 		delete.center();
+	}
+	
+	public void revealStudentView(String studentUid){
+		Map<String,String> params = new HashMap<String,String>();
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+		String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+		String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+		params.put("pos", pos);
+		params.put("id", classpageid);
+		/*if(source!=null){
+			params.put("source", source);
+		}
+		if(backButtonStatus!=null){
+			params.put("b", "true");
+		}*/
+		if(studentUid!=null){
+			params.put("sid", studentUid);
+		}
+		params.put("pageNum", pageNum);
+		params.put("pageSize", pageSize);
+		
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);
+		AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
 	}
 
 }

@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.ednovo.gooru.client.SearchAsyncCallback;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
@@ -102,4 +103,8 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 
 	 public void getSuggestStandardByFilterCourseIdsource(SearchDo<CodeDo> searchDo,
 			 AsyncCallback<SearchDo<CodeDo>> callback);
+	 
+	 void getGooruStoriesUrl(String parms, AsyncCallback<String> callback);
+	 
+	 void showGooruStoriesSection(AsyncCallback<String> callback); 
 }

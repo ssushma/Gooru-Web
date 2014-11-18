@@ -8,18 +8,25 @@ import java.util.List;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.analytics.HCBarChart;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryWidget;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionOverViewWidget;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsReactionWidget;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsTabContainer;
 import org.ednovo.gooru.client.mvp.analytics.util.AnalyticsUtil;
 import org.ednovo.gooru.client.mvp.analytics.util.DataView;
 import org.ednovo.gooru.client.mvp.analytics.util.Print;
 import org.ednovo.gooru.client.mvp.analytics.util.SortTable;
+import org.ednovo.gooru.client.mvp.analytics.util.ViewResponsesPopup;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
+import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Clear;
+import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -30,8 +37,8 @@ import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -51,8 +58,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	interface CollectionSummaryTeacherViewUiBinder extends
 			UiBinder<Widget, CollectionSummaryTeacherView> {
 	}
+	private static MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	@UiField HTMLPanel totalAvgReactionlbl,hiddenChartPnl,tabContainer,teacherScoredData,teacherScoredDatapnl,teacherOpenendedData,teacherResourceBreakdownData,teacherResourceBreakdownDatapnl;
+	@UiField HTMLPanel scoredPrintWidget,printWidget,totalAvgReactionlbl,hiddenChartPnl,tabContainer,teacherScoredData,teacherScoredDatapnl,teacherOpenendedData,teacherResourceBreakdownData,teacherResourceBreakdownDatapnl;
 	@UiField ListBox filterDropDown;
 	@UiField Label totalTimeSpentlbl,totalViewlbl;
 	
@@ -60,9 +68,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	AnalyticsTabContainer teacherTabContainer;
 	
 	CollectionSummaryTeacherCBundle res;
-	ArrayList<CollectionSummaryMetaDataDo> collectionMetaData;
+	CollectionSummaryMetaDataDo collectionMetaData;
 	
-	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab";
+	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab",PRINT="print";;
 	private int collectionProgressCount=1;
 	
 	
@@ -72,20 +80,47 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	final List<Integer> questionRowIndex=new ArrayList<Integer>();
 	final List<Integer> resourceRowIndex=new ArrayList<Integer>();
 	DataView operationsView;
+	ViewResponsesPopup popupPanel=null;
 	
+	//Used for printing
+	Label collectionSummaryText=new Label();
+  	Label scoredQuestionHeading=new Label();
+	HTMLPanel printScoredData=new HTMLPanel("");
+	Label opendedQuestionHeading=new Label();
+	HTMLPanel printOpendedData=new HTMLPanel("");
+	HTMLPanel printResourceData=new HTMLPanel("");
+	
+	CollectionOverViewWidget collectionOverViewWidget=new CollectionOverViewWidget();
+	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
+	
+	/**
+	 * Costructor
+	 */
 	public CollectionSummaryTeacherView() {
 		this.res = CollectionSummaryTeacherCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		setData();
+		printWidget.setVisible(false);
 	}
 	
+	/**
+	 * This method is used to hide all the panels
+	 */
 	void hideAllPanels(){
 		teacherScoredDatapnl.setVisible(false);
 		teacherOpenendedData.setVisible(false);
 		teacherResourceBreakdownDatapnl.setVisible(false);
 	}
+	/**
+	 * This method is used to set default data.
+	 */
 	void setData(){
+		collectionSummaryText.setText(i18n.GL1587());
+		collectionSummaryText.getElement().getStyle().setPaddingBottom(15, Unit.PX);
+		collectionSummaryText.addStyleName("collectionSummaryText");
+		printWidget.add(collectionSummaryText);
+		final String style="<link rel='styleSheet' type='text/css' href='https://www.google.com/uds/api/visualization/1.0/8c95b72e5c145d5b3d7bb8b4ea74fd63/ui+en,table+en.css'><link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'>";
 		teacherTabContainer=new AnalyticsTabContainer() {
 			@Override
 			public void onTabClick(String tabClicked) {
@@ -98,20 +133,45 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 				}else if(tabClicked.equalsIgnoreCase(BREAKDOWN)){
 					hideAllPanels();
 					teacherResourceBreakdownDatapnl.setVisible(true);
+				}else if(tabClicked.equalsIgnoreCase(PRINT)){
+					Element printElement=collectionSummaryText.getElement();
+					printElement.appendChild(collectionSummaryWidget.getElement());
+					printElement.appendChild(scoredQuestionHeading.getElement());
+					printElement.appendChild(scoredPrintWidget.getElement());
+					printElement.appendChild(opendedQuestionHeading.getElement());
+					printElement.appendChild(printOpendedData.getElement());
+					printElement.appendChild(collectionOverViewWidget.getElement());
+					printElement.appendChild(printResourceData.getElement());
+					scoredPrintWidget.setVisible(true);
+					Print.it(style,printElement);
+					scoredPrintWidget.setVisible(false);
 				}else{
-					 Element element = DOM.getElementById("collectionBreakDown");
-					 Print.it(teacherScoredDatapnl.getElement());
+					scoredPrintWidget.setVisible(true);
+					Element printElement=collectionSummaryText.getElement();
+					printElement.appendChild(collectionSummaryWidget.getElement());
+					printElement.appendChild(scoredQuestionHeading.getElement());
+					printElement.appendChild(scoredPrintWidget.getElement());
+					printElement.appendChild(opendedQuestionHeading.getElement());
+					printElement.appendChild(printOpendedData.getElement());
+					printElement.appendChild(collectionOverViewWidget.getElement());
+					printElement.appendChild(printResourceData.getElement());
+					getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printElement.toString().replaceAll("\"", "\\\\\""));
+					scoredPrintWidget.setVisible(false);
 				}
 			}
 		};
+		teacherTabContainer.getEmailButton().setVisible(false);
 		tabContainer.add(teacherTabContainer);
 		filterDropDown.clear();
         filterDropDown.addItem("All", "All");
         filterDropDown.addItem("Questions", "Questions");
         filterDropDown.addItem("Resources", "Resources");
 	}
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.IsCollectionSummaryTeacherView#setTeacherResourceData(java.util.ArrayList, org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo, com.google.gwt.user.client.ui.HTMLPanel)
+	 */
 	@Override
-	public void setTeacherResourceData(ArrayList<UserDataDo> resourcesData,ArrayList<CollectionSummaryMetaDataDo> collectionMetaData) {
+	public void setTeacherResourceData(ArrayList<UserDataDo> resourcesData,CollectionSummaryMetaDataDo collectionMetaData,HTMLPanel loadingImage) {
 		    hideAllPanels();
 		    teacherScoredDatapnl.setVisible(true);
 		    this.collectionMetaData=collectionMetaData;
@@ -127,15 +187,19 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 			//Set collection meta data
 			if(collectionMetaData != null)
 			{
-			totalTimeSpentlbl.setText(getTimeSpent(collectionMetaData.get(0).getAvgTimeSpent()));
-			totalViewlbl.setText(Integer.toString(collectionMetaData.get(0).getViews()));
-			totalAvgReactionlbl.clear();
-			totalAvgReactionlbl.add(new AnalyticsReactionWidget(collectionMetaData.get(0).getAvgReaction()));
+				collectionOverViewWidget.setData(collectionMetaData,true);
+				collectionSummaryWidget.setDataAnalyticsData(collectionMetaData, null);
+				printWidget.add(collectionSummaryWidget);
+				printWidget.add(collectionOverViewWidget);
+				totalTimeSpentlbl.setText(getTimeSpent(collectionMetaData.getAvgTimeSpent()));
+				totalViewlbl.setText(Integer.toString(collectionMetaData.getViews()));
+				totalAvgReactionlbl.clear();
+				totalAvgReactionlbl.add(new AnalyticsReactionWidget(collectionMetaData.getAvgReaction()));
 			}
 			
 	        //This is used for segrate data based on the category
 	        for (UserDataDo userDataDo : resourcesData) {
-				if(userDataDo.getCategory().equalsIgnoreCase("question")){
+				if(userDataDo.getCategory()!=null && userDataDo.getCategory().equalsIgnoreCase("question")){
 					if(userDataDo.getType().equalsIgnoreCase("OE")){
 							openendedData.add(userDataDo);
 					}else{
@@ -148,12 +212,103 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 				collectionProgressCount++;
 	        }
 	    	setScoredQuestionsData(questionsData);
+	    	setQuestionsPrintData(questionsData);
 	    	setOpenendedQuestionsData(openendedData);
-	    	setCollectionBreakDown(resourcesData);
+	    	setOpenendedQuestionsPrintData(openendedData);
+	    	setCollectionBreakDown(resourcesData,loadingImage);
+	    	setCollectionBreakDownPrintData(resourcesData);
 	}
+	/**
+	 * This is used to print opened questions data
+	 * @param result
+	 */
+	void setOpenendedQuestionsPrintData(final ArrayList<UserDataDo> result){
+        try{
+		 	int totalUserCount=this.collectionMetaData.getUserCount();
+		    DataTable data = DataTable.create();
+		    data.addColumn(ColumnType.NUMBER, "No.");
+	        data.addColumn(ColumnType.STRING, "Question");
+	        data.addColumn(ColumnType.STRING, "Completion");
+	        data.addColumn(ColumnType.STRING, "Time&nbsp;Spent");
+	        data.addColumn(ColumnType.STRING, "Reaction");
+	        data.addColumn(ColumnType.STRING, "Student&nbsp;Responses");
+	        data.addRows(result.size());
+	        if(result.size()!=0){
+	        	   for(int i=0;i<result.size();i++) {
+	   	        	data.setCell(i, 0, i+1, null, getPropertiesCell());
+	   	        	
+	   	            //Set Question Title
+	   	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
+	   	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	   	            data.setValue(i, 1, questionTitle.toString());
+	   	          
+	   	            //Set completion
+	   	            HTMLPanel completionpnl=new HTMLPanel("");
+	   	            Label progressBar=new Label();
+	   	            progressBar.setStyleName(res.css().setProgressBar());
+	   	            completionpnl.add(progressBar);
+	   	            Label incompleteProgressBar=new Label();
+	   	            incompleteProgressBar.setStyleName(res.css().setIncorrectProgressBar());
+	   	            completionpnl.add(incompleteProgressBar);
+	   	            int attemptedCount=result.get(i).getTotalAttemptUserCount();
+	   	            float maxAvgVal = ((float) attemptedCount)/((float) totalUserCount);
+	   	            progressBar.getElement().getStyle().setWidth(maxAvgVal*100, Unit.PX);
+	   	            incompleteProgressBar.getElement().getStyle().setWidth((100-maxAvgVal*100), Unit.PX);
+	   	            Label studentTextlbl=new Label(attemptedCount+"/"+totalUserCount+" Students");
+	   	            studentTextlbl.setStyleName(res.css().alignCenterAndBackground());
+	   	            studentTextlbl.getElement().getStyle().setWidth(100, Unit.PX);
+	   	            completionpnl.add(studentTextlbl);
+	   	            data.setValue(i, 2, completionpnl.toString());
+	   	          
+	   	            //Set time spent
+	   	            data.setValue(i, 3,AnalyticsUtil.getTimeStampLabel(result.get(i).getAvgTimeSpent()).toString());
+	   	           
+	   	            //Set reactions
+	   	            int reaction=result.get(i).getAvgReaction();
+	   	            HTMLPanel reactionpnl=new HTMLPanel("");
+	   	            reactionpnl.add(new AnalyticsReactionWidget(reaction));
+	   	            Label reactioncount=new Label();
+	   	            reactionpnl.add(reactioncount);
+	   	            reactioncount.setText(reaction+"/5");
+	   	            reactioncount.setStyleName(res.css().alignCenterAndBackground());
+	   	            data.setValue(i, 4, reactionpnl.toString());
+	   	           
+	   	            //set View response label
+	   	            Label viewResponselbl=new Label("");
+	   	            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
+	   	            data.setValue(i, 5, viewResponselbl.toString());
+	   	        }
+	        }
+	        Options options = Options.create();
+	        options.setAllowHtml(true);
+	        final Table table = new Table(data, options);
+	        table.getElement().setId("opendedData");
+	        printOpendedData.add(table);
+	        if(result.size()==0){
+	        	Label erroeMsg=new Label();
+	        	erroeMsg.setStyleName(res.css().displayMessageTextForOEQuestions());
+	        	erroeMsg.setText("It looks like there is no open-ended question data for this collection yet.");
+	        	printOpendedData.add(erroeMsg);
+	        }
+	    	//To add OE questions
+			opendedQuestionHeading.setText("OE Questions");
+			opendedQuestionHeading.getElement().getStyle().setPaddingTop(15, Unit.PX);
+			opendedQuestionHeading.getElement().getStyle().setPaddingBottom(20, Unit.PX);
+			opendedQuestionHeading.getElement().getStyle().setTextAlign(TextAlign.LEFT);
+			printWidget.add(opendedQuestionHeading);
+	        printWidget.add(printOpendedData);
+	    	printOpendedData.getElement().getStyle().setPaddingBottom(20, Unit.PX);
+        }catch(Exception e){
+        	
+        }
+	}
+	/**
+	 * This method is used to set opended question data.
+	 * @param result
+	 */
 	void setOpenendedQuestionsData(final ArrayList<UserDataDo> result){
             
-		 	int totalUserCount=this.collectionMetaData.get(0).getUserCount();
+		 	int totalUserCount=this.collectionMetaData.getUserCount();
 		    DataTable data = DataTable.create();
 		    data.addColumn(ColumnType.NUMBER, "No.");
 	        data.addColumn(ColumnType.STRING, "Question");
@@ -191,7 +346,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	   	            data.setValue(i, 2, completionpnl.toString());
 	   	          
 	   	            //Set time spent
-	   	            data.setValue(i, 3, getTimeStampLabel(result.get(i).getAvgTimeSpent()).toString());
+	   	            data.setValue(i, 3, AnalyticsUtil.getTimeStampLabel(result.get(i).getAvgTimeSpent()).toString());
 	   	           
 	   	            //Set reactions
 	   	            int reaction=result.get(i).getAvgReaction();
@@ -206,6 +361,8 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	   	            //set View response label
 	   	            Label viewResponselbl=new Label("View Response");
 	   	            viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
+	   	            viewResponselbl.getElement().setAttribute("resourceGooruId", result.get(i).getResourceGooruOId());
+	   	            viewResponselbl.getElement().setAttribute("questionType", result.get(i).getType());
 	   	            data.setValue(i, 5, viewResponselbl.toString());
 	   	        }
 	        }
@@ -221,6 +378,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        	teacherOpenendedData.add(erroeMsg);
 	        }
 	        table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
+	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
 	}
 	/**
 	 * This class is used to handle the click event on the table cell
@@ -230,15 +388,16 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		public void onClick(ClickEvent event) {
 			Element ele=event.getNativeEvent().getEventTarget().cast();
 			if(ele.getInnerText().equalsIgnoreCase("View Response")){
-				//Window.alert("ele:"+ele.getAttribute("id"));
+				getUiHandlers().setOEtextData(ele.getAttribute("resourceGooruId"),ele.getAttribute("questionType"));
 			}
 		}
 	}
-	void setCollectionBreakDown(ArrayList<UserDataDo> result){
-		
-		final int[] primitivesQuestions = AnalyticsUtil.toIntArray(questionRowIndex);
-		final int[] primitivesResources = AnalyticsUtil.toIntArray(resourceRowIndex);
-		
+	/**
+	 * This method is used to print collection breakdown data
+	 * @param result
+	 */
+	void setCollectionBreakDownPrintData(ArrayList<UserDataDo> result){
+		try{
 			UserDataDo maxAvgValue=Collections.max(result,new Comparator<UserDataDo>() {
 	        	public int compare(UserDataDo o1, UserDataDo o2) {
 	        		 Long obj1 = new Long(o1.getTimeSpent());
@@ -300,7 +459,116 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	          
 	           //Set time spent
 	            HorizontalPanel timeSpentpnl=new HorizontalPanel();
-	            timeSpentpnl.add(getTimeStampLabel(result.get(i).getAvgTimeSpent()));
+	            timeSpentpnl.add(AnalyticsUtil.getTimeStampLabel(result.get(i).getAvgTimeSpent()));
+	            Label progressBar=new Label();
+	            progressBar.setStyleName(res.css().setProgressBar());
+	            timeSpentpnl.add(progressBar);
+	            double maxAvgVal = ((double) result.get(i).getAvgTimeSpent())/((double) maxAvgValue.getTimeSpent());
+	            progressBar.getElement().getStyle().setWidth(maxAvgVal*100, Unit.PX);
+	            data.setValue(i, 3, timeSpentpnl.toString());
+	           
+	            //set Views label
+	            HorizontalPanel viewpnl=new HorizontalPanel();
+	            Label viewlbl=new Label(Integer.toString(result.get(i).getViews()));
+	            viewlbl.setStyleName(res.css().alignCenterAndBackground());
+	            viewpnl.add(viewlbl);
+	            Label viewProgressBar=new Label();
+	            viewProgressBar.setStyleName(res.css().setProgressBar());
+	            viewpnl.add(viewProgressBar);
+	            float maxViewVal = ((float) result.get(i).getViews())/((float) maxViews.getViews());
+	            viewProgressBar.getElement().getStyle().setWidth(maxViewVal*100, Unit.PX);
+	            data.setValue(i, 4, viewpnl.toString());
+	            
+	            //Set reactions
+	            int reaction=result.get(i).getAvgReaction();
+	            HTMLPanel reactionpnl=new HTMLPanel("");
+	            reactionpnl.add( new AnalyticsReactionWidget(reaction));
+	            Label reactioncount=new Label();
+	            reactionpnl.add(reactioncount);
+	            reactioncount.setText(reaction+"/5");
+	            reactioncount.setStyleName(res.css().alignCenterAndBackground());
+	            data.setValue(i, 5, reactionpnl.toString());
+	        }
+	        final Options options = Options.create();
+	        options.setAllowHtml(true);
+	        Table table = new Table(data, options);
+	        printResourceData.add(table);
+	        printWidget.add(printResourceData);
+		}catch(Exception e){
+		}
+	}
+	/**
+	 * This method is used to display collection break down data.
+	 * @param result
+	 * @param loadingImage
+	 */
+	void setCollectionBreakDown(ArrayList<UserDataDo> result, HTMLPanel loadingImage){
+		
+		final int[] primitivesQuestions = AnalyticsUtil.toIntArray(questionRowIndex);
+		final int[] primitivesResources = AnalyticsUtil.toIntArray(resourceRowIndex);
+		
+			UserDataDo maxAvgValue=Collections.max(result,new Comparator<UserDataDo>() {
+	        	public int compare(UserDataDo o1, UserDataDo o2) {
+	        		 Long obj1 = new Long(o1.getTimeSpent());
+	        	     Long obj2 = new Long(o2.getTimeSpent());
+	        	     return obj1.compareTo(obj2);
+	        	}
+	        });
+	        UserDataDo maxViews=Collections.max(result,new Comparator<UserDataDo>() {
+	        	public int compare(UserDataDo o1, UserDataDo o2) {
+	        		 Integer obj1 = new Integer(o1.getViews());
+	        		 Integer obj2 = new Integer(o2.getViews());
+	        	     return obj1.compareTo(obj2);
+	        	}
+	        });
+		    final DataTable data = DataTable.create();
+		    data.addColumn(ColumnType.NUMBER, "No.");
+	        data.addColumn(ColumnType.STRING, "Format");
+	        data.addColumn(ColumnType.STRING, "Title");
+	        data.addColumn(ColumnType.STRING, "Avg.Time&nbsp;Spent");
+	        data.addColumn(ColumnType.STRING, "Views");
+	        data.addColumn(ColumnType.STRING, "Reaction");
+	        data.addRows(result.size());
+	        
+	        for(int i=0;i<result.size();i++) {
+	        	data.setCell(i, 0, i+1, null, getPropertiesCell());
+	            //set Format
+	              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
+	              String categoryStyle="";
+				  if(resourceCategory.equalsIgnoreCase("website")){ 
+				      resourceCategory = "webpage";
+				      categoryStyle=res.css().category_new_type_webpage();
+				  } else if(resourceCategory.equalsIgnoreCase("slide")){
+				      resourceCategory = "image";
+				      categoryStyle=res.css().category_new_type_image();
+				  } else if(resourceCategory.equalsIgnoreCase("handout") || resourceCategory.equalsIgnoreCase("lesson") || resourceCategory.equalsIgnoreCase("textbook")) {
+				      resourceCategory = "text";
+				      categoryStyle=res.css().category_new_type_text();
+				  }  else if(resourceCategory.equalsIgnoreCase("exam")) {
+				      resourceCategory = "webpage";
+				      categoryStyle=res.css().category_new_type_webpage();
+				  } else if(resourceCategory.equalsIgnoreCase("video")) {
+				      resourceCategory = "webpage";
+				      categoryStyle=res.css().category_new_type_video();
+				  } else if(resourceCategory.equalsIgnoreCase("interactive")) {
+				      resourceCategory = "webpage";
+				      categoryStyle=res.css().category_new_type_interactive();
+				  } else{
+					  categoryStyle=res.css().category_new_type_other();
+				  }
+	            Label categorylbl=new Label();
+	            categorylbl.addStyleName(categoryStyle);
+	            categorylbl.addStyleName(res.css().setMarginAuto());
+	            data.setValue(i, 1,categorylbl.toString());
+	            
+	            //Set Question Title
+	            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
+	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
+	            data.setValue(i, 2, questionTitle.toString());
+	          
+	           //Set time spent
+	            HorizontalPanel timeSpentpnl=new HorizontalPanel();
+	            timeSpentpnl.add(AnalyticsUtil.getTimeStampLabel(result.get(i).getAvgTimeSpent()));
 	            Label progressBar=new Label();
 	            progressBar.setStyleName(res.css().setProgressBar());
 	            timeSpentpnl.add(progressBar);
@@ -335,6 +603,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        Table table = new Table(data, options);
 	        table.getElement().setId("collectionBreakDown");
 	        teacherResourceBreakdownData.add(table);
+	        table.getElement().getFirstChildElement().getFirstChildElement().getFirstChildElement().getStyle().setWidth(100, Unit.PCT);
 	        filterDropDown.addChangeHandler(new ChangeHandler() {
 	    		
 				@Override
@@ -355,11 +624,52 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 					     table.addDomHandler(new ClickOnTableCell(), ClickEvent.getType());
 				}
 			});
+	        loadingImage.setVisible(false);
 	}
+	/**
+	 * This method is used to print scored questions data
+	 * @param scoredQuestionsData
+	 */
+	void setQuestionsPrintData(final ArrayList<UserDataDo> scoredQuestionsData){
+		scoredPrintWidget.clear();
+        final SortTable sortableTable = new SortTable();
+        sortableTable.setStyleName(res.css().tableMain());
+        sortableTable.getElement().setId("results");
+        sortableTable.setBorderWidth(1);
+        sortableTable.setCellPadding(4);
+        sortableTable.setCellSpacing(1);
+        sortableTable.addColumnHeader("No.",  0);
+        sortableTable.addColumnHeader("Question", 1);
+        sortableTable.addColumnHeader("Progress", 2);
+        sortableTable.addColumnHeader("Student&nbsp;Answers", 3);
+        sortableTable.addColumnHeader("Time&nbsp;Spent", 4);
+        sortableTable.addColumnHeader("Reaction", 5);
+        sortableTable.getRowFormatter().addStyleName(0, res.css().tableHeader());
+        //To add scored questions
+      	scoredQuestionHeading.setText("Scored Questions");
+      	scoredQuestionHeading.getElement().getStyle().setClear(Clear.BOTH);
+      	scoredQuestionHeading.getElement().getStyle().setPaddingTop(15, Unit.PX);
+      	scoredQuestionHeading.getElement().getStyle().setPaddingBottom(20, Unit.PX);
+      	scoredQuestionHeading.getElement().getStyle().setTextAlign(TextAlign.LEFT);
+      	printWidget.add(scoredQuestionHeading);
+        scoredPrintWidget.add(sortableTable);
+        scoredPrintWidget.getElement().getStyle().setPaddingTop(15, Unit.PX);
+        if(scoredQuestionsData.size()!=0){
+        	 setSortedData(scoredQuestionsData,sortableTable,true);
+        }else{
+        	Label erroeMsg=new Label();
+        	erroeMsg.setStyleName(res.css().displayMessageTextForScoredQuestions());
+        	erroeMsg.setText("It looks like there is no scored question data for this collection yet.");
+        	scoredPrintWidget.add(erroeMsg);
+        }
+        scoredPrintWidget.setVisible(false);
+	}
+	/**
+	 * This method is used to display scored data
+	 * @param scoredQuestionsData
+	 */
 	void setScoredQuestionsData(final ArrayList<UserDataDo> scoredQuestionsData){
-
 		teacherScoredData.clear();
-		
         final SortTable sortableTable = new SortTable();
         sortableTable.setStyleName(res.css().tableMain());
         sortableTable.getElement().setId("results");
@@ -374,23 +684,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
         sortableTable.addColumnHeader("Time&nbsp;Spent", 4);
         sortableTable.addColumnHeader("Reaction", 5);
         sortableTable.getRowFormatter().addStyleName(0, res.css().tableHeader());
-        sortableTable.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-			 Collections.sort(scoredQuestionsData, new Comparator<UserDataDo>() {
-	        	public int compare(UserDataDo o1, UserDataDo o2) {
-	        		 String obj1 = new String(o1.getTitle());
-	        		 String obj2 = new String(o2.getTitle());
-	        	     return obj1.compareTo(obj2);
-	        	}
-			 });
-			 sortableTable.clear();
-			 setSortedData(scoredQuestionsData,sortableTable);
-			}
-		});
         teacherScoredData.add(sortableTable);
         if(scoredQuestionsData.size()!=0){
-        	 setSortedData(scoredQuestionsData,sortableTable);
+        	 setSortedData(scoredQuestionsData,sortableTable,false);
         }else{
         	Label erroeMsg=new Label();
         	erroeMsg.setStyleName(res.css().displayMessageTextForScoredQuestions());
@@ -398,11 +694,16 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
         	teacherScoredData.add(erroeMsg);
         }
 	}
-	void setSortedData(ArrayList<UserDataDo> scoredQuestionsData,SortTable sortableTable){
+	/**
+	 * This method is used to set scored questions data.
+	 * @param scoredQuestionsData
+	 * @param sortableTable
+	 * @param isPrint
+	 */
+	void setSortedData(ArrayList<UserDataDo> scoredQuestionsData,SortTable sortableTable,boolean isPrint){
 		 for(int i=1;i<=scoredQuestionsData.size();i++){
         	 sortableTable.setValue(i, 0,i);
              sortableTable.setValue(i, 1, AnalyticsUtil.html2text(scoredQuestionsData.get(i-1).getTitle()));
-             
              VerticalPanel answerBreakDownpnl=new VerticalPanel();
              if(scoredQuestionsData.get(i-1).getType()!=null){
             	  String getQuestionType=scoredQuestionsData.get(i-1).getType();
@@ -410,7 +711,6 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
                  		if((scoredQuestionsData.get(i-1).getMetaData() !=null) && (scoredQuestionsData.get(i-1).getMetaData().size() != 0)) {
                  			int metaDataSize=scoredQuestionsData.get(i-1).getMetaData().size();
                  			int totalcount=scoredQuestionsData.get(i-1).getAttempts();
-                 			
                  			for(int j=0;j<metaDataSize;j++){
                  				     MetaDataDo metaData=scoredQuestionsData.get(i-1).getMetaData().get(j);
                  	            	 HorizontalPanel datagrap=new HorizontalPanel();
@@ -447,14 +747,17 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
                  	            	 answerBreakDownpnl.add(datagrap);
                  		}
                   } 
-             }else if(getQuestionType.equalsIgnoreCase("OE")|| getQuestionType.equalsIgnoreCase("fib") ||getQuestionType.equalsIgnoreCase("MA")){
+             }else if((getQuestionType.equalsIgnoreCase("OE")|| getQuestionType.equalsIgnoreCase("fib") ||getQuestionType.equalsIgnoreCase("MA")) && !isPrint){
             	 Label viewResponselbl=new Label("View Response");
+            	 viewResponselbl.getElement().setAttribute("resourceGooruId", scoredQuestionsData.get(i-1).getResourceGooruOId());
+	   	         viewResponselbl.getElement().setAttribute("questionType", scoredQuestionsData.get(i-1).getType());
  	             viewResponselbl.setStyleName(res.css().viewResponseTextOpended());
+ 	             viewResponselbl.addClickHandler(new ClickOnTableCell());
             	 answerBreakDownpnl.add(viewResponselbl);
              }
            
              sortableTable.setWidget(i, 3, answerBreakDownpnl);
-             sortableTable.setValue(i, 4,getTimeStampLabel(scoredQuestionsData.get(i-1).getAvgTimeSpent()).getText());
+             sortableTable.setValue(i, 4,AnalyticsUtil.getTimeStampLabel(scoredQuestionsData.get(i-1).getAvgTimeSpent()).getText());
              sortableTable.setWidget(i, 5,new AnalyticsReactionWidget(scoredQuestionsData.get(i-1).getAvgReaction()));
              
                 int[] pieChatValues=new int[3];
@@ -473,16 +776,15 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        }
 		}
 	}
+	/**
+	 * This method is used to set the cell properties 
+	 * @return
+	 */
 	com.google.gwt.visualization.client.Properties getPropertiesCell(){
 		  Properties properties=Properties.create();
 		  properties.set("style", "text-align:center;");
 		  com.google.gwt.visualization.client.Properties p=properties.cast();
 		  return p;
-	}
-	Label getTimeStampLabel(long timeSpent){
-		 Label timeStamplbl=new Label(getTimeSpent(timeSpent));
-         timeStamplbl.setStyleName(res.css().alignCenterAndBackground());
-         return timeStamplbl;
 	}
 	/**
 	 * This is used to convert long time format
@@ -521,4 +823,23 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		}
 		return createdTime;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.IsCollectionSummaryTeacherView#setViewResponseData(java.util.ArrayList, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId, String collectionId, String classpageId,String pathwayId,String questionType) {
+		     popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,true);
+		     popupPanel.setStyleName(res.css().setOETextPopupCenter());
+		     if(popupPanel.isShowing()){
+		    	 popupPanel.hide();
+		    	 Window.enableScrolling(true);
+		     }else{
+		    	 Window.enableScrolling(false);
+		    	 popupPanel.setGlassEnabled(true);
+		    	 popupPanel.setAutoHideEnabled(true);
+		    	 popupPanel.show();
+		    	 popupPanel.center();
+		     }
+		}
 }

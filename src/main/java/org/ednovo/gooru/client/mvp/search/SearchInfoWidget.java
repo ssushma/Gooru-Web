@@ -1,10 +1,31 @@
-/**
+/*******************************************************************************
+ * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  * 
- */
+ *  http://www.goorulearning.org/
+ * 
+ *  Permission is hereby granted, free of charge, to any person obtaining
+ *  a copy of this software and associated documentation files (the
+ *  "Software"), to deal in the Software without restriction, including
+ *  without limitation the rights to use, copy, modify, merge, publish,
+ *  distribute, sublicense, and/or sell copies of the Software, and to
+ *  permit persons to whom the Software is furnished to do so, subject to
+ *  the following conditions:
+ * 
+ *  The above copyright notice and this permission notice shall be
+ *  included in all copies or substantial portions of the Software.
+ * 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ ******************************************************************************/
+ 
 package org.ednovo.gooru.client.mvp.search;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +42,6 @@ import org.ednovo.gooru.client.uc.LiecenceTooltip;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.ToolTipPopUp;
-
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -347,7 +367,7 @@ public class SearchInfoWidget extends Composite {
 	}
 
 	public void setData(){
-		AppClientFactory.getInjector().getPlayerAppService().getResourceCollectionItem(null, searchResultDo.getGooruOid(), null, new SimpleAsyncCallback<CollectionItemDo>() {
+		AppClientFactory.getInjector().getPlayerAppService().getResourceInfoDetails(null, searchResultDo.getGooruOid(), null, new SimpleAsyncCallback<CollectionItemDo>() {
 
 			@Override
 			public void onSuccess(CollectionItemDo collectionItemDo) {
@@ -462,21 +482,33 @@ public class SearchInfoWidget extends Composite {
 					CollectiongenealInfo.getResource().getUrl(),CollectiongenealInfo.getResource().getResourceType().getName());
 
 			if(resourceDo.getPublisher()!=null || CollectiongenealInfo.getResource().getResourceFormat()!=null){
-
 			if(resourceDo.getPublisher()!=null){
 				if(resourceDo.getPublisher().size()>0){
 					InfoUtil.setDepthofknowledgeDetails(CollectiongenealInfo.getResource().getPublisher(), publisherType, publisherText, publisherPanel);
 				isGeneralInfo=true;
 				}
 				else{
-					publisherPanel.setVisible(false);
+					 if(CollectiongenealInfo.getResource().getResourceFormat()!=null){
+						if(CollectiongenealInfo.getResource().getResourceFormat()!=null && CollectiongenealInfo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+							List<String> publisherQuestionUserName = new ArrayList<String>();
+							if (CollectiongenealInfo.getResource().getCreator() != null && CollectiongenealInfo.getResource().getCreator().getUsername()!=null){
+							publisherQuestionUserName.add(CollectiongenealInfo.getResource().getCreator().getUsername());
+							InfoUtil.setDepthofknowledgeDetails(publisherQuestionUserName, publisherType, publisherText, publisherPanel);
+							}
+							isGeneralInfo=true;
+						}else{
+							publisherPanel.setVisible(false);
+						}
+					}
 				}
 			}
-			if(CollectiongenealInfo.getResource().getResourceFormat()!=null){
+			else if(CollectiongenealInfo.getResource().getResourceFormat()!=null){
 				if(CollectiongenealInfo.getResource().getResourceFormat()!=null && CollectiongenealInfo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
 					List<String> publisherQuestionUserName = new ArrayList<String>();
+					if (CollectiongenealInfo.getResource().getCreator() != null && CollectiongenealInfo.getResource().getCreator().getUsername()!=null){
 					publisherQuestionUserName.add(CollectiongenealInfo.getResource().getCreator().getUsername());
 					InfoUtil.setDepthofknowledgeDetails(publisherQuestionUserName, publisherType, publisherText, publisherPanel);
+					}
 				}
 			}
 		}

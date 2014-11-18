@@ -16,7 +16,7 @@
 
 .goals{
 	height: 35px;
-	margin-left: 100px;
+	margin-left: 103px;
 }
 
 
@@ -60,4 +60,10 @@
 	margin: 10px 91px;
 	color: #515151;
 	font-style: italic;
+}
+.bubblemainContainer{
+	width: 46px;
+	height: 36px;
+	margin: 0px 12px;
+	display: inline-block;
 }

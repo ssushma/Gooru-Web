@@ -67,7 +67,7 @@
 			ui:field="loadingImagePanel">
 			<g:Label styleName="{playerStyle.loadingImageForShare}" />
 		</g:HTMLPanel>
-
+		<g:Label ui:field="noInfoAvailable"></g:Label>		
 		<g:HTMLPanel styleName="{style.standardDiv}" ui:field="gradesPanel">
 			<g:Label styleName="{style.title}" ui:field="lblGradeTitle" />
 			<g:Label styleName="{style.normal}" ui:field="gradesText" />

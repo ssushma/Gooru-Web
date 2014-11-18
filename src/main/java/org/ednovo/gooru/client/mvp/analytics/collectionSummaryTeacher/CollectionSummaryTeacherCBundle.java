@@ -50,6 +50,7 @@ public interface CollectionSummaryTeacherCBundle extends ClientBundle{
 	        
 	        String displayMessageTextForScoredQuestions();
 	        String displayMessageTextForOEQuestions();
+	        String setOETextPopupCenter();
 	        
 	}
 	@NotStrict

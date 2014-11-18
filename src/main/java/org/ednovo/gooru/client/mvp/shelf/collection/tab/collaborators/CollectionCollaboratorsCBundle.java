@@ -102,6 +102,7 @@ public interface CollectionCollaboratorsCBundle extends ClientBundle{
 		String deleteTextBox();
 		String deleteContainer();
 		String tag();
+		String deleteTextLable();
 		
 		String privacyAlignStyle();
 	}

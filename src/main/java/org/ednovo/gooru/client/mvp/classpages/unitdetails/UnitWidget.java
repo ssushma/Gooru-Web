@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.classpages.unitdetails;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -70,6 +71,8 @@ public class UnitWidget extends Composite implements HasClickHandlers{
  	
  	private String unitCollectionItemId=null;
  	
+ 	private String unitNmae=null;
+ 	
  	ClassUnitsListDo classUnitDo;
  	
  	
@@ -91,13 +94,24 @@ public class UnitWidget extends Composite implements HasClickHandlers{
 		this.classUnitDo=classUnitDo;
 		this.res = UnitAssignmentCssBundle.INSTANCE;
 		res.unitAssignment().ensureInjected();
-		ilUnitNumber.setText(""+classUnitDo.getItemSequence());
-		ilUnitName.setText(classUnitDo.getResource().getTitle());
 		this.unitGooruOid=classUnitDo.getResource().getGooruOid();
 		this.unitCollectionItemId=classUnitDo.getCollectionItemId();
-		System.out.println("unitCollectionItemId::"+unitCollectionItemId);
+		this.unitNmae=classUnitDo.getResource().getTitle();
+		ilUnitNumber.setText(""+classUnitDo.getItemSequence());
+		ilUnitName.setText(classUnitDo.getResource().getTitle());
+		setElementIds();
 	}
 	
+	/**
+	 * To set the Ids
+	 */
+	private void setElementIds() {
+		StringUtil.setAttributes(ilUnitNumber.getElement(), "ilUnitNumber", null, ilUnitNumber.getText());
+		StringUtil.setAttributes(ilUnitName.getElement(), "ilUnitName", null, ilUnitName.getText());
+		StringUtil.setAttributes(liPanelUnit.getElement(), "liPanelUnit", null, null);
+		StringUtil.setAttributes(unitNameContainer.getElement(), "unitNameContainer", null, null);
+	}
+
 	/**
 	 * @return the htPanelUnit
 	 */
@@ -130,7 +144,12 @@ public class UnitWidget extends Composite implements HasClickHandlers{
 	public ClassUnitsListDo getClassUnitDo() {
 		return classUnitDo;
 	}
-	
-	
 
+	public String getUnitNmae() {
+		return unitNmae;
+	}
+
+	public void setUnitNmae(String unitNmae) {
+		this.unitNmae = unitNmae;
+	}
 }

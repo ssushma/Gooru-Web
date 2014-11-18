@@ -27,10 +27,50 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
+import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
+
+import com.google.gwt.user.client.ui.HTMLPanel;
 
 
 public interface IsCollectionSummaryIndividualView extends IsViewWithHandlers<CollectionSummaryIndividualUiHandlers>{
-	void setIndividualData(ArrayList<UserDataDo> result);
-	void setIndividualCollectionMetaData(ArrayList<CollectionSummaryMetaDataDo> result);
+	
+	/**
+	 * This method is used to set individual data
+	 * @param result
+	 * @param loadingImage
+	 */
+	void setIndividualData(ArrayList<UserDataDo> result,HTMLPanel loadingImage);
+	
+	/**
+	 * This method is used to set individual user collection meta data.
+	 * @param result
+	 * @param printUserDataDO
+	 */
+	void setIndividualCollectionMetaData(ArrayList<CollectionSummaryMetaDataDo> result,PrintUserDataDO printUserDataDO);
+	
+	/**
+	 * This method is used to set view responses data
+	 * @param result
+	 * @param resourceGooruId
+	 * @param collectionId
+	 * @param classpageId
+	 * @param pathwayId
+	 * @param questionType
+	 * @param isSummary
+	 */
+	void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType, boolean isSummary);
+
+    /**
+     * This method is used to enable and disable email button
+     * @param isSummary
+     */
+    void enableAndDisableEmailButton(boolean isSummary);
+
+	/**
+	 * This method is used to set the pdf attachment to email popup
+	 * @param path
+	 */
+	void setPdfForEmail(String path);
 }

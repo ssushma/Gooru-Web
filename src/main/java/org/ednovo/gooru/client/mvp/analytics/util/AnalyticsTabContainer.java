@@ -18,15 +18,19 @@ public abstract class AnalyticsTabContainer extends Composite {
 			UiBinder<Widget, AnalyticsTabContainer> {
 	}
 
-	@UiField Button btnScoredQuestions,btnOpenEndedQuestions,btnCollectionBreakDown,btnPtint,btnSave;
-	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab",PRINT="print",SAVEBTN="save";
+	@UiField Button btnScoredQuestions,btnOpenEndedQuestions,btnCollectionBreakDown,btnPtint,btnSave,btnEmail;
+	final String SCORED="scoredTab",OPENENDED="openendedTab",BREAKDOWN="breakdownTab",PRINT="print",SAVEBTN="save",EMAIL="email";
 	
+	/**
+	 * Constructor
+	 */
 	public AnalyticsTabContainer() {
 		initWidget(uiBinder.createAndBindUi(this));
 		btnScoredQuestions.addClickHandler(new ClickImplemntation(SCORED));
 		btnOpenEndedQuestions.addClickHandler(new ClickImplemntation(OPENENDED));
 		btnCollectionBreakDown.addClickHandler(new ClickImplemntation(BREAKDOWN));
 		btnPtint.addClickHandler(new ClickImplemntation(PRINT));
+		btnEmail.addClickHandler(new ClickImplemntation(EMAIL));
 		btnSave.addClickHandler(new ClickImplemntation(SAVEBTN));
 	}
 	
@@ -39,7 +43,17 @@ public abstract class AnalyticsTabContainer extends Composite {
 		public void onClick(ClickEvent event) {
 			onTabClick(tabClicked);
 		}
-		
 	}
+	/**
+	 * This will return the email Button
+	 * @return
+	 */
+	public Button getEmailButton(){
+		return btnEmail;
+	}
+	/**
+	 * This abastact method is used to handle the click event on clicked button
+	 * @param tabClicked
+	 */
 	public abstract void onTabClick(String tabClicked);
 }

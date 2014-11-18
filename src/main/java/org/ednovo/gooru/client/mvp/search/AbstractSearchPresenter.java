@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.event.RegisterTabDndEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
+import org.ednovo.gooru.client.mvp.home.AlmostDoneUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
@@ -278,6 +279,15 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 			int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
 			signUpViewPresenter.displayPopup(displayScreen);
 			addToPopupSlot(signUpViewPresenter);
+		}
+		
+		int flag = AppClientFactory.getLoggedInUser().getViewFlag();
+		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
+		if(!AppClientFactory.isAnonymous() && flag==0 &&  loginType.equalsIgnoreCase("apps")) {
+			AlmostDoneUc update = new AlmostDoneUc(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser());
+			update.setGlassEnabled(true);
+			update.show();
+			update.center();
 		}
 		
 		Document doc = Document.get();
@@ -584,6 +594,8 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 	
 	@Override
 	public void getAddStandards() {
+		
+		if(!AppClientFactory.isAnonymous()){
 		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
 				USER_META_ACTIVE_FLAG,
 				new SimpleAsyncCallback<ProfileDo>() {
@@ -626,7 +638,16 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 					}
 
 				});
-		
+		}else{
+			isCCSSAvailable = true;
+			isNGSSAvailable = true;
+			isCAAvailable = true;
+			if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
+				addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+				addToPopupSlot(addStandardsPresenter);
+				getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
+			}
+		}
 	}
 	
 	@Override

@@ -171,7 +171,7 @@ public class UnitSetupView extends BaseViewWithHandlers<UnitSetupUiHandlers> imp
 			sequenceNum = sequenceNum + 1;
 			System.out.println("sequenceNum::"+sequenceNum);
 			unitsAssignmentWidgetView = new UnitsAssignmentWidgetView(sequenceNum,classListUnitsListDo);
-			unitsAssignmentWidgetView.setClassDo(classDo);
+//			unitsAssignmentWidgetView.setClassDo(classDo);
 			if (classListUnitsListDo.getResource().getItemCount() != null) {
 				unitsAssignmentWidgetView.setTotalHitCount(classListUnitsListDo.getResource().getItemCount());
 			} else {

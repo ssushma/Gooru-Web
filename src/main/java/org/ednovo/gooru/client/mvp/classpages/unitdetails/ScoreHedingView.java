@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateUnitSetGoalEvent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -42,6 +43,7 @@ import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
@@ -115,6 +117,10 @@ public class ScoreHedingView extends Composite {
 		lblTitle.setText(i18n.GL2195());
 		lblControl.getElement().setId("controll");
 		btnSetGoal.setText(SETGOAL);
+		StringUtil.setAttributes(lblTitle.getElement(),"lblTitle", null, lblTitle.getText());
+		StringUtil.setAttributes(btnSetGoal.getElement(),"btnSetGoal", btnSetGoal.getText(), btnSetGoal.getText());
+		StringUtil.setAttributes(txtScore.getElement(), "txtScore",null,null);
+		StringUtil.setAttributes(lblScore.getElement(),"lblScore", null, null);
 	}
 
 	/**
@@ -123,25 +129,26 @@ public class ScoreHedingView extends Composite {
 	public void showUnitStatus() {
 		// TODO Auto-generated method stub
 		if(classUnitsListDo!=null){
-			System.out.println("title:"+getLblTitle().getText());
 			if(getLblTitle().getText().equals(i18n.GL2195())){
-				System.out.println("minimumscore::"+classUnitsListDo.getMinimumScoreByUser());
 				if(classUnitsListDo.getMinimumScoreByUser()!=null){
 					showAndHideTextBox();
 					txtScore.setText(classUnitsListDo.getMinimumScoreByUser()+"");
 					lblScore.setText(txtScore.getText());
+					StringUtil.setAttributes(lblScore.getElement(),"lblScore", null, lblScore.getText());
 					btnSetGoal.setStyleName("secondary");
 					btnSetGoal.setText(EDITGOAL);
+					StringUtil.setAttributes(btnSetGoal.getElement(),"btnSetGoal", btnSetGoal.getText(), btnSetGoal.getText());
 					showingScoreReader();
 				}
 			}else{
-				System.out.println("else::::");
 				if(classUnitsListDo.getAssignmentCompleted()!=null){
 					showAndHideTextBox();
 					txtScore.setText(classUnitsListDo.getAssignmentCompleted()+"");
 					lblScore.setText(txtScore.getText());
+					StringUtil.setAttributes(lblScore.getElement(),"lblScore", null, lblScore.getText());
 					btnSetGoal.setStyleName("secondary");
 					btnSetGoal.setText(EDITGOAL);
+					StringUtil.setAttributes(btnSetGoal.getElement(),"btnSetGoal", btnSetGoal.getText(), btnSetGoal.getText());
 					showingScoreReader();
 				}
 			}
@@ -224,9 +231,13 @@ public class ScoreHedingView extends Composite {
 					&& event.getNativeEvent().getKeyCode() != KeyCodes.KEY_DELETE){
 				((TextBox) event.getSource()).cancelKey();
 			}
-
+			if(event.getNativeEvent().getKeyCode() == 46 &&event.getNativeEvent().getKeyCode() == 37)
+			{
+				((TextBox) event.getSource()).cancelKey();
+			}
 		}
-	}
+	}	
+
 	/**
 	 * Click event for Set Goal Button
 	 * @param clickEvent
@@ -245,8 +256,10 @@ public class ScoreHedingView extends Composite {
 					if(btnSetGoal.getText().equals(SETGOAL)){
 						showAndHideTextBox();
 						lblScore.setText(txtScore.getText());
+						StringUtil.setAttributes(lblScore.getElement(),"lblScore", null, lblScore.getText());
 						btnSetGoal.setStyleName("secondary");
 						btnSetGoal.setText(EDITGOAL);
+						StringUtil.setAttributes(btnSetGoal.getElement(),"btnSetGoal", btnSetGoal.getText(), btnSetGoal.getText());
 						collectionItemId=classUnitsListDo.getCollectionItemId();
 						if(collectionItemId!=null){
 							if(getLblTitle().getText().equals(i18n.GL2195())){
@@ -261,6 +274,7 @@ public class ScoreHedingView extends Composite {
 						showAndHideTextBox();
 						btnSetGoal.setStyleName("primary");
 						btnSetGoal.setText(SETGOAL);
+						StringUtil.setAttributes(btnSetGoal.getElement(),"btnSetGoal", btnSetGoal.getText(), btnSetGoal.getText());
 						lblRedControl.getElement().setId("redControll");
 					}
 				}
@@ -282,6 +296,7 @@ public class ScoreHedingView extends Composite {
 		lblValidation.setVisible(true);
 		lblValidation.setStyleName("errorMessage");
 		lblValidation.setText(msg);
+		StringUtil.setAttributes(lblValidation.getElement(), "lblValidation", null, lblValidation.getText());
 	}
 
 	/**

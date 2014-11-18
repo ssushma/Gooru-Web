@@ -27,36 +27,66 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.client.service.AnalyticsServiceAsync;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
+import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
+import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsCollectionSummaryIndividualView> implements CollectionSummaryIndividualUiHandlers{
 	@Inject
 	private  AnalyticsServiceAsync analyticService;
+	
+	private String collectionId,classpageId,pathwayId,userId,sessionId;
+	private boolean isSummary;
+	
+	/**
+	 * Constructor
+	 * @param eventBus
+	 * @param view
+	 */
 	@Inject
 	public CollectionSummaryIndividualPresenter(EventBus eventBus, IsCollectionSummaryIndividualView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}
 
+	/**
+	 * Get analytics service
+	 * @return
+	 */
 	public AnalyticsServiceAsync getAnalyticService() {
 		return analyticService;
 	}
 
+	/**
+	 * @param analyticService
+	 */
 	public void setAnalyticService(AnalyticsServiceAsync analyticService) {
 		this.analyticService = analyticService;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualUiHandlers#setIndividualData(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, com.google.gwt.user.client.ui.HTMLPanel, org.ednovo.gooru.shared.model.analytics.PrintUserDataDO)
+	 */
 	@Override
-	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId) {
+	public void setIndividualData(String collectionId,String classpageId,String userId,String sessionId,String pathwayId,boolean isSummary,final HTMLPanel loadingImage,final PrintUserDataDO printUserDataDO) {
+		this.pathwayId=pathwayId;
+		this.classpageId=classpageId;
+		this.collectionId=collectionId;
+		this.userId=userId;
+		this.sessionId=sessionId;
+		this.isSummary=isSummary;
+		getView().enableAndDisableEmailButton(isSummary);
 		this.analyticService.getCollectionMetaDataByUserAndSession(collectionId, classpageId,userId, sessionId, new AsyncCallback<ArrayList<CollectionSummaryMetaDataDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<CollectionSummaryMetaDataDo> result) {
-				getView().setIndividualCollectionMetaData(result);
+				getView().setIndividualCollectionMetaData(result,printUserDataDO);
 			}
 			
 			@Override
@@ -68,7 +98,7 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 			
 			@Override
 			public void onSuccess(ArrayList<UserDataDo> result) {
-				getView().setIndividualData(result);
+				getView().setIndividualData(result,loadingImage);
 			}
 			
 			@Override
@@ -78,18 +108,39 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 		});
 	}
 
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualUiHandlers#setHtmltopdf(java.lang.String, boolean)
+	 */
 	@Override
-	public void setHtmltopdf(String htmlString) {
-		this.analyticService.setHTMLtoPDF(htmlString, new AsyncCallback<Void>() {
-			
+	public void setHtmltopdf(String htmlString,final boolean isClickedOnEmail) {
+		this.analyticService.setHTMLtoPDF(htmlString, new AsyncCallback<String>() {
 			@Override
-			public void onSuccess(Void result) {
-				
+			public void onSuccess(String result) {
+				if(isClickedOnEmail){
+					getView().setPdfForEmail(result);
+				}else{
+					Window.open(result, "_blank", "status=0,toolbar=0,menubar=0,location=0");
+				}
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				
+			}
+		});
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.CollectionSummaryIndividualUiHandlers#setOEtextData(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void setOEtextData(final String resourceGooruId, final String questionType) {
+		this.analyticService.getOETextData(resourceGooruId, collectionId, classpageId, pathwayId,"CS",sessionId,userId, new AsyncCallback<ArrayList<OetextDataDO>>() {
+			@Override
+			public void onSuccess(ArrayList<OetextDataDO> result) {
+				getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary);
+			}
+			@Override
+			public void onFailure(Throwable caught) {
 			}
 		});
 	}

@@ -44,7 +44,19 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
-
+/**
+ * @fileName : SocialShareLinksView.java
+*
+* @description : This file used to share Resource/Collection with different types of Links.
+* 
+* @version : 5.4
+*
+* @date:  Sep, 2013.
+*
+* @Author: Gooru Team
+* 
+* @Reviewer: Gooru Team
+ */
 public class SocialShareLinksView extends Composite {
 
 	@UiField

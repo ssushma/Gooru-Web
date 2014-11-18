@@ -11,7 +11,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -31,7 +30,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class LineChartView extends Composite {
 
-	@UiField Label option1,option2;
+	/*@UiField Label option1,option2;*/
 	@UiField HTMLPanel chartContainer;
 	private static LineChartViewUiBinder uiBinder = GWT	.create(LineChartViewUiBinder.class);
 	public MessageProperties msgProperties = GWT.create(MessageProperties.class);
@@ -40,12 +39,25 @@ public class LineChartView extends Composite {
 	}
 	@UiField CollectionChartCBundle res;
 	
+	/**
+	 * Constructor
+	 */
 	public LineChartView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
-	public void createLineChart(String title1,String title2,String []categories,List<String> contentList,Map<String,Number[]> data,ChartMetaDataOptions chartmetadata){
-		option1.setText(title1);
-		option2.setText(title2);
-		chartContainer.add(new HCLineChart().createChartLine(categories,contentList,data,chartmetadata));
+	/**
+	 * This method is used to create a line.
+	 * @param title1
+	 * @param title2
+	 * @param categories
+	 * @param contentList
+	 * @param data
+	 * @param chartmetadata
+	 * @param isFirst
+	 */
+	public void createLineChart(String title1,String title2,String []categories,List<String> contentList,Map<String,Number[]> data,ChartMetaDataOptions chartmetadata,boolean isFirst){
+	/*	option1.setText(title1);
+		option2.setText(title2);*/
+		chartContainer.add(new HCLineChart().createChartLine(categories,contentList,data,chartmetadata,isFirst));
 	}
 }

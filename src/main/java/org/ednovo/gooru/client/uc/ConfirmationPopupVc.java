@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.uc;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -87,6 +88,7 @@ public abstract class ConfirmationPopupVc extends Composite {
 		cancelButton.setText(i18n.GL0142());
 		cancelButton.getElement().setAttribute("alt", i18n.GL0142());
 		cancelButton.getElement().setAttribute("title", i18n.GL0142());
+		cancelButton.setVisible(true);
 		okButton.setText(i18n.GL0190());
 		okButton.getElement().setAttribute("alt", i18n.GL0190());
 		okButton.getElement().setAttribute("title", i18n.GL0190());
@@ -138,6 +140,7 @@ public abstract class ConfirmationPopupVc extends Composite {
 
 	@UiHandler("okButton")
 	public void onClickDelete(ClickEvent clickEvent){
+		System.out.println("con--inin");
 		loadingTextLbl.setVisible(true);
         buttonContainer.setVisible(false);
 		onDelete(clickEvent);
@@ -157,4 +160,29 @@ public abstract class ConfirmationPopupVc extends Composite {
 		okButton.getElement().setAttribute("alt", deleteBtnTxt);
 		okButton.getElement().setAttribute("title", deleteBtnTxt);
 	}
+
+	/**
+	 * @return the cancelButton
+	 */
+	public Button getCancelButton() {
+		return cancelButton;
+	}
+	
+	public void setAndHideButtonInPlayer(String okText, String cancelTxt){
+		okButton.setText(okText);
+		cancelButton.setText(cancelTxt);
+		buttonContainer.getElement().setAttribute("style", "margin-top:0px;");
+		StringUtil.setAttributes(okButton.getElement(), okText, okText, okText);
+		StringUtil.setAttributes(cancelButton.getElement(), cancelTxt, cancelTxt, cancelTxt);
+	}
+
+	/**
+	 * @return the okButton
+	 */
+	public BlueButtonUc getOkButton() {
+		return okButton;
+	}
+	
+	
+	
 }

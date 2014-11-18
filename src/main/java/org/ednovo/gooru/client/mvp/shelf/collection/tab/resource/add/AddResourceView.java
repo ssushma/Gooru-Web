@@ -44,6 +44,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleDocsResourceView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleWebResource;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.exists.ExistsResourceView;
@@ -73,6 +74,7 @@ import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -80,6 +82,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -108,7 +111,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	private AddSearchResourceWidget addSearchResourceWidget;
 	private AddUserOwnResourceWidget addUserOwnResourceWidget;
 
-
 	private DeleteConfirmationPopupVc deleteConfirmationPopup;
 
 	private String ownResourceImgUrl;
@@ -117,8 +119,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		return addWebResourceWidget;
 	}
 	protected AppPopUp appPopUp;
-	
-	String filepattern;
 	
 	public UserOwnResourcePreview userOwnResourcePreview;
 	
@@ -153,7 +153,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	Integer webResourceEnd; 
 	
 	private CollectionItemDo collectionItemDo=null;
-		
+	
+	private HandlerRegistration handlerRegistration=null;
+	
+	private boolean isQuestion =false;
 	
 	@Inject
 	public AddResourceView(EventBus eventBus) {
@@ -396,7 +399,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 					
 					@Override
 					public void addWebResource() {
-
 						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd,educationalUse,momentsOfLearning,standards,hostname,tagList);
 
 						
@@ -451,6 +453,25 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void checkShortenUrl(String userUrlStr) {
 			getUiHandlers().isShortenUrl(userUrlStr);
+		}
+
+
+		@Override
+		public void browseStandardsInfo() {
+			isQuestion =false;
+			getUiHandlers().browseStandardsInfo(isQuestion);
+		}
+
+
+		public void setUpdatedBrowseStandardsVal(String standardsCodeVal,int id,String desc) {
+			super.setUpdatedBrowseStandarsCode(standardsCodeVal,id,desc);
+		}
+
+
+		@Override
+		public void closeStandardsPopup() {
+			// TODO Auto-generated method stub
+			getUiHandlers().closeStandardsPopup();
 		}
 		
 	}
@@ -507,8 +528,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 					AddQuestionImg addQuestionImage=(AddQuestionImg)addQuestionResourceWidget.addQuestImgContainer.getWidget(0);
 					thumbnailUrl=addQuestionImage.getFileName();
 				}
-				System.out.println("thumbna"+thumbnailUrl);
-				getUiHandlers().updateQuestionResource(collectionItemDo,collectionQuestionItemDo,thumbnailUrl==null?null:thumbnailUrl);
+				//getUiHandlers().updateQuestionResource(collectionItemDo,collectionQuestionItemDo,thumbnailUrl==null?null:"asset-question_"+thumbnailUrl);
+				getUiHandlers().v2UpdateQuestionResource(collectionItemDo,collectionQuestionItemDo,thumbnailUrl==null?null:"asset-question_"+thumbnailUrl);
 			}else{
 				getUiHandlers().addQeustionResource(mediaFileName,collectionQuestionItemDo);
 			}
@@ -518,6 +539,20 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		@Override
 		public void setEditQuestionImage(String fileName) {
 			setImageUrl(fileName, null, true, false);
+		}
+		@Override
+		public void callBrowseStandards() {
+			isQuestion =true;
+			getUiHandlers().browseStandardsInfo(isQuestion);
+		}
+		public void setUpdatedBrowseStandardsVal(String standardsCodeVal,int id, String desc) {
+			super.setUpdatedBrowseStandarsCode(standardsCodeVal,id,desc);
+			
+		}
+		@Override
+		public void closeStandardsPopup() {
+			getUiHandlers().closeStandardsPopup();
+			
 		}
 		
 	}
@@ -727,7 +762,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				@Override
 				public void onClick(ClickEvent event) {
 					if(addQuestionResourceWidget.getQuestionEditMode()){
-						getUiHandlers().questionImageUpload(collectionItemDo.getResource().getGooruOid());
+						getUiHandlers().questionImageUpload(collectionItemDo.getCollectionItemId());
 					}else{
 						getUiHandlers().questionImageUpload();
 					}
@@ -1095,7 +1130,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}
 		@Override
 		public void onDelete(ClickEvent clickEvent) {
-			getUiHandlers().removeQuestionImage(collectionItemDo.getResource().getGooruOid());
+			getUiHandlers().removeQuestionImage(collectionItemDo.getCollectionItemId());
 		}
 		public void hide() {
 			 super.hide();
@@ -1198,6 +1233,29 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	         tabViewContainer.add(new GoogleWebResource(result.get(m)));
 		}
 		tabViewContainer.getElement().setId("pnlTabViewContainer");
+	}
+
+	@Override
+	public void OnBrowseStandardsClickEvent(Button addStandardsBtn) {
+		if(handlerRegistration!=null){
+			handlerRegistration.removeHandler();
+		}
+		handlerRegistration=addStandardsBtn.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().addUpdatedBrowseStandards();
+			}
+		});
+	}
+
+	@Override
+	public void setUpdatedStandardsCode(String standardsCodeVal,int id,String desc,boolean value) {
+		if(value == false){
+			addWebResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
+		}else{
+			addQuestionResourceWidget.setUpdatedBrowseStandardsVal(standardsCodeVal,id,desc);
+		}
 	}
 	
 }

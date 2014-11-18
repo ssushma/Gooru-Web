@@ -82,4 +82,5 @@ public interface DistrictStyleBundle extends CssResource {
 	String susdPartnerLogo();
 	String lpsPartnerLogo();
 	String valverdePartnerLogo();
+	String lusdPartnerLogo();
 }

@@ -243,7 +243,7 @@ public class StringUtil {
 				|| userName.equalsIgnoreCase("FTE") || userName.equalsIgnoreCase("WSPWH") || userName.equalsIgnoreCase("lisaNGC") || userName.equalsIgnoreCase("NGC")
 				|| userName.equalsIgnoreCase("ONR") || userName.equalsIgnoreCase(PlaceTokens.FINCAPINC) || userName.equalsIgnoreCase(PlaceTokens.PSDPAL) 
 				|| userName.equalsIgnoreCase(PlaceTokens.YOUTHVOICES) || userName.equalsIgnoreCase(PlaceTokens.GEOEDUCATION) || userName.equalsIgnoreCase(PlaceTokens.LPS) 
-				|| userName.equalsIgnoreCase(PlaceTokens.CORE_LIBRARY) || userName.equalsIgnoreCase(PlaceTokens.ESYP) || userName.equalsIgnoreCase(PlaceTokens.CCST_Cal_TAC)) {
+				|| userName.equalsIgnoreCase(PlaceTokens.CORE_LIBRARY) || userName.equalsIgnoreCase(PlaceTokens.ESYP) || userName.equalsIgnoreCase(PlaceTokens.CCST_Cal_TAC) || userName.equalsIgnoreCase(PlaceTokens.TICAL)) {
 			isPartner = true;
 		}
 		return isPartner;
@@ -413,4 +413,11 @@ public class StringUtil {
 		if (titleValue !=null)
 			object.setAttribute("title",titleValue);
 	}
+	
+	public static native String removeHtml(String htmText) /*-{
+		var regex = /(<([^>]+)>)/ig;
+		result = htmText.replace(regex, "");
+		return result;
+	}-*/;
+
 }

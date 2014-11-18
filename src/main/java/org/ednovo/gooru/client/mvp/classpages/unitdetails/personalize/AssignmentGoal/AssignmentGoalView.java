@@ -113,7 +113,13 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 	}
 	
 	public void setStaticTexts(){
-		lblStudentsList.setText(collaboratorsDo.getFirstName() + " " + collaboratorsDo.getLastName());
+		if(collaboratorsDo.getFirstName()!=null && collaboratorsDo.getLastName()!=null){
+			lblStudentsList.setText(collaboratorsDo.getFirstName() + " " + collaboratorsDo.getLastName());
+		}else if(collaboratorsDo.getFirstName()!=null){
+			lblStudentsList.setText(collaboratorsDo.getFirstName());
+		}else if(collaboratorsDo.getLastName()!=null){
+			lblStudentsList.setText(collaboratorsDo.getLastName());
+		}
 		StringUtil.setAttributes(lblStudentsList.getElement(), collaboratorsDo.getGooruUid(), null, null);
 		
 //		setAssignments();
@@ -124,16 +130,21 @@ public class AssignmentGoalView extends ChildView<AssignmentGoalPresenter> imple
 		panelAssignmentList.clear();
 		if (displayLimit > 10){
 			displayLimit = displayLimit > list.size()  ? list.size() : displayLimit;
+			if(displayLimit%10!=0){
+				displayLimit=displayLimit+(10-(displayLimit%10));
+			}
 		}else{
 			displayLimit = 10;
 		}
 		if (list !=null && list.size() > 0){
 			lblPleaseWait.setVisible(false);
 			for (int i=displayStartFrom; i<displayLimit; i++){
-				if (list.get(i) != null && list.get(i).getTitle() != null){
-					GoalViewVc goalsVc = new GoalViewVc(""+(i+1), list.get(i)) {
-					};
-					panelAssignmentList.add(goalsVc);
+				if(i<list.size()){
+					if (list.get(i) != null && list.get(i).getTitle() != null){
+						GoalViewVc goalsVc = new GoalViewVc(""+(i+1), list.get(i)) {
+						};
+						panelAssignmentList.add(goalsVc);
+					}
 				}
 			}
 		}else{

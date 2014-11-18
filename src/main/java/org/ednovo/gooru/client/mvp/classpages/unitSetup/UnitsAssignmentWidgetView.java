@@ -116,6 +116,9 @@ public class UnitsAssignmentWidgetView extends Composite {
 	private int assignmentOffset=0;
 	private int assignmentLimit=10;
 	
+	private int insightOffset=0;
+	private int insightLimit=10;
+	boolean flag = false;
 	boolean isDeleted=false;
 	private boolean isEditMode=false;
 	private boolean isReorderPopupShowing = false;
@@ -193,7 +196,7 @@ public class UnitsAssignmentWidgetView extends Composite {
 				for(int i=0;i<classUnitsDo.getResource().getCollectionItems().size();i++){
 					ClasspageItemDo classpageItemDo=classUnitsDo.getResource().getCollectionItems().get(i);
 					if(isStudentMode){
-						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),insightsUserList));
+						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),insightsUserList.get(i+insightOffset)));
 					}else{
 						assignmentsContainer.add(new AssignmentsContainerWidget(classpageItemDo, classUnitsDo.getResource().getGooruOid(),null));
 					}
@@ -388,42 +391,54 @@ public class UnitsAssignmentWidgetView extends Composite {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			final String classPageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-			unitAssigmentReorder = new UnitAssigmentReorder(assignmentSeq,getClassDo(),title, narration,classPageId,Integer.parseInt(seqNumber),getTotalHitCount(),collectionItem,classUnitsDo.getResource().getGooruOid()){
+			AppClientFactory.getInjector().getClasspageService().v2GetPathwaysOptimized(classPageId, "5",  "0", new SimpleAsyncCallback<ClassDo>() {
+
 				@Override
-				public void reorderAssignment(int seqPosition,String selectedPathwayId,String targetPathway,String selectedAssignmentId) {
-					boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItem);
-					if(isAssignmentDeleted){
-						setLoadingIcon(true);
-						clearAssignmentsFromDo();
-						/**
-						 * Following condition written in order to check weather assignment moved to the same pathway
-						 * or different pathway, based on this offset value will be decided and respective pathway will get refresh.
-						 */
-						if(Integer.parseInt(targetPathway)==Integer.parseInt(seqNumber)){
-							assignmentOffset =(seqPosition/assignmentLimit)*assignmentLimit;
-							if(assignmentOffset==seqPosition){
-								assignmentOffset = assignmentOffset-assignmentLimit;
-							}
-							getUnitAssignments(assignmentOffset,isEditMode(),null);
-						}else{
-							if((getTotalHitCount()-1)==assignmentOffset){
-								if((getTotalHitCount()-1)==0){
-									assignmentOffset=0;
-								}else{
-									assignmentOffset=assignmentOffset-assignmentLimit;
+				public void onSuccess(ClassDo result) {
+					flag = true;
+					setClassDo(result);
+				}
+				
+			});
+			if(flag){
+				flag=false;
+				unitAssigmentReorder = new UnitAssigmentReorder(assignmentSeq,getClassDo(),title, narration,classPageId,Integer.parseInt(seqNumber),getTotalHitCount(),collectionItem,classUnitsDo.getResource().getGooruOid()){
+					@Override
+					public void reorderAssignment(int seqPosition,String selectedPathwayId,String targetPathway,String selectedAssignmentId) {
+						boolean isAssignmentDeleted = deleteAssignmentWidget(collectionItem);
+						if(isAssignmentDeleted){
+							setLoadingIcon(true);
+							clearAssignmentsFromDo();
+							/**
+							 * Following condition written in order to check weather assignment moved to the same pathway
+							 * or different pathway, based on this offset value will be decided and respective pathway will get refresh.
+							 */
+							if(Integer.parseInt(targetPathway)==Integer.parseInt(seqNumber)){
+								assignmentOffset =(seqPosition/assignmentLimit)*assignmentLimit;
+								if(assignmentOffset==seqPosition){
+									assignmentOffset = assignmentOffset-assignmentLimit;
 								}
+								getUnitAssignments(assignmentOffset,isEditMode(),null);
+							}else{
+								if((getTotalHitCount()-1)==assignmentOffset){
+									if((getTotalHitCount()-1)==0){
+										assignmentOffset=0;
+									}else{
+										assignmentOffset=assignmentOffset-assignmentLimit;
+									}
+								}
+								getUnitAssignments(assignmentOffset,isEditMode(),null);
+								AppClientFactory.fireEvent(new RefreshPathwayItemsEvent(selectedPathwayId, classPageId)); 
 							}
-							getUnitAssignments(assignmentOffset,isEditMode(),null);
-							AppClientFactory.fireEvent(new RefreshPathwayItemsEvent(selectedPathwayId, classPageId)); 
 						}
+
 					}
 
-				}
-
-			};
-			unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-148,event.getRelativeElement().getAbsoluteTop()+36);
-			unitAssigmentReorder.show();
-			isReorderPopupShowing = true;
+				};
+				unitAssigmentReorder.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-148,event.getRelativeElement().getAbsoluteTop()+36);
+				unitAssigmentReorder.show();
+				isReorderPopupShowing = true;
+			}
 		}
 	}
 	
@@ -507,10 +522,15 @@ public class UnitsAssignmentWidgetView extends Composite {
 	 public void revealPlace(String tabName,String pageNum,String unitId,String viewToken,String sequenceNumber){
 			Map<String,String> params = new HashMap<String,String>();
 			String classpageid= "";
+			String stuUid= "";
 			if(viewToken.equals(PlaceTokens.STUDENT))
 			{
 				classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+				stuUid = AppClientFactory.getPlaceManager().getRequestParameter("sid", null);
 				params.put("id", classpageid);
+				if(stuUid!=null){
+					params.put("sid", stuUid);
+				}
 			}
 			else
 			{
@@ -587,10 +607,10 @@ public class UnitsAssignmentWidgetView extends Composite {
 	@UiHandler("htPanelNextArrow")
 	public void clickOnNextArrow(ClickEvent clickEvent){
 		clearAssignmentsFromDo();
+		insightOffset=insightOffset+insightLimit;
 		setLoadingIcon(true);
 		getUnitAssignments(getAssignmentOffsetValue(NEXT),isEditMode(),NEXT);
-		
-		AppClientFactory.fireEvent(new DisplayNextSetAssignmentsEvent(getAssignmentOffsetValue(NEXT), "next"));
+//		AppClientFactory.fireEvent(new DisplayNextSetAssignmentsEvent(getAssignmentOffsetValue(NEXT), "next"));
 	}
 	
 
@@ -602,9 +622,10 @@ public class UnitsAssignmentWidgetView extends Composite {
 	@UiHandler("htPanelPreviousArrow")
 	public void clickOnPreviousArrow(ClickEvent clickEvent){
 		clearAssignmentsFromDo();
+		insightOffset=Math.abs(insightOffset-insightLimit);
 		setLoadingIcon(true);
 		getUnitAssignments(getAssignmentOffsetValue(PREVIOUS),isEditMode(),PREVIOUS);
-		AppClientFactory.fireEvent(new DisplayNextSetAssignmentsEvent(getAssignmentOffsetValue(PREVIOUS), "previous"));
+//		AppClientFactory.fireEvent(new DisplayNextSetAssignmentsEvent(getAssignmentOffsetValue(PREVIOUS), "previous"));
 	}
 	
 	/**
@@ -816,8 +837,15 @@ public class UnitsAssignmentWidgetView extends Composite {
 	}
 	
 	public void getAnalyticData(){
+		System.out.println("getanlyticdata");
+		String gooruUId;
 		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		String gooruUId=classUnitsDo.getResource().getUser().getGooruUId();
+		if(AppClientFactory.getPlaceManager().getRequestParameter("sid")!=null){
+			gooruUId=AppClientFactory.getPlaceManager().getRequestParameter("sid");
+		}else{
+			gooruUId=AppClientFactory.getLoggedInUser().getGooruUId();
+		}
+		 
 		String pathwayId=classUnitsDo.getResource().getGooruOid();
 		
 	 	AppClientFactory.getInjector().getClasspageService().getAssignmentData(gooruUId, classpageId, 20, 0, pathwayId, new SimpleAsyncCallback<List<InsightsUserDataDo>>() {
@@ -825,8 +853,8 @@ public class UnitsAssignmentWidgetView extends Composite {
 			@Override
 			public void onSuccess(List<InsightsUserDataDo> result) {
 //				getView().setAssignments(result);
+				System.out.println("sucesss:::");
 				insightsUserList=result;
-				System.out.println("sucesss:"+result.size());
 				setAssignmentsForUnit();
 			}
 		});		

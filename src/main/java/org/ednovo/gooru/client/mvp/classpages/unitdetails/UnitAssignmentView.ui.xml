@@ -29,6 +29,8 @@
 				<g:HTMLPanel ui:field="containerPanel">
 				 <div class="row">
 						<div class="col-xs-12">
+								<g:Label ui:field="unitTitleDetails" styleName="{unitStyle.unitHeading}" />
+							<div class="clearfix"></div>
 							<g:HTMLPanel styleName="row {unitStyle.classOptionsMain}">
 									<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallerWidth} {unitStyle.assignOverOptions} text-center">
 										<g:InlineLabel styleName="{unitStyle.bubbleSmall}"></g:InlineLabel> 
@@ -48,19 +50,18 @@
 											<g:InlineLabel styleName="{unitStyle.bubbleSmall} {unitStyle.redBubble}"></g:InlineLabel> 
 											<g:InlineLabel text="{i18n.GL2240}"></g:InlineLabel>
 										</g:HTMLPanel>
-										<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidth} {unitStyle.classOverOptions} text-center">
+<!-- 										<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidth} {unitStyle.classOverOptions} text-center">
 											<g:InlineLabel styleName="{unitStyle.bubbleSmallrounded}"></g:InlineLabel> 
 											<g:InlineLabel text="{i18n.GL2212}"></g:InlineLabel>
 										</g:HTMLPanel>
 										<g:HTMLPanel styleName="col-xs-2 {unitStyle.smallWidthFDS} {unitStyle.classOverOptionsFeedback} text-center">
 										    <g:InlineLabel styleName="{unitStyle.bubbleBlueFeedBack}"></g:InlineLabel> 
 										   	<g:InlineLabel text="{i18n.GL2238}"></g:InlineLabel>
-										</g:HTMLPanel> 
+										</g:HTMLPanel> --> 
 									</g:HTMLPanel>
 									
 							</g:HTMLPanel>
-							<g:Label ui:field="unitTitleDetails" styleName="{unitStyle.unitHeading}" />
-							<div class="clearfix"></div>
+					
 						</div>
 					</div> 
 					<!-- This widget Is used to display Circle -->
@@ -99,7 +100,7 @@
 						<div class="col-xs-12 scoreProggressMain">
 							<div class="">
 								<g:HTMLPanel ui:field="scoreHedingContainer"></g:HTMLPanel>
-								   <div class="col-xs-4"> <div class="scorMetInner"> <div class="scoreHeding">Time Studing</div> 
+								   <div class="col-xs-4"> <div class="scorMetInner"> <div class="scoreHeding">Time Studying</div> 
 										<div class="goalTracker"> <div class="circle" id="tracker"> 
 										<g:Label styleName="{unitStyle.circle}" ui:field="lblGreenControl" ></g:Label>
 									    <g:Label styleName="{unitStyle.circle}" ui:field="lblControl"></g:Label> 

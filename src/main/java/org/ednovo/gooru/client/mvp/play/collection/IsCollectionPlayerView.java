@@ -30,6 +30,7 @@ import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.gwtplatform.mvp.client.PopupView;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public interface IsCollectionPlayerView extends PopupView, IsViewWithHandlers<CollectionPlayerUiHandlers>{
 	public FlowPanel getPlayerBodyContainer();
@@ -54,4 +55,5 @@ public interface IsCollectionPlayerView extends PopupView, IsViewWithHandlers<Co
 	public void showClasspage(String classpageId,String page);
 	public void updateAuthorDetails();
 	public void setNarrationButton(Button narrationButton);
+	public void showFlaggedResourcePopup(PlaceRequest previousResoruceRequest, PlaceRequest nextResoruceRequest);
 }

@@ -466,7 +466,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 				placeToken.equalsIgnoreCase(PlaceTokens.PSDPAL)||
 				placeToken.equalsIgnoreCase(PlaceTokens.LESSONOPOLY)||
 				placeToken.equalsIgnoreCase(PlaceTokens.WSPWH)||
-				placeToken.equalsIgnoreCase(PlaceTokens.YOUTHVOICES)|| placeToken.equalsIgnoreCase(PlaceTokens.ESYP)|| placeToken.equalsIgnoreCase(PlaceTokens.CCST_Cal_TAC)){
+				placeToken.equalsIgnoreCase(PlaceTokens.YOUTHVOICES) || placeToken.equalsIgnoreCase(PlaceTokens.ESYP)|| placeToken.equalsIgnoreCase(PlaceTokens.CCST_Cal_TAC)|| placeToken.equalsIgnoreCase(PlaceTokens.TICAL)){
 			container.getElement().getStyle().setWidth(1000, Unit.PX);
 		}else{
 			container.getElement().getStyle().clearWidth();
@@ -578,7 +578,6 @@ public class LibraryView extends Composite implements  ClickHandler {
 		} else if (callBack.equalsIgnoreCase(PARTNER_PAGE)) {
 			landingBanner.setVisible(false);
 			contributorsContainer.setVisible(false);
-			
 			//For setting the partner's website data
 			featuredEducator.setVisible(true);
 			educatorPhoto.setVisible(false);
@@ -1060,6 +1059,10 @@ public class LibraryView extends Composite implements  ClickHandler {
 				featuredContributorsLink.setTitle(courseDo.getCreator().getPartnerName());
 				featuredContributorsLink.setHref(courseDo.getCreator().getPartnerUrl());
 				featuredContributorsLink.setTarget("_blank");
+				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.TICAL)){
+					courseTitle.getElement().getStyle().setFontSize(33, Unit.PX);
+					courseTitle.getElement().getStyle().setPaddingTop(21, Unit.PX);
+				}
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.CORE_LIBRARY)) {
 					courseImage.setHeight("190px");
 					courseImage.getElement().getStyle().setMarginTop(50, Unit.PX);
@@ -1474,7 +1477,7 @@ public class LibraryView extends Composite implements  ClickHandler {
 			int count = 0;
 			for(int i = 0; i <folderListDo.size(); i++) {
 				count++;
-				getContentScroll().add(new LibraryTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken()));
+				getContentScroll().add(new LibraryTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(),null));
 			}
 			getContentScroll().setVisible(true);
 		} catch (Exception e) {

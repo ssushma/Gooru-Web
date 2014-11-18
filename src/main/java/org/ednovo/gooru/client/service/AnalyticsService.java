@@ -29,7 +29,9 @@ import java.util.ArrayList;
 import org.ednovo.gooru.shared.model.analytics.CollectionProgressDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
+import org.ednovo.gooru.shared.model.analytics.FeedBackResponseDataDO;
 import org.ednovo.gooru.shared.model.analytics.GradeJsonData;
+import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -41,8 +43,6 @@ public interface AnalyticsService extends BaseService {
 	
 	public ArrayList<CollectionSummaryUsersDataDo> getCollectionSummaryUsersData(String classpageId);
 	
-	public ArrayList<CollectionSummaryMetaDataDo> getCollectionMetaData(String collectionId,String classpageId);
-	
 	public ArrayList<CollectionSummaryMetaDataDo> getCollectionMetaDataByUserAndSession(String collectionId,String classId,String userId,String sessionId);
 	
 	public ArrayList<UserDataDo> getCollectionResourceData(String collectionId,String classpageId,String pathwayId);
@@ -51,13 +51,21 @@ public interface AnalyticsService extends BaseService {
 		 
 	public ArrayList<UserDataDo> getUserSessionDataByUser(String collectionId,String classId,String userId,String sessionId,String pathwayId);
 
-	public ArrayList<GradeJsonData>  getBottomAndTopScoresData(String collectionId,String classId,String score);
+	public ArrayList<GradeJsonData>  getBottomAndTopScoresData(String collectionId,String classId,String score,String sortOrder);
 	
-	public void setHTMLtoPDF(String htmlString);
+	public String setHTMLtoPDF(String htmlString);
 	
 	public ArrayList<GradeJsonData> getAnalyticsGradeData(String classpageId,String pathwayId);
 	
-	public String exportPathwayOE(String classpageId,String pathwayId);
+	public String exportPathwayOE(String classpageId,String pathwayId,String timeZone);
 	
 	public CollectionSummaryMetaDataDo getAssignmentAverageData(String classId,String unitId,String collectionId);
+
+	public ArrayList<OetextDataDO> getOETextData(String resourceId,String collectionId,String classpageId,String pathwayId,String session,String sessionId,String userUId);
+	
+	public FeedBackResponseDataDO postTeacherFeedBackToStudent(String freeText,String resourceId,String collectionId,String classpageId,String pathwayId,String userId,String session,String contentItemId,String parentItemId,String classCode);
+
+	public void sendEmail(String to,String subject,String message,String displayName,String fileName,String path);
+
+	public String exportTeacherSummary(String collectionGooruOId,String pathwayId,String classId,String timeZone); 
 }

@@ -234,7 +234,7 @@
 	margin-right: 23px;
 	height: 68px;
 	resize:none;
-	margin-top: -15px;
+	/* margin-top: -15px; */
 }
 
 .shelfGradeSelectResources {
@@ -1360,4 +1360,23 @@ padding-top: 10px;
 	font-size: 14px;
 margin-top: 92px;
 position: relative;
+}
+.browseContainer{
+ 	float: right;
+	right: -27%;
+	position: relative;
+	margin-top: -12%;
+
+}
+.charLimit{
+	float: right;
+	color: #999;
+	margin-right: 66px;
+}
+.learningObjErrStyle{
+	float: right;
+	color: #fbb03b;
+	font-size: 12px;
+   font-style: italic;
+   margin-right: -9px;
 }

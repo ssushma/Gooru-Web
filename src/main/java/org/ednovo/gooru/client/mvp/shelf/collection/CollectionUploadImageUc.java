@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -81,6 +82,8 @@ public class CollectionUploadImageUc extends Composite {
 			@Override
 			public void onError(ErrorEvent event) {
 				collectionImg.setUrl("images/default-collection-image-160x120.png");
+				changeImgLbl.setText(i18n.GL1087());
+				StringUtil.setAttributes(changeImgLbl.getElement(), "changeImgLbl", i18n.GL1087(), i18n.GL1087());
 			}
 		});
 		
@@ -96,7 +99,16 @@ public class CollectionUploadImageUc extends Composite {
 	public void setUrl(String url) {
 		if(url!=null&&url.trim().isEmpty()) {
 			collectionImg.setUrl("images/default-collection-image-160x120.png");
+			changeImgLbl.setText(i18n.GL1087());
+			StringUtil.setAttributes(changeImgLbl.getElement(), "changeImgLbl", i18n.GL1087(), i18n.GL1087());
 		} else {
+			if(url.equalsIgnoreCase("images/defaultRes.png")){
+				changeImgLbl.setText(i18n.GL1087());
+				StringUtil.setAttributes(changeImgLbl.getElement(), "changeImgLbl", i18n.GL1087(), i18n.GL1087());
+			}else{
+				changeImgLbl.setText(i18n.GL0800());
+				StringUtil.setAttributes(changeImgLbl.getElement(), "changeImgLbl", i18n.GL0800(), i18n.GL0800());
+			}
 			collectionImg.setUrl(url);
 		}
 	}

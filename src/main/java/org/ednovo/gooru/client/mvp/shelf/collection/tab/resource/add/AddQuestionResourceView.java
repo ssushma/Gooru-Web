@@ -51,6 +51,7 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.RemoveToolTipUc;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
+import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -65,11 +66,13 @@ import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.dom.client.Style.Position;
@@ -88,6 +91,9 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -137,7 +143,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField FlowPanel standardContainer,answerchoiceTitleContainer,explanationContainer;
 	
 	/*@UiField Button questionNameTextAreaToolBarButton;*/
-	@UiField Button cancelButton;
+	@UiField Button cancelButton,browseStandards;
 	@UiField
 	CheckBox chkLevelRecall,chkLevelSkillConcept,chkLevelStrategicThinking,chkLevelExtendedThinking,rightsChkBox;
 	
@@ -147,6 +153,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField Image depthOfKnoweldgeToolTip;
 	
 	@UiField InlineLabel agreeText,andText,additionalText,commuGuideLinesAnr, termsAndPolicyAnr,privacyAnr,copyRightAnr;
+	
+	@UiField Label charLimitLbl,charLimitExplanation;
 	
 	ToolTip toolTip=null;
 	private TermsAndPolicyVc termsAndPolicyVc;
@@ -182,6 +190,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private static final String ERROR_MSG_EXPLAINATION_LENGTH =i18n.GL0879();
 	private static final String ERROR_MSG_QUESTION_LENGTH =i18n.GL0880();
 	private static final String ERROR_MSG_CHAR_LIMIT=i18n.GL0143();
+	private static final String ERROR_MSG_HINTS = i18n.GL2201();
 	
 	private static final String ERROR_MSG_FIB_BALANCED=i18n.GL0881();
 	private static final String ERROR_MSG_FIB_BLANKS=i18n.GL0882();
@@ -192,7 +201,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	private static final int ANSWER_CHOICE_HINTS_TEXT_LENGTH =150;
 	private static final int QUESTION_TEXT_LENGTH =500;
-	private static final int EXPLAINATION_TEXT_LENGTH =400;
+	private static final int EXPLAINATION_TEXT_LENGTH =500;
 	
 	private List<Widget> answerChoicesList=new ArrayList<Widget>();
 	
@@ -210,6 +219,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	String[] anserChoiceArray=new String[]{"A","B","C","D","E"};
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
+	private boolean isBrowseTooltip =false;
+	
+	BrowseStandardsTooltip browseStandardsTooltip;
+	private boolean isBrowseStandardsToolTip = false;
+	
 	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 	
 	public AddQuestionResourceView(){
@@ -252,6 +266,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		explanationLabel.getElement().setId("lblExplanationLabel");
 		explanationLabel.getElement().setAttribute("alt", i18n.GL0867());
 		explanationLabel.getElement().setAttribute("title", i18n.GL0867());
+		explanationLabel.getElement().getStyle().setDisplay(Display.INLINE);
 		addHintsLabel.setText(i18n.GL0868());
 		addHintsLabel.getElement().setAttribute("alt", i18n.GL0868());
 		addHintsLabel.getElement().setAttribute("title", i18n.GL0868());
@@ -344,6 +359,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		lblContentRights.getElement().setId("epnlLblContentRights");
 		rightsContent.getElement().setId("pnlRightsContent");
 		addQuestionResourceButton.getElement().setId("epnlAddQuestionResourceButton");
+		browseStandards.addClickHandler(new onBrowseStandardsClick());
 		setTextForTheFields();
 		errorContainer.setVisible(false);
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
@@ -498,6 +514,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		explanationLabel.getElement().setId("lblExplanationLabel");
 		explanationLabel.getElement().setAttribute("alt", i18n.GL0867());
 		explanationLabel.getElement().setAttribute("title", i18n.GL0867());
+		explanationLabel.getElement().getStyle().setDisplay(Display.INLINE);
 		addAnswerChoice.setText(i18n.GL0866());
 		addAnswerChoice.getElement().setAttribute("alt", i18n.GL0866());
 		addAnswerChoice.getElement().setAttribute("title", i18n.GL0866());
@@ -545,6 +562,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		setTextForTheFields();
 		errorContainer.setVisible(false);
 		errorContainer.add(standardsPreferenceOrganizeToolTip);
+		browseStandards.addClickHandler(new onBrowseStandardsClick());
 	}
 	public void initializeAutoSuggestedBox(){
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
@@ -661,6 +679,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		depthOfKnoweldgeToolTip.getElement().setAttribute("alt", "Question Mark");
 		depthOfKnoweldgeToolTip.getElement().setAttribute("title", "Question Mark");
 		addQuestionResourceButton.getElement().setId("epnlAddQuestionResourceButton");
+		
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		charLimitLbl.setText(value);
+		StringUtil.setAttributes(charLimitLbl.getElement(), "charLimitLbl", value, value);
+		
+		charLimitExplanation.setText(value);
+		StringUtil.setAttributes(charLimitExplanation.getElement(), "charLimitExplanation", value, value);
+		
 		addClickEventsForCheckBox();
 		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
 
@@ -668,10 +694,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			public void onSuccess(ProfileDo profileObj) {
 			if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
 					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
-						standardContainer.setVisible(false);
+						standardContainer.setVisible(true);
+						isBrowseTooltip = true;
+						DisableStandars();
 					}else
 					{
 						standardContainer.setVisible(true);
+						isBrowseTooltip = false;
+						enableStandards();
 						standardPreflist=new ArrayList<String>();
 						for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
 							standardPreflist.add(code);
@@ -680,7 +710,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						
 					}
 				}else{
-					standardContainer.setVisible(false);
+					standardContainer.setVisible(true);
+					isBrowseTooltip = true;
+					DisableStandars();
 				}
 			}
 
@@ -1244,6 +1276,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			
 		}
 	}
+    private class onBrowseStandardsClick implements ClickHandler {
+  		@Override
+  		public void onClick(ClickEvent event) {
+  			callBrowseStandards();
+  		}
+  	}
+    
     @UiHandler("addQuestionResourceButton")
 	public void clickedOnAddQuestionButton(ClickEvent event)
 	{
@@ -1847,20 +1886,31 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
   	        	final AddHintsView addHints = (AddHintsView) hintsContainer.getWidget(i);
   	        	  ProfanityCheckDo profanitymodel=new ProfanityCheckDo();
   	        	  profanitymodel.setQuestionID(Integer.toString(i));
-  	        	  if(addHints.hintTextBox.getContent()!=null|| !addHints.hintTextBox.getContent().trim().equals("")){
-  	        			String hintsText=addHints.hintTextBox.getContent().replaceAll("\\<.*?>","");
+  	        	 
+  	        	 String hintText=addHints.hintTextBox.getContent().toString().trim().replaceAll("&nbsp;", " ");
+  	        	 hintText=hintText.replaceAll("\\<.*?>","");
+  	        	  if(hintText!=null && !hintText.trim().equals("")){
+  	        		 String hintsText=addHints.hintTextBox.getContent().replaceAll("\\<.*?>","");	
   	        		  if(hintsText.trim().length()>ANSWER_CHOICE_HINTS_TEXT_LENGTH){
   	        			  Document.get().getElementById(addHints.hintTextBox.getID()+"_message").setInnerText("");
   	            		  addHints.errorMessageforHints.setText(ERROR_MSG_HINTS_LENGTH);
   	            		  hintsAdded=true;
   	            		  isAddBtnClicked=true;
+  	        		  }else{
+  	        			  hintsAdded=false;
+  	        			  isAddBtnClicked=true;
+ 	            		  addHints.errorMessageforHints.setText("");
+ 	            		  profanitymodel.setQuestionText(addHints.hintTextBox.getContent());
   	        		  }
-  	        		  profanitymodel.setQuestionText(addHints.hintTextBox.getContent());
+  	        		 
+  	        	  }else{
+  	        		  addHints.errorMessageforHints.setText(ERROR_MSG_HINTS);
+	        		  hintsAdded=true;
+            	      isAddBtnClicked=true;
   	        	  }
   	        	  hintsListForProfanity.add(profanitymodel);
   	        }
     	}
-    	
         return hintsAdded;
 }
      /*public void resetAllErrorFields(){
@@ -1993,6 +2043,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0350());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0350());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 108px;");
 		}else if(tabType.equals("MA")){
 			questionTypeHeader.setText(i18n.GL0351());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0351());
@@ -2001,6 +2052,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0352());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0352());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 108px;");
 		}else if(tabType.equals("T/F")){
 			questionTypeHeader.setText(i18n.GL0353());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0353());
@@ -2009,6 +2061,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0354());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0354());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 108px;");
 		}else if(tabType.equals("FIB")){
 			questionTypeHeader.setText(i18n.GL0355());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0355());
@@ -2016,6 +2069,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.setText(i18n.GL0356());
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0356());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0356());
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 14px;");
 		}else if(tabType.equals("OE")){
 			questionTypeHeader.setText(i18n.GL0357());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0357());
@@ -2024,6 +2078,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0358());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0358());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 108px;");
 		}
 	}
 	public boolean getQuestionEditMode(){
@@ -2712,4 +2767,75 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		     }*/
 		}
      }
+     
+     public abstract void callBrowseStandards();
+     
+     public abstract void closeStandardsPopup();
+     
+     public void setUpdatedBrowseStandarsCode(String standardsCodeVal, int id,String desc) {
+		if (standardsPanel.getWidgetCount() <5) {
+			if (standardsCodeVal != null && !standardsCodeVal.isEmpty()) {
+				CodeDo codeObj=new CodeDo();
+				codeObj.setCodeId(id);
+				codeObj.setCode(standardsCodeVal);
+				standardsDo.add(codeObj);
+				standardsPanel.add(createStandardLabel(standardsCodeVal, Integer.toString(id), desc));
+			}
+		} else {
+			standardMaxShow();
+		}
+		closeStandardsPopup();
+	}
+     public void DisableStandars(){
+    	 browseStandardsTooltip=new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
+ 		browseStandards.getElement().getStyle().setColor("#999");
+ 		browseStandards.getElement().addClassName("disabled");
+ 		browseStandards.addMouseOverHandler(new MouseOverHandler() {
+ 			@Override
+ 			public void onMouseOver(MouseOverEvent event) {
+ 					if(isBrowseTooltip == true){
+ 						browseStandardsTooltip.show();
+ 						browseStandardsTooltip.setPopupPosition(browseStandards.getAbsoluteLeft()+3, browseStandards.getAbsoluteTop()+33);
+ 						browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+ 						isBrowseStandardsToolTip= true;
+ 					}
+ 				}
+ 		});
+ 		
+ 		Event.addNativePreviewHandler(new NativePreviewHandler() {
+ 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+ 	        	hideBrowseStandardsPopup(event);
+ 	          }
+ 	    });
+ 	}
+ 	
+ 	public void hideBrowseStandardsPopup(NativePreviewEvent event){
+ 		try{
+ 			if(event.getTypeInt()==Event.ONMOUSEOVER){
+ 				Event nativeEvent = Event.as(event.getNativeEvent());
+ 				boolean target=eventTargetsPopup(nativeEvent);
+ 				if(!target)
+ 				{
+ 					if(isBrowseStandardsToolTip){
+ 						browseStandardsTooltip.hide();
+ 					}
+ 				}
+ 			}
+ 		}catch(Exception ex){ex.printStackTrace();}
+ 	}
+ 	
+ 	private boolean eventTargetsPopup(NativeEvent event) {
+ 		EventTarget target = event.getEventTarget();
+ 		if (Element.is(target)) {
+ 			try{
+ 				return browseStandardsTooltip.getElement().isOrHasChild(Element.as(target));
+ 			}catch(Exception ex){}
+ 		}
+ 		return false;
+ 	}
+
+ 	public void enableStandards(){
+ 		browseStandards.getElement().getStyle().clearColor();
+ 		browseStandards.getElement().removeClassName("disabled");
+ 	}
 }

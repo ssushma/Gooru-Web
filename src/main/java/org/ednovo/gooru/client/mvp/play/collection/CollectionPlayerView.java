@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationCo
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
+import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -117,7 +118,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+
 	@Inject
 	public CollectionPlayerView(EventBus eventBus){
 		super(eventBus);
@@ -202,8 +203,10 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	            @Override
 	            public void onNavigation(NavigationEvent navigationEvent) {
 	              if(!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
-	            	  closePreviewPlayer();
-	            	  hideFromPopup(false);
+	            	 if(!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SHELF)){
+	            		 closePreviewPlayer();
+	            		 hideFromPopup(false);
+	            	 }
 	              } 
 	            }
 	          });
@@ -553,6 +556,42 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	public void makeFlagButtonOrange() {
 		footerView.makeFlagButtonOrange();
 	}
+	
+	/**
+	 * To show the Flagged resource info
+	 */
+	@Override
+	public void showFlaggedResourcePopup(PlaceRequest previous, PlaceRequest next) {
+		// TODO Auto-generated method stub
+		ConfirmationPopupVc confiPopupVc = new ConfirmationPopupVc(i18n.GL2190(), i18n.GL2191()) {
+			
+			@Override
+			@UiHandler("okButton")
+			public void onDelete(ClickEvent clickEvent) {
+				hide();
+				getUiHandlers().navigateToNext("next");
+			}
+			@Override
+			@UiHandler("cancelButton")
+			public void onCancelClick(ClickEvent clickEvent){
+				hide();
+				getUiHandlers().navigateToNext("previous");
+			}
+		};
+		String hasPrevious=previous.getParameter("rid", null);
+		String hasNext=next.getParameter("view", null);
+		if(hasPrevious==null){
+			confiPopupVc.getCancelButton().setVisible(false);
+		}else{
+			confiPopupVc.getCancelButton().setVisible(true);
+		}
+		confiPopupVc.setPopupZindex(99999);
+		confiPopupVc.setGlassZindex(99999);
+		confiPopupVc.setAndHideButtonInPlayer(i18n.GL2192(),i18n.GL2204_1());
+		if(hasNext!=null){
+			confiPopupVc.getOkButton().setText(i18n.GL2205_1());
+		}
+	}
 
 	/**
 	 * This method is used to show first time Add tooltip popup.
@@ -681,5 +720,5 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		  viewAnchor.getElement().setAttribute("alt",i18n.GL1428());
 		  viewAnchor.getElement().setAttribute("title",i18n.GL1428());
 	}
-	
+
 }

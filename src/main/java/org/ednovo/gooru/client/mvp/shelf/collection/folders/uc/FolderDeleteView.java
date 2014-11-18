@@ -12,6 +12,7 @@ import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -40,7 +41,7 @@ public class FolderDeleteView extends AppPopUp {
 	interface FolderDeleteViewUiBinder extends
 			UiBinder<Widget, FolderDeleteView> {
 	}
-	@UiField Label titleLabel,headerLabel,descriptionLabel,deleteText;
+	@UiField Label titleLabel,headerLabel,descriptionLabel,deleteText,lblDeleteText;
 	@UiField Button cancelButton,okButton;
 	@UiField TextBoxWithPlaceholder txtDelete;
 	
@@ -106,6 +107,9 @@ public class FolderDeleteView extends AppPopUp {
 		descriptionLabel.getElement().setId("lblDescriptionLabel");
 		descriptionLabel.getElement().setAttribute("alt",i18n.GL1328());
 		descriptionLabel.getElement().setAttribute("title",i18n.GL1328());
+		
+		lblDeleteText.setText(i18n.GL2189());
+		StringUtil.setAttributes(lblDeleteText.getElement(), "lblDeleteText", null, "lblDeleteText");
 		
 		txtDelete.setPlaceholder(i18n.GL1175());
 		txtDelete.getElement().setId("txtTxtDelete");
@@ -212,7 +216,7 @@ public class FolderDeleteView extends AppPopUp {
 				DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView() {
 					@Override
 					public void onClickPositiveButton(ClickEvent event) {
-						Window.enableScrolling(true);
+//						Window.enableScrolling(true);
 						appPopUp.hide();
 					}
 				};

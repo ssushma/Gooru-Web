@@ -526,16 +526,18 @@
     position:absolute;
     top:0px;
     background: url('../images/folders/panel/arrow-closed.png') no-repeat center;
+    display:none;
 }
 
 .folderLevel .arrow:hover {
     background-color:#f0f0f0;
     cursor:pointer;
+     display:none;
 }
 
 .folderLevel.open .arrow {
     background-image: url('../images/folders/panel/arrow-open.png');
-    display:block;
+    display:none;
 }
 
 .folderLevel.empty .arrow {
@@ -544,17 +546,21 @@
 
 .folderLevel .arrow { /* grandparent level - default */
     left:5px;
+    display:none;
 }
 
 .folderLevel.parent .arrow {
     left:33px;
+    display:none;
 }
 
 .folderLevel.child .arrow {
     left:61px;
+    display:none;
 }
 .folderLevel.innerchild .arrow {
     left:89px;
+    display:none;
 }
 
 .folderLevel:hover,.foldercollection:hover {
@@ -716,10 +722,19 @@
 	background-color: #fff;
 }
  .addMyCollectionsStyle{
-	font-size: 16px;
-	/* background-color: #cfe3f1; */
-	height: 30px;
+	/* font-size: 16px;
+	background-color: #cfe3f1; */
+	height: 20px;
 	text-align: left;
 	padding-top: 7px;
 	padding-left: 11px;
  }
+ .addResourceTextStyles{
+		position: relative;
+	 }
+ .addCollectionTextStyles{
+	/* float: left; */
+	left: 43px;
+	position: relative;
+	top:10px;
+	 }

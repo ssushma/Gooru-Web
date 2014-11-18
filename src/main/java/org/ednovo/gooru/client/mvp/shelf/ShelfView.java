@@ -69,6 +69,7 @@ import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
+import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
@@ -265,6 +266,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	private static final String ID = "id";
 	
 	List<ClassPageCollectionDo> classpageTitles=null;
+	
+	private static final String GOORU_UID = "gooruuid";
 
 	private static ShelfViewUiBinder uiBinder = GWT
 			.create(ShelfViewUiBinder.class);
@@ -309,7 +312,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		 */
 			@Override
 			public void checkCharacterLimit(String text) {
-				if (text.length() >= 415) {
+				if (text.length() >= 500) {
 					descriptionAlertMessageLbl
 							.addStyleName("titleAlertMessageActive");
 					descriptionAlertMessageLbl
@@ -430,7 +433,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		collectionDescriptionTitle.getElement().setAttribute("alt",i18n.GL0618());
 		collectionDescriptionTitle.getElement().setAttribute("title",i18n.GL0618());
 		
-		String value = StringUtil.generateMessage(i18n.GL2103(), "415");
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
 		
 		StringUtil.setAttributes(lblCharLimit.getElement(), "lblCharLimit", value, value);
 		lblCharLimit.setText(value);
@@ -527,6 +530,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		editCollectionTitle.getElement().setId("epnlEditCollectionTitle");
 		collectionEditImageLbl.getElement().setId("lblCollectionEditImageLbl");
 		panelActionItems.getElement().setId("pnlPanelActionItems");
+		panelActionItems.getElement().getStyle().setMarginTop(8, Unit.PX);
 		collectionDescriptionTitleContainer.getElement().setId("epnlCollectionDescriptionTitleContainer");
 		editCollectionDescTitle.getElement().setId("epnlEditCollectionDescTitle");
 		simplePencilPanel.getElement().setId("lblSimplePencilPanel");
@@ -827,23 +831,41 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			editPanel.getElement().getStyle().clearMarginTop();
 		}
 		if(collectionDo.getSharing()!=null){
-			String share=collectionDo.getSharing();
-			if(share.equalsIgnoreCase("private")||share.equalsIgnoreCase("anyonewithlink")){
-				if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().getValue().equals("pending")){
-					rbPublic.setVisible(false);
-					lblPublishPending.setVisible(true);
-					publishedPanel.setVisible(false);
-				}else{
-					rbPublic.setVisible(true);
-					lblPublishPending.setVisible(false);
-					publishedPanel.setVisible(false);
+			final String share=collectionDo.getSharing();
+			AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
+
+				@Override
+				public void onSuccess(SettingDo result) {
+					if(result.getUser().getAccountTypeId()==2){
+						rbPublicPanel.setVisible(false);
+						publishedPanel.setVisible(false);
+					}else{
+						rbPublicPanel.setVisible(true);
+						if(share.equalsIgnoreCase("private")||share.equalsIgnoreCase("anyonewithlink")){
+							if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().getValue().equals("pending")){
+								rbPublic.setVisible(false);
+								lblPublishPending.setVisible(true);
+								publishedPanel.setVisible(false);
+							}else{
+								rbPublic.setVisible(true);
+								lblPublishPending.setVisible(false);
+								publishedPanel.setVisible(false);
+							}
+						}else{
+							rbPublic.setVisible(false);
+							lblPublishPending.setVisible(false);
+							publishedPanel.setVisible(true);
+						}
+					}
 				}
-			}else{
-				rbPublic.setVisible(false);
-				lblPublishPending.setVisible(false);
-				publishedPanel.setVisible(true);
-			}
+			});
 		}
+		
+		Integer resourcesCount = 0;
+		if (collectionDo.getCollectionItems() != null && collectionDo.getCollectionItems().size() != 0) {
+			resourcesCount = collectionDo.getCollectionItems().size();
+		}
+		resourceTabVc.setLabel(""+i18n.GL0829()+" (" + resourcesCount + ")");
 		
 		//getCollectionShareTabVc();
 	}
@@ -1051,10 +1073,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				MixpanelUtil.Click_Info_CollectionEdit();
 				setPersistantTabFlag("infoTab");
 				infoTabVc.setSelected(true);
-				getUiHandlers().revealTab(ShelfUiHandlers.TYPE_COLLECTION_INFO_TAB,
-						collectionDo);
+				getUiHandlers().revealTab(ShelfUiHandlers.TYPE_COLLECTION_INFO_TAB,collectionDo);
 				collectionMetaDataSimPanel.getElement().removeAttribute("style");
-				
 			} else if (tab.equals(resourceTabVc)) {
 				MixpanelUtil.Click_Resource_CollectionEdit();
 				setPersistantTabFlag("resourceTab");
@@ -1072,9 +1092,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				collectionMetaDataSimPanel.getElement().removeAttribute("style");
 				
 //				collectionMetaDataSimPanel.setWidget(getCollectionCollaboratorTabVc());
-				getUiHandlers().revealTab(
-						ShelfUiHandlers.TYPE_COLLABORATOR_TAB, collectionDo);
-				
+				getUiHandlers().revealTab(ShelfUiHandlers.TYPE_COLLABORATOR_TAB, collectionDo);
 			}
 			else if (tab.equals(assignTabVc)) {
 				MixpanelUtil.Click_Assign_CollectionEdit();
@@ -1082,8 +1100,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				setPersistantTabFlag("assignTab");
 				assignTabVc.setSelected(true);
 				collectionMetaDataSimPanel.clear();
-				getUiHandlers().revealTab(
-							ShelfUiHandlers.TYPE_ASSIGN_INFO_TAB, collectionDo);
+				getUiHandlers().revealTab(ShelfUiHandlers.TYPE_ASSIGN_INFO_TAB, collectionDo);
 			}
 			else if (tab.equals(shareTabVc)) {
 				MixpanelUtil.Click_Share_CollectionEdit();

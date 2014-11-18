@@ -23,9 +23,13 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.unitdetails;
+import java.util.List;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateUnitSetGoalEvent;
 import org.ednovo.gooru.client.mvp.classpages.unitdetails.personalize.PersonalizeUnitPresenter;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
@@ -33,6 +37,7 @@ import org.ednovo.gooru.shared.model.content.ClassDo;
 import org.ednovo.gooru.shared.model.content.ClassUnitsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.InsightsUserDataDo;
 import org.ednovo.gooru.shared.model.content.UnitAssignmentsDo;
 
 import com.google.gwt.dom.client.Style.Unit;
@@ -48,6 +53,14 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	
 	private PersonalizeUnitPresenter studentPersonalizePresenter = null;
 	
+	private CollectionProgressPresenter collectionProgressPresenter;
+	
+	private CollectionSummaryPresenter collectionSummaryPresenter;
+	
+	public static final  Object REPORT_SLOT = new Object();
+	
+	final String SUMMARY="Summary",PROGRESS="Progress",BELOWSCORE="BelowScore",ABOVESCORE="AboveScore";
+	
 	private int limit = 5;
 	private int offSet = 0;
 	private int assignmentOffset=0;
@@ -55,14 +68,15 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 	private static final String IMAGE_URL="images/core/B-Dot.gif";
 	
 	@Inject
-	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter) {
+	public UnitAssignmentPresenter(EventBus eventBus, IsUnitAssignmentView view, PersonalizeUnitPresenter studentPersonalizePresenter,CollectionProgressPresenter collectionProgressPresenter,CollectionSummaryPresenter collectionSummaryPresenter) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 		this.studentPersonalizePresenter = studentPersonalizePresenter;
+		this.collectionProgressPresenter=collectionProgressPresenter;
+		this.collectionSummaryPresenter=collectionSummaryPresenter;
 	}
 	@Override
 	protected void onHide() {
-		System.out.println("onhide method...........");
 		getView().resetUnitAssignmentView();
 	}
 	
@@ -79,7 +93,6 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			getAssignemntDetails(assignmentId,classId,unitId);
 		}
 	}
-	
 	
 	@Override
 	public void setClasspageData(ClasspageDo classpageDo){
@@ -103,7 +116,12 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 						}
 					}
 				}
-				getView().getSequence(result);
+				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
+					getAnalyticData(result);
+				}else{
+					getView().getSequence(result);
+				}
+				
 
 			}
 		});
@@ -123,6 +141,7 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
 						int number=Integer.parseInt(seqNumber);
 						number=number-1;
+						getView().clearValues();
 						getView().scoreHederView(classDo.getSearchResults().get(number));
 					}
 				}
@@ -157,7 +176,6 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 		});
 	}
 	
-	
 	public ClasspageItemDo getClasspateItemDo(UnitAssignmentsDo unitAssignmentDo,String assignmentId){
 		for(int i=0;i<unitAssignmentDo.getSearchResults().size();i++){
 			ClasspageItemDo classpageItemDo1=unitAssignmentDo.getSearchResults().get(i);
@@ -166,7 +184,6 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 			}
 		}
 		return null;
-		
 	}
 
 	public void showDashBoardDetails() {
@@ -190,13 +207,51 @@ public class UnitAssignmentPresenter extends PresenterWidget<IsUnitAssignmentVie
 
 			@Override
 			public void onSuccess(ClassUnitsListDo result) {
-				// TODO Auto-generated method stub
 				String updatedTime=(result.getTimeStudying()!=null && !result.getTimeStudying().equals("")) ? result.getTimeStudying():null;
 				AppClientFactory.fireEvent(new UpdateUnitSetGoalEvent(0, 0,updatedTime));
 				
 			}
 		});
 	}
-	
+	/**
+	 * This API used for to show Assignments status.
+	 */
+	public void getAnalyticData(final UnitAssignmentsDo unitAssignmentsDo){
+		String gooruUId;
+		String classpageId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		if(AppClientFactory.getPlaceManager().getRequestParameter("sid")!=null){
+			gooruUId=AppClientFactory.getPlaceManager().getRequestParameter("sid");
+		}else{
+			gooruUId=AppClientFactory.getLoggedInUser().getGooruUId();
+		}
+		String pathwayId=AppClientFactory.getPlaceManager().getRequestParameter("uid",null);
+		
+	 	AppClientFactory.getInjector().getClasspageService().getAssignmentData(gooruUId, classpageId, 0, 0, pathwayId, new SimpleAsyncCallback<List<InsightsUserDataDo>>() {
 
+			@Override
+			public void onSuccess(List<InsightsUserDataDo> result) {
+				if(result!=null){
+					getView().setInsightUserData(result);
+					getView().getSequence(unitAssignmentsDo);
+				}
+			}
+		});		
+	}
+	/**
+	 * This will set the related presenter in the slot
+	 */
+	@Override
+	public void setClickedTabPresenter(String clickedTab, String collectionId,String collectionTitle) {
+		String pathwayId=AppClientFactory.getPlaceManager().getRequestParameter("uid",null);
+		clearSlot(REPORT_SLOT);
+		if(clickedTab!=null){
+			if(clickedTab.equalsIgnoreCase(SUMMARY)){
+				collectionSummaryPresenter.setCollectionSummaryData(collectionId,pathwayId);
+				setInSlot(REPORT_SLOT, collectionSummaryPresenter,false);
+			}else if(clickedTab.equalsIgnoreCase(PROGRESS)){
+				collectionProgressPresenter.setCollectionProgressData(collectionId,pathwayId,true,collectionTitle);
+				setInSlot(REPORT_SLOT, collectionProgressPresenter,false);
+			}
+		}
+	}
 }

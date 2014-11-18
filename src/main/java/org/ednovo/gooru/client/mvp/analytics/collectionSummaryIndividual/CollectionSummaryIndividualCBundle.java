@@ -38,6 +38,11 @@ public interface CollectionSummaryIndividualCBundle extends ClientBundle{
 	        String displayMessageTextForScoredQuestions();
 	        String displayMessageTextForOEQuestions();
 	        
+	        String setOETextPopupCenter();
+	        String setGlassStyleName();
+	        String setEmailGlassStyleName();
+	        String setEmailPopupCenter();
+	        
 	}
 	@NotStrict
 	@Source("collectionSummaryIndividual.css")

@@ -49,9 +49,12 @@ import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
+import org.ednovo.gooru.client.uc.tooltip.ToolTip;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryMetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.CollectionSummaryUsersDataDo;
+import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
@@ -110,24 +113,22 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	FlowPanel frameContainer,frameContainer1,dataInsightsPanel;
 	@UiField VerticalPanel commentsContainer;
 	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,
-					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText;
-	@UiField HTMLPanel addComment,loginMessaging;
+					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText,lblCharLimitComments;
+	@UiField HTMLPanel loadingImageLabel,addComment,loginMessaging;
 	@UiField TextArea commentField;
 	@UiField Button postCommentBtn,postCommentCancel;
 	@UiField Anchor loginUrl, signupUrl;
 	@UiField CollectionPlayerStyleBundle playerStyle;
 	@UiField Image userPhoto,collectionThumbnail,nextCollectionThumbnail;
 	@UiField Button customizeCollectionBtn,shareCollectionBtn;
-	/*@UiField Frame insightsFrame;*/
-	
-	
 	@UiField ListBox sessionsDropDown;
 	@UiField Image collectionImage;
 	@UiField InlineLabel collectionTitle,collectionResourcesCount,collectionLastAccessed,lastModifiedTime;
-	@UiField VerticalPanel pnlSummary;
-	
+	ToolTip toolTip;
 	Map<String, Long> sessionData=new HashMap<String, Long>();
 	
+	@UiField VerticalPanel pnlSummary;
+	/*@UiField Frame insightsFrame;*/
 	private String languageObjectiveValue;
 	private CollectionDo collectionDo=null;
 	
@@ -182,12 +183,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	}
 	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-	
+	PrintUserDataDO printData=new PrintUserDataDO();
 	@Inject
 	public CollectionEndView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		setLabelAndIds();
-		frameContainer1.setVisible(false);
 		//teacherContainer.setVisible(false);
 		messageContainer.setVisible(false);
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
@@ -227,6 +227,11 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		commentField.addKeyUpHandler(new ValidateConfirmText());
 		commentField.addBlurHandler(new OnCommentsFieldBlur());
 		seeMoreButton.setVisible(false);
+		
+		String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+		lblCharLimitComments.setText(value);
+		StringUtil.setAttributes(lblCharLimitComments.getElement(), "lblCharLimitComments", value, value);
+		frameContainer1.setVisible(false);
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
 		customizeCollectionBtn.addBlurHandler(new customizeCollectionBtnOnBlur());
@@ -502,9 +507,10 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 						classpageId="";
 					}
 	                setSessionStartTime(selectedIndex);
-					getUiHandlers().setCollectionSummaryData(collectionDo.getGooruOid(), classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),sessionsDropDown.getValue(selectedIndex));
+					getUiHandlers().setCollectionSummaryData(collectionDo.getGooruOid(), classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),sessionsDropDown.getValue(selectedIndex),printData);
 			}
 	 }
+
 	@UiHandler("collectionThumbnail")
 	public void thumbnailErrorImage(ErrorEvent event){
 		collectionThumbnail.setUrl("images/default-collection-image-160x120.png");
@@ -514,6 +520,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	public void nextThumbnailErrorImage(ErrorEvent event){
 		nextCollectionThumbnail.setUrl("images/default-collection-image-160x120.png");
 	}
+	
 
 	public void setReplyLink(){
 		Anchor resourceAnchor=new Anchor();
@@ -630,6 +637,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	 */
 	@UiHandler("shareCollectionBtn")
 	public void onshareCollectionBtnClicked(ClickEvent clickEvent) {
+		getUiHandlers().triggerCollectionShareDataEvent(null,PlayerDataLogEvents.COLLECTION,"gooru",false);
 		final Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
 		String collectionId = collectionDo.getGooruOid();
 		AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, collectionDo.getTitle(), collectionDo.getGoals()) {
@@ -687,7 +695,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	public void setDataInsightsUrl(){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		if(AppClientFactory.isAnonymous()){
-			frameContainer.clear();
+			//frameContainer.clear();
 			frameContainer.setVisible(false);
 			messageContainer.setVisible(true);
 //		}else if(page!=null&&page.equals("teach")){
@@ -695,12 +703,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 //			frameContainer.setVisible(false);
 //			messageContainer.setVisible(false);
 		}else{
-			frameContainer.clear();
+			//frameContainer.clear();
 			frameContainer.setVisible(true);
 			messageContainer.setVisible(false);
-			//getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPointOld()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
-					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),"",AppClientFactory.getLoginSessionToken())));
+			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
+			/*frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPointOld()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
+					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),"",AppClientFactory.getLoginSessionToken())));*/
 		}
 	}
 	
@@ -710,7 +718,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		}
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		if(AppClientFactory.isAnonymous()){
-			frameContainer.clear();
+			//frameContainer.clear();
 			frameContainer.setVisible(false);
 			messageContainer.setVisible(true);
 //		}else if(page!=null&&page.equals("teach")){
@@ -718,19 +726,19 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 //			frameContainer.setVisible(false);
 //			messageContainer.setVisible(false);
 		}else{
-			frameContainer.clear();
+			//frameContainer.clear();
 			frameContainer.setVisible(true);
 			messageContainer.setVisible(false);
-			//getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPointOld()+DataInsightsUrlTokens.PLAYER_CLASS_PREVIOUS_DATA,
-					classpageId,collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));
+			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
+			/*frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPointOld()+DataInsightsUrlTokens.PLAYER_CLASS_PREVIOUS_DATA,
+					classpageId,collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));*/
 		}
 	}
 	
 	public void setDataInsightsSummaryUrl(String sessionId){
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		if(AppClientFactory.isAnonymous()){
-			frameContainer.clear();
+			//frameContainer.clear();
 			frameContainer.setVisible(false);
 			messageContainer.setVisible(true);
 //		}else if(page!=null&&page.equals("teach")){
@@ -738,13 +746,13 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 //			frameContainer.setVisible(false);
 //			messageContainer.setVisible(false);
 		}else{
-			frameContainer.clear();
+			//frameContainer.clear();
 			frameContainer.setVisible(true);
 			messageContainer.setVisible(false);
 			sessionId=sessionId!=null?sessionId:"";
-			//getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
-			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPointOld()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
-					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));
+			getUiHandlers().setCollectionSummaryBasedOnClasspageIdSessionId();
+			/*frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPointOld()+DataInsightsUrlTokens.STUDYPLAYER_SUMMARY_DATA,
+					collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));*/
 		}
 	}
 	
@@ -1369,7 +1377,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 
 
 	@Override
-	public void displaySpendTime(Long hours, Long mins, Long secs) {
+	public void displaySpendTime(Long hours, Long mins, Double secs) {
 		spendTimeContainer.clear();
 		if(AppClientFactory.isAnonymous()){
 			dispalyTime();
@@ -1507,8 +1515,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 			avgReactionImage.setStyleName(playerStyle.timeTextBig());
 		}
 	}
-
-
 	@Override
 	public void setSessionsData(
 			ArrayList<CollectionSummaryUsersDataDo> result) {
@@ -1526,6 +1532,9 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		if(sessionData.size()!=0){
 			lastModifiedTime.setText(AnalyticsUtil.getCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
 			sessionsDropDown.setSelectedIndex(selectedIndex);
+			printData.setUserName(null);
+			printData.setSession(sessionsDropDown.getItemText(selectedIndex));
+			printData.setSessionStartTime(AnalyticsUtil.getCreatedTime(Long.toString(sessionData.get(sessionsDropDown.getValue(selectedIndex)))));
 		}
 	}
 	
@@ -1535,8 +1544,31 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		if(result.size()!=0){
 			collectionTitle.setText(result.get(0).getTitle());
 			collectionLastAccessed.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.get(0).getLastModified())));
-			if(result.get(0).getThumbnail()!=null)
-			collectionImage.setUrl(result.get(0).getThumbnail());
+			if(result.get(0).getThumbnail()!=null){
+				collectionImage.setUrl(result.get(0).getThumbnail());
+			}else{
+				collectionImage.setUrl("images/analytics/default-collection-image.png");
+			}
+			collectionImage.addErrorHandler(new ErrorHandler() {
+				@Override
+				public void onError(ErrorEvent event) {
+					collectionImage.setUrl("images/analytics/default-collection-image.png");
+				}
+			});
+			collectionResourcesCount.setText((result.get(0).getResourceCount()-result.get(0).getTotalQuestionCount())+" Resources | "+result.get(0).getTotalQuestionCount()+" Questions");
 		}
 	}
+	@Override
+	public void resetCollectionMetaData(){
+		collectionTitle.setText("");
+		collectionLastAccessed.setText("");
+		collectionImage.setUrl("");
+		collectionResourcesCount.setText("");
+	}
+
+	@Override
+	public HTMLPanel getLoadingImageLabel() {
+		return loadingImageLabel;
+	}
+
 }

@@ -33,6 +33,8 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.analytics.collectionProgress.CollectionProgressPresenter;
+import org.ednovo.gooru.client.mvp.analytics.collectionSummary.CollectionSummaryPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classsetup.ClassSetupPresenter;
 import org.ednovo.gooru.client.mvp.classpages.classsetup.ClassSetupUnitPresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
@@ -70,6 +72,10 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	private String classpageId=null;
 	private EditClasspagePresenter editClasspagePresenter=null;
 	
+	private CollectionProgressPresenter collectionProgressPresenter;
+	
+	private CollectionSummaryPresenter collectionSummaryPresenter;
+	
 	private String classpageIdToAssign=null;
 	private String pathwayId=null;
 	private ClassSetupUnitPresenter classSetupUnitPresenter=null;
@@ -80,9 +86,12 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	private static final String UNIT_SETUP="unitSetupMode";
 	
 	@Inject
-	public AddAssignmentContainerPresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddAssignmentContainerView view) {
+	public AddAssignmentContainerPresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddAssignmentContainerView view,CollectionProgressPresenter collectionProgressPresenter,CollectionSummaryPresenter collectionSummaryPresenter) {
 		super(eventBus, view);
-		getView().setUiHandlers(this);		
+		getView().setUiHandlers(this);	
+		this.collectionProgressPresenter=collectionProgressPresenter;
+		this.collectionSummaryPresenter=collectionSummaryPresenter;
+		
 	}
 
 	@Override
