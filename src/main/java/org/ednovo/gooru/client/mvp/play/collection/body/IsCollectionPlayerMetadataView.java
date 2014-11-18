@@ -76,5 +76,7 @@ public interface IsCollectionPlayerMetadataView extends IsViewWithHandlers<Colle
 	public void clearCommentContainer(boolean isClear);
 	
 	public void setPlayerLoginStatus(boolean isLoggedIn);
+
+	public void hideTeachPanelDetails(boolean isDisplayDetails);
 	
 }

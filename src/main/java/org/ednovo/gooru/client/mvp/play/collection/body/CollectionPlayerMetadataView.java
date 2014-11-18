@@ -267,6 +267,9 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			teacherTipLabel.setHTML(""+collectionDo.getKeyPoints()+"");		
 			teacherTipLabel.getElement().setAttribute("alt",""+collectionDo.getKeyPoints()+"");
 			teacherTipLabel.getElement().setAttribute("title",""+collectionDo.getKeyPoints()+"");
+		}else{
+			teacherTipLabel.setHTML("");
+			authorPanel.getElement().getStyle().clearHeight();
 		}
 		setLeftPanelHeight();
 	}
@@ -602,6 +605,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	
 	public void displayAuthorDetails(boolean isDisplayDetails) {
 		authorPanel.setVisible(isDisplayDetails);
+		teacherContainer.setVisible(!isDisplayDetails);
 	}
 	
 	@UiHandler("previewFlagButton")
@@ -641,7 +645,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 
 	@Override
 	public void setTeacherInfo(ClasspageItemDo classpageItemDo) {
-		hideCollectionDetails(true);
+		displayAuthorDetails(false);
 		teacherContainer.setVisible(true);
 		classTitleValue.setText(classpageItemDo.getTitle());
 		classTitleValue.getElement().setAttribute("alt",classpageItemDo.getTitle());
@@ -1526,5 +1530,11 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("</a>", "").replaceAll("<a>", "");
         return html;
+	}
+
+	@Override
+	public void hideTeachPanelDetails(boolean isDisplayDetails) {
+		teacherContainer.setVisible(isDisplayDetails);
+		hideCollectionDetails(false);
 	}
 }
