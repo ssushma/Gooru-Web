@@ -317,7 +317,9 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 	public void setClasspageInsightsUrl(String classpageId, String sessionId){
 		getView().setClasspageInsightsUrl(classpageId, sessionId);
 	}
-	
+	public void hideTeacherInfo() { 
+		getView().hideTeachPanelDetails(false);
+	}
 
 }
 	
