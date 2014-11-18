@@ -545,8 +545,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				});
 					if(!AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){
 						getClassPageDetails(AppClientFactory.getPlaceManager().getRequestParameter("cid")); 
+					}else{
+						metadataPresenter.hideTeacherInfo();
 					}
-				
 			}
 		}
 	}
