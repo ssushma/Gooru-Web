@@ -792,10 +792,10 @@ public class CollectionResourceTabView extends
 	@Override
 	public void removeCollectionItem(CollectionItemDo collectionItemDo,	ShelfCollectionResourceChildView resourceChildView) {
 		
-		int sequence = Integer.parseInt(resourceChildView.getElement().getAttribute("widgetNumb"))-1;
+		int sequence = Integer.parseInt(resourceChildView.getElement().getAttribute("widgetNumb"));
 		collectionDo.getCollectionItems().remove(collectionItemDo);
 		setTotalCount(collectionDo.getCollectionItems().size());
-		collectionResourcePanelVc.remove(sequence);
+		collectionResourcePanelVc.remove(sequence-1);
 		sequenceVerPanel.remove(sequence);
 		resetSequence();
 		setResourceSequence();
