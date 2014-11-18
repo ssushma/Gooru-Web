@@ -197,6 +197,10 @@ header{
 	font-size:18px;
 }
 
+.searchContainer .sInner p>button{
+	font-size:18px;
+}
+
 .searchContainer .sInner .form-control{
 	height:42px;
 	font-size:18px;

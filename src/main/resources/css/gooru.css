@@ -2437,6 +2437,35 @@ fieldset {
 .menu-visible1 #searchPush{
 	display:block;
 }
+.gwt-PopupPanel{
+	width:100%;
+	background: none !important;
+}
+
+/* @media (min-width: 240px) and (max-width: 319px){
+	.gwt-PopupPanel{
+		width:100%;
+		left:0 !important;
+	}
+}
+@media (min-width: 320px) and (max-width: 479px){
+	
+	.gwt-PopupPanel{
+		width:100%;
+		left:0 !important;
+	}
+	
+}
+@media (min-width: 768px) and (max-width: 991px){
+	.gwt-PopupPanel{
+		left:21% !important;
+	}
+} */
+/* @media (min-width: 479px) and (max-width: 767px){
+	.gwt-PopupPanel{
+		left:10% !important;
+	}
+} */
 @media (min-width: 992px) and (max-width: 1199px) {
 	
 	#main, #menuRight {

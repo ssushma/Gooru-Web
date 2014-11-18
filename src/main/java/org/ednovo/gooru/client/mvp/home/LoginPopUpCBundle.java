@@ -24,9 +24,13 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
+import org.ednovo.gooru.client.mvp.search.SearchCBundle.SearchCss;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.ClientBundle.Source;
+import com.google.gwt.resources.client.CssResource.NotStrict;
 
 /**
  * 
@@ -38,118 +42,42 @@ public interface LoginPopUpCBundle extends ClientBundle{
 	
 	static final LoginPopUpCBundle INSTANCE = GWT.create(LoginPopUpCBundle.class);
 	
+	@NotStrict
+	@Source("res_loginpopup1.css")
+	LoginPopUpCss getResponsiveStyle();
+	
+	@NotStrict
+	@Source("res_loginpopup2.css")
+	LoginPopUpCss getResponsive1Style();
+
 	public interface LoginPopUpCss extends CssResource{
 		
-		String loginPopupContainer();
-		String loginPopupInnerdiv();
-		String loginPopupHeaderBg();
-		String loginPopupHeaderTitle();
-		String loginPopupCloseBtnContainer();
-		String textBoxPlaceHolderWidth();
-		String keepMeLoginContainer();
-		String loginPopupCheckBoxDescText();
-		
-		String loginPopupBtnSprite();
-		String loginPopupCloseBtn();
-		String loginPopupGooruLogoContainer();
-		String loginPopupGooruLogo();
-		String loginPopupInputContainer();
-		String loginPopupInputControl();
-		String loginPopupInputPwdText();
-		String loginPopupCheckBoxContainer();
-		String loginPopupCheckBoxControl();
-		String loginPopupCheckBox();
-		String loginPopupCheckBoxDesc();
-		String loginPopupButtonContainer();
-		String loginPopupButtonBg();
-		String loginPopupButtonText();
-		
-		String loginPopupBottomTextContainer();
-		String loginPopupBottomText();
-		String loginPopupBottomBlueText();
-		
-		String loginPopupBorderBottom();
-		String loginPopupOrText();
-		String loginPopupGplusButtonContainer();
-		String loginPopupGplusButton();
-//		String loginPopupGplusButtonQ();
-		String loginPopupGplusOuterdiv();
-		
-		String loginPopupGplusBtn();
-		String loginPopupGplusDesc();
-		String clear();
-		
-		String loginPopupGlassStyle();
-		
-		// New Login popup css.//
-		
-		String processing();
-	
-		String popupInner();
-
-		String popupHeader();
-
-		String popup(); 
-		
-		String closeButton();
-
-		String popupContent();
-
-		String imgBG();
-
-		String h1();
-
-		String signInContainer();
-
-		String gConnectButton();
-
-		String divider();
-
-		String dividerText();
-
-		String emailSignIn();
-
-		String btnLogin();
-
-		String forgotPasswordLink();
-
-		String haveAccount();
-		
-		String haveAccountContainer();
-		 
-		String forgotPasswordText();
-		
-		String forgotPasswordTextBoxContainer();
-		
-		String btnSubmit();
-		
-		String forgotPasswordBottomContainer();
-		
-		String footerText();
-		
-		String forgetImgBG();
-		
-		String forgotPasswordErrorMessage();
-		
-		String forgotPasswordPopupContent();
-		
-		String forgotPasswordSuccessText();
-		
-		String forgotPasswordSuccessPopupContent();
-		
-		String forgotPasswordSuceessButtonContainer();
-		
-		String forgotPasswordPopupResendContent();
-		
-		String h1SuccessConfirmMessage();
-		
-		String h1SuccessConfirmMessage1();
-		
-		String separator();
-		
-		String green();
-		
-		String errorLabel();
+	String LoginpopupMain();
+	String LoginpopupInner();
+	String LoginpopupHeader();
+	String LoginpopupContent();
+	String LoginPopUpgreen();
+	String LoginPopUpgreensmall();
+	String subheader();
+	String signInContainer();
+	String gConnectButton();
+	String divider();
+	String dividerText();
+	String logInput();
+	@ClassName("form-control")
+	String form_control();
+	String forgotPasswordLink();
+	String loginPopupbtnContainer();
+	String haveAccount();
+	String haveAccountContainer();
+	String closeContainer();
+	String closeButton();
+	String whyGoogle();
+	String questionHover();
+	String lblDontHaveGoogleAccount();
+	String processing();
+	String loginPopupGlassStyle();
+	String  lnkSignUpWithEmail();
 	}
 	@Source("Newlogin-popup.css")
 	LoginPopUpCss css();

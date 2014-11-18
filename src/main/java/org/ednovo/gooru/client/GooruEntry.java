@@ -32,6 +32,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.AppInjector;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
+import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerSmallMobileBundle;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.search.SearchCBundle;
@@ -117,6 +118,12 @@ public class GooruEntry implements EntryPoint {
 		SearchCBundle.INSTANCE.css().ensureInjected();
 		
 		HomeCBundle.INSTANCE.css().ensureInjected();
+		
+		StyleInjector.injectAtEnd("@media (min-width: 240px) and (max-width: 319px){"+LoginPopUpCBundle.INSTANCE.getResponsiveStyle().getText()+"}");
+		StyleInjector.injectAtEnd("@media (min-width: 320px) and (max-width: 479px){"+LoginPopUpCBundle.INSTANCE.getResponsive1Style().getText()+"}");
+		
+		LoginPopUpCBundle.INSTANCE.css().ensureInjected();
+	
 	}
 	
 	/* 

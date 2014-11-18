@@ -127,6 +127,11 @@ header {
 	 .searchContainer .sInner p{
 	  font-size:16px;
   }
+
+	 .searchContainer .sInner p>button{
+	  font-size:16px;
+  }
+
   
   .searchContainer .col-md-3 h2{
 	  font-size:35px;
