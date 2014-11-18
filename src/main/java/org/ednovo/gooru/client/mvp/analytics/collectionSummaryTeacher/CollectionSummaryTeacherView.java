@@ -92,7 +92,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	
 	CollectionOverViewWidget collectionOverViewWidget=new CollectionOverViewWidget();
 	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
-	
+	final String style="<link rel='styleSheet' type='text/css' href='../css/googleVisualization.css'><link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'>";
 	/**
 	 * Costructor
 	 */
@@ -101,7 +101,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		setData();
-		printWidget.setVisible(false);
+		printWidget.setVisible(true);
 	}
 	
 	/**
@@ -120,7 +120,6 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 		collectionSummaryText.getElement().getStyle().setPaddingBottom(15, Unit.PX);
 		collectionSummaryText.addStyleName("collectionSummaryText");
 		printWidget.add(collectionSummaryText);
-		final String style="<link rel='styleSheet' type='text/css' href='https://www.google.com/uds/api/visualization/1.0/8c95b72e5c145d5b3d7bb8b4ea74fd63/ui+en,table+en.css'><link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'>";
 		teacherTabContainer=new AnalyticsTabContainer() {
 			@Override
 			public void onTabClick(String tabClicked) {
@@ -196,7 +195,13 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 				totalAvgReactionlbl.clear();
 				totalAvgReactionlbl.add(new AnalyticsReactionWidget(collectionMetaData.getAvgReaction()));
 			}
-			
+			Collections.sort(resourcesData,new Comparator<UserDataDo>() {
+	        	public int compare(UserDataDo o1, UserDataDo o2) {
+	        		 Integer obj1 = new Integer(o1.getItemSequence());
+					 Integer obj2 = new Integer(o2.getItemSequence());
+	        	     return obj1.compareTo(obj2);
+	        	}
+	        });
 	        //This is used for segrate data based on the category
 	        for (UserDataDo userDataDo : resourcesData) {
 				if(userDataDo.getCategory()!=null && userDataDo.getCategory().equalsIgnoreCase("question")){
@@ -235,7 +240,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        data.addRows(result.size());
 	        if(result.size()!=0){
 	        	   for(int i=0;i<result.size();i++) {
-	   	        	data.setCell(i, 0, i+1, null, getPropertiesCell());
+	   	        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	   	        	
 	   	            //Set Question Title
 	   	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
@@ -320,7 +325,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        if(result.size()!=0){
 	       
 	        	   for(int i=0;i<result.size();i++) {
-	   	        	data.setCell(i, 0, i+1, null, getPropertiesCell());
+	   	        	data.setCell(i, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
 	   	        	
 	   	            //Set Question Title
 	   	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
@@ -422,7 +427,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        data.addRows(result.size());
 	        
 	        for(int i=0;i<result.size();i++) {
-	        	data.setCell(i, 0, i+1, null, getPropertiesCell());
+	        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
 	              String  resourceCategory =result.get(i).getCategory();
 	              String categoryStyle="";
@@ -531,7 +536,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        data.addRows(result.size());
 	        
 	        for(int i=0;i<result.size();i++) {
-	        	data.setCell(i, 0, i+1, null, getPropertiesCell());
+	        	data.setCell(i, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
 	              String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
 	              String categoryStyle="";
@@ -702,7 +707,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	 */
 	void setSortedData(ArrayList<UserDataDo> scoredQuestionsData,SortTable sortableTable,boolean isPrint){
 		 for(int i=1;i<=scoredQuestionsData.size();i++){
-        	 sortableTable.setValue(i, 0,i);
+        	 sortableTable.setValue(i, 0,scoredQuestionsData.get(i-1).getItemSequence());
              sortableTable.setValue(i, 1, AnalyticsUtil.html2text(scoredQuestionsData.get(i-1).getTitle()));
              VerticalPanel answerBreakDownpnl=new VerticalPanel();
              if(scoredQuestionsData.get(i-1).getType()!=null){
@@ -727,7 +732,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
                   	        			 JSONObject authorObject = value.isObject();
    	               	        			 if(authorObject.keySet().size()!=0 && authorObject.get(questionSequence)!=null){
    	               	        				attemptCount = (int)authorObject.get(questionSequence).isArray().get(0).isNumber().doubleValue();
-   	               	        			 }
+   	               	         			 }
                     	             }
                  	            	
                  	            	 Label progressBarlbl=new Label("");

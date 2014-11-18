@@ -11,11 +11,11 @@
 					   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles_print}" ui:field="totalTimeSpentlbl"></g:Label>
 					   </div>
 					   <div class="{unitStyle.collectionBreakDown_infobox_print}">
-					   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles_print1}" text="{i18n.GL2276}"></g:Label>
+					   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles_print1}" text="{i18n.GL2276}" ui:field="lblViews"></g:Label>
 					   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles_print}" ui:field="totalViewlbl"></g:Label>
 					   </div>
 					   <div class="{unitStyle.collectionBreakDown_infobox_print}">
-					   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles_print1}"  text="{i18n.GL2277}"></g:Label>
+					   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles_print1}"  text="{i18n.GL2277}" ui:field="lblAvgReaction"></g:Label>
 					  <g:HTMLPanel styleName="{unitStyle.collectionBreakDown_infobox_titles_print}" ui:field="totalAvgReactionlbl"></g:HTMLPanel> 
 					  </div>
 				  </div>
