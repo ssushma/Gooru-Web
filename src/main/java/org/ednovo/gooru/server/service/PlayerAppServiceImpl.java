@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.ednovo.gooru.client.service.PlayerAppService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.deserializer.ResourceCollectionDeSerializer;
@@ -670,6 +671,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public ArrayList<ContentReportDo> getContentReport(String associatedGooruOid,String gooruUid){
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CONTENT_REPORT,associatedGooruOid,getLoggedInSessionToken(),gooruUid);
+		System.out.println("getContentReport::"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		
@@ -818,7 +820,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			contentReportDo.setFreeText(jsonObject.isNull("freeText")?"":jsonObject.getString("freeText"));
 			contentReportDo.setAssocGooruOid(jsonObject.isNull("assocGooruOid")?"":jsonObject.getString("assocGooruOid"));
 			contentReportDo.setDeleteContentGooruOid(jsonObject.isNull("gooruOid")?"":jsonObject.getString("gooruOid"));
-			
+			contentReportDo.setContentReportList(contentReportList);
 			//gooruContentId=gooruContentId+(jsonObject.isNull("gooruOid")?"":jsonObject.getString("gooruOid"));
 
 			//if(jsonRep!=null){
