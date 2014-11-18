@@ -1270,17 +1270,18 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 											}
 											
 											if(urlStr.indexOf("youtube")!=-1){
+												
 												if(youTubeId==null || youTubeId.equalsIgnoreCase("null") || youTubeId.equalsIgnoreCase("")){
 													if(!categoryStr.equalsIgnoreCase("Webpage")){
+														isValidate = true;									
+													}else{
 														mandatoryCategoryLbl.setText(i18n.GL0927());
 														mandatoryCategoryLbl.getElement().setAttribute("alt", i18n.GL0927());
-												        mandatoryCategoryLbl.getElement().setAttribute("title", i18n.GL0927());
+														mandatoryCategoryLbl.getElement().setAttribute("title", i18n.GL0927());
 														mandatoryCategoryLbl.setVisible(true);
-														isValidate = false;
-													}else{
-														isValidate = true;
-													}
+														isValidate = false;													}
 												}
+												
 											}
 											if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
 											{

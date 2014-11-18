@@ -232,6 +232,7 @@ System.out.println("createCollectionform:::"+form);
 	public CollectionItemDo reorderCollectionItem(CollectionItemDo collectionItemDo) {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_REORDER_COLLECTION_ITEM_SEQUENCE, collectionItemDo.getCollectionItemId(), collectionItemDo.getItemSequence() + "", getLoggedInSessionToken());
+		getLogger().info("--- reorder resource -- "+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), new Form());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);

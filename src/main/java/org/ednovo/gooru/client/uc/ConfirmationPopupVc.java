@@ -168,11 +168,21 @@ public abstract class ConfirmationPopupVc extends Composite {
 		return cancelButton;
 	}
 	
-	public void setAndHideButtonInPlayer(String okText){
-		cancelButton.setVisible(false);
+	public void setAndHideButtonInPlayer(String okText, String cancelTxt){
 		okButton.setText(okText);
+		cancelButton.setText(cancelTxt);
 		buttonContainer.getElement().setAttribute("style", "margin-top:0px;");
 		StringUtil.setAttributes(okButton.getElement(), okText, okText, okText);
+		StringUtil.setAttributes(cancelButton.getElement(), cancelTxt, cancelTxt, cancelTxt);
 	}
+
+	/**
+	 * @return the okButton
+	 */
+	public BlueButtonUc getOkButton() {
+		return okButton;
+	}
+	
+	
 	
 }

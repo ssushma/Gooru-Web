@@ -96,6 +96,8 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	
 	private static final String CONTENT_ADMIN_ROLE = "Content_Admin";
 	
+	private static boolean CHECK_COLLOBORATOR =false;
+	
 	private static final String EDUCATOR_DEFAULT_IMG = "../images/settings/setting-user-image.png";
 	
 	private static final String DATE_FORMAT="MMMM dd, yyyy";
@@ -216,7 +218,7 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			collectionOwnerUid = collectionDo.getUser().getGooruUId() !=null ? collectionDo.getUser().getGooruUId() : null;
 			commentOwnerUid = commentsDo.getCommentorUid().getGooruUId() != null ? commentsDo.getCommentorUid().getGooruUId() : null;
 			loggedInOwnerUid = AppClientFactory.getLoggedInUser().getGooruUId();
-
+			CHECK_COLLOBORATOR = collectionDo.getMeta().isIsCollaborator();
 			userPhoto.setUrl(AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+commentOwnerUid+PNG);
 			userPhoto.addErrorHandler(new ErrorHandler() {
 				@Override
@@ -269,6 +271,9 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		} else if(!AppClientFactory.isAnonymous() && AppClientFactory.getLoggedInUser().getUserRoleSetString().contains(CONTENT_ADMIN_ROLE)){
 			deleteButton.setVisible(true);
 			editButton.setVisible(false);
+		}else if(!AppClientFactory.isAnonymous() && CHECK_COLLOBORATOR == true){
+				deleteButton.setVisible(false);
+				editButton.setVisible(true);
 		}
 	}
 	

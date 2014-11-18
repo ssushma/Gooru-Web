@@ -9,13 +9,13 @@
 		<g:FlowPanel styleName="{playerHeaderStyle.getPlayerStyleResource.headerInner}">
 			<g:HTML styleName="{headerStyle.player-resource-title}" ui:field="resourceTitle"></g:HTML>
 			<panel:HTMLEventPanel styleName="{headerStyle.loginStatus} {headerStyle.loggedIn}" ui:field="authorContainer">
-	            <g:HTMLPanel styleName="{headerStyle.loggingIcon}">
+	          <!--   <g:HTMLPanel styleName="{headerStyle.loggingIcon}">
 	                <g:Label styleName="{headerStyle.progress}"></g:Label>
 	                <g:HTMLPanel styleName="{headerStyle.remainingTrack}">
 	                	<g:Label styleName="{headerStyle.trackInner}"></g:Label>
 	                </g:HTMLPanel>
 	                <g:Label styleName="{headerStyle.innerDot}"></g:Label>
-	            </g:HTMLPanel>
+	            </g:HTMLPanel> -->
 	            <g:InlineLabel styleName="" ui:field="wishLabel"></g:InlineLabel>
 	            <g:InlineLabel styleName="{headerStyle.username}" ui:field="loginUserName"></g:InlineLabel>
 	            <g:InlineLabel styleName="" ui:field="wishingText"></g:InlineLabel>
