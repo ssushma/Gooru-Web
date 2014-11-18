@@ -325,13 +325,13 @@ public interface ResourceService extends BaseService {
 	public CollectionItemDo updateNarrationMetadata(String collectionItemId, String narration, String narrationType)  throws GwtException, ServerDownException;
 	//For Flag existing resources
 	//To create content report
-  	public void createContentReport(String assocGooruOid,String targetValue,String typesvalue1,String typesvalue2,String typesvalue3, String typesvalue4,String otherDescription);
+  	public void createContentReport(String assocGooruOid,String targetValue,String typesvalue1,String typesvalue2,String typesvalue3, String typesvalue4,String otherDescription) throws GwtException, ServerDownException;
   	//To update content report
-  	public String updateReport(String gooruOid,String freeText);
+  	public String updateReport(String gooruOid,String freeText) throws GwtException, ServerDownException;
   	//To get content report
-  	public  GetFlagContentDO getContentReport(String assocGooruOid);
+  	public  GetFlagContentDO getContentReport(String assocGooruOid) throws GwtException, ServerDownException;
   	//To delete content report
-  	public String deleteContentReport(String gooruOid);
+  	public String deleteContentReport(String gooruOid) throws GwtException, ServerDownException;
 
   	/**
   	 * 

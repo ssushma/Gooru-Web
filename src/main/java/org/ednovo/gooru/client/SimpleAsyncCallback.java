@@ -28,6 +28,7 @@ package org.ednovo.gooru.client;
 import java.io.IOException;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.uc.error.ErrorPopupUc;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -42,14 +43,11 @@ public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T> {
 	
 	@Override
 	public void onFailure(Throwable caught) {
+		System.out.println("out side gwt exception");
 		String message = "";
 		if(caught instanceof ServerDownException){
-//			System.out.println("in Server Down Exception....");
 			ServerDownException serverDownException=(ServerDownException)caught;
-//			System.out.println("insideeee=== exception"+serverDownException.getStatusCode());
-			//new AlertContentUc("Error==>"+serverDownException.getStatusCode(), "GotException...");
 			AppClientFactory.getInjector().getHomeService().getRedirectServerUrl(new AsyncCallback<String>() {
-				
 				@Override
 				public void onSuccess(String redirectUrl) {
 					Window.open(redirectUrl, "_self","");
@@ -59,7 +57,12 @@ public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T> {
 					caught.printStackTrace();
 				}
 			});
-		}
+//		}else if(caught instanceof GwtException){
+//			GwtException gwtException=(GwtException)caught;
+//			System.out.println("inside gwt exception");
+//			ErrorPopupUc errorPopupuc=new ErrorPopupUc();
+//			errorPopupuc.show();
+			}
 		else if (caught instanceof IOException) {
 			Window.Location.reload();
 		} else {

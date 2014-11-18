@@ -91,7 +91,7 @@ public interface ProfilePageService extends BaseService {
 	
 	public void addCourseUserProfile(Set<ProfileCodeDo> profileCodeDo,String userLevel) throws GwtException, ServerDownException;
 	
-	void deleteCourseUserProfile(CodeDo codeDo, String userLevel);
+	void deleteCourseUserProfile(CodeDo codeDo, String userLevel) throws GwtException, ServerDownException;
 	
 	/**
 	 * @function getProfileLibraryWorkspace
