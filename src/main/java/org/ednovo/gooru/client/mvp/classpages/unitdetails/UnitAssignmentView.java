@@ -351,7 +351,7 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 							unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId(),unitCricleViewObj));
 						}
 						unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
-						String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null);
+						String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null); 
 						if(assignmentId!=null&&assignmentId.equals(unitCricleViewObj.getAssignementId())){
 							unitCricleViewObj.removeStyleName(res.unitAssignment().active());
 							unitCricleViewObj.addStyleName(res.unitAssignment().active());
@@ -831,6 +831,17 @@ public class UnitAssignmentView extends BaseViewWithHandlers<UnitAssignmentUiHan
 				}else{
 					unitCricleViewObj.addMouseOverHandler(new UnitSeqMouseOverHandler(unitAssignmentsDo.getSearchResults().get(i).getItemSequence(),unitAssignmentsDo.getSearchResults().get(i).getResource().getTitle(),unitAssignmentsDo.getSearchResults().get(i).getNarration(),unitAssignmentsDo.getTotalHitCount(),unitCricleViewObj.getElement().getId(),unitCricleViewObj));
 				}
+				
+				String assignmentId=AppClientFactory.getPlaceManager().getRequestParameter("aid", null); 
+				if(assignmentId!=null&&assignmentId.equals(unitCricleViewObj.getAssignementId())){
+					unitCricleViewObj.removeStyleName(res.unitAssignment().active());
+					unitCricleViewObj.addStyleName(res.unitAssignment().active());
+				}
+				if(assignmentId==null&&i==0){
+					unitCricleViewObj.removeStyleName(res.unitAssignment().active());
+					unitCricleViewObj.addStyleName(res.unitAssignment().active());
+				}
+				
 				unitCricleViewObj.addClickHandler(new AssignmentClickChangeEvent(unitCricleViewObj));
 				if(pagenumber!=0){
 					if(pagenumber==assignmentOffset+i+1){
