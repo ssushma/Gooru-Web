@@ -74,7 +74,7 @@
 		text-align: left;
 		font-weight: bold;
 		margin-top: 8px;
-		<!-- float: left; -->
+		/* float: left; */
 		width: 385px;
 		}
 
@@ -84,7 +84,7 @@
 		line-height: 120%;
 		color: #515151;
 		text-align: left;
-		<!-- padding: 0px 0px 15px 15px; margin-left: -14px; width: 394px; -->
+		/* padding: 0px 0px 15px 15px; margin-left: -14px; width: 394px; */
 		}
 
 		.improveGooruBlueTextDesc1 {
@@ -130,7 +130,7 @@
 		}
 
 		.improveGooruLinkOuter {
-			float: right; <!-- margin: 85px 15px 2px 5px; -->
+			float: right; /* margin: 85px 15px 2px 5px; */
 			width: 235px !important;
 			margin-top: 70px;
 		}
@@ -165,7 +165,7 @@
 		.improveGooruOuterDivContainer {
 		float: left;
 		width: 227px;
-		<!-- height: 498px; -->
+		/* height: 498px; */
 		}
 
 		.imporoveMainContainer {
@@ -189,7 +189,7 @@
 		}
 
 		}
-		.improveGooruContneOuter {<!-- padding-left: 10px; -->
+		.improveGooruContneOuter {/* padding-left: 10px; */
 		}
 
 		.improveGooruLearnmoreText {

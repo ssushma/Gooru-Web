@@ -515,6 +515,7 @@ public class HeaderUc extends Composite implements
 		// gooruClassicViewLbl.setText(MessageProperties.i18n.GL0094);
 		getEditSearchTxtBox().getElement().setId("txtEditSearch");
 		editSearchBtn.getElement().setId("btnEditSearch");
+		editSearchBtn.getElement().setAttribute("style","padding:7px 9px 9px 7px");
 		editSearchBtn.setText(i18n.GL0176());
 		editSearchBtn.getElement().setAttribute("alt", i18n.GL0176());
 		editSearchBtn.getElement().setAttribute("title", i18n.GL0176());

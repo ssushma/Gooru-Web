@@ -27,7 +27,6 @@ package org.ednovo.gooru.client.mvp.home;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -53,10 +52,8 @@ import org.ednovo.gooru.client.mvp.search.event.SetMarkButtonEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
-import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.DataLogEvents;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
@@ -105,7 +102,7 @@ public class LoginPopupUc extends PopupPanel{
 
 //	@UiField CheckBox lblKeepMeLogedIn;
 	
-	@UiField HTMLEventPanel cancelButton;
+	@UiField Anchor cancelButton;
 	
 	@UiField Button  loginButton,gmailButton;
 
@@ -168,7 +165,7 @@ public class LoginPopupUc extends PopupPanel{
 		lblPleaseWait.setVisible(false);
 		setHandlers();
         
-		this.center();
+	//	this.center();
 	}
 	
 	public LoginPopupUc(String emailId){
@@ -222,8 +219,8 @@ public class LoginPopupUc extends PopupPanel{
 	 */
 	private void setHandlers(){
 
-		this.setSize("515px", "547px");
-		
+	/*	this.setSize("515px", "547px");
+	*/	
 		loginTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 		passwordTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 	}

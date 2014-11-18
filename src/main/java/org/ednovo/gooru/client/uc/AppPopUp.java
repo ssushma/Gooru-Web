@@ -47,13 +47,13 @@ public class AppPopUp extends PopupPanel {
 	public AppPopUp() {
 		super(false);
 		ShelfCBundle.INSTANCE.css().ensureInjected();
-		this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
-		this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemShortenUrlPopUp());
+	/*	this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
+		this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemShortenUrlPopUp());*/
 		headerPanel = new FlowPanel();
 		content = new FlowPanel();
-		headerPanel.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUpOuterDiv());
+	//	headerPanel.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUpOuterDiv());
 		labletitle = new Label();
-		labletitle.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemHeaderText());
+		//labletitle.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemHeaderText());
 		headerPanel.add(labletitle);
 		content.add(headerPanel);
 		this.setWidget(content);
@@ -74,7 +74,7 @@ public class AppPopUp extends PopupPanel {
 	public AppPopUp(String type){
 		super(false);
 			ShelfCBundle.INSTANCE.css().ensureInjected();
-			this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
+		//	this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
 			content = new FlowPanel();
 			this.setWidget(content);
 			setGlassEnabled(true);

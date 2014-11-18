@@ -85,11 +85,11 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 
 	@UiField Label lblTitle,lblJoinGooruCommunity,lblDescription,lblWhyWithGoogle,lblQuestionMark,lblPopupWhyWithGoogle,lblParentInfo;
 	
-	@UiField Label lblPopupWhyWithGoogleDesc,lblOr,lblDontHaveGoogleAccount,lblAlreadyHaveAccount,lblCancel;
+	@UiField Label lblPopupWhyWithGoogleDesc,lblOr,lblDontHaveGoogleAccount,lblAlreadyHaveAccount;
 	
 	@UiField Button btnSignUpWithGoogle;
 	
-	@UiField Anchor  achSignUpWithEmail,achClickToLogin;
+	@UiField Anchor  achSignUpWithEmail,achClickToLogin,lblCancel;
 	
 	@UiField HTMLPanel panelSignUp, panelUserInfo;
 	
