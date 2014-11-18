@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -293,3 +294,4 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	}
 
 }
+

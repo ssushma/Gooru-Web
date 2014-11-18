@@ -57,3 +57,6 @@ public class ReorderCollectionResourcesEvent extends GwtEvent<ReorderCollectionR
 	} 
 
 }
+
+
+

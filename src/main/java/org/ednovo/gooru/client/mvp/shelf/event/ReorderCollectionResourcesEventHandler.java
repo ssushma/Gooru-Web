@@ -33,4 +33,6 @@ public interface ReorderCollectionResourcesEventHandler extends EventHandler {
 
 	void reorderResources(ShelfCollectionResourceChildView shelfCollectionResourceChildView, String arrow, Integer newSequence);  
 
+
 }
+

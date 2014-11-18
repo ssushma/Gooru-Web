@@ -766,10 +766,11 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 				}else{
 					isReorderButtonEnabled(true,(ShelfFolderItemChildView) widget);
 				}
-				
+
 				/**
 				 * For a first folder/collection hiding the up and top most arrow.
 				 */
+
 				if(seqNum==1){
 					((ShelfFolderItemChildView) widget).upButtonIsVisible(false); 
 					((ShelfFolderItemChildView) widget).downButtonIsVisible(true); 

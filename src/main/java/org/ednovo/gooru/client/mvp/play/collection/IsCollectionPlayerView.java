@@ -55,4 +55,5 @@ public interface IsCollectionPlayerView extends PopupView, IsViewWithHandlers<Co
 	public void showClasspage(String classpageId,String page);
 	public void updateAuthorDetails();
 	public void setNarrationButton(Button narrationButton);
+	public void showFlaggedResourcePopup(PlaceRequest previousResoruceRequest, PlaceRequest nextResoruceRequest);
 }

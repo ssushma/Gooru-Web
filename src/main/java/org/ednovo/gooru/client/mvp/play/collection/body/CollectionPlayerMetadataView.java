@@ -1527,4 +1527,10 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("</a>", "").replaceAll("<a>", "");
         return html;
 	}
+
+	@Override
+	public void hideTeachPanelDetails(boolean isDisplayDetails) {
+		teacherContainer.setVisible(isDisplayDetails);
+		hideCollectionDetails(false);
+	}
 }
