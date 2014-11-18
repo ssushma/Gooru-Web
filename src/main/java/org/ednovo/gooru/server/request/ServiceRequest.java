@@ -28,9 +28,7 @@
 package org.ednovo.gooru.server.request;
 
 
-import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
-import org.ednovo.gooru.shared.exception.ServiceUnavailableException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
@@ -89,7 +87,7 @@ public abstract class ServiceRequest {
 			}else{
 				String message=parseJsonErrorResponse(getClientResource().getResponse().getEntity());
 				jsonResponseRepresentation.setErrorMessage(message);
-				throw new GwtException(exception.getStatus().getCode(),message);
+				//throw new GwtException(exception.getStatus().getCode(),message);
 			}
 			
 			return jsonResponseRepresentation;
