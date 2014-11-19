@@ -92,17 +92,18 @@ public class CfciLibraryPresenter extends BasePlacePresenter<IsCfciView, CfciLib
 			clearSlot(TYPE_FOLDERS_SLOT);
 			setInSlot(TYPE_FOLDERS_SLOT, partnerLibraryPresenter);
 			partnerLibraryPresenter.setPartnerWidget();
-			
-			if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
-				//To show SignUp (Registration popup)
-				if (AppClientFactory.isAnonymous()){
-					Window.enableScrolling(false);
-					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-					String type = getPlaceManager().getRequestParameter("type") ;
-					int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
-					signUpViewPresenter.displayPopup(displayScreen);
-					addToPopupSlot(signUpViewPresenter);
-				}
+		}
+		
+
+		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
+			//To show SignUp (Registration popup)
+			if (AppClientFactory.isAnonymous()){
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+				String type = getPlaceManager().getRequestParameter("type") ;
+				int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
+				signUpViewPresenter.displayPopup(displayScreen);
+				addToPopupSlot(signUpViewPresenter);
 			}
 		}
 		
