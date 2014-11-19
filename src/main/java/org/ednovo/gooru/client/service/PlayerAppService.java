@@ -187,6 +187,6 @@ public interface PlayerAppService extends BaseService {
 	
 	public Map<String,String> getYoutubeFeedCallback(String utubeId) throws GwtException, ServerDownException;
 	
-	public InsightsCollectionDo getInsightsCollectionSummary(String collectionId,String classpageId,String sessionId,String userId);
+	public InsightsCollectionDo getInsightsCollectionSummary(String collectionId,String classpageId,String sessionId,String userId) throws GwtException, ServerDownException;
 	
 }

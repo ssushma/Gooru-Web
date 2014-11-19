@@ -144,6 +144,7 @@ public class PlayerDataLogEvents {
 	public static final String FACEBOOK="facebook";
 	public static final String TWITTER="twitter";
 	public static final String MAIL="mail";
+	public static final String SEARCHTERM="searchTerm";
 	
 	
 	
@@ -290,7 +291,7 @@ public class PlayerDataLogEvents {
 	}
 	
 	public static  JSONString getDataLogPayLoadObject(String questionType,String oeAnswerText, List<Integer> attemptStatus, List<Integer> attemptTrySequence,
-										JSONObject answerIdsObject, JSONObject hintIdsObject,JSONObject explanationIdsObject,Integer attemptCount,List<List<JSONObject>> answerObjectArray){
+										JSONObject answerIdsObject, JSONObject hintIdsObject,JSONObject explanationIdsObject,Integer attemptCount,List<List<JSONObject>> answerObjectArray,String searchTerm){
 		JSONObject payLoadMap=new JSONObject();
 		try{
 			payLoadMap.put(QUESTIONTYPE, new JSONString(questionType));
@@ -303,6 +304,9 @@ public class PlayerDataLogEvents {
 			payLoadMap.put(HINTS, new JSONString(hintIdsObject.toString()));
 			payLoadMap.put(EXPLANATION, new JSONString(explanationIdsObject.toString()));
 			payLoadMap.put(ANSWEROBJECT, new JSONString(getAnswerObjectArrayInString(answerObjectArray)));
+			if(searchTerm!=null){
+				payLoadMap.put(SEARCHTERM, new JSONString(searchTerm));
+			}
 		}catch(Exception e){
 			
 		}
