@@ -90,8 +90,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	HTMLPanel printOpendedData=new HTMLPanel("");
 	HTMLPanel printResourceData=new HTMLPanel("");
 	
-	CollectionOverViewWidget collectionOverViewWidget=new CollectionOverViewWidget();
 	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
+	CollectionOverViewWidget collectionOverViewWidget=new CollectionOverViewWidget();
+	
 	final String style="<link rel='styleSheet' type='text/css' href='../css/googleVisualization.css'><link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'>";
 	/**
 	 * Costructor
@@ -773,10 +774,10 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
              //set row style
              if ( i % 2 == 0 ){
             	 sortableTable.getRowFormatter().addStyleName(i, res.css().tableRowOdd());
-            	 sortableTable.setWidget(i, 2, new HCBarChart().pieChart("#fafafa",pieChatValues));
+            	 sortableTable.setWidget(i, 2, new HCBarChart().pieChart("#fafafa",pieChatValues,isPrint));
              }else{
             	 sortableTable.getRowFormatter().addStyleName(i, res.css().tableRowEven());
-            	 sortableTable.setWidget(i, 2, new HCBarChart().pieChart("#fff",pieChatValues));
+            	 sortableTable.setWidget(i, 2, new HCBarChart().pieChart("#fff",pieChatValues,isPrint));
 	            }
 	        }
 		}

@@ -88,6 +88,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	HTMLPanel printScoredData=new HTMLPanel("");
 	HTMLPanel printOpendedData=new HTMLPanel("");
 	HTMLPanel printResourceData=new HTMLPanel("");
+	
 	CollectionOverViewWidget collectionOverViewWidget=new CollectionOverViewWidget();
 	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
 	
@@ -183,7 +184,13 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 			collectionProgressCount=0;
 			questionRowIndex.clear();
 			resourceRowIndex.clear();
-			
+			Collections.sort(result,new Comparator<UserDataDo>() {
+	        	public int compare(UserDataDo o1, UserDataDo o2) {
+	        		 Integer obj1 = new Integer(o1.getItemSequence());
+					 Integer obj2 = new Integer(o2.getItemSequence());
+	        	     return obj1.compareTo(obj2);
+	        	}
+	        });
 			for (UserDataDo userDataDo : result) {
 				if(userDataDo.getCategory().equalsIgnoreCase(QUESTION)){
 					if(!userDataDo.getType().equalsIgnoreCase("OE")){
@@ -235,7 +242,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		        data.addRows(result.size());
 		        
 		        for(int i=0;i<result.size();i++) {
-		        	data.setCell(i, 0, i+1, null, getPropertiesCell());
+		        	data.setCell(i, 0,result.get(i).getItemSequence(), null, getPropertiesCell());
 		            //set Format
 		              String  resourceCategory =result.get(i).getCategory();
 		              String categoryStyle="";
@@ -338,7 +345,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        data.addRows(result.size());
 	        
 	        for(int i=0;i<result.size();i++) {
-	        	data.setCell(i, 0, i+1, null, getPropertiesCell());
+	        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
 	              String  resourceCategory =result.get(i).getCategory();
 	              String categoryStyle="";
@@ -442,7 +449,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        data.addColumn(ColumnType.STRING, "Response");
 	        data.addRows(result.size());
 	        for(int i=0;i<result.size();i++) {
-	        	data.setCell(i, 0, i+1, null, getPropertiesCell());
+	        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	        	
 	            //Set Question Title
 	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
@@ -500,7 +507,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        data.addColumn(ColumnType.STRING, "Response");
 	        data.addRows(result.size());
 	        for(int i=0;i<result.size();i++) {
-	        	data.setCell(i, 0, i+1, null, getPropertiesCell());
+	        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	        	
 	            //Set Question Title
 	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
@@ -578,7 +585,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        if(result.size()!=0){
 				        for(int i=0;i<result.size();i++) {
 				        	isTickdisplay=false;
-				            data.setCell(i, 0, i+1, null, getPropertiesCell());
+				            data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 				           
 				            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 				            questionTitle.setStyleName(res.css().alignCenterAndBackground());
@@ -758,7 +765,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	        data.addRows(result.size());
 	      if(result.size()!=0){
 				        for(int i=0;i<result.size();i++) {
-				            data.setCell(i, 0, i+1, null, getPropertiesCell());
+				            data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 				           
 				            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
 				            questionTitle.setStyleName(res.css().alignCenterAndBackground());

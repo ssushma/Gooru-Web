@@ -16,9 +16,10 @@ import org.moxieapps.gwt.highcharts.client.plotOptions.PlotOptions;
 
 
 public class HCBarChart {
-   
-    public Chart pieChart(String backGroundColor,int[] pieChatValues) {
+  
+    public Chart pieChart(String backGroundColor,int[] pieChatValues,final boolean isPrint) {
     	final String Colors[]={"#fac6c4","#a6caa2","#A7A9AC"};
+    	final String LabelsText[]={"Incorrect","Correct","Skip"};
 		final Chart chart = new Chart()
 		.setType(Series.Type.PIE)
 		.setChartTitleText("")
@@ -33,7 +34,16 @@ public class HCBarChart {
 			.setAllowPointSelect(true)
 			.setCursor(PlotOptions.Cursor.POINTER)
 			.setPieDataLabels(new PieDataLabels()
-				.setEnabled(false)
+				.setEnabled(true)
+				.setDistance(-10)
+				 .setFormatter(new DataLabelsFormatter() {  
+                     public String format(DataLabelsData dataLabelsData) {  
+                    	 if(dataLabelsData.getYAsLong()!=0 && isPrint){
+                    		  return "<b>" + dataLabelsData.getPointName() + "</b>(" + dataLabelsData.getYAsLong()+")";  
+                    	 }
+                    	 return  "";
+                     }  
+                 }) 
 			)
 			.setAllowPointSelect(true)
 			.setShowInLegend(false)
@@ -43,7 +53,7 @@ public class HCBarChart {
 		);
 		Point[] pointArr = new Point[3];
 		for(int i = 0; i <3; i++){
-			Point pointArray = new Point("text",pieChatValues[i]).setColor(Colors[i]);
+			Point pointArray = new Point(LabelsText[i],pieChatValues[i]).setColor(Colors[i]);
 			pointArr[i] = pointArray;
 		}
 
@@ -111,7 +121,6 @@ public class HCBarChart {
                 new Point("Others", 0.7)  
             })  
         );  
-  
         return chart;  
     }  
 }

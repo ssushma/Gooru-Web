@@ -134,7 +134,7 @@
 	font-weight: bold;
 	line-height: 50px;
 	text-align: center;
-	width: 100%;
+	width: 264px;
 }
 .collectionBreakDown_infobox_titles_print1{
 	clear: both;
@@ -144,7 +144,7 @@
 	font-weight: bold;
 	line-height: 50px;
 	text-align: center;
-	width: 100%;
+	width: 264px;
 	border-bottom: 1px solid #ccc;
 	padding-left: 5px;
 }
@@ -200,13 +200,13 @@
 }
 
 .collection_details_teacher {
-	width: 590px;
+	width: 425px;
 	float: left;
 	margin-left: 12px;
 	text-align: left;
 }
 .session_details{
-	width: 590px;
+	width: 425px;
 	float: left;
 	margin-left: 12px;
 	text-align: left;
