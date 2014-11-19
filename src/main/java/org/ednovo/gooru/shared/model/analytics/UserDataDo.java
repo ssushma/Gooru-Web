@@ -19,6 +19,7 @@ public class UserDataDo implements Serializable{
 	private int attemptStatus;
 	private int avgReaction;
 	private int status;
+	private int itemSequence;
 	private String gooruUId;
 	private int score;
 	private int totalAttemptUserCount;
@@ -227,5 +228,11 @@ public class UserDataDo implements Serializable{
 	}
 	public void setProfileImageUrl(String profileImageUrl) {
 		this.profileImageUrl = profileImageUrl;
+	}
+	public int getItemSequence() {
+		return itemSequence;
+	}
+	public void setItemSequence(int itemSequence) {
+		this.itemSequence = itemSequence;
 	}
 }

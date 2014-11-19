@@ -21,6 +21,7 @@ import org.ednovo.gooru.shared.model.analytics.MetaDataDo;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 import org.ednovo.gooru.shared.model.analytics.PrintUserDataDO;
 import org.ednovo.gooru.shared.model.analytics.UserDataDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.ajaxloader.client.Properties;
 import com.google.gwt.core.client.GWT;
@@ -62,7 +63,7 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	
 	@UiField HTMLPanel printWidget,totalAvgReactionlbl,tabContainer,individualScoredData,individualOpenendedData,individualScoredDatapnl,individualResourceBreakdownDatapnl,individualResourceBreakdownData;
 	@UiField ListBox filterDropDown;
-	@UiField Label totalTimeSpentlbl,totalViewlbl;
+	@UiField Label lblCollectionOverview,lblTotalTimeSpent,lblViews,lblAvgReaction,totalTimeSpentlbl,totalViewlbl;
 	
 	AnalyticsTabContainer individualTabContainer;
 	DataView operationsView;
@@ -90,6 +91,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	CollectionOverViewWidget collectionOverViewWidget=new CollectionOverViewWidget();
 	CollectionSummaryWidget collectionSummaryWidget=new CollectionSummaryWidget();
 	
+	String style="<link rel='styleSheet' type='text/css' href='../css/googleVisualization.css'><link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'>";
+
 	/**
 	 * Constructor
 	 */
@@ -98,6 +101,29 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		setData();
+		setStaticData();
+	}
+	/**
+	 * This method is used to set static data.
+	 */
+	void setStaticData(){
+		StringUtil.setAttributes(printWidget.getElement(), "pnlPrintWidget", null, null);
+		StringUtil.setAttributes(totalAvgReactionlbl.getElement(), "pnlTotalAvgReactionlbl", null, null);
+		StringUtil.setAttributes(tabContainer.getElement(), "pnlTabContainer", null, null);
+		StringUtil.setAttributes(individualScoredData.getElement(), "pnlIndividualScoredData", null, null);
+		StringUtil.setAttributes(individualOpenendedData.getElement(), "pnlIndividualOpenendedData", null, null);
+		StringUtil.setAttributes(individualScoredDatapnl.getElement(), "pnlIndividualScoredDatapnl", null, null);
+		StringUtil.setAttributes(individualResourceBreakdownDatapnl.getElement(), "pnlIndividualResourceBreakdownDatapnl", null, null);
+		StringUtil.setAttributes(individualResourceBreakdownData.getElement(), "pnlIndividualResourceBreakdownData", null, null);
+
+		StringUtil.setAttributes(filterDropDown.getElement(), "ddlFilterDropDown", null, null);
+
+		StringUtil.setAttributes(totalTimeSpentlbl.getElement(), "lblTotalTimeSpentlbl", null, null);
+		StringUtil.setAttributes(totalViewlbl.getElement(), "lblTotalViewlbl", null, null);
+		StringUtil.setAttributes(lblCollectionOverview.getElement(), "lblCollectionOverview", i18n.GL2274(),  i18n.GL2274());
+		StringUtil.setAttributes(lblTotalTimeSpent.getElement(), "lblTotalTimeSpent", i18n.GL2275(),  i18n.GL2275());
+		StringUtil.setAttributes(lblViews.getElement(), "lblViews", i18n.GL2276(),  i18n.GL2276());
+		StringUtil.setAttributes(lblAvgReaction.getElement(), "lblAvgReaction", i18n.GL2277(),  i18n.GL2277());
 	}
 	/**
 	 * This method is used to hide the panels
@@ -963,7 +989,6 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		//To add resource breakdown
 		printWidget.add(collectionOverViewWidget);
 		printWidget.add(printResourceData);
-		String style="<link rel='styleSheet' type='text/css' href='https://www.google.com/uds/api/visualization/1.0/8c95b72e5c145d5b3d7bb8b4ea74fd63/ui+en,table+en.css'><link href='../css/printAnalytics.css' rel='stylesheet' type='text/css'>";
 		if(isClickedOnSave){
 				 getUiHandlers().setHtmltopdf(style.toString().replaceAll("'", "\\\\\"")+printWidget.toString().replaceAll("\"", "\\\\\""),isClickedOnEmail);
 				 printWidget.clear();

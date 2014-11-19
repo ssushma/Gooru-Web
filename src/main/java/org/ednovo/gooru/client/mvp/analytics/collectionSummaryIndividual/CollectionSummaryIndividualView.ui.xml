@@ -16,17 +16,17 @@
 		<g:HTMLPanel ui:field="individualOpenendedData"  styleName="{unitStyle.individualScore}" />
 		<g:HTMLPanel ui:field="individualResourceBreakdownDatapnl">
 			 <g:HTMLPanel styleName="{unitStyle.collectionOverViewpnl}">
-			 	   <g:Label styleName="{unitStyle.collectionOverviewText}"  text="{i18n.GL2274}"></g:Label>
+			 	   <g:Label styleName="{unitStyle.collectionOverviewText}" text="{i18n.GL2274}" ui:field="lblCollectionOverview"></g:Label>
 				   <div class="{unitStyle.collectionBreakDown_infobox}">
-				   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles}" text="{i18n.GL2275}"></g:Label>
+				   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles}" text="{i18n.GL2275}" ui:field="lblTotalTimeSpent"></g:Label>
 				   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles}" ui:field="totalTimeSpentlbl"></g:Label>
 				   </div>
 				   <div class="{unitStyle.collectionBreakDown_infobox}">
-				   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles}" text="{i18n.GL2276}"></g:Label>
+				   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles}" text="{i18n.GL2276}" ui:field="lblViews"></g:Label>
 				   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles}" ui:field="totalViewlbl"></g:Label>
 				   </div>
 				   <div class="{unitStyle.collectionBreakDown_infobox}">
-				   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles}"  text="{i18n.GL2277}"></g:Label>
+				   <g:Label styleName="{unitStyle.collectionBreakDown_infobox_titles}"  text="{i18n.GL2277}" ui:field="lblAvgReaction"></g:Label>
 				  <g:HTMLPanel styleName="{unitStyle.collectionBreakDown_infobox_titles}" ui:field="totalAvgReactionlbl"></g:HTMLPanel> 
 				  </div>
 			 </g:HTMLPanel>
