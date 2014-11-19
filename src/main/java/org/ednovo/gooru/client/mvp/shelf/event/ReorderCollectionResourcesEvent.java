@@ -22,67 +22,41 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.shared.exception;
 
-import java.util.ArrayList;
-import java.util.List;
+package org.ednovo.gooru.client.mvp.shelf.event;
 
-/**
- * @author Search Team
- * 
- */
-public class GwtException extends RuntimeException {
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.ShelfCollectionResourceChildView;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8131503840164251388L;
+import com.google.gwt.event.shared.GwtEvent;
 
-	private List<String> errors;
+public class ReorderCollectionResourcesEvent extends GwtEvent<ReorderCollectionResourcesEventHandler> {
 	
-	private int statusCode;
+	public static final Type<ReorderCollectionResourcesEventHandler> TYPE = new Type<ReorderCollectionResourcesEventHandler>();
 	
-	private String errorMessage;
-
-	public GwtException() {
-		errors = new ArrayList<String>();
-	}
-
-	public GwtException(String message) {
-		super(message);
-	}
+	ShelfCollectionResourceChildView shelfCollectionResourceChildView;
+	String arrow;
+	Integer newSequence;
 	
-	public GwtException(int statusCode, String errorMessage) {
-		this.statusCode=statusCode;
-		this.errorMessage=errorMessage;
-	}
-
-	public void addError(String error) {
-		errors.add(error);
-	}
-
-	public void addErrors(List<String> errors) {
-		this.errors.addAll(errors);
-	}
-
-	public List<String> getErrors() {
-		return errors;
-	}
-
-	public void setErrors(List<String> errors) {
-		this.errors = errors;
-	}
-
-	public void clearErrors() {
-		errors.clear();
+	
+	public ReorderCollectionResourcesEvent(ShelfCollectionResourceChildView shelfCollectionResourceChildView, String arrow, Integer newSequence){
+		this.shelfCollectionResourceChildView = shelfCollectionResourceChildView;
+		this.arrow = arrow;
+		this.newSequence = newSequence;
 	}
 
 	@Override
-	public String getMessage() {
-		if (errors != null && errors.size() > 0) {
-			return errors.get(0);
-		} else {
-			return super.getMessage();
-		}
+	public com.google.gwt.event.shared.GwtEvent.Type<ReorderCollectionResourcesEventHandler> getAssociatedType() {
+		return TYPE;
 	}
+
+	@Override
+	protected void dispatch(ReorderCollectionResourcesEventHandler handler) {
+		System.out.println("--- arrow "+arrow);
+		System.out.println("-- newSequence - "+newSequence); 
+		handler.reorderResources(shelfCollectionResourceChildView, arrow, newSequence); 
+	} 
+
 }
+
+
+

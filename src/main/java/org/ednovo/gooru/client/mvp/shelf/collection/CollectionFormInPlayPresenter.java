@@ -157,9 +157,7 @@ public class CollectionFormInPlayPresenter extends PresenterWidget<IsCollectionF
 	@Override
 	protected void onReveal(){
 		this.getTaxonomyService().getCourse(getCourseAsyncCallback());
-		if(!(AppClientFactory.isAnonymous())){
-			getView().getAccountTypeId();
-		}
+		getView().getAccountTypeId();
 	}
 	
 	public ShelfServiceAsync getShelfService() {

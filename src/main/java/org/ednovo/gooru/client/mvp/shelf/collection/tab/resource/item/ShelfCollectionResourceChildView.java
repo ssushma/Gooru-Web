@@ -37,7 +37,6 @@ import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
-import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragUc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
@@ -47,7 +46,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.PublishButtonHideEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.PublishButtonHideEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionItemInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
-import org.ednovo.gooru.client.uc.AlertContentUc;
+import org.ednovo.gooru.client.mvp.shelf.event.ReorderCollectionResourcesEvent;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -60,6 +59,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -86,7 +86,6 @@ import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -101,14 +100,13 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
-import org.ednovo.gooru.shared.util.InfoUtil;
 
 
 /**
  * @author Search Team
  * 
  */
-public class ShelfCollectionResourceChildView extends
+public class ShelfCollectionResourceChildView extends 
 		ChildView<ShelfCollectionResourceChildPresenter> implements
 		IsShelfCollectionResourceView {
 
@@ -179,6 +177,8 @@ public class ShelfCollectionResourceChildView extends
 	private Integer pageSize=20;
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel(true);
+	
+	private boolean isReorderContainerVisible=false;
 	
 	
 	
@@ -354,7 +354,7 @@ public class ShelfCollectionResourceChildView extends
 		initWidget(uiBinder.createAndBindUi(this));
 		this.collectionItemDo = collectionItem;
 		
-		reorderContainer.setVisible(false);
+//		reorderContainer.setVisible(false);
 		editFloPanel.setVisible(false);
 		editFloPanel.getElement().setId("fpnlEditFloPanel");
 		
@@ -444,7 +444,7 @@ public class ShelfCollectionResourceChildView extends
 		onResourceNarrationOut();
 		addDomHandler(new ActionPanelHover(), MouseOverEvent.getType());
 		addDomHandler(new ActionPanelOut(), MouseOutEvent.getType());
-		setPresenter(new ShelfCollectionResourceChildPresenter(this));
+		setPresenter(new ShelfCollectionResourceChildPresenter(this));  
 		//For 5.9 
 		narrationAlertMessageLbl.setText(i18n.GL0143());
 		narrationAlertMessageLbl.getElement().setId("lblNarrationAlertMessageLbl");
@@ -741,12 +741,10 @@ public class ShelfCollectionResourceChildView extends
 		}
     }
 	/*private class showNarationPencil implements MouseOverHandler {
-
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			onResourceNarrationHover();
 		}
-
 	}*/
 
 	private class narationValidation implements KeyUpHandler {
@@ -778,12 +776,10 @@ public class ShelfCollectionResourceChildView extends
 	}
 
 	/*private class hideNarationPencil implements MouseOutHandler {
-
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			onResourceNarrationOut();
 		}
-
 	}*/
 
 	/**
@@ -796,7 +792,12 @@ public class ShelfCollectionResourceChildView extends
 		public void onMouseOver(MouseOverEvent event) {
 			if ((actionVerPanel.isVisible()==false) && (actionVerPanelForUpdateTime.isVisible()==false) && (actionVerPanelForUpdatePDF.isVisible()==false)) {
 				EditBtn.setVisible(true);
-//				reorderContainer.setVisible(true);
+				if(isReorderContainerVisible){
+					reorderContainer.setVisible(true);
+				}else{
+					System.out.println("--- in else --");
+					reorderContainer.setVisible(false);
+				}
 				//ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 				//actionVerPanel.setVisible(true);
 				// onResourceNarrationHover();
@@ -1825,21 +1826,35 @@ public class ShelfCollectionResourceChildView extends
 
 	/**
 	 * Reorder the collection item with new new sequence
+	 * @param shelfCollectionResourceChildView 
 	 * 
 	 * @param newSequence
 	 *            reorder the collection item
+	 * @param arrow 
 	 */
-	public void reorderCollectionItem(Integer newSequence) {
+	public void reorderCollectionItem(ShelfCollectionResourceChildView shelfCollectionResourceChildView, Integer newSequence, String arrow) { 
 		collectionItemDo.setItemSequence(newSequence);
-		getPresenter().reorderCollectionItem(collectionItemDo);
+		/**
+		 * Not using following method, as drag and dropped removed.
+		 */
+		/*getPresenter().reorderCollectionItem(collectionItemDo);
 		new Timer() {
-
 			@Override
 			public void run() {
 				//remove in 5.9 sprint
 				//setEditMode(false);
 			}
-		}.schedule(2000);
+		}.schedule(2000);*/
+		
+		
+		/**
+		 * Added new method in order to implement reordering of resources.
+		 * 
+		 */
+		
+		getPresenter().reorderMyCollectionItem(collectionItemDo,shelfCollectionResourceChildView,arrow,newSequence);
+		
+		
 	}
 
 	@Override
@@ -1883,11 +1898,13 @@ public class ShelfCollectionResourceChildView extends
 		return 225;
 	}
 
+	/**
+	 * Following method is deprecated, as drag and drop is removed for resource reorder at My Collections.
+	 */
 	@Override
 	public void onPostReorder(CollectionItemDo collectionItemDo) {
 		collectionItemDo.setCollection(this.collectionItemDo.getCollection());
-		this.collectionItemDo.setItemSequence(collectionItemDo
-				.getItemSequence());
+		this.collectionItemDo.setItemSequence(collectionItemDo.getItemSequence());
 		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(collectionItemDo, RefreshType.UPDATE));
 
 	}
@@ -2315,6 +2332,24 @@ public class ShelfCollectionResourceChildView extends
 		new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
 	}
 	
+	
+	public void reorderCollectionResources(ShelfCollectionResourceChildView shelfCollectionResourceChildView, int itemToBeMovedPosSeqNumb, String arrow) { 
+		reorderCollectionItem(shelfCollectionResourceChildView,itemToBeMovedPosSeqNumb,arrow);
+	}
+	
+	@Override
+	public void onPostResourceReorder(CollectionItemDo collectionItemDo,ShelfCollectionResourceChildView shelfCollectionResourceChildView,String arrow,Integer newSequence) {
+		collectionItemDo.setCollection(this.collectionItemDo.getCollection());
+		this.collectionItemDo.setItemSequence(collectionItemDo.getItemSequence());
+		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(collectionItemDo, RefreshType.UPDATE));
+		AppClientFactory.fireEvent(new ReorderCollectionResourcesEvent(shelfCollectionResourceChildView,arrow,newSequence));
+	}
+	
+	
+	
+	public void setReorderContainerVisibility(boolean isEnable) { 
+		isReorderContainerVisible = isEnable;
+	}
 	
 	
 	/**
