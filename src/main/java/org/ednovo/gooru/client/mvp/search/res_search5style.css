@@ -37,6 +37,13 @@
 .bodyWrapper{
 	margin-top:0;
 }
+.addResource{
+	width:140px;
+	vertical-align: middle;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 .oerContainer {
 	
 }

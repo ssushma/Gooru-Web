@@ -162,6 +162,7 @@ public interface SearchCBundle extends ClientBundle{
 		 String focus();
 		 String filtersContainer();
 		 String filtersButton();
+		 String addResource();
 	}	
 
 }

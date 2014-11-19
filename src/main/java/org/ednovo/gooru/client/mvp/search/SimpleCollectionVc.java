@@ -48,6 +48,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -92,7 +93,7 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 	FlowPanel metaDataFloPanel,internalPanel1, standardsDataPanel,collectionTitlePanel,collectionGradePanel;
 	
 	@UiField
-	HTMLPanel containerPanel;
+	HTMLPanel containerPanel,mainContainer;
 	
 	
 	//@UiField SearchMoreInfoVcCBundle res;
@@ -119,7 +120,9 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 	public SimpleCollectionVc(CollectionSearchResultDo collectionSearchResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setData(collectionSearchResultDo);
+		
 		SearchMoreInfoVcCBundle.INSTANCE.css().ensureInjected();
+		mainContainer.getElement().getStyle().setPaddingBottom(10, Unit.PX);
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 			internalPanel1.setStyleName(SearchMoreInfoVcCBundle.INSTANCE.css().resourceCollectionThumbnailPanel());
 		//	collectionTitlePanel.setStyleName(SearchMoreInfoVcCBundle.INSTANCE.css().resourceCollectionTitlePanel());

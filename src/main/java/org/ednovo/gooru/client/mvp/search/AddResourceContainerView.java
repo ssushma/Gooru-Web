@@ -387,8 +387,10 @@ public class AddResourceContainerView extends
 					.arrow());
 			folderContainer.add(arrowLabel);
 			floderName = new Label();
+			
 			floderName.setStyleName(AddResourceContainerCBundle.INSTANCE.css()
 					.title());
+			floderName.addStyleName(SearchCBundle.INSTANCE.css().addResource());
 			folderContainer.add(floderName);
 		}
 
@@ -445,6 +447,7 @@ public class AddResourceContainerView extends
 			folderName = new Label();
 			folderName.setStyleName(AddResourceContainerCBundle.INSTANCE.css()
 					.title());
+			folderName.addStyleName(SearchCBundle.INSTANCE.css().addResource());
 			folderContainer.add(folderName);
 		}
 
@@ -774,8 +777,7 @@ public class AddResourceContainerView extends
 				.addPlayerStyle());
 		dropdownListContainerScrollPanel.getElement().setAttribute("style",
 				"height: 135px !important;margin-left: 46px;overflow: auto;");
-		floderTreeContainer.getElement().setAttribute("style",
-				"height: 135px !important");
+		floderTreeContainer.getElement().setAttribute("style","height: 135px !important");
 		cancelButton.setVisible(false);
 		enableSuccessView.setVisible(false);
 		buttonsContainer.setVisible(true);
