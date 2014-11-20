@@ -1029,9 +1029,9 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	public String reorderValidations(int itemToBeMovedPosSeqNumb,int itemPosSeqNumb,String arrow) {
 		String validationStaus=REORDER_VALIDATION_MSG; 
 		if(itemToBeMovedPosSeqNumb==0){
-			validationStaus = "Given Reorder sequence is not valid or empty.";
+			validationStaus = i18n.GL3003();
 		}else if(itemToBeMovedPosSeqNumb>getTotalCount()){
-			validationStaus = "Sorry, you don't have "+itemToBeMovedPosSeqNumb+"th folder or collection to reorder";
+			validationStaus = StringUtil.generateMessage(i18n.GL3004(),itemToBeMovedPosSeqNumb+"");
 		}else if(itemToBeMovedPosSeqNumb>itemPosSeqNumb && arrow.equalsIgnoreCase(UP_ARROW)){
 			validationStaus = "Please click on down arrow";
 		}else if(itemToBeMovedPosSeqNumb<itemPosSeqNumb && arrow.equalsIgnoreCase(DOWN_ARROW)){
