@@ -1018,6 +1018,10 @@ public class LibraryTopicListView extends Composite{
 									if(libraryGooruOid!=null){
 										params.put("lid", libraryGooruOid);
 									}
+									String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+									if(libraryEventId!=null){
+										params.put("eventid", libraryEventId);
+									}
 									if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY) || getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 										params.put("library", getPlaceToken());
 									}
@@ -1102,6 +1106,10 @@ public class LibraryTopicListView extends Composite{
 									params.put("lessonId", lessonId);
 									if(libraryGooruOid!=null){
 										params.put("lid", libraryGooruOid);
+									}
+									String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+									if(libraryEventId!=null){
+										params.put("eventid", libraryEventId);
 									}
 									if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY) || getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 										params.put("library", getPlaceToken());
@@ -1270,6 +1278,10 @@ public class LibraryTopicListView extends Composite{
 				params.put("lessonId", lessonId);
 				if(libraryId!=null){
 					params.put("lid", libraryId);
+				}
+				String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+				if(libraryEventId!=null){
+					params.put("eventid", libraryEventId);
 				}
 				if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY) || getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 					params.put("library", getPlaceToken());
