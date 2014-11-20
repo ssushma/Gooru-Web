@@ -108,9 +108,9 @@ public class ProfileTopicListView extends Composite{
 
 	private boolean isScrollable = true;
 	
-	private boolean isAssignPopup = false;
+	public static boolean isAssignPopup = false;
 	
-	private boolean isCustomizePopup = false;
+	public static boolean isCustomizePopup = false;
 	
 	private ProfileLibraryDo profileLibraryDo;
 	
