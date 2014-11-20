@@ -98,7 +98,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel(true);
 	
-	private PopupPanel toolTipPosPopupPanel=new PopupPanel();
+	public PopupPanel toolTipPosPopupPanel=new PopupPanel();
 	
 	final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
 	
