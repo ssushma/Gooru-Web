@@ -1523,6 +1523,9 @@ public class CollectionResourceTabView extends
 		}else{
 			collectionResourcePanelVc.insert(shelfCollectionResourceChildView, newSequence);
 		}
+		shelfCollectionResourceChildView.getResourceEditButtonContainer().setVisible(false);
+		shelfCollectionResourceChildView.getEditButton().setVisible(false);
+		shelfCollectionResourceChildView.getReorderContainer().setVisible(false);
 		resetSequence();
 		setResourceSequence();
 	}
