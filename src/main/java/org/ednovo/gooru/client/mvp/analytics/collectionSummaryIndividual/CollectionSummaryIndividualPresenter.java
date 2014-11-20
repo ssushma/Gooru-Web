@@ -111,7 +111,7 @@ public class CollectionSummaryIndividualPresenter extends PresenterWidget<IsColl
 		this.analyticService.getOETextData(resourceGooruId, collectionId, classpageId, pathwayId,"CS",sessionId,userId, new AsyncCallback<ArrayList<OetextDataDO>>() {
 			@Override
 			public void onSuccess(ArrayList<OetextDataDO> result) {
-				getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary);
+				getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,sessionId);
 			}
 			@Override
 			public void onFailure(Throwable caught) {
