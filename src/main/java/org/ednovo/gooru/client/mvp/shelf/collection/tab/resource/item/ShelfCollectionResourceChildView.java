@@ -1686,7 +1686,12 @@ public class ShelfCollectionResourceChildView extends
 				narrationTxtArea.getElement().setAttribute("alt", collectionItemDo.getNarration());
 				narrationTxtArea.getElement().setAttribute("title", collectionItemDo.getNarration());
 			}
+			resourceNarrationHtml.getElement().getStyle().setWidth(230, Unit.PX);
 			resourceNarrationHtml.setHTML(ADD_NARRATION_FOR_YOUR_VIEWERS);
+			String value = StringUtil.generateMessage(i18n.GL2103(), "500");
+			lblCharLimit.setText(value);
+			lblCharLimit.setVisible(true);
+			
 			resourceNarrationHtml.getElement().setAttribute("alt", ADD_NARRATION_FOR_YOUR_VIEWERS);
 			resourceNarrationHtml.getElement().setAttribute("title", ADD_NARRATION_FOR_YOUR_VIEWERS);
 			setEditMode(true);
