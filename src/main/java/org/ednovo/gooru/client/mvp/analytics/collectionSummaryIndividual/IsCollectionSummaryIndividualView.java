@@ -39,5 +39,5 @@ public interface IsCollectionSummaryIndividualView extends IsViewWithHandlers<Co
 	
 	void setIndividualCollectionMetaData(ArrayList<CollectionSummaryMetaDataDo> result);
 	
-	void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType, boolean isSummary);
+	void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType, boolean isSummary,String session);
 }

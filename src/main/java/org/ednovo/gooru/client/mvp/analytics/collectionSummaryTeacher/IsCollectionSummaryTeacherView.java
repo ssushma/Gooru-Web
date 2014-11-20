@@ -35,5 +35,5 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 public interface IsCollectionSummaryTeacherView extends IsViewWithHandlers<CollectionSummaryTeacherUiHandlers>{
 	void setTeacherResourceData(ArrayList<UserDataDo> resourcesData,CollectionSummaryMetaDataDo collectionMetaData,HTMLPanel loadingImage);
-	void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId,String collectionId,String classpageId,String pathwayId,String questionType);
+	void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId,String collectionId,String classpageId,String pathwayId,String questionType,String session);
 }
