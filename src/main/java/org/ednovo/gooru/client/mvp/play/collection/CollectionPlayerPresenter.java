@@ -1797,6 +1797,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			public void onSuccess(ArrayList<ContentReportDo> result) {
 				String gooruFlagId="";
 				String flagType="";
+				boolean isNotLoad=false;
 				if(result!=null&&result.size()>0){
 					for(int i =0;i<result.size();i++){
 						gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
@@ -1807,12 +1808,16 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 						if(result.get(i).getContentReportList()!=null){
 							for(int j=0; j<result.get(i).getContentReportList().size(); j++){
 								flagType=result.get(i).getContentReportList().get(j);
+								System.out.println("flagType::"+flagType);
 								if(flagType.equals("not-loading")){
-									getView().makeFlagButtonOrange();
-									getView().showFlaggedResourcePopup(previousResoruceRequest,nextResoruceRequest);
+									isNotLoad=true;
 								}
 							}
+							getView().makeFlagButtonOrange();
 						}
+					}
+					if(isNotLoad){
+						getView().showFlaggedResourcePopup(previousResoruceRequest,nextResoruceRequest);
 					}
 					resourceFlagPresenter.setContentDeleteIds(gooruFlagId);
 				 }
