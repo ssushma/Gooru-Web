@@ -1905,6 +1905,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(collectionDo.getGooruOid(), classpageId, classpageEventId, eventType, playerMode,"",null,path,null));
 		}else if(AppClientFactory.getPlaceManager().getRequestParameter("lid")!=null){
 			classpageEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+			if(classpageEventId==null||classpageEventId.equals("")){
+				classpageEventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid");
+			}
 			String libraryId=AppClientFactory.getPlaceManager().getRequestParameter("lid");
 			path=libraryId+"/"+collectionDo.getGooruOid();
 			collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(collectionDo.getGooruOid(), libraryId, classpageEventId, eventType, playerMode,"",null,path,null));
@@ -2027,6 +2030,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			path=classpageId+"/"+collectionId;
 		}else if(AppClientFactory.getPlaceManager().getRequestParameter("lid")!=null){
 			classpageEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+			if(classpageEventId==null||classpageEventId.equals("")){
+				classpageEventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid");
+			}
 			String libraryId=AppClientFactory.getPlaceManager().getRequestParameter("lid");
 			classpageId=libraryId;
 			path=classpageId+"/"+collectionId;
@@ -2060,6 +2066,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			}
 		}else if(AppClientFactory.getPlaceManager().getRequestParameter("lid")!=null){
 			classpageEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+			if(classpageEventId==null||classpageEventId.equals("")){
+				classpageEventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid");
+			}
 			String libraryId=AppClientFactory.getPlaceManager().getRequestParameter("lid");
 			classpageId=libraryId;
 			path=classpageId+"/"+collectionDo.getGooruOid();
@@ -2101,6 +2110,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			path=classpageId+"/"+collectionDo.getGooruOid();
 		}else if(AppClientFactory.getPlaceManager().getRequestParameter("lid")!=null){
 			classpageEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+			if(classpageEventId==null||classpageEventId.equals("")){
+				classpageEventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid");
+			}
 			String libraryId=AppClientFactory.getPlaceManager().getRequestParameter("lid");
 			classpageId=libraryId;
 			path=classpageId+"/"+collectionDo.getGooruOid();
