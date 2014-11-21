@@ -180,7 +180,7 @@ public class ShelfCollectionResourceChildView extends
 	
 	private boolean isReorderContainerVisible=false;
 	
-	
+	private GlobalToolTip globalToolTip;
 	
 	
 	
@@ -2329,9 +2329,11 @@ public class ShelfCollectionResourceChildView extends
 	
 	public void showReorderValidationToolTip(String validationMsg){
 		toolTipPopupPanel.clear();
-		toolTipPopupPanel.setWidget(new GlobalToolTip(validationMsg));
+		globalToolTip = new GlobalToolTip(validationMsg);
+		globalToolTip.confirmationPanel.getElement().getStyle().setWidth(155, Unit.PX);
+		toolTipPopupPanel.setWidget(globalToolTip);
 		toolTipPopupPanel.setStyleName("");
-		toolTipPopupPanel.setPopupPosition(reorderTxtBox.getElement().getAbsoluteLeft()+110, reorderTxtBox.getElement().getAbsoluteTop()-40);
+		toolTipPopupPanel.setPopupPosition(reorderTxtBox.getElement().getAbsoluteLeft()+160, reorderTxtBox.getElement().getAbsoluteTop()-70);
 		toolTipPopupPanel.getElement().getStyle().setZIndex(9999);
 		toolTipPopupPanel.show();
 		new FadeInAndOut(toolTipPopupPanel.getElement(), 10200);
