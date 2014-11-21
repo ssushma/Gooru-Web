@@ -651,7 +651,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			//Window.scrollTo(0, 0);
 			//userOwnResourcePreview.getElement().getParentElement().getParentElement().setAttribute("style", "width:502px;");
 			userOwnResourcePreview.setWidth("502px");
-			userOwnResourcePreview.setHeight("400px");
+//			userOwnResourcePreview.setHeight("400px");
+			userOwnResourcePreview.getElement().setAttribute("style", "min-height:400px;");
 			userOwnResourcePreview.show();
 			userOwnResourcePreview.center();
 /*			userOwnResourcePreview.show();

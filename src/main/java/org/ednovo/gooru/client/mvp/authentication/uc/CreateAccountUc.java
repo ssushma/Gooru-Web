@@ -432,9 +432,8 @@ public abstract class CreateAccountUc extends PopupPanel{
 											String confirmPassword = txtConfirmPassword.getText().trim();
 											String dob = dateBoxUc.getDateBox().getValue().trim();
 											String parentEmailId = txtParentEmailId.getText().trim();
-											Boolean userInputval = validateUserInput();
-	
-											if (userInputval) {
+											
+											if (validateUserInput()) {
 												lblPleaseWait.setVisible(true);
 												btnSignUp.setVisible(false);
 												if (!underThirtheen) {
@@ -630,7 +629,6 @@ public abstract class CreateAccountUc extends PopupPanel{
 				txtConfirmPassword.addStyleName(res.css().errorMsgDisplay());
 				isValid = false;
 			}
-
 
 			// TODO Validate Password fields are match each other.
 			if (!password.equalsIgnoreCase(confirmPassword)) {
@@ -852,20 +850,17 @@ public abstract class CreateAccountUc extends PopupPanel{
 		userNameValidUc.getElement().setAttribute("alt",i18n.GL0473());
 		userNameValidUc.getElement().setAttribute("title",i18n.GL0473());
 		
-		txtChoosePassword.addKeyUpHandler(new OnKeyUpHandler());
-		txtConfirmPassword.addKeyUpHandler(new OnKeyUpHandler());
-		
-/*		txtChooseUsername.addKeyUpHandler(new OnKeyUpHandler());
+		txtChooseUsername.addKeyUpHandler(new OnKeyUpHandler());
 		txtFirstName.addKeyUpHandler(new OnKeyUpHandler());
 		txtLastName.addKeyUpHandler(new OnKeyUpHandler());
 		txtChooseEmail.addKeyUpHandler(new OnKeyUpHandler());
 		txtChoosePassword.addKeyUpHandler(new OnKeyUpHandler());
-		txtConfirmPassword.addKeyUpHandler(new OnKeyUpHandler());*/
+		txtConfirmPassword.addKeyUpHandler(new OnKeyUpHandler());
 
-		//txtChooseUsername.addBlurHandler(new OnBlurHandler());
+		txtChooseUsername.addBlurHandler(new OnBlurHandler());
 		txtChooseEmail.addBlurHandler(new OnBlurHandler());
 		txtParentEmailId.addBlurHandler(new OnBlurHandler());
-/*		txtParentEmailId.addKeyUpHandler(new OnKeyUpHandler());*/
+		txtParentEmailId.addKeyUpHandler(new OnKeyUpHandler());
 
 		txtChooseUsername.addMouseOverHandler(new OnMouseOver());
 		txtFirstName.addMouseOverHandler(new OnMouseOver());
@@ -1152,7 +1147,6 @@ public abstract class CreateAccountUc extends PopupPanel{
 			btnSignUp.setEnabled(false);
 			btnSignUp.getElement().addClassName("disabled");
 			
-			
 			if (event.getSource() == txtChooseEmail
 					&& txtChooseEmail.getText() != null
 					&& !txtChooseEmail.getText().equalsIgnoreCase("")) {
@@ -1170,15 +1164,10 @@ public abstract class CreateAccountUc extends PopupPanel{
 					emailValidUc.getElement().setAttribute("title",i18n.GL0464());
 					emailValidUc.setVisible(true);
 				}
-			} else if (event.getSource() == txtParentEmailId
-					&& txtParentEmailId.getText() != null
-					&& !txtParentEmailId.getText().equalsIgnoreCase("")) {
-				isValidEmailId = checkUserRegisteredWithGooru(
-						txtParentEmailId.getText(), "emailId");
-			}else if (event.getSource() == txtChooseUsername
+			} else if (event.getSource() == txtChooseUsername
 					&& txtChooseUsername.getText().trim() != null
 					&& !txtChooseUsername.getText().equalsIgnoreCase("")) {
-					
+					/*
 					//Check for Bad Words
 					Map<String, String> parms = new HashMap<String, String>();
 					parms.put("text", txtChooseUsername.getText().trim());
@@ -1189,18 +1178,15 @@ public abstract class CreateAccountUc extends PopupPanel{
 							boolean isHavingBadWords = value;
 							if (value){
 								txtChooseUsername.getElement().getStyle().setBorderColor("orange");
-								userNameValidUc.setText(i18n.GL0554());
+								userNameValidUc.setText(i18n.GL0554);
 								userNameValidUc.setVisible(true);
 								isValidUserName = false;
 							}else{
 								txtChooseUsername.getElement().getStyle().clearBackgroundColor();
 								txtChooseUsername.getElement().getStyle().setBorderColor("#ddd");
-								userNameValidUc.setVisible(false);
+								userNameValidUc.setVisible(false);*/
 								
 								/// Words are clear then continue the next steps
-								
-								
-								
 								
 								if (txtChooseUsername.getText().length() < 4 || txtChooseUsername.getText().length() > 20){
 									userNameValidUc.addStyleName(res.css().errorLbl());
@@ -1212,7 +1198,6 @@ public abstract class CreateAccountUc extends PopupPanel{
 									isValidUserName = checkUserAvailability(
 										txtChooseUsername.getText(), "username");
 								}
-								
 								Boolean userNameValidate = txtChooseUsername.getText().matches(USER_NAME_REGEX);
 								if(!userNameValidate){
 									userNameValidUc.addStyleName(res.css().errorLbl());
@@ -1227,29 +1212,16 @@ public abstract class CreateAccountUc extends PopupPanel{
 									isValidUserName = false;	
 								}
 								
-								if (isValidEmailId==false && isValidUserName==true){
-									btnSignUp.setEnabled(true);
-									btnSignUp.getElement().removeClassName("disabled");
-								}
-
-								if (underThirtheen){
-									if (isValidEmailId==true && isValidUserName==false){
-										btnSignUp.setEnabled(true);
-										btnSignUp.getElement().removeClassName("disabled");
-									}
-								}
-								
-
-								
-								}
+								/*}
 						}
-					});
+					});*/
 					
-			} 
-			
-			
-
-			
+			} else if (event.getSource() == txtParentEmailId
+					&& txtParentEmailId.getText() != null
+					&& !txtParentEmailId.getText().equalsIgnoreCase("")) {
+				isValidEmailId = checkUserRegisteredWithGooru(
+						txtParentEmailId.getText(), "emailId");
+			}
 		}
 	}
 
@@ -1322,7 +1294,6 @@ public abstract class CreateAccountUc extends PopupPanel{
 						}else if (type.equalsIgnoreCase("username") && !isAvailable) {
 							isValidUserName = result.isAvailability();
 						}
-						
 						if (isValidEmailId==false && isValidUserName==false){
 							btnSignUp.setEnabled(true);
 							btnSignUp.getElement().removeClassName("disabled");
@@ -1333,7 +1304,6 @@ public abstract class CreateAccountUc extends PopupPanel{
 								btnSignUp.getElement().removeClassName("disabled");
 							}
 						}
-						
 						
 					}
 				});

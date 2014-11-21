@@ -51,8 +51,6 @@ public class ReorderCollectionResourcesEvent extends GwtEvent<ReorderCollectionR
 
 	@Override
 	protected void dispatch(ReorderCollectionResourcesEventHandler handler) {
-		System.out.println("--- arrow "+arrow);
-		System.out.println("-- newSequence - "+newSequence); 
 		handler.reorderResources(shelfCollectionResourceChildView, arrow, newSequence); 
 	} 
 

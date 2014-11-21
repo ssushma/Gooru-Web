@@ -38,7 +38,7 @@
 		
 		.myFolderCollectionUrlContent {
 			float: left;
-			width: 259px;
+			width: 256px;
 			/*height: 510px;*/
 			border-bottom: none;
 			border-left: none;
