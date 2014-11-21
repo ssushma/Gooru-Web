@@ -98,7 +98,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel(true);
 	
-	private PopupPanel toolTipPosPopupPanel=new PopupPanel();
+	public PopupPanel toolTipPosPopupPanel=new PopupPanel();
 	
 	final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
 	
@@ -472,21 +472,21 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		public void onMouseOver(MouseOverEvent event) {
 			if (event.getSource() == reorderTxtBox){
 				toolTipPosPopupPanel.clear();
-				toolTipPosPopupPanel.setWidget(new GlobalToolTip("Enter in the position you would like to move this",RIGHT));
+				toolTipPosPopupPanel.setWidget(new GlobalToolTip(i18n.GL3002(),RIGHT));
 				toolTipPosPopupPanel.setStyleName("");
 				toolTipPosPopupPanel.setPopupPosition(reorderTxtBox.getElement().getAbsoluteLeft()-110, reorderTxtBox.getElement().getAbsoluteTop()-40);
 				toolTipPosPopupPanel.getElement().getStyle().setZIndex(9999);
 				toolTipPosPopupPanel.show();
 			}else if(event.getSource() == moveTopBtn){
 				toolTipPosPopupPanel.clear();
-				toolTipPosPopupPanel.setWidget(new GlobalToolTip("Move to top",TOP));
+				toolTipPosPopupPanel.setWidget(new GlobalToolTip(i18n.GL3000(),TOP));
 				toolTipPosPopupPanel.setStyleName("");
 				toolTipPosPopupPanel.setPopupPosition(moveTopBtn.getElement().getAbsoluteLeft()-59, moveTopBtn.getElement().getAbsoluteTop()-34);
 				toolTipPosPopupPanel.getElement().getStyle().setZIndex(9999);
 				toolTipPosPopupPanel.show();
 			}else if(event.getSource() == moveBottomBtn){
 				toolTipPosPopupPanel.clear();
-				toolTipPosPopupPanel.setWidget(new GlobalToolTip("Move to bottom",BOTTOM));
+				toolTipPosPopupPanel.setWidget(new GlobalToolTip(i18n.GL3001(),BOTTOM));
 				toolTipPosPopupPanel.setStyleName("");
 				toolTipPosPopupPanel.setPopupPosition(moveBottomBtn.getElement().getAbsoluteLeft()-70, moveBottomBtn.getElement().getAbsoluteTop()-40);
 				toolTipPosPopupPanel.getElement().getStyle().setZIndex(9999);

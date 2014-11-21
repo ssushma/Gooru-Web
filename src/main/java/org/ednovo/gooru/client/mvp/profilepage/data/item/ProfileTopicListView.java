@@ -108,9 +108,9 @@ public class ProfileTopicListView extends Composite{
 
 	private boolean isScrollable = true;
 	
-	private boolean isAssignPopup = false;
+	public static boolean isAssignPopup = false;
 	
-	private boolean isCustomizePopup = false;
+	public static boolean isCustomizePopup = false;
 	
 	private ProfileLibraryDo profileLibraryDo;
 	
@@ -629,6 +629,10 @@ public class ProfileTopicListView extends Composite{
 										if(libraryGooruOid!=null){
 											params.put("lid", libraryGooruOid);
 										}
+										String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+										if(libraryEventId!=null){
+											params.put("eventid", libraryEventId);
+										}
 										if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 											params.put("library", getPlaceToken());
 										}
@@ -662,6 +666,10 @@ public class ProfileTopicListView extends Composite{
 										params.put("lessonId", lessonId);
 										if(libraryGooruOid!=null){
 											params.put("lid", libraryGooruOid);
+										}
+										String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+										if(libraryEventId!=null){
+											params.put("eventid", libraryEventId);
 										}
 										if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 											params.put("library", getPlaceToken());
@@ -1064,6 +1072,10 @@ public class ProfileTopicListView extends Composite{
 			params.put("lessonId", lessonId);
 			if(libraryGooruOid!=null){
 				params.put("lid", libraryGooruOid);
+			}
+			String libraryEventId=AppClientFactory.getPlaceManager().getLibaryEventId();
+			if(libraryEventId!=null){
+				params.put("eventid", libraryEventId);
 			}
 			if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 				params.put("library", getPlaceToken());
