@@ -799,7 +799,6 @@ public class ShelfCollectionResourceChildView extends
 				if(isReorderContainerVisible){
 					reorderContainer.setVisible(true);
 				}else{
-					System.out.println("--- in else --");
 					reorderContainer.setVisible(false);
 				}
 				//ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.VISIBLE);

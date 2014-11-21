@@ -2360,7 +2360,7 @@ margin-top: 18px; */
 
 .panelAlignRight {
 	float: right;
-	margin-right: 8px;
+	margin-right: 3px;
 	margin-top: -93px;
 }
 
@@ -2877,7 +2877,7 @@ margin-top: 18px; */
 }
 
 .upDownBtn input[type="text"]{
-	width:17px;
+	width:22px;
 	margin:8px 7px 0px 8px;
 	height:25px;
 	padding:1px 6px;
