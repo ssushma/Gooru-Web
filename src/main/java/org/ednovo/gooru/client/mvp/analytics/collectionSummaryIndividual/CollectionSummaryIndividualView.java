@@ -515,8 +515,8 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 		
 	}
 	@Override
-	public void setViewResponseData(ArrayList<OetextDataDO> result,	String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType,boolean isSummary) {
-		 popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary);
+	public void setViewResponseData(ArrayList<OetextDataDO> result,	String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType,boolean isSummary,String session) {
+		 popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,session);
 	     popupPanel.setStyleName(res.css().setOETextPopupCenter());
 	     if(popupPanel.isShowing()){
 	    	 popupPanel.hide();
