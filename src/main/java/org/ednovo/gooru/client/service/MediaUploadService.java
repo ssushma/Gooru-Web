@@ -87,4 +87,8 @@ public interface MediaUploadService extends BaseService {
 
 	CollectionItemDo saveImage(String gooruOid, String resourceId,
 			String fileName);
+	
+
+	String saveImageCollection(String gooruOid,
+			String fileName);
 }

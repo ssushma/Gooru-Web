@@ -115,6 +115,24 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		return mediaUploadDo;
 
 	}
+	
+	@Override
+	public String saveImageCollection(String gooruOid, String fileName) {
+		String filePath = null;
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.MEDIA_FILE_SAVE, gooruOid, getLoggedInSessionToken(),fileName);
+	
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
+				getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		try {
+			filePath = jsonRep.getText(); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return filePath;
+	}
 
 	@Override
 	public CollectionItemDo saveImage(String gooruOid, String resourceId, String fileName) {
@@ -131,7 +149,6 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		if (fileName != null) {
 			createCollectionJsonObject.put("mediaFileName", fileName);
 		}
-
 		
 //		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_COLLLECTION_ITEM, resourceId,getLoggedInSessionToken(), collectionId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createCollectionJsonObject.toString());		
