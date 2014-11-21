@@ -938,7 +938,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 }
 
 .upDownBtn input[type="text"]{
-	width:17px;
+	width:22px;
 	margin:8px 0;
 	height:25px;
 	padding:1px 6px;
@@ -946,6 +946,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 	font-size:16px;
 	color:#515151;
 	text-align:center;
+	margin-left: -3px;
 }
 
 .upDownBtnBlock{
