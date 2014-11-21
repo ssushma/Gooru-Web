@@ -8,6 +8,7 @@ import org.ednovo.gooru.shared.model.analytics.FeedBackResponseDataDO;
 import org.ednovo.gooru.shared.model.analytics.OetextDataDO;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.FontWeight;
 import com.google.gwt.dom.client.Style.Unit;
@@ -59,10 +60,10 @@ public class ViewResponseUserWidget extends Composite {
 	 * @param questionType
 	 * @param isSummary
 	 */
-	public ViewResponseUserWidget(OetextDataDO oetextDataDO,String resourceGooruId,String collectionId, String classpageId,String pathwayId,String questionType,boolean isSummary) {
+	public ViewResponseUserWidget(OetextDataDO oetextDataDO,String resourceGooruId,String collectionId, String classpageId,String pathwayId,String questionType,boolean isSummary,String session) {
 		initWidget(uiBinder.createAndBindUi(this));
-		setData(oetextDataDO,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary);
-		feedBacktxt.getElement().setAttribute("placeholder", "Leave feedback for this answer");
+		setData(oetextDataDO,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,session);
+	 	feedBacktxt.getElement().setAttribute("placeholder", "Leave feedback for this answer");
 		questionCountlbl.setVisible(false);
 	}
 	/**
@@ -99,7 +100,7 @@ public class ViewResponseUserWidget extends Composite {
 	 * @param questionType
 	 * @param isSummary
 	 */
-	void setData(final OetextDataDO oetextDataDO,final String resourceGooruId,final String collectionId, final String classpageId,final String pathwayId,String questionType,boolean isSummary){
+	void setData(final OetextDataDO oetextDataDO,final String resourceGooruId,final String collectionId, final String classpageId,final String pathwayId,String questionType,boolean isSummary,final String session){
 		this.oetextDataDO=oetextDataDO;
 		giveFeedBackpnl.setVisible(false);
 		editFeedBackpnl.setVisible(false);
@@ -193,10 +194,11 @@ public class ViewResponseUserWidget extends Composite {
 				feedBacktxt.setText(oetextDataDO.getFeedbackText());
 				createOn.setText(AnalyticsUtil.getCreatedTime(Long.toString(oetextDataDO.getFeedbackTimestamp())));
 			}
+			final String classCode=Document.get().getElementById("txtClassCode")!=null?Document.get().getElementById("txtClassCode").getInnerText():"";
 			btnSubmit.addClickHandler(new  ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					AppClientFactory.getInjector().getAnalyticsService().postTeacherFeedBackToStudent(feedBacktxt.getText(), resourceGooruId, collectionId, classpageId, pathwayId, oetextDataDO.getGooruUId(), "AS","","","IZBPNRE", new AsyncCallback<FeedBackResponseDataDO>() {
+					AppClientFactory.getInjector().getAnalyticsService().postTeacherFeedBackToStudent(feedBacktxt.getText(), resourceGooruId, collectionId, classpageId, pathwayId, oetextDataDO.getGooruUId(),session,"","",classCode, new AsyncCallback<FeedBackResponseDataDO>() {
 						@Override
 						public void onSuccess(FeedBackResponseDataDO result) {
 							if(result!=null){
@@ -212,6 +214,26 @@ public class ViewResponseUserWidget extends Composite {
 						}
 					});
 				}
+			});
+			spnDelete.addClickHandler(new ClickHandler() {
+								@Override
+								public void onClick(ClickEvent event) {
+									AppClientFactory.getInjector().getAnalyticsService().postTeacherFeedBackToStudent("", resourceGooruId, collectionId, classpageId, pathwayId, oetextDataDO.getGooruUId(), session,"commentsDelete","",classCode, new AsyncCallback<FeedBackResponseDataDO>() {
+										@Override
+										public void onSuccess(FeedBackResponseDataDO result) {
+											if(result!=null){
+												giveFeedBackpnl.setVisible(true);
+											editFeedBackpnl.setVisible(false);
+												editedText.setText(result.getFreeText());
+												feedBacktxt.setText(result.getFreeText());
+												createOn.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.getCreatedOn())));
+											}
+										}
+										@Override
+										public void onFailure(Throwable caught) {
+										}
+									});
+								}
 			});
 			spnEdit.addClickHandler(new ClickHandler() {
 				@Override

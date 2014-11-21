@@ -948,9 +948,9 @@ public class CollectionSummaryIndividualView  extends BaseViewWithHandlers<Colle
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryIndividual.IsCollectionSummaryIndividualView#setViewResponseData(java.util.ArrayList, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean)
 	 */
 	@Override
-	public void setViewResponseData(ArrayList<OetextDataDO> result,	String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType,boolean isSummary) {
-		 popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary);
-	     popupPanel.setStyleName(res.css().setOETextPopupCenter());
+	public void setViewResponseData(ArrayList<OetextDataDO> result,	String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType,boolean isSummary,String session) {
+		 popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,isSummary,session);
+		 popupPanel.setStyleName(res.css().setOETextPopupCenter());
 	     if(popupPanel.isShowing()){
 	    	 popupPanel.hide();
 	    	 Window.enableScrolling(true);

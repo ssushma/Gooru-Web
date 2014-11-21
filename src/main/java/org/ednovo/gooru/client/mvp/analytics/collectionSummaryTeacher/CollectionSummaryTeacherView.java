@@ -430,7 +430,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	        for(int i=0;i<result.size();i++) {
 	        	data.setCell(i, 0, result.get(i).getItemSequence(), null, getPropertiesCell());
 	            //set Format
-	              String  resourceCategory =result.get(i).getCategory();
+	        	 String  resourceCategory =result.get(i).getCategory()!=null?result.get(i).getCategory():"";
 	              String categoryStyle="";
 				  if(resourceCategory.equalsIgnoreCase("website")){
 				      resourceCategory = "webpage";
@@ -834,9 +834,9 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	 * @see org.ednovo.gooru.client.mvp.analytics.collectionSummaryTeacher.IsCollectionSummaryTeacherView#setViewResponseData(java.util.ArrayList, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId, String collectionId, String classpageId,String pathwayId,String questionType) {
-		     popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,true);
-		     popupPanel.setStyleName(res.css().setOETextPopupCenter());
+	public void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId, String collectionId, String classpageId,String pathwayId,String questionType,String session) {
+			popupPanel=new ViewResponsesPopup(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,true,session);
+			popupPanel.setStyleName(res.css().setOETextPopupCenter());
 		     if(popupPanel.isShowing()){
 		    	 popupPanel.hide();
 		    	 Window.enableScrolling(true);

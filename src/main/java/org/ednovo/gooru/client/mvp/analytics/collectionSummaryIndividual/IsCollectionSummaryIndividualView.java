@@ -60,7 +60,7 @@ public interface IsCollectionSummaryIndividualView extends IsViewWithHandlers<Co
 	 * @param questionType
 	 * @param isSummary
 	 */
-	void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType, boolean isSummary);
+	void setViewResponseData(ArrayList<OetextDataDO> result,String resourceGooruId, String collectionId, String classpageId,String pathwayId, String questionType, boolean isSummary,String session);
 
     /**
      * This method is used to enable and disable email button

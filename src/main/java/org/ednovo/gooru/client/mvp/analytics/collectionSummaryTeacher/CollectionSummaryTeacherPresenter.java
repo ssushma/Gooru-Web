@@ -96,7 +96,7 @@ public class CollectionSummaryTeacherPresenter extends PresenterWidget<IsCollect
 		this.analyticService.getOETextData(resourceGooruId, collectionId, classpageId, pathwayId,"AS","","", new AsyncCallback<ArrayList<OetextDataDO>>() {
 			@Override
 			public void onSuccess(ArrayList<OetextDataDO> result) {
-				getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType);
+				getView().setViewResponseData(result,resourceGooruId,collectionId,classpageId,pathwayId,questionType,"AS");
 			}
 			@Override
 			public void onFailure(Throwable caught) {
