@@ -1538,6 +1538,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     										errorMessageForQuestion.getElement().setAttribute("alt", ERROR_MSG_FIB_BLANKS);
         						        	errorMessageForQuestion.getElement().setAttribute("title", ERROR_MSG_FIB_BLANKS);
     										fieldValidationStaus=false;
+    										isAddBtnClicked=true;
     									}
     									if(isAnsweEmpty && !isHintsAdded(hintsContainer)){
     										profanityCheckForHints(fieldValidationStaus,answersListFIB,mediaFileName);
@@ -2043,7 +2044,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0350());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0350());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
-			charLimitLbl.getElement().setAttribute("style", "margin-left: 108px;");
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 190px;");
 		}else if(tabType.equals("MA")){
 			questionTypeHeader.setText(i18n.GL0351());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0351());
@@ -2052,7 +2053,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0352());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0352());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
-			charLimitLbl.getElement().setAttribute("style", "margin-left: 108px;");
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 190px;");
 		}else if(tabType.equals("T/F")){
 			questionTypeHeader.setText(i18n.GL0353());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0353());
@@ -2061,7 +2062,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0354());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0354());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
-			charLimitLbl.getElement().setAttribute("style", "margin-left: 108px;");
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 190px;");
 		}else if(tabType.equals("FIB")){
 			questionTypeHeader.setText(i18n.GL0355());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0355());
@@ -2069,7 +2070,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.setText(i18n.GL0356());
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0356());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0356());
-			charLimitLbl.getElement().setAttribute("style", "margin-left: 14px;");
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 70px;");
 		}else if(tabType.equals("OE")){
 			questionTypeHeader.setText(i18n.GL0357());
 			questionTypeHeader.getElement().setAttribute("alt", i18n.GL0357());
@@ -2078,7 +2079,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			questionTypeText.getElement().setAttribute("alt", i18n.GL0358());
 			questionTypeText.getElement().setAttribute("title", i18n.GL0358());
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
-			charLimitLbl.getElement().setAttribute("style", "margin-left: 108px;");
+			charLimitLbl.getElement().setAttribute("style", "margin-left: 190px;");
 		}
 	}
 	public boolean getQuestionEditMode(){
