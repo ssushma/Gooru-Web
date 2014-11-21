@@ -1387,8 +1387,8 @@ user agent stylesheetdiv {
 	position: absolute;
 	background-color: rgb(255, 255, 255);
 	z-index: 1;
-	top: -11px;
-	width: 358px;
+	top: -51px;
+	width: 341px;
 }
 .myEducationDropdown { /* height: 250px; */
 	border-color: rgb(221, 221, 221);
@@ -1397,8 +1397,8 @@ user agent stylesheetdiv {
 	position: absolute;
 	background-color: rgb(255, 255, 255);
 	z-index: 1;
-	top: -11px;
-	width: 257px;
+	top: -50px;
+	width: 249px;
 }
 .myEducationEditDropdown { /* height: 250px; */
 	border-color: rgb(221, 221, 221);
