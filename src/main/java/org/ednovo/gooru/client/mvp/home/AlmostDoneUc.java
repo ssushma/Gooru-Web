@@ -201,7 +201,7 @@ public class AlmostDoneUc extends PopupPanel{
 				};
 				
 				termsAndPolicyVc.show();
-				termsAndPolicyVc.setSize("600px", "300px");
+				
 				termsAndPolicyVc.center();
 			}
 		});
@@ -219,7 +219,6 @@ public class AlmostDoneUc extends PopupPanel{
 				Window.enableScrolling(false);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));	
 				copyRightPolicy.show();
-				copyRightPolicy.setSize("600px", "300px");
 				copyRightPolicy.center();				
 			}
 		});

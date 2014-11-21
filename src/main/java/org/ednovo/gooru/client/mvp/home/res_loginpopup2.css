@@ -1,4 +1,3 @@
-
 .LoginpopupMain{
 	width:100%;
 }	
@@ -16,6 +15,69 @@
 .signInContainer{
 	padding:25px 25px;
 }
+.popupContentLeaveRegistration {
+
+    padding: 40px 15px;
+
+}
+.SignUp-green-h1 {
+
+    font-size: 18px;
+
+}
+.SignUp-h2{
+	font-size:15px;
+}
+
+.leaveRegistrationButtonContainer button{
+	margin-bottom:15px;
+}
+.leaveRegistrationButtonContainer .primary{
+	margin-left:0;
+}
+
+.PopupMainMedium{
+	width:100%;
+
+}
+
+.PopupMainSmall{
+		width:100%;
+}
+
+.PopupMainLarge{
+	width:100%;
+}
+
+
+
+.PopupMainMedium .text{
+	text-align:center;
+
+
+}
+
+.lblCollectionProgress{
+	text-align:center;
+}
+.lblCollectionProgressDetails{
+	text-align:center;
+}
+
+.SliderHolderNext{
+	right:-25px;
+	
+}
+.SliderHolderPrev{
+	left:-25px;
+	
+}
+.courseContainer {
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+}
+
  .lblDontHaveGoogleAccount{}
 .loginPopupGlassStyle{}
 .LoginPopUpgreensmall{}
@@ -36,5 +98,94 @@
 .whyGoogle{}
 .forgotPasswordLink{}
  .closeButton{} 
-	
+
+ .policyTextLine{}
+ .roleOptionImage{}
+ .selectGrades{}
+ .contactUs{}
+ .subjectOptionScience{}
+ .Grades{}
+ .inputGroup{}
+ .subjectOption{}
+ .leaveRegistrationBottomContainer{}
+ .policyTextHeade{}
+ .courseOption{}
+ .forgotPasswordText{}
+ .popupInnerforgotPassword{}
+ .PopupContent{}
+.popupInnerGrey{}
+ .popupgreyFooter{}
+ .userInfoContainer{}
+ .sampleReportSliderHolder{}
+ .paragraph{}
+ .roleOption{}
+ .roleLabel{}
+.active{}
+ .greyBGContainer{}
+ .popupFooter{}
+.textContentDiv{}
+ .popupgreenHeader{}
+ .subjectOptionELA{}
+ .selectCourses{}
+.PopupInner{}
+ .popupgreyHeader{}
+ .subjectOptionSS{}
+  .termsSubTitle{}
+  .popupContentScroll{}
+  .forgotPasswordTextBoxContainer{}
+  .popupContentGrey{}
+  .leaveRegistarionFooterText{}
+  .popupInnerLeaveReg{}
+ .privacyLinkText{}
+.subjectOptionMath{}
+ .termsTextLine{}
+ .termsTextLine{}
+ .forgotPasswordDescription{}
+  .lastUpdated{}
+.otherRole{}
+.popupContentforgotPassword{}
+.disabled{}
+.GreenHeader{}
+.teacherRole{}
+.forgotPasswordButtonContainer{}
+.parentRole{}
+.secondary{}
+ .noOverflow{}
+.termsOfUserMessageText{}
+ .studentRole{}
+ .title{}
+ .privacyCloseButton{}
+.teacherRoleSelected{}
+.studentRoleSelected{}
+.parentRoleSelected{}
+.otherRoleSelected{} 
+.forgotPasswordErrorMessage{} 
+ 
+
+
+
+
+
+
+  
+  
+ 
+ 
+  
+ 
+  
+  
+   
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+ 
+ 
+  
+ 	
 

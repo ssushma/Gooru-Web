@@ -30,9 +30,12 @@ import java.util.List;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
+import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.uc.LiPanel;
+import org.ednovo.gooru.client.uc.UlPanel;
+import org.ednovo.gooru.client.uc.suggestbox.widget.Span;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
@@ -50,6 +53,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -67,7 +71,7 @@ public class SignUpGradeCourseView extends PopupPanel{
 	
 	@UiField FlowPanel registerGradeList;
 	
-	@UiField HTMLEventPanel mathCourseLbl, scienceCourseLbl, elaCourseLbl, socialCourseLbl;
+	@UiField Anchor mathCourseLbl, scienceCourseLbl, elaCourseLbl, socialCourseLbl;
 	
 	@UiField Button skipBtn, submitBtn;
 	
@@ -286,12 +290,21 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 *
 	 */
 	private void setRegisterGradeList() {
-		registerGradeList.add(new SignupGradeLabel("Kindergarten", new ProfileDo()));
+	/*	UlPanel ulPanel=new UlPanel();
+		ulPanel.addStyleName(LoginPopUpCBundle.INSTANCE.css().Grades());
+		LiPanel liPanel1=new LiPanel();
+		liPanel1.add(new SignupGradeLabel("Kindergarten", new ProfileDo()));
+		liPanel1.add(liPanel1);
 		for (int i = 1; i <= 12; i++) {
-				registerGradeList.add(new SignupGradeLabel(i + "", new ProfileDo()));
+			LiPanel liPanel=new LiPanel();
+			liPanel.add(new SignupGradeLabel(i + "", new ProfileDo()));
+			ulPanel.add(liPanel);
 		}
-		registerGradeList.add(new SignupGradeLabel("Higher Education",new ProfileDo()));
-	}
+		LiPanel liPanel3=new LiPanel();
+		liPanel3.add(new SignupGradeLabel("Higher Education",new ProfileDo()));
+		ulPanel.add(liPanel3);
+		registerGradeList.add(ulPanel);
+*/	}
 
 	/**
 	 * 
@@ -313,10 +326,11 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 *
 	 */
 	private void setRegisterCourseList() {
-		mathCourseLbl.add(new InlineLabel(MATH_LBL));
-		scienceCourseLbl.add(new InlineLabel(SCIENCE_LBL));
-		elaCourseLbl.add(new InlineLabel(ELA_LBL));
-		socialCourseLbl.add(new InlineLabel(SOCIAL_LBL));
+		mathCourseLbl.setHTML(MATH_LBL);
+		scienceCourseLbl.setHTML(SCIENCE_LBL);
+		elaCourseLbl.setHTML(ELA_LBL);
+		socialCourseLbl.setHTML(SOCIAL_LBL);
+	
 //		artsAndHumanitiesLbl.add(new InlineLabel(ARTS_HUMANITIES));
 //		technologyAndEngineeringLbl.add(new InlineLabel(TECH_ENGEE));
 

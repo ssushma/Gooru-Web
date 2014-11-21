@@ -754,7 +754,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			
 		};
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 	}
 	@UiHandler("achPrivacy")
@@ -769,7 +768,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			}
 		};
 		termsAndPolicyVc.show();
-		termsAndPolicyVc.setSize("902px", "300px");
 		termsAndPolicyVc.center();
 	}
 //	@UiHandler("achDataPolicy")
@@ -788,7 +786,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				//No need to set.
 			}
 		};
-		copyRightPolicy.setSize("902px", "300px");
 		copyRightPolicy.center();
 		copyRightPolicy.show();
 

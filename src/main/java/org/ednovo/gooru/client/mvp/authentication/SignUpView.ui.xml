@@ -61,7 +61,7 @@
 			</g:HTMLPanel>
 			<!-- End Sign Up Container -->
 			<!-- Start User Info -->
-			<g:HTMLPanel ui:field="panelUserInfo" styleName="{res1.css.userCreateContainer}" />
+			<g:HTMLPanel ui:field="panelUserInfo"/>
 			<!-- End User Info -->
 		</g:HTMLPanel>
 
