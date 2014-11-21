@@ -35,13 +35,14 @@ import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Label;
 
 /**
  * @author DOTS
  *
  */
-public class SignupGradeLabel extends Label implements ClickHandler {
+public class SignupGradeLabel extends Anchor implements ClickHandler {
 	
 	private static final List<String> gradeList = new ArrayList<String>();
 	

@@ -49,6 +49,7 @@ public interface SignUpCBundle extends ClientBundle {
 	
 	public interface SignUp extends CssResource{
 		
+		String iconPosition();
 		String emphasis();
 
 		String popupGlass();

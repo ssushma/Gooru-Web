@@ -1,15 +1,17 @@
 body {
-	background: #efeded url(../images/background-image.png) repeat !important;
+	background: #efeded url(../images/background-image.png) repeat
+		!important;
 	font-family: Arial, Helvetica, sans-serif !important;
 }
-.loginPopupGlassStyle{
-	z-index:99999;
+
+.loginPopupGlassStyle {
+	z-index: 99999;
 	background-color: black;
-    opacity: 0.3;
-    filter: alpha(opacity=30);
+	opacity: 0.3;
+	filter: alpha(opacity = 30);
 }
 
-.processing{
+.processing {
 	text-align: center;
 	width: 95%;
 	color: #999 !important;
@@ -17,177 +19,774 @@ body {
 	padding: 10px;
 	margin-top: 14px;
 }
-.LoginpopupMain{
-	width:520px;
-	color:#333333;
- 	margin: 30px auto; 
-	position:relative;
-	font-family:arial;
-	font-size:12px;
-	background:#ffffff;
-	border-radius:0 0;
-	border:1px solid #999; 
-	padding:3px 3px;
 
-	
+body {
+	background: #efeded url(../images/background-image.png) repeat
+		!important;
+	font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.LoginpopupMain {
+	width: 520px;
+	color: #515151;
+	margin: 30px auto;
+	position: relative;
+	font-family: arial;
+	font-size: 12px;
+	background: #ffffff;
+	border-radius: 0 0;
+	border: 1px solid #999;
+	padding: 3px 3px;
 }
 
 .LoginpopupInner {
-    border: 1px solid #ddd;
-    position: relative;
-	background:url(../images/registration-bg.png) no-repeat -50px 30px;
+	border: 1px solid #ddd;
+	position: relative;
+	background: url(../images/registration-bg.png) no-repeat -50px 30px;
 }
 
-
-.LoginpopupHeader{
-background: -webkit-gradient(linear, 0 0, 0 100%, from(#7ab075), to(#4e9746));
-background: -webkit-linear-gradient(top, #7ab075, #4e9746);
-background: -moz-linear-gradient(top, #7ab075, #4e9746);
-background: -ms-linear-gradient(top, #7ab075, #4e9746);
-background: -o-linear-gradient(top, #7ab075, #4e9746);
-
-    color: white;
-    font-size: 16px;
-    padding: 10px 15px;
-	
+.LoginpopupHeader {
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#7ab075),
+		to(#4e9746));
+	background: -webkit-linear-gradient(top, #7ab075, #4e9746);
+	background: -moz-linear-gradient(top, #7ab075, #4e9746);
+	background: -ms-linear-gradient(top, #7ab075, #4e9746);
+	background: -o-linear-gradient(top, #7ab075, #4e9746);
+	color: white;
+	font-size: 16px;
+	padding: 10px 15px;
 }
 
-.LoginpopupContent{
-	padding:30px 75px;
+.LoginpopupContent {
+	padding: 30px 75px;
 }
 
-.LoginPopUpgreen{
-	color:#4e9746;
+.LoginPopUpgreen {
+	color: #4e9746;
 	font-size: 20px;
-    margin: 0 0 20px;
-    text-align: center;
-}
-.LoginPopUpgreensmall{
-	color:#4e9746;
-	font-size: 20px;
-    margin: 0 0 8px;
-    text-align: center;
+	margin: 0 0 20px;
+	text-align: center;
 }
 
-.LoginpopupContent .subheader{
+.LoginPopUpgreensmall {
+	color: #4e9746;
+	font-size: 20px;
+	margin: 0 0 8px;
+	text-align: center;
+}
+
+.LoginpopupContent .subheader {
 	margin: 0 0 20px 0;
-	color:#515151;
-}
-	
-.signInContainer {
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
-    padding: 50px 50px 25px;
-    text-align: center;
+	color: #515151;
+	text-align: center;
 }
 
+.signInContainer {
+	background-color: #f0f0f0;
+	border: 1px solid #ddd;
+	padding: 50px 50px 25px;
+	text-align: center;
+}
 
 .gConnectButton {
- padding: 16px 16px 15px 64px;
-color: white;
-background: #1076bb url(images/login/g.png) left center no-repeat;
-background: url(images/login/g.png) left center no-repeat, -webkit-gradient(linear, 0 0, 0 100%, from(#4c98cc), to(#1076bb));
-background: url(images/login/g.png) left center no-repeat, -webkit-linear-gradient(top, #4c98cc, #1076bb);
-background: url(images/login/g.png) left center no-repeat, -ms-linear-gradient(top, #4c98cc, #1076bb);
-background: url(images/login/g.png) left center no-repeat, -moz-linear-gradient(top, #4c98cc, #1076bb);
-background: url(images/login/g.png) left center no-repeat, -o-linear-gradient(top, #4c98cc, #1076bb);
-border-radius: 4px;
-border: 1px solid #1076bb;
-margin-bottom: 15px;
-cursor: pointer;
+	padding: 16px 16px 15px 64px;
+	color: white;
+	background: #1076bb url(images/login/g.png) left center no-repeat;
+	background: url(images/login/g.png) left center no-repeat,
+		-webkit-gradient(linear, 0 0, 0 100%, from(#4c98cc), to(#1076bb));
+	background: url(images/login/g.png) left center no-repeat,
+		-webkit-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(images/login/g.png) left center no-repeat,
+		-ms-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(images/login/g.png) left center no-repeat,
+		-moz-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(images/login/g.png) left center no-repeat,
+		-o-linear-gradient(top, #4c98cc, #1076bb);
+	border-radius: 4px;
+	border: 1px solid #1076bb;
+	margin-bottom: 15px;
+	cursor: pointer;
 }
+
 .gConnectButton:hover {
-background: #1076bb url(images/login/g.png) left center no-repeat;
+	background: #1076bb url(images/login/g.png) left center no-repeat;
 }
 
 .LoginpopupContent .divider {
-    border-bottom: 1px solid #ddd;
-    height: 1em;
-    margin: 10px 0 20px;
-    width: 100%;
+	border-bottom: 1px solid #ddd;
+	height: 1em;
+	margin: 10px 0 20px;
+	width: 100%;
 }
 
 .LoginpopupContent .dividerText {
-    background-color: #f0f0f0;
-    display: inline;
-    padding: 0 10px;
-    position: relative;
-    top: 0.5em;
+	background-color: #f0f0f0;
+	display: inline;
+	padding: 0 10px;
+	position: relative;
+	top: 0.5em;
 }
 
-.logInput{
-	margin:20px 0 10px 0;
+.logInput {
+	margin: 20px 0 10px 0;
 }
 
-.logInput .form-control{
-	margin-bottom:6px;
-	border-radius:0 0;
+.logInput .form-control {
+	margin-bottom: 6px;
+	border-radius: 0 0;
 }
 
-.forgotPasswordLink{
-	text-align:left;
-}
-.forgotPasswordLink a:hover{
-	text-decoration:none;
-	opacity:0.6;
+.forgotPasswordLink {
+	text-align: left;
 }
 
-.loginPopupbtnContainer{
-	margin-top:15px;
+.forgotPasswordLink a:hover {
+	text-decoration: none;
+	opacity: 0.6;
+}
+
+.loginPopupbtnContainer {
+	margin-top: 15px;
 }
 
 .haveAccount {
-    color: #999;
+	color: #999;
 	margin-right: 5px;
-    display:inline-block;
+	display: inline-block;
 }
 
-.haveAccount a:hover{
-	opacity:0.6;
-	text-decoration:none;
-	display:inline-block;
+.haveAccount a:hover {
+	opacity: 0.6;
+	text-decoration: none;
 }
 
-.haveAccountContainer{
-	margin-top:15px;
-	text-align:center;
+.haveAccountContainer {
+	margin-top: 15px;
+	text-align: center;
 }
 
-
-.closeContainer{
-	text-align:right;
-}
-.closeButton{
-    background: url(images/login/close-button.png) no-repeat;
-    height: 17px;
-    width: 17px;
-	display:inline-block;
+.closeContainer {
+	text-align: right;
 }
 
-.closeButton:hover{
-	opacity:0.6;
+.closeButton {
+	background: url(images/login/close-button.png) no-repeat scroll 0 0
+		rgba(0, 0, 0, 0);
+	height: 17px;
+	width: 17px;
+	display: inline-block;
+	
 }
 
-.whyGoogle{
-	color:#999;
-	display:inline-block;
+.closeButton:hover {
+	opacity: 0.6;
 }
 
+.whyGoogle {
+	color: #999;
+	display: inline-block;
+}
 
 .questionHover {
-    background-color: #87badd;
-    border-radius: 10px;
-    color: white;
-    cursor: pointer;
-    margin: 2px;
-    padding: 1px 6px;
-	display:inline-block;
-}
-.lblDontHaveGoogleAccount{
-	color:#999999;
+	background-color: #87badd;
+	border-radius: 10px;
+	color: white;
+	cursor: pointer;
+	margin: 2px;
+	padding: 1px 6px;
+	display: inline-block;
 }
 
-.lnkSignUpWithEmail:hover{
-	opacity:0.6;
-	text-decoration:none;
+.lblDontHaveGoogleAccount {
+	color: #999999;
+}
+
+.lnkSignUpWithEmail:hover {
+	opacity: 0.6;
+	text-decoration: none;
+}
+
+.userInfoContainer {
+	background-color: #f0f0f0;
+	border: 1px solid #ddd;
+	padding: 10px 25px;
+}
+
+.userInfoContainer .inputGroup {
+	position: relative;
+}
+
+.userInfoContainer .inputGroup .questionHover {
+	position: absolute;
+	right: -20px;
+	top: 2px;
+}
+
+.userInfoContainer .form-control {
+	border-radius: 0 0;
+	font-size: 12px;
+	height: 28px;
+}
+
+.userInfoContainer .inputGroup {
+	padding-right: 5px;
+	padding-left: 5px;
+	margin-bottom: 10px;
+}
+
+.roleOption {
+	text-align: center;
+}
+
+.roleOptionImage {
+	height: 45px;
+	margin: 10px 0 5px;
+	width: 100%;
+}
+
+.roleOption .roleLabel {
+	color: #999999;
+}
+
+.teacherRole .roleOptionImage {
+	background: url("images/signup/teacher.png") no-repeat scroll center bottom
+		rgba(0, 0, 0, 0);
+}
+
+.studentRole .roleOptionImage {
+	background: url("images/signup/student.png") no-repeat scroll center bottom
+		rgba(0, 0, 0, 0);
+}
+
+.parentRole .roleOptionImage {
+	background:  url("images/signup/parent.png") no-repeat scroll center bottom
+		rgba(0, 0, 0, 0);
+}
+
+.otherRole .roleOptionImage {
+	background:url("images/signup/other.png") no-repeat scroll center bottom
+		rgba(0, 0, 0, 0);
+}
+
+.haveAccountContainer {
+	color: #515151;
+}
+
+.haveAccountContainer a:hover {
+	opacity: 0.6;
+	text-decoration: none;
+}
+
+button.disabled, button.disabled:hover {
+	color: #999;
+	background: #efefef;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd),
+		to(#ddd));
+	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
+	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
+	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
+	background: -o-linear-gradient(top, #fdfdfd, #ddd);
+	border: 1px solid #ddd;
+	cursor: default;
+}
+
+.popupContentLeaveRegistration {
+	background-color: transparent;
+	padding: 65px 75px;
+	text-align: center;
+}
+
+.popupInnerLeaveReg {
+	border: 1px solid #ddd;
+	position: relative;
+	background: url(../images/registration-bg.png) no-repeat -50px 30px;
+}
+
+.SignUp-green-h1 {
+	font-size: 20px;
+	margin: 0 0 0 0;
+	text-align: center;
+	color: #4e9746;
+}
+
+.SignUp-h2 {
+	font-size: 16px;
+	margin: 10px 0;
+	text-align: center;
+	color: #515151;
+}
+
+.leaveRegistrationButtonContainer {
+	margin: 0 auto 35px;
+	text-align: center;
+}
+
+.leaveRegistrationButtonContainer .primary {
+	margin-left: 15px;
+}
+
+.leaveRegistrationBottomContainer {
+	background-color: rgba(240, 240, 240, 0.3);
+	border: 1px solid #ddd;
+	text-align: right;
+}
+
+.leaveRegistarionFooterText {
+	margin-top: 8px;
+	text-align: center;
+}
+
+button.secondary {
+	color: #1076BB;
+	padding: 7px 9px;
+	border-radius: 4px;
+	background: #efefef;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd),
+		to(#ddd));
+	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
+	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
+	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
+	background: -o-linear-gradient(top, #fdfdfd, #ddd);
+	border: 1px solid #ddd;
+}
+
+button.secondary:hover {
+	background: #efefef;
+	cursor: pointer;
+}
+
+.leaveRegistrationBottomContainer a:hover {
+	text-decoration: none;
+	opacity: 0.6;
+}
+
+.forgotPasswordText {
+	color: #4e9746;
+	font-size: 24px;
+	font-weight: bold;
+	margin: 0 0 20px;
+	line-height: 25px;
+	text-align: center;
+}
+
+.forgotPasswordDescription, .forgotPasswordTextBoxContainer {
+	margin-bottom: 20px;
+}
+
+.forgotPasswordTextBoxContainer .form-control {
+	height: 28px;
+	border-radius: 0 0;
+	font-size: 12px;
+}
+
+.forgotPasswordButtonContainer {
+	margin-top: 35px;
+}
+
+.popupContentforgotPassword {
+	background-color: transparent;
+	padding: 31px 75px;
+	text-align: center;
+}
+
+.popupInnerforgotPassword {
+	border: 1px solid #ddd;
+	position: relative;
+	background: url(../images/registration-bg.png) no-repeat 30px -30px;
+}
+
+.PopupMainSmall {
+	width: 700px;
+	color: #515151;
+	margin: 30px auto;
+	position: relative;
+	font-family: arial;
+	font-size: 12px;
+	background: #ffffff;
+	border-radius: 0 0;
+	border: 1px solid #999;
+	padding: 3px 3px;
+}
+
+.PopupMainMedium {
+	width: 800px;
+	color: #515151;
+	margin: 30px auto;
+	position: relative;
+	font-family: arial;
+	font-size: 12px;
+	background: #ffffff;
+	border-radius: 0 0;
+	border: 1px solid #999;
+	padding: 3px 3px;
+}
+
+.PopupMainLarge {
+	width: 902px;
+	color: #515151;
+	margin: 30px auto;
+	position: relative;
+	font-family: arial;
+	font-size: 12px;
+	background: #ffffff;
+	border-radius: 0 0;
+	border: 1px solid #999;
+	padding: 3px 3px;
+}
+
+.popupgreyHeader {
+	padding: 10px 15px;
+	color: white;
+	background: -webkit-linear-gradient(top, #666, #515151);
+	background: -moz-linear-gradient(top, #666, #515151);
+	background: -ms-linear-gradient(top, #666, #515151);
+	background: -o-linear-gradient(top, #666, #515151);
+	background-color: #515151;
+	font-size: 16px;
+	filter: progid;
+}
+
+.noOverflow {
+	overflow: hidden !important;
+}
+
+.popupgreyFooter {
+	padding: 5px 10px;
+	background: #fafafa;
+	border-top: 1px solid #eaeaea;
+}
+
+.popupInnerGrey {
+	border: 1px solid #ddd;
+	position: relative;
+}
+
+.popupContentGrey {
+	padding: 10px 10px;
+}
+
+.lblCollectionProgress {
+	font-size: 22px;
+	font-weight: bold;
+	margin-top: 7px;
+	text-align: center;
+}
+
+.lblCollectionProgressDetails {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.sampleReportSliderHolder {
+	width: auto;
+	margin-left: 10%;
+	margin-right: 10%;
+	position: relative;
+}
+
+.SliderHolderNext {
+	right: -40px;
+	position: absolute;
+	top: 42%;
+}
+
+.SliderHolderPrev {
+	left: -40px;
+	position: absolute;
+	top: 42%;
+}
+
+.popupContentScroll {
+	height: 430px;
+	overflow-y: scroll;
+	padding: 15px 15px;
+}
+
+.policyTextLine {
+	display: inline-block;
+	padding: 7px 0;
+}
+
+.policyTextHeade {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.lastUpdated, .privacyLinkText {
+	margin: 0 0 10px 0;
+}
+
+.popupInnerGrey a:hover {
+	text-decoration: none;
+	opacity: 0.6;
+}
+
+.privacyCloseButton {
+	text-align: center;
+}
+
+.privacyCloseButton button {
+	padding: 7px 15px;
+}
+
+.paragraph {
+	margin-left: 15px;
+}
+
+.popupContentScroll .contactUs {
+	display: block;
+}
+
+.textContentDiv {
+	margin-bottom: 25px;
+}
+
+.termsOfUserMessageText {
+	color: #585858;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.termsSubTitle {
+	text-decoration: underline;
+}
+
+.termsTextLine {
+	padding: 7px 0;
+	display: inline-block;
+	width: 100%;
+}
+
+.popupgreenHeader {
+	padding: 10px 15px;
+	color: white;
+	background-color: #4e9746;
+	font-size: 16px;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#7ab075),
+		to(#4e9746));
+	background: -webkit-linear-gradient(top, #7ab075, #4e9746);
+	background: -moz-linear-gradient(top, #7ab075, #4e9746);
+	background: -ms-linear-gradient(top, #7ab075, #4e9746);
+	background: -o-linear-gradient(top, #7ab075, #4e9746);
+	filter: progid;
+}
+
+.PopupInner {
+	border: 1px solid #ddd;
+	position: relative;
+	background: url(../images/registration-bg.png) no-repeat -50px 30px;
+}
+
+.PopupContent {
+	padding: 15px 15px;
+}
+
+.GreenHeader {
+	color: #4e9746;
+	font-size: 20px;
+	margin-bottom: 15px;
+	text-align: left;
+}
+
+.greyBGContainer {
+	background-color: #f0f0f0;
+	border: 1px solid #ddd;
+	margin-top: 20px;
+}
+
+.Grades {
+	margin: 0 0;
+	padding: 0 0;
+}
+
+.Grades li {
+	list-style: none;
+	padding: 0 0;
+	margin: 0 0;
+	display: inline-block;
+}
+
+.Grades li a {
+	cursor: pointer;
+	display: block;
+	color: #515151;
+	margin-right: 3px;
+	margin-top: 5px;
+	padding: 4px 7px;
+	text-align: center;
+}
+
+.Grades li a:hover {
+	background-color: #87badd;
+	border-radius: 4px;
+	color: white;
+	text-decoration: none;
+}
+
+.selectGrades {
+	border-bottom: 1px solid #ddd;
+	cursor: default;
+	padding: 7px 0 10px;
+	text-align: center;
+}
+
+.selectCourses {
+	cursor: default;
+	margin: 10px 0;
+	overflow: hidden;
+}
+
+.selectCourses ul {
+	margin: 0 0;
+	padding: 0 0;
+}
+
+.selectCourses ul li {
+	margin: 0 0;
+	list-style: none;
+	padding: 0 0;
+}
+
+.subjectOptionScience span, .subjectOption span, .subjectOptionMath span,
+	.subjectOptionSS span, .subjectOptionELA span {
+	display: inline-block;
+	line-height: 1.2em;
+	margin-left: 40px;
+	margin-right: 15px;
+	vertical-align: middle;
+}
+
+.subjectOptionScience a {
+	background: url("../images/subject-banner.png") no-repeat scroll 0 0
+		rgba(0, 0, 0, 0);
+	display: block;
+	height: 49px;
+	line-height: 50px;
+	margin-bottom: 8px;
+	width: 113px;
+}
+
+.subjectOptionScience a:hover {
+	background: url("../images/banner-science.png") no-repeat scroll 0 0
+		rgba(0, 0, 0, 0);
+	color: white;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.subjectOptionMath a {
+	background: url("../images/subject-banner.png") no-repeat scroll 0 0
+		rgba(0, 0, 0, 0);
+	height: 49px;
+	line-height: 50px;
+	margin-bottom: 8px;
+	padding-right: 25px;
+	display: block;
+	width: 113px;
+	text-align: right;
+}
+
+.subjectOptionMath a:hover {
+	background: url("../images/Math_Active.png") no-repeat scroll 0 0
+		rgba(0, 0, 0, 0);
+	color: white;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.subjectOptionSS a {
+	background: url("../images/subject-banner.png") no-repeat scroll 0 0
+		rgba(0, 0, 0, 0);
+	height: 49px;
+	line-height: 50px;
+	margin-bottom: 8px;
+	width: 113px;
+	display: block;
+}
+
+.subjectOptionSS a:hover {
+	background: url("../images/SS_Active.png") no-repeat scroll 0 0
+		rgba(0, 0, 0, 0);
+	color: white;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.subjectOptionELA a {
+	background: url("../images/subject-banner.png") no-repeat scroll 0 0
+		rgba(0, 0, 0, 0);
+	height: 49px;
+	line-height: 50px;
+	margin-bottom: 8px;
+	width: 113px;
+	display: block;
+}
+
+.subjectOptionELA a:hover {
+	background: url("../images/ELA_Active.png") no-repeat scroll 0 0
+		rgba(0, 0, 0, 0);
+	color: white;
+	cursor: pointer;
+}
+
+.courseOption img {
+	max-width: 100%;
+}
+
+.courseOption {
+	background-color: white;
+	border: 1px solid #ddd;
+	color: #515151;
+	display: inline-block;
+	margin: 0 10px 10px 0;
+	width: 100px;
+	vertical-align: top;
+}
+
+.courseOption:hover, .active:hover {
+	background-color: #4c98cc;
+	border: 1px solid #ddd;
+	color: white;
+	cursor: pointer;
+	display: inline-block;
+	margin: 0 10px 10px 0;
+}
+
+.courseOption .title {
+	text-align: center;
+	height: 32px;
+	line-height: 1.2em;
+	font-size: 12px;
+}
+
+.courseContainer {
+	height: 257px;
+	overflow-y: auto;
+}
+
+.popupFooter {
+	padding: 5px 10px 15px 10px;
+}
+.teacherRoleSelected .roleOptionImage{
+	background: url("images/signup/teacher_selected.png") center bottom no-repeat;
+}
+
+.studentRoleSelected .roleOptionImage{
+	background: url("images/signup/student_selected.png") center bottom no-repeat;
+}
+
+.parentRoleSelected .roleOptionImage{
+	background: url("images/signup/parent_selected.png") center bottom no-repeat;
+}
+
+.otherRoleSelected .roleOptionImage{
+	background: url("images/signup/other_selected.png") center bottom no-repeat;
+}
+.forgotPasswordErrorMessage {
+color: #fbb03b;
+float: left;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 12px;
+margin-left: 45px;
+width: 100%;
 }

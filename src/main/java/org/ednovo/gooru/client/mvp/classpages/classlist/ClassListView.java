@@ -1195,7 +1195,6 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			
 		};
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999);//To display the view in collection player.
 	}

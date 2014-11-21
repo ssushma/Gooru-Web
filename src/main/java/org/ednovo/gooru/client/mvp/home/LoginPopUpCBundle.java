@@ -24,12 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
-import org.ednovo.gooru.client.mvp.search.SearchCBundle.SearchCss;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.resources.client.CssResource.NotStrict;
 
 /**
@@ -50,6 +47,27 @@ public interface LoginPopUpCBundle extends ClientBundle{
 	@Source("res_loginpopup2.css")
 	LoginPopUpCss getResponsive1Style();
 
+	@NotStrict
+	@Source("res_loginpopup3.css")
+	LoginPopUpCss getResponsive2Style();
+	
+	@NotStrict
+	@Source("res_loginpopup4.css")
+	LoginPopUpCss getResponsive3Style();
+	
+	@NotStrict
+	@Source("res_loginpopup5.css")
+	LoginPopUpCss getResponsive4Style();
+	
+	@NotStrict
+	@Source("res_loginpopup6.css")
+	LoginPopUpCss getResponsive5Style();
+	
+	@NotStrict
+	@Source("res_loginpopup7.css")
+	LoginPopUpCss getResponsive6Style();
+	
+	
 	public interface LoginPopUpCss extends CssResource{
 		
 	String LoginpopupMain();
@@ -78,6 +96,81 @@ public interface LoginPopUpCBundle extends ClientBundle{
 	String processing();
 	String loginPopupGlassStyle();
 	String  lnkSignUpWithEmail();
+	String subjectOptionSS();
+	String  policyTextLine();
+	String privacyLinkText();
+	String paragraph();
+	String popupInnerGrey();
+	String contactUs();
+	String forgotPasswordText();
+	String  forgotPasswordDescription();
+	String roleOption();
+	String roleOptionImage();
+	String Grades();
+	String PopupMainSmall();
+	String lblCollectionProgress();
+	String forgotPasswordButtonContainer();
+	String primary();
+	String policyTextHeade();
+	String PopupInner();
+	@ClassName("SignUp-h2")
+	String SignUp_h2();
+	String courseContainer();
+	String subjectOptionScience();
+	String  leaveRegistrationButtonContainer();
+	String otherRole();
+	String PopupContent();
+	@ClassName("SignUp-green-h1")
+	String SignUp_green_h1();
+	String  termsTextLine();
+	String lastUpdated();
+	String leaveRegistrationBottomContainer();
+	String popupgreyFooter();
+	String  forgotPasswordTextBoxContainer();
+	String  termsOfUserMessageText();
+	String privacyCloseButton();
+	String popupgreenHeader();
+	String sampleReportSliderHolder();
+	String courseOption();
+	String teacherRole();
+	String  active();
+	String studentRole();
+	String popupContentLeaveRegistration();
+	String popupFooter();
+	String subjectOptionMath();
+	String subjectOptionELA();
+	String  secondary();
+	String  selectGrades();
+	String greyBGContainer();
+	String popupInnerLeaveReg();
+	String subjectOption();
+	String PopupMainMedium();
+	String parentRole();
+	String  SliderHolderPrev();
+	String title();
+	String popupContentGrey();
+	String leaveRegistarionFooterText();
+	String selectCourses();
+	String popupContentforgotPassword();
+	String SliderHolderNext();
+	String popupInnerforgotPassword();
+	String inputGroup();
+	String lblCollectionProgressDetails();
+	String userInfoContainer();
+	String PopupMainLarge();
+	String popupContentScroll();
+	String roleLabel();
+	String GreenHeader();
+	String termsSubTitle();
+	String noOverflow();
+	String  popupgreyHeader();
+	String textContentDiv();
+	String  disabled();
+	String teacherRoleSelected();
+	String studentRoleSelected();
+	String parentRoleSelected();
+	String otherRoleSelected();
+	String forgotPasswordErrorMessage();
 	}
 	@Source("Newlogin-popup.css")
 	LoginPopUpCss css();

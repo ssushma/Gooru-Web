@@ -2386,7 +2386,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		};
 		
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999);
 	
@@ -2410,7 +2409,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		};
 		
 		termsAndPolicyVc.show();
-		termsAndPolicyVc.setSize("902px", "300px");
 		termsAndPolicyVc.center();
 		termsAndPolicyVc.getElement().getStyle().setZIndex(999);
 	
@@ -2434,7 +2432,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		};
 		
 		copyRightPolicy.show();
-		copyRightPolicy.setSize("902px", "300px");
 		copyRightPolicy.center();
 		copyRightPolicy.getElement().getStyle().setZIndex(999);
 	}

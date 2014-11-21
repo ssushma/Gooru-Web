@@ -427,7 +427,7 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 					}
 				};
 				termsAndPolicyVc.show();
-				termsAndPolicyVc.setSize("902px", "300px");
+			
 				termsAndPolicyVc.center();
 				termsAndPolicyVc.getElement().getStyle().setZIndex(99999);//To display the view in collection player.
 			}
@@ -448,7 +448,6 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 					}
 				};
 				copyRightPolicy.show();
-				copyRightPolicy.setSize("902px", "300px");
 				copyRightPolicy.center();	
 				copyRightPolicy.getElement().getStyle().setZIndex(99999);//To display the view in collection player.
 			}
@@ -469,7 +468,6 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 					
 				};
 				termsOfUse.show();
-				termsOfUse.setSize("902px", "300px");
 				termsOfUse.center();
 				termsOfUse.getElement().getStyle().setZIndex(99999);//To display the view in collection player.
 			

@@ -879,7 +879,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 			
 		};
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999999);//To display the view in collection player.
 	}

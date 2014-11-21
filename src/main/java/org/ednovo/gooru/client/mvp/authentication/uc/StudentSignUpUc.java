@@ -393,7 +393,6 @@ public class StudentSignUpUc extends PopupPanel{
 		};
 		
 		termsOfUse.show();
-		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999);
 	
@@ -417,7 +416,6 @@ public class StudentSignUpUc extends PopupPanel{
 		};
 		
 		termsAndPolicyVc.show();
-		termsAndPolicyVc.setSize("902px", "300px");
 		termsAndPolicyVc.center();
 		termsAndPolicyVc.getElement().getStyle().setZIndex(999);
 	
@@ -441,7 +439,6 @@ public class StudentSignUpUc extends PopupPanel{
 		};
 		
 		copyRightPolicy.show();
-		copyRightPolicy.setSize("902px", "300px");
 		copyRightPolicy.center();
 		copyRightPolicy.getElement().getStyle().setZIndex(999);
 	}
