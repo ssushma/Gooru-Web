@@ -675,7 +675,9 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		JsonRepresentation jsonRep = null;
 		jsonRep =jsonResponseRep.getJsonRepresentation();
+		System.out.println("v2GuestSignIn : "+url);
 		try {
+			System.out.println("jsonRep.getJsonObject().toString() : "+jsonRep.getJsonObject().toString());
 			setLoggedInSessionToken(jsonRep.getJsonObject().getString(TOKEN));
 			V2UserDo v2UserDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
 			user = v2UserDo.getUser();
