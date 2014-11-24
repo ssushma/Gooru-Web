@@ -35,6 +35,8 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
+import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
+import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionEditShareEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
@@ -899,6 +901,8 @@ IsCollectionAssign {
 	@UiHandler("ancClasspageTitle")
 	public void onClickAncClasspageTitle(ClickEvent clickevent) {
 //		getAssignmentView();
+		LibraryTopicListView.isAssignPopup=false;
+		ProfileTopicListView.isAssignPopup=false;
 		
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("classpageid", classpageId);
