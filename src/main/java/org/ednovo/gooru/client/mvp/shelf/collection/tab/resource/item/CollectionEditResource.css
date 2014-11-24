@@ -1840,6 +1840,16 @@ input[type="text"] {
 	margin-top: 150px;
 	position: absolute;
 	z-index: 9999999;
+	margin-left: 78px;
+}
+.loadingImageForResource1{
+	background: url("images/core/B-Dot.gif");
+	width: 200px;
+	height: 190px;
+	margin: 0 auto;
+	margin-top: 150px;
+	position: absolute;
+	z-index: 9999999;
 	margin-left: 220px;
 }
 /* .collectionEditPopupBtnSprite {
