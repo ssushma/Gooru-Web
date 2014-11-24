@@ -64,7 +64,7 @@
 				<g:HTMLPanel styleName="{res.css.coursePopupStyle}">
 					<g:HTMLPanel styleName="{res.css.loadingImageMainDiv}"
 						ui:field="loadingPanel">
-						<g:Label styleName="{res.css.loadingImageForResource}" />
+						<g:Label styleName="{res.css.loadingImageForResource1}" />
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{style.myFolderCollectionUrlContent}"
 						ui:field="addResourceTabContainer">

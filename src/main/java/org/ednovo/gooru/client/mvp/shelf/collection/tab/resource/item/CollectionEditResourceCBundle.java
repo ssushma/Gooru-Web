@@ -360,6 +360,8 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 	    String loadingImageMainDiv();
 	    
 		String loadingImageForResource();
+		
+		String loadingImageForResource1();
 
 		String copyPopupResourcesButtonContainerClick();
 
