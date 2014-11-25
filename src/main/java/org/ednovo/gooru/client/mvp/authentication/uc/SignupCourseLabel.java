@@ -128,16 +128,16 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 	
 	@Override
 	public void onClick(ClickEvent event) {
-		if(this.getStyleName().toString().contains("selected")){
+		if(this.getStyleName().toString().contains("collectionSelected")){
 			deleteCourse(codeDo);
-			this.removeStyleName(SignUpCBundle.INSTANCE.css().selected());
+			this.removeStyleName(LoginPopUpCBundle.INSTANCE.css().collectionSelected());
 			selectCourseLabel(false);
 			showErrorMessage(false);
 		} else {
 			if(getCourseCount()<5) {
 				selectCourseLabel(true);
 				addCourse(profileCodeDoSet);
-				this.addStyleName(SignUpCBundle.INSTANCE.css().selected());
+				this.addStyleName(LoginPopUpCBundle.INSTANCE.css().collectionSelected());
 				showErrorMessage(false);
 			} else {
 				showErrorMessage(true);

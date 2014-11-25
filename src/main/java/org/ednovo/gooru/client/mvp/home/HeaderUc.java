@@ -415,7 +415,7 @@ public class HeaderUc extends Composite implements
 		};
 
 		// mainDotsPanel.setVisible(false);
-		logoutPanelVc.setStyleName(HomeCBundle.INSTANCE.css().logoutPanel());
+		//logoutPanelVc.setStyleName(HomeCBundle.INSTANCE.css().logoutPanel());
 		editSearchInputFloPanel.setVisible(false);
 		LoginLinkContainer.setVisible(false);
 		loggedInfoLbl.setVisible(false);

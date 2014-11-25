@@ -9,7 +9,11 @@
 .menu-icon{
 	display:none;
 }
-
+.overRideBlueButton{}
+.collectionFormCancelButton{}
+.actionField{}
+.sharenEmbedContainer{}
+.addButtonContainer{}
  .LoginpopupInner{}
  .popupContentGrey{}
  .contactUs{}
@@ -106,12 +110,29 @@
 .parentRoleSelected{}
 .otherRoleSelected{}  
 .forgotPasswordErrorMessage{}   
-   
-  
- 
- 
-
-
+.sceinceActive{}
+.mathActive{}
+.ssActive{}
+.elaActive{}
+ .subj{}   
+.activeGrade{}
+.collectionSelected{}  
+.PopupMainVVSmall{}
+ .PopupMainVSmall{}
+ .shareSelection{}
+.contentDesc{}
+.dontWorrkText{}
+.popupcornerBg{} 
+.whatNew{}
+.whatLeft{}
+.whatRight{}
+.borderLeft{}
+.improveGooruDescriptionx{}
+.improveGooruLinkDesc{}
+.improveGooruSubHeading{}
+.improveGooruBlueText{}
+.improveGooruBlueTextDesc{}
+.improveGooruDesc{}
 
  
  

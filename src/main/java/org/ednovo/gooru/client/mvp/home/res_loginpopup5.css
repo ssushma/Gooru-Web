@@ -1,6 +1,13 @@
 .menu-icon{
 	display:none;
-}	
+}
+.overRideBlueButton{}
+.collectionFormCancelButton{}
+.overRideBlueButton{}
+.collectionFormCancelButton{}
+.actionField{}
+.sharenEmbedContainer{}
+.addButtonContainer{}
 .forgotPasswordErrorMessage{}
  .SignUp-h2{}
 .PopupMainLarge{}
@@ -99,13 +106,29 @@
 .studentRoleSelected{}
 .parentRoleSelected{}
 .otherRoleSelected{} 
-   
-
-
-
-
- 
-
+.sceinceActive{}
+.mathActive{}
+.ssActive{}
+.elaActive{}   
+ .subj{}
+.activeGrade{}
+.collectionSelected{}
+.PopupMainVVSmall{}
+.PopupMainVSmall{}
+.shareSelection{}
+.contentDesc{}
+.dontWorrkText{}
+.popupcornerBg{}
+.whatNew{}
+.whatLeft{}
+.whatRight{}
+.borderLeft{}
+.improveGooruDescriptionx{}
+.improveGooruLinkDesc{}
+.improveGooruSubHeading{}
+.improveGooruBlueText{}
+.improveGooruBlueTextDesc{} 
+.improveGooruDesc{}
 
 
  

@@ -35,7 +35,6 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.LiPanel;
 import org.ednovo.gooru.client.uc.UlPanel;
-import org.ednovo.gooru.client.uc.suggestbox.widget.Span;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
@@ -45,6 +44,7 @@ import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.dom.client.Style.Unit;
@@ -58,7 +58,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -67,18 +66,20 @@ public class SignUpGradeCourseView extends PopupPanel{
 
 	@UiField HTMLPanel signupBgPanel, metaDataSelectionPanel, courseContainer,congratsLbl,accountCreatedText;
 	
-	@UiField Label lblTitle, lblCancel, lblErrorMessage;
+	@UiField Label lblTitle, lblCancel, lblErrorMessage,menuIcon;
 	
 	@UiField FlowPanel registerGradeList;
 	
 	@UiField Anchor mathCourseLbl, scienceCourseLbl, elaCourseLbl, socialCourseLbl;
 	
 	@UiField Button skipBtn, submitBtn;
+	@UiField UlPanel subject;
 	
 	
 	HTMLPanel mathCourseContainer, scienceCourseContainer, elaCourseContainer, socialCourseContainer;
 	
 	private int selectedCourseCount = 0;
+	private boolean isSubjectMenuOpened=false;
 	
 	private List<LibraryCodeDo> libraryDo = null;
 	
@@ -115,7 +116,6 @@ public class SignUpGradeCourseView extends PopupPanel{
 		this.userDo = userDo;
 		SignUpCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		signupBgPanel.setWidth("700px");
 		signupBgPanel.getElement().setId("pnlSignUpBgPanel");
 		
 		metaDataSelectionPanel.getElement().getStyle().setPadding(15, Unit.PX);
@@ -158,10 +158,9 @@ public class SignUpGradeCourseView extends PopupPanel{
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
         this.setGlassEnabled(true);
-        this.removeStyleName("gwt-PopupPanel");
-       // this.getElement().getStyle().setZIndex(99999);
-        this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
-        this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
+        this.getElement().getStyle().setZIndex(99999);
+        /*this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
+        this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());*/
         this.show();
         this.center();
         congratsLbl.getElement().setInnerHTML(i18n.GL1159()+i18n.GL_SPL_EXCLAMATION());
@@ -290,11 +289,11 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 *
 	 */
 	private void setRegisterGradeList() {
-	/*	UlPanel ulPanel=new UlPanel();
+		UlPanel ulPanel=new UlPanel();
 		ulPanel.addStyleName(LoginPopUpCBundle.INSTANCE.css().Grades());
 		LiPanel liPanel1=new LiPanel();
 		liPanel1.add(new SignupGradeLabel("Kindergarten", new ProfileDo()));
-		liPanel1.add(liPanel1);
+		ulPanel.add(liPanel1);
 		for (int i = 1; i <= 12; i++) {
 			LiPanel liPanel=new LiPanel();
 			liPanel.add(new SignupGradeLabel(i + "", new ProfileDo()));
@@ -304,7 +303,7 @@ public class SignUpGradeCourseView extends PopupPanel{
 		liPanel3.add(new SignupGradeLabel("Higher Education",new ProfileDo()));
 		ulPanel.add(liPanel3);
 		registerGradeList.add(ulPanel);
-*/	}
+	}
 
 	/**
 	 * 
@@ -326,10 +325,10 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 *
 	 */
 	private void setRegisterCourseList() {
-		mathCourseLbl.setHTML(MATH_LBL);
-		scienceCourseLbl.setHTML(SCIENCE_LBL);
-		elaCourseLbl.setHTML(ELA_LBL);
-		socialCourseLbl.setHTML(SOCIAL_LBL);
+		mathCourseLbl.setHTML("<span>"+MATH_LBL+"</span>");
+		scienceCourseLbl.setHTML("<span>"+SCIENCE_LBL+"</span>");
+		elaCourseLbl.setHTML("<span>"+ELA_LBL+"</span>");
+		socialCourseLbl.setHTML("<span>"+SOCIAL_LBL+"</span>");
 	
 //		artsAndHumanitiesLbl.add(new InlineLabel(ARTS_HUMANITIES));
 //		technologyAndEngineeringLbl.add(new InlineLabel(TECH_ENGEE));
@@ -455,7 +454,7 @@ public class SignUpGradeCourseView extends PopupPanel{
 	@UiHandler("scienceCourseLbl")
 	public void clickScienceLbl(ClickEvent event) {
 		removeStyleNames();
-		scienceCourseLbl.addStyleName(SignUpCBundle.INSTANCE.css().active());
+		scienceCourseLbl.addStyleName(LoginPopUpCBundle.INSTANCE.css().sceinceActive());
 		if(!(scienceCourseContainer.getWidgetCount()>0)) {
 			setCourseData(libraryDo.get(0), libraryDo.get(0).getLabel());
 		}
@@ -483,7 +482,7 @@ public class SignUpGradeCourseView extends PopupPanel{
 	@UiHandler("mathCourseLbl")
 	public void clickMathLbl(ClickEvent event) {
 		removeStyleNames();
-		mathCourseLbl.addStyleName(SignUpCBundle.INSTANCE.css().mathActive());
+		mathCourseLbl.addStyleName(LoginPopUpCBundle.INSTANCE.css().mathActive());
 		if(!(mathCourseContainer.getWidgetCount()>0)) {
 			setCourseData(libraryDo.get(1), MATH_LBL);
 		}
@@ -511,7 +510,7 @@ public class SignUpGradeCourseView extends PopupPanel{
 	@UiHandler("socialCourseLbl")
 	public void clickSocialLbl(ClickEvent event) {
 		removeStyleNames();
-		socialCourseLbl.addStyleName(SignUpCBundle.INSTANCE.css().ssActive());
+		socialCourseLbl.addStyleName(LoginPopUpCBundle.INSTANCE.css().ssActive());
 		if(!(socialCourseContainer.getWidgetCount()>0)) {
 			setCourseData(libraryDo.get(2), SOCIAL_LBL);
 		}
@@ -539,7 +538,7 @@ public class SignUpGradeCourseView extends PopupPanel{
 	@UiHandler("elaCourseLbl")
 	public void clickElaLbl(ClickEvent event) {
 		removeStyleNames();
-		elaCourseLbl.addStyleName(SignUpCBundle.INSTANCE.css().elaActive());
+		elaCourseLbl.addStyleName(LoginPopUpCBundle.INSTANCE.css().elaActive());
 		if(!(elaCourseContainer.getWidgetCount()>0)) {
 			setCourseData(libraryDo.get(3), ELA_LBL);
 		}
@@ -695,10 +694,10 @@ public class SignUpGradeCourseView extends PopupPanel{
 	 *
 	 */
 	private void removeStyleNames() {
-		mathCourseLbl.removeStyleName(SignUpCBundle.INSTANCE.css().mathActive());
-		scienceCourseLbl.removeStyleName(SignUpCBundle.INSTANCE.css().active());
-		elaCourseLbl.removeStyleName(SignUpCBundle.INSTANCE.css().elaActive());
-		socialCourseLbl.removeStyleName(SignUpCBundle.INSTANCE.css().ssActive());
+		mathCourseLbl.removeStyleName(LoginPopUpCBundle.INSTANCE.css().mathActive());
+		scienceCourseLbl.removeStyleName(LoginPopUpCBundle.INSTANCE.css().sceinceActive());
+		elaCourseLbl.removeStyleName(LoginPopUpCBundle.INSTANCE.css().elaActive());
+		socialCourseLbl.removeStyleName(LoginPopUpCBundle.INSTANCE.css().ssActive());
 //		artsAndHumanitiesLbl.removeStyleName(SignUpCBundle.INSTANCE.css().active());
 //		technologyAndEngineeringLbl.removeStyleName(SignUpCBundle.INSTANCE.css().active());
 	}
@@ -728,5 +727,19 @@ public class SignUpGradeCourseView extends PopupPanel{
 		socialCourseContainer.setVisible(courseLabel.equalsIgnoreCase(SOCIAL_LBL) ? true : false);
 //		artsHumanitiesContainer.setVisible(courseLabel.equalsIgnoreCase(ARTS_HUMANITIES) ? true : false);
 //		techologyEngineeringContainer.setVisible(courseLabel.equalsIgnoreCase(TECH_ENGEE) ? true : false);		
+	}
+	@UiHandler("menuIcon")
+	public void menuIconClickEvent(ClickEvent event){
+		
+		if(isSubjectMenuOpened){
+			menuIcon.removeStyleName("active");
+			isSubjectMenuOpened=false;
+			subject.setVisible(false);
+		}else{
+			menuIcon.addStyleName("active");
+			subject.getElement().getStyle().setDisplay(Display.BLOCK);
+			isSubjectMenuOpened=true;
+		}
+		
 	}
 }

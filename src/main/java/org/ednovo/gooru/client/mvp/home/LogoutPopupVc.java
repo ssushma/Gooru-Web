@@ -86,7 +86,7 @@ public class LogoutPopupVc extends Composite{
 	public LogoutPopupVc() {
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
-		appPopUp.setStyleName("removeResourcePopup");
+	//	appPopUp.setStyleName("removeResourcePopup");
 		appPopUp.setContent(i18n.GL0188(), uiBinder.createAndBindUi(this));
 		
 		lblClassDismissed.setText(i18n.GL0189());

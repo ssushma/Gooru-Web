@@ -353,7 +353,6 @@ margin-top: -43px;
 	text-align:center;
 	background: rgba(100,100,100,.1);
 	padding:10px;
-	width:478px;
 	/* position:absolute; */
 	bottom:0px;
 	border-top:1px solid #ddd;
@@ -1034,8 +1033,7 @@ input.halfSize {
 
 
 #btnStartUsingGooru{
-	width: 200px;
-	height: 40px;	
+	padding:12px 36px 12px 36px;
 }
 .leaveRegistrationBottomContainer {
 	background-color: rgba(240,240,240,0.3);
@@ -1268,4 +1266,7 @@ input.halfSize {
 }
 .iconPosition{
 	margin-left:-30px;
+}
+.paddingClear{
+	padding:0;
 }
