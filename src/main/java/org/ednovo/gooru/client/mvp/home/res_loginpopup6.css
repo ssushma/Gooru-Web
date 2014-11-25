@@ -11,7 +11,7 @@
 		color: #000;
 		width: 100%;
 		height: 30px;
-		background: #ecebeb url(../images/menu-icon.png) no-repeat right center;
+		background: #ecebeb url(images/menu-icon.png) no-repeat right center;
 		padding: 6px 10px 0 10px;
 		cursor: pointer;
 		border: solid 1px #666;
@@ -29,6 +29,19 @@
 		background-color: #bbb;
 			margin:0 0 0 0;
 	}
+.subjectOptionScience a.sceinceActive {
+	background:#1076bb;
+}
+.subjectOptionMath a.mathActive {
+		background:#1076bb;
+}
+.subjectOptionSS a.ssActive {
+		background:#1076bb;
+}
+.subjectOptionELA a.elaActive {
+	background:#1076bb;
+}
+
 	
 	/* main nav */
 	.subj {
@@ -93,7 +106,9 @@
 	.subj ul li {
 		margin: 3px 0 3px 15px;
 	}
-	
+.actionField{}
+.sharenEmbedContainer{}
+.addButtonContainer{}	
 .forgotPasswordErrorMessage{}	
  .paragraph{}
  .lnkSignUpWithEmail{}
@@ -186,13 +201,30 @@
 .studentRoleSelected{}
 .parentRoleSelected{}
 .otherRoleSelected{}
-
-
-
-     
-
- 
-  
+.sceinceActive{}
+.mathActive{}
+.ssActive{}
+.elaActive{}
+.activeGrade{}
+.collectionSelected{}
+.PopupMainVVSmall{}
+.PopupMainVSmall{}
+.contentDesc{}
+.dontWorrkText{}
+.popupcornerBg{}     
+ .shareSelection{}
+ .overRideBlueButton{}
+.collectionFormCancelButton{}
+.whatNew{}
+.whatLeft{}
+.whatRight{}
+.borderLeft{}
+.improveGooruDescriptionx{}
+.improveGooruLinkDesc{}
+.improveGooruSubHeading{}
+.improveGooruBlueText{}
+.improveGooruBlueTextDesc{} 
+.improveGooruDesc{}  
 
  
 

@@ -171,6 +171,36 @@ public interface LoginPopUpCBundle extends ClientBundle{
 	String parentRoleSelected();
 	String otherRoleSelected();
 	String forgotPasswordErrorMessage();
+	String sceinceActive();
+	String mathActive();
+	String ssActive();
+	String elaActive();
+	String subj();
+	@ClassName("menu-icon")
+	String menu_icon();
+	String activeGrade();
+	String collectionSelected();
+	String PopupMainVVSmall();
+	String PopupMainVSmall();
+	String shareSelection();
+	String sharenEmbedContainer();
+	String addButtonContainer();
+	String actionField();
+	String contentDesc();
+	String dontWorrkText();
+	String popupcornerBg();
+	String overRideBlueButton();
+	String collectionFormCancelButton();
+	String whatNew();
+	String whatLeft();
+	String whatRight();
+	String improveGooruDesc();
+	String borderLeft();
+	String improveGooruDescriptionx();
+	String improveGooruLinkDesc();
+	String improveGooruSubHeading();
+	String improveGooruBlueText();
+	String improveGooruBlueTextDesc();
 	}
 	@Source("Newlogin-popup.css")
 	LoginPopUpCss css();

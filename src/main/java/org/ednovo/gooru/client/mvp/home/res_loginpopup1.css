@@ -2,7 +2,12 @@
 .LoginpopupMain{
 	width:100%;
 }	
-	
+.PopupMainVVSmall{
+	width:100%;
+}	
+.PopupMainVSmall{
+		width:100%;
+}
 .LoginpopupContent {
     padding: 6px 6px;
 }
@@ -69,8 +74,6 @@
 	left:-25px;
 	
 }
-
-
 .courseOption {
     background-color: white;
     border: 1px solid #ddd;
@@ -86,6 +89,44 @@
     margin-right: 10px;
     text-align: center;
 }
+.shareSelection{
+	margin:10px 10px;
+}
+.improveGooruLinkDesc{
+	text-align:center;
+	font-size:11px;
+	padding:10px 0;
+
+}
+.improveGooruLinkDesc a{
+	color:#4d9645;
+}
+.improveGooruDesc{
+	display:none;
+}
+
+.improveGooruDescriptionx{
+	padding-left:0;
+	text-align:center;
+	margin-bottom:15px;
+	padding-bottom:15px;
+	border-bottom:1px solid #dddddd;
+}
+
+.borderLeft{
+	border-left:none;
+}
+.whatLeft{
+	width:100%;
+}
+.whatRight{
+	width:100%;
+}
+.overRideBlueButton{}
+.collectionFormCancelButton{}
+.actionField{}
+.sharenEmbedContainer{}
+.addButtonContainer{}
 .LoginPopUpgreensmall{}
 .LoginPopUpgreensmall{}
 .LoginPopUpgreensmall{}
@@ -170,3 +211,23 @@
 .parentRoleSelected{}
 .otherRoleSelected{}
 .forgotPasswordErrorMessage{}
+.sceinceActive{}
+.mathActive{}
+.ssActive{}
+.elaActive{}
+ .subj{}
+ .menu-icon{}
+ .activeGrade{}
+.collectionSelected{}
+.contentDesc{}
+.dontWorrkText{}
+.popupcornerBg{}
+.whatNew{}
+.whatLeft{}
+.whatRight{}
+.borderLeft{}
+.improveGooruDescriptionx{}
+.improveGooruLinkDesc{}
+.improveGooruSubHeading{}
+.improveGooruBlueText{}
+.improveGooruBlueTextDesc{}

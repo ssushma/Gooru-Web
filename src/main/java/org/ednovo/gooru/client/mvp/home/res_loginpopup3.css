@@ -33,6 +33,11 @@
     margin-right: 10px;
     text-align: center;
 }	
+.overRideBlueButton{}
+.collectionFormCancelButton{}
+.actionField{}
+.sharenEmbedContainer{}
+.addButtonContainer{}
 .primary{}
 .LoginpopupMain{}
 .gConnectButton{}
@@ -123,14 +128,30 @@
 .parentRoleSelected{}
 .otherRoleSelected{}
 .forgotPasswordErrorMessage{} 
-
-
-
-  
- 
-
- 
-  
+.sceinceActive{}
+.mathActive{}
+.ssActive{}
+.elaActive{}
+.subj{}
+.menu-icon{}
+.activeGrade{}
+.collectionSelected{}  
+.PopupMainVVSmall{} 
+.PopupMainVSmall{}
+.shareSelection{}
+.contentDesc{}
+.dontWorrkText{}
+.popupcornerBg{}
+.whatNew{}
+.whatLeft{}
+.whatRight{}
+.borderLeft{}
+.improveGooruDescriptionx{}
+.improveGooruLinkDesc{}
+.improveGooruSubHeading{}
+.improveGooruBlueText{}
+.improveGooruBlueTextDesc{} 
+.improveGooruDesc{}  
    
   
  

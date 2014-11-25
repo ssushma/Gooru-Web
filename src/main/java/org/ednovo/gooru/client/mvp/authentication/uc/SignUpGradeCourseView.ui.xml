@@ -25,33 +25,36 @@
 			     <eventPanel:PPanel>
 			     	 <g:HTMLPanel  ui:field="accountCreatedText"></g:HTMLPanel>    
 			     </eventPanel:PPanel> 
-			     <g:HTMLPanel styleName="clearfix"/>   
-		   </g:HTMLPanel>
+			  
+		   </g:HTMLPanel>   
+		   <g:HTMLPanel styleName="clearfix"/>   
 		   <g:HTMLPanel styleName="{res1.css.greyBGContainer}">
 			      <g:FlowPanel styleName="{res1.css.selectGrades}"  ui:field="registerGradeList">
 			      </g:FlowPanel>
 			      <g:HTMLPanel styleName="{res1.css.selectCourses}">
 			         <g:HTMLPanel styleName="row">
-			         <g:HTMLPanel styleName="nav-wrap">
-			            <g:Label styleName="menu-icon">Choose Sublect...</g:Label> 
-			            <eventPanel:UlPanel>
-			           		<eventPanel:LiPanel>
-			           			<g:Anchor styleName="{res1.css.subjectOptionScience}" ui:field="scienceCourseLbl"/>    
+			         <g:HTMLPanel styleName="col-md-3 col-sm-3 subjects">
+			           <g:HTMLPanel styleName="nav-wrap">
+			            <g:Label styleName="{res1.css.menu_icon}" ui:field="menuIcon">Choose Sublect...</g:Label> 
+			            <eventPanel:UlPanel styleName="{res1.css.subj}" ui:field="subject">
+			           		<eventPanel:LiPanel styleName="{res1.css.subjectOptionScience}">
+			           			<g:Anchor styleName="{res1.css.sceinceActive}" ui:field="scienceCourseLbl"/>    
 			           		</eventPanel:LiPanel>
-			                <eventPanel:LiPanel>
-			            		<g:Anchor styleName="{res1.css.subjectOptionMath}" ui:field="mathCourseLbl"/>        
+			                <eventPanel:LiPanel styleName="{res1.css.subjectOptionMath}">
+			            		<g:Anchor  ui:field="mathCourseLbl"/>        
 			                </eventPanel:LiPanel>
-			                <eventPanel:LiPanel>
-			            		<g:Anchor styleName="{res1.css.subjectOptionSS}" ui:field="socialCourseLbl"/>        
+			                <eventPanel:LiPanel styleName="{res1.css.subjectOptionSS}">
+			            		<g:Anchor  ui:field="socialCourseLbl"/>        
 			                </eventPanel:LiPanel>
-			            	<eventPanel:LiPanel>
-			            		<g:Anchor styleName="{res1.css.subjectOptionELA}" ui:field="elaCourseLbl"/>     
+			            	<eventPanel:LiPanel styleName="{res1.css.subjectOptionELA}">
+			            		<g:Anchor  ui:field="elaCourseLbl"/>     
 			            	</eventPanel:LiPanel>	
 			             </eventPanel:UlPanel>
 			           
 			            <!-- <eventPanel:HTMLEventPanel styleName="{res.css.subjectOption}" ui:field="artsAndHumanitiesLbl"></eventPanel:HTMLEventPanel>
 			            <eventPanel:HTMLEventPanel styleName="{res.css.subjectOption}" ui:field="technologyAndEngineeringLbl"></eventPanel:HTMLEventPanel> -->
 			         </g:HTMLPanel>
+			      	 </g:HTMLPanel>    
 			         <g:HTMLPanel styleName="col-md-9 col-sm-9">
 			        	 <g:HTMLPanel styleName="{res1.css.courseContainer}" ui:field="courseContainer">
 			             <g:Image ui:field="imgLoading" styleName="{res.css.loadingImage}"></g:Image>
@@ -64,7 +67,7 @@
 			   <g:HTMLPanel styleName="{res.css.errorContainer}">
 			       <g:Label styleName="{res.css.error}" ui:field="lblErrorMessage" />
 			   </g:HTMLPanel>
-			   <g:HTMLPanel styleName="{res.css.popupFooter} text-center">
+			   <g:HTMLPanel styleName="{res1.css.popupFooter} text-center">
 			      <g:Button styleName="primary" ui:field="skipBtn"></g:Button>
 			      <g:Button styleName="primary" ui:field="submitBtn"></g:Button>
 			   </g:HTMLPanel>
