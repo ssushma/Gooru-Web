@@ -93,6 +93,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResou
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter;
+import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;
@@ -250,4 +251,6 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<LusdLibraryPresenter> getLusdLibraryPresenter();
 	
 	AsyncProvider<TicalLibraryPresenter> getTicalLibraryPresenter();
+	
+	AsyncProvider<AnalyticsInfoContainerPresenter> getAnalyticsInfoContainerPresenter();
 }
