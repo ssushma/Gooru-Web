@@ -1098,13 +1098,13 @@ width: 114px;
 	cursor: pointer;
 }
 .yesNoTextStyle {
-font-family: Arial, Helvetica, sans-serif;
-font-size: 12px;
-color: #515151;
-text-align: center;
-position: static;
-float: left;
-margin-left: 41px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #515151;
+	text-align: center;
+	position: static;
+	float: left;
+	margin-left: 41px;
 }
 .charLimitStyle{
 	float: right;
@@ -1116,7 +1116,7 @@ margin-left: 41px;
 	display: inline-flex;	
 	float: right;
 	color: #999;
-	margin-right: 90px;
+	margin-right: 87px;
 }
 .hintsErrorValidation{
 	font-family: Arial, Helvetica, sans-serif;

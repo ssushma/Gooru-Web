@@ -592,7 +592,7 @@ public class ShelfCollectionResourceChildView extends
                     .addStyleName("titleAlertMessageActive");
 					updateNarrationBtn.setEnabled(false);
 	                updateNarrationBtn.getElement().addClassName("disabled");
-					event.preventDefault();
+					//event.preventDefault();
 				}
 				else
 				{ 
@@ -619,7 +619,7 @@ public class ShelfCollectionResourceChildView extends
 					updateNarrationBtn.setEnabled(false);
 	                updateNarrationBtn.getElement().addClassName("disabled");
 					if(event.getNativeEvent().getCtrlKey() && event.getNativeEvent().getKeyCode()==86){
-						event.getNativeEvent().preventDefault();
+						//event.getNativeEvent().preventDefault();
 						((RichTextArea)event.getSource()).setFocus(false);
 						narrationAlertMessageLbl.setVisible(true);
 						return;
