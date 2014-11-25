@@ -169,7 +169,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		shareLbl.getElement().setAttribute("title",i18n.GL0526());
 		
 		analyticsInfoLbl.setText("Analytics");
-		analyticsInfoLbl.setVisible(false);
+		analyticsInfoLbl.setVisible(true);
 		
 		if (AppClientFactory.getCurrentPlaceToken().equals(
 				PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(

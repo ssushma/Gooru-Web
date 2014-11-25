@@ -65,24 +65,11 @@ public class AnalyticsInfoContainerPresenter extends PresenterWidget<IsAnalytics
 	}
 
 	public void setAnalyticsDataForCollections(CollectionSearchResultDo searchResultDo) {
-		// TODO Auto-generated method stub
-		int Count=3;
-		getView().setCollectionAnalyticsData(searchResultDo);
-		getView().setAverageReactionWidget(Count);
+		getView().setCollectionData();
 	}
 
 	public void setAnalyticsResourcesData(ResourceSearchResultDo searchResultDo) {
-		int Count=3;
-		System.out.println("searchResultDo resource format value::::"+searchResultDo.getResourceFormat().getValue());
-		getView().setAverageReactionWidget(Count);
-		String resourcegooruOid = searchResultDo.getGooruOid();
-		AppClientFactory.getInjector().getPlayerAppService().getContentStarRatings(resourcegooruOid, new SimpleAsyncCallback<ContentStarRatingsDo>() {
-			@Override
-			public void onSuccess(ContentStarRatingsDo result) {
-				getView().setContentGraph(result); 
-				getView().setAverageRatingWidget(result);
-			}
-		});
+			getView().setResourceData();
 	}
 	
 }
