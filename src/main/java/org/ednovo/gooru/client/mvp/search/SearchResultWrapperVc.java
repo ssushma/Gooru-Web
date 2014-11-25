@@ -87,7 +87,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	FocusPanel shareLinkFocPanel;
 	
 	@UiField
-	FocusPanel addLinkFocPanel;
+	FocusPanel addLinkFocPanel,tagsLinkFocPanel;
 
 	@UiField
 	Label addedStatusLbl;
@@ -102,7 +102,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	Label moreInfoLbl,collcResLbl;
 
 	@UiField
-	Label shareLbl;
+	Label shareLbl,tagsLbl;
 	
 	@UiField public Label addLbl,analyticsInfoLbl;
 	
@@ -141,6 +141,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	
 	private Boolean addMode = true;
 	
+	private Boolean addTagsMode = true;
+	
 	private Boolean analyticsMode = false;
 
 	private static SearchResultWrapperVc<?, ?> openedResult;
@@ -150,6 +152,13 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	BrowserAgent browserAgent = new BrowserAgent();
 
 	private T searchResultDo;
+	
+	private static final String TAGS = "tags";
+	private static final String INACTIVE = "inactive";
+	private static final String COLL_FOC_PNL = "collFocPnl";
+	private static final String MORE_INFO = "moreInfo";
+	private static final String SHARE = "share";
+	private static final String ADD_TO_FOLDERS = "addToFolders";
 	
 	/**
 	 * Class constructor, creates new instance of SearchShareVc ,creates handled events for MouseOver and MouseOut 
@@ -167,22 +176,19 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		shareLbl.setText(i18n.GL0526());
 		shareLbl.getElement().setAttribute("alt",i18n.GL0526());
 		shareLbl.getElement().setAttribute("title",i18n.GL0526());
-		
-		analyticsInfoLbl.setText("Analytics");
-		analyticsInfoLbl.setVisible(true);
-		
-		if (AppClientFactory.getCurrentPlaceToken().equals(
-				PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(
-						PlaceTokens.COLLECTION_PLAY)) {
-		addLbl.setText(i18n.GL0590());
+		if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)) {
+			addLbl.setText(i18n.GL0590());
+			analyticsInfoLbl.setText("Analytics");
+			analyticsInfoLbl.setVisible(true);
 		}else{
 			addLbl.setText(i18n.GL2037());
 		}
-		
+		tagsLbl.setText("Tags");
 		moreInfoLbl.getElement().setId("lblMoreInfo");
 		collcResLbl.getElement().setId("lblResColle");
 		shareLbl.getElement().setId("lblSahre");
 		addLbl.getElement().setId("lblAdd");
+		tagsLbl.getElement().setId("tagsLbl");
 		
 		String browserType = browserAgent.returnFormFactorView();
 		if(!(browserType.equalsIgnoreCase("desktop"))) {
@@ -209,6 +215,9 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			addedStatusLbl.getElement().setAttribute("alt",DRAG_TO_ADD);
 			addedStatusLbl.getElement().setAttribute("title",DRAG_TO_ADD);
 		}
+		
+		tagsLinkFocPanel.setVisible(false);
+		
 		dragHandleFocPanel.getElement().setId("focuspnlDragHandleFocPanel");
 		contentSimPanel.getElement().setId("spnlContentSimPanel");
 		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
@@ -260,18 +269,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	}
 	
 	public void openMoreInfoContainer() {
-		if (moreInfoMode && (colleResMode || shareMode || addMode || analyticsMode)) {
-			moreInfoMode = false;
-			colleResMode = true;
-			shareMode = true;
-			addMode =true;
-			analyticsMode = true;
-			collcResLbl.removeStyleName(res.css().infoLblActive());
-			moreInfoLbl.addStyleName(res.css().moreInfoActive());
-			shareLbl.removeStyleName(res.css().shareActive());
-			addLbl.removeStyleName(res.css().addLblActive());
-			analyticsInfoLbl.removeStyleName(res.css().analyticsLblActive());
-			
+		if (moreInfoMode && (colleResMode || shareMode || addMode || analyticsMode || addTagsMode)) {
+
 			disclosureContentSimPanel.clear();
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
 				disclosureContentSimPanel.setWidget(getSearchInfoWidget());
@@ -283,13 +282,10 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			}
 			onDisclosureOpen();
 			MixpanelUtil.Click_moreInfo();
+			setCssStyleForTabs(MORE_INFO);
 		} else {
 			onDisclosureClose();
-			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
-			shareLbl.removeStyleName(res.css().shareActive());
-			collcResLbl.removeStyleName(res.css().infoLblActive());
-			addLbl.removeStyleName(res.css().addLblActive());
-			analyticsInfoLbl.removeStyleName(res.css().analyticsLblActive());
+			setCssStyleForTabs(INACTIVE);
 		}
 	}
 	
@@ -299,30 +295,17 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	 */
 	@UiHandler("shareLinkFocPanel")
 	public void onShareShortenUrlLink(ClickEvent clickEvent) {
-
-		if (shareMode && (colleResMode || moreInfoMode || addMode || analyticsMode)) {
-			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
-			collcResLbl.removeStyleName(res.css().infoLblActive());
-			shareLbl.addStyleName(res.css().shareActive());
-			addLbl.removeStyleName(res.css().addLblActive());
-			analyticsInfoLbl.removeStyleName(res.css().analyticsLblActive());
+		if (shareMode && (colleResMode || moreInfoMode || addMode || addTagsMode || analyticsMode)) {
+		
 			disclosureContentSimPanel.clear();
 			disclosureContentSimPanel.setWidget(getSearchShareVc());
 			getSearchShareVc().onReveal();
-			shareMode = false;
-			colleResMode = true;
-			moreInfoMode = true;
-			addMode =true;
-			analyticsMode = true;
 			onDisclosureOpen();
 			MixpanelUtil.Click_Share();
+			setCssStyleForTabs(SHARE);
 		} else {
 			onDisclosureClose();
-			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
-			shareLbl.removeStyleName(res.css().shareActive());
-			collcResLbl.removeStyleName(res.css().infoLblActive());
-			addLbl.removeStyleName(res.css().addLblActive());
-			analyticsInfoLbl.removeStyleName(res.css().analyticsLblActive());
+			setCssStyleForTabs(INACTIVE);
 		}
 	}
 	
@@ -332,62 +315,42 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	 */
 	@UiHandler("collectionFocPanel")
 	public void onInfoTabClick(ClickEvent clickEvent) {
-
-		if (colleResMode && (shareMode || moreInfoMode || addMode || analyticsMode)) {
-			colleResMode = false;
-			moreInfoMode = true;
-			shareMode = true;
-			addMode = true;
-			analyticsMode = true;
-			collcResLbl.addStyleName(res.css().infoLblActive());
-			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
-			shareLbl.removeStyleName(res.css().shareActive());
-			addLbl.removeStyleName(res.css().addLblActive());
-			analyticsInfoLbl.removeStyleName(res.css().analyticsLblActive());
+		if (colleResMode && (shareMode || moreInfoMode || addMode || analyticsMode || addTagsMode)) {
 			disclosureContentSimPanel.clear();
 			disclosureContentSimPanel.setWidget(getSearchMoreInfoVc());
 			getSearchMoreInfoVc().setData(this.searchResultDo);
 			getSearchMoreInfoVc().reset(moreInfoMode);
 			onDisclosureOpen();
+			setCssStyleForTabs(COLL_FOC_PNL);
 			MixpanelUtil.Click_moreInfo();
 		} else {
 			onDisclosureClose();
-			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
-			shareLbl.removeStyleName(res.css().shareActive());
-			collcResLbl.removeStyleName(res.css().infoLblActive());
-			addLbl.removeStyleName(res.css().addLblActive());
-			analyticsInfoLbl.removeStyleName(res.css().analyticsLblActive());
+			setCssStyleForTabs(INACTIVE);
 		}
 	}
 
 	@UiHandler("addLinkFocPanel")
 	public void onaddTabClick(ClickEvent clickEvent) {
-		if (addMode && (shareMode || moreInfoMode || colleResMode || analyticsMode)) {
-			addMode = false;
-			moreInfoMode = true;
-			shareMode = true;
-			colleResMode = true;
-			analyticsMode = true;
-			collcResLbl.removeStyleName(res.css().infoLblActive());
-			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
-			shareLbl.removeStyleName(res.css().shareActive());
-			addLbl.addStyleName(res.css().addLblActive());
-			analyticsInfoLbl.removeStyleName(res.css().analyticsLblActive());
-			/*if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
-				disclosureContentSimPanel.setWidget();
-			}else{
-				disclosureContentSimPanel.setWidget();
-			}*/
-			
+		if (addMode && (shareMode || moreInfoMode || colleResMode || addTagsMode || analyticsMode)) {
 			onDisclosureOpen();
 			MixpanelUtil.Click_addInfo();
+			setCssStyleForTabs(ADD_TO_FOLDERS);
 		} else {
 			onDisclosureClose();
-			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
-			shareLbl.removeStyleName(res.css().shareActive());
-			collcResLbl.removeStyleName(res.css().infoLblActive());
-			addLbl.removeStyleName(res.css().addLblActive());
-			analyticsInfoLbl.removeStyleName(res.css().analyticsLblActive());
+			setCssStyleForTabs(INACTIVE);
+		}
+	}
+	
+	
+	@UiHandler("tagsLinkFocPanel")
+	public void onaddTagsTabClick(ClickEvent clickEvent) {
+		if (addTagsMode && (shareMode || moreInfoMode || colleResMode || addMode || analyticsMode )) {
+			disclosureContentSimPanel.clear();
+			onDisclosureOpen();
+			setCssStyleForTabs(TAGS);
+		} else {
+			onDisclosureClose();
+			setCssStyleForTabs(INACTIVE);
 		}
 	}
 	
@@ -416,6 +379,99 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	 		}
 	 	}
 	
+	/**
+	 * Sets the css based on respective tab clicked.
+	 * @param tab {@link String}
+	 */
+	
+	private void setCssStyleForTabs(String tab) {
+		
+		if(tab.equals(MORE_INFO)){
+			
+			moreInfoMode = false;
+			colleResMode = true;
+			shareMode = true;
+			addMode =true;
+			addTagsMode = true;
+			
+			moreInfoLbl.addStyleName(res.css().tabActive());
+			
+			collcResLbl.removeStyleName(res.css().tabActive());
+			shareLbl.removeStyleName(res.css().tabActive());
+			addLbl.removeStyleName(res.css().tabActive());
+			tagsLbl.removeStyleName(res.css().tabActive());
+			
+		}else if(tab.equals(SHARE)){
+			
+			shareMode = false;
+			colleResMode = true;
+			moreInfoMode = true;
+			addMode =true;
+			addTagsMode = true;
+			
+			shareLbl.addStyleName(res.css().tabActive());
+			
+			moreInfoLbl.removeStyleName(res.css().tabActive());
+			collcResLbl.removeStyleName(res.css().tabActive());
+			addLbl.removeStyleName(res.css().tabActive());
+			tagsLbl.removeStyleName(res.css().tabActive());
+			
+		}else if(tab.equals(COLL_FOC_PNL)){
+			
+			colleResMode = false;
+			moreInfoMode = true;
+			shareMode = true;
+			addMode = true;
+			addTagsMode = true;
+			
+			collcResLbl.addStyleName(res.css().tabActive());
+			
+			moreInfoLbl.removeStyleName(res.css().tabActive());
+			shareLbl.removeStyleName(res.css().tabActive());
+			addLbl.removeStyleName(res.css().tabActive());
+			tagsLbl.removeStyleName(res.css().tabActive());
+			
+		}else if(tab.equals(ADD_TO_FOLDERS)){
+			
+			addMode = false;
+			moreInfoMode = true;
+			shareMode = true;
+			colleResMode = true;
+			addTagsMode = true;
+			
+			
+			addLbl.addStyleName(res.css().tabActive());
+			
+			collcResLbl.removeStyleName(res.css().tabActive());
+			moreInfoLbl.removeStyleName(res.css().tabActive());
+			shareLbl.removeStyleName(res.css().tabActive());
+			tagsLbl.removeStyleName(res.css().tabActive());
+			
+		}else if(tab.equals(TAGS)){
+			
+			addTagsMode = false;
+			addMode = true;
+			moreInfoMode = true;
+			shareMode = true;
+			colleResMode = true;
+			
+			tagsLbl.addStyleName(res.css().tabActive());
+			
+			collcResLbl.removeStyleName(res.css().tabActive());
+			moreInfoLbl.removeStyleName(res.css().tabActive());
+			shareLbl.removeStyleName(res.css().tabActive());
+			addLbl.removeStyleName(res.css().tabActive());
+			
+		}else if(tab.equals(INACTIVE)){
+			
+			moreInfoLbl.removeStyleName(res.css().tabActive());
+			shareLbl.removeStyleName(res.css().tabActive());
+			collcResLbl.removeStyleName(res.css().tabActive());
+			addLbl.removeStyleName(res.css().tabActive());
+			tagsLbl.removeStyleName(res.css().tabActive());
+		}
+	}
+
 	/**
 	 * Close disclosure panel widget
 	 */
@@ -573,6 +629,20 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 
 	public AddResourceContainerView getAddResourceOrFolderContainerView() {
 		return addResourceOrFolderContainerView;
+	}
+	
+	/**
+	 * @return the tagsLbl
+	 */
+	public Label getTagsLbl() {
+		return tagsLbl;
+	}
+
+	/**
+	 * @param tagsLbl the tagsLbl to set
+	 */
+	public void setTagsLbl(Label tagsLbl) {
+		this.tagsLbl = tagsLbl;
 	}
 	
 
