@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchView;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
+import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainer;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
@@ -87,6 +88,17 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 				}
 				}
 		});
+		
+		resourceSearchResultVc.getAnalyticsButton().addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						if(AppClientFactory.isAnonymous()){
+								LoginPopupUc loginPopupUc=new LoginPopupUc();
+							}else{
+							getUiHandlers().setAnalyticsTabData(resourceSearchResultVc.getAddResourceContainerPanel(),searchResultDo,"resource");
+							}
+					}
+					});
 		return resourceSearchResultVc;
 	}
 	

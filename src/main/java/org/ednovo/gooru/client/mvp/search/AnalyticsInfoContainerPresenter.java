@@ -22,89 +22,54 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
 package org.ednovo.gooru.client.mvp.search;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
+
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
+import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
 
 /**
- * @author Search Team
  * 
+ * @fileName : AddAssignmentContainerPresenter.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 27-Dec-2013
+ *
+ * @Author : Gooru Team
+ *
+ * @Reviewer: Gooru Team
  */
-public interface SearchResultWrapperCBundle extends ClientBundle {
-	
-	static final SearchResultWrapperCBundle INSTANCE = GWT.create(SearchResultWrapperCBundle.class);
+public class AnalyticsInfoContainerPresenter extends PresenterWidget<IsAnalyticsInfoContainerView> implements AnalyticsInfoContainerUiHandlers{
 
-	/**
-	 * SearchResultWrapperCss.
-	 */
-	public interface SearchResultWrapperCss extends CssResource {
-		
-		String searchPanel();
-
-		String contentPanel();
-
-		String statusLbl();
-
-		String hiddenPanel();
-
-		String share();
-		
-		String shareActive();
-		
-		String moreInfoActive();
-
-		String moreInfo();
-		
-		String infoLblActive();
-
-		String infoLbl();
-
-		String disclosurePanel();
-		
-		String disclosureContentPanel();
-		
-/*		String disclosurePanelHeader();*/
-		
-		String disclosureMainHeader();
-		
-		String blueLink();
-		
-		String blueLinkPad();
-		
-		String moreMetaLbl();
-		
-		String tagText();
-		
-		String searchResultWrapper();
-		
-		String added();
-		
-		String disclosureHeader();
-		
-		// PPP Css //
-		
-		String collectionPPPPanel();
-		String collectionPPPDisclosureHeader();
-		
-		String embed();
-		
-		String embedActive();
-		
-		String ratingWidgetPanel();
-		
-		String addLblActive();
-		String tagsLblActive();
-		String tabActive();
-		
-		String analyticsLblActive();
+	@Inject
+	public AnalyticsInfoContainerPresenter(EventBus eventBus, IsAnalyticsInfoContainerView view) {
+		super(eventBus, view);
+		getView().setUiHandlers(this);
 	}
 
-	@Source("SearchResultWrapper.css")
-	SearchResultWrapperCss css();
+	@Override
+	protected void onBind() {
+		super.onBind();
+	}
 
+	public void setAnalyticsDataForCollections(CollectionSearchResultDo searchResultDo) {
+		getView().setCollectionData();
+	}
+
+	public void setAnalyticsResourcesData(ResourceSearchResultDo searchResultDo) {
+			getView().setResourceData();
+	}
+	
 }
