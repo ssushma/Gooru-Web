@@ -509,8 +509,16 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			setGrades(gradesdetails);
 			}
 		
+		if(collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("webpage"))
+		{
 		setOriginalUrl(collectionItemDo.getResource().getAssetURI(),collectionItemDo.getResource().getFolder(),
 							collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
+		}
+		else
+		{
+			originalUrlTitle.setVisible(false);
+			originalUrlText.setVisible(false);
+		}
 		loadResourceReleatedCollections(collectionItemDo.getResource().getGooruOid());
 		
 		if(collectionItemDo.getResource().getPublisher()!=null || collectionItemDo.getResource().getResourceFormat()!=null){
