@@ -143,7 +143,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	
 	private Boolean addTagsMode = true;
 	
-	private Boolean analyticsMode = false;
+	private Boolean analyticsMode = true;
 
 	private static SearchResultWrapperVc<?, ?> openedResult;
 
@@ -159,7 +159,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	private static final String MORE_INFO = "moreInfo";
 	private static final String SHARE = "share";
 	private static final String ADD_TO_FOLDERS = "addToFolders";
-	
+	private static final String ANALYTICS = "analytics";	
 	/**
 	 * Class constructor, creates new instance of SearchShareVc ,creates handled events for MouseOver and MouseOut 
 	 */
@@ -179,7 +179,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)) {
 			addLbl.setText(i18n.GL0590());
 			analyticsInfoLbl.setText("Analytics");
-			analyticsInfoLbl.setVisible(true);
+			analyticsInfoLbl.setVisible(false);
 		}else{
 			addLbl.setText(i18n.GL2037());
 		}
@@ -356,26 +356,12 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	
 	@UiHandler("analyticsLinkFocPanel")
 		public void onAnalyticsTabClick(ClickEvent clickEvent) {
-		if (analyticsMode && (shareMode || moreInfoMode || colleResMode || addMode)) {
-				analyticsMode = false;
-				moreInfoMode = true;
-				shareMode = true;
-				colleResMode = true;
-				addMode = true;
-				collcResLbl.removeStyleName(res.css().infoLblActive());
-				moreInfoLbl.removeStyleName(res.css().moreInfoActive());
-				shareLbl.removeStyleName(res.css().shareActive());
-				addLbl.removeStyleName(res.css().addLblActive());
-				analyticsInfoLbl.addStyleName(res.css().analyticsLblActive());
+		if (analyticsMode && (shareMode || moreInfoMode || colleResMode || addMode || addTagsMode)) {
 				onDisclosureOpen();
-				MixpanelUtil.Click_AnalyticsTab_Search();
+				setCssStyleForTabs(ANALYTICS);
 			} else {
 				onDisclosureClose();
-				moreInfoLbl.removeStyleName(res.css().moreInfoActive());
-				shareLbl.removeStyleName(res.css().shareActive());
-				collcResLbl.removeStyleName(res.css().infoLblActive());
-				addLbl.removeStyleName(res.css().addLblActive());
-				analyticsInfoLbl.removeStyleName(res.css().analyticsLblActive());
+				setCssStyleForTabs(INACTIVE);
 	 		}
 	 	}
 	
@@ -393,6 +379,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			shareMode = true;
 			addMode =true;
 			addTagsMode = true;
+			analyticsMode = true;
 			
 			moreInfoLbl.addStyleName(res.css().tabActive());
 			
@@ -400,6 +387,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			shareLbl.removeStyleName(res.css().tabActive());
 			addLbl.removeStyleName(res.css().tabActive());
 			tagsLbl.removeStyleName(res.css().tabActive());
+			analyticsInfoLbl.removeStyleName(res.css().tabActive());
 			
 		}else if(tab.equals(SHARE)){
 			
@@ -408,6 +396,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			moreInfoMode = true;
 			addMode =true;
 			addTagsMode = true;
+			analyticsMode = true;
 			
 			shareLbl.addStyleName(res.css().tabActive());
 			
@@ -415,6 +404,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			collcResLbl.removeStyleName(res.css().tabActive());
 			addLbl.removeStyleName(res.css().tabActive());
 			tagsLbl.removeStyleName(res.css().tabActive());
+			analyticsInfoLbl.removeStyleName(res.css().tabActive());
 			
 		}else if(tab.equals(COLL_FOC_PNL)){
 			
@@ -423,6 +413,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			shareMode = true;
 			addMode = true;
 			addTagsMode = true;
+			analyticsMode = true;
 			
 			collcResLbl.addStyleName(res.css().tabActive());
 			
@@ -430,6 +421,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			shareLbl.removeStyleName(res.css().tabActive());
 			addLbl.removeStyleName(res.css().tabActive());
 			tagsLbl.removeStyleName(res.css().tabActive());
+			analyticsInfoLbl.removeStyleName(res.css().tabActive());
 			
 		}else if(tab.equals(ADD_TO_FOLDERS)){
 			
@@ -438,6 +430,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			shareMode = true;
 			colleResMode = true;
 			addTagsMode = true;
+			analyticsMode = true;
 			
 			
 			addLbl.addStyleName(res.css().tabActive());
@@ -446,7 +439,23 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			moreInfoLbl.removeStyleName(res.css().tabActive());
 			shareLbl.removeStyleName(res.css().tabActive());
 			tagsLbl.removeStyleName(res.css().tabActive());
+			analyticsInfoLbl.removeStyleName(res.css().tabActive());
+		}
+		else if(tab.equals(ANALYTICS)){
+			analyticsMode = false;
+			moreInfoMode = true;
+			shareMode = true;
+			colleResMode = true;
+			addMode = true;
+			addTagsMode = true;
 			
+			analyticsInfoLbl.addStyleName(res.css().tabActive());
+			
+			collcResLbl.removeStyleName(res.css().tabActive());
+			moreInfoLbl.removeStyleName(res.css().tabActive());
+			shareLbl.removeStyleName(res.css().tabActive());
+			addLbl.removeStyleName(res.css().tabActive());
+			tagsLbl.removeStyleName(res.css().tabActive());
 		}else if(tab.equals(TAGS)){
 			
 			addTagsMode = false;
@@ -454,6 +463,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			moreInfoMode = true;
 			shareMode = true;
 			colleResMode = true;
+			analyticsMode = true;
 			
 			tagsLbl.addStyleName(res.css().tabActive());
 			
@@ -461,15 +471,19 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			moreInfoLbl.removeStyleName(res.css().tabActive());
 			shareLbl.removeStyleName(res.css().tabActive());
 			addLbl.removeStyleName(res.css().tabActive());
+			analyticsInfoLbl.removeStyleName(res.css().tabActive());
 			
-		}else if(tab.equals(INACTIVE)){
-			
+		}
+		else if(tab.equals(INACTIVE)){
 			moreInfoLbl.removeStyleName(res.css().tabActive());
 			shareLbl.removeStyleName(res.css().tabActive());
 			collcResLbl.removeStyleName(res.css().tabActive());
 			addLbl.removeStyleName(res.css().tabActive());
 			tagsLbl.removeStyleName(res.css().tabActive());
+			analyticsInfoLbl.removeStyleName(res.css().tabActive());
 		}
+		
+		
 	}
 
 	/**
