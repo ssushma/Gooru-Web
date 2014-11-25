@@ -98,6 +98,8 @@ public interface SearchResultWrapperCBundle extends ClientBundle {
 		String ratingWidgetPanel();
 		
 		String addLblActive();
+		String tagsLblActive();
+		String tabActive();
 	}
 
 	@Source("SearchResultWrapper.css")
