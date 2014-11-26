@@ -47,4 +47,5 @@ public interface PreviewPlayerStyleBundle extends CssResource {
 	String depthofKnow();
 	String infoSectionAuthor();
 	String teacherTipOuterContainer();
+	String mutedText();
 }

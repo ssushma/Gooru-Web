@@ -284,6 +284,9 @@
 .clearBoth{
 	clear: both;
 }
+.mutedText{
+	color:#EEEEEE;
+}
 .depthofKnow{
 	background: -moz-linear-gradient(center top, #666, #515151) repeat scroll 0 0 transparent;
 	background: -webkit-gradient(linear, 0 0, 0 100%, from(#666), to(#515151));
