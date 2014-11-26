@@ -22,89 +22,36 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
 package org.ednovo.gooru.client.mvp.search;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
-
 /**
- * @author Search Team
- * 
- */
-public interface SearchResultWrapperCBundle extends ClientBundle {
-	
-	static final SearchResultWrapperCBundle INSTANCE = GWT.create(SearchResultWrapperCBundle.class);
+* @fileName : AddResourceUiHandlers.java 
+*
+* @description :This file is used to handle Ui Click events.
+*
+* @version :5.1
+*
+* @date: Apr 6 2013
+   	
+* @Author  Gooru Team
+* 
+* @Reviewer 
+*
+*/
+import java.util.HashMap;
 
-	/**
-	 * SearchResultWrapperCss.
-	 */
-	public interface SearchResultWrapperCss extends CssResource {
-		
-		String searchPanel();
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
-		String contentPanel();
+import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Tree;
+import com.google.gwt.user.client.ui.TreeItem;
 
-		String statusLbl();
 
-		String hiddenPanel();
 
-		String share();
-		
-		String shareActive();
-		
-		String moreInfoActive();
-
-		String moreInfo();
-		
-		String infoLblActive();
-
-		String infoLbl();
-
-		String disclosurePanel();
-		
-		String disclosureContentPanel();
-		
-/*		String disclosurePanelHeader();*/
-		
-		String disclosureMainHeader();
-		
-		String blueLink();
-		
-		String blueLinkPad();
-		
-		String moreMetaLbl();
-		
-		String tagText();
-		
-		String searchResultWrapper();
-		
-		String added();
-		
-		String disclosureHeader();
-		
-		// PPP Css //
-		
-		String collectionPPPPanel();
-		String collectionPPPDisclosureHeader();
-		
-		String embed();
-		
-		String embedActive();
-		
-		String ratingWidgetPanel();
-		
-		String addLblActive();
-		String tagsLblActive();
-		String tabActive();
-		
-		String analyticsLblActive();
-	}
-
-	@Source("SearchResultWrapper.css")
-	SearchResultWrapperCss css();
-
+public interface AnalyticsInfoContainerUiHandlers extends BaseUiHandlers,EventHandler{
 }
