@@ -288,7 +288,7 @@ public class CollectionResourceTabView extends
 			}
 			setResourceSequence();
 			hideNoResourceMsg();
-
+			
 			if (collectionDo.getCollectionItems().size() >= 25) {
 				buttonContainerForQuestionGreay.setVisible(true);
 				buttonContainerAddGray.setVisible(true);
@@ -356,9 +356,16 @@ public class CollectionResourceTabView extends
 
 				// newResourceLabel.setVisible(true);
 			}
+			showOrHideResourceButton(collectionDo.getCollectionType(),collectionDo.getCollectionItems().size());
 		}
 		panelLoading.getElement().getStyle().setDisplay(Display.NONE);
 		contentPanel.setVisible(true);
+	}
+	public void showOrHideResourceButton(String collectionType, int size){
+		if(collectionType!=null&&collectionType.equals("quiz")){
+			buttonContainerAddGray.setVisible(false);
+			buttonContainer.setVisible(false);
+		}
 	}
 	
 	public void modifyExistingCollectionItemWidget(final CollectionItemDo collectionItemDo){
