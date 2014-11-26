@@ -78,6 +78,7 @@ import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.register.RegisterPresenter;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
+import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -93,6 +94,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResou
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter;
+import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;
@@ -250,4 +252,10 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<LusdLibraryPresenter> getLusdLibraryPresenter();
 	
 	AsyncProvider<TicalLibraryPresenter> getTicalLibraryPresenter();
+	
+	AsyncProvider<AnalyticsInfoContainerPresenter> getAnalyticsInfoContainerPresenter();
+	
+	AsyncProvider<TagsTabPresenter> getTagsTabPresenter();
+	
+	
 }

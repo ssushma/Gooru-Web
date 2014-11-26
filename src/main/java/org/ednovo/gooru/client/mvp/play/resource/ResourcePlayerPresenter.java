@@ -73,6 +73,7 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -1132,8 +1133,10 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		if(placeRequest!=null){
 			if(placeRequest.getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 				keyword=placeRequest.getParameter("query", null);
+				keyword=URL.encodeQueryString(keyword);
 			}
 		}
 		return keyword;
 	}
+	
 }

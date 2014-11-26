@@ -395,25 +395,21 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		ratingWidgetPanel.clear();
 		ratingWidgetView=new RatingWidgetView();
 		if(collectionItemDoGlobal.getResource().getRatings()!=null){
-//			ratingWidgetView.getRatingCountLabel().getElement().getStyle().setColor("#4e9746");
 			Integer reviewCount=collectionItemDoGlobal.getResource().getRatings().getReviewCount();
 			if(reviewCount==null){
 				reviewCount = 0;
 			}
-			ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL2024());
+			if(reviewCount==1){
+				ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL3006()); 
+			}else{
+				ratingWidgetView.getRatingCountLabel().setText(" "+reviewCount.toString()+" "+i18n.GL2024());
+			}
 			setUpdateReviewCount(reviewCount);
-//			if(reviewCount>0)
-//			{
-//				ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
-//				ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
-				ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
-//			}
+			ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 			ratingWidgetView.getRatingCountLabel().getElement().getStyle().setPadding(4,Unit.PX);
 //			ratingWidgetView.getAverageRatingLabel().setText(Double.toString(collectionItemDoGlobal.getResource().getRatings().getAverage())+" ");
 			ratingWidgetView.setAvgStarRating(collectionItemDoGlobal.getResource().getRatings().getAverage());
 		}
-		
-	
 		ratingWidgetPanel.getElement().getStyle().setMarginRight(10, Unit.PX);
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
@@ -513,8 +509,16 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			setGrades(gradesdetails);
 			}
 		
+		if(collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("webpage"))
+		{
 		setOriginalUrl(collectionItemDo.getResource().getAssetURI(),collectionItemDo.getResource().getFolder(),
 							collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
+		}
+		else
+		{
+			originalUrlTitle.setVisible(false);
+			originalUrlText.setVisible(false);
+		}
 		loadResourceReleatedCollections(collectionItemDo.getResource().getGooruOid());
 		
 		if(collectionItemDo.getResource().getPublisher()!=null || collectionItemDo.getResource().getResourceFormat()!=null){
@@ -2251,7 +2255,11 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024()); 
 				}else{
 					setUpdateReviewCount(Integer.parseInt(revCount[1])-1);
-					ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024()); 
+					if((Integer.parseInt(revCount[1])-1)==1){
+						ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL3006());
+					}else{
+						ratingWidgetView.getRatingCountLabel().setText(" "+(Integer.parseInt(revCount[1])-1)+" "+i18n.GL2024());
+					}
 				}
 			}
 			
@@ -2267,7 +2275,11 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			{
 				if(collectionItemDoGlobal.getResource().getGooruOid().equals(resourceId)){
 					setUpdateReviewCount(count);
-					ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024());
+					if(count==1){
+						ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL3006());
+					}else{
+						ratingWidgetView.getRatingCountLabel().setText(" "+Integer.toString(count)+" "+i18n.GL2024());
+					}
 					ratingWidgetView.getAverageRatingLabel().setVisible(false);
 				}
 			}
