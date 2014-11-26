@@ -227,6 +227,17 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 		});
 	}
 
+	/**
+	 * No need to use this method, at the same do not delete this method.
+	 * (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.search.SearchUiHandlers#setTagsWidget(com.google.gwt.user.client.ui.SimplePanel, org.ednovo.gooru.shared.model.search.ResourceSearchResultDo)
+	 */
+	@Override
+	public void setTagsWidget(SimplePanel addResourceContainerPanel,ResourceSearchResultDo searchResultDo) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 	

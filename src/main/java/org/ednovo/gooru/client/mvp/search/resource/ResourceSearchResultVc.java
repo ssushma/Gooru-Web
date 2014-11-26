@@ -584,4 +584,11 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		}
 		
 	};
+	
+	/**
+	 * @return tagsLbl
+	 */
+	public Label getAddTagsTab(){
+		return wrapperVcr.getTagsLbl();
+	}
 }
