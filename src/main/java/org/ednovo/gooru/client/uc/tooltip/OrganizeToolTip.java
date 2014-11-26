@@ -92,12 +92,17 @@ public class OrganizeToolTip extends PopupPanel implements HasMouseOutHandlers{
 		lblCreateCollection.getElement().setAttribute("alt", i18n.GL1757());
 		lblCreateCollection.getElement().setAttribute("title", i18n.GL1757());
 		
-		lblCreateAsseement.setText(i18n.GL3011());
+
+//		lblCreateAsseement.setText(i18n.GL3011());
+//		lblCreateAsseement.getElement().setId("lblLblAssessment");
+//		lblCreateAsseement.getElement().setAttribute("alt", i18n.GL3011());
+//		lblCreateAsseement.getElement().setAttribute("title", i18n.GL3011());
+
+		lblCreateAsseement.setText(i18n.GL3007());
 		lblCreateAsseement.getElement().setId("lblLblAssessment");
-		lblCreateAsseement.getElement().setAttribute("alt", i18n.GL3011());
-		lblCreateAsseement.getElement().setAttribute("title", i18n.GL3011());
-		
-		lblCreateAsseement.removeFromParent();
+		lblCreateAsseement.getElement().setAttribute("alt", i18n.GL3007());
+		lblCreateAsseement.getElement().setAttribute("title", i18n.GL3007());
+
 		
 		lblCreateFolder.setText(i18n.GL1758());
 		lblCreateFolder.getElement().setId("lblLblCreateFolder");
