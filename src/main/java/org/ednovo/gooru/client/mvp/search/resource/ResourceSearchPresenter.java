@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.search.AbstractSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
+import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
@@ -78,6 +79,8 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	
 	AddStandardsPresenter addStandardsPresenter = null;
 	
+	private TagsTabPresenter tagsTabPresenter;
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.RESOURCE_SEARCH)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -92,12 +95,13 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	 */
 	@Inject
 	public ResourceSearchPresenter(IsResourceSearchView view, IsResourceSearchProxy proxy,SignUpPresenter signUpViewPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup,
-			AddResourceContainerPresenter addResourceContainerPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter, AddStandardsPresenter addStandardsPresenter) {
+			AddResourceContainerPresenter addResourceContainerPresenter,CollectionFormInPlayPresenter collectionFormInPlayPresenter, AddStandardsPresenter addStandardsPresenter, TagsTabPresenter tagsTabPresenter) {
 		super(view, proxy, signUpViewPresenter,addStandardsPresenter);
 		this.ratingAndReviewPopup=ratingAndReviewPopup;
 		this.addStandardsPresenter = addStandardsPresenter;
 		this.addResourceContainerPresenter=addResourceContainerPresenter;
 		this.collectionFormInPlayPresenter= collectionFormInPlayPresenter;
+		this.tagsTabPresenter = tagsTabPresenter;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(UpdateRatingsInSearchEvent.TYPE,this);
 		addRegisteredHandler(RefreshDisclosurePanelEvent.TYPE, this);
@@ -219,5 +223,14 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 				DisclosurePanelClose.setOpen(false);
 			}
 		});
+	}
+
+	/**
+	 * (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.search.SearchUiHandlers#setTagsWidget(com.google.gwt.user.client.ui.SimplePanel, org.ednovo.gooru.shared.model.search.ResourceSearchResultDo)
+	 */
+	@Override
+	public void setTagsWidget(SimplePanel addResourceContainerPanel,ResourceSearchResultDo searchResultDo) {
+		tagsTabPresenter.setData();
 	}
 }
