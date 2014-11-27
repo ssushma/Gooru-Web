@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,30 +23,40 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.collection.preview.metadata;
+package org.ednovo.gooru.client.mvp.search;
+
+import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : PreviewPlayerStyleBundle.java
+ * 
+ * @fileName : TagsTabView.java
  *
  * @description : 
  *
+ * @version : 1.1
  *
- * @version : 1.0
+ * @date: 25-Nov-2014
  *
- * @date: 02-Dec-2013
+ * @Author : Gooru Team
  *
- * @Author Gooru Team
- *
- * @Reviewer: 
+ * @Reviewer: Gooru Team
  */
 
-import com.google.gwt.resources.client.CssResource;
-public interface PreviewPlayerStyleBundle extends CssResource {
-	String successPostMsg();
-	String deleteMsg();
-	String conceptTitle();
-	String clearBoth();
-	String depthofKnow();
-	String infoSectionAuthor();
-	String teacherTipOuterContainer();
-	String mutedText();
+public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> implements IsTagsTabView {
+	
+	private static TagsTabViewUiBinder uiBinder = GWT.create(TagsTabViewUiBinder.class);
+	
+	interface TagsTabViewUiBinder extends UiBinder<Widget, TagsTabView>{
+		
+	}
+	
+	public TagsTabView(){
+		setWidget(uiBinder.createAndBindUi(this));
+		
+	}
+
 }

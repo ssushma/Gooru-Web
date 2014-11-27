@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,30 +23,11 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.collection.preview.metadata;
-/**
- * @fileName : PreviewPlayerStyleBundle.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
 
-import com.google.gwt.resources.client.CssResource;
-public interface PreviewPlayerStyleBundle extends CssResource {
-	String successPostMsg();
-	String deleteMsg();
-	String conceptTitle();
-	String clearBoth();
-	String depthofKnow();
-	String infoSectionAuthor();
-	String teacherTipOuterContainer();
-	String mutedText();
+package org.ednovo.gooru.client.mvp.search;
+
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+
+public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> { 
+
 }

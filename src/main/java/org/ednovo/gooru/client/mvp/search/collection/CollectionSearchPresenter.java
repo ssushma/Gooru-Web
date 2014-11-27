@@ -244,6 +244,11 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 		addResourceContainerPanel.setWidget(analyticsInfoContainerPresenter.getWidget());
 	}
 
+	@Override
+	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo) {
+		
+	}
+
 	
 
 	

@@ -54,4 +54,5 @@ public interface CollectionPlayerStyleBundle extends CssResource {
 	String reactionDonotUnderstand();
 	String reactionMeh();
 	String reactionNeedHelp();
+	String mutedText();
 }

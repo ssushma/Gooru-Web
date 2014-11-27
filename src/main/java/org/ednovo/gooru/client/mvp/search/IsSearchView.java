@@ -69,6 +69,8 @@ public interface IsSearchView<T extends ResourceSearchResultDo> extends IsViewWi
 	
 	String ACCESS_MODE_FLT = "flt.cfAccessMode";
 	
+	String RATINGS_FLT = "flt.ratings";
+	
 	/**
 	 * Set post search view
 	 * @param searchDo instance of {@link SearchDo}

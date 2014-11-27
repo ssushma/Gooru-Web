@@ -100,7 +100,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
@@ -143,7 +142,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	/*@UiField
 	DisclosurePanelUc authorPanelUc;*/
 	
-	@UiField HTMLPanel panelNotMobileFriendly,categoryPanelUc,subjectPanelUc,gradePanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc,accessModePanel;
+	@UiField HTMLPanel panelNotMobileFriendly,categoryPanelUc,subjectPanelUc,gradePanelUc,ratingPanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc,accessModePanel;
 	
 	@UiField
 	HTMLPanel /*contentpanel,*/oerPanel;
@@ -173,7 +172,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	Label sourcesNotFoundLbl,filtersText,/*notifyText,*/aggregatorNotFoundLbl;
 
 	@UiField
-	Label standardsNotFoundLbl;
+	Label standardsNotFoundLbl,ratingsLbl;
 	
 	@UiField
 	Label publisherTooltip, standardHelpicon,clearAll,aggregatorTooltip,resourceFormatLbl,subjectLbl,gradeLbl,aggregatorLbl,sourceLbl,authorLbl,standardLbl,accessModeLbl;
@@ -470,6 +469,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		gradeLbl.getElement().setAttribute("alt",i18n.GL0165());
 		gradeLbl.getElement().setAttribute("title",i18n.GL0165());
 		
+		ratingsLbl.setText("Ratings & Reviews");
+		StringUtil.setAttributes(ratingsLbl.getElement(), "ratingsLbl", "Ratings & Reviews", "Ratings & Reviews");
+		
 		accessModeLbl.setText(i18n.GL2093());
 		accessModeLbl.getElement().setId("lblAccessMode");
 		accessModeLbl.getElement().setAttribute("alt",i18n.GL2093());
@@ -498,6 +500,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			sourceLbl.setVisible(true);
 			aggregatorLbl.setVisible(true);
 			accessModeLbl.setVisible(true);
+			ratingsLbl.setVisible(true);
 			sourcesNotFoundLbl.getElement().getStyle().setOpacity(0.0);
 			sourceSgstBox.addSelectionHandler(this);
 			aggregatorSgstBox.addSelectionHandler(this);
@@ -582,6 +585,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(resourceSearch){
 			resourceFormatLbl.setText(i18n.GL0721());
 			categoryPanelUc.getElement().addClassName("categoryFilterContainer");
+//			ratingPanelUc.getElement().addClassName("reStar");
 		}else{
 			resourceFormatLbl.setText(i18n.GL1465());
 		}
@@ -783,6 +787,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		chkNotFriendly.setStyleName(CssTokens.FILTER_CHECKBOX);
 		chkNotFriendly.addStyleName(value.toLowerCase());
+		if(value.equalsIgnoreCase("fivestar")){
+			chkNotFriendly.setText("");
+			chkNotFriendly.addStyleName(value.toLowerCase());
+		}
 		disclosurePanelVc.add(chkNotFriendly);
 		chkNotFriendly.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 
@@ -900,9 +908,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		categoryPanelUc.clear();
 		subjectPanelUc.clear();
 		gradePanelUc.clear();
+		ratingPanelUc.clear();
 		panelNotMobileFriendly.clear();
 		accessModePanel.clear();
 		oerPanel.clear();
+		System.out.println("renderFilter");
 		if (searchFilterDo != null) {
 			if (searchFilterDo.getCategories() != null) {
 				Iterator<Map.Entry<String, String>> categoriesIterator = searchFilterDo.getCategories().entrySet().iterator();
@@ -911,6 +921,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					renderCheckBox(categoryPanelUc, entry.getKey(), entry.getValue());
 				}
 			}
+			
 			if (searchFilterDo.getGradeLevels() != null) {		
 				renderCheckBox(gradePanelUc, "K-4", i18n.GL0166());
 				renderCheckBox(gradePanelUc, "5-8", i18n.GL0167());
@@ -922,6 +933,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					renderCheckBox(subjectPanelUc, subject, subject);
 				}
 			}
+			
+//			renderCheckBox(ratingPanelUc,"key", "stars");
 			
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
@@ -1014,6 +1027,12 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			});
 			oerPanel.add(oer);
 			oerPanel.setVisible(true);
+			
+			//Ratings panel
+			for(int i=5;i>0;i--){
+				renderCheckBox(ratingPanelUc, i+"", "fivestar");
+			}
+			
 		}/*else{
 			collectionLinkLbl.addStyleName(style.active());
 			resourceLinkLbl.removeStyleName(style.active());
@@ -1066,6 +1085,12 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			if (!aggregatorSgsts.isEmpty()) {
 				filterMap.put(IsSearchView.AGGREGATOR_FLT, aggregatorSgsts);
 			}
+			String ratings=getSelectedFilter(ratingPanelUc);
+			System.out.println("ratings panel uc::"+getSelectedFilter(ratingPanelUc));
+			if(!ratings.isEmpty()){
+				filterMap.put(IsSearchView.RATINGS_FLT, ratings);
+			}
+			
 		} else {
 			String authorSgsts = getSuggestions(authorContainerFloPanel);
 			if (!authorSgsts.isEmpty()) {
@@ -1240,12 +1265,16 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 		String standards = filter.get(IsSearchView.STANDARD_FLT);
 		
+		String ratings = filter.get(IsSearchView.RATINGS_FLT);
+		
 		if(categories==null){
 			clearAllFields();
 		}
 		setSelectedFilter(categoryPanelUc, categories);
 		setSelectedFilter(subjectPanelUc, subjects, "~~");
 		setSelectedFilter(gradePanelUc, grade);
+		if(resourceSearch)
+		setSelectedFilter(ratingPanelUc, ratings);
 		standardSgstBox.setText("");
 		standardSgstBox.getElement().setAttribute("alt","");
 		standardSgstBox.getElement().setAttribute("title","");
@@ -1520,6 +1549,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		clearFilter(gradePanelUc);
 		clearFilter(subjectPanelUc);
 		clearFilter(accessModePanel);
+		clearFilter(ratingPanelUc);
 		standardSgstBox.setText("");
 		standardSgstBox.getElement().setAttribute("alt","");
 		standardSgstBox.getElement().setAttribute("title","");
@@ -1545,6 +1575,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		clearFilter(gradePanelUc);
 		clearFilter(subjectPanelUc);
 		clearFilter(accessModePanel);
+		clearFilter(ratingPanelUc);
 		standardSgstBox.setText("");
 		sourceSgstBox.setText("");
 		sourceSgstBox.getElement().setAttribute("alt","");

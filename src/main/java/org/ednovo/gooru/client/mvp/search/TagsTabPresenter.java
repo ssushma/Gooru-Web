@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,30 +23,48 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.collection.preview.metadata;
+
+package org.ednovo.gooru.client.mvp.search;
+
+import com.google.gwt.event.shared.EventBus;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PresenterWidget;
+
+
+
 /**
- * @fileName : PreviewPlayerStyleBundle.java
+ * 
+ * @fileName : TagsTabPresenter.java
  *
  * @description : 
  *
  *
- * @version : 1.0
+ * @version : 1.1
  *
- * @date: 02-Dec-2013
+ * @date: 25-Nov-2014
  *
- * @Author Gooru Team
+ * @Author : Gooru Team
  *
- * @Reviewer: 
+ * @Reviewer: Gooru Team
  */
 
-import com.google.gwt.resources.client.CssResource;
-public interface PreviewPlayerStyleBundle extends CssResource {
-	String successPostMsg();
-	String deleteMsg();
-	String conceptTitle();
-	String clearBoth();
-	String depthofKnow();
-	String infoSectionAuthor();
-	String teacherTipOuterContainer();
-	String mutedText();
+
+public class TagsTabPresenter extends PresenterWidget<IsTagsTabView> implements TagsTabUiHandlers {
+
+	@Inject
+	public TagsTabPresenter(EventBus eventBus, IsTagsTabView view) {
+		super(eventBus, view);
+		getView().setUiHandlers(this);
+	}
+	
+	
+	@Override
+	protected void onBind() {
+		super.onBind();
+	}
+
+
+	public void setData() {
+	}
+
 }
