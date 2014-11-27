@@ -1137,13 +1137,21 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			//imgFriendly.setAltText(i18n.GL0737());
 			//imgFriendly.setTitle(i18n.GL0737());
 			//imgFriendly.setUrl("images/mos/MobileFriendly.png");
-			lblFriendly.setText(StringUtil.generateMessage(i18n.GL0449(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
+			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+				lblFriendly.setText(StringUtil.generateMessage(i18n.GL3012(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
+			}else{
+				lblFriendly.setText(StringUtil.generateMessage(i18n.GL0449(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
+			}
 		}else{
 			//imgFriendly.getElement().getStyle().setWidth(25, Unit.PX);
 			//imgFriendly.setUrl("images/mos/friendlyResource.png");
 			//imgFriendly.setAltText(i18n.GL0865());
 			//imgFriendly.setTitle(i18n.GL0865());
-			lblFriendly.setText(i18n.GL0453());
+			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+				lblFriendly.setText(i18n.GL3013());
+			}else{
+				lblFriendly.setText(i18n.GL0453());
+			}
 		}
 	}
 
