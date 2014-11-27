@@ -2892,6 +2892,7 @@ public interface MessageProperties extends Constants {
 	String GL3013();
 	String GL3014();
 	String GL3015();
+
 	String GL3016();
 	String GL3017();
 	String GL3018();
@@ -2995,4 +2996,7 @@ public interface MessageProperties extends Constants {
 	String GL3106();
 
 
+=======
+	
+>>>>>>> 567c84e... Added no assessment error message.
 }
