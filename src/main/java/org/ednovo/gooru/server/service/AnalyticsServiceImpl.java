@@ -410,9 +410,9 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			setPlayLoadObj.put("classId",classpageId);
 			setPlayLoadObj.put("sessionId",session);
 			if(freeText.equalsIgnoreCase("commentsDelete")){
-				setPlayLoadObj.put("active ","false");
+				setPlayLoadObj.put("active","false");
 			}else{
-				setPlayLoadObj.put("active ","true");
+				setPlayLoadObj.put("active","true");
 			}
 			
 			mainObj.put("contentGooruOId",resourceId);
