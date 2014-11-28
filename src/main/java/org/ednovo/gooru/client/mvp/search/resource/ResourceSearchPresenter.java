@@ -227,10 +227,13 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 
 	/**
 	 * (non-Javadoc)
-	 * @see org.ednovo.gooru.client.mvp.search.SearchUiHandlers#setTagsWidget(com.google.gwt.user.client.ui.SimplePanel, org.ednovo.gooru.shared.model.search.ResourceSearchResultDo)
+	 * @see org.ednovo.gooru.client.mvp.search.SearchUiHandlers#setTagsWidget(com.google.gwt.user.client.ui.SimplePanel, org.ednovo.gooru.shared.model.search.ResourceSearchResultDo, boolean)
 	 */
-	@Override
-	public void setTagsWidget(SimplePanel addResourceContainerPanel,ResourceSearchResultDo searchResultDo) {
-		tagsTabPresenter.setData();
+	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen) { 
+		simplePanel.clear();
+		if(!isTagsPanelOpen){
+			tagsTabPresenter.setData("0dd8c9a4-9f38-4d8e-8775-a4fca41ba244",searchResultDo.getGooruOid());   
+			simplePanel.setWidget(tagsTabPresenter.getWidget());
+		}
 	}
 }

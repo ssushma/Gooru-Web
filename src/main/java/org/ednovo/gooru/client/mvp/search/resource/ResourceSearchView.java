@@ -102,7 +102,7 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 					if(AppClientFactory.isAnonymous()){
 						new LoginPopupUc();
 					}else{
-						getUiHandlers().setTagsWidget(resourceSearchResultVc.getAddResourceContainerPanel(),searchResultDo);
+						getUiHandlers().setTagsWidget(resourceSearchResultVc.getAddResourceContainerPanel(),searchResultDo,resourceSearchResultVc.isTagsPanelOpen());
 					}
 
 				}});

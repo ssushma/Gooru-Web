@@ -26,28 +26,11 @@
 
 package org.ednovo.gooru.client.mvp.search;
 
-import java.util.List;
+import com.google.gwt.resources.client.CssResource;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.user.UserTagsDo;
+public interface SearchTabTagsStyleBundle extends CssResource {
 
-public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> { 
-	
-
-	/**
-	 * @param resourceTagsDo
-	 */
-	void setResourceTags(List<UserTagsDo> resourceTagsDo);
-
-
-	/**
-	 * @param isVisible
-	 */
-	void isLoadingImageVisible(boolean isVisible);
-
-	/**
-	* @param resourceId
-	* @param resourceGooruOid
-	*/
-	void setResourceTagsData(String resourceId, String resourceGooruOid);   
+	String searchTagsBg();
+	String searchTabTagLbl();
+	String searchTabTagRight();
 }
