@@ -29,12 +29,12 @@ package org.ednovo.gooru.server.service;
 
 
 import java.net.URLEncoder;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.SearchService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.deserializer.AutoCompleteDeSerializer;
@@ -424,9 +424,19 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	}
 	
 	@Override
-	public String getGooruStoriesUrl(String parms) {
+	public String getGooruStoriesUrl(String emailId, String userId, String userName) {
 		
-		return getStoriesUrl();
+		String ltiUrl = getStoriesLtiUrl() + "/" + (isLoggedInUserAnonymous() ? "login.g" : "login/launch.g");
+		String callBackUrl = getStoriesLoggedInUrl();
+		String storiesApiKey = getStoriesApiKey();
+		
+		String finalLtiUrl = null;
+		finalLtiUrl = ltiUrl + "?callBackUrl="+ callBackUrl + "&callBackMethod=POST&apiKey=" +storiesApiKey;
+		if (!isLoggedInUserAnonymous()){
+			
+			finalLtiUrl = finalLtiUrl +"&emailId=" + emailId + "&gooruUid="+userId + "&sessionToken="+getLoggedInSessionToken() +"&username="+userName;
+		}
+		return finalLtiUrl;
 	}
 	
 	

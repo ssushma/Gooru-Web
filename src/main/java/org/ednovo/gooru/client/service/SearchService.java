@@ -231,15 +231,18 @@ public interface SearchService extends BaseService {
 	public SearchDo<CodeDo> getSuggestStandardByFilterCourseIdsource(SearchDo<CodeDo> searchDo)  throws GwtException, ServerDownException;
 
 	/**
+	 * 
 	 * @function getGooruStoriesUrl 
 	 * 
-	 * @created_date : 20-Oct-2014
+	 * @created_date : 28-Nov-2014
 	 * 
 	 * @description
 	 * 
 	 * 
-	 * @param parms
-	 * @return
+	 * @parm(s) : @param emailId
+	 * @parm(s) : @param userId
+	 * @parm(s) : @param userName
+	 * @parm(s) : @return
 	 * 
 	 * @return : String
 	 *
@@ -247,9 +250,9 @@ public interface SearchService extends BaseService {
 	 *
 	 * 
 	 *
-	 * 
-	*/
-	
-	String getGooruStoriesUrl(String parms); 
+	 *
+	 */
+
+	String getGooruStoriesUrl(String emailId, String userId, String userName) throws GwtException, ServerDownException;
 
 }
