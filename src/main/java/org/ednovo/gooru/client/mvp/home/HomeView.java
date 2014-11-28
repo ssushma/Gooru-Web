@@ -43,7 +43,6 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
-import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
@@ -218,34 +217,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			});
 		}
 	
-
-		
-		
 		panelGooruStories.setVisible(false);
-		
-		AppClientFactory.getInjector().getSearchService().showGooruStoriesSection( new SimpleAsyncCallback<String>() {
-			
-			@Override
-			public void onSuccess(String result) {
-				if (result.equalsIgnoreCase("true")){
-					
-					PeListPanel p = new PeListPanel();
-					p.setTitle(i18n.GL2188_3());
-					p.getElement().setInnerHTML(i18n.GL2188_3());
-					panelText.add(p);
-					
-					AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl("", new SimpleAsyncCallback<String>() {
-						
-						@Override
-						public void onSuccess(String result) {
-							achGooruStories.setHref(result);
-							achGooruStories.setTarget("_blank");
-						}
-					});
-					panelGooruStories.setVisible(true);
-				}
-			}
-		});
 		
 		/*ClickHandler rootClick = new ClickHandler(){
 
@@ -270,6 +242,13 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		lblCopyRight.getElement().setId("lblCopyRightYearText");
 		lblCopyRight.getElement().setAttribute("alt",copyRightTxt);
 		lblCopyRight.getElement().setAttribute("title",copyRightTxt);
+
+		
+		setStoryButtonUrl();
+		
+		AppClientFactory.getEventBus().addHandler(SetStoriesUrlEvent.TYPE,
+				storiesHandler);
+
 		
 //		InternalServerErrorPopupViewVc error = new InternalServerErrorPopupViewVc() {
 //		};
@@ -277,7 +256,36 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		
 	}
 	
-	
+	/**
+	 * 
+	 * @function setStoryButtonUrl 
+	 * 
+	 * @created_date : 28-Nov-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void setStoryButtonUrl(){
+		
+		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser().getGooruUId(), AppClientFactory.getLoggedInUser().getUsername(), new SimpleAsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				achGooruStories.setHref(result);
+				achGooruStories.setTarget("_blank");
+			}
+		});
+	}
 	
 	/**
 	 * @function generatePartnerLibraries 
@@ -967,6 +975,14 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	public void setBtnSignUp(Button btnSignUp) {
 		this.btnSignUp = btnSignUp;
 	}
+
+	SetStoriesUrlHandler storiesHandler = new SetStoriesUrlHandler() {
+		
+		@Override
+		public void setStoriesUrl() {
+			setStoryButtonUrl();
+		}
+	};
 
 }
 

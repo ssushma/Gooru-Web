@@ -426,10 +426,21 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	}
 	
 	@Override
-	public String getGooruStoriesUrl(String parms) {
-		
-		return getStoriesUrl();
-	}
+	public String getGooruStoriesUrl(String emailId, String userId, String userName) {
+ 		
+		String ltiUrl = getStoriesLtiUrl() + "/" + (isLoggedInUserAnonymous() ? "login.g" : "launch.g");
+		String callBackUrl = getStoriesLoggedInUrl();
+		String storiesApiKey = getStoriesApiKey();
+
+		String finalLtiUrl = null;
+		finalLtiUrl = ltiUrl + "?callBackUrl="+ callBackUrl + "&callBackMethod=POST&apiKey=" +storiesApiKey;
+		if (!isLoggedInUserAnonymous()){
+			
+			finalLtiUrl = finalLtiUrl +"&emailId=" + emailId + "&gooruUid="+userId + "&sessionToken="+getLoggedInSessionToken() +"&username="+userName;
+		}
+		return finalLtiUrl;
+ 	}
+
 	
 	
 	@Override

@@ -50,6 +50,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetMarkButtonEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetStoriesUrlEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
@@ -395,6 +396,7 @@ public class LoginPopupUc extends PopupPanel{
 							
 							AppClientFactory.fireEvent(new SetUserDetailsInPlayEvent(result.getToken()));
 							AppClientFactory.fireEvent(new SetUserDetailsInCollectionPlayEvent(result.getToken(),result.getGooruUId()));
+							AppClientFactory.fireEvent(new SetStoriesUrlEvent());
 							//to Set the Options butts visibility in Player for comments.
 							/**
 							 * Changed to collection player, as preview player feature removed.
