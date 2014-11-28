@@ -175,7 +175,6 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
    // Image scoreQuestionMark = new Image();
     
 	private DateBoxUc dateBoxUc;
-	
 
 	ToolTip toolTip=null;
 
@@ -263,7 +262,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		textAreaVal.getElement().setId("tatTextAreaVal");
 		
 		StringUtil.setAttributes(textAreaVal, true);
-		
+				
 		textAreaVal.getElement().getStyle().setColor("#999");
 		textAreaVal.getElement().setAttribute("maxlength", "400");
 		directionsErrorLength.setVisible(false);
@@ -454,8 +453,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	 *
 	 */
 	public void setLabelsAndIds(){
+		
 		remainderLbl.setText(i18n.GL1889());
-
 		remainderLbl.getElement().setId("lblRemainderLbl");
 		
 		
