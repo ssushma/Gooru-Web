@@ -26,6 +26,12 @@
 
 package org.ednovo.gooru.client.mvp.search;
 
+import java.util.List;
+
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.model.user.UserTagsDo;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -51,22 +57,58 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 
 public class TagsTabPresenter extends PresenterWidget<IsTagsTabView> implements TagsTabUiHandlers {
 
+	/**
+	 * @param eventBus {@link EventBus}
+	 * @param view {@link IsTagsTabView}
+	 */
 	@Inject
 	public TagsTabPresenter(EventBus eventBus, IsTagsTabView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
-		System.out.println("-- hey --");
 	}
 	
 	
+	/**
+	 * (non-Javadoc)
+	 * @see com.gwtplatform.mvp.client.HandlerContainerImpl#onBind()
+	 */
 	@Override
 	protected void onBind() {
 		super.onBind();
 	}
 
 
-	public void setData() {
-		System.out.println("-- hello --");
+	/**
+	 * 
+	 * @param resourceId {@link String}
+	 * @param resourceId1 {@link String}
+	 */
+	public void setData(String resourceId, String resourceGooruOid) { 
+
+		getView().setResourceTagsData(resourceId,resourceGooruOid);
+		getView().isLoadingImageVisible(false);
+
 	}
+
+
+	/**
+	 * Calls the API to get tags related to resource.
+	 * 
+	 * (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.search.TagsTabUiHandlers#getResourceTags(java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void getResourceTags(String resourceId, String offSet, String limit) {
+
+		AppClientFactory.getInjector().getUserService().getUserAddedContentTagSummary(resourceId,offSet,limit,new SimpleAsyncCallback<List<UserTagsDo>>() {
+
+			@Override
+			public void onSuccess(List<UserTagsDo> result) {
+				getView().setResourceTags(result); 
+
+			}
+		});
+	}
+
 
 }

@@ -139,6 +139,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	private Boolean addMode = true;
 	
 	private Boolean addTagsMode = true;
+	
+	private boolean isTagsDisclosurePanelOpen;
 
 	private static SearchResultWrapperVc<?, ?> openedResult;
 
@@ -337,7 +339,6 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	@UiHandler("tagsLinkFocPanel")
 	public void onaddTagsTabClick(ClickEvent clickEvent) {
 		if (addTagsMode && (shareMode || moreInfoMode || colleResMode || addMode )) {
-			disclosureContentSimPanel.clear();
 			onDisclosureOpen();
 			setCssStyleForTabs(TAGS);
 		} else {
@@ -361,6 +362,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			shareMode = true;
 			addMode =true;
 			addTagsMode = true;
+			setTagsDisclosurePanelOpen(false);
 
 			moreInfoLbl.addStyleName(res.css().tabActive());
 
@@ -376,7 +378,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			moreInfoMode = true;
 			addMode =true;
 			addTagsMode = true;
-
+			setTagsDisclosurePanelOpen(false);
+			
 			shareLbl.addStyleName(res.css().tabActive());
 
 			moreInfoLbl.removeStyleName(res.css().tabActive());
@@ -391,6 +394,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			shareMode = true;
 			addMode = true;
 			addTagsMode = true;
+			setTagsDisclosurePanelOpen(false);
 
 			collcResLbl.addStyleName(res.css().tabActive());
 
@@ -406,6 +410,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			shareMode = true;
 			colleResMode = true;
 			addTagsMode = true;
+			setTagsDisclosurePanelOpen(false);
 
 
 			addLbl.addStyleName(res.css().tabActive());
@@ -421,7 +426,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			addMode = true;
 			moreInfoMode = true;
 			shareMode = true;
-			colleResMode = true;
+			colleResMode = true;setTagsDisclosurePanelOpen(true);
+			
 
 			tagsLbl.addStyleName(res.css().tabActive());
 
@@ -431,7 +437,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			addLbl.removeStyleName(res.css().tabActive());
 
 		}else if(tab.equals(INACTIVE)){
-
+			
+			setTagsDisclosurePanelOpen(false);
 			moreInfoLbl.removeStyleName(res.css().tabActive());
 			shareLbl.removeStyleName(res.css().tabActive());
 			collcResLbl.removeStyleName(res.css().tabActive());
@@ -451,6 +458,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		shareMode = true;
 		colleResMode = true;
 		addMode = true;
+		addTagsMode = true;
 		disclosureDisPanel.setOpen(false);
 	}
 
@@ -605,6 +613,20 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	 */
 	public void setTagsLbl(Label tagsLbl) {
 		this.tagsLbl = tagsLbl;
+	}
+
+	/**
+	 * @return the isTagsDisclosurePanelOpen
+	 */
+	public boolean isTagsDisclosurePanelOpen() {
+		return isTagsDisclosurePanelOpen;
+	}
+
+	/**
+	 * @param isTagsDisclosurePanelOpen the isTagsDisclosurePanelOpen to set
+	 */
+	public void setTagsDisclosurePanelOpen(boolean isTagsDisclosurePanelOpen) {
+		this.isTagsDisclosurePanelOpen = isTagsDisclosurePanelOpen;
 	}
 	
 

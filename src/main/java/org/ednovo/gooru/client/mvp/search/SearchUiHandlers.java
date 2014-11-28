@@ -111,6 +111,7 @@ public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandle
 	/**
 	 * @param addResourceContainerPanel
 	 * @param searchResultDo
+	 * @param isTagsPanelOpen
 	 */
-	void setTagsWidget(SimplePanel addResourceContainerPanel,ResourceSearchResultDo searchResultDo);
+	void setTagsWidget(SimplePanel simplePanel, ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen);
 }

@@ -6,7 +6,7 @@
 	  <g:HTMLPanel styleName="{ProfilePageTagStyle.tagTitle}">
 	      <g:Label styleName="{ProfilePageTagStyle.taglabel}" ui:field="tagTitle"></g:Label>
 	  </g:HTMLPanel>
-	   <g:HTMLPanel styleName="{ProfilePageTagStyle.tagRight}">
+	   <g:HTMLPanel ui:field="tagRightPanel" styleName="{ProfilePageTagStyle.tagRight}">
 	      <g:Label styleName="{ProfilePageTagStyle.taglabel}" ui:field="tagcount"></g:Label>
 	  </g:HTMLPanel>
 	</panel:HTMLEventPanel>
