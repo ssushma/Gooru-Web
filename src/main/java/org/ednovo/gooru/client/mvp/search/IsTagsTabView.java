@@ -26,8 +26,28 @@
 
 package org.ednovo.gooru.client.mvp.search;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import java.util.List;
 
-public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> { 
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.user.UserTagsDo;
+
+public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> {
+
+	/**
+	 * @param resourceTagsDo
+	 */
+	void setResourceTags(List<UserTagsDo> resourceTagsDo);
+
+
+	/**
+	 * @param isVisible
+	 */
+	void isLoadingImageVisible(boolean isVisible);
+
+	/**
+	 * @param resourceId
+	 * @param resourceGooruOid
+	 */
+	void setResourceTagsData(String resourceId, String resourceGooruOid);   
 
 }

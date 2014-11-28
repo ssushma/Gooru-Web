@@ -30,4 +30,11 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface TagsTabUiHandlers extends BaseUiHandlers,EventHandler {
 
+	/**
+	 * @param resourceId
+	 * @param offSet
+	 * @param limit
+	 */
+	void getResourceTags(String resourceId, String offSet, String limit); 
+
 }

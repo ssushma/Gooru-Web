@@ -595,4 +595,8 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		return wrapperVcr.getTagsLbl();
 	}
 	
+	public boolean isTagsPanelOpen(){
+		return wrapperVcr.isTagsDisclosurePanelOpen();
+	}
+	
 }
