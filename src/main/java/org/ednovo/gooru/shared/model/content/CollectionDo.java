@@ -72,6 +72,7 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private List<checkboxSelectedDo> instructionalMethod;
 	private List<checkboxSelectedDo> audience;
 	private List<checkboxSelectedDo> learningSkills;
+	private CollectionSettingsDo settings;
 	
 	public CollectionDo(){
 		
@@ -360,5 +361,16 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	public void setMemberCount(Integer memberCount) {
 		this.memberCount = memberCount;
 	}
+
+	public CollectionSettingsDo getSettings() {
+		return settings;
+	}
+
+	public void setSettings(CollectionSettingsDo settings) {
+		this.settings = settings;
+	}
+
+	
+	
 
 }

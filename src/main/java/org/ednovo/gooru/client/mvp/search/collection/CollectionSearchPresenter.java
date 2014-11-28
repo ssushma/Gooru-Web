@@ -245,7 +245,7 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 	}
 
 	@Override
-	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo) {
+	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen) {
 		
 	}
 
