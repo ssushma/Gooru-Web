@@ -6,9 +6,16 @@
 	width:100%;
 
 }
+.PopupMainExtraLarge{
+	width:100%;
+}
+.PopupMainV1Small{
+	
+}
 .PopupMainLarge{
 	width:100%;
 }
+
 .PopupMainMedium .text{
 	text-align:center;
 }
@@ -32,7 +39,66 @@
     margin-left: 10px;
     margin-right: 10px;
     text-align: center;
+--}
+.emailSelection{
+	margin:5px 5px;
+}
+.emailSelection .lables{
+	text-align:left;
+}
+.addSelection .lables{
+	text-align:left;
+}
+.assignContainer .lables {
+	margin-bottom:5px;
+    text-align: left;
 }	
+.standarBodyContainer .scrollBar{
+	height:auto;
+	border:none;
+}
+
+.standarBodyContainer button{
+	display:block;
+	width:100%;
+	margin-bottom:8px;
+}
+.listGroup .col-md-2, .listGroup .col-md-4{
+	height:auto;
+}
+.listGroup .col-md-2, .listGroup .col-md-4{
+	border-right:0;
+}
+.ratingDistribution{
+	width:50%;
+		float:left;
+}
+.AvgRate{
+	width:50%;
+	float:left;
+	
+}
+.firstInputGroup{}
+.childUserInfoContainer{}
+.childInputGroup{}
+.parentsAccount{}
+.contentDescr{}
+.orContainerDown{}
+
+.reviewsContent{}
+.bar{}
+ .count{}
+ .panelRatingLabels{}
+ .reviewContainer{}
+ .reviewContainerHeader{}
+  .date{}
+  .ratingStars{}
+  .review{}
+  .ratingLabel{}
+   .panelRatingValues{}  
+ .rHeader{}
+
+
 .overRideBlueButton{}
 .collectionFormCancelButton{}
 .actionField{}
@@ -151,13 +217,22 @@
 .improveGooruSubHeading{}
 .improveGooruBlueText{}
 .improveGooruBlueTextDesc{} 
-.improveGooruDesc{}  
-   
-  
- 
-
-
-
+.improveGooruDesc{} 
+.loginShareContainer{}
+ .collectionSel{} 
+ .formViewButtonContainer{} 
+ .addTagsContent{}
+ .AddTagesPopup-levelType{}
+ .AddTagesPopup-selected{}
+ .AddTagesPopup-li{}
+  .AddTagesPopup-levelnumbers{}
+  .standardsCont{}
+ .AddTagesPopup-okcancel{}
+ .addQuestionStandard{}
+  .AddTagesPopup-h5{}
+.emailContainer{}
+.lblNoteTxt{}
+.classPageEmailButtonCancel{}
 
 
 

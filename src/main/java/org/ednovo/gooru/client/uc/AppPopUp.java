@@ -134,6 +134,12 @@ public class AppPopUp extends PopupPanel {
 		return headerPanel;
 	}
 
+	public FlowPanel getMainPanel(){
+		return mainPanel;
+	}
+	public FlowPanel getInnerPanel(){
+		return innerPanel;
+	}
 	public void setHeaderPanel(FlowPanel headerPanel) {
 		this.headerPanel = headerPanel;
 	}

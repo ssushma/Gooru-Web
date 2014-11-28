@@ -75,6 +75,7 @@ public interface LoginPopUpCBundle extends ClientBundle{
 	String LoginpopupHeader();
 	String LoginpopupContent();
 	String LoginPopUpgreen();
+	String PopupMainV1Small();
 	String LoginPopUpgreensmall();
 	String subheader();
 	String signInContainer();
@@ -201,7 +202,56 @@ public interface LoginPopUpCBundle extends ClientBundle{
 	String improveGooruSubHeading();
 	String improveGooruBlueText();
 	String improveGooruBlueTextDesc();
+	String collectionSel();
+	String lables();
+	String assignContainer();
+	String addSelection();
+	String emailSelection();
+	String loginShareContainer();
+	String formViewButtonContainer();
+	@ClassName("AddTagesPopup-levelType")
+	String  AddTagesPopup_levelType();
+	@ClassName("AddTagesPopup-okcancel")
+	String  AddTagesPopup_okcancel();
+	@ClassName("AddTagesPopup-li")
+	String AddTagesPopup_li();
+	@ClassName("AddTagesPopup-levelnumbers")
+	String AddTagesPopup_levelnumbers();
+	String standardsCont();
+	@ClassName("AddTagesPopup-h5")
+	String AddTagesPopup_h5();
+	String addTagsContent();
+	String addQuestionStandard();
+	@ClassName("AddTagesPopup-selected")
+	String AddTagesPopup_selected();
+	String emailContainer();
+	String lblNoteTxt();
+	String classPageEmailButtonCancel();
+	String PopupMainExtraLarge();
+	String standarBodyContainer();
+	String scrollBar();
+	String listGroup();
+	String reviewsContent();
+	String rHeader();
+	String panelRatingLabels();
+	String ratingLabel();
+	String panelRatingValues();
+	String bar();
+	String count();
+	String reviewContainer();
+	String reviewContainerHeader();
+	String review();
+	String date();
+	String ratingStars();
+	String childInputGroup();
+	String parentsAccount();
+	String contentDescr();
+	String orContainerDown();
+	String childUserInfoContainer();
+	String firstInputGroup();
+	
 	}
+	@NotStrict
 	@Source("Newlogin-popup.css")
 	LoginPopUpCss css();
 

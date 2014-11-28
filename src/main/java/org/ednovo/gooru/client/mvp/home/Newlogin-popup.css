@@ -49,6 +49,19 @@ body {
 	border: 1px solid #999;
 	padding: 3px 3px;
 }
+.PopupMainExtraLarge{
+	width:1000px;
+	color:#515151;
+	margin: 30px auto;
+	position:relative;
+	font-family:arial;
+	font-size:12px;
+	background:#ffffff;
+	border-radius:0 0;
+	border:1px solid #999;
+	padding:3px 3px;
+}
+
 .PopupMainVVSmall{
 	width:390px;
 	color:#515151;
@@ -64,6 +77,18 @@ body {
 
 .PopupMainVSmall{
 	width:550px;
+	color:#515151;
+	margin: 30px auto;
+	position:relative;
+	font-family:arial;
+	font-size:12px;
+	background:#ffffff;
+	border-radius:0 0;
+	border:1px solid #999;
+	padding:3px 3px;
+}
+.PopupMainV1Small{
+	width:450px;
 	color:#515151;
 	margin: 30px auto;
 	position:relative;
@@ -845,14 +870,40 @@ width: 100%;
 }
 
 
+.dontWorrkText {
+    color: #515151;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 21px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    text-align: center;
+    word-wrap: break-word;
+}
+.contentDesc {
+    color: #515151;
+    font-size: 12px;
+    line-height: 120%;
+    padding: 20px;
+    text-align: center;
+}
+.assignContainer .dontWorrkText{
+	 padding-bottom: 20px;
+    padding-top: 20px;
+}
 .shareSelection .dontWorrkText{
+	padding:20px 0 0 0;
+}
+.loginShareContainer .dontWorrkText{
 	padding:20px 0 0 0;
 }
 
 .shareSelection .contentDesc{
 	padding:5px 0 20px 0;
 }
-
+.addSelection .contentDesc{
+	padding:5px 25px 25px 25px;
+}
 .popupcornerBg{
 	background-color: #f0f0f0;
     border: 1px solid #ccc;
@@ -1000,3 +1051,356 @@ line-height: 120%;
 color: #515151;
 text-align: left;
 }
+.collectionSel{
+	margin:0 10% 10px 10%;
+}
+.collectionSel .lables{
+	text-align:right;
+}
+
+.collectionSel .form-control{
+	height:28px;
+	border-radius:0 0;
+	margin-bottom:10px;
+	font-size:12px;
+}
+.emailSelection .lables{
+	text-align:right;
+	padding-right:0;
+	font-size:12px;
+}
+
+.addSelection .lables{
+	text-align:right;
+	padding-right:0;
+	font-size:12px;
+	margin:5px 0;
+}
+.assignContainer .lables{
+	 font-size: 12px;
+    padding-right: 0;
+    text-align: center;
+	line-height:15px;
+}
+.emailSelection{
+	margin:5px 35px;
+}
+.emailSelection .form-control{
+	height:28px;
+	font-size:12px;
+	border-radius:0 0;
+	margin-bottom:8px;
+}
+.emailSelection textarea.form-control{
+		margin-bottom:10px;
+}
+
+.addSelection{
+	padding:15px 15px;
+}
+
+.addSelection .form-control{
+	height:28px;
+	font-size:12px;
+	border-radius:0 0;
+	margin-bottom:8px;
+}
+
+.assignContainer .form-control{
+	height:28px;
+	margin-bottom:10px;
+	border-radius:0 0;
+	font-size:12px;
+}
+
+.assignContainer textarea.form-control{
+	height:auto;
+	margin-bottom:10px;
+	border-radius:0 0;
+	font-size:12px;
+}
+.formViewButtonContainer {
+    padding-bottom: 20px;
+    padding-top: 10px;
+    text-align: center;
+}
+.addTagsContent{
+	padding:15px 15px;
+}
+
+.AddTagesPopup-h5 {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 0;
+}
+.AddTagesPopup-li {
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 5px;
+    padding: 0 10px 8px 0;
+}
+.AddTagesPopup-li a{
+	color:#515151;
+}
+.AddTagesPopup-li a:hover{
+	text-decoration:none;
+	color:#515151;
+}
+
+.AddTagesPopup-selected {
+    background: none repeat scroll 0 0 #a6cba2;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+.addQuestionStandard {
+    color: #515151;
+
+    font-size: 12px;
+    font-weight: bold;
+    margin: 10px 0;
+
+}
+.standardsCont .form-control{
+	height:30px;
+	border-radius:0 0;
+	font-size:12px;
+	width:42%;
+}
+.AddTagesPopup-levelType{
+	margin:10px 0;
+}
+.AddTagesPopup-levelnumbers {
+    color: #515151;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 10px;
+    vertical-align: top;
+}
+.AddTagesPopup-levelnumbers a{
+	color:#515151;
+}
+.AddTagesPopup-levelnumbers a:hover{
+	color:#515151;
+	text-decoration:none;
+}
+.AddTagesPopup-okcancel {
+    margin: auto;
+    padding-top: 20px;
+    text-align: center;
+}
+.emailContainer{
+	padding:15px;
+	padding:15px;
+}
+.emailContainer iframe.form-control {
+    height: auto;
+}
+.lblNoteTxt{
+	text-align:center;
+	margin:10px 0;
+}
+.classPageEmailButtonCancel{
+	display:inline-block;
+	margin-left:5px;
+	color:#1076ba;
+	cursor:pointer;
+}
+.standarBodyContainer{
+	background:#ffffff;
+	padding:15px 10px;
+
+}
+.standarBodyContainer button{
+	margin-right:10px;
+}
+.scrollBar{
+	border: 1px solid #ccc;
+    height: 450px;
+    overflow: auto;
+ 
+}
+
+.listGroup{
+	margin:15px 0;
+	border:1px solid #cccccc;
+
+}
+
+.listGroup .col-md-2, .listGroup .col-md-4{
+	padding-left:0 !important;
+	padding-right:0 !important;
+		border-right:1px solid #cccccc;
+		 height: 450px;
+}
+
+.listGroup ul li a{
+	color:#515151;
+	padding:5px 5px;
+	display:block;
+	line-height:20px;
+}
+
+.listGroup ul li a:hover{
+	color:#515151;
+	background:#cfe3f1;
+	text-decoration:none;
+	opacity:1;
+
+}
+.listGroup ul li.active a,.listGroup ul li.focus a{
+		color:#515151;
+	background:#cfe3f1;
+	text-decoration:none;
+}
+.listGroup ul li a:active,.listGroup ul li a:focus, .listGroup ul li.active:hover{
+		color:#515151;
+	background:#cfe3f1;
+	text-decoration:none;
+	margin:0 0;
+	border:none;
+	display:block;
+}
+
+.reviewsContent{
+	padding:15px 15px;
+}
+.rHeader{
+	 font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.panelRatingLabels {
+	text-align:right;
+	padding-left:0;
+	padding-right:0;
+}
+.panelRatingLabels .ratingLabel{
+	padding-right:8px;
+	font-size:11px;
+	margin:2px 0;
+}
+.panelRatingValues{
+		text-align:left;
+	padding-left:0;
+	padding-right:0;
+}
+
+.panelRatingValues {
+    border-left: 1px solid #ccc;
+   
+}
+.bar {
+    background-color: #8cc63e;
+    display: inline-block;
+    height: 10px;
+    vertical-align: middle;
+}
+.count {
+    display: inline-block;
+    font-size: 11px;
+	margin-left:2px;
+}
+.reviewContainer{
+	margin:0 5% 5% 5%;
+}
+.reviewContainerHeader{
+	margin-bottom:8px;
+	border-bottom:1px solid #dddddd;
+	padding:5px 0;
+}
+
+.reviewContainerHeader .date{
+	text-align:right;
+}
+
+.reviewContainer .review{
+	margin-bottom:15px;
+}
+.ratingStars{
+	margin-bottom:10px;
+}
+
+.childInputGroup{
+	padding:10px 25px;
+	
+	background-color: rgba(136, 187, 221, 0.2);
+}
+
+
+.childInputGroup .divider {
+    border-bottom: 1px solid #ddd;
+    height: 1em;
+    margin: 10px 0 20px;
+    width: 100%;
+	text-align:center;
+}
+
+.childInputGroup .dividerText {
+    background-color:#dbe5ec;
+    display: inline;
+    padding: 0 10px;
+    position: relative;
+    top: 0em;
+    top: 0.5em;
+}
+.childInputGroup .form-control{
+	width:66%;
+	margin:0 auto;
+}
+.parentsAccount {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 16px;
+line-height: 120%;
+font-weight: bold;
+text-align: center;
+padding: 15px;
+display:inline-block;
+}
+.parentsAccount .questionHover{
+	font-size: 11px;
+    font-weight: normal;
+    line-height: 16px;
+}
+.contentDescr{
+	margin:10px 0;
+	text-align:center;
+}
+.orContainerDown{
+	text-align:center;
+	margin:35px 0;
+}
+.orContainerDown .contentDescr{
+	margin:0 0;
+}
+.childUserInfoContainer {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+
+	padding:15px 0 0 0;
+}
+
+.childUserInfoContainer .inputGroup{
+	position:relative;
+}
+
+.childUserInfoContainer .inputGroup .questionHover{
+	position:absolute;
+	right:-20px;
+	top:2px;
+}
+
+.childUserInfoContainer .form-control{
+	border-radius:0 0;
+	font-size:12px;
+	height:28px;
+}
+
+.childUserInfoContainer .inputGroup{
+	padding-right:5px;
+	padding-left:5px;
+	margin-bottom:10px;
+}
+.firstInputGroup{
+	padding:0 25px 5px 25px;
+}
+

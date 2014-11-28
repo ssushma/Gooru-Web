@@ -1,17 +1,18 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
-	<ui:style field="style" src="ratingandreview.css"
-		type="org.ednovo.gooru.client.mvp.rating.RatingAndReviewStyleBundle" />
-		<panel:HTMLEventPanel styleName="{style.reviewContainer}"
-			ui:field="reviewContainer">
-			<g:Label styleName="{style.username} {style.userNameLbl}"
-				ui:field="userName"></g:Label>
-			<g:Label styleName="{style.timestamp}" ui:field="timeStamp"></g:Label>
-
-			<g:Label styleName="{style.hrline}"/>
+	<ui:style field="style" src="ratingandreview.css"	type="org.ednovo.gooru.client.mvp.rating.RatingAndReviewStyleBundle" />
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res" />
+		<panel:HTMLEventPanel styleName="{res.css.reviewContainer}"	ui:field="reviewContainer">
+		    <g:HTMLPanel styleName="{res.css.reviewContainerHeader}">
+		        <g:HTMLPanel styleName="row">
+					<g:Label styleName="col-md-6 col-xs-6 "	ui:field="userName"></g:Label>
+					<g:Label styleName="col-md-6 col-xs-6 {res.css.date}" ui:field="timeStamp"></g:Label>	            
+		        </g:HTMLPanel>
+		        <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+		    </g:HTMLPanel>
 			<g:HTMLPanel ui:field="editReviewLabelContainer">
-
 				<g:HTMLPanel styleName="{style.rating}">
 					<g:InlineHTML styleName="{style.star}" ui:field="starOne"></g:InlineHTML>
 					<g:InlineHTML styleName="{style.star}" ui:field="starTwo"></g:InlineHTML>
@@ -23,7 +24,7 @@
 					<g:Button styleName="secondary {style.editReview}"
 						ui:field="deleteReview" />
 				</g:HTMLPanel>
-				<g:Label styleName="{style.review}" ui:field="review"></g:Label>
+				<g:Label styleName="{res.css.review}" ui:field="review"></g:Label>
 			</g:HTMLPanel>
 			<g:HTMLPanel ui:field="editReviewTextareaContainer">
 				<g:HTMLPanel styleName="{style.rating}">
@@ -35,8 +36,7 @@
 					<g:Label styleName="{style.ratingValuemouseover}" ui:field="starValue"></g:Label>
 					<g:Label styleName="{style.ratingValuemouseover}" ui:field="mouseOverStarValue"></g:Label>
 				</g:HTMLPanel>
-				<g:TextArea styleName="{style.textAreaReviewEdit}"
-					ui:field="editReviewText"></g:TextArea>
+				<g:TextArea styleName="{style.textAreaReviewEdit}"	ui:field="editReviewText"></g:TextArea>
 					 <g:Label ui:field="mandatoryDescLblForSwareWords"></g:Label>
   					 <g:Label styleName="{style.errorLblBottomText}" ui:field="errorLbl"></g:Label>
 				<div style="margin-left: 66%;margin-top:4px;">

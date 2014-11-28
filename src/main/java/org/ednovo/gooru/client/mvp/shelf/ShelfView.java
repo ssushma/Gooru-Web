@@ -1503,8 +1503,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			}
 		};
 		folderPopupUc.setGlassEnabled(true);
-		folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
-		folderPopupUc.setPopupPosition(clickEvent.getRelativeElement().getAbsoluteLeft() - (604), Window.getScrollTop() + 60);
+		/*folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
+		folderPopupUc.setPopupPosition(clickEvent.getRelativeElement().getAbsoluteLeft() - (604), Window.getScrollTop() + 60);*/
 		Window.enableScrolling(false);
 		/*folderPopupUc.center();*/
 		folderPopupUc.show();

@@ -1,6 +1,31 @@
 .menu-icon{
 	display:none;
 }
+.PopupMainV1Small{
+}
+.firstInputGroup{}
+.childUserInfoContainer{}
+.childInputGroup{}
+.parentsAccount{}
+.contentDescr{}
+.orContainerDown{}
+
+.reviewsContent{}
+.bar{}
+ .count{}
+ .panelRatingLabels{}
+ .reviewContainer{}
+ .reviewContainerHeader{}
+  .date{}
+  .review{}
+  .ratingLabel{}
+   .panelRatingValues{}  
+ .rHeader{}
+
+.ratingStars{}
+.scrollBar{}
+.listGroup{}
+.standarBodyContainer{}
 .overRideBlueButton{}
 .collectionFormCancelButton{}
 .overRideBlueButton{}
@@ -129,10 +154,26 @@
 .improveGooruBlueText{}
 .improveGooruBlueTextDesc{} 
 .improveGooruDesc{}
-
-
- 
-
+.loginShareContainer{}
+ .collectionSel{}
+.addSelection{}
+.emailSelection{}
+.lables{}
+.assignContainer{}
+ .formViewButtonContainer{}
+ .addTagsContent{}
+ .AddTagesPopup-levelType{}
+ .AddTagesPopup-selected{}
+ .AddTagesPopup-li{}
+  .AddTagesPopup-levelnumbers{}
+  .standardsCont{}
+ .AddTagesPopup-okcancel{}
+ .addQuestionStandard{}
+  .AddTagesPopup-h5{} 
+.emailContainer{}
+.lblNoteTxt{}
+.classPageEmailButtonCancel{} 
+ .PopupMainExtraLarge{}
 
   
 
