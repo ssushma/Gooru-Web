@@ -43,6 +43,8 @@ import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetStoriesUrlEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetStoriesUrlHandler;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.ui.PeListPanel;
@@ -221,15 +223,11 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		p.getElement().setInnerHTML(i18n.GL2188_3());
 		panelText.add(p);
 		
-		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl("", new SimpleAsyncCallback<String>() {
-			
-			@Override
-			public void onSuccess(String result) {
-				achGooruStories.setHref(result);
-				achGooruStories.setTarget("_blank");
-			}
-		});
 		
+		setStoryButtonUrl();
+		
+		AppClientFactory.getEventBus().addHandler(SetStoriesUrlEvent.TYPE,
+				storiesHandler);
 		
 //		InternalServerErrorPopupViewVc error = new InternalServerErrorPopupViewVc() {
 //		};
@@ -237,7 +235,36 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		
 	}
 	
-	
+	/**
+	 * 
+	 * @function setStoryButtonUrl 
+	 * 
+	 * @created_date : 28-Nov-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void setStoryButtonUrl(){
+		
+		AppClientFactory.getInjector().getSearchService().getGooruStoriesUrl(AppClientFactory.getLoggedInUser().getEmailId(), AppClientFactory.getLoggedInUser().getGooruUId(), AppClientFactory.getLoggedInUser().getUsername(), new SimpleAsyncCallback<String>() {
+			
+			@Override
+			public void onSuccess(String result) {
+				achGooruStories.setHref(result);
+				achGooruStories.setTarget("_blank");
+			}
+		});
+	}
 	
 	/**
 	 * @function generatePartnerLibraries 
@@ -910,6 +937,14 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	public void setBtnSignUp(Button btnSignUp) {
 		this.btnSignUp = btnSignUp;
 	}
+	
+	SetStoriesUrlHandler storiesHandler = new SetStoriesUrlHandler() {
+		
+		@Override
+		public void setStoriesUrl() {
+			setStoryButtonUrl();
+		}
+	};
 }
 
 
