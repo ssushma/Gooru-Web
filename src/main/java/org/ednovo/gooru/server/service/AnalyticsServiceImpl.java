@@ -420,7 +420,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			mainObj.put("parentItemId",parentItemId);
 			mainObj.put("parentGooruOId",collectionId);
 			mainObj.put("freeText",freeText);
-			mainObj.put("playLoadObject",setPlayLoadObj.toString());
+			mainObj.put("payLoadObject",setPlayLoadObj.toString());
 			mainObj.put("user",userObj);
 			System.out.println("mainObj.toString()::"+mainObj.toString());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),mainObj.toString());
