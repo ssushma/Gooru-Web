@@ -205,8 +205,8 @@ public class EmailShareUc extends PopupPanel{
 		toUsText.getElement().setId("inlineLblToUsText");
 		toUsText.getElement().setAttribute("alt", i18n.GL1894());
 		toUsText.getElement().setAttribute("title", i18n.GL1894());
-		lblPii.getElement().getStyle().setMarginLeft(99, Unit.PX);
-		ancprivacy.getElement().getStyle().setMarginLeft(101, Unit.PX);
+		
+		ancprivacy.getElement().getStyle().setMarginLeft(10, Unit.PX);
 		mandatoryErrorLbl.getElement().setId("lblMandatoryErrorLbl");
 		mandatoryErrorLbl.setVisible(false);
 		mandatoryErrorRichTextArea.getElement().setId("lblMandatoryErrorRichTextArea");
