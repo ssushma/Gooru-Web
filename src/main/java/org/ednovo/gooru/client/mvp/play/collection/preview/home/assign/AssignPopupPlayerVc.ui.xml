@@ -5,12 +5,20 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.play.collection.preview.home.assign.AssignPopUpCBundle"
 		field="res" />
-	<g:HTMLPanel styleName="{res.css.assign}">
-		<g:HTMLPanel styleName="{res.css.assignContent}">
-			<g:HTMLPanel styleName="{res.css.assignHeader}">
-			<g:Label ui:field="lblAssignTitle" styleName="{res.css.assignTitle}"/>
-				<g:Label ui:field="cancelButton"
-					styleName="{res.css.assignCloseMarker} {res.css.assignSprite} {res.css.assignCloseMark}"></g:Label>
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res1" />
+	<g:HTMLPanel styleName="{res1.css.PopupMainVSmall}">
+		<g:HTMLPanel styleName="{res1.css.popupInnerGrey}">
+			<g:HTMLPanel styleName="{res1.css.popupgreyHeader}">
+			    <g:HTMLPanel styleName="row">
+			    	<g:HTMLPanel styleName="col-md-8 col-xs-8">
+			    		<g:Label ui:field="lblAssignTitle"/>    
+			    	</g:HTMLPanel>
+			    	<g:HTMLPanel styleName="col-md-4 col-xs-4 {res1.css.closeContainer}">
+			    		<g:Label ui:field="cancelButton"	styleName="{res1.css.closeButton}"></g:Label>    
+			    	</g:HTMLPanel>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="clearfix"/>	
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.conent}">
 		<g:HTMLPanel styleName="{res.css.loadingImageMainDiv}" ui:field="loadingImageLabel">

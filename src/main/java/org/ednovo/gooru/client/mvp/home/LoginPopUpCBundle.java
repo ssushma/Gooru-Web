@@ -249,7 +249,8 @@ public interface LoginPopUpCBundle extends ClientBundle{
 	String orContainerDown();
 	String childUserInfoContainer();
 	String firstInputGroup();
-	
+	String remixContainer();
+	String labels();
 	}
 	@NotStrict
 	@Source("Newlogin-popup.css")

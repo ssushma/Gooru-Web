@@ -333,10 +333,10 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("471px");
-				successPopupVc.show();
+			//	successPopupVc.setWidth("500px");
 				successPopupVc.center();
+				successPopupVc.show();
+		
 				
 				Map<String,String> params = new HashMap<String,String>();
 				params.put("id", AppClientFactory.getPlaceManager().getRequestParameter("id"));
@@ -474,10 +474,11 @@ public class CollectionHomeMetadataView extends BaseViewWithHandlers<CollectionH
 				}
 			};
 			Window.scrollTo(0, 0);
-			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("471px");
+			//successPopupVc.setWidth("500px");
 			successPopupVc.show();
 			successPopupVc.center();
+			
+			
 		}
 		if(assign!=null && assign.equals("yes") && emailId!=null){
 			AssignPopupPlayerVc successPopupVc = new AssignPopupPlayerVc(collectionId) {

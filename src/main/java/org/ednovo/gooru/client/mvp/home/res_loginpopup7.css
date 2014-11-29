@@ -7,6 +7,7 @@ display: block !important;
 }
 .PopupMainV1Small{
 }
+.labels{}
 .firstInputGroup{}
 .childUserInfoContainer{}
 .childInputGroup{}
@@ -180,4 +181,5 @@ display: block !important;
   .emailContainer{}
   .lblNoteTxt{}
   .classPageEmailButtonCancel{}
-   .PopupMainExtraLarge{} 
+   .PopupMainExtraLarge{}
+   .remixContainer{} 
