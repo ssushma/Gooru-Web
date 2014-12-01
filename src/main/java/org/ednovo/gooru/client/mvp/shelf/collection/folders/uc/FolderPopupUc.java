@@ -136,6 +136,20 @@ public abstract class FolderPopupUc extends PopupPanel {
 		folderTitle.addBlurHandler(new CheckProfanityForFolders());
 	}
 	
+	public void setCollectionType(String collectionType){
+		if(collectionType!=null&&collectionType.equals("quiz")){
+			addAttributesToWidget(inputDescLbl,i18n.GL3036());
+			addAttributesToWidget(popupHeaderTitleLbl,i18n.GL3037());
+		}else{
+			addAttributesToWidget(inputDescLbl,i18n.GL1364());
+			addAttributesToWidget(popupHeaderTitleLbl,i18n.GL1264());
+		}
+	}
+	public void addAttributesToWidget(Label labelText, String text){
+		labelText.setText(text);
+		labelText.getElement().setAttribute("alt",text);
+		labelText.getElement().setAttribute("title",text);
+	}
 	private void modifyPopup(boolean isFolderType, String moveType) {
 		if(isFolderType){
 			inputDescLbl.setVisible(true);
@@ -159,13 +173,6 @@ public abstract class FolderPopupUc extends PopupPanel {
 			isCollectionMove = true;
 			inputTitleLbl.getElement().getStyle().setDisplay(Display.NONE);
 			folderTitle.getElement().getStyle().setDisplay(Display.NONE);
-			popupHeaderTitleLbl.setText(i18n.GL1264());
-			popupHeaderTitleLbl.getElement().setAttribute("alt",i18n.GL1264());
-			popupHeaderTitleLbl.getElement().setAttribute("title",i18n.GL1264());
-			
-			inputDescLbl.setText(i18n.GL1364());
-			inputDescLbl.getElement().setAttribute("alt",i18n.GL1364());
-			inputDescLbl.getElement().setAttribute("title",i18n.GL1364());
 			
 			addingLbl.setText(i18n.GL1362());
 			addingLbl.getElement().setAttribute("alt",i18n.GL1362());
