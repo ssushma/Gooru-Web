@@ -4,9 +4,9 @@
 }
 
 .userInput .popupContent input[type="text"] {
-    width: 406px;
     margin:0px;
     margin-bottom:5px;
+	width:100%;
 }
 
 

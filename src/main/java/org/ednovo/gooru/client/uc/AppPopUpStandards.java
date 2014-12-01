@@ -24,8 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -37,37 +39,56 @@ import com.google.gwt.user.client.ui.Widget;
  *
  */
 public class AppPopUpStandards extends PopupPanel {
-
+	
+	private FlowPanel mainPanel;
+	private FlowPanel innerPanel;
 	private FlowPanel headerPanel;
+	
+	private FlowPanel row;
 	private FlowPanel content;
 	private Label labletitle;
-	private HTMLEventPanel closeBtn;
+	private FlowPanel closeBtn;
+	private Anchor close;
 
 	/**
 	 * Class constructor 
 	 */
 	public AppPopUpStandards() {
 		super(false);
-		
 		//<div class="org-ednovo-gooru-client-mvp-home-library-assign-AssignPopUpCBundle-CollectionAssignCss-assignCloseMarker org-ednovo-gooru-client-mvp-home-library-assign-AssignPopUpCBundle-CollectionAssignCss-assignSprite org-ednovo-gooru-client-mvp-home-library-assign-AssignPopUpCBundle-CollectionAssignCss-assignCloseMark" id="btnCancelButton"></div>
-		
 		ShelfCBundle.INSTANCE.css().ensureInjected();
-		this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
-		this.setStyleName(ShelfCBundle.INSTANCE.css().standardsBrowsePopup());
+	/*	this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
+		this.setStyleName(ShelfCBundle.INSTANCE.css().standardsBrowsePopup());*/
+		
+		mainPanel=new FlowPanel();
+		innerPanel=new FlowPanel();
+		row=new FlowPanel();
+		close=new Anchor();
+		mainPanel.setStyleName(LoginPopUpCBundle.INSTANCE.css().PopupMainExtraLarge());
+		innerPanel.setStyleName(LoginPopUpCBundle.INSTANCE.css().popupInnerGrey());
+		row.setStyleName("row");
 		headerPanel = new FlowPanel();
 		content = new FlowPanel();
-		closeBtn = new HTMLEventPanel("");
-		headerPanel.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUpOuterDiv());
+		closeBtn = new FlowPanel();
+		headerPanel.setStyleName(LoginPopUpCBundle.INSTANCE.css().popupgreyHeader());
 		labletitle = new Label();
-		labletitle.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemHeaderText());
-		closeBtn.addStyleName(ShelfCBundle.INSTANCE.css().assignCloseMarker());
-		closeBtn.addStyleName(ShelfCBundle.INSTANCE.css().assignSprite());
-		closeBtn.addStyleName(ShelfCBundle.INSTANCE.css().assignCloseMark());
-
-		headerPanel.add(labletitle);
-		headerPanel.add(closeBtn);
-		content.add(headerPanel);
-		this.setWidget(content);
+		labletitle.setStyleName("col-md-8 col-xs-8");
+		closeBtn.addStyleName("col-md-4 col-xs-4");
+		closeBtn.addStyleName(LoginPopUpCBundle.INSTANCE.css().closeContainer());
+		close.addStyleName(LoginPopUpCBundle.INSTANCE.css().closeButton());
+		closeBtn.add(close);
+		
+		row.add(labletitle);
+		row.add(closeBtn);
+		HTMLPanel htmlPanel=new HTMLPanel("");
+		htmlPanel.addStyleName("clearfix");
+		row.add(htmlPanel);
+		headerPanel.add(row);
+		innerPanel.add(headerPanel);
+		mainPanel.add(innerPanel);
+		innerPanel.add(content);
+		
+		this.setWidget(mainPanel);
 		setGlassEnabled(true);
 		setAutoHideOnHistoryEventsEnabled(true);
 		getElement().getStyle().setZIndex(200);
@@ -140,11 +161,11 @@ public class AppPopUpStandards extends PopupPanel {
 		labletitle.getElement().setAttribute("alt",title);
 		labletitle.getElement().setAttribute("title",title);
 	}
-	public HTMLEventPanel getCloseBtn() {
-		return closeBtn;
+	public Anchor getCloseBtn() {
+		return close;
 	}
-	public void setCloseBtn(HTMLEventPanel closeBtn) {
-		this.closeBtn = closeBtn;
+	public void setCloseBtn(Anchor close) {
+		this.close = close;
 	}
 	
 	

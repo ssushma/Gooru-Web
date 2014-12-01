@@ -140,7 +140,7 @@ public abstract class CreateAccountUc extends PopupPanel{
 	HTMLPanel rdTeacher,mainContainer, rdStudent, rdParent, rdOther, panelOther, panelTeacher, panelStudent, panelParent,emailFieldContainer;
 
 	@UiField
-	HTMLPanel panelUserNamePopUp, panelPublic, panelEmail, panelPassword,toolTip;
+	HTMLPanel panelUserNamePopUp,popupbody, panelPublic, panelEmail, panelPassword,toolTip,userDetailscontainer;
 
 	@UiField
 	HTMLEventPanel panelDataOfBirth;
@@ -277,7 +277,9 @@ public abstract class CreateAccountUc extends PopupPanel{
 		dateBoxUc.addDomHandler(new OnDateFocus(), FocusEvent.getType());
 		dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
 		
-		
+		lblQuestionMarkNeedParentAccount.addDomHandler(new MouseoverQuestion(), MouseOverEvent.getType());
+		lblQuestionMarkNeedParentAccount.addDomHandler(new MouseOutQuestion(), MouseOutEvent.getType());
+
 		this.getElement().getStyle().setBackgroundColor("transparent");
 
 		dateValidationUc.setVisible(false);
@@ -687,10 +689,6 @@ public abstract class CreateAccountUc extends PopupPanel{
 
 		} else {
 			// TODO Validation different components for age < 13
-			parentEmailValidUc.getElement().getStyle()
-					.setMarginLeft(54, Unit.PX);
-			parentEmailValidUc.getElement().getStyle().setClear(Clear.NONE);
-
 			if (parentEmailId.equalsIgnoreCase("") || parentEmailId == null) {
 				txtParentEmailId.addStyleName(res.css().errorMsgDisplay());
 				parentEmailValidUc.setText(i18n.GL0463());
@@ -717,8 +715,6 @@ public abstract class CreateAccountUc extends PopupPanel{
 						parentEmailValidUc.setText(i18n.GL0465());
 						parentEmailValidUc.getElement().setAttribute("alt",i18n.GL1146());
 						parentEmailValidUc.getElement().setAttribute("title",i18n.GL1146());
-						parentEmailValidUc.getElement().getStyle().setWidth(340, Unit.PX);
-						parentEmailValidUc.getElement().getStyle().setMarginLeft(0, Unit.PX);
 						parentEmailValidUc.setVisible(true);
 						lblGetCorrectEmail.setVisible(false);
 						isValid = false;
@@ -1370,11 +1366,6 @@ public abstract class CreateAccountUc extends PopupPanel{
 							btnSignUp.getElement().removeClassName("disabled");
 						} else {
 							// Found user is not registered user in gooru
-							parentEmailValidUc.getElement().getStyle()
-									.setMarginLeft(54, Unit.PX);
-							parentEmailValidUc.getElement().getStyle()
-									.setClear(Clear.NONE);
-							parentEmailValidUc.getElement().getStyle().setWidth(197, Unit.PX);
 							txtParentEmailId.addStyleName(res.css()
 									.errorMsgDisplay());
 							parentEmailValidUc
@@ -1402,6 +1393,8 @@ public abstract class CreateAccountUc extends PopupPanel{
 					dob = dateBoxUc.getDate();
 					underThirtheen = true;
 					panelBelowThirteen.setVisible(true);
+					popupbody.setStyleName(LoginPopUpCBundle.INSTANCE.css().childUserInfoContainer());
+					userDetailscontainer.setStyleName(LoginPopUpCBundle.INSTANCE.css().firstInputGroup());
 					if (panelAboveThirteen.isVisible()) {
 						btnSignUp.setText(i18n.GL0460());
 					}
@@ -1409,6 +1402,10 @@ public abstract class CreateAccountUc extends PopupPanel{
 				}else{
 					underThirtheen = false;
 					panelBelowThirteen.setVisible(false);
+					popupbody.removeStyleName(LoginPopUpCBundle.INSTANCE.css().childUserInfoContainer());
+					popupbody.setStyleName(LoginPopUpCBundle.INSTANCE.css().userInfoContainer());
+					userDetailscontainer.removeStyleName(LoginPopUpCBundle.INSTANCE.css().firstInputGroup());
+
 					panelAboveThirteen.setVisible(true);
 					btnSignUp.setText(i18n.GL0186());
 				}
@@ -1454,6 +1451,8 @@ public abstract class CreateAccountUc extends PopupPanel{
 								// TODO set the parent user details.
 								underThirtheen = true;
 								panelBelowThirteen.setVisible(true);
+								popupbody.setStyleName(LoginPopUpCBundle.INSTANCE.css().childUserInfoContainer());
+								userDetailscontainer.setStyleName(LoginPopUpCBundle.INSTANCE.css().firstInputGroup());
 								if (panelAboveThirteen.isVisible()) {
 									btnSignUp.setText(i18n.GL0460());
 								}
@@ -1491,6 +1490,8 @@ public abstract class CreateAccountUc extends PopupPanel{
 						// TODO set the parent user details.
 						underThirtheen = true;
 						panelBelowThirteen.setVisible(true);
+						popupbody.setStyleName(LoginPopUpCBundle.INSTANCE.css().childUserInfoContainer());
+						userDetailscontainer.setStyleName(LoginPopUpCBundle.INSTANCE.css().firstInputGroup());
 						if (panelAboveThirteen.isVisible()) {
 							btnSignUp.setText(i18n.GL0460());
 						}
@@ -1672,5 +1673,27 @@ public abstract class CreateAccountUc extends PopupPanel{
 				}
 			});
 		}
+	}
+	
+	public class MouseoverQuestion implements MouseOverHandler{
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			// TODO Auto-generated method stub
+			tootltipContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+		}
+		
+	}
+	public class MouseOutQuestion implements MouseOutHandler{
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			// TODO Auto-generated method stub
+			tootltipContainer.getElement().getStyle().setDisplay(Display.NONE);
+
+		}
+
+		
+		
 	}
 }

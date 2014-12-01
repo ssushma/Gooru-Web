@@ -144,8 +144,8 @@ public class OrganizeToolTip extends Composite implements HasMouseOutHandlers{
 						}
 					};
 					folderPopupUc.setGlassEnabled(true);
-					folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
-					folderPopupUc.setPopupPosition((Window.getClientWidth() - 456)/2, (Window.getClientHeight() - 522)/2);
+					/*folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
+					folderPopupUc.setPopupPosition((Window.getClientWidth() - 456)/2, (Window.getClientHeight() - 522)/2);*/
 					Window.enableScrolling(false);
 					folderPopupUc.show();
 				}

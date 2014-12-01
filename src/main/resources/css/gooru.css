@@ -2345,7 +2345,9 @@ fieldset {
 .searchPushHide{
 	display:none;
 }
-
+.menu-icon{
+	clear:both
+}
 /*ipad player menu style */
 #page {
 	position: relative; /* Set the position property so z-index will apply */

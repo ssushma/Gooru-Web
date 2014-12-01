@@ -2,29 +2,29 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="createCollectionStyle" src="CreateCollectionPopUp.css"/>
-
-	<g:HTMLPanel styleName="{createCollectionStyle.UrlPopUp}">
-		<g:HTMLPanel styleName="{createCollectionStyle.shelfItemContentDiv}" ui:field="shelfItemContent">
-			<g:HTMLPanel styleName="{createCollectionStyle.shelfItemContentInnerDiv}">
-				<g:Label ui:field="collPopUpMainheading" styleName="{createCollectionStyle.dontWorrkText}"></g:Label>
-				<g:Label ui:field="collPopUpSubheading" styleName="{createCollectionStyle.contentDesc}"></g:Label>
-				<g:HTMLPanel styleName="{createCollectionStyle.formContainer}">
-					<g:Label  ui:field="collTitleLbl" styleName="{createCollectionStyle.formContainerLabel}"></g:Label>
-					<g:HTMLPanel styleName="{createCollectionStyle.formContainerinput}">
-						<uc:TextBoxWithPlaceholder ui:field="collectionTitleTxtBox"
-							styleName="{createCollectionStyle.textBoxWithPlaceholderText}" />
-						<g:Label ui:field="mandatoryErrorLbl" styleName="{createCollectionStyle.mandatoryLabel}" />
-					</g:HTMLPanel>
+	<ui:with type="org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle"
+		field="res" />
+	
+		<g:HTMLPanel  ui:field="shelfItemContent">
+			<g:Label ui:field="collPopUpMainheading" styleName="{res.css.dontWorrkText}"></g:Label>
+			<g:Label ui:field="collPopUpSubheading" styleName="{res.css.contentDesc}"></g:Label>
+			<g:HTMLPanel styleName="{res.css.collectionSel}" ui:field="bodyContainer">
+				<g:Label  ui:field="collTitleLbl" styleName="col-md-4 col-xs-4 col-sm-4 {res.css.lables}"></g:Label>
+				<g:HTMLPanel styleName="col-md-8 col-xs-8 col-sm-8">
+					<uc:TextBoxWithPlaceholder ui:field="collectionTitleTxtBox" styleName="form-control {res.css.form_control}" />
+					<g:Label ui:field="mandatoryErrorLbl" styleName="{createCollectionStyle.mandatoryLabel}" />
 				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{createCollectionStyle.formContainer}" ui:field="gradeContainer">
-					<g:Label ui:field="gradeLbl" styleName="{createCollectionStyle.formContainerLabel}"></g:Label>
-					<g:SimplePanel ui:field="collectionGradeTxtBox" styleName="{createCollectionStyle.formContainerinput}"></g:SimplePanel>
+				<g:HTMLPanel styleName="clearfix">	</g:HTMLPanel>
+				<g:HTMLPanel ui:field="gradeContainer">
+					<g:Label ui:field="gradeLbl" styleName="col-md-4 col-xs-4 col-sm-4 {res.css.lables}"></g:Label>
+					<g:SimplePanel ui:field="collectionGradeTxtBox" styleName="col-md-8 col-xs-8 col-sm-8"></g:SimplePanel>
+					<g:HTMLPanel styleName="clearfix">	</g:HTMLPanel>
 				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{createCollectionStyle.formContainer}" ui:field="courseContainer">
-					<g:Label ui:field="courseLbl" styleName="{createCollectionStyle.formContainerLabel}"></g:Label>
-					<div styleName="{createCollectionStyle.formContainerinput}">
-						<g:SimplePanel ui:field="groupSimPanel"/>
-					</div>
+				
+				<g:HTMLPanel  ui:field="courseContainer">
+					<g:Label ui:field="courseLbl" styleName="col-md-4 col-xs-4 col-sm-4 {res.css.lables}"></g:Label>
+					<g:SimplePanel styleName="col-md-8 col-xs-8 col-sm-8" ui:field="groupSimPanel"/>
+				<g:HTMLPanel styleName="clearfix">	</g:HTMLPanel>
 				</g:HTMLPanel>
 
 				<g:FlowPanel styleName="{createCollectionStyle.contentAlign} {createCollectionStyle.actionField}" ui:field="buttonFloPanel">
@@ -63,13 +63,12 @@
 					<g:HTMLPanel styleName="{createCollectionStyle.clearStyle}"></g:HTMLPanel>
 				</g:FlowPanel>
 
-				<g:HTMLPanel styleName="{createCollectionStyle.formViewButtonContainer}" ui:field="buttonMainContainer">
+				<g:HTMLPanel styleName="{res.css.formViewButtonContainer}" ui:field="buttonMainContainer">
 					<g:Button styleName="secondary" ui:field="cancelAnr"> </g:Button>
 					<g:Button ui:field="btnOk" styleName="primary"></g:Button>
-					
 				</g:HTMLPanel>
 				<g:Label  styleName="{createCollectionStyle.formViewButtonContainer}" ui:field="loadingTextLbl"></g:Label>
-			</g:HTMLPanel>
+				</g:HTMLPanel>
 		</g:HTMLPanel>
-	</g:HTMLPanel>
+	
 </ui:UiBinder>

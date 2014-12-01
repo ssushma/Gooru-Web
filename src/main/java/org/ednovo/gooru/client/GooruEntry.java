@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.AppInjector;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.home.LoginPopUpCBundle;
+import org.ednovo.gooru.client.mvp.home.ResLoginStyleBundle;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerSmallMobileBundle;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.search.SearchCBundle;
@@ -125,10 +126,10 @@ public class GooruEntry implements EntryPoint {
 		StyleInjector.injectAtEnd("@media (min-width: 768px) and (max-width: 991px){"+LoginPopUpCBundle.INSTANCE.getResponsive3Style().getText()+"}");
 		StyleInjector.injectAtEnd("@media (min-width: 1200px){"+LoginPopUpCBundle.INSTANCE.getResponsive4Style().getText()+"}");
 		StyleInjector.injectAtEnd("@media screen and (max-width: 767px) {"+LoginPopUpCBundle.INSTANCE.getResponsive5Style().getText()+"}");
-		StyleInjector.injectAtEnd("@media screen and (min-width: 767px) {"+LoginPopUpCBundle.INSTANCE.getResponsive6Style().getText()+"}");
+		StyleInjector.injectAtEnd("@media screen and (min-width: 768px) {"+LoginPopUpCBundle.INSTANCE.getResponsive6Style().getText()+"}");
 
 		LoginPopUpCBundle.INSTANCE.css().ensureInjected();
-	
+
 	}
 	
 	/* 

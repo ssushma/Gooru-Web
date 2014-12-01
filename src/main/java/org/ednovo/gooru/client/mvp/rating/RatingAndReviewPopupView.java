@@ -113,14 +113,12 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		}
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));	
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
-
+		reviewsContainer.getElement().getStyle().setWidth(100, Unit.PCT);
 	}
 
 	@UiHandler("closeButton")
 	public void closeRatingAndReviewPopup(ClickEvent event){
 		String currentToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-
-		
 		hide();
 		if (!currentToken.equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) && !currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			Window.enableScrolling(true);

@@ -105,11 +105,11 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	Anchor forgotPwd, ancSignUp;
 
 	@UiField
-	Label lblPleaseWait, collectionDescription,donotHaveAcount,lblOr,lblLoginwithGooru;
+	Label lblPleaseWait, collectionDescription,lblOr,lblLoginwithGooru;
 	
 	@UiField HTMLPanel hangOnText,signUpPanel;
 	
-	@UiField InlineLabel lblPii,toUsText;
+	@UiField InlineLabel lblPii,toUsText,donotHaveAcount;
 	@UiField Anchor ancprivacy;
 
 
@@ -193,7 +193,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		hangOnText.getElement().setAttribute("alt",i18n.GL0740());
 		hangOnText.getElement().setAttribute("title",i18n.GL0740());
 		
-		signUpPanel.getElement().setAttribute("style", "display: inline-block;");
+	//	signUpPanel.getElement().setAttribute("style", "display: inline-block;");
 		signUpPanel.getElement().setId("pnlSignUpPanel");
 		
 		donotHaveAcount.setText(i18n.GL0634()+" ");
@@ -345,7 +345,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 
 	private void setHandlers() {
 
-		this.setSize("515px", "547px");
+		/*this.setSize("515px", "547px");*/
 		loginTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 		passwordTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 	}

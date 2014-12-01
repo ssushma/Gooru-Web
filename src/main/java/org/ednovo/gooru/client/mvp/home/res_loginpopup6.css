@@ -106,6 +106,44 @@
 	.subj ul li {
 		margin: 3px 0 3px 15px;
 	}
+.standeredList {
+clear: both;
+position: relative;
+top: -1px;
+width: auto;
+z-index: 10000;
+padding: 10px 0;
+background: #f8f8f8;
+border: solid 1px #999;
+margin: 0 0;
+height:450px;
+overflow-y:auto;
+display: none;
+}
+.PopupMainV1Small{
+}
+.firstInputGroup{}
+.childUserInfoContainer{}
+.childInputGroup{}
+.parentsAccount{}
+.contentDescr{}
+.orContainerDown{}
+
+.ratingStars{}
+.reviewsContent{}
+.bar{}
+ .count{}
+ .panelRatingLabels{}
+ .reviewContainer{}
+ .reviewContainerHeader{}
+  .date{}
+  .review{}
+  .ratingLabel{}
+   .panelRatingValues{}  
+ .rHeader{}
+.listGroup{}	
+.scrollBar{}
+.standarBodyContainer{}
 .actionField{}
 .sharenEmbedContainer{}
 .addButtonContainer{}	
@@ -225,13 +263,28 @@
 .improveGooruBlueText{}
 .improveGooruBlueTextDesc{} 
 .improveGooruDesc{}  
-
- 
-
-   
-
-
-
+.loginShareContainer{}
+ .collectionSel{}
+  .addSelection{}
+  .emailSelection{}
+   .lables{}
+   .assignContainer{}
+ .formViewButtonContainer{} 
+ .addTagsContent{}
+ .AddTagesPopup-levelType{}
+ .AddTagesPopup-selected{}
+ .AddTagesPopup-li{}
+  .AddTagesPopup-levelnumbers{}
+  .standardsCont{}
+ .AddTagesPopup-okcancel{}
+ .addQuestionStandard{}
+  .AddTagesPopup-h5{}
+.emailContainer{}
+.lblNoteTxt{}
+.classPageEmailButtonCancel{}   
+ .PopupMainExtraLarge{}
+.remixContainer{}
+.labels{}
  
 
  
