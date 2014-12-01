@@ -2735,5 +2735,34 @@ public interface MessageProperties extends Constants {
 	String GL3009();
 	String GL3010();
 	String GL3011();
+	String GL3012();
+	String GL3013();
+	String GL3014();
+	String GL3015();
+	String GL3016();
+	String GL3017();
+	String GL3018();
+	String GL3019();
+	String GL3020();
+	String GL3021();
+	String GL3022();
+	String GL3023();
+	String GL3024();
+	String GL3025();
+	String GL3026();
+	String GL3027();
+	String GL3028();
+	String GL3029();
+	String GL3030();
+	String GL3031();
+	String GL3032();
+	String GL3033();
+	String GL3034();
+	String GL3035();
+	String GL3036();
+	String GL3037();
+	String GL3038();
+	String GL3039();
+	String GL3040();
 	
 }

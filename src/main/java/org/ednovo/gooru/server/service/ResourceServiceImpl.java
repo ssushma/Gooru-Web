@@ -54,6 +54,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsListDo;
 import org.ednovo.gooru.shared.model.content.CollectionProfileItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
+import org.ednovo.gooru.shared.model.content.CollectionSettingsDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.NewResourceDo;
@@ -69,6 +70,7 @@ import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfanityDo;
+import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.user.GoogleToken;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -135,14 +137,32 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionDo createCollection(CollectionDo collectionDo, String codeId) {
 		CollectionDo collectionDoObj=new CollectionDo();
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_COLLLECTION, getLoggedInSessionToken());
-		Form form = ResourceFormFactory.generateDataForm(collectionDo, COLLECTION);
-		form.add(ADD_TO_SHELF, TRUE);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_COLLECTION_IN_FOLDER, getLoggedInSessionToken());
+		//collectionDo.setAddToShelf(TRUE);
 		if (codeId != null) {
-			form.add(TAXONOMY_CODE, codeId);
+			Set<CodeDo> codeDo=new HashSet<CodeDo>();
+			CodeDo codeDoObj=new CodeDo();
+			codeDoObj.setCodeId(Integer.parseInt(codeId));
+			codeDo.add(codeDoObj);
+			collectionDo.setTaxonomySet(codeDo);
 		}
+		CollectionSettingsDo collSetting = new CollectionSettingsDo();
+		collSetting.setComment("turn-on");
+		collectionDo.setSettings(collSetting);
+		String form = ResourceFormFactory.generateStringDataForm(collectionDo, COLLECTION);
+		
+		JSONObject jsonObj = new JSONObject();
+		try {
+		jsonObj = new JSONObject(form);	
+		jsonObj.put(ADD_TO_SHELF, TRUE);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//form.add(ADD_TO_SHELF, TRUE);
 
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
+
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), jsonObj.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation(); 
 		if(jsonResponseRep.getStatusCode()==200){
 			collectionDoObj = deserializeCollection(jsonRep);
@@ -445,17 +465,32 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionDo createCollectionWithItem(CollectionDo collectionDo, String codeId, String resourceId) {
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj= new CollectionDo();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_COLLLECTION, getLoggedInSessionToken());
-		Form form = ResourceFormFactory.generateDataForm(collectionDo, COLLECTION);
-		form.add(ADD_TO_SHELF, TRUE);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_COLLECTION_IN_FOLDER, getLoggedInSessionToken());
+		//collectionDo.setAddToShelf(TRUE);
 		if (codeId != null) {
-			form.add(TAXONOMY_CODE, codeId);
+			Set<CodeDo> codeDo=new HashSet<CodeDo>();
+			CodeDo codeDoObj=new CodeDo();
+			codeDoObj.setCodeId(Integer.parseInt(codeId));
+			codeDo.add(codeDoObj);
+			collectionDo.setTaxonomySet(codeDo);
 		}
-		if (resourceId != null) {
-			form.add(RESOURCE_ID, resourceId);
-		}
+		CollectionSettingsDo collSetting = new CollectionSettingsDo();
+		collSetting.setComment("turn-on");
+		collectionDo.setSettings(collSetting);
 
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
+		String form = ResourceFormFactory.generateStringDataForm(collectionDo, COLLECTION);
+		JSONObject jsonObj = new JSONObject();
+		try {
+		jsonObj = new JSONObject(form);	
+		jsonObj.put(ADD_TO_SHELF, TRUE);
+		if (resourceId != null) {
+			jsonObj.put(RESOURCE_ID,resourceId);
+		}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), jsonObj.toString());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
 			collectionDoObj = deserializeCollection(jsonRep);
