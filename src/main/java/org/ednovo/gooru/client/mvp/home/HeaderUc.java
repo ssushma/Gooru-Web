@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListHandler;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
+import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
@@ -242,6 +243,8 @@ public class HeaderUc extends Composite implements
 	DiscoverToolTip discoverToolTip;
 	
 	OrganizeToolTip organizeToolTip;
+	
+	PreFilterPopup prefilter=null;
 
 	boolean isGooruGuidePanelOpen = false;
 
@@ -303,7 +306,7 @@ public class HeaderUc extends Composite implements
 	public static HTMLPanel dotsPanel, mainDotsPanel, mainInnerDotsPanel,dropDownImg;
 
 	@UiField
-	Label discoverLink, organizeLink, teachLink, studyLink, loggedInfoLbl,thanksLbl;
+	Label discoverLink, organizeLink, teachLink, studyLink, loggedInfoLbl,thanksLbl,arrowLbl;
 
 	@UiField
 	HTMLEventPanel discoverLinkContainer, organizeLinkContainer,organizeLinkMain,teachLinkMain,discoverLinkMain,
@@ -593,6 +596,8 @@ public class HeaderUc extends Composite implements
 		discoverToolTip.getElement().getStyle().setBackgroundColor("transparent");
 		discoverToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		discoverToolTip.getElement().getStyle().setZIndex(99);
+		
+		arrowLbl.addClickHandler(new showPrefilterPopup());
 
 		
 		discovertooltippop.add(discoverToolTip);
@@ -1263,8 +1268,12 @@ public class HeaderUc extends Composite implements
 				//queryVal = queryVal.replaceAll("%5C1", "&");
 				Map<String, String> map = params;
 				map.put("query", queryVal);	
+				if(prefilter!=null){
+					prefilter.hide();
+				}
+				
 				AppClientFactory.getPlaceManager().revealPlace(
-						PlaceTokens.RESOURCE_SEARCH, map);
+						PlaceTokens.RESOURCE_SEARCH, params);
 			}
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 			getEditSearchTxtBox().hideSuggestionList();
@@ -1316,10 +1325,27 @@ public class HeaderUc extends Composite implements
 	 * @return pagination values
 	 */
 	public Map<String, String> updateParams(Map<String, String> params) {
+		params.clear();
+		if(prefilter!=null){
+			params=prefilter.getFilter();
+			String subject = params.get(IsSearchView.SUBJECT_FLT);
+			if (subject != null) {
+				params.put(IsSearchView.SUBJECT_FLT, subject);
+			}else{
+				params.remove(IsSearchView.SUBJECT_FLT);
+			}
+			String grade = params.get(IsSearchView.GRADE_FLT);
+			if (grade != null) {
+				params.put(IsSearchView.GRADE_FLT, grade);
+			}else{
+				params.remove(IsSearchView.GRADE_FLT);
+			}
+		}
 		params.put("category", "All");
 		params.put("query", getEditSearchText());
 		params.put("pageNum", "1");
 		params.put("pageSize", "8");
+		
 		return params;
 	}
 
@@ -1969,6 +1995,32 @@ public class HeaderUc extends Composite implements
 		{
 		myClassesPop.setVisible(false);
 		}
+	}
+	/**
+	 * @description This class is used to show the pre-filter search popup
+	 * @author search team
+	 * @date 27-Nov-2014
+	 *
+	 */
+	
+	public class showPrefilterPopup implements ClickHandler{
+
+		/* (non-Javadoc)
+		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+		 */
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			
+			if(prefilter!=null && prefilter.isShowing()){
+				prefilter.hide();
+			}else{
+				prefilter =	new PreFilterPopup();
+				prefilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, getAbsoluteTop()-10);
+				prefilter.show();
+			}
+		}
+		
 	}
 	
 }
