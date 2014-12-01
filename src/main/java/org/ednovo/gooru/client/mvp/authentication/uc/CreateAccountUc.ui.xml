@@ -10,7 +10,7 @@
 	
 	<g:HTMLPanel styleName="{res1.css.LoginpopupContent}" ui:field="mainContainer">
 		<g:Label styleName="{res1.css.subheader}" ui:field="lblPleaseFill"/>
-		<g:HTMLPanel styleName="{res1.css.userInfoContainer}">
+		<g:HTMLPanel styleName="{res1.css.userInfoContainer}" ui:field="popupbody">
 			<g:HTMLPanel>
 				<g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.horizontalTooltipContainer} hidden-xs"	ui:field="panelUserNamePopUp">
@@ -20,11 +20,11 @@
 							<g:HTMLPanel styleName="{res.css.arrow}"></g:HTMLPanel>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
-					<g:HTMLPanel>
-					<g:HTMLPanel styleName="col-md-6 col-xs-6 col-sm-6 {res1.css.inputGroup}">
+					<g:HTMLPanel ui:field="userDetailscontainer">
+					<g:HTMLPanel styleName="col-md-6 col-sm-6 {res1.css.inputGroup}">
 						<gg:TextBoxWithPlaceholder ui:field="txtChooseUsername" styleName="form-control"/>    
 					</g:HTMLPanel>
-					<g:HTMLPanel styleName="col-md-6 col-xs-6 col-sm-6 {res1.css.inputGroup}">
+					<g:HTMLPanel styleName="col-md-6 col-sm-6 {res1.css.inputGroup}">
 						<g:SimplePanel ui:field="sPanelDateOfBirth" styleName="form-control"/> 
 						<g:HTMLPanel styleName="{res1.css.questionHover} hidden-xs">
 						<g:Label  ui:field="lblQuestionMark"/>
@@ -49,11 +49,10 @@
 					<gg:ErrorLabelUc ui:field="userNameValidUc" />
 					<gg:ErrorLabelUc ui:field="dateValidationUc" styleName="{res.css.error}"/>				    
 				</g:HTMLPanel>
-				<g:HTMLPanel ui:field="panelBelowThirteen" styleName="{res.css.belowThirteenPanel}">
-				    <g:Label ui:field="lblNeedParentsAccount" styleName="{res.css.parentsAccount}" />
-				    <g:HTMLPanel styleName="{res.css.questionHoverContainerParentAccount}">
-						<g:Label styleName="{res.css.questionHover}" ui:field="lblQuestionMarkNeedParentAccount"/>
-						<g:HTMLPanel styleName="{res.css.tooltipContainer}" ui:field="tootltipContainer">
+				<g:HTMLPanel ui:field="panelBelowThirteen" styleName="{res1.css.childInputGroup}">
+				    <g:Label ui:field="lblNeedParentsAccount" styleName="{res1.css.parentsAccount}" />
+				 		<g:Label styleName="hidden-xs hidden-sm {res1.css.questionHover}" ui:field="lblQuestionMarkNeedParentAccount"/>
+						<g:HTMLPanel styleName="hidden-xs hidden-sm {res.css.tooltipContainer}" ui:field="tootltipContainer">
 							<g:HTMLPanel styleName="{res.css.arrowBorder}"></g:HTMLPanel>
 							<g:HTMLPanel styleName="{res.css.arrow}"></g:HTMLPanel>
 							<g:HTMLPanel styleName="{res.css.tooltipContent}">
@@ -61,18 +60,17 @@
 								<g:Label ui:field="lblWhyNeedParentDesc"/>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
-					</g:HTMLPanel>
-				    <g:Label ui:field="lblMyParentHasGooruAccount" />
-				    <g:HTMLPanel styleName="{res.css.parentEmailContainer}">
-				    <gg:TextBoxWithPlaceholder ui:field="txtParentEmailId"></gg:TextBoxWithPlaceholder>
+					<g:Label styleName="{res1.css.contentDescr}" ui:field="lblMyParentHasGooruAccount" />
+				    <g:HTMLPanel>
+				    <gg:TextBoxWithPlaceholder ui:field="txtParentEmailId" styleName="form-control {res1.css.form_control}"></gg:TextBoxWithPlaceholder>
 				    <g:Label ui:field="lblGetCorrectEmail" styleName="{res.css.rightIconImage}"/>
 				    <gg:ErrorLabelUc ui:field="parentEmailValidUc" />
 				    </g:HTMLPanel>
-				    <g:HTMLPanel styleName="{res.css.orBoderLeftSide}"/>
-				     <g:HTMLPanel styleName="{res.css.orBoderRightSide}"/>
-				     <g:Label ui:field="lblOr" styleName="{res.css.orBoder}" />
-				   <g:HTMLPanel styleName="{res.css.orContainerDown}">
-				    <g:Label ui:field="lblMyParentDontHaveAccount" />
+				    <g:HTMLPanel styleName="{res1.css.divider}">
+						<g:Label styleName="{res1.css.dividerText}" ui:field="lblOr">	</g:Label>
+					</g:HTMLPanel>
+				    <g:HTMLPanel styleName="{res1.css.orContainerDown}">
+				    <g:Label styleName="{res1.css.contentDescr}" ui:field="lblMyParentDontHaveAccount" />
 				    <g:Anchor ui:field="ancParentRegister" /> 
 				    </g:HTMLPanel>
 				</g:HTMLPanel>

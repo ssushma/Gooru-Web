@@ -19,7 +19,6 @@
 					<g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
-			
 			<g:HTMLPanel styleName="{res.css.LoginpopupContent}">
 				<g:Label styleName="{res.css.LoginPopUpgreen}" ui:field="lblWelcomeBack" />
 				<g:HTMLPanel styleName="{res.css.signInContainer}">

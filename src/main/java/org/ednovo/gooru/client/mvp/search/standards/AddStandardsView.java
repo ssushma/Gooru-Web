@@ -26,9 +26,10 @@ package org.ednovo.gooru.client.mvp.search.standards;
 
 import java.util.ArrayList;
 
-import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle;
 import org.ednovo.gooru.client.uc.AppPopUpStandards;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.uc.LiPanel;
+import org.ednovo.gooru.client.uc.UlPanel;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
@@ -45,8 +46,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -64,8 +66,8 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	ToolTip toolTip;
 	
 	@UiField Button commonStandards,texasKnowledge,ngss,californiaStandards,addBtn;
-	
-	@UiField HTMLPanel levelOneStandards,levelTwoStandards,levelThreeStandards,levelFourStandards;
+	@UiField Label subjects,grade,course,standard;
+	@UiField UlPanel levelOneStandards,levelTwoStandards,levelThreeStandards,levelFourStandards;
 	
 	private boolean isCheckedValue;
 	
@@ -135,8 +137,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		appPopUp.setViewTitle(i18n.GL0575());
 		
 		commonStandards.setStyleName("primary");
-		commonStandards.addStyleName(AddStandardsBundle.INSTANCE.css().btnStandardsStyle());
-	
+			
 	}
 	
 	@Override
@@ -156,10 +157,11 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	public void SetData(final StandardsLevel1DO levelOneData, int valArr)
 	{
 		instantVal = false;
-		HTMLEventPanel levelOneStandardsInner = new HTMLEventPanel("");
-		levelOneStandardsInner.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+		LiPanel liPanel=new LiPanel();
+		Anchor levelOneStandardsInner = new Anchor();
+		liPanel.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 		levelOneStandardsInner.getElement().setInnerHTML(levelOneData.getLabel());
-		levelOneStandardsInner.getElement().setAttribute("id", levelOneData.getCodeId().toString());
+		liPanel.getElement().setAttribute("id", levelOneData.getCodeId().toString());
 		if(levelOneData.getCode()!= null)
 		{
 		if(levelOneData.getCode().equalsIgnoreCase("CA.SCI") && !scienceCodeVal)
@@ -171,17 +173,16 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		}
 		if(!scienceStrCode.isEmpty())
 		{			
-			levelOneStandardsInner.getElement().setAttribute("dupid", scienceStrCode);
+			liPanel.getElement().setAttribute("dupid", scienceStrCode);
 		}
 		if(valArr==0)
 		{
-			levelOneStandardsInner.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
+			liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
 		}
-		levelOneStandardsInner.addClickHandler(new ClickHandler() {
-			
+		liPanel.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				HTMLEventPanel clickedElement = (HTMLEventPanel)event.getSource();
+				LiPanel clickedElement = (LiPanel)event.getSource();
 				String codeStandardsVal = clickedElement.getElement().getAttribute("id");
 				if(levelOneData.getCode() != null)
 				{
@@ -199,7 +200,6 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 				{
 					getFirstLevelObjects("1",codeStandardsVal);
 				}
-				
 				for(int l=0;l<levelOneStandards.getWidgetCount();l++)
 				{
 					levelOneStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
@@ -208,28 +208,30 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			}
 		});
 
+		liPanel.add(levelOneStandardsInner);
 		if(!instantVal)
 		{
-		levelOneStandards.add(levelOneStandardsInner.asWidget());
+		levelOneStandards.add(liPanel.asWidget());
 		}
 		
 		if(valArr == 0)
 		{
 		for(int i=0;i<levelOneData.getNode().size();i++)
 		{
-			HTMLEventPanel levelOneStandardsInner2 = new HTMLEventPanel("");
-			levelOneStandardsInner2.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+			LiPanel liPanel2=new LiPanel();
+			Anchor levelOneStandardsInner2 = new Anchor();
+			liPanel2.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 			levelOneStandardsInner2.getElement().setInnerHTML(levelOneData.getNode().get(i).getLabel());
-			levelOneStandardsInner2.getElement().setAttribute("id", levelOneData.getNode().get(i).getCodeId().toString());
+			liPanel2.getElement().setAttribute("id", levelOneData.getNode().get(i).getCodeId().toString());
 			if(i==0)
 			{
-				levelOneStandardsInner2.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
+				liPanel2.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
 			}
-			levelOneStandardsInner2.addClickHandler(new ClickHandler() {
+			liPanel2.addClickHandler(new ClickHandler() {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					HTMLEventPanel clickedElement = (HTMLEventPanel)event.getSource();
+					LiPanel clickedElement = (LiPanel)event.getSource();
 					String codeStandardsVal = clickedElement.getElement().getAttribute("id");
 					getSecondLevelObjects("2",codeStandardsVal);
 					for(int l=0;l<levelTwoStandards.getWidgetCount();l++)
@@ -240,24 +242,26 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 					
 				}
 			});
-			levelTwoStandards.add(levelOneStandardsInner2.asWidget());
+			liPanel2.add(levelOneStandardsInner2);
+			levelTwoStandards.add(liPanel2.asWidget());
 			if(i==0)
 			{
 			for(int j=0;j<levelOneData.getNode().get(i).getNode().size();j++)
 			{
-				HTMLEventPanel levelOneStandardsInner3 = new HTMLEventPanel("");
-				levelOneStandardsInner3.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+				LiPanel  liPanel3=new LiPanel();
+				Anchor levelOneStandardsInner3 = new Anchor();
+				liPanel3.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 				levelOneStandardsInner3.getElement().setInnerHTML(levelOneData.getNode().get(i).getNode().get(j).getLabel());
-				levelOneStandardsInner3.getElement().setAttribute("id", levelOneData.getNode().get(i).getNode().get(j).getCodeId().toString());
+				liPanel3.getElement().setAttribute("id", levelOneData.getNode().get(i).getNode().get(j).getCodeId().toString());
 				if(j==0)
 				{
-					levelOneStandardsInner3.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
+					liPanel3.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
 				}
-				levelOneStandardsInner3.addClickHandler(new ClickHandler() {
+				liPanel3.addClickHandler(new ClickHandler() {
 					
 					@Override
 					public void onClick(ClickEvent event) {
-						HTMLEventPanel clickedElement = (HTMLEventPanel)event.getSource();
+						LiPanel clickedElement = (LiPanel)event.getSource();
 						String codeStandardsVal = clickedElement.getElement().getAttribute("id");
 						getThirdLevelObjects("3",codeStandardsVal);
 						for(int l=0;l<levelThreeStandards.getWidgetCount();l++)
@@ -268,12 +272,14 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 						
 					}
 				});
-				levelThreeStandards.add(levelOneStandardsInner3.asWidget());
-				if(j==0)
-				{
+				liPanel3.add(levelOneStandardsInner3);
+				levelThreeStandards.add(liPanel3.asWidget());
+				if(j==0){
 				for(int k=0;k<levelOneData.getNode().get(i).getNode().get(j).getNode().size();k++)
 				{
-					HTMLEventPanel levelOneStandardsInner4Outer = new HTMLEventPanel("");
+				
+					
+					LiPanel levelOneStandardsInner4Outer = new LiPanel();
 					HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
 					HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
 					levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
@@ -291,7 +297,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 						@Override
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
-							HTMLEventPanel clickedObject = (HTMLEventPanel)event.getSource();
+							LiPanel clickedObject = (LiPanel)event.getSource();
 							selectedCodeVal = codeVal;
 							selectedCodeId=codeIdVal;
 							selectedCodeDesc = codeDesc;
@@ -353,19 +359,20 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		{
 			try
 			{
-			HTMLEventPanel levelOneStandardsInner2 = new HTMLEventPanel("");
-			levelOneStandardsInner2.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+			LiPanel liPanel1=new LiPanel();	
+			Anchor levelOneStandardsInner2 = new Anchor();
+			liPanel1.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 			levelOneStandardsInner2.getElement().setInnerHTML(levelOneData.get(i).getLabel());
-			levelOneStandardsInner2.getElement().setAttribute("id", levelOneData.get(i).getCodeId().toString());
+			liPanel1.getElement().setAttribute("id", levelOneData.get(i).getCodeId().toString());
 			if(i==0)
 			{
-				levelOneStandardsInner2.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
+				liPanel1.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
 			}
-			levelOneStandardsInner2.addClickHandler(new ClickHandler() {
+			liPanel1.addClickHandler(new ClickHandler() {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					HTMLEventPanel clickedElement = (HTMLEventPanel)event.getSource();
+					LiPanel clickedElement = (LiPanel)event.getSource();
 					String codeStandardsVal = clickedElement.getElement().getAttribute("id");
 					getSecondLevelObjects("2",codeStandardsVal);
 					for(int l=0;l<levelTwoStandards.getWidgetCount();l++)
@@ -381,19 +388,20 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			{
 			for(int j=0;j<levelOneData.get(i).getNode().size();j++)
 			{
-				HTMLEventPanel levelOneStandardsInner3 = new HTMLEventPanel("");
-				levelOneStandardsInner3.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+				LiPanel liPanel=new LiPanel();
+				Anchor levelOneStandardsInner3 = new Anchor();
+				liPanel.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 				levelOneStandardsInner3.getElement().setInnerHTML(levelOneData.get(i).getNode().get(j).getLabel());
-				levelOneStandardsInner3.getElement().setAttribute("id", levelOneData.get(i).getNode().get(j).getCodeId().toString());
+				liPanel.getElement().setAttribute("id", levelOneData.get(i).getNode().get(j).getCodeId().toString());
 				if(j==0)
 				{
-					levelOneStandardsInner3.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
+					liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
 				}
-				levelOneStandardsInner3.addClickHandler(new ClickHandler() {
+				liPanel.addClickHandler(new ClickHandler() {
 					
 					@Override
 					public void onClick(ClickEvent event) {
-						HTMLEventPanel clickedElement = (HTMLEventPanel)event.getSource();
+						LiPanel clickedElement = (LiPanel)event.getSource();
 						String codeStandardsVal = clickedElement.getElement().getAttribute("id");
 						getThirdLevelObjects("3",codeStandardsVal);
 						for(int l=0;l<levelThreeStandards.getWidgetCount();l++)
@@ -404,12 +412,13 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 						
 					}
 				});
-				levelThreeStandards.add(levelOneStandardsInner3.asWidget());
+				liPanel.add(levelOneStandardsInner3);
+				levelThreeStandards.add(liPanel.asWidget());
 				if(j==0)
 				{
 				for(int k=0;k<levelOneData.get(i).getNode().get(j).getNode().size();k++)
 				{
-					HTMLEventPanel levelOneStandardsInner4Outer = new HTMLEventPanel("");
+					LiPanel levelOneStandardsInner4Outer = new LiPanel();
 					HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
 					HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
 					levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
@@ -427,7 +436,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 						@Override
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
-							HTMLEventPanel clickedObject = (HTMLEventPanel)event.getSource();
+							LiPanel clickedObject = (LiPanel)event.getSource();
 							selectedCodeVal = codeVal;
 							selectedCodeId=codeIdVal;
 							selectedCodeDesc = codeDesc;
@@ -462,19 +471,20 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			for(int j=0;j<levelOneData.size();j++)
 			{
 				try{
-				HTMLEventPanel levelOneStandardsInner3 = new HTMLEventPanel("");
-				levelOneStandardsInner3.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
+				LiPanel liPanel=new LiPanel();	
+				Anchor levelOneStandardsInner3 = new Anchor();
+				liPanel.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 				levelOneStandardsInner3.getElement().setInnerHTML(levelOneData.get(j).getLabel());
-				levelOneStandardsInner3.getElement().setAttribute("id", levelOneData.get(j).getCodeId().toString());
+				liPanel.getElement().setAttribute("id", levelOneData.get(j).getCodeId().toString());
 				if(j==0)
 				{
-					levelOneStandardsInner3.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
+					liPanel.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());				
 				}
-				levelOneStandardsInner3.addClickHandler(new ClickHandler() {
+				liPanel.addClickHandler(new ClickHandler() {
 					
 					@Override
 					public void onClick(ClickEvent event) {
-						HTMLEventPanel clickedElement = (HTMLEventPanel)event.getSource();
+						LiPanel clickedElement = (LiPanel)event.getSource();
 						String codeStandardsVal = clickedElement.getElement().getAttribute("id");
 						getThirdLevelObjects("3",codeStandardsVal);
 						for(int l=0;l<levelThreeStandards.getWidgetCount();l++)
@@ -485,12 +495,13 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 						
 					}
 				});
-				levelThreeStandards.add(levelOneStandardsInner3.asWidget());
+				liPanel.add(levelOneStandardsInner3);
+				levelThreeStandards.add(liPanel.asWidget());
 				if(j==0)
 				{
 				for(int k=0;k<levelOneData.get(j).getNode().size();k++)
 				{
-					HTMLEventPanel levelOneStandardsInner4Outer = new HTMLEventPanel("");
+					LiPanel levelOneStandardsInner4Outer = new LiPanel();
 					HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
 					HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
 					levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
@@ -507,7 +518,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 						
 						@Override
 						public void onClick(ClickEvent event) {
-							HTMLEventPanel clickedObject = (HTMLEventPanel)event.getSource();
+							LiPanel clickedObject = (LiPanel)event.getSource();
 							selectedCodeVal = codeVal;
 							selectedCodeId=codeIdVal;
 							selectedCodeDesc = codeDesc;
@@ -541,7 +552,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 				for(int k=0;k<levelOneData.size();k++)
 				{
 					try{
-					HTMLEventPanel levelOneStandardsInner4Outer = new HTMLEventPanel("");
+					LiPanel levelOneStandardsInner4Outer = new LiPanel();
 					HTMLEventPanel levelOneStandardsInner4 = new HTMLEventPanel("");
 					HTMLEventPanel levelOneStandardsInner4Code = new HTMLEventPanel("");
 					levelOneStandardsInner4Outer.setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
@@ -559,7 +570,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 						@Override
 						public void onClick(ClickEvent event) {
 							// TODO Auto-generated method stub
-							HTMLEventPanel clickedObject = (HTMLEventPanel)event.getSource();
+							LiPanel clickedObject = (LiPanel)event.getSource();
 							selectedCodeVal = codeVal;
 							selectedCodeId=codeIdVal;
 							selectedCodeDesc = codeDesc;
@@ -695,8 +706,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 		californiaStandards.addStyleName("secondary");
 		commonStandards.removeStyleName("secondary");
 		commonStandards.addStyleName("primary");
-
-	getUiHandlers().loadStateStandards("CCSS");
+		getUiHandlers().loadStateStandards("CCSS");
 	}
 	
 	@UiHandler("ngss")
@@ -746,4 +756,42 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 			return selectedCodeDesc;
 	}
 	
+	@UiHandler("subjects")
+	public void subjectdropdown(ClickEvent clickEvent){
+		invokestandrs1();
+	}
+	
+	@UiHandler("grade")
+	public void gradedropdown(ClickEvent clickEvent){
+		invokestandrs2();
+	}
+	
+	@UiHandler("course")
+	public void courseropdown(ClickEvent clickEvent){
+		invokestandrs3();
+	}
+	
+	@UiHandler("standard")
+	public void standarddropdown(ClickEvent clickEvent){
+		invokestandrs4();
+	}
+	
+	public static native void invokestandrs1() /*-{
+		
+		$wnd.searchStandard1();
+	}-*/;
+	
+	public static native void invokestandrs2() /*-{
+		
+		$wnd.searchStandard2();
+	}-*/;
+	
+	public static native void invokestandrs3() /*-{
+		
+		$wnd.searchStandard3();
+	}-*/;
+	public static native void invokestandrs4() /*-{
+	
+		$wnd.searchStandard4();
+	}-*/;
 }

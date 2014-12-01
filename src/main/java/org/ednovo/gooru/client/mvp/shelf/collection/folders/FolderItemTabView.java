@@ -262,13 +262,13 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					}
 				};
 				folderPopupUc.setGlassEnabled(true);
-				folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
+				/*folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
 				if(isFolderType){
 					folderPopupUc.getElement().setAttribute("style", "top:50px !important;");	
 				}else{
 					folderPopupUc.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - (464), Window.getScrollTop() + 233);
 				}
-				
+				*/
 				Window.enableScrolling(false);
 				folderPopupUc.show();
 			}
