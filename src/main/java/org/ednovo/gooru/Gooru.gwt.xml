@@ -43,6 +43,9 @@
 	<!-- Include GWTUpload library -->
 	<inherits name="gwtupload.GWTUpload" />
 
+	<!-- GWT high charts-->
+	<inherits name="org.moxieapps.gwt.highcharts.Highcharts"/>
+	
 	<!-- Specify the app entry point class. -->
 	<entry-point class='org.ednovo.gooru.client.GooruEntry' />
 
