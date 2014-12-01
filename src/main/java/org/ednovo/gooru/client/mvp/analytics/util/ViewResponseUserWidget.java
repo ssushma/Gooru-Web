@@ -154,21 +154,21 @@ public class ViewResponseUserWidget extends Composite {
 			if((feedBackStatus!=null && feedBackStatus.equalsIgnoreCase("true")) && (oeText!=null && !oeText.trim().isEmpty())){
 				editFeedBackpnl.setVisible(true);
 				editedText.setText(oetextDataDO.getFeedbackText());
-				feedBacktxt.setText(oetextDataDO.getFeedbackText());
+				feedBacktxt.setText(decodeFeedbackText(oetextDataDO.getFeedbackText()));
 				createOn.setText(AnalyticsUtil.getCreatedTime(Long.toString(oetextDataDO.getFeedbackTimestamp())));
 			}
 			final String classCode=Document.get().getElementById("txtClassCode")!=null?Document.get().getElementById("txtClassCode").getInnerText():"";
 			btnSubmit.addClickHandler(new  ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					AppClientFactory.getInjector().getAnalyticsService().postTeacherFeedBackToStudent(feedBacktxt.getText(), resourceGooruId, collectionId, classpageId, pathwayId, oetextDataDO.getGooruUId(), session,"","",classCode, new AsyncCallback<FeedBackResponseDataDO>() {
+					AppClientFactory.getInjector().getAnalyticsService().postTeacherFeedBackToStudent(encodedString(feedBacktxt.getText()), resourceGooruId, collectionId, classpageId, pathwayId, oetextDataDO.getGooruUId(), session,"","",classCode, new AsyncCallback<FeedBackResponseDataDO>() {
 						@Override
 						public void onSuccess(FeedBackResponseDataDO result) {
 							if(result!=null){
 								giveFeedBackpnl.setVisible(false);
 								editFeedBackpnl.setVisible(true);
-								editedText.setText(result.getFreeText());
-								feedBacktxt.setText(result.getFreeText());
+								editedText.setText(decodeFeedbackText(result.getFreeText()));
+								feedBacktxt.setText(decodeFeedbackText(result.getFreeText()));
 								createOn.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.getCreatedOn())));
 							}
 						}
@@ -188,8 +188,8 @@ public class ViewResponseUserWidget extends Composite {
 							if(result!=null){
 								giveFeedBackpnl.setVisible(true);
 								editFeedBackpnl.setVisible(false);
-								editedText.setText(result.getFreeText());
-								feedBacktxt.setText(result.getFreeText());
+								editedText.setText(decodeFeedbackText(result.getFreeText()));
+								feedBacktxt.setText((result.getFreeText()));
 								createOn.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.getCreatedOn())));
 							}
 						}
@@ -208,4 +208,14 @@ public class ViewResponseUserWidget extends Composite {
 			});
 		}
 	}
+	public static native String encodedString(String msg) /*-{
+	  	var feedbackText = encodeURIComponent(feedbackContent);
+	  	return feedbackText;
+	}-*/;
+	
+	public static native String decodeFeedbackText(String msg) /*-{
+  	 	  var decodeFeedback = decodeURIComponent(feedbackText);
+		  decodeFeedback = decodeFeedback.replace(/<|_/g,'&lt;');
+		  return decodeFeedback;
+	}-*/;
 }

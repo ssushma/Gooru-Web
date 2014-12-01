@@ -172,7 +172,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	   	        	data.setCell(i, 0, i+1, null, getPropertiesCell());
 	   	        	
 	   	            //Set Question Title
-	   	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()));
+	   	            Label questionTitle=new Label( AnalyticsUtil.html2text(result.get(i).getTitle()!=null?result.get(i).getTitle():""));
 	   	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 	   	            data.setValue(i, 1, questionTitle.toString());
 	   	          
@@ -302,7 +302,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	            data.setValue(i, 1,categorylbl.toString());
 	            
 	            //Set Question Title
-	            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()));
+	            Label questionTitle=new Label(AnalyticsUtil.html2text(result.get(i).getTitle()!=null?result.get(i).getTitle():""));
 	            questionTitle.setStyleName(res.css().alignCenterAndBackground());
 	            data.setValue(i, 2, questionTitle.toString());
 	          
@@ -411,7 +411,7 @@ public class CollectionSummaryTeacherView  extends BaseViewWithHandlers<Collecti
 	void setSortedData(ArrayList<UserDataDo> scoredQuestionsData,SortTable sortableTable){
 		 for(int i=1;i<=scoredQuestionsData.size();i++){
         	 sortableTable.setValue(i, 0,i);
-             sortableTable.setValue(i, 1, AnalyticsUtil.html2text(scoredQuestionsData.get(i-1).getTitle()));
+             sortableTable.setValue(i, 1, AnalyticsUtil.html2text(scoredQuestionsData.get(i-1).getTitle()!=null?scoredQuestionsData.get(i-1).getTitle():""));
              
              VerticalPanel answerBreakDownpnl=new VerticalPanel();
              if(scoredQuestionsData.get(i-1).getType()!=null){
