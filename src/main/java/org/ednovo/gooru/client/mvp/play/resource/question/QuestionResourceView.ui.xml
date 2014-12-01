@@ -5,12 +5,14 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field= "oeStyle" src="questionresource.css" type="org.ednovo.gooru.client.mvp.play.resource.question.QuestionStyleResource"/>
 	<g:FlowPanel styleName="{oeStyle.openEndedQuestionTotalContainer}" ui:field="questionContainer">
-     	<g:FlowPanel styleName="{oeStyle.openEndedQuestionContainer}">
+     	<g:FlowPanel styleName="col-md-6 col-sm-6">
 	         <g:HTMLPanel styleName="{oeStyle.openendedQuestionTitle}" ui:field="questiontext"></g:HTMLPanel>
 	         <g:HTML styleName="{oeStyle.openEndedQuestionFull}" ui:field="openEndedQuestionText"></g:HTML>
 	         <g:Image styleName="{oeStyle.openEndedQuestionImageContainer} {oeStyle.openEndedQuestionImage}" ui:field="openEndedQuestionImage"/>
-	         <g:Button styleName="{oeStyle.hintsActiveButton}" ui:field="hintsButton"></g:Button>
-	         <g:Button styleName="{oeStyle.hintsActiveButton}" ui:field="explanaionButton"></g:Button>
+	         <g:FlowPanel styleName="{oeStyle.questionButtons}">
+		         <g:Button styleName="{oeStyle.hintsActiveButton}" ui:field="hintsButton"></g:Button>
+		         <g:Button styleName="{oeStyle.hintsActiveButton}" ui:field="explanaionButton"></g:Button>
+	         </g:FlowPanel>
 	         <g:FlowPanel styleName="{oeStyle.hintsHoldingContainer}" ui:field="hintsContainer"></g:FlowPanel>
 	         <g:HTMLPanel styleName="{oeStyle.explanationText}"  ui:field="explanationContainer"></g:HTMLPanel>
          </g:FlowPanel>

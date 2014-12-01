@@ -53,6 +53,7 @@ import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
@@ -103,7 +104,7 @@ public class SearchInfoWidget extends Composite {
 	readingLevelPanel,hasAdaptationPanel,languagePanel,countryCodePanel,isAdaptationPanel,copyRightPanel,hostPanel,
 	accessibilityAPIPanel,accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel,thumbnailPanel,licenceCodePanel,
 	authorPanel,schLevelPanel,eduUseType,keyWordsPanel,keywordsInfo,readingLevelType,accessModeType,mediaFeatureType,accessibilityAPIType,dKnowledgeType,
-	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,generalPanel,gradesText;
+	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,generalPanel,gradesText,totalContainer;
 	
 	@UiField
 	HTMLPanel aggregationPanel,aggregationType;
@@ -155,6 +156,7 @@ public class SearchInfoWidget extends Composite {
 		isResourceInfo=false;
 		isAccessibilityInfo=false;
 		isGrades =false;
+		totalContainer.getElement().getStyle().setPadding(15, Unit.PX);
 		setResourceInfoData();
 	}
 
@@ -282,6 +284,7 @@ public class SearchInfoWidget extends Composite {
 		}
 		if(searchResultsDo.getResourceTitle()!=null){
 			lblcollectionName.setHTML(removeHtmlTags(searchResultsDo.getResourceTitle()));
+			
 
 		}
 		/**
@@ -752,6 +755,7 @@ public class SearchInfoWidget extends Composite {
 			originalUrlAnchor.setHref(originalUrl);
 			originalUrlAnchor.setStyleName("");
 			originalUrlAnchor.setTarget("_blank");
+			originalUrlAnchor.getElement().setAttribute("style"," word-break: break-all;");
 			this.originalUrlText.add(originalUrlAnchor);
 			this.originalUrlTitle.setVisible(true);
 			this.originalUrlText.setVisible(true);

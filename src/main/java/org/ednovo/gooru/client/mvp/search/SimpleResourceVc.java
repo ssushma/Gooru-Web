@@ -79,7 +79,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 	@UiField
 	HTML resourceTitleLbl;
 	
-	@UiField HTMLPanel resourceTitleContainer;
+	@UiField HTMLPanel resourceTitleContainer,mainContainer;
 
 	@UiField
 	ResourceImageUc resourceImageUc;
@@ -113,7 +113,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 		positionLbl.getElement().setId("lblPositionLbl");
 		positionLbl.getElement().setAttribute("alt",position + "");
 		positionLbl.getElement().setAttribute("title",position + "");
-		
+		mainContainer.getElement().getStyle().setPaddingBottom(10, Unit.PX);
 			
 		
 		imgOER.setUrl("images/oer_icon.png");
@@ -171,8 +171,11 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 		//boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? false : true : true;
 		
 		if (resourceTitleLbl.getText().length() > 30){
-			resourceTitleLbl.getElement().getStyle().setWidth(210, Unit.PX);
-			resourceTitleLbl.getElement().getStyle().setFloat(Float.LEFT);
+			String resourceTitleText=resourceTitleLbl.getText();
+			 resourceTitleText=resourceTitleText.substring(0, 26)+"...";
+			 resourceTitleLbl.setText(resourceTitleText);
+			 //resourceTitleLbl.getElement().getStyle().setWidth(210, Unit.PX);
+			//resourceTitleLbl.getElement().getStyle().setFloat(Float.LEFT);
 		}else{
 			resourceTitleLbl.getElement().getStyle().clearWidth();
 			resourceTitleLbl.getElement().getStyle().clearFloat();

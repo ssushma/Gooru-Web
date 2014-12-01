@@ -46,6 +46,9 @@ import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.DisclosurePanelUc;
 import org.ednovo.gooru.client.uc.DownToolTipUc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
+import org.ednovo.gooru.client.uc.H4Panel;
+import org.ednovo.gooru.client.uc.H5Panel;
+import org.ednovo.gooru.client.uc.PPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -88,6 +91,7 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
@@ -142,11 +146,17 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	/*@UiField
 	DisclosurePanelUc authorPanelUc;*/
 	
-	@UiField HTMLPanel panelNotMobileFriendly,categoryPanelUc,subjectPanelUc,gradePanelUc,ratingPanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc,accessModePanel;
+
+	@UiField HTMLPanel categoryPanelUc,subjectPanelUc,gradePanelUc,ratingPanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc,accessModePanel;
+	
+	@UiField PPanel panelNotMobileFriendly; 
+
 	
 	@UiField
-	HTMLPanel /*contentpanel,*/oerPanel;
-
+	PPanel /*contentpanel,*/oerPanel;
+	
+	@UiField
+	H5Panel resourceFormatLbl,subjectLbl,gradeLbl,standardLbl,accessModeLbl;
 	@UiField(provided = true)
 	AppSuggestBox sourceSgstBox;
 
@@ -169,17 +179,22 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	FlowPanel standardContainerFloPanel;
 
 	@UiField
-	Label sourcesNotFoundLbl,filtersText,/*notifyText,*/aggregatorNotFoundLbl;
+	Label sourcesNotFoundLbl,aggregatorNotFoundLbl;
+	
+	@UiField
+	H4Panel filtersText;
 
 	@UiField
 	Label standardsNotFoundLbl,ratingsLbl;
 	
 	@UiField
-	Label publisherTooltip, standardHelpicon,clearAll,aggregatorTooltip,resourceFormatLbl,subjectLbl,gradeLbl,aggregatorLbl,sourceLbl,authorLbl,standardLbl,accessModeLbl;
+	Label publisherTooltip, standardHelpicon,clearAll,aggregatorTooltip,aggregatorLbl,sourceLbl,authorLbl;
 
 	@UiField
 	HTMLEventPanel sourceToolTip, standardToolTip,aggregatorToolTip;
 	
+	@UiField
+	SearchCBundle res;
 	/*@UiField Image publisherTooltip;*/
 	CheckBox chkNotFriendly = null;
 	CheckBox chkOER = null;
@@ -190,9 +205,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiField
 	Style style;
 	
-		ToolTip toolTip = null;
+
+	ToolTip toolTip = null;
 		
-		GlobalToolTip globalToolTip=null;
+	GlobalToolTip globalToolTip=null;
 	
 	private AppMultiWordSuggestOracle sourceSuggestOracle;
 
@@ -252,6 +268,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 */
 	public SearchFilterVc(final boolean resourceSearch) {
 		this.resourceSearch = resourceSearch;
+		res.INSTANCE.css().ensureInjected();
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(15);
 		standardsInfoSearchDo.setPageSize(20);
@@ -487,10 +504,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		aggregatorLbl.getElement().setAttribute("alt",i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
 		aggregatorLbl.getElement().setAttribute("title",i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
 		
-		standardSgstBox.getElement().getStyle().setMarginTop(2, Unit.PX);
-		standardSgstBox.getElement().getStyle().setMarginLeft(3, Unit.PX);
+		/*standardSgstBox.getElement().getStyle().setMarginTop(2, Unit.PX);
+		standardSgstBox.getElement().getStyle().setMarginLeft(3, Unit.PX);*/
 		
-		browseStandards.getElement().getStyle().setPadding(4, Unit.PX);
+	//	browseStandards.getElement().getStyle().setPadding(4, Unit.PX);
 		
 //		aggregatorPanelUc.setHeaderTitle(i18n.GL1628()+i18n.GL_SPL_SEMICOLON()+" ");
 		
@@ -505,10 +522,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			sourceSgstBox.addSelectionHandler(this);
 			aggregatorSgstBox.addSelectionHandler(this);
 			aggregatorNotFoundLbl.getElement().getStyle().setOpacity(0.0);
-			
-			
+						
 			publisherTooltip.addMouseOverHandler(new MouseOverHandler() {
-				
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
 					toolTip = new ToolTip(i18n.GL1769());
@@ -621,7 +636,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		standardToolTip.getElement().setId("epnlStandardToolTip");
 		standardsNotFoundLbl.getElement().setId("lblStandardsNotFoundLbl");
 		standardContainerFloPanel.getElement().setId("fpnlStandardContainerFloPanel");
-	}
+}
 	
 
 	/**
@@ -629,107 +644,106 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 * @param key check box name
 	 * @param value check box value
 	 */
-	public void renderCheckBox(DisclosurePanelUc disclosurePanelVc, String key, String value) {
-		CheckBox categoryChk = new CheckBox();
-		categoryChk.setText(value);
-		categoryChk.setName(key);
-		if(value.equalsIgnoreCase("videos")){
-			categoryChk.setText("Video");
-			MixpanelUtil.mixpanelEvent("search_video_filter_selected");
-			categoryChk.getElement().setId("chkVideos");	
-		}else if(value.equalsIgnoreCase("webpage")){
-			MixpanelUtil.mixpanelEvent("search_webpage_filter_selected");
-			categoryChk.getElement().setId("chkwebpage");	
-		}
-		/*else if(value.equalsIgnoreCase("websites"))
-		{
-			MixpanelUtil.mixpanelEvent("search_websites_filter_selected");
-			categoryChk.getElement().setId("chkwebsites");	
-		}*/
-		else if(value.equalsIgnoreCase("interactives")){
-			categoryChk.setText("Interactive");
-			MixpanelUtil.mixpanelEvent("search_interactives_filter_selected");
-			categoryChk.getElement().setId("chkInteractives");
-		}
-		else if(value.equalsIgnoreCase("questions")){
-			categoryChk.setText("Question");
-			MixpanelUtil.mixpanelEvent("search_questions_filter_selected");
-			categoryChk.getElement().setId("chkQuestions");
-		}
-		else if(value.equalsIgnoreCase("images")){
-			categoryChk.setText("Image");
-			MixpanelUtil.mixpanelEvent("search_images_filter_selected");
-			categoryChk.getElement().setId("chkImages");
-		}
-		else if(value.equalsIgnoreCase("texts")){
-			categoryChk.setText("Text");
-			MixpanelUtil.mixpanelEvent("search_texts_filter_selected");
-			categoryChk.getElement().setId("chkTexts");
-		}
-		else if(value.equalsIgnoreCase("audio")){
-			MixpanelUtil.mixpanelEvent("search_audios_filter_selected");
-			categoryChk.getElement().setId("chkAudios");
-		}
-		/*else if(value.equalsIgnoreCase("others")){
-			MixpanelUtil.mixpanelEvent("search_others_filter_selected");
-			categoryChk.getElement().setId("chkOther");
-		}*/
-		else if(value.equalsIgnoreCase("science")){
-			categoryChk.getElement().setId("chkScience");
-		}
-		else if(value.equalsIgnoreCase("math")){
-			categoryChk.getElement().setId("chkMath");
-		}
-		else if(value.equalsIgnoreCase("Social Sciences")){
-			categoryChk.getElement().setId("chkSocialSciences");
-		}
-		else if(value.equalsIgnoreCase("Language Arts")){
-			categoryChk.getElement().setId("chkLanguageArts");
-		}
-		else if(value.equalsIgnoreCase("Arts and Humanities")){
-			categoryChk.getElement().setId("chkArts&Humanities");
-		}
-		else if(value.equalsIgnoreCase("Technology & Engineering")){
-			categoryChk.setText("Tech & Engineering");
-			categoryChk.getElement().setId("chkTechnology&Engineering");
-		}
-		else if(value.equalsIgnoreCase("Elementary School")){
-			categoryChk.getElement().setId("chkElementarySchool");
-		}
-		else if(value.equalsIgnoreCase("Middle School")){
-			categoryChk.getElement().setId("chkMiddleSchool");
-		}
-		else if(value.equalsIgnoreCase("High School")){
-			categoryChk.getElement().setId("chkHighSchool");
-		}
-		else if(value.equalsIgnoreCase("Higher Education")){
-			categoryChk.getElement().setId("chkHigherEducation");
-		}
-		else if(value.equalsIgnoreCase("Show only Quizzes")){
-			categoryChk.getElement().setId("chkShowonlyQuizzes");
-		}
-		categoryChk.setStyleName(CssTokens.FILTER_CHECKBOX);
-		categoryChk.addStyleName(value.toLowerCase());
-		disclosurePanelVc.addWidget(categoryChk);
-		categoryChk.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
-
-			@Override
-			public void onValueChange(ValueChangeEvent<Boolean> event) {
-				AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
-			}
-		});
-	}
-	public void renderOERCheckBox(HTMLPanel disclosurePanelVc, String key, final String value) {
+//	public void renderCheckBox(DisclosurePanelUc disclosurePanelVc, String key, String value) {
+//		CheckBox categoryChk = new CheckBox();
+//		categoryChk.setText(value);
+//		categoryChk.setName(key);
+//		if(value.equalsIgnoreCase("videos")){
+//			categoryChk.setText("Video");
+//			MixpanelUtil.mixpanelEvent("search_video_filter_selected");
+//			categoryChk.getElement().setId("chkVideos");	
+//		}else if(value.equalsIgnoreCase("webpage")){
+//			MixpanelUtil.mixpanelEvent("search_webpage_filter_selected");
+//			categoryChk.getElement().setId("chkwebpage");	
+//		}
+//		/*else if(value.equalsIgnoreCase("websites"))
+//		{
+//			MixpanelUtil.mixpanelEvent("search_websites_filter_selected");
+//			categoryChk.getElement().setId("chkwebsites");	
+//		}*/
+//		else if(value.equalsIgnoreCase("interactives")){
+//			categoryChk.setText("Interactive");
+//			MixpanelUtil.mixpanelEvent("search_interactives_filter_selected");
+//			categoryChk.getElement().setId("chkInteractives");
+//		}
+//		else if(value.equalsIgnoreCase("questions")){
+//			categoryChk.setText("Question");
+//			MixpanelUtil.mixpanelEvent("search_questions_filter_selected");
+//			categoryChk.getElement().setId("chkQuestions");
+//		}
+//		else if(value.equalsIgnoreCase("images")){
+//			categoryChk.setText("Image");
+//			MixpanelUtil.mixpanelEvent("search_images_filter_selected");
+//			categoryChk.getElement().setId("chkImages");
+//		}
+//		else if(value.equalsIgnoreCase("texts")){
+//			categoryChk.setText("Text");
+//			MixpanelUtil.mixpanelEvent("search_texts_filter_selected");
+//			categoryChk.getElement().setId("chkTexts");
+//		}
+//		else if(value.equalsIgnoreCase("audio")){
+//			MixpanelUtil.mixpanelEvent("search_audios_filter_selected");
+//			categoryChk.getElement().setId("chkAudios");
+//		}
+//		/*else if(value.equalsIgnoreCase("others")){
+//			MixpanelUtil.mixpanelEvent("search_others_filter_selected");
+//			categoryChk.getElement().setId("chkOther");
+//		}*/
+//		else if(value.equalsIgnoreCase("science")){
+//			categoryChk.getElement().setId("chkScience");
+//		}
+//		else if(value.equalsIgnoreCase("math")){
+//			categoryChk.getElement().setId("chkMath");
+//		}
+//		else if(value.equalsIgnoreCase("Social Sciences")){
+//			categoryChk.getElement().setId("chkSocialSciences");
+//		}
+//		else if(value.equalsIgnoreCase("Language Arts")){
+//			categoryChk.getElement().setId("chkLanguageArts");
+//		}
+//		else if(value.equalsIgnoreCase("Arts and Humanities")){
+//			categoryChk.getElement().setId("chkArts&Humanities");
+//		}
+//		else if(value.equalsIgnoreCase("Technology & Engineering")){
+//			categoryChk.setText("Tech & Engineering");
+//			categoryChk.getElement().setId("chkTechnology&Engineering");
+//		}
+//		else if(value.equalsIgnoreCase("Elementary School")){
+//			categoryChk.getElement().setId("chkElementarySchool");
+//		}
+//		else if(value.equalsIgnoreCase("Middle School")){
+//			categoryChk.getElement().setId("chkMiddleSchool");
+//		}
+//		else if(value.equalsIgnoreCase("High School")){
+//			categoryChk.getElement().setId("chkHighSchool");
+//		}
+//		else if(value.equalsIgnoreCase("Higher Education")){
+//			categoryChk.getElement().setId("chkHigherEducation");
+//		}
+//		else if(value.equalsIgnoreCase("Show only Quizzes")){
+//			categoryChk.getElement().setId("chkShowonlyQuizzes");
+//		}
+//		categoryChk.setStyleName(CssTokens.FILTER_CHECKBOX);
+//		categoryChk.addStyleName(value.toLowerCase());
+//		disclosurePanelVc.addWidget(categoryChk);
+//		categoryChk.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+//
+//			@Override
+//			public void onValueChange(ValueChangeEvent<Boolean> event) {
+//				AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+//			}
+//		});
+//	}
+	public void renderOERCheckBox(PPanel disclosurePanelVc, String key, final String value) {
 		chkOER = new CheckBox();	
 		chkOER.setText(value);
 		chkOER.setName(key);
 		
 		if(value.equalsIgnoreCase("OER")){
-			disclosurePanelVc.setStyleName("oerContainer");
 			chkOER.getElement().setId("chkOer");
-			chkOER.getElement().getStyle().setMarginTop(20, Unit.PX);
+			//chkOER.getElement().getStyle().setMarginTop(20, Unit.PX);
 		}
-			chkOER.setStyleName(CssTokens.FILTER_CHECKBOX);
+		//	chkOER.setStyleName(CssTokens.FILTER_CHECKBOX);
 			chkOER.addStyleName(value.toLowerCase());
 			disclosurePanelVc.add(chkOER);
 	
@@ -773,19 +787,19 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 * @param key check box name
 	 * @param value check box value
 	 */
-	public void renderCheckBox(HTMLPanel disclosurePanelVc, String key, final String value) {
+	public void renderCheckBox(PPanel disclosurePanelVc, String key, final String value) {
 		
 		chkNotFriendly = new CheckBox();
 		chkNotFriendly.setText(value);
 		chkNotFriendly.setName(key);
 		
 		if(value.equalsIgnoreCase("Mobile Friendly")){
-			disclosurePanelVc.setStyleName("mobilefriendlyContainer");
+			//disclosurePanelVc.setStyleName("mobilefriendlyContainer");
 			chkNotFriendly.getElement().setId("chkNotFriendly");
 //			chkNotFriendly.getElement().getStyle().setMarginTop(20, Unit.PX);
 	
 		}
-		chkNotFriendly.setStyleName(CssTokens.FILTER_CHECKBOX);
+		//chkNotFriendly.setStyleName(CssTokens.FILTER_CHECKBOX);
 		chkNotFriendly.addStyleName(value.toLowerCase());
 		if(value.equalsIgnoreCase("fivestar")){
 			chkNotFriendly.setText("");
@@ -808,6 +822,37 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 	}
 	
+	public void renderCheckBox1(HTMLPanel disclosurePanelVc, String key, final String value) {
+		chkNotFriendly = new CheckBox();
+		chkNotFriendly.setText(value);
+		chkNotFriendly.setName(key);
+		
+		if(value.equalsIgnoreCase("Mobile Friendly")){
+			//disclosurePanelVc.setStyleName("mobilefriendlyContainer");
+			chkNotFriendly.getElement().setId("chkNotFriendly");
+//			chkNotFriendly.getElement().getStyle().setMarginTop(20, Unit.PX);
+	
+		}
+		if(resourceSearch)
+		chkNotFriendly.setStyleName(res.css().filterCheckBox());
+		chkNotFriendly.addStyleName(value.toLowerCase());
+		disclosurePanelVc.add(chkNotFriendly);
+		chkNotFriendly.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				if (chkNotFriendly.getValue()){
+						MixpanelUtil.MOS_Filter("Selected");
+					
+				}else{
+						MixpanelUtil.MOS_Filter("Unselected");
+				}
+				AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+			}
+		});
+		
+	}
+
 	/*public void renderRadioButtons(final DisclosurePanelUc disclosurePanelVc, String key, String value){
 		final QuestionTypeFilter questionTypeFilter=new QuestionTypeFilter(key);
 		questionTypeFilter.radioButton.addClickHandler(new ClickHandler() {
@@ -918,19 +963,19 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				Iterator<Map.Entry<String, String>> categoriesIterator = searchFilterDo.getCategories().entrySet().iterator();
 				while (categoriesIterator.hasNext()) {
 					Map.Entry<String, String> entry = categoriesIterator.next();
-					renderCheckBox(categoryPanelUc, entry.getKey(), entry.getValue());
+					renderCheckBox1(categoryPanelUc, entry.getKey(), entry.getValue());
 				}
 			}
 			
 			if (searchFilterDo.getGradeLevels() != null) {		
-				renderCheckBox(gradePanelUc, "K-4", i18n.GL0166());
-				renderCheckBox(gradePanelUc, "5-8", i18n.GL0167());
-				renderCheckBox(gradePanelUc, "9-12", i18n.GL0168());
-				renderCheckBox(gradePanelUc, "H", i18n.GL0169());
+				renderCheckBox1(gradePanelUc, "K-4", i18n.GL0166());
+				renderCheckBox1(gradePanelUc, "5-8", i18n.GL0167());
+				renderCheckBox1(gradePanelUc, "9-12", i18n.GL0168());
+				renderCheckBox1(gradePanelUc, "H", i18n.GL0169());
 			}
 			if (searchFilterDo.getSubjects() != null) {
 				for (String subject : searchFilterDo.getSubjects()) {
-					renderCheckBox(subjectPanelUc, subject, subject);
+					renderCheckBox1(subjectPanelUc, subject, subject);
 				}
 			}
 			
@@ -951,8 +996,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			renderOERCheckBox(oerPanel, "not_show_OER", "OER");
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
 			final Image imgNotFriendly = new Image("images/mos/questionmark.png");
-			imgNotFriendly.getElement().getStyle().setLeft(114, Unit.PX);
-			imgNotFriendly.getElement().getStyle().setTop(-16, Unit.PX);
+			imgNotFriendly.getElement().getStyle().setLeft(104, Unit.PX);
+			imgNotFriendly.getElement().getStyle().setTop(-25, Unit.PX);
 			imgNotFriendly.getElement().getStyle().setMarginLeft(30, Unit.PX);
 			imgNotFriendly.getElement().getStyle().setPosition(Position.RELATIVE);
 	
@@ -993,8 +1038,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			//added for OER search
 			
 			final Image oer = new Image("images/mos/questionmark.png");
-			oer.getElement().getStyle().setLeft(85, Unit.PX);
-			oer.getElement().getStyle().setTop(-20, Unit.PX);
+			oer.getElement().getStyle().setLeft(72, Unit.PX);
+			oer.getElement().getStyle().setTop(-23, Unit.PX);
 			oer.getElement().getStyle().setPosition(Position.RELATIVE);
 			oer.getElement().getStyle().setCursor(Cursor.POINTER);
 			oer.setAltText(i18n.GL0732());
@@ -1030,7 +1075,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			
 			//Ratings panel
 			for(int i=5;i>0;i--){
-				renderCheckBox(ratingPanelUc, i+"", "fivestar");
+				renderCheckBox1(ratingPanelUc, i+"", "fivestar");
 			}
 			
 		}/*else{
@@ -1799,5 +1844,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	public void enableStandards(){
 		browseStandards.getElement().getStyle().clearColor();
 		browseStandards.getElement().removeClassName("disabled");
+	}
+	public FlowPanel getMainContainer(){
+		return myCollectionSearch;
+
 	}
 }

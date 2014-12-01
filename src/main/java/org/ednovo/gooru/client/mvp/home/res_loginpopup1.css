@@ -1,0 +1,233 @@
+	
+.LoginpopupMain{
+	width:100%;
+}	
+.PopupMainVVSmall{
+	width:100%;
+}	
+.PopupMainVSmall{
+		width:100%;
+}
+.LoginpopupContent {
+    padding: 6px 6px;
+}
+
+.gConnectButton{
+	padding:16px 16px 15px 45px;
+}
+
+.signInContainer{
+	padding:25px 15px;
+}
+	
+.subheader{
+	text-align:center;
+}
+.popupContentLeaveRegistration {
+
+    padding: 30px 5px;
+
+}
+.SignUp-green-h1{
+	font-size:17px;
+}
+.SignUp-h2{
+	font-size:14px;
+}
+.leaveRegistrationButtonContainer button{
+	margin-bottom:15px;
+}
+.leaveRegistrationButtonContainer .primary{
+	margin-left:0;
+}
+
+.PopupMainMedium{
+	width:100%;
+
+}
+
+.PopupMainSmall{
+		width:100%;
+}
+
+.PopupMainLarge{
+	width:100%;
+}
+.PopupMainMedium .text{
+	text-align:center;
+
+
+}
+
+.lblCollectionProgress{
+	text-align:center;
+}
+.lblCollectionProgressDetails{
+	text-align:center;
+}
+
+.SliderHolderNext{
+	right:-25px;
+	
+}
+.SliderHolderPrev{
+	left:-25px;
+	
+}
+.courseOption {
+    background-color: white;
+    border: 1px solid #ddd;
+    color: #515151;
+    display: inline-block;
+    margin: 0 10px 10px 0;
+    vertical-align: top;
+    width: 80px;
+}
+
+.courseContainer {
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+}
+.shareSelection{
+	margin:10px 10px;
+}
+.improveGooruLinkDesc{
+	text-align:center;
+	font-size:11px;
+	padding:10px 0;
+
+}
+.improveGooruLinkDesc a{
+	color:#4d9645;
+}
+.improveGooruDesc{
+	display:none;
+}
+
+.improveGooruDescriptionx{
+	padding-left:0;
+	text-align:center;
+	margin-bottom:15px;
+	padding-bottom:15px;
+	border-bottom:1px solid #dddddd;
+}
+
+.borderLeft{
+	border-left:none;
+}
+.whatLeft{
+	width:100%;
+}
+.whatRight{
+	width:100%;
+}
+.overRideBlueButton{}
+.collectionFormCancelButton{}
+.actionField{}
+.sharenEmbedContainer{}
+.addButtonContainer{}
+.LoginPopUpgreensmall{}
+.LoginPopUpgreensmall{}
+.LoginPopUpgreensmall{}
+.LoginpopupInner{}
+.dividerText{}
+.haveAccount{}
+.logInput{}
+.closeContainer{}
+.whyGoogle{}
+.divider{}
+.loginPopupbtnContainer{}
+.form-control{}
+.closeButton{}
+.processing{}
+ .lblDontHaveGoogleAccount{}
+ .haveAccountContainer{}
+.lnkSignUpWithEmail{}
+ .loginPopupGlassStyle{}
+.LoginPopUpgreen{}
+.questionHover{}   
+ .LoginpopupHeader{}
+ .forgotPasswordLink{}       
+
+ .policyTextLine{}
+ .roleOptionImage{}
+ .selectGrades{}
+ .contactUs{}
+ .subjectOptionScience{}
+ .Grades{}
+ .inputGroup{}
+ .subjectOption{}
+ .leaveRegistrationBottomContainer{}
+ .policyTextHeade{}
+ .courseOption{}
+ .forgotPasswordText{}
+ .popupInnerforgotPassword{}
+ .PopupContent{}
+.popupInnerGrey{}
+ .popupgreyFooter{}
+ .userInfoContainer{}
+ .sampleReportSliderHolder{}
+ .paragraph{}
+ .roleOption{}
+ .roleLabel{}
+.active{}
+ .greyBGContainer{}
+ .popupFooter{}
+.textContentDiv{}
+ .popupgreenHeader{}
+ .subjectOptionELA{}
+ .selectCourses{}
+.PopupInner{}
+ .popupgreyHeader{}
+ .subjectOptionSS{}
+  .termsSubTitle{}
+  .popupContentScroll{}
+  .forgotPasswordTextBoxContainer{}
+  .popupContentGrey{}
+  .leaveRegistarionFooterText{}
+  .popupInnerLeaveReg{}
+ .privacyLinkText{}
+.subjectOptionMath{}
+ .termsTextLine{}
+ .termsTextLine{}
+ .forgotPasswordDescription{}
+  .lastUpdated{}
+.otherRole{}
+.popupContentforgotPassword{}
+.disabled{}
+.GreenHeader{}
+.teacherRole{}
+.forgotPasswordButtonContainer{}
+.parentRole{}
+.secondary{}
+ .noOverflow{}
+.termsOfUserMessageText{}
+ .studentRole{}
+ .title{}
+ .privacyCloseButton{}
+.teacherRoleSelected{}
+.studentRoleSelected{}
+.parentRoleSelected{}
+.otherRoleSelected{}
+.forgotPasswordErrorMessage{}
+.sceinceActive{}
+.mathActive{}
+.ssActive{}
+.elaActive{}
+ .subj{}
+ .menu-icon{}
+ .activeGrade{}
+.collectionSelected{}
+.contentDesc{}
+.dontWorrkText{}
+.popupcornerBg{}
+.whatNew{}
+.whatLeft{}
+.whatRight{}
+.borderLeft{}
+.improveGooruDescriptionx{}
+.improveGooruLinkDesc{}
+.improveGooruSubHeading{}
+.improveGooruBlueText{}
+.improveGooruBlueTextDesc{}

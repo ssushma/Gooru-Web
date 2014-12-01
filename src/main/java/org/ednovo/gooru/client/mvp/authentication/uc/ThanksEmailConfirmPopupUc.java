@@ -41,6 +41,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -64,11 +65,12 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ThanksEmailConfirmPopupUc extends PopupPanel{
  
-	@UiField Label lblLoginHeading, lblCongratsHeader, lblClose,lblCheckYourEmail; //lblDiscover,lblOrganize,lblTeach
+	@UiField Label lblLoginHeading, lblCongratsHeader,lblCheckYourEmail; //lblDiscover,lblOrganize,lblTeach
 	
 	@UiField Button btnStartUsingGooru;//btnDiscover, btnOrganize, btnTeach,
 	
 	@UiField HTMLPanel panelPopupInner;
+	@UiField Anchor lblClose;
 	
 	@UiField(provided = true)
 	SignUpCBundle res;

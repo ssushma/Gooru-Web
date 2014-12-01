@@ -34,6 +34,7 @@ import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.FlowPanel;
 
 public interface IsCollectionPlayerMetadataView extends IsViewWithHandlers<CollectionPlayerMetadataUiHandlers>{
 
@@ -77,6 +78,4 @@ public interface IsCollectionPlayerMetadataView extends IsViewWithHandlers<Colle
 	
 	public void setPlayerLoginStatus(boolean isLoggedIn);
 
-	public void hideTeachPanelDetails(boolean isDisplayDetails);
-	
 }

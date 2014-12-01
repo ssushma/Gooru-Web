@@ -47,9 +47,12 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -58,10 +61,9 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlayerTocUiHandlers> implements IsCollectionPlayerTocView{
 
-	@UiField FlowPanel navgationTocContainer;
-	@UiField Label previousButton,nextButton,hideText,resourceCountLabel;
+	@UiField FlowPanel navgationTocContainer,carouselContainer;
+	@UiField Label previousButton,nextButton,resourceCountLabel;
 	
-	@UiField HTMLEventPanel hideButton;
 	
 	private int selectedWidgetIndex=-1;
 	
@@ -75,18 +77,10 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 	@Inject
 	public CollectionPlayerTocView(){
 		setWidget(uiBinder.createAndBindUi(this));
-		hideText.setText(i18n.GL0592());
-		hideText.getElement().setId("lblHideText");
-		hideText.getElement().setAttribute("alt",i18n.GL0592());
-		hideText.getElement().setAttribute("title",i18n.GL0592());
 		
 		previousButton.getElement().setId("lblPreviousButton");
 		navgationTocContainer.getElement().setId("fpnlNavgationTocContainer");
 		nextButton.getElement().setId("lblNextButton");
-		hideButton.getElement().setId("epnlHideButton");
-		if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.COLLECTION_PLAY)){
-			hideButton.setVisible(false);
-		}
 	}
 	public void clearNavigationPanel(){
 		navgationTocContainer.clear();
@@ -110,7 +104,12 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				previousButton.setVisible(true);
 				List<CollectionItemDo> collectionItems=collectionDo.getCollectionItems();
 			
-				TocCollectionHomeView tocCollectionHomeView=new TocCollectionHomeView(collectionDo.getThumbnails().getUrl());
+				TocCollectionHomeView tocCollectionHomeView=new TocCollectionHomeView(collectionDo.getThumbnails().getUrl()){
+					@Override
+					public void setPaddingTopForPlayerBody(){
+						getUiHandlers().setPaddingTopForPlayerBody();
+					}
+				};
 				if(!isCollectionHome){
 					tocCollectionHomeView.hideResourceThumbnailContainer(true);
 				}
@@ -141,14 +140,14 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				navgationTocContainer.add(tocCollectionEndView);
 				//resources width with padding and margin constitutes 100px for each and collection home and end with padding and margin width
 				//have 100px each. navgationTocContainer width is derived from this.
-				if(resourcesSize>7){
+				//if(resourcesSize>7){
 					navgationTocContainer.getElement().removeAttribute("style");
-					new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize+2, 100);
-				}else{
-					nextButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
-					previousButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
-					navgationTocContainer.getElement().setAttribute("style", "width:"+((resourcesSize+2)*100)+"px !important;");
-				}
+					new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize+2, 100,carouselContainer);
+//				}else{
+//					nextButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+//					previousButton.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+//					navgationTocContainer.getElement().setAttribute("style", "width:"+((resourcesSize+2)*100)+"px !important;");
+//				}
 				String resourceString = resourceCount == 1? resourceCount + " " + i18n.GL1110().toLowerCase() : resourceCount + " " + i18n.GL0174().toLowerCase();
 				String questionString = questionCount == 1? questionCount + " " + i18n.GL0308().toLowerCase() : questionCount + " " + i18n.GL1042().toLowerCase();
 				String finalMessage = "";
@@ -301,79 +300,5 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 			}
 		}
 	}
-	/**
-	 * 
-	 * @function onhideBtnClicked 
-	 * 
-	 * @created_date : 11-Dec-2013
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
-	@UiHandler("hideButton")
-	public void onhideBtnClicked(ClickEvent clickEvent) 
-	{
-		PlaceRequest collectionRequest = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-		String collectionId = collectionRequest.getParameter("id", null);
-		String collectionItemId = collectionRequest.getParameter("rid", null);
-		String chkViewParam = collectionRequest.getParameter("view", null);
-		
-		Map<String,String> params = new LinkedHashMap<String,String>();
-		params.put("id", collectionId);
-		params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
-		
-	if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.RESOURCE_PLAY))
-	{
-		PlaceRequest request=new PlaceRequest(PlaceTokens.RESOURCE_PLAY).
-				with("id", collectionId);
-		AppClientFactory.getPlaceManager().revealPlace(false,request,true);
-	}
-	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.COLLECTION_PLAY) && chkViewParam == null && collectionItemId != null)
-	{
-		PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).
-				with("id", collectionId).with("rid", collectionItemId);
-		AppClientFactory.getPlaceManager().revealPlace(false,request,true);
-	}
-	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.PREVIEW_PLAY) && chkViewParam == null && collectionItemId != null)
-	{
-		params.put("rid", collectionItemId);
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-	}
-	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.COLLECTION_PLAY) && chkViewParam == null && collectionItemId == null)
-	{
-		PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).
-				with("id", collectionId);
-		AppClientFactory.getPlaceManager().revealPlace(false,request,true);
-	}
-	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.PREVIEW_PLAY) && chkViewParam == null && collectionItemId == null)
-	{
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-	}
-	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.COLLECTION_PLAY) && chkViewParam.equalsIgnoreCase("end"))
-	{
-		PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).
-				with("id", collectionId).with("view", "end");
-		AppClientFactory.getPlaceManager().revealPlace(false,request,true);
-	}
-	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.PREVIEW_PLAY) && chkViewParam.equalsIgnoreCase("end"))
-	{
-		params.put("view", "end");
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-
-	}
-	}
-
-	
-
 	
 }

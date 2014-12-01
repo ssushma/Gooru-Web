@@ -5,6 +5,7 @@
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=9"> -->
 <meta http-equiv="X-UA-Compatible" content="IE=9" />
 <!-- <meta name="viewport" content="width=640, user-scalable=no"> -->
+<meta name='viewport' content='width=device-width,initial-scale=1,maximum-scale=1'>
 <link type="text/css" rel="stylesheet" href="css/fi/foundation-icons.css">
 <!-- <link type="text/css" rel="stylesheet" href="css/css/font-awesome.css"> -->
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -28,6 +29,20 @@
 	src="scripts/errorImageFunction.js"></script>
 	<script type="text/javascript"
 	src="scripts/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> 
+<script type="text/javascript"	src="scripts/highcharts.js"></script>
+<script type="text/javascript"	src="scripts/push-menu.js"></script>
+<script type="text/javascript"	src="scripts/highcharts-more.js"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="css/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    google.load("visualization", "1", {
+        'packages' : [ "corechart" ]
+    });
+    google.load("visualization", "1", {'packages' : ["table"] });
+</script>
 <script>
      (function() {
  	    var et = document.createElement('script'); et.type = 'text/javascript'; et.async= true;
@@ -132,8 +147,8 @@ mixpanel.init(mixpanelApiKey);
 </script>
 </head>
 <body>
-	<iframe id="__printingFrame" style="width: 0; height: 0; border: 0"></iframe>
-	<noscript>
+ <!--  <iframe id="__printingFrame" style="width: 0; height: 0; border: 0"></iframe>  -->
+  	<noscript>
 		<div
 			style="width: 22em; position: absolute; left: 50%; overflow: auto; margin-left: -11em; color: red; border: 1px solid red; padding: 4px; font-family: sans-serif">
 			Your web browser must have JavaScript enabled in order for this

@@ -52,6 +52,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -99,12 +100,18 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	FlowPanel disclosureHeaderFloPanel;
 
 	@UiField
-	Label moreInfoLbl,collcResLbl;
+	Anchor moreInfoLbl,collcResLbl;
 
 	@UiField
-	Label shareLbl,tagsLbl;
+	Label tagsLbl;
 	
-	@UiField public Label addLbl,analyticsInfoLbl;
+	@UiField public Label analyticsInfoLbl;
+	
+	@UiField Anchor shareLbl;
+	
+	@UiField 
+	public Anchor addLbl;
+
 	
 	@UiField(provided = true)
 	SearchResultWrapperCBundle res;
@@ -171,6 +178,10 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		setAddedStatus(true);
+		disclosureContentSimPanel.getElement().getStyle().setWidth(100, Unit.PCT);
+		disclosureContentSimPanel.getElement().getStyle().setBorderWidth(0, Unit.PX);
+		disclosureContentSimPanel.getElement().getStyle().setPadding(0, Unit.PX);
+		disclosureContentSimPanel.getElement().getStyle().setMargin(0, Unit.PX);
 		moreInfoLbl.setText(i18n.GL1756());
 		moreInfoLbl.getElement().setAttribute("alt",i18n.GL1756());
 		moreInfoLbl.getElement().setAttribute("title",i18n.GL1756());
@@ -228,6 +239,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		resourcePlayerClickPanel.getElement().setId("lblResourcePlayerClickPanel");
 		disclosureHeaderFloPanel.getElement().setId("fpnlDisclosureHeaderFloPanel");
 		disclosureDisPanel.getElement().setId("discpnlDisclosureDisPanel");
+		disclosureDisPanel.getElement().getStyle().setWidth(100, Unit.PCT);
 		disclosureContentSimPanel.getElement().setId("spnlDisclosureContentSimPanel");
 	}
 

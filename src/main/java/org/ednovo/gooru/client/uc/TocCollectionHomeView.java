@@ -91,6 +91,7 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 	
 	public void onLoad(){
 		resourceThumbnail.setUrl(thumbnailUrl);
+		setPaddingTopForPlayerBody();
 	}
 	
 	@UiHandler("resourceThumbnail")
@@ -134,6 +135,9 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 	
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
 		return addDomHandler(handler, ClickEvent.getType());
+	}
+	public void setPaddingTopForPlayerBody(){
+		
 	}
 	
 }
