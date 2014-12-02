@@ -1557,6 +1557,12 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void onKeyDown(KeyDownEvent event) {
+			if (getEditSearchTxtBox().getText() != null && getEditSearchTxtBox().getText().length() > 0){
+				arrowLbl.setVisible(true);
+			}else{
+				arrowLbl.setVisible(false);
+			}
+		
 			if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 				if (getEditSearchTxtBox().getText() != null
 						&& getEditSearchTxtBox().getText().length() > 0) {
