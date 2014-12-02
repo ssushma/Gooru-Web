@@ -22,36 +22,42 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+package org.ednovo.gooru.client.uc.error;
 
-package org.ednovo.gooru.client.mvp.shelf.event;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.Widget;
 
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.ShelfCollectionResourceChildView;
+/**
+ * @author Search Team
+ *
+ */
+public class ErrorPopupUc extends Composite{
 
-import com.google.gwt.event.shared.GwtEvent;
+	public PopupPanel appPopUp;
 
-public class ReorderCollectionResourcesEvent extends GwtEvent<ReorderCollectionResourcesEventHandler> {
-	
-	public static final Type<ReorderCollectionResourcesEventHandler> TYPE = new Type<ReorderCollectionResourcesEventHandler>();
-	
-	ShelfCollectionResourceChildView shelfCollectionResourceChildView;
-	String arrow;
-	Integer newSequence;
-	
-	
-	public ReorderCollectionResourcesEvent(ShelfCollectionResourceChildView shelfCollectionResourceChildView, String arrow, Integer newSequence){
-		this.shelfCollectionResourceChildView = shelfCollectionResourceChildView;
-		this.arrow = arrow;
-		this.newSequence = newSequence;
+	private static ErrorPopupUcUiBinder uiBinder = GWT.create(ErrorPopupUcUiBinder.class);
+
+	interface ErrorPopupUcUiBinder extends UiBinder<Widget, ErrorPopupUc> {
+		
 	}
 
-	@Override
-	public com.google.gwt.event.shared.GwtEvent.Type<ReorderCollectionResourcesEventHandler> getAssociatedType() {
-		return TYPE;
+	 private MessageProperties i18n = GWT.create(MessageProperties.class);
+	 
+	/**
+	 * Class constructor , get confirm logout popup
+	 */
+	public ErrorPopupUc() {
+		appPopUp = new PopupPanel();
+		appPopUp.setWidget(uiBinder.createAndBindUi(this));
+		appPopUp.setGlassEnabled(true);
 	}
-
-	@Override
-	protected void dispatch(ReorderCollectionResourcesEventHandler handler) {
-		handler.reorderResources(shelfCollectionResourceChildView, arrow, newSequence); 
-	} 
-
+	
+	public void show(){
+		appPopUp.show();
+		appPopUp.center();
+	}
 }

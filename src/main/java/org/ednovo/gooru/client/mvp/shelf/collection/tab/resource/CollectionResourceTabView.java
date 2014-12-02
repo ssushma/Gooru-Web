@@ -53,6 +53,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -1368,7 +1369,7 @@ public class CollectionResourceTabView extends
 
 			ShelfCollectionResourceChildView shelfCollectionResourceChildView = getFolderOrCollectionWidget(itemGooruOid);
 
-			itemPosSeqNumb = shelfCollectionResourceChildView != null ?(shelfCollectionResourceChildView.getCollectionItemDo().getItemSequence()):0;
+			itemPosSeqNumb = shelfCollectionResourceChildView != null ?(Integer.parseInt(shelfCollectionResourceChildView.getElement().getAttribute("widgetNumb"))):0;
 			itemToBeMovedPosSeqNumb = (shelfCollectionResourceChildView != null && shelfCollectionResourceChildView.getReorderTxtBox().getText().trim() !=null && !shelfCollectionResourceChildView.getReorderTxtBox().getText().trim().equals(""))?(Integer.parseInt(shelfCollectionResourceChildView.getReorderTxtBox().getText().trim())):0;
 
 			if(itemToBeMovedPosSeqNumb==0 && itemPosSeqNumb!=1 && itemPosSeqNumb!=getTotalCount()){
@@ -1410,7 +1411,7 @@ public class CollectionResourceTabView extends
 			
 			ShelfCollectionResourceChildView shelfCollectionResourceChildView = getFolderOrCollectionWidget(itemGooruOid);
 			
-			itemPosSeqNumb = shelfCollectionResourceChildView != null ?shelfCollectionResourceChildView.getCollectionItemDo().getItemSequence():0;
+			itemPosSeqNumb = shelfCollectionResourceChildView != null ?Integer.parseInt(shelfCollectionResourceChildView.getElement().getAttribute("widgetNumb")):0;
 			itemToBeMovedPosSeqNumb = (shelfCollectionResourceChildView != null && shelfCollectionResourceChildView.getReorderTxtBox().getText().trim() !=null && !shelfCollectionResourceChildView.getReorderTxtBox().getText().trim().equals(""))?(Integer.parseInt(shelfCollectionResourceChildView.getReorderTxtBox().getText().trim())):0;
 			if(shelfCollectionResourceChildView!=null){
 				reorderValidationMsg = reorderValidations(itemToBeMovedPosSeqNumb,itemPosSeqNumb,UP_ARROW);
@@ -1458,7 +1459,7 @@ public class CollectionResourceTabView extends
 			
 			ShelfCollectionResourceChildView shelfCollectionResourceChildView = getFolderOrCollectionWidget(itemGooruOid);
 
-			itemPosSeqNumb = shelfCollectionResourceChildView != null ?(shelfCollectionResourceChildView.getCollectionItemDo().getItemSequence()):0;
+			itemPosSeqNumb = shelfCollectionResourceChildView != null ?(Integer.parseInt(shelfCollectionResourceChildView.getElement().getAttribute("widgetNumb"))):0;
 			itemToBeMovedPosSeqNumb = shelfCollectionResourceChildView != null && shelfCollectionResourceChildView.getReorderTxtBox().getText().trim() !=null && !shelfCollectionResourceChildView.getReorderTxtBox().getText().trim().equals("")?(Integer.parseInt(shelfCollectionResourceChildView.getReorderTxtBox().getText().trim())):0;
 			if(shelfCollectionResourceChildView!=null){
 				reorderValidationMsg = reorderValidations(itemToBeMovedPosSeqNumb,itemPosSeqNumb,DOWN_ARROW);
@@ -1487,9 +1488,9 @@ public class CollectionResourceTabView extends
 	public String reorderValidations(int itemToBeMovedPosSeqNumb,int itemPosSeqNumb,String arrow) {
 		String validationStaus=REORDER_VALIDATION_MSG; 
 		if(itemToBeMovedPosSeqNumb==0){
-			validationStaus = "Given Reorder sequence is not valid or empty.";
+			validationStaus = i18n.GL3003();
 		}else if(itemToBeMovedPosSeqNumb>getTotalCount()){
-			validationStaus = "Sorry, you don't have "+itemToBeMovedPosSeqNumb+"th resource to reorder";
+			validationStaus = StringUtil.generateMessage(i18n.GL3005(),itemToBeMovedPosSeqNumb+"");
 		}else if(itemToBeMovedPosSeqNumb==0){
 			validationStaus = "Please specify the reorder sequence.";
 		}
@@ -1523,6 +1524,9 @@ public class CollectionResourceTabView extends
 		}else{
 			collectionResourcePanelVc.insert(shelfCollectionResourceChildView, newSequence);
 		}
+		shelfCollectionResourceChildView.getResourceEditButtonContainer().setVisible(false);
+		shelfCollectionResourceChildView.getEditButton().setVisible(false);
+		shelfCollectionResourceChildView.getReorderContainer().setVisible(false);
 		resetSequence();
 		setResourceSequence();
 	}

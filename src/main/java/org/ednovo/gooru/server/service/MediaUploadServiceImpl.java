@@ -51,6 +51,7 @@ import org.ednovo.gooru.server.serializer.JsonSerializer;
 import org.ednovo.gooru.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.json.JSONArray;
@@ -114,6 +115,24 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		return mediaUploadDo;
 
 	}
+	
+	@Override
+	public String saveImageCollection(String gooruOid, String fileName) {
+		String filePath = null;
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.MEDIA_FILE_SAVE, gooruOid, getLoggedInSessionToken(),fileName);
+	
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
+				getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		try {
+			filePath = jsonRep.getText(); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return filePath;
+	}
 
 	@Override
 	public CollectionItemDo saveImage(String gooruOid, String resourceId, String fileName) {
@@ -130,7 +149,6 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		if (fileName != null) {
 			createCollectionJsonObject.put("mediaFileName", fileName);
 		}
-
 		
 //		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.COPY_COLLLECTION_ITEM, resourceId,getLoggedInSessionToken(), collectionId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createCollectionJsonObject.toString());		
@@ -220,6 +238,24 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		collItemDo.getQuestionInfo().setGooruOid(null);
 		collItemDo.getQuestionInfo().setAssets(null);
 		
+		TreeSet<QuestionHintsDo> treeSetHints = new TreeSet<QuestionHintsDo>();
+		treeSetHints.addAll(collItemDo.getQuestionInfo().getHints());
+		
+		 Object[] objArrayHints = treeSetHints.toArray();
+		 JSONArray jArrHints = new JSONArray();
+		 
+		 for(int i=0; i < objArrayHints.length ; i++)
+		 {
+			 try {
+				JSONObject jsonObjVal = new JSONObject(ResourceFormFactory.generateStringDataForm(objArrayHints[i],null));
+				jArrHints.put(jsonObjVal);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		 }
+		
 		TreeSet<QuestionAnswerDo> treeSet = new TreeSet<QuestionAnswerDo>();
 		treeSet.addAll(collItemDo.getQuestionInfo().getAnswers());
 		
@@ -237,14 +273,17 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 			}
 		
 		 }
+		 
+
 
 
 
 		collItemDo.getQuestionInfo().setAnswers(null);
-
+		collItemDo.getQuestionInfo().setHints(null);
 		  JSONObject mainQuestionTempObj = new JSONObject();
 		  JSONObject mainAnswerTempObj = new JSONObject();
 		  JSONObject mainQTempObj = new JSONObject();
+		  JSONObject mainHintTempObj = new JSONObject();
 		  String data = "";
 		 // mainQTempObj. = new LinkedHashMap();
 		  try {
@@ -252,11 +291,13 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 			  mainQuestionTempObj.put("question", ResourceFormFactory.generateStringDataForm(collItemDo.getQuestionInfo(), null));
 			  JSONObject mainQuestionTempObj1 = new JSONObject(mainQuestionTempObj.get("question").toString());
 			  mainAnswerTempObj.put("answer", jArr);
+			  mainHintTempObj.put("hint", jArrHints);
 			  mainQuestionTempObj1.put("answers", mainAnswerTempObj);
+			  mainQuestionTempObj1.put("hints", mainHintTempObj);
 
 		
 			  
- 	data = "{\""+"question"+"\" : " + mainQuestionTempObj1.toString() +", \""+"mediaFileName"+"\" : " +fileName+"}";
+			  data = "{\""+"question"+"\" : " + mainQuestionTempObj1.toString() +", \""+"mediaFileName"+"\" : " +fileName+"}";
 			  
 			
 			  mainQTempObj.put("question", mainQuestionTempObj1).put("mediaFileName", fileName);
@@ -266,6 +307,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		  
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), data);
 		jsonRep = jsonResponseRep.getJsonRepresentation();

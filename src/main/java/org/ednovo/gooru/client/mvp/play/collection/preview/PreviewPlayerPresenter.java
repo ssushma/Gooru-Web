@@ -1760,6 +1760,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		String rootNodeId=AppClientFactory.getPlaceManager().getRequestParameter("rootNodeId", null);
 		String libraryGooruOid=AppClientFactory.getPlaceManager().getRequestParameter("lid", null);
+		String eventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid", null);
 		if(classpageItemId!=null){
 			params.put("cid", classpageItemId);
 		}
@@ -1781,6 +1782,9 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		if(libraryGooruOid!=null) {
 			params.put("lid", libraryGooruOid);
 		}
+		if(eventId!=null) {
+			params.put("eventid", eventId);
+		}
 		return params;
 	}
 
@@ -1793,6 +1797,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		String rootNodeId=AppClientFactory.getPlaceManager().getRequestParameter("rootNodeId", null);
 		String libraryGooruOid=AppClientFactory.getPlaceManager().getRequestParameter("lid", null);
+		String eventId=AppClientFactory.getPlaceManager().getRequestParameter("eventid", null);
 		if(classpageItemId!=null){
 			anchorLink += "&cid="+classpageItemId;
 		}
@@ -1813,6 +1818,9 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		}
 		if(libraryGooruOid!=null) {
 			anchorLink += "&lid="+libraryGooruOid;
+		}
+		if(eventId!=null) {
+			anchorLink += "&eventid="+eventId;
 		}
 		return anchorLink;
 	}
@@ -1897,7 +1905,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), collectionNewDataLogEventId, eventType, playerMode,questionTypeString,null,path,null));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(resourceEndTime-resourceStartTime, getResourceScore()));
-		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount(),answerObjectArray));
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount(),answerObjectArray,null));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	public void triggerSaveOeAnswerTextDataEvent(String eventId,String resourceId,Long oeStartTime,Long oeEndTime,int score){
@@ -1919,7 +1927,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), resourceNewDataLogEventId, "", playerMode,"question",null,path,null));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(oeEndTime-oeStartTime, 0));
-		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount(),answerObjectArray));
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount(),answerObjectArray,null));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	public void triggerReactiontDataLogEvent(String resourceId,Long reactionStartTime,Long reactionEndTime,String reactionType,String eventName){

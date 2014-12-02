@@ -53,7 +53,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 
 	@UiField FolderStyleBundle folderStyle;
 
-	@UiField FlowPanel contentBlock,contents;
+	@UiField FlowPanel contentBlock,contents,reorderPanel;
 	@UiField HTMLEventPanel folderImage;
 	@UiField Image collectionImage;
 	@UiField Label itemTitle,itemNumber;
@@ -98,7 +98,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel(true);
 	
-	private PopupPanel toolTipPosPopupPanel=new PopupPanel();
+	public PopupPanel toolTipPosPopupPanel=new PopupPanel();
 	
 	final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
 	
@@ -400,6 +400,11 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		}
 	}
 	
+	
+	/**
+	 * Shows alert tool tip message while doing reorder.
+	 * @param validationMsg {@link String}
+	 */
 	public void showReorderValidationToolTip(String validationMsg){
 		toolTipPopupPanel.clear();
 		toolTipPopupPanel.setWidget(new GlobalToolTip(validationMsg));
@@ -455,6 +460,11 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		}
 	}
 	
+	/**
+	 * Inner class to implement mouse over functionality for a text field, top most button and bottom most button.
+	 * On mouse over shows alert tool tip.
+	 *
+	 */
 	
 	private class OnMouseOver implements MouseOverHandler {
 
@@ -462,21 +472,21 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		public void onMouseOver(MouseOverEvent event) {
 			if (event.getSource() == reorderTxtBox){
 				toolTipPosPopupPanel.clear();
-				toolTipPosPopupPanel.setWidget(new GlobalToolTip("Enter in the position you would like to move this",RIGHT));
+				toolTipPosPopupPanel.setWidget(new GlobalToolTip(i18n.GL3002(),RIGHT));
 				toolTipPosPopupPanel.setStyleName("");
 				toolTipPosPopupPanel.setPopupPosition(reorderTxtBox.getElement().getAbsoluteLeft()-110, reorderTxtBox.getElement().getAbsoluteTop()-40);
 				toolTipPosPopupPanel.getElement().getStyle().setZIndex(9999);
 				toolTipPosPopupPanel.show();
 			}else if(event.getSource() == moveTopBtn){
 				toolTipPosPopupPanel.clear();
-				toolTipPosPopupPanel.setWidget(new GlobalToolTip("Move to top",TOP));
+				toolTipPosPopupPanel.setWidget(new GlobalToolTip(i18n.GL3000(),TOP));
 				toolTipPosPopupPanel.setStyleName("");
 				toolTipPosPopupPanel.setPopupPosition(moveTopBtn.getElement().getAbsoluteLeft()-59, moveTopBtn.getElement().getAbsoluteTop()-34);
 				toolTipPosPopupPanel.getElement().getStyle().setZIndex(9999);
 				toolTipPosPopupPanel.show();
 			}else if(event.getSource() == moveBottomBtn){
 				toolTipPosPopupPanel.clear();
-				toolTipPosPopupPanel.setWidget(new GlobalToolTip("Move to bottom",BOTTOM));
+				toolTipPosPopupPanel.setWidget(new GlobalToolTip(i18n.GL3001(),BOTTOM));
 				toolTipPosPopupPanel.setStyleName("");
 				toolTipPosPopupPanel.setPopupPosition(moveBottomBtn.getElement().getAbsoluteLeft()-70, moveBottomBtn.getElement().getAbsoluteTop()-40);
 				toolTipPosPopupPanel.getElement().getStyle().setZIndex(9999);
@@ -484,6 +494,12 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			}
 		}
 	}
+	
+	/**
+	 * Inner class to implement mouse out functionality for a text field, top most button and bottom most button.
+	 * On mouse out hides alert tool tip.
+	 *
+	 */
 	
 	private class OnMouseOut implements MouseOutHandler {
 
@@ -634,6 +650,20 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	 */
 	public void setMoveBottomBtn(Button moveBottomBtn) {
 		this.moveBottomBtn = moveBottomBtn;
+	}
+
+	/**
+	 * @return the reorderPanel
+	 */
+	public FlowPanel getReorderPanel() {
+		return reorderPanel;
+	}
+
+	/**
+	 * @param reorderPanel the reorderPanel to set
+	 */
+	public void setReorderPanel(FlowPanel reorderPanel) {
+		this.reorderPanel = reorderPanel;
 	}
 	
 

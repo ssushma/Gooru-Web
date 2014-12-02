@@ -396,22 +396,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 					if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 						isFolderType = false;
 					}
-					if(getTotalCount()==1){
-						isReorderButtonEnabled(false,shelfFolderItemChildView);
-						/*shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
-						shelfFolderItemChildView.getMoveDownBtn().setEnabled(false);
-						
-						shelfFolderItemChildView.getMoveBottomBtn().getElement().addClassName("disabled");
-						shelfFolderItemChildView.getMoveBottomBtn().setEnabled(false);*/
-						
-					}else{
-						isReorderButtonEnabled(true,shelfFolderItemChildView);
-						/*shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
-						shelfFolderItemChildView.getMoveDownBtn().setEnabled(true);
-						
-						shelfFolderItemChildView.getMoveBottomBtn().getElement().removeClassName("disabled");
-						shelfFolderItemChildView.getMoveBottomBtn().setEnabled(true);*/
-					}
+					
 					folderContentBlock.add(shelfFolderItemChildView);
 				}
 				setFolderCollectionItemSequence();
@@ -421,17 +406,13 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 			mainSection.removeStyleName(folderStyle.emptyFolder());
 			if(!isPaginated) {
 				folderContentBlock.clear();
-//				folderItemPanel.clear();
 			}
 			for(int i = 0; i<folderList.size(); i++) {
 				shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i),i+1);
 				if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 					isFolderType = false;
 				}
-//				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
 				folderContentBlock.add(shelfFolderItemChildView);
-				/*folderContentBlock.add(shelfFolderItemChildView);
-				folderItemPanel.addDraggable(shelfFolderItemChildView,2);*/
 			}
 		}
 		loadingImage.setVisible(false);
@@ -449,20 +430,17 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		setPaginatedResults();
 	}
 	
+	/**
+	 * Based on number of folders/collections, will be making visible reorder panel.
+	 * 
+	 * @param isEnable {@link Boolean}
+	 * @param shelfFolderItemChildView {@link ShelfFolderItemChildView}
+	 */
 	private void isReorderButtonEnabled(boolean isEnable, ShelfFolderItemChildView shelfFolderItemChildView) { 
 		if(isEnable){
-			shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
-			shelfFolderItemChildView.getMoveDownBtn().setEnabled(isEnable);
-			
-			shelfFolderItemChildView.getMoveBottomBtn().getElement().removeClassName("disabled");
-			shelfFolderItemChildView.getMoveBottomBtn().setEnabled(isEnable);
-			
+			shelfFolderItemChildView.getReorderPanel().setVisible(isEnable);
 		}else{
-			shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
-			shelfFolderItemChildView.getMoveDownBtn().setEnabled(isEnable);
-			
-			shelfFolderItemChildView.getMoveBottomBtn().getElement().addClassName("disabled");
-			shelfFolderItemChildView.getMoveBottomBtn().setEnabled(isEnable);
+			shelfFolderItemChildView.getReorderPanel().setVisible(isEnable);
 		}
 	}
 
@@ -679,24 +657,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		setTotalCount(getTotalCount()+1);
 		setFolderCollectionItemSequence();
 		mainSection.removeStyleName(folderStyle.emptyFolder());
-		if(getTotalCount()==1){
-			isReorderButtonEnabled(false,shelfFolderItemChildView);
-			
-			/*shelfFolderItemChildView.getMoveDownBtn().getElement().addClassName("disabled");
-			shelfFolderItemChildView.getMoveDownBtn().setEnabled(false);
-			
-			shelfFolderItemChildView.getMoveBottomBtn().getElement().addClassName("disabled");
-			shelfFolderItemChildView.getMoveBottomBtn().setEnabled(false);*/
-			
-			
-		}else{
-			isReorderButtonEnabled(true,shelfFolderItemChildView);
-			/*shelfFolderItemChildView.getMoveDownBtn().getElement().removeClassName("disabled");
-			shelfFolderItemChildView.getMoveDownBtn().setEnabled(true);
-			
-			shelfFolderItemChildView.getMoveBottomBtn().getElement().removeClassName("disabled");
-			shelfFolderItemChildView.getMoveBottomBtn().setEnabled(true);*/
-		}
 	}
 	
 	
@@ -789,15 +749,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Updates the item sequence and reorder buttons of all folders
 	 * and collection, as new folder or collection created or reordered.
@@ -808,6 +759,17 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		while (widgets.hasNext()) {
 			Widget widget = widgets.next();
 			if (widget instanceof ShelfFolderItemChildView) {
+				
+				if(getTotalCount()==1){
+					isReorderButtonEnabled(false,(ShelfFolderItemChildView) widget);
+					
+				}else{
+					isReorderButtonEnabled(true,(ShelfFolderItemChildView) widget);
+				}
+				
+				/**
+				 * For a first folder/collection hiding the up and top most arrow.
+				 */
 				if(seqNum==1){
 					((ShelfFolderItemChildView) widget).upButtonIsVisible(false); 
 					((ShelfFolderItemChildView) widget).downButtonIsVisible(true); 
@@ -1067,9 +1029,9 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	public String reorderValidations(int itemToBeMovedPosSeqNumb,int itemPosSeqNumb,String arrow) {
 		String validationStaus=REORDER_VALIDATION_MSG; 
 		if(itemToBeMovedPosSeqNumb==0){
-			validationStaus = "Given Reorder sequence is not valid or empty.";
+			validationStaus = i18n.GL3003();
 		}else if(itemToBeMovedPosSeqNumb>getTotalCount()){
-			validationStaus = "Sorry, you don't have "+itemToBeMovedPosSeqNumb+"th folder or collection to reorder";
+			validationStaus = StringUtil.generateMessage(i18n.GL3004(),itemToBeMovedPosSeqNumb+"");
 		}else if(itemToBeMovedPosSeqNumb>itemPosSeqNumb && arrow.equalsIgnoreCase(UP_ARROW)){
 			validationStaus = "Please click on down arrow";
 		}else if(itemToBeMovedPosSeqNumb<itemPosSeqNumb && arrow.equalsIgnoreCase(DOWN_ARROW)){
@@ -1166,14 +1128,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		}
 		
 		if(direction.equalsIgnoreCase(DOWN_ARROW)){
-			/*if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
-				itemToBeMovedPosSeqNumb+=1;
-			}*/
 			reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb),DOWN_ARROW,params);
 		}else{
-			/*if(itemToBeMovedPosSeqNumb==itemPosSeqNumb){
-				itemToBeMovedPosSeqNumb-=1;
-			}*/
 			reorderItemToNewPosition(shelfFolderItemChildView,(itemToBeMovedPosSeqNumb-1),UP_ARROW,params);
 		}
 		
@@ -1188,6 +1144,9 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	 */
 	public void reorderItemToNewPosition(ShelfFolderItemChildView shelfFolderItemChildView, int newItemPosition,String direction, HashMap<String, String> params){
 		folderContentBlock.insert(shelfFolderItemChildView, newItemPosition);
+		if(shelfFolderItemChildView.toolTipPosPopupPanel!=null && shelfFolderItemChildView.toolTipPosPopupPanel.isVisible()){
+			shelfFolderItemChildView.toolTipPosPopupPanel.hide(); 
+		}
 		Document.get().getElementById("pnlEditPanel").setScrollTop(0 + (newItemPosition)*(shelfFolderItemChildView.getOffsetHeight()-23));
 		new BackgroundColorEffect(shelfFolderItemChildView.getElement(),"#E7F1F8" ,"white", 4000);
 		setFolderCollectionItemSequence();
