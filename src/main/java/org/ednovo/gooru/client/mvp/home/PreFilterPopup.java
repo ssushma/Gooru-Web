@@ -7,22 +7,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.CssTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
-import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
+import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
 import org.ednovo.gooru.client.uc.DisclosurePanelUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
 
 /**
  * @author janamitra
@@ -40,7 +43,17 @@ public class PreFilterPopup extends PopupPanel {
 	
 	@UiField HTMLPanel eleGradePanelUc,middleGradePanelUc,highrGradePanelUc,subjectPanelUc;
 	
+	@UiField Label lblGradesSubj,lblStandards;
+	
+	@UiField HTMLPanel gradePanel,standardsPanel;
+	
+//	@UiField SimplePanel standardsPanel;
+	
 	CheckBox gradeCheckBox;
+	@Inject
+	AddStandardsPresenter addStandardsPresenter;
+	
+	
 	
 	private static final String COMMA_SEPARATOR = i18n.GL_GRR_COMMA();
 	
@@ -67,7 +80,29 @@ public class PreFilterPopup extends PopupPanel {
 		renderCheckBoxs(middleGradePanelUc, middleGrades);
 		renderCheckBoxs(highrGradePanelUc, higherGrades);
 		renderCheckBoxs(subjectPanelUc, subjects);
-		clearAllFields();
+		setStaticData();
+		eventActions();
+//		clearAllFields();
+	}
+
+	/**
+	 * To perform Actions with events.
+	 */
+	private void eventActions() {
+		// TODO Auto-generated method stub
+		lblGradesSubj.addClickHandler(new GradeandSubjectFilter());
+		lblStandards.addClickHandler(new StandardsFilter());
+		lblGradesSubj.getElement().setAttribute("style", "background: #e5e5e5;");
+		standardsPanel.setVisible(false);
+	}
+
+	/**
+	 * To set the static data to the fields
+	 */
+	private void setStaticData() {
+		// TODO Auto-generated method stub
+		lblGradesSubj.setText("Grade and Subject");
+		lblStandards.setText("Standards");
 	}
 
 	/**
@@ -224,12 +259,55 @@ public class PreFilterPopup extends PopupPanel {
 		}
 		return selectedFilter;
 	}
-		
+	/**
+	 * Clear all panels values
+	 */
 	public void clearAllFields(){
 		clearFilter(eleGradePanelUc);
 		clearFilter(middleGradePanelUc);
 		clearFilter(highrGradePanelUc);
 		clearFilter(subjectPanelUc);
+	}
+	
+    /**
+     * 
+     * @author janamitra
+     *
+     */
+	private class GradeandSubjectFilter implements ClickHandler{
+
+		/* (non-Javadoc)
+		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+		 */
+		@Override
+		public void onClick(ClickEvent event) {
+			lblGradesSubj.getElement().setAttribute("style", "background: #e5e5e5;");
+			lblStandards.getElement().getStyle().clearBackgroundColor();
+			standardsPanel.setVisible(false);
+			gradePanel.setVisible(true);
+		}
+		
+	}
+	
+	/**
+     * 
+     * @author janamitra
+     *
+     */
+	private class StandardsFilter implements ClickHandler{
+
+		/* (non-Javadoc)
+		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+		 */
+		@Override
+		public void onClick(ClickEvent event) {
+			lblStandards.getElement().setAttribute("style", "background: #e5e5e5;");
+			lblGradesSubj.getElement().getStyle().clearBackgroundColor();
+			standardsPanel.setVisible(true);
+			gradePanel.setVisible(false);
+//			standardsPanel.add(new AppPopUpStandards());
+		}
+		
 	}
 	
 
