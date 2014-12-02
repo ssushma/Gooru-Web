@@ -11,7 +11,7 @@
 			    <g:HTMLPanel  styleName="{res1.css.popupgreyHeader}">
 			        <g:HTMLPanel styleName="row">
 			            <g:HTMLPanel styleName="col-md-12 col-xs-12" ui:field="headerPanel" />
-			            <g:HTMLPanel styleName="clearfix"></g:HTMLPanel>
+			            <g:HTMLPanel styleName="clearfix"/>
 			        </g:HTMLPanel>
 			      </g:HTMLPanel>
 				<g:HTMLPanel ui:field="bodyConatiner" >
