@@ -51,6 +51,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexHandler;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.uc.tooltip.DashBoardToolTip;
 import org.ednovo.gooru.client.uc.tooltip.DiscoverToolTip;
 import org.ednovo.gooru.client.uc.tooltip.OrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyNowToolTip;
@@ -263,7 +264,7 @@ public class HeaderUc extends Composite implements
 	
 	boolean hasClasses = false;
 	
-	@UiField HTMLPanel discovertooltippop,myCollectionsPop;
+	@UiField HTMLPanel discovertooltippop,myCollectionsPop,myDashBoardPop;
 	
 	@UiField static HTMLPanel myClassesPop;
 	
@@ -339,6 +340,8 @@ public class HeaderUc extends Composite implements
 
 	
 	private static String DEFAULT_PROFILE_IMAGE="images/settings/setting-user-image.png";
+	
+	DashBoardToolTip dashBoardToolTip;
 
 	/**
 	 * Class constructor , set logged in user , gooru classic view link
@@ -494,6 +497,26 @@ public class HeaderUc extends Composite implements
 		
 		teachLinkMain.addMouseOverHandler(new TeachMouseOver());
 		teachLinkMain.addMouseOutHandler(new TeachMouseOut());
+		
+		LoginLinkContainer
+		.addClickHandler(new OnClickDashBoardEventHandler());
+
+
+		dashBoardToolTip=new DashBoardToolTip();
+		dashBoardToolTip.getElement().getStyle().setBackgroundColor("transparent");
+		dashBoardToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+		dashBoardToolTip.getElement().getStyle().setZIndex(99);
+		myDashBoardPop.add(dashBoardToolTip);
+		myDashBoardPop.getElement().getStyle().setPosition(Position.ABSOLUTE);
+		myDashBoardPop.getElement().getStyle().setZIndex(99);
+		myDashBoardPop.setVisible(false);
+
+		LoginLinkContainer.addMouseOverHandler(new DashBoardMouseOver());
+		LoginLinkContainer.addMouseOutHandler(new DashBoardMouseOut());
+
+
+	organizeLinkMain.addMouseOverHandler(new OrganizeMouseOver());
+	organizeLinkMain.addMouseOutHandler(new OrganizeMouseOut());
 		
 
 		studyLinkContainer.addClickHandler(new studyClickHandler());
@@ -1030,6 +1053,23 @@ public class HeaderUc extends Composite implements
 
 	}
 
+	public class OnClickDashBoardEventHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			name = "dashboard";
+			if (AppClientFactory.isAnonymous()){
+				Window.enableScrolling(true);
+			}else{
+				Window.enableScrolling(true);
+			}
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
+			manageDotsMenuSelection(loggedInfoLbl);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DASHBOARD);
+		}
+	}
+	
+	
 	public void OpenClasspageList() {
 	/*	int left = teachLinkContainer.getAbsoluteLeft();
 		int top = teachLinkContainer.getAbsoluteTop() + 50;
@@ -1092,6 +1132,26 @@ public class HeaderUc extends Composite implements
 		}
 	}
 
+	
+	public class DashBoardMouseOver implements MouseOverHandler {
+
+		@Override
+		public void onMouseOver(final MouseOverEvent event) {
+			if (!AppClientFactory.isAnonymous()){
+				myDashBoardPop.setVisible(true);
+			}
+		}
+	}
+
+	public class DashBoardMouseOut implements MouseOutHandler {
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			if (!AppClientFactory.isAnonymous()){
+				myDashBoardPop.setVisible(false);
+			}
+		}
+	}
 	public class TeachMouseOver implements MouseOverHandler {
 
 		@Override
@@ -1394,7 +1454,7 @@ public class HeaderUc extends Composite implements
 			if (userDo.isBeforeProductionSwitch()) {
 				// goToClasicGooruPanel.setVisible(true);
 				logoutPanelVc.displayClassicGooruLink(true);
-				// goToClasicGooruPanel.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+				// goToClasicGooruPanel.getElement().getStyle().setVisibility(Visibility.VISIBLE);SearchKeyDownHandler
 			} else {
 				// goToClasicGooruPanel.setVisible(false);
 				logoutPanelVc.displayClassicGooruLink(false);
