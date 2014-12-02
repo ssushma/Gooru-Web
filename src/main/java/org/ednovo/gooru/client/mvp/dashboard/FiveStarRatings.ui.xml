@@ -1,0 +1,47 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui' xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default'>
+
+	<ui:style field="style" src="dashboard.css"/>
+	
+	<g:HTMLPanel ui:field="FiveStarRatingsPnl">
+						<div class="{style.whiteBg}">
+						<div class="{style.panelBox}">
+						
+						<g:HTMLPanel styleName="{style.smallHeader}" ui:field="ratingsHeaderPnl">
+						<g:Label ui:field="fiveStarRatedLbl"></g:Label>
+						<span class="{style.rating}"><g:Image ui:field="fivestarImage"></g:Image></span>
+						</g:HTMLPanel>
+						
+						<g:HTMLPanel styleName="{style.smallHeader}" ui:field="reactionsHeaderPnl">
+						<g:Image ui:field="iCanExplainImage"/> 
+						<div class="{style.smallHeaderIcn}">
+						<g:Label ui:field="icanExplainLbl"></g:Label><br /><g:Label ui:field="reactionResourcesLbl"></g:Label></div>
+						</g:HTMLPanel>
+						
+						<div class="{style.resourceBlock}">
+						<div class="{style.collHead}"><g:Image ui:field="resourceImage"></g:Image> 
+						<g:Label ui:field="resourceNameLbl"></g:Label>
+						</div>
+						</div>
+						
+						<div class="{style.resourceBlock}">
+						<div class="{style.collHead}"><img src="../images/profileimages/imgIcon.png" /> British History</div>
+						</div>
+						
+						<div class="{style.resourceBlock}">
+						<div class="{style.collHead]"><img src="../images/profileimages/soundIcon.png" /> Enter the Cell</div>
+						</div>
+						
+						<div class="space"></div>
+						<div class="{style.moreLink}"><a href="#">View all ratings</a></div>
+						</div>
+						</div>
+	</g:HTMLPanel>
+	
+</ui:UiBinder>

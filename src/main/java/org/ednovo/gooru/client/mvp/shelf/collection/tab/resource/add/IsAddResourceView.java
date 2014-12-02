@@ -85,4 +85,6 @@ public interface IsAddResourceView extends PopupView, IsViewWithHandlers<AddReso
 
 	void setUpdatedStandardsCode(String setStandardsVal,int id,String desc,boolean val);
 	
+	public void setCollectionDo(CollectionDo collectionDo);
+	
 }

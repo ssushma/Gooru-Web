@@ -83,7 +83,9 @@ import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimpleCheckBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -120,6 +122,8 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiField CollectionPlayerStyleBundle playerStyle;
 	@UiField HTML teacherTipLabel;
 	@UiField Label lblCharLimitComments;
+	@UiField SimpleCheckBox changeAssignmentStatusButton;
+	@UiField InlineLabel requiredLabel,optionalLabel;
 	//@UiField Frame insightsFrame;
 //	@UiField Button collectionSummaryPrintBtn;
 	private String languageObjectiveValue;
@@ -1324,6 +1328,22 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			modifyEditControls(false);
 		}
 	}
+	
+	@UiHandler("changeAssignmentStatusButton")
+	public void clickOnStatusChangeBtn(ClickEvent event) {
+		
+		System.out.println("changeAssignmentStatusButton.isChecked()::"+changeAssignmentStatusButton.isChecked());
+		if (changeAssignmentStatusButton.isChecked()){
+			requiredLabel.removeStyleName(playerStyle.mutedText());
+			optionalLabel.removeStyleName(playerStyle.mutedText());
+		}
+		else{
+			requiredLabel.setStyleName(playerStyle.mutedText());
+			optionalLabel.setStyleName(playerStyle.mutedText());
+		}
+	}
+	
+	
 	
 	/**
 	 * 

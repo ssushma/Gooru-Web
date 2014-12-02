@@ -433,6 +433,20 @@
 	float:left;
 
 	}
+       .arrowLable{
+            background: url(images/ratings/down-arrow.png) 0px 12px no-repeat;
+            position: absolute;
+			top: 4px;
+			right: 72px;
+			z-index: 9999999;
+			width: 10px;
+			height: 17px;
+			cursor: pointer;
+       }
+
+       .searchMainPanel{
+           position: relative;
+       }
 	
 	</ui:style>
 	<g:HTMLPanel>
@@ -449,9 +463,10 @@
             <g:FlowPanel ui:field="editSearchInputFloPanel"
 						styleName="{res.css.editSearchInputBoxDiv}">
 						<g:VerticalPanel width="100%" height="100%" ui:field="headerSearchBarVerPanel">
-							<g:FlowPanel ui:field="headerSearchBarFloPanel">
+							<g:FlowPanel styleName="{style.searchMainPanel}" ui:field="headerSearchBarFloPanel">
 								<uc:AppSuggestBox ui:field="editSearchTxtBox"
-								styleName="{res.css.editInputBox}" />
+								styleName="{res.css.editInputBox}"/>
+								<g:Label styleName="{style.arrowLable}" ui:field="arrowLbl"></g:Label>
 							<g:Button styleName="primary"
 								ui:field="editSearchBtn" />
 							</g:FlowPanel>
@@ -491,7 +506,7 @@
                       <uc:HTMLEventPanel styleName="{style.menu} {style.borderRightMenu}" ui:field="LoginLinkContainer">
                           	<g:Image styleName="{style.profileImage}" ui:field="imgUserProfile"></g:Image>
                       		<g:Label styleName="{style.username}" ui:field="loggedInfoLbl" />
-                      		     
+                      		     <g:HTMLPanel ui:field="myDashBoardPop"></g:HTMLPanel>
                       </uc:HTMLEventPanel>
                       <g:HTMLPanel styleName="{style.teachUserNameArrowContainerNew}">
                       <div style="border-right: 1px solid #616161; height: 34px;  /* margin-left: 69px; */ position: absolute; margin-top: -13px;"></div>  

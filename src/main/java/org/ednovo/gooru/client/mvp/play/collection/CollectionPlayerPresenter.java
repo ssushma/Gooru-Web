@@ -88,6 +88,7 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
@@ -613,6 +614,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		getView().hidePlayerButtons(true, collectionDo.getGooruOid());
 		setCollectionDetails(collectionDo);
 		metadataPresenter.setCollectionMetadata(collectionDo);
+		getView().setCollectionType(collectionDo.getCollectionType());
 		//clearDashBoardIframe();
 		//setClassCollectionDataInsightsUrl(true);
 		if(AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){
@@ -1144,6 +1146,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	public void setResourceInfoView(String resourceId){
 		CollectionItemDo collectionItemDo=getCollectionItemDo(resourceId);
 		resourceInfoPresenter.setResoruceDetails(collectionItemDo);
+		resourceInfoPresenter.setCollectionType(collectionDo.getCollectionType());
 		setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, resourceInfoPresenter,false);
 		new CustomAnimation(getView().getResourceAnimationContainer()).run(400);
 	}
@@ -2299,6 +2302,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		if(placeRequest!=null){
 			if(placeRequest.getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
 				keyword=placeRequest.getParameter("query", null);
+				keyword=URL.encodeQueryString(keyword);
 			}
 		}
 		return keyword;

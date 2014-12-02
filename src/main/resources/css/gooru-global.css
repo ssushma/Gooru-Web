@@ -392,6 +392,35 @@ button.disabled, button.disabled:hover {
 .categoryFilterContainer  input[type="checkbox"] {
 	margin: 3px 0.5ex !important;
 }
+.fivestar{
+	background:url(../images/ratings/reviews.png) 16px 0 no-repeat;
+	padding: 2px;
+}
+
+.fourstar{
+ 	background:url(../images/ratings/reviews-four.png) 16px 0 no-repeat;
+ 	padding: 2px;
+}
+
+.threestar{
+	background:url(../images/ratings/reviews-three.png) 16px 0 no-repeat;
+	padding: 2px;
+}
+
+.twostar{
+ 	background:url(../images/ratings/reviews-two.png) 16px 0 no-repeat;
+ 	padding: 2px;
+}
+.onestar{
+ 	background:url(../images/ratings/reviews-none.png) 16px 0 no-repeat;
+ 	padding: 2px;
+}
+
+.reStar{
+	height: 17px;
+	display: inline-block;
+	width: 90px;
+}
 
 .categoryFilterContainer .filterCheckBox label {
 	padding: 3px 31px;

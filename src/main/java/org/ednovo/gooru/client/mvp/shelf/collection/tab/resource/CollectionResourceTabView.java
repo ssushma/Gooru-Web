@@ -190,45 +190,24 @@ public class CollectionResourceTabView extends
 		dragAndDropLabel.getElement().setAttribute("alt",i18n.GL0853());
 		dragAndDropLabel.getElement().setAttribute("title",i18n.GL0853());
 		
-		noResourceLineOneLabel.setText(i18n.GL0854());
 		noResourceLineOneLabel.getElement().setId("lblNoResourceLineOneLabel");
-		noResourceLineOneLabel.getElement().setAttribute("alt",i18n.GL0854());
-		noResourceLineOneLabel.getElement().setAttribute("title",i18n.GL0854());
-		
-		
-		noResourceLineTwoLabel.setText(i18n.GL0855());
-		noResourceLineTwoLabel.getElement().setId("lblNoResourceLineTwoLabel");
-		noResourceLineTwoLabel.getElement().setAttribute("alt",i18n.GL0855());
-		noResourceLineTwoLabel.getElement().setAttribute("title",i18n.GL0855());
-		
-		noResourceLineThreeLabel.setText(" "+i18n.GL0856());
 		noResourceLineThreeLabel.getElement().setId("lblNoResourceLineThreeLabel");
-		noResourceLineThreeLabel.getElement().setAttribute("alt",i18n.GL0856());
-		noResourceLineThreeLabel.getElement().setAttribute("title",i18n.GL0856());
-		
-		noResourceLineSixLabel.setText(" "+i18n.GL0209()+" ");
+		noResourceLineTwoLabel.getElement().setId("lblNoResourceLineTwoLabel");
 		noResourceLineSixLabel.getElement().setId("lblNoResourceLineSixLabel");
-		noResourceLineSixLabel.getElement().setAttribute("alt",i18n.GL0209());
-		noResourceLineSixLabel.getElement().setAttribute("title",i18n.GL0209());
-		
-		noResourceLineFiveLabel.setText(" "+i18n.GL0857());
 		noResourceLineFiveLabel.getElement().setId("lblNoResourceLineFiveLabel");
-		noResourceLineFiveLabel.getElement().setAttribute("alt",i18n.GL0857());
-		noResourceLineFiveLabel.getElement().setAttribute("title",i18n.GL0857());
 		
-		noResourceLineFourLabel.setText(" "+i18n.GL0858());
+		
 		noResourceLineFourLabel.getElement().setId("lblNoResourceLineFourLabel");
-		noResourceLineFourLabel.getElement().setAttribute("alt",i18n.GL0858());
-		noResourceLineFourLabel.getElement().setAttribute("title",i18n.GL0858());
 		
 		CollectionEditResourceCBundle.INSTANCE.css().ensureInjected();
 		css = CollectionEditResourceCBundle.INSTANCE.css();
 
-		noResourceLineOneLabel.setVisible(false);
-		panelNoResourceContainer.setVisible(false);
-		noResourceLineTwoLabel.setVisible(false);
-		noResourceLineThreeLabel.setVisible(false);
-		noResourceLineFourLabel.setVisible(false);
+//		noResourceLineOneLabel.setVisible(false);
+//		panelNoResourceContainer.setVisible(false);
+//		noResourceLineTwoLabel.setVisible(false);
+//		noResourceLineThreeLabel.setVisible(false);
+//		noResourceLineFourLabel.setVisible(false);
+		showOrHideNoCollectionItemsMessage(false);
 		// popupPanel.setVisible(false);
 		
 		
@@ -276,19 +255,23 @@ public class CollectionResourceTabView extends
 			postlabel.setStyleName(getCss().shelfResourceSequenceSpacer());
 			sequenceVerPanel.add(postlabel);
 			if (collectionDo.getCollectionItems().size() <= 0) {
-				noResourceLineOneLabel.setVisible(true);
-				panelNoResourceContainer.setVisible(true);
-				noResourceLineTwoLabel.setVisible(true);
-				noResourceLineThreeLabel.setVisible(true);
-				noResourceLineFourLabel.setVisible(true);
+//				noResourceLineOneLabel.setVisible(true);
+//				panelNoResourceContainer.setVisible(true);
+//				noResourceLineTwoLabel.setVisible(true);
+//				noResourceLineThreeLabel.setVisible(true);
+//				noResourceLineFourLabel.setVisible(true);
+				showNoCollectionsItemsMessage(collectionDo.getCollectionType());
+				showOrHideNoCollectionItemsMessage(true);
 				// dragAndDropLabel.setVisible(false);
+			}else{
+				
 			}
 			for (CollectionItemDo collectionItem : collectionDo.getCollectionItems()) {
 				insertColectionItem(collectionItem, false);
 			}
 			setResourceSequence();
 			hideNoResourceMsg();
-
+			
 			if (collectionDo.getCollectionItems().size() >= 25) {
 				buttonContainerForQuestionGreay.setVisible(true);
 				buttonContainerAddGray.setVisible(true);
@@ -356,9 +339,16 @@ public class CollectionResourceTabView extends
 
 				// newResourceLabel.setVisible(true);
 			}
+			showOrHideResourceButton(collectionDo.getCollectionType(),collectionDo.getCollectionItems().size());
 		}
 		panelLoading.getElement().getStyle().setDisplay(Display.NONE);
 		contentPanel.setVisible(true);
+	}
+	public void showOrHideResourceButton(String collectionType, int size){
+		if(collectionType!=null&&collectionType.equals("quiz")){
+			buttonContainerAddGray.setVisible(false);
+			buttonContainer.setVisible(false);
+		}
 	}
 	
 	public void modifyExistingCollectionItemWidget(final CollectionItemDo collectionItemDo){
@@ -450,11 +440,12 @@ public class CollectionResourceTabView extends
 			}
 
 			AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(collectionItemDo, RefreshType.INSERT));
-			noResourceLineOneLabel.setVisible(false);
-			panelNoResourceContainer.setVisible(false);
-			noResourceLineTwoLabel.setVisible(false);
-			noResourceLineThreeLabel.setVisible(false);
-			noResourceLineFourLabel.setVisible(false);
+//			noResourceLineOneLabel.setVisible(false);
+//			panelNoResourceContainer.setVisible(false);
+//			noResourceLineTwoLabel.setVisible(false);
+//			noResourceLineThreeLabel.setVisible(false);
+//			noResourceLineFourLabel.setVisible(false);
+			showOrHideNoCollectionItemsMessage(false);
 			dragAndDropLabel.setVisible(true);
 
 		} else {
@@ -882,15 +873,49 @@ public class CollectionResourceTabView extends
 			// newResourceLabel.setVisible(true);
 		}
 		if (collectionDo.getCollectionItems().size() <= 0) {
-			noResourceLineOneLabel.setVisible(true);
-			panelNoResourceContainer.setVisible(true);
-			noResourceLineTwoLabel.setVisible(true);
-			noResourceLineThreeLabel.setVisible(true);
-			noResourceLineFourLabel.setVisible(true);
+			showNoCollectionsItemsMessage(collectionDo.getCollectionType());
+			showOrHideNoCollectionItemsMessage(true);
+//			noResourceLineOneLabel.setVisible(true);
+//			panelNoResourceContainer.setVisible(true);
+//			noResourceLineTwoLabel.setVisible(true);
+//			noResourceLineThreeLabel.setVisible(true);
+//			noResourceLineFourLabel.setVisible(true);
 			// dragAndDropLabel.setVisible(false);
 		}
 		AppClientFactory.fireEvent(new UpdateResourceCountEvent(collectionDo.getCollectionItems().size()));
 
+	}
+	
+	public void showNoCollectionsItemsMessage(String collectionType){
+		if(collectionType!=null&&collectionType.equals("quiz")){
+			setAttributeToWidget(noResourceLineOneLabel,i18n.GL3014());
+			setAttributeToWidget(noResourceLineTwoLabel,i18n.GL0855());
+			setAttributeToWidget(noResourceLineThreeLabel,"");
+			setAttributeToWidget(noResourceLineFourLabel," "+i18n.GL3015());
+			setAttributeToWidget(noResourceLineSixLabel,"");
+			setAttributeToWidget(noResourceLineFiveLabel," "+i18n.GL0857());
+		}else{
+			setAttributeToWidget(noResourceLineOneLabel,i18n.GL0854());
+			setAttributeToWidget(noResourceLineTwoLabel,i18n.GL0855());
+			setAttributeToWidget(noResourceLineThreeLabel," "+i18n.GL0856());
+			setAttributeToWidget(noResourceLineFourLabel," "+i18n.GL0858());
+			setAttributeToWidget(noResourceLineSixLabel," "+i18n.GL0209()+" ");
+			setAttributeToWidget(noResourceLineFiveLabel," "+i18n.GL0857());
+		}
+	}
+	
+	public void setAttributeToWidget(Label textLabel,String text){
+		textLabel.setText(text);
+		textLabel.getElement().setAttribute("alt",text);
+		textLabel.getElement().setAttribute("title",text);
+	}
+	
+	public void showOrHideNoCollectionItemsMessage(boolean isShow){
+		noResourceLineOneLabel.setVisible(isShow);
+		panelNoResourceContainer.setVisible(isShow);
+		noResourceLineTwoLabel.setVisible(isShow);
+		noResourceLineThreeLabel.setVisible(isShow);
+		noResourceLineFourLabel.setVisible(isShow);
 	}
 
 	/**
@@ -1190,11 +1215,12 @@ public class CollectionResourceTabView extends
 	@Override
 	public void hideNoResourceMsg() {
 		if (this.collectionDo.getCollectionItems().size() > 0) {
-			noResourceLineOneLabel.setVisible(false);
-			panelNoResourceContainer.setVisible(false);
-			noResourceLineTwoLabel.setVisible(false);
-			noResourceLineThreeLabel.setVisible(false);
-			noResourceLineFourLabel.setVisible(false);
+//			noResourceLineOneLabel.setVisible(false);
+//			panelNoResourceContainer.setVisible(false);
+//			noResourceLineTwoLabel.setVisible(false);
+//			noResourceLineThreeLabel.setVisible(false);
+//			noResourceLineFourLabel.setVisible(false);
+			showOrHideNoCollectionItemsMessage(false);
 		}
 	}
 

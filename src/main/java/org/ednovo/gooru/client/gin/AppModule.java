@@ -70,6 +70,10 @@ import org.ednovo.gooru.client.mvp.community.IsCommunityView;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsView;
 import org.ednovo.gooru.client.mvp.community.contributors.IsContributorsView;
+import org.ednovo.gooru.client.mvp.dashboard.IsUserDashBoardView;
+import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter;
+import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter.IsUserDashBoardProxy;
+import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardView;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter.IsDeviceSupportProxy;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportView;
@@ -294,11 +298,17 @@ import org.ednovo.gooru.client.mvp.register.RegisterPresenter.IsRegisterProxy;
 import org.ednovo.gooru.client.mvp.register.RegisterView;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerView;
+import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainer;
+import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsAddResourceContainerView;
+import org.ednovo.gooru.client.mvp.search.IsAnalyticsInfoContainerView;
 import org.ednovo.gooru.client.mvp.search.IsSearchRootView;
+import org.ednovo.gooru.client.mvp.search.IsTagsTabView;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter.IsSearchRootProxy;
 import org.ednovo.gooru.client.mvp.search.SearchRootView;
+import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
+import org.ednovo.gooru.client.mvp.search.TagsTabView;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter.IsCollectionSearchProxy;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchView;
@@ -567,6 +577,9 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(CcstCalTacLibraryPresenter.class, IsCcstCalTacLibraryView.class, CcstCalTacLibraryView.class,IsCcstCalTacLibraryProxy.class);
 		bindPresenter(LusdLibraryPresenter.class, IsLusdLibraryView.class, LusdLibraryView.class,IsLusdLibraryProxy.class);
 		bindPresenter(TicalLibraryPresenter.class, IsTicalLibraryView.class, TicalLibraryView.class,IsTicalLibraryProxy.class);
-		
+		bindPresenterWidget(AnalyticsInfoContainerPresenter.class, IsAnalyticsInfoContainerView.class, AnalyticsInfoContainer.class);
+		bindPresenterWidget(TagsTabPresenter.class, IsTagsTabView.class, TagsTabView.class);
+		bindPresenter(UserDashBoardPresenter.class, IsUserDashBoardView.class,UserDashBoardView.class, IsUserDashBoardProxy.class);
+
 	}
 }

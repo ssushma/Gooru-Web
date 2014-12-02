@@ -1,0 +1,15 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="style" src="searchRatingAndReview.css"/>
+	
+	<g:HTMLPanel styleName="{style.QuestionsContainer}">
+		  <g:HTMLPanel styleName="{style.analyticsContainerInner}">
+		  		<g:HTMLPanel ui:field="totalReviewsContainer"></g:HTMLPanel>
+		  		<g:HTMLPanel ui:field="averageReactionsContainer"></g:HTMLPanel>
+		  		<g:HTMLPanel ui:field="averageRatingsContainer"></g:HTMLPanel>
+				    <div class="{style.clearfix}"></div>
+		  </g:HTMLPanel>
+	</g:HTMLPanel>
+
+</ui:UiBinder> 

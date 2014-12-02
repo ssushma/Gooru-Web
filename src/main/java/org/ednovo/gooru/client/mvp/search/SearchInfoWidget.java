@@ -534,13 +534,26 @@ public class SearchInfoWidget extends Composite {
 				hostType.getElement().setAttribute("title"," "+CollectiongenealInfo.getResource().getCustomFieldValues().getCfHost());
 				isGeneralInfo=true;
 			}else if(resourceDo.getHost()!=null){
-				setHostDetails(resourceDo.getHost());
-				isGeneralInfo=true;
+				if(resourceDo.getHost().size()>0)
+				{
+					setHostDetails(resourceDo.getHost());
+					isGeneralInfo=true;
+				}
+				else
+				{
+					hostPanel.setVisible(false);
+				}			
 			}else{
 				hostPanel.setVisible(false);
 			}
 			
 			setResourceLicenceLogo(CollectiongenealInfo.getResource().getAssetURI(), CollectiongenealInfo.getResource().getLicense());
+			
+			if(!CollectiongenealInfo.getResource().getResourceFormat().getValue().equalsIgnoreCase("webpage"))
+			{
+				originalUrlTitle.setVisible(false);
+				originalUrlText.setVisible(false);
+			}
 			
 			if(grade==null && coursesList.isEmpty() && CollectiongenealInfo.getStandards().isEmpty() && url==null &&
 					resourceDo.getPublisher().isEmpty() && resourceDo.getAggregator().isEmpty() && host==null && licence==null ){
