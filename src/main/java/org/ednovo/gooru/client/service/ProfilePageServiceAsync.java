@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.service;
 import java.util.List;
 import java.util.Set;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -62,6 +63,8 @@ public interface ProfilePageServiceAsync extends BaseServiceAsync {
 	void getProfilePaginationWorkspace(String parentId,String sharingType, int limit, AsyncCallback<ProfileLibraryListDo> callback);
 	
 	void getProfileLibraryCollection(String gooruOid, boolean skipCollectionItems, AsyncCallback<ProfileLibraryDo> callback);
+
+	void deleteUserCourses(List<CodeDo> delcodeDoList,AsyncCallback<String> callback); 
 
 	
 }
