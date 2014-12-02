@@ -20,20 +20,22 @@
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="clearfix"/>	
 			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{res.css.conent}">
+		<g:HTMLPanel styleName="{res1.css.shareSelection}">
 		<g:HTMLPanel styleName="{res.css.loadingImageMainDiv}" ui:field="loadingImageLabel">
 		      <g:Label  styleName="{res.css.loadingImageForSelfEdit}" />
 		   </g:HTMLPanel>
-				  <g:HTMLPanel styleName="{res.css.popupContent}" ui:field="popupContentAssign">
-		<g:Label ui:field="lblpopupTitle" styleName="{res.css.popupTitle}"/>		  
-        <g:Label styleName="{res.css.popupDesc}" ui:field="assignDes"/>
-        <g:HTMLPanel styleName="{res.css.popupcornerBg}">
-        <g:TextArea styleName="{res.css.shareTextarea}" ui:field="shareLinkTxtBox">
-        
-            </g:TextArea>
+	<g:HTMLPanel  ui:field="popupContentAssign">
+		<g:Label ui:field="lblpopupTitle" styleName="{res1.css.dontWorrkText}"/>		  
+        <g:Label styleName="{res1.css.contentDesc}" ui:field="assignDes"/>
+        <g:HTMLPanel styleName="{res1.css.popupcornerBg}">
+        <g:TextArea styleName="form-control {res1.css.form_control} shareTextarea" ui:field="shareLinkTxtBox">
+        </g:TextArea>
       </g:HTMLPanel>
-      <g:Label styleName="{res.css.url}" ui:field="swithUrlLbl"/>
-      <g:Label styleName="{res.css.url}" ui:field="swithToEmbedLbl"/>
+      <g:HTMLPanel styleName="{res1.css.sharenEmbedContainer}">
+     	 <g:Anchor styleName="{res.css.url}" ui:field="swithUrlLbl"/>
+      	<g:Anchor styleName="{res.css.url}" ui:field="swithToEmbedLbl"/>     
+      </g:HTMLPanel>
+     
       <g:HTMLPanel styleName="{res.css.clear}"></g:HTMLPanel>
       <g:HTMLPanel styleName="{res.css.contentBorder}"></g:HTMLPanel>
       

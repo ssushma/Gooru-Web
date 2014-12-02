@@ -112,9 +112,13 @@ public abstract class AssignPopupPlayerVc extends PopupPanel{
 	Anchor forgotPwd,ancSignUp;
 
 	@UiField
-	Label cancelButton,lblPleaseWait, swithUrlLbl, swithToEmbedLbl,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAccountText,lblOr;
+	Label cancelButton,lblPleaseWait,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAccountText,lblOr;
 
+	@UiField
+	Anchor  swithUrlLbl, swithToEmbedLbl;
+	
 	@UiField InlineLabel lblPii,toUsText;
+	
 	@UiField Anchor ancprivacy;
 	
 	private boolean isPrivate = false;

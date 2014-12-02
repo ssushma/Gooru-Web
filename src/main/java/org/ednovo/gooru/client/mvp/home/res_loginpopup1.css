@@ -178,6 +178,22 @@
 	width:100%;
 	text-align:center;
 }
+.leftFlagPanel{
+	height:auto;
+}
+
+.leftFlagPanel .leftFlagMenu{
+	width:1%;
+	display:table-cell;
+	overflow:hidden;
+	position:relative;
+}
+.leftFlagPanel .leftFlagMenu a{
+	font-size:16px;
+}
+ .rightFlagPanel{}
+ .normalText{}
+ .flagbuttonDeSelected{}
 .firstInputGroup{}
 .childUserInfoContainer{}
 .childInputGroup{}

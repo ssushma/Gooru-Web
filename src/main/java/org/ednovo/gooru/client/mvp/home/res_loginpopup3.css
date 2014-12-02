@@ -78,6 +78,19 @@
 	float:left;
 	
 }
+.leftFlagPanel{
+	height:auto;
+}
+
+.leftFlagPanel .leftFlagMenu{
+	width:1%;
+	display:table-cell;
+	overflow:hidden;
+	position:relative;
+}
+.normalText{}
+ .flagbuttonDeSelected{}
+ .rightFlagPanel{}
 .firstInputGroup{}
 .childUserInfoContainer{}
 .childInputGroup{}

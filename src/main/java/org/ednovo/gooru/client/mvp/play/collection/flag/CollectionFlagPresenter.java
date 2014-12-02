@@ -7,12 +7,12 @@ import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Image;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -140,7 +140,7 @@ public class CollectionFlagPresenter extends PresenterWidget<IsCollectionFlagVie
 	{
 		return getView().getCloseButton();
 	}
-	public HTMLEventPanel getSubmitButton(){
+	public Button getSubmitButton(){
 		return getView().getSubmitButton();
 	}
 	public CollectionEndPresenter getCollectionEndPresenter() {

@@ -171,7 +171,7 @@ IsCollectionAssign {
 		initWidget(uiBinder.createAndBindUi(this));
 		
 		loadingImageLabel.setVisible(true);
-		
+		lblNoClassPageImage.getElement().getStyle().setWidth(100, Unit.PCT);
 		toAssignStr = collectionDoObject.getGooruOid();
 		collectionDoGlobal = collectionDoObject;
 		

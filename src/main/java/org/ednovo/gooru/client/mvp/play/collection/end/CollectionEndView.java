@@ -620,14 +620,14 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		int clientHeight=Window.getClientHeight();
 		if(clientHeight>625){
 			clientHeight=625;
-			successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
+		//	successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
 		}else{
-			successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
+		//	successPopupVc.getAssignContainer().getElement().setAttribute("style", "max-height:"+clientHeight+"px;width:500px;overflow-x:hidden;overflow-y:scroll");
 		}
 		successPopupVc.show();
 		int left = (Window.getClientWidth() - 500) >> 1;
 	    int top = (Window.getClientHeight() - clientHeight) >> 1;
-	    successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop() + top, 0));
+	   // successPopupVc.setPopupPosition(Math.max(Window.getScrollLeft() + left, 0), Math.max(Window.getScrollTop() + top, 0));
 		params.put("assign", "yes");
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(AppClientFactory.getCurrentPlaceToken(), params);
 		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);

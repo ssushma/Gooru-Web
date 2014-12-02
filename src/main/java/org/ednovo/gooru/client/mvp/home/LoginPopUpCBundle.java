@@ -251,6 +251,11 @@ public interface LoginPopUpCBundle extends ClientBundle{
 	String firstInputGroup();
 	String remixContainer();
 	String labels();
+	String leftFlagPanel();
+	String leftFlagMenu();
+	String flagbuttonDeSelected();
+	String rightFlagPanel();
+	String normalText();
 	}
 	@NotStrict
 	@Source("Newlogin-popup.css")
