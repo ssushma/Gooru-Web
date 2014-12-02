@@ -121,6 +121,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 
 	boolean isChildAccount = false;
 	
+	private boolean isAPICall = true;
+	
 	//private final Widget widget;
 	private static final String PROFILE_DEFAULT_IMAGE="./images/settings/setting-user-image.png";
 	
@@ -198,6 +200,14 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	
 	String USER_TAXONOMY_ROOT_CODE="user_taxonomy_root_code";
 	List<String> userStandardPrefcode=new ArrayList<String>();
+	
+	
+	Set<ProfileCodeDo> profileCodeDoSet =  new HashSet<ProfileCodeDo>();
+	
+	List<CodeDo> delcodeDoList = new ArrayList<CodeDo>();
+	
+	CodeDo delCodeDo;
+	
 	
 	boolean isDriveConnected = false;
 	
@@ -1113,6 +1123,10 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 
 		@Override
 		public void onClick(ClickEvent event) {
+			if(profileDo !=null){
+				setUserCourse(profileDo);
+			}
+			
 			EduInfoButtonContainer.setVisible(true);
 			editButtonEdu.setVisible(false);
 			gradeContainer.setVisible(true);
@@ -1231,18 +1245,26 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		courseContainer.setVisible(false);
 		EduSavingTextLabel.setVisible(true);
 		editButtonEdu.setVisible(false);
-		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(gooruUid, USER_META_ACTIVE_FLAG, new SimpleAsyncCallback<ProfileDo>() {
-
-			@Override
-			public void onSuccess(ProfileDo profileObj) {
-				setProfileData(profileObj);
-				EduSavingTextLabel.setVisible(false);
-				editButtonEdu.setVisible(true);
-			}
-			
-		});
 		
+		if(delcodeDoList!=null){
+			if(delcodeDoList.size()!=0){
+				isAPICall = false;
+				getUiHandlers().deleteCorses(delcodeDoList);
+			}
 		}
+		
+		if(profileCodeDoSet!=null){
+			if(profileCodeDoSet.size() != 0){
+				isAPICall = false;
+				getUiHandlers().addCourse(profileCodeDoSet);
+			}
+		}
+		
+		if(isAPICall){
+			getProfileEduInfoDetails();
+		}
+
+	}
 	@UiHandler("eduInfoCancelButton")
 	public void onClickEduInfoCancelButton(ClickEvent event) {
 		gradeContainer.setVisible(false);
@@ -1620,17 +1642,23 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 
 	@Override
 	public void setProfileData(ProfileDo profileDo) {
+		this.profileDo= profileDo; 
 		uploadProfileImage.setUrl(profileDo.getUser().getProfileImageUrl() + "?p="+ Math.random());
 		uploadProfilImageButton.setText(i18n.GL0800());
 		StringUtil.setAttributes(uploadProfilImageButton.getElement(), "uploadProfilImageButton", i18n.GL0800(), i18n.GL0800());
 		setGradeList(profileDo.getGrade(), profileDo);
+		setUserCourse(profileDo);
+		
+	}
+	
+	private void setUserCourse(ProfileDo profileDo) {
 		Set<ProfileCodeDo> codeDo = profileDo.getCourses();
 		coursesPanel.clear();
 		
 		collectionCourseDefaultLstPanel.clear();
 		for (ProfileCodeDo code : codeDo) {
 			coursesPanel.add(createCourseLabel(code.getCode().getLabel(), code.getCode().getCodeId() + ""));
-			//collectionCourseDefaultLstPanel.add(createCourseLabel(code.getCode().getLabel(), code.getCode().getCodeId() + ""));
+			
 			defaultCoursePanel=new HTML(code.getCode().getLabel());
 			collectionCourseDefaultLstPanel.add(defaultCoursePanel);
 			defaultCoursePanel.setStyleName(Settings.deafaultCourse());
@@ -1643,9 +1671,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			defaultCourseLabel.setText(i18n.GL1476());
 			collectionCourseDefaultLstPanel.add(defaultCourseLabel);
 		}
-		
 	}
-	
+
 	/**
 	 * separate the view according to grade level of the user
 	 */
@@ -1737,16 +1764,15 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	 *            used to create a new course
 	 * @return the label of all course created for the User.
 	 */
-	protected CloseLabelSetting createCourseLabel(final String courseLabel,
-			final String courseCode) {
+	protected CloseLabelSetting createCourseLabel(final String courseLabel,final String courseCode) {
 		return new CloseLabelSetting(courseLabel) {
-
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
 				this.removeFromParent();
-				CodeDo codeDo = new CodeDo();
-				codeDo.setCodeId(Integer.parseInt(courseCode));
-				getUiHandlers().deleteCourse(codeDo);
+				
+				CodeDo delCodeDo = new CodeDo();
+				delCodeDo.setCodeId(Integer.parseInt(courseCode));
+				delcodeDoList.add(delCodeDo);
 			}
 		};
 	}
@@ -1789,32 +1815,29 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	 */
 	
 	private void addCourseEvent() {
-			if (coursesPanel.getWidgetCount() < 5) {
-				final String courseCodeLabel = collectionCourseLst
-						.getItemText(collectionCourseLst.getSelectedIndex());
-				final String courseCode = collectionCourseLst
-						.getValue(collectionCourseLst.getSelectedIndex());
-				if (collectionCourseLst.getSelectedIndex() == 0) {
-					return;
-				}
-				if (validateCourse(courseCodeLabel) && courseCode != null) {
-					alertContentUc=	new AlertContentUc(i18n.GL1089(), i18n.GL1090());
-				} else {
-					Set<ProfileCodeDo> profileCodeDoSet = new HashSet<ProfileCodeDo>();
-					ProfileCodeDo profileCodeDo = new ProfileCodeDo();
-					CodeDo codeDo = new CodeDo();
-					codeDo.setCodeId(Integer.parseInt(courseCode));
-					profileCodeDo.setCode(codeDo);
-					profileCodeDoSet.add(profileCodeDo);
-					getUiHandlers().addCourse(profileCodeDoSet);
-					coursesPanel.add(createCourseLabel(courseCodeLabel, courseCode));
-					collectionCourseLst.setSelectedIndex(0);
-				}
-				courseMaxHide();
-			} else {
-				courseMaxShow();
+		if (coursesPanel.getWidgetCount() < 5) {
+			final String courseCodeLabel = collectionCourseLst.getItemText(collectionCourseLst.getSelectedIndex());
+			final String courseCode = collectionCourseLst.getValue(collectionCourseLst.getSelectedIndex());
+			if (collectionCourseLst.getSelectedIndex() == 0) {
+				return;
 			}
-		
+			if (validateCourse(courseCodeLabel) && courseCode != null) {
+				alertContentUc=	new AlertContentUc(i18n.GL1089(), i18n.GL1090());
+			} else {
+				
+				ProfileCodeDo profileCodeDo = new ProfileCodeDo();
+				CodeDo codeDo = new CodeDo();
+				codeDo.setCodeId(Integer.parseInt(courseCode));
+				profileCodeDo.setCode(codeDo);
+				profileCodeDoSet.add(profileCodeDo);
+				coursesPanel.add(createCourseLabel(courseCodeLabel, courseCode));
+				collectionCourseLst.setSelectedIndex(0);
+			}
+			courseMaxHide();
+		} else {
+			courseMaxShow();
+		}
+
 	}
 	
 	
@@ -2318,5 +2341,35 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		htmlConnectedAs.setHTML(connectedAs);
 		htmlConnectedAs.setVisible(true);
 		htmlConnectedAs.getElement().getStyle().setLineHeight(3, Unit.EM);
+	}
+	
+
+	@Override
+	public void getUserProfileCourseGradeDetails() {
+		isAPICall = true;
+		profileCodeDoSet.clear();
+		getProfileEduInfoDetails();
+	}
+
+	@Override
+	public void onPostCourseDel() {
+		isAPICall = true;
+		delcodeDoList.clear();
+		getProfileEduInfoDetails();
+	}
+
+	private void getProfileEduInfoDetails() {
+		
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(gooruUid, USER_META_ACTIVE_FLAG, new SimpleAsyncCallback<ProfileDo>() {
+
+			@Override
+			public void onSuccess(ProfileDo profileObj) {
+				setProfileData(profileObj);
+				EduSavingTextLabel.setVisible(false);
+				editButtonEdu.setVisible(true);
+			}
+
+		});
+
 	}
 }

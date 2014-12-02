@@ -43,6 +43,7 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -52,7 +53,9 @@ import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -207,7 +210,11 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 			
 			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_GRADE_COURSE, getLoggedInUserUid(), getLoggedInSessionToken());
 			formData = "{\"profile\":" +formData+ ", \"userMetaActiveFlag\" : \"1\"}";
+			getLogger().info("--- Add Course -- "+url);
+			getLogger().info("--- pay load -- "+formData);
 		}
+		getLogger().info("-- Add course from settings -- "+url);
+		getLogger().info("--- payload add course -- "+formData);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), formData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 	}
@@ -283,6 +290,38 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 			}
 		}
 		return new ProfileLibraryDo();
+	}
+
+	@Override
+	public String deleteUserCourses(List<CodeDo> delcodeDoList)	throws GwtException, ServerDownException {
+		
+		JsonRepresentation jsonRep = null;
+		JsonResponseRepresentation jsonResponseRep=null;
+		
+		try {
+			
+			JSONObject coursesObject=new JSONObject();
+			JSONArray codeJsonArray=new JSONArray();
+			
+			for(int i=0;i<delcodeDoList.size();i++){
+				JSONObject codeIdObject=new JSONObject();
+				codeIdObject.put("codeId",delcodeDoList.get(i).getCodeId());
+				codeJsonArray.put(new JSONObject().put("code",codeIdObject));
+				coursesObject.put("courses",codeJsonArray);
+			}
+			
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_USER_BIOGRAPHY, getLoggedInUserUid(), getLoggedInSessionToken());
+			
+			getLogger().info("-- del course from settings -- "+url);
+			getLogger().info("--- payload ->>>>- "+coursesObject.toString());
+			jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), coursesObject.toString());
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+				
+		return Integer.toString(jsonResponseRep.getStatusCode());
 	}
 
 }
