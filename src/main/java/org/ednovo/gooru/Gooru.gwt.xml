@@ -42,7 +42,7 @@
 
 	<!-- Include GWTUpload library -->
 	<inherits name="gwtupload.GWTUpload" />
-
+	<inherits name='com.google.gwt.maps.Maps' />
 	<!-- Specify the app entry point class. -->
 	<entry-point class='org.ednovo.gooru.client.GooruEntry' />
 

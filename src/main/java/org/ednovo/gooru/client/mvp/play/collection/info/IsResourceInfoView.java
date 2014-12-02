@@ -39,5 +39,6 @@ public interface IsResourceInfoView extends IsViewWithHandlers<ResourceInfoUiHan
 	
 	public Button getPlusAddTagsButton();
 	public void insertHideButtonAtLast();
+	public void setCollectionType(String collectionType);
 	
 }

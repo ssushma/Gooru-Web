@@ -614,6 +614,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		getView().hidePlayerButtons(true, collectionDo.getGooruOid());
 		setCollectionDetails(collectionDo);
 		metadataPresenter.setCollectionMetadata(collectionDo);
+		getView().setCollectionType(collectionDo.getCollectionType());
 		//clearDashBoardIframe();
 		//setClassCollectionDataInsightsUrl(true);
 		if(AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){
@@ -1145,6 +1146,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	public void setResourceInfoView(String resourceId){
 		CollectionItemDo collectionItemDo=getCollectionItemDo(resourceId);
 		resourceInfoPresenter.setResoruceDetails(collectionItemDo);
+		resourceInfoPresenter.setCollectionType(collectionDo.getCollectionType());
 		setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, resourceInfoPresenter,false);
 		new CustomAnimation(getView().getResourceAnimationContainer()).run(400);
 	}
