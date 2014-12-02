@@ -43,6 +43,7 @@ import org.ednovo.gooru.client.mvp.folders.FoldersPresenter;
 import org.ednovo.gooru.client.mvp.folders.edit.EditFolderPresenter;
 import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.library.district.DistrictPresenter;
@@ -96,6 +97,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResou
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter;
+import org.simpleframework.http.parse.AddressParser;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;
@@ -233,6 +235,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<LifeboardLibraryPresenter> getLifeboardPresenter();
 
 	AsyncProvider<AddStandardsPresenter> getAddStandardsPresenter();
+	
+	AsyncProvider<AddStandardsPreSearchPresenter> getAddStandardsPreSearchPresenter();
 
 	AsyncProvider<ContributorsPresenter> getContributorsPresenter();
 

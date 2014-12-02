@@ -307,7 +307,10 @@ public class HeaderUc extends Composite implements
 	public static HTMLPanel dotsPanel, mainDotsPanel, mainInnerDotsPanel,dropDownImg;
 
 	@UiField
-	Label discoverLink, organizeLink, teachLink, studyLink, loggedInfoLbl,thanksLbl,arrowLbl;
+	Label discoverLink, organizeLink, teachLink, studyLink, loggedInfoLbl,thanksLbl;
+
+	@UiField
+	static Label arrowLbl;
 
 	@UiField
 	HTMLEventPanel discoverLinkContainer, organizeLinkContainer,organizeLinkMain,teachLinkMain,discoverLinkMain,
@@ -620,7 +623,7 @@ public class HeaderUc extends Composite implements
 		discoverToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		discoverToolTip.getElement().getStyle().setZIndex(99);
 		
-		arrowLbl.addClickHandler(new showPrefilterPopup());
+	
 
 		
 		discovertooltippop.add(discoverToolTip);
@@ -2068,26 +2071,13 @@ public class HeaderUc extends Composite implements
 	 * @date 27-Nov-2014
 	 *
 	 */
-	
-	public class showPrefilterPopup implements ClickHandler{
 
-		/* (non-Javadoc)
-		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
-		 */
-		@Override
-		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
-			
-			if(prefilter!=null && prefilter.isShowing()){
-				prefilter.hide();
-			}else{
-				prefilter =	new PreFilterPopup();
-				prefilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, getAbsoluteTop()-10);
-				prefilter.show();
-			}
-		}
-		
+	public static Label getArrowLbl() {
+		return arrowLbl;
 	}
+
+	
+	
 	
 }
 

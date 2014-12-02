@@ -41,6 +41,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -49,17 +50,9 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
 /**
-* @description : This class used to show pre-filter search popup.
-*
-* @version :1.2
-*
-* @date: DEC 2 2014
-   	
-* @Author Gooru Team
-* 
-* Reviewer Gooru Team
-*
-*/
+ * @author janamitra
+ *
+ */
 public class PreFilterPopup extends PopupPanel {
 
 	private static PreFilterPopupUiBinder uiBinder = GWT
@@ -70,7 +63,8 @@ public class PreFilterPopup extends PopupPanel {
 	interface PreFilterPopupUiBinder extends UiBinder<Widget, PreFilterPopup> {
 	}
 	
-	@UiField HTMLPanel eleGradePanelUc,middleGradePanelUc,highrGradePanelUc,subjectPanelUc;
+	@UiField HTMLPanel eleGradePanelUc,middleGradePanelUc,highrGradePanelUc,subjectPanelUc,gradesPanel;
+	@UiField Button standardsButton;
 	
 	@UiField Label lblGradesSubj,lblStandards;
 	
@@ -298,6 +292,13 @@ public class PreFilterPopup extends PopupPanel {
 		clearFilter(middleGradePanelUc);
 		clearFilter(highrGradePanelUc);
 		clearFilter(subjectPanelUc);
+	}
+
+	public Button getStandardsInfo(){
+		return standardsButton;
+	}
+	public HTMLPanel clearGradesInfo(){
+		return gradesPanel;
 	}
 	
     /**

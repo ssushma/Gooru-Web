@@ -104,6 +104,9 @@ import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter.IsHomeProxy;
 import org.ednovo.gooru.client.mvp.home.HomeView;
 import org.ednovo.gooru.client.mvp.home.IsHomeView;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchView;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView;
 import org.ednovo.gooru.client.mvp.home.register.IsUserRegistrationView;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationView;
@@ -563,6 +566,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(NatGeoLibraryPresenter.class, IsNatGeoLibraryView.class, NatGeoLibraryView.class,IsNatGeoLibraryProxy.class);
 		
 		bindPresenterWidget(AddStandardsPresenter.class, IsAddStandardsView.class, AddStandardsView.class);
+		bindPresenterWidget(AddStandardsPreSearchPresenter.class, IsAddStandardsPreSearchView.class, AddStandardsPreSearchView.class);
 		bindPresenterWidget(ContributorsPresenter.class, IsContributorsView.class, ContributorsView.class);
 
 		bindPresenterWidget(DistrictPresenter.class, IsDistrictView.class, DistrictView.class);
