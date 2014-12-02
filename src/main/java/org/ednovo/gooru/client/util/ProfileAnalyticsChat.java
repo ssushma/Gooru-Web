@@ -1,5 +1,4 @@
 package org.ednovo.gooru.client.util;
-import java.util.Arrays;
 import java.util.Date;
 
 import org.moxieapps.gwt.highcharts.client.AxisTitle;
@@ -17,6 +16,8 @@ import org.moxieapps.gwt.highcharts.client.labels.YAxisLabels;
 import org.moxieapps.gwt.highcharts.client.plotOptions.ColumnPlotOptions;
 import org.moxieapps.gwt.highcharts.client.plotOptions.Marker;
 import org.moxieapps.gwt.highcharts.client.plotOptions.SplinePlotOptions;
+
+import com.google.gwt.i18n.client.DateTimeFormat;
   
 public class ProfileAnalyticsChat{  
   
@@ -24,8 +25,17 @@ public class ProfileAnalyticsChat{
 	final String ORANGE_COLOR="#F6A026";
 	final String DOTTED_COLOR="#AA4643";
 	final String RECT_COLOR="#97D2C4";
-	 
+	private static final String DATE_FORMAT="MM/dd/yyyy hh:mm:ss aaa";
+	public static String getCreatedTime(String commentCreatedTime) {
+		String createdTime = null;
+		Long commentTime = Long.parseLong("1404172800000");
+		Date currentDate = new Date(commentTime);
+		DateTimeFormat fmt = DateTimeFormat.getFormat (DATE_FORMAT);
+		createdTime = fmt.format (currentDate);
+		return createdTime;
+	}
 	public Chart createChart() {  
+		System.out.println("Created time::"+getCreatedTime(""));
 		String[] monthArray={"Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
     	String[] monthArrayNew = new String[12];
         final Chart chart = new Chart()  
@@ -57,7 +67,7 @@ public class ProfileAnalyticsChat{
         Date date = new Date();
         int month=date.getMonth();
         int monthVal=month;
-        int year=date.getYear();
+        int year=date.getYear()-1;
         for(int i=0;i<12;i++){
         	if(monthVal>=12){
         		monthVal=0;
@@ -76,7 +86,7 @@ public class ProfileAnalyticsChat{
           .setCategories(monthArrayNew);
   
      // Primary yAxis  
-        chart.getYAxis(0)  
+        chart.getYAxis(0)   
             .setLabels(new YAxisLabels()  
                 .setStyle(new Style()  
                     .setColor(GREEN_COLOR)  
