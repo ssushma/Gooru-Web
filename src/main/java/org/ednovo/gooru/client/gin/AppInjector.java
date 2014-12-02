@@ -80,6 +80,7 @@ import org.ednovo.gooru.client.mvp.register.RegisterPresenter;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
+import org.ednovo.gooru.client.mvp.search.TagsTabPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.standards.AddStandardsPresenter;
@@ -254,6 +255,11 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<TicalLibraryPresenter> getTicalLibraryPresenter();
 	
 	AsyncProvider<AnalyticsInfoContainerPresenter> getAnalyticsInfoContainerPresenter();
+
+	AsyncProvider<TagsTabPresenter> getTagsTabPresenter();
 	
 	AsyncProvider<UserDashBoardPresenter> getUserDashBoardPresenter();
+	
+	
+
 }

@@ -493,6 +493,9 @@
 .clearBoth{
 	clear: both;
 }
+.mutedText{
+	color:#EEEEEE;
+}
 
 .collections{
 	background:#333333;

@@ -100,6 +100,8 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	
 	private boolean  isFlagButtonActive=false;
 	
+	private String collectionType=null;
+	
 	private static final String STUDY_PLAYER ="studyPlayer";
 	
 	GlobalTooltipWithButton globalTooltipWithButton,logOutToolTip;
@@ -660,7 +662,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 				headerView.getAuthorContainer().setVisible(false);
 			}else{
 				headerView.getAuthorContainer().setVisible(isHidePlayerButtons);
-				headerView.displayAuthorName();
+				headerView.displayAuthorName(getCollectionType());
 				showLogoutMessage(!isHidePlayerButtons);
 			}
 			//headerView.getFlagButton().setVisible(!isHidePlayerButtons);
@@ -674,7 +676,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	}
 	
 	public void updateAuthorDetails(){
-		headerView.displayAuthorName();
+		headerView.displayAuthorName(getCollectionType());
 	}
 	
 	public void scrollStudyPage(){
@@ -719,6 +721,14 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		  viewAnchor.getElement().setId("lnkViewAnchor");
 		  viewAnchor.getElement().setAttribute("alt",i18n.GL1428());
 		  viewAnchor.getElement().setAttribute("title",i18n.GL1428());
+	}
+
+	public String getCollectionType() {
+		return collectionType;
+	}
+
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
 	}
 
 }

@@ -69,6 +69,10 @@ public class ResourceInfoPresenter extends PresenterWidget<IsResourceInfoView> i
 		}
 	}
 	
+	public void setCollectionType(String collectionType){
+		getView().setCollectionType(collectionType);
+	}
+	
 	public void updateViewsCount(String viewCount){
 		getView().setResourceViewsCount(viewCount);
 	}

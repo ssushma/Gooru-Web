@@ -245,7 +245,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	
 	static MessageProperties i18n = GWT.create(MessageProperties.class);
 
-	private static final String WHAT_IS_THIS_COLLECTION_ABOUT = i18n.GL1485()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP();
+	private static String WHAT_IS_THIS_COLLECTION_ABOUT = i18n.GL1485()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP();
 
 	private static final String PRE_SEARCH_LINK = i18n.GL1487();
 	
@@ -1067,6 +1067,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 //		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		setIpadFriendly();
+		modifyStaticText(collectionDo.getCollectionType());
 //		panelFriendly.setVisible(false);
 		if(tab!=null){
 			if (tab.equals(infoTabVc)) {
@@ -1137,14 +1138,27 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			//imgFriendly.setAltText(i18n.GL0737());
 			//imgFriendly.setTitle(i18n.GL0737());
 			//imgFriendly.setUrl("images/mos/MobileFriendly.png");
-			lblFriendly.setText(StringUtil.generateMessage(i18n.GL0449(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
+			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+				lblFriendly.setText(StringUtil.generateMessage(i18n.GL3012(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
+			}else{
+				lblFriendly.setText(StringUtil.generateMessage(i18n.GL0449(), String.valueOf(notFriendlyCount), notFriendlyCount>1 ? i18n.GL_GRR_ARE() : i18n.GL_GRR_IS()));
+			}
 		}else{
 			//imgFriendly.getElement().getStyle().setWidth(25, Unit.PX);
 			//imgFriendly.setUrl("images/mos/friendlyResource.png");
 			//imgFriendly.setAltText(i18n.GL0865());
 			//imgFriendly.setTitle(i18n.GL0865());
-			lblFriendly.setText(i18n.GL0453());
+			if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+				lblFriendly.setText(i18n.GL3013());
+			}else{
+				lblFriendly.setText(i18n.GL0453());
+			}
 		}
+	}
+	
+	public void modifyStaticText(String collectionType){
+		collectionType=(collectionType!=null&&collectionType.equals("quiz"))?i18n.GL3007().toLowerCase():i18n.GL2001();
+		collectionDescriptionUc.setPlaceholder(StringUtil.generateMessage(WHAT_IS_THIS_COLLECTION_ABOUT, collectionType));
 	}
 
 	/**
@@ -1323,8 +1337,13 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			}
 		};
 		delete.setPopupTitle(i18n.GL0748());
-		delete.setNotes(StringUtil.generateMessage(i18n.GL1020(), collectionDo.getTitle()));
-		delete.setDescText(i18n.GL1238());
+		if(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz")){
+			delete.setNotes(StringUtil.generateMessage(i18n.GL3038(), collectionDo.getTitle()));
+			delete.setDescText(i18n.GL3039());
+		}else{
+			delete.setNotes(StringUtil.generateMessage(i18n.GL1020(), collectionDo.getTitle()));
+			delete.setDescText(i18n.GL1238());
+		}
 		delete.setDeleteValidate("delete");
 		delete.setPositiveButtonText(i18n.GL0190());
 		delete.setNegitiveButtonText(i18n.GL0142());
@@ -1523,6 +1542,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
 		folderPopupUc.setPopupPosition(clickEvent.getRelativeElement().getAbsoluteLeft() - (604), Window.getScrollTop() + 60);
 		Window.enableScrolling(false);
+		folderPopupUc.setCollectionType(collectionDo.getCollectionType());
 		/*folderPopupUc.center();*/
 		folderPopupUc.show();
 	}

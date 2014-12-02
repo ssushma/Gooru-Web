@@ -53,6 +53,8 @@ public class ProfileUserTagWidget extends Composite {
 	@UiField
 	HTMLEventPanel mainContainer;
 	HTMLPanel followingContainer; HTMLPanel tagResourceContainer;		
+	@UiField HTMLPanel tagRightPanel;
+	
 	UserTagsDo userTagDo =new UserTagsDo();
 	String titleLabelName;
 	public ProfileUserTagWidget(){
@@ -65,6 +67,17 @@ public class ProfileUserTagWidget extends Composite {
 		this.followingContainer = followingContainer;
 		this.tagResourceContainer = tagResourceContainer;
 		setData(userTagDo);
+	}
+	
+	
+	/**
+	 * Class constructor, calls from TagsTabView class.
+	 * 
+	 * @param resourceTagsDo {@link UserTagsDo}
+	 */
+	public ProfileUserTagWidget(UserTagsDo resourceTagsDo) {
+		initWidget(uiBinder.createAndBindUi(this));
+		setResourceTags(resourceTagsDo);
 	}
 	public void setData(UserTagsDo userTagDo){
 		String titleLabel=userTagDo.getLabel();
@@ -97,9 +110,58 @@ public class ProfileUserTagWidget extends Composite {
 		tagResourceContainer.add(ProfileUserTagsResourceView);
 		followingContainer.setVisible(false);
 		tagResourceContainer.setVisible(true);
+	}
+	
+	
+	/**
+	 * Sets the tags at search results tags tab.
+	 * 
+	 * @param resourceTagsDo {@link UserTagsDo}
+	 */
+	public void setResourceTags(UserTagsDo resourceTagsDo) {
 		
+		String titleLabel=resourceTagsDo.getLabel();
+		titleLabelName=resourceTagsDo.getLabel();
+		tagTitle.setText(titleLabel);
+		tagTitle.getElement().setId("lblTagTitle");
+		tagTitle.getElement().setAttribute("alt",titleLabel);
+		tagTitle.getElement().setAttribute("title",titleLabel);
 		
-				
+		tagcount.setText(resourceTagsDo.getCount());
+		tagcount.getElement().setId("lblTagcount");
+		tagcount.getElement().setAttribute("alt",resourceTagsDo.getCount());
+		tagcount.getElement().setAttribute("title",resourceTagsDo.getCount());
+	}
+	
+	
+	/**
+	 * Overrides the default style with search tags style
+	 * 
+	 * @param styleName {@link String}
+	 */
+	public void setSearchTagsBgStyleName(String styleName){
+		mainContainer.setStyleName(styleName);
+	}
+	
+	
+	/**
+	 * Overrides the default style with search tags style
+	 * 
+	 * @param styleName {@link String}
+	 */
+	public void setSearchTabTagRightStyleName(String styleName){
+		tagRightPanel.setStyleName(styleName);
+	}
+	
+	
+	/**
+	 * Overrides the default style with search tags style
+	 * 
+	 * @param styleName {@link String}
+	 */
+	public void setSearchTabTagLblStyleName(String styleName){
+		tagcount.setStyleName(styleName);
+		tagTitle.setStyleName(styleName);
 	}
 	
 	
