@@ -213,10 +213,11 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		standardsText.getElement().setAttribute("title",i18n.GL1877());
 
 		collectionsText.getElement().setId("pnlCollectionsText");
+
 		collectionsText.getElement().setInnerHTML(i18n.GL0620());
 		collectionsText.getElement().setAttribute("alt",i18n.GL0620());
 		collectionsText.getElement().setAttribute("title",i18n.GL0620());
-		
+
 		hideText.setText(i18n.GL0592());
 		hideText.getElement().setId("lblHideText");
 		hideText.getElement().setAttribute("alt",i18n.GL0592());
@@ -2302,9 +2303,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	@Override
 	public void setCollectionType(String collectionType) {
-		System.out.println("Enter");
+
 		String message=(collectionType!=null&&collectionType.equals("quiz"))?i18n.GL3043():i18n.GL0620();
-		System.out.println("message:::"+message);
+
 		collectionsText.getElement().setInnerHTML(message);
 		collectionsText.getElement().setAttribute("alt",message);
 		collectionsText.getElement().setAttribute("title",message);
