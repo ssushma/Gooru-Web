@@ -5,7 +5,7 @@
 		/* Add CSS here. See the GWT docs on UI Binder for more
 		details */
 		.searchPop{
-		width:335px;
+		min-width:335px;
 		border: 1px solid #cacaca;
 		box-shadow:0 0 10px rgba(0, 0, 0, 0.1);
 		}
@@ -129,13 +129,13 @@
 						<a href="#">Grade and Subject</a>
 					</li>
 					<li>
-						<a href="#">Standards</a>
+						<g:Button ui:field="standardsButton">Standards</g:Button>
 					</li>
 				</ul>	
 
 			</g:HTMLPanel>
 
-			<g:HTMLPanel styleName="{style.searchPopContent}">
+			<g:HTMLPanel ui:field="gradesPanel" styleName="{style.searchPopContent}">
 
 				<g:HTMLPanel styleName="{style.searchPopGrade}">
 					<g:HTMLPanel styleName="{style.searchPopSmallHead}">Grade</g:HTMLPanel>

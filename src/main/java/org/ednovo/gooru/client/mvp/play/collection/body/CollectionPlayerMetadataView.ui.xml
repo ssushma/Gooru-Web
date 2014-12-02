@@ -16,7 +16,7 @@
 		                </g:FlowPanel>
              		</g:FlowPanel>
  -->                <g:Label styleName="{playerStyle.hrShadow}"></g:Label>
-				<g:HTMLPanel styleName="{playerStyle.commentsSection}">
+				<g:HTMLPanel styleName="{playerStyle.commentsSection}" ui:field="commentssection">
 					   <g:Label ui:field="commentCount" styleName="{playerStyle.commentsH2}"></g:Label>
 					   <g:HTMLPanel styleName="{playerStyle.onoffbtns}" ui:field="switchContainer">
 						<g:InlineLabel ui:field="requiredLabel">Comments On</g:InlineLabel>

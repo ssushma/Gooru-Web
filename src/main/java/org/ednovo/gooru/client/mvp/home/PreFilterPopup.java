@@ -7,9 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.CssTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
-import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
 import org.ednovo.gooru.client.uc.DisclosurePanelUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -19,6 +17,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -28,7 +27,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author janamitra
  *
  */
-public class PreFilterPopup extends PopupPanel {
+public  class PreFilterPopup extends PopupPanel {
 
 	private static PreFilterPopupUiBinder uiBinder = GWT
 			.create(PreFilterPopupUiBinder.class);
@@ -38,7 +37,8 @@ public class PreFilterPopup extends PopupPanel {
 	interface PreFilterPopupUiBinder extends UiBinder<Widget, PreFilterPopup> {
 	}
 	
-	@UiField HTMLPanel eleGradePanelUc,middleGradePanelUc,highrGradePanelUc,subjectPanelUc;
+	@UiField HTMLPanel eleGradePanelUc,middleGradePanelUc,highrGradePanelUc,subjectPanelUc,gradesPanel;
+	@UiField Button standardsButton;
 	
 	CheckBox gradeCheckBox;
 	
@@ -231,6 +231,10 @@ public class PreFilterPopup extends PopupPanel {
 		clearFilter(highrGradePanelUc);
 		clearFilter(subjectPanelUc);
 	}
-	
-
+	public Button getStandardsInfo(){
+		return standardsButton;
+	}
+	public HTMLPanel clearGradesInfo(){
+		return gradesPanel;
+	}
 }

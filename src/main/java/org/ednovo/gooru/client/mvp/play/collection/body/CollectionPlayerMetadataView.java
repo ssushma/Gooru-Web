@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresente
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.CommentWidgetChildView;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
+import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.uc.CollaboratorsUc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -117,7 +118,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiField Image profileThumbnailImage,userPhoto;
 	@UiField HTMLPanel teacherPanel,classInfoPanel,authorPanel,courseSection,standardSection,teacherContainer,viewSection,dueDateSection,directionSection,teacherProfileContainer,languageObjectiveContainer,addComment,loginMessaging,
 						depthOfKnowledgePanel,audiencePanel,instructionalmethodPanel,learningAndInnovationSkillPanel,
-						InstructionalmethodContainer,audienceContainer,learningAndInnovationSkillsContainer,depthOfKnowledgeContainer;
+						InstructionalmethodContainer,audienceContainer,learningAndInnovationSkillsContainer,depthOfKnowledgeContainer,switchContainer,commentssection;
 	@UiField Anchor previewFlagButton,seeMoreAnchor,loginUrl, signupUrl;
 	@UiField CollectionPlayerStyleBundle playerStyle;
 	@UiField HTML teacherTipLabel;
@@ -145,6 +146,8 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	
 	private static final String PAGINATION = "page";
 	
+	private SimpleAsyncCallback<CollectionDo> updateCollectionAsyncCallback;
+	
 //	private static final String COMMENTS_LBL = " "+i18n.GL1432;
 	
 	private static final String PRIMARY_STYLE = "primary";
@@ -167,6 +170,9 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	private int paginationCount = 0;
 	
 	private boolean isHavingBadWords;
+	
+	@Inject
+	private ResourceServiceAsync resourceService;
 	
 	private static CollectionPlayerMetadataViewUiBinder uiBinder = GWT.create(CollectionPlayerMetadataViewUiBinder.class);
 
@@ -246,6 +252,90 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		}else{
 			setUserName(collectionDo.getUser().getUsernameDisplay());
 		}
+		if (collectionDo.getMeta() !=null)
+		{
+			if(collectionDo.getMeta().getPermissions() != null)
+			{
+			if (collectionDo.getMeta().getPermissions().toString().contains("edit") || collectionDo.getMeta().isIsCollaborator()){
+				switchContainer.setVisible(true);
+				if(collectionDo.getSettings() != null)
+				{
+					if(collectionDo.getSettings().getComment() != null)
+					{
+						if(collectionDo.getSettings().getComment().equalsIgnoreCase("turn-on"))
+						{
+							commentField.setEnabled(true);
+							commentssection.getElement().getStyle().setOpacity(1);
+							changeAssignmentStatusButton.setChecked(true);
+						}
+						else
+						{
+							commentField.setEnabled(false);
+							postCommentBtn.setEnabled(false);
+							postCommentBtn.removeStyleName(PRIMARY_STYLE);
+							postCommentBtn.addStyleName(SECONDARY_STYLE);
+							postCommentBtn.addStyleName(DISABLED_STYLE);
+							commentssection.getElement().getStyle().setOpacity(0.5);
+							changeAssignmentStatusButton.setChecked(false);
+						}
+					}
+					else
+					{
+						commentField.setEnabled(true);
+						postCommentBtn.removeStyleName(SECONDARY_STYLE);
+						postCommentBtn.removeStyleName(DISABLED_STYLE);
+						postCommentBtn.addStyleName(PRIMARY_STYLE);
+						commentssection.getElement().getStyle().setOpacity(1);
+						changeAssignmentStatusButton.setChecked(true);
+					}
+				}
+				else
+				{
+					commentField.setEnabled(true);
+					commentssection.getElement().getStyle().setOpacity(1);
+					changeAssignmentStatusButton.setChecked(true);
+				}
+				
+				
+				
+			}
+			else
+			{				
+				if(collectionDo.getSettings() != null)
+				{
+					if(collectionDo.getSettings().getComment() != null)
+					{
+						if(collectionDo.getSettings().getComment().equalsIgnoreCase("turn-off"))
+						{
+							commentssection.setVisible(false);
+						}
+						else
+						{
+							commentssection.setVisible(true);
+						}
+						
+					}
+					
+				}
+				else
+				{
+					commentssection.setVisible(true);
+				}			
+				
+				switchContainer.setVisible(false);	
+			}
+			}
+			else
+			{
+				switchContainer.setVisible(false);	
+			}
+		}
+		else
+		{
+			switchContainer.setVisible(false);	
+		}
+		
+		
 		setViewCount(collectionDo.getViews());
 		setUserProfileImage(collectionDo.getUser().getGooruUId());
 		renderCourseInfo(collectionDo.getMetaInfo().getCourse());
@@ -1331,16 +1421,70 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	
 	@UiHandler("changeAssignmentStatusButton")
 	public void clickOnStatusChangeBtn(ClickEvent event) {
-		
-		System.out.println("changeAssignmentStatusButton.isChecked()::"+changeAssignmentStatusButton.isChecked());
 		if (changeAssignmentStatusButton.isChecked()){
-			requiredLabel.removeStyleName(playerStyle.mutedText());
-			optionalLabel.removeStyleName(playerStyle.mutedText());
+		
+			getResourceService().updateCollectionSettingForComments(collectionDo.getGooruOid(), collectionDo.getTitle(), collectionDo.getGoals(), null, null, null, null, null, null, null,"turn-on", getUpdateCollectionAsyncCallback());
 		}
 		else{
-			requiredLabel.setStyleName(playerStyle.mutedText());
-			optionalLabel.setStyleName(playerStyle.mutedText());
+			getResourceService().updateCollectionSettingForComments(collectionDo.getGooruOid(), collectionDo.getTitle(), collectionDo.getGoals(), null, null, null, null, null, null, null,"turn-off", getUpdateCollectionAsyncCallback());
 		}
+	}
+	
+	public SimpleAsyncCallback<CollectionDo> getUpdateCollectionAsyncCallback() {
+		if (updateCollectionAsyncCallback == null) {
+			updateCollectionAsyncCallback = new SimpleAsyncCallback<CollectionDo>() {
+
+				@Override
+				public void onSuccess(CollectionDo result) {
+				//here
+					if(result.getSettings()!=null)
+					{
+						if(result.getSettings().getComment()!=null)
+						{
+							if(result.getSettings().getComment().equalsIgnoreCase("turn-on"))
+							{
+								requiredLabel.removeStyleName(playerStyle.mutedText());
+								optionalLabel.removeStyleName(playerStyle.mutedText());
+								
+								commentField.setEnabled(true);
+								//postCommentBtn.setEnabled(true);
+					/*			postCommentBtn.removeStyleName(SECONDARY_STYLE);
+								postCommentBtn.removeStyleName(DISABLED_STYLE);
+								postCommentBtn.addStyleName(PRIMARY_STYLE);*/
+								commentssection.getElement().getStyle().setOpacity(1);
+								changeAssignmentStatusButton.setChecked(true);
+							}
+							else
+							{
+								requiredLabel.setStyleName(playerStyle.mutedText());
+								optionalLabel.setStyleName(playerStyle.mutedText());
+								
+								commentField.setEnabled(false);
+								postCommentBtn.setEnabled(false);
+								postCommentBtn.removeStyleName(PRIMARY_STYLE);
+								postCommentBtn.addStyleName(SECONDARY_STYLE);
+								postCommentBtn.addStyleName(DISABLED_STYLE);
+								commentssection.getElement().getStyle().setOpacity(0.5);
+								changeAssignmentStatusButton.setChecked(false);
+							}
+							
+						}
+						else
+						{
+							requiredLabel.setStyleName(playerStyle.mutedText());
+							optionalLabel.setStyleName(playerStyle.mutedText());
+						}
+					}
+					else
+					{
+						requiredLabel.setStyleName(playerStyle.mutedText());
+						optionalLabel.setStyleName(playerStyle.mutedText());
+					}
+			
+				}
+			};
+		}
+		return updateCollectionAsyncCallback;
 	}
 	
 	
@@ -1557,4 +1701,14 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		teacherContainer.setVisible(isDisplayDetails);
 		hideCollectionDetails(false);
 	}
+
+	public ResourceServiceAsync getResourceService() {
+		return resourceService;
+	}
+
+	public void setResourceService(ResourceServiceAsync resourceService) {
+		this.resourceService = resourceService;
+	}
+	
+	
 }
