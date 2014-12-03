@@ -235,5 +235,7 @@ public interface UserService extends BaseService {
 	String revokeToken(String gooruUid)throws GwtException,ServerDownException;
 	
 	String isValidResetPasswordLink(String resetToken)throws GwtException,ServerDownException;
+	
+	Map<String,Integer> getTheAnalyticsFlaggedMonthlyData();
 
 }

@@ -40,6 +40,7 @@ package org.ednovo.gooru.client.mvp.dashboard;
 */
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.util.ProfileAnalyticsChat;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
@@ -54,7 +55,7 @@ import com.google.inject.Inject;
 
 public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandlers> implements IsUserDashBoardView{
 	
-	@UiField HTMLPanel CollectionsPublishedWidget,ResourceAddedWidget,commentsMadeWIdget,endorsementsGivenWidget,reviewsWrittenWidget,
+	@UiField HTMLPanel profileActivityBreakDown,CollectionsPublishedWidget,ResourceAddedWidget,commentsMadeWIdget,endorsementsGivenWidget,reviewsWrittenWidget,
 	topRemixedCollectionsWidget,topEndorsedCollectionsWidget,fiveStarRatedResourcesWidget,reactionsWidgetPanel,reactionsGivenWidget,ratingsGivenWidget,googleMapContainer;
 	@UiField HTMLEventPanel profileAnalyticsGrageContainer;
 	
@@ -88,6 +89,7 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 		reactionsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("reactions"));
 		googleMapContainer.add(new GoogleMapWidget());
 		profileAnalyticsGrageContainer.add(new ProfileAnalyticsGradeWidget());
+		profileActivityBreakDown.add(new ProfileAnalyticsChat().createChart());
 	}
 
 	@Override

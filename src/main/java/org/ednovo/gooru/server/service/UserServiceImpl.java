@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.UserService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.deserializer.ResourceDeserializer;
@@ -59,11 +58,9 @@ import org.ednovo.gooru.shared.model.user.UserSummaryDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
-import org.ednovo.gooru.shared.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -800,6 +797,39 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 		return resetToken;
 	}
-	
-	
+
+	@Override
+	public Map<String, Integer> getTheAnalyticsFlaggedMonthlyData() {
+		JsonRepresentation jsonRep = null;
+		String url ="http://qa.goorulearning.org/insights/api/v2/items/search?data={%22fields%22:%22%22,%22dataSource%22:%22rawdata%22,%22granularity%22:%22month%22,%22filter%22:[{%22logicalOperatorPrefix%22:%22AND%22,%22fields%22:[{%22type%22:%22selector%22,%22valueType%22:%22String%22,%22fieldName%22:%22gooruUId%22,%22operator%22:%22eq%22,%22value%22:%2295a744e1-631e-4642-875d-8b07a5e3b421%22},{%22type%22:%22selector%22,%22valueType%22:%22string%22,%22fieldName%22:%22eventName%22,%22operator%22:%22eq%22,%22value%22:%22item.flag%22}]}],%22aggregations%22:[{%22field1%22:%22eventName%22,%22formula%22:%22count%22,%22name%22:%22eventCount%22,%22requestValues%22:%22field1%22}],%22groupBy%22:%22eventName,eventTime%22}";
+		System.out.println("url:getTheAnalyticsFlaggedMonthlyData::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeMapData(jsonRep);
+	}
+	public Map<String, Integer> deserializeMapData(JsonRepresentation jsonRep) {
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+		try{
+			JSONObject mainObject = new JSONObject(jsonRep);
+
+			JSONObject posts = mainObject.getJSONObject("content");
+			
+			/*Iterator<String> keys = posts.keys();
+
+	        while( keys.hasNext() ){
+	            String key = (String)keys.next();
+	            if( posts.get(key) instanceof JSONObject ){
+	            	System.out.println("in the value::"+posts.get(key).toString());
+	            }
+	        }
+			*/
+			System.out.println(posts.keys());
+		}catch(JSONException e){
+			e.getStackTrace();
+		}
+			
+		}
+		return result;
+	}
 }

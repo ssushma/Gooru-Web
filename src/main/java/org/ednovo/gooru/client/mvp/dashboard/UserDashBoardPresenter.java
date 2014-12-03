@@ -38,21 +38,23 @@ package org.ednovo.gooru.client.mvp.dashboard;
  * Reviewer Gooru Team
  *
  */
+import java.util.Map;
+
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
-public class UserDashBoardPresenter
-		extends
-		BasePlacePresenter<IsUserDashBoardView, UserDashBoardPresenter.IsUserDashBoardProxy>
+public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardView, UserDashBoardPresenter.IsUserDashBoardProxy>
 		implements UserDashBoardUiHandlers {
 	
 	@Inject
@@ -89,16 +91,38 @@ public class UserDashBoardPresenter
 		super.onBind();
 		Window.enableScrolling(true);
 		displayDashBoardPage();
+		setData();
+	}
+	public void setData(){
+		AppClientFactory
+		.getInjector()
+		.getUserService().getTheAnalyticsFlaggedMonthlyData(new AsyncCallback<Map<String,Integer>>() {
+				
+				@Override
+				public void onSuccess(Map<String, Integer> result) {
+					
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+			});
 	}
 	@Override
 	protected void onHide() {
 		super.onHide();
 	}
-	public UserServiceAsync getUserService() {
-		return userService;
-	}
 	@Override
 	public String getViewToken() {
 		return null;
+	}
+
+	public UserServiceAsync getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserServiceAsync userService) {
+		this.userService = userService;
 	}
 }

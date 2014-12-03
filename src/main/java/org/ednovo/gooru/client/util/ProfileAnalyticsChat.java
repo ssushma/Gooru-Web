@@ -35,7 +35,6 @@ public class ProfileAnalyticsChat{
 		return createdTime;
 	}
 	public Chart createChart() {  
-		System.out.println("Created time::"+getCreatedTime(""));
 		String[] monthArray={"Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
     	String[] monthArrayNew = new String[12];
         final Chart chart = new Chart()  
