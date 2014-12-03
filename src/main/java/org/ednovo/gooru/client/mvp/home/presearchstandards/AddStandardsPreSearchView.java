@@ -26,8 +26,6 @@ package org.ednovo.gooru.client.mvp.home.presearchstandards;
 
 import java.util.ArrayList;
 
-import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle;
-import org.ednovo.gooru.client.uc.AppPopUpStandards;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
@@ -46,8 +44,6 @@ import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -58,7 +54,6 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -77,7 +72,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	
 	@UiField Button commonStandards1,texasKnowledge1,ngss1,californiaStandards1,addBtn;
 	
-	@UiField HTMLPanel levelOneStandards,levelTwoStandards,levelThreeStandards,levelFourStandards;
+	@UiField HTMLPanel addStandardsPanel,levelOneStandards,levelTwoStandards,levelThreeStandards,levelFourStandards;
 	
 	private boolean isCheckedValue;
 	
@@ -934,6 +929,14 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			}catch(Exception ex){}
 		}
 		return false;
+	}
+	
+	/**
+	 * @return the addStandardsPanel
+	 */
+	@Override
+	public HTMLPanel getAddStandardsPanel() {
+		return addStandardsPanel;
 	}
 	
 }

@@ -637,6 +637,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 					//addStandardsPresenter.loadDataFrompresnter();
 					preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
 					addStandardsPresenter.callDefaultStandardsLoad();
+					addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
 				
 					
 				}

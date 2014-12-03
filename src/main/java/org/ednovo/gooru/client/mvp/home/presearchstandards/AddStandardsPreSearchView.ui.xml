@@ -3,7 +3,7 @@
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="createCollectionStyle" src="CreateCollectionPopUp.css"/>
 
-	<g:HTMLPanel styleName="{createCollectionStyle.shelfItemContentDiv}">
+	<g:HTMLPanel styleName="{createCollectionStyle.shelfItemContentDiv}" ui:field="addStandardsPanel">
 	<g:HTMLPanel>
 		<g:HTMLPanel styleName="{createCollectionStyle.btnStandardsContainer}">
 		<g:Button styleName="secondary {createCollectionStyle.btnStandardsStyle}" ui:field="commonStandards1">Common Core State Standards</g:Button>

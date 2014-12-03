@@ -36,6 +36,7 @@ import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.gwtplatform.mvp.client.PopupView;
 
 /**
@@ -69,5 +70,7 @@ public interface IsAddStandardsPreSearchView extends PopupView, IsViewWithHandle
 			boolean isCAAvailable);
 
 	void setStandardsStyles(String standardVal);
+	
+	HTMLPanel getAddStandardsPanel();
 	
 }

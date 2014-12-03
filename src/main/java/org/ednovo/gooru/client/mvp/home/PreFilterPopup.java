@@ -41,8 +41,6 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -64,14 +62,14 @@ public class PreFilterPopup extends PopupPanel {
 	interface PreFilterPopupUiBinder extends UiBinder<Widget, PreFilterPopup> {
 	}
 	
-	@UiField HTMLPanel eleGradePanelUc,middleGradePanelUc,highrGradePanelUc,subjectPanelUc,gradesPanel;
+	@UiField HTMLPanel filterPanel,eleGradePanelUc,middleGradePanelUc,highrGradePanelUc,subjectPanelUc,gradesPanel;
 
 	
 	@UiField Label lblGradesSubj,lblStandards;
 	
 	@UiField HTMLPanel standardsPanel;
 	
-	@UiField Anchor gradeAnc,standardsButton;
+//	@UiField Anchor gradeAnc,standardsButton;
 	
 //	@UiField SimplePanel standardsPanel;
 	
@@ -108,7 +106,7 @@ public class PreFilterPopup extends PopupPanel {
 		renderCheckBoxs(subjectPanelUc, subjects);
 		setStaticData();
 		eventActions();
-		gradeAnc.addClickHandler(new ClickHandler() {
+		/*gradeAnc.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
@@ -116,8 +114,8 @@ public class PreFilterPopup extends PopupPanel {
 			ShowSTandardsPanel().setVisible(false);
 				
 			}
-		});
-		standardsButton.addClickHandler(new ClickHandler() {
+		});*/
+		/*standardsButton.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
@@ -125,7 +123,7 @@ public class PreFilterPopup extends PopupPanel {
 				hideGradePanel().setVisible(false);
 				ShowSTandardsPanel().setVisible(true);
 			}
-		});
+		});*/
 //		clearAllFields();
 	}
 
@@ -315,8 +313,8 @@ public class PreFilterPopup extends PopupPanel {
 		clearFilter(subjectPanelUc);
 	}
 
-	public Anchor getStandardsInfo(){
-		return standardsButton;
+	public Label getStandardsInfo(){
+		return lblStandards;
 	}
 	public HTMLPanel hideGradePanel(){
 		return gradesPanel;
@@ -337,6 +335,7 @@ public class PreFilterPopup extends PopupPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			lblGradesSubj.getElement().setAttribute("style", "background: #e5e5e5;");
+			filterPanel.getElement().setAttribute("style", "width:335px;");
 			lblStandards.getElement().getStyle().clearBackgroundColor();
 			standardsPanel.setVisible(false);
 			gradesPanel.setVisible(true);
@@ -357,6 +356,7 @@ public class PreFilterPopup extends PopupPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			lblStandards.getElement().setAttribute("style", "background: #e5e5e5;");
+			filterPanel.getElement().setAttribute("style", "width:922px;");
 			lblGradesSubj.getElement().getStyle().clearBackgroundColor();
 			standardsPanel.setVisible(true);
 			gradesPanel.setVisible(false);
