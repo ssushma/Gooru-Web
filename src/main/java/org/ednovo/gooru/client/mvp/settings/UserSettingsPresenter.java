@@ -428,11 +428,11 @@ public class UserSettingsPresenter
 										: "");
 					}
 
-					if (user.getExternalId() != null) {
-						Refersh_emailId=user.getExternalId();
-						boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
+					if (user.getUser().getEmailId() != null) {
+						Refersh_emailId=user.getUser().getEmailId();
+						boolean isValidEmail = user.getUser().getEmailId().matches(EMAIL_REGEX);
 						if(isValidEmail){
-							getView().getLbEmail().setText(user.getExternalId());
+							getView().getLbEmail().setText(user.getUser().getEmailId());
 							//StringUtil.consoleLog("setEmailId 1"+user.getExternalId());
 							
 							
@@ -444,7 +444,7 @@ public class UserSettingsPresenter
 						if(user.getUser().getAccountTypeId() != 2){
 							if(user.getUser().getEmailId()!=null){
 								Refersh_emailId=user.getUser().getEmailId();
-								boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
+								boolean isValidEmail = user.getUser().getEmailId().matches(EMAIL_REGEX);
 								if(isValidEmail){
 									//StringUtil.consoleLog("setEmailId 2"+user.getUser().getEmailId());
 									
@@ -727,10 +727,10 @@ public class UserSettingsPresenter
 										: "");
 					}
 
-					if (user.getExternalId() != null) {
-						getView().getLbEmail().setText(user.getExternalId());
+					if (user.getUser().getEmailId() != null) {
+						getView().getLbEmail().setText(user.getUser().getEmailId());
 						//StringUtil.consoleLog("setEmailId 3"+user.getExternalId());
-						Refersh_emailId = user.getExternalId();
+						Refersh_emailId = user.getUser().getEmailId();
 						
 						
 					} else {
