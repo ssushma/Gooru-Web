@@ -126,19 +126,21 @@
 			<g:HTMLPanel styleName="{style.searchPopMenu}">
 				<ul>
 					<li class="active">
-						<a href="#">Grade and Subject</a>
+						<g:Anchor ui:field="gradeAnc">Grade and Subject</g:Anchor>
 					</li>
 					<li>
-						<g:Button ui:field="standardsButton">Standards</g:Button>
+					<g:Anchor ui:field="standardsButton">Standards</g:Anchor>
 					</li>
 				</ul>	
 
 			</g:HTMLPanel>
+			
+			<g:HTMLPanel ui:field="standardsPanel"></g:HTMLPanel>
 
 			<g:HTMLPanel ui:field="gradesPanel" styleName="{style.searchPopContent}">
 
 				<g:HTMLPanel styleName="{style.searchPopGrade}">
-					<g:HTMLPanel styleName="{style.searchPopSmallHead}">Grade</g:HTMLPanel>
+					<g:Label ui:field="lblGradesSubj" styleName="{style.searchPopSmallHead}">Grade</g:Label>
 					<g:HTMLPanel styleName="{style.checkBoxContaner}">
 
 						<g:HTMLPanel styleName="{style.col1}">
@@ -176,7 +178,7 @@
 				</g:HTMLPanel>
 
 				<g:HTMLPanel styleName="{style.searchPopSubject}">
-					<g:HTMLPanel styleName="{style.searchPopSmallHead}">Subject</g:HTMLPanel>
+					<g:Label ui:field="lblStandards" styleName="{style.searchPopSmallHead}">Subject</g:Label>
 					<g:HTMLPanel styleName="{style.checkBoxContaner}">
 						<g:HTMLPanel  ui:field="subjectPanelUc"/>
 					</g:HTMLPanel>

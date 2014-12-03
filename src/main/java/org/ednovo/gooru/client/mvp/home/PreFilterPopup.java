@@ -41,6 +41,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -64,11 +65,13 @@ public class PreFilterPopup extends PopupPanel {
 	}
 	
 	@UiField HTMLPanel eleGradePanelUc,middleGradePanelUc,highrGradePanelUc,subjectPanelUc,gradesPanel;
-	@UiField Button standardsButton;
+
 	
 	@UiField Label lblGradesSubj,lblStandards;
 	
-	@UiField HTMLPanel gradePanel,standardsPanel;
+	@UiField HTMLPanel standardsPanel;
+	
+	@UiField Anchor gradeAnc,standardsButton;
 	
 //	@UiField SimplePanel standardsPanel;
 	
@@ -105,6 +108,24 @@ public class PreFilterPopup extends PopupPanel {
 		renderCheckBoxs(subjectPanelUc, subjects);
 		setStaticData();
 		eventActions();
+		gradeAnc.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+			hideGradePanel().setVisible(true);
+			ShowSTandardsPanel().setVisible(false);
+				
+			}
+		});
+		standardsButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+			
+				hideGradePanel().setVisible(false);
+				ShowSTandardsPanel().setVisible(true);
+			}
+		});
 //		clearAllFields();
 	}
 
@@ -294,13 +315,15 @@ public class PreFilterPopup extends PopupPanel {
 		clearFilter(subjectPanelUc);
 	}
 
-	public Button getStandardsInfo(){
+	public Anchor getStandardsInfo(){
 		return standardsButton;
 	}
-	public HTMLPanel clearGradesInfo(){
+	public HTMLPanel hideGradePanel(){
 		return gradesPanel;
 	}
-	
+	public HTMLPanel ShowSTandardsPanel(){
+		return standardsPanel;
+	}
     /**
      * 
      * @author janamitra
@@ -316,7 +339,7 @@ public class PreFilterPopup extends PopupPanel {
 			lblGradesSubj.getElement().setAttribute("style", "background: #e5e5e5;");
 			lblStandards.getElement().getStyle().clearBackgroundColor();
 			standardsPanel.setVisible(false);
-			gradePanel.setVisible(true);
+			gradesPanel.setVisible(true);
 		}
 		
 	}
@@ -336,7 +359,7 @@ public class PreFilterPopup extends PopupPanel {
 			lblStandards.getElement().setAttribute("style", "background: #e5e5e5;");
 			lblGradesSubj.getElement().getStyle().clearBackgroundColor();
 			standardsPanel.setVisible(true);
-			gradePanel.setVisible(false);
+			gradesPanel.setVisible(false);
 //			standardsPanel.add(new AppPopUpStandards());
 		}
 		
