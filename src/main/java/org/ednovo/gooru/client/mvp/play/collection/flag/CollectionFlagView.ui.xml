@@ -85,8 +85,8 @@
   	    </g:HTMLPanel>
       	<div class="{res.css.formViewButtonContainer}">
                <g:Button styleName="secondary" ui:field="collectionCancelButton"/>
-               <g:Button styleName="secondary" ui:field="collectionSubmitButton"/>
-         	   <g:Button styleName="primary" ui:field="submitButtonGray"/>
+               <g:Button styleName="primary" ui:field="collectionSubmitButton"/>
+         	   <g:Button styleName="secondary" ui:field="submitButtonGray"/>
          </div>
         </g:HTMLPanel>
           <g:HTMLPanel styleName="clearfix"/> 

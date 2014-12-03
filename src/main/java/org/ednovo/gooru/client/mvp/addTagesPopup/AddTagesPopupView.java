@@ -121,14 +121,14 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		lblMediaPlaceHolder.getElement().setAttribute("data-toggle","dropdown");
 		htmlMediaFeatureListContainer.setHeight("100px");
 		htmlMediaFeatureListContainer.getElement().getStyle().setOverflowY(Overflow.AUTO);
-		/*if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("resource-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("collection-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("mycollections")){
-				this.getGlassElement().addClassName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
+		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("resource-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("collection-search")||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("mycollections")){
+		//		this.getGlassElement().addClassName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
 			}else{
 			
-				this.removeStyleName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
-				this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
+			//	this.removeStyleName(AddTagesCBundle.INSTANCE.css().tagsStyleSearch());
+				//this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
 				this.getElement().setAttribute("style", "z-index:999999;");
-		}*/
+		}
 	
 		//AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
 		this.center();

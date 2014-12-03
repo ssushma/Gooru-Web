@@ -53,6 +53,7 @@ import com.google.gwt.dom.client.Style.Clear;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -267,7 +268,7 @@ public abstract class CreateAccountUc extends PopupPanel{
 		setUiAndIds();
 		
 		dateBoxUc = new DateBoxUc(true, true, false);
-		dateBoxUc.getElement().getStyle().setFloat(Float.LEFT);
+		//dateBoxUc.getElement().getStyle().setFloat(Float.LEFT);
 		sPanelDateOfBirth.add(dateBoxUc);
 		
 		sPanelDateOfBirth.getElement().setId("spnlDateOfBirth");
@@ -566,7 +567,7 @@ public abstract class CreateAccountUc extends PopupPanel{
 					passwordValidUc.setText(StringUtil.generateMessage(i18n.GL0073(), "Password"));
 					passwordValidUc.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL0073(), "Password"));
 					passwordValidUc.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL0073(), "Password"));
-					passwordValidUc.getElement().getStyle().setWidth(340, Unit.PX);
+					/*passwordValidUc.getElement().getStyle().setWidth(340, Unit.PX);*/
 					passwordValidUc.getElement().getStyle().setMarginLeft(0, Unit.PX);
 					passwordValidUc.setVisible(true);
 					isValid = false;
@@ -590,12 +591,11 @@ public abstract class CreateAccountUc extends PopupPanel{
 			}
 			if (dob.equalsIgnoreCase("") || dob == null || dob.isEmpty()
 					|| !dateBoxUc.hasValidateDate()) {
-				dateBoxUc.getDateBox()
-						.addStyleName(res.css().errorMsgDisplay());
+				sPanelDateOfBirth.addStyleName(res.css().errorMsgDisplay());
 				// dateValidationUc.setVisible(true);
 				isValid = false;
 			} else {
-				dateBoxUc.getDateBox().removeStyleName(
+				sPanelDateOfBirth.removeStyleName(
 						res.css().errorMsgDisplay());
 			}
 			if (firstName.equalsIgnoreCase("") || firstName == null) {
@@ -668,7 +668,7 @@ public abstract class CreateAccountUc extends PopupPanel{
 			}
 			// TODO Validate Whether is Seleted or not
 			if (selectedRole == null) {
-				lblSelectRole.addStyleName(res.css().error());
+			//	lblSelectRole.addStyleName(res.css().error());
 				lblSelectRole.setVisible(true);
 				isValid = false;
 			}
@@ -996,7 +996,8 @@ public abstract class CreateAccountUc extends PopupPanel{
 		lblSelectRole.getElement().setAttribute("title",i18n.GL1146());
 		
 		parentEmailValidUc.getElement().setId("errlblParentEmailValidUc");
-	
+		parentEmailValidUc.getElement().getStyle().setMarginLeft(0, Unit.PX);
+		parentEmailValidUc.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		firstNameValidUc.getElement().setId("errlblFirstNameValidUc");
 		errorLblForFirstName.getElement().setId("errlblFirstName");
 		

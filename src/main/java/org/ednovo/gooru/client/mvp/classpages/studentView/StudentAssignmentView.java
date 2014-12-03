@@ -494,8 +494,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 										}
 										
 									};
-									success.setHeight("248px");
-                                    success.setWidth("450px");
+							/*		success.setHeight("248px");
+                                    success.setWidth("450px");*/
                                     success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
                                     success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
                                     success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
@@ -604,8 +604,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												}
 												
 											};
-											success.setHeight("248px");
-                                            success.setWidth("450px");
+										/*	success.setHeight("248px");
+                                            success.setWidth("450px");*/
                                             success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
                                             success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
                                             success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
@@ -933,8 +933,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 									}
 									
 								};
-								success.setHeight("248px");
-                                success.setWidth("450px");
+							/*	success.setHeight("248px");
+                                success.setWidth("450px");*/
                                 success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
                                 success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
                                 success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
@@ -1091,8 +1091,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 								}
 								
 							};
-							success.setHeight("248px");
-                            success.setWidth("450px");
+						/*	success.setHeight("248px");
+                            success.setWidth("450px");*/
                             success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
                             success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
                             success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
@@ -1202,8 +1202,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 											}
 											
 										};
-										success.setHeight("248px");
-		                                success.setWidth("450px");
+									/*	success.setHeight("248px");
+		                                success.setWidth("450px");*/
 		                                success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
 		                                success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
 		                                success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
@@ -1355,8 +1355,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 												}
 												
 											};
-											success.setHeight("248px");
-		                                    success.setWidth("450px");
+										/*	success.setHeight("248px");
+		                                    success.setWidth("450px");*/
 		                                    success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
 		                                    success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
 		                                    success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
@@ -1466,8 +1466,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 														}
 														
 													};
-													success.setHeight("248px");
-		                                            success.setWidth("450px");
+											/*		success.setHeight("248px");
+		                                            success.setWidth("450px");*/
 		                                            success.setPopupTitle(StudentAssignmentView.i18n.GL1553());
 		                                            success.setDescText(StudentAssignmentView.i18n.GL1554()+classpageDo.getTitle()+StudentAssignmentView.i18n.GL_SPL_EXCLAMATION()+'\n'+StudentAssignmentView.i18n.GL1552());
 		                                            success.setPositiveButtonText(StudentAssignmentView.i18n.GL0190());
