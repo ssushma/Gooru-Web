@@ -209,12 +209,12 @@ public class ViewResponseUserWidget extends Composite {
 		}
 	}
 	public static native String encodedString(String msg) /*-{
-	  	var feedbackText = encodeURIComponent(feedbackContent);
+	  	var feedbackText = encodeURIComponent(msg);
 	  	return feedbackText;
 	}-*/;
 	
 	public static native String decodeFeedbackText(String msg) /*-{
-  	 	  var decodeFeedback = decodeURIComponent(feedbackText);
+  	 	  var decodeFeedback = decodeURIComponent(msg);
 		  decodeFeedback = decodeFeedback.replace(/<|_/g,'&lt;');
 		  return decodeFeedback;
 	}-*/;
