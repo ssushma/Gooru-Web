@@ -1,3 +1,4 @@
+
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
 
@@ -24,30 +25,54 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package org.ednovo.gooru.client.mvp.search;
+package org.ednovo.gooru.shared.model.search;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
-import org.ednovo.gooru.shared.model.user.UserTagsDo;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> {
 
-	/**
-	 * @param result
-	 */
-	void setResourceTags(SearchResourcesTagsDo searchResourcesTagsDo); 
-
+@JsonInclude(Include.NON_NULL)
+public class SearchResourcesTagsDo implements Serializable {
 
 	/**
-	 * @param isVisible
+	 * 
 	 */
-	void isLoadingImageVisible(boolean isVisible);
+	private static final long serialVersionUID = 1L;
+	
+	private Integer totalHitCount;
+	
+	List<ResourceTagsListDo> searchResults = new ArrayList<ResourceTagsListDo>();
 
 	/**
-	 * @param resourceId
+	 * @return the totalHitCount
 	 */
-	void setResourceTagsData(String resourceId);   
+	public Integer getTotalHitCount() {
+		return totalHitCount;
+	}
+
+	/**
+	 * @param totalHitCount the totalHitCount to set
+	 */
+	public void setTotalHitCount(Integer totalHitCount) {
+		this.totalHitCount = totalHitCount;
+	}
+
+	/**
+	 * @return the searchResults
+	 */
+	public List<ResourceTagsListDo> getSearchResults() {
+		return searchResults;
+	}
+
+	/**
+	 * @param searchResults the searchResults to set
+	 */
+	public void setSearchResults(List<ResourceTagsListDo> searchResults) {
+		this.searchResults = searchResults;
+	}
 
 }

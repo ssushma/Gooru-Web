@@ -62,7 +62,9 @@ import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
+import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
 import org.ednovo.gooru.shared.util.StringUtil;
+import org.json.JSONException;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -692,6 +694,25 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	@Override
 	public String showGooruStoriesSection() throws GwtException, ServerDownException {
 		return showStoriesSection();
+	}
+
+	@Override
+	public SearchResourcesTagsDo getResourceTags(String resourceId,	String offSet, String limit) throws GwtException,ServerDownException {
+		
+		JsonRepresentation jsonRep = null;
+		SearchResourcesTagsDo searchResourcesTagsDo = new SearchResourcesTagsDo();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.RESOURCE_TAGS, resourceId,getLoggedInSessionToken(),offSet,limit);
+		getLogger().info("-- resource based tags url -- "+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();	
+		
+		try{
+			searchResourcesTagsDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), SearchResourcesTagsDo.class);
+		}
+		catch(JSONException ex){
+			
+		}
+		return searchResourcesTagsDo;
 	}
 	
 	/*@Override
