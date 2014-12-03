@@ -43,7 +43,9 @@ import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
+import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 /**
@@ -437,5 +439,8 @@ public interface SearchService extends BaseService {
 	 *
 	 */
 	String showGooruStoriesSection()  throws GwtException, ServerDownException; 
+	
+	
+	public SearchResourcesTagsDo getResourceTags(String resourceId, String offSet, String limit) throws GwtException, ServerDownException; 
 
 }
