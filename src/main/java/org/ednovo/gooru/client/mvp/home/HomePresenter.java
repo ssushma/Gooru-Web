@@ -621,7 +621,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				preFilter.hide();
 			}else{*/
 				//preFilter =	new PreFilterPopup();
-				preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()-10);
+				preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+30);
 				preFilter.show();
 			/*}*/
 			
@@ -629,15 +629,19 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					
-					preFilter.clearGradesInfo().clear();
+					preFilter.hideGradePanel().clear();
+					preFilter.hideGradePanel().setVisible(false);
+					preFilter.ShowSTandardsPanel().clear();
+					preFilter.ShowSTandardsPanel().setVisible(true);
 					isCCSSAvailable = true;
 					isNGSSAvailable = true;
 					isCAAvailable = true;
 					addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
-					addStandardsPresenter.callDefaultStandardsLoad();				
-					preFilter.clearGradesInfo().add(addStandardsPresenter.getWidget());
+					addStandardsPresenter.callDefaultStandardsLoad();
 					addStandardsPresenter.loadDataFrompresnter();
+					preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
+					addStandardsPresenter.callDefaultStandardsLoad();
+				
 					
 				}
 			});
