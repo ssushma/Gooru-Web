@@ -772,7 +772,8 @@ public class CollectionFormView extends
 			mandatoryErrorLbl.getElement().setAttribute("alt",i18n.GL0173());
 			mandatoryErrorLbl.getElement().setAttribute("title",i18n.GL0173());
 			mandatoryErrorLbl.setVisible(true);
-			mandatoryErrorLbl.getElement().getStyle().setMarginRight(62,Unit.PX);
+			/*mandatoryErrorLbl.getElement().getStyle().setMarginRight(62,Unit.PX);*/
+			mandatoryErrorLbl.getElement().getStyle().setMargin(0, Unit.PX);
 		}else if (isHavingBadWords){
 			errorList.put("title", i18n.GL0554());
 			mandatoryErrorLbl.setText(i18n.GL0554());

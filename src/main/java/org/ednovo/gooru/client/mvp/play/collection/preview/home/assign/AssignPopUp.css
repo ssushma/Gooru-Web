@@ -947,9 +947,9 @@ button.LoginText {
 
 .popupStyle{
 	z-index: 99999;
-visibility: visible;
-position: absolute;
-left:  375px !important;
-top: 26px !important;
-overflow: visible;
+	visibility: visible;
+	position: absolute;
+	top: 26px !important;
+	
+	overflow: visible;
 }

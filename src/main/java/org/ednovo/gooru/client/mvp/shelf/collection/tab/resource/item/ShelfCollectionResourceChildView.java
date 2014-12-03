@@ -1311,8 +1311,8 @@ public class ShelfCollectionResourceChildView extends
 						}
 						
 					};
-					success.setHeight("253px");
-					success.setWidth("450px");
+				/*	success.setHeight("253px");
+					success.setWidth("450px");*/
 					success.setPopupTitle(i18n.GL1795());
 					success.setDescText(i18n.GL1796());
 					success.enableTaggingImage();

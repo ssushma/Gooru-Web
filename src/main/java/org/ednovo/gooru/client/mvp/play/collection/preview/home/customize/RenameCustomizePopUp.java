@@ -135,6 +135,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel{
 		Window.enableScrolling(false);
 		this.getElement().setAttribute("style", "z-index:99999;");
 		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
+	//	this.getElement().setAttribute("style", "top:26px");
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 
 		popupcontentCustomize.setVisible(false);
