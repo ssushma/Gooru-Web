@@ -48,6 +48,7 @@ import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderHandler;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
@@ -155,6 +156,15 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	
 	private static final String ERROR = "error";
 	
+	AddStandardsPreSearchPresenter addStandardsPresenter = null;
+	
+	private static final String USER_META_ACTIVE_FLAG = "0";
+	
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
+	
 	
 	private String parentGooruUID;
 	
@@ -166,6 +176,8 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	public interface IsHomeProxy extends ProxyPlace<HomePresenter> {
 	}
 	
+//	PreFilterPopup preFilter = new PreFilterPopup();
+	
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
 
 	/**
@@ -175,9 +187,10 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public HomePresenter(UserRegistrationPresenter userRegistrationPresenter, ContributorsPresenter contributorsPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter, IsHomeView view, IsHomeProxy proxy) {
+	public HomePresenter(UserRegistrationPresenter userRegistrationPresenter, ContributorsPresenter contributorsPresenter, SignUpPresenter signUpViewPresenter, SignUpCompleteProfilePresenter signUpCompletePresenter,SignUpAfterThirteenPresenter signUpAfterThirteenPresenter, IsHomeView view, IsHomeProxy proxy,AddStandardsPreSearchPresenter addStandardsPresenterObj) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
+		this.addStandardsPresenter = addStandardsPresenterObj;
 		this.signUpViewPresenter = signUpViewPresenter;
 		this.userRegistrationPresenter = userRegistrationPresenter;
 		this.signUpCompletePresenter = signUpCompletePresenter;
@@ -191,6 +204,8 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				
 			}
 		});
+		
+		HeaderUc.getArrowLbl().addClickHandler(new showPrefilterPopup());
 		
 		
 		
@@ -590,6 +605,49 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			};
 		}
 		return autoKeyWordSuggestionAsyncCallback;
+	}
+	
+	public class showPrefilterPopup implements ClickHandler{
+
+		/* (non-Javadoc)
+		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+		 */
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			final PreFilterPopup preFilter = new PreFilterPopup();
+			
+	/*		if(preFilter!=null && preFilter.isShowing()){
+				preFilter.hide();
+			}else{*/
+				//preFilter =	new PreFilterPopup();
+				preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+30);
+				preFilter.show();
+			/*}*/
+			
+			preFilter.getStandardsInfo().addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					preFilter.ShowSTandardsPanel().clear();
+					isCCSSAvailable = true;
+					isNGSSAvailable = true;
+					isCAAvailable = true;
+					addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+					//addStandardsPresenter.loadDataFrompresnter();
+					preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
+					addStandardsPresenter.callDefaultStandardsLoad();
+					addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
+				
+					
+				}
+			});
+			
+			// TODO Auto-generated method stub
+			
+		
+		}
+		
 	}
 
 	

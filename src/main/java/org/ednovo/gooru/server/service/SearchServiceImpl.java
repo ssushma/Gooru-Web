@@ -553,7 +553,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(getSearchEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
 		}
-		System.out.println("search end point url::::::"+url);
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{
@@ -581,6 +581,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(getSearchEndPoint().contains(HTTPS)){
 			url = appendHttpsURL(url);
 		}
+		System.out.println("getFirstLevelStandards::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try {

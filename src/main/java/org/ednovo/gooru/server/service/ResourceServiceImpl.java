@@ -557,6 +557,66 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 	    return collectionDoObj;
 	}
+	
+	@Override
+	public CollectionDo updateCollectionSettingForComments(String collectionId, String title, String description, String grade, String sharing, String vocabulary, String taxonomyCode, String updateTaxonomyByCode, String mediaType,String action,String comments) {
+		JsonRepresentation jsonRep = null;
+		CollectionDo collectionDoObj= new CollectionDo();
+		CollectionDo collectionDoInputObj= new CollectionDo();
+	    String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionId, getLoggedInSessionToken());
+		String form = "";
+	
+		try{
+			if(title!=null){
+				collectionDoInputObj.setTitle(title);
+			}
+			if(description != null){
+				collectionDoInputObj.setGoals(description);
+			}
+			if(grade!=null){
+				collectionDoInputObj.setGrade(grade);
+			}
+			if(sharing!=null){
+				collectionDoInputObj.setSharing(sharing);
+			}
+			if (taxonomyCode != null) {
+				Set<CodeDo> codeDo=new HashSet<CodeDo>();
+				CodeDo codeDoObj=new CodeDo();
+				codeDoObj.setCodeId(Integer.parseInt(taxonomyCode));
+				codeDo.add(codeDoObj);
+				collectionDoInputObj.setTaxonomySet(codeDo);
+			}
+			if(mediaType!=null){
+				collectionDoInputObj.setMediaType(mediaType);
+			}
+			if(action!=null){
+				collectionDoInputObj.setAction(action);
+			}
+			if(comments!=null)
+			{
+
+			CollectionSettingsDo collSetting = new CollectionSettingsDo();
+			collSetting.setComment(comments);
+			collectionDoInputObj.setSettings(collSetting);
+			}
+
+			form = ResourceFormFactory.generateStringDataForm(collectionDoInputObj, "collection");
+			  
+			
+		}catch(Exception e){
+			
+		}
+	    JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), form);
+	    jsonRep = jsonResponseRep.getJsonRepresentation();
+	    if(jsonResponseRep.getStatusCode()==200){
+			collectionDoObj = deserializeCollection(jsonRep);
+			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
+		}else{
+			collectionDoObj=new CollectionDo();
+			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
+		}
+	    return collectionDoObj;
+	}
 
 	@Override
 	public CollectionItemDo updateCollectionItemMetadata(String collectionItemId, String narration, String narrationType, String start, String stop) {
