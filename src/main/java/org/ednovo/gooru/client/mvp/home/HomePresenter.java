@@ -629,16 +629,12 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					preFilter.hideGradePanel().clear();
-					preFilter.hideGradePanel().setVisible(false);
 					preFilter.ShowSTandardsPanel().clear();
-					preFilter.ShowSTandardsPanel().setVisible(true);
 					isCCSSAvailable = true;
 					isNGSSAvailable = true;
 					isCAAvailable = true;
 					addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
-					addStandardsPresenter.callDefaultStandardsLoad();
-					addStandardsPresenter.loadDataFrompresnter();
+					//addStandardsPresenter.loadDataFrompresnter();
 					preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
 					addStandardsPresenter.callDefaultStandardsLoad();
 				
