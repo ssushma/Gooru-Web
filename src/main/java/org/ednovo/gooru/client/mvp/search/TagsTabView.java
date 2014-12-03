@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagWidget;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
+import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -115,7 +116,7 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 	@UiHandler("tagScrollPanel")
 	public void onScroll(ScrollEvent scrollEvent){
 		if(getMoreTags()){
-			getUiHandlers().getResourceTags("0dd8c9a4-9f38-4d8e-8775-a4fca41ba244",Integer.toString(getCurrentTagsDispalyCount()),limit);
+			getUiHandlers().getResourceTags(resourceGooruOid,Integer.toString(getCurrentTagsDispalyCount()),limit);
 		}
 		
 	}
@@ -142,13 +143,15 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 					this.hide();
 					if(!isCancelclicked){
 						SuccessPopupViewVc success = new SuccessPopupViewVc() {
-							
+
 							/** (non-Javadoc)
 							 * @see org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc#onClickPositiveButton(com.google.gwt.event.dom.client.ClickEvent)
 							 */
 							@Override
 							public void onClickPositiveButton(ClickEvent event) {
 								this.hide();
+								clearTagsContainer(true);
+								getUiHandlers().getResourceTags(resourceGooruOid,offSet,limit);
 								if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 									Window.enableScrolling(false);
 								}else{
@@ -185,15 +188,15 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 	 * @see org.ednovo.gooru.client.mvp.search.IsTagsTabView#getResourceTags(java.util.List)
 	 */
 	@Override
-	public void setResourceTags(List<UserTagsDo> resourceTagsDo) {
+	public void setResourceTags(SearchResourcesTagsDo searchResourcesTagsDo) {
 
-		setTotCount(resourceTagsDo.get(0).getTotalHitCount());
-		setCurrentTagsDispalyCount(getCurrentTagsDispalyCount()+resourceTagsDo.size());
+		setTotCount(searchResourcesTagsDo.getTotalHitCount());
+		setCurrentTagsDispalyCount(getCurrentTagsDispalyCount()+searchResourcesTagsDo.getSearchResults().size());
 		resourceTag.clear();
 		
-		resourceTag.addAll(resourceTagsDo);
-		for(int i=0; i<resourceTagsDo.size();i++){
-			ProfileUserTagWidget profileUserTagWidget = new ProfileUserTagWidget(resourceTagsDo.get(i));
+//		resourceTag.addAll(resourceTagsDo);
+		for(int i=0; i<searchResourcesTagsDo.getSearchResults().size();i++){
+			ProfileUserTagWidget profileUserTagWidget = new ProfileUserTagWidget(searchResourcesTagsDo.getSearchResults().get(i)); 
 			profileUserTagWidget.setSearchTabTagLblStyleName(searchTagsTabStyle.searchTabTagLbl());
 			profileUserTagWidget.setSearchTabTagRightStyleName(searchTagsTabStyle.searchTabTagRight());
 			profileUserTagWidget.setSearchTagsBgStyleName(searchTagsTabStyle.searchTagsBg());
@@ -270,12 +273,12 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 	 * @see org.ednovo.gooru.client.mvp.search.IsTagsTabView#setResourceTagsData(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void setResourceTagsData(String resourceId, String resourceGooruOid) {
+	public void setResourceTagsData(String resourceGooruOid) {
 		
 		this.resourceGooruOid = resourceGooruOid;
 		clearTagsContainer(true);
 		setCurrentTagsDispalyCount(0);
-		getUiHandlers().getResourceTags(resourceId,offSet,limit);
+		getUiHandlers().getResourceTags(resourceGooruOid,offSet,limit);
 		
 	}
 

@@ -26,6 +26,7 @@
 package org.ednovo.gooru.client.mvp.profilepage.tab.content.tags;
 
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.model.search.ResourceTagsListDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 
 import com.google.gwt.core.client.GWT;
@@ -73,11 +74,11 @@ public class ProfileUserTagWidget extends Composite {
 	/**
 	 * Class constructor, calls from TagsTabView class.
 	 * 
-	 * @param resourceTagsDo {@link UserTagsDo}
+	 * @param resourceTagsListDo {@link UserTagsDo}
 	 */
-	public ProfileUserTagWidget(UserTagsDo resourceTagsDo) {
+	public ProfileUserTagWidget(ResourceTagsListDo resourceTagsListDo) { 
 		initWidget(uiBinder.createAndBindUi(this));
-		setResourceTags(resourceTagsDo);
+		setResourceTags(resourceTagsListDo);
 	}
 	public void setData(UserTagsDo userTagDo){
 		String titleLabel=userTagDo.getLabel();
@@ -116,21 +117,21 @@ public class ProfileUserTagWidget extends Composite {
 	/**
 	 * Sets the tags at search results tags tab.
 	 * 
-	 * @param resourceTagsDo {@link UserTagsDo}
+	 * @param resourceTagsListDo {@link UserTagsDo}
 	 */
-	public void setResourceTags(UserTagsDo resourceTagsDo) {
+	public void setResourceTags(ResourceTagsListDo resourceTagsListDo) { 
 		
-		String titleLabel=resourceTagsDo.getLabel();
-		titleLabelName=resourceTagsDo.getLabel();
+		String titleLabel=resourceTagsListDo.getLabel();
+		titleLabelName=resourceTagsListDo.getLabel();
 		tagTitle.setText(titleLabel);
 		tagTitle.getElement().setId("lblTagTitle");
 		tagTitle.getElement().setAttribute("alt",titleLabel);
 		tagTitle.getElement().setAttribute("title",titleLabel);
 		
-		tagcount.setText(resourceTagsDo.getCount());
+		tagcount.setText(resourceTagsListDo.getCount()+"");
 		tagcount.getElement().setId("lblTagcount");
-		tagcount.getElement().setAttribute("alt",resourceTagsDo.getCount());
-		tagcount.getElement().setAttribute("title",resourceTagsDo.getCount());
+		tagcount.getElement().setAttribute("alt",resourceTagsListDo.getCount()+"");
+		tagcount.getElement().setAttribute("title",resourceTagsListDo.getCount()+"");
 	}
 	
 	
