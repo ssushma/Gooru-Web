@@ -188,6 +188,7 @@ public class PreFilterPopup extends PopupPanel {
 		Map<String, String> filterMap = new HashMap<String, String>();
 		filterMap.clear();
 		String filterGrade = "";
+		String elemGrade="";
 		
 		String eleGrade = getSelectedFilter(eleGradePanelUc);
 		if (!eleGrade.isEmpty()) {
@@ -198,7 +199,7 @@ public class PreFilterPopup extends PopupPanel {
 		System.out.println("selected grade:"+midGrade);
 		if (!midGrade.isEmpty()) {
 			if(midGrade.contains("4")){
-				eleGrade="K-4";
+				elemGrade="K-4";
 			}else{
 				midGrade="5-8";
 			}
@@ -206,16 +207,24 @@ public class PreFilterPopup extends PopupPanel {
 				midGrade="5-8";
 			}
 			if(filterGrade.equals("")){
-				if(eleGrade.isEmpty()){
+				if(elemGrade.isEmpty()){
 					filterGrade+=midGrade;
 				}else if(midGrade.equals("5-8")){
-					filterGrade+=eleGrade+","+midGrade;
+					filterGrade+=elemGrade+","+midGrade;
 				}else{
-					filterGrade+=eleGrade;
+					filterGrade+=elemGrade;
 				}
 				
-			}else{
-				filterGrade+=","+midGrade;
+			}else {
+				if(elemGrade.isEmpty()){
+					filterGrade+=","+midGrade;
+				}else{
+					if(midGrade.equals("5-8")){
+						filterGrade+=","+midGrade;
+					}
+					
+				}
+				
 			}
 		}
 		String highGrade = getSelectedFilter(highrGradePanelUc);
@@ -240,7 +249,16 @@ public class PreFilterPopup extends PopupPanel {
 					filterGrade+=higher;
 				}
 			}else{
-				filterGrade+=","+highGrade;
+				if(higher.isEmpty()){
+					filterGrade+=","+highGrade;
+				}else{
+					if(highGrade.isEmpty()){
+						filterGrade+=","+higher;
+					}else{
+						filterGrade+=","+highGrade+","+higher;
+					}
+					
+				}
 			}
 		}
 		if(filterGrade!=null && !filterGrade.equals("")){
@@ -252,6 +270,11 @@ public class PreFilterPopup extends PopupPanel {
 		if (!selectedSubject.isEmpty()) {
 			filterMap.put(IsSearchView.SUBJECT_FLT, selectedSubject);
 		}
+		
+		/*String standardSgsts = getSuggestions(standardsPanel);
+		if (!standardSgsts.isEmpty()) {
+			filterMap.put(IsSearchView.STANDARD_FLT, standardSgsts);
+		}*/
 		
 		return filterMap;
 		
