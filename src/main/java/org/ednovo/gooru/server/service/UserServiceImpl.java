@@ -176,7 +176,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public V2UserDo getV2UserProfileDetails(String gooruUid) {
 		V2UserDo settingeDo = null;
 		String userUid = getLoggedInUserUid();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_DETAILS, userUid, getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_V2_DETAILS, userUid, getLoggedInSessionToken());
+		System.out.println("urlval::"+url);
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -374,7 +375,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		if(userMetaActiveFlag.equalsIgnoreCase("1")) {
 			url+=USER_META_ACTIVE_FLAG;
 		}
-		System.out.println("getUserProfileV2Details..."+url);
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();

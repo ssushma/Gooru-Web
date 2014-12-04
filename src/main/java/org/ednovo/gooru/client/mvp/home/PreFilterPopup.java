@@ -41,7 +41,6 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -63,12 +62,14 @@ public class PreFilterPopup extends PopupPanel {
 	interface PreFilterPopupUiBinder extends UiBinder<Widget, PreFilterPopup> {
 	}
 	
-	@UiField HTMLPanel eleGradePanelUc,middleGradePanelUc,highrGradePanelUc,subjectPanelUc,gradesPanel;
-	@UiField Button standardsButton;
+	@UiField HTMLPanel filterPanel,eleGradePanelUc,middleGradePanelUc,highrGradePanelUc,subjectPanelUc,gradesPanel;
+
 	
 	@UiField Label lblGradesSubj,lblStandards;
 	
-	@UiField HTMLPanel gradePanel,standardsPanel;
+	@UiField HTMLPanel standardsPanel;
+	
+//	@UiField Anchor gradeAnc,standardsButton;
 	
 //	@UiField SimplePanel standardsPanel;
 	
@@ -105,6 +106,24 @@ public class PreFilterPopup extends PopupPanel {
 		renderCheckBoxs(subjectPanelUc, subjects);
 		setStaticData();
 		eventActions();
+		/*gradeAnc.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+			hideGradePanel().setVisible(true);
+			ShowSTandardsPanel().setVisible(false);
+				
+			}
+		});*/
+		/*standardsButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+			
+				hideGradePanel().setVisible(false);
+				ShowSTandardsPanel().setVisible(true);
+			}
+		});*/
 //		clearAllFields();
 	}
 
@@ -169,6 +188,7 @@ public class PreFilterPopup extends PopupPanel {
 		Map<String, String> filterMap = new HashMap<String, String>();
 		filterMap.clear();
 		String filterGrade = "";
+		String elemGrade="";
 		
 		String eleGrade = getSelectedFilter(eleGradePanelUc);
 		if (!eleGrade.isEmpty()) {
@@ -179,7 +199,7 @@ public class PreFilterPopup extends PopupPanel {
 		System.out.println("selected grade:"+midGrade);
 		if (!midGrade.isEmpty()) {
 			if(midGrade.contains("4")){
-				eleGrade="K-4";
+				elemGrade="K-4";
 			}else{
 				midGrade="5-8";
 			}
@@ -187,16 +207,24 @@ public class PreFilterPopup extends PopupPanel {
 				midGrade="5-8";
 			}
 			if(filterGrade.equals("")){
-				if(eleGrade.isEmpty()){
+				if(elemGrade.isEmpty()){
 					filterGrade+=midGrade;
 				}else if(midGrade.equals("5-8")){
-					filterGrade+=eleGrade+","+midGrade;
+					filterGrade+=elemGrade+","+midGrade;
 				}else{
-					filterGrade+=eleGrade;
+					filterGrade+=elemGrade;
 				}
 				
-			}else{
-				filterGrade+=","+midGrade;
+			}else {
+				if(elemGrade.isEmpty()){
+					filterGrade+=","+midGrade;
+				}else{
+					if(midGrade.equals("5-8")){
+						filterGrade+=","+midGrade;
+					}
+					
+				}
+				
 			}
 		}
 		String highGrade = getSelectedFilter(highrGradePanelUc);
@@ -221,7 +249,16 @@ public class PreFilterPopup extends PopupPanel {
 					filterGrade+=higher;
 				}
 			}else{
-				filterGrade+=","+highGrade;
+				if(higher.isEmpty()){
+					filterGrade+=","+highGrade;
+				}else{
+					if(highGrade.isEmpty()){
+						filterGrade+=","+higher;
+					}else{
+						filterGrade+=","+highGrade+","+higher;
+					}
+					
+				}
 			}
 		}
 		if(filterGrade!=null && !filterGrade.equals("")){
@@ -233,6 +270,11 @@ public class PreFilterPopup extends PopupPanel {
 		if (!selectedSubject.isEmpty()) {
 			filterMap.put(IsSearchView.SUBJECT_FLT, selectedSubject);
 		}
+		
+		/*String standardSgsts = getSuggestions(standardsPanel);
+		if (!standardSgsts.isEmpty()) {
+			filterMap.put(IsSearchView.STANDARD_FLT, standardSgsts);
+		}*/
 		
 		return filterMap;
 		
@@ -294,13 +336,15 @@ public class PreFilterPopup extends PopupPanel {
 		clearFilter(subjectPanelUc);
 	}
 
-	public Button getStandardsInfo(){
-		return standardsButton;
+	public Label getStandardsInfo(){
+		return lblStandards;
 	}
-	public HTMLPanel clearGradesInfo(){
+	public HTMLPanel hideGradePanel(){
 		return gradesPanel;
 	}
-	
+	public HTMLPanel ShowSTandardsPanel(){
+		return standardsPanel;
+	}
     /**
      * 
      * @author janamitra
@@ -314,9 +358,10 @@ public class PreFilterPopup extends PopupPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			lblGradesSubj.getElement().setAttribute("style", "background: #e5e5e5;");
+			filterPanel.getElement().setAttribute("style", "width:335px;");
 			lblStandards.getElement().getStyle().clearBackgroundColor();
 			standardsPanel.setVisible(false);
-			gradePanel.setVisible(true);
+			gradesPanel.setVisible(true);
 		}
 		
 	}
@@ -334,9 +379,10 @@ public class PreFilterPopup extends PopupPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			lblStandards.getElement().setAttribute("style", "background: #e5e5e5;");
+			filterPanel.getElement().setAttribute("style", "width:922px;");
 			lblGradesSubj.getElement().getStyle().clearBackgroundColor();
 			standardsPanel.setVisible(true);
-			gradePanel.setVisible(false);
+			gradesPanel.setVisible(false);
 //			standardsPanel.add(new AppPopUpStandards());
 		}
 		

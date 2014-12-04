@@ -245,7 +245,9 @@ public class HeaderUc extends Composite implements
 	
 	OrganizeToolTip organizeToolTip;
 	
-	PreFilterPopup prefilter=null;
+	static PreFilterPopup prefilter=null;
+	
+	static String stadardCode;
 
 	boolean isGooruGuidePanelOpen = false;
 
@@ -1403,6 +1405,10 @@ public class HeaderUc extends Composite implements
 			}else{
 				params.remove(IsSearchView.GRADE_FLT);
 			}
+			if(stadardCode!=null && !stadardCode.equals("")){
+				System.out.println("stadardcode::"+stadardCode);
+				params.put(IsSearchView.STANDARD_FLT, stadardCode);
+			}
 		}
 		params.put("category", "All");
 		params.put("query", getEditSearchText());
@@ -2065,18 +2071,19 @@ public class HeaderUc extends Composite implements
 		myClassesPop.setVisible(false);
 		}
 	}
-	/**
-	 * @description This class is used to show the pre-filter search popup
-	 * @author search team
-	 * @date 27-Nov-2014
-	 *
-	 */
 
 	public static Label getArrowLbl() {
 		return arrowLbl;
 	}
 
-	
+	public static void setPrefilterObj(PreFilterPopup prefilterObj) {
+		prefilter=prefilterObj;
+	    //stadardCode=stadardCodeId;
+	}
+
+	public static void setStandardsCode(String stadardCodeId){
+		stadardCode=stadardCodeId;
+	}
 	
 	
 }

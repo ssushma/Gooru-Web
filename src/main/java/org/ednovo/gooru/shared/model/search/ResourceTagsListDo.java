@@ -24,30 +24,71 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package org.ednovo.gooru.client.mvp.search;
+package org.ednovo.gooru.shared.model.search;
 
-import java.util.List;
+import java.io.Serializable;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
-import org.ednovo.gooru.shared.model.user.UserTagsDo;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> {
-
-	/**
-	 * @param result
-	 */
-	void setResourceTags(SearchResourcesTagsDo searchResourcesTagsDo); 
-
+@JsonInclude(Include.NON_NULL)
+public class ResourceTagsListDo implements Serializable {
 
 	/**
-	 * @param isVisible
+	 * 
 	 */
-	void isLoadingImageVisible(boolean isVisible);
+	private static final long serialVersionUID = 1L; 
+	
+	private String tagGooruOid;
+	
+	private Integer count;
+	
+	private String label;
+	
+	
+	
+	
 
 	/**
-	 * @param resourceId
+	 * @return the tagGooruOid
 	 */
-	void setResourceTagsData(String resourceId);   
+	public String getTagGooruOid() {
+		return tagGooruOid;
+	}
+
+	/**
+	 * @param tagGooruOid the tagGooruOid to set
+	 */
+	public void setTagGooruOid(String tagGooruOid) {
+		this.tagGooruOid = tagGooruOid;
+	}
+
+	/**
+	 * @return the count
+	 */
+	public Integer getCount() {
+		return count;
+	}
+
+	/**
+	 * @param count the count to set
+	 */
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+
+	/**
+	 * @return the label
+	 */
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * @param label the label to set
+	 */
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
 }

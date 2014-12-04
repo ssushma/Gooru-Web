@@ -1,11 +1,12 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:with field="i18n" type="org.ednovo.gooru.shared.i18n.MessageProperties"/>
 	<ui:style>
 		/* Add CSS here. See the GWT docs on UI Binder for more
 		details */
 		.searchPop{
-		min-width:335px;
+		width:335px;
 		border: 1px solid #cacaca;
 		box-shadow:0 0 10px rgba(0, 0, 0, 0.1);
 		}
@@ -68,7 +69,7 @@
 		box-sizing:
 		border-box;
 		float: left;
-		margin-right: 7%;
+		margin-right: 4%;
 		width: 57%;
 		padding-top:12px;
 		}
@@ -116,69 +117,90 @@
 		.checkBoxContaner p{
 		margin:0 0 6px 0;
 		}
+		.filterHeaderPanel {
+		color:
+		#1076bb;
+		background: #efefef;
+		background:
+		-webkit-gradient(linear, 0 0, 0
+		100%,
+		from(#fdfdfd), to(#ddd));
+		background: -webkit-linear-gradient(top,
+		#fdfdfd, #ddd);
+		background:
+		-moz-linear-gradient(top, #fdfdfd, #ddd);
+		background:
+		-ms-linear-gradient(top, #fdfdfd, #ddd);
+		background:
+		-o-linear-gradient(top, #fdfdfd, #ddd);
+		border-bottom: 1px solid
+		#e5e5e5;
+		margin:0 0;
+		padding:0 0;
+
+		}
+
+		.filterGradePanel{
+		list-style:none;
+		display:inline-block;
+		margin:0 0;
+		padding:0 0;
+		}
+
+		.filterLable{
+		display:block;
+		font-size:13px;
+		letter-spacing:-0.02em;
+		text-decoration:none;
+		padding: 10px 15px;
+		color:#515151;
+		font-family:Arial, Helvetica, sans-serif;
+		cursor:pointer;
+
+		}
 	</ui:style>
 	<g:HTMLPanel>
 		<!-- Add GWT widgets here. Enter < and hit Ctrl-Space to auto-complete 
 			widget names. The ui:field attribute binds an element to a field in the owner 
 			class. See the GWT docs on UI Binder for more details. -->
 
-		<g:HTMLPanel styleName="{style.searchPop}">
+		<g:HTMLPanel styleName="{style.searchPop}" ui:field="filterPanel">
 			<g:HTMLPanel styleName="{style.searchPopMenu}">
-				<ul>
-					<li class="active">
-						<a href="#">Grade and Subject</a>
-					</li>
-					<li>
-						<g:Button ui:field="standardsButton">Standards</g:Button>
-					</li>
-				</ul>	
+				<g:HTMLPanel styleName="{style.filterHeaderPanel}">
+					<g:HTMLPanel styleName="{style.filterGradePanel}">
+						<g:Label styleName="{style.filterLable}" ui:field="lblGradesSubj" />
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="{style.filterGradePanel}">
+						<g:Label styleName="{style.filterLable}" ui:field="lblStandards" />
+					</g:HTMLPanel>
+				</g:HTMLPanel>
 
 			</g:HTMLPanel>
 
-			<g:HTMLPanel ui:field="gradesPanel" styleName="{style.searchPopContent}">
+			<g:HTMLPanel styleName="{style.searchPopContent}" ui:field="gradesPanel">
 
 				<g:HTMLPanel styleName="{style.searchPopGrade}">
-					<g:HTMLPanel styleName="{style.searchPopSmallHead}">Grade</g:HTMLPanel>
+					<g:Label styleName="{style.searchPopSmallHead}" text="{i18n.GL0325}"/>
 					<g:HTMLPanel styleName="{style.checkBoxContaner}">
 
 						<g:HTMLPanel styleName="{style.col1}">
-							<!-- <p>
-								<input name="" type="checkbox" value="" />
-								<label> Pre-K</label>
-							</p>
-							<p>
-								<input name="" type="checkbox" value="" />
-								<label> K</label>
-							</p>
-							<p>
-								<input name="" type="checkbox" value="" />
-								<label> 1</label>
-							</p>
-							<p>
-								<input name="" type="checkbox" value="" />
-								<label> 2</label>
-							</p>
-							<p>
-								<input name="" type="checkbox" value="" />
-								<label> 3</label>
-							</p> -->
-							<g:HTMLPanel  ui:field="eleGradePanelUc" />
+							<g:HTMLPanel ui:field="eleGradePanelUc" />
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="{style.col1}">
-							<g:HTMLPanel  ui:field="middleGradePanelUc" />
+							<g:HTMLPanel ui:field="middleGradePanelUc" />
 						</g:HTMLPanel>
 
 						<g:HTMLPanel styleName="{style.col1}">
-							<g:HTMLPanel  ui:field="highrGradePanelUc"/>
+							<g:HTMLPanel ui:field="highrGradePanelUc" />
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="{style.clearfix}"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 
 				<g:HTMLPanel styleName="{style.searchPopSubject}">
-					<g:HTMLPanel styleName="{style.searchPopSmallHead}">Subject</g:HTMLPanel>
+					<g:Label styleName="{style.searchPopSmallHead}" text="{i18n.GL0226}"/>
 					<g:HTMLPanel styleName="{style.checkBoxContaner}">
-						<g:HTMLPanel  ui:field="subjectPanelUc"/>
+						<g:HTMLPanel ui:field="subjectPanelUc" />
 					</g:HTMLPanel>
 
 
@@ -187,8 +209,8 @@
 				<g:HTMLPanel styleName="{style.clearfix}"></g:HTMLPanel>
 
 			</g:HTMLPanel>
-
-
+			<!-- Standards tab content -->
+			<g:HTMLPanel ui:field="standardsPanel"></g:HTMLPanel>
 
 		</g:HTMLPanel>
 	</g:HTMLPanel>

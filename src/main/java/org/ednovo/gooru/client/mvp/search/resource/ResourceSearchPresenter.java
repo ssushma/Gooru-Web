@@ -255,7 +255,7 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	public void setTagsWidget(SimplePanel simplePanel,ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen) { 
 		simplePanel.clear();
 		if(!isTagsPanelOpen){
-			tagsTabPresenter.setData("0dd8c9a4-9f38-4d8e-8775-a4fca41ba244",searchResultDo.getGooruOid());   
+			tagsTabPresenter.setData(searchResultDo.getGooruOid());   
 			simplePanel.setWidget(tagsTabPresenter.getWidget());
 		}
 	}
