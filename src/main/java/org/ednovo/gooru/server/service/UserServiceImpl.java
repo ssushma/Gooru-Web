@@ -902,11 +902,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public Map<String, Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String startDate,String endDate,String operator) {
 		JsonRepresentation jsonRep = null;
-		String url ="http://qa.goorulearning.org/insights/api/v2/query?sessionToken=1edb25aa-5c5e-4d13-8498-15ef31a93c1f&data="+createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator);
-		System.out.println("url:getTheAnalyticsFlaggedMonthlyData::"+url);
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,"1edb25aa-5c5e-4d13-8498-15ef31a93c1f",createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator));
+		System.out.println("url::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeMapData(jsonRep);
+		return deserializeMapData(jsonRep,operator);
 	}
 	public String createProfileJsonPayloadObject(String fieldVal,String startDate,String endDate,String operator){
 		JSONObject jsonMainDataObject=new JSONObject(); 
@@ -952,7 +952,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			fourthFilterVal.put("valueType", "String");
 			fourthFilterVal.put("fieldName", "gooruUId");
 			fourthFilterVal.put("operator", "eq");
-			fourthFilterVal.put("value", "95a744e1-631e-4642-875d-8b07a5e3b421");
+			fourthFilterVal.put("value", getLoggedInUserUid());
 			filterArrayVales.put(fourthFilterVal);
 			
 			filterObj.put("fields", filterArrayVales);
@@ -983,7 +983,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 		return jsonMainDataObject.toString();
 	}
-	public Map<String, Integer> deserializeMapData(JsonRepresentation jsonRep) {
+	public Map<String, Integer> deserializeMapData(JsonRepresentation jsonRep,String operator) {
 		Map<String, Integer> result = new HashMap<String, Integer>();
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 		try{
@@ -995,7 +995,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		        while( keys.hasNext() ){
 		            String key = (String)keys.next();
 		            if( obj.get(key) instanceof JSONArray ){
-		            	result.put(key, obj.getJSONArray(key).getJSONObject(j).getInt("eventCount"));
+		            	int size=obj.getJSONArray(key).length();
+		            	if(operator.equalsIgnoreCase("in") && size>=2){
+		            		result.put(key, obj.getJSONArray(key).getJSONObject(j).getInt("eventCount")+obj.getJSONArray(key).getJSONObject(1).getInt("eventCount"));
+		            	}else{
+		            		result.put(key, obj.getJSONArray(key).getJSONObject(j).getInt("eventCount"));
+		            	}
 		            }
 		            j++;
 		        }

@@ -38,6 +38,7 @@ package org.ednovo.gooru.client.mvp.dashboard;
  * Reviewer Gooru Team
  *
  */
+import java.util.Date;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -48,6 +49,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
@@ -68,7 +70,15 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-
+	
+	private static final String DATE_FORMAT="yyyy-MM-dd";
+	private static final String FLAGGED="item.flag";
+	private static final String SHARED="item.share";
+	private static final String ADDCOLLECTION="item.create";
+	private static final String VIEWS="collection.resource.play,resource.play";
+	private static final String EQ_OPERATOR="eq";
+	private static final String IN_OPERATOR="in";
+	
 	@Inject
 	public UserDashBoardPresenter(final IsUserDashBoardView view,
 			final IsUserDashBoardProxy proxy) {
@@ -103,7 +113,13 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 		setData();
 	}
 	public void setData(){
-		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData("item.flag","2014-01-01","2014-10-12","eq",new AsyncCallback<Map<String,Integer>>() {
+	    	DateTimeFormat fmt = DateTimeFormat.getFormat (DATE_FORMAT);
+	    	String endDate = fmt.format(new Date());
+	    	Date date = new Date();
+	    	date.setMonth(date.getMonth()-12);
+	    	String startDate =fmt.format(date);
+	    	
+		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(FLAGGED,startDate,endDate,EQ_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
 				
 				@Override
 				public void onSuccess(Map<String, Integer> result) {
@@ -115,7 +131,7 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 					
 				}
 			});
-		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData("item.share","2014-01-01","2014-10-12","eq",new AsyncCallback<Map<String,Integer>>() {
+		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(SHARED,startDate,endDate,EQ_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
 			
 			@Override
 			public void onSuccess(Map<String, Integer> result) {
@@ -127,7 +143,7 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 				
 			}
 		});
-		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData("item.create","2014-01-01","2014-10-12","eq",new AsyncCallback<Map<String,Integer>>() {
+		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(ADDCOLLECTION,startDate,endDate,EQ_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
 			
 			@Override
 			public void onSuccess(Map<String, Integer> result) {
@@ -139,7 +155,7 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 				
 			}
 		});
-		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData("collection.resource.play,resource.play","2014-01-01","2014-10-12","in",new AsyncCallback<Map<String,Integer>>() {
+		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(VIEWS,startDate,endDate,IN_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
 			
 			@Override
 			public void onSuccess(Map<String, Integer> result) {
