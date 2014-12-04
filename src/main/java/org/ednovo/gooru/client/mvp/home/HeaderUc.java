@@ -326,7 +326,7 @@ public class HeaderUc extends Composite implements
 
 	@UiField
 	Label thanksLbl;
-
+	@UiField
 	static Label arrowLbl;
 
 	@UiField

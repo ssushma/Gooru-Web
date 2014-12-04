@@ -476,8 +476,8 @@
        .arrowLable{
             background: url(images/ratings/down-arrow.png) 0px 12px no-repeat;
             position: absolute;
-			top: 4px;
-			right: 72px;
+			top: 10px;
+			right: 122px;
 			z-index: 9999999;
 			width: 10px;
 			height: 17px;
@@ -575,6 +575,7 @@
 														<g:Image styleName="{style.profileImage} hidden-sm hidden-xs"
 															ui:field="imgUserProfile"></g:Image>
 														<g:Anchor styleName="{style.username}" ui:field="loggedInfoLbl" />
+														<g:HTMLPanel styleName="" ui:field="myDashBoardPop" />
 													</uc:HTMLEventPanel>
 												</uc:LiPanel>
 												<!-- <uc:LiPanel> <g:HTMLPanel styleName="{style.teachUserNameArrowContainerNew}"> 
