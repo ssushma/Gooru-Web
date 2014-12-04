@@ -245,7 +245,9 @@ public class HeaderUc extends Composite implements
 	
 	OrganizeToolTip organizeToolTip;
 	
-	PreFilterPopup prefilter=null;
+	static PreFilterPopup prefilter=null;
+	
+	static String stadardCode;
 
 	boolean isGooruGuidePanelOpen = false;
 
@@ -307,7 +309,10 @@ public class HeaderUc extends Composite implements
 	public static HTMLPanel dotsPanel, mainDotsPanel, mainInnerDotsPanel,dropDownImg;
 
 	@UiField
-	Label discoverLink, organizeLink, teachLink, studyLink, loggedInfoLbl,thanksLbl,arrowLbl;
+	Label discoverLink, organizeLink, teachLink, studyLink, loggedInfoLbl,thanksLbl;
+
+	@UiField
+	static Label arrowLbl;
 
 	@UiField
 	HTMLEventPanel discoverLinkContainer, organizeLinkContainer,organizeLinkMain,teachLinkMain,discoverLinkMain,
@@ -620,7 +625,7 @@ public class HeaderUc extends Composite implements
 		discoverToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		discoverToolTip.getElement().getStyle().setZIndex(99);
 		
-		arrowLbl.addClickHandler(new showPrefilterPopup());
+	
 
 		
 		discovertooltippop.add(discoverToolTip);
@@ -1400,6 +1405,10 @@ public class HeaderUc extends Composite implements
 			}else{
 				params.remove(IsSearchView.GRADE_FLT);
 			}
+			if(stadardCode!=null && !stadardCode.equals("")){
+				System.out.println("stadardcode::"+stadardCode);
+				params.put(IsSearchView.STANDARD_FLT, stadardCode);
+			}
 		}
 		params.put("category", "All");
 		params.put("query", getEditSearchText());
@@ -1554,6 +1563,12 @@ public class HeaderUc extends Composite implements
 
 		@Override
 		public void onKeyDown(KeyDownEvent event) {
+			if (getEditSearchTxtBox().getText() != null && getEditSearchTxtBox().getText().length() > 0){
+				arrowLbl.setVisible(true);
+			}else{
+				arrowLbl.setVisible(false);
+			}
+		
 			if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 				if (getEditSearchTxtBox().getText() != null
 						&& getEditSearchTxtBox().getText().length() > 0) {
@@ -2056,32 +2071,20 @@ public class HeaderUc extends Composite implements
 		myClassesPop.setVisible(false);
 		}
 	}
-	/**
-	 * @description This class is used to show the pre-filter search popup
-	 * @author search team
-	 * @date 27-Nov-2014
-	 *
-	 */
-	
-	public class showPrefilterPopup implements ClickHandler{
 
-		/* (non-Javadoc)
-		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
-		 */
-		@Override
-		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
-			
-			if(prefilter!=null && prefilter.isShowing()){
-				prefilter.hide();
-			}else{
-				prefilter =	new PreFilterPopup();
-				prefilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, getAbsoluteTop()-10);
-				prefilter.show();
-			}
-		}
-		
+	public static Label getArrowLbl() {
+		return arrowLbl;
 	}
+
+	public static void setPrefilterObj(PreFilterPopup prefilterObj) {
+		prefilter=prefilterObj;
+	    //stadardCode=stadardCodeId;
+	}
+
+	public static void setStandardsCode(String stadardCodeId){
+		stadardCode=stadardCodeId;
+	}
+	
 	
 }
 

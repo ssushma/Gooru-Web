@@ -1,6 +1,5 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
-
  * 
  *  http://www.goorulearning.org/
  * 
@@ -23,31 +22,55 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+package org.ednovo.gooru.client.mvp.home.presearchstandards;
 
-package org.ednovo.gooru.client.mvp.search;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
-import org.ednovo.gooru.shared.model.user.UserTagsDo;
+import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.shared.model.code.StandardsLevel1DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel2DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
+import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 
-public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> {
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.gwtplatform.mvp.client.PopupView;
 
-	/**
-	 * @param result
-	 */
-	void setResourceTags(SearchResourcesTagsDo searchResourcesTagsDo); 
+/**
+ * @author Search Team
+ *
+ */
+public interface IsAddStandardsPreSearchView extends PopupView, IsViewWithHandlers<AddStandardsPreSearchUiHandlers> {
 
+	String setStandardsVal();
 
-	/**
-	 * @param isVisible
-	 */
-	void isLoadingImageVisible(boolean isVisible);
+	Button getAddBtn();
 
-	/**
-	 * @param resourceId
-	 */
-	void setResourceTagsData(String resourceId);   
+	void SetData(StandardsLevel1DO levelOneData, int valArr);
 
+	void loadSecondLevelContianerObjects(ArrayList<StandardsLevel2DO> result);
+
+	void loadThirdLevelContianerObjects(ArrayList<StandardsLevel3DO> result);
+
+	void loadFourthLevelContianerObjects(ArrayList<StandardsLevel4DO> result);
+
+	void loadData();
+
+	void setDefaultCCSS();
+
+	Integer setStandardsIdVal();
+	
+	String setStandardsDesc();
+
+	void setEnableStandardButtons(boolean isCCSSAvailable,
+			boolean isNGSSAvailable, boolean isTEKSAvailable,
+			boolean isCAAvailable);
+
+	void setStandardsStyles(String standardVal);
+	
+	HTMLPanel getAddStandardsPanel();
+	
 }

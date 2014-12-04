@@ -68,6 +68,7 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private String sharing;
 	private PublishDo publishStatus;
 	private String status;
+	private String action;
 	private List<checkboxSelectedDo> depthOfKnowledges;
 	private List<checkboxSelectedDo> instructionalMethod;
 	private List<checkboxSelectedDo> audience;
@@ -368,6 +369,14 @@ public class CollectionDo extends ResourceDo implements Serializable{
 
 	public void setSettings(CollectionSettingsDo settings) {
 		this.settings = settings;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
 	}
 
 	

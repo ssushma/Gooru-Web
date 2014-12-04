@@ -1,6 +1,5 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
-
  * 
  *  http://www.goorulearning.org/
  * 
@@ -23,31 +22,32 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+package org.ednovo.gooru.client.mvp.home.presearchstandards;
 
-package org.ednovo.gooru.client.mvp.search;
-
-import java.util.List;
-
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
-import org.ednovo.gooru.shared.model.user.UserTagsDo;
-
-public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> {
-
-	/**
-	 * @param result
-	 */
-	void setResourceTags(SearchResourcesTagsDo searchResourcesTagsDo); 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.NotStrict;
 
 
-	/**
-	 * @param isVisible
-	 */
-	void isLoadingImageVisible(boolean isVisible);
 
-	/**
-	 * @param resourceId
-	 */
-	void setResourceTagsData(String resourceId);   
+/**
+ * @author Search Team
+ *
+ */
+public interface AddStandardsBundle extends ClientBundle{
+	
+	static final AddStandardsBundle INSTANCE = GWT.create(AddStandardsBundle.class);
+	
+	public interface  addStandards extends CssResource{
+		
+		String dropMenu();
+		String gwtGlassPanel();
+		String dropMenuSelected();
+		String btnStandardsStyle();
+	}
+	@NotStrict
+	@Source("CreateCollectionPopUp.css")
+	addStandards css();
 
 }

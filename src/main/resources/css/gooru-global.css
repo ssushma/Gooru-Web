@@ -412,7 +412,7 @@ button.disabled, button.disabled:hover {
  	padding: 2px;
 }
 .onestar{
- 	background:url(../images/ratings/reviews-none.png) 16px 0 no-repeat;
+ 	background:url(../images/ratings/reviews-one.png) 16px 0 no-repeat;
  	padding: 2px;
 }
 

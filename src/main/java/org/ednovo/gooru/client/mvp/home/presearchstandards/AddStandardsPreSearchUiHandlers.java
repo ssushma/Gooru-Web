@@ -1,6 +1,5 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
-
  * 
  *  http://www.goorulearning.org/
  * 
@@ -23,31 +22,35 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+package org.ednovo.gooru.client.mvp.home.presearchstandards;
 
-package org.ednovo.gooru.client.mvp.search;
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
-import java.util.List;
+import com.google.gwt.user.client.ui.Button;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
-import org.ednovo.gooru.shared.model.user.UserTagsDo;
+/**
+ * @author Search Team
+ *
+ */
+public interface AddStandardsPreSearchUiHandlers extends BaseUiHandlers {
 
-public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> {
+	void callDefaultStandardsLoad();
 
-	/**
-	 * @param result
-	 */
-	void setResourceTags(SearchResourcesTagsDo searchResourcesTagsDo); 
+	String setStandardsVal();
 
+	Button getAddBtn();
 
-	/**
-	 * @param isVisible
-	 */
-	void isLoadingImageVisible(boolean isVisible);
+	void getFirstLevelObjects(String levelOrder, String standardCodeSelected);
 
-	/**
-	 * @param resourceId
-	 */
-	void setResourceTagsData(String resourceId);   
+	void getSecondLevelObjects(String levelOrder, String standardCodeSelected);
+
+	void getThirdLevelObjects(String levelOrder, String standardCodeSelected);
+
+	void loadStateStandards(String string);
+
+	Integer setStandardsIdVal();
+
+	String setStandardDesc();
+
 
 }
