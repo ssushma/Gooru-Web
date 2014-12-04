@@ -22,47 +22,37 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.dashboard;
+package org.ednovo.gooru.shared.model.code;
 
-/**
- * @fileName : IsUserSettingsView.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: Apr 18, 2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
+import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import java.util.List;
-
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.client.uc.ProfileBiographyEditUC;
-import org.ednovo.gooru.client.uc.SettingEditLabelUc;
-import org.ednovo.gooru.client.uc.SettingEmailEditLabelUc;
-import org.ednovo.gooru.client.uc.SettingLastNameEditLabelUC;
-import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
-import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
-import org.ednovo.gooru.shared.model.user.ProfileDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
-import org.ednovo.gooru.shared.model.user.V2UserDo;
-
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FocusPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
-
-public interface IsUserDashBoardView extends IsViewWithHandlers<UserDashBoardUiHandlers>{
-
-	void dispalyDashBoardHomePage();
-
-	void setPublishedCollectionData(UserDashBoardCommonInfoDO result);
+@JsonInclude(Include.NON_NULL)
+public class PublishedCollectionsInfoDo implements Serializable {
+	
+	private static final long serialVersionUID = 1849886397443409797L;
+	
+	private Integer publishedCollection;
+	
+	private String creatorUid;
+	
+	public PublishedCollectionsInfoDo(){
+		
+	}
+	
+	public Integer getPublishedCollection() {
+		return publishedCollection;
+	}
+	public void setPublishedCollection(Integer publishedCollection) {
+		this.publishedCollection = publishedCollection;
+	}
+	public String getCreatorUid() {
+		return creatorUid;
+	}
+	public void setCreatorUid(String creatorUid) {
+		this.creatorUid = creatorUid;
+	}
+	
 }
