@@ -63,7 +63,6 @@ public class ViewResponseUserWidget extends Composite {
 		}
 	}
 	void setData(final OetextDataDO oetextDataDO,final String resourceGooruId,final String collectionId, final String classpageId,final String pathwayId,String questionType,boolean isSummary,final String session){
-		System.out.println("session::"+session);
 		this.oetextDataDO=oetextDataDO;
 		giveFeedBackpnl.setVisible(false);
 		editFeedBackpnl.setVisible(false);
@@ -145,15 +144,14 @@ public class ViewResponseUserWidget extends Composite {
 			if(oeText==null || oeText.trim().isEmpty()){
 				userResponselbl.setText("The Student is not provided any responses..");
 			}else{
-				userResponselbl.setText(oetextDataDO.getOEText());
+				userResponselbl.setText(decodeFeedbackText(oetextDataDO.getOEText()));
 			}
-			System.out.println("isSummary::"+isSummary);
 			if((isSummary && feedBackStatus!=null && feedBackStatus.equalsIgnoreCase("false")) && (oeText!=null && !oeText.trim().isEmpty())){
 				giveFeedBackpnl.setVisible(true);
 			}
 			if((feedBackStatus!=null && feedBackStatus.equalsIgnoreCase("true")) && (oeText!=null && !oeText.trim().isEmpty())){
 				editFeedBackpnl.setVisible(true);
-				editedText.setText(oetextDataDO.getFeedbackText());
+				editedText.setText(decodeFeedbackText(oetextDataDO.getFeedbackText()));
 				feedBacktxt.setText(decodeFeedbackText(oetextDataDO.getFeedbackText()));
 				createOn.setText(AnalyticsUtil.getCreatedTime(Long.toString(oetextDataDO.getFeedbackTimestamp())));
 			}
@@ -161,7 +159,7 @@ public class ViewResponseUserWidget extends Composite {
 			btnSubmit.addClickHandler(new  ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					AppClientFactory.getInjector().getAnalyticsService().postTeacherFeedBackToStudent(encodedString(feedBacktxt.getText()), resourceGooruId, collectionId, classpageId, pathwayId, oetextDataDO.getGooruUId(), session,"","",classCode, new AsyncCallback<FeedBackResponseDataDO>() {
+					AppClientFactory.getInjector().getAnalyticsService().postTeacherFeedBackToStudent(false,encodedString(feedBacktxt.getText()), resourceGooruId, collectionId, classpageId, pathwayId, oetextDataDO.getGooruUId(), session,"","",classCode, new AsyncCallback<FeedBackResponseDataDO>() {
 						@Override
 						public void onSuccess(FeedBackResponseDataDO result) {
 							if(result!=null){
@@ -182,15 +180,12 @@ public class ViewResponseUserWidget extends Composite {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					AppClientFactory.getInjector().getAnalyticsService().postTeacherFeedBackToStudent("commentsDelete", resourceGooruId, collectionId, classpageId, pathwayId, oetextDataDO.getGooruUId(), session,"","",classCode, new AsyncCallback<FeedBackResponseDataDO>() {
+					AppClientFactory.getInjector().getAnalyticsService().postTeacherFeedBackToStudent(true,"", resourceGooruId, collectionId, classpageId, pathwayId, oetextDataDO.getGooruUId(), session,"","",classCode, new AsyncCallback<FeedBackResponseDataDO>() {
 						@Override
 						public void onSuccess(FeedBackResponseDataDO result) {
 							if(result!=null){
 								giveFeedBackpnl.setVisible(true);
 								editFeedBackpnl.setVisible(false);
-								editedText.setText(decodeFeedbackText(result.getFreeText()));
-								feedBacktxt.setText((result.getFreeText()));
-								createOn.setText(AnalyticsUtil.getCreatedTime(Long.toString(result.getCreatedOn())));
 							}
 						}
 						@Override
