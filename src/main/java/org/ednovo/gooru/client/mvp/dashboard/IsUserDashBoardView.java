@@ -49,6 +49,7 @@ import org.ednovo.gooru.client.uc.SettingEmailEditLabelUc;
 import org.ednovo.gooru.client.uc.SettingLastNameEditLabelUC;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
@@ -62,4 +63,6 @@ import com.google.gwt.user.client.ui.TextBox;
 public interface IsUserDashBoardView extends IsViewWithHandlers<UserDashBoardUiHandlers>{
 
 	void dispalyDashBoardHomePage();
+
+	void setPublishedCollectionData(UserDashBoardCommonInfoDO result);
 }

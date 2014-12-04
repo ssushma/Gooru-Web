@@ -32,6 +32,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
+import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
@@ -235,5 +236,6 @@ public interface UserService extends BaseService {
 	String revokeToken(String gooruUid)throws GwtException,ServerDownException;
 	
 	String isValidResetPasswordLink(String resetToken)throws GwtException,ServerDownException;
-
+	
+    UserDashBoardCommonInfoDO getUsersPublishedCollectionsCount();
 }
