@@ -1,6 +1,5 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
-
  * 
  *  http://www.goorulearning.org/
  * 
@@ -23,32 +22,37 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+package org.ednovo.gooru.shared.model.code;
 
-package org.ednovo.gooru.client.mvp.search;
+import java.io.Serializable;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
-import org.ednovo.gooru.shared.model.user.UserTagsDo;
-
-public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> {
-
-	/**
-	 * @param isTagsclear 
-	 * @param result
-	 */
-	void setResourceTags(SearchResourcesTagsDo searchResourcesTagsDo, boolean isTagsclear); 
-
-
-	/**
-	 * @param isVisible
-	 */
-	void isLoadingImageVisible(boolean isVisible);
-
-	/**
-	 * @param resourceId
-	 */
-	void setResourceTagsData(String resourceId);   
-
+@JsonInclude(Include.NON_NULL)
+public class PublishedCollectionsInfoDo implements Serializable {
+	
+	private static final long serialVersionUID = 1849886397443409797L;
+	
+	private Integer publishedCollection;
+	
+	private String creatorUid;
+	
+	public PublishedCollectionsInfoDo(){
+		
+	}
+	
+	public Integer getPublishedCollection() {
+		return publishedCollection;
+	}
+	public void setPublishedCollection(Integer publishedCollection) {
+		this.publishedCollection = publishedCollection;
+	}
+	public String getCreatorUid() {
+		return creatorUid;
+	}
+	public void setCreatorUid(String creatorUid) {
+		this.creatorUid = creatorUid;
+	}
+	
 }

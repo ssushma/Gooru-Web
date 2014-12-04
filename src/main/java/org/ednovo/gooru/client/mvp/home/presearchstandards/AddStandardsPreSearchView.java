@@ -369,7 +369,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 							}
 							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());		
-							HeaderUc.setStandardsCode(codeVal);
+							HeaderUc.setStandardsCode(codeVal,codeIdVal,codeDesc);
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -506,7 +506,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 							}
 							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
-							HeaderUc.setStandardsCode(codeVal);
+							HeaderUc.setStandardsCode(codeVal,codeIdVal,codeDesc);
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -587,7 +587,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 							}
 							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
-							HeaderUc.setStandardsCode(codeVal);
+							HeaderUc.setStandardsCode(codeVal,codeIdVal,codeDesc);
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -640,7 +640,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 							}
 							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
-							HeaderUc.setStandardsCode(codeVal);
+							HeaderUc.setStandardsCode(codeVal,codeIdVal,codeDesc);
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());

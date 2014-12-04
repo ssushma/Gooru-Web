@@ -77,6 +77,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -527,6 +528,7 @@ public class HeaderUc extends Composite implements
 		dashBoardToolTip.getElement().getStyle().setBackgroundColor("transparent");
 		dashBoardToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		dashBoardToolTip.getElement().getStyle().setZIndex(99);
+		dashBoardToolTip.getElement().getStyle().setLeft(loggedInfoLbl.getAbsoluteLeft(), Unit.PX);
 		myDashBoardPop.add(dashBoardToolTip);
 		myDashBoardPop.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		myDashBoardPop.getElement().getStyle().setZIndex(99);
@@ -2174,7 +2176,8 @@ public class HeaderUc extends Composite implements
 	    //stadardCode=stadardCodeId;
 	}
 
-	public static void setStandardsCode(String stadardCodeId){
+	public static void setStandardsCode(String stadardCodeId, int id, String code){
 		stadardCode=stadardCodeId;
+
 	}
 }

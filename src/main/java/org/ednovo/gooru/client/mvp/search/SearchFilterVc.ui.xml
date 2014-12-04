@@ -211,6 +211,7 @@
 			<g:HTMLPanel>
 				<g:Label styleName="{style.headerLbl}" visible="false" ui:field="ratingsLbl"></g:Label>
 				<g:HTMLPanel  ui:field="ratingPanelUc" />
+				<g:HTMLPanel  ui:field="reviewPanelUc" />
 			</g:HTMLPanel>
 			<g:HTMLPanel>
 				<g:Label styleName="{style.headerLbl}" visible="false"	ui:field="sourceLbl"></g:Label>

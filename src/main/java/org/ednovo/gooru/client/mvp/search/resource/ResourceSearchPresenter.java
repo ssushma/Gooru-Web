@@ -27,6 +27,7 @@
  */
 package org.ednovo.gooru.client.mvp.search.resource;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.AppPlaceKeeper;
@@ -152,6 +153,22 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 		}
 		if (getSearchDo().getSearchQuery().trim().equals(ALL) && !AppClientFactory.isContentAdmin()) {
 			return;
+		}
+		if(getPlaceManager().getRequestParameter("flt.rating") != null)
+		{
+			String ratingsVal = getPlaceManager().getRequestParameter("flt.rating");
+			Map<String, String> filterMap = new HashMap<String, String>();
+			filterMap = searchDo.getFilters();
+			filterMap.put("flt.rating", ratingsVal);
+			searchDo.setFilters(filterMap);
+		}
+		if(getPlaceManager().getRequestParameter("flt.isReviewed") != null)
+		{
+			String reviewsVal = getPlaceManager().getRequestParameter("flt.isReviewed");
+			Map<String, String> filterMap = new HashMap<String, String>();
+			filterMap = searchDo.getFilters();
+			filterMap.put("flt.isReviewed", reviewsVal);
+			searchDo.setFilters(filterMap);
 		}
 		getSearchService().getResourceSearchResults(searchDo, searchAsyncCallback);
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
