@@ -2082,11 +2082,13 @@ public class HeaderUc extends Composite implements
 	    //stadardCode=stadardCodeId;
 	}
 
-	public static void setStandardsCode(String stadardCodeId){
+	public static void setStandardsCode(String stadardCodeId, int id, String code){
 		stadardCode=stadardCodeId;
-	}
-	
-	
+		/*SearchFilterVc searchFilterVc= new SearchFilterVc(true);
+		System.out.println("id::"+id);
+		System.out.println("code::"+code	);
+		searchFilterVc.setUpdatedBrowseStandarsCode(stadardCodeId,id,code);*/	
+		}
 }
 
 

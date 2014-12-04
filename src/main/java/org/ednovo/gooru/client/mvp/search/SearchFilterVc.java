@@ -803,6 +803,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(value.equalsIgnoreCase("fivestar") ||value.equalsIgnoreCase("fourstar")||value.equalsIgnoreCase("threestar")||value.equalsIgnoreCase("twostar")||value.equalsIgnoreCase("onestar")){
 			chkNotFriendly.setText("");
 			chkNotFriendly.addStyleName(value.toLowerCase());
+		}
 			
 			if(AppClientFactory.getPlaceManager().getRequestParameter("flt.rating") != null)
 			{
@@ -859,7 +860,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				}
 			}
 			
-		}
+		
 		disclosurePanelVc.add(chkNotFriendly);
 		chkNotFriendly.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 
