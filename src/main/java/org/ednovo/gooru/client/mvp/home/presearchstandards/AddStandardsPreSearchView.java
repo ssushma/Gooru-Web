@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.home.presearchstandards;
 
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.StandardPreferenceTooltip;
 import org.ednovo.gooru.client.uc.tooltip.BrowseStandardsTooltip;
@@ -368,6 +369,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 							}
 							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());		
+							HeaderUc.setStandardsCode(codeVal);
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -503,7 +505,8 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 							{
 								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 							}
-							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());		
+							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
+							HeaderUc.setStandardsCode(codeVal);
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -583,7 +586,8 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 							{
 								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 							}
-							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());		
+							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
+							HeaderUc.setStandardsCode(codeVal);
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
@@ -635,7 +639,8 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 							{
 								levelFourStandards.getWidget(l).setStyleName(AddStandardsBundle.INSTANCE.css().dropMenu());
 							}
-							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());		
+							clickedObject.addStyleName(AddStandardsBundle.INSTANCE.css().dropMenuSelected());	
+							HeaderUc.setStandardsCode(codeVal);
 						}
 					});
 					levelFourStandards.add(levelOneStandardsInner4Outer.asWidget());
