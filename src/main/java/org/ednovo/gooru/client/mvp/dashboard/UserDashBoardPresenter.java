@@ -118,7 +118,6 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 	    	Date date = new Date();
 	    	date.setMonth(date.getMonth()-12);
 	    	String startDate =fmt.format(date);
-	    	
 		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(FLAGGED,startDate,endDate,EQ_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
 				
 				@Override

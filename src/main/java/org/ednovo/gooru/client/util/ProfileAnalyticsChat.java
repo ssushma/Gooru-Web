@@ -68,7 +68,7 @@ public class ProfileAnalyticsChat{
             );  
         Date date = new Date();
         int month=date.getMonth();
-        int monthVal=month;
+        int monthVal=month+1;
         int year=date.getYear()-1;
         for(int i=0;i<12;i++){
         	if(monthVal>=12){
