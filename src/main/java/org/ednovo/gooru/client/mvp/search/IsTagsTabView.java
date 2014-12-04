@@ -35,9 +35,10 @@ import org.ednovo.gooru.shared.model.user.UserTagsDo;
 public interface IsTagsTabView extends IsViewWithHandlers<TagsTabUiHandlers> {
 
 	/**
+	 * @param isTagsclear 
 	 * @param result
 	 */
-	void setResourceTags(SearchResourcesTagsDo searchResourcesTagsDo); 
+	void setResourceTags(SearchResourcesTagsDo searchResourcesTagsDo, boolean isTagsclear); 
 
 
 	/**
