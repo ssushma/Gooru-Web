@@ -76,5 +76,6 @@ public interface PlaceTokens {
 	String CCST_Cal_TAC = "CCSTCalTAC";
 	String LUSD = "lusd";	
 	String TICAL = "tical";
+	String DASHBOARD ="dashboard";
 
 }

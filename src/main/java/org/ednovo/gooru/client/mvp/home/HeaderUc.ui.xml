@@ -473,10 +473,27 @@
 
 		}
 
+       .arrowLable{
+            background: url(images/ratings/down-arrow.png) 0px 12px no-repeat;
+            position: absolute;
+			top: 4px;
+			right: 72px;
+			z-index: 9999999;
+			width: 10px;
+			height: 17px;
+			cursor: pointer;
+       }
+
+       .searchMainPanel{
+           position: relative;
+       }
+	}
+
 	</ui:style>
 	<g:HTMLPanel>
 
 		<!-- New Header -->
+
 
 		<uc:HeaderPanel ui:field="headerMainPanel">
 			<g:HTMLPanel styleName="container">
@@ -496,6 +513,7 @@
 									styleName="form-group">
 									<uc:AppSuggestBox ui:field="editSearchTxtBox"
 										styleName="form-control" />
+									<g:Label styleName="{style.arrowLable}" ui:field="arrowLbl" visible="false"></g:Label>
 								</g:FlowPanel>
 								<g:Button styleName="primary" ui:field="editSearchBtn" />
 							</g:HTMLPanel>
@@ -592,7 +610,6 @@
 					</g:HTMLPanel>
 
 				</g:HTMLPanel>
-
 			</g:HTMLPanel>
 
 			<uc:HTMLEventPanel styleName="{res1.css.resourceRightsPopupContainer} hidden-sm hidden-xs"	ui:field="acctActivationPl">

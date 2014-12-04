@@ -111,7 +111,7 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 	@UiField SectionTag dataInsightsPanel;
 	@UiField VerticalPanel commentsContainer;
 	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit,successPostMsg,replayCollection,whatNextCollectionTitle,
-					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText,lblCharLimitComments;
+					resourceCount,questionCount,avgReactionImage,insightsHeaderText,insightsContentText,lblCharLimitComments,headingText;
 	@UiField HTMLPanel addComment,loginMessaging;
 	@UiField TextArea commentField;
 	@UiField Button postCommentBtn,postCommentCancel;
@@ -313,6 +313,8 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		this.collectionDo = collectionDo;
 		//showPopupAfterGmailSignin();
 		setCollectionImage(collectionDo.getThumbnails().getUrl());
+		String message=(collectionDo.getCollectionType()!=null&&collectionDo.getCollectionType().equals("quiz"))?i18n.GL3044():i18n.GL2083();
+		headingText.setText(message);
 //		setCollectionGoal(collectionDo.getGoals());
 //		assignCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		customizeCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());

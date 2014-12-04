@@ -25,6 +25,7 @@
 
 package org.ednovo.gooru.client;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +46,8 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.maps.client.LoadApi;
+import com.google.gwt.maps.client.LoadApi.LoadLibrary;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
@@ -65,7 +68,16 @@ public class GooruEntry implements EntryPoint {
 	public void onModuleLoad() {
 
 		DelayedBindRegistry.bind(appInjector);
-
+		  ArrayList<LoadLibrary> loadLibraries = new ArrayList<LoadApi.LoadLibrary>();
+		    loadLibraries.add(LoadLibrary.ADSENSE);
+		    loadLibraries.add(LoadLibrary.DRAWING);
+		    loadLibraries.add(LoadLibrary.GEOMETRY);
+		    loadLibraries.add(LoadLibrary.PANORAMIO);
+		    loadLibraries.add(LoadLibrary.PLACES);
+		    loadLibraries.add(LoadLibrary.WEATHER);
+		    loadLibraries.add(LoadLibrary.VISUALIZATION);
+		    
+		    
 		String device = BrowserAgent.returnFormFactorWithSizeView();
 		String size[] = device.split("-");
 		if (size[0].equalsIgnoreCase("mobile") || size[0].equalsIgnoreCase("iphone")){

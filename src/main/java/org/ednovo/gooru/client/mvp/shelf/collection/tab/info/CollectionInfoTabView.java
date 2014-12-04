@@ -1,4 +1,5 @@
 /*******************************************************************************
+ * 
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  * 
  *  http://www.goorulearning.org/
@@ -279,15 +280,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		gradeLbl.getElement().setAttribute("alt",i18n.GL1076());
 		gradeLbl.getElement().setAttribute("title",i18n.GL1076());
 		
-		selectGradeLbl.setText(i18n.GL0820());
 		selectGradeLbl.getElement().setId("lblSelectGradeLbl");
-		selectGradeLbl.getElement().setAttribute("alt",i18n.GL0820());
-		selectGradeLbl.getElement().setAttribute("title",i18n.GL0820());
 		
-		selectCourseLbl.setText(i18n.GL0846());
 		selectCourseLbl.getElement().setId("lblSelectCourseLbl");
-		selectCourseLbl.getElement().setAttribute("alt",i18n.GL0846());
-		selectCourseLbl.getElement().setAttribute("title",i18n.GL0846());
+		
 		
 		addCourseBtn.setText(i18n.GL0847());
 		addCourseBtn.getElement().setId("btnAddCourseBtn");
@@ -324,15 +320,11 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		audienceLabel.getElement().setAttribute("alt",i18n.GL1638());
 		audienceLabel.getElement().setAttribute("title",i18n.GL1638());
 		
-		instructionalTitle.setText(i18n.GL1639());
 		instructionalTitle.getElement().setId("lblInstructionalTitle");
-		instructionalTitle.getElement().setAttribute("alt",i18n.GL1639());
-		instructionalTitle.getElement().setAttribute("title",i18n.GL1639());
 		
-		audienceTitle.setText(i18n.GL1640());
+		
 		audienceTitle.getElement().setId("lblAdienceTitle");
-		audienceTitle.getElement().setAttribute("alt",i18n.GL1640());
-		audienceTitle.getElement().setAttribute("title",i18n.GL1640());
+		
 		
 		textAreaVal.setText(i18n.GL1641());
 		textAreaVal.getElement().setId("tatTextAreaVal");
@@ -350,10 +342,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		depthOfKnowledgeHeader.getElement().setAttribute("alt",i18n.GL1643());
 		depthOfKnowledgeHeader.getElement().setAttribute("title",i18n.GL1643());
 		
-		depthOfKnowledgeTitle.setText(i18n.GL1644());
 		depthOfKnowledgeTitle.getElement().setId("lblDepthOfKnowledgeTitle");
-		depthOfKnowledgeTitle.getElement().setAttribute("alt",i18n.GL1644());
-		depthOfKnowledgeTitle.getElement().setAttribute("title",i18n.GL1644());
+		
 	
 		chkLevelRecall.setText(i18n.GL1645());
 		chkLevelRecall.getElement().setId("chkLevelRecall");
@@ -380,10 +370,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		learningInnovationHeader.getElement().setAttribute("alt",i18n.GL1649());
 		learningInnovationHeader.getElement().setAttribute("title",i18n.GL1649());
 		
-		learningInnovationTitle.setText(i18n.GL1650());
 		learningInnovationTitle.getElement().setId("lblLearningInnovationTitle");
-		learningInnovationTitle.getElement().setAttribute("alt",i18n.GL1650());
-		learningInnovationTitle.getElement().setAttribute("title",i18n.GL1650());
+		
 		
 		learninglevel1.setText(i18n.GL1651());
 		learninglevel1.getElement().setId("chkLearninglevel1");
@@ -712,10 +700,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			}
 		});
 		teacherTipTextLabel.setText(MessageProperties.i18n.GL0750);*/
-		standardsDefaultText.setText(i18n.GL0749());
 		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
-		standardsDefaultText.getElement().setAttribute("alt",i18n.GL0139());
-		standardsDefaultText.getElement().setAttribute("title",i18n.GL0139());
+		
 		
 		panelLoading.getElement().setId("pnlPanelLoading");
 		mainInfoPanel.getElement().setId("pnlMainInfoPanel");
@@ -750,6 +736,32 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		spanelInstructionalPanel.setVisible(false);
 		spanelAudiencePanel.setVisible(false);
 		
+	}
+	
+	public void modifyStaticText(String collectionType){
+		if(collectionType!=null&&collectionType.equals("quiz")){
+			addAttributesToWidget(selectGradeLbl,i18n.GL3025());
+			addAttributesToWidget(selectCourseLbl,i18n.GL3026());
+			addAttributesToWidget(standardsDefaultText, i18n.GL3027());
+			addAttributesToWidget(depthOfKnowledgeTitle, i18n.GL3028());
+			addAttributesToWidget(learningInnovationTitle, i18n.GL3029());
+			addAttributesToWidget(instructionalTitle, i18n.GL3030());
+			addAttributesToWidget(audienceTitle, i18n.GL3031());
+		}else{
+			addAttributesToWidget(selectGradeLbl,i18n.GL0820());
+			addAttributesToWidget(selectCourseLbl,i18n.GL0846());
+			addAttributesToWidget(standardsDefaultText, i18n.GL0749());
+			addAttributesToWidget(depthOfKnowledgeTitle, i18n.GL1644());
+			addAttributesToWidget(learningInnovationTitle, i18n.GL1650());
+			addAttributesToWidget(instructionalTitle, i18n.GL1639());
+			addAttributesToWidget(audienceTitle, i18n.GL1640());
+		}
+	}
+	
+	public void addAttributesToWidget(Label labelText, String text){
+		labelText.setText(text);
+		labelText.getElement().setAttribute("alt",text);
+		labelText.getElement().setAttribute("title",text);
 	}
 	
 	public void configureClickEvents()
@@ -933,6 +945,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	public void setData(CollectionDo collectionDoVal) {
 		reset();
 		this.collectionDo = collectionDoVal;
+		modifyStaticText(collectionDo.getCollectionType());
 			if(collectionDoVal.getLanguageObjective() != null)
 			{
 

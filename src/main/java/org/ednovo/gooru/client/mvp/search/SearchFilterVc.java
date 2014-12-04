@@ -801,7 +801,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		//chkNotFriendly.setStyleName(CssTokens.FILTER_CHECKBOX);
 		chkNotFriendly.addStyleName(value.toLowerCase());
-		if(value.equalsIgnoreCase("fivestar")){
+		if(value.equalsIgnoreCase("fivestar") ||value.equalsIgnoreCase("fourstar")||value.equalsIgnoreCase("threestar")||value.equalsIgnoreCase("twostar")||value.equalsIgnoreCase("onestar")){
 			chkNotFriendly.setText("");
 			chkNotFriendly.addStyleName(value.toLowerCase());
 		}
@@ -810,7 +810,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 
 			@Override
 			public void onValueChange(ValueChangeEvent<Boolean> event) {
-				if (chkNotFriendly.getValue()){
+				System.out.println("onvaluechange::"+chkNotFriendly.getValue());
+				if (chkNotFriendly.getValue()){					
 						MixpanelUtil.MOS_Filter("Selected");
 					
 				}else{
@@ -1075,7 +1076,24 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			
 			//Ratings panel
 			for(int i=5;i>0;i--){
-				renderCheckBox1(ratingPanelUc, i+"", "fivestar");
+				String starVal = "five";
+				if(i==4)
+				{
+					starVal="four";
+				}
+				else if(i==3)
+				{
+					starVal="three";
+				}
+				else if(i==2)
+				{
+					starVal="two";
+				}
+				else if(i==1)
+				{
+					starVal="one";
+				}
+				renderCheckBox1(ratingPanelUc, i+"", starVal+"star");
 			}
 			
 		}/*else{
@@ -1151,6 +1169,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 //				if (chkNotFriendly.getText().equalsIgnoreCase("not_ipad_friendly")){
 					filterMap.put(IsSearchView.MEDIATYPE_FLT, "not_ipad_friendly");
 //				}
+			}
+			String ratings=getSelectedFilter(ratingPanelUc);
+			if(!ratings.isEmpty()){
+				filterMap.put(IsSearchView.RATINGS_FLT, ratings);
 			}
 				if(chkOER!=null && chkOER.getValue()){
 					filterMap.put(IsSearchView.OER_FLT, "1");

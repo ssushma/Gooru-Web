@@ -59,9 +59,13 @@ public interface IsCollectionPlayerView extends PopupView, IsViewWithHandlers<Co
 
 	public void showFlaggedResourcePopup(PlaceRequest previousResoruceRequest, PlaceRequest nextResoruceRequest);
 
+
 	public void addClonedMenuContent(FlowPanel rightPanelElement);
 	public FlowPanel menuContent();
 	public FlowPanel getHeaderFixedContainer();
 	public FlowPanel getNavigationContainer();
+
+
+	public void setCollectionType(String collectionType);
 
 }

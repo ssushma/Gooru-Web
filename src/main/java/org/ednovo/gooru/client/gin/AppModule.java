@@ -70,6 +70,10 @@ import org.ednovo.gooru.client.mvp.community.IsCommunityView;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsPresenter;
 import org.ednovo.gooru.client.mvp.community.contributors.ContributorsView;
 import org.ednovo.gooru.client.mvp.community.contributors.IsContributorsView;
+import org.ednovo.gooru.client.mvp.dashboard.IsUserDashBoardView;
+import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter;
+import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardPresenter.IsUserDashBoardProxy;
+import org.ednovo.gooru.client.mvp.dashboard.UserDashBoardView;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter.IsDeviceSupportProxy;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportView;
@@ -100,6 +104,9 @@ import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter.IsHomeProxy;
 import org.ednovo.gooru.client.mvp.home.HomeView;
 import org.ednovo.gooru.client.mvp.home.IsHomeView;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchView;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView;
 import org.ednovo.gooru.client.mvp.home.register.IsUserRegistrationView;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationView;
@@ -294,7 +301,10 @@ import org.ednovo.gooru.client.mvp.register.RegisterPresenter.IsRegisterProxy;
 import org.ednovo.gooru.client.mvp.register.RegisterView;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.AddResourceContainerView;
+import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainer;
+import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
 import org.ednovo.gooru.client.mvp.search.IsAddResourceContainerView;
+import org.ednovo.gooru.client.mvp.search.IsAnalyticsInfoContainerView;
 import org.ednovo.gooru.client.mvp.search.IsSearchRootView;
 import org.ednovo.gooru.client.mvp.search.IsTagsTabView;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
@@ -357,10 +367,6 @@ import org.ednovo.gooru.client.mvp.wrap.IsWrapView;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter.IsWrapProxy;
 import org.ednovo.gooru.client.mvp.wrap.WrapView;
-import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainer;
-import org.ednovo.gooru.client.mvp.search.AnalyticsInfoContainerPresenter;
-import org.ednovo.gooru.client.mvp.search.IsAnalyticsInfoContainerView;
-
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
@@ -560,6 +566,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(NatGeoLibraryPresenter.class, IsNatGeoLibraryView.class, NatGeoLibraryView.class,IsNatGeoLibraryProxy.class);
 		
 		bindPresenterWidget(AddStandardsPresenter.class, IsAddStandardsView.class, AddStandardsView.class);
+		bindPresenterWidget(AddStandardsPreSearchPresenter.class, IsAddStandardsPreSearchView.class, AddStandardsPreSearchView.class);
 		bindPresenterWidget(ContributorsPresenter.class, IsContributorsView.class, ContributorsView.class);
 
 		bindPresenterWidget(DistrictPresenter.class, IsDistrictView.class, DistrictView.class);
@@ -576,5 +583,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(TicalLibraryPresenter.class, IsTicalLibraryView.class, TicalLibraryView.class,IsTicalLibraryProxy.class);
 		bindPresenterWidget(AnalyticsInfoContainerPresenter.class, IsAnalyticsInfoContainerView.class, AnalyticsInfoContainer.class);
 		bindPresenterWidget(TagsTabPresenter.class, IsTagsTabView.class, TagsTabView.class);
+		bindPresenter(UserDashBoardPresenter.class, IsUserDashBoardView.class,UserDashBoardView.class, IsUserDashBoardProxy.class);
+
 	}
 }
