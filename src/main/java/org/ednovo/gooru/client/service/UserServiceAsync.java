@@ -115,5 +115,5 @@ public interface UserServiceAsync extends BaseServiceAsync {
    
    void isValidResetPasswordLink(String resetToken,AsyncCallback<String> callback);
    
-   void getTheAnalyticsFlaggedMonthlyData(AsyncCallback<Map<String, Integer>> callback);
+   void getTheAnalyticsFlaggedMonthlyData(String fieldVal,String StartDate,String endDate,String operator,AsyncCallback<Map<String, Integer>> callback);
 }

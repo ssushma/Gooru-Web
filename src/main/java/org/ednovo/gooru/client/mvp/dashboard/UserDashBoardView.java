@@ -38,6 +38,8 @@ package org.ednovo.gooru.client.mvp.dashboard;
 * Reviewer Gooru Team
 *
 */
+import java.util.Map;
+
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.ProfileAnalyticsChat;
@@ -72,7 +74,7 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	
 	public interface Binder extends UiBinder<Widget, UserDashBoardView> {
 	}
-
+	ProfileAnalyticsChat profileAnalyticChat=new ProfileAnalyticsChat();
 	@Inject
 	public UserDashBoardView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -89,7 +91,7 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 		reactionsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("reactions"));
 		googleMapContainer.add(new GoogleMapWidget());
 		profileAnalyticsGrageContainer.add(new ProfileAnalyticsGradeWidget());
-		profileActivityBreakDown.add(new ProfileAnalyticsChat().createChart());
+		profileActivityBreakDown.add(profileAnalyticChat.createChart());
 	}
 
 	@Override
@@ -98,5 +100,26 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	}
 	
 	public void setGraphData(){
+	}
+
+	@Override
+	public void setProfileAnalyticsFlaggedChatData(Map<String, Integer> result) {
+		profileAnalyticChat.updateProfileAnalyticsFlaggedChatData(result);
+	}
+	
+	@Override
+	public void setProfileAnalyticsSharedChatData(Map<String, Integer> result) {
+		profileAnalyticChat.updateProfileAnalyticsSharedChatData(result);
+	}
+
+	@Override
+	public void setProfileAnalyticsViewsChatData(Map<String, Integer> result) {
+		System.out.println("in the vere");
+		profileAnalyticChat.updateProfileAnalyticsViewsChatData(result);
+	}
+	
+	@Override
+	public void setProfileAnalyticsAddedCollectionChatData(Map<String, Integer> result) {
+		profileAnalyticChat.updateProfileAnalyticsAddedToCollectionChatData(result);
 	}
 }

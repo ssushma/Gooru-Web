@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -793,17 +794,16 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			JSONObject jsonObject=jsonRep.getJsonObject();
 			resetToken = jsonObject.getString("isValidToken");
 			}catch(JSONException e){}
-				
 		}
 		return resetToken;
 	}
 
 	@Override
-	public Map<String, Integer> getTheAnalyticsFlaggedMonthlyData() {
+	public Map<String, Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String startDate,String endDate,String operator) {
 		JsonRepresentation jsonRep = null;
-		String url ="http://qa.goorulearning.org/insights/api/v2/items/search?data={%22fields%22:%22%22,%22dataSource%22:%22rawdata%22,%22granularity%22:%22month%22,%22filter%22:[{%22logicalOperatorPrefix%22:%22AND%22,%22fields%22:[{%22type%22:%22selector%22,%22valueType%22:%22String%22,%22fieldName%22:%22gooruUId%22,%22operator%22:%22eq%22,%22value%22:%2295a744e1-631e-4642-875d-8b07a5e3b421%22},{%22type%22:%22selector%22,%22valueType%22:%22string%22,%22fieldName%22:%22eventName%22,%22operator%22:%22eq%22,%22value%22:%22item.flag%22}]}],%22aggregations%22:[{%22field1%22:%22eventName%22,%22formula%22:%22count%22,%22name%22:%22eventCount%22,%22requestValues%22:%22field1%22}],%22groupBy%22:%22eventName,eventTime%22}";
+		String url ="http://qa.goorulearning.org/insights/api/v2/query?sessionToken=1edb25aa-5c5e-4d13-8498-15ef31a93c1f&data={%22fields%22:%22%22,%22dataSource%22:%22rawdata%22,%22granularity%22:%22month%22,%22filter%22:[{%22logicalOperatorPrefix%22:%22AND%22,%22fields%22:[{%22type%22:%22selector%22,%22valueType%22:%22string%22,%22fieldName%22:%22eventName%22,%22operator%22:%22"+operator+"%22,%22value%22:%22"+fieldVal+"%22},{%22type%22:%22selector%22,%22valueType%22:%22Date%22,%22fieldName%22:%22eventTime%22,%22operator%22:%22ge%22,%22value%22:%22"+startDate+"%22,%22format%22:%22yyyy-MM-dd%22},{%22type%22:%22selector%22,%22valueType%22:%22Date%22,%22fieldName%22:%22eventTime%22,%22operator%22:%22le%22,%22value%22:%22"+endDate+"%22,%22format%22:%22yyyy-MM-dd%22},{%22type%22:%22selector%22,%22valueType%22:%22String%22,%22fieldName%22:%22gooruUId%22,%22operator%22:%22eq%22,%22value%22:%2295a744e1-631e-4642-875d-8b07a5e3b421%22}]}],%22aggregations%22:[{%22field1%22:%22eventName%22,%22formula%22:%22count%22,%22name%22:%22eventCount%22,%22requestValues%22:%22field1%22}],%22groupBy%22:%22eventName,eventTime%22,%22pagination%22:{%22offset%22:0,%22limit%22:10,%22order%22:[]}}";
 		System.out.println("url:getTheAnalyticsFlaggedMonthlyData::"+url);
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeMapData(jsonRep);
 	}
@@ -811,25 +811,23 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		Map<String, Integer> result = new HashMap<String, Integer>();
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 		try{
-			JSONObject mainObject = new JSONObject(jsonRep);
-
-			JSONObject posts = mainObject.getJSONObject("content");
-			
-			/*Iterator<String> keys = posts.keys();
-
-	        while( keys.hasNext() ){
-	            String key = (String)keys.next();
-	            if( posts.get(key) instanceof JSONObject ){
-	            	System.out.println("in the value::"+posts.get(key).toString());
-	            }
-	        }
-			*/
-			System.out.println(posts.keys());
+			JSONArray posts = jsonRep.getJsonObject().getJSONArray("content");
+			for(int i=0;i<posts.length();i++){
+				JSONObject obj=posts.getJSONObject(i);
+				Iterator<String> keys = obj.keys();
+				int j=0;
+		        while( keys.hasNext() ){
+		            String key = (String)keys.next();
+		            if( obj.get(key) instanceof JSONArray ){
+		            	result.put(key, obj.getJSONArray(key).getJSONObject(j).getInt("eventCount"));
+		            }
+		            j++;
+		        }
+			}
 		}catch(JSONException e){
 			e.getStackTrace();
 		}
-			
-		}
-		return result;
 	}
+		return result;
+ }
 }

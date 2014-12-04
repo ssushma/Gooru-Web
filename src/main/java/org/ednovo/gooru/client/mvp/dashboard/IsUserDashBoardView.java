@@ -40,26 +40,19 @@ package org.ednovo.gooru.client.mvp.dashboard;
  */
 
 
-import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.client.uc.ProfileBiographyEditUC;
-import org.ednovo.gooru.client.uc.SettingEditLabelUc;
-import org.ednovo.gooru.client.uc.SettingEmailEditLabelUc;
-import org.ednovo.gooru.client.uc.SettingLastNameEditLabelUC;
-import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
-import org.ednovo.gooru.shared.model.user.ProfileDo;
-import org.ednovo.gooru.shared.model.user.SettingDo;
-import org.ednovo.gooru.shared.model.user.V2UserDo;
-
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FocusPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
 
 public interface IsUserDashBoardView extends IsViewWithHandlers<UserDashBoardUiHandlers>{
 
 	void dispalyDashBoardHomePage();
+	
+	void setProfileAnalyticsFlaggedChatData(Map<String, Integer> result);
+	
+	void setProfileAnalyticsViewsChatData(Map<String, Integer> result);
+	
+	void setProfileAnalyticsSharedChatData(Map<String, Integer> result);
+	
+	void setProfileAnalyticsAddedCollectionChatData(Map<String, Integer> result);
 }

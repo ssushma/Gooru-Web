@@ -1,5 +1,7 @@
 package org.ednovo.gooru.client.util;
 import java.util.Date;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.moxieapps.gwt.highcharts.client.AxisTitle;
 import org.moxieapps.gwt.highcharts.client.Chart;
@@ -26,9 +28,10 @@ public class ProfileAnalyticsChat{
 	final String DOTTED_COLOR="#AA4643";
 	final String RECT_COLOR="#97D2C4";
 	private static final String DATE_FORMAT="MM/dd/yyyy hh:mm:ss aaa";
+	Chart chart; 
 	public static String getCreatedTime(String commentCreatedTime) {
 		String createdTime = null;
-		Long commentTime = Long.parseLong("1404172800000");
+		Long commentTime = Long.parseLong(commentCreatedTime);
 		Date currentDate = new Date(commentTime);
 		DateTimeFormat fmt = DateTimeFormat.getFormat (DATE_FORMAT);
 		createdTime = fmt.format (currentDate);
@@ -37,7 +40,7 @@ public class ProfileAnalyticsChat{
 	public Chart createChart() {  
 		String[] monthArray={"Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
     	String[] monthArrayNew = new String[12];
-        final Chart chart = new Chart()  
+    		chart = new Chart()  
         	.setChartTitleText("Activity Breakdown")
             .setZoomType(Chart.ZoomType.X_AND_Y)  
             .setHeight(200)
@@ -215,7 +218,49 @@ public class ProfileAnalyticsChat{
                     100, 200, 90.5, 140.5, 180.0, 210.5, 250, 260.5, 230.3, 180, 130, 90  
                 })  
             );  
-      
         return chart;  
     }  
+	public void updateProfileAnalyticsFlaggedChatData(Map<String, Integer> result){
+		Number dataPassed[]=new Number[12];
+		Map<String, Integer> map = new TreeMap<String, Integer>(result); 
+		if(chart!=null){
+			for(Map.Entry<String, Integer> entry : map.entrySet()) {
+				dataPassed[Integer.parseInt(getCreatedTime(entry.getKey()).substring(0, 2))]=entry.getValue();
+			}
+			chart.getSeries()[0].setPoints(dataPassed);
+		}
+	}
+	public void updateProfileAnalyticsViewsChatData(Map<String, Integer> result){
+		System.out.println("inthe ");
+		Number dataPassed[]=new Number[12];
+		Map<String, Integer> map = new TreeMap<String, Integer>(result); 
+		if(chart!=null){
+			for(Map.Entry<String, Integer> entry : map.entrySet()) {
+				System.out.println(getCreatedTime(entry.getKey()).substring(0, 2)+"::"+entry.getValue());
+				dataPassed[Integer.parseInt(getCreatedTime(entry.getKey()).substring(0, 2))]=entry.getValue();
+			}
+			chart.getSeries()[1].setPoints(dataPassed);
+		}
+	}
+	public void updateProfileAnalyticsSharedChatData(Map<String, Integer> result){
+		Number dataPassed[]=new Number[12];
+		Map<String, Integer> map = new TreeMap<String, Integer>(result); 
+		if(chart!=null){
+			for(Map.Entry<String, Integer> entry : map.entrySet()) {
+				dataPassed[Integer.parseInt(getCreatedTime(entry.getKey()).substring(0, 2))]=entry.getValue();
+			}
+			chart.getSeries()[2].setPoints(dataPassed);
+		}
+	}
+	
+	public void updateProfileAnalyticsAddedToCollectionChatData(Map<String, Integer> result){
+		Number dataPassed[]=new Number[12];
+		Map<String, Integer> map = new TreeMap<String, Integer>(result); 
+		if(chart!=null){
+			for(Map.Entry<String, Integer> entry : map.entrySet()) {
+				dataPassed[Integer.parseInt(getCreatedTime(entry.getKey()).substring(0, 2))]=entry.getValue();
+			}
+			chart.getSeries()[3].setPoints(dataPassed);
+		}
+	}
 }  

@@ -94,13 +94,11 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 		setData();
 	}
 	public void setData(){
-		AppClientFactory
-		.getInjector()
-		.getUserService().getTheAnalyticsFlaggedMonthlyData(new AsyncCallback<Map<String,Integer>>() {
+		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData("item.flag","2014-01-01","2014-10-12","eq",new AsyncCallback<Map<String,Integer>>() {
 				
 				@Override
 				public void onSuccess(Map<String, Integer> result) {
-					
+					getView().setProfileAnalyticsFlaggedChatData(result);
 				}
 				
 				@Override
@@ -108,6 +106,42 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 					
 				}
 			});
+		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData("item.share","2014-01-01","2014-10-12","eq",new AsyncCallback<Map<String,Integer>>() {
+			
+			@Override
+			public void onSuccess(Map<String, Integer> result) {
+				getView().setProfileAnalyticsSharedChatData(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+		});
+		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData("item.create","2014-01-01","2014-10-12","eq",new AsyncCallback<Map<String,Integer>>() {
+			
+			@Override
+			public void onSuccess(Map<String, Integer> result) {
+				getView().setProfileAnalyticsAddedCollectionChatData(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+		});
+		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData("collection.resource.play,resource.play","2014-01-01","2014-10-12","in",new AsyncCallback<Map<String,Integer>>() {
+			
+			@Override
+			public void onSuccess(Map<String, Integer> result) {
+				getView().setProfileAnalyticsViewsChatData(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+		});
 	}
 	@Override
 	protected void onHide() {
