@@ -801,11 +801,86 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public Map<String, Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String startDate,String endDate,String operator) {
 		JsonRepresentation jsonRep = null;
-		String url ="http://qa.goorulearning.org/insights/api/v2/query?sessionToken=1edb25aa-5c5e-4d13-8498-15ef31a93c1f&data={%22fields%22:%22%22,%22dataSource%22:%22rawdata%22,%22granularity%22:%22month%22,%22filter%22:[{%22logicalOperatorPrefix%22:%22AND%22,%22fields%22:[{%22type%22:%22selector%22,%22valueType%22:%22string%22,%22fieldName%22:%22eventName%22,%22operator%22:%22"+operator+"%22,%22value%22:%22"+fieldVal+"%22},{%22type%22:%22selector%22,%22valueType%22:%22Date%22,%22fieldName%22:%22eventTime%22,%22operator%22:%22ge%22,%22value%22:%22"+startDate+"%22,%22format%22:%22yyyy-MM-dd%22},{%22type%22:%22selector%22,%22valueType%22:%22Date%22,%22fieldName%22:%22eventTime%22,%22operator%22:%22le%22,%22value%22:%22"+endDate+"%22,%22format%22:%22yyyy-MM-dd%22},{%22type%22:%22selector%22,%22valueType%22:%22String%22,%22fieldName%22:%22gooruUId%22,%22operator%22:%22eq%22,%22value%22:%2295a744e1-631e-4642-875d-8b07a5e3b421%22}]}],%22aggregations%22:[{%22field1%22:%22eventName%22,%22formula%22:%22count%22,%22name%22:%22eventCount%22,%22requestValues%22:%22field1%22}],%22groupBy%22:%22eventName,eventTime%22,%22pagination%22:{%22offset%22:0,%22limit%22:10,%22order%22:[]}}";
+		String url ="http://qa.goorulearning.org/insights/api/v2/query?sessionToken=1edb25aa-5c5e-4d13-8498-15ef31a93c1f&data="+createProfileJsonPayloadObject(fieldVal,startDate,endDate,operator);
 		System.out.println("url:getTheAnalyticsFlaggedMonthlyData::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeMapData(jsonRep);
+	}
+	public String createProfileJsonPayloadObject(String fieldVal,String startDate,String endDate,String operator){
+		JSONObject jsonMainDataObject=new JSONObject(); 
+		try {
+			jsonMainDataObject.put("fields", "");
+			jsonMainDataObject.put("dataSource","rawdata");
+			jsonMainDataObject.put("granularity","month");
+			
+			JSONArray filterArray=new JSONArray();
+			JSONObject filterObj=new JSONObject();
+			filterObj.put("logicalOperatorPrefix", "AND");
+			
+			JSONArray filterArrayVales=new JSONArray();
+			
+			JSONObject firstFilterVal=new JSONObject();
+			firstFilterVal.put("type", "selector");
+			firstFilterVal.put("valueType", "string");
+			firstFilterVal.put("fieldName", "eventName");
+			firstFilterVal.put("operator", operator);
+			firstFilterVal.put("value", fieldVal);
+			filterArrayVales.put(firstFilterVal);
+			
+			JSONObject secondFilterVal=new JSONObject();
+			secondFilterVal.put("type", "selector");
+			secondFilterVal.put("valueType", "Date");
+			secondFilterVal.put("fieldName", "eventTime");
+			secondFilterVal.put("operator", "ge");
+			secondFilterVal.put("value", startDate);
+			secondFilterVal.put("format", "yyyy-MM-dd");
+			filterArrayVales.put(secondFilterVal);
+			
+			JSONObject thiredFilterVal=new JSONObject();
+			thiredFilterVal.put("type", "selector");
+			thiredFilterVal.put("valueType", "Date");
+			thiredFilterVal.put("fieldName", "eventTime");
+			thiredFilterVal.put("operator", "le");
+			thiredFilterVal.put("value", endDate);
+			thiredFilterVal.put("format", "yyyy-MM-dd");
+			filterArrayVales.put(thiredFilterVal);
+		
+			JSONObject fourthFilterVal=new JSONObject();
+			fourthFilterVal.put("type", "selector");
+			fourthFilterVal.put("valueType", "String");
+			fourthFilterVal.put("fieldName", "gooruUId");
+			fourthFilterVal.put("operator", "eq");
+			fourthFilterVal.put("value", "95a744e1-631e-4642-875d-8b07a5e3b421");
+			filterArrayVales.put(fourthFilterVal);
+			
+			filterObj.put("fields", filterArrayVales);
+			filterArray.put(filterObj);
+			jsonMainDataObject.put("filter", filterArray);
+			
+			JSONArray aggregationsArray=new JSONArray();
+			JSONObject aggregationObj=new JSONObject();
+			aggregationObj.put("field1", "eventName");
+			aggregationObj.put("formula", "count");
+			aggregationObj.put("name", "eventCount");
+			aggregationObj.put("requestValues", "field1");
+			aggregationsArray.put(aggregationObj);
+			
+			jsonMainDataObject.put("aggregations", aggregationsArray);
+			jsonMainDataObject.put("groupBy","eventName,eventTime");
+			
+			JSONObject paginationObj=new JSONObject();
+			paginationObj.put("offset", 0);
+			paginationObj.put("limit", 10);
+			JSONArray offsetArray=new JSONArray();
+			paginationObj.put("order",offsetArray);
+			
+			jsonMainDataObject.put("pagination",paginationObj);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonMainDataObject.toString();
 	}
 	public Map<String, Integer> deserializeMapData(JsonRepresentation jsonRep) {
 		Map<String, Integer> result = new HashMap<String, Integer>();

@@ -231,12 +231,10 @@ public class ProfileAnalyticsChat{
 		}
 	}
 	public void updateProfileAnalyticsViewsChatData(Map<String, Integer> result){
-		System.out.println("inthe ");
 		Number dataPassed[]=new Number[12];
 		Map<String, Integer> map = new TreeMap<String, Integer>(result); 
 		if(chart!=null){
 			for(Map.Entry<String, Integer> entry : map.entrySet()) {
-				System.out.println(getCreatedTime(entry.getKey()).substring(0, 2)+"::"+entry.getValue());
 				dataPassed[Integer.parseInt(getCreatedTime(entry.getKey()).substring(0, 2))]=entry.getValue();
 			}
 			chart.getSeries()[1].setPoints(dataPassed);

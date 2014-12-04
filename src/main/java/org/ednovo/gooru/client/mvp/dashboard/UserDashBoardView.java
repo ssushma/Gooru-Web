@@ -114,7 +114,6 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 
 	@Override
 	public void setProfileAnalyticsViewsChatData(Map<String, Integer> result) {
-		System.out.println("in the vere");
 		profileAnalyticChat.updateProfileAnalyticsViewsChatData(result);
 	}
 	
