@@ -120,6 +120,11 @@ height:450px;
 overflow-y:auto;
 display: none;
 }
+.normalText{}
+ .flagbuttonDeSelected{}
+ .rightFlagPanel{}
+ .leftFlagMenu{}
+ .leftFlagPanel{}
 .PopupMainV1Small{
 }
 .firstInputGroup{}

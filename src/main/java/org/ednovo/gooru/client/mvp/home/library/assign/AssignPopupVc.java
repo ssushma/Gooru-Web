@@ -122,10 +122,10 @@ public abstract class AssignPopupVc extends PopupPanel {
 	@UiField Label lblOr,lblLoginwithGooru;
 
 	@UiField
-	Label cancelButton,lblPleaseWait, swithUrlLbl, swithToEmbedLbl,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAC;
+	Label cancelButton,lblPleaseWait,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle;
 	
-	@UiField InlineLabel lblPii,toUsText;
-	@UiField Anchor ancprivacy;
+	@UiField InlineLabel lblPii,toUsText,donothaveAC;
+	@UiField Anchor ancprivacy ,swithUrlLbl, swithToEmbedLbl;
 
 	private boolean isPrivate = false;
 //	private static final String SWITCH_FULL_URL = i18n.GL0643;
@@ -413,8 +413,8 @@ public abstract class AssignPopupVc extends PopupPanel {
 		lblLoginwithGooru.getElement().setAttribute("alt",i18n.GL0346());
 		lblLoginwithGooru.getElement().setAttribute("title",i18n.GL0346());
 		
-		signUpStyles.getElement().setAttribute("style", "display: inline-block;");
-		ancSignUp.getElement().setAttribute("style", "float: left;");
+/*		signUpStyles.getElement().setAttribute("style", "display: inline-block;");
+*/		ancSignUp.getElement().setAttribute("style", "float: left;");
 		donothaveAC.getElement().setAttribute("style", "float: left;padding:0;");
 
 		cancelButton.getElement().setId("btnCancelButton");
@@ -787,8 +787,8 @@ public abstract class AssignPopupVc extends PopupPanel {
 
 	private void setHandlers() {
 
-		this.setSize("515px", "547px");
-
+	/*	this.setSize("515px", "547px");
+*/
 		loginTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 		passwordTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 	}

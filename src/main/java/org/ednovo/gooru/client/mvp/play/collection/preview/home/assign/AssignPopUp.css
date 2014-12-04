@@ -60,7 +60,7 @@
 	font-size:12px;
 	line-height:120%;
 	color:rgb(81,81,81);
-	text-align:left;
+	text-align:center;
 	padding-top: 3px;
 }
 
@@ -71,7 +71,7 @@
 	color:rgb(81,81,81);
 	text-align: center;
 	padding-top: 8px;
-	width: 445px;
+	
 }
 
 .placeHolderText{
@@ -115,7 +115,8 @@
 
 .scrollPanelContainer{
 	background-color:rgb(255,255,255);
-	width:310px;
+	/* width:310px; */
+	width:100%
 	border-color:rgb(221,221,221);
 	border-width:1px;
 	/* Firefox v1.0+ */
@@ -485,9 +486,15 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666', EndC
 	padding: 15px;
 }
 .heightClasspagecontainer{
-	height:155px;
+/* 	height:155px; */
 	margin-right: auto;
 	display: inline-block;
+	width:100%;
+}
+.classContainer{
+	margin-right: auto;
+	display: inline-block;
+	margin-top:10px;
 }
 .contentTitle {
 	color: #fff;
@@ -772,7 +779,7 @@ button.LoginText {
 }
 
 .noClassPageBanner{
-	margin-left: -23px;
+	margin-left: -23spx;
 }
 
 .assignClassPageBtn {
@@ -942,9 +949,9 @@ button.LoginText {
 
 .popupStyle{
 	z-index: 99999;
-visibility: visible;
-position: absolute;
-left:  375px !important;
-top: 26px !important;
-overflow: visible;
+	visibility: visible;
+	position: absolute;
+	top: 26px !important;
+	
+	overflow: visible;
 }

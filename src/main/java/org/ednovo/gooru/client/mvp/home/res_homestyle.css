@@ -84,12 +84,8 @@ header {
 	  text-align:left;
   }
  .logo{
-		text-align:left;
-	
-    padding-bottom: 6px;
-    padding-top: 6px;
+	text-align:left;
 	width:16% !important;
-
 	}
 	.searchbox{
 		width:auto !important;

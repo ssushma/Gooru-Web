@@ -31,23 +31,23 @@
                                 <g:Label styleName="{res.css.ratingLabel}" ui:field="poorLbl"></g:Label>
                              </g:HTMLPanel>
                              <g:HTMLPanel ui:field="panelRatingValues" styleName="col-md-8 col-xs-8  {res.css.panelRatingValues}">
-                                	<g:HTMLPanel styleName="prgressBar">
+                                	<g:HTMLPanel styleName="{res.css.ratingLabel}" >
                                 	   <g:HTMLPanel styleName="{res.css.bar}" ui:field="dataFive"></g:HTMLPanel> 
                                 	   <g:Label ui:field="excellentScore" styleName="{res.css.count}"></g:Label>
                                 	</g:HTMLPanel>
-									<g:HTMLPanel styleName="prgressBar">
+									<g:HTMLPanel styleName="{res.css.ratingLabel}" >
 										<g:HTMLPanel styleName="{res.css.bar} {style.data-two}" ui:field="dataFour"></g:HTMLPanel> 
                                 		<g:Label ui:field="verygoodScore" styleName="{res.css.count}"></g:Label>
 									</g:HTMLPanel>													                                
-                                   	<g:HTMLPanel styleName="prgressBar">
+                                   	<g:HTMLPanel styleName="{res.css.ratingLabel}" >
                                    		<g:HTMLPanel styleName="{res.css.bar} {style.data-three}" ui:field="dataThree"></g:HTMLPanel> 
                                    		<g:Label ui:field="goodScore" styleName="{res.css.count}"></g:Label>    
                                    	</g:HTMLPanel>
-                                   	<g:HTMLPanel styleName="prgressBar">
+                                   	<g:HTMLPanel styleName="{res.css.ratingLabel}" >
                                    		<g:HTMLPanel styleName="{res.css.bar} {style.data-four}" ui:field="dataTwo"></g:HTMLPanel> 
                                    		<g:Label ui:field="fairScore" styleName="{res.css.count}"></g:Label>    
                                    	</g:HTMLPanel>
-                                   	<g:HTMLPanel styleName="prgressBar">
+                                   	<g:HTMLPanel styleName="{res.css.ratingLabel}" >
                                    		<g:HTMLPanel styleName="{res.css.bar} {style.data-five}" ui:field="dataOne"></g:HTMLPanel> 
                                    		<g:Label ui:field="poorScore" styleName="{res.css.count}"></g:Label>
                                    	</g:HTMLPanel>

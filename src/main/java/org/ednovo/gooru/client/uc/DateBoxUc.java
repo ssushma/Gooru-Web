@@ -82,6 +82,7 @@ public class DateBoxUc extends FlowPanel{
 		
 		dateBox = new TextBox();
 		dateBox.getElement().setId("tbBirthday");
+		dateBox.getElement().getStyle().setWidth(100, Unit.PCT);
 		dateBox.setReadOnly(true);
 		if (!isRegistration){
 				this.setStyleName(UcCBundle.INSTANCE.css().gooruDateBoxAssignment());

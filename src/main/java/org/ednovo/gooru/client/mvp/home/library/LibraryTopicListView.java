@@ -1364,8 +1364,8 @@ public class LibraryTopicListView extends Composite{
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("658px");
+				/*successPopupVc.setWidth("500px");
+				successPopupVc.setHeight("658px");*/
 				if(!successPopupVc.isVisible()){
 					successPopupVc.show();
 					successPopupVc.center();
@@ -1523,8 +1523,8 @@ public class LibraryTopicListView extends Composite{
 					}
 				};
 				Window.scrollTo(0, 0);
-				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("658px");
+			//	successPopupVc.setWidth("500px");
+			//	successPopupVc.setHeight("658px");
 				if(!successPopupVc.isVisible()){
 					successPopupVc.show();
 					successPopupVc.center();

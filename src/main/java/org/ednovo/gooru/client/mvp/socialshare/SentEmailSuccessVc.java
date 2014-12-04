@@ -38,6 +38,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -71,7 +72,10 @@ public class SentEmailSuccessVc extends Composite {
 	private AppPopUp appPopUp;
 
 	@UiField
-	Label okLbl,toEmailLbl;
+	Label toEmailLbl;
+	
+	@UiField
+	Button okLbl;
 	@UiField HTMLPanel emailToFriendText,emailSentText;
 
 	/**
@@ -82,8 +86,8 @@ public class SentEmailSuccessVc extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
-		appPopUp.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemSucessPopUp());
-		appPopUp.getElement().getStyle().setZIndex(999999);
+/*		appPopUp.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemSucessPopUp());
+*/		appPopUp.getElement().getStyle().setZIndex(999999);
 		appPopUp.setGlassStyleName(HomeCBundle.INSTANCE.css().loginPopupGlassStyle());
 		appPopUp.setGlassEnabled(true);
 		appPopUp.show();
