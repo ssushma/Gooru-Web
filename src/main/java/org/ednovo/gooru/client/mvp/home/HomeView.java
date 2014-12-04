@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.home;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -129,6 +130,8 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	
 	String jsonDataString = null;
 	
+	boolean isGetLibApiCalling = false;
+	
 	Map<String, String> allSubject = new HashMap<String, String>();
 	Map<String, String> allCourse  = new HashMap<String, String>();
 	private boolean hasAutoSelected = false;
@@ -178,7 +181,12 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		Window.addWindowScrollHandler(new Window.ScrollHandler() {
 		    @Override
 		    public void onWindowScroll(ScrollEvent event) {
-		    	getEditSearchTxtBox().hideSuggestionList();   	
+		    	getEditSearchTxtBox().hideSuggestionList(); 
+		    	if (panelPartnerLibraries.getWidgetCount() <= 0 && !isGetLibApiCalling){
+		    		System.out.println("Window.getScrollTop() : "+Window.getScrollTop());
+		    		getUiHandlers().generatePartnerLibraries();
+		    		isGetLibApiCalling= true;
+		    	}
 			}
 		});
 		
@@ -189,13 +197,12 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 		gooruPanel.setVisible(false);
 		setIds();
 		
-		
 		generateSubjectsData();
 		generateCourseData();
 		
 		generateStandardLibraries();
 		generateDistrictLibraries();
-		generatePartnerLibraries();
+//		generatePartnerLibraries();
 		String emailId= AppClientFactory.getPlaceManager()
 				.getRequestParameter("emailId");
 	//	StringUtil.consoleLog("emailId..in home."+emailId);
@@ -219,7 +226,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				}
 			});
 		}
-	
 
 		
 		
@@ -249,6 +255,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			}
 		});
 		
+		
 //		InternalServerErrorPopupViewVc error = new InternalServerErrorPopupViewVc() {
 //		};
 //		error.show();
@@ -258,13 +265,13 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	
 	
 	/**
-	 * @function generatePartnerLibraries 
+	 * @function displayPartnerLibraries 
 	 * 
 	 * @created_date : Aug 12, 2014
 	 * 
 	 * @description
 	 * 
-	 * 
+	 * @param : ArrayList<LibraryUserDo> partnersList
 	 * 
 	 * @return : void
 	 *
@@ -274,26 +281,24 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	 *
 	 * 
 	*/
-	
-	private void generatePartnerLibraries() {
-		AppClientFactory.getInjector().getLibraryService().getPartners(new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
-			@Override
-			public void onSuccess(ArrayList<LibraryUserDo> partnersList) {
-				if (partnersList != null){
-					for(int i=0;i<partnersList.size();i++) {
-						final LibraryUserDo libraryUserDo = partnersList.get(i);
-						PeListPanel pTag = new PeListPanel();
-						Anchor anchor = new Anchor();
-						anchor.setText(libraryUserDo.getDisplayName());
-						String url = "#"+libraryUserDo.getUsername();
-						anchor.setHref(url);
-						pTag.add(anchor);
-						panelPartnerLibraries.add(pTag);
-					}
-				}
+	@Override
+	public void displayPartnerLibraries(ArrayList<LibraryUserDo> partnersList) {
+		isGetLibApiCalling = false;
+		if (partnersList != null){
+			for(int i=0;i<partnersList.size();i++) {
+				final LibraryUserDo libraryUserDo = partnersList.get(i);
+				PeListPanel pTag = new PeListPanel();
+				Anchor anchor = new Anchor();
+				anchor.setText(libraryUserDo.getDisplayName());
+				String url = "#"+libraryUserDo.getUsername();
+				anchor.setHref(url);
+				pTag.add(anchor);
+				panelPartnerLibraries.add(pTag);
 			}
-		});
+		}
 	}
+	
+	
 	/**
 	 * 
 	 * @function generateDistrictLibraries 

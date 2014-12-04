@@ -27,6 +27,8 @@
  */
 package org.ednovo.gooru.client.mvp.home;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,9 +59,11 @@ import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
+import org.ednovo.gooru.client.ui.PeListPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
@@ -74,6 +78,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -598,5 +603,16 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			SearchDo<AutoSuggestKeywordSearchDo> searchDo) {
 			getAutoSuggestionKeyWordAsyncCallback().execute(searchDo);
 	}
-
+	@Override
+	public void generatePartnerLibraries() {
+		System.out.println("In Home View ....");
+		AppClientFactory.getInjector().getLibraryService().getPartners(new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
+			@Override
+			public void onSuccess(ArrayList<LibraryUserDo> partnersList) {
+				if (partnersList != null){
+					getView().displayPartnerLibraries(partnersList);
+				}
+			}
+		});
+	}
 }
