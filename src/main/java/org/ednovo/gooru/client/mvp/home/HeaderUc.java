@@ -43,6 +43,7 @@ import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListHandler;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
+import org.ednovo.gooru.client.mvp.search.SearchFilterVc;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
@@ -2081,11 +2082,13 @@ public class HeaderUc extends Composite implements
 	    //stadardCode=stadardCodeId;
 	}
 
-	public static void setStandardsCode(String stadardCodeId){
+	public static void setStandardsCode(String stadardCodeId, int id, String code){
 		stadardCode=stadardCodeId;
-	}
-	
-	
+		/*SearchFilterVc searchFilterVc= new SearchFilterVc(true);
+		System.out.println("id::"+id);
+		System.out.println("code::"+code	);
+		searchFilterVc.setUpdatedBrowseStandarsCode(stadardCodeId,id,code);*/	
+		}
 }
 
 
