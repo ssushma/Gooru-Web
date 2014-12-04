@@ -34,6 +34,7 @@
 	<script type="text/javascript"
 	src="scripts/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
 
+<script type="text/javascript" src="scripts/jquery-1.11.0.min.js"></script>
 <script type="text/javascript"	src="scripts/highcharts.js"></script>
 <script type="text/javascript"	src="scripts/highcharts-more.js"></script>
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
@@ -60,14 +61,6 @@
     $(function() {
  		$('#source').heatmap('target', 15);
  	});
-     function graphData()
-     {
-    	 alert($('#pnlGraphWidget').html());
-    	  $(function() {
-    	 		$('#source').heatmap('target', 15);
-    	 	});
-    	 $('#pnlGraphWidget').heatmap('pnlTarget', 15);
-     }
      function hewlettTracking(a)
      {
     	 try
