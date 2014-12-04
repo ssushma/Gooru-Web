@@ -158,8 +158,11 @@
 			   <g:HTMLPanel styleName="btn-group">
   				<g:Anchor ui:field="lblMediaPlaceHolder" styleName="btn btn-default dropdown-toggle">
     			</g:Anchor>
+    			<g:Label ui:field="lblMediaFeatureArrow" styleName="{res.css.arrowInstructional}"></g:Label>
+			      <g:ScrollPanel ui:field="spanelMediaFeaturePanel"
+					styleName="{res.css.scrollPanelContainerInstructional}" >
     			<gg:UlPanel ui:field="htmlMediaFeatureListContainer" styleName="dropdown-menu"></gg:UlPanel>    
-    			
+    			</g:ScrollPanel>
   				
 			  </g:HTMLPanel>
 		       </g:HTMLPanel>	

@@ -14,8 +14,12 @@
       		<!--  new design start -->
       		<g:FlowPanel styleName="{playerStyle.collectionEnd}">
       			<g:FlowPanel styleName="col-md-12">
-      				<g:Label styleName="colleDescriptionBig" text="{i18n.GL2083}"></g:Label>
-      				<html5:SectionTag styleName="{playerStyle.block}">
+						<g:FlowPanel styleName="{playerStyle.collections} {playerStyle.Playlast}">
+							<g:FlowPanel styleName="">
+								<g:Label styleName="colleDescriptionBig" text="{i18n.GL2083}" ui:field="headingText"></g:Label>
+							</g:FlowPanel>
+						</g:FlowPanel>      				
+						<html5:SectionTag styleName="{playerStyle.block}">
       					<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.timespend}">
 							<g:FlowPanel styleName="{palyerStyleResource.getPlayerStyleResource.collectionEndImageContainer}" >
 								<g:Image ui:field="collectionThumbnail" styleName="{playerStyle.collectionImage}"></g:Image>

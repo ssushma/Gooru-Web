@@ -1,3 +1,4 @@
+
 body {
 	background: #efeded url(../images/background-image.png) repeat
 		!important;
@@ -1533,4 +1534,91 @@ filter: progid;
 .rightFlagPanel .normalText{
 	margin-bottom:10px;
 	margin-top:10px;
+}
+
+
+.popupHeader {
+	padding:10px 15px;
+	color:white;
+	background-color:#4e9746;
+	font-size:16px;
+	/* Safari 4-5, Chrome 1-9 */
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7AB075), to(#4e9746));
+	
+	/* Safari 5.1, Chrome 10+ */
+	background: -webkit-linear-gradient(top, #7AB075, #4e9746);
+
+	/* Firefox 3.6+ */
+	background: -moz-linear-gradient(top, #7AB075, #4e9746);
+
+	/* IE 10 */
+	background: -ms-linear-gradient(top, #7AB075, #4e9746);
+
+	/* Opera 11.10+ */
+	background: -o-linear-gradient(top, #7AB075, #4e9746);
+
+	/* IE 6-9 */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#7AB075', EndColorStr='#4e9746');
+}
+
+.forgotPasswordSuccessText{
+	text-align:center;
+	margin:36px 0px 20px 0px;
+	font-size: 24px;
+	font-weight: bold;
+	color: #4e9746;
+}
+
+.btnSubmit {
+	display:block;
+	margin:50px auto 0px auto;
+}
+
+.h1 {
+	font-size:20px;
+	text-align:center;
+	margin:0px 0px 20px 0px;
+}
+.forgotPasswordSuceessButtonContainer{
+	text-align: center;
+}
+
+.forgotPasswordSuccessPopupContent {
+	padding:36px 98px;
+}
+
+.footerText{
+	
+}
+
+.forgotPasswordBottomContainer {
+	background-color: rgba(240,240,240,0.3);
+	border:1px solid #ddd;
+	text-align:right;
+	width: 498px;
+	height: 48px;
+}
+.footerText
+{
+	text-align:center;
+	margin-top:8px;
+}	
+
+.popupInner {
+	border: 1px solid #DDD;
+	position:relative;	
+}
+
+.popup {
+	background-color:white;
+	width: 500px;
+}
+
+.popup.forgetImgBG {
+	background: white url("images/login/registration-bg.png") no-repeat;
+	background-position: 30px -30px;
+}
+
+.forgetImgBG{
+	
 }

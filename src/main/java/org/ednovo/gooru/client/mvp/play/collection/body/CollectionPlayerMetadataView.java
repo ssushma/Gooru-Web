@@ -34,15 +34,10 @@ import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
-import org.ednovo.gooru.client.mvp.play.collection.body.MetadataWidget.TeacherImage;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.CommentWidgetChildView;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
-
-import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
-
-import org.ednovo.gooru.client.uc.CollaboratorsUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
@@ -57,7 +52,6 @@ import org.ednovo.gooru.shared.util.UAgentInfo;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -79,7 +73,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Frame;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -95,32 +88,23 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 
 	@UiField
 	static FlowPanel studyMainContianer;
-//	@UiField
-//	SectionTag metadataContainer;
+
 	@UiField
-	FlowPanel /*standardsContainer,*/leftPanelContainer;
-	/*@UiField
-	FlowPanel teamContainer;*/
-	/*@UiField
-	FlowPanel messageContainer;*/
-	/*@UiField
-	FlowPanel frameContainer;*/
-	/*@UiField
-	FlowPanel courseTitle;*/
+	FlowPanel leftPanelContainer;
+
 	@UiField VerticalPanel commentsContainer;
 	@UiField TextArea commentField;
 	@UiField Button postCommentBtn,postCommentCancel;
 
 	@UiField MetadataWidget rightPanelMetadata;
 
-	@UiField Label userNameLabel,viewsCountLabel,lblClassInfo,classTitleValue,lblclassTitle,lblTeacher,lbldueDate,lblDirections,lblDirectionsDesc,commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit;
-	@UiField Label lblAuthor, lblCourse, lblStandards,teacherNameLabel,dueDate,/*insightsHeaderText,insightsContentText,*/lbllanguageObjectiveText,lbllanguageObjective,successPostMsg,
-				lbldepthOfKnowledgeText,lbllearningAndInnovationText,lblAudienceText,lblInstructionalmethodText;
-	@UiField Image profileThumbnailImage,userPhoto;
-	@UiField HTMLPanel teacherPanel,classInfoPanel,authorPanel,courseSection,standardSection,teacherContainer,viewSection,dueDateSection,directionSection,teacherProfileContainer,languageObjectiveContainer,addComment,loginMessaging,
-						depthOfKnowledgePanel,audiencePanel,instructionalmethodPanel,learningAndInnovationSkillPanel,
-						InstructionalmethodContainer,audienceContainer,learningAndInnovationSkillsContainer,depthOfKnowledgeContainer,switchContainer,commentssection;
-	@UiField Anchor previewFlagButton,seeMoreAnchor,loginUrl, signupUrl;
+	@UiField Label commentCount,seeMoreButton,noCommentsLbl,toCommentText,orText,loginMessagingText,characterLimit;
+	@UiField Label /*insightsHeaderText,insightsContentText,*/successPostMsg;
+	@UiField Image userPhoto;
+	@UiField HTMLPanel addComment,loginMessaging,
+						audiencePanel,instructionalmethodPanel,learningAndInnovationSkillPanel,
+						switchContainer,commentssection;
+	@UiField Anchor loginUrl, signupUrl;
 
 	@UiField CollectionPlayerStyleBundle playerStyle;
 
