@@ -43,7 +43,6 @@ import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListHandler;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
-import org.ednovo.gooru.client.mvp.search.SearchFilterVc;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
