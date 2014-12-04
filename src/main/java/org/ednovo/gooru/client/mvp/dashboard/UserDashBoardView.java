@@ -38,8 +38,11 @@ package org.ednovo.gooru.client.mvp.dashboard;
 * Reviewer Gooru Team
 *
 */
+import java.util.Map;
+
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.util.ProfileAnalyticsChat;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 
@@ -55,7 +58,7 @@ import com.google.inject.Inject;
 
 public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandlers> implements IsUserDashBoardView{
 	
-	@UiField HTMLPanel CollectionsPublishedWidget,ResourceAddedWidget,commentsMadeWIdget,endorsementsGivenWidget,reviewsWrittenWidget,
+	@UiField HTMLPanel profileActivityBreakDown,CollectionsPublishedWidget,ResourceAddedWidget,commentsMadeWIdget,endorsementsGivenWidget,reviewsWrittenWidget,
 	topRemixedCollectionsWidget,topEndorsedCollectionsWidget,fiveStarRatedResourcesWidget,reactionsWidgetPanel,reactionsGivenWidget,ratingsGivenWidget,googleMapContainer;
 	@UiField HTMLEventPanel profileAnalyticsGrageContainer;
 	
@@ -72,7 +75,7 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	
 	public interface Binder extends UiBinder<Widget, UserDashBoardView> {
 	}
-
+	ProfileAnalyticsChat profileAnalyticChat=new ProfileAnalyticsChat();
 	@Inject
 	public UserDashBoardView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -88,6 +91,7 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 		reactionsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("reactions"));
 		googleMapContainer.add(new GoogleMapWidget());
 		profileAnalyticsGrageContainer.add(new ProfileAnalyticsGradeWidget());
+		profileActivityBreakDown.add(profileAnalyticChat.createChart());
 	}
 
 	@Override
@@ -99,6 +103,25 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	}
 
 	@Override
+	public void setProfileAnalyticsFlaggedChatData(Map<String, Integer> result) {
+		profileAnalyticChat.updateProfileAnalyticsFlaggedChatData(result);
+	}
+	
+	@Override
+	public void setProfileAnalyticsSharedChatData(Map<String, Integer> result) {
+		profileAnalyticChat.updateProfileAnalyticsSharedChatData(result);
+	}
+
+	@Override
+	public void setProfileAnalyticsViewsChatData(Map<String, Integer> result) {
+		profileAnalyticChat.updateProfileAnalyticsViewsChatData(result);
+	}
+	
+	@Override
+	public void setProfileAnalyticsAddedCollectionChatData(Map<String, Integer> result) {
+		profileAnalyticChat.updateProfileAnalyticsAddedToCollectionChatData(result);
+	}
+	
 	public void setPublishedCollectionData(UserDashBoardCommonInfoDO result) {
 		CollectionsPublishedWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getContent().get(0).getPublishedCollection())),new Label("Collections Published")));
 	}

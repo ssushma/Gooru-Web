@@ -142,7 +142,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	/*@UiField
 	DisclosurePanelUc authorPanelUc;*/
 	
-	@UiField HTMLPanel panelNotMobileFriendly,categoryPanelUc,subjectPanelUc,gradePanelUc,ratingPanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc,accessModePanel;
+	@UiField HTMLPanel panelNotMobileFriendly,categoryPanelUc,subjectPanelUc,gradePanelUc,ratingPanelUc,reviewPanelUc,aggregatorPanelUc,sourcePanelUc,authorPanelUc,standardPanelUc,accessModePanel;
 	
 	@UiField
 	HTMLPanel /*contentpanel,*/oerPanel;
@@ -787,19 +787,87 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		chkNotFriendly.setStyleName(CssTokens.FILTER_CHECKBOX);
 		chkNotFriendly.addStyleName(value.toLowerCase());
+		
+		if(AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed") != null)
+		{
+			String reviewedVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.isReviewed");
+			if(reviewedVal.equalsIgnoreCase("1") && value.equalsIgnoreCase("Resources w/ Reviews"))
+			{
+				chkNotFriendly.setValue(true);
+			}
+			else
+			{
+				chkNotFriendly.setValue(false);	
+			}
+		}		
 		if(value.equalsIgnoreCase("fivestar") ||value.equalsIgnoreCase("fourstar")||value.equalsIgnoreCase("threestar")||value.equalsIgnoreCase("twostar")||value.equalsIgnoreCase("onestar")){
 			chkNotFriendly.setText("");
 			chkNotFriendly.addStyleName(value.toLowerCase());
 		}else if(value.equalsIgnoreCase("zerostar")){
 			chkNotFriendly.setText("Only Resources w/ Reviews");
 			chkNotFriendly.addStyleName(value.toLowerCase());
+			
+			if(AppClientFactory.getPlaceManager().getRequestParameter("flt.rating") != null)
+			{
+				String ratingsAlreadyexisting = AppClientFactory.getPlaceManager().getRequestParameter("flt.rating");
+				if(ratingsAlreadyexisting.contains(","))
+				{
+					String[] arrRatings = ratingsAlreadyexisting.split(",");
+					for(int i=0;i<arrRatings.length;i++)
+					{		
+						if(arrRatings[i].equalsIgnoreCase("5") && value.equalsIgnoreCase("fivestar"))
+						{
+							chkNotFriendly.setValue(true);
+						}
+						else if(arrRatings[i].equalsIgnoreCase("4") && value.equalsIgnoreCase("fourstar"))
+						{
+							chkNotFriendly.setValue(true);
+						}
+						else if(arrRatings[i].equalsIgnoreCase("3") && value.equalsIgnoreCase("threestar"))
+						{
+							chkNotFriendly.setValue(true);
+						}
+						else if(arrRatings[i].equalsIgnoreCase("2") && value.equalsIgnoreCase("twostar"))
+						{
+							chkNotFriendly.setValue(true);
+						}
+						else if(arrRatings[i].equalsIgnoreCase("1") && value.equalsIgnoreCase("onestar"))
+						{
+							chkNotFriendly.setValue(true);
+						}
+					}
+				}
+				else
+				{
+					if(ratingsAlreadyexisting.equalsIgnoreCase("5") && value.equalsIgnoreCase("fivestar"))
+					{
+						chkNotFriendly.setValue(true);
+					}
+					else if(ratingsAlreadyexisting.equalsIgnoreCase("4") && value.equalsIgnoreCase("fourstar"))
+					{
+						chkNotFriendly.setValue(true);
+					}
+					else if(ratingsAlreadyexisting.equalsIgnoreCase("3") && value.equalsIgnoreCase("threestar"))
+					{
+						chkNotFriendly.setValue(true);
+					}
+					else if(ratingsAlreadyexisting.equalsIgnoreCase("2") && value.equalsIgnoreCase("twostar"))
+					{
+						chkNotFriendly.setValue(true);
+					}
+					else if(ratingsAlreadyexisting.equalsIgnoreCase("1") && value.equalsIgnoreCase("onestar"))
+					{
+						chkNotFriendly.setValue(true);
+					}
+				}
+			}
+			
 		}
 		disclosurePanelVc.add(chkNotFriendly);
 		chkNotFriendly.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 
 			@Override
 			public void onValueChange(ValueChangeEvent<Boolean> event) {
-				System.out.println("onvaluechange::"+chkNotFriendly.getValue());
 				if (chkNotFriendly.getValue()){					
 						MixpanelUtil.MOS_Filter("Selected");
 					
@@ -913,10 +981,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		subjectPanelUc.clear();
 		gradePanelUc.clear();
 		ratingPanelUc.clear();
+		reviewPanelUc.clear();
 		panelNotMobileFriendly.clear();
 		accessModePanel.clear();
 		oerPanel.clear();
-		System.out.println("renderFilter");
 		if (searchFilterDo != null) {
 			if (searchFilterDo.getCategories() != null) {
 				Iterator<Map.Entry<String, String>> categoriesIterator = searchFilterDo.getCategories().entrySet().iterator();
@@ -1055,6 +1123,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				}
 				renderCheckBox(ratingPanelUc, i+"", starVal+"star");
 			}
+			renderCheckBox(reviewPanelUc,"review", "Resources w/ Reviews");
 			
 		}/*else{
 			collectionLinkLbl.addStyleName(style.active());
@@ -1109,7 +1178,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				filterMap.put(IsSearchView.AGGREGATOR_FLT, aggregatorSgsts);
 			}
 			String ratings=getSelectedFilter(ratingPanelUc);
-			System.out.println("ratings panel uc::"+getSelectedFilter(ratingPanelUc));
+			String reviews = getSelectedFilter(reviewPanelUc);
+			if(!reviews.isEmpty()){
+				if(chkNotFriendly.getValue())
+				{
+				filterMap.put(IsSearchView.REVIEWS_FLT, "1");
+				}
+			}
 			if(!ratings.isEmpty()){
 				filterMap.put(IsSearchView.RATINGS_FLT, ratings);
 			}
@@ -1133,6 +1208,18 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			String ratings=getSelectedFilter(ratingPanelUc);
 			if(!ratings.isEmpty()){
 				filterMap.put(IsSearchView.RATINGS_FLT, ratings);
+			}
+			
+			String reviews = getSelectedFilter(reviewPanelUc);
+			if(!reviews.isEmpty()){
+				if(chkNotFriendly.getValue())
+				{
+				filterMap.put(IsSearchView.REVIEWS_FLT, "1");
+				}
+				else
+				{
+				filterMap.remove(IsSearchView.REVIEWS_FLT);
+				}
 			}
 				if(chkOER!=null && chkOER.getValue()){
 					filterMap.put(IsSearchView.OER_FLT, "1");

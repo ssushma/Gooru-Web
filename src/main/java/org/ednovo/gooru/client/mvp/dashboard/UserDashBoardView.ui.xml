@@ -80,7 +80,7 @@
 							
 							<div class="col-md-12 {style.graphSmall}">
 							<div class="{style.whiteBg}">
-							<img src="../images/profileimages/graph-small.png" />
+							<g:HTMLPanel ui:field="profileActivityBreakDown"></g:HTMLPanel>
 							</div>
 							</div>
 			   </div>

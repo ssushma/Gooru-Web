@@ -71,7 +71,7 @@ public interface IsSearchView<T extends ResourceSearchResultDo> extends IsViewWi
 	
 	String RATINGS_FLT = "flt.rating";
 	
-	String REVIEW_FLT = "flt.isReviewed";
+	String REVIEWS_FLT = "flt.isReviewed";
 	
 	/**
 	 * Set post search view

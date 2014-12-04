@@ -515,6 +515,7 @@ public class HeaderUc extends Composite implements
 		dashBoardToolTip.getElement().getStyle().setBackgroundColor("transparent");
 		dashBoardToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		dashBoardToolTip.getElement().getStyle().setZIndex(99);
+		dashBoardToolTip.getElement().getStyle().setLeft(loggedInfoLbl.getAbsoluteLeft(), Unit.PX);
 		myDashBoardPop.add(dashBoardToolTip);
 		myDashBoardPop.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		myDashBoardPop.getElement().getStyle().setZIndex(99);

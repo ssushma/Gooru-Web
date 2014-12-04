@@ -237,5 +237,7 @@ public interface UserService extends BaseService {
 	
 	String isValidResetPasswordLink(String resetToken)throws GwtException,ServerDownException;
 	
+	Map<String,Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String StartDate,String endDate,String operator);
+
     UserDashBoardCommonInfoDO getUsersPublishedCollectionsCount();
 }
