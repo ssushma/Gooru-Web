@@ -18,7 +18,6 @@
 	
 }
 .directionsDiv{
-	width: 20%;
 	float: left;
 	padding-top: 4px; 
 
@@ -92,7 +91,7 @@
 }
 .dropdownContainer{
 	background-color:rgb(255,255,255);
-	width:310px;
+/* 	width:310px; */
 	height:28px;
 	border-color:rgb(221,221,221);
 	border-width:1px;
@@ -103,8 +102,8 @@
 	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
 	border-radius:1px;
 	border-style:solid;
-	position: absolute;
-	margin-left: 98px;
+/* 	position: absolute;
+	margin-left: 98px; */
 }
 .classpageContainerFont{
 	font-family:Arial, Helvetica, sans-serif;
@@ -116,6 +115,7 @@
 	float:left;
 	margin-bottom:10px;
 	margin-left:25px;
+	width:100%;
 }
 
 .labelTitlePrivateText{
@@ -546,6 +546,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666', EndC
 /* 	height:155px; */
 	margin-right: auto;
 	display: inline-block;
+	width:100%;
 }
 .contentTitle {
 	color: #fff;
@@ -973,4 +974,7 @@ button.LoginText {
 .loginWithGooru{
 	font-size: 12px;
 	font-weight: normal;
+}
+.marginTop{
+	margin-top:10px;
 }
