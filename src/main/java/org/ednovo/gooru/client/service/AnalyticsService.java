@@ -63,5 +63,5 @@ public interface AnalyticsService extends BaseService {
 
 	public ArrayList<OetextDataDO> getOETextData(String resourceId,String collectionId,String classpageId,String pathwayId,String session,String sessionId,String userUId);
 	
-	public FeedBackResponseDataDO postTeacherFeedBackToStudent(String freeText,String resourceId,String collectionId,String classpageId,String pathwayId,String userId,String session,String contentItemId,String parentItemId,String classCode);
+	public FeedBackResponseDataDO postTeacherFeedBackToStudent(boolean isDelete,String freeText,String resourceId,String collectionId,String classpageId,String pathwayId,String userId,String session,String contentItemId,String parentItemId,String classCode);
 }

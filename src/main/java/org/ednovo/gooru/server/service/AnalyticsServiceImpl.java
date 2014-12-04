@@ -392,7 +392,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 	}
 
 	@Override
-	public FeedBackResponseDataDO postTeacherFeedBackToStudent(String freeText,
+	public FeedBackResponseDataDO postTeacherFeedBackToStudent(boolean isDelete,String freeText,
 			String resourceId, String collectionId, String classpageId,	String pathwayId, String userId, String session,String contentItemId,String parentItemId,String classCode) {
 		JsonRepresentation jsonRep = null;
 		FeedBackResponseDataDO feedBackResponseDataDO=new FeedBackResponseDataDO();
@@ -409,7 +409,7 @@ public class AnalyticsServiceImpl extends BaseServiceImpl implements AnalyticsSe
 			setPlayLoadObj.put("pathwayId", pathwayId);
 			setPlayLoadObj.put("classId",classpageId);
 			setPlayLoadObj.put("sessionId",session);
-			if(freeText.equalsIgnoreCase("commentsDelete")){
+			if(isDelete){
 				setPlayLoadObj.put("active","false");
 			}else{
 				setPlayLoadObj.put("active","true");
