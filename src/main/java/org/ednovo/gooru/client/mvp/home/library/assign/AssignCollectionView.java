@@ -113,7 +113,7 @@ IsCollectionAssign {
 	
 	@UiField HTMLPanel  panelNoClasspages,htmlPanelContainer,panelTitleContainer,loadingImageLabel;
 	
-	@UiField HTMLPanel controlsContainer;
+	@UiField HTMLPanel controlsContainer,mainContainer;
 	
 	@UiField HTMLPanel assignMoreCpContainer;
 	
@@ -174,6 +174,7 @@ IsCollectionAssign {
 		lblNoClassPageImage.getElement().getStyle().setWidth(100, Unit.PCT);
 		toAssignStr = collectionDoObject.getGooruOid();
 		collectionDoGlobal = collectionDoObject;
+		mainContainer.getElement().getStyle().setWidth(100, Unit.PCT);
 		
 		lblDirections.setText(i18n.GL1166());
 		lblDirections.getElement().setAttribute("alt",i18n.GL1166());
@@ -267,6 +268,7 @@ IsCollectionAssign {
 		panelNoClasspages.setVisible(false);
 		onLoaded();
 		panelTitleContainer.getElement().getStyle().setMarginBottom(15, Unit.PX);
+		panelTitleContainer.getElement().getStyle().setWidth(100, Unit.PCT);
 		spanelClasspagesPanel.setVisible(false);
 		spanelClasspagesPanel.addScrollHandler(new ScrollHandler() {
 			@Override

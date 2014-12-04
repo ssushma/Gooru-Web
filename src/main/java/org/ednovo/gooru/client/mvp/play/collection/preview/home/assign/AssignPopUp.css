@@ -115,7 +115,8 @@
 
 .scrollPanelContainer{
 	background-color:rgb(255,255,255);
-	width:310px;
+	/* width:310px; */
+	width:100%
 	border-color:rgb(221,221,221);
 	border-width:1px;
 	/* Firefox v1.0+ */
@@ -488,6 +489,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666', EndC
 /* 	height:155px; */
 	margin-right: auto;
 	display: inline-block;
+	width:100%;
 }
 .classContainer{
 	margin-right: auto;
