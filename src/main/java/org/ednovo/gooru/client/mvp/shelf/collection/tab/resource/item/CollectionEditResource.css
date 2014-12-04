@@ -329,7 +329,9 @@ margin-top: -2px;
 .reorderLabelContainer { /* top: -19px; */
 	position: relative;
 	float: left;
-	margin-top: 40px;
+	/*
+		// hot fix changes
+	 margin-top: 40px; */
 }
 
 .newResourceLabelNoHover {
@@ -2515,7 +2517,9 @@ margin-top: 18px; */
 
 .gEditButton {
 	margin-top: 2px;
-	margin-left: 16px;
+	/* 
+	 Hot fix changes
+	margin-left: 16px; */
 	padding: 8px 65px 8px 10px;
 	color: white;
 	background: #1076bb url(images/g.png) 55px -9px no-repeat;
@@ -2882,6 +2886,9 @@ margin-top: 18px; */
 }
 
 
+
+/* 
+ // hot fix changes
 .upDownBtn{
 	padding:10px 6px;
 }
@@ -2895,7 +2902,7 @@ margin-top: 18px; */
 	font-size:16px;
 	color:#515151;
 	text-align:center;
-}
+} */
 
 .coursePopupStyle {
 	float: left;
