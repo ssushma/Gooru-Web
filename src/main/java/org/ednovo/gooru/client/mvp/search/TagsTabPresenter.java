@@ -99,13 +99,13 @@ public class TagsTabPresenter extends PresenterWidget<IsTagsTabView> implements 
 	 * @see org.ednovo.gooru.client.mvp.search.TagsTabUiHandlers#getResourceTags(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void getResourceTags(String resourceId, String offSet, String limit) {
+	public void getResourceTags(String resourceId, String offSet, String limit, final boolean isTagsclear) {
 		
 		AppClientFactory.getInjector().getSearchService().getResourceTags(resourceId,offSet,limit, new SimpleAsyncCallback<SearchResourcesTagsDo>() {
 
 			@Override
 			public void onSuccess(SearchResourcesTagsDo result) {
-				getView().setResourceTags(result);
+				getView().setResourceTags(result,isTagsclear);
 			}
 		});
 	}

@@ -34,7 +34,8 @@ public interface TagsTabUiHandlers extends BaseUiHandlers,EventHandler {
 	 * @param resourceId
 	 * @param offSet
 	 * @param limit
+	 * @param isclearContainer 
 	 */
-	void getResourceTags(String resourceId, String offSet, String limit); 
+	void getResourceTags(String resourceId, String offSet, String limit, boolean isclearContainer);  
 
 }
