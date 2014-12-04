@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.ProfileAnalyticsChat;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -78,7 +79,6 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	@Inject
 	public UserDashBoardView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		CollectionsPublishedWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(127)),new Label("Collections Published")));
 		ResourceAddedWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(132)),new Label("Resources Added")));
 		commentsMadeWIdget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(85)),new Label("Comments Made")));
 		endorsementsGivenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(26)),new Label("endorsements given")));
@@ -120,5 +120,9 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	@Override
 	public void setProfileAnalyticsAddedCollectionChatData(Map<String, Integer> result) {
 		profileAnalyticChat.updateProfileAnalyticsAddedToCollectionChatData(result);
+	}
+	
+	public void setPublishedCollectionData(UserDashBoardCommonInfoDO result) {
+		CollectionsPublishedWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getContent().get(0).getPublishedCollection())),new Label("Collections Published")));
 	}
 }

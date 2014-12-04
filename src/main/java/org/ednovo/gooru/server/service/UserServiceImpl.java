@@ -43,8 +43,10 @@ import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
+import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
+import org.ednovo.gooru.shared.model.player.InsightsCollectionDo;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.CustomFieldDo;
 import org.ednovo.gooru.shared.model.user.GenderDo;
@@ -95,6 +97,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	private static final String PROFILE = "profile";
 	
 	private static final String USER_META_ACTIVE_FLAG = "&userMetaActiveFlag=1";
+	
+	
+	public static final String FIELDS="fields";
+	public static final String DATASOURCE="dataSource";
+	public static final String GRANULARITY="granularity";
+	public static final String GROUPBY="groupBy";
+	public static final String LOGICALKey="logicalOperatorPrefix";
+	
 
 	@Override
 	public UserDo getEmailId(String emailId) {
@@ -795,7 +805,98 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			resetToken = jsonObject.getString("isValidToken");
 			}catch(JSONException e){}
 		}
-		return resetToken;
+		return resetToken;																																																																																																																																																																																																								
+	}
+	@Override
+	public UserDashBoardCommonInfoDO getUsersPublishedCollectionsCount() {
+		JsonRepresentation jsonRep = null;
+		String urlDataParameterValue=createJsonPayloadObject(getLoggedInUserUid(),"1020");
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, "1edb25aa-5c5e-4d13-8498-15ef31a93c1f",urlDataParameterValue);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url,getRestUsername(),getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		UserDashBoardCommonInfoDO userDashBoardCommonInfoDoObj = null;
+		if(jsonRep!=null){
+			try {
+				userDashBoardCommonInfoDoObj=JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDashBoardCommonInfoDO.class);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return userDashBoardCommonInfoDoObj;
+	}
+	public String createJsonPayloadObject(String userId,String resourceTypeId){
+		JSONObject jsonDataObject=new JSONObject(); 
+		try {
+			jsonDataObject.put(FIELDS, "publishedCollection");
+			jsonDataObject.put(DATASOURCE, "content");
+			jsonDataObject.put(GRANULARITY, "");
+			jsonDataObject.put(GROUPBY, "creatorUid");
+			
+			
+			JSONArray filterArray = new JSONArray();
+			JSONObject filterObject = new JSONObject();
+			JSONArray fieldsArray = new JSONArray();
+			JSONObject fieldsObjectOne = new JSONObject();
+			JSONObject fieldsObjectTwo = new JSONObject();
+			JSONObject fieldsObjectThree = new JSONObject();
+			JSONObject paginationObject = new JSONObject();
+			
+			JSONArray agreegationsArray = new JSONArray();
+			JSONObject aggregationsObject = new JSONObject();
+			
+			JSONArray orderArray = new JSONArray();
+			
+			fieldsObjectOne.put("type","selector");
+			fieldsObjectOne.put("valueType","String");
+			fieldsObjectOne.put("fieldName","creatorUid");
+			fieldsObjectOne.put("operator","eq");
+			fieldsObjectOne.put("value",userId);
+			
+			fieldsObjectTwo.put("type","selector");
+			fieldsObjectTwo.put("valueType","String");
+			fieldsObjectTwo.put("fieldName","sharing");
+			fieldsObjectTwo.put("operator","eq");
+			fieldsObjectTwo.put("value","public");
+			
+			fieldsObjectThree.put("type","selector");
+			fieldsObjectThree.put("valueType","Long");
+			fieldsObjectThree.put("fieldName","resourceTypeId");
+			fieldsObjectThree.put("operator","eq");
+			fieldsObjectThree.put("value",resourceTypeId);
+			
+			fieldsArray.put(fieldsObjectOne);
+			fieldsArray.put(fieldsObjectTwo);
+			fieldsArray.put(fieldsObjectThree);
+			
+			
+			filterObject.put(LOGICALKey, "AND");
+			filterObject.put(FIELDS, fieldsArray);
+			filterArray.put(filterObject);
+			
+			
+			aggregationsObject.put("field1", "gooruOid");
+			aggregationsObject.put("formula","count");
+			aggregationsObject.put("name","publishedCollection");
+			aggregationsObject.put("requestValues","field1");
+			
+			agreegationsArray.put(aggregationsObject);
+			
+			paginationObject.put("offset","0");
+			paginationObject.put("limit",10);
+			paginationObject.put("order",orderArray);
+			
+			
+			
+			jsonDataObject.put("filter", filterArray);
+			jsonDataObject.put("aggregations", agreegationsArray);
+			jsonDataObject.put("pagination", paginationObject);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("jsonDataObject.toString() here is:::::::"+jsonDataObject.toString());
+		return jsonDataObject.toString();
 	}
 
 	@Override

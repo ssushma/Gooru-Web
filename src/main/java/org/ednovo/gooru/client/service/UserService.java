@@ -32,6 +32,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
+import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
@@ -238,4 +239,5 @@ public interface UserService extends BaseService {
 	
 	Map<String,Integer> getTheAnalyticsFlaggedMonthlyData(String fieldVal,String StartDate,String endDate,String operator);
 
+    UserDashBoardCommonInfoDO getUsersPublishedCollectionsCount();
 }

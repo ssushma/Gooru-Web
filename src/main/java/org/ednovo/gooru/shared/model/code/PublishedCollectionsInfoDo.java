@@ -22,40 +22,37 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.dashboard;
+package org.ednovo.gooru.shared.model.code;
 
-/**
- * @fileName : IsUserSettingsView.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: Apr 18, 2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
+import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import java.util.Map;
-
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
-
-public interface IsUserDashBoardView extends IsViewWithHandlers<UserDashBoardUiHandlers>{
-
-	void dispalyDashBoardHomePage();
+@JsonInclude(Include.NON_NULL)
+public class PublishedCollectionsInfoDo implements Serializable {
 	
-	void setProfileAnalyticsFlaggedChatData(Map<String, Integer> result);
+	private static final long serialVersionUID = 1849886397443409797L;
 	
-	void setProfileAnalyticsViewsChatData(Map<String, Integer> result);
+	private Integer publishedCollection;
 	
-	void setProfileAnalyticsSharedChatData(Map<String, Integer> result);
+	private String creatorUid;
 	
-	void setProfileAnalyticsAddedCollectionChatData(Map<String, Integer> result);
-
-	void setPublishedCollectionData(UserDashBoardCommonInfoDO result);
+	public PublishedCollectionsInfoDo(){
+		
+	}
+	
+	public Integer getPublishedCollection() {
+		return publishedCollection;
+	}
+	public void setPublishedCollection(Integer publishedCollection) {
+		this.publishedCollection = publishedCollection;
+	}
+	public String getCreatorUid() {
+		return creatorUid;
+	}
+	public void setCreatorUid(String creatorUid) {
+		this.creatorUid = creatorUid;
+	}
+	
 }

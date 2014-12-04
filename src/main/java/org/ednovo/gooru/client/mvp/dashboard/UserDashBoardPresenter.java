@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
+import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
@@ -79,10 +80,18 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 	@Override
 	public void onReveal() {
 		Window.enableScrolling(true);
-		displayDashBoardPage();
 	}
 
 	void displayDashBoardPage() {
+		AppClientFactory.getInjector().getUserService().getUsersPublishedCollectionsCount(new AsyncCallback<UserDashBoardCommonInfoDO>() {
+			@Override
+			public void onSuccess(UserDashBoardCommonInfoDO result) {
+				getView().setPublishedCollectionData(result);
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
 		getView().dispalyDashBoardHomePage();
 	}
 

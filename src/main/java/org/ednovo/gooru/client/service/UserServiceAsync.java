@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.service;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
@@ -116,4 +117,7 @@ public interface UserServiceAsync extends BaseServiceAsync {
    void isValidResetPasswordLink(String resetToken,AsyncCallback<String> callback);
    
    void getTheAnalyticsFlaggedMonthlyData(String fieldVal,String StartDate,String endDate,String operator,AsyncCallback<Map<String, Integer>> callback);
+  
+   void getUsersPublishedCollectionsCount(AsyncCallback<UserDashBoardCommonInfoDO> callback);
+   
 }
