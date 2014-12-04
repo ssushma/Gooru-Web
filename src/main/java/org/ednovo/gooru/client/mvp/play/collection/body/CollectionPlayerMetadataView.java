@@ -146,8 +146,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	
 	private static final String PAGINATION = "page";
 	
-	private SimpleAsyncCallback<CollectionDo> updateCollectionAsyncCallback;
-	
 //	private static final String COMMENTS_LBL = " "+i18n.GL1432;
 	
 	private static final String PRIMARY_STYLE = "primary";
@@ -1422,43 +1420,33 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiHandler("changeAssignmentStatusButton")
 	public void clickOnStatusChangeBtn(ClickEvent event) {
 		if (changeAssignmentStatusButton.isChecked()){
-		
-			getResourceService().updateCollectionSettingForComments(collectionDo.getGooruOid(), collectionDo.getTitle(), collectionDo.getGoals(), null, null, null, null, null, null, null,"turn-on", getUpdateCollectionAsyncCallback());
+		getUiHandlers().updateCommentsStatus("turn-on");
 		}
 		else{
-			getResourceService().updateCollectionSettingForComments(collectionDo.getGooruOid(), collectionDo.getTitle(), collectionDo.getGoals(), null, null, null, null, null, null, null,"turn-off", getUpdateCollectionAsyncCallback());
+		getUiHandlers().updateCommentsStatus("turn-off");
 		}
 	}
 	
-	public SimpleAsyncCallback<CollectionDo> getUpdateCollectionAsyncCallback() {
-		if (updateCollectionAsyncCallback == null) {
-			updateCollectionAsyncCallback = new SimpleAsyncCallback<CollectionDo>() {
+	public void changeCommentsButton(CollectionDo result) {
 
-				@Override
-				public void onSuccess(CollectionDo result) {
-				//here
+					
 					if(result.getSettings()!=null)
 					{
 						if(result.getSettings().getComment()!=null)
 						{
+					
 							if(result.getSettings().getComment().equalsIgnoreCase("turn-on"))
 							{
 								requiredLabel.removeStyleName(playerStyle.mutedText());
-								optionalLabel.removeStyleName(playerStyle.mutedText());
-								
-								commentField.setEnabled(true);
-								//postCommentBtn.setEnabled(true);
-					/*			postCommentBtn.removeStyleName(SECONDARY_STYLE);
-								postCommentBtn.removeStyleName(DISABLED_STYLE);
-								postCommentBtn.addStyleName(PRIMARY_STYLE);*/
+								optionalLabel.removeStyleName(playerStyle.mutedText());								
+								commentField.setEnabled(true);	
 								commentssection.getElement().getStyle().setOpacity(1);
 								changeAssignmentStatusButton.setChecked(true);
 							}
 							else
 							{
 								requiredLabel.setStyleName(playerStyle.mutedText());
-								optionalLabel.setStyleName(playerStyle.mutedText());
-								
+								optionalLabel.setStyleName(playerStyle.mutedText());								
 								commentField.setEnabled(false);
 								postCommentBtn.setEnabled(false);
 								postCommentBtn.removeStyleName(PRIMARY_STYLE);
@@ -1481,10 +1469,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 						optionalLabel.setStyleName(playerStyle.mutedText());
 					}
 			
-				}
-			};
-		}
-		return updateCollectionAsyncCallback;
+
 	}
 	
 	

@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.add.AddCollectionPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndPresenter;
+import org.ednovo.gooru.client.mvp.play.collection.end.study.CollectionHomeMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowCollectionTabWidgetEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCollectionViewCountEvent;
@@ -71,6 +72,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.RefreshDisclosurePanelHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayEvent;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
+import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
@@ -106,6 +108,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 
 	@Inject
 	private PlayerAppServiceAsync playerAppService;
+	
+	@Inject
+	private ResourceServiceAsync resourceService;
 	
     private SimpleAsyncCallback<CollectionDo> collectionDetailsAsync;
     
@@ -184,6 +189,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
     private String resourcePlayEventName=null;
     
     private String classpageId=null;
+    
+	private SimpleAsyncCallback<CollectionDo> updateCollectionAsyncCallback;
        
 	private Map<String,AttemptedAnswersDo> attemptAnswersMap=new HashMap<String,AttemptedAnswersDo>();
 	
@@ -2307,4 +2314,34 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		return keyword;
 	}
+	
+	
+
+	public ResourceServiceAsync getResourceService() {
+		return resourceService;
+	}
+
+	public void setResourceService(ResourceServiceAsync resourceService) {
+		this.resourceService = resourceService;
+	}
+
+	public void updateCommentsStatus(String commentsStatus) {
+		getResourceService().updateCollectionSettingForComments(collectionDo.getGooruOid(), collectionDo.getTitle(), collectionDo.getGoals(), null, null, null, null, null, null, null,commentsStatus, getUpdateCollectionAsyncCallback());
+		
+	}
+	public SimpleAsyncCallback<CollectionDo> getUpdateCollectionAsyncCallback() {
+		if (updateCollectionAsyncCallback == null) {
+			updateCollectionAsyncCallback = new SimpleAsyncCallback<CollectionDo>() {
+
+				@Override
+				public void onSuccess(CollectionDo result) {
+					collectionDo.getSettings().setComment(result.getSettings().getComment());
+					metadataPresenter.changeCommentsButton(result);
+					collectionEndPresenter.changeCommentsButton(result);
+				}
+			};
+		}
+		return updateCollectionAsyncCallback;
+	}
+	
 }
