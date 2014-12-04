@@ -120,4 +120,6 @@ public interface UserServiceAsync extends BaseServiceAsync {
   
    void getUsersPublishedCollectionsCount(AsyncCallback<UserDashBoardCommonInfoDO> callback);
    
+   void getProfileAnalyticsRatings(AsyncCallback<Map<String, Integer>> callback);
+
 }

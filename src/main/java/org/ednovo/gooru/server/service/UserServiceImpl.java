@@ -1011,4 +1011,30 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 		return result;
  }
+
+	@Override
+	public Map<String, Integer> getProfileAnalyticsRatings() {
+		JsonRepresentation jsonRep = null;
+		String url = "http://qa.goorulearning.org/insights/api/v2/query?sessionToken=1edb25aa-5c5e-4d13-8498-15ef31a93c1f&data={%22fields%22:%22rateCount,eventTime%22,%22dataSource%22:%22rawData%22,%22granularity%22:%22%22,%22filter%22:[{%22logicalOperatorPrefix%22:%22NOT%22,%22fields%22:[{%22type%22:%22selector%22,%22valueType%22:%22long%22,%22fieldName%22:%22rate%22,%22operator%22:%22eq%22,%22value%22:%22-1%22}]},{%22logicalOperatorPrefix%22:%22AND%22,%22fields%22:[{%22type%22:%22selector%22,%22valueType%22:%22string%22,%22fieldName%22:%22eventName%22,%22operator%22:%22eq%22,%22value%22:%22item.rate%22},{%22type%22:%22selector%22,%22valueType%22:%22string%22,%22fieldName%22:%22gooruUId%22,%22operator%22:%22eq%22,%22value%22:%22cc6aca61-d7d9-4ea8-b22c-fbdf1e75ac49%22}]}],%22pagination%22:{%22offset%22:0,%22limit%22:10,%22order%22:[]},%22aggregations%22:[{%22field1%22:%22rate%22,%22formula%22:%22count%22,%22name%22:%22rateCount%22,%22requestValues%22:%22field1%22}],%22groupBy%22:%22rate%22}";
+		System.out.println("url::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeRatingsData(jsonRep);
+	}
+	public Map<String, Integer> deserializeRatingsData(JsonRepresentation jsonRep) {
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try{
+				JSONArray posts = jsonRep.getJsonObject().getJSONArray("content");
+				result.put("totalRows", jsonRep.getJsonObject().getJSONObject("paginate").getInt("totalRows"));
+				for(int i=0;i<posts.length();i++){
+					JSONObject obj=posts.getJSONObject(i);
+					result.put(Integer.toString(obj.getInt("rate")), obj.getInt("rateCount"));
+				}
+			}catch(JSONException e){
+					e.getStackTrace();
+			}
+		}
+		return result;
+	}
 }

@@ -118,7 +118,7 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 	    	Date date = new Date();
 	    	date.setMonth(date.getMonth()-12);
 	    	String startDate =fmt.format(date);
-		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(FLAGGED,startDate,endDate,EQ_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
+	    	AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(FLAGGED,startDate,endDate,EQ_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
 				
 				@Override
 				public void onSuccess(Map<String, Integer> result) {
@@ -130,7 +130,7 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 					
 				}
 			});
-		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(SHARED,startDate,endDate,EQ_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
+	    	AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(SHARED,startDate,endDate,EQ_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
 			
 			@Override
 			public void onSuccess(Map<String, Integer> result) {
@@ -141,8 +141,8 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 			public void onFailure(Throwable caught) {
 				
 			}
-		});
-		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(ADDCOLLECTION,startDate,endDate,EQ_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
+	    	});
+	    	AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(ADDCOLLECTION,startDate,endDate,EQ_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
 			
 			@Override
 			public void onSuccess(Map<String, Integer> result) {
@@ -153,19 +153,31 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 			public void onFailure(Throwable caught) {
 				
 			}
-		});
-		AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(VIEWS,startDate,endDate,IN_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
+	    	});
+	    	AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(VIEWS,startDate,endDate,IN_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
 			
-			@Override
-			public void onSuccess(Map<String, Integer> result) {
-				getView().setProfileAnalyticsViewsChatData(result);
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
+				@Override
+				public void onSuccess(Map<String, Integer> result) {
+					getView().setProfileAnalyticsViewsChatData(result);
+				}
 				
-			}
-		});
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+	    	});
+	    	AppClientFactory.getInjector().getUserService().getProfileAnalyticsRatings(new AsyncCallback<Map<String,Integer>>() {
+				
+				@Override
+				public void onSuccess(Map<String, Integer> result) {
+					getView().setProfileRatingsData(result);
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+			});
 	}
 	@Override
 	protected void onHide() {

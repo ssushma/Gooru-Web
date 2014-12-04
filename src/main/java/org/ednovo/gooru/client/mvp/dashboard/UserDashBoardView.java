@@ -87,8 +87,7 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 		topRemixedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Remixed Collections","Dogs","12 remixes"));
 		fiveStarRatedResourcesWidget.add(new FiveStarRatings("fivestarRatings"));
 		reactionsWidgetPanel.add(new FiveStarRatings("fivestarReviews"));
-		ratingsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("ratings"));
-		reactionsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("reactions"));
+		reactionsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("reactions",null));
 		googleMapContainer.add(new GoogleMapWidget());
 		profileAnalyticsGrageContainer.add(new ProfileAnalyticsGradeWidget());
 		profileActivityBreakDown.add(profileAnalyticChat.createChart());
@@ -124,5 +123,10 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	
 	public void setPublishedCollectionData(UserDashBoardCommonInfoDO result) {
 		CollectionsPublishedWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getContent().get(0).getPublishedCollection())),new Label("Collections Published")));
+	}
+
+	@Override
+	public void setProfileRatingsData(Map<String, Integer> result) {
+		ratingsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("ratings",result));
 	}
 }

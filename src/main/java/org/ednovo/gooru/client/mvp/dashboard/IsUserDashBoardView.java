@@ -58,4 +58,6 @@ public interface IsUserDashBoardView extends IsViewWithHandlers<UserDashBoardUiH
 	void setProfileAnalyticsAddedCollectionChatData(Map<String, Integer> result);
 
 	void setPublishedCollectionData(UserDashBoardCommonInfoDO result);
+	
+	void setProfileRatingsData(Map<String, Integer> result);
 }

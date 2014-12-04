@@ -38,6 +38,8 @@ package org.ednovo.gooru.client.mvp.dashboard;
 * Reviewer Gooru Team
 *
 */
+import java.util.Map;
+
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
@@ -74,7 +76,7 @@ public class ReactionsAndRatingsGivenCommonInfo extends Composite{
 		DashBoardCBundle.INSTANCE.css().ensureInjected();
 	}
 
-	public ReactionsAndRatingsGivenCommonInfo(String textLbl) {
+	public ReactionsAndRatingsGivenCommonInfo(String textLbl,Map<String, Integer> result) {
 		initWidget(uiBinder.createAndBindUi(this));
 		DashBoardCBundle.INSTANCE.css().ensureInjected();
 		if(textLbl.equalsIgnoreCase("ratings")){
@@ -95,11 +97,39 @@ public class ReactionsAndRatingsGivenCommonInfo extends Composite{
 			ratingorReactionImgVeryGood.setUrl("../images/profileimages/rating4.png");
 			ratingLabelExcellent.setText("Excellent");
 			ratingorReactionImgExcellent.setUrl("../images/profileimages/rating5.png");
-			dataOne.getElement().getStyle().setWidth(0, Unit.PCT);
-			dataTwo.getElement().getStyle().setWidth(0, Unit.PCT);
-			dataThree.getElement().getStyle().setWidth(0, Unit.PCT);
-			dataFour.getElement().getStyle().setWidth(45, Unit.PCT);
-			dataFive.getElement().getStyle().setWidth(89, Unit.PCT);
+			
+			String setDefaultVal="(0)";
+			countLblPoor.setText(setDefaultVal);
+			countLblFair.setText(setDefaultVal);
+			countLblGood.setText(setDefaultVal);
+			countLblVeryGood.setText(setDefaultVal);
+			countLblExcellent.setText(setDefaultVal);
+			
+			int totalCount=result.get("totalRows");
+			for(Map.Entry<String, Integer> entry : result.entrySet()) {
+				if(!entry.getKey().toString().equalsIgnoreCase("totalRows")){
+					int keyVal=Integer.parseInt(entry.getKey());
+					float widthVal=(((float)entry.getValue()/(float)totalCount)*100);
+					String setValue="("+entry.getValue()+")";
+					if(keyVal==1){
+						dataOne.getElement().getStyle().setWidth(widthVal, Unit.PCT);
+						countLblPoor.setText(setValue);
+					}else if(keyVal==2){
+						dataTwo.getElement().getStyle().setWidth(widthVal, Unit.PCT);
+						countLblFair.setText(setValue);
+					}else if(keyVal==3){
+						dataThree.getElement().getStyle().setWidth(widthVal, Unit.PCT);
+						countLblGood.setText(setValue);
+					}else if(keyVal==4){
+						dataFour.getElement().getStyle().setWidth(widthVal, Unit.PCT);
+						countLblVeryGood.setText(setValue);
+					}else if(keyVal==5){
+						dataFive.getElement().getStyle().setWidth(widthVal, Unit.PCT);
+						countLblExcellent.setText(setValue);
+					}
+				}
+			}
+			
 		}else if(textLbl.equalsIgnoreCase("reactions")){
 			ratingsOrReviewsBlock.setStyleName(DashBoardCBundle.INSTANCE.css().reactionOutBlock());
 			ratingLblPoor.addStyleName(DashBoardCBundle.INSTANCE.css().ratingLabel());
