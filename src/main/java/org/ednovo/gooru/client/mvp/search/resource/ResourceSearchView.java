@@ -50,6 +50,8 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultDo> implements IsResourceSearchView {
+	
+	ResourceSearchResultVc resourceSearchResultVc; 
 
 	/**
 	 * Class constructor
@@ -67,6 +69,7 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 	@Override
 	public IsDraggable renderSearchResult(final ResourceSearchResultDo searchResultDo) {
 		final ResourceSearchResultVc resourceSearchResultVc=new ResourceSearchResultVc(searchResultDo, dragController);
+		setResourceSearchResultVc(resourceSearchResultVc);
 		resourceSearchResultVc.setUpdateReviewCount(searchResultDo.getRatings().getReviewCount());
 		resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().addClickHandler(new ClickHandler() {
 			@Override
@@ -175,6 +178,22 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 //			resourceSearchResultVc.getAddResourceContainerPanel().clear();
 //			resourceSearchResultVc.getAddResourceContainerPanel().setWidget(addResourceContainerPresenter.getWidget());
 //		}
+	}
+
+
+	/**
+	 * @return the resourceSearchResultVc
+	 */
+	public ResourceSearchResultVc getResourceSearchResultVc() {
+		return resourceSearchResultVc;
+	}
+
+	/**
+	 * @param resourceSearchResultVc the resourceSearchResultVc to set
+	 */
+	public void setResourceSearchResultVc(
+			ResourceSearchResultVc resourceSearchResultVc) {
+		this.resourceSearchResultVc = resourceSearchResultVc;
 	}
 
 }
