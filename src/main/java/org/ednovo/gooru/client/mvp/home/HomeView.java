@@ -991,7 +991,6 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	 * @description This class is used to show the pre-filter search popup
 	 * @author search team
 	 * @date 27-Nov-2014
-	 *
 	 */
 	public class showPrefilterPopup implements ClickHandler{
 
@@ -1032,6 +1031,7 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				HeaderUc.setPrefilterObj(preFilter);
 				preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+30);
 				preFilter.show();
+				preFilter.hidePlanels();
 //				preFilter.setAutoHideEnabled(true);
 				ClickHandler handler = new ClickHandler() {
 					@Override

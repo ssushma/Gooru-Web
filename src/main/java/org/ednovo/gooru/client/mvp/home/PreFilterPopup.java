@@ -388,5 +388,13 @@ public class PreFilterPopup extends PopupPanel {
 		
 	}
 	
+	public void hidePlanels(){
+		lblGradesSubj.getElement().setAttribute("style", "background: #e5e5e5;");
+		filterPanel.getElement().setAttribute("style", "width:360px;");
+		lblStandards.getElement().getStyle().clearBackgroundColor();
+		standardsPanel.setVisible(false);
+		gradesPanel.setVisible(true);
+	}
+	
 
 }
