@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagWidget;
+import org.ednovo.gooru.client.mvp.search.event.ResourceTagsCountUpdateEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
@@ -95,6 +96,8 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 	
 	private int currentTagsDispalyCount;
 	
+	private boolean isTagsAdded = false;
+	
 	/**
 	 * Class constructor.
 	 */
@@ -151,6 +154,7 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 							@Override
 							public void onClickPositiveButton(ClickEvent event) {
 								this.hide();
+								isTagsAdded = true;
 								setCurrentTagsDispalyCount(0);
 								getUiHandlers().getResourceTags(resourceGooruOid,offSet,limit,true);
 								if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
@@ -194,6 +198,10 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 		setTotCount(searchResourcesTagsDo.getTotalHitCount());
 		setCurrentTagsDispalyCount(getCurrentTagsDispalyCount()+searchResourcesTagsDo.getSearchResults().size());
 		clearTagsContainer(isTagsClear);
+		if(isTagsAdded){
+			isTagsAdded = false;
+			AppClientFactory.fireEvent( new ResourceTagsCountUpdateEvent(getTotCount()));
+		}
 		
 		for(int i=0; i<searchResourcesTagsDo.getSearchResults().size();i++){
 			ProfileUserTagWidget profileUserTagWidget = new ProfileUserTagWidget(searchResourcesTagsDo.getSearchResults().get(i)); 
