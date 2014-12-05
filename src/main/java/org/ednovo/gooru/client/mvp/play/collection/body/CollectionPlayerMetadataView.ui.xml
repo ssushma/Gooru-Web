@@ -11,7 +11,7 @@
 	    		<g:FlowPanel  styleName="{playerResponseStyle.getPlayerStyleResource.greybackground}">
      	      		 <g:FlowPanel styleName="col-md-9 col-sm-12 {playerResponseStyle.getPlayerStyleResource.leftPanel}" ui:field="leftPanelContainer">
 			            	<html5:SectionTag ui:field="metadataContainer" styleName="{playerStyle.block}"></html5:SectionTag>
-							<html5:SectionTag styleName="{playerStyle.block} {playerStyle.commentsSection}">
+							<html5:SectionTag styleName="{playerStyle.block} {playerStyle.commentsSection}" ui:field="commentsSection">
 								<g:HTMLPanel styleName="col-md-12">
 								   <g:Label ui:field="commentCount" styleName="{playerStyle.commentsH2}"></g:Label>
 								   <g:HTMLPanel styleName="{playerStyle.onoffbtns}" ui:field="switchContainer">

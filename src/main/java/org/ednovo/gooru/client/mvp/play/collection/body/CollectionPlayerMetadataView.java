@@ -102,7 +102,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiField Label /*insightsHeaderText,insightsContentText,*/successPostMsg;
 	@UiField Image userPhoto;
 	@UiField HTMLPanel addComment,loginMessaging,
-						instructionalmethodPanel,learningAndInnovationSkillPanel,
 						switchContainer,commentssection;
 	@UiField Anchor loginUrl, signupUrl;
 
