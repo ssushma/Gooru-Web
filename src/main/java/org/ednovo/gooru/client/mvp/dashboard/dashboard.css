@@ -449,19 +449,23 @@ background:#81c5e5 url(../images/profileimages/arrow.png) no-repeat 28px 7px;
 
 .data-two {
     background-color: #57b53b;
+      display: inline-block;
 }
 
 .data-four {
     background-color: #45843e;
+      display: inline-block;
 }
 
 
 .data-three {
     background-color: #57b53b;
+    display: inline-block;
 }
 
 .data-one {
     background-color: #45843e;
+      display: inline-block;
 }
 
 .ratingOutBlock, .reactionOutBlock{
