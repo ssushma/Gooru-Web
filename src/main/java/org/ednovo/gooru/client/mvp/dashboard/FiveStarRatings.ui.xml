@@ -26,7 +26,7 @@
 						<g:HTMLPanel ui:field="resourcesDataBlock"></g:HTMLPanel>
 						
 						<div class="space"></div>
-						<div class="{style.moreLink}"><g:Anchor href="#" ui:field="viewAllLbl"></g:Anchor></div>
+						<div class="{style.moreLink}"><g:Anchor  ui:field="viewAllLbl"></g:Anchor></div>
 						</div>
 						</div>
 	</g:HTMLPanel>
