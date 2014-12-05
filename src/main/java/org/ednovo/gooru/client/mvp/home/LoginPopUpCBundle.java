@@ -256,6 +256,20 @@ public interface LoginPopUpCBundle extends ClientBundle{
 	String flagbuttonDeSelected();
 	String rightFlagPanel();
 	String normalText();
+	String popupHeader();
+	
+	
+	String forgotPasswordSuccessText();
+	String h1();
+	String btnSubmit();
+	String forgotPasswordSuceessButtonContainer();
+	String forgotPasswordSuccessPopupContent();
+	String footerText();
+	String forgotPasswordBottomContainer();
+	String popupInner();
+	String popup();
+	String forgetImgBG();
+	
 	}
 	@NotStrict
 	@Source("Newlogin-popup.css")
