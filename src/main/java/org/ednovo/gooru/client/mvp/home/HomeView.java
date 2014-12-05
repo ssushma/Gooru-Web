@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
+import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
@@ -89,6 +90,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.TextBox;
@@ -124,6 +126,18 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	public AppSuggestBox txtSearch;
 	
 	String jsonDataString = null;
+	
+	PreFilterPopup preFilter =	null;
+	
+	AddStandardsPreSearchPresenter addStandardsPresenter = null;
+
+	private boolean isCCSSAvailable =false;
+	private boolean isNGSSAvailable =false;
+	private boolean isTEKSAvailable =false;
+	private boolean isCAAvailable =false;
+	
+	private boolean isArrowIcon = false;
+	private boolean isOpenPrefilterPopup = true;
 	
 	Map<String, String> allSubject = new HashMap<String, String>();
 	Map<String, String> allCourse  = new HashMap<String, String>();
@@ -244,6 +258,23 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 				}
 			}
 		});
+		
+		ClickHandler rootClick = new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				System.out.println("isArrowIcon::"+isArrowIcon);
+				if(!isArrowIcon && preFilter!=null){
+					isOpenPrefilterPopup=true;
+					preFilter.hide();
+				}else{
+					isArrowIcon=false;
+				}
+			}
+			
+		};
+		
+		RootPanel.get().addDomHandler(rootClick, ClickEvent.getType());
 		
 //		InternalServerErrorPopupViewVc error = new InternalServerErrorPopupViewVc() {
 //		};
@@ -942,6 +973,79 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	 */
 	public void setBtnSignUp(Button btnSignUp) {
 		this.btnSignUp = btnSignUp;
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.home.IsHomeView#showPrefilter()
+	 */
+	@Override
+	public void showPrefilter(AddStandardsPreSearchPresenter addStandardsPresenter) {
+		// TODO Auto-generated method stub
+		this.addStandardsPresenter=addStandardsPresenter;
+		HeaderUc.getArrowLbl().addClickHandler(new showPrefilterPopup());
+	}
+	
+	/**
+	 * @description This class is used to show the pre-filter search popup
+	 * @author search team
+	 * @date 27-Nov-2014
+	 *
+	 */
+	public class showPrefilterPopup implements ClickHandler{
+
+		/* (non-Javadoc)
+		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+		 */
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			System.out.println("onClick::");
+			if(preFilter!=null && preFilter.isShowing()){
+				System.out.println("ifsss::");
+				preFilter.hide();
+				isArrowIcon=true;
+			}else{
+				isArrowIcon=true;
+				System.out.println("else::");
+				if(preFilter==null){
+					preFilter =	new PreFilterPopup();
+					preFilter.getStandardsInfo().addClickHandler(new ClickHandler() {
+						
+						@Override
+						public void onClick(ClickEvent event) {
+							preFilter.ShowSTandardsPanel().clear();
+							isCCSSAvailable = true;
+							isNGSSAvailable = true;
+							isCAAvailable = true;
+							addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+							//addStandardsPresenter.loadDataFrompresnter();
+							preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
+							addStandardsPresenter.callDefaultStandardsLoad();
+							addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
+							addStandardsPresenter.getAddBtn().setVisible(false);
+							
+						}
+					});
+				}
+				HeaderUc.setPrefilterObj(preFilter);
+				preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+30);
+				preFilter.show();
+//				preFilter.setAutoHideEnabled(true);
+				ClickHandler handler = new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						preFilter.show();
+						isArrowIcon = true;
+					}
+				};
+				preFilter.addDomHandler(handler, ClickEvent.getType());
+				
+			}
+			
+		}
+		
 	}
 }
 

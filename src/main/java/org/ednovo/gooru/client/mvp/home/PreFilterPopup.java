@@ -99,7 +99,7 @@ public class PreFilterPopup extends PopupPanel {
 	 */
 	public PreFilterPopup() {
 		setWidget(uiBinder.createAndBindUi(this));
-		show();
+//		show();
 		renderCheckBoxs(eleGradePanelUc, elementaryGrades);
 		renderCheckBoxs(middleGradePanelUc, middleGrades);
 		renderCheckBoxs(highrGradePanelUc, higherGrades);
