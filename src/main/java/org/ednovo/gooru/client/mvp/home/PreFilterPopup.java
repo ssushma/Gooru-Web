@@ -99,7 +99,7 @@ public class PreFilterPopup extends PopupPanel {
 	 */
 	public PreFilterPopup() {
 		setWidget(uiBinder.createAndBindUi(this));
-		show();
+//		show();
 		renderCheckBoxs(eleGradePanelUc, elementaryGrades);
 		renderCheckBoxs(middleGradePanelUc, middleGrades);
 		renderCheckBoxs(highrGradePanelUc, higherGrades);
@@ -386,6 +386,14 @@ public class PreFilterPopup extends PopupPanel {
 //			standardsPanel.add(new AppPopUpStandards());
 		}
 		
+	}
+	
+	public void hidePlanels(){
+		lblGradesSubj.getElement().setAttribute("style", "background: #e5e5e5;");
+		filterPanel.getElement().setAttribute("style", "width:360px;");
+		lblStandards.getElement().getStyle().clearBackgroundColor();
+		standardsPanel.setVisible(false);
+		gradesPanel.setVisible(true);
 	}
 	
 

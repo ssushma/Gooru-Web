@@ -44,27 +44,27 @@
 						        <g:HTMLPanel styleName="{style.panelRatingValues}">
 								      <div class="{style.prgressBar}"> 
 								      <g:HTMLPanel  ui:field="dataOne" styleName="{style.bar}"></g:HTMLPanel>
-								      <g:Label styleName="{style.count}" ui:field="countLblPoor">(0)</g:Label>
+								      <g:Label styleName="{style.count}" ui:field="countLblPoor"></g:Label>
 								      </div>
 						      
 								      <div class="{style.prgressBar}"> 
 								      <g:HTMLPanel  ui:field="dataTwo" styleName="{style.bar} {style.data-two}"></g:HTMLPanel> 
-								       <g:Label styleName="{style.count}" ui:field="countLblFair">(0)</g:Label>  
+								       <g:Label styleName="{style.count}" ui:field="countLblFair"></g:Label>  
 								       </div>
 						       
 								        <div class="{style.prgressBar}">  
-								        <g:HTMLPanel  ui:field="dataThree" styleName="{style.data-three}"></g:HTMLPanel>
-								       <g:Label styleName="{style.count}" ui:field="countLblGood">(0)</g:Label>  
+								        <g:HTMLPanel  ui:field="dataThree" styleName="{style.bar} {style.data-three}"></g:HTMLPanel>
+								       <g:Label styleName="{style.count}" ui:field="countLblGood"></g:Label>  
 								       </div>
 								     
 								       <div class="{style.prgressBar}">  
 								       <g:HTMLPanel  ui:field="dataFour" styleName="{style.bar} {style.data-three}"></g:HTMLPanel>
-								        <g:Label styleName="{style.count}" ui:field="countLblVeryGood">(3)</g:Label> 
+								        <g:Label styleName="{style.count}" ui:field="countLblVeryGood"></g:Label> 
 								       </div> 
 								       
 								       <div class="{style.prgressBar}">  
 								       <g:HTMLPanel  ui:field="dataFive" styleName="{style.bar} {style.data-four}"></g:HTMLPanel>
-								       <g:Label styleName="{style.count}" ui:field="countLblExcellent">(7)</g:Label>  
+								       <g:Label styleName="{style.count}" ui:field="countLblExcellent"></g:Label>  
 								       </div>
 						        </g:HTMLPanel>
         							   <div class="{style.clearfix}"></div>
