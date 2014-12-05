@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.ProfileAnalyticsChat;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
+import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -80,14 +81,11 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	public UserDashBoardView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		ResourceAddedWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(132)),new Label("Resources Added")));
-		commentsMadeWIdget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(85)),new Label("Comments Made")));
 		endorsementsGivenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(26)),new Label("endorsements given")));
-		reviewsWrittenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(121)),new Label("Reviews Written")));
 		topEndorsedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Endorsed Collections","Roman Poets","23 endorsments"));
 		topRemixedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Remixed Collections","Dogs","12 remixes"));
 		fiveStarRatedResourcesWidget.add(new FiveStarRatings("fivestarRatings"));
 		reactionsWidgetPanel.add(new FiveStarRatings("fivestarReviews"));
-		reactionsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("reactions",null));
 		googleMapContainer.add(new GoogleMapWidget());
 		profileAnalyticsGrageContainer.add(new ProfileAnalyticsGradeWidget());
 		profileActivityBreakDown.add(profileAnalyticChat.createChart());
@@ -126,7 +124,15 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	}
 
 	@Override
-	public void setProfileRatingsData(Map<String, Integer> result) {
+	public void setProfileRatingsData(ProfileRatingsReactionsDO result) {
+		commentsMadeWIdget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getCommentCount())),new Label("Comments Made")));
+		reviewsWrittenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getReviewCount())),new Label("Reviews Written")));
+		
 		ratingsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("ratings",result));
+	}
+
+	@Override
+	public void setProfileReationsData(ProfileRatingsReactionsDO result) {
+		reactionsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("reactions",result));
 	}
 }

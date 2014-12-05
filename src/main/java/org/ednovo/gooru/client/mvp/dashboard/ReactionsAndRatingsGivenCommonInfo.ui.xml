@@ -53,7 +53,7 @@
 								       </div>
 						       
 								        <div class="{style.prgressBar}">  
-								        <g:HTMLPanel  ui:field="dataThree" styleName="{style.data-three}"></g:HTMLPanel>
+								        <g:HTMLPanel  ui:field="dataThree" styleName="{style.bar} {style.data-three}"></g:HTMLPanel>
 								       <g:Label styleName="{style.count}" ui:field="countLblGood"></g:Label>  
 								       </div>
 								     

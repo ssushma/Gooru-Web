@@ -44,6 +44,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
+import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 
 public interface IsUserDashBoardView extends IsViewWithHandlers<UserDashBoardUiHandlers>{
 
@@ -59,5 +60,7 @@ public interface IsUserDashBoardView extends IsViewWithHandlers<UserDashBoardUiH
 
 	void setPublishedCollectionData(UserDashBoardCommonInfoDO result);
 	
-	void setProfileRatingsData(Map<String, Integer> result);
+	void setProfileRatingsData(ProfileRatingsReactionsDO result);
+	
+	void setProfileReationsData(ProfileRatingsReactionsDO result);
 }

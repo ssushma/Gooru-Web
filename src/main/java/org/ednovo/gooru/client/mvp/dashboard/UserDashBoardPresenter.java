@@ -47,6 +47,7 @@ import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
+import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -166,11 +167,12 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 					
 				}
 	    	});
-	    	AppClientFactory.getInjector().getUserService().getProfileAnalyticsRatings(new AsyncCallback<Map<String,Integer>>() {
+	    	AppClientFactory.getInjector().getUserService().getProfileAnalyticsRatings(new AsyncCallback<ProfileRatingsReactionsDO>() {
 				
 				@Override
-				public void onSuccess(Map<String, Integer> result) {
+				public void onSuccess(ProfileRatingsReactionsDO result) {
 					getView().setProfileRatingsData(result);
+					getView().setProfileReationsData(result);
 				}
 				
 				@Override

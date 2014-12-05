@@ -46,13 +46,13 @@ import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
-import org.ednovo.gooru.shared.model.player.InsightsCollectionDo;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.CustomFieldDo;
 import org.ednovo.gooru.shared.model.user.GenderDo;
 import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
+import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 import org.ednovo.gooru.shared.model.user.ProfileV2Do;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -104,6 +104,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public static final String GRANULARITY="granularity";
 	public static final String GROUPBY="groupBy";
 	public static final String LOGICALKey="logicalOperatorPrefix";
+	public static final String RATNGFIELDS="copiedCount,shareCount,countOfReaction5,countOfRating5,countOfRating4,countOfRating3,countOfRating2,countOfRating1,countOfICanExplain,countOfINeedHelp,countOfIDoNotUnderstand,countOfMeh,countOfICanUnderstand,commentCount,reviewCount";
 	
 
 	@Override
@@ -1013,28 +1014,74 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
  }
 
 	@Override
-	public Map<String, Integer> getProfileAnalyticsRatings() {
+	public ProfileRatingsReactionsDO getProfileAnalyticsRatings() {
 		JsonRepresentation jsonRep = null;
-		String url = "http://qa.goorulearning.org/insights/api/v2/query?sessionToken=1edb25aa-5c5e-4d13-8498-15ef31a93c1f&data={%22fields%22:%22rateCount,eventTime%22,%22dataSource%22:%22rawData%22,%22granularity%22:%22%22,%22filter%22:[{%22logicalOperatorPrefix%22:%22NOT%22,%22fields%22:[{%22type%22:%22selector%22,%22valueType%22:%22long%22,%22fieldName%22:%22rate%22,%22operator%22:%22eq%22,%22value%22:%22-1%22}]},{%22logicalOperatorPrefix%22:%22AND%22,%22fields%22:[{%22type%22:%22selector%22,%22valueType%22:%22string%22,%22fieldName%22:%22eventName%22,%22operator%22:%22eq%22,%22value%22:%22item.rate%22},{%22type%22:%22selector%22,%22valueType%22:%22string%22,%22fieldName%22:%22gooruUId%22,%22operator%22:%22eq%22,%22value%22:%22cc6aca61-d7d9-4ea8-b22c-fbdf1e75ac49%22}]}],%22pagination%22:{%22offset%22:0,%22limit%22:10,%22order%22:[]},%22aggregations%22:[{%22field1%22:%22rate%22,%22formula%22:%22count%22,%22name%22:%22rateCount%22,%22requestValues%22:%22field1%22}],%22groupBy%22:%22rate%22}";
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,"1edb25aa-5c5e-4d13-8498-15ef31a93c1f",createProfileRatingsJsonPayloadObject());
+		//String url = "http://qa.goorulearning.org/insights/api/v2/query?sessionToken=1edb25aa-5c5e-4d13-8498-15ef31a93c1f&data="+createProfileRatingsJsonPayloadObject();
 		System.out.println("url::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeRatingsData(jsonRep);
-	}
-	public Map<String, Integer> deserializeRatingsData(JsonRepresentation jsonRep) {
-		Map<String, Integer> result = new HashMap<String, Integer>();
-		if (jsonRep != null && jsonRep.getSize() != -1) {
-			try{
-				JSONArray posts = jsonRep.getJsonObject().getJSONArray("content");
-				result.put("totalRows", jsonRep.getJsonObject().getJSONObject("paginate").getInt("totalRows"));
-				for(int i=0;i<posts.length();i++){
-					JSONObject obj=posts.getJSONObject(i);
-					result.put(Integer.toString(obj.getInt("rate")), obj.getInt("rateCount"));
-				}
-			}catch(JSONException e){
-					e.getStackTrace();
+		ProfileRatingsReactionsDO profileRatingsReactionsDO = null;
+		if(jsonRep!=null){
+			try {
+				System.out.println(jsonRep.getJsonObject().getJSONArray("content").get(0).toString());;
+				profileRatingsReactionsDO=JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").get(0).toString(), ProfileRatingsReactionsDO.class);
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
 		}
-		return result;
+		return profileRatingsReactionsDO;
+	}
+	public String createProfileRatingsJsonPayloadObject(){
+		JSONObject jsonMainDataObject=new JSONObject(); 
+		try {
+			jsonMainDataObject.put("fields",RATNGFIELDS);
+			jsonMainDataObject.put("dataSource","user");
+			jsonMainDataObject.put("granularity","");
+			
+			JSONArray filterArray=new JSONArray();
+			//First Obj
+			JSONObject filterObj=new JSONObject();
+			filterObj.put("logicalOperatorPrefix", "AND");
+				JSONArray filterArrayVales=new JSONArray();
+				Map<String,String> firstFilterMap=new HashMap<String, String>();
+				firstFilterMap.put("type","selector");
+				firstFilterMap.put("valueType","string");
+				firstFilterMap.put("fieldName","gooruUId");
+				firstFilterMap.put("operator","eq");
+				firstFilterMap.put("value","b498aa5c-4307-4287-ba64-eb51732c30ec");
+				JSONObject firstFilterVal=getPayLoadObj(firstFilterMap);
+				filterArrayVales.put(firstFilterVal);
+				filterObj.put("fields", filterArrayVales);
+			filterArray.put(filterObj);
+			
+			jsonMainDataObject.put("filter", filterArray);
+			
+			JSONArray aggregationsArray=new JSONArray();
+			jsonMainDataObject.put("aggregations", aggregationsArray);
+			jsonMainDataObject.put("groupBy","");
+			
+			JSONObject paginationObj=new JSONObject();
+			paginationObj.put("offset", 0);
+			paginationObj.put("limit", 10);
+			JSONArray offsetArray=new JSONArray();
+			paginationObj.put("order",offsetArray);
+			
+			jsonMainDataObject.put("pagination",paginationObj);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonMainDataObject.toString();
+	}
+	public JSONObject getPayLoadObj(Map<String,String> payLoad){
+		JSONObject objVal=null;
+		try{
+			objVal=new JSONObject();
+			for(Map.Entry<String, String> entry : payLoad.entrySet()) {
+				objVal.put(entry.getKey(), entry.getValue());
+			}
+		}catch(Exception e){	}
+		return objVal;
 	}
 }

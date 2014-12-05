@@ -32,6 +32,7 @@ import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
+import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
@@ -120,6 +121,6 @@ public interface UserServiceAsync extends BaseServiceAsync {
   
    void getUsersPublishedCollectionsCount(AsyncCallback<UserDashBoardCommonInfoDO> callback);
    
-   void getProfileAnalyticsRatings(AsyncCallback<Map<String, Integer>> callback);
+   void getProfileAnalyticsRatings(AsyncCallback<ProfileRatingsReactionsDO> callback);
 
 }
