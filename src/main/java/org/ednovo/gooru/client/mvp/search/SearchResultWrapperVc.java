@@ -614,7 +614,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		
 		@Override
 		public void updateTotalTagsCount(int totalTagsCount) {
-			tagsLbl.setText(i18n.GL3046()+" "+i18n.GL_SPL_OPEN_SMALL_BRACKET()+totalTagsCount+i18n.GL_SPL_CLOSE_SMALL_BRACKET());  
+			tagsLbl.setText(i18n.GL3048()+" "+i18n.GL_SPL_OPEN_SMALL_BRACKET()+totalTagsCount+i18n.GL_SPL_CLOSE_SMALL_BRACKET());  
 		}
 	};
 	
