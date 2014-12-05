@@ -90,6 +90,8 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 	
 	@UiField SearchTabTagsStyleBundle searchTagsTabStyle;
 	
+	Label tagsLbl = new Label();
+	
 	AddTagesPopupView addTagesPopupView;
 	
 	private String resourceGooruOid;
@@ -214,7 +216,8 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 		}
 		if(isTagsAdded){
 			isTagsAdded = false;
-			AppClientFactory.fireEvent( new ResourceTagsCountUpdateEvent(getTotCount()));
+			tagsLbl.setText(i18n.GL3048()+" "+i18n.GL_SPL_OPEN_SMALL_BRACKET()+getTotCount()+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
+//			AppClientFactory.fireEvent( new ResourceTagsCountUpdateEvent(getTotCount()));
 		}
 		
 		for(int i=0; i<searchResourcesTagsDo.getSearchResults().size();i++){
@@ -293,11 +296,12 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 	 * 
 	 * (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.search.IsTagsTabView#setResourceTagsData(java.lang.String, java.lang.String)
-	 */
+ 	 */
 	@Override
-	public void setResourceTagsData(String resourceGooruOid) {
+	public void setResourceTagsData(String resourceGooruOid, Label tagsLbl) {
 		
 		this.resourceGooruOid = resourceGooruOid;
+		this.tagsLbl = tagsLbl;
 		clearTagsContainer(true);
 		setCurrentTagsDispalyCount(0);
 		getUiHandlers().getResourceTags(resourceGooruOid,offSet,limit,true);

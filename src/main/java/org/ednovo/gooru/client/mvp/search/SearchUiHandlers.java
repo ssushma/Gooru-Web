@@ -44,6 +44,7 @@ import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.google.gwt.user.client.ui.DisclosurePanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
@@ -122,6 +123,7 @@ public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandle
 	 * @param simplePanel     
 	 * @param searchResultDo
 	 * @param isTagsPanelOpen 
+	 * @param tagsLbl 
 	 */
-	void setTagsWidget(SimplePanel simplePanel, ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen);
+	void setTagsWidget(SimplePanel simplePanel, ResourceSearchResultDo searchResultDo, boolean isTagsPanelOpen, Label tagsLbl);
 }
