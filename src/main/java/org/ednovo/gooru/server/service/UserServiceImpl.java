@@ -46,13 +46,13 @@ import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
-import org.ednovo.gooru.shared.model.player.InsightsCollectionDo;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.CustomFieldDo;
 import org.ednovo.gooru.shared.model.user.GenderDo;
 import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
+import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 import org.ednovo.gooru.shared.model.user.ProfileV2Do;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -104,6 +104,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public static final String GRANULARITY="granularity";
 	public static final String GROUPBY="groupBy";
 	public static final String LOGICALKey="logicalOperatorPrefix";
+	public static final String RATNGFIELDS="copiedCount,shareCount,countOfReaction5,countOfRating5,countOfRating4,countOfRating3,countOfRating2,countOfRating1,countOfICanExplain,countOfINeedHelp,countOfIDoNotUnderstand,countOfMeh,countOfICanUnderstand,commentCount,reviewCount";
 	
 
 	@Override
@@ -1011,4 +1012,76 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 		return result;
  }
+
+	@Override
+	public ProfileRatingsReactionsDO getProfileAnalyticsRatings() {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,"1edb25aa-5c5e-4d13-8498-15ef31a93c1f",createProfileRatingsJsonPayloadObject());
+		//String url = "http://qa.goorulearning.org/insights/api/v2/query?sessionToken=1edb25aa-5c5e-4d13-8498-15ef31a93c1f&data="+createProfileRatingsJsonPayloadObject();
+		System.out.println("url::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		ProfileRatingsReactionsDO profileRatingsReactionsDO = null;
+		if(jsonRep!=null){
+			try {
+				System.out.println(jsonRep.getJsonObject().getJSONArray("content").get(0).toString());;
+				profileRatingsReactionsDO=JsonDeserializer.deserialize(jsonRep.getJsonObject().getJSONArray("content").get(0).toString(), ProfileRatingsReactionsDO.class);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return profileRatingsReactionsDO;
+	}
+	public String createProfileRatingsJsonPayloadObject(){
+		JSONObject jsonMainDataObject=new JSONObject(); 
+		try {
+			jsonMainDataObject.put("fields",RATNGFIELDS);
+			jsonMainDataObject.put("dataSource","user");
+			jsonMainDataObject.put("granularity","");
+			
+			JSONArray filterArray=new JSONArray();
+			//First Obj
+			JSONObject filterObj=new JSONObject();
+			filterObj.put("logicalOperatorPrefix", "AND");
+				JSONArray filterArrayVales=new JSONArray();
+				Map<String,String> firstFilterMap=new HashMap<String, String>();
+				firstFilterMap.put("type","selector");
+				firstFilterMap.put("valueType","string");
+				firstFilterMap.put("fieldName","gooruUId");
+				firstFilterMap.put("operator","eq");
+				firstFilterMap.put("value",getLoggedInUserUid());
+				JSONObject firstFilterVal=getPayLoadObj(firstFilterMap);
+				filterArrayVales.put(firstFilterVal);
+				filterObj.put("fields", filterArrayVales);
+			filterArray.put(filterObj);
+			
+			jsonMainDataObject.put("filter", filterArray);
+			
+			JSONArray aggregationsArray=new JSONArray();
+			jsonMainDataObject.put("aggregations", aggregationsArray);
+			jsonMainDataObject.put("groupBy","");
+			
+			JSONObject paginationObj=new JSONObject();
+			paginationObj.put("offset", 0);
+			paginationObj.put("limit", 10);
+			JSONArray offsetArray=new JSONArray();
+			paginationObj.put("order",offsetArray);
+			
+			jsonMainDataObject.put("pagination",paginationObj);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonMainDataObject.toString();
+	}
+	public JSONObject getPayLoadObj(Map<String,String> payLoad){
+		JSONObject objVal=null;
+		try{
+			objVal=new JSONObject();
+			for(Map.Entry<String, String> entry : payLoad.entrySet()) {
+				objVal.put(entry.getKey(), entry.getValue());
+			}
+		}catch(Exception e){	}
+		return objVal;
+	}
 }
