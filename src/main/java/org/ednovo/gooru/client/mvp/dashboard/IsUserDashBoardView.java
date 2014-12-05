@@ -65,4 +65,8 @@ public interface IsUserDashBoardView extends IsViewWithHandlers<UserDashBoardUiH
 	void dispalyDashBoardHomePage();
 
 	void setPublishedCollectionData(UserDashBoardCommonInfoDO result);
+
+	void getFiveStarRatedResults(UserDashBoardCommonInfoDO result);
+
+	void getFiveStarReviewedResources(UserDashBoardCommonInfoDO result);
 }

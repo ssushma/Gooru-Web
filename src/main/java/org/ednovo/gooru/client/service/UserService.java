@@ -238,4 +238,9 @@ public interface UserService extends BaseService {
 	String isValidResetPasswordLink(String resetToken)throws GwtException,ServerDownException;
 	
     UserDashBoardCommonInfoDO getUsersPublishedCollectionsCount();
+    
+    UserDashBoardCommonInfoDO getFiveStarRatedResources();
+    
+    UserDashBoardCommonInfoDO getFiveStarReviewdResources();
+    
 }

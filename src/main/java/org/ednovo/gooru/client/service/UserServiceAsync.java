@@ -118,4 +118,10 @@ public interface UserServiceAsync extends BaseServiceAsync {
    
    void getUsersPublishedCollectionsCount(AsyncCallback<UserDashBoardCommonInfoDO> callback);
    
+   void getFiveStarRatedResources(AsyncCallback<UserDashBoardCommonInfoDO> callback);
+   
+   void getFiveStarReviewdResources(AsyncCallback<UserDashBoardCommonInfoDO> callback);
+   
+   
+   
 }

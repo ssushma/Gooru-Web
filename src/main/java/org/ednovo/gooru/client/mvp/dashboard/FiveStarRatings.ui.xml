@@ -8,7 +8,6 @@
 	ui:generateLocales='default'>
 
 	<ui:style field="style" src="dashboard.css"/>
-	
 	<g:HTMLPanel ui:field="FiveStarRatingsPnl">
 						<div class="{style.whiteBg}">
 						<div class="{style.panelBox}">
@@ -21,25 +20,13 @@
 						<g:HTMLPanel styleName="{style.smallHeader}" ui:field="reactionsHeaderPnl">
 						<g:Image ui:field="iCanExplainImage"/> 
 						<div class="{style.smallHeaderIcn}">
-						<g:Label ui:field="icanExplainLbl"></g:Label><br /><g:Label ui:field="reactionResourcesLbl"></g:Label></div>
+						<g:Label ui:field="icanExplainLbl"></g:Label><g:Label ui:field="reactionResourcesLbl"></g:Label></div>
 						</g:HTMLPanel>
 						
-						<div class="{style.resourceBlock}">
-						<div class="{style.collHead}"><g:Image ui:field="resourceImage"></g:Image> 
-						<g:Label ui:field="resourceNameLbl"></g:Label>
-						</div>
-						</div>
-						
-						<div class="{style.resourceBlock}">
-						<div class="{style.collHead}"><img src="../images/profileimages/imgIcon.png" /> British History</div>
-						</div>
-						
-						<div class="{style.resourceBlock}">
-						<div class="{style.collHead]"><img src="../images/profileimages/soundIcon.png" /> Enter the Cell</div>
-						</div>
+						<g:HTMLPanel ui:field="resourcesDataBlock"></g:HTMLPanel>
 						
 						<div class="space"></div>
-						<div class="{style.moreLink}"><a href="#">View all ratings</a></div>
+						<div class="{style.moreLink}"><g:Anchor href="#" ui:field="viewAllLbl"></g:Anchor></div>
 						</div>
 						</div>
 	</g:HTMLPanel>

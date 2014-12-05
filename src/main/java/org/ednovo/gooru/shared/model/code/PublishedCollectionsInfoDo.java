@@ -38,6 +38,12 @@ public class PublishedCollectionsInfoDo implements Serializable {
 	
 	private String creatorUid;
 	
+	private Integer resourceTypeId;
+	
+	private String title;
+	
+	private String category;
+	
 	public PublishedCollectionsInfoDo(){
 		
 	}
@@ -55,4 +61,27 @@ public class PublishedCollectionsInfoDo implements Serializable {
 		this.creatorUid = creatorUid;
 	}
 	
+	public Integer getResourceTypeId() {
+		return resourceTypeId;
+	}
+
+	public void setResourceTypeId(Integer resourceTypeId) {
+		this.resourceTypeId = resourceTypeId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 }

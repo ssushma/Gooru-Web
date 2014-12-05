@@ -82,8 +82,8 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 		reviewsWrittenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(121)),new Label("Reviews Written")));
 		topEndorsedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Endorsed Collections","Roman Poets","23 endorsments"));
 		topRemixedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Remixed Collections","Dogs","12 remixes"));
-		fiveStarRatedResourcesWidget.add(new FiveStarRatings("fivestarRatings"));
-		reactionsWidgetPanel.add(new FiveStarRatings("fivestarReviews"));
+		//fiveStarRatedResourcesWidget.add(new FiveStarRatings("fivestarRatings"));
+		//reactionsWidgetPanel.add(new FiveStarRatings("fivestarReviews"));
 		ratingsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("ratings"));
 		reactionsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("reactions"));
 		googleMapContainer.add(new GoogleMapWidget());
@@ -101,5 +101,15 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	@Override
 	public void setPublishedCollectionData(UserDashBoardCommonInfoDO result) {
 		CollectionsPublishedWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getContent().get(0).getPublishedCollection())),new Label("Collections Published")));
+	}
+
+	@Override
+	public void getFiveStarRatedResults(UserDashBoardCommonInfoDO result) {
+		fiveStarRatedResourcesWidget.add(new FiveStarRatings("fivestarRatings",result));
+	}
+
+	@Override
+	public void getFiveStarReviewedResources(UserDashBoardCommonInfoDO result) {
+		reactionsWidgetPanel.add(new FiveStarRatings("fivestarReviews",result));
 	}
 }

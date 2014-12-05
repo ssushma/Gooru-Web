@@ -92,6 +92,25 @@ public class UserDashBoardPresenter
 			public void onFailure(Throwable caught) {
 			}
 		});
+		AppClientFactory.getInjector().getUserService().getFiveStarRatedResources(new AsyncCallback<UserDashBoardCommonInfoDO>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+			@Override
+			public void onSuccess(UserDashBoardCommonInfoDO result) {
+				getView().getFiveStarRatedResults(result);
+			}
+		});
+		AppClientFactory.getInjector().getUserService().getFiveStarReviewdResources(new AsyncCallback<UserDashBoardCommonInfoDO>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+			@Override
+			public void onSuccess(UserDashBoardCommonInfoDO result) {
+				getView().getFiveStarReviewedResources(result);
+			}
+		});
+		
 		getView().dispalyDashBoardHomePage();
 	}
 

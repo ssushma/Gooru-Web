@@ -480,7 +480,9 @@ background:#81c5e5 url(../images/profileimages/arrow.png) no-repeat 28px 7px;
 	width:100%;
 }
 
-
+.resource-image{
+	float:left;
+}
 
 
 

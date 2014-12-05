@@ -68,6 +68,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.gwt.dev.jjs.ast.js.JsonObject;
 
 /**
  * @author Search Team
@@ -103,6 +104,22 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public static final String GRANULARITY="granularity";
 	public static final String GROUPBY="groupBy";
 	public static final String LOGICALKey="logicalOperatorPrefix";
+	
+	public static final String TYPE="type";
+	public static final String VALUETYPE="valueType";
+	public static final String FIELDNAME="fieldName";
+	public static final String OPERATOR="operator";
+	public static final String VALUE="value";
+	
+	public static final String FILTER=	"filter";
+	public static final String AGGREGATIONS="aggregations";
+	public static final String PAGINATION="pagination";
+	public static final String OFFSETVAL=	"offset";
+	public static final String LIMITVAL="limit";
+	public static final String SORTBY="sortBy";
+	public static final String SORTORDER="sortOrder";
+	public static final String ORDERKEY="order";
+	
 	
 
 	@Override
@@ -803,7 +820,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			JSONObject jsonObject=jsonRep.getJsonObject();
 			resetToken = jsonObject.getString("isValidToken");
 			}catch(JSONException e){}
-				
 		}
 		return resetToken;																																																																																																																																																																																																								
 	}
@@ -812,6 +828,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		JsonRepresentation jsonRep = null;
 		String urlDataParameterValue=createJsonPayloadObject(getLoggedInUserUid(),"1020");
 		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, "1edb25aa-5c5e-4d13-8498-15ef31a93c1f",urlDataParameterValue);
+		System.out.println("getUsersPublishedCollectionsCount url::::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url,getRestUsername(),getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		UserDashBoardCommonInfoDO userDashBoardCommonInfoDoObj = null;
@@ -881,7 +898,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			
 			agreegationsArray.put(aggregationsObject);
 			
-			paginationObject.put("offset","0");
+			paginationObject.put("offset",0);
 			paginationObject.put("limit",10);
 			paginationObject.put("order",orderArray);
 			
@@ -890,15 +907,120 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			jsonDataObject.put("filter", filterArray);
 			jsonDataObject.put("aggregations", agreegationsArray);
 			jsonDataObject.put("pagination", paginationObject);
-			
-			
-			
-			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println("jsonDataObject.toString() here is:::::::"+jsonDataObject.toString());
 		return jsonDataObject.toString();
 	}
+
+	@Override
+	public UserDashBoardCommonInfoDO getFiveStarRatedResources() {
+		JsonRepresentation jsonrep = null;
+		//"1edb25aa-5c5e-4d13-8498-15ef31a93c1f"   sessiontoken hardcoded
+		String urlparameters = createJsonRatingsPayloadObject("title,resourceTypeId,category","content","","","AND","selector","String","countOfRating5",
+				"ge","1",getLoggedInUserUid(),"eq","creatorUid","DESC");
+		String url= UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT,getLoggedInSessionToken(), urlparameters);
+		System.out.println("getFiveStarRatedResources url:::"+url);
+		JsonResponseRepresentation jsonRespRep=ServiceProcessor.post(url,getRestUsername(),getRestPassword());
+		jsonrep	=jsonRespRep.getJsonRepresentation();
+		UserDashBoardCommonInfoDO userDashBoardCommonInfoDOObject = null;
+		if(jsonrep!=null){
+			try{
+				userDashBoardCommonInfoDOObject	= JsonDeserializer.deserialize(jsonrep.getJsonObject().toString(), UserDashBoardCommonInfoDO.class);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return userDashBoardCommonInfoDOObject;
+	}
+	
+	@Override
+	public UserDashBoardCommonInfoDO getFiveStarReviewdResources() {
+		// TODO Auto-generated method stub
+		JsonRepresentation jsonRep = null;
+		String urlparameters = createJsonRatingsPayloadObject("title,resourceTypeId,category","content","","","AND","selector","String","countOfICanExplain",
+				"ge","1",getLoggedInUserUid(),"eq","creatorUid","DESC");
+		String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.V2_USER_PUBLISHEDCOLLECTIONS_COUNT, getLoggedInSessionToken(),urlparameters);
+		System.out.println("getFiveStarReviewdResources url::::::"+url);
+		JsonResponseRepresentation jsonRespRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		jsonRep	= jsonRespRep.getJsonRepresentation();
+		UserDashBoardCommonInfoDO userDashBoardCommonInfoDO = null;
+		if(jsonRep != null){
+			try{
+				userDashBoardCommonInfoDO	=	JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDashBoardCommonInfoDO.class);
+			}catch(Exception e){
+				
+			}
+			
+		}
+		return userDashBoardCommonInfoDO;
+	}
+	
+	public String createJsonRatingsPayloadObject(String fields,String content,String granularity,String groupBy,String logicalKey,String selector,String stringval,
+			String countofratings,String operatorval,String valueone,String creatoruserId,String eqval,String creatoruid,String desc){
+		JSONObject jsondataobject= null;
+		try{
+		jsondataobject = new JSONObject();
+		
+		JSONObject filterobject = new JSONObject();
+		JSONArray filterArray = new JSONArray();
+		JSONArray fieldsArray = new JSONArray();
+		JSONObject fieldsobjectone = new JSONObject();
+		JSONObject fieldsobjecttwo = new JSONObject();
+		JSONArray aggregationsArray = new JSONArray();
+		JSONObject paginationobject = new JSONObject();
+		JSONArray orderArray = new JSONArray();
+		JSONObject orderobject = new JSONObject();
+		
+		jsondataobject.put(FIELDS, fields);
+		jsondataobject.put(DATASOURCE, content);
+		jsondataobject.put(GRANULARITY, granularity);
+		jsondataobject.put(GROUPBY, groupBy);
+		
+		filterobject.put(LOGICALKey, logicalKey);
+		
+		fieldsobjectone.put(TYPE, selector);
+		fieldsobjectone.put(VALUETYPE, stringval);
+		fieldsobjectone.put(FIELDNAME, countofratings);
+		fieldsobjectone.put(OPERATOR, operatorval);
+		fieldsobjectone.put(VALUE, valueone);
+		
+		
+		fieldsobjecttwo.put(TYPE, selector);
+		fieldsobjecttwo.put(VALUETYPE, stringval);
+		fieldsobjecttwo.put(FIELDNAME, creatoruid);
+		fieldsobjecttwo.put(OPERATOR, eqval);
+		//fieldsobjecttwo.put(VALUE, creatoruserId);
+		fieldsobjecttwo.put(VALUE, "ee410cef-2a44-46ef-878d-172511e54e07");
+		
+		
+		fieldsArray.put(fieldsobjectone);
+		fieldsArray.put(fieldsobjecttwo);
+		
+		
+		filterobject.put(FIELDS, fieldsArray);
+		filterArray.put(filterobject);
+		jsondataobject.put(FILTER, filterArray);
+		jsondataobject.put(AGGREGATIONS, aggregationsArray);
+		
+		paginationobject.put(OFFSETVAL, 0);
+		paginationobject.put(LIMITVAL, 10);
+		
+		orderobject.put(SORTBY, countofratings);
+		orderobject.put(SORTORDER, desc);
+		
+		orderArray.put(orderobject);
+		paginationobject.put(ORDERKEY, orderArray);
+		
+		jsondataobject.put(PAGINATION, paginationobject);
+		}catch(Exception e){
+			
+		}
+		
+		return jsondataobject.toString();
+		
+	}
+
 }
