@@ -63,7 +63,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer: Gooru Team
  */
-public class DashBoardToolTip extends PopupPanel implements HasMouseOutHandlers{
+public abstract class DashBoardToolTip extends PopupPanel implements HasMouseOutHandlers{
 	
 	private static DashBoardToolTipUiBinder uiBinder = GWT
 			.create(DashBoardToolTipUiBinder.class);
@@ -79,7 +79,7 @@ public class DashBoardToolTip extends PopupPanel implements HasMouseOutHandlers{
 	
 	public DashBoardToolTip() {
 		setWidget(uiBinder.createAndBindUi(this));
-		
+		this.getElement().setAttribute("style", "left: -12px !important; top: 0px; position: absolute; z-index: 99; background-color: transparent;");
 		lblDashBoard.setText("DashBoard");
 		lblDashBoard.getElement().setId("lblDashBoard");
 		lblDashBoard.getElement().setAttribute("alt", "DashBoard");
@@ -104,7 +104,7 @@ public class DashBoardToolTip extends PopupPanel implements HasMouseOutHandlers{
 		  }		  
 		  else
 		  {
-			  tooltipPanel.getElement().getStyle().setWidth(120, Unit.PX);
+			  tooltipPanel.getElement().getStyle().setWidth(140, Unit.PX);
 			  tooltipPanel.getElement().getStyle().setPosition(Position.FIXED);
 		  }
 		
@@ -119,13 +119,14 @@ public class DashBoardToolTip extends PopupPanel implements HasMouseOutHandlers{
 		lblDashBoard.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				if (!AppClientFactory.isAnonymous()){
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DASHBOARD);
-				}
+				fireSelectionEvent();
+
 			}
 		});
+		
         
 	}
+	public abstract void fireSelectionEvent();
 	
 	@Override
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {

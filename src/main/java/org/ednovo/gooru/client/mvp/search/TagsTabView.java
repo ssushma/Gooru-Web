@@ -36,11 +36,14 @@ import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagWidget;
 import org.ednovo.gooru.client.mvp.search.event.ResourceTagsCountUpdateEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
+import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.TextAlign;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -49,6 +52,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -73,6 +77,8 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 	
 	interface TagsTabViewUiBinder extends UiBinder<Widget, TagsTabView>{
 	}
+	
+	private  MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	List<UserTagsDo> resourceTag = new ArrayList<UserTagsDo>();
 	
@@ -198,6 +204,14 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 		setTotCount(searchResourcesTagsDo.getTotalHitCount());
 		setCurrentTagsDispalyCount(getCurrentTagsDispalyCount()+searchResourcesTagsDo.getSearchResults().size());
 		clearTagsContainer(isTagsClear);
+		if(getTotCount()==0){
+			Label emptyTagsLbl = new Label();
+			emptyTagsLbl.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+			emptyTagsLbl.getElement().getStyle().setMarginTop(40,Unit.PX);
+			emptyTagsLbl.setText(i18n.GL3049());
+			tagsContainer.add(emptyTagsLbl);
+			
+		}
 		if(isTagsAdded){
 			isTagsAdded = false;
 			AppClientFactory.fireEvent( new ResourceTagsCountUpdateEvent(getTotCount()));
