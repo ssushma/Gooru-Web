@@ -84,8 +84,7 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 		endorsementsGivenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(26)),new Label("endorsements given")));
 		topEndorsedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Endorsed Collections","Roman Poets","23 endorsments"));
 		topRemixedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Remixed Collections","Dogs","12 remixes"));
-		fiveStarRatedResourcesWidget.add(new FiveStarRatings("fivestarRatings"));
-		reactionsWidgetPanel.add(new FiveStarRatings("fivestarReviews"));
+
 		googleMapContainer.add(new GoogleMapWidget());
 		profileAnalyticsGrageContainer.add(new ProfileAnalyticsGradeWidget());
 		profileActivityBreakDown.add(profileAnalyticChat.createChart());
@@ -124,6 +123,16 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	}
 
 	@Override
+
+	public void getFiveStarRatedResults(UserDashBoardCommonInfoDO result) {
+		fiveStarRatedResourcesWidget.add(new FiveStarRatings("fivestarRatings",result));
+	}
+
+	@Override
+	public void getFiveStarReviewedResources(UserDashBoardCommonInfoDO result) {
+		reactionsWidgetPanel.add(new FiveStarRatings("fivestarReviews",result));
+	}
+
 	public void setProfileRatingsData(ProfileRatingsReactionsDO result) {
 		commentsMadeWIdget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getCommentCount())),new Label("Comments Made")));
 		reviewsWrittenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getReviewCount())),new Label("Reviews Written")));
@@ -134,5 +143,6 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	@Override
 	public void setProfileReationsData(ProfileRatingsReactionsDO result) {
 		reactionsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("reactions",result));
+
 	}
 }

@@ -128,6 +128,12 @@ public class ReactionsAndRatingsGivenCommonInfo extends Composite{
 			ratingLabelGood.addStyleName(DashBoardCBundle.INSTANCE.css().ratingLabel());
 			ratingLabelVeryGood.addStyleName(DashBoardCBundle.INSTANCE.css().ratingLabel());
 			ratingLabelExcellent.addStyleName(DashBoardCBundle.INSTANCE.css().ratingLabel());
+			ratingLblPoor.getElement().getStyle().clearWidth();
+			ratingLabelFair.getElement().getStyle().clearWidth();
+			ratingLabelGood.getElement().getStyle().clearWidth();
+			ratingLabelVeryGood.getElement().getStyle().clearWidth();
+			ratingLabelExcellent.getElement().getStyle().clearWidth();
+		
 			smallHeaderTextLbl.setText("Reactions Given");
 			ratingLblPoor.setText("I need help");
 			ratingorReactionImgPoor.setUrl("../images/profileimages/emotics1.png");
