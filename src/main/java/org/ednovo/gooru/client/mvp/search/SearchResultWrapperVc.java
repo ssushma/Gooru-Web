@@ -173,7 +173,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		this.res = SearchResultWrapperCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		setAddedStatus(true);
+		setAddedStatus(true);	
 		moreInfoLbl.setText(i18n.GL1756());
 		moreInfoLbl.getElement().setAttribute("alt",i18n.GL1756());
 		moreInfoLbl.getElement().setAttribute("title",i18n.GL1756());
