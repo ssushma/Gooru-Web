@@ -320,6 +320,16 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 	public void hideTeacherInfo() { 
 		getView().hideTeachPanelDetails(false);
 	}
+	@Override
+	public void updateCommentsStatus(String commentsStatus){
+		if(collectionPlayerPresenter!=null){
+			collectionPlayerPresenter.updateCommentsStatus(commentsStatus);
+		}
+	}
+	
+	public void changeCommentsButton(CollectionDo collectionDoObj){
+		getView().changeCommentsButton(collectionDoObj);
+	}
 
 }
 	
