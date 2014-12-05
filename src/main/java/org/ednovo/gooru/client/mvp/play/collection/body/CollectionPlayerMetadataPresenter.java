@@ -334,6 +334,16 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 			return null;
 		}
 	}
+	@Override
+	public void updateCommentsStatus(String commentsStatus){
+		if(collectionPlayerPresenter!=null){
+			collectionPlayerPresenter.updateCommentsStatus(commentsStatus);
+		}
+	}
+	
+	public void changeCommentsButton(CollectionDo collectionDoObj){
+		getView().changeCommentsButton(collectionDoObj);
+	}
 
 }
 	

@@ -632,6 +632,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 				HeaderUc.setPrefilterObj(preFilter);
 				preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+30);
 				preFilter.show();
+				preFilter.setAutoHideEnabled(true);
 				
 				preFilter.getStandardsInfo().addClickHandler(new ClickHandler() {
 					

@@ -316,7 +316,17 @@
 .classPageEmailButtonCancel{}  
 .remixContainer{} 
 .labels{}  
- 
+    .h1{}
+   .forgotPasswordBottomContainer{}
+   .forgotPasswordSuccessText{}
+   .popupInner{}
+   
+   .popupHeader{}
+   .forgotPasswordSuccessPopupContent{}
+   .forgotPasswordSuceessButtonContainer{}
+   .footerText{}
+   .btnSubmit{}
+   .popup{}
   
   
    

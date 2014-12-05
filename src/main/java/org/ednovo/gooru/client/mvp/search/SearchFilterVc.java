@@ -817,9 +817,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(value.equalsIgnoreCase("fivestar") ||value.equalsIgnoreCase("fourstar")||value.equalsIgnoreCase("threestar")||value.equalsIgnoreCase("twostar")||value.equalsIgnoreCase("onestar")){
 			chkNotFriendly.setText("");
 			chkNotFriendly.addStyleName(value.toLowerCase());
-		}else if(value.equalsIgnoreCase("zerostar")){
-			chkNotFriendly.setText("Only Resources w/ Reviews");
-			chkNotFriendly.addStyleName(value.toLowerCase());
+		}
 			
 			if(AppClientFactory.getPlaceManager().getRequestParameter("flt.rating") != null)
 			{
@@ -876,7 +874,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				}
 			}
 			
-		}
+		
 		disclosurePanelVc.add(chkNotFriendly);
 		chkNotFriendly.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 
@@ -1146,7 +1144,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			oerPanel.setVisible(true);
 			
 			//Ratings panel
-			for(int i=5;i>=0;i--){
+			for(int i=5;i>0;i--){
 				String starVal = "five";
 				if(i==4)
 				{
@@ -1163,8 +1161,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				else if(i==1)
 				{
 					starVal="one";
-				}else if(i==0){
-					starVal="zero";
 				}
 				renderCheckBox1(ratingPanelUc, i+"", starVal+"star");
 			}

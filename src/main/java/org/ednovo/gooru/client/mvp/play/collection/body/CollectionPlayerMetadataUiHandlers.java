@@ -39,4 +39,6 @@ public interface CollectionPlayerMetadataUiHandlers extends BaseUiHandlers,SetPl
 	public void getPaginationResults(String gooruOid, String offset, String limit);
 	
 	public FlowPanel getMenuContainer();
+
+	void updateCommentsStatus(String commentsStatus);
 }
