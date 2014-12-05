@@ -119,8 +119,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	
 	SignUpCompleteProfilePresenter signUpCompletePresenter = null;
 	
-	PreFilterPopup preFilter = null;
-	
 	SignUpAfterThirteenPresenter signUpAfterThirteenPresenter=null;
 	private SearchDo<ResourceSearchResultDo> resourceSearchDo = new SearchDo<ResourceSearchResultDo>();
 
@@ -162,12 +160,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	
-	private boolean isCCSSAvailable =false;
-	private boolean isNGSSAvailable =false;
-	private boolean isTEKSAvailable =false;
-	private boolean isCAAvailable =false;
-	
-	
 	private String parentGooruUID;
 	
 	private boolean isLandingPageLoaded = false;
@@ -207,8 +199,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			}
 		});
 		
-		HeaderUc.getArrowLbl().addClickHandler(new showPrefilterPopup());
-		
+		showPrefilterPopup();
 	}
 	
 	@Override
@@ -606,55 +597,15 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		}
 		return autoKeyWordSuggestionAsyncCallback;
 	}
+	
 	/**
-	 * @description This class is used to show the pre-filter search popup
-	 * @author search team
-	 * @date 27-Nov-2014
-	 *
+	 * 
 	 */
-	public class showPrefilterPopup implements ClickHandler{
-
-		/* (non-Javadoc)
-		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
-		 */
-		@Override
-		public void onClick(ClickEvent event) {
-			
-			if(preFilter!=null && preFilter.isShowing()){
-				preFilter.hide();
-			}else{
-				preFilter =	new PreFilterPopup();
-				HeaderUc.setPrefilterObj(preFilter);
-				preFilter.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()-176, event.getRelativeElement().getAbsoluteTop()+30);
-				preFilter.show();
-				preFilter.setAutoHideEnabled(true);
-				
-				preFilter.getStandardsInfo().addClickHandler(new ClickHandler() {
-					
-					@Override
-					public void onClick(ClickEvent event) {
-						preFilter.ShowSTandardsPanel().clear();
-						isCCSSAvailable = true;
-						isNGSSAvailable = true;
-						isCAAvailable = true;
-						addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
-						//addStandardsPresenter.loadDataFrompresnter();
-						preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
-						addStandardsPresenter.callDefaultStandardsLoad();
-						addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
-						addStandardsPresenter.getAddBtn().setVisible(false);
-						if(addStandardsPresenter.getAddBtn().isEnabled()){
-//							HeaderUc.setPrefilterObj(preFilter,addStandardsPresenter.setStandardsVal());
-						}
-						
-						
-					}
-				});
-			}
-			
-		}
-		
+	private void showPrefilterPopup() {
+		// TODO Auto-generated method stub
+		getView().showPrefilter(addStandardsPresenter);
 	}
+
 
 	
 	@Override
