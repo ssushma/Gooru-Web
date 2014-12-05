@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.htmltags.SectionTag;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.CommentWidgetChildView;
 import org.ednovo.gooru.client.mvp.play.resource.style.PlayerStyleBundle;
@@ -102,9 +103,11 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiField Label /*insightsHeaderText,insightsContentText,*/successPostMsg;
 	@UiField Image userPhoto;
 	@UiField HTMLPanel addComment,loginMessaging,
-						switchContainer,commentssection;
+						switchContainer;
 	@UiField Anchor loginUrl, signupUrl;
 
+	@UiField SectionTag commentssection;
+	
 	@UiField CollectionPlayerStyleBundle playerStyle;
 
 	@UiField Label lblCharLimitComments;
