@@ -70,8 +70,17 @@
 	                </g:FlowPanel>
             		</g:FlowPanel>
             <g:Label styleName="{playerStyle.hrShadow}"></g:Label>
-				<g:HTMLPanel styleName="{playerStyle.commentsSection}">
+				<g:HTMLPanel styleName="{playerStyle.commentsSection}" ui:field="commentssection">
 					   <g:Label ui:field="commentCount" styleName="{playerStyle.commentsH2}"></g:Label>
+					    <g:HTMLPanel styleName="{playerStyle.onoffbtns}" ui:field="switchContainer">
+						<g:InlineLabel ui:field="requiredLabel" text="{i18n.GL3046}"></g:InlineLabel>
+						<label class="{playerStyle.switchContainer} switchGreen">
+						 	<g:SimpleCheckBox styleName="switchInput" ui:field="changeAssignmentStatusButton" checked="true"></g:SimpleCheckBox>
+							<g:InlineLabel styleName="switchLabel"></g:InlineLabel>
+							<g:InlineLabel styleName="switchHandle" ui:field="sequenceNumberLabel"></g:InlineLabel>
+						</label> 
+						<g:InlineLabel ui:field="optionalLabel" text="{i18n.GL3047}"></g:InlineLabel>
+					</g:HTMLPanel>
 					   <g:VerticalPanel ui:field="commentsContainer"/>
 					   <g:Label ui:field="seeMoreButton" styleName="{playerStyle.seeMore}" />
 					   <g:Label ui:field="noCommentsLbl"/>

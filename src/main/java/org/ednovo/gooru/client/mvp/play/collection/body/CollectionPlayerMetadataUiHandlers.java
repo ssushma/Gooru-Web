@@ -35,4 +35,6 @@ public interface CollectionPlayerMetadataUiHandlers extends BaseUiHandlers,SetPl
 	public void deleteCommentFromCollection(String gooruOid,String commentUid, String offset, String limit);
 	
 	public void getPaginationResults(String gooruOid, String offset, String limit);
+
+	void updateCommentsStatus(String commentsStatus);
 }

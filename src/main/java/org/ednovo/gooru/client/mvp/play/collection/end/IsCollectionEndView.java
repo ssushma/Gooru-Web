@@ -91,4 +91,6 @@ public void setCollectionMetadata(CollectionDo collectionDo);
 	public void showAvgReaction(String averageReaction);
 	
 	public void dispalyTime();
+
+	public void changeCommentsButton(CollectionDo collectionDoObj);
 }

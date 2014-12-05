@@ -407,6 +407,17 @@ public class CollectionEndPresenter extends PresenterWidget<IsCollectionEndView>
 	public void dispalyTime(){
 		getView().dispalyTime();
 	}
+
+	@Override
+	public void updateCommentsStatus(String commentsStatus) {
+		if(collectionPlayerPresenter!=null){
+			collectionPlayerPresenter.updateCommentsStatus(commentsStatus);
+		}
+		
+	}
+	public void changeCommentsButton(CollectionDo collectionDoObj){
+		getView().changeCommentsButton(collectionDoObj);
+	}
 	
 	
 }
