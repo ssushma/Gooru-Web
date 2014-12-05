@@ -1049,7 +1049,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 				firstFilterMap.put("valueType","string");
 				firstFilterMap.put("fieldName","gooruUId");
 				firstFilterMap.put("operator","eq");
-				firstFilterMap.put("value","b498aa5c-4307-4287-ba64-eb51732c30ec");
+				firstFilterMap.put("value",getLoggedInUserUid());
 				JSONObject firstFilterVal=getPayLoadObj(firstFilterMap);
 				filterArrayVales.put(firstFilterVal);
 				filterObj.put("fields", filterArrayVales);
