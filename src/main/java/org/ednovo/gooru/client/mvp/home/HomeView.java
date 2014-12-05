@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -55,6 +56,7 @@ import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -126,6 +128,8 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	public AppSuggestBox txtSearch;
 	
 	String jsonDataString = null;
+	
+	private static final String USER_META_ACTIVE_FLAG = "0";
 	
 	PreFilterPopup preFilter =	null;
 	
@@ -1015,13 +1019,14 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 						@Override
 						public void onClick(ClickEvent event) {
 							preFilter.ShowSTandardsPanel().clear();
-							isCCSSAvailable = true;
+							/*isCCSSAvailable = true;
 							isNGSSAvailable = true;
 							isCAAvailable = true;
-							addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+							addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);*/
+							getAddStandards();
 							//addStandardsPresenter.loadDataFrompresnter();
 							preFilter.ShowSTandardsPanel().add(addStandardsPresenter.getWidget());
-							addStandardsPresenter.callDefaultStandardsLoad();
+							
 							addStandardsPresenter.getView().getAddStandardsPanel().getElement().setAttribute("style", "margin: -45px 4px 4px; border: 0px solid #ccc;");
 							addStandardsPresenter.getAddBtn().setVisible(false);
 							
@@ -1046,6 +1051,69 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 			
 		}
 		
+	}
+     /**
+      * To show particular user standards 
+      */
+	
+	public void getAddStandards() {
+		
+		if(!AppClientFactory.isAnonymous()){
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getLoggedInUser().getGooruUId(),
+				USER_META_ACTIVE_FLAG,
+				new SimpleAsyncCallback<ProfileDo>() {
+					@Override
+					public void onSuccess(final ProfileDo profileObj) {
+					AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+					checkStandarsList(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+					}
+					public void checkStandarsList(List<String> standarsPreferencesList) {
+						
+					if(standarsPreferencesList!=null){
+							if(standarsPreferencesList.contains("CCSS")){
+								isCCSSAvailable = true;
+							}else{
+								isCCSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("NGSS")){
+								isNGSSAvailable = true;
+							}else{
+								isNGSSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("TEKS")){
+								isTEKSAvailable = true;
+							}else{
+								isTEKSAvailable = false;
+							}
+							if(standarsPreferencesList.contains("CA")){
+								isCAAvailable = true;
+							}else{
+								isCAAvailable = false;
+							}
+								if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
+									System.out.println("isCCSSAvailable::"+isCCSSAvailable+"isNGSSAvailable::"+isNGSSAvailable);
+									addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+									addStandardsPresenter.callDefaultStandardsLoad();
+									//addToPopupSlot(addStandardsPresenter);
+									//getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
+								}
+							
+					}
+						
+					}
+
+				});
+		}else{
+			isCCSSAvailable = true;
+			isNGSSAvailable = true;
+			isCAAvailable = true;
+			if(isCCSSAvailable || isNGSSAvailable || isTEKSAvailable || isCAAvailable){
+				addStandardsPresenter.enableStandardsData(isCCSSAvailable,isTEKSAvailable,isNGSSAvailable,isCAAvailable);
+				addStandardsPresenter.callDefaultStandardsLoad();
+//				addToPopupSlot(addStandardsPresenter);
+//				getView().OnStandardsClickEvent(addStandardsPresenter.getAddBtn());
+			}
+		}
 	}
 }
 

@@ -94,6 +94,10 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 	}
 
 	void displayDashBoardPage() {
+		
+		
+		if(!AppClientFactory.isAnonymous()){
+		
 		AppClientFactory.getInjector().getUserService().getUsersPublishedCollectionsCount(new AsyncCallback<UserDashBoardCommonInfoDO>() {
 			@Override
 			public void onSuccess(UserDashBoardCommonInfoDO result) {
@@ -103,7 +107,29 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 			public void onFailure(Throwable caught) {
 			}
 		});
+		AppClientFactory.getInjector().getUserService().getFiveStarRatedResources(new AsyncCallback<UserDashBoardCommonInfoDO>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+			@Override
+			public void onSuccess(UserDashBoardCommonInfoDO result) {
+				getView().getFiveStarRatedResults(result);
+			}
+		});
+		AppClientFactory.getInjector().getUserService().getFiveStarReviewdResources(new AsyncCallback<UserDashBoardCommonInfoDO>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+			@Override
+			public void onSuccess(UserDashBoardCommonInfoDO result) {
+				getView().getFiveStarReviewedResources(result);
+			}
+		});
+		
 		getView().dispalyDashBoardHomePage();
+		}else{
+			
+		}
 	}
 
 	@Override
@@ -119,6 +145,8 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 	    	Date date = new Date();
 	    	date.setMonth(date.getMonth()-12);
 	    	String startDate =fmt.format(date);
+	    	
+	    	if(!AppClientFactory.isAnonymous()){
 	    	AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(FLAGGED,startDate,endDate,EQ_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
 				
 				@Override
@@ -180,6 +208,9 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 					
 				}
 			});
+	    	
+	    	}
+	    	
 	}
 	@Override
 	protected void onHide() {
