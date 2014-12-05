@@ -407,6 +407,8 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 					pageLocation="shelf";
 				}else if(pageLocation.equals(PlaceTokens.PROFILE_PAGE)){
 					pageLocation="profile";
+				}else if(pageLocation.equals(PlaceTokens.DASHBOARD)){
+					pageLocation="dashboard";
 				}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
 					pageLocation="teach";
 				}else if(pageLocation.equals(PlaceTokens.STUDENT)){
