@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagWidget;
+import org.ednovo.gooru.client.mvp.search.event.ResourceTagsCountUpdateEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.shared.model.search.SearchResourcesTagsDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
@@ -95,6 +96,8 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 	
 	private int currentTagsDispalyCount;
 	
+	private boolean isTagsAdded = false;
+	
 	/**
 	 * Class constructor.
 	 */
@@ -115,8 +118,9 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 	 */
 	@UiHandler("tagScrollPanel")
 	public void onScroll(ScrollEvent scrollEvent){
+		
 		if(getMoreTags()){
-			getUiHandlers().getResourceTags(resourceGooruOid,Integer.toString(getCurrentTagsDispalyCount()),limit);
+			getUiHandlers().getResourceTags(resourceGooruOid,Integer.toString(getCurrentTagsDispalyCount()),limit,false);
 		}
 		
 	}
@@ -150,8 +154,9 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 							@Override
 							public void onClickPositiveButton(ClickEvent event) {
 								this.hide();
-								clearTagsContainer(true);
-								getUiHandlers().getResourceTags(resourceGooruOid,offSet,limit);
+								isTagsAdded = true;
+								setCurrentTagsDispalyCount(0);
+								getUiHandlers().getResourceTags(resourceGooruOid,offSet,limit,true);
 								if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 									Window.enableScrolling(false);
 								}else{
@@ -188,13 +193,16 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 	 * @see org.ednovo.gooru.client.mvp.search.IsTagsTabView#getResourceTags(java.util.List)
 	 */
 	@Override
-	public void setResourceTags(SearchResourcesTagsDo searchResourcesTagsDo) {
+	public void setResourceTags(SearchResourcesTagsDo searchResourcesTagsDo, boolean isTagsClear) {
 
 		setTotCount(searchResourcesTagsDo.getTotalHitCount());
 		setCurrentTagsDispalyCount(getCurrentTagsDispalyCount()+searchResourcesTagsDo.getSearchResults().size());
-		resourceTag.clear();
+		clearTagsContainer(isTagsClear);
+		if(isTagsAdded){
+			isTagsAdded = false;
+			AppClientFactory.fireEvent( new ResourceTagsCountUpdateEvent(getTotCount()));
+		}
 		
-//		resourceTag.addAll(resourceTagsDo);
 		for(int i=0; i<searchResourcesTagsDo.getSearchResults().size();i++){
 			ProfileUserTagWidget profileUserTagWidget = new ProfileUserTagWidget(searchResourcesTagsDo.getSearchResults().get(i)); 
 			profileUserTagWidget.setSearchTabTagLblStyleName(searchTagsTabStyle.searchTabTagLbl());
@@ -278,7 +286,7 @@ public class TagsTabView extends BaseViewWithHandlers<TagsTabUiHandlers> impleme
 		this.resourceGooruOid = resourceGooruOid;
 		clearTagsContainer(true);
 		setCurrentTagsDispalyCount(0);
-		getUiHandlers().getResourceTags(resourceGooruOid,offSet,limit);
+		getUiHandlers().getResourceTags(resourceGooruOid,offSet,limit,true);
 		
 	}
 

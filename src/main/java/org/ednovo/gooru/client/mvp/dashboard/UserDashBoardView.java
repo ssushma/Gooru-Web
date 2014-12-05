@@ -38,10 +38,14 @@ package org.ednovo.gooru.client.mvp.dashboard;
 * Reviewer Gooru Team
 *
 */
+import java.util.Map;
+
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.util.ProfileAnalyticsChat;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
+import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -55,7 +59,7 @@ import com.google.inject.Inject;
 
 public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandlers> implements IsUserDashBoardView{
 	
-	@UiField HTMLPanel CollectionsPublishedWidget,ResourceAddedWidget,commentsMadeWIdget,endorsementsGivenWidget,reviewsWrittenWidget,
+	@UiField HTMLPanel profileActivityBreakDown,CollectionsPublishedWidget,ResourceAddedWidget,commentsMadeWIdget,endorsementsGivenWidget,reviewsWrittenWidget,
 	topRemixedCollectionsWidget,topEndorsedCollectionsWidget,fiveStarRatedResourcesWidget,reactionsWidgetPanel,reactionsGivenWidget,ratingsGivenWidget,googleMapContainer;
 	@UiField HTMLEventPanel profileAnalyticsGrageContainer;
 	
@@ -72,22 +76,18 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	
 	public interface Binder extends UiBinder<Widget, UserDashBoardView> {
 	}
-
+	ProfileAnalyticsChat profileAnalyticChat=new ProfileAnalyticsChat();
 	@Inject
 	public UserDashBoardView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		ResourceAddedWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(132)),new Label("Resources Added")));
-		commentsMadeWIdget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(85)),new Label("Comments Made")));
 		endorsementsGivenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(26)),new Label("endorsements given")));
-		reviewsWrittenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(121)),new Label("Reviews Written")));
 		topEndorsedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Endorsed Collections","Roman Poets","23 endorsments"));
 		topRemixedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Remixed Collections","Dogs","12 remixes"));
-		//fiveStarRatedResourcesWidget.add(new FiveStarRatings("fivestarRatings"));
-		//reactionsWidgetPanel.add(new FiveStarRatings("fivestarReviews"));
-		ratingsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("ratings"));
-		reactionsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("reactions"));
+
 		googleMapContainer.add(new GoogleMapWidget());
 		profileAnalyticsGrageContainer.add(new ProfileAnalyticsGradeWidget());
+		profileActivityBreakDown.add(profileAnalyticChat.createChart());
 	}
 
 	@Override
@@ -99,11 +99,31 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	}
 
 	@Override
+	public void setProfileAnalyticsFlaggedChatData(Map<String, Integer> result) {
+		profileAnalyticChat.updateProfileAnalyticsFlaggedChatData(result);
+	}
+	
+	@Override
+	public void setProfileAnalyticsSharedChatData(Map<String, Integer> result) {
+		profileAnalyticChat.updateProfileAnalyticsSharedChatData(result);
+	}
+
+	@Override
+	public void setProfileAnalyticsViewsChatData(Map<String, Integer> result) {
+		profileAnalyticChat.updateProfileAnalyticsViewsChatData(result);
+	}
+	
+	@Override
+	public void setProfileAnalyticsAddedCollectionChatData(Map<String, Integer> result) {
+		profileAnalyticChat.updateProfileAnalyticsAddedToCollectionChatData(result);
+	}
+	
 	public void setPublishedCollectionData(UserDashBoardCommonInfoDO result) {
 		CollectionsPublishedWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getContent().get(0).getPublishedCollection())),new Label("Collections Published")));
 	}
 
 	@Override
+
 	public void getFiveStarRatedResults(UserDashBoardCommonInfoDO result) {
 		fiveStarRatedResourcesWidget.add(new FiveStarRatings("fivestarRatings",result));
 	}
@@ -111,5 +131,18 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	@Override
 	public void getFiveStarReviewedResources(UserDashBoardCommonInfoDO result) {
 		reactionsWidgetPanel.add(new FiveStarRatings("fivestarReviews",result));
+	}
+
+	public void setProfileRatingsData(ProfileRatingsReactionsDO result) {
+		commentsMadeWIdget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getCommentCount())),new Label("Comments Made")));
+		reviewsWrittenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getReviewCount())),new Label("Reviews Written")));
+		
+		ratingsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("ratings",result));
+	}
+
+	@Override
+	public void setProfileReationsData(ProfileRatingsReactionsDO result) {
+		reactionsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("reactions",result));
+
 	}
 }

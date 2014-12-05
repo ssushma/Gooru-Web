@@ -32,6 +32,7 @@ import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
+import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
@@ -116,12 +117,14 @@ public interface UserServiceAsync extends BaseServiceAsync {
    
    void isValidResetPasswordLink(String resetToken,AsyncCallback<String> callback);
    
+   void getTheAnalyticsFlaggedMonthlyData(String fieldVal,String StartDate,String endDate,String operator,AsyncCallback<Map<String, Integer>> callback);
+  
    void getUsersPublishedCollectionsCount(AsyncCallback<UserDashBoardCommonInfoDO> callback);
-   
+
    void getFiveStarRatedResources(AsyncCallback<UserDashBoardCommonInfoDO> callback);
    
    void getFiveStarReviewdResources(AsyncCallback<UserDashBoardCommonInfoDO> callback);
-   
-   
-   
+  
+   void getProfileAnalyticsRatings(AsyncCallback<ProfileRatingsReactionsDO> callback);
+
 }

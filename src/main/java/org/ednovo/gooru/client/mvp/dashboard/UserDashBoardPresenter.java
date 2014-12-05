@@ -38,14 +38,19 @@ package org.ednovo.gooru.client.mvp.dashboard;
  * Reviewer Gooru Team
  *
  */
+import java.util.Date;
+import java.util.Map;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
+import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
@@ -53,9 +58,7 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
-public class UserDashBoardPresenter
-		extends
-		BasePlacePresenter<IsUserDashBoardView, UserDashBoardPresenter.IsUserDashBoardProxy>
+public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardView, UserDashBoardPresenter.IsUserDashBoardProxy>
 		implements UserDashBoardUiHandlers {
 	
 	@Inject
@@ -68,7 +71,15 @@ public class UserDashBoardPresenter
 
 	}
 	private MessageProperties i18n = GWT.create(MessageProperties.class);
-
+	
+	private static final String DATE_FORMAT="yyyy-MM-dd";
+	private static final String FLAGGED="item.flag";
+	private static final String SHARED="item.share";
+	private static final String ADDCOLLECTION="item.create";
+	private static final String VIEWS="collection.resource.play,resource.play";
+	private static final String EQ_OPERATOR="eq";
+	private static final String IN_OPERATOR="in";
+	
 	@Inject
 	public UserDashBoardPresenter(final IsUserDashBoardView view,
 			final IsUserDashBoardProxy proxy) {
@@ -119,16 +130,90 @@ public class UserDashBoardPresenter
 		super.onBind();
 		Window.enableScrolling(true);
 		displayDashBoardPage();
+		setData();
+	}
+	public void setData(){
+	    	DateTimeFormat fmt = DateTimeFormat.getFormat (DATE_FORMAT);
+	    	String endDate = fmt.format(new Date());
+	    	Date date = new Date();
+	    	date.setMonth(date.getMonth()-12);
+	    	String startDate =fmt.format(date);
+	    	AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(FLAGGED,startDate,endDate,EQ_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
+				
+				@Override
+				public void onSuccess(Map<String, Integer> result) {
+					getView().setProfileAnalyticsFlaggedChatData(result);
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+			});
+	    	AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(SHARED,startDate,endDate,EQ_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
+			
+			@Override
+			public void onSuccess(Map<String, Integer> result) {
+				getView().setProfileAnalyticsSharedChatData(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+	    	});
+	    	AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(ADDCOLLECTION,startDate,endDate,EQ_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
+			
+			@Override
+			public void onSuccess(Map<String, Integer> result) {
+				getView().setProfileAnalyticsAddedCollectionChatData(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+	    	});
+	    	AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(VIEWS,startDate,endDate,IN_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
+			
+				@Override
+				public void onSuccess(Map<String, Integer> result) {
+					getView().setProfileAnalyticsViewsChatData(result);
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+	    	});
+	    	AppClientFactory.getInjector().getUserService().getProfileAnalyticsRatings(new AsyncCallback<ProfileRatingsReactionsDO>() {
+				
+				@Override
+				public void onSuccess(ProfileRatingsReactionsDO result) {
+					getView().setProfileRatingsData(result);
+					getView().setProfileReationsData(result);
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+			});
 	}
 	@Override
 	protected void onHide() {
 		super.onHide();
 	}
-	public UserServiceAsync getUserService() {
-		return userService;
-	}
 	@Override
 	public String getViewToken() {
 		return null;
+	}
+
+	public UserServiceAsync getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserServiceAsync userService) {
+		this.userService = userService;
 	}
 }

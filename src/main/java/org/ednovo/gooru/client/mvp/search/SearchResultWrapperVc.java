@@ -29,6 +29,9 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceReviewCountEvent;
+import org.ednovo.gooru.client.mvp.search.event.ResourceTagsCountUpdateEvent;
+import org.ednovo.gooru.client.mvp.search.event.ResourceTagsCountUpdateEventHandler;
 import org.ednovo.gooru.client.mvp.search.resource.ResourceSearchPresenter;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.UcCBundle;
@@ -219,6 +222,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		}
 		
 		tagsLinkFocPanel.setVisible(true);
+		AppClientFactory.getEventBus().addHandler(ResourceTagsCountUpdateEvent.TYPE,updateTagscount);
 		
 		dragHandleFocPanel.getElement().setId("focuspnlDragHandleFocPanel");
 		contentSimPanel.getElement().setId("spnlContentSimPanel");
@@ -604,6 +608,16 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		});
 
 	}
+	
+	
+	ResourceTagsCountUpdateEventHandler updateTagscount = new ResourceTagsCountUpdateEventHandler() {
+		
+		@Override
+		public void updateTotalTagsCount(int totalTagsCount) {
+			tagsLbl.setText(i18n.GL3048()+" "+i18n.GL_SPL_OPEN_SMALL_BRACKET()+totalTagsCount+i18n.GL_SPL_CLOSE_SMALL_BRACKET());  
+		}
+	};
+	
 
 
 	/**

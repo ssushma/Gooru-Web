@@ -169,13 +169,12 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 		
 		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("iPad_friendly") ? true : false : true;
 		//boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? false : true : true;
-		
+		resourceTitleLbl.getElement().getStyle().setFloat(Float.LEFT);
+		resourceTitleContainer.getElement().getStyle().setFloat(Float.LEFT);
 		if (resourceTitleLbl.getText().length() > 30){
 			resourceTitleLbl.getElement().getStyle().setWidth(210, Unit.PX);
-			resourceTitleLbl.getElement().getStyle().setFloat(Float.LEFT);
 		}else{
 			resourceTitleLbl.getElement().getStyle().clearWidth();
-			resourceTitleLbl.getElement().getStyle().clearFloat();
 		}
 		
 		imgNotFriendly.addMouseOverHandler(new MouseOverHandler() {
@@ -222,11 +221,11 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 
 		imgOER.setVisible(oerVisibility);
 		
-		if (setVisibility || oerVisibility){
-			resourceTitleContainer.getElement().getStyle().setFloat(Float.LEFT);
-		}else{
-			resourceTitleContainer.getElement().getStyle().clearFloat();
-		}
+//		if (setVisibility || oerVisibility){
+//			resourceTitleContainer.getElement().getStyle().setFloat(Float.LEFT);
+//		}else{
+//			resourceTitleContainer.getElement().getStyle().clearFloat();
+//		}
 
 		
 		setAvgRatingWidget(resourceSearchResultDo);

@@ -306,7 +306,7 @@ public class HeaderUc extends Composite implements
 	Label lblBeta; // gooruClassicViewLbl
 
 	@UiField
-	public static HTMLPanel dotsPanel, mainDotsPanel, mainInnerDotsPanel,dropDownImg;
+	public static HTMLPanel dotsPanel, mainDotsPanel, mainInnerDotsPanel,dropDownImg,dropDownImgforDashboard;
 
 	@UiField
 	Label discoverLink, organizeLink, teachLink, studyLink, loggedInfoLbl,thanksLbl;
@@ -506,11 +506,21 @@ public class HeaderUc extends Composite implements
 		teachLinkMain.addMouseOverHandler(new TeachMouseOver());
 		teachLinkMain.addMouseOutHandler(new TeachMouseOut());
 		
-		LoginLinkContainer
-		.addClickHandler(new OnClickDashBoardEventHandler());
+/*		loggedInfoLbl
+		.addClickHandler(new OnClickDashBoardEventHandler());*/
 
 
-		dashBoardToolTip=new DashBoardToolTip();
+		dashBoardToolTip=new DashBoardToolTip() {
+			
+			@Override
+			public void fireSelectionEvent() {
+				if (!AppClientFactory.isAnonymous()){
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.DASHBOARD);
+					manageDotsMenuSelection(loggedInfoLbl);
+				}
+				
+			}
+		};
 		dashBoardToolTip.getElement().getStyle().setBackgroundColor("transparent");
 		dashBoardToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		dashBoardToolTip.getElement().getStyle().setZIndex(99);
@@ -613,6 +623,7 @@ public class HeaderUc extends Composite implements
 		
 
 		dropDownImg.getElement().setId("pnlDropDownImg");
+		dropDownImgforDashboard.getElement().getStyle().setMarginTop(14, Unit.PX);
 		signUpInfo.getElement().setId("fpnlSignUpInfo");
 		logoutDownArrowLbl.getElement().setId("lblLogoutDownArrow");
 		logInfoFloPanel.getElement().setId("fpnlLogInfoFloPanel");
@@ -852,7 +863,7 @@ public class HeaderUc extends Composite implements
 
 	public void manageDotsMenuSelection(Label dotsLink) {
 
-		for (int i = 1; i < 4; i++) {
+		for (int i = 1; i <=5; i++) {
 
 			if (userDo != null
 					&& !userDo.getUserUid().equals(
@@ -1284,7 +1295,7 @@ public class HeaderUc extends Composite implements
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
 	 */
-	@UiHandler("LoginLinkContainer")
+	@UiHandler("loggedInfoLbl")
 	public void signoutPanel(ClickEvent clickEvent) {
 
 		/*
@@ -2082,11 +2093,13 @@ public class HeaderUc extends Composite implements
 	    //stadardCode=stadardCodeId;
 	}
 
-	public static void setStandardsCode(String stadardCodeId){
+	public static void setStandardsCode(String stadardCodeId, int id, String code){
 		stadardCode=stadardCodeId;
-	}
-	
-	
+		/*SearchFilterVc searchFilterVc= new SearchFilterVc(true);
+		System.out.println("id::"+id);
+		System.out.println("code::"+code	);
+		searchFilterVc.setUpdatedBrowseStandarsCode(stadardCodeId,id,code);*/	
+		}
 }
 
 

@@ -6,7 +6,7 @@
 		/* Add CSS here. See the GWT docs on UI Binder for more
 		details */
 		.searchPop{
-		width:335px;
+		width:360px;
 		border: 1px solid #cacaca;
 		box-shadow:0 0 10px rgba(0, 0, 0, 0.1);
 		}
@@ -65,16 +65,18 @@
 		}
 
 		.searchPopGrade{
-		border-right: 1px solid #cacaca;
+		box-sizing: border-box;
 		box-sizing:
 		border-box;
 		float: left;
-		margin-right: 4%;
-		width: 57%;
+		width: 50%;
 		padding-top:12px;
 		}
 		.searchPopSubject{
-		width:35%;
+		width:50%;
+		border-left: 1px solid #cacaca;
+		padding-left: 4%;
+		height: 155px;
 		box-sizing:border-box;
 		-moz-box-sizing:border-box;
 		-webkit-box-sizing:border-box;
@@ -107,6 +109,9 @@
 		}
 		.checkBoxContaner label{
 		vertical-align:middle;
+		font-weight: normal !important;
+		margin-bottom: 0px !important;
+		margin-left:2px;
 		}
 
 		.checkBoxContaner{
