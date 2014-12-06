@@ -106,8 +106,19 @@ import com.google.inject.Provider;
 import com.gwtplatform.mvp.client.googleanalytics.GoogleAnalyticsImpl;
 
 /**
- * @author Search Team
  * 
+ * @fileName : AppInjector.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 @GinModules({ AppModule.class, ServiceModule.class })
 public interface AppInjector extends ServiceInjector {
