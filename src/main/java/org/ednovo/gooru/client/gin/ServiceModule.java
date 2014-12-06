@@ -36,8 +36,19 @@ import org.ednovo.gooru.client.service.UserServiceAsync;
 import com.google.inject.Singleton;
 
 /**
- * @author Search Team
  * 
+ * @fileName : ServiceModule.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public class ServiceModule extends AppPresenterModule {
 

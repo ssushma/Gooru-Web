@@ -40,8 +40,19 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Label;
 
 /**
- * @author DOTS
+ * 
+ * @fileName : SignupGradeLabel.java
  *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author tumbalam
+ *
+ * @Reviewer:
  */
 public class SignupGradeLabel extends Anchor implements ClickHandler {
 	
@@ -77,7 +88,25 @@ public class SignupGradeLabel extends Anchor implements ClickHandler {
 			this.addStyleName(LoginPopUpCBundle.INSTANCE.css().activeGrade());
 		}
 	}
-	
+	/**
+	 * 
+	 * @function updateGrade 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param grade
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void updateGrade(String grade){
 		AppClientFactory.getInjector().getProfilePageService().addGradeUserProfile(grade, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
 				@Override
@@ -86,7 +115,25 @@ public class SignupGradeLabel extends Anchor implements ClickHandler {
 				}
 		});
 	}
-
+	/**
+	 * 
+	 * @function removeGrade 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param grade
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void removeGrade(String grade){
 		AppClientFactory.getInjector().getProfilePageService().deleteGradeUserProfile(grade, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
 				@Override

@@ -49,9 +49,7 @@ import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Clear;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
@@ -508,7 +506,25 @@ public abstract class CreateAccountUc extends PopupPanel{
 			}
 		});
 	}
-
+	/**
+	 * 
+	 * @function validateUserInput 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : boolean
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public boolean validateUserInput() {
 		boolean isValid = true;
 		lblPleaseWait.setVisible(true);
@@ -743,7 +759,25 @@ public abstract class CreateAccountUc extends PopupPanel{
 		}
 		return isValid;
 	}
-
+	/**
+	 * 
+	 * @function setUiAndIds 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void setUiAndIds() {
 		lblPleaseFill.getElement().setId("lblPleaseFill");
 		if (account != null) {
@@ -1114,7 +1148,21 @@ public abstract class CreateAccountUc extends PopupPanel{
 		}
 
 	}
-
+	/**
+	 * 
+	 * @fileName : CreateAccountUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnMouseOver implements MouseOverHandler {
 
 		@Override
@@ -1134,7 +1182,21 @@ public abstract class CreateAccountUc extends PopupPanel{
 			}
 		}
 	}
-
+	/**
+	 * 
+	 * @fileName : CreateAccountUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnMouseOut implements MouseOutHandler {
 
 		@Override
@@ -1146,7 +1208,21 @@ public abstract class CreateAccountUc extends PopupPanel{
 		}
 
 	}
-
+	/**
+	 * 
+	 * @fileName : CreateAccountUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnBlurHandler implements BlurHandler {
 
 		@Override
@@ -1231,7 +1307,21 @@ public abstract class CreateAccountUc extends PopupPanel{
 			}
 		}
 	}
-
+	/**
+	 * 
+	 * @fileName : CreateAccountUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnKeyUpHandler implements KeyUpHandler {
 
 		@Override
@@ -1317,7 +1407,21 @@ public abstract class CreateAccountUc extends PopupPanel{
 		
 		return isAvailable;
 	}
-
+	/**
+	 * 
+	 * @fileName : CreateAccountUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class MouseOverEventQuestion implements MouseOverHandler{
 
 		@Override
@@ -1328,7 +1432,21 @@ public abstract class CreateAccountUc extends PopupPanel{
 		}
 		
 	}
-	
+	/**
+	 * 
+	 * @fileName : CreateAccountUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class MouseOutEventQuestion implements MouseOutHandler{
 
 		@Override
@@ -1378,7 +1496,21 @@ public abstract class CreateAccountUc extends PopupPanel{
 				});
 			return isValidEmailId;
 	}
-
+	/**
+	 * 
+	 * @fileName : CreateAccountUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class DateValueChange implements ClickHandler{
 
 		@Override
@@ -1416,7 +1548,21 @@ public abstract class CreateAccountUc extends PopupPanel{
 		}
 		
 	}
-	
+	/**
+	 * 
+	 * @fileName : CreateAccountUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnDateFocus implements FocusHandler {
 		@Override
 		public void onFocus(FocusEvent event) {
@@ -1430,7 +1576,21 @@ public abstract class CreateAccountUc extends PopupPanel{
 
 		}
 	}
-
+	/**
+	 * 
+	 * @fileName : CreateAccountUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnDoneClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -1469,7 +1629,21 @@ public abstract class CreateAccountUc extends PopupPanel{
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @fileName : CreateAccountUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnDateBlur implements BlurHandler {
 		@Override
 		public void onBlur(BlurEvent event) {
@@ -1502,7 +1676,26 @@ public abstract class CreateAccountUc extends PopupPanel{
 			}
 		}
 	}
-
+	/**
+	 * 
+	 * @function getAge 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param birthDate
+	 * @parm(s) : @return
+	 * 
+	 * @return : int
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private int getAge(Date birthDate) {
 		if (birthDate != null) {
 			long ageInMillis = new Date().getTime() - birthDate.getTime();
@@ -1613,7 +1806,21 @@ public abstract class CreateAccountUc extends PopupPanel{
 	}
 
 	public abstract void closePoup();
-	
+	/**
+	 * 
+	 * @fileName : CreateAccountUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class CheckProfanityInOnBlur implements BlurHandler{
 		private TextBox textBox;
 		private Label label;
@@ -1675,7 +1882,21 @@ public abstract class CreateAccountUc extends PopupPanel{
 			});
 		}
 	}
-	
+	/**
+	 * 
+	 * @fileName : CreateAccountUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class MouseoverQuestion implements MouseOverHandler{
 
 		@Override
@@ -1685,6 +1906,21 @@ public abstract class CreateAccountUc extends PopupPanel{
 		}
 		
 	}
+	/**
+	 * 
+	 * @fileName : CreateAccountUc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class MouseOutQuestion implements MouseOutHandler{
 
 		@Override

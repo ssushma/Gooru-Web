@@ -56,7 +56,21 @@ import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.gwtplatform.mvp.client.DelayedBindRegistry;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-
+/**
+ * 
+ * @fileName : GooruEntry.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class GooruEntry implements EntryPoint {
 
 	private final AppInjector appInjector = GWT.create(AppInjector.class);

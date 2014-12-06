@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.mvp.classpages;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -65,8 +64,6 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.ScrollEvent;
-import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -75,12 +72,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -413,7 +405,21 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 */		// inLineLblCreateOne.setText(MessageProperties.GL0120);
 		lblTitle.getElement().setId("lblTitle");
 	}
-
+	/**
+	 * 
+	 * @fileName : ClasspageListVc.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 06-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class OnEnterClassCodeClick implements ClickHandler {
 
 		@Override
@@ -795,7 +801,27 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 					title, listClasspage.get(i), false));
 		}*/
 	}
-	
+	/**
+	 * 
+	 * @function createTitle 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param title
+	 * @parm(s) : @param classpageOwnerId
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private String createTitle(String title, String classpageOwnerId){
 		String tmptitle = "";
 		title = title.length() >= 18 ? title.substring(0, 18) + "..." : title;
@@ -1118,7 +1144,25 @@ public class ClasspageListVc extends Composite implements HasMouseOutHandlers{
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
 		}
 	}
-
+	/**
+	 * 
+	 * @function setButtonStatus 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param status
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void setButtonStatus(String status) {
 		if (status.equalsIgnoreCase("active")) {
 			enterLbl.getElement().removeClassName("disabled");

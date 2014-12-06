@@ -52,7 +52,21 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-
+/**
+ * 
+ * @fileName : ThanksPopupUc.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class ThanksPopupUc extends PopupPanel{
  
 	@UiField Label lblLoginHeading, lblCongratsHeader,lblCheckYourEmail,lblWhatsNext,lblLearnHowTo; //lblDiscover,lblOrganize,lblTeach
@@ -288,7 +302,25 @@ public class ThanksPopupUc extends PopupPanel{
 		hide();
 		startCreatingStudent();
 	}
-	
+	/**
+	 * 
+	 * @function startCreatingStudent 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void startCreatingStudent(){
 		String externalId = AppClientFactory.getLoggedInUser().getExternalId();
 		String email = AppClientFactory.getLoggedInUser().getEmailId();

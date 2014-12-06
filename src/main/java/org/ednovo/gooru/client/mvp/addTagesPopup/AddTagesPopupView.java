@@ -1,3 +1,28 @@
+/*******************************************************************************
+ * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+ * 
+ *  http://www.goorulearning.org/
+ * 
+ *  Permission is hereby granted, free of charge, to any person obtaining
+ *  a copy of this software and associated documentation files (the
+ *  "Software"), to deal in the Software without restriction, including
+ *  without limitation the rights to use, copy, modify, merge, publish,
+ *  distribute, sublicense, and/or sell copies of the Software, and to
+ *  permit persons to whom the Software is furnished to do so, subject to
+ *  the following conditions:
+ * 
+ *  The above copyright notice and this permission notice shall be
+ *  included in all copies or substantial portions of the Software.
+ * 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ ******************************************************************************/
+
 package org.ednovo.gooru.client.mvp.addTagesPopup;
 
 import java.util.ArrayList;
@@ -42,7 +67,6 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -52,6 +76,21 @@ import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * 
+ * @fileName : AddTagesPopupView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public abstract class AddTagesPopupView extends PopupPanel implements SelectionHandler<SuggestOracle.Suggestion>{
 
 	public PopupPanel appPopUp;
@@ -470,6 +509,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		};
 		RootPanel.get().addDomHandler(tagHandler, ClickEvent.getType());
 	}
+	/**
+	 * 
+	 * @function initializeAutoSuggestedBox 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void initializeAutoSuggestedBox(){
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
@@ -541,6 +599,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		};
 		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
 	}
+	/**
+	 * 
+	 * @function setStandardSuggestions 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param standardSearchDo
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
 		standardSuggestOracle.clear();
 		this.standardSearchDo = standardSearchDo;
@@ -776,6 +853,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			level12.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 	}
+	/**
+	 * 
+	 * @function removeClassNameForAllEducationalUse 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void removeClassNameForAllEducationalUse(){
 		 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 		 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
@@ -973,7 +1069,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		isCancelclicked=true;
 		closePoup(isCancelclicked);
 	}
-	
+	/**
+	 * 
+	 * @function OpenMediaFeatureDropdown 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void OpenMediaFeatureDropdown() {
 		isClickedOnDropDwn=true;
 		if (spanelMediaFeaturePanel.isVisible()){
@@ -982,6 +1096,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			spanelMediaFeaturePanel.setVisible(true);
 		}
 	}
+	/**
+	 * 
+	 * @function removeClassNameForAllAds 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void removeClassNameForAllAds(){
 		noAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 		modAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
@@ -1036,7 +1169,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());		
 		}
 	}
-	
+	/**
+	 * 
+	 * @function removeClassNamesForAllAccessHazard 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void removeClassNamesForAllAccessHazard(){
 		soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 		flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
@@ -1158,7 +1309,26 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		
 		deleteTagsServiceRequest(tagListGlobal.toString(), tagList.toString());
 	}
-	
+	/**
+	 * 
+	 * @function addTagsServiceRequest 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param frameTagsStr
+	 * @parm(s) : @param resourceId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void addTagsServiceRequest(String frameTagsStr, String resourceId){
 		
 		AppClientFactory.getInjector().getResourceService().addTagsToResource(resourceId, frameTagsStr, new SimpleAsyncCallback<List<ResourceTagsDo>>() {
@@ -1171,6 +1341,26 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		});
 	
 	}
+	/**
+	 * 
+	 * @function deleteTagsServiceRequest 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param frameTagsStr
+	 * @parm(s) : @param addingNewTags
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void deleteTagsServiceRequest(String frameTagsStr, final String addingNewTags)
 	{
 		AppClientFactory.getInjector().getResourceService().deleteTagsServiceRequest(resourceId, frameTagsStr, new SimpleAsyncCallback<Void>() {
@@ -1182,6 +1372,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			}
 		});
 	}
+	/**
+	 * 
+	 * @function getTagsServiceRequest 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param resourceId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void getTagsServiceRequest(String resourceId)
 	{
 		AppClientFactory.getInjector().getResourceService().getTagsToResource(resourceId, new SimpleAsyncCallback<List<ResourceTagsDo>>() {
@@ -1191,6 +1400,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			}
 		});
 	}
+	/**
+	 * 
+	 * @function bindObjectsToUI 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param resultResourceTags
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void bindObjectsToUI(List<ResourceTagsDo> resultResourceTags)
 	{
 		tagListGlobal.clear();
@@ -1228,6 +1456,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			}
 		}
 	}
+	/**
+	 * 
+	 * @function setMobileFriendlyObjectVal 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param mobileFriendlyVal
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setMobileFriendlyObjectVal(String mobileFriendlyVal)
 	{
 		if(mobileFriendlyVal.contains(mobileYes.getText()))
@@ -1241,6 +1488,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
 		}
 	}
+	/**
+	 * 
+	 * @function setMediaFeatureObjectVal 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param mediaFeatureVal
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setMediaFeatureObjectVal(String mediaFeatureVal)
 	{
 		if(mediaFeatureVal != null)
@@ -1249,12 +1515,50 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			lblMediaPlaceHolder.setText(mediaFeatureVal);
 		}
 	}
+	/**
+	 * 
+	 * @function setStandardObjectVal 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param standardStr
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setStandardObjectVal(String standardStr)
 	{
 		String[] standardArray=standardStr.split(":");
 		//standardsDo.add(standardArray[1]);
 		addStandard(standardArray[1], "0");
 	}
+	/**
+	 * 
+	 * @function setAccessHazardObjectVal 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param accessHazardStr
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setAccessHazardObjectVal(String accessHazardStr)
 	{
 		String[] stringArry=accessHazardStr.split(":");
@@ -1273,6 +1577,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			}
 		}
 	}
+	/**
+	 * 
+	 * @function setAdsObjectVal 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param adsStr
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setAdsObjectVal(String adsStr)
 	{
 		if(adsStr.contains(noAds.getText()))
@@ -1288,6 +1611,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 	}
+	/**
+	 * 
+	 * @function setLexileObjectVal 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param lexileStr
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setLexileObjectVal(String lexileStr)
 	{
 		if(lexileStr.contains(kindergarden.getText()))
@@ -1349,7 +1691,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			level12.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 	}
-	
+	/**
+	 * 
+	 * @function setEducationalObjectVal 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param educationalStr
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setEducationalObjectVal(String educationalStr)
 	{
 		if(educationalStr.contains(activity.getText()))
@@ -1413,7 +1773,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			book.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 	}
-	
+	/**
+	 * 
+	 * @function setAdsString 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public String setAdsString()
 	{
 		String adsStr = "";
@@ -1433,7 +1811,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		
 		return adsStr;
 	}
-	
+	/**
+	 * 
+	 * @function setAccessHazards 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : String[]
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public String[] setAccessHazards()
 	{
 		String[] accessHazardsArr = null;
@@ -1458,7 +1854,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		accessHazardsArr = accessHazardsSelected.toArray(new String[accessHazardsSelected.size()]);
 		return accessHazardsArr;
 	}
-	
+	/**
+	 * 
+	 * @function setEducationalUseString 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : String[]
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public String[] setEducationalUseString()
 	{
 		String[] educationalUseArr = null;
@@ -1542,7 +1956,25 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		educationalUseArr = educationalUseSelected.toArray(new String[educationalUseSelected.size()]);
 		return educationalUseArr;
 	}
-	
+	/**
+	 * 
+	 * @function setLexileLevel 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : String[]
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public String[] setLexileLevel()
 	{
 		String[] lexileLevelArr = null;

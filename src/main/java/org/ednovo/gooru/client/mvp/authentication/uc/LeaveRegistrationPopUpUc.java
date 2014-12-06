@@ -49,7 +49,21 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-
+/**
+ * 
+ * @fileName : LeaveRegistrationPopUpUc.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class LeaveRegistrationPopUpUc extends PopupPanel{
 
 	private static LeaveRegistrationPopUpUcUiBinder uiBinder = GWT
@@ -96,7 +110,25 @@ public class LeaveRegistrationPopUpUc extends PopupPanel{
 		
 		setUiAndIds();
 	}
-
+	/**
+	 * 
+	 * @function setUiAndIds 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setUiAndIds() {
 		lblTitle.setText(i18n.GL0480()
 				+ i18n.GL_SPL_QUESTION());
