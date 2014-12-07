@@ -25,9 +25,41 @@
 package org.ednovo.gooru.client.mvp.classpages.home;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-
+/**
+ * 
+ * @fileName : IsClassHomeView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public interface IsClassHomeView extends IsViewWithHandlers<ClassHomeUiHandlers>  {
-
+	/**
+	 * 
+	 * @function callServiceRequestsToBindData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void callServiceRequestsToBindData();
 
 	
