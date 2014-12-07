@@ -51,7 +51,21 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-
+/**
+ * 
+ * @fileName : MembersViewVc.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author tumbalam
+ *
+ * @Reviewer:
+ */
 public abstract class MembersViewVc extends Composite {
 
 	private static MembersViewVcUiBinder uiBinder = GWT.create(MembersViewVcUiBinder.class);
@@ -125,7 +139,25 @@ public abstract class MembersViewVc extends Composite {
 	public void onLoad() {
 //		setDebugId();
 	}
-
+	/**
+	 * 
+	 * @function setDebugId 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setDebugId() {
 		String emailId = collaboratorsDo.getEmailId() != null ? collaboratorsDo.getEmailId() : null;
 		String email = collaboratorsDo.getEmail() != null ? collaboratorsDo.getEmail() : null;
@@ -190,11 +222,48 @@ public abstract class MembersViewVc extends Composite {
 		imgProfileImage.getElement().setId("imgProfileImage");
 	
 	}
-	
+	/**
+	 * 
+	 * @function removeThisFromParent 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void removeThisFromParent(){		
 		this.removeFromParent();
 	}
-	
+	/**
+	 * 
+	 * @function setCollabCount 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param count
+	 * @parm(s) : @param type
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public abstract void setCollabCount(int count, String type);
 	
 	@UiHandler("btnRemove")
