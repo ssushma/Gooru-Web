@@ -24,20 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.dashboard;
 
-/**
- * @fileName : UserSettingsPresenter.java 
- *
- * @description : 
- *
- * @version :1.0
- *
- * @date: APR 18 2013
 
- * @Author Gooru Team 
- * 
- * Reviewer Gooru Team
- *
- */
 import java.util.Date;
 import java.util.Map;
 
@@ -57,7 +44,21 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-
+/**
+ * 
+ * @fileName : UserDashBoardPresenter.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardView, UserDashBoardPresenter.IsUserDashBoardProxy>
 		implements UserDashBoardUiHandlers {
 	
@@ -92,7 +93,25 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 	public void onReveal() {
 		Window.enableScrolling(true);
 	}
-
+	/**
+	 * 
+	 * @function displayDashBoardPage 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void displayDashBoardPage() {
 		
 		
@@ -139,6 +158,25 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 		displayDashBoardPage();
 		setData();
 	}
+	/**
+	 * 
+	 * @function setData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setData(){
 	    	DateTimeFormat fmt = DateTimeFormat.getFormat (DATE_FORMAT);
 	    	String endDate = fmt.format(new Date());

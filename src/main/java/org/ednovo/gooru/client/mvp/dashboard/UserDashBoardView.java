@@ -23,21 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.dashboard;
-/**
 
-
-*
-* @description : 
-*
-* @version :1.0
-*
-* @date: APR 19 2013
-   	
-* @Author Gooru Team
-* 
-* Reviewer Gooru Team
-*
-*/
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -56,7 +42,21 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
 
-
+/**
+ * 
+ * @fileName : UserDashBoardView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandlers> implements IsUserDashBoardView{
 	
 	@UiField HTMLPanel profileActivityBreakDown,CollectionsPublishedWidget,ResourceAddedWidget,commentsMadeWIdget,endorsementsGivenWidget,reviewsWrittenWidget,
@@ -94,7 +94,25 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	public void dispalyDashBoardHomePage() {
 		
 	}
-	
+	/**
+	 * 
+	 * @function setGraphData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setGraphData(){
 	}
 
@@ -117,7 +135,9 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	public void setProfileAnalyticsAddedCollectionChatData(Map<String, Integer> result) {
 		profileAnalyticChat.updateProfileAnalyticsAddedToCollectionChatData(result);
 	}
-	
+	/**
+	 * 
+	 */
 	public void setPublishedCollectionData(UserDashBoardCommonInfoDO result) {
 		CollectionsPublishedWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getContent().get(0).getPublishedCollection())),new Label("Collections Published")));
 	}
@@ -132,7 +152,9 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	public void getFiveStarReviewedResources(UserDashBoardCommonInfoDO result) {
 		reactionsWidgetPanel.add(new FiveStarRatings("fivestarReviews",result));
 	}
-
+	/**
+	 * 
+	 */
 	public void setProfileRatingsData(ProfileRatingsReactionsDO result) {
 		commentsMadeWIdget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getCommentCount())),new Label("Comments Made")));
 		reviewsWrittenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getReviewCount())),new Label("Reviews Written")));
