@@ -23,22 +23,6 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.dashboard;
-/**
-
-
-*
-* @description : 
-*
-* @version :1.0
-*
-* @date: APR 19 2013
-   	
-* @Author Gooru Team
-*
-* Reviewer Gooru Team
-*
-*/
-
 
 import org.ednovo.gooru.shared.i18n.MessageProperties;
 
@@ -49,7 +33,21 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-
+/**
+ * 
+ * @fileName : ProfileAnalyticsGradeWidget.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class ProfileAnalyticsGradeWidget extends Composite{
 	private static ProfileAnalyticsGradeWidgetUiBinder uiBinder = GWT
 			.create(ProfileAnalyticsGradeWidgetUiBinder.class);
@@ -83,6 +81,25 @@ public class ProfileAnalyticsGradeWidget extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		
 	}
+	/**
+	 * 
+	 * @function callaccrodian 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public native void callaccrodian()/*-{
 	   $wnd.callaccrodian();
 	}-*/;

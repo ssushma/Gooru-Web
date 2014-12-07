@@ -78,6 +78,11 @@ public class FiveStarRatings extends Composite{
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		DashBoardCBundle.INSTANCE.css().ensureInjected();
 	}
+	/**
+	 * 
+	 * @param val
+	 * @param userDashBoardCommonInfoDOObject
+	 */
 	public FiveStarRatings(String val,UserDashBoardCommonInfoDO userDashBoardCommonInfoDOObject) {
 		initWidget(uiBinder.createAndBindUi(this));
 		DashBoardCBundle.INSTANCE.css().ensureInjected();
@@ -129,7 +134,26 @@ public class FiveStarRatings extends Composite{
 			}
 		}
 	}
-	
+	/**
+	 * 
+	 * @function getResourceTypeImage 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param resourceType
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public String getResourceTypeImage(String resourceType){
 		if(resourceType.equalsIgnoreCase("Video")||resourceType.equalsIgnoreCase("Videos")){
 			return PlayerBundle.INSTANCE.getPlayerStyle().videoResourceTypeInfo();
