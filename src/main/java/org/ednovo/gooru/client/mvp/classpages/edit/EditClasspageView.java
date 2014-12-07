@@ -735,7 +735,25 @@ public class EditClasspageView extends
 		frameUrl.getElement().setId("ifFrameUrl");
 		newAssignmentAndMsgPanel.getElement().getStyle().setMarginTop(22, Unit.PX);
 	}
-	
+	/**
+	 * 
+	 * @function addSortEventToText 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void addSortEventToText(){
 		if(sortingOptionsList.size()>0){
 			for(int i=0;i < sortingOptionsList.size();i++){
@@ -748,13 +766,42 @@ public class EditClasspageView extends
 		}
 		
 	}
+	/**
+	 * 
+	 * @fileName : EditClasspageView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class SortDropDownEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
 			new CustomAnimation(dropDownListContainer).run(300);
 		}
 	}
-	
+	/**
+	 * 
+	 * @fileName : EditClasspageView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class SortAssignmentEvents implements ClickHandler{
 		private String sortType=null;
 		public SortAssignmentEvents(){}
@@ -805,7 +852,25 @@ public class EditClasspageView extends
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @function hideDropDown 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param event
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void hideDropDown(NativePreviewEvent event){
     	if(event.getTypeInt()==Event.ONCLICK){
     		Event nativeEvent = Event.as(event.getNativeEvent());
@@ -815,6 +880,26 @@ public class EditClasspageView extends
         	}
     	}
      }
+	/**
+	 * 
+	 * @function eventTargetsPopup 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param event
+	 * @parm(s) : @return
+	 * 
+	 * @return : boolean
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private boolean eventTargetsPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
@@ -886,7 +971,21 @@ public class EditClasspageView extends
 		}
 
 	}
-
+	/**
+	 * 
+	 * @fileName : EditClasspageView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class showEditPencil implements MouseOutHandler {
 
 		@Override
@@ -895,7 +994,21 @@ public class EditClasspageView extends
 		}
 
 	}
-
+	/**
+	 * 
+	 * @fileName : EditClasspageView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class OnEditImageClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -1037,7 +1150,25 @@ public class EditClasspageView extends
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 		getUiHandlers().addAssignmentsContainerPopup(getClasspageId());
 	}*/
-	
+	/**
+	 * 
+	 * @function setClasspageData 
+	 * 
+	 * @created_date : Jun 11, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param ClasspageDo classpageDo
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setClasspageData(ClasspageDo classpageDo){
 		this.classpageDo=classpageDo;
 		
@@ -1092,7 +1223,21 @@ public class EditClasspageView extends
 		
 		//txtClasspageCodeShare.setText(classpageDo.getClasspageCode().toUpperCase());
 	}
-	
+	/**
+	 * 
+	 * @fileName : EditClasspageView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class ClassCodeTextCopy implements ClickHandler{
 
 		@Override
@@ -1102,6 +1247,10 @@ public class EditClasspageView extends
 		}
 		
 	}
+	
+	/**
+	 * 
+	 */
 	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList1,String tab, String analyticsId, String monitorId,ClassListPresenter classlistPresenter,int assignmentsCount){
 		this.classlistPresenter = classlistPresenter;
 
@@ -1242,6 +1391,28 @@ public class EditClasspageView extends
 			getClassListContainer().setVisible(false);
 		}
 	}
+	
+	/**
+	 * 
+	 * @function showClasspageItem 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageItemDo
+	 * @parm(s) : @param sequenceNum
+	 * @parm(s) : @return
+	 * 
+	 * @return : CollectionsView
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public CollectionsView showClasspageItem(ClasspageItemDo classpageItemDo,int sequenceNum){
 		CollectionsView assignmentCollectionView = new CollectionsView(classpageItemDo,sequenceNum){
 			public void resetPagination(){
@@ -1269,7 +1440,25 @@ public class EditClasspageView extends
 		};
 		return assignmentCollectionView;
 	}
-	
+	/**
+	 * 
+	 * @function showCollectionsAfterDeletingCollection 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param pageNumber
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void showCollectionsAfterDeletingCollection(int pageNumber){
 		Map<String,String> params = new HashMap<String,String>();
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
@@ -1280,7 +1469,25 @@ public class EditClasspageView extends
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	}
-	
+	/**
+	 * 
+	 * @function restingPagination 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void restingPagination(){
 		setPagination();
 		if((pageNumber*limit)<totalHitCount){
@@ -1303,7 +1510,9 @@ public class EditClasspageView extends
 			}
 		}
 	}
-	
+	/**
+	 * 
+	 */
 	public void setClasspageItemOnTop(ClasspageItemDo classpageItemDo){
 		assignmentTabView = showClasspageItem(classpageItemDo,1);                             //TODO refresh the sequence....
 		totalHitCount++;
@@ -1323,7 +1532,25 @@ public class EditClasspageView extends
 		setPagination();
 		
 	}
-	
+	/**
+	 * 
+	 * @function setPagination 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setPagination(){
 		if(this.totalHitCount>5){
 			showPaginationButton();
@@ -1331,6 +1558,25 @@ public class EditClasspageView extends
 			clearPaginationButton();
 		}
 	}
+	/**
+	 * 
+	 * @function showPaginationButton 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void showPaginationButton(){
 		paginationFocPanel.clear();
 		paginationFocPanel1.clear();
@@ -1360,10 +1606,44 @@ public class EditClasspageView extends
 		}
 		//paginationFocPanel.add(seeMoreLabel);
 	}
+	/**
+	 * 
+	 * @function clearPaginationButton 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void clearPaginationButton(){
 		paginationFocPanel.clear();
 		paginationFocPanel1.clear();
 	}
+	/**
+	 * 
+	 * @fileName : EditClasspageView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	private class PaginationEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -1373,6 +1653,9 @@ public class EditClasspageView extends
 			getUiHandlers().getNextClasspageItems(((pageNumber-1)*limit),limit);
 		}
 	}
+	/**
+	 * 
+	 */
 	public void resetEditClasspageView(){
 		collectionTitleUc.setText("");
 		collectionTitleUc.getElement().removeAttribute("title");
@@ -1391,11 +1674,49 @@ public class EditClasspageView extends
 		pageNumber=1;
 
 	}
+	/**
+	 * 
+	 * @function setLoadingPanel 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : Label
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public Label setLoadingPanel(){
 		Label loadingImage=new Label();
 		loadingImage.setStyleName(EditClasspageCBundle.INSTANCE.css().loadingpanelImage());
 		return loadingImage;
 	}
+	/**
+	 * 
+	 * @function removeLoadingPanel 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void removeLoadingPanel(){
 		if(assignmentsContainerPanel.getWidgetCount()>0){
 			Widget loadingPanel=assignmentsContainerPanel.getWidget(assignmentsContainerPanel.getWidgetCount()-1);
@@ -1580,7 +1901,10 @@ public class EditClasspageView extends
 		} else {
 		}
 	}
-
+	
+	/**
+	 * 
+	 */
 	public void onDeleteAssignment(boolean isPostDeleteAssignment) {
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
@@ -1727,6 +2051,25 @@ public class EditClasspageView extends
 				classpage, RefreshType.UPDATE));
 
 	}
+	/**
+	 * 
+	 * @function frameAnalyticsUrl 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private static String frameAnalyticsUrl() {
 		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
 		String analyticsId = AppClientFactory.getPlaceManager().getRequestParameter("analyticsId");
@@ -1747,6 +2090,25 @@ public class EditClasspageView extends
 		return urlVal;
 	}
 	
+	/**
+	 * 
+	 * @function frameReportsUrl 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private static String frameReportsUrl() {
 		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
 
@@ -1756,7 +2118,25 @@ public class EditClasspageView extends
 			
 		return urlVal;
 	}
-	
+	/**
+	 * 
+	 * @function frameAnalyticsUrlForMonitor 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private static String frameAnalyticsUrlForMonitor() {
 
 		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
@@ -1845,6 +2225,21 @@ public class EditClasspageView extends
 			deleteConfirmVc.hide();
 		}
 	}
+	/**
+	 * 
+	 * @fileName : EditClasspageView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class AssignmentsTabClicked implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -1912,6 +2307,21 @@ public class EditClasspageView extends
 			}
 		}
 	}
+	/**
+	 * 
+	 * @fileName : EditClasspageView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class ClassListTabClicked implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -1953,7 +2363,21 @@ public class EditClasspageView extends
         }
 		}
 	}
-	
+	/**
+	 * 
+	 * @fileName : EditClasspageView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class reportsTabClicked implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -2005,6 +2429,25 @@ public class EditClasspageView extends
 	public FlowPanel getClassListContainer() {
 		return classListContainer;
 	}
+	/**
+	 * 
+	 * @function setAnalyticsData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public static void setAnalyticsData()
 	{
 
@@ -2018,6 +2461,25 @@ public class EditClasspageView extends
 		monitorProgress.setVisible(true);
 		monitorProgress.setText(i18n.GL1586());
 	}
+	/**
+	 * 
+	 * @function setAnalyticsMonitoringData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public static void setAnalyticsMonitoringData()
 	{
 
@@ -2071,7 +2533,21 @@ public class EditClasspageView extends
 					classpageProcess.get(i), classpageProcess.get(i).getSequenceNumber(), classpageProcess.get(0).getTotalHitCount()));
 		}
 	}
-	
+	/**
+	 * 
+	 * @fileName : EditClasspageView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class MouseOverShowClassCodeToolTip implements MouseOverHandler{
 
 		@Override
@@ -2085,7 +2561,21 @@ public class EditClasspageView extends
 		}
 
 	}
-
+	/**
+	 * 
+	 * @fileName : EditClasspageView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class MouseOutHideToolTip implements MouseOutHandler{
 
 		@Override
@@ -2093,7 +2583,25 @@ public class EditClasspageView extends
 			toolTipPopupPanelNew.hide();
 		}
 	}
-	
+	/**
+	 * 
+	 * @function addSortingOptionsToList 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void addSortingOptionsToList(){
 		sortingOptionsList.clear();
 		sortingOptionsList.add(i18n.GL1948());
@@ -2131,7 +2639,21 @@ public class EditClasspageView extends
 	public void hideNoAssignmentsMessagePanel(){
 		noAssignmentsMessagePanel.setVisible(false);
 	}
-	
+	/**
+	 * 
+	 * @fileName : EditClasspageView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: 07-Dec-2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class addAssignmentHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {

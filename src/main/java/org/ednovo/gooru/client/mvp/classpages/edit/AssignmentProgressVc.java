@@ -157,6 +157,25 @@ public class AssignmentProgressVc extends Composite{
 	    });
 		setId();
 	}
+	/**
+	 * 
+	 * @function setId 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setId(){
 		lblLineStart.getElement().setId("lblLineStart");
 		lblLineEnd.getElement().setId("lblLineEnd");
@@ -177,7 +196,12 @@ public class AssignmentProgressVc extends Composite{
 		studyButtonText.getElement().setId("btnStudy");
 		dueDateContainer.getElement().setId("pnlDueDateContainer");
 	}
-	
+	/**
+	 * 
+	 * @param isLastCollection
+	 * @param classpageItemDo
+	 * @param sequenceNumber
+	 */
 	public AssignmentProgressVc(boolean isLastCollection, final ClasspageItemDo classpageItemDo, int sequenceNumber) {
 		this.res = AssignmentProgressCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
@@ -226,7 +250,25 @@ public class AssignmentProgressVc extends Composite{
 	    });
 		setId();
 	}
-	
+	/**
+	 * 
+	 * @function updateDotsCircle 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param readStatus
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void updateDotsCircle(String readStatus){
 		classpageItemDo.setStatus(readStatus);
 		if(classpageItemDo.getStatus().equalsIgnoreCase("open")){
@@ -237,7 +279,25 @@ public class AssignmentProgressVc extends Composite{
 			panelCicle1.setStyleName(this.res.css().greencircle());
 		}
 	}
-	
+	/**
+	 * 
+	 * @function setDueDateAndDirection 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setDueDateAndDirection(){
 		dueDateContainer.clear();
 		String dueDate=classpageItemDo.getPlannedEndDate();
@@ -260,7 +320,26 @@ public class AssignmentProgressVc extends Composite{
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @function createLabel 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param title
+	 * @parm(s) : @return
+	 * 
+	 * @return : Label
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public Label createLabel(String title){
 		Label lblLabel = new Label();
 		lblLabel.setText(title);
@@ -291,7 +370,25 @@ public class AssignmentProgressVc extends Composite{
 		});
 		return lblLabel;
 	}
-	
+	/**
+	 * 
+	 * @function hideDropDown 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param event
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void hideDropDown(NativePreviewEvent event){
     	if(event.getTypeInt()==Event.ONMOUSEOVER){
     		Event nativeEvent = Event.as(event.getNativeEvent());
@@ -301,6 +398,26 @@ public class AssignmentProgressVc extends Composite{
         	}
     	}
      }
+	/**
+	 * 
+	 * @function eventTargetsPopup 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param event
+	 * @parm(s) : @return
+	 * 
+	 * @return : boolean
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private boolean eventTargetsPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {

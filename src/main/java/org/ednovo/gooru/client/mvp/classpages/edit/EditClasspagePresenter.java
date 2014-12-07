@@ -384,6 +384,25 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	//	classpageDo = null;
 		getClasspage();
 	}
+	/**
+	 * 
+	 * @function getClasspage 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void getClasspage(){
 		this.analyticsId= getPlaceManager().getRequestParameter("analyticsId");
 		this.monitorId = getPlaceManager().getRequestParameter("monitorid");
@@ -437,7 +456,25 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			}
 		}
 	}
-	
+	/**
+	 * 
+	 * @function getOffsetValue 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : Integer
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public Integer getOffsetValue(){
 		String pageNum=getPlaceManager().getRequestParameter("pageNum","1");
 		int pageNumber=0;
@@ -451,7 +488,32 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		return (((pageNumber-1)*DEFAULT_LIMITVALUE));
 		
 	}
-	
+	/**
+	 * 
+	 * @function getClasspageItems 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
+	 * @parm(s) : @param offset
+	 * @parm(s) : @param limit
+	 * @parm(s) : @param tab
+	 * @parm(s) : @param analyticsId
+	 * @parm(s) : @param monitorId
+	 * @parm(s) : @param sortingOrder
+	 * @parm(s) : @param assignemntCount
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void getClasspageItems(String classpageId,String offset,String limit, final String tab, final String analyticsId, final String monitorId,final String sortingOrder,final int assignemntCount){
 		this.classpageService.getClassPageItems(classpageId, offset, limit,sortingOrder,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			@Override
@@ -462,7 +524,31 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			}
 		});
 	}
-	
+	/**
+	 * 
+	 * @function getAssignmentsCount 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
+	 * @parm(s) : @param offset
+	 * @parm(s) : @param limit
+	 * @parm(s) : @param tab
+	 * @parm(s) : @param analyticsId
+	 * @parm(s) : @param monitorId
+	 * @parm(s) : @param sortingOrder
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void getAssignmentsCount(final String classpageId,final String offset,final String limit, final String tab, final String analyticsId, final String monitorId,final String sortingOrder){
 		this.classpageService.getClassPageItems(classpageId, "0", "1",null,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			@Override
@@ -483,6 +569,25 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		String monitorId=getPlaceManager().getRequestParameter("monitorid");
 		//getClasspageItems( classpageId,offset.toString(),limit.toString(), tab, analyticsId,monitorId,null);
 	}
+	/**
+	 * 
+	 * @function initParam 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void initParam() {
 		classpageId = getPlaceManager().getRequestParameter("classpageid");
 		String pageSize = getPlaceManager().getRequestParameter("pageSize");
@@ -540,7 +645,25 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		}
 		return updateAssignmentAsyncCallback;
 	}
-
+	/**
+	 * 
+	 * @function setUpdateAssignmentAsyncCallback 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param updateAssignmentAsyncCallback
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setUpdateAssignmentAsyncCallback(
 			SimpleAsyncCallback<CollectionDo> updateAssignmentAsyncCallback) {
 		this.updateAssignmentAsyncCallback = updateAssignmentAsyncCallback;
@@ -562,7 +685,26 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	public void setClasspageItemDo(ClasspageItemDo classpageItemDo){
 		getView().setClasspageItemOnTop(classpageItemDo);
 	}
-
+	/**
+	 * 
+	 * @function triggerClassPageNewDataLogStartStopEvent 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
+	 * @parm(s) : @param classCode
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void triggerClassPageNewDataLogStartStopEvent(String classpageId, String classCode){
 		JSONObject classpageDataLog=new JSONObject();
 		String classpageEventId=GwtUUIDGenerator.uuid();
