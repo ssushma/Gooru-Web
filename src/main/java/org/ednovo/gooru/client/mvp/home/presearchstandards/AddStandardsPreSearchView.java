@@ -117,7 +117,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	@UiTemplate("AddStandardsPreSearchView.ui.xml")
 	interface AddStandardsPreSearchViewUiBinder extends UiBinder<Widget, AddStandardsPreSearchView> {
 	}
-	BrowseStandardsTooltip browseStandardsTooltip = new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
+	BrowseStandardsTooltip browseStandardsTooltip = new BrowseStandardsTooltip(i18n.GL3050(),i18n.GL0192());
 
 	/**
 	 * Class constructor 
