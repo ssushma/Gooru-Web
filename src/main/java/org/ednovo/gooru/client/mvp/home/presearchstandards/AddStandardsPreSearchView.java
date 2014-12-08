@@ -38,6 +38,7 @@ import org.ednovo.gooru.shared.model.code.StandardsLevel3DO;
 import org.ednovo.gooru.shared.model.code.StandardsLevel4DO;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
+import com.gargoylesoftware.htmlunit.javascript.host.MouseEvent;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
@@ -111,12 +112,12 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	private boolean isTEKSAvailable =false;
 	private boolean isCAAvailable =false;
 	
-	 BrowseStandardsTooltip browseStandardsTooltip = new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
 	private boolean isBrowseStandardsToolTip = false;
 	
 	@UiTemplate("AddStandardsPreSearchView.ui.xml")
 	interface AddStandardsPreSearchViewUiBinder extends UiBinder<Widget, AddStandardsPreSearchView> {
 	}
+	BrowseStandardsTooltip browseStandardsTooltip = new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
 
 	/**
 	 * Class constructor 
@@ -136,9 +137,7 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		californiaStandards1 = new Button();
 	
 	
-	
 		AddStandardsBundle.INSTANCE.css().ensureInjected();
-
 
 		
 		commonStandards1.setStyleName("primary");
@@ -161,48 +160,11 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	        	hideBrowseStandardsPopup(event);
 	          }
 	    });
-		ngss1.addMouseOverHandler(new MouseOverHandler() {
-			
-			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				if(isNGSSAvailable==false){
-					browseStandardsTooltip.show();
-					browseStandardsTooltip.setPopupPosition(ngss1.getAbsoluteLeft()+3, ngss1.getAbsoluteTop()+33);
-					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
-					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
-					isBrowseStandardsToolTip= true;
-				}
-			}
-		});
-		texasKnowledge1.addMouseOverHandler(new MouseOverHandler() {
-			
-			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				if(isTEKSAvailable==false){
-					browseStandardsTooltip.show();
-					browseStandardsTooltip.setPopupPosition(texasKnowledge1.getAbsoluteLeft()+3, texasKnowledge1.getAbsoluteTop()+33);
-					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
-					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
-					isBrowseStandardsToolTip= true;
-				}
-			}
-		});
-		californiaStandards1.addMouseOverHandler(new MouseOverHandler() {
-			
-			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				if(isCAAvailable==false){
-					browseStandardsTooltip.show();
-					browseStandardsTooltip.setPopupPosition(californiaStandards1.getAbsoluteLeft()+3, californiaStandards1.getAbsoluteTop()+33);
-					browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
-					browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
-					isBrowseStandardsToolTip= true;
-				}
-				
-			}
-		});
 	}
 	
+	/** (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#loadData()
+	 */
 	@Override
 	public void loadData()
 	{
@@ -218,6 +180,10 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 
 	}
 	
+	/**
+	 * To set the Standards
+	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#SetData(org.ednovo.gooru.shared.model.code.StandardsLevel1DO, int)
+	 */
 	@Override
 	public void SetData(final StandardsLevel1DO levelOneData, int valArr)
 	{
@@ -381,7 +347,11 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	}
 	//	appPopUp.getElement().setAttribute("style", "width:1000px;height:599px;z-index:99999;visibility: visible;position: absolute;left: 0 !important;right: 0 !important;margin:auto;top:0 !important;bottom:0 !important;");
 	}
-	
+	/**
+	 * To get the First level Objects
+	 * @param levelOrder
+	 * @param standardCodeSelected
+	 */
 	public void getFirstLevelObjects(String levelOrder, String standardCodeSelected)
 	{
 		selectedCodeVal = "";
@@ -391,6 +361,11 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		addBtn.addStyleName("secondary");
 		getUiHandlers().getFirstLevelObjects(levelOrder,standardCodeSelected);
 	}
+	/**
+	 * To get the Second level Objects
+	 * @param levelOrder
+	 * @param standardCodeSelected
+	 */
 	public void getSecondLevelObjects(String levelOrder, String standardCodeSelected)
 	{
 		selectedCodeVal = "";
@@ -400,6 +375,11 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		addBtn.addStyleName("secondary");
 		getUiHandlers().getSecondLevelObjects(levelOrder,standardCodeSelected);
 	}
+	/**
+	 * To get the Third level Objects
+	 * @param levelOrder
+	 * @param standardCodeSelected
+	 */
 	public void getThirdLevelObjects(String levelOrder, String standardCodeSelected)
 	{
 		selectedCodeVal = "";
@@ -410,6 +390,9 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		getUiHandlers().getThirdLevelObjects(levelOrder,standardCodeSelected);
 	}
 	
+	/** (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#loadSecondLevelContianerObjects(java.util.ArrayList)
+	 */
 	public void loadSecondLevelContianerObjects(ArrayList<StandardsLevel2DO> levelOneData)
 	{
 		levelTwoStandards.clear();
@@ -522,6 +505,9 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		}
 	}
 	
+	/** (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#loadThirdLevelContianerObjects(java.util.ArrayList)
+	 */
 	public void loadThirdLevelContianerObjects(ArrayList<StandardsLevel3DO> levelOneData)
 	{
 		levelThreeStandards.clear();
@@ -602,6 +588,9 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 
 	}
 	
+	/** (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#loadFourthLevelContianerObjects(java.util.ArrayList)
+	 */
 	public void loadFourthLevelContianerObjects(ArrayList<StandardsLevel4DO> levelOneData)
 	{
 		levelFourStandards.clear();
@@ -656,6 +645,9 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 	
 
 
+	/** (non-Javadoc)
+	 * @see com.gwtplatform.mvp.client.View#asWidget()
+	 */
 	@Override
 	public Widget asWidget() {
 		// TODO Auto-generated method stub
@@ -663,6 +655,9 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		return uiBinder.createAndBindUi(this);
 	}
 
+	/**(non-Javadoc)
+	 * @see org.ednovo.gooru.client.gin.IsView#reset()
+	 */
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
@@ -674,6 +669,9 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		scienceCodeVal = false;
 	}
 	
+	/** (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#setDefaultCCSS()
+	 */
 	@Override
 	public void setDefaultCCSS() {
 		texasKnowledge1.removeStyleName("primary");
@@ -695,34 +693,52 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		//addBtn.setText("Add");
 	}
 
+	/** (non-Javadoc)
+	 * @see org.ednovo.gooru.client.gin.IsView#onUnload()
+	 */
 	@Override
 	public void onUnload() {
 		// TODO Auto-generated method stub
 		
 	}
+	/**
+	 * return the addBtn
+	 */
 	@Override
 	public Button getAddBtn() {
 		return addBtn;
 	}
-
+	/**
+	 * set the addBtn
+	 */
 	public void setAddBtn(Button addBtn) {
 		this.addBtn = addBtn;
 	}
 	
+	/**(non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#setStandardsVal()
+	 */
 	@Override
 	public String setStandardsVal()
 	{
 		String standardVal = selectedCodeVal;
 		return standardVal;
 	}
+	
+	/** (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#setStandardsIdVal()
+	 */
 	@Override
 	public Integer setStandardsIdVal()
 	{
 		Integer standardVal = selectedCodeId;
 		return standardVal;
 	}
-
 	
+	/**
+	 * texasKnowledge1 button ClickEvent
+	 * @param click {@link ClickEvent}
+	 */
 	@UiHandler("texasKnowledge1")
 	public void ontexasKnowledgeClick(ClickEvent click){
 		if(isTEKSAvailable){
@@ -745,7 +761,10 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		}else{
 		}
 	}
-	
+	/**
+	 * commonStandards1 button ClickEvent
+	 * @param click {@link ClickEvent}
+	 */
 	@UiHandler("commonStandards1")
 	public void oncommonStandardsClick(ClickEvent click){
 		if(isCCSSAvailable){
@@ -768,7 +787,10 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		}else{
 		}
 	}
-	
+	/**
+	 * ngss1 button ClickEvent
+	 * @param click {@link ClickEvent}
+	 */
 	@UiHandler("ngss1")
 	public void onngssClick(ClickEvent click){
 		if(isNGSSAvailable){
@@ -792,9 +814,70 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 			
 		}
 	}
+	/**
+	 * ngss1 button MouseEvent
+	 * @param mouseEvent {@link MouseEvent}
+	 */
+	@UiHandler("ngss1")
+	public void onNgssMouseOver(MouseOverEvent mouseEvent){
+		if(isNGSSAvailable==false){
+			browseStandardsTooltip.show();
+			browseStandardsTooltip.setPopupPosition(ngss1.getAbsoluteLeft()+28, ngss1.getAbsoluteTop()+39);
+			browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
+			browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+			isBrowseStandardsToolTip= true;
+		}
+	}
+	/**
+	 * texasKnowledge1 button MouseEvent
+	 * @param mouseEvent {@link MouseEvent}
+	 */
+	@UiHandler("texasKnowledge1")
+	public void onTexasMouseOver(MouseOverEvent mouseEvent){
+		if(isTEKSAvailable==false){
+			browseStandardsTooltip.show();
+			browseStandardsTooltip.setPopupPosition(texasKnowledge1.getAbsoluteLeft()+28, texasKnowledge1.getAbsoluteTop()+39);
+			browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
+			browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+			isBrowseStandardsToolTip= true;
+		}
+	}
+	/**
+	 * commonStandards1 button MouseEvent
+	 * @param mouseEvent {@link MouseEvent}
+	 */
+	@UiHandler("commonStandards1")
+	public void onCommonMouseOver(MouseOverEvent mouseEvent){
+		if(isCCSSAvailable==false){
+			browseStandardsTooltip.show();
+			browseStandardsTooltip.setPopupPosition(commonStandards1.getAbsoluteLeft()+14, commonStandards1.getAbsoluteTop()+39);
+			browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
+			browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+			isBrowseStandardsToolTip= true;
+		}
+	}
 	
+	/**
+	 * californiaStandards1 button MouseEvent
+	 * @param mouseEvent {@link MouseEvent}
+	 */
 	@UiHandler("californiaStandards1")
-	public void oncaliforniaStandardsClick(ClickEvent click){
+	public void onCaliforniaMouseOver(MouseOverEvent mouseEvent){
+		if(isCAAvailable==false){
+			browseStandardsTooltip.show();
+			browseStandardsTooltip.setPopupPosition(californiaStandards1.getAbsoluteLeft()+3, californiaStandards1.getAbsoluteTop()+39);
+			browseStandardsTooltip.getConfirmationPanel().getElement().getStyle().setLeft(0, Unit.PX);
+			browseStandardsTooltip.getElement().getStyle().setZIndex(999999);
+			isBrowseStandardsToolTip= true;
+		}
+	}
+	
+	/**
+	 * californiaStandards1 button ClickEvent
+	 * @param clickEvent {@link ClickEvent}
+	 */
+	@UiHandler("californiaStandards1")
+	public void oncaliforniaStandardsClick(ClickEvent clickEvent){
 		if(isCAAvailable){
 		selectedCodeVal = "";
 		selectedCodeId = 0;
@@ -817,11 +900,17 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		}
 	}
 
+	/** (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#setStandardsDesc()
+	 */
 	@Override
 	public String setStandardsDesc() {
 			return selectedCodeDesc;
 	}
 
+	/**
+	 * To set the Default Styles for TEKS
+	 */
 	public void setDefaultTEKS() {
 		commonStandards1.removeStyleName("primary");
 		commonStandards1.addStyleName("secondary");
@@ -832,7 +921,9 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		texasKnowledge1.removeStyleName("secondary");
 		texasKnowledge1.addStyleName("primary");
 	}
-	
+	/**
+	 * To set the Default Styles for NGSS
+	 */
 	public void setDefaultNGSS() {
 		texasKnowledge1.removeStyleName("primary");
 		texasKnowledge1.addStyleName("secondary");
@@ -843,7 +934,9 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		ngss1.removeStyleName("secondary");
 		ngss1.addStyleName("primary");
 	}
-	
+	/**
+	 * To set the Default Styles for CA
+	 */
 	public void setDefaultCA() {
 		texasKnowledge1.removeStyleName("primary");
 		texasKnowledge1.addStyleName("secondary");
@@ -855,6 +948,9 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		californiaStandards1.addStyleName("primary");
 	}
 	
+	/** (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#setEnableStandardButtons(boolean, boolean, boolean, boolean)
+	 */
 	@Override
 	public void setEnableStandardButtons(boolean isCCSSAvailable,
 			boolean isNGSSAvailable, boolean isTEKSAvailable,
@@ -897,6 +993,9 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		
 	}
 
+	/** (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.home.presearchstandards.IsAddStandardsPreSearchView#setStandardsStyles(java.lang.String)
+	 */
 	@Override
 	public void setStandardsStyles(String standardVal) {
 		// TODO Auto-generated method stub
@@ -911,6 +1010,10 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		}
 	}
 	
+	/**
+	 * To hide Browse Standards Popup 
+	 * @param event {@link NativePreviewEvent}
+	 */
 	public void hideBrowseStandardsPopup(NativePreviewEvent event){
 		try{
 			if(event.getTypeInt()==Event.ONMOUSEOVER){
@@ -926,6 +1029,10 @@ public class AddStandardsPreSearchView extends PopupViewWithUiHandlers<AddStanda
 		}catch(Exception ex){ex.printStackTrace();}
 	}
 	
+	/**
+	 * @param event {@link NativeEvent}
+	 * @return false	{@link Boolean}
+	 */
 	private boolean eventTargetsPopup(NativeEvent event) {
 		EventTarget target = event.getEventTarget();
 		if (Element.is(target)) {
