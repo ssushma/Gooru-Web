@@ -40,6 +40,8 @@ public class PublishedCollectionsInfoDo implements Serializable {
 	
 	private Integer resourceTypeId;
 	
+	private Integer viewsCount;
+	
 	private String title;
 	
 	private String category;
@@ -84,4 +86,13 @@ public class PublishedCollectionsInfoDo implements Serializable {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+
+	public Integer getViewsCount() {
+		return viewsCount;
+	}
+
+	public void setViewsCount(Integer viewsCount) {
+		this.viewsCount = viewsCount;
+	}
+	
 }
