@@ -43,9 +43,21 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface PopupForAnalyticsUiHandlers extends BaseUiHandlers, EventHandler {
 	/**
-	 * This method is used to set popup data.
+	 * 
+	 * @function setPopupData 
+	 * 
+	 * @created_date : 08-Dec-2014
+	 * 
+	 * @description
+	 * 	This method is used to set popup data.
+	 * 
 	 * @param isEndorsedOrRemixed
 	 * @param isReactionOrRatings
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
 	 */
 	void setPopupData(String isEndorsedOrRemixed,String isReactionOrRatings);
 }

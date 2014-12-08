@@ -113,7 +113,7 @@ public class AddStandardsView extends PopupViewWithUiHandlers<AddStandardsUiHand
 	private boolean isTEKSAvailable =false;
 	private boolean isCAAvailable =false;
 	
-	 BrowseStandardsTooltip browseStandardsTooltip = new BrowseStandardsTooltip("To see all standards, please edit your standards preference in","settings");
+	 BrowseStandardsTooltip browseStandardsTooltip = new BrowseStandardsTooltip(i18n.GL3050(),i18n.GL0192());
 	private boolean isBrowseStandardsToolTip = false;
 	
 	@UiTemplate("AddStandardsView.ui.xml")

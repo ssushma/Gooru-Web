@@ -88,8 +88,8 @@ public class PopupForAnalyticsView extends PopupViewWithUiHandlers<PopupForAnaly
 		popup.setGlassEnabled(true);
 		popup.setAutoHideEnabled(true);
 		popup.setGlassStyleName("");
-		btnHighToLow.setText(i18n.GL3050());
-		btnLowToHigh.setText(i18n.GL3051());
+		btnHighToLow.setText(i18n.GL3057());
+		btnLowToHigh.setText(i18n.GL3058());
 		pnlScrollPanel.addScrollHandler(new ScrollHandler() {
 			@Override
 			public void onScroll(ScrollEvent event) {
@@ -142,7 +142,7 @@ public class PopupForAnalyticsView extends PopupViewWithUiHandlers<PopupForAnaly
 		if(isEndorsedOrRemixed!=null){
 			boolean isEndorsed=Boolean.parseBoolean(isEndorsedOrRemixed);
 			if(isEndorsed){
-				titleTextlbl.setText(i18n.GL3052());
+				titleTextlbl.setText(i18n.GL3059());
 				
 			}else{
 				titleTextlbl.setText(i18n.GL3053());
