@@ -1366,25 +1366,25 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 		if(result!=null){
 			setStyle();
-			currentRating = result.getScore();
-			if(result.getScore()==1){
+			currentRating = result.getScore()!= null && result.getScore() > 0 ? result.getScore() : 0;
+			if(currentRating==1){
 				starValue.setVisible(true);
 				starValue.setText(POOR);
 				setStarRatingValue(1); 
-			}else if(result.getScore()==2){
+			}else if(currentRating==2){
 				starValue.setVisible(true);
 				starValue.setText(FAIR);
 				setStarRatingValue(2); 
-			}else if(result.getScore()==3){
+			}else if(currentRating==3){
 				starValue.setVisible(true);
 				starValue.setText(GOOD);
 				setStarRatingValue(3);
-			}else if(result.getScore()==4){
+			}else if(currentRating==4){
 				starValue.setVisible(true);
 				starValue.setText(VERY_GOOD);
 				setStarRatingValue(4);
 				
-			}else if(result.getScore()==5){
+			}else if(currentRating==5){
 				starValue.setVisible(true);
 				starValue.setText(EXCELLENT);
 				setStarRatingValue(5);

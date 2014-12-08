@@ -129,8 +129,9 @@ position: relative;
 }
 
 .logStatus{
-		margin:20px 0;
-		text-align:center;
+	margin:20px 0;
+	text-align:center;
+	display: inline-block;
 }
 .closeButton{
 	right:50px;

@@ -111,9 +111,11 @@
 					</div>
 				</div>
 			</section>
-
-			<div class="{res.css.learnMoreContainer}">
-				<g:Anchor styleName="{res.css.secondary}" ui:field="achLearn" text="{i18n.GL2129}"></g:Anchor>
+			<div class="clearfix"></div>
+			<div class="container">
+				<div class="{res.css.learnMoreContainer}">
+					<g:Anchor styleName="{res.css.secondary}" ui:field="achLearn" text="{i18n.GL2129}"></g:Anchor>
+				</div>
 			</div>
 			<div class="clearfix"></div>
 			<div class="container {res.css.communityblock}">

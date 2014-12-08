@@ -119,7 +119,9 @@
 .collectionbuttons{
 	
 }
-.logStatus{}
+.logStatus{
+	display: inline-block;
+}
 .closeButton{
 	right:50px;
 }

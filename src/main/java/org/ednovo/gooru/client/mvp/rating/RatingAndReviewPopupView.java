@@ -114,6 +114,8 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));	
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		reviewsContainer.getElement().getStyle().setWidth(100, Unit.PCT);
+//		this.center();
+//		appPopUp.center();
 	}
 
 	@UiHandler("closeButton")
@@ -335,6 +337,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		}
 		
 		apiInprogress=false;
+//		appPopUp.center();
 
 	}
 

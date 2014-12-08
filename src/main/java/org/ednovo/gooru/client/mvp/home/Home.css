@@ -2198,7 +2198,7 @@ a.secondary:hover {
 
 
 .banner {
-	margin-top:30px;
+	margin-top:35px;
 	
 }
 
@@ -2700,6 +2700,7 @@ footer {
 
 .signup {
 	margin-top: 9px;
+	width: 68px;
 }
 
 .dropdowDisplay {
