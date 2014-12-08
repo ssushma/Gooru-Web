@@ -29,6 +29,7 @@ import org.ednovo.gooru.shared.i18n.MessageProperties;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -53,6 +54,7 @@ public class TopRemixedAndEndorsedCollections extends Composite{
 			.create(TopRemixedAndEndorsedCollectionsUiBinder.class);
 	
 	@UiField Label collectionNameLbl,countNoOfEndorsements,titleLbl;
+	@UiField Anchor clickOnMorelbl;
 
 	interface TopRemixedAndEndorsedCollectionsUiBinder extends
 			UiBinder<Widget, TopRemixedAndEndorsedCollections> {
@@ -64,15 +66,31 @@ public class TopRemixedAndEndorsedCollections extends Composite{
 	public interface Binder extends UiBinder<Widget, TopRemixedAndEndorsedCollections> {
 	}
 
+	/**
+	 *  Constructor
+	 */
 	@Inject
 	public TopRemixedAndEndorsedCollections() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
+	/**
+	 * Parameter constructor
+	 * @param title
+	 * @param collName
+	 * @param totalEndorsements
+	 */
 	public TopRemixedAndEndorsedCollections(String title, String collName,String totalEndorsements) {
 		initWidget(uiBinder.createAndBindUi(this));
 		titleLbl.setText(title);
 		collectionNameLbl.setText(collName);
 		countNoOfEndorsements.setText(totalEndorsements);
+	}
+	/**
+	 * This will return the view more label
+	 * @return
+	 */
+	public Anchor getClickOnMorelbl(){
+		return clickOnMorelbl;
 	}
 }

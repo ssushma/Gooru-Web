@@ -24,28 +24,41 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.dashboard;
 
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import com.gwtplatform.mvp.client.PopupView;
 /**
- * 
- * @fileName : UserDashBoardUiHandlers.java
+ * @fileName : IsPopupForAnalyticsView.java
  *
  * @description : 
  *
- *
  * @version : 1.0
  *
- * @date: 07-Dec-2014
+ * @date: Dec 8, 2014
  *
  * @Author Gooru Team
  *
- * @Reviewer:
+ * @Reviewer: 
  */
-
-public interface UserDashBoardUiHandlers extends BaseUiHandlers{
-	/**
-	 * This method is used to handle the click event on view more.
-	 */
-	void clickedOnMoreButton();
-	
+public interface IsPopupForAnalyticsView extends PopupView, IsViewWithHandlers<PopupForAnalyticsUiHandlers>{
+		/**
+		 * 
+		 * @function setPopupData 
+		 * 
+		 * @created_date : 08-Dec-2014
+		 * 
+		 * @description
+		 * 
+		 * 
+		 * @parm(s) : 
+		 * 
+		 * @return : void
+		 *
+		 * @throws : <Mentioned if any exceptions>
+		 *
+		 * 
+		 *
+		 *
+		 */
+		 void setPopupData();
 }
