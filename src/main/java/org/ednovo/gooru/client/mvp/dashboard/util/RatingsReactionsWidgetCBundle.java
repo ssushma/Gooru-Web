@@ -34,7 +34,7 @@ import com.google.gwt.resources.client.CssResource.NotStrict;
 
 /**
  * 
- * @fileName : ViewsRemixWidgetCBundle.java
+ * @fileName : RatingsReactionsWidgetCBundle.java
  *
  * @description : 
  *
@@ -47,20 +47,21 @@ import com.google.gwt.resources.client.CssResource.NotStrict;
  *
  * @Reviewer:
  */
-public interface ViewsRemixWidgetCBundle extends ClientBundle{
+public interface RatingsReactionsWidgetCBundle extends ClientBundle{
 	
-	static final ViewsRemixWidgetCBundle INSTANCE = GWT.create(ViewsRemixWidgetCBundle.class);
+	static final RatingsReactionsWidgetCBundle INSTANCE = GWT.create(RatingsReactionsWidgetCBundle.class);
 	
-	public interface  ViewsRemixWidgetCss extends CssResource{
+	public interface  RatingsReactionsWidgetCss extends CssResource{
 		
 		String collListBlock();
 		String col6();
 		String collHead();
 		String collSmallHead();
 		String clearfix();
+		String ratingListBlock();
 	}
 	@NotStrict
-	@Source("ViewsRemixWidget.css")
-	ViewsRemixWidgetCss css();
+	@Source("RatingsReactionsWidget.css")
+	RatingsReactionsWidgetCss css();
 
 }
