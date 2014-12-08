@@ -191,4 +191,11 @@ public class FiveStarRatings extends Composite{
 			return PlayerBundle.INSTANCE.getPlayerStyle().otherResourceTypeInfo();
 		}
 	}
+	/**
+	 * This method will return the view more label
+	 * @return
+	 */
+	public Anchor getViewAllLabel(){
+		return viewAllLbl;
+	}
 }

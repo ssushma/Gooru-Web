@@ -46,6 +46,10 @@ public class PublishedCollectionsInfoDo implements Serializable {
 	
 	private String category;
 	
+	private Integer ratingsCount;
+	
+	private Integer reactionsCount;
+	
 	public PublishedCollectionsInfoDo(){
 		
 	}
@@ -93,6 +97,22 @@ public class PublishedCollectionsInfoDo implements Serializable {
 
 	public void setViewsCount(Integer viewsCount) {
 		this.viewsCount = viewsCount;
+	}
+
+	public Integer getRatingsCount() {
+		return ratingsCount;
+	}
+
+	public void setRatingsCount(Integer ratingsCount) {
+		this.ratingsCount = ratingsCount;
+	}
+
+	public Integer getReactionsCount() {
+		return reactionsCount;
+	}
+
+	public void setReactionsCount(Integer reactionsCount) {
+		this.reactionsCount = reactionsCount;
 	}
 	
 }

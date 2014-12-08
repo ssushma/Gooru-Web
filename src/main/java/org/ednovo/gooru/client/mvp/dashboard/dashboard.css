@@ -27,8 +27,20 @@ body {
 	width:1000px;
 	margin:0 auto;
 }
-
-
+.MainHeader{
+    float:left;
+    margin-left: 12px;
+}
+.closeContainer {
+    text-align: right;
+    float:right;
+}
+.closeButton {
+    background: url("../images/close-button.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 17px;
+    width: 17px;
+}
 
 .profileHeader{
 	font-size:23px;
@@ -419,7 +431,7 @@ background:#81c5e5 url(../images/profileimages/arrow.png) no-repeat 28px 7px;
     padding-right: 8px;
 	display:inline-block;
 	text-align:right;
-	width:85px;
+	min-width:85px;
 }
 
 

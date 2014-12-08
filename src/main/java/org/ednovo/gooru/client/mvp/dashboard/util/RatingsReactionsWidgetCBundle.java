@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+ * Copyright 2013 Ednovo d
+/b/a Gooru. All rights reserved.
  * 
  *  http://www.goorulearning.org/
  * 
@@ -22,13 +23,18 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.dashboard;
+package org.ednovo.gooru.client.mvp.dashboard.util;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.NotStrict;
 
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+
 /**
  * 
- * @fileName : UserDashBoardUiHandlers.java
+ * @fileName : RatingsReactionsWidgetCBundle.java
  *
  * @description : 
  *
@@ -41,11 +47,21 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
  *
  * @Reviewer:
  */
-
-public interface UserDashBoardUiHandlers extends BaseUiHandlers{
-	/**
-	 * This method is used to handle the click event on view more.
-	 */
-	void clickedOnMoreButton(String isEndorsedOrRemixed,String isReactionOrRatings);
+public interface RatingsReactionsWidgetCBundle extends ClientBundle{
 	
+	static final RatingsReactionsWidgetCBundle INSTANCE = GWT.create(RatingsReactionsWidgetCBundle.class);
+	
+	public interface  RatingsReactionsWidgetCss extends CssResource{
+		
+		String collListBlock();
+		String col6();
+		String collHead();
+		String collSmallHead();
+		String clearfix();
+		String ratingListBlock();
+	}
+	@NotStrict
+	@Source("RatingsReactionsWidget.css")
+	RatingsReactionsWidgetCss css();
+
 }
