@@ -411,15 +411,15 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
 		spanelMediaFeaturePanel.setVisible(false);
 		
-		mediaLabel.setText("Media Feature");
+		mediaLabel.setText(i18n.GL1706());
 		mediaLabel.getElement().setId("lblMediaFeature");
-		mediaLabel.getElement().setAttribute("alt","Media Feature");
-		mediaLabel.getElement().setAttribute("title","Media Feature");
+		mediaLabel.getElement().setAttribute("alt",i18n.GL1706());
+		mediaLabel.getElement().setAttribute("title",i18n.GL1706());
 		
-		lblMediaPlaceHolder.setText("Choose a Media Feature Option:");
+		lblMediaPlaceHolder.setText(i18n.GL3051()+i18n.GL_SPL_SEMICOLON());
 		lblMediaPlaceHolder.getElement().setId("phMediaFeature");
-		lblMediaPlaceHolder.getElement().setAttribute("alt","Choose a Media Feature Option:");
-		lblMediaPlaceHolder.getElement().setAttribute("title","Choose a Media Feature Option:");
+		lblMediaPlaceHolder.getElement().setAttribute("alt",i18n.GL3051());
+		lblMediaPlaceHolder.getElement().setAttribute("title",i18n.GL3051());
 		
 		lblMediaFeatureArrow.getElement().setId("lblMediaFeatureArrow");
 		lblMediaFeatureArrow.getElement().setAttribute("alt","");
