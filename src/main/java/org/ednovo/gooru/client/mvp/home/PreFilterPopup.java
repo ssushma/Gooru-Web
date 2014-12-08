@@ -49,8 +49,11 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
 /**
+ * @description : This class used for to show the Pre-filter seach Popup
+ * @version :1.2
  * @author janamitra
- *
+ * @date: Dec 1 2014
+ * @Reviewer Gooru Team
  */
 public class PreFilterPopup extends PopupPanel {
 
@@ -335,19 +338,27 @@ public class PreFilterPopup extends PopupPanel {
 		clearFilter(highrGradePanelUc);
 		clearFilter(subjectPanelUc);
 	}
-
+	/**
+	 * @return the lblStandards
+	 */
 	public Label getStandardsInfo(){
 		return lblStandards;
 	}
+	/**
+	 * @return the gradesPanel
+	 */
 	public HTMLPanel hideGradePanel(){
 		return gradesPanel;
 	}
+	/**
+	 * @return the standardsPanel
+	 */
 	public HTMLPanel ShowSTandardsPanel(){
 		return standardsPanel;
 	}
     /**
-     * 
-     * @author janamitra
+     * This class used to show Grades & Subjects filter when user click on Grade & Suject tab
+     * @author seachTeam
      *
      */
 	private class GradeandSubjectFilter implements ClickHandler{
@@ -367,13 +378,13 @@ public class PreFilterPopup extends PopupPanel {
 	}
 	
 	/**
-     * 
-     * @author janamitra
+     * This class used to show Standards filter when user click on Grade tab
+     * @author searchTeam
      *
      */
 	private class StandardsFilter implements ClickHandler{
 
-		/* (non-Javadoc)
+		/** (non-Javadoc)
 		 * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
 		 */
 		@Override
@@ -388,6 +399,9 @@ public class PreFilterPopup extends PopupPanel {
 		
 	}
 	
+	/**
+	 * To set the Default tabs
+	 */
 	public void hidePlanels(){
 		lblGradesSubj.getElement().setAttribute("style", "background: #e5e5e5;");
 		filterPanel.getElement().setAttribute("style", "width:360px;");

@@ -1,0 +1,20 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
+	<ui:with
+		type="org.ednovo.gooru.client.mvp.dashboard.util.ViewsRemixWidgetCBundle"
+		field="res" />
+	<g:HTMLPanel styleName="{res.css.collListBlock}">
+
+<g:HTMLPanel styleName="{res.css.col6}">
+<g:HTMLPanel styleName="{res.css.collHead}" ui:field="collTitle"><g:Image url="images/folder.png" /> Dogs</g:HTMLPanel>
+</g:HTMLPanel>
+<g:HTMLPanel styleName="{res.css.col6}">
+<g:HTMLPanel styleName="{res.css.collSmallHead}" ui:field="labelValue"><g:InlineLabel ui:field="countLbl"></g:InlineLabel>remixes</g:HTMLPanel>
+</g:HTMLPanel>
+<g:HTMLPanel styleName="{res.css.clearfix}"></g:HTMLPanel>
+
+
+</g:HTMLPanel>
+</ui:UiBinder> 
