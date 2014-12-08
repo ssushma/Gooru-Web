@@ -25,7 +25,21 @@
 
 package org.ednovo.gooru.client;
 
-
+/**
+ * 
+ * @fileName : SeoTokens.java
+ *
+ * @description : 
+ *	Message (Title) related to SEO.
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public interface SeoTokens{
 	String HOME_TITLE_ANONYMOUS = "Gooru | Sign up, Sign in ";
 	String HOME_TITLE_LOGGEDIN = "Gooru";

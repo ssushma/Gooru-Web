@@ -24,22 +24,23 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.dashboard;
 
+
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
 /**
- * @fileName : UserSettingsUiHandlers.java
+ * 
+ * @fileName : UserDashBoardUiHandlers.java
  *
  * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: Apr 18, 2013
+ * @date: 07-Dec-2014
  *
  * @Author Gooru Team
  *
- * @Reviewer: 
+ * @Reviewer:
  */
-
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 public interface UserDashBoardUiHandlers extends BaseUiHandlers{
 	/**

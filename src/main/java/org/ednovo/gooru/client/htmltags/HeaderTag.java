@@ -22,16 +22,15 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+package org.ednovo.gooru.client.htmltags;
+
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.user.client.ui.ComplexPanel;
+import com.google.gwt.user.client.ui.InsertPanel;
+import com.google.gwt.user.client.ui.Widget;
 /**
  * 
- */
-package org.ednovo.gooru.client.gin;
-
-import com.gwtplatform.mvp.client.HasUiHandlers;
-
-/**
- * 
- * @fileName : IsViewWithHandlers.java
+ * @fileName : HeaderTag.java
  *
  * @description : 
  *
@@ -44,6 +43,17 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
  *
  * @Reviewer:
  */
-public interface IsViewWithHandlers<H extends BaseUiHandlers> extends IsView, HasUiHandlers<H> {
+public class HeaderTag extends ComplexPanel implements InsertPanel{
+	public HeaderTag() {
+		setElement(Document.get().createElement("header"));
+	}
 
+	@Override
+	public void add(Widget w){
+		add(w,getElement());
+	}
+	
+	public void insert(Widget w,int beforeIndex){
+		insert(w, getElement(), beforeIndex, true);
+	}
 }

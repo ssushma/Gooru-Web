@@ -23,21 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.dashboard;
-/**
 
-
-*
-* @description : 
-*
-* @version :1.0
-*
-* @date: APR 19 2013
-   	
-* @Author Gooru Team
-* 
-* Reviewer Gooru Team
-*
-*/
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -58,7 +44,21 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
 
-
+/**
+ * 
+ * @fileName : UserDashBoardView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandlers> implements IsUserDashBoardView{
 	
 	@UiField HTMLPanel profileActivityBreakDown,CollectionsPublishedWidget,ResourceAddedWidget,commentsMadeWIdget,endorsementsGivenWidget,reviewsWrittenWidget,
@@ -89,9 +89,7 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 		
 		topEndorsedCollectionsWidget.add(topEndorsedCollection=new TopRemixedAndEndorsedCollections("Top Endorsed Collections","Roman Poets","23 endorsments"));
 		topRemixedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Remixed Collections","Dogs","12 remixes"));
-		
-		fiveStarRatedResourcesWidget.add(new FiveStarRatings("fivestarRatings"));
-		reactionsWidgetPanel.add(new FiveStarRatings("fivestarReviews"));
+
 		googleMapContainer.add(new GoogleMapWidget());
 		profileAnalyticsGrageContainer.add(new ProfileAnalyticsGradeWidget());
 		profileActivityBreakDown.add(profileAnalyticChat.createChart());
@@ -110,7 +108,27 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	public void dispalyDashBoardHomePage() {
 		
 	}
-
+	/**
+	 * 
+	 * @function setGraphData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void setGraphData(){
+	}
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.dashboard.IsUserDashBoardView#setProfileAnalyticsFlaggedChatData(java.util.Map)
 	 */
@@ -142,7 +160,6 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	public void setProfileAnalyticsAddedCollectionChatData(Map<String, Integer> result) {
 		profileAnalyticChat.updateProfileAnalyticsAddedToCollectionChatData(result);
 	}
-	
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.dashboard.IsUserDashBoardView#setPublishedCollectionData(org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO)
 	 */
@@ -154,10 +171,21 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	 * @see org.ednovo.gooru.client.mvp.dashboard.IsUserDashBoardView#setProfileRatingsData(org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO)
 	 */
 	@Override
+
+	public void getFiveStarRatedResults(UserDashBoardCommonInfoDO result) {
+		fiveStarRatedResourcesWidget.add(new FiveStarRatings("fivestarRatings",result));
+	}
+
+	@Override
+	public void getFiveStarReviewedResources(UserDashBoardCommonInfoDO result) {
+		reactionsWidgetPanel.add(new FiveStarRatings("fivestarReviews",result));
+	}
+	/**
+	 * This method is used to set the count of comments,reviews written and ratings
+	 */
 	public void setProfileRatingsData(ProfileRatingsReactionsDO result) {
 		commentsMadeWIdget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getCommentCount())),new Label("Comments Made")));
 		reviewsWrittenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(result.getReviewCount())),new Label("Reviews Written")));
-		
 		ratingsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("ratings",result));
 	}
 
@@ -167,5 +195,6 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	@Override
 	public void setProfileReationsData(ProfileRatingsReactionsDO result) {
 		reactionsGivenWidget.add(new ReactionsAndRatingsGivenCommonInfo("reactions",result));
+
 	}
 }

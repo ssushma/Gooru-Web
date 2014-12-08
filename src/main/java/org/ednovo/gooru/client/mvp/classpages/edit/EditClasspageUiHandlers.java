@@ -57,17 +57,130 @@ public interface EditClasspageUiHandlers extends BaseUiHandlers, AssignmentHandl
 	
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_SHELF_TAB = new Type<RevealContentHandler<?>>();
-
+	/**
+	 * 
+	 * @function addAssignmentsContainerPopup 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void addAssignmentsContainerPopup(String classpageId);
-
+	/**
+	 * 
+	 * @function getAssignmentsByClasspageById 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
+	 * @parm(s) : @param pageSize
+	 * @parm(s) : @param pageNum
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void getAssignmentsByClasspageById(String classpageId, String pageSize,String pageNum);
-
+	/**
+	 * 
+	 * @function generateShareLink 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void generateShareLink(String classpageId);
-	
+	/**
+	 * 
+	 * @function updateClassPageInfo 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classPageId
+	 * @parm(s) : @param collectionType
+	 * @parm(s) : @param title
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void updateClassPageInfo(String classPageId,String collectionType, String title);
-	
+	/**
+	 * 
+	 * @function showImageUploadWidget 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void showImageUploadWidget();
-	
+	/**
+	 * 
+	 * @function getNextClasspageItems 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param offset
+	 * @parm(s) : @param limit
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void getNextClasspageItems(Integer offset,Integer limit);
 
 	/**

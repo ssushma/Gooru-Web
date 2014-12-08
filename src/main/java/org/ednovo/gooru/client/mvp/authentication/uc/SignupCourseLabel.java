@@ -45,8 +45,19 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
 /**
- * @author DOTS
+ * 
+ * @fileName : SignupCourseLabel.java
  *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 public abstract class SignupCourseLabel extends FlowPanel implements ClickHandler {
 	
@@ -118,7 +129,25 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 		
 		setCodeDo(codeId);
 	}
-
+	/**
+	 * 
+	 * @function setCodeDo 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param codeId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	private void setCodeDo(int codeId) {
 		profileCodeDoSet = new HashSet<ProfileCodeDo>();
 		ProfileCodeDo profileCodeDo = new ProfileCodeDo();
@@ -147,7 +176,25 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 		}
 	}
 	
-
+	/**
+	 * 
+	 * @function addCourse 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param profileCodeDoSet
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void addCourse(Set<ProfileCodeDo> profileCodeDoSet) {
 		AppClientFactory.getInjector().getProfilePageService().addCourseUserProfile(profileCodeDoSet, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
 			@Override
@@ -155,7 +202,25 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 			}
 		});
 	}
-
+	/**
+	 * 
+	 * @function deleteCourse 
+	 * 
+	 * @created_date : 06-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param codeDo
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void deleteCourse(CodeDo codeDo) {
 		AppClientFactory.getInjector().getProfilePageService().deleteCourseUserProfile(codeDo, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
 			@Override

@@ -46,7 +46,21 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
-
+/**
+ * 
+ * @fileName : SignUpRoleView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class SignUpRoleView extends PopupPanel{
 
 	@UiField Label lblTitle, lblCancel,teacherLbl,studentLbl,parentLbl,otherLbl;

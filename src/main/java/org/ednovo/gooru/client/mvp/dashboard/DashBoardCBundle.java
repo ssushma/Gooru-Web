@@ -29,7 +29,21 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.CssResource.NotStrict;
 
-
+/**
+ * 
+ * @fileName : DashBoardCBundle.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public interface DashBoardCBundle extends ClientBundle {
 	static final DashBoardCBundle INSTANCE = GWT.create(DashBoardCBundle.class);
 	

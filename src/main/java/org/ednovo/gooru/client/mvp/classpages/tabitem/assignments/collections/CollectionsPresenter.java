@@ -77,7 +77,28 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 	public void setClasspageService(ClasspageService classpageService) {
 		this.classpageService = classpageService;
 	}
-	
+	/**
+	 * 
+	 * @function updateClasspageItem 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageItemId
+	 * @parm(s) : @param directionText
+	 * @parm(s) : @param dueDate
+	 * @parm(s) : @param readStatus
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void updateClasspageItem(String classpageItemId,final String directionText,final String dueDate,final String readStatus){
 		AppClientFactory.getInjector().getClasspageService().updateClasspageItem(classpageItemId, directionText, dueDate,readStatus,new SimpleAsyncCallback<String>() {
 			@Override
@@ -92,7 +113,25 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 			}
 		});
 	}
-	
+	/**
+	 * 
+	 * @function deleteClasspageItem 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageItemId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void deleteClasspageItem(String classpageItemId){
 		AppClientFactory.getInjector().getClasspageService().deleteClassPageItem(classpageItemId, new SimpleAsyncCallback<String>() {
 			@Override
@@ -104,12 +143,48 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 		});
 	}
 
-
+	/**
+	 * 
+	 * @function getEditClasspagePresenter 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : EditClasspagePresenter
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public EditClasspagePresenter getEditClasspagePresenter() {
 		return editClasspagePresenter;
 	}
 
-
+	/**
+	 * 
+	 * @function setEditClasspagePresenter 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param editClasspagePresenter
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	public void setEditClasspagePresenter(
 			EditClasspagePresenter editClasspagePresenter) {
 		this.editClasspagePresenter = editClasspagePresenter;

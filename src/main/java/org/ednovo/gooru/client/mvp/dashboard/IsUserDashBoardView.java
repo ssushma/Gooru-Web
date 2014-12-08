@@ -47,39 +47,208 @@ import org.ednovo.gooru.shared.model.code.UserDashBoardCommonInfoDO;
 import org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO;
 
 public interface IsUserDashBoardView extends IsViewWithHandlers<UserDashBoardUiHandlers>{
-
+	/**
+	 * 
+	 * @function dispalyDashBoardHomePage 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void dispalyDashBoardHomePage();
 	
 	/**
-	 * This method is used to set profile analytics flagged count data.
-	 * @param result
+	 * 
+	 * @function setProfileAnalyticsFlaggedChatData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	void setProfileAnalyticsFlaggedChatData(Map<String, Integer> result);
 	/**
-	 * This method is used to set profile analytics view count data.
-	 * @param result
+	 * 
+	 * @function setProfileAnalyticsViewsChatData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	void setProfileAnalyticsViewsChatData(Map<String, Integer> result);
 	/**
-	 * This method is used to set profile analytics shared count data.
-	 * @param result
+	 * 
+	 * @function setProfileAnalyticsSharedChatData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	void setProfileAnalyticsSharedChatData(Map<String, Integer> result);
 	/**
-	 * This method is used to set profile analytics add to collection count data.
-	 * @param result
+	 * 
+	 * @function setProfileAnalyticsAddedCollectionChatData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	void setProfileAnalyticsAddedCollectionChatData(Map<String, Integer> result);
-
-	void setPublishedCollectionData(UserDashBoardCommonInfoDO result);
 	/**
-	 * This method is used to set profile analytics Ratings data.
-	 * @param result
+	 * 
+	 * @function setPublishedCollectionData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	void setPublishedCollectionData(UserDashBoardCommonInfoDO result);
+
+	/**
+	 * 
+	 * @function getFiveStarRatedResults 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	void getFiveStarRatedResults(UserDashBoardCommonInfoDO result);
+	/**
+	 * 
+	 * @function getFiveStarReviewedResources 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	void getFiveStarReviewedResources(UserDashBoardCommonInfoDO result);
+
+	/**
+	 * 
+	 * @function setProfileRatingsData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	void setProfileRatingsData(ProfileRatingsReactionsDO result);
 	/**
-	 * This method is used to set profile analytics Reactions data.
-	 * @param result
+	 * 
+	 * @function setProfileReationsData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param result
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	void setProfileReationsData(ProfileRatingsReactionsDO result);
+
 }

@@ -24,20 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.dashboard;
 
-/**
- * @fileName : UserSettingsPresenter.java 
- *
- * @description : 
- *
- * @version :1.0
- *
- * @date: APR 18 2013
 
- * @Author Gooru Team 
- * 
- * Reviewer Gooru Team
- *
- */
 import java.util.Date;
 import java.util.Map;
 
@@ -57,7 +44,21 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-
+/**
+ * 
+ * @fileName : UserDashBoardPresenter.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 07-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardView, UserDashBoardPresenter.IsUserDashBoardProxy>
 		implements UserDashBoardUiHandlers {
 	
@@ -95,8 +96,30 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 	public void onReveal() {
 		Window.enableScrolling(true);
 	}
-
+	/**
+	 * 
+	 * @function displayDashBoardPage 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void displayDashBoardPage() {
+		
+		
+		if(!AppClientFactory.isAnonymous()){
+		
 		AppClientFactory.getInjector().getUserService().getUsersPublishedCollectionsCount(new AsyncCallback<UserDashBoardCommonInfoDO>() {
 			@Override
 			public void onSuccess(UserDashBoardCommonInfoDO result) {
@@ -106,7 +129,29 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 			public void onFailure(Throwable caught) {
 			}
 		});
+		AppClientFactory.getInjector().getUserService().getFiveStarRatedResources(new AsyncCallback<UserDashBoardCommonInfoDO>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+			@Override
+			public void onSuccess(UserDashBoardCommonInfoDO result) {
+				getView().getFiveStarRatedResults(result);
+			}
+		});
+		AppClientFactory.getInjector().getUserService().getFiveStarReviewdResources(new AsyncCallback<UserDashBoardCommonInfoDO>() {
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+			@Override
+			public void onSuccess(UserDashBoardCommonInfoDO result) {
+				getView().getFiveStarReviewedResources(result);
+			}
+		});
+		
 		getView().dispalyDashBoardHomePage();
+		}else{
+			
+		}
 	}
 
 	@Override
@@ -117,7 +162,23 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 		setData();
 	}
 	/**
-	 * This method is used to set data at the time of loading.
+	 * 
+	 * @function setData 
+	 * 
+	 * @created_date : 07-Dec-2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public void setData(){
 	    	DateTimeFormat fmt = DateTimeFormat.getFormat (DATE_FORMAT);
@@ -125,6 +186,8 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 	    	Date date = new Date();
 	    	date.setMonth(date.getMonth()-12);
 	    	String startDate =fmt.format(date);
+	    	
+	    	if(!AppClientFactory.isAnonymous()){
 	    	AppClientFactory.getInjector().getUserService().getTheAnalyticsFlaggedMonthlyData(FLAGGED,startDate,endDate,EQ_OPERATOR,new AsyncCallback<Map<String,Integer>>() {
 				
 				@Override
@@ -186,6 +249,9 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 					
 				}
 			});
+	    	
+	    	}
+	    	
 	}
 	@Override
 	protected void onHide() {

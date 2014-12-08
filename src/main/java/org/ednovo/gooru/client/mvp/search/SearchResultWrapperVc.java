@@ -173,7 +173,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		this.res = SearchResultWrapperCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		setAddedStatus(true);
+		setAddedStatus(true);	
 		moreInfoLbl.setText(i18n.GL1756());
 		moreInfoLbl.getElement().setAttribute("alt",i18n.GL1756());
 		moreInfoLbl.getElement().setAttribute("title",i18n.GL1756());
@@ -188,7 +188,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		}else{
 			addLbl.setText(i18n.GL2037());
 		}
-		tagsLbl.setText("Tags");
+		tagsLbl.setText(i18n.GL3048()+" "+i18n.GL_SPL_OPEN_SMALL_BRACKET()+"0"+i18n.GL_SPL_CLOSE_SMALL_BRACKET());
 		moreInfoLbl.getElement().setId("lblMoreInfo");
 		collcResLbl.getElement().setId("lblResColle");
 		shareLbl.getElement().setId("lblSahre");

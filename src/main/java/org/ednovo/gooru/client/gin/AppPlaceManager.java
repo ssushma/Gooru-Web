@@ -43,8 +43,19 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.TokenFormatter;
 
 /**
- * @author Search Team
  * 
+ * @fileName : AppPlaceManager.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 06-Dec-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
 @Singleton
 public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager {
@@ -407,6 +418,8 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 					pageLocation="shelf";
 				}else if(pageLocation.equals(PlaceTokens.PROFILE_PAGE)){
 					pageLocation="profile";
+				}else if(pageLocation.equals(PlaceTokens.DASHBOARD)){
+					pageLocation="dashboard";
 				}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
 					pageLocation="teach";
 				}else if(pageLocation.equals(PlaceTokens.STUDENT)){
