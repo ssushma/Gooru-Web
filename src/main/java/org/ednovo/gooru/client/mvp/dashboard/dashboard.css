@@ -419,8 +419,9 @@ background:#81c5e5 url(../images/profileimages/arrow.png) no-repeat 28px 7px;
     padding-right: 8px;
 	display:inline-block;
 	text-align:right;
-	min-width:85px;
+	width:85px;
 }
+
 
 .ratingStars{
 	display:inline-block;
@@ -483,9 +484,7 @@ background:#81c5e5 url(../images/profileimages/arrow.png) no-repeat 28px 7px;
 	width:100%;
 }
 
-.resource-image{
-	float:left;
-}
+
 
 
 
@@ -582,9 +581,11 @@ filter: progid;
 .collectionsEndo{
 	margin:0px 0 0 0;
 	height:320px;
-	overflow-y:auto;
+	/* overflow-y:auto; */
 }
-
+.scrollPanel{
+	height:320px;
+}
 .colHeadBlock{
 		margin:25px 0 0 0;
 		}

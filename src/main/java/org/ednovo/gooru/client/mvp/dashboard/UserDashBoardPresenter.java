@@ -81,12 +81,15 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 	private static final String EQ_OPERATOR="eq";
 	private static final String IN_OPERATOR="in";
 	
+	PopupForAnalyticsPresenter popupForAnalyticsPresenter=null;
+	
 	@Inject
 	public UserDashBoardPresenter(final IsUserDashBoardView view,
-			final IsUserDashBoardProxy proxy) {
+			final IsUserDashBoardProxy proxy,PopupForAnalyticsPresenter popupForAnalyticsPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		Window.enableScrolling(true);
+		this.popupForAnalyticsPresenter=popupForAnalyticsPresenter;
 	}
 
 	@Override
@@ -265,5 +268,12 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 
 	public void setUserService(UserServiceAsync userService) {
 		this.userService = userService;
+	}
+
+	@Override
+	public void clickedOnMoreButton() {
+		Window.enableScrolling(false);
+		popupForAnalyticsPresenter.setPopupData();
+		addToPopupSlot(popupForAnalyticsPresenter);
 	}
 }
