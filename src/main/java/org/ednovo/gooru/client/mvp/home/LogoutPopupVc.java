@@ -48,6 +48,7 @@ import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -133,6 +134,7 @@ public class LogoutPopupVc extends Composite{
 	public void userLogout(ClickEvent clickEvent) {
 //		StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
 //		StringUtil.clearCookies("google-refresh-token", "/", ".www.goorulearning.org");
+		Cookies.removeCookie("gooru-version");
 		AppClientFactory.getInjector().getAppService().v2Signout(new SimpleAsyncCallback<UserDo>() {
 
 			@Override
@@ -141,7 +143,7 @@ public class LogoutPopupVc extends Composite{
 			    String premiumAccountUserName = AppClientFactory.getLoggedInUser().getUsername();
 				
 				AppClientFactory.fireEvent(new ClearClasspageListEvent());
-				
+				Cookies.removeCookie("gooru-version");
 				Window.enableScrolling(true);
 		        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				AppClientFactory.setLoggedInUser(result);
