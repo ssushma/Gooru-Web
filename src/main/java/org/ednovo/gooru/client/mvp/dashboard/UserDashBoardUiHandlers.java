@@ -46,6 +46,6 @@ public interface UserDashBoardUiHandlers extends BaseUiHandlers{
 	/**
 	 * This method is used to handle the click event on view more.
 	 */
-	void clickedOnMoreButton();
+	void clickedOnMoreButton(String isEndorsedOrRemixed,String isReactionOrRatings);
 	
 }

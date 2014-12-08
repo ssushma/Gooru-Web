@@ -51,15 +51,13 @@ public interface PopupForAnalyticsUiHandlers extends BaseUiHandlers, EventHandle
 	 * @description
 	 * 	This method is used to set popup data.
 	 * 
-	 * @parm(s) : 
+	 * @param isEndorsedOrRemixed
+	 * @param isReactionOrRatings
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
-	 * 
-	 *
-	 *
 	 */
-	void setPopupData();
+	void setPopupData(String isEndorsedOrRemixed,String isReactionOrRatings);
 }

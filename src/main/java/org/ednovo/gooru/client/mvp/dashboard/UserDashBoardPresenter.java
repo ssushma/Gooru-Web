@@ -117,7 +117,6 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 	 */
 	void displayDashBoardPage() {
 		
-		
 		if(!AppClientFactory.isAnonymous()){
 		
 		AppClientFactory.getInjector().getUserService().getUsersPublishedCollectionsCount(new AsyncCallback<UserDashBoardCommonInfoDO>() {
@@ -271,9 +270,9 @@ public class UserDashBoardPresenter	extends	BasePlacePresenter<IsUserDashBoardVi
 	}
 
 	@Override
-	public void clickedOnMoreButton() {
+	public void clickedOnMoreButton(String isEndorsedOrRemixed,String isReactionOrRatings) {
 		Window.enableScrolling(false);
-		popupForAnalyticsPresenter.setPopupData();
+		popupForAnalyticsPresenter.setPopupData(isEndorsedOrRemixed,isReactionOrRatings);
 		addToPopupSlot(popupForAnalyticsPresenter);
 	}
 }

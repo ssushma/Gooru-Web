@@ -72,7 +72,9 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 			UiBinder<Widget, UserDashBoardView> {
 
 	}
-	TopRemixedAndEndorsedCollections topEndorsedCollection;
+	TopRemixedAndEndorsedCollections topEndorsedCollection,topRemixedCollection;
+	FiveStarRatings fiveStarRatings,fiveStarReactions;
+	
 	public MessageProperties i18n = GWT.create(MessageProperties.class);
 	
 	public interface Binder extends UiBinder<Widget, UserDashBoardView> {
@@ -88,7 +90,7 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 		endorsementsGivenWidget.add(new UserDashBoardCommonInfo(new Label(Integer.toString(26)),new Label("endorsements given")));
 		
 		topEndorsedCollectionsWidget.add(topEndorsedCollection=new TopRemixedAndEndorsedCollections("Top Endorsed Collections","Roman Poets","23 endorsments"));
-		topRemixedCollectionsWidget.add(new TopRemixedAndEndorsedCollections("Top Remixed Collections","Dogs","12 remixes"));
+		topRemixedCollectionsWidget.add(topRemixedCollection=new TopRemixedAndEndorsedCollections("Top Remixed Collections","Dogs","12 remixes"));
 
 		googleMapContainer.add(new GoogleMapWidget());
 		profileAnalyticsGrageContainer.add(new ProfileAnalyticsGradeWidget());
@@ -96,7 +98,13 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 		topEndorsedCollection.getClickOnMorelbl().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				getUiHandlers().clickedOnMoreButton();
+				getUiHandlers().clickedOnMoreButton("true", null);
+			}
+		});
+		topRemixedCollection.getClickOnMorelbl().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().clickedOnMoreButton("false",null);
 			}
 		});
 	}
@@ -171,14 +179,25 @@ public class UserDashBoardView extends BaseViewWithHandlers<UserDashBoardUiHandl
 	 * @see org.ednovo.gooru.client.mvp.dashboard.IsUserDashBoardView#setProfileRatingsData(org.ednovo.gooru.shared.model.user.ProfileRatingsReactionsDO)
 	 */
 	@Override
-
 	public void getFiveStarRatedResults(UserDashBoardCommonInfoDO result) {
-		fiveStarRatedResourcesWidget.add(new FiveStarRatings("fivestarRatings",result));
+		fiveStarRatedResourcesWidget.add(fiveStarRatings=new FiveStarRatings("fivestarRatings",result));
+		fiveStarRatings.getViewAllLabel().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().clickedOnMoreButton(null,"true");
+			}
+		});
 	}
 
 	@Override
 	public void getFiveStarReviewedResources(UserDashBoardCommonInfoDO result) {
-		reactionsWidgetPanel.add(new FiveStarRatings("fivestarReviews",result));
+		reactionsWidgetPanel.add(fiveStarReactions=new FiveStarRatings("fivestarReviews",result));
+		fiveStarReactions.getViewAllLabel().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				getUiHandlers().clickedOnMoreButton(null,"false");
+			}
+		});
 	}
 	/**
 	 * This method is used to set the count of comments,reviews written and ratings

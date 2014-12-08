@@ -62,7 +62,7 @@ public class PopupForAnalyticsPresenter extends PresenterWidget<IsPopupForAnalyt
 		 * @see org.ednovo.gooru.client.mvp.dashboard.PopupForAnalyticsUiHandlers#setPopupData()
 		 */
 		@Override
-		public void setPopupData() {
-			getView().setPopupData();
+		public void setPopupData(String isEndorsedOrRemixed,String isReactionOrRatings) {
+			getView().setPopupData(isEndorsedOrRemixed,isReactionOrRatings);
 		}
 }
